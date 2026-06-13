@@ -1033,9 +1033,9 @@ export const DemosIndex: Record<
 		files: ["ui/form/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/form/demos/basic")),
 	},
-	"form/demos/react-aria": {
-		files: ["ui/form/demos/react-aria.tsx"],
-		component: React.lazy(() => import("@/registry/ui/form/demos/react-aria")),
+	"form/demos/validation": {
+		files: ["ui/form/demos/validation.tsx"],
+		component: React.lazy(() => import("@/registry/ui/form/demos/validation")),
 	},
 	"group/demos/basic": {
 		files: ["ui/group/demos/basic.tsx"],
@@ -1992,6 +1992,10 @@ export const DemosIndex: Record<
 	"tag-group/demos/with-icon": {
 		files: ["ui/tag-group/demos/with-icon.tsx"],
 		component: React.lazy(() => import("@/registry/ui/tag-group/demos/with-icon")),
+	},
+	"tanstack-form/demos/register": {
+		files: ["ui/tanstack-form/demos/register.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tanstack-form/demos/register")),
 	},
 	"text-area/demos/controlled": {
 		files: ["ui/text-area/demos/controlled.tsx"],

@@ -1,7 +1,7 @@
 import type { RegistryItem } from '@/registry/types'
 
-const formMeta = {
-  name: 'form',
+const reactHookFormMeta = {
+  name: 'react-hook-form',
   type: 'registry:ui',
   files: [
     {
@@ -10,6 +10,7 @@ const formMeta = {
       target: 'ui/react-hook-form.tsx',
     },
   ],
+  dependencies: ['react-hook-form'],
 } satisfies RegistryItem
 
-export default formMeta
+export default reactHookFormMeta
