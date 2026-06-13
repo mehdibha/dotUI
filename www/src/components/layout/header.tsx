@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link as RouterLink } from '@tanstack/react-router'
+import { Link as RouterLink, useLocation } from '@tanstack/react-router'
 import type * as PageTree from 'fumadocs-core/page-tree'
 import { SearchIcon } from 'lucide-react'
 
@@ -31,6 +31,14 @@ interface HeaderProps {
 
 export function Header({ className, items = [] }: HeaderProps) {
   const scrolled = useScrolled(8)
+  const { pathname } = useLocation()
+  // Longest-matching-prefix wins so "/docs/components" highlights Components (not
+  // Docs) while "/docs/button" still highlights Docs.
+  const activeTo = [...navItems]
+    .sort((a, b) => b.to.length - a.to.length)
+    .find(
+      (item) => pathname === item.to || pathname.startsWith(`${item.to}/`),
+    )?.to
 
   return (
     <header
@@ -58,21 +66,34 @@ export function Header({ className, items = [] }: HeaderProps) {
         <MobileNav items={items} />
         <Logo className="max-md:hidden" />
         <nav className="flex items-center gap-3 text-sm max-md:hidden">
-          {navItems.map((item) => (
-            <RouterLink
-              key={item.name}
-              to={item.to}
-              className="px-0.5 text-fg-muted transition-colors hover:text-fg"
-            >
-              {item.name}
-            </RouterLink>
-          ))}
+          {navItems.map((item) => {
+            // Color highlights the whole section (Docs stays lit on /docs/button)
+            // via the longest-prefix match above. aria-current is left to Router
+            // Link with `exact` matching so it marks only the literal current page
+            // — otherwise Link's default fuzzy match lights aria-current on both
+            // Docs and Components for any /docs/components/* page.
+            const isActive = item.to === activeTo
+            return (
+              <RouterLink
+                key={item.name}
+                to={item.to}
+                activeOptions={{ exact: true }}
+                className={cn(
+                  'px-0.5 transition-colors hover:text-fg',
+                  isActive ? 'text-fg' : 'text-fg-muted',
+                )}
+              >
+                {item.name}
+              </RouterLink>
+            )
+          })}
         </nav>
       </div>
       <div className="flex items-center gap-2">
         <SearchCommand keyboardShortcut items={items}>
           <Button
             variant="default"
+            aria-label="Search docs"
             className="max-md:size-8 max-md:px-0 md:text-fg-muted"
           >
             <SearchIcon className="md:hidden" />

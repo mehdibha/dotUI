@@ -49,6 +49,7 @@ export function Example({
         <Dialog>
           <Button
             variant="quiet"
+            aria-label={title ? `Expand ${title} example` : 'Expand example'}
             className="absolute inset-0 z-2 size-auto h-auto! border hover:border-border-hover"
           />
           <Modal>
