@@ -7,12 +7,14 @@
  * registered producer. No per-algorithm branching.
  */
 
-import { type ModeCtx, produceValidated } from './producer'
+import { getProducer, type ModeCtx, produceValidated } from './producer'
 import { registerBuiltins } from './producers'
 import {
   type BaseThemeOptions,
+  BUILTIN_SCHEMA_IDS,
   type CreateThemeOptions,
   createThemeOptionsSchema,
+  customThemeOptionsSchema,
 } from './schema'
 import { gamutMap, oklchCss, toOklch } from './shared/color'
 import { DEFAULT_MODES, SCALE_STEPS, SEMANTIC_COLORS } from './shared/constants'
@@ -120,7 +122,17 @@ export function createTheme(
   options: CreateThemeOptions | BaseThemeOptions,
 ): Theme {
   registerBuiltins()
-  const opts: BaseThemeOptions = createThemeOptionsSchema.parse(options)
+  let opts: BaseThemeOptions
+  if ((BUILTIN_SCHEMA_IDS as readonly string[]).includes(options.algorithm)) {
+    opts = createThemeOptionsSchema.parse(options)
+  } else {
+    // Throws the canonical "Unknown color algorithm" error (with the registered list) for
+    // unregistered ids, BEFORE base validation — registration is the gate, not the union.
+    getProducer(options.algorithm)
+    // The catchall types extra knobs as `unknown`; producers re-validate them per palette
+    // (produceValidated), so this widening cast is the one place the kernel trusts the registry.
+    opts = customThemeOptionsSchema.parse(options) as BaseThemeOptions
+  }
   const { algorithm } = opts
   const steps = opts.steps ?? [...SCALE_STEPS]
   const modes = opts.modes ?? DEFAULT_MODES
@@ -147,6 +159,7 @@ export function createTheme(
       isDark: resolved.isDark,
       steps,
       background: deriveBackground(neutralSeed, resolved.bgLightness),
+      gamut: opts.targetGamut,
     }
     const scales: Record<string, ColorScale> = {}
     const on: Record<string, ColorScale> = {}

@@ -53,7 +53,7 @@ export const materialProducer: ColorProducer<MaterialOpts> = {
     const scale: Record<string, string> = {}
     for (let i = 0; i < ctx.steps.length; i++) {
       const hex = hexFromArgb(palette.tone(tones[i]!))
-      scale[ctx.steps[i]!] = oklchCss(gamutMap(toOklch(hex)))
+      scale[ctx.steps[i]!] = oklchCss(gamutMap(toOklch(hex), ctx.gamut))
     }
     return { scale, on: computeOnColors(scale) }
   },

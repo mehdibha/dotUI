@@ -8,10 +8,10 @@ Product context that applies to every plan: dotUI's north star is that every vis
 
 | Plan | Title | Priority | Effort | Depends on | Status |
 |------|-------|----------|--------|------------|--------|
-| 001 | Recover the color-engine design spec into docs/research | P1 | S | — | TODO |
-| 002 | Pin per-algorithm color output with characterization snapshots | P1 | S | — | TODO |
-| 003 | Let registered custom algorithms through createTheme | P1 | M | — | TODO |
-| 004 | Make an unknown `preserveSeedAt` step a loud error | P2 | S | — | TODO |
+| 001 | Recover the color-engine design spec into docs/research | P1 | S | — | DONE (2026-06-13) — `docs/research/2026-06-11-color-engine-spec.md` |
+| 002 | Pin per-algorithm color output with characterization snapshots | P1 | S | — | DONE (2026-06-13) |
+| 003 | Let registered custom algorithms through createTheme | P1 | M | — | DONE (2026-06-13) |
+| 004 | Make an unknown `preserveSeedAt` step a loud error | P2 | S | — | DONE (2026-06-13) |
 | 005 | Make the kernel own dark-mode generation | P1 | L | 001, 002 | TODO |
 | 006 | Add `neutralChroma` + `backgroundChroma` knobs (tinted neutrals axis) | P2 | S-M | soft: 003, 005 | TODO |
 | 007 | Add a `lightness` anchors knob to oklch/tailwind | P2 | S | soft: 005, 006 | TODO |
@@ -19,6 +19,8 @@ Product context that applies to every plan: dotUI's north star is that every vis
 | 009 | Centralize on-color behind a theme-level `onColor` option | P3 | M | 002; land last | TODO |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) | REJECTED (with one-line rationale — finding fixed independently or approach abandoned).
+
+> 2026-06-13: plans 001–004 landed together (kernel-hardening foundation), alongside a new **wide-gamut `targetGamut` axis** that is *not* part of this audit — see `docs/research/2026-06-13-colors-modernization.md`, which also catalogs the remaining modern-SOTA gaps (alpha ramps, CVD tooling, harmony/image seeding, contrast-level slider). Plans 005–009 remain TODO.
 
 ## Dependency notes
 

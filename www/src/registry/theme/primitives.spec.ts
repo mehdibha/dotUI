@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { onBlackWhite, toOklch, wcag2 } from '@dotui/colors'
+import { createTheme, onBlackWhite, toOklch, wcag2 } from '@dotui/colors'
 
 import {
   type ColorConfig,
@@ -162,6 +162,43 @@ describe.each(GENERATIVE_ALGORITHMS)(
     })
   },
 )
+
+// Value-level characterization: pins the exact resolved output per algorithm, split by
+// mode, so a refactor of dark-mode derivation can prove light output stayed identical.
+describe.each(GENERATIVE_ALGORITHMS)(
+  'resolveColorConfig — %s value characterization',
+  (algorithm) => {
+    const resolved = resolveColorConfig({ ...DEFAULT_COLOR_CONFIG, algorithm })
+    it('light ramps match the pinned values', () => {
+      expect(resolved.light).toMatchSnapshot('light')
+    })
+    it('dark ramps match the pinned values', () => {
+      expect(resolved.dark).toMatchSnapshot('dark')
+    })
+  },
+)
+
+// CHARACTERIZATION of a known infidelity (see docs/plans/2026-06-11-colors-audit/005-kernel-owned-dark-mode.md):
+// the wrapper derives dark by reversing the light ramp, but the contrast algorithm's
+// kernel-native dark mode solves each step against the dark background. The two
+// disagree today; plan 005 makes the wrapper use the kernel-native dark and flips
+// this assertion to equality.
+it('wrapper dark for `contrast` is the reversal, NOT the kernel-native dark solve', () => {
+  const wrapper = resolveColorConfig({
+    ...DEFAULT_COLOR_CONFIG,
+    algorithm: 'contrast',
+  })
+  const native = createTheme({
+    algorithm: 'contrast',
+    palettes: {
+      primary: DEFAULT_COLOR_CONFIG.seeds.accent,
+      neutral: DEFAULT_COLOR_CONFIG.seeds.neutral,
+    },
+    modes: { dark: true },
+  }).dark
+  expect(native).toBeDefined()
+  expect(wrapper.dark.accent?.['500']).not.toBe(native?.scales.primary?.['500'])
+})
 
 describe('resolveColorConfig — neutral lightness stretch (near-white → near-black surfaces)', () => {
   const { light, dark } = resolveColorConfig(DEFAULT_COLOR_CONFIG)

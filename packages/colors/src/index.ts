@@ -39,6 +39,7 @@ export { registerBuiltins } from './producers'
 export {
   apca,
   type ContrastFormula,
+  type Gamut,
   gamutMap,
   type Oklch,
   oklchCss,

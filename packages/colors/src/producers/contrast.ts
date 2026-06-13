@@ -11,6 +11,7 @@ import { z } from 'zod'
 
 import type { ColorProducer, ModeCtx } from '../producer'
 import {
+  type Gamut,
   gamutMap,
   makeContrast,
   type Oklch,
@@ -44,9 +45,10 @@ function solveStep(
   chroma: number,
   bgL: number,
   contrastOf: (fg: Oklch) => number,
+  gamut: Gamut | undefined,
 ): Oklch {
   const at = (l: number): number =>
-    contrastOf(gamutMap({ l, c: chroma, h: hue }))
+    contrastOf(gamutMap({ l, c: chroma, h: hue }, gamut))
   // Search toward whichever extreme actually maximizes contrast, not a fixed bgL cutoff
   // (the true crossover isn't at 0.5, so a hard cutoff forfeits the stronger pole on mid bg).
   const lighter = at(1) >= at(0) // is a lighter foreground the higher-contrast direction?
@@ -57,7 +59,8 @@ function solveStep(
     else hi = Math.min(1, lo + 1e-3)
   }
   const extreme = lighter ? hi : lo // max-contrast end
-  if (at(extreme) <= target) return gamutMap({ l: extreme, c: chroma, h: hue })
+  if (at(extreme) <= target)
+    return gamutMap({ l: extreme, c: chroma, h: hue }, gamut)
   for (let k = 0; k < 20; k++) {
     const mid = (lo + hi) / 2
     const needsMore = at(mid) < target
@@ -65,7 +68,7 @@ function solveStep(
     if (lighter ? needsMore : !needsMore) lo = mid
     else hi = mid
   }
-  return gamutMap({ l: (lo + hi) / 2, c: chroma, h: hue })
+  return gamutMap({ l: (lo + hi) / 2, c: chroma, h: hue }, gamut)
 }
 
 export const contrastProducer: ColorProducer<ContrastOpts> = {
@@ -87,7 +90,7 @@ export const contrastProducer: ColorProducer<ContrastOpts> = {
       const target = ratios[i] ?? ratios.at(-1) ?? 1
       const chroma = baseChroma * chromaEnvelope(i, n)
       scale[ctx.steps[i]!] = oklchCss(
-        solveStep(target, seed.h, chroma, bgL, contrastOf),
+        solveStep(target, seed.h, chroma, bgL, contrastOf, ctx.gamut),
       )
     }
     return { scale, on: computeOnColors(scale, formula) }

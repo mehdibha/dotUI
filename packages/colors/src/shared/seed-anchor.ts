@@ -10,7 +10,11 @@
  * monotonic.
  */
 
-/** Return a lightness array adjusted so `seedL` lands at `preserveSeedAt` (or unchanged by default). */
+/**
+ * Return a lightness array adjusted so `seedL` lands at `preserveSeedAt` (or unchanged
+ * by default). Throws if `preserveSeedAt` names a step that isn't in the scale — a typo,
+ * or a default-scale name combined with custom `steps` — rather than silently ignoring it.
+ */
 export function applyAnchoring(
   ls: number[],
   steps: readonly string[],
@@ -19,7 +23,12 @@ export function applyAnchoring(
 ): number[] {
   if (!preserveSeedAt) return ls // default: array-driven, discard seed L
   const idx = steps.indexOf(preserveSeedAt)
-  if (idx < 0 || ls.length < 2) return ls
+  if (idx < 0) {
+    throw new Error(
+      `preserveSeedAt "${preserveSeedAt}" is not one of the scale steps (have: ${steps.join(', ')}).`,
+    )
+  }
+  if (ls.length < 2) return ls
 
   const top = ls[0]! // lightest
   const bottom = ls[ls.length - 1]! // darkest

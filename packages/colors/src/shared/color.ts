@@ -12,6 +12,13 @@ import Color from 'colorjs.io'
 
 export type Oklch = { l: number; c: number; h: number }
 export type ContrastFormula = 'wcag2' | 'apca'
+/**
+ * Target gamut for output. `srgb` (the default) clamps every color into the sRGB
+ * gamut — universally safe. `p3` / `rec2020` clamp into the wider Display-P3 /
+ * Rec.2020 gamuts, admitting more saturated `oklch()` values that render vividly on
+ * capable displays and are gamut-mapped down by the browser on narrower ones.
+ */
+export type Gamut = 'srgb' | 'p3' | 'rec2020'
 
 function round(x: number, n: number): number {
   const f = 10 ** n
@@ -48,10 +55,13 @@ export function toSrgb(input: string | Oklch): {
   return { r: r ?? 0, g: g ?? 0, b: b ?? 0 }
 }
 
-/** Reduce an OKLCH color into the sRGB gamut (CSS Color 4 method: chroma reduce + clip). */
-export function gamutMap(o: Oklch): Oklch {
+/**
+ * Reduce an OKLCH color into a target gamut (CSS Color 4 method: chroma reduce + clip).
+ * Defaults to `srgb`; pass `p3` / `rec2020` to keep more chroma for wide-gamut output.
+ */
+export function gamutMap(o: Oklch, gamut: Gamut = 'srgb'): Oklch {
   const [l, c, h] = oklch(o)
-    .toGamut({ space: 'srgb', method: 'css' })
+    .toGamut({ space: gamut, method: 'css' })
     .to('oklch').coords
   return { l: l ?? 0, c: c ?? 0, h: normHue(h) }
 }

@@ -281,6 +281,48 @@ describe('edge seeds', () => {
   }
 })
 
+describe('targetGamut (wide-gamut output)', () => {
+  const vivid = (targetGamut?: 'srgb' | 'p3' | 'rec2020') =>
+    createTheme({
+      algorithm: 'oklch',
+      palettes: { primary: 'oklch(0.7 0.37 145)' }, // a green that exceeds sRGB
+      chromaMode: 'max',
+      ...(targetGamut ? { targetGamut } : {}),
+    })
+
+  const peakChroma = (s: ColorScale): number =>
+    Math.max(...Object.values(s).map((v) => toOklch(v).c))
+
+  it('default output is byte-identical to explicit srgb', () => {
+    expect(vivid()).toEqual(vivid('srgb'))
+  })
+
+  it('p3 keeps more chroma than srgb for an out-of-sRGB seed (still valid oklch)', () => {
+    const srgb = sc(vivid('srgb'), 'light', 'primary')
+    const p3 = sc(vivid('p3'), 'light', 'primary')
+    expect(peakChroma(p3)).toBeGreaterThan(peakChroma(srgb))
+    for (const v of Object.values(p3)) {
+      expect(v).toMatch(/^oklch\(/)
+      expect(v).not.toMatch(/NaN/)
+    }
+  })
+
+  it('rec2020 is at least as wide as p3', () => {
+    const p3 = sc(vivid('p3'), 'light', 'primary')
+    const rec2020 = sc(vivid('rec2020'), 'light', 'primary')
+    expect(peakChroma(rec2020)).toBeGreaterThanOrEqual(peakChroma(p3) - 1e-9)
+  })
+
+  it('p3 ramps stay monotonic and carry readable on-*', () => {
+    const theme = vivid('p3')
+    for (const mode of Object.values(theme)) {
+      for (const scale of Object.values(mode.scales))
+        expect(isMonotonic(rampLs(scale))).toBe(true)
+    }
+    expect(worstOnContrast(theme)).toBeGreaterThanOrEqual(4.5)
+  })
+})
+
 describe('snapshots', () => {
   it('oklch theme value snapshot', () => {
     expect(
@@ -297,6 +339,24 @@ describe('snapshots', () => {
         palettes: { primary: '#6366f1', neutral: '#64748b' },
       }),
     ).toMatchSnapshot()
+  })
+
+  it('contrast theme value snapshot (mode-split: dark is solved against the dark bg)', () => {
+    const theme = createTheme({
+      algorithm: 'contrast',
+      palettes: { primary: '#3b82f6', neutral: '#64748b' },
+    })
+    expect(theme.light).toMatchSnapshot('light')
+    expect(theme.dark).toMatchSnapshot('dark')
+  })
+
+  it('tailwind theme value snapshot (mode-split)', () => {
+    const theme = createTheme({
+      algorithm: 'tailwind',
+      palettes: { primary: '#3b82f6', neutral: '#64748b' },
+    })
+    expect(theme.light).toMatchSnapshot('light')
+    expect(theme.dark).toMatchSnapshot('dark')
   })
 })
 
@@ -393,5 +453,16 @@ describe('review regressions', () => {
         modes: { light: { palettes: { ghost: { seed: '#ffffff' } } } },
       }),
     ).toThrow(/not a declared palette/)
+  })
+
+  it('preserveSeedAt naming a step outside the scale throws (typo / custom-steps mismatch)', () => {
+    expect(() =>
+      createTheme({
+        algorithm: 'oklch',
+        palettes: { primary: '#3b82f6' },
+        steps: ['1', '2', '3', '4', '5'],
+        preserveSeedAt: '500', // valid for the default scale, absent from these steps
+      }),
+    ).toThrow(/preserveSeedAt "500" is not one of the scale steps/)
   })
 })

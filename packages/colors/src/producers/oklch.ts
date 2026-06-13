@@ -74,7 +74,7 @@ export const oklchProducer: ColorProducer<OklchOpts> = {
       const t = n <= 1 ? 0 : i / (n - 1)
       const h = torsion(seed.h, t, torsionAmt)
       const c = maxMode ? MAX_MODE_C : peakC * chromaEnvelope(i, n)
-      scale[ctx.steps[i]!] = oklchCss(gamutMap({ l: ls[i]!, c, h }))
+      scale[ctx.steps[i]!] = oklchCss(gamutMap({ l: ls[i]!, c, h }, ctx.gamut))
     }
     return { scale, on: computeOnColors(scale) }
   },
