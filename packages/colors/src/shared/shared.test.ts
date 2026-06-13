@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
 import { isMonotonic } from '../test-utils'
-import { apca, gamutMap, oklchCss, toOklch, wcag2 } from './color'
+import { computeAlphaColors } from './alpha'
+import { apca, gamutMap, oklchCss, toOklch, toSrgb, wcag2 } from './color'
 import { lightnessForSteps } from './curve'
 import { onColor } from './on-color'
 import { applyAnchoring } from './seed-anchor'
@@ -73,6 +74,30 @@ describe('shared/seed-anchor', () => {
     expect(() =>
       applyAnchoring(lightnessForSteps(11), S11, 0.62, '5000'),
     ).toThrow(/preserveSeedAt "5000" is not one of the scale steps/)
+  })
+})
+
+describe('shared/alpha', () => {
+  it('composites over its design background back to the solid step (sRGB fidelity)', () => {
+    const bg = '#ffffff'
+    const solid = '#4477aa' // a mid blue, unambiguously in sRGB
+    const value = computeAlphaColors({ '500': solid }, bg)['500']!
+    expect(value).toMatch(/^oklch\(.+ \/ [\d.]+\)$/) // carries an alpha component
+    const a = Number(/ \/ ([\d.]+)\)$/.exec(value)![1])
+    expect(a).toBeGreaterThan(0)
+    expect(a).toBeLessThanOrEqual(1)
+
+    const fg = toSrgb(value)
+    const b = toSrgb(bg)
+    const t = toSrgb(solid)
+    for (const c of ['r', 'g', 'b'] as const)
+      expect(a * fg[c] + (1 - a) * b[c]).toBeCloseTo(t[c], 2)
+  })
+
+  it('a step equal to its background is fully transparent', () => {
+    expect(computeAlphaColors({ '50': '#ffffff' }, '#ffffff')['50']).toMatch(
+      / \/ 0\)$/,
+    )
   })
 })
 

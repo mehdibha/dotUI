@@ -37,6 +37,8 @@ const modesSchema = z.record(z.string(), modeSchema).optional()
 const stepsSchema = z.array(z.string()).min(2).optional()
 /** Output gamut for the generated ramps (theme-wide). Default `srgb`; `p3`/`rec2020` go wider. */
 const gamutSchema = z.enum(['srgb', 'p3', 'rec2020']).optional()
+/** Emit a translucent `oklch(… / a)` twin per ramp (theme-wide). Default off. */
+const alphaSchema = z.boolean().optional()
 
 const oklchArm = z.object({
   algorithm: z.literal('oklch'),
@@ -44,6 +46,7 @@ const oklchArm = z.object({
   modes: modesSchema,
   steps: stepsSchema,
   targetGamut: gamutSchema,
+  alpha: alphaSchema,
   chromaMult: z.number().min(0).optional(),
   minChroma: z.number().min(0).optional(),
   hueTorsion: z.number().optional(),
@@ -59,6 +62,7 @@ const contrastArm = z.object({
   modes: modesSchema,
   steps: stepsSchema,
   targetGamut: gamutSchema,
+  alpha: alphaSchema,
   ratios: z.array(z.number().positive()).min(2).optional(),
   formula: z.enum(['wcag2', 'apca']).optional(),
   saturation: z.number().min(0).max(100).optional(),
@@ -70,6 +74,7 @@ const materialArm = z.object({
   modes: modesSchema,
   steps: stepsSchema,
   targetGamut: gamutSchema,
+  alpha: alphaSchema,
   tones: z.array(z.number().min(0).max(100)).min(2).optional(),
 })
 
@@ -80,6 +85,7 @@ const fixedArm = z.object({
   modes: modesSchema,
   steps: stepsSchema,
   targetGamut: gamutSchema,
+  alpha: alphaSchema,
 })
 
 export const createThemeOptionsSchema = z.discriminatedUnion('algorithm', [
@@ -130,6 +136,8 @@ export interface BaseThemeOptions {
   steps?: string[]
   /** Output gamut for generated ramps (theme-wide). Default `srgb`. */
   targetGamut?: Gamut
+  /** Emit a translucent `oklch(… / a)` twin per ramp (theme-wide). Default off. */
+  alpha?: boolean
   // oklch / tailwind
   chromaMult?: number
   minChroma?: number

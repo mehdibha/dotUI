@@ -66,13 +66,25 @@ export function gamutMap(o: Oklch, gamut: Gamut = 'srgb'): Oklch {
   return { l: l ?? 0, c: c ?? 0, h: normHue(h) }
 }
 
-/** Format OKLCH coords as a compact, valid `oklch()` string (hue normalized before output). */
-export function oklchCss(o: Oklch): string {
+/**
+ * Format OKLCH coords as a compact, valid `oklch()` string (hue normalized before output).
+ * An `alpha` < 1 appends ` / A` (`oklch(L C H / A)`); omitted or ≥ 1 emits the opaque
+ * 3-component form, so every existing caller is byte-for-byte unchanged.
+ */
+export function oklchCss(o: Oklch, alpha?: number): string {
   const L = round(Math.min(1, Math.max(0, o.l)), 4)
   const C = round(Math.max(0, o.c), 4)
-  if (C < 0.0005) return `oklch(${L} 0 0)`
+  const a = alpha == null ? 1 : Math.min(1, Math.max(0, alpha))
+  const suffix = a < 1 ? ` / ${round(a, 4)}` : ''
+  if (C < 0.0005) return `oklch(${L} 0 0${suffix})`
   const H = round(((normHue(o.h) % 360) + 360) % 360, 2)
-  return `oklch(${L} ${C} ${H})`
+  return `oklch(${L} ${C} ${H}${suffix})`
+}
+
+/** OKLCH coords from sRGB channels (0..1) — the inverse of {@link toSrgb} through the one seam. */
+export function oklchFromSrgb(rgb: { r: number; g: number; b: number }): Oklch {
+  const [l, c, h] = new Color('srgb', [rgb.r, rgb.g, rgb.b]).to('oklch').coords
+  return { l: l ?? 0, c: c ?? 0, h: normHue(h) }
 }
 
 /** WCAG 2.1 contrast ratio (1–21), order-independent. */

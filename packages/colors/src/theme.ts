@@ -16,6 +16,7 @@ import {
   createThemeOptionsSchema,
   customThemeOptionsSchema,
 } from './schema'
+import { computeAlphaColors } from './shared/alpha'
 import { gamutMap, oklchCss, toOklch } from './shared/color'
 import { DEFAULT_MODES, SCALE_STEPS, SEMANTIC_COLORS } from './shared/constants'
 import type { ColorScale, Theme } from './shared/types'
@@ -163,6 +164,7 @@ export function createTheme(
     }
     const scales: Record<string, ColorScale> = {}
     const on: Record<string, ColorScale> = {}
+    const alpha: Record<string, ColorScale> = {}
     for (const [name, input] of baseInputs) {
       const paletteOpts = buildPaletteOpts(
         name,
@@ -173,8 +175,12 @@ export function createTheme(
       const out = produceValidated(algorithm, paletteOpts, ctx)
       scales[name] = out.scale
       on[name] = out.on
+      // Alpha is a pure post-process of the solid ramp + the mode background, so it lives
+      // here (not in producers) — opt-in, and absent from the output when off.
+      if (opts.alpha)
+        alpha[name] = computeAlphaColors(out.scale, ctx.background)
     }
-    theme[modeName] = { scales, on }
+    theme[modeName] = opts.alpha ? { scales, on, alpha } : { scales, on }
   }
   return theme
 }
