@@ -4,11 +4,15 @@
  * Every generation strategy implements {@link ColorProducer} and is registered
  * by `registerBuiltins()` (see ./producers). `createTheme` resolves a producer by
  * id and calls `produce` once per palette per mode. Adding an algorithm is one
- * `registerProducer` call — nothing downstream branches on the algorithm.
+ * `registerProducer` call — nothing downstream branches on the algorithm: a
+ * registered non-builtin id is accepted by `createTheme` (shared fields validated by
+ * `customThemeOptionsSchema`, knobs validated by the producer's own schema), so the
+ * registry — not a closed top-level union — is what gates which algorithms are usable.
  */
 
 import type { ZodType } from 'zod'
 
+import type { Gamut } from './shared/color'
 import type { ColorScale } from './shared/types'
 
 export type BuiltinAlgorithmId = 'oklch' | 'contrast' | 'material' | 'fixed'
@@ -25,6 +29,8 @@ export interface ModeCtx {
   steps: readonly string[]
   /** Mode background (from the neutral seed). Used by contrast-targeting producers; ignored by others. */
   background: string
+  /** Target output gamut for ramp values (default `srgb`). Producers pass it to `gamutMap`. */
+  gamut?: Gamut
 }
 
 /** A produced palette: the ramp plus its paired on-* foregrounds, both keyed by step. */

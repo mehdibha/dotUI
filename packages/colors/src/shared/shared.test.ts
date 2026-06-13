@@ -68,6 +68,12 @@ describe('shared/seed-anchor', () => {
     for (let i = 1; i < out.length; i++)
       expect(out[i]!).toBeLessThan(out[i - 1]!)
   })
+
+  it('throws on a step name that is not in the scale (no silent no-op)', () => {
+    expect(() =>
+      applyAnchoring(lightnessForSteps(11), S11, 0.62, '5000'),
+    ).toThrow(/preserveSeedAt "5000" is not one of the scale steps/)
+  })
 })
 
 describe('test-utils/isMonotonic', () => {
