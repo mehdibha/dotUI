@@ -1,10 +1,10 @@
 'use client'
 
 import type React from 'react'
-import * as FormPrimitives from 'react-aria-components/Form'
 
 import { Button } from '@/registry/ui/button'
-import { Description, Label } from '@/registry/ui/field'
+import { Description, FieldError, Label } from '@/registry/ui/field'
+import { Form } from '@/registry/ui/form'
 import { Input } from '@/registry/ui/input'
 import { TextField } from '@/registry/ui/text-field'
 
@@ -16,15 +16,16 @@ export default function Demo() {
   }
 
   return (
-    <FormPrimitives.Form onSubmit={handleSubmit} className="w-xs space-y-4">
-      <TextField isRequired>
+    <Form onSubmit={handleSubmit} className="w-xs">
+      <TextField name="name" isRequired>
         <Label>Name</Label>
-        <Input name="name" minLength={2} placeholder="Name" />
+        <Input minLength={2} placeholder="Your name" />
         <Description>Please enter your full name.</Description>
+        <FieldError />
       </TextField>
-      <Button variant="primary" type="submit">
+      <Button type="submit" variant="primary" className="w-fit">
         Submit
       </Button>
-    </FormPrimitives.Form>
+    </Form>
   )
 }

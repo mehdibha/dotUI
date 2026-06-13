@@ -57,6 +57,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	table: () => import("@/registry/ui/table/examples"),
 	tabs: () => import("@/registry/ui/tabs/examples"),
 	"tag-group": () => import("@/registry/ui/tag-group/examples"),
+	"tanstack-form": () => import("@/registry/ui/tanstack-form/examples"),
 	"text-area": () => import("@/registry/ui/text-area/examples"),
 	"text-field": () => import("@/registry/ui/text-field/examples"),
 	"time-field": () => import("@/registry/ui/time-field/examples"),

@@ -32,6 +32,7 @@ import UiDropZone from "@/registry/ui/drop-zone/meta";
 import UiEmpty from "@/registry/ui/empty/meta";
 import UiField from "@/registry/ui/field/meta";
 import UiFileTrigger from "@/registry/ui/file-trigger/meta";
+import UiForm from "@/registry/ui/form/meta";
 import UiGroup from "@/registry/ui/group/meta";
 import UiInput from "@/registry/ui/input/meta";
 import UiKbd from "@/registry/ui/kbd/meta";
@@ -46,6 +47,7 @@ import UiOverlay from "@/registry/ui/overlay/meta";
 import UiPopover from "@/registry/ui/popover/meta";
 import UiProgressBar from "@/registry/ui/progress-bar/meta";
 import UiRadioGroup from "@/registry/ui/radio-group/meta";
+import UiReactHookForm from "@/registry/ui/react-hook-form/meta";
 import UiScrollFade from "@/registry/ui/scroll-fade/meta";
 import UiSearchField from "@/registry/ui/search-field/meta";
 import UiSelect from "@/registry/ui/select/meta";
@@ -56,6 +58,7 @@ import UiSwitch from "@/registry/ui/switch/meta";
 import UiTable from "@/registry/ui/table/meta";
 import UiTabs from "@/registry/ui/tabs/meta";
 import UiTagGroup from "@/registry/ui/tag-group/meta";
+import UiTanstackForm from "@/registry/ui/tanstack-form/meta";
 import UiTextField from "@/registry/ui/text-field/meta";
 import UiText from "@/registry/ui/text/meta";
 import UiTimeField from "@/registry/ui/time-field/meta";
@@ -96,6 +99,7 @@ export const registryUi: RegistryItem[] = [
 	UiEmpty,
 	UiField,
 	UiFileTrigger,
+	UiForm,
 	UiGroup,
 	UiInput,
 	UiKbd,
@@ -110,6 +114,7 @@ export const registryUi: RegistryItem[] = [
 	UiPopover,
 	UiProgressBar,
 	UiRadioGroup,
+	UiReactHookForm,
 	UiScrollFade,
 	UiSearchField,
 	UiSelect,
@@ -120,6 +125,7 @@ export const registryUi: RegistryItem[] = [
 	UiTable,
 	UiTabs,
 	UiTagGroup,
+	UiTanstackForm,
 	UiText,
 	UiTextField,
 	UiTimeField,

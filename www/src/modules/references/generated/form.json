@@ -1,0 +1,443 @@
+{
+  "name": "FormProps",
+  "description": "A form groups inputs together and handles submission and native, accessible\nvalidation. Built on React Aria's `Form`, so it works with browser-native\nvalidation out of the box and accepts server-side `validationErrors`.",
+  "props": {
+    "action": {
+      "type": "string | ((formData: FormData) => void | Promise<void>)",
+      "detailedType": "| string\n| ((formData: FormData) => void | Promise<void>)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "formData",
+                "value": {
+                  "type": "identifier",
+                  "name": "FormData"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "void"
+                },
+                {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "Promise"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "void"
+                    }
+                  ]
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Where to send the form-data when the form is submitted.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#action)."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the\nobject."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    },
+    "autoCapitalize": {
+      "type": "\"characters\" | \"none\" | \"off\" | \"on\" | \"sentences\" | \"words\"",
+      "detailedType": "| 'characters'\n| 'none'\n| 'off'\n| 'on'\n| 'sentences'\n| 'words'\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "characters"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "off"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "on"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "sentences"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "words"
+          }
+        ]
+      },
+      "description": "Controls whether inputted text is automatically capitalized and, if so, in what manner.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize)."
+    },
+    "autoComplete": {
+      "type": "\"off\" | \"on\"",
+      "detailedType": "'off' | 'on' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "off"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "on"
+          }
+        ]
+      },
+      "description": "Indicates whether input elements can by default have their values automatically completed by\nthe browser. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#autocomplete)."
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "The children of the component."
+    },
+    "className": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement."
+    },
+    "encType": {
+      "type": "\"application/x-www-form-urlencoded\" | \"multipart/form-data\" | \"text/plain\"",
+      "detailedType": "| 'application/x-www-form-urlencoded'\n| 'multipart/form-data'\n| 'text/plain'\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "application/x-www-form-urlencoded"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "multipart/form-data"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "text/plain"
+          }
+        ]
+      },
+      "description": "The enctype attribute specifies how the form-data should be encoded when submitting it to the\nserver. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#enctype)."
+    },
+    "id": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The element's unique identifier. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
+    },
+    "method": {
+      "type": "\"dialog\" | \"get\" | \"post\"",
+      "detailedType": "'dialog' | 'get' | 'post' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "dialog"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "get"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "post"
+          }
+        ]
+      },
+      "description": "The HTTP method to submit the form with.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#method)."
+    },
+    "onInvalid": {
+      "type": "((event: FormEvent<HTMLFormElement>) => void)",
+      "detailedType": "| ((event: FormEvent<HTMLFormElement>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "FormEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "HTMLFormElement"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Triggered for each invalid field when a user submits the form."
+    },
+    "onReset": {
+      "type": "((event: FormEvent<HTMLFormElement>) => void)",
+      "detailedType": "| ((event: FormEvent<HTMLFormElement>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "FormEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "HTMLFormElement"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Triggered when a user resets the form."
+    },
+    "onSubmit": {
+      "type": "((event: FormEvent<HTMLFormElement>) => void)",
+      "detailedType": "| ((event: FormEvent<HTMLFormElement>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "FormEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "HTMLFormElement"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Triggered when a user submits the form."
+    },
+    "render": {
+      "type": "DOMRenderFunction<\"form\", undefined>",
+      "detailedType": "DOMRenderFunction<'form', undefined> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "DOMRenderFunction"
+            },
+            "typeParameters": [
+              {
+                "type": "stringLiteral",
+                "value": "form"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
+    },
+    "role": {
+      "type": "\"presentation\" | \"search\"",
+      "detailedType": "'presentation' | 'search' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "presentation"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "search"
+          }
+        ]
+      },
+      "description": "An ARIA role override to apply to the form element."
+    },
+    "style": {
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "CSSProperties"
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement."
+    },
+    "target": {
+      "type": "\"_blank\" | \"_parent\" | \"_self\" | \"_top\"",
+      "detailedType": "'_blank' | '_parent' | '_self' | '_top' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "_blank"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "_parent"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "_self"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "_top"
+          }
+        ]
+      },
+      "description": "The target attribute specifies a name or a keyword that indicates where to display the response\nthat is received after submitting the form. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#target)."
+    },
+    "validationBehavior": {
+      "type": "\"aria\" | \"native\"",
+      "detailedType": "'aria' | 'native' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "aria"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "native"
+          }
+        ]
+      },
+      "description": "Whether to use native HTML form validation to prevent form submission\nwhen a field value is missing or invalid, or mark fields as required\nor invalid via ARIA.",
+      "default": "'native'"
+    },
+    "validationErrors": {
+      "type": "ValidationErrors",
+      "detailedType": "ValidationErrors | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ValidationErrors"
+      },
+      "description": "Validation errors for the form, typically returned by a server.\nThis should be set to an object mapping from input names to errors."
+    }
+  }
+}

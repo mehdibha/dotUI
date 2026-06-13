@@ -385,20 +385,12 @@ ${arrayBlock('registryLib', 'lib', lib)}
  *   ui/context-menu      WIP — production-ready (base.tsx + 5 demos + examples);
  *                         readiness check warns until it's removed from here.
  *   ui/sidebar           WIP — base.tsx + styles.ts but no demos/examples yet.
- *   ui/react-hook-form   WIP — name:"form"; meta points to a base.tsx that does
- *                         not exist yet.
- *   ui/tanstack-form     WIP — name:"form"; stub (index.tsx + meta only).
  *   lib/context          Real runtime dep (avatar/tabs/toggle-button) but not yet
  *                         a registered item.
- *
- * NOTE: react-hook-form and tanstack-form both declare name:"form"; they never
- * collide because both are excluded here (and bare ui/form has no meta.ts).
  */
 const ORPHAN_ALLOWLIST = new Set<string>([
   'ui/context-menu',
   'ui/sidebar',
-  'ui/react-hook-form',
-  'ui/tanstack-form',
   'lib/context',
 ])
 
@@ -559,7 +551,7 @@ async function checkRegistryDepsDrift(): Promise<string[]> {
 /**
  * Asserts `meta.name` is globally unique across all REGISTERED items
  * (base + ui + lib + hooks). Unregistered/allowlisted items are not
- * checked here, so the two unregistered name:"form" folders don't collide.
+ * checked here.
  */
 function checkUniqueRegisteredNames(): string[] {
   const seen = new Map<string, string>() // name -> scope it was first seen in

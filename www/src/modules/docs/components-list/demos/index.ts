@@ -24,6 +24,7 @@ import { DrawerDemo } from './drawer'
 import { EmptyDemo } from './empty'
 import { FieldDemo } from './field'
 import { FileTriggerDemo } from './file-trigger'
+import { FormDemo } from './form'
 import { GroupDemo } from './group'
 import { InputDemo } from './input'
 import { InputGroupDemo } from './input-group'
@@ -81,6 +82,7 @@ export const componentDemos: Record<string, ComponentType> = {
   empty: EmptyDemo,
   field: FieldDemo,
   'file-trigger': FileTriggerDemo,
+  form: FormDemo,
   group: GroupDemo,
   input: InputDemo,
   'input-group': InputGroupDemo,

@@ -12,7 +12,7 @@ import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
 import { Combobox } from '@/registry/ui/combobox'
 import { DatePicker } from '@/registry/ui/date-picker'
 import { DialogContent } from '@/registry/ui/dialog'
-import { FieldGroup, Label } from '@/registry/ui/field'
+import { FieldError, FieldGroup, Label } from '@/registry/ui/field'
 import {
   DateInput,
   Input,
@@ -20,7 +20,6 @@ import {
   InputGroupAddon,
 } from '@/registry/ui/input'
 import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Overlay } from '@/registry/ui/overlay'
 import { Popover } from '@/registry/ui/popover'
 import { Radio, RadioControl, RadioGroup } from '@/registry/ui/radio-group'
 import { FormControl } from '@/registry/ui/react-hook-form'
@@ -33,61 +32,68 @@ import {
 import { TextField } from '@/registry/ui/text-field'
 
 const FormSchema = z.object({
-  name: z.string().min(2),
-  email: z.email(),
-  gender: z.enum(['male', 'female', 'other']),
-  'birth-date': z.string(),
-  referral: z.string({
-    error: 'Please select a method.',
-  }),
-  language: z.string({
-    error: 'Please select a language.',
-  }),
-  terms: z.boolean().refine((val) => val === true, {
-    message: 'You must accept the terms and conditions',
-  }),
+  name: z
+    .string('Name is required.')
+    .min(2, 'Name must be at least 2 characters.'),
+  email: z.email('Enter a valid email address.'),
+  gender: z.enum(['male', 'female', 'other'], 'Please select a gender.'),
+  'birth-date': z.string('Please pick your birth date.'),
+  language: z.string('Please select a language.'),
+  referral: z.string('Please select a method.'),
+  terms: z
+    .boolean()
+    .refine((val) => val, 'You must accept the terms and conditions.'),
 })
 
+type FormValues = z.infer<typeof FormSchema>
+
 export default function Demo() {
-  const { handleSubmit, control } = useForm<z.infer<typeof FormSchema>>({
+  const { handleSubmit, control } = useForm<FormValues>({
     // oxlint-disable-next-line typescript/no-explicit-any -- zodResolver's overloads lag this bundled Zod v4 build.
     resolver: zodResolver(FormSchema as any),
+    defaultValues: { terms: false },
   })
 
   return (
-    <div className="w-sm space-y-4 rounded-lg border bg-muted p-8">
+    <div className="w-sm rounded-lg border bg-muted p-8">
       <h1 className="text-xl font-bold">Register</h1>
       <form
         onSubmit={handleSubmit((data) => {
           alert(JSON.stringify(data, null, 2))
         })}
-        className="space-y-4"
+        className="mt-4 flex flex-col gap-4"
       >
         <FormControl
           name="name"
           control={control}
-          render={(props) => (
+          render={({ errorMessage, ...props }) => (
             <TextField {...props}>
               <Label>Name</Label>
               <Input placeholder="Name" />
+              <FieldError>{errorMessage}</FieldError>
             </TextField>
           )}
         />
         <FormControl
           name="email"
           control={control}
-          render={(props) => (
+          render={({ errorMessage, ...props }) => (
             <TextField {...props}>
               <Label>Email</Label>
               <Input placeholder="Email" />
+              <FieldError>{errorMessage}</FieldError>
             </TextField>
           )}
         />
         <FormControl
           name="gender"
           control={control}
-          render={(props) => (
-            <RadioGroup orientation="horizontal" {...props}>
+          render={({ value, errorMessage, ...props }) => (
+            <RadioGroup
+              orientation="horizontal"
+              value={value ?? null}
+              {...props}
+            >
               <Label>Gender</Label>
               <FieldGroup>
                 <Radio value="male">
@@ -103,20 +109,21 @@ export default function Demo() {
                   <Label>Other</Label>
                 </Radio>
               </FieldGroup>
+              <FieldError>{errorMessage}</FieldError>
             </RadioGroup>
           )}
         />
         <FormControl
           name="birth-date"
           control={control}
-          render={({ value, onChange, ...props }) => (
+          render={({ value, onChange, errorMessage, ...props }) => (
             <DatePicker
-              value={value ? parseDate(value) : undefined}
-              onChange={(val) => onChange(val?.toString())}
+              value={value ? parseDate(value) : null}
+              onChange={(date) => onChange(date?.toString() ?? '')}
               className="w-full"
               {...props}
             >
-              <Label>Birth Date</Label>
+              <Label>Birth date</Label>
               <InputGroup>
                 <DateInput />
                 <InputGroupAddon>
@@ -125,21 +132,22 @@ export default function Demo() {
                   </Button>
                 </InputGroupAddon>
               </InputGroup>
-              <Overlay type="popover" mobileType="drawer">
+              <FieldError>{errorMessage}</FieldError>
+              <Popover>
                 <DialogContent>
-                  <Calendar aria-label="Pick a date" />
+                  <Calendar />
                 </DialogContent>
-              </Overlay>
+              </Popover>
             </DatePicker>
           )}
         />
         <FormControl
           name="language"
           control={control}
-          render={({ value, onChange, ...props }) => (
+          render={({ value, onChange, errorMessage, ...props }) => (
             <Combobox
-              inputValue={value}
-              onSelectionChange={onChange}
+              selectedKey={value ?? null}
+              onSelectionChange={(key) => onChange(key)}
               className="w-full"
               {...props}
             >
@@ -152,6 +160,7 @@ export default function Demo() {
                   </Button>
                 </InputGroupAddon>
               </InputGroup>
+              <FieldError>{errorMessage}</FieldError>
               <Popover>
                 <ListBox items={languages}>
                   {(item) => (
@@ -167,10 +176,16 @@ export default function Demo() {
         <FormControl
           name="referral"
           control={control}
-          render={(props) => (
-            <Select className="w-full" {...props}>
+          render={({ value, onChange, errorMessage, ...props }) => (
+            <Select
+              selectedKey={value ?? null}
+              onSelectionChange={(key) => onChange(key)}
+              className="w-full"
+              {...props}
+            >
               <Label>How did you hear about us?</Label>
               <SelectTrigger variant="default" className="w-full" />
+              <FieldError>{errorMessage}</FieldError>
               <SelectContent>
                 <SelectItem id="linkedin">LinkedIn</SelectItem>
                 <SelectItem id="x">X</SelectItem>
@@ -181,10 +196,20 @@ export default function Demo() {
         <FormControl
           name="terms"
           control={control}
-          render={({ value, ...props }) => (
-            <Checkbox isSelected={value} {...props}>
+          render={({ value, onChange, errorMessage, isInvalid, ...props }) => (
+            <Checkbox
+              isSelected={Boolean(value)}
+              onChange={onChange}
+              isInvalid={isInvalid}
+              {...props}
+            >
               <CheckboxControl />
               <Label>I agree to the terms and conditions</Label>
+              {isInvalid && (
+                <span className="w-full text-sm text-fg-danger">
+                  {errorMessage}
+                </span>
+              )}
             </Checkbox>
           )}
         />

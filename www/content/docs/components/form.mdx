@@ -1,6 +1,6 @@
 ---
 title: Form
-description: A form wraps a group of form elements and handles form submission.
+description: Group inputs, handle submission, and surface accessible validation — natively, or with React Hook Form or TanStack Form.
 links:
   - label: Docs
     href: https://react-spectrum.adobe.com/react-aria/Form.html
@@ -8,6 +8,14 @@ wip: true
 ---
 
 <Demo name="form/demos/basic" />
+
+dotUI forms are built on React Aria's native form handling, so you get a lot for free before reaching for a form library:
+
+- **Accessible validation** — render `<FieldError>` inside any field and React Aria wires up `aria-describedby`, focus management, and the invalid state.
+- **Native + custom validation** — use built-in HTML constraints (`isRequired`, `minLength`, `type="email"`) or pass your own messages.
+- **Server validation** — pass a `validationErrors` object to `<Form>` to display errors returned from the server, keyed by field name.
+
+When a form grows — cross-field rules, schema validation, typed state — drop in one of the integrations below. They map a form library's field state onto the exact same dotUI components, so the markup barely changes.
 
 ## Installation
 
@@ -17,25 +25,42 @@ npx shadcn@latest add @dotui/form
 
 ## Usage
 
-Use forms to wrap groups of form elements and handle form submission with validation.
-
 ```tsx
 import { Form } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
 import { TextField } from '@/components/ui/text-field'
-import { Label } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import { Label, FieldError } from '@/components/ui/field'
+import { Button } from '@/components/ui/button'
 ```
 
 ```tsx
-<Form onSubmit={handleSubmit}>
-  <TextField name="email" isRequired>
-    <Label>Email</Label>
-    <Input />
+<Form
+  onSubmit={(e) => {
+    e.preventDefault()
+    const data = Object.fromEntries(new FormData(e.currentTarget))
+    // ...
+  }}
+>
+  <TextField name="name" isRequired>
+    <Label>Name</Label>
+    <Input minLength={2} />
+    <FieldError />
   </TextField>
-  <Button type="submit" variant="primary">
-    Submit
-  </Button>
+  <Button type="submit">Submit</Button>
+</Form>
+```
+
+### Server validation
+
+Render errors returned from your backend by passing `validationErrors` to the `Form`. Each key matches a field's `name`.
+
+```tsx
+<Form validationErrors={{ username: 'This username is already taken.' }}>
+  <TextField name="username">
+    <Label>Username</Label>
+    <Input />
+    <FieldError />
+  </TextField>
 </Form>
 ```
 
@@ -43,25 +68,117 @@ import { Input } from '@/components/ui/input'
 
 <Examples>
   <Example name="form/demos/basic" />
-  <Example name="form/demos/react-aria" />
+  <Example name="form/demos/validation" />
 </Examples>
+
+## Form libraries
+
+For larger forms you'll usually want schema validation, typed values, and fine-grained control over when validation runs. dotUI ships first-class integrations for the two most popular libraries — each is its own registry item, so install only the one you use.
+
+### React Hook Form
+
+[React Hook Form](https://react-hook-form.com) keeps inputs uncontrolled for performance. Because dotUI fields are controlled React Aria components, connect them with a `Controller`. The `react-hook-form` item ships a thin `FormControl` helper that maps the controller's field state onto React Aria props.
+
+```npm
+npx shadcn@latest add @dotui/react-hook-form
+```
+
+`FormControl` is a typed wrapper around `Controller`. Its `render` callback receives the field's `value`, `onChange`, `onBlur`, and `ref`, plus `isInvalid`, `isDisabled`, and `errorMessage` — spread them onto any dotUI field and render the message with `<FieldError>`.
+
+```tsx
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
+import { FormControl } from '@/components/ui/react-hook-form'
+import { TextField } from '@/components/ui/text-field'
+import { Input } from '@/components/ui/input'
+import { Label, FieldError } from '@/components/ui/field'
+
+const schema = z.object({
+  email: z.email('Enter a valid email address.'),
+})
+
+function SignUp() {
+  const { handleSubmit, control } = useForm({
+    resolver: zodResolver(schema),
+  })
+
+  return (
+    <form onSubmit={handleSubmit(console.log)}>
+      <FormControl
+        name="email"
+        control={control}
+        render={({ errorMessage, ...field }) => (
+          <TextField {...field}>
+            <Label>Email</Label>
+            <Input />
+            <FieldError>{errorMessage}</FieldError>
+          </TextField>
+        )}
+      />
+    </form>
+  )
+}
+```
+
+<Demo name="react-hook-form/demos/register" />
+
+### TanStack Form
+
+[TanStack Form](https://tanstack.com/form) is headless, type-safe, and framework-agnostic. The `tanstack-form` item uses `createFormHook` to pre-bind every dotUI field to the form context, so each field reads its value and surfaces its errors automatically — you just compose the markup.
+
+```npm
+npx shadcn@latest add @dotui/tanstack-form
+```
+
+Build your form with `useAppForm`, then reach for the bound components through `form.AppField` (fields) and `form.AppForm` (submit/reset buttons).
+
+```tsx
+import { z } from 'zod'
+
+import { useAppForm } from '@/components/ui/tanstack-form'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/field'
+
+const schema = z.object({
+  email: z.email('Enter a valid email address.'),
+})
+
+function SignUp() {
+  const form = useAppForm({
+    defaultValues: { email: '' },
+    validators: { onChange: schema },
+    onSubmit: ({ value }) => console.log(value),
+  })
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        form.handleSubmit()
+      }}
+    >
+      <form.AppField name="email">
+        {(field) => (
+          <field.TextField>
+            <Label>Email</Label>
+            <Input />
+          </field.TextField>
+        )}
+      </form.AppField>
+      <form.AppForm>
+        <form.SubmitButton>Sign up</form.SubmitButton>
+      </form.AppForm>
+    </form>
+  )
+}
+```
+
+<Demo name="tanstack-form/demos/register" />
 
 ## API Reference
 
-| Prop                 | Type                                                      | Default    | Description                                         |
-| -------------------- | --------------------------------------------------------- | ---------- | --------------------------------------------------- |
-| `validationBehavior` | `'native' \| 'aria'`                                      | `'native'` | Whether to use native HTML form validation or ARIA. |
-| `validationErrors`   | `ValidationErrors`                                        | -          | Validation errors to display on form fields.        |
-| `action`             | `string \| FormHTMLAttributes<HTMLFormElement>['action']` | -          | The URL to submit the form to.                      |
-| `encType`            | `string`                                                  | -          | The encoding type to use for form submission.       |
-| `method`             | `string`                                                  | -          | The HTTP method to use for form submission.         |
-| `target`             | `string`                                                  | -          | The target window for form submission.              |
-| `autoComplete`       | `string`                                                  | -          | Whether the browser should autocomplete the form.   |
-| `autoCapitalize`     | `string`                                                  | -          | Whether text should be auto-capitalized.            |
-| `children`           | `ReactNode`                                               | -          | The form content.                                   |
+### Form
 
-| Event       | Type                                      | Description                                        |
-| ----------- | ----------------------------------------- | -------------------------------------------------- |
-| `onSubmit`  | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is submitted. |
-| `onReset`   | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when the form is reset.     |
-| `onInvalid` | `(e: FormEvent<HTMLFormElement>) => void` | Handler that is called when validation fails.      |
+<Reference name="form" />

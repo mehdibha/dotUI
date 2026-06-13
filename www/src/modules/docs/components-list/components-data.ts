@@ -151,6 +151,13 @@ export const componentsData: ComponentCategory[] = [
         scale: 0.9,
         status: 'pending',
       },
+      {
+        name: 'Form',
+        slug: 'form',
+        href: '/docs/components/form',
+        scale: 0.9,
+        status: 'pending',
+      },
     ],
   },
   {
