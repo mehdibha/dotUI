@@ -64,6 +64,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"toggle-button": () => import("@/registry/ui/toggle-button/examples"),
 	"toggle-button-group": () => import("@/registry/ui/toggle-button-group/examples"),
 	tooltip: () => import("@/registry/ui/tooltip/examples"),
+	tree: () => import("@/registry/ui/tree/examples"),
 };
 
 export const GroupExamplesIndex: Record<string, () => Promise<{ default: React.ComponentType }>> = {

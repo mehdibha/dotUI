@@ -1,0 +1,109 @@
+---
+title: Tree
+description: A tree provides users with a way to navigate nested hierarchical information, with support for keyboard navigation and selection.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Tree.html
+wip: true
+---
+
+<InteractiveDemo
+  name="tree"
+  controls={[
+    {
+      type: 'enum',
+      name: 'selectionMode',
+      options: ['none', 'single', 'multiple'],
+      defaultValue: 'multiple',
+    },
+    {
+      type: 'enum',
+      name: 'selectionBehavior',
+      options: ['toggle', 'replace'],
+      defaultValue: 'toggle',
+    },
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/tree
+```
+
+## Usage
+
+Use a tree to display nested, hierarchical data such as a file system or
+category navigation. Each row is a `TreeItem` whose `TreeItemContent` holds the
+label; nested `TreeItem`s become its children.
+
+```tsx
+import { Tree, TreeItem, TreeItemContent } from '@/components/ui/tree'
+```
+
+```tsx
+<Tree
+  aria-label="Files"
+  selectionMode="single"
+  defaultExpandedKeys={['documents']}
+>
+  <TreeItem id="documents" textValue="Documents">
+    <TreeItemContent>Documents</TreeItemContent>
+    <TreeItem id="report" textValue="Weekly report">
+      <TreeItemContent>Weekly report</TreeItemContent>
+    </TreeItem>
+  </TreeItem>
+</Tree>
+```
+
+When rendering data dynamically, pass `items` to the `Tree` and a `Collection`
+to each `TreeItem` for its children.
+
+```tsx
+import { Collection } from 'react-aria-components'
+```
+
+```tsx
+<Tree aria-label="Files" items={items}>
+  {function renderItem(item) {
+    return (
+      <TreeItem textValue={item.name}>
+        <TreeItemContent>{item.name}</TreeItemContent>
+        {item.children && (
+          <Collection items={item.children}>{renderItem}</Collection>
+        )}
+      </TreeItem>
+    )
+  }}
+</Tree>
+```
+
+## Examples
+
+<Examples>
+  <Example name="tree/demos/basic" description="Basic tree" />
+  <Example name="tree/demos/selection" description="Multiple selection" />
+  <Example name="tree/demos/with-icons" description="With icons" />
+  <Example name="tree/demos/dynamic" description="Dynamic items" />
+  <Example
+    name="tree/demos/default-expanded"
+    description="Default expanded keys"
+  />
+  <Example name="tree/demos/disabled" description="Disabled items" />
+  <Example name="tree/demos/drag-and-drop" description="Drag and drop" />
+  <Example name="tree/demos/empty" description="Empty state" />
+</Examples>
+
+## API Reference
+
+### Tree
+
+<Reference name="tree" />
+
+### TreeItem
+
+<Reference name="tree-item" />
+
+### TreeItemContent
+
+<Reference name="tree-item-content" />
