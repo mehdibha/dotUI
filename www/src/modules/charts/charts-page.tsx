@@ -9,6 +9,9 @@ import { ChartPlayground } from './chart-playground'
 import { ChartPreview } from './chart-preview'
 import { CHART_FAMILIES, totalVariantCount, variantsFor } from './data'
 
+/** Polar families stay square in the gallery; cartesian ones fill the wide card. */
+const POLAR_FAMILIES = new Set(['chart-pie', 'chart-radar', 'chart-radial'])
+
 export function ChartsPage() {
   const [family, setFamily] = useState<string>(CHART_FAMILIES[0].id)
 
@@ -70,11 +73,17 @@ export function ChartsPage() {
               <div
                 // Decorative inside the button: `inert` keeps the chart's
                 // accessibilityLayer focus targets out of the tab order. The
-                // chart is forced to fill this fixed box (overriding each demo's
-                // own aspect/min-height) so every family frames consistently.
+                // chart fills this fixed box (overriding each demo's own
+                // aspect/min-height); polar charts stay square so they don't
+                // stretch, cartesian ones fill the full width.
                 inert
                 aria-hidden="true"
-                className="h-64 overflow-hidden border-b bg-bg/40 p-4 [&_*]:pointer-events-none [&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!"
+                className={cn(
+                  'flex h-64 items-center justify-center overflow-hidden border-b bg-bg/40 p-4 [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!',
+                  POLAR_FAMILIES.has(f.id)
+                    ? '[&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:w-auto!'
+                    : '[&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!',
+                )}
               >
                 <ChartPreview demoKey={f.hero} className="h-full" />
               </div>
