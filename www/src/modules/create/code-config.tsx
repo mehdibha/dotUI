@@ -333,23 +333,3 @@ export function CodeConfig() {
     </div>
   )
 }
-
-/* -------------------------------- summary -------------------------------- */
-
-export function CodeSummary() {
-  const { designSystem } = useDesignSystem()
-  const opts = designSystem.codeOptions ?? DEFAULT_CODE_OPTIONS
-
-  const facts = [
-    opts.quoteStyle === 'single' ? 'Single quotes' : 'Double quotes',
-    opts.indentStyle === 'tab' ? 'Tabs' : `${opts.indentWidth} spaces`,
-    opts.semicolons ? 'Semicolons' : 'No semicolons',
-  ]
-
-  return (
-    <div className="-mt-1 flex flex-col items-start gap-1">
-      <p className="font-medium">TypeScript</p>
-      <p className="text-xs text-fg-muted">{facts.join(' · ')}</p>
-    </div>
-  )
-}

@@ -27,7 +27,7 @@ import { SearchField } from '@/registry/ui/search-field'
 import { Select, SelectValue } from '@/registry/ui/select'
 import { componentsData } from '@/modules/docs/components-list/components-data'
 
-import { CodeConfig, CodeSummary } from './code-config'
+import { CodeOptionsDialog } from './code-options-dialog'
 import { ColorsConfig, ColorsSummary } from './colors-config'
 import {
   AllComponentsView,
@@ -145,12 +145,6 @@ const menu: MenuItem[] = [
     title: 'Cursor',
     preview: 'dynamic',
     config: 'dynamic',
-  },
-  {
-    id: 'code',
-    title: 'Code',
-    preview: <CodeSummary />,
-    config: <CodeConfig />,
   },
 ]
 
@@ -482,6 +476,7 @@ export function CustomizerPanel({
 
       {/* Footer */}
       <div className="flex flex-col gap-2 border-t p-3">
+        <CodeOptionsDialog />
         <InstallCommand />
         <OpenInV0 />
       </div>
