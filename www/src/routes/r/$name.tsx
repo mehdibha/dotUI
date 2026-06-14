@@ -18,6 +18,8 @@ import {
   publishables,
   PUBLISHABLE_NAMES,
 } from '@/registry/__generated__/publishables'
+import { applyFileHeader, DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
+import { codeOptionsToFormatConfig } from '@/publisher/format-config'
 import {
   publish,
   setDotuiDepResolver,
@@ -63,25 +65,28 @@ export const Route = createFileRoute('/r/$name')({
         const mod = await loader()
         const publishable = selectPublishable(mod, preset)
 
+        const codeOptions = preset.codeOptions ?? DEFAULT_CODE_OPTIONS
         const { item, rawContent } = publish({ publishable, preset })
 
         // Run the component source through oxfmt so the consumer's `shadcn add`
-        // gets clean output. Don't let formatter failures break the response —
-        // the raw template still works, just less pretty.
+        // gets clean output, in the user's chosen code style. Don't let
+        // formatter failures break the response — the raw template still works,
+        // just less pretty.
         let formatted = rawContent
         try {
           const result = await format(
             publishable.meta.files?.[0]?.target ?? 'ui.tsx',
             rawContent,
-            {
-              printWidth: 120,
-              useTabs: true,
-            },
+            codeOptionsToFormatConfig(codeOptions),
           )
           formatted = result.code
         } catch {
           /* fall through with raw content */
         }
+
+        // Prepend the banner/license header (if any) after formatting so the
+        // formatter can't reflow it.
+        formatted = applyFileHeader(formatted, codeOptions.fileHeader)
 
         // Re-apply formatted content to every file (in practice we only ever ship one).
         if (item.files) {
@@ -135,7 +140,11 @@ async function decodePresetForRoute(encoded: string): Promise<PublishPreset> {
   try {
     const { decodePreset } = await import('@/modules/create/preset/codec')
     const ds = decodePreset(encoded)
-    return { density: ds.density, componentParams: ds.componentParams }
+    return {
+      density: ds.density,
+      componentParams: ds.componentParams,
+      codeOptions: ds.codeOptions,
+    }
   } catch {
     return defaultPreset()
   }
