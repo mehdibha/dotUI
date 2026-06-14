@@ -109,6 +109,7 @@ async function decodePresetForRoute(encoded: string): Promise<PublishPreset> {
       color: ds.color,
       density: ds.density,
       componentParams: ds.componentParams,
+      codeOptions: ds.codeOptions,
     }
   } catch {
     return defaultPreset()

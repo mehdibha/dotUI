@@ -18,6 +18,12 @@
 
 import type { RegistryItem } from '@/registry/types'
 
+import {
+  DEFAULT_CODE_OPTIONS,
+  flattenClassArrays,
+  stripSectionComments,
+  stripUseClient,
+} from './code-options'
 import { flatten } from './flatten'
 import { buildScalarVarMap, resolveClasses } from './resolve-classes'
 import { serializeTvConfig } from './serialize'
@@ -120,6 +126,7 @@ export interface PublishInput {
 export function publish({ publishable, preset }: PublishInput): PublishedItem {
   const { template, stylesConfig, meta } = publishable
   const paramSelections = preset.componentParams[meta.name] ?? {}
+  const codeOptions = preset.codeOptions ?? DEFAULT_CODE_OPTIONS
 
   // 1. Flatten base + density + param layers.
   const flat = flatten({
@@ -131,11 +138,28 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
 
   // 2. Rewrite scalar-param var refs to Tailwind suffixes.
   const varMap = buildScalarVarMap(meta, paramSelections)
-  const resolved = resolveClasses(flat, varMap)
+  let resolved = resolveClasses(flat, varMap)
+
+  // 2b. Code-style: collapse grouped class arrays to a single string per
+  // slot/variant when the user prefers one-line-per-slot tv configs.
+  if (!codeOptions.classArrays) {
+    resolved = flattenClassArrays(resolved)
+  }
 
   // 3+4. Serialize and substitute.
   const literal = serializeTvConfig(resolved)
-  const content = template.replace(TV_CONFIG_PLACEHOLDER, literal)
+  let content = template.replace(TV_CONFIG_PLACEHOLDER, literal)
+
+  // 4b. Code-style text edits. Strip the `"use client"` directive for
+  // SPA/Vite consumers, and drop the source's `// MARK:` section comments
+  // unless the user keeps them. (The banner/file header is applied by the
+  // route after formatting.)
+  if (codeOptions.useClient === 'strip') {
+    content = stripUseClient(content)
+  }
+  if (!codeOptions.sectionComments) {
+    content = stripSectionComments(content)
+  }
 
   // 5. Assemble shadcn item — drop dotui-only fields (params, group).
   // Shadcn's RegistryItem is a discriminated union on `type`. We can't carry the
