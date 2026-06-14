@@ -48,6 +48,14 @@ export function toSrgb(input: string | Oklch): {
   return { r: r ?? 0, g: g ?? 0, b: b ?? 0 }
 }
 
+/** Hex string (`#rrggbb`) of any color, gamut-mapped into sRGB (CSS Color 4 method). */
+export function toHex(input: string | Oklch): string {
+  return colorOf(input)
+    .to('srgb')
+    .toGamut({ space: 'srgb', method: 'css' })
+    .toString({ format: 'hex' })
+}
+
 /** Reduce an OKLCH color into the sRGB gamut (CSS Color 4 method: chroma reduce + clip). */
 export function gamutMap(o: Oklch): Oklch {
   const [l, c, h] = oklch(o)
