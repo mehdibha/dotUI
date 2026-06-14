@@ -27,6 +27,7 @@ import { SearchField } from '@/registry/ui/search-field'
 import { Select, SelectValue } from '@/registry/ui/select'
 import { componentsData } from '@/modules/docs/components-list/components-data'
 
+import { ExamplesIndex } from './__generated__/examples'
 import { ColorsConfig, ColorsSummary } from './colors-config'
 import {
   AllComponentsView,
@@ -168,8 +169,18 @@ export function CustomizerPanel({
   const navStack = useMemo(() => (panel ? panel.split('.') : []), [panel])
 
   function push(id: string) {
+    // Opening a component switches the live preview to it so param edits are
+    // visible immediately — the panel (`panel`) and preview (`preview`) params are
+    // otherwise independent, so editing a component while viewing "Cards" showed no
+    // feedback. Only components with a preview example switch; menu/group ids don't.
+    const switchPreview =
+      !MENU_IDS.has(id) && !isGroupId(id) && id in ExamplesIndex
     navigate({
-      search: (prev) => ({ ...prev, panel: [...navStack, id].join('.') }),
+      search: (prev) => ({
+        ...prev,
+        panel: [...navStack, id].join('.'),
+        ...(switchPreview ? { preview: id } : {}),
+      }),
     })
   }
 
@@ -432,7 +443,7 @@ export function CustomizerPanel({
               <ButtonPrimitives.Button
                 key={item.id}
                 onPress={() => push(item.id)}
-                className="flex flex-col items-stretch gap-2 rounded-lg border p-3 text-sm transition-colors hover:bg-neutral"
+                className="flex flex-col items-stretch gap-2 rounded-lg border p-3 text-sm focus-reset transition-colors hover:bg-neutral focus-visible:focus-ring"
               >
                 <div className="text-left text-fg-muted">{item.title}</div>
                 <div className="text-left">
@@ -475,6 +486,9 @@ export function CustomizerPanel({
 
       {/* Footer */}
       <div className="flex flex-col gap-2 border-t p-3">
+        <p className="px-0.5 text-[10px] font-medium tracking-widest text-fg-muted uppercase">
+          Install your design system
+        </p>
         <InstallCommand />
         <OpenInV0 />
       </div>
