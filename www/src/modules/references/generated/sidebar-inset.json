@@ -1,0 +1,14 @@
+{
+  "name": "SidebarInsetProps",
+  "description": "The main content area that sits next to the sidebar. Required when using the\n`inset` variant; otherwise optional.",
+  "extendsElement": "main",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
