@@ -9,7 +9,7 @@ export function DefaultError({ error }: { error: Error }) {
   const router = useRouter()
 
   return (
-    <main className="container flex flex-1 flex-col items-center justify-center py-20 text-center">
+    <div className="container flex min-h-[calc(100svh-var(--header-height,0px))] flex-col items-center justify-center py-20 text-center">
       <h1 className="text-6xl font-bold">Error</h1>
       <p className="mt-4 text-lg text-fg-muted">Something went wrong.</p>
       {error?.message ? (
@@ -22,6 +22,6 @@ export function DefaultError({ error }: { error: Error }) {
       >
         Try again
       </button>
-    </main>
+    </div>
   )
 }

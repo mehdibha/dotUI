@@ -3,6 +3,8 @@ import { createFileRoute, stripSearchParams } from '@tanstack/react-router'
 import { useTheme } from 'starter-themes'
 import { z } from 'zod'
 
+import { cn } from '@/registry/lib/utils'
+import { Button } from '@/registry/ui/button'
 import { CustomizerPanel } from '@/modules/create/customizer-panel'
 import {
   sendPreviewMode,
@@ -33,6 +35,13 @@ function CreatePage() {
   const { resolvedTheme } = useTheme()
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [previewMode, setPreviewMode] = useState<PreviewMode>('light')
+  // Below `md` the panel and preview can't sit side by side (the iframe would be a
+  // ~15px sliver), so they become two full-width views toggled by the segmented
+  // control below. Both stay mounted — the iframe is only hidden via CSS, never
+  // unmounted, so switching views never reloads the preview. Desktop is unaffected.
+  const [mobileView, setMobileView] = useState<'preview' | 'customize'>(
+    'preview',
+  )
 
   // Open the preview in the same light / dark mode the site is currently in. Seeded on
   // mount rather than via the useState initializer: this page is server-rendered and the
@@ -95,19 +104,55 @@ function CreatePage() {
   }, [previewMode])
 
   return (
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-row gap-6 p-6 pt-2">
-      <CustomizerPanel
-        previewMode={previewMode}
-        onTogglePreviewMode={() =>
-          setPreviewMode((m) => (m === 'dark' ? 'light' : 'dark'))
-        }
-      />
+    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-3 md:flex-row md:gap-6 md:p-6 md:pt-2">
+      {/* Mobile-only view switcher — hidden once the two panes fit side by side. */}
+      <div
+        role="group"
+        aria-label="Builder view"
+        className="flex shrink-0 gap-1 rounded-lg border bg-card p-1 md:hidden"
+      >
+        <Button
+          size="sm"
+          variant={mobileView === 'preview' ? 'primary' : 'quiet'}
+          aria-pressed={mobileView === 'preview'}
+          onPress={() => setMobileView('preview')}
+          className="flex-1"
+        >
+          Preview
+        </Button>
+        <Button
+          size="sm"
+          variant={mobileView === 'customize' ? 'primary' : 'quiet'}
+          aria-pressed={mobileView === 'customize'}
+          onPress={() => setMobileView('customize')}
+          className="flex-1"
+        >
+          Customize
+        </Button>
+      </div>
+
+      <div
+        className={cn(
+          'min-h-0 w-full flex-1 md:w-72 md:flex-none',
+          mobileView === 'customize' ? 'block' : 'hidden md:block',
+        )}
+      >
+        <CustomizerPanel
+          previewMode={previewMode}
+          onTogglePreviewMode={() =>
+            setPreviewMode((m) => (m === 'dark' ? 'light' : 'dark'))
+          }
+        />
+      </div>
       <iframe
         ref={iframeRef}
         key={effectivePreview}
         src={iframeSrc}
         title="preview"
-        className="min-w-0 flex-1 rounded-xl border"
+        className={cn(
+          'min-h-0 min-w-0 flex-1 rounded-xl border',
+          mobileView === 'preview' ? 'block' : 'hidden md:block',
+        )}
       />
     </div>
   )

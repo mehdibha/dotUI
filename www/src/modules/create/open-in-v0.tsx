@@ -14,19 +14,25 @@
 
 import { useEffect, useMemo, useState } from 'react'
 
+import { siteConfig } from '@/config/site'
 import { V0Icon } from '@/components/icons/v0'
 
 import { useDesignSystem } from './preset'
 import { encodePreset } from './preset/codec'
 
-const DEFAULT_REGISTRY_HOST = 'https://dotui.com'
+const DEFAULT_REGISTRY_HOST = siteConfig.url
 
 function getRegistryHost(): string {
   if (typeof window === 'undefined') return DEFAULT_REGISTRY_HOST
-  const { origin } = window.location
+  const { origin, hostname } = window.location
+  // v0 has to fetch the registry item back, so any non-public origin (the dev
+  // server on any localhost port, 127.0.0.1, file://, sandboxed null) must fall
+  // back to the deployed host. Match on hostname, not the full origin, so the
+  // dev port (localhost:4444) is caught too.
   if (
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
     origin === 'null' ||
-    origin === 'http://localhost' ||
     origin.startsWith('file:')
   ) {
     return DEFAULT_REGISTRY_HOST
@@ -36,7 +42,7 @@ function getRegistryHost(): string {
 
 export function OpenInV0() {
   const { designSystem } = useDesignSystem()
-  const [host, setHost] = useState(DEFAULT_REGISTRY_HOST)
+  const [host, setHost] = useState<string>(DEFAULT_REGISTRY_HOST)
 
   useEffect(() => {
     setHost(getRegistryHost())
@@ -55,6 +61,7 @@ export function OpenInV0() {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="Open in v0"
       className="flex h-9 w-full items-center justify-center gap-2 rounded-md bg-primary text-sm font-medium text-fg-on-primary transition-colors hover:bg-primary-hover"
     >
       {/* h-3 (not h-3.5): V0Icon's viewBox is cropped to the glyph, so it renders

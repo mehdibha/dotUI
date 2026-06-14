@@ -68,7 +68,9 @@ export const Route = createFileRoute('/_app/')({
 function HomePage() {
   return (
     <div className="min-h-[calc(100vh-var(--header-height))]">
-      <main>
+      {/* The <main> landmark lives in the shared _app layout; use a fragment here
+          so we don't nest a second one. */}
+      <>
         {/* Hero section */}
         <section className="container flex flex-col pt-6 sm:pt-8 md:pt-12">
           <div className="flex flex-col items-center gap-3 text-center md:gap-4">
@@ -219,7 +221,7 @@ function HomePage() {
 						</LinkButton>
 					</div>
 				</section> */}
-      </main>
+      </>
       <Footer />
     </div>
   )

@@ -184,6 +184,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="min-h-screen bg-bg font-sans text-fg antialiased">
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-bg focus:px-4 focus:py-2 focus:text-fg focus:shadow focus:outline focus:outline-2 focus:outline-border-focus"
+        >
+          Skip to main content
+        </a>
         {children}
         {/* <TanStackRouterDevtools position="bottom-right" /> */}
         <Scripts />

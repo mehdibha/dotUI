@@ -82,11 +82,12 @@ export const mdxComponents: MDXComponents = {
     />
   ),
   a: ({ className, children, href, ...props }): React.ComponentProps<'a'> => {
-    const isInternal = href.startsWith('/')
+    const isInternal = href?.startsWith('/') ?? false
     return (
       <Link
-        href={href}
+        href={href ?? '#'}
         target={isInternal ? '_self' : '_blank'}
+        rel={isInternal ? undefined : 'noopener noreferrer'}
         className={cn('inline', className)}
         {...props}
       >
@@ -123,6 +124,38 @@ export const mdxComponents: MDXComponents = {
     />
   ),
   hr: (props) => <hr className="my-4 md:my-8" {...props} />,
+  // Markdown tables have no JSX override otherwise, so they fall back to browser
+  // defaults and overflow the capped prose column on narrow screens. Wrap in a
+  // horizontal scroll container and style cells with theme tokens.
+  table: ({ className, ...props }) => (
+    <div className="my-6 w-full overflow-x-auto">
+      <table
+        className={cn('w-full border-collapse text-sm', className)}
+        {...props}
+      />
+    </div>
+  ),
+  thead: ({ className, ...props }) => (
+    <thead className={cn('border-b text-left', className)} {...props} />
+  ),
+  tr: ({ className, ...props }) => (
+    <tr className={cn('border-b last:border-0', className)} {...props} />
+  ),
+  th: ({ className, ...props }) => (
+    <th
+      className={cn(
+        'px-3 py-2 text-left font-medium whitespace-nowrap',
+        className,
+      )}
+      {...props}
+    />
+  ),
+  td: ({ className, ...props }) => (
+    <td
+      className={cn('px-3 py-2 align-top text-fg-muted', className)}
+      {...props}
+    />
+  ),
   pre: ({ className, 'data-raw': dataRaw, ...props }) => {
     if (dataRaw) {
       return props.children

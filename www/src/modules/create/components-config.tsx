@@ -79,7 +79,7 @@ function paramCount(item: RegistryItem): number {
 /* ----------------------- Card (shared card style) ----------------------- */
 
 const cardClass =
-  'flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover'
+  'flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover focus-reset focus-visible:focus-ring'
 
 /* ---------------------- All components flat view ---------------------- */
 
