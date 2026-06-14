@@ -2233,4 +2233,36 @@ export const DemosIndex: Record<
 		files: ["ui/tooltip/demos/with-keyboard.tsx"],
 		component: React.lazy(() => import("@/registry/ui/tooltip/demos/with-keyboard")),
 	},
+	"tree/demos/basic": {
+		files: ["ui/tree/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/basic")),
+	},
+	"tree/demos/default-expanded": {
+		files: ["ui/tree/demos/default-expanded.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/default-expanded")),
+	},
+	"tree/demos/disabled": {
+		files: ["ui/tree/demos/disabled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/disabled")),
+	},
+	"tree/demos/drag-and-drop": {
+		files: ["ui/tree/demos/drag-and-drop.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/drag-and-drop")),
+	},
+	"tree/demos/dynamic": {
+		files: ["ui/tree/demos/dynamic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/dynamic")),
+	},
+	"tree/demos/empty": {
+		files: ["ui/tree/demos/empty.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/empty")),
+	},
+	"tree/demos/selection": {
+		files: ["ui/tree/demos/selection.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/selection")),
+	},
+	"tree/demos/with-icons": {
+		files: ["ui/tree/demos/with-icons.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/with-icons")),
+	},
 };

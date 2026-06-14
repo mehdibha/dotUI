@@ -267,6 +267,13 @@ export const componentsData: ComponentCategory[] = [
         status: 'done',
       },
       {
+        name: 'Tree',
+        slug: 'tree',
+        href: '/docs/components/tree',
+        scale: 0.8,
+        status: 'in review',
+      },
+      {
         name: 'TagGroup',
         slug: 'tag-group',
         href: '/docs/components/tag-group',
