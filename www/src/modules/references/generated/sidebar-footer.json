@@ -1,0 +1,14 @@
+{
+  "name": "SidebarFooterProps",
+  "description": "A sticky footer region at the bottom of the sidebar.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

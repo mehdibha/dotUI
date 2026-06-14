@@ -1,0 +1,22 @@
+{
+  "name": "SidebarMenuSkeletonProps",
+  "description": "A loading placeholder shaped like a `SidebarMenuButton`.",
+  "extendsElement": "div",
+  "props": {
+    "showIcon": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Render a leading icon-sized placeholder."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

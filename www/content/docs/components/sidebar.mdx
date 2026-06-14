@@ -1,0 +1,207 @@
+---
+title: Sidebar
+description: A composable, collapsible sidebar for application shells — with a mobile drawer, icon mode, and keyboard toggle.
+---
+
+<Demo name="sidebar/demos/basic" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/sidebar
+```
+
+## Anatomy
+
+A sidebar is built from a `SidebarProvider` wrapping the `Sidebar` and a `SidebarInset` (the main content). Inside the sidebar, compose a header, scrollable content split into groups of menus, and a footer.
+
+```tsx
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
+```
+
+```tsx
+<SidebarProvider>
+  <Sidebar>
+    <SidebarHeader />
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Platform</SidebarGroupLabel>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton>Dashboard</SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarGroup>
+    </SidebarContent>
+    <SidebarFooter />
+  </Sidebar>
+  <SidebarInset>
+    <SidebarTrigger />
+    {/* page content */}
+  </SidebarInset>
+</SidebarProvider>
+```
+
+## Usage
+
+The `Sidebar` positions itself relative to the `SidebarProvider`, so the whole shell is self-contained. For a full-screen app, give the provider the viewport height and let the content scroll inside the inset:
+
+```tsx
+<SidebarProvider className="h-svh">
+  <Sidebar>{/* ... */}</Sidebar>
+  <SidebarInset className="overflow-auto">{/* ... */}</SidebarInset>
+</SidebarProvider>
+```
+
+Below the `md` breakpoint the sidebar renders as an off-canvas drawer, toggled by the same `SidebarTrigger`. The sidebar can also be toggled from anywhere with <kbd>⌘</kbd>+<kbd>B</kbd> (<kbd>Ctrl</kbd>+<kbd>B</kbd>).
+
+### Links
+
+Pass `href` to `SidebarMenuButton` (or `SidebarMenuSubButton`) to render it as a link, and `isActive` to mark the current page (which also sets `aria-current="page"`).
+
+```tsx
+<SidebarMenuButton href="/dashboard" isActive>
+  <HomeIcon />
+  <span>Dashboard</span>
+</SidebarMenuButton>
+```
+
+### useSidebar
+
+Read or control the sidebar state from any descendant of `SidebarProvider`:
+
+```tsx
+const {
+  state,
+  isOpen,
+  setOpen,
+  isMobile,
+  openMobile,
+  setOpenMobile,
+  toggleSidebar,
+} = useSidebar()
+```
+
+### Controlled state
+
+Drive the open state yourself with `isOpen` and `onOpenChange` on `SidebarProvider` — useful for persisting it (e.g. in a cookie or `localStorage`).
+
+## Examples
+
+<Examples>
+  <Example name="sidebar/demos/collapsible-icon" />
+  <Example name="sidebar/demos/floating" />
+  <Example name="sidebar/demos/inset" />
+  <Example name="sidebar/demos/right" />
+  <Example name="sidebar/demos/groups" />
+  <Example name="sidebar/demos/submenu" />
+  <Example name="sidebar/demos/badges-and-actions" />
+  <Example name="sidebar/demos/search" />
+  <Example name="sidebar/demos/footer-user" />
+  <Example name="sidebar/demos/loading" />
+  <Example name="sidebar/demos/rail" />
+  <Example name="sidebar/demos/controlled" />
+</Examples>
+
+## API Reference
+
+### SidebarProvider
+
+<Reference name="sidebar-provider" />
+
+### Sidebar
+
+<Reference name="sidebar" />
+
+### SidebarInset
+
+<Reference name="sidebar-inset" />
+
+### SidebarTrigger
+
+<Reference name="sidebar-trigger" />
+
+### SidebarRail
+
+<Reference name="sidebar-rail" />
+
+### SidebarHeader
+
+<Reference name="sidebar-header" />
+
+### SidebarFooter
+
+<Reference name="sidebar-footer" />
+
+### SidebarContent
+
+<Reference name="sidebar-content" />
+
+### SidebarSeparator
+
+<Reference name="sidebar-separator" />
+
+### SidebarGroup
+
+<Reference name="sidebar-group" />
+
+### SidebarGroupLabel
+
+<Reference name="sidebar-group-label" />
+
+### SidebarGroupAction
+
+<Reference name="sidebar-group-action" />
+
+### SidebarGroupContent
+
+<Reference name="sidebar-group-content" />
+
+### SidebarMenu
+
+<Reference name="sidebar-menu" />
+
+### SidebarMenuItem
+
+<Reference name="sidebar-menu-item" />
+
+### SidebarMenuButton
+
+<Reference name="sidebar-menu-button" />
+
+### SidebarMenuAction
+
+<Reference name="sidebar-menu-action" />
+
+### SidebarMenuBadge
+
+<Reference name="sidebar-menu-badge" />
+
+### SidebarMenuSkeleton
+
+<Reference name="sidebar-menu-skeleton" />
+
+### SidebarMenuSub
+
+<Reference name="sidebar-menu-sub" />
+
+### SidebarMenuSubItem
+
+<Reference name="sidebar-menu-sub-item" />
+
+### SidebarMenuSubButton
+
+<Reference name="sidebar-menu-sub-button" />

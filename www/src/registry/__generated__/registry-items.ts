@@ -50,6 +50,7 @@ import UiScrollFade from "@/registry/ui/scroll-fade/meta";
 import UiSearchField from "@/registry/ui/search-field/meta";
 import UiSelect from "@/registry/ui/select/meta";
 import UiSeparator from "@/registry/ui/separator/meta";
+import UiSidebar from "@/registry/ui/sidebar/meta";
 import UiSkeleton from "@/registry/ui/skeleton/meta";
 import UiSlider from "@/registry/ui/slider/meta";
 import UiSwitch from "@/registry/ui/switch/meta";
@@ -114,6 +115,7 @@ export const registryUi: RegistryItem[] = [
 	UiSearchField,
 	UiSelect,
 	UiSeparator,
+	UiSidebar,
 	UiSkeleton,
 	UiSlider,
 	UiSwitch,
