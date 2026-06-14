@@ -69,12 +69,14 @@ export function ChartsPage() {
             >
               <div
                 // Decorative inside the button: `inert` keeps the chart's
-                // accessibilityLayer focus targets out of the tab order.
+                // accessibilityLayer focus targets out of the tab order. The
+                // chart is forced to fill this fixed box (overriding each demo's
+                // own aspect/min-height) so every family frames consistently.
                 inert
                 aria-hidden="true"
-                className="flex h-56 items-center justify-center overflow-hidden border-b bg-bg/40 p-5 [&_*]:pointer-events-none"
+                className="h-64 overflow-hidden border-b bg-bg/40 p-4 [&_*]:pointer-events-none [&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!"
               >
-                <ChartPreview demoKey={f.hero} className="max-h-full" />
+                <ChartPreview demoKey={f.hero} className="h-full" />
               </div>
               <div className="flex items-center justify-between gap-3 p-4">
                 <div className="flex flex-col">
