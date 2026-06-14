@@ -27,6 +27,7 @@ const { useStyles, styles } = createStyles(treeMeta, {
       chevron:
         'flex shrink-0 cursor-interactive items-center justify-center rounded-sm text-fg-muted outline-hidden',
       chevronPlaceholder: 'shrink-0',
+      label: 'flex min-w-0 flex-1 items-center gap-1.5',
     },
   },
   density: {

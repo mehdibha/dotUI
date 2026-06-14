@@ -47,33 +47,45 @@ const TreeItem = <T extends object>({
 interface TreeItemContentProps extends TreePrimitive.TreeItemContentProps {}
 
 const TreeItemContent = ({ children, ...props }: TreeItemContentProps) => {
-  const { itemContent, chevron, chevronPlaceholder } = useStyles()()
+  const { itemContent, chevron, chevronPlaceholder, label } = useStyles()()
   return (
     <TreePrimitive.TreeItemContent {...props}>
-      {(renderProps) => (
-        <div data-tree-item-content="" className={itemContent()}>
-          {renderProps.allowsDragging && (
-            <ButtonPrimitive.Button slot="drag" className={chevron()}>
-              <GripVerticalIcon aria-hidden />
-            </ButtonPrimitive.Button>
-          )}
-          {renderProps.selectionBehavior === 'toggle' &&
-            renderProps.selectionMode !== 'none' && (
-              <Checkbox slot="selection" />
+      {(renderProps) => {
+        const hasSelectionCheckbox =
+          renderProps.selectionBehavior === 'toggle' &&
+          renderProps.selectionMode !== 'none'
+        // With no selection checkbox, pressing the row toggles the item's
+        // expansion — a parent opens on click, not only via the chevron.
+        const toggleExpandOnPress =
+          renderProps.hasChildItems && !hasSelectionCheckbox
+            ? () => renderProps.state.toggleKey(renderProps.id)
+            : undefined
+        return (
+          <div data-tree-item-content="" className={itemContent()}>
+            {renderProps.allowsDragging && (
+              <ButtonPrimitive.Button slot="drag" className={chevron()}>
+                <GripVerticalIcon aria-hidden />
+              </ButtonPrimitive.Button>
             )}
-          {renderProps.hasChildItems ? (
-            <ButtonPrimitive.Button slot="chevron" className={chevron()}>
-              <ChevronRightIcon
-                aria-hidden
-                className="transition-transform duration-200 group-data-[expanded]/tree-item:rotate-90"
-              />
-            </ButtonPrimitive.Button>
-          ) : (
-            <span aria-hidden="true" className={chevronPlaceholder()} />
-          )}
-          {typeof children === 'function' ? children(renderProps) : children}
-        </div>
-      )}
+            {hasSelectionCheckbox && <Checkbox slot="selection" />}
+            {renderProps.hasChildItems ? (
+              <ButtonPrimitive.Button slot="chevron" className={chevron()}>
+                <ChevronRightIcon
+                  aria-hidden
+                  className="transition-transform duration-200 group-data-[expanded]/tree-item:rotate-90"
+                />
+              </ButtonPrimitive.Button>
+            ) : (
+              <span aria-hidden="true" className={chevronPlaceholder()} />
+            )}
+            <span className={label()} onClick={toggleExpandOnPress}>
+              {typeof children === 'function'
+                ? children(renderProps)
+                : children}
+            </span>
+          </div>
+        )
+      }}
     </TreePrimitive.TreeItemContent>
   )
 }
