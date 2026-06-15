@@ -31,7 +31,7 @@ const TO = 'to '
 // Swappable destinations in the hero headline — "Ship it ___". The shared "to" lives in
 // `connector`, not the lead, so it renders once in the lead's font and — because the
 // rotator keys the connector slot by this string — stays put across the v0 / bolt.new /
-// Lovable / your-codebase frames instead of re-animating; only the destination swaps.
+// Lovable / your-code frames instead of re-animating; only the destination swaps.
 // "anywhere" reads without a connector. v0 / bolt.new / Lovable are their official brand
 // wordmarks (logo-only); the rest are text. Everything inherits the headline color
 // (white); the Lovable heart keeps its brand gradient.
@@ -63,9 +63,9 @@ const EXPORT_TARGETS: RotatingTextItem[] = [
   },
   {
     id: 'codebase',
-    text: 'to your codebase',
+    text: 'to your code',
     connector: TO,
-    segments: [{ text: 'your codebase', className: 'font-bold italic' }],
+    segments: [{ text: 'your code', className: 'font-bold italic' }],
   },
 ]
 
@@ -86,7 +86,7 @@ function HomePage() {
           <div className="flex flex-col items-center gap-3 text-center md:gap-4">
             <Announcement />
             <h1
-              aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your codebase, or anywhere."
+              aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your code, or anywhere."
               className="text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl"
             >
               <span aria-hidden="true">

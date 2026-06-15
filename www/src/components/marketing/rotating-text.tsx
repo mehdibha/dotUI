@@ -75,14 +75,24 @@ const REDUCED_SWAP_VARIANTS = {
   exit: { opacity: 0 },
 }
 
+/**
+ * Zero-width text-baseline anchor. Gives a slot a real text baseline even when its content
+ * has none — an icon-only logo, or the connector slot on the no-connector ("anywhere")
+ * frame. Without it an empty first slot has no baseline, which drags the rotor's inline-flex
+ * baseline down and inflates the headline row (a tall phantom gap below it).
+ */
+function BaselineAnchor() {
+  return (
+    <span aria-hidden="true" className="inline-block w-0">
+      {'​'}
+    </span>
+  )
+}
+
 function Segments({ item }: { item: RotatingTextItem }) {
   return (
     <>
-      {/* Zero-width baseline anchor: gives icon-only words (a logo with no text) a real
-			    text baseline, so the slot sits at the same height as text words — no line jump. */}
-      <span aria-hidden="true" className="inline-block w-0">
-        {'​'}
-      </span>
+      <BaselineAnchor />
       {item.segments.map((seg, i) =>
         seg.icon ? (
           <span key={i} className="inline-flex items-center">
@@ -239,6 +249,7 @@ function RotatingWord({
         reduce={reduce}
         enterDelay={reduce ? 0 : SWAP_DURATION}
       >
+        <BaselineAnchor />
         {connector || null}
       </SwapSlot>
       {/* Destination slot — the cycling logo / keyword in the rotating Josefin style. */}
