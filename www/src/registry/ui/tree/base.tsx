@@ -36,7 +36,14 @@ const TreeItem = <T extends object>({
   return (
     <TreePrimitive.TreeItem
       data-tree-item=""
-      className={composeRenderProps(className, (cn) => item({ className: cn }))}
+      className={composeRenderProps(className, (cn, renderProps) =>
+        item({
+          className: cn,
+          interactive:
+            !renderProps.isDisabled &&
+            (renderProps.selectionMode !== 'none' || renderProps.hasChildItems),
+        }),
+      )}
       {...props}
     />
   )

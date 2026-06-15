@@ -11,9 +11,8 @@ const { useStyles, styles } = createStyles(treeMeta, {
         'data-empty:items-center data-empty:justify-center',
       ],
       item: [
-        'group/tree-item relative flex w-full cursor-interactive items-center rounded-(--tree-item-radius) outline-hidden select-none',
+        'group/tree-item relative flex w-full items-center rounded-(--tree-item-radius) outline-hidden select-none',
         '**:[svg]:pointer-events-none **:[svg]:shrink-0',
-        'hover:bg-highlight hover:text-fg-on-highlight',
         'focus-visible:bg-highlight focus-visible:text-fg-on-highlight',
         'selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:focus-visible:bg-selected-hover',
         'drop-target:bg-accent-muted drop-target:text-fg',
@@ -28,6 +27,20 @@ const { useStyles, styles } = createStyles(treeMeta, {
         'flex shrink-0 cursor-interactive items-center justify-center rounded-sm text-fg-muted outline-hidden',
       chevronPlaceholder: 'shrink-0',
       label: 'flex min-w-0 flex-1 items-center gap-1.5',
+    },
+    variants: {
+      // A row is interactive when pressing it does something — it can be
+      // selected, or it has children to expand. Inert rows (e.g. a leaf in a
+      // non-selectable tree) keep the default cursor and no hover highlight.
+      interactive: {
+        true: {
+          item: 'cursor-interactive hover:bg-highlight hover:text-fg-on-highlight',
+        },
+        false: {},
+      },
+    },
+    defaultVariants: {
+      interactive: false,
     },
   },
   density: {
