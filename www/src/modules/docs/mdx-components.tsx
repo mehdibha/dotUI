@@ -82,11 +82,12 @@ export const mdxComponents: MDXComponents = {
     />
   ),
   a: ({ className, children, href, ...props }): React.ComponentProps<'a'> => {
-    const isInternal = href.startsWith('/')
+    const isInternal = href?.startsWith('/') ?? false
     return (
       <Link
-        href={href}
+        href={href ?? '#'}
         target={isInternal ? '_self' : '_blank'}
+        rel={isInternal ? undefined : 'noopener noreferrer'}
         className={cn('inline', className)}
         {...props}
       >
@@ -123,6 +124,43 @@ export const mdxComponents: MDXComponents = {
     />
   ),
   hr: (props) => <hr className="my-4 md:my-8" {...props} />,
+  // Markdown tables have no JSX override otherwise, so they fall back to browser
+  // defaults and overflow the capped prose column. Styling mirrors shadcn/ui's
+  // mdx-components: a bordered, rounded wrapper that scrolls horizontally on
+  // overflow (overflow-y-auto computes overflow-x to auto for wide tables), bold
+  // left-aligned headers, and nowrap cells with align-attribute overrides.
+  table: ({ className, ...props }) => (
+    <div className="my-6 scrollbar-none w-full overflow-y-auto rounded-xl border">
+      <table
+        className={cn(
+          'relative w-full overflow-hidden border-none text-sm [&_tbody_tr:last-child]:border-b-0',
+          className,
+        )}
+        {...props}
+      />
+    </div>
+  ),
+  tr: ({ className, ...props }) => (
+    <tr className={cn('m-0 border-b', className)} {...props} />
+  ),
+  th: ({ className, ...props }) => (
+    <th
+      className={cn(
+        'px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right',
+        className,
+      )}
+      {...props}
+    />
+  ),
+  td: ({ className, ...props }) => (
+    <td
+      className={cn(
+        'px-4 py-2 text-left whitespace-nowrap [&[align=center]]:text-center [&[align=right]]:text-right',
+        className,
+      )}
+      {...props}
+    />
+  ),
   pre: ({ className, 'data-raw': dataRaw, ...props }) => {
     if (dataRaw) {
       return props.children

@@ -22,6 +22,7 @@ export function ExportFooter() {
           <DeeplinkButton
             key={target.id}
             label={target.label}
+            ariaLabel={target.ariaLabel}
             icon={target.icon}
             href={target.href(presetUrl)}
           />

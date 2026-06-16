@@ -49,10 +49,12 @@ export function CommandCard({
 export function DeeplinkButton({
   href,
   label,
+  ariaLabel,
   icon,
 }: {
   href: string
   label: string
+  ariaLabel?: string
   icon: ReactNode
 }) {
   return (
@@ -60,6 +62,7 @@ export function DeeplinkButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={ariaLabel}
       className="flex h-9 w-full items-center justify-center gap-2 rounded-md bg-primary text-sm font-medium text-fg-on-primary transition-colors hover:bg-primary-hover"
     >
       {label} {icon}

@@ -22,6 +22,7 @@ export const EXPORT_TARGETS: ExportTarget[] = [
   {
     id: 'v0',
     label: 'Open in',
+    ariaLabel: 'Open in v0',
     kind: 'deeplink',
     // h-3 (not h-3.5): V0Icon's viewBox is cropped to the glyph, so it renders
     // optically larger than the padded legacy lockup it replaced.

@@ -40,7 +40,9 @@ function AppLayout() {
   return (
     <div className="[--header-height:--spacing(14)]">
       <Header items={items} />
-      <Outlet />
+      <main id="content">
+        <Outlet />
+      </main>
     </div>
   )
 }

@@ -1,22 +1,26 @@
 import { useEffect, useMemo, useState } from 'react'
 
+import { siteConfig } from '@/config/site'
+
 import { useDesignSystem } from '../preset'
 import { encodePreset } from '../preset/codec'
 import type { PresetUrl } from './types'
 
-const DEFAULT_REGISTRY_HOST = 'https://dotui.com'
+const DEFAULT_REGISTRY_HOST: string = siteConfig.url
 
 /**
  * The origin to build registry URLs against. v0 and the shadcn CLI fetch these
  * URLs server-side, so on localhost (or a `file:`/null origin) we point back at
- * the deployed host — fetching `http://localhost` would fail for them.
+ * the deployed host — fetching `http://localhost` would fail for them. Match on
+ * `hostname` (not the full origin) so any dev port (e.g. :4444) still counts.
  */
 function getRegistryHost(): string {
   if (typeof window === 'undefined') return DEFAULT_REGISTRY_HOST
-  const { origin } = window.location
+  const { origin, hostname } = window.location
   if (
     origin === 'null' ||
-    origin === 'http://localhost' ||
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
     origin.startsWith('file:')
   ) {
     return DEFAULT_REGISTRY_HOST

@@ -96,7 +96,7 @@ export function DocsCopyPage({
         {isCopied ? <CheckIcon /> : <CopyIcon />} Copy page
       </Button>
       <Menu>
-        <Button size="sm" isIconOnly>
+        <Button size="sm" isIconOnly aria-label="More copy options">
           <ChevronDownIcon />
         </Button>
         <Popover placement="bottom end">

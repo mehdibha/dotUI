@@ -26,6 +26,9 @@ export type ExportTarget =
   | {
       id: string
       label: string
+      // Accessible name for screen readers when the visible label + brand icon
+      // don't spell it out (e.g. "Open in" + a wordmark reads as just "Open in").
+      ariaLabel?: string
       kind: 'deeplink'
       icon: ReactNode
       href: (presetUrl: PresetUrl) => string
