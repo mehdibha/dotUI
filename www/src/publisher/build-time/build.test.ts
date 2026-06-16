@@ -4,7 +4,7 @@
  *
  * If these pass, the build-time emission step in `build-publishables.ts`
  * should produce drop-in equivalents to the hand-written fixtures used by
- * `publish.spec.ts`.
+ * `publish.test.ts`.
  */
 
 import path from 'node:path'

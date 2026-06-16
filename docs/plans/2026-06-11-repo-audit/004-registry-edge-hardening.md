@@ -2,7 +2,7 @@
 
 > **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-repo-audit/README.md`.
 >
-> **Drift check (run first)**: `git diff --stat 0da0afa3..HEAD -- www/src/publisher/publish.ts www/src/publisher/publish.spec.ts www/src/routes/r/$name.tsx www/src/modules/create/preset/codec.ts www/src/routes/og.tsx www/vercel.ts`
+> **Drift check (run first)**: `git diff --stat 0da0afa3..HEAD -- www/src/publisher/publish.ts www/src/publisher/publish.test.ts www/src/routes/r/$name.tsx www/src/modules/create/preset/codec.ts www/src/routes/og.tsx www/vercel.ts`
 > If any in-scope file changed since this plan was written, compare the "Current state" excerpts against the live code before proceeding; on a mismatch, treat it as a STOP condition.
 
 ## Status
@@ -10,7 +10,7 @@
 - **Priority**: P2
 - **Effort**: S
 - **Risk**: LOW
-- **Depends on**: none (touches `publish.spec.ts`, which plan 002's sweep also imports — land this before or after 002, then reconcile the import as noted in 002 Step 3)
+- **Depends on**: none (touches `publish.test.ts`, which plan 002's sweep also imports — land this before or after 002, then reconcile the import as noted in 002 Step 3)
 - **Category**: security
 - **Planned at**: commit `0da0afa3`, 2026-06-11
 
@@ -52,7 +52,7 @@ const publishable = selectPublishable(mod, preset)
 const { item, rawContent } = publish({ publishable, preset })
 ```
 
-- Callers of `setDotuiDepResolver` (verified by grep): `www/src/routes/r/$name.tsx` (import line 23, call line 61) and `www/src/publisher/publish.spec.ts` (lines 18, 32, 233). `r/init.tsx` and `r/showcase-bundle.tsx` do NOT call it.
+- Callers of `setDotuiDepResolver` (verified by grep): `www/src/routes/r/$name.tsx` (import line 23, call line 61) and `www/src/publisher/publish.test.ts` (lines 18, 32, 233). `r/init.tsx` and `r/showcase-bundle.tsx` do NOT call it.
 - `www/src/modules/create/preset/codec.ts:127-145` — `decodePreset` (full body): base64url-decodes, `inflateRaw(bytes, { to: 'string' })`, `JSON.parse`, merges over `DEFAULTS`, falls back to `DEFAULTS` on any throw. There is no length check on `encoded`. Note: pako has **no** `maxOutputSize` option — the honest guard is capping the input length before inflating. Real presets are small (diff-encoded, deflate level 9); even a maximal hand-built preset is far under 4 KB encoded.
 - `www/src/routes/og.tsx:50-51` — `const title = searchParams.get('title')` / `description` (nullable), rendered at lines 99 and 110; the only use besides rendering is `title.length > 20` for font size (line 94). React renders `null` as empty — so the failure mode is a blank card, not the string "null".
 - `www/vercel.ts` — header config today (Cache-Control for static fn cache + an RFC 8288 `Link` discovery header on `/(.*)`), using `routes.header(...)` / `routes.cacheControl(...)` from `@vercel/config/v1`. Pattern to extend:
@@ -67,7 +67,7 @@ headers: [
 ```
 
 - Note: `/create` embeds `/preview/$slug` in an **iframe on the same origin** (`www/src/routes/_app/create.tsx:52-56`), so the frame policy must allow same-origin framing — use `frame-ancestors 'self'` via CSP or `X-Frame-Options: SAMEORIGIN`, never `DENY`.
-- Existing spec to extend: `www/src/modules/create/preset/codec.spec.ts` (5 tests) and `www/src/publisher/publish.spec.ts` (19 tests).
+- Existing spec to extend: `www/src/modules/create/preset/codec.test.ts` (5 tests) and `www/src/publisher/publish.test.ts` (19 tests).
 
 ## Commands you will need
 
@@ -83,9 +83,9 @@ headers: [
 **In scope**:
 
 - `www/src/publisher/publish.ts` (thread the dep resolver through `publish()`; delete the module-level origin/query state)
-- `www/src/publisher/publish.spec.ts` (update to the new signature)
+- `www/src/publisher/publish.test.ts` (update to the new signature)
 - `www/src/routes/r/$name.tsx` (pass resolver as argument)
-- `www/src/modules/create/preset/codec.ts` + `codec.spec.ts` (input length cap)
+- `www/src/modules/create/preset/codec.ts` + `codec.test.ts` (input length cap)
 - `www/src/routes/og.tsx` (fallbacks + caps)
 - `www/vercel.ts` (three headers)
 
@@ -114,7 +114,7 @@ In `www/src/publisher/publish.ts`:
 
 In `www/src/routes/r/$name.tsx`: remove the `setDotuiDepResolver` import and call; pass `depResolver: { origin, query: depQuery }` in the `publish({ ... })` call at line 66.
 
-In `www/src/publisher/publish.spec.ts`: replace `setDotuiDepResolver(...)` setup calls (lines 18/32/233 area) with `depResolver` arguments on the relevant `publish(...)` invocations. The spec at line 32 calls `setDotuiDepResolver('')` to reset state between tests — with the parameter approach that reset becomes unnecessary; delete it.
+In `www/src/publisher/publish.test.ts`: replace `setDotuiDepResolver(...)` setup calls (lines 18/32/233 area) with `depResolver` arguments on the relevant `publish(...)` invocations. The spec at line 32 calls `setDotuiDepResolver('')` to reset state between tests — with the parameter approach that reset becomes unnecessary; delete it.
 
 **Verify**: `grep -rn "setDotuiDepResolver" www/src` → no matches. `pnpm test -- publish` → all pass. `pnpm typecheck` → exit 0.
 
@@ -134,7 +134,7 @@ Add a `MAX_ENCODED_PRESET_LENGTH` const if you prefer a named bound — keep the
 
 ### Step 3: Spec the cap
 
-In `www/src/modules/create/preset/codec.spec.ts`, add: (a) a 5000-char string → `decodePreset` returns `DEFAULTS` (deep-equal); (b) sanity: a legitimate `encodePreset` output of a maximally-tweaked design system stays under 4096 (construct one config with several componentParams/tokens/color overrides; assert `encoded.length < 4096` — this guards the cap against ever rejecting real presets).
+In `www/src/modules/create/preset/codec.test.ts`, add: (a) a 5000-char string → `decodePreset` returns `DEFAULTS` (deep-equal); (b) sanity: a legitimate `encodePreset` output of a maximally-tweaked design system stays under 4096 (construct one config with several componentParams/tokens/color overrides; assert `encoded.length < 4096` — this guards the cap against ever rejecting real presets).
 
 **Verify**: `pnpm test -- codec` → all pass including 2 new tests.
 
@@ -167,8 +167,8 @@ In `www/vercel.ts`, extend the existing `routes.header('/(.*)', [...])` entry (o
 
 ## Test plan
 
-- `publish.spec.ts` updated in place: the dep-rewrite test (around line 233) now passes `depResolver` explicitly and still asserts absolute-URL rewriting with preset query; the bare-name test (line ~223) asserts pass-through when `depResolver` is absent.
-- `codec.spec.ts`: oversized-input rejection + real-preset-fits-under-cap (Step 3).
+- `publish.test.ts` updated in place: the dep-rewrite test (around line 233) now passes `depResolver` explicitly and still asserts absolute-URL rewriting with preset query; the bare-name test (line ~223) asserts pass-through when `depResolver` is absent.
+- `codec.test.ts`: oversized-input rejection + real-preset-fits-under-cap (Step 3).
 - No new test file needed for og.tsx/vercel.ts (config-level; verified by typecheck and review).
 
 ## Done criteria
@@ -187,7 +187,7 @@ Stop and report back if:
 
 - `rewriteDeps` turns out to be called from anywhere besides `publish()`'s pipeline (grep first) — the parameter threading would miss a path.
 - `@vercel/config`'s `routes.header` cannot express multiple headers for one matcher and the alternative would restructure `vercel.ts` — report the API shape you found instead of improvising a workaround.
-- Any existing `publish.spec.ts` assertion depends on the module-level resolver persisting across calls (i.e. a test relies on the race-prone behavior) — that's a semantic question, report it.
+- Any existing `publish.test.ts` assertion depends on the module-level resolver persisting across calls (i.e. a test relies on the race-prone behavior) — that's a semantic question, report it.
 
 ## Maintenance notes
 
