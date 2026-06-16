@@ -19,7 +19,6 @@ import {
   PUBLISHABLE_NAMES,
 } from '@/registry/__generated__/publishables'
 import { applyFileHeader, DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
-import { codeOptionsToFormatConfig } from '@/publisher/format-config'
 import {
   publish,
   setDotuiDepResolver,
@@ -37,6 +36,11 @@ const JSON_HEADERS = {
   'Cache-Control':
     'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
 }
+
+// A fixed, conventional baseline — the consumer reformats with their own
+// Prettier/Biome rules on commit, so formatting isn't a `codeOptions` axis.
+// Only meant to keep the shipped + previewed source readable.
+const OUTPUT_FORMAT = { printWidth: 80 } as const
 
 export const Route = createFileRoute('/r/$name')({
   server: {
@@ -69,15 +73,14 @@ export const Route = createFileRoute('/r/$name')({
         const { item, rawContent } = publish({ publishable, preset })
 
         // Run the component source through oxfmt so the consumer's `shadcn add`
-        // gets clean output, in the user's chosen code style. Don't let
-        // formatter failures break the response — the raw template still works,
-        // just less pretty.
+        // gets clean output. Don't let formatter failures break the response —
+        // the raw template still works, just less pretty.
         let formatted = rawContent
         try {
           const result = await format(
             publishable.meta.files?.[0]?.target ?? 'ui.tsx',
             rawContent,
-            codeOptionsToFormatConfig(codeOptions),
+            OUTPUT_FORMAT,
           )
           formatted = result.code
         } catch {

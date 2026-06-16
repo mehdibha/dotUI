@@ -8,12 +8,9 @@
  */
 
 import { createFileRoute } from '@tanstack/react-router'
-import { format } from 'oxfmt'
 
 import { baseRegistryCss } from '@/registry/__generated__/base-css'
-import { DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
 import { emitInitItem } from '@/publisher/emit-theme'
-import { codeOptionsToFormatConfig } from '@/publisher/format-config'
 import type { PublishPreset } from '@/publisher/types'
 
 const JSON_HEADERS = {
@@ -39,27 +36,6 @@ export const Route = createFileRoute('/r/init')({
           registryRoot: `${url.protocol}//${url.host}`,
         })
 
-        // Format the shipped `cn` helper in the user's chosen code style so the
-        // utils file matches the components they install. Best-effort.
-        const codeOptions = preset.codeOptions ?? DEFAULT_CODE_OPTIONS
-        if (item.files) {
-          item.files = (await Promise.all(
-            item.files.map(async (f) => {
-              if (!f.content) return f
-              try {
-                const result = await format(
-                  f.target ?? f.path ?? 'utils.ts',
-                  f.content,
-                  codeOptionsToFormatConfig(codeOptions),
-                )
-                return { ...f, content: result.code }
-              } catch {
-                return f
-              }
-            }),
-          )) as typeof item.files
-        }
-
         return new Response(JSON.stringify(item, null, 2), {
           headers: JSON_HEADERS,
         })
@@ -80,7 +56,6 @@ async function decodePresetForRoute(encoded: string): Promise<PublishPreset> {
       color: ds.color,
       density: ds.density,
       componentParams: ds.componentParams,
-      codeOptions: ds.codeOptions,
     }
   } catch {
     return defaultPreset()

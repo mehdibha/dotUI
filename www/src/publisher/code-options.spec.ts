@@ -1,14 +1,14 @@
 /**
- * Tests for the `codeOptions` transforms — the second customization layer that
- * shapes the STYLE of exported code.
+ * Tests for the `codeOptions` transforms — the non-formatter customization
+ * layer that shapes the STYLE of exported code.
  *
  * Coverage:
- *   - sanitizeCodeOptions      : robust coercion of stale/crafted presets
- *   - codeOptionsToFormatConfig: mapping onto oxfmt's FormatConfig
- *   - flattenClassArrays       : grouped arrays → single string per slot/variant
- *   - stripSectionComments     : // MARK: removal
- *   - applyFileHeader          : banner/license block
- *   - publish (integration)    : the options flow through the request-time path
+ *   - sanitizeCodeOptions   : robust coercion of stale/crafted presets
+ *   - flattenClassArrays    : grouped arrays → single string per slot/variant
+ *   - stripSectionComments  : // MARK: removal
+ *   - stripUseClient        : "use client" removal
+ *   - applyFileHeader       : banner/license block
+ *   - publish (integration) : the options flow through the request-time path
  */
 
 import { describe, expect, test } from 'vitest'
@@ -22,7 +22,6 @@ import {
   stripSectionComments,
   stripUseClient,
 } from './code-options'
-import { codeOptionsToFormatConfig } from './format-config'
 import { publish, TV_CONFIG_PLACEHOLDER } from './publish'
 import type { TvLayer } from './types'
 
@@ -41,82 +40,25 @@ describe('sanitizeCodeOptions', () => {
 
   test('keeps valid fields and falls back per-field for invalid ones', () => {
     const out = sanitizeCodeOptions({
-      semicolons: false,
-      quoteStyle: 'single',
-      arrowParens: 'banana', // invalid → default
-      trailingComma: 'none',
-      classArrays: true,
+      classArrays: false,
+      useClient: 'strip',
+      sectionComments: 'nope', // not a boolean → default
+      extra: 'ignored',
     })
-    expect(out.semicolons).toBe(false)
-    expect(out.quoteStyle).toBe('single')
-    expect(out.arrowParens).toBe(DEFAULT_CODE_OPTIONS.arrowParens)
-    expect(out.trailingComma).toBe('none')
-    expect(out.classArrays).toBe(true)
-    // untouched fields keep defaults
-    expect(out.printWidth).toBe(DEFAULT_CODE_OPTIONS.printWidth)
+    expect(out.classArrays).toBe(false)
+    expect(out.useClient).toBe('strip')
+    expect(out.sectionComments).toBe(DEFAULT_CODE_OPTIONS.sectionComments)
   })
 
-  test('clamps numeric fields into range and rounds', () => {
-    expect(sanitizeCodeOptions({ indentWidth: 99 }).indentWidth).toBe(8)
-    expect(sanitizeCodeOptions({ indentWidth: 0 }).indentWidth).toBe(1)
-    expect(sanitizeCodeOptions({ printWidth: 5 }).printWidth).toBe(40)
-    expect(sanitizeCodeOptions({ printWidth: 9999 }).printWidth).toBe(200)
-    expect(sanitizeCodeOptions({ indentWidth: 2.7 }).indentWidth).toBe(3)
-    expect(sanitizeCodeOptions({ printWidth: Number.NaN }).printWidth).toBe(
-      DEFAULT_CODE_OPTIONS.printWidth,
+  test('invalid enum value falls back to default', () => {
+    expect(sanitizeCodeOptions({ useClient: 'banana' }).useClient).toBe(
+      DEFAULT_CODE_OPTIONS.useClient,
     )
   })
 
   test('non-string fileHeader falls back to default', () => {
     expect(sanitizeCodeOptions({ fileHeader: 123 }).fileHeader).toBe('')
     expect(sanitizeCodeOptions({ fileHeader: '© Me' }).fileHeader).toBe('© Me')
-  })
-})
-
-/* ============================================================ */
-/* codeOptionsToFormatConfig                                    */
-/* ============================================================ */
-
-describe('codeOptionsToFormatConfig', () => {
-  test('maps the default options onto oxfmt config', () => {
-    const cfg = codeOptionsToFormatConfig(DEFAULT_CODE_OPTIONS)
-    expect(cfg).toMatchObject({
-      semi: true,
-      singleQuote: false,
-      jsxSingleQuote: false,
-      useTabs: false,
-      tabWidth: 2,
-      printWidth: 80,
-      trailingComma: 'all',
-      arrowParens: 'always',
-      bracketSpacing: true,
-      objectWrap: 'preserve',
-      quoteProps: 'as-needed',
-      endOfLine: 'lf',
-      bracketSameLine: false,
-      singleAttributePerLine: false,
-      sortImports: true,
-    })
-    // sortClasses true → tailwind sorting names cn + tv
-    expect(cfg.sortTailwindcss).toEqual({ functions: ['cn', 'tv'] })
-  })
-
-  test('inverts quote/indent and disables class sorting', () => {
-    const cfg = codeOptionsToFormatConfig({
-      ...DEFAULT_CODE_OPTIONS,
-      quoteStyle: 'single',
-      jsxQuoteStyle: 'single',
-      indentStyle: 'tab',
-      indentWidth: 4,
-      sortImports: false,
-      sortClasses: false,
-    })
-    expect(cfg.singleQuote).toBe(true)
-    expect(cfg.jsxSingleQuote).toBe(true)
-    expect(cfg.useTabs).toBe(true)
-    expect(cfg.tabWidth).toBe(4)
-    expect(cfg.sortImports).toBe(false)
-    expect(cfg.sortTailwindcss).toBe(false)
   })
 })
 

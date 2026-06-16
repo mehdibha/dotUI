@@ -3,19 +3,22 @@
  * options is encoded to a preset, decoded back, fed to the publisher, and
  * formatted — proving the choices a user makes in /create reach the exported
  * source. Exercises codec ↔ publish ↔ oxfmt together (the parts the unit
- * specs mock out).
+ * specs cover in isolation).
  */
 
 import { format } from 'oxfmt'
 import { describe, expect, test } from 'vitest'
 
 import { buttonPublishable } from '@/publisher/__fixtures__/button-publishable'
-import { DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
-import { codeOptionsToFormatConfig } from '@/publisher/format-config'
+import { applyFileHeader, DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
 import { publish } from '@/publisher/publish'
 
 import { decodePreset, encodePreset } from './codec'
 import { DEFAULTS } from './defaults'
+
+// Mirrors the fixed baseline the /r/$name route uses (formatting isn't a
+// codeOptions axis — the consumer reformats with their own rules).
+const OUTPUT_FORMAT = { printWidth: 80 } as const
 
 async function exportButton(codeOptions: typeof DEFAULT_CODE_OPTIONS) {
   // 1. Encode the user's design system (with code options) to a preset blob.
@@ -34,57 +37,40 @@ async function exportButton(codeOptions: typeof DEFAULT_CODE_OPTIONS) {
       codeOptions: ds.codeOptions,
     },
   })
-  const { code } = await format(
-    'button.tsx',
-    rawContent,
-    codeOptionsToFormatConfig(ds.codeOptions ?? DEFAULT_CODE_OPTIONS),
-  )
+  const { code } = await format('button.tsx', rawContent, OUTPUT_FORMAT)
   return { decoded: ds.codeOptions, code }
 }
 
 describe('codeOptions end-to-end (preset → publish → format)', () => {
-  test('single quotes + no semicolons + tabs reach the exported file', async () => {
+  test('classArrays:false collapses tv class lists in the exported file', async () => {
     const { decoded, code } = await exportButton({
       ...DEFAULT_CODE_OPTIONS,
-      quoteStyle: 'single',
-      semicolons: false,
-      indentStyle: 'tab',
+      classArrays: false,
     })
 
-    // codec round-trip preserved the options
-    expect(decoded?.quoteStyle).toBe('single')
-    expect(decoded?.semicolons).toBe(false)
+    // codec round-trip preserved the option
+    expect(decoded?.classArrays).toBe(false)
 
-    // formatter applied them to the real output
-    expect(code).toContain("'use client'")
-    expect(code).not.toContain('"use client"')
-    expect(code).not.toContain("'use client';")
-    expect(code).toContain('\t')
+    // base groups are joined into one string (no array-element split)
+    expect(code).toContain('select-none focus-reset focus-visible:focus-ring')
   })
 
-  test('double quotes + semicolons + spaces reach the exported file', async () => {
-    const { code } = await exportButton({
+  test('useClient:strip removes the directive end to end', async () => {
+    const { decoded, code } = await exportButton({
       ...DEFAULT_CODE_OPTIONS,
-      quoteStyle: 'double',
-      semicolons: true,
-      indentStyle: 'space',
-      indentWidth: 2,
-      printWidth: 100, // non-default so the preset actually encodes
+      useClient: 'strip',
     })
 
-    expect(code).toContain('"use client";')
-    expect(code).not.toContain('\t')
-    expect(code).toContain('  ') // 2-space indent
+    expect(decoded?.useClient).toBe('strip')
+    expect(code).not.toContain('use client')
+    expect(code).toContain('buttonVariants') // rest of the file intact
   })
 
-  test('file header is prepended and use-client can be stripped together', async () => {
-    // (applyFileHeader runs in the route, after format — mirror that here.)
-    const { applyFileHeader } = await import('@/publisher/code-options')
+  test('a file header prepends a banner (applied post-format, like the route)', async () => {
     const { code } = await exportButton({
       ...DEFAULT_CODE_OPTIONS,
       useClient: 'strip',
     })
-    expect(code).not.toContain('use client')
     const withHeader = applyFileHeader(code, '(c) 2026 Acme')
     expect(withHeader.startsWith('/**')).toBe(true)
     expect(withHeader).toContain('(c) 2026 Acme')
