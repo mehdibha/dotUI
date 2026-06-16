@@ -28,6 +28,7 @@ import {
 // module scope so it runs once per route bundle load.
 setKnownDotuiNames(PUBLISHABLE_NAMES)
 
+import { resolveRequestPreset } from '@/lib/registry-preset'
 import type { Publishable, PublishPreset } from '@/publisher/types'
 
 const JSON_HEADERS = {
@@ -35,6 +36,11 @@ const JSON_HEADERS = {
   'Cache-Control':
     'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
 }
+
+// A fixed, conventional baseline — the consumer reformats with their own
+// Prettier/Biome rules on commit, so formatting isn't a `codeOptions` axis.
+// Only meant to keep the shipped + previewed source readable.
+const OUTPUT_FORMAT = { printWidth: 80 } as const
 
 export const Route = createFileRoute('/r/$name')({
   server: {
@@ -48,9 +54,7 @@ export const Route = createFileRoute('/r/$name')({
 
         const url = new URL(request.url)
         const encodedPreset = url.searchParams.get('preset') ?? undefined
-        const preset = encodedPreset
-          ? await decodePresetForRoute(encodedPreset)
-          : defaultPreset()
+        const preset = await resolveRequestPreset(encodedPreset)
 
         // Configure how transitive deps get rewritten — they become absolute
         // URLs back at this same origin (with the preset preserved) so
@@ -73,10 +77,7 @@ export const Route = createFileRoute('/r/$name')({
           const result = await format(
             publishable.meta.files?.[0]?.target ?? 'ui.tsx',
             rawContent,
-            {
-              printWidth: 120,
-              useTabs: true,
-            },
+            OUTPUT_FORMAT,
           )
           formatted = result.code
         } catch {
@@ -125,18 +126,4 @@ function selectPublishable(
     if (hit) return hit
   }
   return mod.publishable
-}
-
-function defaultPreset(): PublishPreset {
-  return { density: 'compact', componentParams: {} }
-}
-
-async function decodePresetForRoute(encoded: string): Promise<PublishPreset> {
-  try {
-    const { decodePreset } = await import('@/modules/create/preset/codec')
-    const ds = decodePreset(encoded)
-    return { density: ds.density, componentParams: ds.componentParams }
-  } catch {
-    return defaultPreset()
-  }
 }

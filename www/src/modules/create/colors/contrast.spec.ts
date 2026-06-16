@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from '@/registry/theme'
 
-import { solidContrastReport } from './color-contrast'
+import { solidContrastReport } from './contrast'
 
 describe('solidContrastReport', () => {
   it('reports text-on-solid contrast for every palette', () => {

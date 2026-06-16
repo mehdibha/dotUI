@@ -30,7 +30,8 @@ import { Select, SelectValue } from '@/registry/ui/select'
 import { componentsData } from '@/modules/docs/components-list/components-data'
 
 import { ExamplesIndex } from './__generated__/examples'
-import { ColorsConfig, ColorsSummary } from './colors-config'
+import { CodeOptionsDialog } from './code-options'
+import { ColorsConfig, ColorsSummary } from './colors'
 import {
   AllComponentsView,
   ComponentDetailView,
@@ -38,26 +39,25 @@ import {
   getComponentDisplayName,
   getGroupDisplayName,
   isGroupId,
-} from './components-config'
+} from './components'
 import {
   CURSOR_DISABLED_VAR,
   CURSOR_INTERACTIVE_VAR,
   CursorConfig,
   DEFAULT_CURSOR_DISABLED,
   DEFAULT_CURSOR_INTERACTIVE,
-} from './cursor-config'
-import { IconographyConfig } from './iconography-config'
-import { InstallCommand } from './install-command'
+} from './cursor'
+import { ExportFooter } from './export'
+import { IconographyConfig } from './iconography'
 import {
   DEFAULT_RADIUS_FACTOR,
   DensityConfig,
   RADIUS_FACTOR_VAR,
   RadiusConfig,
-} from './layout-config'
-import { OpenInV0 } from './open-in-v0'
+} from './layout'
 import { useDesignSystem } from './preset'
 import type { PreviewMode } from './preset'
-import { TypographyConfig } from './typography-config'
+import { TypographyConfig } from './typography'
 
 /* -------------------------------- Types -------------------------------- */
 
@@ -577,11 +577,8 @@ export function CustomizerPanel({
 
       {/* Footer */}
       <div className="flex flex-col gap-2 border-t p-3">
-        <p className="px-0.5 text-[10px] font-medium tracking-widest text-fg-muted uppercase">
-          Install your design system
-        </p>
-        <InstallCommand />
-        <OpenInV0 />
+        <CodeOptionsDialog />
+        <ExportFooter />
       </div>
     </div>
   )

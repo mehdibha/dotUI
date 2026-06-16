@@ -5,6 +5,8 @@ import { getRouteApi } from '@tanstack/react-router'
 
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import type { AlgorithmId, ColorKnobs, PaletteSeeds } from '@/registry/theme'
+import { DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
+import type { CodeOptions } from '@/publisher/code-options'
 
 import { decodePreset, encodePreset } from './codec'
 import { DEFAULTS } from './defaults'
@@ -106,6 +108,17 @@ export function useDesignSystem() {
     [setDesignSystem],
   )
 
+  /** Set one exported-code style option (starting from the default code style). */
+  const setCodeOption = useCallback(
+    <K extends keyof CodeOptions>(key: K, value: CodeOptions[K]) => {
+      setDesignSystem((prev) => {
+        const base = prev.codeOptions ?? DEFAULT_CODE_OPTIONS
+        return { ...prev, codeOptions: { ...base, [key]: value } }
+      })
+    },
+    [setDesignSystem],
+  )
+
   return {
     designSystem,
     setDesignSystem,
@@ -115,5 +128,6 @@ export function useDesignSystem() {
     setColorSeed,
     setColorAlgorithm,
     setColorKnob,
+    setCodeOption,
   }
 }
