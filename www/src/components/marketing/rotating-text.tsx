@@ -114,22 +114,20 @@ function Segments({ item }: { item: RotatingTextItem }) {
  * `swapKey` is unchanged between renders the content stays mounted and does NOT animate
  * — that's what keeps a shared connector static while only the destination swaps.
  * `wordStyle` is applied to the content (Josefin for destinations; omitted for the
- * connector so it inherits the lead's font). `enterDelay` holds the incoming content back
- * for one swap, so the connector fades in *as* the new destination arrives rather than
- * over the still-exiting old one (no "to anywhere" ghost at the no-connector boundary).
+ * connector so it inherits the lead's font). Both slots use mode="wait", so the incoming
+ * content waits one swap for the outgoing one to clear — that keeps the connector and the
+ * destination entering together at a boundary (and means no extra enter delay is needed).
  */
 function SwapSlot({
   swapKey,
   children,
   wordStyle,
   reduce,
-  enterDelay = 0,
 }: {
   swapKey: string
   children: ReactNode
   wordStyle?: CSSProperties
   reduce: boolean
-  enterDelay?: number
 }) {
   // Measure the active content's natural width from the invisible sizer, then animate the
   // slot to it — animating the real `width` (not a transform) keeps the surrounding text
@@ -179,18 +177,9 @@ function SwapSlot({
           <motion.span
             key={swapKey}
             initial={swapVariants.initial}
-            animate={{
-              ...swapVariants.animate,
-              transition: {
-                duration: SWAP_DURATION,
-                ease: SWAP_EASE,
-                delay: enterDelay,
-              },
-            }}
-            exit={{
-              ...swapVariants.exit,
-              transition: { duration: SWAP_DURATION, ease: SWAP_EASE },
-            }}
+            animate={swapVariants.animate}
+            exit={swapVariants.exit}
+            transition={{ duration: SWAP_DURATION, ease: SWAP_EASE }}
             style={wordStyle}
             className="inline-flex items-baseline whitespace-nowrap"
           >
@@ -242,13 +231,7 @@ function RotatingWord({
       {/* Connector slot — keyed by the connector text, so the "to" shared across the tool /
 			    codebase frames keeps the same key and never re-animates between them. No wordStyle:
 			    it inherits the lead's font, matching "Ship it". Empty for the no-connector frame. */}
-      {/* enterDelay holds "to" back for one swap so, at the "anywhere" boundary, it fades in
-				    with the new destination instead of ghosting over the outgoing word. */}
-      <SwapSlot
-        swapKey={connector}
-        reduce={reduce}
-        enterDelay={reduce ? 0 : SWAP_DURATION}
-      >
+      <SwapSlot swapKey={connector} reduce={reduce}>
         <BaselineAnchor />
         {connector || null}
       </SwapSlot>
