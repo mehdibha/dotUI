@@ -160,7 +160,7 @@ const onVars: Record<string, string> =
     }, {} as Record<string, string>);
 ```
 
-This mirrors the plugin's `getContrastColor` exactly (parity test: `www/src/registry/theme/on-color-parity.spec.ts`).
+This mirrors the plugin's `getContrastColor` exactly (parity test: `www/src/registry/theme/on-color-parity.test.ts`).
 
 ---
 
@@ -353,7 +353,7 @@ The `p` (componentParams) and `d` (density) fields of the preset encode componen
 ### L4 — `tailwindcss-autocontrast` plugin is not available
 The `--on-*` foreground vars are normally computed at Tailwind-compile time by `packages/tailwindcss-autocontrast/src/index.js`. They are never emitted by the init pipeline (`emit-theme.ts:152-159`).
 
-**Mitigation:** The Webflow export endpoint must compute them statically using `onBlackWhite` (see §3). This is safe — the parity test at `www/src/registry/theme/on-color-parity.spec.ts` confirms `onBlackWhite` produces the same output as the plugin's `getContrastColor`.
+**Mitigation:** The Webflow export endpoint must compute them statically using `onBlackWhite` (see §3). This is safe — the parity test at `www/src/registry/theme/on-color-parity.test.ts` confirms `onBlackWhite` produces the same output as the plugin's `getContrastColor`.
 
 ### L5 — `tokens` field not wired
 The `t` / `tokens` field of `DesignSystemState` (global CSS vars like `--radius-factor: 1.25`) is not yet threaded into the publisher output — there is an explicit TODO at `www/src/publisher/emit-theme.ts:62-68` and `PublishPreset` (`www/src/publisher/types.ts:79-85`) does not carry `tokens`. This means a user who has adjusted `--radius-factor` via the customizer will not see that change reflected in any export, including the Webflow block.

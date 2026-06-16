@@ -156,7 +156,7 @@ pnpm check && pnpm --filter www build
 
 ## Test plan
 
-If plan 002's `docs-content.spec.ts` exists, `pnpm test` must stay green (it validates `<Example name>` resolution — your Step 4 names must resolve). No other automated tests; correctness gates are the snippet parse check (Step 2) and the rendered pages.
+If plan 002's `docs-content.test.ts` exists, `pnpm test` must stay green (it validates `<Example name>` resolution — your Step 4 names must resolve). No other automated tests; correctness gates are the snippet parse check (Step 2) and the rendered pages.
 
 ## Done criteria
 
