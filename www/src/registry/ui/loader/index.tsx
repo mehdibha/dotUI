@@ -1,4 +1,4 @@
-import { createDynamicComponent } from '@/modules/core/styles'
+import { createDynamicComponent } from '@/lib/styles'
 
 import { Loader as RingLoader } from './base.ring'
 import { type LoaderProps, Loader as SpinnerLoader } from './base.spinner'

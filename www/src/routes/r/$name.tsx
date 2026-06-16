@@ -28,6 +28,7 @@ import {
 // module scope so it runs once per route bundle load.
 setKnownDotuiNames(PUBLISHABLE_NAMES)
 
+import { resolveRequestPreset } from '@/lib/registry-preset'
 import type { Publishable, PublishPreset } from '@/publisher/types'
 
 const JSON_HEADERS = {
@@ -53,9 +54,7 @@ export const Route = createFileRoute('/r/$name')({
 
         const url = new URL(request.url)
         const encodedPreset = url.searchParams.get('preset') ?? undefined
-        const preset = encodedPreset
-          ? await decodePresetForRoute(encodedPreset)
-          : defaultPreset()
+        const preset = await resolveRequestPreset(encodedPreset)
 
         // Configure how transitive deps get rewritten — they become absolute
         // URLs back at this same origin (with the preset preserved) so
@@ -127,22 +126,4 @@ function selectPublishable(
     if (hit) return hit
   }
   return mod.publishable
-}
-
-function defaultPreset(): PublishPreset {
-  return { density: 'compact', componentParams: {} }
-}
-
-async function decodePresetForRoute(encoded: string): Promise<PublishPreset> {
-  try {
-    const { decodePreset } = await import('@/modules/create/preset/codec')
-    const ds = decodePreset(encoded)
-    return {
-      density: ds.density,
-      componentParams: ds.componentParams,
-      codeOptions: ds.codeOptions,
-    }
-  } catch {
-    return defaultPreset()
-  }
 }
