@@ -51,6 +51,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"search-field": () => import("@/registry/ui/search-field/examples"),
 	select: () => import("@/registry/ui/select/examples"),
 	separator: () => import("@/registry/ui/separator/examples"),
+	sidebar: () => import("@/registry/ui/sidebar/examples"),
 	skeleton: () => import("@/registry/ui/skeleton/examples"),
 	slider: () => import("@/registry/ui/slider/examples"),
 	switch: () => import("@/registry/ui/switch/examples"),

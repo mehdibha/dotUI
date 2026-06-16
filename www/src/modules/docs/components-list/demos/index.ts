@@ -42,6 +42,7 @@ import { ScrollFadeDemo } from './scroll-fade'
 import { SearchFieldDemo } from './search-field'
 import { SelectDemo } from './select'
 import { SeparatorDemo } from './separator'
+import { SidebarDemo } from './sidebar'
 import { SkeletonDemo } from './skeleton'
 import { SliderDemo } from './slider'
 import { SwitchDemo } from './switch'
@@ -99,6 +100,7 @@ export const componentDemos: Record<string, ComponentType> = {
   'search-field': SearchFieldDemo,
   select: SelectDemo,
   separator: SeparatorDemo,
+  sidebar: SidebarDemo,
   skeleton: SkeletonDemo,
   slider: SliderDemo,
   switch: SwitchDemo,
