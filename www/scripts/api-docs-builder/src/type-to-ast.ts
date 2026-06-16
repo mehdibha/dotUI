@@ -33,7 +33,7 @@ import type {
   TTypeParameter,
   TUnion,
   TypeLinksRegistry,
-} from '@/modules/references/types/type-ast'
+} from '@/modules/docs/references/types/type-ast'
 
 export interface ConversionContext {
   checker: ts.TypeChecker

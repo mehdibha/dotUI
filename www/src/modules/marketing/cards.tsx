@@ -2,13 +2,13 @@
 
 import { useMemo, useState } from 'react'
 
+import { DesignSystemProvider } from '@/lib/styles'
 import { useMounted } from '@/hooks/use-mounted'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import type { Density } from '@/registry/types'
-import { CardsGrid } from '@/components/marketing/showcase/cards-grid'
-import { ShowcaseCustomizer } from '@/components/marketing/showcase/showcase-customizer'
-import { SkeletonRail } from '@/components/marketing/showcase/skeleton-cards'
-import { DesignSystemProvider } from '@/modules/core/styles'
+import { CardsGrid } from '@/components/showcase/cards-grid'
+import { ShowcaseCustomizer } from '@/components/showcase/showcase-customizer'
+import { SkeletonRail } from '@/components/showcase/skeleton-cards'
 import { encodePreset } from '@/modules/create/preset'
 
 // Theme contract: every `--radius-*` token is `calc(<rem> * var(--radius-factor))`,
@@ -65,7 +65,8 @@ export function Cards() {
 
   // The centered, capped real grid — `CardsGrid` (shared with the /create preview),
   // sized as a flex item that bleeds past the rails on small screens, caps at
-  // `--grid-max` on large ones, and bumps to 4-up at xl.
+  // `--grid-max` on large ones, and bumps to 4-up at xl. Kept interactive on
+  // purpose: the showcase is a live playground, so visitors can poke the cards.
   const realGrid = (
     <CardsGrid className="relative z-20 w-[max(52rem,120vw)] max-w-none shrink-0 lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink xl:columns-4" />
   )

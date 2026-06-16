@@ -3,6 +3,9 @@ import { createFileRoute, stripSearchParams } from '@tanstack/react-router'
 import { useTheme } from 'starter-themes'
 import { z } from 'zod'
 
+import { cn } from '@/registry/lib/utils'
+import { ToggleButton } from '@/registry/ui/toggle-button'
+import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { CustomizerPanel } from '@/modules/create/customizer-panel'
 import {
   sendPreviewMode,
@@ -10,6 +13,8 @@ import {
   useDesignSystem,
 } from '@/modules/create/preset'
 import type { PreviewMode } from '@/modules/create/preset'
+
+type MobilePane = 'customize' | 'preview'
 
 export const createSearchSchema = z.object({
   panel: z.string().optional().catch(undefined),
@@ -33,6 +38,11 @@ function CreatePage() {
   const { resolvedTheme } = useTheme()
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [previewMode, setPreviewMode] = useState<PreviewMode>('light')
+  // Below `lg` the customizer and the live preview can't sit side by side (the iframe
+  // would be a ~15px sliver), so they collapse into a single switchable pane toggled
+  // by the segmented control. Both stay mounted — only CSS-hidden, never unmounted —
+  // so switching never reloads the preview. Above `lg` this state is inert; both show.
+  const [mobilePane, setMobilePane] = useState<MobilePane>('customize')
 
   // Open the preview in the same light / dark mode the site is currently in. Seeded on
   // mount rather than via the useState initializer: this page is server-rendered and the
@@ -95,19 +105,39 @@ function CreatePage() {
   }, [previewMode])
 
   return (
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-row gap-6 p-6 pt-2">
+    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">
+      {/* Mobile-only view switcher — hidden once the two panes fit side by side. */}
+      <ToggleButtonGroup
+        aria-label="Editor view"
+        selectionMode="single"
+        disallowEmptySelection
+        size="sm"
+        selectedKeys={[mobilePane]}
+        onSelectionChange={(keys) => {
+          const next = keys.values().next().value
+          if (next === 'customize' || next === 'preview') setMobilePane(next)
+        }}
+        className="w-full shrink-0 *:flex-1 lg:hidden"
+      >
+        <ToggleButton id="customize">Customize</ToggleButton>
+        <ToggleButton id="preview">Preview</ToggleButton>
+      </ToggleButtonGroup>
       <CustomizerPanel
         previewMode={previewMode}
         onTogglePreviewMode={() =>
           setPreviewMode((m) => (m === 'dark' ? 'light' : 'dark'))
         }
+        className={cn(mobilePane === 'preview' && 'max-lg:hidden')}
       />
       <iframe
         ref={iframeRef}
         key={effectivePreview}
         src={iframeSrc}
         title="preview"
-        className="min-w-0 flex-1 rounded-xl border"
+        className={cn(
+          'min-w-0 flex-1 rounded-xl border',
+          mobilePane === 'customize' && 'max-lg:hidden',
+        )}
       />
     </div>
   )

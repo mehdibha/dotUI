@@ -1,5 +1,5 @@
+import { createStyles } from '@/lib/styles'
 import { fieldStyles } from '@/registry/ui/field'
-import { createStyles } from '@/modules/core/styles'
 
 import sliderMeta from './meta'
 

@@ -16,7 +16,7 @@ import { Label } from '@/registry/ui/field'
 import { Input } from '@/registry/ui/input'
 import { Popover } from '@/registry/ui/popover'
 
-import { useDesignSystem } from './preset'
+import { useDesignSystem } from '../preset'
 
 /**
  * The categorical chart palette. Each slot derives from a theme hue by default

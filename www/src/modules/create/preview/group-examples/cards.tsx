@@ -1,4 +1,4 @@
-import { CardsGrid } from '@/components/marketing/showcase/cards-grid'
+import { CardsGrid } from '@/components/showcase/cards-grid'
 
 // The "Cards" preview view: the same masonry of real-world card blocks as the
 // landing page, rendered inside the /create preview iframe so the user's whole

@@ -5,8 +5,6 @@ import { Button } from '@/registry/ui/button'
 import { Dialog, DialogBody, DialogContent } from '@/registry/ui/dialog'
 import { Modal } from '@/registry/ui/modal'
 
-// import { DemoCode, DemoCodePreview, getSlotContent } from "./demo";
-
 export interface ExampleProps extends React.ComponentProps<'div'> {
   component: React.ComponentType
   title?: string
@@ -25,9 +23,6 @@ export function Example({
   // render nothing instead.
   if (!Component) return null
 
-  // const codeContent = getSlotContent(children, DemoCode);
-  // const previewContent = getSlotContent(children, DemoCodePreview);
-
   return (
     <div
       className={cn(
@@ -42,20 +37,18 @@ export function Example({
         <div
           data-example-preview=""
           tabIndex={-1}
-          className="pointer-events-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 p-10"
+          className="pointer-events-none scrollbar-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 overflow-x-auto p-6 sm:p-10"
         >
           <Component />
         </div>
         <Dialog>
           <Button
             variant="quiet"
+            aria-label={title ? `Expand ${title} example` : 'Expand example'}
             className="absolute inset-0 z-2 size-auto h-auto! border hover:border-border-hover"
           />
           <Modal>
-            <DialogContent>
-              {/* <DialogHeader>
-								<DialogTitle>{title}</DialogTitle>
-							</DialogHeader> */}
+            <DialogContent aria-label={title ? `${title} example` : 'Example'}>
               <DialogBody>
                 <Component />
               </DialogBody>

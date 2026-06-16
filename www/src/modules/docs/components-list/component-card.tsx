@@ -43,9 +43,25 @@ export function ComponentCard({
   const Demo = componentDemos[slug]
 
   return (
-    <div data-component={slug} className="flex flex-col items-center gap-3">
-      <ComponentPreview className={previewClassName}>
+    <Link
+      to="/docs/$"
+      params={{ _splat: href.replace('/docs/', '') }}
+      aria-label={name}
+      data-component={slug}
+      className="group flex flex-col items-center gap-3 rounded-lg focus-reset focus-visible:focus-ring"
+    >
+      <ComponentPreview
+        className={cn(
+          'w-full transition-colors group-hover:border-border-hover',
+          previewClassName,
+        )}
+      >
+        {/* The demo is a non-interactive preview: `inert` keeps its controls out of
+            the tab order and lets clicks fall through to the card link, so the whole
+            card navigates instead of an embedded demo (Modal/Menu/Popover…) hijacking
+            the click. */}
         <div
+          inert
           className="flex items-center justify-center"
           style={{ transform: `scale(${scale})` }}
         >
@@ -56,13 +72,9 @@ export function ComponentCard({
           )}
         </div>
       </ComponentPreview>
-      <Link
-        to="/docs/$"
-        params={{ _splat: href.replace('/docs/', '') }}
-        className="text-sm font-medium text-fg hover:underline"
-      >
+      <span className="text-sm font-medium text-fg group-hover:underline">
         {name}
-      </Link>
-    </div>
+      </span>
+    </Link>
   )
 }

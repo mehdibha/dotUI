@@ -1,4 +1,4 @@
-import { createStyles } from '@/modules/core/styles'
+import { createStyles } from '@/lib/styles'
 
 import colorThumbMeta from './meta'
 
