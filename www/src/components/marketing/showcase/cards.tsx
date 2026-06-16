@@ -65,19 +65,10 @@ export function Cards() {
 
   // The centered, capped real grid — `CardsGrid` (shared with the /create preview),
   // sized as a flex item that bleeds past the rails on small screens, caps at
-  // `--grid-max` on large ones, and bumps to 4-up at xl.
-  //
-  // It's a decorative demo, not functional UI: the lower cards fade to transparent
-  // (the mask below), so without `inert`/`aria-hidden` their now-invisible controls
-  // stay in the keyboard tab order and focus lands on nothing. The `display:contents`
-  // wrapper keeps `CardsGrid` itself the flex item so layout is unchanged. This applies
-  // wherever `Cards` renders (the landing page and the "Open in v0" showcase bundle,
-  // which boots from this file) — both have the faded tail. The /create preview is
-  // unaffected: it renders `CardsGrid` directly (no mask), so it stays interactive.
+  // `--grid-max` on large ones, and bumps to 4-up at xl. Kept interactive on
+  // purpose: the showcase is a live playground, so visitors can poke the cards.
   const realGrid = (
-    <div className="contents" inert aria-hidden="true">
-      <CardsGrid className="relative z-20 w-[max(52rem,120vw)] max-w-none shrink-0 lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink xl:columns-4" />
-    </div>
+    <CardsGrid className="relative z-20 w-[max(52rem,120vw)] max-w-none shrink-0 lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink xl:columns-4" />
   )
 
   return (
