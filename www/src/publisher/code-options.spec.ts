@@ -5,9 +5,7 @@
  * Coverage:
  *   - sanitizeCodeOptions   : robust coercion of stale/crafted presets
  *   - flattenClassArrays    : grouped arrays → single string per slot/variant
- *   - stripSectionComments  : // MARK: removal
- *   - stripUseClient        : "use client" removal
- *   - applyFileHeader       : banner/license block
+ *   - applySectionComments  : // MARK: → section separators (or removal)
  *   - publish (integration) : the options flow through the request-time path
  */
 
@@ -15,12 +13,10 @@ import { describe, expect, test } from 'vitest'
 
 import { buttonPublishable } from './__fixtures__/button-publishable'
 import {
-  applyFileHeader,
+  applySectionComments,
   DEFAULT_CODE_OPTIONS,
   flattenClassArrays,
   sanitizeCodeOptions,
-  stripSectionComments,
-  stripUseClient,
 } from './code-options'
 import { publish, TV_CONFIG_PLACEHOLDER } from './publish'
 import type { TvLayer } from './types'
@@ -41,24 +37,11 @@ describe('sanitizeCodeOptions', () => {
   test('keeps valid fields and falls back per-field for invalid ones', () => {
     const out = sanitizeCodeOptions({
       classArrays: false,
-      useClient: 'strip',
       sectionComments: 'nope', // not a boolean → default
       extra: 'ignored',
     })
     expect(out.classArrays).toBe(false)
-    expect(out.useClient).toBe('strip')
     expect(out.sectionComments).toBe(DEFAULT_CODE_OPTIONS.sectionComments)
-  })
-
-  test('invalid enum value falls back to default', () => {
-    expect(sanitizeCodeOptions({ useClient: 'banana' }).useClient).toBe(
-      DEFAULT_CODE_OPTIONS.useClient,
-    )
-  })
-
-  test('non-string fileHeader falls back to default', () => {
-    expect(sanitizeCodeOptions({ fileHeader: 123 }).fileHeader).toBe('')
-    expect(sanitizeCodeOptions({ fileHeader: '© Me' }).fileHeader).toBe('© Me')
   })
 })
 
@@ -120,84 +103,60 @@ describe('flattenClassArrays', () => {
 })
 
 /* ============================================================ */
-/* stripSectionComments                                         */
+/* applySectionComments                                         */
 /* ============================================================ */
 
-describe('stripSectionComments', () => {
-  test('removes MARK lines and collapses the gap', () => {
-    const src = [
-      '// MARK: buttonStyles',
-      'const styles = {}',
-      '',
-      '// MARK: Separator',
-      '',
-      'export { styles }',
-      '',
-    ].join('\n')
-    const out = stripSectionComments(src)
+describe('applySectionComments', () => {
+  test('always drops the internal <name>Styles marker (disabled)', () => {
+    const out = applySectionComments(
+      '// MARK: buttonStyles\nconst x = 1\n',
+      false,
+    )
     expect(out).not.toContain('MARK')
-    expect(out).toContain('const styles = {}')
-    expect(out).toContain('export { styles }')
-    expect(out).not.toMatch(/\n{3,}/)
+    expect(out).toContain('const x = 1')
+  })
+
+  test('always drops the <name>Styles marker even when enabled', () => {
+    const out = applySectionComments(
+      '// MARK: buttonStyles\nconst x = 1\n',
+      true,
+    )
+    expect(out).not.toContain('MARK')
+    expect(out).not.toContain('buttonStyles')
+    expect(out).toContain('const x = 1')
+  })
+
+  test('disabled: strips section markers, adds no separators', () => {
+    const src = 'const a = 1\n\n// MARK: Separator\n\nconst b = 2\n'
+    const out = applySectionComments(src, false)
+    expect(out).not.toContain('MARK')
+    expect(out).not.toContain('/*')
+    expect(out).toContain('const a = 1')
+    expect(out).toContain('const b = 2')
+  })
+
+  test('enabled: turns section markers into comment-rule separators', () => {
+    const src = 'const a = 1\n\n// MARK: Separator\n\nconst b = 2\n'
+    const out = applySectionComments(src, true)
+    expect(out).not.toContain('MARK')
+    expect(out).toContain('/* ---') // a real separator rule
+    expect(out).toContain('const a = 1')
+    expect(out).toContain('const b = 2')
+  })
+
+  test('enabled: drops the Styles marker but keeps other separators', () => {
+    const src =
+      '// MARK: fooStyles\nconst v = tv()\n\n// MARK: Separator\n\nexport { v }\n'
+    const out = applySectionComments(src, true)
+    expect(out).not.toContain('fooStyles')
+    expect(out).toContain('/* ---')
+    expect(out).toContain('const v = tv()')
   })
 
   test('leaves ordinary comments alone', () => {
     const src = '// a normal comment\nconst x = 1\n'
-    expect(stripSectionComments(src)).toBe(src)
-  })
-
-  test('strips indented MARK comments too', () => {
-    expect(stripSectionComments('\t\t// MARK: nested\n\tcode\n')).toBe(
-      '\tcode\n',
-    )
-  })
-})
-
-/* ============================================================ */
-/* stripUseClient                                               */
-/* ============================================================ */
-
-describe('stripUseClient', () => {
-  test('removes a leading double-quoted directive with semicolon', () => {
-    expect(stripUseClient('"use client";\n\nimport x\n')).toBe('import x\n')
-  })
-
-  test('removes a single-quoted directive without semicolon', () => {
-    expect(stripUseClient("'use client'\n\nconst x = 1\n")).toBe(
-      'const x = 1\n',
-    )
-  })
-
-  test('leaves files without the directive untouched', () => {
-    expect(stripUseClient('import x\n')).toBe('import x\n')
-  })
-
-  test('does not touch a non-leading occurrence', () => {
-    const src = 'const s = "use client"\n'
-    expect(stripUseClient(src)).toBe(src)
-  })
-})
-
-/* ============================================================ */
-/* applyFileHeader                                              */
-/* ============================================================ */
-
-describe('applyFileHeader', () => {
-  test('empty / whitespace header is a no-op', () => {
-    expect(applyFileHeader('const x = 1\n', '')).toBe('const x = 1\n')
-    expect(applyFileHeader('const x = 1\n', '   \n  ')).toBe('const x = 1\n')
-  })
-
-  test('wraps a single line in a JSDoc block at the top', () => {
-    const out = applyFileHeader("'use client'\n", '© 2026 Acme')
-    expect(out).toBe("/**\n * © 2026 Acme\n */\n\n'use client'\n")
-    // the directive is still present, only preceded by a comment
-    expect(out).toContain("'use client'")
-  })
-
-  test('prefixes every line of a multi-line header', () => {
-    const out = applyFileHeader('code\n', 'Line one\nLine two')
-    expect(out).toBe('/**\n * Line one\n * Line two\n */\n\ncode\n')
+    expect(applySectionComments(src, true)).toBe(src)
+    expect(applySectionComments(src, false)).toBe(src)
   })
 })
 
@@ -230,40 +189,23 @@ describe('publish + codeOptions', () => {
     )
   })
 
-  test('strips the "use client" directive when requested', () => {
-    const base = publish({
-      publishable: buttonPublishable,
-      preset: { density: 'default', componentParams: {} },
-    })
-    expect(base.rawContent).toContain('use client')
-
-    const stripped = publish({
-      publishable: buttonPublishable,
-      preset: {
-        density: 'default',
-        componentParams: {},
-        codeOptions: { ...DEFAULT_CODE_OPTIONS, useClient: 'strip' },
-      },
-    })
-    expect(stripped.rawContent).not.toContain('use client')
-    // the rest of the file survives intact.
-    expect(stripped.rawContent).toContain('const buttonVariants = tv(')
-  })
-
-  test('strips // MARK comments by default, keeps them when enabled', () => {
+  test('drops the internal Styles marker; section separators follow the flag', () => {
     const publishable = {
       template: `// MARK: fooStyles\nconst foo = tv(${TV_CONFIG_PLACEHOLDER})\n\n// MARK: Separator\n\nexport { foo }\n`,
       stylesConfig: { base: {} },
       meta: { name: 'foo', type: 'registry:ui' as const },
     }
 
-    const stripped = publish({
+    // default (sectionComments off): every MARK gone, no separators added.
+    const off = publish({
       publishable,
       preset: { density: 'default', componentParams: {} },
     })
-    expect(stripped.rawContent).not.toContain('MARK')
+    expect(off.rawContent).not.toContain('MARK')
+    expect(off.rawContent).not.toContain('/* ---')
 
-    const kept = publish({
+    // enabled: the Styles marker is still dropped, Separator → a rule.
+    const on = publish({
       publishable,
       preset: {
         density: 'default',
@@ -271,6 +213,8 @@ describe('publish + codeOptions', () => {
         codeOptions: { ...DEFAULT_CODE_OPTIONS, sectionComments: true },
       },
     })
-    expect(kept.rawContent).toContain('// MARK: Separator')
+    expect(on.rawContent).not.toContain('fooStyles')
+    expect(on.rawContent).not.toContain('MARK')
+    expect(on.rawContent).toContain('/* ---')
   })
 })

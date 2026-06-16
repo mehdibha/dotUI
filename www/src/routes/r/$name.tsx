@@ -18,7 +18,6 @@ import {
   publishables,
   PUBLISHABLE_NAMES,
 } from '@/registry/__generated__/publishables'
-import { applyFileHeader, DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
 import {
   publish,
   setDotuiDepResolver,
@@ -69,7 +68,6 @@ export const Route = createFileRoute('/r/$name')({
         const mod = await loader()
         const publishable = selectPublishable(mod, preset)
 
-        const codeOptions = preset.codeOptions ?? DEFAULT_CODE_OPTIONS
         const { item, rawContent } = publish({ publishable, preset })
 
         // Run the component source through oxfmt so the consumer's `shadcn add`
@@ -86,10 +84,6 @@ export const Route = createFileRoute('/r/$name')({
         } catch {
           /* fall through with raw content */
         }
-
-        // Prepend the banner/license header (if any) after formatting so the
-        // formatter can't reflow it.
-        formatted = applyFileHeader(formatted, codeOptions.fileHeader)
 
         // Re-apply formatted content to every file (in practice we only ever ship one).
         if (item.files) {

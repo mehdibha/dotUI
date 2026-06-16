@@ -10,7 +10,7 @@ import { format } from 'oxfmt'
 import { describe, expect, test } from 'vitest'
 
 import { buttonPublishable } from '@/publisher/__fixtures__/button-publishable'
-import { applyFileHeader, DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
+import { DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
 import { publish } from '@/publisher/publish'
 
 import { decodePreset, encodePreset } from './codec'
@@ -55,24 +55,11 @@ describe('codeOptions end-to-end (preset → publish → format)', () => {
     expect(code).toContain('select-none focus-reset focus-visible:focus-ring')
   })
 
-  test('useClient:strip removes the directive end to end', async () => {
-    const { decoded, code } = await exportButton({
+  test('sectionComments survives the codec round-trip', async () => {
+    const { decoded } = await exportButton({
       ...DEFAULT_CODE_OPTIONS,
-      useClient: 'strip',
+      sectionComments: true,
     })
-
-    expect(decoded?.useClient).toBe('strip')
-    expect(code).not.toContain('use client')
-    expect(code).toContain('buttonVariants') // rest of the file intact
-  })
-
-  test('a file header prepends a banner (applied post-format, like the route)', async () => {
-    const { code } = await exportButton({
-      ...DEFAULT_CODE_OPTIONS,
-      useClient: 'strip',
-    })
-    const withHeader = applyFileHeader(code, '(c) 2026 Acme')
-    expect(withHeader.startsWith('/**')).toBe(true)
-    expect(withHeader).toContain('(c) 2026 Acme')
+    expect(decoded?.sectionComments).toBe(true)
   })
 })

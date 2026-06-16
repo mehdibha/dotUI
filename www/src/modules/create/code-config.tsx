@@ -1,9 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { Label } from '@/registry/ui/field'
-import { TextArea } from '@/registry/ui/input'
 import { Switch } from '@/registry/ui/switch'
-import { TextField } from '@/registry/ui/text-field'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
@@ -104,10 +101,10 @@ function EnumRow<T extends string>({
 /* -------------------------------- config -------------------------------- */
 
 /**
- * Controls for the non-formatter `codeOptions` axes. Pure formatting
- * (quotes, semicolons, indentation, sorting…) is intentionally absent — the
- * consumer reformats with their own Prettier/Biome rules, so we only expose
- * choices that survive that pass.
+ * Controls for the non-formatter `codeOptions` axes. Pure formatting (quotes,
+ * semicolons, indentation, sorting…) is the consumer's Prettier/Biome job, and
+ * the `"use client"` directive is handled by the shadcn CLI — so we only expose
+ * what survives a formatter pass and isn't already managed elsewhere.
  */
 export function CodeConfig() {
   const { designSystem, setCodeOption } = useDesignSystem()
@@ -125,39 +122,12 @@ export function CodeConfig() {
         ]}
         onChange={(v) => setCodeOption('classArrays', v === 'arrays')}
       />
-      <EnumRow
-        label='"use client"'
-        description="Keep for RSC, strip for SPA/Vite"
-        value={opts.useClient}
-        options={[
-          { value: 'keep', label: 'Keep' },
-          { value: 'strip', label: 'Strip' },
-        ]}
-        onChange={(v) => setCodeOption('useClient', v)}
-      />
       <SwitchRow
-        label="Section comments"
-        description="Keep // MARK: dividers"
+        label="Section separators"
+        description="Divide the file with comment rules"
         value={opts.sectionComments}
         onChange={(v) => setCodeOption('sectionComments', v)}
       />
-      <div className="flex flex-col gap-2">
-        <Label>File header</Label>
-        <TextField
-          aria-label="File header"
-          value={opts.fileHeader}
-          onChange={(v) => setCodeOption('fileHeader', v)}
-        >
-          <TextArea
-            rows={3}
-            placeholder="© 2026 Acme — licensed under MIT"
-            className="font-mono text-xs"
-          />
-        </TextField>
-        <span className="text-xs text-fg-muted">
-          Prepended to every file as a comment block.
-        </span>
-      </div>
     </div>
   )
 }

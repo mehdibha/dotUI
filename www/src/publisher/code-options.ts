@@ -6,21 +6,17 @@
  * decides how the exported source READS, so it lands in the user's codebase
  * looking like the user wrote it, not like we generated it.
  *
- * Scope is deliberately limited to choices a code FORMATTER won't undo. Pure
- * formatting (semicolons, quotes, indentation, line width, trailing commas,
- * import/class sorting…) is intentionally NOT here: the consumer runs Prettier
- * or Biome with their own rules before committing, so any formatting we pick is
- * immediately overwritten — offering it as an option is noise. What survives a
- * formatter pass, and so is worth controlling:
+ * Scope is deliberately limited to choices a code FORMATTER won't undo and that
+ * the shadcn CLI doesn't already handle. Pure formatting (semicolons, quotes,
+ * indentation, width, sorting…) is the consumer's Prettier/Biome job; the
+ * `"use client"` directive is managed by the CLI's `rsc` flag. What's left:
  *
  *   - serialize-shape — how the resolved `tv(...)` config literal is rendered
  *     (`flattenClassArrays`): grouped arrays (one concern per line) vs. a single
  *     class string per slot/variant. A formatter reflows, but never converts
  *     `['a', 'b']` ↔ `'a b'`.
- *   - comment / directive transforms — add/strip text a formatter preserves:
- *     the `// MARK:` section comments (`stripSectionComments`), the
- *     `"use client"` directive (`stripUseClient`), a banner/license header
- *     (`applyFileHeader`).
+ *   - section separators — whether the file is divided into sections with
+ *     comment rules (`applySectionComments`).
  *
  * Pure JS, no external imports — safe to import from anywhere: the request-time
  * route bundle, the `/create` client bundle, AND the "Open in v0" showcase
@@ -38,45 +34,26 @@ export interface CodeOptions {
    *   - `false` → a single space-joined string per slot/variant (compact).
    */
   classArrays: boolean
-  /** Keep or strip the leading `"use client"` directive (RSC vs SPA/Vite). */
-  useClient: 'keep' | 'strip'
-  /** Keep the `// MARK:` section/separator comments from the source. */
-  sectionComments: boolean
   /**
-   * A banner/license comment prepended to every exported file. Plain text
-   * (one entry per line); rendered as a JSDoc block. Empty string = none.
+   * Divide the file into sections with comment-rule separators (placed where
+   * the source carries `// MARK:` markers). When off, no separators are added.
    */
-  fileHeader: string
+  sectionComments: boolean
 }
 
 /**
- * Defaults preserve the source's authored shape (grouped class arrays, no
- * `// MARK:` pragmas leaking to the consumer, the directive kept) — a clean
- * starting point the user can tweak.
+ * Defaults preserve the source's authored shape (grouped class arrays) with a
+ * clean, separator-free file — a sensible starting point the user can tweak.
  *
  * Kept as a complete object (every field present) so the codec can diff the
  * whole recipe against this default — an untouched config encodes to nothing.
  */
 export const DEFAULT_CODE_OPTIONS: CodeOptions = {
   classArrays: true,
-  useClient: 'keep',
   sectionComments: false,
-  fileHeader: '',
 }
 
 /* ------------------------------- validation ------------------------------- */
-
-const USE_CLIENT = new Set<CodeOptions['useClient']>(['keep', 'strip'])
-
-function pickEnum<T extends string>(
-  value: unknown,
-  allowed: Set<T>,
-  fallback: T,
-): T {
-  return typeof value === 'string' && allowed.has(value as T)
-    ? (value as T)
-    : fallback
-}
 
 function pickBool(value: unknown, fallback: boolean): boolean {
   return typeof value === 'boolean' ? value : fallback
@@ -95,10 +72,7 @@ export function sanitizeCodeOptions(input: unknown): CodeOptions {
   const d = DEFAULT_CODE_OPTIONS
   return {
     classArrays: pickBool(raw.classArrays, d.classArrays),
-    useClient: pickEnum(raw.useClient, USE_CLIENT, d.useClient),
     sectionComments: pickBool(raw.sectionComments, d.sectionComments),
-    fileHeader:
-      typeof raw.fileHeader === 'string' ? raw.fileHeader : d.fileHeader,
   }
 }
 
@@ -174,39 +148,30 @@ export function flattenClassArrays(layer: TvLayer): TvLayer {
   return out
 }
 
-/* ----------------------------- text edits ----------------------------- */
+/* --------------------------- section separators -------------------------- */
+
+/** A blank section-divider comment rule (≈ 80 cols). */
+const SEPARATOR =
+  '/* -------------------------------------------------------------------------- */'
+
+// `// MARK: <name>Styles` only tells the publisher where to inject the resolved
+// `tv()` config — purely internal, never shown to the user.
+const STYLES_MARK_RE =
+  /^[ \t]*\/\/ MARK:[ \t]*[A-Za-z0-9_$]*Styles[ \t]*\r?\n?/gm
+// Every other `// MARK:` marks where a section separator belongs.
+const SECTION_MARK_LINE_RE = /^[ \t]*\/\/ MARK:.*$/gm
+const SECTION_MARK_BLOCK_RE = /^[ \t]*\/\/ MARK:.*$\r?\n?/gm
 
 /**
- * Strip the source's `// MARK:` section/separator comments (an Xcode authoring
- * convention) from emitted code. Leftover blank runs are collapsed; the
- * formatter normalises the rest.
+ * Resolve the source's `// MARK:` markers. The `…Styles` marker is always
+ * dropped (it's an internal injection point). The rest become real
+ * comment-rule separators when `enabled`, or are dropped when not. Leftover
+ * blank runs are collapsed; the formatter normalises the rest.
  */
-export function stripSectionComments(source: string): string {
-  return source
-    .replace(/^[ \t]*\/\/ MARK:.*$\n?/gm, '')
-    .replace(/\n{3,}/g, '\n\n')
-}
-
-/**
- * Strip a leading `"use client"` / `'use client'` directive (with optional
- * semicolon) from the head of the file. For SPA/Vite consumers who don't want
- * stray RSC directives.
- */
-export function stripUseClient(source: string): string {
-  return source.replace(/^\s*['"]use client['"];?[ \t]*\r?\n+/, '')
-}
-
-/**
- * Prepend a banner/license comment as a JSDoc block at the top of the file
- * (above any `"use client"` directive — comments before a directive are legal).
- * Applied after formatting so the formatter doesn't reflow the banner.
- */
-export function applyFileHeader(source: string, header: string): string {
-  const trimmed = header.trim()
-  if (trimmed === '') return source
-  const body = trimmed
-    .split('\n')
-    .map((line) => ` * ${line}`.trimEnd())
-    .join('\n')
-  return `/**\n${body}\n */\n\n${source}`
+export function applySectionComments(source: string, enabled: boolean): string {
+  let out = source.replace(STYLES_MARK_RE, '')
+  out = enabled
+    ? out.replace(SECTION_MARK_LINE_RE, SEPARATOR)
+    : out.replace(SECTION_MARK_BLOCK_RE, '')
+  return out.replace(/\n{3,}/g, '\n\n')
 }

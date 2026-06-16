@@ -19,10 +19,9 @@
 import type { RegistryItem } from '@/registry/types'
 
 import {
+  applySectionComments,
   DEFAULT_CODE_OPTIONS,
   flattenClassArrays,
-  stripSectionComments,
-  stripUseClient,
 } from './code-options'
 import { flatten } from './flatten'
 import { buildScalarVarMap, resolveClasses } from './resolve-classes'
@@ -150,16 +149,10 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
   const literal = serializeTvConfig(resolved)
   let content = template.replace(TV_CONFIG_PLACEHOLDER, literal)
 
-  // 4b. Code-style text edits. Strip the `"use client"` directive for
-  // SPA/Vite consumers, and drop the source's `// MARK:` section comments
-  // unless the user keeps them. (The banner/file header is applied by the
-  // route after formatting.)
-  if (codeOptions.useClient === 'strip') {
-    content = stripUseClient(content)
-  }
-  if (!codeOptions.sectionComments) {
-    content = stripSectionComments(content)
-  }
+  // 4b. Resolve the source's `// MARK:` markers: always drop the internal
+  // `…Styles` injection marker; render the rest as section separators when the
+  // user wants them, or drop them too.
+  content = applySectionComments(content, codeOptions.sectionComments)
 
   // 5. Assemble shadcn item — drop dotui-only fields (params, group).
   // Shadcn's RegistryItem is a discriminated union on `type`. We can't carry the
