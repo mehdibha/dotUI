@@ -144,7 +144,7 @@ function buildPageTsx(preset: PublishPreset): string {
 
 import "./globals.css";
 
-import Cards from "../components/showcase/cards";
+import Cards from "../modules/marketing/cards";
 import { DesignSystemProvider } from "../modules/core/styles";
 
 export default function Page() {

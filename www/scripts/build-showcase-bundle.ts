@@ -2,7 +2,7 @@
  * Build the "showcase bundle" generated artifact.
  *
  * The "Open in v0" feature hands an external tool (v0) a *whole project* that
- * boots straight into the dotUI showcase (`components/showcase/cards.tsx`),
+ * boots straight into the dotUI showcase (`modules/marketing/cards.tsx`),
  * with every component installed and the user's preset
  * theme written into `globals.css`.
  *
@@ -50,7 +50,7 @@ const GENERATED = path.join(SRC, 'registry/__generated__')
 const OUT_FILE = path.join(GENERATED, 'showcase-bundle.ts')
 
 /** Entry point of the closure — the component the showcase renders first. */
-const ENTRY = 'components/showcase/cards.tsx'
+const ENTRY = 'modules/marketing/cards.tsx'
 
 /**
  * Full-file replacements, keyed by src-relative path. A file in this map is
