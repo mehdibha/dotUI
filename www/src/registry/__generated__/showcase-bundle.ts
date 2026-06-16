@@ -1093,7 +1093,7 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	{
 		target: "registry/ui/tree/meta.ts",
 		content:
-			"import type { RegistryItem } from '../../types'\n\nconst treeMeta = {\n  name: 'tree',\n  type: 'registry:ui',\n  group: 'menus-lists',\n  files: [\n    {\n      type: 'registry:ui',\n      path: 'ui/tree/base.tsx',\n      target: 'ui/tree.tsx',\n    },\n  ],\n  registryDependencies: ['checkbox'],\n  dependencies: ['react-aria-components'],\n  params: {\n    highlight: {\n      kind: 'enum',\n      default: 'subtle',\n      values: ['subtle', 'accent'] as const,\n      description: 'How focused/active items are highlighted.',\n    },\n  },\n} satisfies RegistryItem\n\nexport default treeMeta\n",
+			"import type { RegistryItem } from '../../types'\n\nconst treeMeta = {\n  name: 'tree',\n  type: 'registry:ui',\n  group: 'menus-lists',\n  files: [\n    {\n      type: 'registry:ui',\n      path: 'ui/tree/base.tsx',\n      target: 'ui/tree.tsx',\n    },\n  ],\n  registryDependencies: ['checkbox'],\n  dependencies: ['react-aria-components'],\n} satisfies RegistryItem\n\nexport default treeMeta\n",
 	},
 ];
 

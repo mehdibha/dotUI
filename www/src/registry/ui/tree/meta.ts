@@ -13,14 +13,6 @@ const treeMeta = {
   ],
   registryDependencies: ['checkbox'],
   dependencies: ['react-aria-components'],
-  params: {
-    highlight: {
-      kind: 'enum',
-      default: 'subtle',
-      values: ['subtle', 'accent'] as const,
-      description: 'How focused/active items are highlighted.',
-    },
-  },
 } satisfies RegistryItem
 
 export default treeMeta
