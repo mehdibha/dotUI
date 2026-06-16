@@ -27,6 +27,7 @@ export async function resolveRequestPreset(
       color: ds.color,
       density: ds.density,
       componentParams: ds.componentParams,
+      codeOptions: ds.codeOptions,
     }
   } catch {
     return defaultPreset()

@@ -27,7 +27,8 @@ import { SearchField } from '@/registry/ui/search-field'
 import { Select, SelectValue } from '@/registry/ui/select'
 import { componentsData } from '@/modules/docs/components-list/components-data'
 
-import { ColorsConfig, ColorsSummary } from './colors-config'
+import { CodeOptionsDialog } from './code-options'
+import { ColorsConfig, ColorsSummary } from './colors'
 import {
   AllComponentsView,
   ComponentDetailView,
@@ -35,25 +36,25 @@ import {
   getComponentDisplayName,
   getGroupDisplayName,
   isGroupId,
-} from './components-config'
+} from './components'
 import {
   CURSOR_DISABLED_VAR,
   CURSOR_INTERACTIVE_VAR,
   CursorConfig,
   DEFAULT_CURSOR_DISABLED,
   DEFAULT_CURSOR_INTERACTIVE,
-} from './cursor-config'
+} from './cursor'
 import { ExportFooter } from './export'
-import { IconographyConfig } from './iconography-config'
+import { IconographyConfig } from './iconography'
 import {
   DEFAULT_RADIUS_FACTOR,
   DensityConfig,
   RADIUS_FACTOR_VAR,
   RadiusConfig,
-} from './layout-config'
+} from './layout'
 import { useDesignSystem } from './preset'
 import type { PreviewMode } from './preset'
-import { TypographyConfig } from './typography-config'
+import { TypographyConfig } from './typography'
 
 /* -------------------------------- Types -------------------------------- */
 
@@ -474,6 +475,7 @@ export function CustomizerPanel({
 
       {/* Footer */}
       <div className="flex flex-col gap-2 border-t p-3">
+        <CodeOptionsDialog />
         <ExportFooter />
       </div>
     </div>

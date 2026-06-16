@@ -8,4 +8,9 @@ export {
   usePreviewForcedTheme,
 } from './iframe-sync'
 export { useDesignSystem } from './use-design-system'
-export type { Density, DesignSystem, DesignSystemState } from './types'
+export type {
+  CodeOptions,
+  Density,
+  DesignSystem,
+  DesignSystemState,
+} from './types'

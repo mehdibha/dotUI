@@ -10,6 +10,8 @@
 import type { ColorConfig } from '@/registry/theme'
 import type { Density, RegistryItem, RegistryItemFile } from '@/registry/types'
 
+import type { CodeOptions } from './code-options'
+
 /**
  * A class value in a `tv` config. `tv` accepts more shapes (booleans, conditionals)
  * but we only emit string / string-array forms from `styles.ts` files.
@@ -71,6 +73,8 @@ export interface PublishPreset {
   componentParams: Record<string, Record<string, string>>
   /** Generative color recipe; when present, its ramps override the static base palette. */
   color?: ColorConfig
+  /** Exported-code style. When omitted, the publisher applies `DEFAULT_CODE_OPTIONS`. */
+  codeOptions?: CodeOptions
 }
 
 /** Subset of `RegistryItemFile` we emit. */

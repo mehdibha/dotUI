@@ -1,9 +1,9 @@
 import { createContext, useContext, useRef } from 'react'
 import { CheckIcon, CopyIcon, FileIcon } from 'lucide-react'
 
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
-import { useCopyToClipboard } from '@/modules/docs/use-copy-to-clipboard'
 
 const CodeBlockContext =
   createContext<React.RefObject<HTMLElement | null> | null>(null)

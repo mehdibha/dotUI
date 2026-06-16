@@ -22,9 +22,9 @@ import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
 import { Popover } from '@/registry/ui/popover'
 import { Select, SelectValue } from '@/registry/ui/select'
 
-import { ContrastReadout } from './color-contrast'
-import { ColorKnobsControls } from './color-knobs'
-import { useDesignSystem } from './preset'
+import { useDesignSystem } from '../preset'
+import { ContrastReadout } from './contrast'
+import { ColorKnobsControls } from './knobs'
 
 const ALGORITHMS: ReadonlyArray<{ id: AlgorithmId; label: string }> = [
   { id: 'oklch', label: 'OKLCH Perceptual' },

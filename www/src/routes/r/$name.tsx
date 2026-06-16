@@ -37,6 +37,11 @@ const JSON_HEADERS = {
     'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
 }
 
+// A fixed, conventional baseline — the consumer reformats with their own
+// Prettier/Biome rules on commit, so formatting isn't a `codeOptions` axis.
+// Only meant to keep the shipped + previewed source readable.
+const OUTPUT_FORMAT = { printWidth: 80 } as const
+
 export const Route = createFileRoute('/r/$name')({
   server: {
     handlers: {
@@ -72,10 +77,7 @@ export const Route = createFileRoute('/r/$name')({
           const result = await format(
             publishable.meta.files?.[0]?.target ?? 'ui.tsx',
             rawContent,
-            {
-              printWidth: 120,
-              useTabs: true,
-            },
+            OUTPUT_FORMAT,
           )
           formatted = result.code
         } catch {

@@ -5,6 +5,10 @@ import {
   GENERATIVE_ALGORITHMS,
   type ColorConfig,
 } from '@/registry/theme'
+import {
+  DEFAULT_CODE_OPTIONS,
+  sanitizeCodeOptions,
+} from '@/publisher/code-options'
 
 import { DEFAULTS } from './defaults'
 import { fromCompact } from './types'
@@ -98,7 +102,15 @@ export function encodePreset(ds: DesignSystem): string | undefined {
   )
     compact.c = ds.color
 
-  if (!compact.p && !compact.t && !compact.d && !compact.c) return undefined
+  // Store the whole (small) code-options recipe only when it differs from the default style.
+  if (
+    ds.codeOptions &&
+    JSON.stringify(ds.codeOptions) !== JSON.stringify(DEFAULT_CODE_OPTIONS)
+  )
+    compact.o = ds.codeOptions
+
+  if (!compact.p && !compact.t && !compact.d && !compact.c && !compact.o)
+    return undefined
 
   const json = JSON.stringify(compact)
   const compressed = deflateRaw(json, { level: 9 })
@@ -138,6 +150,9 @@ export function decodePreset(encoded: string): DesignSystem {
       tokens: { ...DEFAULTS.tokens, ...ds.tokens },
       density: ds.density,
       color: sanitizeColor(ds.color),
+      codeOptions: ds.codeOptions
+        ? sanitizeCodeOptions(ds.codeOptions)
+        : undefined,
     }
   } catch {
     return DEFAULTS
