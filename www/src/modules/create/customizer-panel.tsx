@@ -13,6 +13,7 @@ import { AnimatePresence, motion, type Transition } from 'motion/react'
 import * as ButtonPrimitives from 'react-aria-components/Button'
 
 import * as icons from '@/registry/__generated__/icons'
+import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
 import { Command } from '@/registry/ui/command'
@@ -180,9 +181,11 @@ const routeApi = getRouteApi('/_app/create')
 export function CustomizerPanel({
   previewMode = 'light',
   onTogglePreviewMode,
+  className,
 }: {
   previewMode?: PreviewMode
   onTogglePreviewMode?: () => void
+  className?: string
 }) {
   const { panel, preview, preset } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
@@ -439,7 +442,12 @@ export function CustomizerPanel({
   }
 
   return (
-    <div className="relative flex h-full w-full flex-col rounded-xl border bg-card">
+    <div
+      className={cn(
+        'relative flex w-full flex-1 flex-col rounded-xl border bg-card lg:w-72 lg:flex-none lg:shrink-0',
+        className,
+      )}
+    >
       {/* Header */}
       <div className="relative overflow-hidden border-b p-2">
         <div className="flex w-full items-center gap-2">
