@@ -23,7 +23,7 @@ export function TypographyConfig() {
 
 const FontPicker = ({ label }: { label: string }) => {
   return (
-    <Select className="w-full" defaultValue="geist">
+    <Select className="w-full" defaultValue="Geist">
       <Label>{label}</Label>
       <SelectTrigger className="w-full" />
       <Popover>

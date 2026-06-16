@@ -1,4 +1,4 @@
-import { type ReactNode, useMemo } from 'react'
+import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
 import {
   ChevronDownIcon,
@@ -13,6 +13,8 @@ import { AnimatePresence, motion, type Transition } from 'motion/react'
 import * as ButtonPrimitives from 'react-aria-components/Button'
 
 import * as icons from '@/registry/__generated__/icons'
+import { cn } from '@/registry/lib/utils'
+import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
 import { Command } from '@/registry/ui/command'
 import { Input } from '@/registry/ui/input'
@@ -149,6 +151,28 @@ const menu: MenuItem[] = [
 
 export const MENU_IDS = new Set(menu.map((m) => m.id))
 
+/* ------------------------------- Shuffle ------------------------------- */
+
+// "Surprise me" pools for the shuffle button — the punchy, always-legible axes
+// (accent / radius / density), each curated so any random pick still looks good.
+const SHUFFLE_ACCENTS = [
+  '#3b82f6',
+  '#6366f1',
+  '#8b5cf6',
+  '#ec4899',
+  '#f43f5e',
+  '#f59e0b',
+  '#22c55e',
+  '#14b8a6',
+  '#06b6d4',
+]
+const SHUFFLE_RADII = ['0', '0.5', '1', '1.5', '2']
+const SHUFFLE_DENSITIES = ['compact', 'default', 'comfortable'] as const
+
+function pickRandom<T>(arr: readonly T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)] as T
+}
+
 /* -------------------------------- Panel -------------------------------- */
 
 const routeApi = getRouteApi('/_app/create')
@@ -156,16 +180,72 @@ const routeApi = getRouteApi('/_app/create')
 export function CustomizerPanel({
   previewMode = 'light',
   onTogglePreviewMode,
+  className,
 }: {
   previewMode?: PreviewMode
   onTogglePreviewMode?: () => void
+  className?: string
 }) {
-  const { panel, preview } = routeApi.useSearch()
+  const { panel, preview, preset } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const { designSystem, setComponentParam, setToken, setDensity } =
-    useDesignSystem()
+  const {
+    designSystem,
+    setDesignSystem,
+    setComponentParam,
+    setToken,
+    setDensity,
+  } = useDesignSystem()
 
   const navStack = useMemo(() => (panel ? panel.split('.') : []), [panel])
+
+  // Undo history. Every design change is encoded into the `?preset=` search param
+  // with `replace: true`, so the browser back button can't step through edits — we
+  // keep our own stack of past preset values and walk back through it. Watching
+  // `preset` (not wiring into each setter) captures changes from every config panel,
+  // each of which owns a separate `useDesignSystem()` instance but shares this URL.
+  const historyRef = useRef<(string | undefined)[]>([])
+  const prevPresetRef = useRef<string | undefined>(preset)
+  const isUndoingRef = useRef(false)
+  const [canUndo, setCanUndo] = useState(false)
+
+  useEffect(() => {
+    if (prevPresetRef.current === preset) return
+    if (isUndoingRef.current) {
+      isUndoingRef.current = false
+    } else {
+      historyRef.current.push(prevPresetRef.current)
+      setCanUndo(true)
+    }
+    prevPresetRef.current = preset
+  }, [preset])
+
+  function undo() {
+    if (historyRef.current.length === 0) return
+    const previous = historyRef.current.pop()
+    isUndoingRef.current = true
+    navigate({
+      search: (prev) => ({ ...prev, preset: previous }),
+      replace: true,
+    })
+    setCanUndo(historyRef.current.length > 0)
+  }
+
+  // Shuffle the always-legible axes (accent / radius / density) in one update so
+  // they land as a single history entry that Undo can revert in one step.
+  function shuffle() {
+    const accent = pickRandom(SHUFFLE_ACCENTS)
+    const radius = pickRandom(SHUFFLE_RADII)
+    const density = pickRandom(SHUFFLE_DENSITIES)
+    setDesignSystem((prev) => {
+      const base = prev.color ?? DEFAULT_COLOR_CONFIG
+      return {
+        ...prev,
+        density,
+        tokens: { ...prev.tokens, [RADIUS_FACTOR_VAR]: radius },
+        color: { ...base, seeds: { ...base.seeds, accent } },
+      }
+    })
+  }
 
   function push(id: string) {
     navigate({
@@ -351,7 +431,12 @@ export function CustomizerPanel({
   }
 
   return (
-    <div className="relative flex w-72 shrink-0 flex-col rounded-xl border bg-card">
+    <div
+      className={cn(
+        'relative flex w-full flex-1 flex-col rounded-xl border bg-card lg:w-72 lg:flex-none lg:shrink-0',
+        className,
+      )}
+    >
       {/* Header */}
       <div className="relative overflow-hidden border-b p-2">
         <div className="flex w-full items-center gap-2">
@@ -401,7 +486,7 @@ export function CustomizerPanel({
               </Command>
             </Popover>
           </Select>
-          <Button size="sm" isIconOnly>
+          <Button size="sm" isIconOnly aria-label="Shuffle" onPress={shuffle}>
             <ShuffleIcon />
           </Button>
           <Button
@@ -412,7 +497,13 @@ export function CustomizerPanel({
           >
             {previewMode === 'dark' ? <SunIcon /> : <MoonIcon />}
           </Button>
-          <Button size="sm" isIconOnly>
+          <Button
+            size="sm"
+            isIconOnly
+            onPress={undo}
+            isDisabled={!canUndo}
+            aria-label="Undo"
+          >
             <Undo2Icon />
           </Button>
         </div>

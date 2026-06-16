@@ -82,7 +82,7 @@ export const mdxComponents: MDXComponents = {
     />
   ),
   a: ({ className, children, href, ...props }): React.ComponentProps<'a'> => {
-    const isInternal = href.startsWith('/')
+    const isInternal = href?.startsWith('/') ?? false
     return (
       <Link
         href={href}

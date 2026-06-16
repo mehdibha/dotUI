@@ -14,19 +14,23 @@
 
 import { useEffect, useMemo, useState } from 'react'
 
+import { siteConfig } from '@/config/site'
 import { V0Icon } from '@/components/icons/v0'
 
 import { useDesignSystem } from './preset'
 import { encodePreset } from './preset/codec'
 
-const DEFAULT_REGISTRY_HOST = 'https://dotui.com'
+const DEFAULT_REGISTRY_HOST: string = siteConfig.url
 
 function getRegistryHost(): string {
   if (typeof window === 'undefined') return DEFAULT_REGISTRY_HOST
-  const { origin } = window.location
+  // localhost / file fall back to the public host (v0 can't fetch a local URL);
+  // match on `hostname` so any dev port counts. A deployed origin points to itself.
+  const { origin, hostname } = window.location
   if (
     origin === 'null' ||
-    origin === 'http://localhost' ||
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
     origin.startsWith('file:')
   ) {
     return DEFAULT_REGISTRY_HOST

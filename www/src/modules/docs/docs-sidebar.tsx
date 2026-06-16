@@ -8,7 +8,10 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
   const { pathname } = useLocation()
 
   return (
-    <nav className="flex h-full flex-col gap-6 overflow-y-auto scroll-smooth rounded-2xl [mask-image:linear-gradient(to_bottom,transparent_0,black_24px,black_calc(100%-24px),transparent_100%)] py-6 pr-3 pl-4 [webkit-mask-image:linear-gradient(to_bottom,transparent_0,black_24px,black_calc(100%-24px),transparent_100%)]">
+    <nav
+      aria-label="Docs"
+      className="flex h-full flex-col gap-6 overflow-y-auto scroll-smooth rounded-2xl [mask-image:linear-gradient(to_bottom,transparent_0,black_24px,black_calc(100%-24px),transparent_100%)] py-6 pr-3 pl-4 [-webkit-mask-image:linear-gradient(to_bottom,transparent_0,black_24px,black_calc(100%-24px),transparent_100%)]"
+    >
       {items.map((item) => {
         if (item.type === 'folder') {
           return (

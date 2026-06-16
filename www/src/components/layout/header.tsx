@@ -97,8 +97,11 @@ export function Header({ className, items = [] }: HeaderProps) {
       </div>
       <div className="flex items-center gap-3 md:gap-6">
         <MobileNav items={items} />
-        <Logo className="max-md:hidden" />
-        <nav className="flex items-center gap-3 text-sm max-md:hidden">
+        <Logo />
+        <nav
+          aria-label="Main"
+          className="flex items-center gap-3 text-sm max-md:hidden"
+        >
           {navItems.map((item) => (
             <RouterLink
               key={item.name}

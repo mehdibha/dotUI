@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <div className="container flex items-center justify-center py-10">
+    <footer className="container flex items-center justify-center py-10">
       <p className="text-sm text-fg-muted">
         Built with passion by{' '}
         <a
@@ -13,6 +13,6 @@ export function Footer() {
         </a>
         .
       </p>
-    </div>
+    </footer>
   )
 }
