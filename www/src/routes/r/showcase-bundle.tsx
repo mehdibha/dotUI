@@ -21,6 +21,7 @@
 
 import { createFileRoute } from '@tanstack/react-router'
 
+import { resolveRequestPreset } from '@/lib/registry-preset'
 import {
   SHOWCASE_BUNDLE_CSS_FILES,
   SHOWCASE_BUNDLE_DEPENDENCIES,
@@ -48,9 +49,7 @@ export const Route = createFileRoute('/r/showcase-bundle')({
       GET: async ({ request }) => {
         const url = new URL(request.url)
         const encodedPreset = url.searchParams.get('preset') ?? undefined
-        const preset = encodedPreset
-          ? await decodePresetForRoute(encodedPreset)
-          : defaultPreset()
+        const preset = await resolveRequestPreset(encodedPreset)
 
         const files: ItemFile[] = [
           // App shell + theme (assembled per request). Root-relative targets:
@@ -95,24 +94,6 @@ export const Route = createFileRoute('/r/showcase-bundle')({
 
 function file(type: string, target: string, content: string): ItemFile {
   return { type, path: target, target, content }
-}
-
-function defaultPreset(): PublishPreset {
-  return { density: 'compact', componentParams: {} }
-}
-
-async function decodePresetForRoute(encoded: string): Promise<PublishPreset> {
-  try {
-    const { decodePreset } = await import('@/modules/create/preset/codec')
-    const ds = decodePreset(encoded)
-    return {
-      color: ds.color,
-      density: ds.density,
-      componentParams: ds.componentParams,
-    }
-  } catch {
-    return defaultPreset()
-  }
 }
 
 function buildLayoutTsx(): string {
