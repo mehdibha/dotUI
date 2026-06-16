@@ -52,7 +52,7 @@ const GLOBALS_CSS = `@import "tailwindcss";
 const PAGE_TSX = `"use client";
 
 import Cards from "../modules/marketing/cards";
-import { DesignSystemProvider } from "../modules/core/styles";
+import { DesignSystemProvider } from "../lib/styles";
 
 export default function Page() {
 \treturn (

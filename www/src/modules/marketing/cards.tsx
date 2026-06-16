@@ -2,13 +2,13 @@
 
 import { useMemo, useState } from 'react'
 
+import { DesignSystemProvider } from '@/lib/styles'
 import { useMounted } from '@/hooks/use-mounted'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import type { Density } from '@/registry/types'
 import { CardsGrid } from '@/components/showcase/cards-grid'
 import { ShowcaseCustomizer } from '@/components/showcase/showcase-customizer'
 import { SkeletonRail } from '@/components/showcase/skeleton-cards'
-import { DesignSystemProvider } from '@/modules/core/styles'
 import { encodePreset } from '@/modules/create/preset'
 
 // Theme contract: every `--radius-*` token is `calc(<rem> * var(--radius-factor))`,
