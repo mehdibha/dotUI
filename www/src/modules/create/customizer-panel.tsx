@@ -27,7 +27,7 @@ import { SearchField } from '@/registry/ui/search-field'
 import { Select, SelectValue } from '@/registry/ui/select'
 import { componentsData } from '@/modules/docs/components-list/components-data'
 
-import { CodeOptionsDialog } from './code-options-dialog'
+import { CodeOptionsDialog } from './code-options'
 import { ColorsConfig, ColorsSummary } from './colors-config'
 import {
   AllComponentsView,

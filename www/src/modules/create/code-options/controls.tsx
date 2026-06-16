@@ -5,7 +5,7 @@ import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
 
-import { useDesignSystem } from './preset'
+import { useDesignSystem } from '../preset'
 
 /* ------------------------------ row helpers ------------------------------ */
 
@@ -98,7 +98,7 @@ function EnumRow<T extends string>({
   )
 }
 
-/* -------------------------------- config -------------------------------- */
+/* -------------------------------- controls ------------------------------- */
 
 /**
  * Controls for the non-formatter `codeOptions` axes. Pure formatting (quotes,
@@ -106,7 +106,7 @@ function EnumRow<T extends string>({
  * the `"use client"` directive is handled by the shadcn CLI — so we only expose
  * what survives a formatter pass and isn't already managed elsewhere.
  */
-export function CodeConfig() {
+export function CodeOptionsControls() {
   const { designSystem, setCodeOption } = useDesignSystem()
   const opts = designSystem.codeOptions ?? DEFAULT_CODE_OPTIONS
 
