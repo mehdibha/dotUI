@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { LinkButton } from '@/registry/ui/button'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { Announcement } from '@/components/announcement'
 import { BaseUiIcon } from '@/components/icons/base-ui'
 import { BoltIcon } from '@/components/icons/bolt'
 import { LovableIcon } from '@/components/icons/lovable'
@@ -12,12 +13,11 @@ import { TailwindWordmark } from '@/components/icons/tailwind-wordmark'
 import { TypeScriptIcon } from '@/components/icons/typescript'
 import { V0Icon } from '@/components/icons/v0'
 import { Footer } from '@/components/layout/footer'
-import { Announcement } from '@/components/marketing/announcement'
 import {
   AnimatedHeadline,
   type RotatingTextItem,
-} from '@/components/marketing/rotating-text'
-import Cards from '@/components/marketing/showcase/cards'
+} from '@/components/rotating-text'
+import Cards from '@/components/showcase/cards'
 
 // dotUI's brand font (the "dotUI" wordmark uses Josefin Sans), loaded locally. Weight,
 // letter-spacing and size come from the original headline classes on the <h1>.

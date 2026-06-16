@@ -50,7 +50,7 @@ const GLOBALS_CSS = `@import "tailwindcss";
 
 const PAGE_TSX = `"use client";
 
-import Cards from "../components/marketing/showcase/cards";
+import Cards from "../components/showcase/cards";
 import { DesignSystemProvider } from "../modules/core/styles";
 
 export default function Page() {
