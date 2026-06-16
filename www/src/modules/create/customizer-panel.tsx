@@ -28,7 +28,7 @@ import { Select, SelectValue } from '@/registry/ui/select'
 import { componentsData } from '@/modules/docs/components-list/components-data'
 
 import { CodeOptionsDialog } from './code-options'
-import { ColorsConfig, ColorsSummary } from './colors-config'
+import { ColorsConfig, ColorsSummary } from './colors'
 import {
   AllComponentsView,
   ComponentDetailView,
@@ -36,26 +36,26 @@ import {
   getComponentDisplayName,
   getGroupDisplayName,
   isGroupId,
-} from './components-config'
+} from './components'
 import {
   CURSOR_DISABLED_VAR,
   CURSOR_INTERACTIVE_VAR,
   CursorConfig,
   DEFAULT_CURSOR_DISABLED,
   DEFAULT_CURSOR_INTERACTIVE,
-} from './cursor-config'
-import { IconographyConfig } from './iconography-config'
+} from './cursor'
+import { IconographyConfig } from './iconography'
 import { InstallCommand } from './install-command'
 import {
   DEFAULT_RADIUS_FACTOR,
   DensityConfig,
   RADIUS_FACTOR_VAR,
   RadiusConfig,
-} from './layout-config'
+} from './layout'
 import { OpenInV0 } from './open-in-v0'
 import { useDesignSystem } from './preset'
 import type { PreviewMode } from './preset'
-import { TypographyConfig } from './typography-config'
+import { TypographyConfig } from './typography'
 
 /* -------------------------------- Types -------------------------------- */
 
