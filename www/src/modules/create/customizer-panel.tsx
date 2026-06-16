@@ -43,15 +43,14 @@ import {
   DEFAULT_CURSOR_DISABLED,
   DEFAULT_CURSOR_INTERACTIVE,
 } from './cursor-config'
+import { ExportFooter } from './export'
 import { IconographyConfig } from './iconography-config'
-import { InstallCommand } from './install-command'
 import {
   DEFAULT_RADIUS_FACTOR,
   DensityConfig,
   RADIUS_FACTOR_VAR,
   RadiusConfig,
 } from './layout-config'
-import { OpenInV0 } from './open-in-v0'
 import { useDesignSystem } from './preset'
 import type { PreviewMode } from './preset'
 import { TypographyConfig } from './typography-config'
@@ -475,8 +474,7 @@ export function CustomizerPanel({
 
       {/* Footer */}
       <div className="flex flex-col gap-2 border-t p-3">
-        <InstallCommand />
-        <OpenInV0 />
+        <ExportFooter />
       </div>
     </div>
   )
