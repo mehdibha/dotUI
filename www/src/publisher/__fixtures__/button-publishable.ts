@@ -1,6 +1,6 @@
 /**
  * Hand-written fixture mirroring what the build-time AST extractor will emit
- * for the button component. Used by `publish.spec.ts` to exercise the full
+ * for the button component. Used by `publish.test.ts` to exercise the full
  * request-time pipeline without needing the AST pass to be working.
  *
  * Kept in sync (manually) with:

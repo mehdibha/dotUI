@@ -4,7 +4,7 @@
  * Produces the Tailwind v4 `@theme` block that today lives, hand-authored, in
  * `base/theme.css`. Parsing the output through the publisher's
  * `cssToRegistryFields` must yield the same `cssVars.theme` entries — see
- * `emit-css.spec.ts`.
+ * `emit-css.test.ts`.
  */
 
 import type {

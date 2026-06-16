@@ -86,7 +86,7 @@ to keep them aligned:
 | Runtime theming (`www/src/modules/core/styles.tsx`, `DesignSystemProvider`) | `emitPrimitivesCss(…, { onColors: true })` using `onBlackWhite()` from `packages/colors/src/shared/on-color.ts` | Plugin output is stale once ramps are overridden at runtime, so foregrounds are re-baked into the injected `<style>` |
 | Showcase bundle (`www/scripts/build-showcase-bundle.ts`) | **Strips the `@plugin` line** and pre-bakes `--on-*` into static CSS | Portability — avoids the plugin's path brittleness entirely |
 
-Parity is enforced by `www/src/registry/theme/on-color-parity.spec.ts`, which asserts
+Parity is enforced by `www/src/registry/theme/on-color-parity.test.ts`, which asserts
 `onBlackWhite()` matches the plugin's exported `getContrastColor` for every generated
 step. When a system needs a parity test between a build-time scanner, a runtime baker,
 and a bundle pre-baker, the scanner is the odd one out. Components consume the result

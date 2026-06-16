@@ -83,7 +83,7 @@ The rehype plugin that powers every docs page (`<Demo>`, `<Example>`, `<Referenc
 
 - Demo name → file resolution rule (from `rehype-transform.ts`, `resolveDemoPath`): a name like `button/demos/default` maps to `<registryBasePath>/ui/button/demos/default.tsx`; in this repo that is `www/src/registry/ui/button/demos/default.tsx`. Reference name `X` maps to `www/src/modules/references/generated/X.json`.
 
-- Existing spec to model after: `www/src/modules/docs/codegen/source-overlay.spec.ts` (vitest, runs via root `pnpm test`; root `vitest.config.ts` aliases `@/` → `www/src/`).
+- Existing spec to model after: `www/src/modules/docs/codegen/source-overlay.test.ts` (vitest, runs via root `pnpm test`; root `vitest.config.ts` aliases `@/` → `www/src/`).
 
 ## Commands you will need
 
@@ -99,7 +99,7 @@ The rehype plugin that powers every docs page (`<Demo>`, `<Example>`, `<Referenc
 
 **In scope** (the only files you should modify):
 - `www/src/modules/docs/mdx-plugins/rehype-transform.ts`
-- `www/src/modules/docs/docs-content.spec.ts` (create)
+- `www/src/modules/docs/docs-content.test.ts` (create)
 
 **Out of scope** (do NOT touch, even though they look related):
 - `www/src/modules/docs/codegen/source-overlay.ts` — separately spec'd engine; its `OverlayError`s already propagate into `processInteractiveDemoNode`'s catch, which this plan re-throws — no change needed inside it.
@@ -118,7 +118,7 @@ The rehype plugin that powers every docs page (`<Demo>`, `<Example>`, `<Referenc
 
 ### Step 1: Write the content-integrity spec first (it documents the invariants)
 
-Create `www/src/modules/docs/docs-content.spec.ts`. It uses `node:fs` + `node:path` to read files relative to the repo root (compute the root from `import.meta.dirname`, like `vitest.config.ts` does — the spec lives at `www/src/modules/docs/`, so root is four levels up). Assertions:
+Create `www/src/modules/docs/docs-content.test.ts`. It uses `node:fs` + `node:path` to read files relative to the repo root (compute the root from `import.meta.dirname`, like `vitest.config.ts` does — the spec lives at `www/src/modules/docs/`, so root is four levels up). Assertions:
 
 1. **Demo/Example names resolve**: scan every `www/content/docs/**/*.mdx` for `name="…"` attributes on `<Demo`, `<Example` and `<InteractiveDemo` elements (a regex over raw MDX text is acceptable: `/<(Demo|Example|InteractiveDemo)\b[^>]*?name="([^"]+)"/gs` — but note attributes can be on separate lines, so match across newlines and verify the count: there are 44 `<InteractiveDemo` occurrences at planned-at commit). Each captured name `N` must satisfy `existsSync(repoRoot, 'www/src/registry/ui', N + '.tsx')` — except `InteractiveDemo` names, which refer to a component slug whose demo file is `www/src/registry/ui/<name>/demos/playground.tsx` — **verify the actual resolution rule for InteractiveDemo in `rehype-transform.ts` (`processInteractiveDemoNode` / the `file` attribute) before encoding it**, and encode what the code actually does.
 2. **Reference names resolve**: every `<Reference name="X">` has `www/src/modules/references/generated/X.json`.
@@ -178,7 +178,7 @@ In the same file, where `InteractiveDemo` controls are extracted (`extractContro
 
 Machine-checkable. ALL must hold:
 
-- [ ] `www/src/modules/docs/docs-content.spec.ts` exists; `pnpm test` exits 0
+- [ ] `www/src/modules/docs/docs-content.test.ts` exists; `pnpm test` exits 0
 - [ ] `grep -n "return null" www/src/modules/docs/mdx-plugins/rehype-transform.ts` shows no remaining silent-failure returns in the three process functions (other legitimate `return null`s elsewhere in the file may remain — judge by enclosing function)
 - [ ] Fault-injection: a bogus demo name fails `pnpm --filter www build` (observed once, then reverted; `git status` clean of content edits)
 - [ ] `pnpm typecheck` and `pnpm check` exit 0

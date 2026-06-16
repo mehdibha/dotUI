@@ -28,7 +28,7 @@ import type { ControlValues, SerializableControl } from './types'
  * real demo source (see codegen/source-overlay.ts). Preview and code derive
  * from one `values` state, so they can never diverge — and the rendered code
  * is always byte-identical to what oxfmt would emit
- * (codegen/playground-fidelity.spec.ts holds that line).
+ * (codegen/playground-fidelity.test.ts holds that line).
  */
 
 interface InteractiveDemoProps {
