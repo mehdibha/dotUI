@@ -83,6 +83,6 @@ jobs:
 
       - name: Fail if any committed reference file is stale
         run: |
-          git status --porcelain -- www/src/modules/references/generated/ | grep -q . \
-          && { git status --porcelain -- www/src/modules/references/generated/; echo '::error::Committed API reference files are out of date. Run `pnpm build:references` and commit the result.'; exit 1; } \
+          git status --porcelain -- www/src/modules/docs/references/generated/ | grep -q . \
+          && { git status --porcelain -- www/src/modules/docs/references/generated/; echo '::error::Committed API reference files are out of date. Run `pnpm build:references` and commit the result.'; exit 1; } \
           || true

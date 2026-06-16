@@ -40,6 +40,7 @@ const GLOBALS_CSS = `@import "tailwindcss";
 
 @source "../registry/**/*.{ts,tsx}";
 @source "../components/**/*.{ts,tsx}";
+@source "../modules/**/*.{ts,tsx}";
 @source "./**/*.{ts,tsx}";
 
 @theme {
@@ -50,8 +51,8 @@ const GLOBALS_CSS = `@import "tailwindcss";
 
 const PAGE_TSX = `"use client";
 
-import Cards from "../components/marketing/showcase/cards";
-import { DesignSystemProvider } from "../modules/core/styles";
+import Cards from "../modules/marketing/cards";
+import { DesignSystemProvider } from "../lib/styles";
 
 export default function Page() {
 \treturn (

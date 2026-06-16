@@ -2,7 +2,7 @@ import { use, useCallback, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
-import { DesignSystemProvider } from '@/modules/core/styles'
+import { DesignSystemProvider } from '@/lib/styles'
 import {
   ExamplesIndex,
   GroupExamplesIndex,

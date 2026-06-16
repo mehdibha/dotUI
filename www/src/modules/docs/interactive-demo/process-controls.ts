@@ -6,9 +6,9 @@
 import type { HighlighterGeneric } from 'shiki'
 import { Node, Project, ScriptKind } from 'ts-morph'
 
-import { loadApiReference } from '../../references/loader'
-import type { PropDefinition, TType } from '../../references/types'
 import type { ControlSelection } from '../codegen/source-overlay'
+import { loadApiReference } from '../references/loader'
+import type { PropDefinition, TType } from '../references/types'
 import type {
   BooleanControl,
   Control,
