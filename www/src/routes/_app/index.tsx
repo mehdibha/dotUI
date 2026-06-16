@@ -23,10 +23,18 @@ import Cards from '@/components/marketing/showcase/cards'
 // letter-spacing and size come from the original headline classes on the <h1>.
 const HEADLINE_STYLE = { fontFamily: 'var(--font-josefin)' }
 
-// Swappable destinations in the hero headline — "ship it to ___". "to" is a static
-// prefix, so only the destination swaps. v0 / bolt.new / Lovable are their official
-// brand wordmarks (logo-only); the rest are plain text. Everything inherits the
-// headline color (white); the Lovable heart keeps its brand gradient.
+// Shared connector for the tool / codebase frames. The trailing space is a non-breaking
+// space on purpose: the rotator sizes the connector slot from this text, and a normal
+// trailing space gets trimmed in the flex slot (so "to" would butt against the logo).
+const TO = 'to '
+
+// Swappable destinations in the hero headline — "Ship it ___". The shared "to" lives in
+// `connector`, not the lead, so it renders once in the lead's font and — because the
+// rotator keys the connector slot by this string — stays put across the v0 / bolt.new /
+// Lovable / your-code frames instead of re-animating; only the destination swaps.
+// "anywhere" reads without a connector. v0 / bolt.new / Lovable are their official brand
+// wordmarks (logo-only); the rest are text. Everything inherits the headline color
+// (white); the Lovable heart keeps its brand gradient.
 const EXPORT_TARGETS: RotatingTextItem[] = [
   {
     id: 'anywhere',
@@ -35,25 +43,29 @@ const EXPORT_TARGETS: RotatingTextItem[] = [
   },
   {
     id: 'v0',
-    text: 'v0',
+    text: 'to v0',
+    connector: TO,
     segments: [{ icon: <V0Icon className="h-[0.58em] w-auto" /> }],
   },
   {
     id: 'bolt',
-    text: 'bolt.new',
+    text: 'to bolt.new',
+    connector: TO,
     segments: [
       { icon: <BoltIcon className="h-[0.72em] w-auto translate-y-[0.09em]" /> },
     ],
   },
   {
     id: 'lovable',
-    text: 'Lovable',
+    text: 'to Lovable',
+    connector: TO,
     segments: [{ icon: <LovableIcon className="h-[0.72em] w-auto" /> }],
   },
   {
     id: 'codebase',
-    text: 'your codebase',
-    segments: [{ text: 'your codebase', className: 'font-bold italic' }],
+    text: 'to your code',
+    connector: TO,
+    segments: [{ text: 'your code', className: 'font-bold italic' }],
   },
 ]
 
@@ -76,12 +88,12 @@ function HomePage() {
           <div className="flex flex-col items-center gap-3 text-center md:gap-4">
             <Announcement />
             <h1
-              aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your own codebase, or anywhere."
+              aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your code, or anywhere."
               className="text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl"
             >
               <span aria-hidden="true">
                 <AnimatedHeadline
-                  lead="Build your design system. Ship it to"
+                  lead="Build your design system. Ship it"
                   items={EXPORT_TARGETS}
                   trailing="."
                   wordStyle={HEADLINE_STYLE}

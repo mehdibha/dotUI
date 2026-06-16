@@ -8,6 +8,11 @@
  * animate the same way. The swap motion matches theirs — `{y, opacity, blur(4px)}`,
  * 0.25s, easeOutExpo. The slot springs to the incoming word's measured width so
  * the surrounding text never snaps.
+ *
+ * A destination and its optional connector ("to") render in two independent slots,
+ * each keyed by its own content. So a connector shared by consecutive destinations
+ * (every "to …") keeps the same key and stays put — only the destination swaps —
+ * instead of the "to" pointlessly blurring out and back in on every change.
  */
 
 import {
@@ -41,7 +46,13 @@ export interface RotatingTextItem {
   /** Plain-text reading of the word — the rotation is decorative (the slot renders
 	    aria-hidden by the caller), so keep the caller's accessible label in sync with these. */
   text: string
-  /** Visual content (text and/or a logo). */
+  /** Optional connector rendered before the destination, in the lead's font (e.g. "to ").
+	    It lives in its own slot keyed by this string, so a connector shared by consecutive
+	    items stays mounted and does not re-animate between them — only the destination swaps.
+	    End it with a non-breaking space for the word gap: the slot is sized from this text and
+	    a normal trailing space is trimmed. Omit it for items that read without one ("anywhere"). */
+  connector?: string
+  /** Visual content of the destination (text and/or a logo). */
   segments: RotatingTextSegment[]
 }
 
@@ -64,14 +75,24 @@ const REDUCED_SWAP_VARIANTS = {
   exit: { opacity: 0 },
 }
 
+/**
+ * Zero-width text-baseline anchor. Gives a slot a real text baseline even when its content
+ * has none — an icon-only logo, or the connector slot on the no-connector ("anywhere")
+ * frame. Without it an empty first slot has no baseline, which drags the rotor's inline-flex
+ * baseline down and inflates the headline row (a tall phantom gap below it).
+ */
+function BaselineAnchor() {
+  return (
+    <span aria-hidden="true" className="inline-block w-0">
+      {'​'}
+    </span>
+  )
+}
+
 function Segments({ item }: { item: RotatingTextItem }) {
   return (
     <>
-      {/* Zero-width baseline anchor: gives icon-only words (a logo with no text) a real
-			    text baseline, so the slot sits at the same height as text words — no line jump. */}
-      <span aria-hidden="true" className="inline-block w-0">
-        {'​'}
-      </span>
+      <BaselineAnchor />
       {item.segments.map((seg, i) =>
         seg.icon ? (
           <span key={i} className="inline-flex items-center">
@@ -87,6 +108,89 @@ function Segments({ item }: { item: RotatingTextItem }) {
   )
 }
 
+/**
+ * One measured-width slot with the x.ai blur-slide swap. The slot springs its width to
+ * the active content; content crossfades via AnimatePresence keyed by `swapKey`. When
+ * `swapKey` is unchanged between renders the content stays mounted and does NOT animate
+ * — that's what keeps a shared connector static while only the destination swaps.
+ * `wordStyle` is applied to the content (Josefin for destinations; omitted for the
+ * connector so it inherits the lead's font). Both slots use mode="wait", so the incoming
+ * content waits one swap for the outgoing one to clear — that keeps the connector and the
+ * destination entering together at a boundary (and means no extra enter delay is needed).
+ */
+function SwapSlot({
+  swapKey,
+  children,
+  wordStyle,
+  reduce,
+}: {
+  swapKey: string
+  children: ReactNode
+  wordStyle?: CSSProperties
+  reduce: boolean
+}) {
+  // Measure the active content's natural width from the invisible sizer, then animate the
+  // slot to it — animating the real `width` (not a transform) keeps the surrounding text
+  // from snapping. The ResizeObserver re-measures when the natural width changes without a
+  // key change: the webfont swapping in over the fallback, or the responsive headline
+  // font-size crossing a breakpoint mid-interval.
+  const sizerRef = useRef<HTMLSpanElement | null>(null)
+  const [width, setWidth] = useState<number | undefined>(undefined)
+  useEffect(() => {
+    const el = sizerRef.current
+    if (!el) return
+    const measure = () => {
+      const next = Math.round(el.scrollWidth)
+      setWidth((prev) => (prev === next ? prev : next))
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [swapKey, wordStyle])
+
+  const swapVariants = reduce ? REDUCED_SWAP_VARIANTS : SWAP_VARIANTS
+
+  return (
+    <motion.span
+      // Cap the slot to one line so a taller logo spills out visually (overflow-visible)
+      // rather than growing the headline's line height on an icon word.
+      className="inline-grid h-[1em] items-baseline overflow-visible"
+      animate={width != null ? { width } : undefined}
+      // Snap (don't spring) the slot under prefers-reduced-motion: the width change is
+      // the one piece of layout motion the variants above don't cover.
+      transition={{ width: reduce ? { duration: 0 } : WIDTH_SPRING }}
+    >
+      {/* Sizer: invisibly holds the current content so the slot keeps a baseline + a
+			    measurable width through the swap, and never collapses between words. */}
+      <span
+        ref={sizerRef}
+        style={wordStyle}
+        className="invisible col-start-1 row-start-1 inline-flex items-baseline justify-self-start whitespace-nowrap"
+      >
+        {children}
+      </span>
+      {/* Visible content: swapped sequentially over the sizer (mode="wait"). `initial={false}`
+			    so the first word shows statically on load — only later swaps animate. */}
+      <span className="col-start-1 row-start-1 inline-flex items-baseline justify-self-start whitespace-nowrap">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={swapKey}
+            initial={swapVariants.initial}
+            animate={swapVariants.animate}
+            exit={swapVariants.exit}
+            transition={{ duration: SWAP_DURATION, ease: SWAP_EASE }}
+            style={wordStyle}
+            className="inline-flex items-baseline whitespace-nowrap"
+          >
+            {children}
+          </motion.span>
+        </AnimatePresence>
+      </span>
+    </motion.span>
+  )
+}
+
 interface RotatingWordProps {
   items: RotatingTextItem[]
   /** Time each word stays fully on screen, ms. */
@@ -96,9 +200,9 @@ interface RotatingWordProps {
 }
 
 /**
- * The cycling trailing word — measured-width slot + whole-word blur-slide swap.
- * Purely decorative: the caller owns the accessible reading (e.g. an `aria-label`
- * on the heading with the subtree `aria-hidden`).
+ * The cycling trailing word — a connector slot + a destination slot, each a measured-width
+ * blur-slide swap. Purely decorative: the caller owns the accessible reading (e.g. an
+ * `aria-label` on the heading with the subtree `aria-hidden`).
  */
 function RotatingWord({
   items,
@@ -117,69 +221,24 @@ function RotatingWord({
     return () => window.clearInterval(id)
   }, [items.length, interval])
 
-  // Measure the incoming word's natural width from the invisible sizer, then animate
-  // the slot to it — animating the real `width` (not a transform) keeps the surrounding
-  // text from snapping. The ResizeObserver re-measures when the word's natural width
-  // changes without an index change: the webfont swapping in over the fallback, or the
-  // responsive headline font-size crossing a breakpoint mid-interval.
-  const sizerRef = useRef<HTMLSpanElement | null>(null)
-  const [width, setWidth] = useState<number | undefined>(undefined)
-  useEffect(() => {
-    const el = sizerRef.current
-    if (!el) return
-    const measure = () => {
-      const next = Math.round(el.scrollWidth)
-      setWidth((prev) => (prev === next ? prev : next))
-    }
-    measure()
-    const observer = new ResizeObserver(measure)
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [index, wordStyle])
-
   const active = items[index] ?? items[0]
   if (!active) return null
 
-  const swapVariants = reduce ? REDUCED_SWAP_VARIANTS : SWAP_VARIANTS
+  const connector = active.connector ?? ''
 
   return (
     <span className="relative inline-flex items-baseline align-baseline text-fg">
-      <motion.span
-        // Cap the slot to one line so a taller logo spills out visually (overflow-visible)
-        // rather than growing the headline's line height on an icon word.
-        className="inline-grid h-[1em] items-baseline overflow-visible"
-        animate={width != null ? { width } : undefined}
-        // Snap (don't spring) the slot under prefers-reduced-motion: the width change is
-        // the one piece of layout motion the variants above don't cover.
-        transition={{ width: reduce ? { duration: 0 } : WIDTH_SPRING }}
-      >
-        {/* Sizer: invisibly holds the current word so the slot keeps a baseline + a
-				    measurable width through the swap, and never collapses between words. */}
-        <span
-          ref={sizerRef}
-          style={wordStyle}
-          className="invisible col-start-1 row-start-1 inline-flex items-baseline justify-self-start whitespace-nowrap"
-        >
-          <Segments item={active} />
-        </span>
-        {/* Visible word: swapped sequentially over the sizer (mode="wait"). `initial={false}`
-				    so the first word shows statically on load — only later swaps animate. */}
-        <span className="col-start-1 row-start-1 inline-flex items-baseline justify-self-start whitespace-nowrap">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.span
-              key={active.id}
-              initial={swapVariants.initial}
-              animate={swapVariants.animate}
-              exit={swapVariants.exit}
-              transition={{ duration: SWAP_DURATION, ease: SWAP_EASE }}
-              style={{ ...wordStyle }}
-              className="inline-flex items-baseline whitespace-nowrap"
-            >
-              <Segments item={active} />
-            </motion.span>
-          </AnimatePresence>
-        </span>
-      </motion.span>
+      {/* Connector slot — keyed by the connector text, so the "to" shared across the tool /
+			    codebase frames keeps the same key and never re-animates between them. No wordStyle:
+			    it inherits the lead's font, matching "Ship it". Empty for the no-connector frame. */}
+      <SwapSlot swapKey={connector} reduce={reduce}>
+        <BaselineAnchor />
+        {connector || null}
+      </SwapSlot>
+      {/* Destination slot — the cycling logo / keyword in the rotating Josefin style. */}
+      <SwapSlot swapKey={active.id} wordStyle={wordStyle} reduce={reduce}>
+        <Segments item={active} />
+      </SwapSlot>
     </span>
   )
 }
