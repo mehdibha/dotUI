@@ -1,5 +1,3 @@
-import { getBaseUrl } from '@/lib/url'
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -9,6 +7,8 @@ import { Button } from '@/registry/ui/button'
 import { Group } from '@/registry/ui/group'
 import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
+import { getBaseUrl } from '@/modules/docs/url'
+import { useCopyToClipboard } from '@/modules/docs/use-copy-to-clipboard'
 
 function getPromptUrl(baseURL: string, url: string) {
   return `${baseURL}?q=${encodeURIComponent(
