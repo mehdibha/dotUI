@@ -65,7 +65,7 @@ export function CodeBlock({
           {!title && (
             <div
               className={cn(
-                'absolute top-1.75 right-1.75 gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5',
+                'absolute top-1.75 right-1.75 flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5',
                 'backdrop-blur-[1px] **:data-button:bg-card/60 **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))] **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))]',
               )}
             >

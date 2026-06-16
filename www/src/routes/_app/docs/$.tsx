@@ -136,8 +136,8 @@ const clientLoader = browserCollections.docs.createClientLoader({
         <PageLayout className="mt-4 flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
           <div className="mx-auto flex w-full max-w-3xl min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
             <div data-page-header="" className="relative mb-2 space-y-3 pb-4">
-              <div className="flex items-start justify-between">
-                <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex min-w-0 flex-col gap-2">
                   <PageHeaderHeading className="xl:leading-none">
                     {frontmatter.title}
                   </PageHeaderHeading>
@@ -145,7 +145,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
                     {frontmatter.description}
                   </PageHeaderDescription>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex shrink-0 items-center gap-2">
                   <DocsPager neighbours={neighbours} />
                   <DocsCopyPage content={rawContent} url={url} />
                 </div>

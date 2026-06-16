@@ -130,7 +130,7 @@ export const mdxComponents: MDXComponents = {
   // overflow (overflow-y-auto computes overflow-x to auto for wide tables), bold
   // left-aligned headers, and nowrap cells with align-attribute overrides.
   table: ({ className, ...props }) => (
-    <div className="my-6 w-full scrollbar-none overflow-y-auto rounded-xl border">
+    <div className="my-6 scrollbar-none w-full overflow-y-auto rounded-xl border">
       <table
         className={cn(
           'relative w-full overflow-hidden border-none text-sm [&_tbody_tr:last-child]:border-b-0',

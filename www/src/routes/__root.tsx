@@ -162,16 +162,11 @@ function RootComponent() {
   return (
     <ThemeProvider forcedTheme={forcedTheme}>
       <FaviconSwitcher />
-      {/* <DrawerProvider> */}
       <RootDocument>
-        {/* <DrawerIndentBackground /> */}
-        {/* <DrawerIndent> */}
         <ToastProvider>
           <Outlet />
         </ToastProvider>
-        {/* </DrawerIndent> */}
       </RootDocument>
-      {/* </DrawerProvider> */}
     </ThemeProvider>
   )
 }

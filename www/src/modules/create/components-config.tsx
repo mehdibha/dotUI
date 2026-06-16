@@ -196,7 +196,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
         >
           <Button size="sm" className="w-full">
             <SelectValue />
-            <ChevronDownIcon />
+            <ChevronDownIcon data-icon-end="" />
           </Button>
           <Popover>
             <ListBox>
@@ -261,7 +261,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
       >
         <Button size="sm" className="w-full">
           <SelectValue />
-          <ChevronDownIcon />
+          <ChevronDownIcon data-icon-end="" />
         </Button>
         <Popover>
           <ListBox>

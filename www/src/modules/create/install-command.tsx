@@ -10,19 +10,23 @@ import { useEffect, useMemo, useState } from 'react'
 import { CheckIcon, CopyIcon } from 'lucide-react'
 import * as ButtonPrimitives from 'react-aria-components/Button'
 
+import { siteConfig } from '@/config/site'
+
 import { useDesignSystem } from './preset'
 import { encodePreset } from './preset/codec'
 
-const DEFAULT_REGISTRY_HOST = 'https://dotui.com'
+const DEFAULT_REGISTRY_HOST: string = siteConfig.url
 
 function getRegistryHost(): string {
   if (typeof window === 'undefined') return DEFAULT_REGISTRY_HOST
-  // Honour the deployed origin so local dev (http://localhost:4444) shows the
-  // command pointing back at itself.
-  const { origin } = window.location
+  // On a deployed origin the command points back at it; on localhost / file we
+  // fall back to the public host, since v0 and the shadcn CLI can't fetch a local
+  // URL. Match on `hostname` (not the full origin) so any dev port still counts.
+  const { origin, hostname } = window.location
   if (
     origin === 'null' ||
-    origin === 'http://localhost' ||
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
     origin.startsWith('file:')
   ) {
     return DEFAULT_REGISTRY_HOST
