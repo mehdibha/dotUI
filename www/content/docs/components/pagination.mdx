@@ -1,0 +1,95 @@
+---
+title: Pagination
+description: Pagination lets users navigate through content split across multiple pages.
+---
+
+<Demo name="pagination/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/pagination
+```
+
+## Usage
+
+Compose pagination from its parts. Provide an `href` on each link to navigate between pages, or wire `onPress` to drive client-side state.
+
+```tsx
+import {
+  Pagination,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationList,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination'
+```
+
+```tsx
+<Pagination>
+  <PaginationList>
+    <PaginationItem>
+      <PaginationPrevious href="#" />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" isActive>
+        2
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext href="#" />
+    </PaginationItem>
+  </PaginationList>
+</Pagination>
+```
+
+## Framework Setup
+
+`PaginationLink`, `PaginationPrevious`, and `PaginationNext` are built on the Link button, so they pick up router integration from your `button.tsx` — there's nothing pagination-specific to wire up. See the [Button](/docs/components/button) docs to connect `LinkButton` to your framework's router, and pagination links with an `href` will route through it automatically.
+
+## Examples
+
+<Examples className="sm:grid-cols-2">
+  <Example title="Links" name="pagination/demos/links" />
+  <Example title="Controlled" name="pagination/demos/controlled" />
+  <Example title="Sizes" name="pagination/demos/sizes" />
+  <Example title="Compact" name="pagination/demos/compact" />
+</Examples>
+
+## API Reference
+
+### Pagination
+
+<Reference name="pagination" />
+
+### PaginationList
+
+<Reference name="pagination-list" />
+
+### PaginationItem
+
+<Reference name="pagination-item" />
+
+### PaginationLink
+
+<Reference name="pagination-link" />
+
+### PaginationPrevious
+
+<Reference name="pagination-previous" />
+
+### PaginationNext
+
+<Reference name="pagination-next" />
+
+### PaginationEllipsis
+
+<Reference name="pagination-ellipsis" />

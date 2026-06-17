@@ -1,7 +1,7 @@
 {
-  "name": "SidebarMenuSubItemProps",
-  "description": "A single item (list element) in a `SidebarMenuSub`.",
-  "extendsElement": "li",
+  "name": "PaginationEllipsisProps",
+  "description": "A non-interactive indicator for a gap of skipped pages.",
+  "extendsElement": "span",
   "props": {
     "className": {
       "type": "string",

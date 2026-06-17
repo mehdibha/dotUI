@@ -1,7 +1,7 @@
 {
-  "name": "SidebarInsetProps",
-  "description": "The main content area that sits next to the sidebar. Required when using the\n`inset` variant; otherwise optional.",
-  "extendsElement": "main",
+  "name": "PaginationListProps",
+  "description": "The list that holds the pagination items.",
+  "extendsElement": "ul",
   "props": {
     "className": {
       "type": "string",

@@ -1,7 +1,7 @@
 {
-  "name": "SidebarFooterProps",
-  "description": "A sticky footer region at the bottom of the sidebar.",
-  "extendsElement": "div",
+  "name": "PaginationProps",
+  "description": "Pagination lets users navigate through large sets of content split across\nmultiple pages. It renders a `nav` landmark labelled \"pagination\".",
+  "extendsElement": "nav",
   "props": {
     "className": {
       "type": "string",

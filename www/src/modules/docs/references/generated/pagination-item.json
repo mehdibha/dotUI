@@ -1,7 +1,7 @@
 {
-  "name": "SidebarGroupProps",
-  "description": "A labelled section of the sidebar, grouping related menus.",
-  "extendsElement": "div",
+  "name": "PaginationItemProps",
+  "description": "A single item in the pagination list.",
+  "extendsElement": "li",
   "props": {
     "className": {
       "type": "string",

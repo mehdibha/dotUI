@@ -1,136 +1,14 @@
 {
-  "name": "SidebarMenuSubButtonProps",
-  "description": "The interactive element inside a `SidebarMenuSubItem`. Renders a button, or a\nlink when `href` is provided.",
+  "name": "PaginationPreviousProps",
+  "description": "A link that navigates to the previous page. Renders a leading chevron and,\nunless `isIconOnly` is set, a \"Previous\" label hidden on small screens.",
   "props": {
-    "isActive": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "children": {
+      "type": "ReactNode",
       "typeAst": {
-        "type": "boolean"
+        "type": "identifier",
+        "name": "ReactNode"
       },
-      "description": "Marks the item as the active page (highlighted, and `aria-current` on links)."
-    },
-    "size": {
-      "type": "\"md\" | \"sm\"",
-      "detailedType": "'md' | 'sm' | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "md"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "sm"
-          }
-        ]
-      },
-      "description": "Control font size.",
-      "default": "'md'"
-    },
-    "href": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Render as a link to this destination instead of a button."
-    },
-    "render": {
-      "type": "((props: DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> | DetailedHTMLProps<LinkWithRequiredHref, HTMLAnchorElement>, renderProps: LinkRenderProps) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
-      "detailedType": "| ((\n    props:\n      | DetailedHTMLProps<\n          HTMLAttributes<HTMLSpanElement>,\n          HTMLSpanElement\n        >\n      | DetailedHTMLProps<\n          LinkWithRequiredHref,\n          HTMLAnchorElement\n        >,\n    renderProps: LinkRenderProps,\n  ) => ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >)\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "function",
-            "parameters": [
-              {
-                "type": "parameter",
-                "name": "props",
-                "value": {
-                  "type": "union",
-                  "elements": [
-                    {
-                      "type": "application",
-                      "base": {
-                        "type": "identifier",
-                        "name": "DetailedHTMLProps"
-                      },
-                      "typeParameters": [
-                        {
-                          "type": "application",
-                          "base": {
-                            "type": "identifier",
-                            "name": "HTMLAttributes"
-                          },
-                          "typeParameters": [
-                            {
-                              "type": "identifier",
-                              "name": "HTMLSpanElement"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "HTMLSpanElement"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "application",
-                      "base": {
-                        "type": "identifier",
-                        "name": "DetailedHTMLProps"
-                      },
-                      "typeParameters": [
-                        {
-                          "type": "identifier",
-                          "name": "LinkWithRequiredHref"
-                        },
-                        {
-                          "type": "identifier",
-                          "name": "HTMLAnchorElement"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                "optional": false,
-                "rest": false
-              },
-              {
-                "type": "parameter",
-                "name": "renderProps",
-                "value": {
-                  "type": "link",
-                  "id": "react-aria-components/dist/types/src/Link.d.ts:LinkRenderProps",
-                  "name": "LinkRenderProps"
-                },
-                "optional": false,
-                "rest": false
-              }
-            ],
-            "return": {
-              "type": "identifier",
-              "name": "ReactElement"
-            },
-            "typeParameters": []
-          }
-        ]
-      },
-      "description": "Escape hatch to render the link with a custom element (e.g. a router link)."
-    },
-    "className": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+      "description": "Overrides the default \"Previous\" label."
     },
     "onPress": {
       "type": "((e: PressEvent) => void)",
@@ -512,58 +390,6 @@
       },
       "description": "Handler that is called when the hover state changes."
     },
-    "aria-controls": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Identifies the element (or elements) whose contents or presence are controlled by the current\nelement."
-    },
-    "aria-current": {
-      "type": "\"date\" | \"false\" | \"location\" | \"page\" | \"step\" | \"time\" | \"true\" | boolean",
-      "detailedType": "| 'date'\n| 'false'\n| 'location'\n| 'page'\n| 'step'\n| 'time'\n| 'true'\n| boolean\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "date"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "false"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "location"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "page"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "step"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "time"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "true"
-          },
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "boolean"
-          }
-        ]
-      },
-      "description": "Indicates whether this element represents the current item within a container or set of related\nelements."
-    },
     "aria-describedby": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -579,98 +405,6 @@
         "type": "string"
       },
       "description": "Identifies the element (or elements) that provide a detailed, extended description for the\nobject."
-    },
-    "aria-disabled": {
-      "type": "\"false\" | \"true\" | boolean",
-      "detailedType": "'false' | 'true' | boolean | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "false"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "true"
-          },
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "boolean"
-          }
-        ]
-      },
-      "description": "Indicates whether the element is disabled to users of assistive technology."
-    },
-    "aria-expanded": {
-      "type": "\"false\" | \"true\" | boolean",
-      "detailedType": "'false' | 'true' | boolean | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "false"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "true"
-          },
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "boolean"
-          }
-        ]
-      },
-      "description": "Indicates whether the element, or another grouping element it controls, is currently expanded\nor collapsed."
-    },
-    "aria-haspopup": {
-      "type": "\"dialog\" | \"false\" | \"grid\" | \"listbox\" | \"menu\" | \"tree\" | \"true\" | boolean",
-      "detailedType": "| 'dialog'\n| 'false'\n| 'grid'\n| 'listbox'\n| 'menu'\n| 'tree'\n| 'true'\n| boolean\n| undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "dialog"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "false"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "grid"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "listbox"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "menu"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "tree"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "true"
-          },
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "boolean"
-          }
-        ]
-      },
-      "description": "Indicates the availability and type of interactive popup element, such as menu or dialog, that\ncan be triggered by an element."
     },
     "aria-label": {
       "type": "string",
@@ -688,34 +422,6 @@
       },
       "description": "Identifies the element (or elements) that labels the current element."
     },
-    "aria-pressed": {
-      "type": "\"false\" | \"mixed\" | \"true\" | boolean",
-      "detailedType": "'false' | 'mixed' | 'true' | boolean | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "false"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "mixed"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "true"
-          },
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "boolean"
-          }
-        ]
-      },
-      "description": "Indicates the current \"pressed\" state of toggle buttons."
-    },
     "autoFocus": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -724,31 +430,12 @@
       },
       "description": "Whether the element should receive focus on render."
     },
-    "excludeFromTabOrder": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether to exclude the element from the sequential tab order. If true,\nthe element will not be focusable via the keyboard by tabbing. This should\nbe avoided except in rare scenarios where an alternative means of accessing\nthe element or its functionality via the keyboard is available."
-    },
-    "form": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The `<form>` element to associate the button with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#form)."
-    },
-    "formAction": {
-      "type": "string | ((formData: FormData) => void | Promise<void>)",
-      "detailedType": "| string\n| ((formData: FormData) => void | Promise<void>)\n| undefined",
+    "className": {
+      "type": "string | (values: LinkRenderProps) => string",
+      "detailedType": "string | (values: LinkRenderProps) => string | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
-          {
-            "type": "undefined"
-          },
           {
             "type": "string"
           },
@@ -757,72 +444,59 @@
             "parameters": [
               {
                 "type": "parameter",
-                "name": "formData",
+                "name": "values",
                 "value": {
-                  "type": "identifier",
-                  "name": "FormData"
+                  "type": "link",
+                  "id": "LinkRenderProps",
+                  "name": "LinkRenderProps"
                 },
                 "optional": false,
                 "rest": false
               }
             ],
             "return": {
-              "type": "union",
-              "elements": [
-                {
-                  "type": "void"
-                },
-                {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "Promise"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "void"
-                    }
-                  ]
-                }
-              ]
+              "type": "string"
             },
             "typeParameters": []
           }
         ]
       },
-      "description": "The URL that processes the information submitted by the button.\nOverrides the action attribute of the button's form owner."
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
     },
-    "formEncType": {
+    "download": {
+      "type": "boolean | string",
+      "detailedType": "boolean | string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "Causes the browser to download the linked URL. A string may be provided to suggest a file name.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download)."
+    },
+    "href": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Indicates how to encode the form data that is submitted."
+      "description": "A URL to link to. See [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#href)."
     },
-    "formMethod": {
+    "hrefLang": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Indicates the HTTP method used to submit the form."
-    },
-    "formNoValidate": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Indicates that the form is not to be validated when it is submitted."
-    },
-    "formTarget": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Overrides the target attribute of the button's form owner."
+      "description": "Hints at the human language of the linked URL.\nSee[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#hreflang)."
     },
     "id": {
       "type": "string",
@@ -832,37 +506,177 @@
       },
       "description": "The element's unique identifier. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id)."
     },
+    "isActive": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether this link represents the current page. Sets `aria-current=\"page\"`\nand switches to the active visual style."
+    },
     "isDisabled": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the button is disabled."
+      "description": "Whether the link is disabled."
     },
-    "isPending": {
+    "isIconOnly": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Whether the button is in a pending state. This disables press and hover events\nwhile retaining focusability, and announces the pending state to screen readers."
+      "description": "Render the link as a square cell sized like an icon button. Page numbers\nuse this; `PaginationPrevious`/`PaginationNext` opt out by default.",
+      "default": "true"
     },
-    "name": {
+    "ping": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Submitted as a pair with the button's value as part of the form data."
+      "description": "A space-separated list of URLs to ping when the link is followed. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#ping)."
     },
-    "preventFocusOnPress": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "referrerPolicy": {
+      "type": "HTMLAttributeReferrerPolicy",
+      "detailedType": "HTMLAttributeReferrerPolicy | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "identifier",
+        "name": "HTMLAttributeReferrerPolicy"
       },
-      "description": "Whether to prevent focus from moving to the button when pressing it.\n\nCaution, this can make the button inaccessible and should only be used when alternative\nkeyboard interaction is provided, such as ComboBox's MenuTrigger or a NumberField's\nincrement/decrement control."
+      "description": "How much of the referrer to send when following the link. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#referrerpolicy)."
+    },
+    "rel": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The relationship between the linked resource and the current page. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel)."
+    },
+    "render": {
+      "type": "((props: DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> | DetailedHTMLProps<LinkWithRequiredHref, HTMLAnchorElement>, renderProps: LinkRenderProps) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
+      "detailedType": "| ((\n    props:\n      | DetailedHTMLProps<\n          HTMLAttributes<HTMLSpanElement>,\n          HTMLSpanElement\n        >\n      | DetailedHTMLProps<\n          LinkWithRequiredHref,\n          HTMLAnchorElement\n        >,\n    renderProps: LinkRenderProps,\n  ) => ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "props",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "application",
+                      "base": {
+                        "type": "identifier",
+                        "name": "DetailedHTMLProps"
+                      },
+                      "typeParameters": [
+                        {
+                          "type": "application",
+                          "base": {
+                            "type": "identifier",
+                            "name": "HTMLAttributes"
+                          },
+                          "typeParameters": [
+                            {
+                              "type": "identifier",
+                              "name": "HTMLSpanElement"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "HTMLSpanElement"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "application",
+                      "base": {
+                        "type": "identifier",
+                        "name": "DetailedHTMLProps"
+                      },
+                      "typeParameters": [
+                        {
+                          "type": "identifier",
+                          "name": "LinkWithRequiredHref"
+                        },
+                        {
+                          "type": "identifier",
+                          "name": "HTMLAnchorElement"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "renderProps",
+                "value": {
+                  "type": "link",
+                  "id": "react-aria-components/dist/types/src/Link.d.ts:LinkRenderProps",
+                  "name": "LinkRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactElement"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nNote: You can check if `'href' in props` in order to tell whether to render an `<a>` element.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<a>` is expected, you cannot render a\n  `<button>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
+    },
+    "routerOptions": {
+      "type": "undefined",
+      "typeAst": {
+        "type": "undefined"
+      },
+      "description": "Options for the configured client side router."
+    },
+    "size": {
+      "type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",
+      "detailedType": "'lg' | 'md' | 'sm' | 'xs' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "lg"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "md"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "sm"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "xs"
+          }
+        ]
+      },
+      "description": "The size of the link.",
+      "default": "\"md\""
     },
     "slot": {
       "type": "null | string",
@@ -884,8 +698,8 @@
       "description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
     },
     "style": {
-      "type": "CSSProperties | (values: ButtonRenderProps) => CSSProperties",
-      "detailedType": "CSSProperties | (values: ButtonRenderProps) => CSSProperties | undefined",
+      "type": "CSSProperties | (values: LinkRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: LinkRenderProps) => CSSProperties | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -901,8 +715,8 @@
                 "name": "values",
                 "value": {
                   "type": "link",
-                  "id": "ButtonRenderProps",
-                  "name": "ButtonRenderProps"
+                  "id": "LinkRenderProps",
+                  "name": "LinkRenderProps"
                 },
                 "optional": false,
                 "rest": false
@@ -918,105 +732,52 @@
       },
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     },
-    "type": {
-      "type": "\"button\" | \"reset\" | \"submit\"",
-      "detailedType": "'button' | 'reset' | 'submit' | undefined",
+    "target": {
+      "type": "HTMLAttributeAnchorTarget",
+      "detailedType": "HTMLAttributeAnchorTarget | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "HTMLAttributeAnchorTarget"
+      },
+      "description": "The target window for the link. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
+    },
+    "variant": {
+      "type": "\"danger\" | \"default\" | \"link\" | \"primary\" | \"quiet\" | \"warning\"",
+      "detailedType": "| 'danger'\n| 'default'\n| 'link'\n| 'primary'\n| 'quiet'\n| 'warning'\n| undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "button"
+            "value": "danger"
           },
           {
             "type": "stringLiteral",
-            "value": "reset"
+            "value": "default"
           },
           {
             "type": "stringLiteral",
-            "value": "submit"
+            "value": "link"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "primary"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "quiet"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "warning"
           }
         ]
       },
-      "description": "The behavior of the button when used in an HTML form.",
-      "default": "'button'"
-    },
-    "value": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The value associated with the button's name when it's submitted with the form data."
+      "description": "The visual style of the link.",
+      "default": "isActive ? 'default' : 'quiet'"
     }
   },
   "typeLinks": {
-    "ButtonRenderProps": {
-      "type": "interface",
-      "name": "ButtonRenderProps",
-      "properties": {
-        "isDisabled": {
-          "type": "property",
-          "name": "isDisabled",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the button is disabled."
-        },
-        "isFocused": {
-          "type": "property",
-          "name": "isFocused",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the button is focused, either via a mouse or keyboard."
-        },
-        "isFocusVisible": {
-          "type": "property",
-          "name": "isFocusVisible",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the button is keyboard focused."
-        },
-        "isHovered": {
-          "type": "property",
-          "name": "isHovered",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the button is currently hovered with a mouse."
-        },
-        "isPending": {
-          "type": "property",
-          "name": "isPending",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the button is currently in a pending state."
-        },
-        "isPressed": {
-          "type": "property",
-          "name": "isPressed",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": false,
-          "readonly": false,
-          "description": "Whether the button is currently in a pressed state."
-        }
-      }
-    },
     "HoverEvent": {
       "type": "interface",
       "name": "HoverEvent",
@@ -1053,6 +814,72 @@
           "optional": false,
           "readonly": false,
           "description": "The type of hover event being fired."
+        }
+      }
+    },
+    "LinkRenderProps": {
+      "type": "interface",
+      "name": "LinkRenderProps",
+      "properties": {
+        "isCurrent": {
+          "type": "property",
+          "name": "isCurrent",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is the current item within a list."
+        },
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is disabled."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is keyboard focused."
+        },
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is currently hovered with a mouse."
+        },
+        "isPressed": {
+          "type": "property",
+          "name": "isPressed",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the link is currently in a pressed state."
         }
       }
     },
