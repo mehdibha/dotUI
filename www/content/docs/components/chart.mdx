@@ -1,0 +1,150 @@
+---
+title: Chart
+description: Beautiful, accessible charts built on Recharts and themed by your design system.
+---
+
+<Demo name="chart-bar/demos/multiple" />
+
+Charts are a thin, themeable layer over [Recharts](https://recharts.org).
+`ChartContainer` wires your series config to CSS variables, light/dark theming,
+and a responsive container; the tooltip, legend, and a visually-hidden data table
+are styled to match the rest of your design system. Use the primitives directly,
+or install a ready-made family — browse every variant on the [charts page](/charts).
+
+## Installation
+
+The primitives (`ChartContainer`, `ChartTooltip`, `ChartLegend`, …) ship as a
+single `chart` item:
+
+```npm
+npx shadcn@latest add @dotui/chart
+```
+
+Each family — bar, line, area, pie, radar, and radial — ships as its own item
+with a curated set of variants, and pulls in `chart` and `card` automatically:
+
+```npm
+npx shadcn@latest add @dotui/chart-bar
+```
+
+## Usage
+
+```tsx
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
+
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart'
+```
+
+```tsx
+const chartData = [
+  { month: 'January', desktop: 186 },
+  { month: 'February', desktop: 305 },
+  { month: 'March', desktop: 237 },
+]
+
+const chartConfig = {
+  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
+} satisfies ChartConfig
+
+export function Example() {
+  return (
+    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+      <BarChart accessibilityLayer data={chartData}>
+        <CartesianGrid vertical={false} />
+        <XAxis dataKey="month" tickLine={false} axisLine={false} />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+      </BarChart>
+    </ChartContainer>
+  )
+}
+```
+
+### Chart config
+
+`config` maps each series key to a `label`, a `color` (or a per-theme `theme`),
+and an optional `icon`. `ChartContainer` turns it into `--color-<key>` CSS
+variables you reference from Recharts (`fill="var(--color-desktop)"`), and the
+tooltip and legend read it for labels and icons. Because config is separate from
+data, a key with no series of its own (such as an axis category) can still carry
+a label.
+
+## Theming
+
+Series colors come from the categorical palette `--chart-1` … `--chart-5`, which
+your design system derives from its theme hues — editable under **Chart colors**
+in the [editor](/create), or live on the [charts page](/charts). Point each
+series at a slot:
+
+```tsx
+const chartConfig = {
+  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
+  mobile: { label: 'Mobile', color: 'var(--chart-2)' },
+} satisfies ChartConfig
+```
+
+Need a different color per mode? Use `theme` instead of `color`:
+
+```tsx
+const chartConfig = {
+  desktop: { label: 'Desktop', theme: { light: '#2563eb', dark: '#60a5fa' } },
+} satisfies ChartConfig
+```
+
+## Tooltip and legend
+
+`ChartTooltip` and `ChartLegend` are the Recharts primitives; `ChartTooltipContent`
+and `ChartLegendContent` are the styled, config-aware contents you pass to them:
+
+```tsx
+<ChartTooltip content={<ChartTooltipContent indicator="line" />} />
+<ChartLegend content={<ChartLegendContent />} />
+```
+
+## Accessibility
+
+Pass `accessibilityLayer` to the Recharts chart for keyboard navigation and
+screen-reader announcements. Every family demo also renders `ChartDataTable` — a
+visually-hidden table derived from the same `data` and `config` — so the
+underlying figures are available to assistive technology with no extra work:
+
+```tsx
+<ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
+```
+
+## Families
+
+Each family is a curated set of variants; install one, then copy the variant you
+need. See them all on the [charts page](/charts).
+
+<Examples className="lg:grid-cols-2">
+  <Example name="chart-line/demos/multiple" title="Line" />
+  <Example name="chart-area/demos/stacked" title="Area" />
+  <Example name="chart-pie/demos/donut-text" title="Pie" />
+  <Example name="chart-radar/demos/dots" title="Radar" />
+  <Example name="chart-radial/demos/stacked" title="Radial" />
+  <Example name="chart-bar/demos/horizontal" title="Bar" />
+</Examples>
+
+## API Reference
+
+### ChartContainer
+
+<Reference name="chart-container" />
+
+### ChartTooltipContent
+
+<Reference name="chart-tooltip-content" />
+
+### ChartLegendContent
+
+<Reference name="chart-legend-content" />
+
+### ChartDataTable
+
+<Reference name="chart-data-table" />
