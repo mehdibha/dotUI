@@ -1,0 +1,56 @@
+{
+  "name": "SidebarProviderProps",
+  "description": "Provides the sidebar's open/collapsed state to everything inside it and renders\nthe layout wrapper. Wrap your whole app shell (the sidebar and its main content)\nin a single provider.",
+  "extendsElement": "div",
+  "props": {
+    "defaultOpen": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Open state when uncontrolled.",
+      "default": "true"
+    },
+    "isOpen": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Open state when controlled."
+    },
+    "onOpenChange": {
+      "type": "((open: boolean) => void)",
+      "detailedType": "((open: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "open",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler called when the open state changes."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

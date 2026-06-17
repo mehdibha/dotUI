@@ -56,7 +56,7 @@ export function ContrastReadout({ resolved }: { resolved: ResolvedPalettes }) {
 - `www/src/modules/core/styles.tsx:194` and `:314` — the design-system provider emits primitives CSS from `resolveColorConfig(color)` inside its CSS-building code paths (line 194 in the unscoped path, line 314 in the scoped path). These run in the preview iframe on every postMessage'd design-system change (`www/src/routes/_app/create.tsx:60-77` sends on every `designSystem` change) and in the landing-page scoped previews.
 - `resolveColorConfig` itself lives in `www/src/registry/theme/` (re-exported from `@/registry/theme`) and is pure: `ColorConfig` in → resolved palettes out. `ColorConfig` is a small JSON-safe object (algorithm + seeds + knobs — see `www/src/modules/create/preset/codec.ts:94-99` which already `JSON.stringify`s it for comparison).
 - Repo conventions: `www/src/modules/core/styles.tsx` is the www-side styling runtime — the right home for a www-side cache. Do NOT put caching inside `www/src/registry/theme/` (registry stays a clean, mechanism-free source tree per CLAUDE.md). The repo uses `oxlint-disable-next-line react/exhaustive-deps -- <reason>` comments where deps are intentionally narrowed (see `www/src/routes/_app/create.tsx:44,55`) — match that idiom if needed.
-- Existing spec to model on: `www/src/modules/create/color-contrast.spec.ts` (vitest, node, imports via `@/` alias).
+- Existing spec to model on: `www/src/modules/create/color-contrast.test.ts` (vitest, node, imports via `@/` alias).
 
 ## Commands you will need
 
@@ -75,7 +75,7 @@ export function ContrastReadout({ resolved }: { resolved: ResolvedPalettes }) {
 - `www/src/modules/core/styles.tsx` (add `resolveColorConfigCached`, use it at the two internal call sites)
 - `www/src/modules/create/colors-config.tsx` (use the cached resolver)
 - `www/src/modules/create/color-contrast.tsx` (memoize the report on `resolved`)
-- `www/src/modules/core/resolve-color-cached.spec.ts` (create)
+- `www/src/modules/core/resolve-color-cached.test.ts` (create)
 
 **Out of scope**:
 
@@ -141,7 +141,7 @@ In `www/src/modules/create/color-contrast.tsx:41-42`, wrap the report: `const re
 
 ### Step 5: Spec the cache
 
-Create `www/src/modules/core/resolve-color-cached.spec.ts` (model on `www/src/modules/create/color-contrast.spec.ts`):
+Create `www/src/modules/core/resolve-color-cached.test.ts` (model on `www/src/modules/create/color-contrast.test.ts`):
 
 - same-value, different-identity configs (`JSON.parse(JSON.stringify(DEFAULT_COLOR_CONFIG))` twice) → `toBe`-identical results (same object).
 - a changed seed (e.g. different `seeds.accent`) → different result object, and the resolved accent ramp differs from the default's.
@@ -157,8 +157,8 @@ If your environment has the preview tools: `pnpm build:registry && pnpm dev:www`
 
 ## Test plan
 
-- New `resolve-color-cached.spec.ts` as Step 5 (identity stability, correct invalidation, size-1 behavior).
-- Existing suites that lock resolution correctness must stay green untouched: `www/src/registry/theme/primitives.spec.ts` (32 tests), `palettes.spec.ts`, `www/src/modules/create/color-contrast.spec.ts`.
+- New `resolve-color-cached.test.ts` as Step 5 (identity stability, correct invalidation, size-1 behavior).
+- Existing suites that lock resolution correctness must stay green untouched: `www/src/registry/theme/primitives.test.ts` (32 tests), `palettes.test.ts`, `www/src/modules/create/color-contrast.test.ts`.
 - Final: `pnpm test` → all pass.
 
 ## Done criteria

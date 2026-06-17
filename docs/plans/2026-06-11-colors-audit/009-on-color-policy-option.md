@@ -237,6 +237,6 @@ Stop and report back (do not improvise) if:
 
 ## Maintenance notes
 
-- The product follow-up this enables (separate decision): a builder axis "on-color style: pure black/white (current shipped behavior, via tailwindcss-autocontrast) vs hue-tinted (kernel)". Shipping tinted on-* requires reconciling with the autocontrast plugin's compile-time `--on-*` baking — see `www/src/registry/theme/on-color-parity.spec.ts` and the `onBlackWhite` doc comment in `shared/on-color.ts:98-105` before designing that.
+- The product follow-up this enables (separate decision): a builder axis "on-color style: pure black/white (current shipped behavior, via tailwindcss-autocontrast) vs hue-tinted (kernel)". Shipping tinted on-* requires reconciling with the autocontrast plugin's compile-time `--on-*` baking — see `www/src/registry/theme/on-color-parity.test.ts` and the `onBlackWhite` doc comment in `shared/on-color.ts:98-105` before designing that.
 - A future Material-faithful variant can now ship bespoke tone-paired on-* by returning `on` from the producer — that's the reason `on` stays in `PaletteOutput` instead of being deleted.
 - Reviewer focus: the default-formula rule (`onColor?.formula ?? opts.formula ?? 'wcag2'`) and the byte-identical snapshot gate.

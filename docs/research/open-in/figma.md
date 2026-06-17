@@ -410,7 +410,7 @@ INPUT: registry.json (filtered to items with `figma`), figma manifest, tokens pa
 - **Variables REST write API is Enterprise-only.** The "no plugin" path (`POST /v1/files/:key/variables`) needs an Enterprise org token and an existing file you own — not viable as a public button. *Fallback:* plugin (the primary path).
 - **No interactivity / no React semantics.** Figma component sets are static; hover/pressed/disabled become **separate variant cells** with precomputed colors, not live states. Behavior (focus rings, react-aria, pending spinners) cannot be represented; only the resolved visual states.
 - **Composite drift.** The `figma` anatomy is hand-authored and can drift from `base.tsx` / `styles.ts`. *Mitigation:* a CI test asserting every `figma.anatomy[].component` and `variants[].source` enum exists in `registryUi` / the item's `params`, plus the showcase manifest references only real components (section 7.5).
-- **`--on-*` parity.** Figma foregrounds are precomputed with `onBlackWhite` (`on-color.ts:88`). If dotUI ever changes the autocontrast formula, the plugin must track it — the existing parity test (`www/src/registry/theme/on-color-parity.spec.ts`) is the guard to extend.
+- **`--on-*` parity.** Figma foregrounds are precomputed with `onBlackWhite` (`on-color.ts:88`). If dotUI ever changes the autocontrast formula, the plugin must track it — the existing parity test (`www/src/registry/theme/on-color-parity.test.ts`) is the guard to extend.
 - **Plugin bundle weight if decoding client-side.** Shipping `colorjs.io` into the plugin is heavy. *Mitigation:* the `/r/figma/tokens` endpoint (section 7.3) keeps OKLCH→RGB on the server; the plugin only consumes RGB.
 - **`?preset` absent.** When the user hasn't customized, `encodePreset` returns `undefined` (`codec.ts:84-89`); the plugin must generate the **default** palette from `DEFAULT_COLOR_CONFIG`, not an empty file.
 
@@ -428,7 +428,7 @@ INPUT: registry.json (filtered to items with `figma`), figma manifest, tokens pa
 8. **Publish** the plugin to the Figma Community; capture its deep link / id.
 9. **Add the "Open in Figma" button** on `/create` next to `install-command.tsx`, building the deep link + clipboard payload from `encodePreset(designSystem)` (handle `undefined` → default).
 10. **Round-trip test:** customize a preset (custom accent + comfortable density), Open in Figma, verify (a) the collection's accent matches the site swatch within gamut, (b) Dark mode matches the reversed ramp, (c) the showcase page is the open view and component variants/sizes match `styles.ts`.
-11. **CI guards:** anatomy↔registry validator (step 6), `onBlackWhite` parity (extend `on-color-parity.spec.ts`), and a snapshot of `/r/figma/tokens` for the default preset.
+11. **CI guards:** anatomy↔registry validator (step 6), `onBlackWhite` parity (extend `on-color-parity.test.ts`), and a snapshot of `/r/figma/tokens` for the default preset.
 
 ---
 

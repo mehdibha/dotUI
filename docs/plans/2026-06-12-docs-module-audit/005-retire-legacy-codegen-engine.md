@@ -80,14 +80,14 @@ The interactive playground has two code-generation engines. The doc comment in `
 
   Downstream, `processInteractiveDemoNode` branches on `engine` (only `'source'` builds a `codeTemplate` via `buildSourceOverlay`). Read that function before editing — the legacy branch there must go too.
 
-- Related but **kept**: `www/src/modules/docs/codegen/source-overlay.ts` + `code-template.ts` (the SourceFirst engine, spec-covered by `source-overlay.spec.ts`), and `process-controls.ts` (controls inference — used by both engines' metadata path; check its imports before assuming any of it is legacy-only).
+- Related but **kept**: `www/src/modules/docs/codegen/source-overlay.ts` + `code-template.ts` (the SourceFirst engine, spec-covered by `source-overlay.test.ts`), and `process-controls.ts` (controls inference — used by both engines' metadata path; check its imports before assuming any of it is legacy-only).
 
 ## Commands you will need
 
 | Purpose | Command | Expected |
 |---|---|---|
 | Typecheck | `pnpm typecheck` | exit 0 |
-| Tests | `pnpm test` | all pass (incl. `source-overlay.spec.ts`) |
+| Tests | `pnpm test` | all pass (incl. `source-overlay.test.ts`) |
 | Lint/format | `pnpm check` | exit 0 |
 | Full build | `pnpm --filter www build` | exit 0 — this compiles all MDX and is the real gate |
 | Dev server | `pnpm dev:www` | playgrounds render |
@@ -162,11 +162,11 @@ In `interactive-demo.tsx`:
 pnpm test && pnpm check && pnpm typecheck
 ```
 
-**Verify**: all exit 0; `source-overlay.spec.ts` still green.
+**Verify**: all exit 0; `source-overlay.test.ts` still green.
 
 ## Test plan
 
-No new tests: the deleted path was untested dead code, and the surviving engine is already pinned by `www/src/modules/docs/codegen/source-overlay.spec.ts` (426 lines — real invariants over template fill, default omission, indentation). The build compiling all 44 playgrounds plus Step 5's interaction check is the behavioral gate.
+No new tests: the deleted path was untested dead code, and the surviving engine is already pinned by `www/src/modules/docs/codegen/source-overlay.test.ts` (426 lines — real invariants over template fill, default omission, indentation). The build compiling all 44 playgrounds plus Step 5's interaction check is the behavioral gate.
 
 ## Done criteria
 

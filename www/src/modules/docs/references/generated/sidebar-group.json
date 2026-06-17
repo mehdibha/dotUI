@@ -1,0 +1,14 @@
+{
+  "name": "SidebarGroupProps",
+  "description": "A labelled section of the sidebar, grouping related menus.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

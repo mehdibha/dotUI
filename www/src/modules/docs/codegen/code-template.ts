@@ -7,7 +7,7 @@
 // change. `renderCode` (runtime, browser) re-renders the dynamic parts for the
 // current control values, re-making exactly the layout decisions oxfmt would
 // make — so the displayed code is always a fixed point of the formatter
-// (enforced across every playground by playground-fidelity.spec.ts):
+// (enforced across every playground by playground-fidelity.test.ts):
 //
 //  - an element with a single text/expression child joins onto one line iff
 //    it has at most one attribute and the joined line fits PRINT_WIDTH;

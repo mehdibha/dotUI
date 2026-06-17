@@ -34,7 +34,7 @@ The output is still run through `oxfmt` once with a fixed config (`{ printWidth:
 - `www/src/modules/create/code-config.tsx` — the `CodeConfig` controls (2 rows).
 - `www/src/modules/create/code-options-dialog.tsx` — the footer "Code style" button + split modal + the live `/r/button` preview (debounced fetch, highlighted with the docs `DynamicPre`).
 - Wiring: `preset/{types,codec,use-design-system,index}.ts`, `publisher/{publish,types}.ts`, `routes/r/$name.tsx`, `customizer-panel.tsx`.
-- Tests: `publisher/code-options.spec.ts` (unit), `modules/create/preset/code-options-e2e.spec.ts` (preset→publish→format chain).
+- Tests: `publisher/code-options.test.ts` (unit), `modules/create/preset/code-options-e2e.test.ts` (preset→publish→format chain).
 
 ## Shipped (2 options)
 

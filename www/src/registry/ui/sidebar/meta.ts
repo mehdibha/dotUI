@@ -11,6 +11,14 @@ const sidebarMeta = {
       target: 'ui/sidebar.tsx',
     },
   ],
+  registryDependencies: [
+    'button',
+    'drawer',
+    'separator',
+    'skeleton',
+    'tooltip',
+    'use-mobile',
+  ],
 } satisfies RegistryItem
 
 export default sidebarMeta

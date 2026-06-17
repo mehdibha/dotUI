@@ -141,7 +141,7 @@ where `<dotui-init-url>` = `https://dotui.com/r/init` (the `registry:base` item 
 
 The theme is approximated via Paper's `set_styles` MCP tool. The agent calls it with the resolved flat token map (section 3) as CSS custom property assignments. This gives Paper's canvas a color system, but it is cosmetic — Paper does not run a Tailwind build, does not process `@theme inline` blocks, and does not invoke `tailwindcss-autocontrast` to derive `--on-*` foreground values.
 
-For the agent-mediated path, `--on-*` foregrounds are derived using the same `onBlackWhite` heuristic the autocontrast plugin uses (WCAG relative luminance, black or white pick) from `packages/colors/src/shared/on-color.ts:88-97`. This is the deliberate replica of `tailwindcss-autocontrast`'s `getContrastColor` kept in lockstep by `www/src/registry/theme/on-color-parity.spec.ts`. The result is adequate for painting foreground text on colored cards.
+For the agent-mediated path, `--on-*` foregrounds are derived using the same `onBlackWhite` heuristic the autocontrast plugin uses (WCAG relative luminance, black or white pick) from `packages/colors/src/shared/on-color.ts:88-97`. This is the deliberate replica of `tailwindcss-autocontrast`'s `getContrastColor` kept in lockstep by `www/src/registry/theme/on-color-parity.test.ts`. The result is adequate for painting foreground text on colored cards.
 
 What the `set_styles` call looks like:
 
@@ -387,7 +387,7 @@ Paper's public roadmap mentions "themes" and "shadcn" as forthcoming features. W
 - dotUI preset codec: `www/src/modules/create/preset/codec.ts:75-126`
 - dotUI init item emission: `www/src/publisher/emit-theme.ts:71-128`
 - OKLCH color seam: `packages/colors/src/shared/color.ts:36-81`
-- on-black/white heuristic (autocontrast parity): `packages/colors/src/shared/on-color.ts:88-97`; parity test `www/src/registry/theme/on-color-parity.spec.ts`
+- on-black/white heuristic (autocontrast parity): `packages/colors/src/shared/on-color.ts:88-97`; parity test `www/src/registry/theme/on-color-parity.test.ts`
 - Showcase card list: `www/src/components/marketing/showcase/cards.tsx:20-48`
 - Semantic token vocabulary: `www/src/registry/theme/semantics.ts:36-124`
 - RegistryItem type (where to add `paper` field): `www/src/registry/types.ts:69-78`

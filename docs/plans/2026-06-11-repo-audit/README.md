@@ -20,7 +20,7 @@ Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) | REJE
 ## Dependency notes
 
 - 002's completeness assertion expects 001's four restored components; 002 can land first using its documented temporary allowlist (002 Step 4).
-- 002 and 004 both touch `publish.spec.ts` imports; whichever lands second reconciles a one-line import (noted in both plans).
+- 002 and 004 both touch `publish.test.ts` imports; whichever lands second reconciles a one-line import (noted in both plans).
 - 003–006 are mutually independent.
 
 ## Vetted findings (deep audit, 2026-06-11)
