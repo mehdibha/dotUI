@@ -23,14 +23,23 @@ export interface PropDefinition {
 }
 
 /**
- * A render prop definition with CSS selector
+ * A render prop / data attribute definition with CSS selector
  */
 export interface RenderPropDefinition {
-  /** CSS selector for styling this state (e.g., "[data-hovered]") */
-  selector: string
+  /** CSS selector for styling this state (e.g., "[data-hovered]"); absent for render props without a DOM marker */
+  selector?: string
+  /** Tailwind variant(s) targeting the selector (e.g., "pressed:") */
+  tailwind?: string
   /** Description of the render prop */
   description?: string
 }
+
+/**
+ * What the styling-state table documents: React Aria render props or Base UI
+ * data attributes. Drives the table's first-column header. Defaults to
+ * "render-prop" when absent.
+ */
+export type RenderPropsKind = 'render-prop' | 'data-attribute'
 
 /**
  * The full API reference for a component
@@ -44,8 +53,10 @@ export interface ComponentApiReference {
   extendsElement?: string
   /** Map of prop name to prop definition */
   props: Record<string, PropDefinition>
-  /** Map of render prop name to render prop definition (CSS selectors) */
+  /** Map of render prop / data attribute name to its definition (CSS selectors) */
   renderProps?: Record<string, RenderPropDefinition>
+  /** Whether `renderProps` documents render props or data attributes (default: render props) */
+  renderPropsKind?: RenderPropsKind
   /** Type links registry for navigating to type definitions */
   typeLinks?: TypeLinksRegistry
 }
