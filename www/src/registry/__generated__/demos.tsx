@@ -1497,6 +1497,26 @@ export const DemosIndex: Record<
 		files: ["ui/overlay/demos/type.tsx"],
 		component: React.lazy(() => import("@/registry/ui/overlay/demos/type")),
 	},
+	"pagination/demos/compact": {
+		files: ["ui/pagination/demos/compact.tsx"],
+		component: React.lazy(() => import("@/registry/ui/pagination/demos/compact")),
+	},
+	"pagination/demos/controlled": {
+		files: ["ui/pagination/demos/controlled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/pagination/demos/controlled")),
+	},
+	"pagination/demos/default": {
+		files: ["ui/pagination/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/pagination/demos/default")),
+	},
+	"pagination/demos/links": {
+		files: ["ui/pagination/demos/links.tsx"],
+		component: React.lazy(() => import("@/registry/ui/pagination/demos/links")),
+	},
+	"pagination/demos/sizes": {
+		files: ["ui/pagination/demos/sizes.tsx"],
+		component: React.lazy(() => import("@/registry/ui/pagination/demos/sizes")),
+	},
 	"popover/demos/basic": {
 		files: ["ui/popover/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/popover/demos/basic")),

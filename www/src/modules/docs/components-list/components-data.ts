@@ -308,6 +308,13 @@ export const componentsData: ComponentCategory[] = [
         status: 'done',
       },
       {
+        name: 'Pagination',
+        slug: 'pagination',
+        href: '/docs/components/pagination',
+        scale: 0.8,
+        status: 'in review',
+      },
+      {
         name: 'Sidebar',
         slug: 'sidebar',
         href: '/docs/components/sidebar',

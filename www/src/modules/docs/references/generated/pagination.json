@@ -1,0 +1,14 @@
+{
+  "name": "PaginationProps",
+  "description": "Pagination lets users navigate through large sets of content split across\nmultiple pages. It renders a `nav` landmark labelled \"pagination\".",
+  "extendsElement": "nav",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
