@@ -1,0 +1,14 @@
+{
+  "name": "SidebarMenuSubProps",
+  "description": "A nested list of sub-items, indented under a `SidebarMenuItem`.",
+  "extendsElement": "ul",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -1753,6 +1753,58 @@ export const DemosIndex: Record<
 		files: ["ui/separator/demos/orientation.tsx"],
 		component: React.lazy(() => import("@/registry/ui/separator/demos/orientation")),
 	},
+	"sidebar/demos/badges-and-actions": {
+		files: ["ui/sidebar/demos/badges-and-actions.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/badges-and-actions")),
+	},
+	"sidebar/demos/basic": {
+		files: ["ui/sidebar/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/basic")),
+	},
+	"sidebar/demos/collapsible-icon": {
+		files: ["ui/sidebar/demos/collapsible-icon.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/collapsible-icon")),
+	},
+	"sidebar/demos/controlled": {
+		files: ["ui/sidebar/demos/controlled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/controlled")),
+	},
+	"sidebar/demos/floating": {
+		files: ["ui/sidebar/demos/floating.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/floating")),
+	},
+	"sidebar/demos/footer-user": {
+		files: ["ui/sidebar/demos/footer-user.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/footer-user")),
+	},
+	"sidebar/demos/groups": {
+		files: ["ui/sidebar/demos/groups.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/groups")),
+	},
+	"sidebar/demos/inset": {
+		files: ["ui/sidebar/demos/inset.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/inset")),
+	},
+	"sidebar/demos/loading": {
+		files: ["ui/sidebar/demos/loading.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/loading")),
+	},
+	"sidebar/demos/rail": {
+		files: ["ui/sidebar/demos/rail.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/rail")),
+	},
+	"sidebar/demos/right": {
+		files: ["ui/sidebar/demos/right.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/right")),
+	},
+	"sidebar/demos/search": {
+		files: ["ui/sidebar/demos/search.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/search")),
+	},
+	"sidebar/demos/submenu": {
+		files: ["ui/sidebar/demos/submenu.tsx"],
+		component: React.lazy(() => import("@/registry/ui/sidebar/demos/submenu")),
+	},
 	"skeleton/demos/card": {
 		files: ["ui/skeleton/demos/card.tsx"],
 		component: React.lazy(() => import("@/registry/ui/skeleton/demos/card")),

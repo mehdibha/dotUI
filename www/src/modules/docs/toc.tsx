@@ -171,6 +171,7 @@ export function TOCItems({
       />
       <nav
         ref={mergeRefs(ref, containerRef)}
+        aria-label="On this page"
         className={cn('flex flex-col', className)}
         {...props}
       >

@@ -1,6 +1,6 @@
 import { tv } from 'tailwind-variants'
 
-import { createStyles } from '@/modules/core/styles'
+import { createStyles } from '@/lib/styles'
 
 import inputMeta from './meta'
 

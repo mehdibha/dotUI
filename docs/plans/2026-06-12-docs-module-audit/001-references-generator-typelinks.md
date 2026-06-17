@@ -111,7 +111,7 @@ The API-reference generator (`pnpm build:references`) serializes entire TypeScri
 - `www/src/modules/references/transform.ts`
 - `www/src/modules/references/types.ts` (if the dead fields are typed there)
 - `www/src/modules/references/generated/*.json` (regenerated output — commit it)
-- `www/scripts/api-docs-builder/src/output-invariants.spec.ts` (create — see Test plan)
+- `www/scripts/api-docs-builder/src/output-invariants.test.ts` (create — see Test plan)
 
 **Out of scope** (do NOT touch, even though they look related):
 - `www/src/modules/docs/reference.tsx` and `www/src/modules/references/components/*` — renderers already handle missing links; no change needed.
@@ -223,13 +223,13 @@ If browser preview tooling is unavailable, render-test via `pnpm --filter www bu
 
 ## Test plan
 
-Create `www/scripts/api-docs-builder/src/output-invariants.spec.ts` (vitest picks up `*.spec.ts` repo-wide; model the file header after `www/src/modules/docs/codegen/source-overlay.spec.ts`). It reads the **committed** generated JSONs (no generator execution in tests) and asserts:
+Create `www/scripts/api-docs-builder/src/output-invariants.test.ts` (vitest picks up `*.test.ts` repo-wide; model the file header after `www/src/modules/docs/codegen/source-overlay.test.ts`). It reads the **committed** generated JSONs (no generator execution in tests) and asserts:
 
 1. No file under `www/src/modules/references/generated/` contains the substring `/Users/` or `\\Users\\` (machine paths).
 2. No file contains `node_modules/.pnpm` (version-pinned paths).
 3. No `typeLinks` key resolves a stdlib type: no key matching `^typescript/lib/lib\.` (they should be skipped entirely now, not just renamed).
 4. A size budget: no single generated JSON exceeds 200 KB (today's worst legitimate file after the fix should be well under; this pins the regression).
-5. Every prop object has no `type` / `typeHighlighted` keys — guards the dead fields from returning. (Skip this assertion if the generated JSONs never contained them — they're added at MDX-compile time by `transform.ts`, not the generator. Check one JSON first; if absent there, instead assert in a small unit test that `transformProp`'s return object lacks the keys, importing `transformReference` from `www/src/modules/references/transform.ts` with a stub highlighter — see how `source-overlay.spec.ts` builds fixtures.)
+5. Every prop object has no `type` / `typeHighlighted` keys — guards the dead fields from returning. (Skip this assertion if the generated JSONs never contained them — they're added at MDX-compile time by `transform.ts`, not the generator. Check one JSON first; if absent there, instead assert in a small unit test that `transformProp`'s return object lacks the keys, importing `transformReference` from `www/src/modules/references/transform.ts` with a stub highlighter — see how `source-overlay.test.ts` builds fixtures.)
 
 Verification: `pnpm test` → all pass, including the new spec.
 
@@ -241,7 +241,7 @@ Machine-checkable. ALL must hold:
 - [ ] `ls -la www/src/modules/references/generated/color-field.json` → < 150 KB
 - [ ] `grep -rn "typeHighlighted" www/src/modules/references/transform.ts` → no matches
 - [ ] `pnpm typecheck`, `pnpm test`, `pnpm check` all exit 0
-- [ ] New `output-invariants.spec.ts` exists and passes
+- [ ] New `output-invariants.test.ts` exists and passes
 - [ ] Running `pnpm --filter www build:references` twice in a row produces zero diff (`git status --porcelain` clean after the second run) — output is now deterministic on this machine
 - [ ] No files outside the in-scope list are modified (`git status`)
 - [ ] Status row updated in this audit's `README.md`

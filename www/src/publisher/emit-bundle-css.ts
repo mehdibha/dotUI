@@ -54,6 +54,7 @@ export const BUNDLE_GLOBALS_CSS = `@import "tailwindcss";
 
 @source "../registry/**/*.{ts,tsx}";
 @source "../components/**/*.{ts,tsx}";
+@source "../modules/**/*.{ts,tsx}";
 @source "./**/*.{ts,tsx}";
 
 @theme {

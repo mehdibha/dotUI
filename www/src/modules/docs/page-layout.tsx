@@ -7,22 +7,6 @@ export function PageLayout({
   return <div className={cn('', className)} {...props} />
 }
 
-export function PageHeader({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<'section'>) {
-  return (
-    <section
-      data-page-header
-      className={cn('container py-6 md:py-8 lg:py-14', className)}
-      {...props}
-    >
-      {children}
-    </section>
-  )
-}
-
 export function PageHeaderHeading({
   className,
   ...props
@@ -46,21 +30,6 @@ export function PageHeaderDescription({
     <p
       className={cn(
         'sm:text-md mt-1 max-w-3xl text-base text-balance text-fg-muted',
-        className,
-      )}
-      {...props}
-    />
-  )
-}
-
-export function PageActions({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
-  return (
-    <div
-      className={cn(
-        'mt-4 flex w-full flex-col gap-2 sm:flex-row sm:items-center',
         className,
       )}
       {...props}

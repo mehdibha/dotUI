@@ -2,8 +2,8 @@
  * Build the "showcase bundle" generated artifact.
  *
  * The "Open in v0" feature hands an external tool (v0) a *whole project* that
- * boots straight into the dotUI marketing showcase (`components/marketing/
- * showcase/cards.tsx`), with every component installed and the user's preset
+ * boots straight into the dotUI showcase (`modules/marketing/cards.tsx`),
+ * with every component installed and the user's preset
  * theme written into `globals.css`.
  *
  * v0 strips a registry item's `css` / `cssVars` fields, so the theme can't ride
@@ -50,7 +50,7 @@ const GENERATED = path.join(SRC, 'registry/__generated__')
 const OUT_FILE = path.join(GENERATED, 'showcase-bundle.ts')
 
 /** Entry point of the closure — the component the showcase renders first. */
-const ENTRY = 'components/marketing/showcase/cards.tsx'
+const ENTRY = 'modules/marketing/cards.tsx'
 
 /**
  * Full-file replacements, keyed by src-relative path. A file in this map is
@@ -63,7 +63,7 @@ const OVERRIDES: Record<string, string> = {
 
 /** Per-file content rewrites applied after read, before emit and import scan. */
 function transformContent(srcRel: string, content: string): string {
-  if (srcRel === 'components/marketing/showcase/invite-members.tsx') {
+  if (srcRel === 'components/showcase/invite-members.tsx') {
     const rewritten = content.replace(
       /import\s*\{\s*ExternalLinkIcon\s*\}\s*from\s*["']@\/registry\/__generated__\/icons["'];?/,
       `import { ExternalLink as ExternalLinkIcon } from "lucide-react";`,

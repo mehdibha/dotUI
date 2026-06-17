@@ -1,0 +1,14 @@
+{
+  "name": "SidebarContentProps",
+  "description": "The scrollable region between the header and footer.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

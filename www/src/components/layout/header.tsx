@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link as RouterLink } from '@tanstack/react-router'
+import { Link as RouterLink, useLocation } from '@tanstack/react-router'
 import type * as PageTree from 'fumadocs-core/page-tree'
 import { SearchIcon } from 'lucide-react'
 
@@ -12,6 +12,37 @@ import { Logo } from '@/components/layout/logo'
 import { MobileNav } from '@/components/layout/mobile-nav'
 import { SearchCommand } from '@/components/search-command'
 import { ThemeToggle } from '@/components/theme-toggle'
+
+// iOS-style progressive blur: each layer adds a larger backdrop blur over an
+// overlapping gradient window. Where the windows overlap the blurs compound,
+// ramping smoothly from sharp (bottom edge) to heavily blurred (top). The
+// `to top` direction puts the strongest blur under the nav content. The wrapper
+// must stay mask-free — a mask there establishes a backdrop root and kills the
+// cross-layer compounding that makes the ramp smooth.
+const BLUR_LAYERS = [
+  {
+    blur: 0.5,
+    mask: 'linear-gradient(to top, transparent 0%, #000 10%, #000 30%, transparent 40%)',
+  },
+  {
+    blur: 1,
+    mask: 'linear-gradient(to top, transparent 10%, #000 20%, #000 40%, transparent 50%)',
+  },
+  {
+    blur: 2,
+    mask: 'linear-gradient(to top, transparent 15%, #000 30%, #000 50%, transparent 60%)',
+  },
+  {
+    blur: 4,
+    mask: 'linear-gradient(to top, transparent 20%, #000 40%, #000 60%, transparent 70%)',
+  },
+  {
+    blur: 8,
+    mask: 'linear-gradient(to top, transparent 40%, #000 60%, #000 80%, transparent 90%)',
+  },
+  { blur: 16, mask: 'linear-gradient(to top, transparent 60%, #000 80%)' },
+  { blur: 24, mask: 'linear-gradient(to top, transparent 70%, #000 100%)' },
+]
 
 function useScrolled(threshold = 8) {
   const [scrolled, setScrolled] = useState(false)
@@ -31,6 +62,14 @@ interface HeaderProps {
 
 export function Header({ className, items = [] }: HeaderProps) {
   const scrolled = useScrolled(8)
+  const { pathname } = useLocation()
+  // Longest-matching-prefix wins so "/docs/components" highlights Components (not
+  // Docs) while "/docs/button" still highlights Docs.
+  const activeTo = [...navItems]
+    .sort((a, b) => b.to.length - a.to.length)
+    .find(
+      (item) => pathname === item.to || pathname.startsWith(`${item.to}/`),
+    )?.to
 
   return (
     <header
@@ -42,37 +81,63 @@ export function Header({ className, items = [] }: HeaderProps) {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] opacity-0 transition-opacity duration-300 ease-out group-data-scrolled/header:opacity-100"
-        style={{
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          backgroundColor:
-            'color-mix(in oklab, var(--color-bg) 60%, transparent)',
-          maskImage:
-            'linear-gradient(to bottom, black 0%, black 55%, transparent 100%)',
-          WebkitMaskImage:
-            'linear-gradient(to bottom, black 0%, black 55%, transparent 100%)',
-        }}
-      />
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] opacity-0 transition-opacity duration-300 ease-out group-data-[scrolled]/header:opacity-100"
+      >
+        {BLUR_LAYERS.map(({ blur, mask }) => (
+          <div
+            key={blur}
+            className="absolute inset-0"
+            style={{
+              backdropFilter: `blur(${blur}px)`,
+              WebkitBackdropFilter: `blur(${blur}px)`,
+              maskImage: mask,
+              WebkitMaskImage: mask,
+            }}
+          />
+        ))}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--color-bg) 55%, transparent) 55%, color-mix(in oklab, var(--color-bg) 72%, transparent) 100%)',
+          }}
+        />
+      </div>
       <div className="flex items-center gap-3 md:gap-6">
         <MobileNav items={items} />
-        <Logo className="max-md:hidden" />
-        <nav className="flex items-center gap-3 text-sm max-md:hidden">
-          {navItems.map((item) => (
-            <RouterLink
-              key={item.name}
-              to={item.to}
-              className="px-0.5 text-fg-muted transition-colors hover:text-fg"
-            >
-              {item.name}
-            </RouterLink>
-          ))}
+        <Logo />
+        <nav
+          aria-label="Main"
+          className="flex items-center gap-3 text-sm max-md:hidden"
+        >
+          {navItems.map((item) => {
+            // Color highlights the whole section (Docs stays lit on /docs/button)
+            // via the longest-prefix match above. aria-current is left to Router
+            // Link with `exact` matching so it marks only the literal current page
+            // — otherwise Link's default fuzzy match lights aria-current on both
+            // Docs and Components for any /docs/components/* page.
+            const isActive = item.to === activeTo
+            return (
+              <RouterLink
+                key={item.name}
+                to={item.to}
+                activeOptions={{ exact: true }}
+                className={cn(
+                  'px-0.5 transition-colors hover:text-fg',
+                  isActive ? 'text-fg' : 'text-fg-muted',
+                )}
+              >
+                {item.name}
+              </RouterLink>
+            )
+          })}
         </nav>
       </div>
       <div className="flex items-center gap-2">
         <SearchCommand keyboardShortcut items={items}>
           <Button
             variant="default"
+            aria-label="Search docs"
             className="max-md:size-8 max-md:px-0 md:text-fg-muted"
           >
             <SearchIcon className="md:hidden" />

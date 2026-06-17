@@ -90,7 +90,7 @@ const scalarVarsRegistry = new Map<string, Record<string, string>>()
 - `www/src/publisher/build-time/evaluate-config.ts` (create)
 - `www/src/publisher/build-time/build-publishables.ts` (fallback wiring + placeholder assert)
 - `www/scripts/registry-build.ts` (fail-loud guard)
-- `www/src/publisher/build-time/build.spec.ts` (extend tests) and/or a new `www/src/publisher/build-time/styles-extraction-sweep.spec.ts`
+- `www/src/publisher/build-time/build.test.ts` (extend tests) and/or a new `www/src/publisher/build-time/styles-extraction-sweep.test.ts`
 - `www/src/registry/__generated__/**` and `www/src/registry/base/colors.css` (regenerated artifacts — commit whatever `pnpm build:registry` produces)
 
 **Out of scope** (do NOT touch, even though they look related):
@@ -164,17 +164,17 @@ In `build-publishables.ts`, inside `buildOne()`'s template mapping (lines 185–
 
 ### Step 8: Tests
 
-Two additions (model the structure on the existing `www/src/publisher/build-time/build.spec.ts`):
+Two additions (model the structure on the existing `www/src/publisher/build-time/build.test.ts`):
 
-1. In `build.spec.ts`: a test that `evaluateStylesConfig('input', <abs path to ui/input/styles.ts>)` resolves and the result contains `params.style.outline.slots.inputGroup` including the substring `border-border-field`, and one asserting `slider`'s `base.slots.root` is a non-empty string.
-2. New `www/src/publisher/build-time/styles-extraction-sweep.spec.ts`: for **every** directory under `www/src/registry/ui/*/` that has a `styles.ts`, assert `extractStylesConfig` succeeds OR `evaluateStylesConfig` succeeds (try/catch the first). This is the regression net for the whole registry — a future component using unsupported constructs fails tests, not just the build.
+1. In `build.test.ts`: a test that `evaluateStylesConfig('input', <abs path to ui/input/styles.ts>)` resolves and the result contains `params.style.outline.slots.inputGroup` including the substring `border-border-field`, and one asserting `slider`'s `base.slots.root` is a non-empty string.
+2. New `www/src/publisher/build-time/styles-extraction-sweep.test.ts`: for **every** directory under `www/src/registry/ui/*/` that has a `styles.ts`, assert `extractStylesConfig` succeeds OR `evaluateStylesConfig` succeeds (try/catch the first). This is the regression net for the whole registry — a future component using unsupported constructs fails tests, not just the build.
 
 **Verify**: `pnpm test` → all pass, including the new tests.
 
 ## Test plan
 
 - New tests as in Step 8 (evaluate-path happy cases for `input` and `slider`; all-components extraction sweep).
-- Existing `publish.spec.ts` (19 tests) and `build.spec.ts` (8 tests) must stay green untouched — they lock the behavior of the 56 previously-working components.
+- Existing `publish.test.ts` (19 tests) and `build.test.ts` (8 tests) must stay green untouched — they lock the behavior of the 56 previously-working components.
 - Final: `pnpm test` → all pass; `pnpm typecheck` → exit 0; `pnpm check` → exit 0.
 
 ## Done criteria

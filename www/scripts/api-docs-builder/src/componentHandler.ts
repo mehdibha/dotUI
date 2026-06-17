@@ -4,7 +4,7 @@ import { format } from 'oxfmt'
 import ts from 'typescript'
 import * as tae from 'typescript-api-extractor'
 
-import type { TLink, TType } from '@/modules/references/types/type-ast'
+import type { TLink, TType } from '@/modules/docs/references/types/type-ast'
 
 import {
   ALWAYS_EXPAND_TYPES,
