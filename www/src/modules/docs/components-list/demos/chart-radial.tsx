@@ -1,11 +1,19 @@
 'use client'
 
-import ChartRadialSimple from '@/registry/ui/chart-radial/demos/simple'
+import { Suspense, lazy } from 'react'
+
+// Lazy on purpose — see the note in chart-bar.tsx: a module imported both
+// statically here and dynamically via DemosIndex breaks in production.
+const ChartRadialSimple = lazy(
+  () => import('@/registry/ui/chart-radial/demos/simple'),
+)
 
 export function ChartRadialDemo() {
   return (
     <div className="w-[360px] max-w-full">
-      <ChartRadialSimple />
+      <Suspense fallback={null}>
+        <ChartRadialSimple />
+      </Suspense>
     </div>
   )
 }
