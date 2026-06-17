@@ -329,24 +329,29 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the group is disabled."
-    },
-    "isFocusVisible": {
-      "selector": "[data-focus-visible]",
-      "description": "Whether an element within the group is keyboard focused."
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "tailwind": "hover:",
+      "description": "Whether the group is currently hovered with a mouse."
     },
     "isFocusWithin": {
       "selector": "[data-focus-within]",
+      "tailwind": "focus-within:",
       "description": "Whether an element within the group is focused, either via a mouse or keyboard."
     },
-    "isHovered": {
-      "selector": "[data-hovered]",
-      "description": "Whether the group is currently hovered with a mouse."
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
+      "description": "Whether an element within the group is keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the group is disabled."
     },
     "isInvalid": {
       "selector": "[data-invalid]",
+      "tailwind": "invalid:",
       "description": "Whether the group is invalid."
     }
   },

@@ -242,6 +242,7 @@
   "renderProps": {
     "isPlaceholder": {
       "selector": "[data-placeholder]",
+      "tailwind": "placeholder-shown:",
       "description": "Whether the value is a placeholder."
     }
   },

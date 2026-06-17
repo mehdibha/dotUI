@@ -803,6 +803,38 @@
       "description": "The target window for the link. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#target)."
     }
   },
+  "renderProps": {
+    "isCurrent": {
+      "selector": "[data-current]",
+      "tailwind": "current:",
+      "description": "Whether the link is the current item within a list."
+    },
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "tailwind": "hover:",
+      "description": "Whether the link is currently hovered with a mouse."
+    },
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "tailwind": "pressed:",
+      "description": "Whether the link is currently in a pressed state."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "tailwind": "focus:",
+      "description": "Whether the link is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
+      "description": "Whether the link is keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the link is disabled."
+    }
+  },
   "typeLinks": {
     "HoverEvent": {
       "type": "interface",

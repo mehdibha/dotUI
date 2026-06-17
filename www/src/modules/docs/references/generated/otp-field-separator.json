@@ -138,6 +138,14 @@
       "description": "Style applied to the element, or a function that\nreturns a style object based on the component's state."
     }
   },
+  "renderProps": {
+    "orientation": {
+      "selector": "[data-orientation]",
+      "tailwind": "data-orientation:",
+      "description": "Indicates the orientation of the separator."
+    }
+  },
+  "renderPropsKind": "data-attribute",
   "typeLinks": {
     "@base-ui/react/esm/separator/Separator.d.ts:SeparatorState": {
       "type": "interface",

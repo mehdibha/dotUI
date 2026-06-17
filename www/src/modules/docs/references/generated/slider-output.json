@@ -136,6 +136,18 @@
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
+  "renderProps": {
+    "orientation": {
+      "selector": "[data-orientation=\"horizontal | vertical\"]",
+      "tailwind": "orientation-horizontal: | orientation-vertical:",
+      "description": "The orientation of the slider."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the slider is disabled."
+    }
+  },
   "typeLinks": {
     "SliderRenderProps": {
       "type": "interface",

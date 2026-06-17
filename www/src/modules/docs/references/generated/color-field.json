@@ -837,25 +837,30 @@
     }
   },
   "renderProps": {
-    "channel": {
-      "selector": "[data-channel=\"hex | hue | saturation | ...\"]",
-      "description": "The color channel that this field edits, or \"hex\" if no `channel` prop is set."
-    },
     "isDisabled": {
       "selector": "[data-disabled]",
+      "tailwind": "disabled:",
       "description": "Whether the color field is disabled."
     },
     "isInvalid": {
       "selector": "[data-invalid]",
+      "tailwind": "invalid:",
       "description": "Whether the color field is invalid."
     },
     "isReadOnly": {
       "selector": "[data-readonly]",
+      "tailwind": "read-only:",
       "description": "Whether the color field is read only."
     },
     "isRequired": {
       "selector": "[data-required]",
+      "tailwind": "required:",
       "description": "Whether the color field is required."
+    },
+    "channel": {
+      "selector": "[data-channel=\"hex | hue | saturation | ...\"]",
+      "tailwind": "data-[channel=hex]: | data-[channel=hue]: | data-[channel=saturation]: | data-[channel=…]:",
+      "description": "The color channel that this field edits, or \"hex\" if no `channel` prop is set."
     }
   },
   "typeLinks": {

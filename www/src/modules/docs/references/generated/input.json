@@ -209,24 +209,29 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the input is disabled."
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "tailwind": "hover:",
+      "description": "Whether the input is currently hovered with a mouse."
     },
     "isFocused": {
       "selector": "[data-focused]",
+      "tailwind": "focus:",
       "description": "Whether the input is focused, either via a mouse or keyboard."
     },
     "isFocusVisible": {
       "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
       "description": "Whether the input is keyboard focused."
     },
-    "isHovered": {
-      "selector": "[data-hovered]",
-      "description": "Whether the input is currently hovered with a mouse."
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the input is disabled."
     },
     "isInvalid": {
       "selector": "[data-invalid]",
+      "tailwind": "invalid:",
       "description": "Whether the input is invalid."
     }
   },

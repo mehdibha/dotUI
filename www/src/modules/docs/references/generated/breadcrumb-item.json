@@ -177,6 +177,18 @@
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
+  "renderProps": {
+    "isCurrent": {
+      "selector": "[data-current]",
+      "tailwind": "current:",
+      "description": "Whether the breadcrumb is for the current page."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the breadcrumb is disabled."
+    }
+  },
   "typeLinks": {
     "BreadcrumbRenderProps": {
       "type": "interface",

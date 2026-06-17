@@ -489,19 +489,23 @@
   "renderProps": {
     "isDisabled": {
       "selector": "[data-disabled]",
+      "tailwind": "disabled:",
       "description": "Whether the checkbox group is disabled."
-    },
-    "isInvalid": {
-      "selector": "[data-invalid]",
-      "description": "Whether the checkbox group is invalid."
     },
     "isReadOnly": {
       "selector": "[data-readonly]",
+      "tailwind": "read-only:",
       "description": "Whether the checkbox group is read only."
     },
     "isRequired": {
       "selector": "[data-required]",
+      "tailwind": "required:",
       "description": "Whether the checkbox group is required."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "invalid:",
+      "description": "Whether the checkbox group is invalid."
     }
   },
   "typeLinks": {

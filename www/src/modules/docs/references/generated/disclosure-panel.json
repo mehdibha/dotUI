@@ -191,6 +191,7 @@
   "renderProps": {
     "isFocusVisibleWithin": {
       "selector": "[data-focus-visible-within]",
+      "tailwind": "data-focus-visible-within:",
       "description": "Whether keyboard focus is within the disclosure panel."
     }
   },

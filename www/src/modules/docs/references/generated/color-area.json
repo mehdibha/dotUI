@@ -349,6 +349,7 @@
   "renderProps": {
     "isDisabled": {
       "selector": "[data-disabled]",
+      "tailwind": "disabled:",
       "description": "Whether the color area is disabled."
     }
   },

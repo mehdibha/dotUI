@@ -230,6 +230,53 @@
       "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     }
   },
+  "renderProps": {
+    "isSelected": {
+      "selector": "[data-selected]",
+      "tailwind": "selected:",
+      "description": "Whether the radio is selected."
+    },
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "tailwind": "hover:",
+      "description": "Whether the radio is currently hovered with a mouse."
+    },
+    "isPressed": {
+      "selector": "[data-pressed]",
+      "tailwind": "pressed:",
+      "description": "Whether the radio is currently in a pressed state."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "tailwind": "focus:",
+      "description": "Whether the radio is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
+      "description": "Whether the radio is keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the radio is disabled."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "tailwind": "read-only:",
+      "description": "Whether the radio is read only."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "invalid:",
+      "description": "Whether the radio is invalid."
+    },
+    "isRequired": {
+      "selector": "[data-required]",
+      "tailwind": "required:",
+      "description": "Whether the checkbox is required."
+    }
+  },
   "typeLinks": {
     "HoverEvent": {
       "type": "interface",

@@ -443,25 +443,30 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the dropzone is disabled."
-    },
-    "isDropTarget": {
-      "selector": "[data-drop-target]",
-      "description": "Whether the dropzone is the drop target."
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "tailwind": "hover:",
+      "description": "Whether the dropzone is currently hovered with a mouse."
     },
     "isFocused": {
       "selector": "[data-focused]",
+      "tailwind": "focus:",
       "description": "Whether the dropzone is focused, either via a mouse or keyboard."
     },
     "isFocusVisible": {
       "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
       "description": "Whether the dropzone is keyboard focused."
     },
-    "isHovered": {
-      "selector": "[data-hovered]",
-      "description": "Whether the dropzone is currently hovered with a mouse."
+    "isDropTarget": {
+      "selector": "[data-drop-target]",
+      "tailwind": "drop-target:",
+      "description": "Whether the dropzone is the drop target."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the dropzone is disabled."
     }
   },
   "typeLinks": {

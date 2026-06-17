@@ -212,36 +212,44 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the date field is disabled."
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "tailwind": "hover:",
+      "description": "Whether the segment is currently hovered with a mouse."
     },
     "isFocused": {
       "selector": "[data-focused]",
+      "tailwind": "focus:",
       "description": "Whether the segment is focused, either via a mouse or keyboard."
     },
     "isFocusVisible": {
       "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
       "description": "Whether the segment is keyboard focused."
-    },
-    "isHovered": {
-      "selector": "[data-hovered]",
-      "description": "Whether the segment is currently hovered with a mouse."
-    },
-    "isInvalid": {
-      "selector": "[data-invalid]",
-      "description": "Whether the date field is in an invalid state."
     },
     "isPlaceholder": {
       "selector": "[data-placeholder]",
+      "tailwind": "placeholder-shown:",
       "description": "Whether the value is a placeholder."
     },
     "isReadOnly": {
       "selector": "[data-readonly]",
+      "tailwind": "read-only:",
       "description": "Whether the segment is read only."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the date field is disabled."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "invalid:",
+      "description": "Whether the date field is in an invalid state."
     },
     "type": {
       "selector": "[data-type=\"...\"]",
+      "tailwind": "data-[type=…]:",
       "description": "The type of segment. Values include `literal`, `year`, `month`, `day`, etc."
     }
   },

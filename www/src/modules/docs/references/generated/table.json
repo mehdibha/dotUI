@@ -516,17 +516,20 @@
     }
   },
   "renderProps": {
-    "isDropTarget": {
-      "selector": "[data-drop-target]",
-      "description": "Whether the table is currently the active drop target."
-    },
     "isFocused": {
       "selector": "[data-focused]",
+      "tailwind": "focus:",
       "description": "Whether the table is currently focused."
     },
     "isFocusVisible": {
       "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
       "description": "Whether the table is currently keyboard focused."
+    },
+    "isDropTarget": {
+      "selector": "[data-drop-target]",
+      "tailwind": "drop-target:",
+      "description": "Whether the table is currently the active drop target."
     }
   },
   "typeLinks": {

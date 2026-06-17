@@ -485,25 +485,30 @@
     }
   },
   "renderProps": {
+    "orientation": {
+      "selector": "[data-orientation=\"horizontal | vertical\"]",
+      "tailwind": "orientation-horizontal: | orientation-vertical:",
+      "description": "The orientation of the radio group."
+    },
     "isDisabled": {
       "selector": "[data-disabled]",
+      "tailwind": "disabled:",
       "description": "Whether the radio group is disabled."
-    },
-    "isInvalid": {
-      "selector": "[data-invalid]",
-      "description": "Whether the radio group is invalid."
     },
     "isReadOnly": {
       "selector": "[data-readonly]",
+      "tailwind": "read-only:",
       "description": "Whether the radio group is read only."
     },
     "isRequired": {
       "selector": "[data-required]",
+      "tailwind": "required:",
       "description": "Whether the radio group is required."
     },
-    "orientation": {
-      "selector": "[data-orientation=\"horizontal | vertical\"]",
-      "description": "The orientation of the radio group."
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "invalid:",
+      "description": "Whether the radio group is invalid."
     }
   },
   "typeLinks": {

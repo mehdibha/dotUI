@@ -240,57 +240,70 @@
     }
   },
   "renderProps": {
-    "isDisabled": {
-      "selector": "[data-disabled]",
-      "description": "Whether the cell is disabled, according to the calendar's `minValue`, `maxValue`, and\n`isDisabled` props. Disabled dates are not focusable, and cannot be selected by the user. They\nare typically displayed with a dimmed appearance."
-    },
-    "isFocused": {
-      "selector": "[data-focused]",
-      "description": "Whether the cell is focused."
-    },
-    "isFocusVisible": {
-      "selector": "[data-focus-visible]",
-      "description": "Whether the cell is keyboard focused."
-    },
     "isHovered": {
       "selector": "[data-hovered]",
+      "tailwind": "hover:",
       "description": "Whether the cell is currently hovered with a mouse."
-    },
-    "isInvalid": {
-      "selector": "[data-invalid]",
-      "description": "Whether the cell is part of an invalid selection."
-    },
-    "isOutsideMonth": {
-      "selector": "[data-outside-month]",
-      "description": "Whether the cell is outside the current month."
-    },
-    "isOutsideVisibleRange": {
-      "selector": "[data-outside-visible-range]",
-      "description": "Whether the cell is outside the visible range of the calendar.\nFor example, dates before the first day of a month in the same week."
     },
     "isPressed": {
       "selector": "[data-pressed]",
+      "tailwind": "pressed:",
       "description": "Whether the cell is currently being pressed."
     },
     "isSelected": {
       "selector": "[data-selected]",
+      "tailwind": "selected:",
       "description": "Whether the cell is selected."
-    },
-    "isSelectionEnd": {
-      "selector": "[data-selection-end]",
-      "description": "Whether the cell is the last date in a range selection."
     },
     "isSelectionStart": {
       "selector": "[data-selection-start]",
+      "tailwind": "selection-start:",
       "description": "Whether the cell is the first date in a range selection."
     },
-    "isToday": {
-      "selector": "[data-today]",
-      "description": "Whether the cell is today."
+    "isSelectionEnd": {
+      "selector": "[data-selection-end]",
+      "tailwind": "selection-end:",
+      "description": "Whether the cell is the last date in a range selection."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "tailwind": "focus:",
+      "description": "Whether the cell is focused."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "tailwind": "focus-visible:",
+      "description": "Whether the cell is keyboard focused."
+    },
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "tailwind": "disabled:",
+      "description": "Whether the cell is disabled, according to the calendar's `minValue`, `maxValue`, and\n`isDisabled` props. Disabled dates are not focusable, and cannot be selected by the user. They\nare typically displayed with a dimmed appearance."
+    },
+    "isOutsideVisibleRange": {
+      "selector": "[data-outside-visible-range]",
+      "tailwind": "outside-visible-range:",
+      "description": "Whether the cell is outside the visible range of the calendar.\nFor example, dates before the first day of a month in the same week."
+    },
+    "isOutsideMonth": {
+      "selector": "[data-outside-month]",
+      "tailwind": "outside-month:",
+      "description": "Whether the cell is outside the current month."
     },
     "isUnavailable": {
       "selector": "[data-unavailable]",
+      "tailwind": "unavailable:",
       "description": "Whether the cell is unavailable, according to the calendar's `isDateUnavailable` prop.\nUnavailable dates remain focusable, but cannot be selected by the user. They should be\ndisplayed with a visual affordance to indicate they are unavailable, such as a different color\nor a strikethrough.\n\nNote that because they are focusable, unavailable dates must meet a 4.5:1 color contrast ratio,\n[as defined by WCAG](https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html)."
+    },
+    "isInvalid": {
+      "selector": "[data-invalid]",
+      "tailwind": "invalid:",
+      "description": "Whether the cell is part of an invalid selection."
+    },
+    "isToday": {
+      "selector": "[data-today]",
+      "tailwind": "data-today:",
+      "description": "Whether the cell is today."
     }
   },
   "typeLinks": {
