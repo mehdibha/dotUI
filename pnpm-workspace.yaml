@@ -21,6 +21,16 @@ allowBuilds:
   puppeteer: true
   sharp: true
 
+# The /r/* publisher routes format exported code with oxfmt at request time, so
+# oxfmt is bundled into the Vercel lambda. Nitro's externals tracer realpaths
+# every one of oxfmt's optional native bindings — including the linux-x64 musl
+# build, which pnpm skips on Vercel's glibc machine — and fails the build with
+# ENOENT. Install the musl libc variants too so the tracer can resolve them.
+supportedArchitectures:
+  libc:
+    - current
+    - musl
+
 overrides:
   '@types/react': 19.2.2
   '@types/react-dom': 19.2.1
