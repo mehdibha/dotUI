@@ -108,5 +108,8 @@
     ".agents/**",
     "skills-lock.json",
     "docs/**",
+    // design-sync tooling: authored preview inputs + forked converter scripts.
+    // The forks must stay byte-diffable against upstream lib/*.mjs — don't reformat.
+    ".design-sync/**",
   ],
 }
