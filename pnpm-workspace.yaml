@@ -25,10 +25,12 @@ overrides:
   '@types/react': 19.2.2
   '@types/react-dom': 19.2.1
 
-patchedDependencies:
-  tailwindcss-react-aria-components@2.1.1: patches/tailwindcss-react-aria-components@2.1.1.patch
-
 minimumReleaseAgeExclude:
   - starter-themes@0.0.2
   - tailwindcss-autocontrast@0.0.4
   - tailwindcss-with@0.0.2
+  - '@react-types/shared@3.36.0'
+  - react-aria-components@1.19.0
+  - react-aria@3.50.0
+  - react-stately@3.48.0
+  - tailwindcss-react-aria-components@2.2.0
