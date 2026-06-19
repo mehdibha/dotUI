@@ -28,7 +28,8 @@
     "DatePicker": { "cardMode": "single", "viewport": "560x520", "primaryStory": "Default" },
     "ColorPicker": { "cardMode": "single", "viewport": "520x520", "primaryStory": "Default" },
     "Command": { "cardMode": "single", "viewport": "520x520", "primaryStory": "Default" },
-    "Sidebar": { "cardMode": "single", "viewport": "1100x640", "primaryStory": "Default" }
+    "Sidebar": { "cardMode": "single", "viewport": "1100x640", "primaryStory": "Default" },
+    "Toaster": { "cardMode": "single", "viewport": "560x420", "primaryStory": "Success" }
   },
   "componentSrcMap": {
     "Accordion": "src/registry/ui/accordion/base.tsx",

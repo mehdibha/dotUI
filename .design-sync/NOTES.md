@@ -88,11 +88,42 @@ node .ds-sync/package-validate.mjs ./ds-bundle
 
 ## Scope / status
 
-- **Phase 1** (current): all 62 components importable + functional on FLOOR CARDS;
-  verify a representative handful render styled; upload; stop for review. No authored
-  previews yet.
-- **Phase 2+** (later): author rich `.design-sync/previews/<Name>.tsx` for a curated core,
-  then expand. Authored previews + grades carry forward across syncs.
+- **Phase 1** (done): all 62 components importable on floor cards; uploaded.
+- **Phase 2** (done 2026-06-19): authored a rendered preview card for ALL 62 components
+  (`.design-sync/previews/<Name>.tsx`), graded good, 62/62 render cleanly. Replaces the
+  floor cards.
+
+## Authoring conventions (Phase 2 — for future previews / re-syncs)
+
+- One `.design-sync/previews/<Name>.tsx` per component; each **named export = one card cell**
+  (`?story=<Export>`). Budget 2–5 cells: canonical + main variant axis + key states.
+- **Import components from `'www'`** (the package specifier shims to `window.DotUI`). Icons
+  from `'lucide-react'`. `@internationalized/date` for date/time values. NEVER `@/…`,
+  `@/modules/*`, relative-demo, or the `@/registry/__generated__/icons` barrel.
+- **Inline `style={{}}` for layout wrappers**, never Tailwind className utilities — the
+  shipped CSS only contains classes already used by registry components (component styling
+  itself is fine; only wrapper layout needs inline styles). The previews dir IS scanned by
+  `@source` (gen-css) so utilities *can* compile, but inline styles avoid a CSS recompile.
+- Port from each component's `examples.tsx` + `demos/*.tsx` (strip the www-only
+  `@/modules/create/preview/*` wrappers). Realistic content, never foo/bar.
+- **Overlays render the OPEN state** via `defaultOpen` on the root wrapper (Menu/Dialog/
+  Tooltip/Select/DatePicker/ColorPicker/Modal/Drawer-via-Dialog). They + Sidebar/Command/
+  Toaster get `cfg.overrides.<Name> = {cardMode:"single", viewport, primaryStory}` so the
+  open layer/large layout renders in a dedicated card. **Combobox** opens on focus only —
+  static open isn't possible; its card is the styled closed input (acceptable).
+- **Toaster**: the bundle exports only `Toaster` + `ToastProvider` (not `toastManager`/
+  `ToastPrimitive`). The preview imports `@base-ui/react/toast` directly, makes a manager
+  with `createToastManager()`, passes it to `ToastProvider toastManager=`, and pushes toasts
+  in a mount `useEffect`. Toasts portal to fixed bottom-right → single card mode.
+- **Loader**: the shipped spinner ignores `size`/`stroke`/`speed` runtime props (those only
+  drive the `ring` variant; the spinner-vs-ring `style` axis is a builder-time param not
+  surfaced in the bundle). Sweep contexts, not those props.
+- **Table** exports `TableContainer/TableHeader/TableColumn/TableBody/TableRow/TableCell/
+  TableFooter` (not the Column/Row/Cell shorthand).
+- **Aliased re-exports** (`ListBoxItem as SelectItem`, `SelectSection`, …): `gen-bundle-inputs.mjs`
+  reads exported names via `getExportSymbols()` (NOT `getExportedDeclarations`, which keys
+  aliases under the original name and drops them). If `SelectItem`/`SelectSection` etc. go
+  missing from the bundle, that regressed.
 
 ## Render-check findings (Phase 1 build)
 
@@ -115,6 +146,19 @@ Switch, NumberField, SearchField, DropZone, Avatar all render fully styled). Kno
 
 ### Known render warns (triaged legitimate)
 - `[RENDER_THIN]` Loader — a spinner really is tiny; legitimate.
+- `[RENDER_THIN]` Toaster "variants render identically" — toasts portal to a fixed
+  bottom-right position, so in a multi-cell grid render the cells read empty/identical.
+  Resolved with single card mode (`primaryStory: "Success"`); benign.
+- Headless Chrome cosmetics (NOT defects): glass/backdrop-blur scrims render flat gray
+  (Dialog/Modal/Drawer), and remote images break (Card "WithImage" Unsplash, Sidebar avatar).
+  The component layout/content is correct; the real product (with GPU/network) renders these.
+
+### Incident 2026-06-19 — work auto-stashed by a background rebase
+While authoring Phase 2, a background PR-rebase routine checked out another branch
+(`claude/charming-nightingale-7ad20b`) + `git clean`-ed, wiping the uncommitted `.design-sync/`
+working tree (62 previews + config edits). Recovered from `git stash` (the routine
+auto-stashed with a descriptive message before switching). Lesson: **commit `.design-sync/`
+sources frequently** — untracked files are the first casualty. See the user-memory note.
 
 ## Re-sync risks
 
