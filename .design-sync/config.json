@@ -17,6 +17,19 @@
     "bundle.mjs": "tsconfigPathsPlugin must require a file so directory imports (@/registry/ui/loader) resolve to index.tsx",
     "source-kit.mjs": "normalize own-dir group filter (kebab dir vs PascalCase name) so cfg.docsMap category wins for multi-word components"
   },
+  "overrides": {
+    "Menu": { "cardMode": "single", "viewport": "460x320", "primaryStory": "Open" },
+    "Popover": { "cardMode": "single", "viewport": "440x280", "primaryStory": "Open" },
+    "Tooltip": { "cardMode": "single", "viewport": "380x240", "primaryStory": "Open" },
+    "Select": { "cardMode": "single", "viewport": "440x360", "primaryStory": "Open" },
+    "Dialog": { "cardMode": "single", "viewport": "760x600", "primaryStory": "Default" },
+    "Modal": { "cardMode": "single", "viewport": "760x560", "primaryStory": "Default" },
+    "Drawer": { "cardMode": "single", "viewport": "760x720", "primaryStory": "Default" },
+    "DatePicker": { "cardMode": "single", "viewport": "560x520", "primaryStory": "Default" },
+    "ColorPicker": { "cardMode": "single", "viewport": "520x520", "primaryStory": "Default" },
+    "Command": { "cardMode": "single", "viewport": "520x520", "primaryStory": "Default" },
+    "Sidebar": { "cardMode": "single", "viewport": "1100x640", "primaryStory": "Default" }
+  },
   "componentSrcMap": {
     "Accordion": "src/registry/ui/accordion/base.tsx",
     "Alert": "src/registry/ui/alert/base.tsx",

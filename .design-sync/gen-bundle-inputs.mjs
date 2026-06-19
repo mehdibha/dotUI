@@ -99,12 +99,28 @@ for (const dir of dirs) {
   const sf = project.getSourceFile(srcAbs)
   if (!sf) { skipped.push(`${dir} (not in project)`); continue }
 
+  // Use getExportSymbols (not getExportedDeclarations): the latter keys an
+  // aliased re-export (`ListBoxItem as SelectItem`) under the ORIGINAL name, so
+  // alias exports like SelectItem/SelectSection were silently dropped. Symbols
+  // preserve the exported (aliased) name.
   const names = []
-  for (const [name, decls] of sf.getExportedDeclarations()) {
+  for (const sym of sf.getExportSymbols()) {
+    const name = sym.getName()
     if (!isComponentExport(name)) continue
-    if (decls.some((d) => Node.isVariableDeclaration(d) || Node.isFunctionDeclaration(d) || Node.isClassDeclaration(d))) {
-      names.push(name)
-    }
+    const decls = sym.getDeclarations()
+    // Skip type-only exports (`export type { X }`, `export { type X }`).
+    if (decls.length && decls.every((d) => Node.isExportSpecifier(d) && d.isTypeOnly())) continue
+    // A value: a real value declaration, or a (non-type-only) re-export
+    // specifier whose target is a value, or a namespace/default value export.
+    const isValue = decls.some(
+      (d) =>
+        Node.isVariableDeclaration(d) ||
+        Node.isFunctionDeclaration(d) ||
+        Node.isClassDeclaration(d) ||
+        Node.isBindingElement(d) ||
+        (Node.isExportSpecifier(d) && !d.isTypeOnly()),
+    )
+    if (isValue) names.push(name)
   }
   if (!names.length) { skipped.push(`${dir} (no component exports)`); continue }
 
