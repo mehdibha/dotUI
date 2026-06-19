@@ -488,6 +488,13 @@
                     },
                     {
                       "type": "symbol"
+                    },
+                    {
+                      "type": "array",
+                      "elementType": {
+                        "type": "identifier",
+                        "name": "DragType"
+                      }
                     }
                   ]
                 },
