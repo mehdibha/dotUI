@@ -199,6 +199,51 @@
       },
       "description": "Whether the overlay is open by default (uncontrolled)."
     },
+    "getTargetRect": {
+      "type": "((target: Element) => DOMRect | null | undefined)",
+      "detailedType": "| ((target: Element) => DOMRect | null | undefined)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "target",
+                "value": {
+                  "type": "identifier",
+                  "name": "Element"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "identifier",
+                  "name": "DOMRect"
+                }
+              ]
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Overrides the target element's bounding rectangle. Useful for positioning relative to\na specific point such as the mouse cursor (e.g. context menus) or text selection.",
+      "default": "target.getBoundingClientRect()"
+    },
     "isEntering": {
       "type": "boolean",
       "detailedType": "boolean | undefined",

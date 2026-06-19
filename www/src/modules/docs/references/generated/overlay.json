@@ -3189,6 +3189,41 @@
           "readonly": false,
           "description": ""
         },
+        "getTargetRect": {
+          "type": "property",
+          "name": "getTargetRect",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "function",
+                "parameters": [
+                  {
+                    "type": "parameter",
+                    "name": "target",
+                    "value": {
+                      "type": "identifier",
+                      "name": "Element"
+                    },
+                    "optional": false,
+                    "rest": false
+                  }
+                ],
+                "return": {
+                  "type": "identifier",
+                  "name": "DOMRect | null | undefined"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Overrides the target element's bounding rectangle. Useful for positioning relative to\na specific point such as the mouse cursor (e.g. context menus) or text selection."
+        },
         "hidden": {
           "type": "property",
           "name": "hidden",

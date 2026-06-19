@@ -35,27 +35,46 @@
       "description": "Whether keyboard navigation is circular."
     },
     "onAction": {
-      "type": "((key: Key) => void)",
-      "detailedType": "((key: Key) => void) | undefined",
+      "type": "((key: Key, value: T) => void)",
+      "detailedType": "((key: Key, value: T) => void) | undefined",
       "typeAst": {
-        "type": "function",
-        "parameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "parameter",
-            "name": "key",
-            "value": {
-              "type": "link",
-              "id": "Key",
-              "name": "Key"
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "key",
+                "value": {
+                  "type": "identifier",
+                  "name": "Key"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "typeParameter",
+                  "name": "T",
+                  "constraint": null,
+                  "default": null
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
             },
-            "optional": false,
-            "rest": false
+            "typeParameters": []
           }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
+        ]
       },
       "description": "Handler that is called when an item is selected."
     },
