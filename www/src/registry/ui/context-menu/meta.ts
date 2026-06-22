@@ -16,6 +16,7 @@ const contextMenuMeta = {
       target: 'ui/use-context-menu-trigger.ts',
     },
   ],
+  dependencies: ['react-aria', 'react-stately'],
   registryDependencies: ['menu', 'popover'],
 } satisfies RegistryItem
 

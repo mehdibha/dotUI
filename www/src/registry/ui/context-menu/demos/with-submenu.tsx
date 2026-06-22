@@ -6,10 +6,7 @@ import { Separator } from '@/registry/ui/separator'
 
 export default function Demo() {
   return (
-    <ContextMenu
-      data-testid="context-menu-submenu"
-      className="bg-bg-muted flex h-32 w-64 items-center justify-center rounded-md border border-dashed text-sm text-fg-muted"
-    >
+    <ContextMenu className="bg-bg-muted flex h-32 w-64 items-center justify-center rounded-md border border-dashed text-sm text-fg-muted">
       Right click for submenu
       <Popover>
         <MenuContent>
