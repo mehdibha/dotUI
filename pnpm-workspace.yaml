@@ -44,3 +44,4 @@ minimumReleaseAgeExclude:
   - react-aria@3.50.0
   - react-stately@3.48.0
   - tailwindcss-react-aria-components@2.2.0
+  - vite@8.1.0
