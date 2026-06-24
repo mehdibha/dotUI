@@ -20,10 +20,9 @@ import { useDesignSystem } from '../preset'
 import { usePanelConfig } from './config'
 import { PanelBody } from './layouts'
 import { useReroll } from './macros'
-import { Segmented } from './primitives'
 
 export function ControlPanel({ className }: { className?: string }) {
-  const { config, setConfig } = usePanelConfig()
+  const { config } = usePanelConfig()
   const { header } = config
 
   return (
@@ -35,19 +34,6 @@ export function ControlPanel({ className }: { className?: string }) {
       )}
     >
       <PanelHeader />
-
-      {/* Posture switch — the front-door tension made explicit. */}
-      <div className="flex items-center gap-2 border-b px-3 py-2">
-        <Segmented
-          ariaLabel="Authoring posture"
-          value={config.advanced ? 'expert' : 'quick'}
-          onChange={(v) => setConfig({ advanced: v === 'expert' })}
-          options={[
-            { value: 'quick', label: 'Quick' },
-            { value: 'expert', label: 'Expert' },
-          ]}
-        />
-      </div>
 
       <PanelBody />
 
