@@ -24,7 +24,7 @@ const HEADLINE_STYLE = { fontFamily: 'var(--font-josefin)' }
 // Shared connector for the tool / codebase frames. The trailing space is a non-breaking
 // space on purpose: the rotator sizes the connector slot from this text, and a normal
 // trailing space gets trimmed in the flex slot (so "to" would butt against the logo).
-const TO = 'to '
+const TO = 'to\u00A0'
 
 // Swappable destinations in the hero headline — "Ship it ___". The shared "to" lives in
 // `connector`, not the lead, so it renders once in the lead's font and — because the
@@ -57,7 +57,7 @@ const EXPORT_TARGETS: RotatingTextItem[] = [
     id: 'lovable',
     text: 'to Lovable',
     connector: TO,
-    segments: [{ icon: <LovableIcon className="h-[0.72em] w-auto" /> }],
+    segments: [{ icon: <LovableIcon className="h-[0.66em] w-auto" /> }],
   },
   {
     id: 'codebase',
