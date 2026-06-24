@@ -35,19 +35,23 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
       <div
         inert
         aria-hidden="true"
-        className={cn(
-          'flex h-60 items-center justify-center overflow-hidden border-b bg-bg/40 p-4 [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!',
-          isPolar
-            ? '[&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:w-auto!'
-            : '[&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!',
-        )}
+        className="h-60 overflow-hidden border-b bg-bg/40"
       >
+        {/* Skeleton fills the whole box edge-to-edge; padding lives on the chart
+            wrapper so it never insets the fallback. */}
         <Suspense
-          fallback={
-            <div className="size-full animate-pulse rounded-xl bg-muted" />
-          }
+          fallback={<div className="size-full animate-pulse bg-muted" />}
         >
-          <Component />
+          <div
+            className={cn(
+              'flex size-full items-center justify-center [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!',
+              isPolar
+                ? 'p-2 [&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:w-auto!'
+                : 'p-4 [&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!',
+            )}
+          >
+            <Component />
+          </div>
         </Suspense>
       </div>
       <div className="px-4 py-3">
