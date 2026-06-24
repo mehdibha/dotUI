@@ -11,7 +11,11 @@ const ChartAreaDefault = lazy(
 export function ChartAreaDemo() {
   return (
     <div className="w-[360px] max-w-full">
-      <Suspense fallback={null}>
+      <Suspense
+        fallback={
+          <div className="h-[400px] w-full animate-pulse rounded-xl bg-muted" />
+        }
+      >
         <ChartAreaDefault />
       </Suspense>
     </div>
