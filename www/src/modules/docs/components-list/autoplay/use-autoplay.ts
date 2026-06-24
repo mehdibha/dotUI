@@ -271,6 +271,21 @@ export function useStepAutoplay(
   return { index: step, pressing }
 }
 
+/**
+ * Cycles through `items` and returns the current ITEM (typed, never undefined)
+ * — a typed convenience over `useStepAutoplay` for selection demos that map an
+ * index back to a key/value (lists, tag groups, segmented controls).
+ */
+export function useCycle<T>(
+  items: readonly T[],
+  options: AutoplayOptions & { initial?: number; dwell?: number } = {},
+): { item: T; index: number; pressing: boolean } {
+  const { index, pressing } = useStepAutoplay(items.length, options)
+  const len = items.length
+  const safe = len > 0 ? ((index % len) + len) % len : 0
+  return { item: items[safe] as T, index: safe, pressing }
+}
+
 export type ScenePhase = 'idle' | 'hover' | 'press' | 'open'
 
 /**
@@ -321,8 +336,9 @@ export function useValueAutoplay(
   }))
 
   const { index, playing } = useAutoplay(phases, rest)
+  const first = stops[0] ?? 0
   return {
-    value: playing ? (stops[index] ?? stops[0]) : stops[0],
+    value: playing ? (stops[index] ?? first) : first,
     moving: playing,
   }
 }

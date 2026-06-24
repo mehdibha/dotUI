@@ -2,17 +2,17 @@
 
 import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
 
-import { useStepAutoplay } from '../autoplay'
+import { useCycle } from '../autoplay'
 
 const KEYS = ['nextjs', 'remix', 'astro', 'gatsby']
 
 export function ListBoxDemo() {
-  const { index } = useStepAutoplay(KEYS.length, { dwell: 1150 })
+  const { item } = useCycle(KEYS, { dwell: 1150 })
   return (
     <ListBox
       aria-label="Framework"
       selectionMode="single"
-      selectedKeys={[KEYS[index]]}
+      selectedKeys={[item]}
       onSelectionChange={() => {}}
     >
       <ListBoxItem id="nextjs">Next.js</ListBoxItem>

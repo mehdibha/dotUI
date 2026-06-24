@@ -3,16 +3,16 @@
 import { Label } from '@/registry/ui/field'
 import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
 
-import { useStepAutoplay } from '../autoplay'
+import { useCycle } from '../autoplay'
 
 const KEYS = ['react', 'typescript', 'nextjs']
 
 export function TagGroupDemo() {
-  const { index } = useStepAutoplay(KEYS.length, { dwell: 1300 })
+  const { item } = useCycle(KEYS, { dwell: 1300 })
   return (
     <TagGroup
       selectionMode="single"
-      selectedKeys={[KEYS[index]]}
+      selectedKeys={[item]}
       onSelectionChange={() => {}}
     >
       <Label>Tags</Label>

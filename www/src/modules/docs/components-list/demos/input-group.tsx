@@ -2,14 +2,18 @@
 
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 
-import { demoFocusProps, useTypewriter } from '../autoplay'
+import { DemoFocus, useTypewriter } from '../autoplay'
 
 export function InputGroupDemo() {
   const { value, active } = useTypewriter('john_doe')
   return (
-    <InputGroup className="w-full" {...demoFocusProps(active)}>
+    <InputGroup className="w-full">
       <InputGroupAddon>@</InputGroupAddon>
-      <Input value={value} readOnly placeholder="username" />
+      {/* Drive the inner control's real focus: the group lights its own ring via
+          `has-[[data-input-control][data-focused]]`. */}
+      <DemoFocus active={active}>
+        <Input value={value} readOnly placeholder="username" />
+      </DemoFocus>
     </InputGroup>
   )
 }

@@ -7,7 +7,7 @@ import {
   ColorSwatchPickerItem,
 } from '@/registry/ui/color-swatch-picker'
 
-import { useStepAutoplay } from '../autoplay'
+import { useCycle } from '../autoplay'
 
 // Selection is controlled by a Color matched against each item's `color`, so we
 // cycle `value` through the swatches — the selected one lights up its ring.
@@ -21,10 +21,10 @@ const SWATCHES = [
 ]
 
 export function ColorSwatchPickerDemo() {
-  const { index } = useStepAutoplay(SWATCHES.length, { dwell: 750 })
+  const { item } = useCycle(SWATCHES, { dwell: 750 })
   return (
     <ColorSwatchPicker
-      value={ColorAreaPrimitives.parseColor(SWATCHES[index])}
+      value={ColorAreaPrimitives.parseColor(item)}
       onChange={() => {}}
     >
       {SWATCHES.map((color) => (

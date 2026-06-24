@@ -5,17 +5,17 @@ import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from 'lucide-react'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 
-import { useStepAutoplay } from '../autoplay'
+import { useCycle } from '../autoplay'
 
 const KEYS = ['left', 'center', 'right']
 
 export function ToggleButtonGroupDemo() {
-  const { index } = useStepAutoplay(KEYS.length, { dwell: 1100 })
+  const { item } = useCycle(KEYS, { dwell: 1100 })
   return (
     <ToggleButtonGroup
       orientation="horizontal"
       selectionMode="single"
-      selectedKeys={[KEYS[index]]}
+      selectedKeys={[item]}
       onSelectionChange={() => {}}
     >
       <ToggleButton id="left" isIconOnly aria-label="Align left">

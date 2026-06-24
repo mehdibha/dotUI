@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@/registry/ui/button'
 import {
   Card,
@@ -8,10 +10,13 @@ import {
 } from '@/registry/ui/card'
 import { Label } from '@/registry/ui/field'
 import { Input } from '@/registry/ui/input'
-import { Link } from '@/registry/ui/link'
+import { useStyles as useLinkStyles } from '@/registry/ui/link/styles'
 import { TextField } from '@/registry/ui/text-field'
 
 export function CardDemo() {
+  // The card is itself an <a>; render the real link STYLES on a span so the
+  // inline "register" link doesn't nest anchors.
+  const linkStyles = useLinkStyles()
   return (
     <Card className="w-full max-w-xs">
       <CardHeader>
@@ -70,9 +75,9 @@ export function CardDemo() {
         </Button>
         <p className="mt-4 text-sm text-fg-muted">
           Don&apos;t have an account?{' '}
-          <Link href="#" variant="quiet">
+          <span data-rac="" className={linkStyles({ variant: 'quiet' })}>
             register
-          </Link>
+          </span>
         </p>
       </CardContent>
       {/* <CardFooter>

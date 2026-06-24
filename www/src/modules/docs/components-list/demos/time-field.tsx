@@ -6,16 +6,19 @@ import { Label } from '@/registry/ui/field'
 import { DateInput } from '@/registry/ui/input'
 import { TimeField } from '@/registry/ui/time-field'
 
-import { demoFocusProps, useCardHover } from '../autoplay'
+import { DemoFocus, useCardHover } from '../autoplay'
 
-// The field shows a real time and lights up its focus ring whenever the card is
-// hovered — a faux ring (no real `:focus`), so it never steals page focus.
+// Shows a real time and lights up its real focus ring while the card is hovered.
+// We only set `data-focused` on the field (no real `:focus`), so it never steals
+// the page's focus.
 export function TimeFieldDemo() {
   const active = useCardHover()
   return (
     <TimeField defaultValue={new Time(11, 45)}>
       <Label>Event time</Label>
-      <DateInput className="w-40" {...demoFocusProps(active)} />
+      <DemoFocus active={active}>
+        <DateInput className="w-40" />
+      </DemoFocus>
     </TimeField>
   )
 }

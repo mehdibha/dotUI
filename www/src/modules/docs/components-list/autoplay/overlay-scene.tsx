@@ -65,16 +65,18 @@ const SCENE_ROOT =
   'relative flex h-full w-full items-center justify-center overflow-hidden'
 const EASE = 'cubic-bezier(0.32,0.72,0,1)'
 
+// The trigger is a real component; it only ever shows real hover/pressed styles
+// (via DemoPress → real RAC state attributes), never a synthetic scale. When an
+// overlay opens it can dim back (a depth cue), but it does not resize — the only
+// scaling is the scene "camera" on the anchored column below.
 function Trigger({
   phase,
   dim,
-  scale,
   cursorClassName,
   children,
 }: {
   phase: ScenePhase
   dim?: boolean
-  scale?: number
   cursorClassName?: string
   children: React.ReactNode
 }) {
@@ -83,8 +85,7 @@ function Trigger({
       className="relative"
       style={{
         opacity: dim ? 0.55 : 1,
-        transform: `scale(${scale ?? 1})`,
-        transition: `opacity 300ms ease, transform 300ms ${EASE}`,
+        transition: 'opacity 300ms ease',
       }}
     >
       <DemoPress phase={phase}>{children}</DemoPress>
@@ -159,12 +160,7 @@ export function OverlayScene({
   if (variant === 'modal') {
     return (
       <div className={SCENE_ROOT}>
-        <Trigger
-          phase={phase}
-          dim={open}
-          scale={open ? 0.96 : 1}
-          cursorClassName={cursorClassName}
-        >
+        <Trigger phase={phase} dim={open} cursorClassName={cursorClassName}>
           {trigger}
         </Trigger>
         <div
@@ -190,12 +186,7 @@ export function OverlayScene({
   if (variant === 'drawer') {
     return (
       <div className={SCENE_ROOT}>
-        <Trigger
-          phase={phase}
-          dim={open}
-          scale={open ? 0.96 : 1}
-          cursorClassName={cursorClassName}
-        >
+        <Trigger phase={phase} dim={open} cursorClassName={cursorClassName}>
           {trigger}
         </Trigger>
         <div

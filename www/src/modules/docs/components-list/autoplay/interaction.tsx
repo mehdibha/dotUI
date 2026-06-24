@@ -1,89 +1,145 @@
 'use client'
 
-import type * as React from 'react'
+import { type ReactNode, useEffect, useLayoutEffect, useRef } from 'react'
 
 import { cn } from '@/registry/lib/utils'
 
 /**
- * Generic, component-agnostic "this is being interacted with" wrapper. It maps a
- * phase to a small scale + brightness shift on whatever it wraps, so a button,
- * link, swatch or menu item reads as hovered → pressed without us needing to
- * know its colours.
+ * Exact-fidelity state simulation for the preview cards.
  *
- * Animations are plain CSS transitions on inline styles (not a JS animation
- * library): the previews live inside an `inert` subtree, where script-driven
- * transform animations don't run, but CSS transitions do — and they cost nothing
- * when idle. It styles nothing permanently and never fires real events.
+ * Instead of faking interaction with our own transforms, we mirror the desired
+ * state onto the REAL React Aria state attributes (`data-hovered`, `data-pressed`,
+ * `data-focused`, …) of the real component. The component then renders its OWN
+ * state styles — the exact look it will have under any design-system preset —
+ * with no interaction and without ever touching the page's real focus.
+ *
+ * The attributes are (re)applied in a layout effect after every render because
+ * React Aria rewrites them from its internal state (always idle here) on each
+ * render; re-applying post-commit, pre-paint, keeps them set with no flicker.
  */
-const PRESS_TRANSFORM: Record<string, string> = {
-  idle: 'scale(1)',
-  hover: 'scale(1.045)',
-  press: 'scale(0.95)',
-}
-const PRESS_FILTER: Record<string, string> = {
-  idle: 'brightness(1)',
-  hover: 'brightness(1.07)',
-  press: 'brightness(0.92)',
+
+// useLayoutEffect on the client, no-op useEffect on the server (avoids the SSR warning).
+const useIsoLayoutEffect =
+  typeof window === 'undefined' ? useEffect : useLayoutEffect
+
+export interface DemoStateFlags {
+  hovered?: boolean
+  pressed?: boolean
+  /** Adds `data-focused` — drives `focus:` (input rings, etc.). */
+  focused?: boolean
+  /** Adds `data-focused` + `data-focus-visible` — drives `focus-visible:` rings. */
+  focusVisible?: boolean
+  selected?: boolean
+  open?: boolean
+  current?: boolean
 }
 
-export function DemoPress({
-  phase,
-  pressing,
-  hovering,
-  className,
+const FLAG_ATTRS: [keyof DemoStateFlags, string][] = [
+  ['hovered', 'data-hovered'],
+  ['pressed', 'data-pressed'],
+  ['selected', 'data-selected'],
+  ['open', 'data-open'],
+  ['current', 'data-current'],
+]
+
+export function applyDemoState(el: HTMLElement, flags: DemoStateFlags): void {
+  for (const [key, attr] of FLAG_ATTRS) {
+    if (flags[key]) el.setAttribute(attr, '')
+    else el.removeAttribute(attr)
+  }
+  const focused = flags.focused || flags.focusVisible
+  if (focused) el.setAttribute('data-focused', '')
+  else el.removeAttribute('data-focused')
+  if (flags.focusVisible) el.setAttribute('data-focus-visible', '')
+  else el.removeAttribute('data-focus-visible')
+}
+
+/**
+ * Wraps a single child in a `display:contents` span (so it adds no box) and
+ * mirrors `flags` onto the child element's real state attributes. `target`
+ * selects which descendant to drive when the styled element isn't the wrapper's
+ * first child.
+ */
+export function DemoState({
+  flags,
+  target = 'first',
   children,
 }: {
-  /** Explicit phase. Takes precedence over the boolean shorthands. */
-  phase?: 'idle' | 'hover' | 'press' | (string & {})
-  /** Shorthand: show the press state. */
-  pressing?: boolean
-  /** Shorthand: show the hover state. */
-  hovering?: boolean
-  className?: string
-  children: React.ReactNode
+  flags: DemoStateFlags
+  target?: 'first' | 'last' | 'all'
+  children: ReactNode
 }) {
-  const resolved =
-    phase && phase in PRESS_TRANSFORM
-      ? phase
-      : pressing
-        ? 'press'
-        : hovering
-          ? 'hover'
-          : 'idle'
+  const ref = useRef<HTMLSpanElement>(null)
+
+  useIsoLayoutEffect(() => {
+    const host = ref.current
+    if (!host) return
+    const targets =
+      target === 'all'
+        ? Array.from(host.children)
+        : target === 'last'
+          ? [host.lastElementChild]
+          : [host.firstElementChild]
+    for (const el of targets) {
+      if (el instanceof HTMLElement) applyDemoState(el, flags)
+    }
+  })
 
   return (
-    <div
-      className={cn('inline-flex', className)}
-      style={{
-        transform: PRESS_TRANSFORM[resolved] ?? PRESS_TRANSFORM.idle,
-        filter: PRESS_FILTER[resolved] ?? PRESS_FILTER.idle,
-        transformOrigin: 'center',
-        transition:
-          'transform 220ms cubic-bezier(0.32,0.72,0,1), filter 220ms ease',
-      }}
-    >
+    <span ref={ref} style={{ display: 'contents' }}>
       {children}
-    </div>
+    </span>
   )
 }
 
 /**
- * Faux focus-ring classes. Applied to the real field element via a custom
- * `data-demo-focus` attribute so we replicate the exact focus look (the same
- * `border-border-focus` + `ring-border-focus-muted` tokens RAC uses) without
- * the field actually being `:focus`. The attribute selector out-specifies the
- * resting `border-border-field`, so toggling `data-demo-focus` flips the ring.
- *
- * Usage: spread `demoFocusProps(active)` onto the bordered field element.
+ * Drives the real hover / pressed states of a pressable (Button, Link,
+ * ToggleButton, menu item…). Accepts either an explicit `phase`
+ * (`idle | hover | press | …`) or the `hovering` / `pressing` booleans.
  */
-export const DEMO_FOCUS_RING =
-  'transition-[box-shadow,border-color] duration-200 data-demo-focus:border-border-focus data-demo-focus:ring-2 data-demo-focus:ring-border-focus-muted'
+export function DemoPress({
+  phase,
+  pressing,
+  hovering,
+  target,
+  children,
+}: {
+  phase?: string
+  pressing?: boolean
+  hovering?: boolean
+  target?: 'first' | 'last' | 'all'
+  children: ReactNode
+}) {
+  const isPressed = pressing || phase === 'press'
+  const isHovered = isPressed || hovering || phase === 'hover'
+  return (
+    <DemoState
+      flags={{ hovered: isHovered, pressed: isPressed }}
+      target={target}
+    >
+      {children}
+    </DemoState>
+  )
+}
 
-export function demoFocusProps(active: boolean) {
-  return {
-    'data-demo-focus': active ? '' : undefined,
-    className: DEMO_FOCUS_RING,
-  }
+/**
+ * Drives the real focus state of a field so it shows its actual focus ring/border
+ * — without taking real focus (the preview is `inert`; we only set the attribute).
+ */
+export function DemoFocus({
+  active,
+  target,
+  children,
+}: {
+  active: boolean
+  target?: 'first' | 'last' | 'all'
+  children: ReactNode
+}) {
+  return (
+    <DemoState flags={{ focused: active }} target={target}>
+      {children}
+    </DemoState>
+  )
 }
 
 /**

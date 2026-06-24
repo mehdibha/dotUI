@@ -4,6 +4,7 @@ export {
   useTypewriter,
   useToggleAutoplay,
   useStepAutoplay,
+  useCycle,
   useOpenAutoplay,
   useValueAutoplay,
 } from './use-autoplay'
@@ -18,10 +19,12 @@ export type {
 } from './use-autoplay'
 export { FakeCursor } from './cursor'
 export {
+  DemoState,
   DemoPress,
+  DemoFocus,
   DemoCaret,
-  DEMO_FOCUS_RING,
-  demoFocusProps,
+  applyDemoState,
 } from './interaction'
+export type { DemoStateFlags } from './interaction'
 export { OverlayScene } from './overlay-scene'
 export type { SurfaceVariant } from './overlay-scene'
