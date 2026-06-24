@@ -10,7 +10,7 @@ export function TextFieldDemo() {
   const { value, active } = useTypewriter('hello@example.com')
   return (
     <TextField
-      className="w-full max-w-[14rem]"
+      className="w-full max-w-[11.5rem]"
       value={value}
       onChange={() => {}}
     >

@@ -176,15 +176,20 @@ export function OverlayScene({
           className="absolute inset-0 bg-black/40 backdrop-blur-[1px]"
           style={{ opacity: open ? 1 : 0, transition: 'opacity 250ms ease' }}
         />
-        <div
-          className="absolute w-[78%] max-w-[15rem]"
-          style={{
-            opacity: open ? 1 : 0,
-            transform: open ? 'none' : 'translateY(6px) scale(0.95)',
-            transition: `opacity 250ms ease, transform 300ms ${EASE}`,
-          }}
-        >
-          {surface}
+        <div className="absolute inset-0 flex items-center justify-center p-3">
+          <div
+            className="w-full max-w-[13rem]"
+            style={{
+              opacity: open ? 1 : 0,
+              transform: open
+                ? `scale(${openScale ?? 0.92})`
+                : 'translateY(6px) scale(0.9)',
+              transformOrigin: 'center',
+              transition: `opacity 250ms ease, transform 300ms ${EASE}`,
+            }}
+          >
+            {surface}
+          </div>
         </div>
       </div>
     )
@@ -217,7 +222,7 @@ export function OverlayScene({
 
   // Anchored (popover / menu / tooltip): the trigger + surface share a column
   // that scales down when open so both fit — the "zoom out" the trigger rides.
-  const resolvedScale = openScale ?? (variant === 'tooltip' ? 0.95 : 0.82)
+  const resolvedScale = openScale ?? (variant === 'tooltip' ? 0.92 : 0.7)
 
   return (
     <div className={SCENE_ROOT}>

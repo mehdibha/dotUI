@@ -16,7 +16,7 @@ export function DateFieldDemo() {
   return (
     <DateField
       defaultValue={parseDate('2024-06-12')}
-      className="w-full max-w-[14rem]"
+      className="w-full max-w-[11.5rem]"
     >
       <Label>Meeting date</Label>
       <DemoFocus active={active}>

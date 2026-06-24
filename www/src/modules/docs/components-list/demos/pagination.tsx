@@ -11,7 +11,8 @@ import {
 
 import { useStepAutoplay } from '../autoplay'
 
-const PAGES = [1, 2, 3, 4, 5]
+// Kept short so the row fits the preview card without overflowing.
+const PAGES = [1, 2, 3]
 
 export function PaginationDemo() {
   const { index } = useStepAutoplay(PAGES.length, { dwell: 1100 })

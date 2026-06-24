@@ -15,9 +15,9 @@ export function SelectDemo() {
       variant="menu"
       side="bottom"
       fluid
-      surfaceClassName="w-full max-w-[14rem] p-0"
+      surfaceClassName="w-full max-w-[11.5rem] p-0"
       trigger={
-        <Button className="w-full max-w-[14rem] justify-between font-normal">
+        <Button className="w-full max-w-[11.5rem] justify-between font-normal">
           Perplexity
           <ChevronDownIcon className="ml-auto text-fg-muted" />
         </Button>
@@ -32,7 +32,6 @@ export function SelectDemo() {
         <ListBoxItem id="perplexity">Perplexity</ListBoxItem>
         <ListBoxItem id="replicate">Replicate</ListBoxItem>
         <ListBoxItem id="together">Together AI</ListBoxItem>
-        <ListBoxItem id="eleven">ElevenLabs</ListBoxItem>
       </ListBox>
     </OverlayScene>
   )

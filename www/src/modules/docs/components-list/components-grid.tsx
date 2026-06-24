@@ -13,6 +13,9 @@ const CATEGORY_PREVIEW_HEIGHT: Record<string, string> = {
   'data-display': 'h-52',
   colors: 'h-52',
   charts: 'h-72',
+  // Overlay scenes (and the pickers' dropdowns) need room for the opened surface.
+  overlays: 'h-52',
+  pickers: 'h-52',
 }
 
 /**

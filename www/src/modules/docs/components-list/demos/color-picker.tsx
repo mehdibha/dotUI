@@ -19,6 +19,7 @@ export function ColorPickerDemo() {
       phase={phase}
       variant="popover"
       side="bottom"
+      openScale={0.66}
       surfaceClassName="w-56 p-2"
       trigger={
         <Button className="w-40 justify-start font-normal">

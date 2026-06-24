@@ -19,10 +19,12 @@ export function ProgressBarDemo() {
     <ProgressBar
       value={value}
       valueLabel={`${value}%`}
-      className="w-44 [&_[data-rac]]:transition-transform [&_[data-rac]]:duration-700 [&_[data-rac]]:ease-out"
+      className="w-full max-w-[11.5rem] [&_[data-rac]]:transition-transform [&_[data-rac]]:duration-700 [&_[data-rac]]:ease-out"
     >
-      <Label>Uploading…</Label>
-      <ProgressBarOutput />
+      <div className="flex items-center justify-between gap-2">
+        <Label>Uploading…</Label>
+        <ProgressBarOutput />
+      </div>
       <ProgressBarControl />
     </ProgressBar>
   )

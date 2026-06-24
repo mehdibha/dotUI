@@ -57,7 +57,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'Group',
         slug: 'group',
         href: '/docs/components/group',
-        scale: 0.9,
+        scale: 1,
         status: 'done',
       },
     ],
@@ -147,7 +147,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'Slider',
         slug: 'slider',
         href: '/docs/components/slider',
-        scale: 0.9,
+        stretch: true,
         status: 'pending',
       },
       {
@@ -239,7 +239,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'ProgressBar',
         slug: 'progress-bar',
         href: '/docs/components/progress-bar',
-        scale: 1,
+        stretch: true,
         status: 'pending',
       },
       {
@@ -376,7 +376,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'Card',
         slug: 'card',
         href: '/docs/components/card',
-        scale: 0.45,
+        stretch: true,
         status: 'done',
       },
       {

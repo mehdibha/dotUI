@@ -23,10 +23,11 @@ export function DatePickerDemo() {
       variant="popover"
       side="bottom"
       fluid
+      openScale={0.6}
       surfaceClassName="p-2"
       trigger={
         <DateField
-          className="w-full max-w-[14rem]"
+          className="w-full max-w-[11.5rem]"
           aria-label="Date"
           value={VALUE}
           onChange={() => {}}

@@ -12,7 +12,7 @@ export function TextAreaDemo() {
         value={value}
         onChange={() => {}}
         placeholder="Enter description..."
-        className="w-full max-w-[14rem]"
+        className="w-full max-w-[11.5rem]"
       />
     </DemoFocus>
   )

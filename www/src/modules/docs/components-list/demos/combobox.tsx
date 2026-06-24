@@ -16,9 +16,9 @@ export function ComboboxDemo() {
       variant="menu"
       side="bottom"
       fluid
-      surfaceClassName="w-full max-w-[14rem] p-0"
+      surfaceClassName="w-full max-w-[11.5rem] p-0"
       trigger={
-        <InputGroup className="w-full max-w-[14rem]">
+        <InputGroup className="w-full max-w-[11.5rem]">
           <Input placeholder="Select country..." value="France" readOnly />
           <InputGroupAddon>
             <Button variant="quiet" isIconOnly>
@@ -37,7 +37,6 @@ export function ComboboxDemo() {
         <ListBoxItem id="canada">Canada</ListBoxItem>
         <ListBoxItem id="france">France</ListBoxItem>
         <ListBoxItem id="germany">Germany</ListBoxItem>
-        <ListBoxItem id="japan">Japan</ListBoxItem>
       </ListBox>
     </OverlayScene>
   )

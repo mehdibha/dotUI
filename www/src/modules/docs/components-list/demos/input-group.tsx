@@ -7,7 +7,7 @@ import { DemoFocus, useTypewriter } from '../autoplay'
 export function InputGroupDemo() {
   const { value, active } = useTypewriter('john_doe')
   return (
-    <InputGroup className="w-full max-w-[14rem]">
+    <InputGroup className="w-full max-w-[11.5rem]">
       <InputGroupAddon>@</InputGroupAddon>
       {/* Drive the inner control's real focus: the group lights its own ring via
           `has-[[data-input-control][data-focused]]`. */}

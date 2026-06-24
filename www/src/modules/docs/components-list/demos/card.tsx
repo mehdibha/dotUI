@@ -18,7 +18,7 @@ export function CardDemo() {
   // inline "register" link doesn't nest anchors.
   const linkStyles = useLinkStyles()
   return (
-    <Card className="w-full max-w-xs">
+    <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle className="text-xl">Login to your account</CardTitle>
         <CardDescription>

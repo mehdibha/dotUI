@@ -27,7 +27,6 @@ export function MenuDemo() {
       >
         <ListBoxItem id="account">Account settings</ListBoxItem>
         <ListBoxItem id="team">Create team</ListBoxItem>
-        <ListBoxItem id="command">Command menu</ListBoxItem>
         <ListBoxItem id="logout">Log out</ListBoxItem>
       </ListBox>
     </OverlayScene>
