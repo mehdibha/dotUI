@@ -383,14 +383,24 @@ function getPayloadConfigFromPayload(
  * dotUI a11y layer (not in shadcn): charts encode data with color alone, which
  * is invisible to assistive tech. Render this alongside any chart — it derives
  * the table from the same `data` + `config` you already pass, so the consumer
- * adds nothing. Columns come from `config` keys (using their `label`); the row
- * header comes from `labelKey` (e.g. the x-axis category).
+ * adds nothing.
+ *
+ * Handles both data shapes: wide-format (one column per series, e.g. bar/line/
+ * area/radar) renders a column per `config` entry; long-format (one row per
+ * category, e.g. pie/radial — where `labelKey` values are themselves `config`
+ * keys) renders a two-column category/value table instead, so the per-series
+ * columns aren't left empty.
  */
 interface ChartDataTableProps extends React.ComponentProps<'table'> {
   data: Record<string, unknown>[]
   config: ChartConfig
-  /** Key in each datum used as the row header (e.g. the x-axis category). */
+  /**
+   * Key in each datum used as the row header — the x-axis category for cartesian
+   * charts, or the slice/segment name for pie and radial charts.
+   */
   labelKey?: string
+  /** Header for the `labelKey` column. Defaults to a capitalized `labelKey`. */
+  labelName?: string
   /** Accessible name for the table. Defaults to "Chart data". */
   'aria-label'?: string
   /** Optional visible-to-AT caption. */
@@ -401,12 +411,30 @@ function ChartDataTable({
   data,
   config,
   labelKey,
+  labelName,
   caption,
   'aria-label': ariaLabel = 'Chart data',
   className,
   ...props
 }: ChartDataTableProps) {
-  const seriesKeys = Object.keys(config)
+  // Long-format data (pie/radial) encodes each series as a ROW: `labelKey` values
+  // are themselves keys in `config`, and the numeric value sits in a column every
+  // row shares. Detect that and render category/value columns; otherwise render
+  // one column per `config` entry (wide-format).
+  const row0 = data[0] ?? {}
+  const configKeys = Object.keys(config)
+  const valueColumns = configKeys.filter((key) => key in row0)
+  const categoryKeys = configKeys.filter((key) => !(key in row0))
+  const isLong =
+    labelKey != null &&
+    valueColumns.length > 0 &&
+    categoryKeys.length > 0 &&
+    data.some((datum) => categoryKeys.includes(String(datum[labelKey])))
+  const columns = isLong ? valueColumns : configKeys
+
+  const headerLabel = labelName ?? (labelKey ? capitalize(labelKey) : undefined)
+  const rowHeader = (value: unknown): string =>
+    asText(config[String(value ?? '')]?.label) ?? String(value ?? '')
 
   return (
     <table
@@ -417,8 +445,8 @@ function ChartDataTable({
       {caption ? <caption>{caption}</caption> : null}
       <thead>
         <tr>
-          {labelKey ? <th scope="col">{labelKey}</th> : null}
-          {seriesKeys.map((key) => (
+          {labelKey ? <th scope="col">{headerLabel}</th> : null}
+          {columns.map((key) => (
             <th key={key} scope="col">
               {asText(config[key]?.label) ?? key}
             </th>
@@ -429,9 +457,9 @@ function ChartDataTable({
         {data.map((datum, index) => (
           <tr key={index}>
             {labelKey ? (
-              <th scope="row">{String(datum[labelKey] ?? '')}</th>
+              <th scope="row">{rowHeader(datum[labelKey])}</th>
             ) : null}
-            {seriesKeys.map((key) => (
+            {columns.map((key) => (
               <td key={key}>{formatCell(datum[key])}</td>
             ))}
           </tr>
@@ -450,6 +478,10 @@ function asText(label: React.ReactNode): string | undefined {
 function formatCell(value: unknown): string {
   if (value == null) return ''
   return typeof value === 'number' ? value.toLocaleString() : String(value)
+}
+
+function capitalize(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1)
 }
 
 export {

@@ -1,6 +1,6 @@
 {
   "name": "ChartDataTableProps",
-  "description": "A visually-hidden table that mirrors a chart's series for assistive tech\n(dotUI accessibility layer; not part of shadcn). Columns are derived from\n`config`, rows from `data` — render it alongside any chart with the same\nprops you already pass.",
+  "description": "A visually-hidden table that mirrors a chart's series for assistive tech\n(dotUI accessibility layer; not part of shadcn). Render it alongside any chart\nwith the same props you already pass. It adapts to the data shape: wide-format\n(bar/line/area/radar) gets one column per series; long-format (pie/radial) gets\na two-column category/value table.",
   "extendsElement": "table",
   "props": {
     "data": {
@@ -41,7 +41,15 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Key in each datum used as the row header (e.g. the x-axis category)."
+      "description": "Key in each datum used as the row header — the x-axis category for cartesian\ncharts, or the slice/segment name for pie and radial charts."
+    },
+    "labelName": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Header for the `labelKey` column. Defaults to a capitalized `labelKey`."
     },
     "caption": {
       "type": "string",
