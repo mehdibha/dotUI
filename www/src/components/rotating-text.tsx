@@ -5,8 +5,9 @@
  * <verb>."). The lead sentence is static; only the trailing word cycles on an
  * interval. x.ai splits the word into letters; we animate the whole word as one
  * unit so brand logos (v0 / bolt.new / Lovable), which can't be letter-split,
- * animate the same way. The swap motion matches theirs — `{y, opacity, blur(4px)}`,
- * 0.25s, easeOutExpo. The slot springs to the incoming word's measured width so
+ * animate the same way. The swap is a blur crossfade — `{opacity, blur(6px)}` with no
+ * vertical travel, ~0.3s easeOutExpo (exit a touch faster). The word resolves in and
+ * out of focus instead of sliding. The slot springs to the incoming word's measured width so
  * the surrounding text never snaps.
  *
  * A destination and its optional connector ("to") render in two independent slots,
@@ -56,17 +57,26 @@ export interface RotatingTextItem {
   segments: RotatingTextSegment[]
 }
 
-// ── x.ai-matched swap motion ─────────────────────────────────────────────────
-const SWAP_DURATION = 0.25
+// ── Blur-crossfade swap motion ─────────────────────────────────────────────────
+const SWAP_DURATION = 0.3
+const SWAP_EXIT_DURATION = 0.22
 const SWAP_EASE = [0.16, 1, 0.3, 1] as const
-const SWAP_SHIFT = '0.32em' // ≈ x.ai's 14px rise, made font-relative
+const SWAP_BLUR = 'blur(6px)'
 /** Slot width spring so the surrounding text never snaps on a word change. */
 const WIDTH_SPRING: Transition = { type: 'spring', stiffness: 260, damping: 30 }
 
+// No vertical travel: the word resolves in/out of focus via blur + opacity, which reads
+// more refined than a slide (and keeps brand logos, which can't be letter-split, swapping
+// the same way). The peak blur lands at opacity 0, so you never see sharp-but-blurred text.
+// Exit carries its own faster transition so the swap doesn't drag.
 const SWAP_VARIANTS = {
-  initial: { opacity: 0, y: SWAP_SHIFT, filter: 'blur(4px)' },
-  animate: { opacity: 1, y: '0em', filter: 'blur(0px)' },
-  exit: { opacity: 0, y: `-${SWAP_SHIFT}`, filter: 'blur(4px)' },
+  initial: { opacity: 0, filter: SWAP_BLUR },
+  animate: { opacity: 1, filter: 'blur(0px)' },
+  exit: {
+    opacity: 0,
+    filter: SWAP_BLUR,
+    transition: { duration: SWAP_EXIT_DURATION, ease: SWAP_EASE },
+  },
 }
 /** Crossfade only — no movement or blur — under prefers-reduced-motion. */
 const REDUCED_SWAP_VARIANTS = {
@@ -109,7 +119,7 @@ function Segments({ item }: { item: RotatingTextItem }) {
 }
 
 /**
- * One measured-width slot with the x.ai blur-slide swap. The slot springs its width to
+ * One measured-width slot with the blur-crossfade swap. The slot springs its width to
  * the active content; content crossfades via AnimatePresence keyed by `swapKey`. When
  * `swapKey` is unchanged between renders the content stays mounted and does NOT animate
  * — that's what keeps a shared connector static while only the destination swaps.
@@ -201,7 +211,7 @@ interface RotatingWordProps {
 
 /**
  * The cycling trailing word — a connector slot + a destination slot, each a measured-width
- * blur-slide swap. Purely decorative: the caller owns the accessible reading (e.g. an
+ * blur-crossfade swap. Purely decorative: the caller owns the accessible reading (e.g. an
  * `aria-label` on the heading with the subtree `aria-hidden`).
  */
 function RotatingWord({
