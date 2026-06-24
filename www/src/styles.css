@@ -76,3 +76,17 @@
     display: none;
   }
 }
+
+/* Click ripple for the docs component-gallery cursor (components-list/autoplay).
+   Expands and fades from the pointer hotspot; mounts only during the press beat
+   so it replays on each loop. */
+@keyframes cursor-click {
+  0% {
+    transform: translate(-50%, -50%) scale(0.25);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}

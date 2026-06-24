@@ -302,9 +302,11 @@ export function useOpenAutoplay(
   const { holdOpen = 2000, ...rest } = options
   const { phase, cycle } = useAutoplay(
     [
-      { name: 'idle', duration: 750 },
-      { name: 'hover', duration: 480 },
-      { name: 'press', duration: 240 },
+      { name: 'idle', duration: 700 },
+      // Long enough for the cursor's ~520ms glide-in to settle before the click.
+      { name: 'hover', duration: 640 },
+      // Covers the click ripple (~320ms) plus a brief hold.
+      { name: 'press', duration: 360 },
       { name: 'open', duration: holdOpen },
     ],
     rest,
