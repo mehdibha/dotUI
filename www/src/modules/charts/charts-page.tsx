@@ -44,8 +44,7 @@ export function ChartsPage() {
           </div>
         </section>
 
-        {/* Showcase — the mini-editor playground over a tabbed grid of every
-            variant; the charts re-theme live as the toolbar changes. */}
+        {/* Showcase — a tabbed grid of every variant, one family per tab. */}
         <section className="container mt-12 sm:mt-16">
           <ChartShowcase />
         </section>
