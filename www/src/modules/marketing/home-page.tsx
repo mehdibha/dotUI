@@ -21,11 +21,10 @@ import Cards from '@/modules/marketing/cards'
 // letter-spacing and size come from the original headline classes on the <h1>.
 const HEADLINE_STYLE = { fontFamily: 'var(--font-josefin)' }
 
-// Shared connector for the tool / codebase frames. The trailing non-breaking space (the
-// `\u00a0` escape, kept as ASCII source so a formatter or file move can't flatten it back to a
-// normal space, which is how it was lost once) stops "to" butting against the logo, and lets
-// the rotator size the connector slot from this exact text.
-const TO = 'to\u00a0'
+// Shared connector for the tool / codebase frames. The trailing space is a non-breaking
+// space on purpose: the rotator sizes the connector slot from this text, and a normal
+// trailing space gets trimmed in the flex slot (so "to" would butt against the logo).
+const TO = 'to\u00A0'
 
 // Swappable destinations in the hero headline — "Ship it ___". The shared "to" lives in
 // `connector`, not the lead, so it renders once in the lead's font and — because the
@@ -58,7 +57,7 @@ const EXPORT_TARGETS: RotatingTextItem[] = [
     id: 'lovable',
     text: 'to Lovable',
     connector: TO,
-    segments: [{ icon: <LovableIcon className="h-[0.72em] w-auto" /> }],
+    segments: [{ icon: <LovableIcon className="h-[0.66em] w-auto" /> }],
   },
   {
     id: 'codebase',
