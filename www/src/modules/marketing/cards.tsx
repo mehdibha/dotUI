@@ -3,7 +3,6 @@
 import { useMemo, useState } from 'react'
 
 import { DesignSystemProvider } from '@/lib/styles'
-import { useMounted } from '@/hooks/use-mounted'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import type { Density } from '@/registry/types'
 import { CardsGrid } from '@/components/showcase/cards-grid'
@@ -22,11 +21,11 @@ const DEFAULT_DENSITY: Density = 'default'
 // density controls drive a local `DesignSystem` scoped (via the provider's `scoped` prop)
 // to the real grid below: color + radius re-theme the grid's wrapper (which clones the
 // page's token closure) and density is React context — so the preview re-themes the cards
-// alone, leaving the controls (and the rest of the page) on the site's default theme. It
-// mounts on the client only (the provider's effects are layout-effects), so the grid renders
-// identically on the server and pre-hydration.
+// alone, leaving the controls (and the rest of the page) on the site's default theme. The
+// provider is SSR-safe, so the grid mounts once and renders identically on the server and
+// pre-hydration: an untouched preview emits no tokens, color or <style>, and the scoped theme
+// only kicks in on the client once the user changes a control — no client-only gate, no remount.
 export function Cards() {
-  const mounted = useMounted()
   const [accent, setAccent] = useState(DEFAULT_ACCENT)
   const [radius, setRadius] = useState(DEFAULT_RADIUS)
   const [density, setDensity] = useState<Density>(DEFAULT_DENSITY)
@@ -75,7 +74,7 @@ export function Cards() {
     <div className="flex flex-col [--grid-max:1500px] [--rail-gap:--spacing(4)] [--rail-peek:2.5rem] sm:[--rail-peek:3.5rem] md:[--rail-peek:5rem] lg:[--rail-peek:7rem]">
       {/* The mini-editor toolbar, just before the cards. Server-rendered (it's plain
 			    react-aria components) so it's there on first paint — no pop-in. Only the
-			    provider below is client-gated, since its theme effects are layout-effects.
+			    provider below re-themes its subtree; it renders on the server too (no client gate).
 			    The empty rails mirror the cards' flex layout so the toolbar's slot lines up
 			    with the real grid: left-aligned to it on `lg`, centered on small screens. */}
       <div className="mb-3 flex justify-center gap-4 sm:mb-4">
@@ -118,18 +117,14 @@ export function Cards() {
         <SkeletonRail side="left" />
         {/* `scoped` confines the whole theme — color, radius and density — to this
 				    provider's subtree, so only the real grid re-themes (not the toolbar/page). */}
-        {mounted ? (
-          <DesignSystemProvider
-            scoped
-            density={density}
-            tokens={tokens}
-            color={color}
-          >
-            {realGrid}
-          </DesignSystemProvider>
-        ) : (
-          realGrid
-        )}
+        <DesignSystemProvider
+          scoped
+          density={density}
+          tokens={tokens}
+          color={color}
+        >
+          {realGrid}
+        </DesignSystemProvider>
         <SkeletonRail side="right" />
         {/* Below `lg` (no rails) the real grid bleeds off both edges; this overlay
 				    fades those bleeding columns into the page background so they read as
