@@ -12,7 +12,7 @@ export function InputDemo() {
         value={value}
         readOnly
         placeholder="Enter text..."
-        className="w-full"
+        className="w-full max-w-[14rem]"
       />
     </DemoFocus>
   )

@@ -12,7 +12,7 @@ export function SearchFieldDemo() {
   return (
     <SearchField
       aria-label="Search"
-      className="w-full"
+      className="w-full max-w-[14rem]"
       value={value}
       onChange={() => {}}
     >

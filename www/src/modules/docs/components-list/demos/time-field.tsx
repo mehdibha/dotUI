@@ -14,10 +14,10 @@ import { DemoFocus, useCardHover } from '../autoplay'
 export function TimeFieldDemo() {
   const active = useCardHover()
   return (
-    <TimeField defaultValue={new Time(11, 45)}>
+    <TimeField defaultValue={new Time(11, 45)} className="w-full max-w-[14rem]">
       <Label>Event time</Label>
       <DemoFocus active={active}>
-        <DateInput className="w-40" />
+        <DateInput className="w-full" />
       </DemoFocus>
     </TimeField>
   )

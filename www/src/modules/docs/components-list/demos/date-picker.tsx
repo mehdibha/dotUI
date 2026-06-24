@@ -22,15 +22,16 @@ export function DatePickerDemo() {
       phase={phase}
       variant="popover"
       side="bottom"
+      fluid
       surfaceClassName="p-2"
       trigger={
         <DateField
-          className="w-56"
+          className="w-full max-w-[14rem]"
           aria-label="Date"
           value={VALUE}
           onChange={() => {}}
         >
-          <InputGroup>
+          <InputGroup className="w-full">
             <DateInput />
             <InputGroupAddon>
               <Button variant="default" size="sm" isIconOnly>

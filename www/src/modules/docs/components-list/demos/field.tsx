@@ -8,7 +8,7 @@ import { DemoFocus, useTypewriter } from '../autoplay'
 export function FieldDemo() {
   const { value, active } = useTypewriter('john_doe')
   return (
-    <Field>
+    <Field className="w-full max-w-[14rem]">
       <Label>Username</Label>
       <DemoFocus active={active}>
         <Input value={value} readOnly placeholder="Enter username" />

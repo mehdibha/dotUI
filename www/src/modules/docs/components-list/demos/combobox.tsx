@@ -15,9 +15,10 @@ export function ComboboxDemo() {
       phase={phase}
       variant="menu"
       side="bottom"
-      surfaceClassName="w-56 p-0"
+      fluid
+      surfaceClassName="w-full max-w-[14rem] p-0"
       trigger={
-        <InputGroup className="w-56">
+        <InputGroup className="w-full max-w-[14rem]">
           <Input placeholder="Select country..." value="France" readOnly />
           <InputGroupAddon>
             <Button variant="quiet" isIconOnly>

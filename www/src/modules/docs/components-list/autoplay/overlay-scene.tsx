@@ -36,6 +36,9 @@ interface OverlaySceneProps {
   children: React.ReactNode
   /** Scale of the trigger+surface stack when open (anchored variants). */
   openScale?: number
+  /** Field-style trigger: fill the width so it matches the stretched field demos
+   *  (combobox, select, date-picker) instead of sizing to content. */
+  fluid?: boolean
   /** Extra classes for the surface frame. */
   surfaceClassName?: string
   /** Position the cursor over the trigger (defaults to the bottom-right corner). */
@@ -72,17 +75,21 @@ const EASE = 'cubic-bezier(0.32,0.72,0,1)'
 function Trigger({
   phase,
   dim,
+  fluid,
   cursorClassName,
   children,
 }: {
   phase: ScenePhase
   dim?: boolean
+  fluid?: boolean
   cursorClassName?: string
   children: React.ReactNode
 }) {
   return (
     <div
-      className="relative"
+      // `fluid` field triggers fill the column so their width matches the
+      // stretched field demos; the cursor still anchors to the field's corner.
+      className={cn('relative', fluid && 'w-full')}
       style={{
         opacity: dim ? 0.55 : 1,
         transition: 'opacity 300ms ease',
@@ -143,6 +150,7 @@ export function OverlayScene({
   trigger,
   children,
   openScale,
+  fluid = false,
   surfaceClassName,
   cursorClassName,
 }: OverlaySceneProps) {
@@ -214,7 +222,10 @@ export function OverlayScene({
   return (
     <div className={SCENE_ROOT}>
       <div
-        className="flex flex-col items-center"
+        // `fluid` makes field-style triggers (combobox, select, date-picker) fill
+        // the width + horizontal inset so they match the stretched field demos;
+        // icon-button triggers stay content-sized and centered.
+        className={cn('flex flex-col items-center', fluid && 'w-full px-4')}
         style={{
           transform: `scale(${open ? resolvedScale : 1})`,
           transformOrigin: 'center',
@@ -226,7 +237,7 @@ export function OverlayScene({
             {surface}
           </AnchoredSurface>
         )}
-        <Trigger phase={phase} cursorClassName={cursorClassName}>
+        <Trigger phase={phase} fluid={fluid} cursorClassName={cursorClassName}>
           {trigger}
         </Trigger>
         {side === 'bottom' && (

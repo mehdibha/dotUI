@@ -36,6 +36,9 @@ interface ComponentCardProps {
   /** Full-bleed demos (overlay scenes) fill the preview instead of being centered
    *  and scaled — they manage their own framing and the "zoom out" choreography. */
   fill?: boolean
+  /** Field-like demos render full-width (not scaled), so the field is responsive
+   *  to the card and consistent across the set; the demo caps itself via max-width. */
+  stretch?: boolean
 }
 
 export function ComponentCard({
@@ -45,6 +48,7 @@ export function ComponentCard({
   scale = 0.8,
   previewClassName,
   fill = false,
+  stretch = false,
 }: ComponentCardProps) {
   const Demo = componentDemos[slug]
   // Hover/keyboard-focus on the card drives the demo's autoplay animation. The
@@ -84,6 +88,10 @@ export function ComponentCard({
         <CardHoverProvider value={active}>
           {fill ? (
             <div inert className="absolute inset-0">
+              {content}
+            </div>
+          ) : stretch ? (
+            <div inert className="flex w-full items-center justify-center">
               {content}
             </div>
           ) : (

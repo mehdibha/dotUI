@@ -14,10 +14,13 @@ import { DemoFocus, useCardHover } from '../autoplay'
 export function DateFieldDemo() {
   const active = useCardHover()
   return (
-    <DateField defaultValue={parseDate('2024-06-12')}>
+    <DateField
+      defaultValue={parseDate('2024-06-12')}
+      className="w-full max-w-[14rem]"
+    >
       <Label>Meeting date</Label>
       <DemoFocus active={active}>
-        <DateInput className="w-40" />
+        <DateInput className="w-full" />
       </DemoFocus>
     </DateField>
   )

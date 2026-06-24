@@ -14,9 +14,10 @@ export function SelectDemo() {
       phase={phase}
       variant="menu"
       side="bottom"
-      surfaceClassName="w-44 p-0"
+      fluid
+      surfaceClassName="w-full max-w-[14rem] p-0"
       trigger={
-        <Button className="w-44 justify-between font-normal">
+        <Button className="w-full max-w-[14rem] justify-between font-normal">
           Perplexity
           <ChevronDownIcon className="ml-auto text-fg-muted" />
         </Button>

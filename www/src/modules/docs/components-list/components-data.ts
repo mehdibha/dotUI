@@ -8,6 +8,9 @@ export interface ComponentInfo {
   /** Render the demo full-bleed (overlay "zoom out" scenes manage their own
    *  framing) instead of the default centered + scaled preview. */
   fill?: boolean
+  /** Render the demo full-width (responsive, not scaled) — for field-like demos
+   *  that should share one consistent, responsive width. */
+  stretch?: boolean
   status: ComponentStatus
 }
 
@@ -67,35 +70,35 @@ export const componentsData: ComponentCategory[] = [
         name: 'Input',
         slug: 'input',
         href: '/docs/components/input',
-        scale: 0.9,
+        stretch: true,
         status: 'done',
       },
       {
         name: 'TextArea',
         slug: 'text-area',
         href: '/docs/components/text-area',
-        scale: 0.9,
+        stretch: true,
         status: 'done',
       },
       {
         name: 'InputGroup',
         slug: 'input-group',
         href: '/docs/components/input-group',
-        scale: 0.9,
+        stretch: true,
         status: 'done',
       },
       {
         name: 'TextField',
         slug: 'text-field',
         href: '/docs/components/text-field',
-        scale: 0.9,
+        stretch: true,
         status: 'in review',
       },
       {
         name: 'SearchField',
         slug: 'search-field',
         href: '/docs/components/search-field',
-        scale: 0.9,
+        stretch: true,
         status: 'in review',
       },
       {
@@ -151,7 +154,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'Field',
         slug: 'field',
         href: '/docs/components/field',
-        scale: 0.9,
+        stretch: true,
         status: 'pending',
       },
     ],
@@ -201,7 +204,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'DateField',
         slug: 'date-field',
         href: '/docs/components/date-field',
-        scale: 0.9,
+        stretch: true,
         status: 'done',
       },
       {
@@ -216,7 +219,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'TimeField',
         slug: 'time-field',
         href: '/docs/components/time-field',
-        scale: 0.9,
+        stretch: true,
         status: 'in review',
       },
     ],
@@ -414,7 +417,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'ColorField',
         slug: 'color-field',
         href: '/docs/components/color-field',
-        scale: 0.9,
+        stretch: true,
         status: 'pending',
       },
       {
