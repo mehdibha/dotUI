@@ -1,20 +1,38 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from '@/registry/ui/select'
+'use client'
+
+import { ChevronDownIcon } from 'lucide-react'
+
+import { Button } from '@/registry/ui/button'
+import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
+
+import { OverlayScene, useOpenAutoplay } from '../autoplay'
 
 export function SelectDemo() {
+  const { phase } = useOpenAutoplay()
   return (
-    <Select aria-label="Provider" className="w-48">
-      <SelectTrigger />
-      <SelectContent>
-        <SelectItem>Perplexity</SelectItem>
-        <SelectItem>Replicate</SelectItem>
-        <SelectItem>Together AI</SelectItem>
-        <SelectItem>ElevenLabs</SelectItem>
-      </SelectContent>
-    </Select>
+    <OverlayScene
+      phase={phase}
+      variant="menu"
+      side="bottom"
+      surfaceClassName="w-44 p-0"
+      trigger={
+        <Button className="w-44 justify-between font-normal">
+          Perplexity
+          <ChevronDownIcon className="ml-auto text-fg-muted" />
+        </Button>
+      }
+    >
+      <ListBox
+        aria-label="Provider"
+        selectionMode="single"
+        selectedKeys={['perplexity']}
+        className="border-0 bg-transparent shadow-none"
+      >
+        <ListBoxItem id="perplexity">Perplexity</ListBoxItem>
+        <ListBoxItem id="replicate">Replicate</ListBoxItem>
+        <ListBoxItem id="together">Together AI</ListBoxItem>
+        <ListBoxItem id="eleven">ElevenLabs</ListBoxItem>
+      </ListBox>
+    </OverlayScene>
   )
 }

@@ -41,6 +41,7 @@ import { MenuDemo } from './menu'
 import { ModalDemo } from './modal'
 import { NumberFieldDemo } from './number-field'
 import { OTPFieldDemo } from './otp-field'
+import { PaginationDemo } from './pagination'
 import { PopoverDemo } from './popover'
 import { ProgressBarDemo } from './progress-bar'
 import { RadioGroupDemo } from './radio-group'
@@ -105,6 +106,7 @@ export const componentDemos: Record<string, ComponentType> = {
   modal: ModalDemo,
   'number-field': NumberFieldDemo,
   'otp-field': OTPFieldDemo,
+  pagination: PaginationDemo,
   popover: PopoverDemo,
   'progress-bar': ProgressBarDemo,
   'radio-group': RadioGroupDemo,

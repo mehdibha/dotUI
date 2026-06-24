@@ -5,6 +5,9 @@ export interface ComponentInfo {
   slug: string
   href: string
   scale?: number
+  /** Render the demo full-bleed (overlay "zoom out" scenes manage their own
+   *  framing) instead of the default centered + scaled preview. */
+  fill?: boolean
   status: ComponentStatus
 }
 
@@ -162,6 +165,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'menu',
         href: '/docs/components/menu',
         scale: 1,
+        fill: true,
         status: 'in review',
       },
       {
@@ -169,6 +173,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'combobox',
         href: '/docs/components/combobox',
         scale: 0.9,
+        fill: true,
         status: 'done',
       },
       {
@@ -176,6 +181,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'select',
         href: '/docs/components/select',
         scale: 0.95,
+        fill: true,
         status: 'done',
       },
     ],
@@ -203,6 +209,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'date-picker',
         href: '/docs/components/date-picker',
         scale: 0.8,
+        fill: true,
         status: 'done',
       },
       {
@@ -415,6 +422,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'color-picker',
         href: '/docs/components/color-picker',
         scale: 0.65,
+        fill: true,
         status: 'pending',
       },
       {
@@ -442,6 +450,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'modal',
         href: '/docs/components/modal',
         scale: 1,
+        fill: true,
         status: 'done',
       },
       {
@@ -449,6 +458,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'popover',
         href: '/docs/components/popover',
         scale: 1,
+        fill: true,
         status: 'done',
       },
       {
@@ -456,6 +466,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'drawer',
         href: '/docs/components/drawer',
         scale: 1,
+        fill: true,
         status: 'in review',
       },
       {
@@ -463,6 +474,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'tooltip',
         href: '/docs/components/tooltip',
         scale: 1,
+        fill: true,
         status: 'pending',
       },
     ],

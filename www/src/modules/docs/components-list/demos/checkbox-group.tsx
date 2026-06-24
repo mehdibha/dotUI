@@ -1,10 +1,17 @@
+'use client'
+
 import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
 import { CheckboxGroup } from '@/registry/ui/checkbox-group'
 import { FieldGroup, Label } from '@/registry/ui/field'
 
+import { useStepAutoplay } from '../autoplay'
+
+const KEYS = ['nextjs', 'remix', 'astro']
+
 export function CheckboxGroupDemo() {
+  const { index } = useStepAutoplay(KEYS.length, { dwell: 1300 })
   return (
-    <CheckboxGroup defaultValue={['nextjs']}>
+    <CheckboxGroup value={[KEYS[index]]} onChange={() => {}}>
       <Label>React frameworks</Label>
       <FieldGroup>
         <Checkbox value="nextjs">
