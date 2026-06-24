@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createFileRoute, stripSearchParams } from '@tanstack/react-router'
 import { z } from 'zod'
 
@@ -7,6 +7,11 @@ import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { CustomizerPanel } from '@/modules/create/customizer-panel'
 import { LabExperience } from '@/modules/create/panel'
+import { DEFAULTS, useDesignSystem } from '@/modules/create/preset'
+import {
+  loadStoredPreset,
+  saveStoredPreset,
+} from '@/modules/create/preset/storage'
 import { PreviewPanel } from '@/modules/create/preview/preview-panel'
 
 type MobilePane = 'customize' | 'preview'
@@ -33,12 +38,36 @@ export const Route = createFileRoute('/_app/create')({
 })
 
 function CreatePage() {
-  const { lab } = Route.useSearch()
+  const { lab, preset } = Route.useSearch()
+  const { designSystem, setDesignSystem } = useDesignSystem()
   // Below `lg` the customizer and the live preview can't sit side by side (the iframe
   // would be a ~15px sliver), so they collapse into a single switchable pane toggled
   // by the segmented control. Both stay mounted — only CSS-hidden, never unmounted —
   // so switching never reloads the preview. Above `lg` this state is inert; both show.
   const [mobilePane, setMobilePane] = useState<MobilePane>('customize')
+
+  // The user's selected preset is persisted in localStorage so every docs
+  // component demo renders in it. Seed the editor from it on open (unless a
+  // shared ?preset= link is being viewed), then persist back as it's edited.
+  const seededFromStorage = useRef(false)
+  useEffect(() => {
+    if (seededFromStorage.current) return
+    seededFromStorage.current = true
+    if (preset) return // a shared / deep-linked preset wins over the saved one
+    const stored = loadStoredPreset()
+    if (stored !== DEFAULTS) setDesignSystem(stored)
+  }, [preset, setDesignSystem])
+
+  const skipFirstPersist = useRef(true)
+  useEffect(() => {
+    // Skip the initial value so merely opening a shared link doesn't overwrite
+    // the saved preset; persist once the user actually changes something.
+    if (skipFirstPersist.current) {
+      skipFirstPersist.current = false
+      return
+    }
+    saveStoredPreset(designSystem)
+  }, [designSystem])
 
   // Opt-in exploration of the redesigned control panel + floating panel lab.
   if (lab) return <LabExperience />

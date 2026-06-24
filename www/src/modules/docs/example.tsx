@@ -5,6 +5,8 @@ import { Button } from '@/registry/ui/button'
 import { Dialog, DialogBody, DialogContent } from '@/registry/ui/dialog'
 import { Modal } from '@/registry/ui/modal'
 
+import { DemoPreset } from './demo-preset'
+
 export interface ExampleProps extends React.ComponentProps<'div'> {
   component: React.ComponentType
   title?: string
@@ -33,29 +35,33 @@ export function Example({
       {...props}
     >
       {children ?? (title ? <h3>{title}</h3> : null)}
-      <div className="relative flex flex-1 flex-col">
-        <div
-          data-example-preview=""
-          tabIndex={-1}
-          className="pointer-events-none scrollbar-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 overflow-x-auto p-6 sm:p-10"
-        >
-          <Component />
+      <DemoPreset>
+        <div className="relative flex flex-1 flex-col">
+          <div
+            data-example-preview=""
+            tabIndex={-1}
+            className="pointer-events-none scrollbar-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 overflow-x-auto p-6 sm:p-10"
+          >
+            <Component />
+          </div>
+          <Dialog>
+            <Button
+              variant="quiet"
+              aria-label={title ? `Expand ${title} example` : 'Expand example'}
+              className="absolute inset-0 z-2 size-auto h-auto! border hover:border-border-hover"
+            />
+            <Modal>
+              <DialogContent
+                aria-label={title ? `${title} example` : 'Example'}
+              >
+                <DialogBody>
+                  <Component />
+                </DialogBody>
+              </DialogContent>
+            </Modal>
+          </Dialog>
         </div>
-        <Dialog>
-          <Button
-            variant="quiet"
-            aria-label={title ? `Expand ${title} example` : 'Expand example'}
-            className="absolute inset-0 z-2 size-auto h-auto! border hover:border-border-hover"
-          />
-          <Modal>
-            <DialogContent aria-label={title ? `${title} example` : 'Example'}>
-              <DialogBody>
-                <Component />
-              </DialogBody>
-            </DialogContent>
-          </Modal>
-        </Dialog>
-      </div>
+      </DemoPreset>
     </div>
   )
 }
