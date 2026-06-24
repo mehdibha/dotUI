@@ -10,7 +10,6 @@ import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/registry/ui/card'
 import { CodeBlock } from '@/modules/docs/code-block'
 import { renderCode } from '@/modules/docs/codegen/code-template'
 import type { CodeTemplate } from '@/modules/docs/codegen/code-template'
@@ -123,30 +122,24 @@ export function InteractiveDemo({
           {previewElement}
         </div>
 
-        {/* Controls — always grouped in a titled card; a fixed-width column to the right at md+
-				    when horizontal, otherwise a wrapping row beneath the preview (also on small screens). */}
+        {/* Controls — bare, no card chrome: a self-sizing column to the right at md+ when
+				    horizontal (clamped by min/max width), otherwise a wrapping row beneath the preview. */}
         <div
           className={cn(
             '**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted',
-            'p-5',
-            horizontal && 'md:w-64 md:shrink-0',
+            'flex p-5',
+            controlListClass,
+            // Right column at md+: drop the left padding (the preview's flex space is the gap)
+            // and let it size to content between a min and max instead of a fixed width.
+            horizontal && 'md:max-w-72 md:min-w-52 md:shrink-0 md:pl-0',
           )}
         >
-          <Card size="sm" className="md:h-full">
-            <CardHeader>
-              <CardTitle className="text-xs font-medium text-fg-muted">
-                Props
-              </CardTitle>
-            </CardHeader>
-            <CardContent className={cn('flex', controlListClass)}>
-              <Controls
-                controls={controls}
-                values={values}
-                onChange={handleChange}
-                layout={layout}
-              />
-            </CardContent>
-          </Card>
+          <Controls
+            controls={controls}
+            values={values}
+            onChange={handleChange}
+            layout={layout}
+          />
         </div>
       </div>
 
