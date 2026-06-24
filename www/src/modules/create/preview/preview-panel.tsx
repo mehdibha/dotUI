@@ -38,36 +38,6 @@ import {
 import type { PreviewMode } from '@/modules/create/preset'
 import { componentsData } from '@/modules/docs/components-list/components-data'
 
-// iOS-style progressive blur, mirroring the app navbar (components/layout/header.tsx):
-// each layer adds a larger backdrop blur over an overlapping gradient window, so where
-// the windows overlap the blurs compound — ramping smoothly from sharp (the toolbar's
-// bottom edge) to heavily blurred (top). `to top` puts the strongest blur under the
-// toolbar content, so preview content slides under a glass bar as it scrolls.
-const BLUR_LAYERS = [
-  {
-    blur: 0.5,
-    mask: 'linear-gradient(to top, transparent 0%, #000 10%, #000 30%, transparent 40%)',
-  },
-  {
-    blur: 1,
-    mask: 'linear-gradient(to top, transparent 10%, #000 20%, #000 40%, transparent 50%)',
-  },
-  {
-    blur: 2,
-    mask: 'linear-gradient(to top, transparent 15%, #000 30%, #000 50%, transparent 60%)',
-  },
-  {
-    blur: 4,
-    mask: 'linear-gradient(to top, transparent 20%, #000 40%, #000 60%, transparent 70%)',
-  },
-  {
-    blur: 8,
-    mask: 'linear-gradient(to top, transparent 40%, #000 60%, #000 80%, transparent 90%)',
-  },
-  { blur: 16, mask: 'linear-gradient(to top, transparent 60%, #000 80%)' },
-  { blur: 24, mask: 'linear-gradient(to top, transparent 70%, #000 100%)' },
-]
-
 type DeviceSize = 'mobile' | 'tablet' | 'desktop'
 
 // Widths the iframe reflows to per device — true responsive previews (changing the
@@ -192,30 +162,24 @@ export function PreviewPanel({ className }: { className?: string }) {
         className,
       )}
     >
-      {/* Stage — holds the iframe. Full-bleed on desktop (content slides under the glass
-          toolbar); a centered device card on smaller sizes. Scrolls when zoomed past fit. */}
+      {/* Stage — holds the iframe at full height for every device size; the toolbar's
+          background fade overlays its top edge. Smaller sizes narrow the iframe and center
+          it on a muted backdrop. Scrolls when zoomed past fit. */}
       <div
         className={cn(
           'relative flex-1 overflow-auto',
           constrained && 'bg-neutral',
         )}
       >
-        <div
-          className={cn(
-            'flex min-h-full w-full justify-center',
-            constrained && 'p-6 pt-16',
-          )}
-        >
+        <div className="flex h-full w-full justify-center">
           <iframe
             ref={iframeRef}
             key={effectivePreview}
             src={iframeSrc}
             title="preview"
             className={cn(
-              'border-0 bg-bg',
-              constrained
-                ? 'self-stretch rounded-lg border shadow-sm'
-                : 'size-full',
+              'h-full border-0 bg-bg',
+              constrained && 'border-x shadow-sm',
             )}
             style={{
               width: constrained ? DEVICE_WIDTHS[size] : '100%',
@@ -225,36 +189,21 @@ export function PreviewPanel({ className }: { className?: string }) {
         </div>
       </div>
 
-      {/* Glass toolbar — overlays the top of the stage with the progressive blur. The
-          wrapper is pointer-events-none so empty areas click through to the preview;
-          each control cluster re-enables pointer events. */}
+      {/* Toolbar — overlays the top of the stage. A background-to-transparent fade (no
+          blur), the height of the app header, lets the preview dissolve into the page
+          color beneath the controls. The wrapper is pointer-events-none so empty areas
+          click through to the preview; each control cluster re-enables pointer events. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-20">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32"
-        >
-          {BLUR_LAYERS.map(({ blur, mask }) => (
-            <div
-              key={blur}
-              className="absolute inset-0"
-              style={{
-                backdropFilter: `blur(${blur}px)`,
-                WebkitBackdropFilter: `blur(${blur}px)`,
-                maskImage: mask,
-                WebkitMaskImage: mask,
-              }}
-            />
-          ))}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--color-bg) 55%, transparent) 55%, color-mix(in oklab, var(--color-bg) 80%, transparent) 100%)',
-            }}
-          />
-        </div>
+          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-(--header-height)"
+          style={{
+            background:
+              'linear-gradient(to bottom, var(--color-bg) 0%, var(--color-bg) 25%, transparent 100%)',
+          }}
+        />
 
-        <div className="relative flex h-12 items-center gap-2 px-2">
+        <div className="relative flex h-(--header-height) items-center gap-2 px-3">
           {/* Preview selector */}
           <Select
             value={effectivePreview}
