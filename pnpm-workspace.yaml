@@ -21,14 +21,26 @@ allowBuilds:
   puppeteer: true
   sharp: true
 
+# The /r/* publisher routes format exported code with oxfmt at request time, so
+# oxfmt is bundled into the Vercel lambda. Nitro's externals tracer realpaths
+# every one of oxfmt's optional native bindings — including the linux-x64 musl
+# build, which pnpm skips on Vercel's glibc machine — and fails the build with
+# ENOENT. Install the musl libc variants too so the tracer can resolve them.
+supportedArchitectures:
+  libc:
+    - current
+    - musl
+
 overrides:
   '@types/react': 19.2.2
   '@types/react-dom': 19.2.1
-
-patchedDependencies:
-  tailwindcss-react-aria-components@2.1.1: patches/tailwindcss-react-aria-components@2.1.1.patch
 
 minimumReleaseAgeExclude:
   - starter-themes@0.0.2
   - tailwindcss-autocontrast@0.0.4
   - tailwindcss-with@0.0.2
+  - '@react-types/shared@3.36.0'
+  - react-aria-components@1.19.0
+  - react-aria@3.50.0
+  - react-stately@3.48.0
+  - tailwindcss-react-aria-components@2.2.0

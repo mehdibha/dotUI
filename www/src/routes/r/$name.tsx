@@ -67,29 +67,27 @@ export const Route = createFileRoute('/r/$name')({
         const mod = await loader()
         const publishable = selectPublishable(mod, preset)
 
-        const { item, rawContent } = publish({ publishable, preset })
+        const { item } = publish({ publishable, preset })
 
-        // Run the component source through oxfmt so the consumer's `shadcn add`
-        // gets clean output. Don't let formatter failures break the response —
-        // the raw template still works, just less pretty.
-        let formatted = rawContent
-        try {
-          const result = await format(
-            publishable.meta.files?.[0]?.target ?? 'ui.tsx',
-            rawContent,
-            OUTPUT_FORMAT,
-          )
-          formatted = result.code
-        } catch {
-          /* fall through with raw content */
-        }
-
-        // Re-apply formatted content to every file (in practice we only ever ship one).
+        // Run each file's source through oxfmt so the consumer's `shadcn add`
+        // gets clean output. Format per-file — a base `.tsx` and a secondary
+        // `.ts` hook carry different content and need their own parser. Don't
+        // let formatter failures break the response — raw content still works.
         if (item.files) {
-          item.files = item.files.map((f) => ({
-            ...f,
-            content: formatted,
-          })) as typeof item.files
+          item.files = (await Promise.all(
+            item.files.map(async (file) => {
+              try {
+                const result = await format(
+                  file.target ?? 'ui.tsx',
+                  file.content ?? '',
+                  OUTPUT_FORMAT,
+                )
+                return { ...file, content: result.code }
+              } catch {
+                return file
+              }
+            }),
+          )) as typeof item.files
         }
 
         return new Response(JSON.stringify(item, null, 2), {

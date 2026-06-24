@@ -885,6 +885,10 @@ export const DemosIndex: Record<
 		files: ["ui/context-menu/demos/nested.tsx"],
 		component: React.lazy(() => import("@/registry/ui/context-menu/demos/nested")),
 	},
+	"context-menu/demos/with-icons": {
+		files: ["ui/context-menu/demos/with-icons.tsx"],
+		component: React.lazy(() => import("@/registry/ui/context-menu/demos/with-icons")),
+	},
 	"context-menu/demos/with-submenu": {
 		files: ["ui/context-menu/demos/with-submenu.tsx"],
 		component: React.lazy(() => import("@/registry/ui/context-menu/demos/with-submenu")),
