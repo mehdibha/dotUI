@@ -68,7 +68,7 @@ export function Cards() {
   // `--grid-max` on large ones, and bumps to 4-up at xl. Kept interactive on
   // purpose: the showcase is a live playground, so visitors can poke the cards.
   const realGrid = (
-    <CardsGrid className="relative z-20 w-[max(52rem,120vw)] max-w-none shrink-0 lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink xl:grid-cols-4" />
+    <CardsGrid className="relative z-20 w-[max(52rem,120vw)] max-w-none shrink-0 lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink" />
   )
 
   return (

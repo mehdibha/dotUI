@@ -10,10 +10,7 @@ import { CardsGrid } from '@/components/showcase/cards-grid'
 export default function CardsExamples() {
   return (
     <div className="w-full p-4 sm:p-6">
-      <CardsGrid
-        className="mx-auto max-w-6xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-        featuredClassName="col-span-1 self-stretch sm:col-span-2 lg:col-span-2 lg:col-start-2"
-      />
+      <CardsGrid className="mx-auto max-w-6xl" variant="preview" />
     </div>
   )
 }

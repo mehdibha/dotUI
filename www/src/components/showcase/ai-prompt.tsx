@@ -28,24 +28,22 @@ const suggestions = [
   { label: "Claude's choice", icon: LightbulbIcon },
 ]
 
-// The showcase's hero card: a full AI prompt composer (input + model picker +
+// The showcase's lead card: a full AI prompt composer (input + model picker +
 // dictation + voice + attachment) over a row of suggestion chips. Unlike the
 // other showcase cards it isn't wrapped in <Card>; the composer *is* the surface,
-// so it stacks the bordered composer over free-standing chips. Every visual goes
-// through design-system tokens (--card-radius, bg-card, text-fg-muted…) so it
-// re-themes live with the rest of the grid.
+// so it stacks the bordered composer over free-standing chips. It sizes to its
+// content — a short, wide banner across the top of the grid's main region — and
+// every visual goes through design-system tokens (--card-radius, bg-card,
+// text-fg-muted…) so it re-themes live with the rest of the grid.
 export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div className={cn('flex h-full flex-col gap-4', className)} {...props}>
-      {/* Composer — grows to fill the featured card so it reads as a tall hero
-          (matching the height of the cards stacked to its left) instead of a
-          short box floating in empty space. */}
-      <div className="flex flex-1 flex-col rounded-(--card-radius) border bg-card p-2 shadow-sm">
-        <TextField aria-label="Prompt" className="flex w-full flex-1 flex-col">
+    <div className={cn('flex flex-col gap-4', className)} {...props}>
+      <div className="flex flex-col rounded-(--card-radius) border bg-card p-2 shadow-sm">
+        <TextField aria-label="Prompt" className="flex w-full flex-col">
           <TextArea
             placeholder="How can I help you today?"
-            rows={4}
-            className="h-full min-h-24 flex-1 resize-none border-0 bg-transparent px-2 pt-2 text-base shadow-none focus:border-0 focus:ring-0"
+            rows={3}
+            className="min-h-20 resize-none border-0 bg-transparent px-2 pt-2 text-base shadow-none focus:border-0 focus:ring-0"
           />
         </TextField>
         <div className="flex items-center justify-between gap-2 pt-1">
