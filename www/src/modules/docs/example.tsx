@@ -5,6 +5,8 @@ import { Button } from '@/registry/ui/button'
 import { Dialog, DialogBody, DialogContent } from '@/registry/ui/dialog'
 import { Modal } from '@/registry/ui/modal'
 
+import { DemoIsland } from './demo-island'
+
 export interface ExampleProps extends React.ComponentProps<'div'> {
   component: React.ComponentType
   title?: string
@@ -39,7 +41,9 @@ export function Example({
           tabIndex={-1}
           className="pointer-events-none scrollbar-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 overflow-x-auto p-6 sm:p-10"
         >
-          <Component />
+          <DemoIsland>
+            <Component />
+          </DemoIsland>
         </div>
         <Dialog>
           <Button
@@ -50,7 +54,9 @@ export function Example({
           <Modal>
             <DialogContent aria-label={title ? `${title} example` : 'Example'}>
               <DialogBody>
-                <Component />
+                <DemoIsland>
+                  <Component />
+                </DemoIsland>
               </DialogBody>
             </DialogContent>
           </Modal>
