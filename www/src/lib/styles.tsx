@@ -62,6 +62,15 @@ function resolveCssValue(value: string): string {
   return value.startsWith('--') ? `var(${value})` : value
 }
 
+// The global `:root` write must land before paint on the client (no flash of the
+// previous theme), so it wants `useLayoutEffect` — but layout effects do nothing on
+// the server, where calling `useLayoutEffect` only logs React's SSR warning. Falling
+// back to `useEffect` server-side lets the provider render during SSR without warning,
+// so callers can mount it unconditionally (no client-only gate that would remount the
+// subtree). Same idiom as the Skeleton component.
+const useIsomorphicLayoutEffect =
+  typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
+
 /* ----------------------------- Scoped theming ----------------------------- */
 
 /*
@@ -181,8 +190,13 @@ function harvestRootClosure(): RootClosure {
 function buildScopedThemeCss(
   selector: string,
   color: ColorConfig | undefined,
-): string {
+): string | null {
   const { light, dark } = harvestRootClosure()
+  // No closure to clone — we're on the server, or the document's stylesheets aren't
+  // parsed yet. Scoped theming is inherently client-only (it mirrors the live `:root`
+  // closure), so emit nothing here; it applies once mounted on the client. Rendering a
+  // partial closure now would also mismatch the client during hydration.
+  if (!light && !dark) return null
   const blocks = [
     `${selector} {\n${light}\n}`,
     `.dark ${selector} {\n${dark}\n}`,
@@ -275,7 +289,7 @@ function DesignSystemProvider({
   // var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor))) recompute correctly —
   // setting them on a wrapper <div> would leave the :root-declared tokens frozen. In `scoped`
   // mode they ride inline on the wrapper instead, over the cloned closure (see buildScopedThemeCss).
-  React.useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (scoped) return
     const root = document.documentElement
     const applied = Object.entries(cssVars)
@@ -295,11 +309,12 @@ function DesignSystemProvider({
     if (scoped) harvestRootClosure()
   }, [scoped])
 
-  // Generative palette as an injected <style>. Global mode writes :root + .dark (the flat-token
+  // Generative palette as a rendered <style> (the element is declared in the returned tree
+  // below, not imperatively appended). Global mode writes :root + .dark (the flat-token
   // path above only writes :root). Scoped mode clones :root's token closure onto the wrapper
   // (so semantic + component vars recompute from the scope) and overrides the ramps there — but
   // only once something actually diverges (a color, or a token like --radius-factor); an
-  // untouched preview injects nothing and just inherits the page defaults.
+  // untouched preview emits nothing and just inherits the page defaults.
   //
   // `cssVars` themselves ride inline on the scope element and never enter the CSS text, so the
   // memo depends on whether any override EXISTS (a boolean) rather than the object's identity —
@@ -315,16 +330,16 @@ function DesignSystemProvider({
       : null
   }, [scoped, scopeSelector, color, hasTokenOverrides])
 
-  React.useLayoutEffect(() => {
-    if (!themeCss) return
-    const styleEl = document.createElement('style')
-    styleEl.setAttribute('data-dotui-color', '')
-    styleEl.textContent = themeCss
-    document.head.appendChild(styleEl)
-    return () => {
-      styleEl.remove()
-    }
-  }, [themeCss])
+  // The palette / scoped-closure stylesheet as a real node, rendered into the tree rather
+  // than appended via an effect. `themeCss` is null until something diverges (and, when
+  // scoped, is client-only — see buildScopedThemeCss), so an untouched provider renders no
+  // <style> and SSR/first paint stay byte-identical to the bare children. A plain <style>
+  // (no `precedence`) is not hoisted by React; it renders in place, which is fine — its
+  // rules are global selectors (`:root`, `.dark`, `[data-dotui-scope]`) that apply wherever
+  // the tag sits, and `<style>` carries the UA `display: none`, so it never affects layout.
+  const themeStyle = themeCss ? (
+    <style data-dotui-color>{themeCss}</style>
+  ) : null
 
   const tree = (
     <DesignSystemContext.Provider value={value}>
@@ -332,7 +347,13 @@ function DesignSystemProvider({
     </DesignSystemContext.Provider>
   )
 
-  if (!scoped) return tree
+  if (!scoped)
+    return (
+      <>
+        {themeStyle}
+        {tree}
+      </>
+    )
 
   const scopeStyle = { ...cssVars } as React.CSSProperties
   // `useId` ids contain ':' etc.; strip to a valid, stable DOM id for the portal target.
@@ -352,6 +373,7 @@ function DesignSystemProvider({
       data-dotui-scope={scopeId}
       style={{ display: 'contents', ...scopeStyle }}
     >
+      {themeStyle}
       <UNSAFE_PortalProvider
         getContainer={() => document.getElementById(portalDomId)}
       >
