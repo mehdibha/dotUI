@@ -12,7 +12,11 @@ export default function ProgressGroupExamples() {
   return (
     <Examples>
       <Example title="Progress Bar">
-        <ProgressBar value={60} className="w-full max-w-sm">
+        <ProgressBar
+          aria-label="Progress"
+          value={60}
+          className="w-full max-w-sm"
+        >
           <ProgressBarOutput />
           <ProgressBarControl />
         </ProgressBar>

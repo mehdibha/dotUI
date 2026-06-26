@@ -28,7 +28,11 @@ const FontPicker = ({ label }: { label: string }) => {
       <SelectTrigger className="w-full" />
       <Popover>
         <Command>
-          <SearchField autoFocus className="w-full p-2">
+          <SearchField
+            aria-label="Search fonts"
+            autoFocus
+            className="w-full p-2"
+          >
             <Input className="w-full" />
           </SearchField>
           <ListBox>

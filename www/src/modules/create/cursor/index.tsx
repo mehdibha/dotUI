@@ -39,6 +39,7 @@ export function CursorConfig({
       <div className="flex flex-col gap-2">
         <span className="text-xs font-medium text-fg-muted">Interactive</span>
         <CursorSelect
+          aria-label="Interactive cursor"
           value={interactive}
           onChange={(v) => onChange(CURSOR_INTERACTIVE_VAR, v)}
         />
@@ -46,6 +47,7 @@ export function CursorConfig({
       <div className="flex flex-col gap-2">
         <span className="text-xs font-medium text-fg-muted">Disabled</span>
         <CursorSelect
+          aria-label="Disabled cursor"
           value={disabled}
           onChange={(v) => onChange(CURSOR_DISABLED_VAR, v)}
         />
@@ -57,12 +59,15 @@ export function CursorConfig({
 function CursorSelect({
   value,
   onChange,
+  'aria-label': ariaLabel,
 }: {
   value: string
   onChange: (v: string) => void
+  'aria-label'?: string
 }) {
   return (
     <Select
+      aria-label={ariaLabel}
       selectedKey={value}
       onSelectionChange={(key) => onChange(key as string)}
     >
