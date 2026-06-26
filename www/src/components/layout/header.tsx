@@ -65,11 +65,12 @@ export function Header({ className, items = [] }: HeaderProps) {
   const { pathname } = useLocation()
   // Longest-matching-prefix wins so "/docs/components" highlights Components (not
   // Docs) while "/docs/button" still highlights Docs.
-  const activeTo = [...navItems]
-    .sort((a, b) => b.to.length - a.to.length)
+  const activeMatch = [...navItems]
+    .sort((a, b) => b.match.length - a.match.length)
     .find(
-      (item) => pathname === item.to || pathname.startsWith(`${item.to}/`),
-    )?.to
+      (item) =>
+        pathname === item.match || pathname.startsWith(`${item.match}/`),
+    )?.match
 
   return (
     <header
@@ -116,11 +117,12 @@ export function Header({ className, items = [] }: HeaderProps) {
             // Link with `exact` matching so it marks only the literal current page
             // — otherwise Link's default fuzzy match lights aria-current on both
             // Docs and Components for any /docs/components/* page.
-            const isActive = item.to === activeTo
+            const isActive = item.match === activeMatch
             return (
               <RouterLink
                 key={item.name}
                 to={item.to}
+                params={item.params}
                 activeOptions={{ exact: true }}
                 className={cn(
                   'px-0.5 transition-colors hover:text-fg',

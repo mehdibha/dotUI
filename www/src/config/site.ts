@@ -36,8 +36,23 @@ export const siteConfig = {
   },
 } as const
 
-export const navItems: { name: string; to: string }[] = [
-  { name: 'Docs', to: '/docs' },
-  { name: 'Components', to: '/docs/components' },
-  { name: 'Create', to: '/create' },
+export const navItems: {
+  name: string
+  /** Pathname prefix used for active-state highlighting. */
+  match: string
+  /** Router link target. Docs entries target the splat route (`/docs/$`) rather
+   *  than the bare `/docs` layout route: linking the layout route generates a
+   *  path that re-matches to its splat child, tripping TanStack's
+   *  `params.stringify` dev warning on every render. */
+  to: string
+  params?: { _splat: string }
+}[] = [
+  { name: 'Docs', match: '/docs', to: '/docs/$', params: { _splat: '' } },
+  {
+    name: 'Components',
+    match: '/docs/components',
+    to: '/docs/$',
+    params: { _splat: 'components' },
+  },
+  { name: 'Create', match: '/create', to: '/create' },
 ]
