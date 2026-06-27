@@ -387,13 +387,6 @@ export const componentsData: ComponentCategory[] = [
         status: 'done',
       },
       {
-        name: 'ScrollFade',
-        slug: 'scroll-fade',
-        href: '/docs/components/scroll-fade',
-        scale: 0.75,
-        status: 'in review',
-      },
-      {
         name: 'Separator',
         slug: 'separator',
         href: '/docs/components/separator',

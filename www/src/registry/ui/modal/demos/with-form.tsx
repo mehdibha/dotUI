@@ -28,7 +28,7 @@ export default function Demo() {
               Your profile will be updated immediately.
             </DialogDescription>
           </DialogHeader>
-          <DialogBody scrollFade={false}>
+          <DialogBody>
             <TextField defaultValue="Pedro Duarte">
               <Label>Name</Label>
               <Input name="name" />

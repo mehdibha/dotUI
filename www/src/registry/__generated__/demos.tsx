@@ -1885,18 +1885,6 @@ export const DemosIndex: Record<
 		files: ["ui/react-hook-form/demos/register.tsx"],
 		component: React.lazy(() => import("@/registry/ui/react-hook-form/demos/register")),
 	},
-	"scroll-fade/demos/basic": {
-		files: ["ui/scroll-fade/demos/basic.tsx"],
-		component: React.lazy(() => import("@/registry/ui/scroll-fade/demos/basic")),
-	},
-	"scroll-fade/demos/both-axes": {
-		files: ["ui/scroll-fade/demos/both-axes.tsx"],
-		component: React.lazy(() => import("@/registry/ui/scroll-fade/demos/both-axes")),
-	},
-	"scroll-fade/demos/horizontal": {
-		files: ["ui/scroll-fade/demos/horizontal.tsx"],
-		component: React.lazy(() => import("@/registry/ui/scroll-fade/demos/horizontal")),
-	},
 	"search-field/demos/controlled": {
 		files: ["ui/search-field/demos/controlled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/search-field/demos/controlled")),
