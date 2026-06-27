@@ -21,7 +21,12 @@ import {
   MenuSection,
   MenuSectionHeader,
 } from '@/registry/ui/menu'
-import { Modal } from '@/registry/ui/modal'
+import {
+  ModalBackdrop,
+  ModalOverlay,
+  ModalPanel,
+  ModalViewport,
+} from '@/registry/ui/modal'
 import { SearchField } from '@/registry/ui/search-field'
 
 interface SearchCommandProps {
@@ -163,10 +168,17 @@ export function SearchCommand({
           return isMobile ? (
             <Drawer>{content}</Drawer>
           ) : (
-            // Mirror shadcn.com's command menu: max-w-lg (512px), top-15%.
-            <Modal className="mt-[15vh] self-start duration-0 sm:max-w-lg entering:scale-100 exiting:scale-100">
-              {content}
-            </Modal>
+            // Composed (not <Modal>) so the panel AND backdrop appear
+            // instantly — duration-0 on both. Mirror shadcn.com: max-w-lg
+            // (512px), top-15%.
+            <ModalOverlay>
+              <ModalBackdrop className="duration-0 group-exiting/modal:duration-0" />
+              <ModalViewport>
+                <ModalPanel className="mt-[15vh] self-start duration-0 sm:max-w-lg entering:scale-100 exiting:scale-100">
+                  {content}
+                </ModalPanel>
+              </ModalViewport>
+            </ModalOverlay>
           )
         }}
       />
