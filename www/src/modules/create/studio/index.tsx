@@ -1,48 +1,31 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { getRouteApi } from '@tanstack/react-router'
-import {
-  DicesIcon,
-  MoreHorizontalIcon,
-  RotateCcwIcon,
-  Undo2Icon,
-} from 'lucide-react'
 import { AnimatePresence, motion, type Transition } from 'motion/react'
 
 import { cn } from '@/registry/lib/utils'
-import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 
 import { CodeOptionsDialog } from '../code-options'
 import { ExportFooter } from '../export'
-import { useDesignSystem } from '../preset'
-import { useStudioActions } from './actions'
-import { CommandPalette } from './command'
 import { StudioHome } from './home'
-import { DetailHeader, Segmented } from './primitives'
-import { StudioProvider, useStudio } from './store'
+import { DetailHeader } from './primitives'
+import { useStudio } from './store'
 import { resolveView } from './views'
 
-const routeApi = getRouteApi('/_app/create')
+export { StudioProvider } from './store'
+export { StudioTopBar } from './top-bar'
 
 const stackTransition: Transition = {
   x: { type: 'tween', duration: 0.34, ease: [0.32, 0.72, 0, 1] },
 }
 
+/**
+ * The editor panel. Its chrome (system name, Simple/Pro posture, ⌘K, undo and
+ * the macros menu) has moved up to `StudioTopBar` so there's one bar on /create,
+ * never two stacked — the panel is now just the slide-in body plus the export
+ * footer. Render it inside a `StudioProvider` (shared with the top bar).
+ */
 export function StudioPanel({ className }: { className?: string }) {
-  return (
-    <StudioProvider>
-      <PanelInner className={className} />
-    </StudioProvider>
-  )
-}
-
-function PanelInner({ className }: { className?: string }) {
-  const { level, setLevel, stack, back } = useStudio()
+  const { level, stack, back } = useStudio()
 
   return (
     <div
@@ -51,21 +34,6 @@ function PanelInner({ className }: { className?: string }) {
         className,
       )}
     >
-      <Header />
-
-      {/* Audience posture */}
-      <div className="border-b px-3 py-2">
-        <Segmented
-          ariaLabel="Editing mode"
-          value={level}
-          onChange={setLevel}
-          options={[
-            { value: 'simple', label: 'Simple' },
-            { value: 'pro', label: 'Pro' },
-          ]}
-        />
-      </div>
-
       {/* Body — home + slide-in detail stack */}
       <div className="relative flex-1 overflow-hidden">
         <motion.div
@@ -115,108 +83,5 @@ function PanelInner({ className }: { className?: string }) {
         <ExportFooter />
       </div>
     </div>
-  )
-}
-
-/* -------------------------------- Header -------------------------------- */
-
-function Header() {
-  const { name, setName } = useStudio()
-  const { designSystem } = useDesignSystem()
-  const { reroll, resetAll } = useStudioActions()
-  const accent =
-    (designSystem.color ?? DEFAULT_COLOR_CONFIG).seeds.accent ?? '#6366f1'
-
-  return (
-    <div className="flex items-center gap-2 border-b px-3 py-2.5">
-      <span
-        className="size-5 shrink-0 rounded-md ring-1 ring-black/10 ring-inset"
-        style={{ backgroundColor: accent }}
-        aria-hidden
-      />
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        aria-label="System name"
-        spellCheck={false}
-        className="min-w-0 flex-1 truncate rounded-sm bg-transparent text-sm font-medium outline-none focus-visible:bg-neutral focus-visible:px-1.5 focus-visible:py-0.5"
-      />
-      <div className="flex shrink-0 items-center gap-0.5">
-        <CommandPalette />
-        <UndoButton />
-        <Menu>
-          <Button size="sm" variant="quiet" isIconOnly aria-label="More">
-            <MoreHorizontalIcon />
-          </Button>
-          <Popover placement="bottom end" className="min-w-44">
-            <MenuContent>
-              <MenuItem onAction={reroll}>
-                <DicesIcon />
-                Surprise me
-              </MenuItem>
-              <MenuItem onAction={resetAll}>
-                <RotateCcwIcon />
-                Reset to defaults
-              </MenuItem>
-            </MenuContent>
-          </Popover>
-        </Menu>
-      </div>
-    </div>
-  )
-}
-
-/* --------------------------------- Undo --------------------------------- */
-
-/**
- * Walks back through past preset values. Every edit lands in `?preset=` with
- * `replace:true`, so the browser back button can't undo edits — we keep our own
- * stack. Watching `preset` captures changes from every editor regardless of
- * which `useDesignSystem()` instance made them.
- */
-function UndoButton() {
-  const { preset } = routeApi.useSearch()
-  const navigate = routeApi.useNavigate()
-  const historyRef = useRef<(string | undefined)[]>([])
-  const prevRef = useRef<string | undefined>(preset)
-  const undoingRef = useRef(false)
-  const [canUndo, setCanUndo] = useState(false)
-
-  useEffect(() => {
-    if (prevRef.current === preset) return
-    if (undoingRef.current) {
-      undoingRef.current = false
-    } else {
-      historyRef.current.push(prevRef.current)
-      setCanUndo(true)
-    }
-    prevRef.current = preset
-  }, [preset])
-
-  function undo() {
-    if (historyRef.current.length === 0) return
-    const previous = historyRef.current.pop()
-    undoingRef.current = true
-    navigate({
-      search: (prev) => ({ ...prev, preset: previous }),
-      replace: true,
-    })
-    setCanUndo(historyRef.current.length > 0)
-  }
-
-  return (
-    <Tooltip delay={300}>
-      <Button
-        size="sm"
-        variant="quiet"
-        isIconOnly
-        onPress={undo}
-        isDisabled={!canUndo}
-        aria-label="Undo"
-      >
-        <Undo2Icon />
-      </Button>
-      <TooltipContent>Undo</TooltipContent>
-    </Tooltip>
   )
 }
