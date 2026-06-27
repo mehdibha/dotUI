@@ -17,7 +17,6 @@ import {
   PaperclipIcon,
   PlugIcon,
   PlusIcon,
-  SlidersHorizontalIcon,
   TelescopeIcon,
   TriangleAlertIcon,
 } from 'lucide-react'
@@ -30,7 +29,14 @@ import { Label } from '@/registry/ui/field'
 import { TextArea } from '@/registry/ui/input'
 import { Kbd } from '@/registry/ui/kbd'
 import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Menu, MenuContent, MenuItem, MenuSub } from '@/registry/ui/menu'
+import {
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuSection,
+  MenuSectionHeader,
+  MenuSub,
+} from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
 import { Separator } from '@/registry/ui/separator'
 import { Switch, SwitchControl } from '@/registry/ui/switch'
@@ -118,8 +124,8 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
       <TextField aria-label="Prompt" className="flex w-full flex-col">
         <TextArea
           placeholder="How can I help you today?"
-          rows={3}
-          className="min-h-20 resize-none border-0 bg-transparent px-2 pt-2 text-base shadow-none focus:border-0 focus:ring-0"
+          rows={2}
+          className="min-h-14 resize-none border-0 bg-transparent px-2 pt-2 text-base shadow-none focus:border-0 focus:ring-0"
         />
       </TextField>
       <div className="flex items-center justify-between gap-2 pt-1">
@@ -218,79 +224,58 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
           </Popover>
         </Menu>
 
-        {voiceMode ? (
-          // Voice mode active — the whole cluster collapses to a Stop pill.
-          <Button
-            variant="primary"
-            size="sm"
-            className="gap-1.5"
-            onPress={() => setVoiceMode(false)}
+        {/* Right side: the tool cluster and the voice-mode Stop pill both stay
+            mounted and cross-fade (opacity + scale) so toggling voice mode is a
+            smooth swap, not a hard cut. The pill is absolutely overlaid on the
+            cluster's right edge, so the row's width never reflows mid-transition;
+            `inert` pulls whichever side is hidden out of focus order and the a11y
+            tree. */}
+        <div className="relative flex items-center">
+          <div
+            inert={voiceMode || undefined}
+            className={cn(
+              'flex items-center gap-0.5 transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none',
+              voiceMode && 'scale-95 opacity-0',
+            )}
           >
-            <AudioLinesIcon />
-            Stop
-          </Button>
-        ) : (
-          <div className="flex items-center gap-0.5">
-            {/* Model picker — manual single-select so it can share the menu with
-                the Effort submenu and "More models" without a radio indicator. */}
+            {/* Model + effort — one menu, two labelled sections. */}
             <Menu>
-              <Button variant="quiet" size="sm" className="font-normal">
+              <Button variant="quiet" size="sm" className="gap-1.5 font-normal">
                 {modelName}
+                <span className="text-fg-muted">{effortName}</span>
+                <ChevronDownIcon className="text-fg-muted" />
               </Button>
               <Popover>
                 <MenuContent className="min-w-64">
-                  {MODELS.filter((m) => !m.legacy).map((m) => (
-                    <MenuItem
-                      key={m.id}
-                      textValue={m.name}
-                      isDisabled={m.disabled}
-                      onAction={() => setModel(m.id)}
-                    >
-                      <div className="flex flex-1 flex-col">
-                        <span className="flex items-center gap-1.5">
-                          {m.name}
-                          {m.disabled && (
-                            <span className="flex items-center gap-1 text-xs text-fg-muted">
-                              <InfoIcon className="size-3" />
-                              Currently unavailable
-                            </span>
-                          )}
-                        </span>
-                        <span className="text-xs text-fg-muted">
-                          {m.description}
-                        </span>
-                      </div>
-                      {model === m.id && (
-                        <CheckIcon className="text-fg-accent" />
-                      )}
-                    </MenuItem>
-                  ))}
-                  <Separator />
-                  <MenuSub>
-                    <MenuItem textValue="Effort" className="pr-7">
-                      <SlidersHorizontalIcon />
-                      Effort
-                      <span className="ml-auto text-fg-muted">
-                        {effortName}
-                      </span>
-                    </MenuItem>
-                    <Popover>
-                      <MenuContent>
-                        {EFFORTS.map((e) => (
-                          <MenuItem
-                            key={e.id}
-                            textValue={e.name}
-                            onAction={() => setEffort(e.id)}
-                          >
-                            {e.name}
-                            {effort === e.id && (
-                              <CheckIcon className="ml-auto text-fg-accent" />
+                  <MenuSection>
+                    <MenuSectionHeader>Model</MenuSectionHeader>
+                    {MODELS.filter((m) => !m.legacy).map((m) => (
+                      <MenuItem
+                        key={m.id}
+                        textValue={m.name}
+                        isDisabled={m.disabled}
+                        onAction={() => setModel(m.id)}
+                      >
+                        <div className="flex flex-1 flex-col">
+                          <span className="flex items-center gap-1.5">
+                            {m.name}
+                            {m.disabled && (
+                              <span className="flex items-center gap-1 text-xs text-fg-muted">
+                                <InfoIcon className="size-3" />
+                                Currently unavailable
+                              </span>
                             )}
-                          </MenuItem>
-                        ))}
-                      </MenuContent>
-                    </Popover>
-                  </MenuSub>
+                          </span>
+                          <span className="text-xs text-fg-muted">
+                            {m.description}
+                          </span>
+                        </div>
+                        {model === m.id && (
+                          <CheckIcon className="text-fg-accent" />
+                        )}
+                      </MenuItem>
+                    ))}
+                  </MenuSection>
                   <MenuSub>
                     <MenuItem textValue="More models">More models</MenuItem>
                     <Popover>
@@ -310,34 +295,22 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
                       </MenuContent>
                     </Popover>
                   </MenuSub>
-                </MenuContent>
-              </Popover>
-            </Menu>
-
-            {/* Effort picker — also reachable from the model menu's submenu. */}
-            <Menu>
-              <Button
-                variant="quiet"
-                size="sm"
-                className="gap-1 font-normal text-fg-muted"
-              >
-                {effortName}
-                <ChevronDownIcon />
-              </Button>
-              <Popover>
-                <MenuContent className="min-w-40">
-                  {EFFORTS.map((e) => (
-                    <MenuItem
-                      key={e.id}
-                      textValue={e.name}
-                      onAction={() => setEffort(e.id)}
-                    >
-                      {e.name}
-                      {effort === e.id && (
-                        <CheckIcon className="ml-auto text-fg-accent" />
-                      )}
-                    </MenuItem>
-                  ))}
+                  <Separator />
+                  <MenuSection>
+                    <MenuSectionHeader>Effort</MenuSectionHeader>
+                    {EFFORTS.map((e) => (
+                      <MenuItem
+                        key={e.id}
+                        textValue={e.name}
+                        onAction={() => setEffort(e.id)}
+                      >
+                        {e.name}
+                        {effort === e.id && (
+                          <CheckIcon className="ml-auto text-fg-accent" />
+                        )}
+                      </MenuItem>
+                    ))}
+                  </MenuSection>
                 </MenuContent>
               </Popover>
             </Menu>
@@ -406,7 +379,26 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
               <AudioLinesIcon />
             </Button>
           </div>
-        )}
+
+          {/* Voice mode active — Stop pill, overlaid on the cluster's right edge. */}
+          <div
+            inert={!voiceMode || undefined}
+            className={cn(
+              'absolute inset-y-0 right-0 flex items-center transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none',
+              voiceMode ? 'opacity-100' : 'scale-95 opacity-0',
+            )}
+          >
+            <Button
+              variant="primary"
+              size="sm"
+              className="gap-1.5"
+              onPress={() => setVoiceMode(false)}
+            >
+              <AudioLinesIcon />
+              Stop
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   )

@@ -23,11 +23,12 @@ import { UploadAvatar } from '@/components/showcase/upload-avatar'
 // into N equal units, the rail takes 1, the main takes N-1, and `columns` re-cuts
 // those N-1 units back into N-1 equal columns at the same gap.
 const LAYOUTS = {
-  // Landing: 3 columns, 4 at xl.
+  // Landing: rail + 2-column main at every size, so the AI banner caps at two
+  // columns of space instead of widening into a third on large screens.
   landing: {
-    outer: 'grid-cols-3 xl:grid-cols-4',
-    main: 'col-span-2 xl:col-span-3',
-    masonry: 'columns-2 xl:columns-3',
+    outer: 'grid-cols-3',
+    main: 'col-span-2',
+    masonry: 'columns-2',
   },
   // /create preview: narrower pane, 1 → 2 → 3 columns.
   preview: {
