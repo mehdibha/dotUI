@@ -16,6 +16,7 @@ import {
   demoSource,
   getDemoComponent,
   installCommands,
+  installItems,
   PACKAGE_MANAGERS,
 } from './data'
 
@@ -39,7 +40,7 @@ export default function ChartCodeModalContent({
 }: ChartCodeModalContentProps) {
   const Component = getDemoComponent(demoKey)
   const source = use(demoSource(demoKey))
-  const commands = installCommands(demoKey)
+  const commands = installCommands(installItems(demoKey, source))
 
   return (
     <div className="flex h-full min-h-0 flex-col md:flex-row">
