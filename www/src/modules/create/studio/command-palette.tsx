@@ -51,7 +51,7 @@ const components = registryUi
  * component (and couple the preview to it), or fire an action. The index is
  * derived from the same data the panel renders, so it can never drift.
  */
-export function CommandPalette() {
+export function CommandPalette({ compact = false }: { compact?: boolean }) {
   const [open, setOpen] = useState(false)
   const { setChapter, setActiveComponent } = useStudio()
   const { applyPreset, reroll, reset } = useStudioActions()
@@ -93,15 +93,27 @@ export function CommandPalette() {
 
   return (
     <Dialog isOpen={open} onOpenChange={setOpen}>
-      <Button
-        size="sm"
-        aria-label="Open command palette"
-        className="h-8 w-full justify-start gap-2 px-2.5 text-xs font-normal text-fg-muted"
-      >
-        <SearchIcon className="size-3.5" />
-        <span>Search</span>
-        <Kbd className="ml-auto">⌘K</Kbd>
-      </Button>
+      {compact ? (
+        <Button
+          size="sm"
+          variant="quiet"
+          aria-label="Search — ⌘K"
+          className="h-8 gap-1.5 px-2 text-fg-muted"
+        >
+          <SearchIcon className="size-3.5" />
+          <Kbd>⌘K</Kbd>
+        </Button>
+      ) : (
+        <Button
+          size="sm"
+          aria-label="Open command palette"
+          className="h-8 w-full justify-start gap-2 px-2.5 text-xs font-normal text-fg-muted"
+        >
+          <SearchIcon className="size-3.5" />
+          <span>Search</span>
+          <Kbd className="ml-auto">⌘K</Kbd>
+        </Button>
+      )}
       <Overlay
         type="modal"
         mobileType={null}

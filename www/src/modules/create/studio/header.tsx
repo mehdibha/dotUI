@@ -1,14 +1,6 @@
 'use client'
 
-import {
-  DicesIcon,
-  MoonIcon,
-  Redo2Icon,
-  RotateCcwIcon,
-  SunIcon,
-  Undo2Icon,
-} from 'lucide-react'
-import { useTheme } from 'starter-themes'
+import { DicesIcon, Redo2Icon, RotateCcwIcon, Undo2Icon } from 'lucide-react'
 
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
@@ -28,15 +20,19 @@ import { useStudioActions } from './hooks'
 import { useStudio } from './store'
 import { useHistory } from './use-history'
 
+/**
+ * Two compact rows: identity + search, then mode + history. The theme toggle is
+ * intentionally absent — the global site header already owns it, and the preview
+ * has its own mode switch, so duplicating it here only spent a row.
+ */
 export function StudioHeader() {
   const { name, setName, depth, setDepth } = useStudio()
   const { reroll, reset } = useStudioActions()
   const { canUndo, canRedo, undo, redo } = useHistory()
-  const { resolvedTheme, setTheme } = useTheme()
 
   return (
-    <div className="flex flex-col gap-2 border-b p-2.5">
-      {/* Identity row */}
+    <div className="flex flex-col gap-2 border-b p-2">
+      {/* Identity + search */}
       <div className="flex items-center gap-2">
         <BrandSwatch />
         <input
@@ -46,29 +42,23 @@ export function StudioHeader() {
           spellCheck={false}
           className="min-w-0 flex-1 truncate rounded-sm bg-transparent text-sm font-semibold outline-none focus-visible:bg-neutral focus-visible:px-1"
         />
-        <IconButton
-          label={resolvedTheme === 'dark' ? 'Light mode' : 'Dark mode'}
-          onPress={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-        >
-          {resolvedTheme === 'dark' ? <SunIcon /> : <MoonIcon />}
-        </IconButton>
+        <CommandPalette compact />
       </div>
 
-      {/* Search */}
-      <CommandPalette />
-
-      {/* Depth + actions */}
+      {/* Mode + history */}
       <div className="flex items-center gap-2">
-        <Segmented
-          ariaLabel="Depth"
-          value={depth}
-          onChange={setDepth}
-          options={[
-            { value: 'quick', label: 'Quick' },
-            { value: 'studio', label: 'Studio' },
-          ]}
-        />
-        <div className="ml-auto flex items-center gap-0.5">
+        <div className="min-w-0 flex-1">
+          <Segmented
+            ariaLabel="Depth"
+            value={depth}
+            onChange={setDepth}
+            options={[
+              { value: 'quick', label: 'Quick' },
+              { value: 'studio', label: 'Studio' },
+            ]}
+          />
+        </div>
+        <div className="flex shrink-0 items-center gap-0.5">
           <IconButton label="Re-roll the system" onPress={reroll}>
             <DicesIcon />
           </IconButton>

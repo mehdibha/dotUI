@@ -6,9 +6,8 @@ import { cn } from '@/registry/lib/utils'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 
-import { CodeOptionsDialog } from '../code-options'
-import { ExportFooter } from '../export'
 import { PreviewPanel } from '../preview/preview-panel'
+import { ExportBar } from './export-bar'
 import { StudioHeader } from './header'
 import { Inspector } from './inspector'
 import { Rail } from './rail'
@@ -79,10 +78,7 @@ function StudioPanel({ className }: { className?: string }) {
       </div>
 
       {/* The payoff — always reachable, never buried. */}
-      <div className="flex flex-col gap-2 border-t p-3">
-        <CodeOptionsDialog />
-        <ExportFooter />
-      </div>
+      <ExportBar />
     </div>
   )
 }
