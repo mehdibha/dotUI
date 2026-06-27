@@ -180,3 +180,23 @@
     opacity: 0;
   }
 }
+
+/* Studio inspector chapter entrance. A transform-only CSS keyframe — deliberately
+   NEVER animating opacity. The content is always fully visible, so even if the
+   animation is frozen at its first frame (a throttled/background tab, a headless
+   renderer with no vsync) the panel can never be stranded blank; the worst case is
+   a 6px offset. Replaces a framer-motion enter whose persistent inline opacity:0
+   could leave the panel invisible. */
+@keyframes studio-enter {
+  from {
+    transform: translateY(6px);
+  }
+}
+.studio-enter {
+  animation: studio-enter 0.18s cubic-bezier(0.32, 0.72, 0, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .studio-enter {
+    animation: none;
+  }
+}

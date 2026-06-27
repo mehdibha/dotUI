@@ -4,6 +4,7 @@
  * button component on the right.
  */
 
+import type { ReactNode } from 'react'
 import { Code2Icon } from 'lucide-react'
 
 import { Button } from '@/registry/ui/button'
@@ -13,13 +14,20 @@ import { Overlay } from '@/registry/ui/overlay'
 import { CodeOptionsControls } from './controls'
 import { CodeOptionsPreview } from './preview'
 
-export function CodeOptionsDialog() {
+/**
+ * The "Code style" modal. `trigger` overrides the default full-width button with
+ * a caller-supplied trigger (e.g. a compact icon) — it must be a React-Aria
+ * pressable, since `Dialog` is a `DialogTrigger`.
+ */
+export function CodeOptionsDialog({ trigger }: { trigger?: ReactNode }) {
   return (
     <Dialog>
-      <Button variant="default" size="sm" className="w-full">
-        <Code2Icon data-icon-start="" />
-        Code style
-      </Button>
+      {trigger ?? (
+        <Button variant="default" size="sm" className="w-full">
+          <Code2Icon data-icon-start="" />
+          Code style
+        </Button>
+      )}
       <Overlay
         type="modal"
         mobileType={null}
