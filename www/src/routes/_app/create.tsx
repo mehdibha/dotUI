@@ -6,6 +6,7 @@ import { cn } from '@/registry/lib/utils'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { CustomizerPanel } from '@/modules/create/customizer-panel'
+import { BuilderNext } from '@/modules/create/next'
 import { LabExperience } from '@/modules/create/panel'
 import { DEFAULTS, useDesignSystem } from '@/modules/create/preset'
 import {
@@ -25,6 +26,9 @@ export const createSearchSchema = z.object({
   // Coerced boolean: the search parser reads bare `1`/`true` as non-strings, so a
   // plain `z.string()` would reject them and the param would be dropped.
   lab: z.coerce.boolean().optional().catch(undefined),
+  // Opt-in flag for the reimagined "studio" builder — AI assistant + new axes.
+  // Same gating pattern as `lab`; shipped /create stays untouched at /create?next=true.
+  next: z.coerce.boolean().optional().catch(undefined),
 })
 
 const searchDefaults = { preview: 'cards' }
@@ -38,7 +42,7 @@ export const Route = createFileRoute('/_app/create')({
 })
 
 function CreatePage() {
-  const { lab, preset } = Route.useSearch()
+  const { lab, next, preset } = Route.useSearch()
   const { designSystem, setDesignSystem } = useDesignSystem()
   // Below `lg` the customizer and the live preview can't sit side by side (the iframe
   // would be a ~15px sliver), so they collapse into a single switchable pane toggled
@@ -71,6 +75,9 @@ function CreatePage() {
 
   // Opt-in exploration of the redesigned control panel + floating panel lab.
   if (lab) return <LabExperience />
+
+  // Opt-in exploration of the reimagined "studio" builder with the AI assistant.
+  if (next) return <BuilderNext />
 
   return (
     <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">
