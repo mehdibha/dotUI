@@ -1,7 +1,7 @@
 'use client'
 
 import { lazy, Suspense } from 'react'
-import { CodeIcon, LoaderCircleIcon } from 'lucide-react'
+import { CodeIcon, LoaderCircleIcon, XIcon } from 'lucide-react'
 
 import { Button } from '@/registry/ui/button'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
@@ -33,17 +33,31 @@ export function ChartCodeModal({ demoKey, label }: ChartCodeModalProps) {
       <Modal className="h-[80vh] w-full sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl">
         <DialogContent
           aria-label={`${label} chart code`}
-          className="flex h-full min-h-0 flex-col gap-0 overflow-hidden p-0"
+          className="relative flex h-full min-h-0 flex-col p-0"
         >
-          <Suspense
-            fallback={
-              <div className="flex h-full items-center justify-center">
-                <LoaderCircleIcon className="size-5 animate-spin text-fg-muted" />
-              </div>
-            }
+          {/* Close sits just outside the panel's top-right corner. Kept inside
+              the dialog (so slot="close" works) but escaping the rounded body. */}
+          <Button
+            slot="close"
+            variant="quiet"
+            size="sm"
+            isIconOnly
+            aria-label="Close"
+            className="absolute -top-10 right-0 z-10 text-fg-muted hover:bg-inverse/10 hover:text-fg"
           >
-            <ChartCodeModalContent demoKey={demoKey} label={label} />
-          </Suspense>
+            <XIcon />
+          </Button>
+          <div className="min-h-0 flex-1 overflow-hidden">
+            <Suspense
+              fallback={
+                <div className="flex h-full items-center justify-center">
+                  <LoaderCircleIcon className="size-5 animate-spin text-fg-muted" />
+                </div>
+              }
+            >
+              <ChartCodeModalContent demoKey={demoKey} label={label} />
+            </Suspense>
+          </div>
         </DialogContent>
       </Modal>
     </Dialog>
