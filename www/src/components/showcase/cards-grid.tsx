@@ -23,12 +23,13 @@ import { UploadAvatar } from '@/components/showcase/upload-avatar'
 // into N equal units, the rail takes 1, the main takes N-1, and `columns` re-cuts
 // those N-1 units back into N-1 equal columns at the same gap.
 const LAYOUTS = {
-  // Landing: rail + 2-column main at every size, so the AI banner caps at two
-  // columns of space instead of widening into a third on large screens.
+  // Landing: 3 columns, 4 at xl. The AI banner only spans 2 of the main's
+  // columns; on xl a companion card fills the freed third column beside it, so
+  // the input caps at two columns of space without costing the grid a column.
   landing: {
-    outer: 'grid-cols-3',
-    main: 'col-span-2',
-    masonry: 'columns-2',
+    outer: 'grid-cols-3 xl:grid-cols-4',
+    main: 'col-span-2 xl:col-span-3',
+    masonry: 'columns-2 xl:columns-3',
   },
   // /create preview: narrower pane, 1 → 2 → 3 columns.
   preview: {
@@ -54,14 +55,15 @@ function Cell({ children }: { children: React.ReactNode }) {
 // rails and edge fade) and the /create preview's "Cards" view, so both render the
 // exact same cards.
 //
-// Layout: the AI-prompt card has to span the top-right, which CSS multi-column
-// (the masonry) can't do — a column-span there is all-or-nothing. So the grid is
-// split into two regions instead: a left RAIL that flows on its own, and a MAIN
-// region where the short AI banner sits on top and the remaining cards masonry-
-// flow beneath it. The two flows are independent, so the cards still pack tightly
-// (no aligned-row gaps) while the AI card keeps its corner. The column count and
-// width vary by surface (see LAYOUTS); the landing also passes width/positioning
-// via `className`.
+// Layout: the AI-prompt card has to keep its corner without spanning the whole
+// width, which CSS multi-column (the masonry) can't do — a column-span there is
+// all-or-nothing. So the grid is split into two regions: a left RAIL that flows
+// on its own, and a MAIN region whose top is a small grid row — the AI banner
+// spanning two columns plus a companion card filling the freed column beside it
+// on xl — sitting over the remaining cards, which masonry-flow beneath. The
+// flows are independent, so the cards still pack tightly (no aligned-row gaps)
+// while the AI card keeps its corner. The column count and width vary by surface
+// (see LAYOUTS); the landing also passes width/positioning via `className`.
 export function CardsGrid({
   className,
   variant = 'landing',
@@ -81,9 +83,16 @@ export function CardsGrid({
         <AccountMenu />
       </div>
 
-      {/* Main region: the AI banner pinned on top, the rest masonry-flowing below. */}
+      {/* Main region: a featured top row over the masonry. The AI banner spans
+          two of the main's columns; on xl the grid opens a third column and a
+          companion card (TeamName) sits beside the banner. Below xl the top row
+          collapses to one column, so the banner is full-width and TeamName drops
+          under it. The rest of the cards masonry-flow beneath. */}
       <div className={cn('flex flex-col gap-4', layout.main)}>
-        <AiPrompt />
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+          <AiPrompt className="xl:col-span-2" />
+          <TeamName />
+        </div>
         <div className={cn('gap-4', layout.masonry)}>
           <Cell>
             <Storage />
@@ -111,9 +120,6 @@ export function CardsGrid({
           </Cell>
           <Cell>
             <UploadAvatar />
-          </Cell>
-          <Cell>
-            <TeamName />
           </Cell>
           <Cell>
             <LoginForm className="max-w-none" />
