@@ -6,43 +6,28 @@ import {
   CheckIcon,
   Link2Icon,
   RotateCcwIcon,
+  SearchIcon,
   ShuffleIcon,
   Undo2Icon,
 } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
-import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
+import { Kbd } from '@/registry/ui/kbd'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 
-import { RADIUS_FACTOR_VAR } from '../layout'
-import { useDesignSystem } from '../preset'
+import { useStudioActions } from './actions'
 import { ExportMenu } from './export-menu'
-
-const SHUFFLE_ACCENTS = [
-  '#3b82f6',
-  '#6366f1',
-  '#8b5cf6',
-  '#ec4899',
-  '#f43f5e',
-  '#f59e0b',
-  '#22c55e',
-  '#14b8a6',
-  '#06b6d4',
-]
-const SHUFFLE_RADII = ['0', '0.5', '1', '1.5', '2']
-const SHUFFLE_DENSITIES = ['compact', 'default', 'comfortable'] as const
-
-function pick<T>(arr: readonly T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)] as T
-}
+import { PresetsButton } from './presets'
+import { useStudio } from './store'
 
 const routeApi = getRouteApi('/_app/create')
 
 export function TopBar() {
   const { preset } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const { setDesignSystem } = useDesignSystem()
+  const { shuffle, reset } = useStudioActions()
+  const { setCommandOpen } = useStudio()
   const [name, setName] = useState('Untitled system')
   const [copied, setCopied] = useState(false)
 
@@ -69,25 +54,6 @@ export function TopBar() {
     undoing.current = true
     navigate({ search: (p) => ({ ...p, preset: previous }), replace: true })
     setCanUndo(history.current.length > 0)
-  }
-
-  function reset() {
-    navigate({ search: (p) => ({ ...p, preset: undefined }), replace: true })
-  }
-
-  function shuffle() {
-    const accent = pick(SHUFFLE_ACCENTS)
-    const radius = pick(SHUFFLE_RADII)
-    const density = pick(SHUFFLE_DENSITIES)
-    setDesignSystem((p) => {
-      const base = p.color ?? DEFAULT_COLOR_CONFIG
-      return {
-        ...p,
-        density,
-        tokens: { ...p.tokens, [RADIUS_FACTOR_VAR]: radius },
-        color: { ...base, seeds: { ...base.seeds, accent } },
-      }
-    })
   }
 
   async function share() {
@@ -121,6 +87,23 @@ export function TopBar() {
 
       {/* Actions */}
       <div className="flex shrink-0 items-center gap-1">
+        <PresetsButton />
+
+        {/* Command palette opener — keyboard ⌘K works anywhere. */}
+        <Button
+          size="sm"
+          variant="quiet"
+          onPress={() => setCommandOpen(true)}
+          aria-label="Open command palette"
+          className="gap-1.5 text-fg-muted max-sm:hidden"
+        >
+          <SearchIcon />
+          <span className="text-[12px]">Search</span>
+          <Kbd className="text-[10px]">⌘K</Kbd>
+        </Button>
+
+        <div className="mx-1 h-5 w-px bg-border max-sm:hidden" />
+
         {/* Secondary actions collapse first on narrow screens. */}
         <div className="flex items-center gap-1 max-sm:hidden">
           <Tooltip>

@@ -11,6 +11,7 @@ import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 
 import { AXES } from './axes'
 import { Canvas } from './canvas'
+import { CommandPalette } from './command-palette'
 import { Inspector } from './inspector'
 import { Navigator } from './navigator'
 import { Onboarding } from './onboarding'
@@ -83,6 +84,8 @@ function StudioShell() {
 
         <AnimatePresence>{onboardingOpen && <Onboarding />}</AnimatePresence>
       </div>
+
+      <CommandPalette />
     </div>
   )
 }

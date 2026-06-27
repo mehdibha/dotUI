@@ -43,6 +43,19 @@ Two speeds, one product — quick clean output **and** tweak-everything:
 - Browser (dev server): onboarding overlay, full studio, axis switching, Color inspector (engine + ramps + foundation), Components list → Alert detail with real params + canvas switch, Type specimen, light/dark split, mobile layout, and a live shuffle visibly recoloring the preview end-to-end (inspector → URL preset → iframe).
 - Two bugs found and fixed during verification: Framer Motion `AnimatePresence mode="wait"` stranded the inspector body, and an SSR'd `motion.div` with `initial={{opacity:0}}` stuck at opacity 0 — both replaced with a CSS `.studio-rise` keyframe (can't strand content). Mobile top-bar overflow fixed.
 
+## Round 2 — going deeper
+
+Four more "advanced builder" capabilities, all verified live:
+
+- **Command palette (⌘K)** — a global Modal+Command: jump to any axis, jump to + open any component (switches the canvas too), or run actions (Generate, Surprise me, Reset). Also opened from a top-bar Search affordance. Shared shuffle/reset live in `actions.ts` (used by the top bar too).
+- **Canvas view modes — Preview / Tokens / Code** — the stage is now multi-modal (the iframe stays mounted/hidden, so switching never reloads it):
+  - **Tokens** — a live, searchable browser of the resolved tokens: all six palettes as 50–950 swatch ramps (light/dark), plus the foundation tokens; click to copy.
+  - **Code** — the *real* generated `theme.css` via `emitPrimitivesCss(resolveColorConfig(...))` (with `--on-*` foregrounds), tabbed with the shadcn install command; updates live as the system changes. "The code you own," shown honestly.
+- **Vision simulation** — an eye control over the live preview: Protanopia / Deuteranopia / Tritanopia (SVG `feColorMatrix`) + Grayscale (CSS filter). A real accessibility lens on the whole system.
+- **Presets gallery** — a top-bar "Presets" dialog of eight curated complete systems (cool product, monochrome, fintech, developer-green, Material, warm editorial, glass, bold). Each has a live mini-specimen; clicking forks it (seeds + algorithm + radius + density + depth) through the real engine.
+
+New files: `actions.ts`, `command-palette.tsx`, `presets.tsx`, `tokens-view.tsx`, `code-view.tsx`; `store.tsx`/`top-bar.tsx`/`canvas.tsx`/`index.tsx` updated.
+
 ## Known limitations / next steps
 
 - Designed axes need engine consumers to become live (the var names are already aligned).

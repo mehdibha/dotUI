@@ -25,6 +25,8 @@ interface StudioContextValue {
   setSelectedComponent: (name: string | null) => void
   onboardingOpen: boolean
   setOnboardingOpen: (open: boolean) => void
+  commandOpen: boolean
+  setCommandOpen: (open: boolean) => void
   /** Mobile-only: which pane is visible when the two can't sit side by side. */
   mobilePane: 'design' | 'preview'
   setMobilePane: (pane: 'design' | 'preview') => void
@@ -44,6 +46,7 @@ export function StudioProvider({
     null,
   )
   const [onboardingOpen, setOnboardingOpen] = useState(initialOnboarding)
+  const [commandOpen, setCommandOpen] = useState(false)
   const [mobilePane, setMobilePane] = useState<'design' | 'preview'>('design')
 
   const value = useMemo<StudioContextValue>(
@@ -54,10 +57,12 @@ export function StudioProvider({
       setSelectedComponent,
       onboardingOpen,
       setOnboardingOpen,
+      commandOpen,
+      setCommandOpen,
       mobilePane,
       setMobilePane,
     }),
-    [axis, selectedComponent, onboardingOpen, mobilePane],
+    [axis, selectedComponent, onboardingOpen, commandOpen, mobilePane],
   )
 
   return (
