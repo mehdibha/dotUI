@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseHeader } from '@tanstack/react-start/server'
 import type * as PageTree from 'fumadocs-core/page-tree'
@@ -37,9 +37,19 @@ function AppLayout() {
   const { pageTree } = Route.useLoaderData()
   const items = pageTree.children as PageTree.Node[]
 
+  // The reimagined "studio" builder (/create?next=true) owns its own top bar —
+  // a focused app shell that merges the site-nav continuity bits (logo→home,
+  // theme toggle, GitHub) into the builder's chrome. Skip the global site
+  // Header there so the two bars never stack; every other route (and the other
+  // /create variants) keeps the normal site Header. --header-height stays
+  // defined on this layout so the builder's height math still resolves.
+  const { pathname, search } = useLocation()
+  const isNextBuilder =
+    pathname === '/create' && (search as { next?: boolean }).next === true
+
   return (
     <div className="[--header-height:--spacing(14)]">
-      <Header items={items} />
+      {!isNextBuilder && <Header items={items} />}
       <main id="content">
         <Outlet />
       </main>

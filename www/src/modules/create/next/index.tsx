@@ -2,19 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
-import {
-  DicesIcon,
-  MoonIcon,
-  Share2Icon,
-  SparklesIcon,
-  SunIcon,
-  Undo2Icon,
-} from 'lucide-react'
-import { useTheme } from 'starter-themes'
+import { DicesIcon, Share2Icon, SparklesIcon, Undo2Icon } from 'lucide-react'
 
+import { siteConfig } from '@/config/site'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
+import { Button, buttonStyles } from '@/registry/ui/button'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { GitHubIcon } from '@/components/icons/github'
+import { Logo } from '@/components/layout/logo'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 import { RADIUS_FACTOR_VAR } from '../layout'
 import { useDesignSystem } from '../preset'
@@ -61,7 +57,7 @@ export function BuilderNext() {
   }, [])
 
   return (
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-col">
+    <div className="flex h-svh min-h-0 flex-col">
       <TopBar onOpenAssistant={() => setAssistantOpen(true)} />
       <div className="flex min-h-0 flex-1">
         <Rail
@@ -82,7 +78,6 @@ function TopBar({ onOpenAssistant }: { onOpenAssistant: () => void }) {
   const { preset } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
   const { designSystem, setDesignSystem } = useDesignSystem()
-  const { resolvedTheme, setTheme } = useTheme()
   const [name, setName] = useState('Untitled system')
   const accent = readAccent(designSystem)
 
@@ -137,19 +132,28 @@ function TopBar({ onOpenAssistant }: { onOpenAssistant: () => void }) {
   }
 
   return (
-    <header className="flex h-12 shrink-0 items-center gap-2 border-b px-3">
-      <span
-        className="size-5 shrink-0 rounded-md ring-1 ring-black/10 ring-inset"
-        style={{ backgroundColor: accent }}
-        aria-hidden
-      />
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        aria-label="System name"
-        spellCheck={false}
-        className="w-40 min-w-0 truncate rounded-sm bg-transparent text-sm font-medium outline-none focus-visible:bg-neutral focus-visible:px-1.5 focus-visible:py-0.5"
-      />
+    // Builder top bar: the site-nav links + "Search docs" are gone (the global
+    // site Header is suppressed on /create?next=true), replaced by the builder's
+    // own controls. The continuity bits — Logo→home, GitHub, ThemeToggle — and
+    // the shared --header-height keep the transition into the builder seamless,
+    // so it reads as a focused mode of the same product, not a separate app.
+    <header className="sticky top-0 z-30 flex h-(--header-height) shrink-0 items-center gap-2 border-b px-3 sm:px-4">
+      <div className="flex shrink-0 items-center gap-2.5">
+        <Logo />
+        <span aria-hidden className="h-5 w-px bg-border" />
+        <span
+          className="size-5 shrink-0 rounded-md ring-1 ring-black/10 ring-inset"
+          style={{ backgroundColor: accent }}
+          aria-hidden
+        />
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          aria-label="System name"
+          spellCheck={false}
+          className="w-32 min-w-0 truncate rounded-sm bg-transparent text-sm font-medium outline-none focus-visible:bg-neutral focus-visible:px-1.5 focus-visible:py-0.5 max-md:hidden"
+        />
+      </div>
 
       {/* AI compose bar — the front door. */}
       <button
@@ -165,20 +169,6 @@ function TopBar({ onOpenAssistant }: { onOpenAssistant: () => void }) {
       </button>
 
       <div className="flex shrink-0 items-center gap-0.5">
-        <Tooltip>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            aria-label="Toggle mode"
-            onPress={() =>
-              setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
-            }
-          >
-            {resolvedTheme === 'dark' ? <SunIcon /> : <MoonIcon />}
-          </Button>
-          <TooltipContent>Toggle mode</TooltipContent>
-        </Tooltip>
         <Tooltip>
           <Button
             size="sm"
@@ -216,6 +206,18 @@ function TopBar({ onOpenAssistant }: { onOpenAssistant: () => void }) {
           </Button>
           <TooltipContent>Copy share link</TooltipContent>
         </Tooltip>
+        <span aria-hidden className="mx-1 h-5 w-px bg-border" />
+        <a
+          aria-label="GitHub"
+          href={siteConfig.links.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-icon-only=""
+          className={buttonStyles({ variant: 'quiet', size: 'sm' })}
+        >
+          <GitHubIcon />
+        </a>
+        <ThemeToggle size="sm" variant="quiet" isIconOnly />
       </div>
     </header>
   )
