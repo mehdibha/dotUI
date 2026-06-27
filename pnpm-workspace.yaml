@@ -36,6 +36,7 @@ overrides:
   '@types/react-dom': 19.2.1
 
 minimumReleaseAgeExclude:
+  - cnfast@0.0.8
   - starter-themes@0.0.2
   - tailwindcss-autocontrast@0.0.4
   - tailwindcss-with@0.0.2

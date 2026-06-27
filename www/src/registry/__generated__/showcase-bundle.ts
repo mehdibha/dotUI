@@ -125,8 +125,7 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	},
 	{
 		target: "registry/lib/utils/index.ts",
-		content:
-			"import { clsx } from 'clsx'\nimport type { ClassValue } from 'clsx'\nimport { twMerge } from 'tailwind-merge'\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n",
+		content: "export { cn } from 'cnfast'\n",
 	},
 	{
 		target: "registry/theme/emit-css.ts",
@@ -971,7 +970,7 @@ export const SHOWCASE_BUNDLE_DEPENDENCIES: string[] = [
 	"@fontsource/geist-mono@^5.2.7",
 	"@internationalized/date@^3.12.2",
 	"@tanstack/react-router",
-	"clsx@^2.1.0",
+	"cnfast@^0.0.8",
 	"lucide-react@^1.16.0",
 	"react-aria@^3.50.0",
 	"react-aria-components@^1.19.0",

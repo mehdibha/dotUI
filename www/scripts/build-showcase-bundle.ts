@@ -98,6 +98,14 @@ const CSS_DEPENDENCIES = [
 const FRAMEWORK_PROVIDED = new Set(['react', 'react-dom', 'tailwindcss'])
 
 /**
+ * Runtime peer deps of bundled packages that the JS-import scan can't see:
+ * `tailwind-variants` imports `tailwind-merge` internally (its `twMerge`), and
+ * `cn` no longer pulls it in directly (it uses `cnfast`). Without this the v0
+ * bundle would ship `tailwind-variants` with an unmet `tailwind-merge` peer.
+ */
+const PEER_DEPENDENCIES = ['tailwind-merge']
+
+/**
  * Published versions to pin in the bundle's `dependencies`. `workspace:*` deps in
  * dotUI's package.json (the two tailwind plugins) resolve to these published
  * releases. Bare names left out default to latest; pinning avoids breakage when
@@ -108,7 +116,7 @@ const DEP_VERSIONS: Record<string, string> = {
   '@fontsource-variable/geist': '^5.2.8',
   '@fontsource/geist-mono': '^5.2.7',
   '@internationalized/date': '^3.12.2',
-  clsx: '^2.1.0',
+  cnfast: '^0.0.8',
   'lucide-react': '^1.16.0',
   'react-aria': '^3.50.0',
   'react-aria-components': '^1.19.0',
@@ -367,7 +375,9 @@ async function buildShowcaseBundle(): Promise<void> {
       content: rewriteImportsToRelative(srcRel, content),
     }))
 
-  const dependencies = [...new Set([...npmDeps, ...CSS_DEPENDENCIES])]
+  const dependencies = [
+    ...new Set([...npmDeps, ...CSS_DEPENDENCIES, ...PEER_DEPENDENCIES]),
+  ]
     .filter((d) => !d.startsWith('@/') && !FRAMEWORK_PROVIDED.has(d))
     .sort()
     .map((d) => (DEP_VERSIONS[d] ? `${d}@${DEP_VERSIONS[d]}` : d))
