@@ -44,8 +44,12 @@ function StudioShell() {
     // oxlint-disable-next-line react/exhaustive-deps -- mount-only greeting
   }, [])
 
+  // The studio owns the full viewport now that the site Header is suppressed on
+  // /create (see _app/route.tsx); the TopBar below is the single `--header-height`
+  // bar, so the shell spans the whole screen rather than subtracting a header
+  // that no longer sits above it.
   return (
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col">
+    <div className="flex h-svh min-h-0 flex-1 flex-col">
       <TopBar />
 
       {/* Mobile pane switcher */}

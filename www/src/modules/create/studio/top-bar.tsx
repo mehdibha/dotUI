@@ -11,10 +11,14 @@ import {
   Undo2Icon,
 } from 'lucide-react'
 
+import { siteConfig } from '@/config/site'
 import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
+import { Button, buttonStyles } from '@/registry/ui/button'
 import { Kbd } from '@/registry/ui/kbd'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { GitHubIcon } from '@/components/icons/github'
+import { Logo } from '@/components/layout/logo'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 import { useStudioActions } from './actions'
 import { ExportMenu } from './export-menu'
@@ -66,23 +70,35 @@ export function TopBar() {
     }
   }
 
+  // This single bar replaces the site Header on /create. It stays visually
+  // continuous — same `--header-height`, sticky position, the site Logo (→home
+  // so you can step back out), and the same theme/github right cluster — so
+  // entering the builder reads as "same product, focused mode", not an app
+  // switch. The builder's primary controls live here; secondary tweaks stay in
+  // the panels below.
   return (
-    <header className="flex h-12 shrink-0 items-center gap-3 px-4">
-      {/* Identity */}
-      <div className="flex min-w-0 flex-1 items-center gap-2.5">
-        <div className="flex size-7 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-primary to-primary/70 text-fg-on-primary shadow-sm">
-          <span className="text-xs font-bold">d</span>
+    <header className="sticky top-0 z-30 flex h-(--header-height) shrink-0 items-center gap-3 border-b bg-bg px-4 sm:px-6">
+      {/* Left: site logo (exit → home) then the system identity. */}
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        <Logo />
+
+        <div className="h-5 w-px bg-border max-sm:hidden" />
+
+        <div className="flex min-w-0 items-center gap-2">
+          <div className="flex size-7 shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-primary to-primary/70 text-fg-on-primary shadow-sm max-sm:hidden">
+            <span className="text-xs font-bold">d</span>
+          </div>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            aria-label="System name"
+            spellCheck={false}
+            className="min-w-0 flex-1 truncate rounded-md bg-transparent px-1.5 py-1 text-sm font-semibold outline-none hover:bg-neutral focus:bg-neutral focus-visible:focus-ring sm:max-w-44 sm:flex-none"
+          />
+          <span className="hidden rounded-full border px-2 py-0.5 text-[10px] font-medium tracking-wide text-fg-muted uppercase sm:inline">
+            Draft
+          </span>
         </div>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          aria-label="System name"
-          spellCheck={false}
-          className="min-w-0 flex-1 truncate rounded-md bg-transparent px-1.5 py-1 text-sm font-semibold outline-none hover:bg-neutral focus:bg-neutral focus-visible:focus-ring sm:max-w-44 sm:flex-none"
-        />
-        <span className="hidden rounded-full border px-2 py-0.5 text-[10px] font-medium tracking-wide text-fg-muted uppercase sm:inline">
-          Draft
-        </span>
       </div>
 
       {/* Actions */}
@@ -158,6 +174,23 @@ export function TopBar() {
           <span className="max-sm:hidden">{copied ? 'Copied' : 'Share'}</span>
         </Button>
         <ExportMenu />
+
+        {/* Site continuity cluster — mirrors the global header's right side so
+            stepping in and out of the builder feels seamless. */}
+        <div className="ml-1 flex items-center gap-1 max-sm:hidden">
+          <div className="mr-1 h-5 w-px bg-border" />
+          <a
+            aria-label="GitHub"
+            href={siteConfig.links.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-icon-only=""
+            className={buttonStyles({ variant: 'quiet', size: 'sm' })}
+          >
+            <GitHubIcon />
+          </a>
+          <ThemeToggle isIconOnly variant="quiet" size="sm" />
+        </div>
       </div>
     </header>
   )
