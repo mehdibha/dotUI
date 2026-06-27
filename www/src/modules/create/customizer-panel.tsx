@@ -1,12 +1,9 @@
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
 import {
-  ChevronDownIcon,
   ChevronLeftIcon,
-  MoonIcon,
   MousePointer2Icon,
   ShuffleIcon,
-  SunIcon,
   Undo2Icon,
 } from 'lucide-react'
 import { AnimatePresence, motion, type Transition } from 'motion/react'
@@ -16,18 +13,6 @@ import * as icons from '@/registry/__generated__/icons'
 import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
-import { Command } from '@/registry/ui/command'
-import { Input } from '@/registry/ui/input'
-import {
-  ListBox,
-  ListBoxItem,
-  ListBoxSection,
-  ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { SearchField } from '@/registry/ui/search-field'
-import { Select, SelectValue } from '@/registry/ui/select'
-import { componentsData } from '@/modules/docs/components-list/components-data'
 
 import { ExamplesIndex } from './__generated__/examples'
 import { ChartColorsConfig, ChartColorsSummary } from './chart-colors'
@@ -57,7 +42,6 @@ import {
   RadiusConfig,
 } from './layout'
 import { useDesignSystem } from './preset'
-import type { PreviewMode } from './preset'
 import { TypographyConfig } from './typography'
 
 /* -------------------------------- Types -------------------------------- */
@@ -185,16 +169,8 @@ function pickRandom<T>(arr: readonly T[]): T {
 
 const routeApi = getRouteApi('/_app/create')
 
-export function CustomizerPanel({
-  previewMode = 'light',
-  onTogglePreviewMode,
-  className,
-}: {
-  previewMode?: PreviewMode
-  onTogglePreviewMode?: () => void
-  className?: string
-}) {
-  const { panel, preview, preset } = routeApi.useSearch()
+export function CustomizerPanel({ className }: { className?: string }) {
+  const { panel, preset } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
   const {
     designSystem,
@@ -288,8 +264,6 @@ export function CustomizerPanel({
     designSystem.tokens[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE
   const cursorDisabled =
     designSystem.tokens[CURSOR_DISABLED_VAR] ?? DEFAULT_CURSOR_DISABLED
-
-  const effectivePreview = preview
 
   function renderDynamicPreview(id: string): ReactNode {
     if (id === 'radius') {
@@ -457,73 +431,22 @@ export function CustomizerPanel({
     >
       {/* Header */}
       <div className="relative overflow-hidden border-b p-2">
-        <div className="flex w-full items-center gap-2">
-          <Select
-            value={effectivePreview}
-            onChange={(v) =>
-              navigate({
-                search: (prev) => ({ ...prev, preview: v as string }),
-              })
-            }
-            className="flex-1"
-            aria-label="Preview"
-          >
-            <Button size="sm" className="w-full">
-              <SelectValue className="truncate" />
-              <ChevronDownIcon data-icon-end="" />
+        <div className="flex w-full items-center justify-between gap-2 pl-1">
+          <span className="text-sm font-medium">Customize</span>
+          <div className="flex items-center gap-1">
+            <Button size="sm" isIconOnly aria-label="Shuffle" onPress={shuffle}>
+              <ShuffleIcon />
             </Button>
-            <Popover>
-              <Command>
-                <SearchField autoFocus aria-label="Search previews">
-                  <Input />
-                </SearchField>
-                <ListBox>
-                  <ListBoxSection>
-                    <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
-                    {/* Composed, real-world UI (the landing cards grid), themed live. */}
-                    <ListBoxItem id="cards" textValue="Cards">
-                      <span className="truncate">Cards</span>
-                    </ListBoxItem>
-                  </ListBoxSection>
-                  <ListBoxSection>
-                    <ListBoxSectionHeader>Components</ListBoxSectionHeader>
-                    {componentsData
-                      .flatMap((category) => category.components)
-                      .sort((a, b) => a.name.localeCompare(b.name))
-                      .map((comp) => (
-                        <ListBoxItem
-                          key={comp.slug}
-                          id={comp.slug}
-                          textValue={comp.name}
-                        >
-                          <span className="truncate">{comp.name}</span>
-                        </ListBoxItem>
-                      ))}
-                  </ListBoxSection>
-                </ListBox>
-              </Command>
-            </Popover>
-          </Select>
-          <Button size="sm" isIconOnly aria-label="Shuffle" onPress={shuffle}>
-            <ShuffleIcon />
-          </Button>
-          <Button
-            size="sm"
-            isIconOnly
-            onPress={onTogglePreviewMode}
-            aria-label="Toggle preview mode"
-          >
-            {previewMode === 'dark' ? <SunIcon /> : <MoonIcon />}
-          </Button>
-          <Button
-            size="sm"
-            isIconOnly
-            onPress={undo}
-            isDisabled={!canUndo}
-            aria-label="Undo"
-          >
-            <Undo2Icon />
-          </Button>
+            <Button
+              size="sm"
+              isIconOnly
+              onPress={undo}
+              isDisabled={!canUndo}
+              aria-label="Undo"
+            >
+              <Undo2Icon />
+            </Button>
+          </div>
         </div>
       </div>
 
