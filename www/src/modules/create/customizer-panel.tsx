@@ -15,6 +15,7 @@ import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
 
 import { ExamplesIndex } from './__generated__/examples'
+import { ChartColorsConfig, ChartColorsSummary } from './chart-colors'
 import { CodeOptionsDialog } from './code-options'
 import { ColorsConfig, ColorsSummary } from './colors'
 import {
@@ -66,6 +67,12 @@ const menu: MenuItem[] = [
     title: 'Colors',
     preview: <ColorsSummary />,
     config: <ColorsConfig />,
+  },
+  {
+    id: 'chart-colors',
+    title: 'Chart colors',
+    preview: <ChartColorsSummary />,
+    config: <ChartColorsConfig />,
   },
   {
     id: 'typography',

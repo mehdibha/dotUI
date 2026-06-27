@@ -6,7 +6,7 @@
       "runtimeExecutable": "pnpm",
       "runtimeArgs": ["--filter", "www", "dev"],
       "port": 4444,
-      "autoPort": false
+      "autoPort": true
     }
   ]
 }

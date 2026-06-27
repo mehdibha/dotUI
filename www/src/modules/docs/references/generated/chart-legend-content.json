@@ -1,0 +1,50 @@
+{
+  "name": "ChartLegendContentProps",
+  "description": "Styled content for a chart legend. Use inside `<ChartLegend content={...} />`.",
+  "extendsElement": "div",
+  "props": {
+    "hideIcon": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Hide the per-series icon/swatch.",
+      "default": "false"
+    },
+    "nameKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Key used to resolve the series name against `config`."
+    },
+    "verticalAlign": {
+      "type": "\"bottom\" | \"top\"",
+      "detailedType": "'bottom' | 'top' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top"
+          }
+        ]
+      },
+      "description": "Legend position relative to the chart, used for spacing.",
+      "default": "\"bottom\""
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

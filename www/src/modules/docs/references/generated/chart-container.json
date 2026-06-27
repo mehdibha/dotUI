@@ -1,0 +1,62 @@
+{
+  "name": "ChartContainerProps",
+  "description": "Wraps a Recharts chart with theming and a responsive container. Pass your\n`config` (series → label / color / icon) and a single Recharts chart child.",
+  "extendsElement": "div",
+  "props": {
+    "config": {
+      "type": "ChartConfig",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartConfig"
+      },
+      "description": "Series metadata keyed by `dataKey`: a `label`, a `color` (or a per-theme\n`theme` map), and an optional `icon`. Drives tooltips, legends, and the\n`--color-<key>` CSS variables.",
+      "required": true
+    },
+    "initialDimension": {
+      "type": "{ width: number; height: number; }",
+      "detailedType": "undefined | { width: number; height: number }",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "objectLiteral",
+            "properties": {
+              "height": {
+                "type": "property",
+                "name": "height",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "readonly": false,
+                "description": ""
+              },
+              "width": {
+                "type": "property",
+                "name": "width",
+                "value": {
+                  "type": "number"
+                },
+                "optional": false,
+                "readonly": false,
+                "description": ""
+              }
+            }
+          }
+        ]
+      },
+      "description": "Fallback dimensions used for the first server render (the responsive\ncontainer has no measured size yet). Keep this set or the chart can\ncollapse in SSR / production builds.",
+      "default": "{ width: 320, height: 200 }"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
