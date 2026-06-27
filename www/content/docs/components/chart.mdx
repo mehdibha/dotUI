@@ -1,0 +1,175 @@
+---
+title: Chart
+description: Beautiful, accessible charts built on Recharts and themed by your design system.
+---
+
+<Demo name="chart-bar/demos/multiple" />
+
+Charts are a thin, themeable layer over [Recharts](https://recharts.org). You write a chart with Recharts' own components — `BarChart`, `Bar`, `XAxis`, and the rest — and wrap them in `ChartContainer`, which maps your series to your design system's colors, handles light and dark theming, and makes the chart responsive. The tooltip, legend, and a visually-hidden data table are styled to match the rest of your components, so a chart looks at home next to a card or a button with no extra work.
+
+Use the primitives directly to build any chart Recharts supports, or install a ready-made family and copy the variant you need. Browse every variant on the [charts page](/charts).
+
+## Installation
+
+The primitives — `ChartContainer`, `ChartTooltip`, `ChartLegend`, their `*Content` variants, and `ChartDataTable` — ship as a single `chart` item:
+
+```npm
+npx shadcn@latest add @dotui/chart
+```
+
+Each family — bar, line, area, pie, radar, and radial — ships as its own item with a curated set of variants, and pulls in `chart` and `card` automatically:
+
+```npm
+npx shadcn@latest add @dotui/chart-bar
+```
+
+You only need to add the `chart` item directly when you are composing a chart by hand. Installing any family brings the primitives along with it.
+
+## Usage
+
+Import the primitives you need alongside the Recharts components for your chart type:
+
+```tsx
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
+
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@/components/ui/chart'
+```
+
+A chart is built from three pieces: your **data** (an array of rows), a **config** that describes each series, and the **Recharts chart** wrapped in `ChartContainer`.
+
+```tsx
+const chartData = [
+  { month: 'January', desktop: 186 },
+  { month: 'February', desktop: 305 },
+  { month: 'March', desktop: 237 },
+]
+
+const chartConfig = {
+  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
+} satisfies ChartConfig
+
+export function Example() {
+  return (
+    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+      <BarChart accessibilityLayer data={chartData}>
+        <CartesianGrid vertical={false} />
+        <XAxis dataKey="month" tickLine={false} axisLine={false} />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+      </BarChart>
+    </ChartContainer>
+  )
+}
+```
+
+`ChartContainer` reads `chartConfig` and exposes each series key as a CSS variable — the `desktop` key becomes `var(--color-desktop)`, which the `Bar` references with its `fill`. This name-keyed indirection is the heart of the API: you assign a color once in config, and every Recharts element, the tooltip, and the legend pick it up by name. There is no color array to keep aligned with your data.
+
+### Chart config
+
+`config` maps each series key to a `label`, a `color` (or a per-theme `theme`), and an optional `icon`:
+
+```tsx
+const chartConfig = {
+  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
+  mobile: { label: 'Mobile', color: 'var(--chart-2)' },
+} satisfies ChartConfig
+```
+
+`ChartContainer` turns each entry into a `--color-<key>` CSS variable you reference from Recharts (`fill="var(--color-desktop)"`), and the tooltip and legend read it for labels and icons. Use `satisfies ChartConfig` rather than a type annotation so TypeScript keeps the exact keys, which makes the matching `var(--color-<key>)` names easy to keep in sync.
+
+Because config is separate from data, a key with no series of its own — an axis category, for example — can still carry a label and a color, which is how per-category coloring on pie and radial charts works.
+
+## Theming
+
+Series colors come from a categorical palette of five slots, `--chart-1` through `--chart-5`. Your design system derives them from its theme hues, so charts stay on-brand and adapt to light and dark automatically — no per-mode values to maintain. The palette is editable under **Chart colors** in the [editor](/create), and updates live as you tweak it on the [charts page](/charts).
+
+Point each series at a slot through its config color:
+
+```tsx
+const chartConfig = {
+  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
+  mobile: { label: 'Mobile', color: 'var(--chart-2)' },
+} satisfies ChartConfig
+```
+
+A color can be any CSS value, so you are not limited to the palette. To set a different color per mode, use `theme` instead of `color`:
+
+```tsx
+const chartConfig = {
+  desktop: { label: 'Desktop', theme: { light: '#2563eb', dark: '#60a5fa' } },
+} satisfies ChartConfig
+```
+
+For per-category colors — common on pie and radial charts — give each row its own `fill` using the same `var(--color-<key>)` names:
+
+```tsx
+const chartData = [
+  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
+  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
+]
+```
+
+## Tooltip and legend
+
+`ChartTooltip` and `ChartLegend` are the Recharts primitives; `ChartTooltipContent` and `ChartLegendContent` are the styled, config-aware contents you pass to them. Both resolve labels, colors, and icons from your config, so they stay consistent with the chart without extra wiring:
+
+```tsx
+<ChartTooltip content={<ChartTooltipContent indicator="line" />} />
+<ChartLegend content={<ChartLegendContent />} />
+```
+
+`ChartTooltipContent` accepts an `indicator` of `dot`, `line`, or `dashed` to change the marker next to each value, plus `hideLabel` and `hideIndicator` to trim it down. `ChartLegendContent` accepts `hideIcon` and a `nameKey` for reading labels from a different config key. See the [API reference](#api-reference) for the full set of props.
+
+## Accessibility
+
+Charts encode data with color and position, which is invisible to assistive technology, so accessibility is handled in two layers.
+
+First, pass `accessibilityLayer` to the Recharts chart. It enables keyboard navigation and screen-reader announcements as the user moves across data points:
+
+```tsx
+<BarChart accessibilityLayer data={chartData}>
+```
+
+Second — and unique to dotUI — every family demo renders `ChartDataTable` alongside the chart: a visually-hidden `<table>` derived from the same `data` and `config`. It exposes the underlying figures to screen readers and other assistive tools without affecting the visual layout, giving you a real data-table fallback for free:
+
+```tsx
+<ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
+```
+
+`labelKey` names the field used for each row's header — the x-axis category on cartesian charts, or the slice name on pie and radial charts. `ChartDataTable` adapts to your data's shape on its own: one column per series for bar, line, area, and radar; a two-column category/value table for pie and radial. Pass it the same `data` and `config` you gave `ChartContainer` and it stays in sync.
+
+## Families
+
+Each family is a curated set of variants — install one, then copy the variant you need. Browse them all on the [charts page](/charts).
+
+<Examples className="lg:grid-cols-2">
+  <Example name="chart-line/demos/multiple" title="Line" />
+  <Example name="chart-area/demos/stacked" title="Area" />
+  <Example name="chart-pie/demos/donut-text" title="Pie" />
+  <Example name="chart-radar/demos/dots" title="Radar" />
+  <Example name="chart-radial/demos/stacked" title="Radial" />
+  <Example name="chart-bar/demos/horizontal" title="Bar" />
+</Examples>
+
+## API Reference
+
+### ChartContainer
+
+<Reference name="chart-container" />
+
+### ChartTooltipContent
+
+<Reference name="chart-tooltip-content" />
+
+### ChartLegendContent
+
+<Reference name="chart-legend-content" />
+
+### ChartDataTable
+
+<Reference name="chart-data-table" />

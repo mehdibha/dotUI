@@ -1,23 +1,22 @@
 import { Link as RouterLink } from '@tanstack/react-router'
 import { ArrowRightIcon } from 'lucide-react'
 
-import { buttonStyles } from '@/registry/ui/button'
+import { Eyebrow } from '@/components/eyebrow'
 
 export function Announcement() {
   return (
     <RouterLink
       to="/create"
-      className={buttonStyles({
-        size: 'xs',
-        className:
-          'group gap-1.5 rounded-full text-xs text-fg-muted hover:text-fg',
-      })}
+      className="group rounded-full focus-reset focus-visible:focus-ring"
     >
-      <span className="size-1.5 rounded-full bg-accent" />
-      <span>
-        Open in v0, bolt.new <span className="text-fg-muted/70">&</span> Lovable
-      </span>
-      <ArrowRightIcon />
+      <Eyebrow className="transition-colors group-hover:text-fg">
+        <span className="size-1.5 rounded-full bg-accent" />
+        <span>
+          Open in v0, bolt.new <span className="text-fg-muted/70">&</span>{' '}
+          Lovable
+        </span>
+        <ArrowRightIcon className="size-3 shrink-0" />
+      </Eyebrow>
     </RouterLink>
   )
 }
