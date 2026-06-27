@@ -39,12 +39,7 @@ export interface DialogDescriptionProps extends Omit<
 /**
  * The main content area of the dialog.
  */
-export interface DialogBodyProps extends React.ComponentProps<'div'> {
-  /**
-   * Whether to render the body with scroll edge fade masks.
-   */
-  scrollFade?: boolean
-}
+export interface DialogBodyProps extends React.ComponentProps<'div'> {}
 
 /**
  * The footer of the dialog. Contains the dialog's actions.

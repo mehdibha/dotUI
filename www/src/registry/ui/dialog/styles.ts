@@ -14,17 +14,6 @@ const { useStyles, styles } = createStyles(dialogMeta, {
       footer: 'flex flex-col-reverse gap-2 sm:flex-row sm:justify-end',
       closeButton: 'absolute',
     },
-    variants: {
-      scrollFade: {
-        true: {
-          body: 'relative scroll-fade-y overflow-auto outline-none',
-        },
-        false: {},
-      },
-    },
-    defaultVariants: {
-      scrollFade: false,
-    },
   },
   density: {
     compact: {

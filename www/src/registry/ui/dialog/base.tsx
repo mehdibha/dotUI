@@ -117,23 +117,13 @@ const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
 
 // MARK: Separator
 
-interface DialogBodyProps extends React.ComponentProps<'div'> {
-  scrollFade?: boolean
-}
+interface DialogBodyProps extends React.ComponentProps<'div'> {}
 
-const DialogBody = ({
-  className,
-  scrollFade = false,
-  ...props
-}: DialogBodyProps) => {
+const DialogBody = ({ className, ...props }: DialogBodyProps) => {
   const { body } = useStyles()()
 
   return (
-    <div
-      data-slot="dialog-body"
-      className={body({ scrollFade, className })}
-      {...props}
-    />
+    <div data-slot="dialog-body" className={body({ className })} {...props} />
   )
 }
 
