@@ -3,6 +3,7 @@
 import { Suspense } from 'react'
 
 import { cn } from '@/registry/lib/utils'
+import { ShowcaseCard } from '@/components/showcase-card'
 
 import { ChartCodeModal } from './chart-code-modal'
 import { getDemoComponent, POLAR_FAMILIES } from './data'
@@ -32,33 +33,26 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
   const isPolar = POLAR_FAMILIES.has(familyId)
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center justify-between gap-2 pl-1">
-        <span className="text-sm text-fg-muted capitalize">{label}</span>
-        <ChartCodeModal demoKey={demoKey} label={label} />
-      </div>
-      <div
-        inert
-        aria-hidden="true"
-        className="h-60 overflow-hidden rounded-2xl border bg-card"
-      >
-        {/* Skeleton fills the whole box edge-to-edge; padding lives on the chart
-            wrapper so it never insets the fallback. */}
-        <Suspense
-          fallback={<div className="size-full animate-pulse bg-muted" />}
+    <ShowcaseCard
+      label={label}
+      action={<ChartCodeModal demoKey={demoKey} label={label} />}
+      inert
+      aria-hidden="true"
+    >
+      {/* Skeleton fills the whole box edge-to-edge; padding lives on the chart
+          wrapper so it never insets the fallback. */}
+      <Suspense fallback={<div className="size-full animate-pulse bg-muted" />}>
+        <div
+          className={cn(
+            'flex size-full items-center justify-center [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!',
+            isPolar
+              ? 'p-2 [&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:w-auto!'
+              : 'p-4 [&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!',
+          )}
         >
-          <div
-            className={cn(
-              'flex size-full items-center justify-center [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!',
-              isPolar
-                ? 'p-2 [&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:w-auto!'
-                : 'p-4 [&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!',
-            )}
-          >
-            <Component />
-          </div>
-        </Suspense>
-      </div>
-    </div>
+          <Component />
+        </div>
+      </Suspense>
+    </ShowcaseCard>
   )
 }
