@@ -1,7 +1,6 @@
 import DialogDemo from '@/registry/ui/dialog/demos/basic'
 import DrawerDemo from '@/registry/ui/drawer/demos/basic'
 import ModalDemo from '@/registry/ui/modal/demos/basic'
-import OverlayDemo from '@/registry/ui/overlay/demos/basic'
 import PopoverDemo from '@/registry/ui/popover/demos/basic'
 import TooltipDemo from '@/registry/ui/tooltip/demos/basic'
 import { Example } from '@/modules/create/preview/example'
@@ -24,9 +23,6 @@ export default function OverlaysGroupExamples() {
       </Example>
       <Example title="Drawer">
         <DrawerDemo />
-      </Example>
-      <Example title="Overlay">
-        <OverlayDemo />
       </Example>
     </Examples>
   )
