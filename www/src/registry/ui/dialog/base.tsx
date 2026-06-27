@@ -7,7 +7,6 @@ import * as DialogPrimitive from 'react-aria-components/Dialog'
 import * as TextPrimitives from 'react-aria-components/Text'
 
 import { Button } from '@/registry/ui/button'
-import { ScrollFade } from '@/registry/ui/scroll-fade'
 
 import { useStyles } from './styles'
 
@@ -128,12 +127,11 @@ const DialogBody = ({
   ...props
 }: DialogBodyProps) => {
   const { body } = useStyles()()
-  const ElementType = scrollFade ? ScrollFade : 'div'
 
   return (
-    <ElementType
+    <div
       data-slot="dialog-body"
-      className={body({ className })}
+      className={body({ scrollFade, className })}
       {...props}
     />
   )

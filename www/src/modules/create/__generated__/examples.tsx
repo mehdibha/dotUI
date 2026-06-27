@@ -48,7 +48,6 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"progress-bar": () => import("@/registry/ui/progress-bar/examples"),
 	"radio-group": () => import("@/registry/ui/radio-group/examples"),
 	"react-hook-form": () => import("@/registry/ui/react-hook-form/examples"),
-	"scroll-fade": () => import("@/registry/ui/scroll-fade/examples"),
 	"search-field": () => import("@/registry/ui/search-field/examples"),
 	select: () => import("@/registry/ui/select/examples"),
 	separator: () => import("@/registry/ui/separator/examples"),

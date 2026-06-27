@@ -38,7 +38,6 @@ import { OTPFieldDemo } from './otp-field'
 import { PopoverDemo } from './popover'
 import { ProgressBarDemo } from './progress-bar'
 import { RadioGroupDemo } from './radio-group'
-import { ScrollFadeDemo } from './scroll-fade'
 import { SearchFieldDemo } from './search-field'
 import { SelectDemo } from './select'
 import { SeparatorDemo } from './separator'
@@ -96,7 +95,6 @@ export const componentDemos: Record<string, ComponentType> = {
   popover: PopoverDemo,
   'progress-bar': ProgressBarDemo,
   'radio-group': RadioGroupDemo,
-  'scroll-fade': ScrollFadeDemo,
   'search-field': SearchFieldDemo,
   select: SelectDemo,
   separator: SeparatorDemo,

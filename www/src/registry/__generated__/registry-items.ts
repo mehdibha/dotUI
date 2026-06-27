@@ -48,7 +48,6 @@ import UiPagination from "@/registry/ui/pagination/meta";
 import UiPopover from "@/registry/ui/popover/meta";
 import UiProgressBar from "@/registry/ui/progress-bar/meta";
 import UiRadioGroup from "@/registry/ui/radio-group/meta";
-import UiScrollFade from "@/registry/ui/scroll-fade/meta";
 import UiSearchField from "@/registry/ui/search-field/meta";
 import UiSelect from "@/registry/ui/select/meta";
 import UiSeparator from "@/registry/ui/separator/meta";
@@ -115,7 +114,6 @@ export const registryUi: RegistryItem[] = [
 	UiPopover,
 	UiProgressBar,
 	UiRadioGroup,
-	UiScrollFade,
 	UiSearchField,
 	UiSelect,
 	UiSeparator,

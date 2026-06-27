@@ -22,6 +22,249 @@ export const baseRegistryCss = {
 		"@utility no-highlight": {
 			"-webkit-tap-highlight-color": "transparent",
 		},
+		"@property --scroll-fade-t": {
+			syntax: "'<length-percentage>'",
+			inherits: "false",
+			"initial-value": "0px",
+		},
+		"@property --scroll-fade-b": {
+			syntax: "'<length-percentage>'",
+			inherits: "false",
+			"initial-value": "0px",
+		},
+		"@property --scroll-fade-s": {
+			syntax: "'<length-percentage>'",
+			inherits: "false",
+			"initial-value": "0px",
+		},
+		"@property --scroll-fade-e": {
+			syntax: "'<length-percentage>'",
+			inherits: "false",
+			"initial-value": "0px",
+		},
+		"@property --scroll-fade-mask": {
+			syntax: "'*'",
+			inherits: "false",
+		},
+		"@utility scroll-fade": {
+			"--_scroll-fade-size-t":
+				"var(\n    --scroll-fade-t-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--_scroll-fade-size-b":
+				"var(\n    --scroll-fade-b-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--scroll-fade-block":
+				"linear-gradient(\n    to bottom,\n    transparent 0,\n    #000 var(--scroll-fade-t, 0px),\n    #000 calc(100% - var(--scroll-fade-b, 0px)),\n    transparent 100%\n  )",
+			"-webkit-mask-image": "var(--scroll-fade-mask, var(--scroll-fade-block))",
+			"mask-image": "var(--scroll-fade-mask, var(--scroll-fade-block))",
+			"-webkit-mask-composite": "source-in",
+			"mask-composite": "intersect",
+			"-webkit-mask-repeat": "no-repeat",
+			"mask-repeat": "no-repeat",
+			"@supports (animation-timeline: scroll())": {
+				animation: "scroll-fade-reveal-t 1ms ease-in-out,\n      scroll-fade-reveal-b 1ms ease-in-out",
+				"animation-timeline": "scroll(self y), scroll(self y)",
+				"animation-range":
+					"0 var(--scroll-fade-reveal, calc(var(--spacing) * 24)),\n      calc(100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))) 100%",
+				"animation-fill-mode": "both",
+			},
+			"@supports not (animation-timeline: scroll())": {
+				"--scroll-fade-t": "var(--_scroll-fade-size-t)",
+				"--scroll-fade-b": "var(--_scroll-fade-size-b)",
+			},
+		},
+		"@utility scroll-fade-y": {
+			"--_scroll-fade-size-t":
+				"var(\n    --scroll-fade-t-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--_scroll-fade-size-b":
+				"var(\n    --scroll-fade-b-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--scroll-fade-block":
+				"linear-gradient(\n    to bottom,\n    transparent 0,\n    #000 var(--scroll-fade-t, 0px),\n    #000 calc(100% - var(--scroll-fade-b, 0px)),\n    transparent 100%\n  )",
+			"-webkit-mask-image": "var(--scroll-fade-mask, var(--scroll-fade-block))",
+			"mask-image": "var(--scroll-fade-mask, var(--scroll-fade-block))",
+			"-webkit-mask-composite": "source-in",
+			"mask-composite": "intersect",
+			"-webkit-mask-repeat": "no-repeat",
+			"mask-repeat": "no-repeat",
+			"@supports (animation-timeline: scroll())": {
+				animation: "scroll-fade-reveal-t 1ms ease-in-out,\n      scroll-fade-reveal-b 1ms ease-in-out",
+				"animation-timeline": "scroll(self y), scroll(self y)",
+				"animation-range":
+					"0 var(--scroll-fade-reveal, calc(var(--spacing) * 24)),\n      calc(100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))) 100%",
+				"animation-fill-mode": "both",
+			},
+			"@supports not (animation-timeline: scroll())": {
+				"--scroll-fade-t": "var(--_scroll-fade-size-t)",
+				"--scroll-fade-b": "var(--_scroll-fade-size-b)",
+			},
+		},
+		"@utility scroll-fade-x": {
+			"--_scroll-fade-size-s":
+				"var(\n    --scroll-fade-s-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--_scroll-fade-size-e":
+				"var(\n    --scroll-fade-e-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--scroll-fade-inline":
+				"linear-gradient(\n    to right,\n    transparent 0,\n    #000 var(--scroll-fade-s, 0px),\n    #000 calc(100% - var(--scroll-fade-e, 0px)),\n    transparent 100%\n  )",
+			"&:where([dir='rtl'], [dir='rtl'] *)": {
+				"--scroll-fade-inline":
+					"linear-gradient(\n      to left,\n      transparent 0,\n      #000 var(--scroll-fade-s, 0px),\n      #000 calc(100% - var(--scroll-fade-e, 0px)),\n      transparent 100%\n    )",
+			},
+			"-webkit-mask-image": "var(--scroll-fade-mask, var(--scroll-fade-inline))",
+			"mask-image": "var(--scroll-fade-mask, var(--scroll-fade-inline))",
+			"-webkit-mask-composite": "source-in",
+			"mask-composite": "intersect",
+			"-webkit-mask-repeat": "no-repeat",
+			"mask-repeat": "no-repeat",
+			"@supports (animation-timeline: scroll())": {
+				animation: "scroll-fade-reveal-s 1ms ease-in-out,\n      scroll-fade-reveal-e 1ms ease-in-out",
+				"animation-timeline": "scroll(self inline), scroll(self inline)",
+				"animation-range":
+					"0 var(--scroll-fade-reveal, calc(var(--spacing) * 24)),\n      calc(100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))) 100%",
+				"animation-fill-mode": "both",
+			},
+			"@supports not (animation-timeline: scroll())": {
+				"--scroll-fade-s": "var(--_scroll-fade-size-s)",
+				"--scroll-fade-e": "var(--_scroll-fade-size-e)",
+			},
+		},
+		"@utility scroll-fade-t": {
+			"--_scroll-fade-size-t":
+				"var(\n    --scroll-fade-t-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--scroll-fade-mask":
+				"linear-gradient(\n    to bottom,\n    transparent 0,\n    #000 var(--scroll-fade-t, 0px),\n    #000 100%\n  )",
+			"-webkit-mask-image": "var(--scroll-fade-mask)",
+			"mask-image": "var(--scroll-fade-mask)",
+			"-webkit-mask-composite": "source-in",
+			"mask-composite": "intersect",
+			"-webkit-mask-repeat": "no-repeat",
+			"mask-repeat": "no-repeat",
+			"@supports (animation-timeline: scroll())": {
+				animation: "scroll-fade-reveal-t 1ms ease-in-out",
+				"animation-timeline": "scroll(self y)",
+				"animation-range": "0 var(--scroll-fade-reveal, calc(var(--spacing) * 24))",
+				"animation-fill-mode": "both",
+			},
+			"@supports not (animation-timeline: scroll())": {
+				"--scroll-fade-t": "var(--_scroll-fade-size-t)",
+			},
+		},
+		"@utility scroll-fade-b": {
+			"--_scroll-fade-size-b":
+				"var(\n    --scroll-fade-b-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--scroll-fade-mask":
+				"linear-gradient(\n    to bottom,\n    #000 0,\n    #000 calc(100% - var(--scroll-fade-b, 0px)),\n    transparent 100%\n  )",
+			"-webkit-mask-image": "var(--scroll-fade-mask)",
+			"mask-image": "var(--scroll-fade-mask)",
+			"-webkit-mask-composite": "source-in",
+			"mask-composite": "intersect",
+			"-webkit-mask-repeat": "no-repeat",
+			"mask-repeat": "no-repeat",
+			"@supports (animation-timeline: scroll())": {
+				animation: "scroll-fade-reveal-b 1ms ease-in-out",
+				"animation-timeline": "scroll(self y)",
+				"animation-range":
+					"calc(\n        100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))\n      )\n      100%",
+				"animation-fill-mode": "both",
+			},
+			"@supports not (animation-timeline: scroll())": {
+				"--scroll-fade-b": "var(--_scroll-fade-size-b)",
+			},
+		},
+		"@utility scroll-fade-l": {
+			"--_scroll-fade-size-s":
+				"var(\n    --scroll-fade-s-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--scroll-fade-mask":
+				"linear-gradient(\n    to right,\n    transparent 0,\n    #000 var(--scroll-fade-s, 0px),\n    #000 100%\n  )",
+			"-webkit-mask-image": "var(--scroll-fade-mask)",
+			"mask-image": "var(--scroll-fade-mask)",
+			"-webkit-mask-composite": "source-in",
+			"mask-composite": "intersect",
+			"-webkit-mask-repeat": "no-repeat",
+			"mask-repeat": "no-repeat",
+			"@supports (animation-timeline: scroll())": {
+				animation: "scroll-fade-reveal-s 1ms ease-in-out",
+				"animation-timeline": "scroll(self x)",
+				"animation-range": "0 var(--scroll-fade-reveal, calc(var(--spacing) * 24))",
+				"animation-fill-mode": "both",
+			},
+			"@supports not (animation-timeline: scroll())": {
+				"--scroll-fade-s": "var(--_scroll-fade-size-s)",
+			},
+		},
+		"@utility scroll-fade-r": {
+			"--_scroll-fade-size-e":
+				"var(\n    --scroll-fade-e-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--scroll-fade-mask":
+				"linear-gradient(\n    to right,\n    #000 0,\n    #000 calc(100% - var(--scroll-fade-e, 0px)),\n    transparent 100%\n  )",
+			"-webkit-mask-image": "var(--scroll-fade-mask)",
+			"mask-image": "var(--scroll-fade-mask)",
+			"-webkit-mask-composite": "source-in",
+			"mask-composite": "intersect",
+			"-webkit-mask-repeat": "no-repeat",
+			"mask-repeat": "no-repeat",
+			"@supports (animation-timeline: scroll())": {
+				animation: "scroll-fade-reveal-e 1ms ease-in-out",
+				"animation-timeline": "scroll(self x)",
+				"animation-range":
+					"calc(\n        100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))\n      )\n      100%",
+				"animation-fill-mode": "both",
+			},
+			"@supports not (animation-timeline: scroll())": {
+				"--scroll-fade-e": "var(--_scroll-fade-size-e)",
+			},
+		},
+		"@utility scroll-fade-s": {
+			"--_scroll-fade-size-s":
+				"var(\n    --scroll-fade-s-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--scroll-fade-mask":
+				"linear-gradient(\n    to right,\n    transparent 0,\n    #000 var(--scroll-fade-s, 0px),\n    #000 100%\n  )",
+			"&:where([dir='rtl'], [dir='rtl'] *)": {
+				"--scroll-fade-mask":
+					"linear-gradient(\n      to left,\n      transparent 0,\n      #000 var(--scroll-fade-s, 0px),\n      #000 100%\n    )",
+			},
+			"-webkit-mask-image": "var(--scroll-fade-mask)",
+			"mask-image": "var(--scroll-fade-mask)",
+			"-webkit-mask-composite": "source-in",
+			"mask-composite": "intersect",
+			"-webkit-mask-repeat": "no-repeat",
+			"mask-repeat": "no-repeat",
+			"@supports (animation-timeline: scroll())": {
+				animation: "scroll-fade-reveal-s 1ms ease-in-out",
+				"animation-timeline": "scroll(self inline)",
+				"animation-range": "0 var(--scroll-fade-reveal, calc(var(--spacing) * 24))",
+				"animation-fill-mode": "both",
+			},
+			"@supports not (animation-timeline: scroll())": {
+				"--scroll-fade-s": "var(--_scroll-fade-size-s)",
+			},
+		},
+		"@utility scroll-fade-e": {
+			"--_scroll-fade-size-e":
+				"var(\n    --scroll-fade-e-size,\n    var(--scroll-fade-size, min(12%, calc(var(--spacing) * 10)))\n  )",
+			"--scroll-fade-mask":
+				"linear-gradient(\n    to right,\n    #000 0,\n    #000 calc(100% - var(--scroll-fade-e, 0px)),\n    transparent 100%\n  )",
+			"&:where([dir='rtl'], [dir='rtl'] *)": {
+				"--scroll-fade-mask":
+					"linear-gradient(\n      to left,\n      #000 0,\n      #000 calc(100% - var(--scroll-fade-e, 0px)),\n      transparent 100%\n    )",
+			},
+			"-webkit-mask-image": "var(--scroll-fade-mask)",
+			"mask-image": "var(--scroll-fade-mask)",
+			"-webkit-mask-composite": "source-in",
+			"mask-composite": "intersect",
+			"-webkit-mask-repeat": "no-repeat",
+			"mask-repeat": "no-repeat",
+			"@supports (animation-timeline: scroll())": {
+				animation: "scroll-fade-reveal-e 1ms ease-in-out",
+				"animation-timeline": "scroll(self inline)",
+				"animation-range":
+					"calc(\n        100% - var(--scroll-fade-reveal, calc(var(--spacing) * 24))\n      )\n      100%",
+				"animation-fill-mode": "both",
+			},
+			"@supports not (animation-timeline: scroll())": {
+				"--scroll-fade-e": "var(--_scroll-fade-size-e)",
+			},
+		},
+		"@utility scroll-fade-*": {
+			"--scroll-fade-size": "--value([length], [percentage])",
+		},
 		"@layer base": {
 			"*": {
 				"@apply border-border": {},
