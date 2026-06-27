@@ -65,6 +65,13 @@ function PreviewPage() {
 
   const { default: Examples } = use(promise)
 
+  // Embedded in the /create builder, the preview renders under a translucent toolbar the
+  // height of the app header. Offset the content so it clears the toolbar at rest while
+  // still sliding under it on scroll: header height (3.5rem) minus the toolbar's own
+  // padding (px-3, 0.75rem) = 2.75rem / pt-11. Opened standalone (open-in-new-tab) there
+  // is no toolbar, so no offset.
+  const embedded = typeof window !== 'undefined' && window.self !== window.top
+
   return (
     <DesignSystemProvider
       params={designSystem.componentParams}
@@ -72,7 +79,9 @@ function PreviewPage() {
       density={designSystem.density}
       color={designSystem.color}
     >
-      <Examples />
+      <div className={embedded ? 'pt-11' : undefined}>
+        <Examples />
+      </div>
     </DesignSystemProvider>
   )
 }
