@@ -372,7 +372,7 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	{
 		target: "registry/ui/dialog/meta.ts",
 		content:
-			"import type { RegistryItem } from '../../types'\n\nconst dialogMeta = {\n  name: 'dialog',\n  type: 'registry:ui',\n  group: 'overlays',\n  files: [\n    {\n      type: 'registry:ui',\n      path: 'ui/dialog/base.tsx',\n      target: 'ui/dialog.tsx',\n    },\n  ],\n  registryDependencies: ['overlay', 'button'],\n} satisfies RegistryItem\n\nexport default dialogMeta\n",
+			"import type { RegistryItem } from '../../types'\n\nconst dialogMeta = {\n  name: 'dialog',\n  type: 'registry:ui',\n  group: 'overlays',\n  files: [\n    {\n      type: 'registry:ui',\n      path: 'ui/dialog/base.tsx',\n      target: 'ui/dialog.tsx',\n    },\n  ],\n  registryDependencies: ['responsive', 'modal', 'drawer', 'popover', 'button'],\n} satisfies RegistryItem\n\nexport default dialogMeta\n",
 	},
 	{
 		target: "registry/ui/dialog/styles.ts",
@@ -570,7 +570,7 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	{
 		target: "registry/ui/menu/meta.ts",
 		content:
-			"import type { RegistryItem } from '../../types'\n\nconst menuMeta = {\n  name: 'menu',\n  type: 'registry:ui',\n  group: 'menus-lists',\n  files: [\n    {\n      type: 'registry:ui',\n      path: 'ui/menu/base.tsx',\n      target: 'ui/menu.tsx',\n    },\n  ],\n  registryDependencies: ['kbd', 'overlay', 'text'],\n  params: {\n    highlight: {\n      kind: 'enum',\n      default: 'subtle',\n      values: ['subtle', 'accent'] as const,\n      description: 'How focused/active items are highlighted.',\n    },\n  },\n} satisfies RegistryItem\n\nexport default menuMeta\n",
+			"import type { RegistryItem } from '../../types'\n\nconst menuMeta = {\n  name: 'menu',\n  type: 'registry:ui',\n  group: 'menus-lists',\n  files: [\n    {\n      type: 'registry:ui',\n      path: 'ui/menu/base.tsx',\n      target: 'ui/menu.tsx',\n    },\n  ],\n  registryDependencies: [\n    'kbd',\n    'responsive',\n    'modal',\n    'drawer',\n    'popover',\n    'text',\n  ],\n  params: {\n    highlight: {\n      kind: 'enum',\n      default: 'subtle',\n      values: ['subtle', 'accent'] as const,\n      description: 'How focused/active items are highlighted.',\n    },\n  },\n} satisfies RegistryItem\n\nexport default menuMeta\n",
 	},
 	{
 		target: "registry/ui/menu/styles.ts",

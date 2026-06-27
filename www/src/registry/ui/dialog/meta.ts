@@ -11,7 +11,7 @@ const dialogMeta = {
       target: 'ui/dialog.tsx',
     },
   ],
-  registryDependencies: ['overlay', 'button'],
+  registryDependencies: ['responsive', 'modal', 'drawer', 'popover', 'button'],
 } satisfies RegistryItem
 
 export default dialogMeta

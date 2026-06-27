@@ -2,6 +2,7 @@
 // Run "tsx scripts/registry-build.ts" to regenerate
 
 import LibFocusStyles from "@/registry/lib/focus-styles/meta";
+import LibResponsive from "@/registry/lib/responsive/meta";
 import LibUtils from "@/registry/lib/utils/meta";
 import UiAccordion from "@/registry/ui/accordion/meta";
 import UiAlert from "@/registry/ui/alert/meta";
@@ -50,7 +51,6 @@ import UiMenu from "@/registry/ui/menu/meta";
 import UiModal from "@/registry/ui/modal/meta";
 import UiNumberField from "@/registry/ui/number-field/meta";
 import UiOtpField from "@/registry/ui/otp-field/meta";
-import UiOverlay from "@/registry/ui/overlay/meta";
 import UiPagination from "@/registry/ui/pagination/meta";
 import UiPopover from "@/registry/ui/popover/meta";
 import UiProgressBar from "@/registry/ui/progress-bar/meta";
@@ -124,7 +124,6 @@ export const registryUi: RegistryItem[] = [
 	UiModal,
 	UiNumberField,
 	UiOtpField,
-	UiOverlay,
 	UiPagination,
 	UiPopover,
 	UiProgressBar,
@@ -149,4 +148,4 @@ export const registryUi: RegistryItem[] = [
 	UiTree,
 ];
 
-export const registryLib: RegistryItem[] = [LibFocusStyles, LibUtils];
+export const registryLib: RegistryItem[] = [LibFocusStyles, LibResponsive, LibUtils];

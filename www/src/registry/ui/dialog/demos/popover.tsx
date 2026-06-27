@@ -4,6 +4,7 @@ import React from 'react'
 import type * as MenuPrimitives from 'react-aria-components/Menu'
 
 import { InfoIcon } from '@/registry/__generated__/icons'
+import { Responsive } from '@/registry/lib/responsive'
 import { Button } from '@/registry/ui/button'
 import {
   Dialog,
@@ -12,11 +13,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/registry/ui/dialog'
+import { Drawer } from '@/registry/ui/drawer'
 import { Label } from '@/registry/ui/field'
 import { Group } from '@/registry/ui/group'
 import { Input } from '@/registry/ui/input'
 import { NumberField } from '@/registry/ui/number-field'
-import { Overlay } from '@/registry/ui/overlay'
+import { Popover } from '@/registry/ui/popover'
 import {
   Select,
   SelectContent,
@@ -40,16 +42,25 @@ export default function Demo() {
           <Button variant="default" isIconOnly>
             <InfoIcon />
           </Button>
-          <Overlay type="popover">
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Help</DialogTitle>
-                <DialogDescription>
-                  For help accessing your account, please contact support.
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Overlay>
+          <Responsive
+            render={(isMobile) => {
+              const content = (
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Help</DialogTitle>
+                    <DialogDescription>
+                      For help accessing your account, please contact support.
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              )
+              return isMobile ? (
+                <Drawer>{content}</Drawer>
+              ) : (
+                <Popover>{content}</Popover>
+              )
+            }}
+          />
         </Dialog>
       </div>
       <div className="space-y-4 rounded-md border p-4">

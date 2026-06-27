@@ -1,9 +1,9 @@
 ---
 title: Command
-description: A command menu allows users to search and execute commands.
+description: A command menu lets users search a list of commands and run one.
 links:
   - label: Docs
-    href: https://react-spectrum.adobe.com/react-aria/
+    href: https://react-spectrum.adobe.com/react-aria/Autocomplete.html
 wip: true
 ---
 
@@ -26,35 +26,51 @@ npx shadcn@latest add @dotui/command
 
 ## Usage
 
-Use command menus to provide users with a searchable list of commands or actions.
+`Command` is a thin wrapper around React Aria's [Autocomplete](https://react-spectrum.adobe.com/react-aria/Autocomplete.html). It ships no input or list of its own — you compose it from primitives you already have: a [`SearchField`](/docs/components/search-field) for the query and a [`ListBox`](/docs/components/list-box) for the commands. As the user types, the list is filtered down to the items whose text matches the query.
 
 ```tsx
-import {
-  Command,
-  CommandContent,
-  CommandInput,
-  CommandItem,
-} from '@/components/ui/command'
+import { SearchIcon } from 'lucide-react'
+
+import { Command } from '@/components/ui/command'
+import { Input, InputGroup, InputGroupAddon } from '@/components/ui/input'
+import { ListBox, ListBoxItem } from '@/components/ui/list-box'
+import { SearchField } from '@/components/ui/search-field'
 ```
 
 ```tsx
-<Command>
-  <CommandInput placeholder="Type a command..." />
-  <CommandContent>
-    <CommandItem textValue="Create file">Create new file</CommandItem>
-    <CommandItem textValue="Open file">Open file</CommandItem>
-  </CommandContent>
+<Command aria-label="Command menu">
+  <SearchField aria-label="Search">
+    <InputGroup>
+      <InputGroupAddon>
+        <SearchIcon />
+      </InputGroupAddon>
+      <Input placeholder="Type a command or search..." />
+    </InputGroup>
+  </SearchField>
+  <ListBox aria-label="Commands" onAction={(key) => console.log(key)}>
+    <ListBoxItem textValue="Calendar">Calendar</ListBoxItem>
+    <ListBoxItem textValue="Search Emoji">Search Emoji</ListBoxItem>
+    <ListBoxItem textValue="Calculator">Calculator</ListBoxItem>
+  </ListBox>
 </Command>
 ```
+
+Filtering matches against each item's **`textValue`**. String children set it automatically, but items with rich content — an icon, a keyboard shortcut — need an explicit `textValue` to stay searchable. Group related commands with `ListBoxSection` and `ListBoxSectionHeader`, and respond to a selection with the list's `onAction` callback.
+
+Because the input and the list are ordinary primitives, anything they support works here too: put the `Command` inside a `Modal` for a `⌘K` palette, inside a `Popover` to filter a `Select`, or swap the `ListBox` for a `TagGroup`. See the [examples](#examples) below.
 
 ## Examples
 
 <Examples>
-  <Example name="command/demos/basic" />
-  <Example name="command/demos/dialog" />
+  <Example name="command/demos/basic" title="Basic" />
+  <Example name="command/demos/in-modal" title="In a modal" />
+  <Example name="command/demos/in-select" title="In a select" />
+  <Example name="command/demos/with-tag-group" title="With a tag group" />
 </Examples>
 
 ## API Reference
+
+`Command` renders only the autocomplete wrapper. The input is a [`SearchField`](/docs/components/search-field) and the list is a [`ListBox`](/docs/components/list-box) — `CommandInput` and `CommandContent` are re-exported aliases for those primitives, so refer to their pages for the full set of props.
 
 ### Command
 

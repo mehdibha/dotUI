@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/registry/ui/dialog'
-import { Overlay } from '@/registry/ui/overlay'
+import { Modal } from '@/registry/ui/modal'
 
 export default function Demo({
   title = 'Dialog Title',
@@ -24,7 +24,7 @@ export default function Demo({
   return (
     <Dialog>
       <Button>Open Dialog</Button>
-      <Overlay data-control-target isDismissable={isDismissable}>
+      <Modal data-control-target isDismissable={isDismissable}>
         <DialogContent>
           <DialogHeader>
             {title && <DialogTitle>{title}</DialogTitle>}
@@ -42,7 +42,7 @@ export default function Demo({
             </Button>
           </DialogFooter>
         </DialogContent>
-      </Overlay>
+      </Modal>
     </Dialog>
   )
 }

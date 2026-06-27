@@ -11,8 +11,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/registry/ui/dialog'
+import { Drawer } from '@/registry/ui/drawer'
 import { Label } from '@/registry/ui/field'
-import { Overlay } from '@/registry/ui/overlay'
 import { Select, SelectContent, SelectItem } from '@/registry/ui/select'
 import { Switch } from '@/registry/ui/switch'
 
@@ -26,7 +26,7 @@ export default function Demo() {
       <div className="flex flex-1 items-center justify-center">
         <Dialog>
           <Button variant="default">Open drawer</Button>
-          <Overlay type="drawer">
+          <Drawer>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Help</DialogTitle>
@@ -35,7 +35,7 @@ export default function Demo() {
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>
-          </Overlay>
+          </Drawer>
         </Dialog>
       </div>
       <div className="space-y-4 rounded-md border p-4">

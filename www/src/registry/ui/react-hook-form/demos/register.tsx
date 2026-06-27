@@ -6,12 +6,14 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { CalendarIcon, ChevronDownIcon } from '@/registry/__generated__/icons'
+import { Responsive } from '@/registry/lib/responsive'
 import { Button } from '@/registry/ui/button'
 import { Calendar } from '@/registry/ui/calendar'
 import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
 import { Combobox } from '@/registry/ui/combobox'
 import { DatePicker } from '@/registry/ui/date-picker'
 import { DialogContent } from '@/registry/ui/dialog'
+import { Drawer } from '@/registry/ui/drawer'
 import { FieldGroup, Label } from '@/registry/ui/field'
 import {
   DateInput,
@@ -20,7 +22,6 @@ import {
   InputGroupAddon,
 } from '@/registry/ui/input'
 import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Overlay } from '@/registry/ui/overlay'
 import { Popover } from '@/registry/ui/popover'
 import { Radio, RadioControl, RadioGroup } from '@/registry/ui/radio-group'
 import { FormControl } from '@/registry/ui/react-hook-form'
@@ -125,11 +126,20 @@ export default function Demo() {
                   </Button>
                 </InputGroupAddon>
               </InputGroup>
-              <Overlay type="popover" mobileType="drawer">
-                <DialogContent>
-                  <Calendar aria-label="Pick a date" />
-                </DialogContent>
-              </Overlay>
+              <Responsive
+                render={(isMobile) => {
+                  const content = (
+                    <DialogContent>
+                      <Calendar aria-label="Pick a date" />
+                    </DialogContent>
+                  )
+                  return isMobile ? (
+                    <Drawer>{content}</Drawer>
+                  ) : (
+                    <Popover>{content}</Popover>
+                  )
+                }}
+              />
             </DatePicker>
           )}
         />
