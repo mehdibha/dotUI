@@ -1,28 +1,29 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { SparklesIcon, Undo2Icon } from 'lucide-react'
 import { AnimatePresence, motion, type Transition } from 'motion/react'
 
 import { cn } from '@/registry/lib/utils'
-import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
 
 import { CodeOptionsDialog } from '../code-options'
 import { ExportFooter } from '../export'
-import { useDesignSystem } from '../preset'
 import { ColorLab } from './color-lab'
 import { ComponentScreen, ComponentsBrowser } from './components-browser'
 import { FOUNDATION_SCREENS } from './foundations'
 import { Home } from './home'
-import { StudioProvider, useStudio } from './nav'
+import { useStudio } from './nav'
 
 /* ------------------------------------------------------------------ *
  * dotUI Studio — the redesigned /create control surface.
  *
- * Persistent identity header · a slide-stack of Home → editors · the
- * export footer. All design edits flow to the live preview through the
- * shared `?preset=` design-system state.
+ * A slide-stack of Home → editors plus the export footer. The system
+ * identity and global actions (name, reroll, undo, Quick/Pro depth) live
+ * in the page top bar (see CreateTopBar) so there's a single cohesive
+ * chrome. All design edits flow to the live preview through the shared
+ * `?preset=` design-system state.
+ *
+ * Must be rendered inside a <StudioProvider> (mounted in the /create
+ * route so the top bar shares the same studio context).
  * ------------------------------------------------------------------ */
 
 const stackTransition: Transition = {
@@ -30,14 +31,6 @@ const stackTransition: Transition = {
 }
 
 export function StudioPanel({ className }: { className?: string }) {
-  return (
-    <StudioProvider>
-      <StudioShell className={className} />
-    </StudioProvider>
-  )
-}
-
-function StudioShell({ className }: { className?: string }) {
   const { stack } = useStudio()
 
   return (
@@ -47,8 +40,6 @@ function StudioShell({ className }: { className?: string }) {
         className,
       )}
     >
-      <Header />
-
       <div className="relative flex-1 overflow-hidden">
         {/* Home — always mounted, slides left when covered. */}
         <motion.div
@@ -93,63 +84,6 @@ function renderScreen(id: string): ReactNode {
   const Screen = FOUNDATION_SCREENS[id]
   if (Screen) return <Screen />
   return <ComponentScreen name={id} />
-}
-
-/* ------------------------------ Header ------------------------------ */
-
-function Header() {
-  const { name, setName, reroll, undo, canUndo } = useStudio()
-  const { designSystem } = useDesignSystem()
-  const accent = (designSystem.color ?? DEFAULT_COLOR_CONFIG).seeds.accent
-
-  return (
-    <div className="flex items-center gap-2 border-b p-2.5 pl-3">
-      <span
-        className="size-3 shrink-0 rounded-full ring-1 ring-black/10 ring-inset"
-        style={{ backgroundColor: accent }}
-        aria-hidden
-      />
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        aria-label="System name"
-        spellCheck={false}
-        className="min-w-0 flex-1 rounded-sm bg-transparent text-sm font-semibold outline-none placeholder:text-fg-muted focus-visible:bg-neutral focus-visible:px-1"
-      />
-      <IconAction label="Surprise me" onPress={reroll}>
-        <SparklesIcon />
-      </IconAction>
-      <IconAction label="Undo" onPress={undo} isDisabled={!canUndo}>
-        <Undo2Icon />
-      </IconAction>
-    </div>
-  )
-}
-
-function IconAction({
-  label,
-  onPress,
-  isDisabled,
-  children,
-}: {
-  label: string
-  onPress: () => void
-  isDisabled?: boolean
-  children: ReactNode
-}) {
-  return (
-    <Button
-      variant="quiet"
-      size="sm"
-      isIconOnly
-      aria-label={label}
-      onPress={onPress}
-      isDisabled={isDisabled}
-      className="size-7"
-    >
-      {children}
-    </Button>
-  )
 }
 
 /* ------------------------------ Footer ------------------------------ */

@@ -16,13 +16,7 @@ import { useDesignSystem } from '../preset'
 import { ComponentList } from './components-browser'
 import { FOUNDATIONS, type Vibe, VIBES } from './data'
 import { useStudio } from './nav'
-import {
-  NavRow,
-  RampStrip,
-  SectionLabel,
-  Segmented,
-  SeedSwatch,
-} from './primitives'
+import { NavRow, RampStrip, SectionLabel, SeedSwatch } from './primitives'
 
 /* ------------------------------------------------------------------ *
  * Home — the front door.
@@ -32,7 +26,7 @@ import {
  * ------------------------------------------------------------------ */
 
 export function Home() {
-  const { push, depth, setDepth, reroll } = useStudio()
+  const { push, depth, reroll } = useStudio()
   const { designSystem, setColorSeed, setDesignSystem } = useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
   const [query, setQuery] = useState('')
@@ -108,17 +102,8 @@ export function Home() {
         </div>
       </section>
 
-      {/* Depth */}
-      <Segmented
-        value={depth}
-        onChange={setDepth}
-        options={[
-          { id: 'quick', label: 'Quick' },
-          { id: 'pro', label: 'Pro' },
-        ]}
-      />
-
-      {/* Foundations */}
+      {/* Foundations — Quick shows only the core set; the Quick/Pro depth
+          switch that gates this lives in the page top bar (CreateTopBar). */}
       <section className="flex flex-col gap-2">
         <SectionLabel>Foundations</SectionLabel>
         <div className="flex flex-col gap-2">
