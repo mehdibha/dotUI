@@ -121,11 +121,11 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
       )}
       {...props}
     >
-      <TextField aria-label="Prompt" className="flex w-full flex-1 flex-col">
+      <TextField aria-label="Prompt" className="flex w-full flex-col">
         <TextArea
           placeholder="How can I help you today?"
           rows={2}
-          className="min-h-14 flex-1 resize-none border-0 bg-transparent px-2 pt-2 text-base shadow-none focus:border-0 focus:ring-0"
+          className="min-h-14 resize-none border-0 bg-transparent px-2 pt-2 text-base shadow-none focus:border-0 focus:ring-0"
         />
       </TextField>
       <div className="flex items-center justify-between gap-2 pt-1">

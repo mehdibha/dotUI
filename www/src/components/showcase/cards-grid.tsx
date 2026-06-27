@@ -17,25 +17,20 @@ import { TeamName } from '@/components/showcase/team-name'
 import { TwoFactor } from '@/components/showcase/two-factor'
 import { UploadAvatar } from '@/components/showcase/upload-avatar'
 
-// Two column schemes for the two surfaces. Each keeps the rail at one column and
-// lets the main region (AI banner + masonry) take the rest, so the rail, and the
-// masonry's columns, all end up the same width: the outer grid splits the row
-// into N equal units, the rail takes 1, the main takes N-1, and `columns` re-cuts
-// those N-1 units back into N-1 equal columns at the same gap.
+// Column schemes for the two surfaces. Each keeps the rail at one column and
+// lets the main region take the rest: the outer grid splits the row into N equal
+// units, the rail takes 1, the main takes N-1.
 const LAYOUTS = {
-  // Landing: 3 columns, 4 at xl. The AI banner only spans 2 of the main's
-  // columns; on xl a companion card fills the freed third column beside it, so
-  // the input caps at two columns of space without costing the grid a column.
+  // Landing: 3 columns, 4 at xl. The main region (N-1 wide) carries the AI banner
+  // and the bulk of the cards; see the landing branch below for how it's split.
   landing: {
     outer: 'grid-cols-3 xl:grid-cols-4',
     main: 'col-span-2 xl:col-span-3',
-    masonry: 'columns-2 xl:columns-3',
   },
-  // /create preview: narrower pane, 1 → 2 → 3 columns.
+  // /create preview: narrower pane, 1 → 2 → 3 columns; never opens a 4th column.
   preview: {
     outer: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
     main: 'lg:col-span-2',
-    masonry: 'columns-1 lg:columns-2',
   },
 } as const
 
@@ -50,20 +45,19 @@ function Cell({ children }: { children: React.ReactNode }) {
   return <div className="break-inside-avoid pb-4">{children}</div>
 }
 
-// The showcase grid — the single source of truth for which cards render and in
-// what order. Shared by the landing page (`cards.tsx` wraps it with the skeleton
-// rails and edge fade) and the /create preview's "Cards" view, so both render the
-// exact same cards.
+// The showcase grid — the single source of truth for which cards render. Shared by
+// the landing page (`cards.tsx` wraps it with the skeleton rails and edge fade) and
+// the /create preview's "Cards" view, so both render the exact same cards.
 //
-// Layout: the AI-prompt card has to keep its corner without spanning the whole
-// width, which CSS multi-column (the masonry) can't do — a column-span there is
-// all-or-nothing. So the grid is split into two regions: a left RAIL that flows
-// on its own, and a MAIN region whose top is a small grid row — the AI banner
-// spanning two columns plus a companion card filling the freed column beside it
-// on xl — sitting over the remaining cards, which masonry-flow beneath. The
-// flows are independent, so the cards still pack tightly (no aligned-row gaps)
-// while the AI card keeps its corner. The column count and width vary by surface
-// (see LAYOUTS); the landing also passes width/positioning via `className`.
+// Layout: a left RAIL flows on its own; the MAIN region holds the AI banner and the
+// rest of the cards. The banner has to stay narrow (two columns) *and* keep its own
+// short height — nothing beside it should stretch it — but CSS multi-column can't
+// span a banner across part of a masonry. So on the landing surface the main region
+// is two independent flows: the banner sits over its own 2-column masonry (cards
+// pack straight up under it, no gap), and a separate side column takes the rest. On
+// xl that side column is the grid's 4th column; below xl it drops beneath as its own
+// masonry. The narrower /create preview never opens a 4th column, so there the
+// banner just sits full-width over a single masonry.
 export function CardsGrid({
   className,
   variant = 'landing',
@@ -72,6 +66,26 @@ export function CardsGrid({
   variant?: keyof typeof LAYOUTS
 }) {
   const layout = LAYOUTS[variant]
+
+  // Every card that isn't in the rail or the AI banner, in source order.
+  const cards = [
+    { key: 'storage', node: <Storage /> },
+    { key: 'notifications', node: <Notifications className="h-100" /> },
+    { key: 'cookie', node: <CookiePreferences /> },
+    { key: 'invite', node: <InviteMembers /> },
+    { key: 'payment', node: <Payment /> },
+    { key: 'computer', node: <ComputerUse /> },
+    { key: 'faq', node: <Faq /> },
+    { key: 'color', node: <ColorEditorCard /> },
+    { key: 'upload', node: <UploadAvatar /> },
+    { key: 'team', node: <TeamName /> },
+    { key: 'login', node: <LoginForm className="max-w-none" /> },
+  ]
+  const cells = (subset: typeof cards) =>
+    subset.map((c) => <Cell key={c.key}>{c.node}</Cell>)
+  // On landing these cards live in the side column, beside (not under) the banner.
+  const sideKeys = new Set(['team', 'cookie', 'computer', 'upload'])
+
   return (
     <div className={cn('grid items-start gap-4', layout.outer, className)}>
       {/* Left rail: its own single-column stack. */}
@@ -83,49 +97,34 @@ export function CardsGrid({
         <AccountMenu />
       </div>
 
-      {/* Main region: a featured top row over the masonry. The AI banner spans
-          two of the main's columns; on xl the grid opens a third column and a
-          companion card (TeamName) sits beside the banner. Below xl the top row
-          collapses to one column, so the banner is full-width and TeamName drops
-          under it. The rest of the cards masonry-flow beneath. */}
-      <div className={cn('flex flex-col gap-4', layout.main)}>
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
-          <AiPrompt className="xl:col-span-2" />
-          <TeamName />
+      {variant === 'landing' ? (
+        // Two independent flows: the banner over its own masonry, plus a side
+        // column. Splitting at xl into a 2-col + 1-col grid (`items-start` so the
+        // columns don't stretch to match each other) keeps the banner short and
+        // lets the cards beneath flow straight up under it.
+        <div
+          className={cn(
+            'flex flex-col gap-4 xl:grid xl:grid-cols-3 xl:items-start',
+            layout.main,
+          )}
+        >
+          <div className="flex flex-col gap-4 xl:col-span-2">
+            <AiPrompt />
+            <div className="columns-2 gap-4">
+              {cells(cards.filter((c) => !sideKeys.has(c.key)))}
+            </div>
+          </div>
+          <div className="columns-2 gap-4 xl:columns-1">
+            {cells(cards.filter((c) => sideKeys.has(c.key)))}
+          </div>
         </div>
-        <div className={cn('gap-4', layout.masonry)}>
-          <Cell>
-            <Storage />
-          </Cell>
-          <Cell>
-            <Notifications className="h-100" />
-          </Cell>
-          <Cell>
-            <CookiePreferences />
-          </Cell>
-          <Cell>
-            <InviteMembers />
-          </Cell>
-          <Cell>
-            <Payment />
-          </Cell>
-          <Cell>
-            <ComputerUse />
-          </Cell>
-          <Cell>
-            <Faq />
-          </Cell>
-          <Cell>
-            <ColorEditorCard />
-          </Cell>
-          <Cell>
-            <UploadAvatar />
-          </Cell>
-          <Cell>
-            <LoginForm className="max-w-none" />
-          </Cell>
+      ) : (
+        // Preview: the banner full-width over a single masonry of every card.
+        <div className={cn('flex flex-col gap-4', layout.main)}>
+          <AiPrompt />
+          <div className="columns-1 gap-4 lg:columns-2">{cells(cards)}</div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
