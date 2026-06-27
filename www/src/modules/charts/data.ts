@@ -20,11 +20,32 @@ export function familyOf(demoKey: string): string {
   return demoKey.slice(0, demoKey.indexOf('/'))
 }
 
-/** The shadcn install command per package manager for a demo's family. */
+/**
+ * The registry items to install for a variant: its family, plus any other
+ * registry UI components the variant's source imports (e.g. the interactive
+ * area chart pulls in `select`). The chart primitive and sibling chart families
+ * are skipped — installing the family item already brings the primitive along.
+ */
+export function installItems(demoKey: string, source: string | null): string[] {
+  const family = familyOf(demoKey)
+  if (!source) return [family]
+  const extras = new Set<string>()
+  for (const match of source.matchAll(/@\/components\/ui\/([a-z0-9-]+)/g)) {
+    const name = match[1]
+    // Skip the chart primitive and sibling chart families — installing the
+    // family item already pulls those in.
+    if (name && name !== 'chart' && !name.startsWith('chart-')) {
+      extras.add(name)
+    }
+  }
+  return [family, ...[...extras].sort()]
+}
+
+/** The shadcn install command per package manager for a set of registry items. */
 export function installCommands(
-  demoKey: string,
+  items: string[],
 ): Record<PackageManager, string> {
-  const arg = `shadcn@latest add @dotui/${familyOf(demoKey)}`
+  const arg = `shadcn@latest add ${items.map((i) => `@dotui/${i}`).join(' ')}`
   return {
     npm: `npx ${arg}`,
     pnpm: `pnpm dlx ${arg}`,

@@ -417,20 +417,13 @@ function ChartDataTable({
   className,
   ...props
 }: ChartDataTableProps) {
-  // Long-format data (pie/radial) encodes each series as a ROW: `labelKey` values
-  // are themselves keys in `config`, and the numeric value sits in a column every
-  // row shares. Detect that and render category/value columns; otherwise render
-  // one column per `config` entry (wide-format).
+  // Columns are the `config` entries that are actual data columns — keys present
+  // in the rows. Config also carries metadata-only entries: a long-format pie
+  // (`labelKey` values are themselves `config` keys) lists per-slice color
+  // configs that are row *values*, not columns. Including those would render
+  // empty columns that misrepresent the data to screen readers.
   const row0 = data[0] ?? {}
-  const configKeys = Object.keys(config)
-  const valueColumns = configKeys.filter((key) => key in row0)
-  const categoryKeys = configKeys.filter((key) => !(key in row0))
-  const isLong =
-    labelKey != null &&
-    valueColumns.length > 0 &&
-    categoryKeys.length > 0 &&
-    data.some((datum) => categoryKeys.includes(String(datum[labelKey])))
-  const columns = isLong ? valueColumns : configKeys
+  const columns = Object.keys(config).filter((key) => key in row0)
 
   const headerLabel = labelName ?? (labelKey ? capitalize(labelKey) : undefined)
   const rowHeader = (value: unknown): string =>
