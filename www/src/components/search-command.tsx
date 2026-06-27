@@ -79,7 +79,7 @@ export function SearchCommand({
             >
               <Command
                 aria-label="Search documentation"
-                className="overflow-y-hidden"
+                className="overflow-y-hidden p-0"
               >
                 <SearchField autoFocus aria-label="Search">
                   <InputGroup>
@@ -91,7 +91,7 @@ export function SearchCommand({
                 </SearchField>
                 <MenuContent
                   aria-label="Search results"
-                  className="max-h-80 overflow-y-auto"
+                  className="max-h-80 overflow-y-auto p-0"
                   onAction={() => setIsOpen(false)}
                   renderEmptyState={() => (
                     <div className="py-8 text-center text-sm text-fg-muted">
