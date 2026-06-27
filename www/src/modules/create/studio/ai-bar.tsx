@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowUpIcon, SparklesIcon } from 'lucide-react'
 import * as ButtonPrimitives from 'react-aria-components/Button'
 
@@ -8,6 +8,7 @@ import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 
 import { useDesignSystem } from '../preset'
+import { registerAiFocuser } from './ai-focus'
 import { applyDelta } from './vibes'
 
 const REFINE_CHIPS = [
@@ -27,6 +28,10 @@ export function AiBar({ className }: { className?: string }) {
   const ds = useDesignSystem()
   const [text, setText] = useState('')
   const [log, setLog] = useState<Message[]>([])
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Let the top bar's "Ask dotUI" command (and ⌘K) jump focus straight here.
+  useEffect(() => registerAiFocuser(() => inputRef.current?.focus()), [])
 
   function run(input: string) {
     if (!input.trim()) return
@@ -60,6 +65,7 @@ export function AiBar({ className }: { className?: string }) {
       <div className="flex items-center gap-2 rounded-full border bg-card/95 p-1.5 pl-3 shadow-lg backdrop-blur">
         <SparklesIcon className="size-4 shrink-0 text-primary" />
         <input
+          ref={inputRef}
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => {

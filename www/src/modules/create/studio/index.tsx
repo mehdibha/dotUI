@@ -8,6 +8,7 @@ import { PreviewPanel } from '../preview/preview-panel'
 import { AiBar } from './ai-bar'
 import { Inspector } from './inspector'
 import { Rail, type DomainId } from './rail'
+import { StudioTopBar } from './top-bar'
 
 const routeApi = getRouteApi('/_app/create')
 
@@ -54,6 +55,10 @@ export function StudioExperience() {
 
   return (
     <>
+      {/* The builder's own top bar — replaces the global site nav on /create,
+          staying visually continuous with it (same height, Logo, ThemeToggle). */}
+      <StudioTopBar canUndo={canUndo} onUndo={undo} />
+
       {/* Desktop-only: the three-zone studio needs width the shipped /create
           doesn't, so below `lg` it points to a wider screen rather than cramming. */}
       <div className="flex h-[calc(100svh-var(--header-height))] flex-col items-center justify-center gap-2 p-8 text-center lg:hidden">
@@ -66,9 +71,9 @@ export function StudioExperience() {
         </p>
       </div>
 
-      <div className="hidden h-[calc(100svh-var(--header-height))] min-h-0 flex-1 gap-3 p-4 pt-2 lg:flex lg:gap-4 lg:p-6 lg:pt-2">
+      <div className="hidden h-[calc(100svh-var(--header-height))] min-h-0 flex-1 gap-3 p-4 pt-4 lg:flex lg:gap-4 lg:p-6 lg:pt-4">
         <Rail domain={domain} onSelect={setDomain} />
-        <Inspector domain={domain} canUndo={canUndo} onUndo={undo} />
+        <Inspector domain={domain} />
         <div className="relative flex min-w-0 flex-1 flex-col">
           <PreviewPanel className="flex-1" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex justify-center p-4">

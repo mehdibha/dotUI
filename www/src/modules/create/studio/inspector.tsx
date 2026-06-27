@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronLeftIcon, ShuffleIcon, Undo2Icon } from 'lucide-react'
+import { ChevronLeftIcon } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
@@ -45,21 +45,14 @@ import {
 } from './axis-panels'
 import { DOMAIN_LABELS, type DomainId } from './rail'
 import { StylePanel } from './style-panel'
-import { shuffleSystem } from './vibes'
 
 export function Inspector({
   domain,
-  canUndo,
-  onUndo,
   className,
 }: {
   domain: DomainId
-  canUndo: boolean
-  onUndo: () => void
   className?: string
 }) {
-  const { setDesignSystem } = useDesignSystem()
-
   return (
     <div
       className={cn(
@@ -67,28 +60,10 @@ export function Inspector({
         className,
       )}
     >
-      {/* Header */}
-      <div className="flex items-center justify-between gap-2 border-b p-2 pl-3">
+      {/* Header — re-roll + undo live in the top bar so they act on the whole
+          system, not per-axis; this just labels the active axis. */}
+      <div className="flex items-center gap-2 border-b p-2.5 pl-3">
         <span className="text-sm font-medium">{DOMAIN_LABELS[domain]}</span>
-        <div className="flex items-center gap-1">
-          <Button
-            size="sm"
-            isIconOnly
-            aria-label="Shuffle"
-            onPress={() => shuffleSystem(setDesignSystem)}
-          >
-            <ShuffleIcon />
-          </Button>
-          <Button
-            size="sm"
-            isIconOnly
-            aria-label="Undo"
-            onPress={onUndo}
-            isDisabled={!canUndo}
-          >
-            <Undo2Icon />
-          </Button>
-        </div>
       </div>
 
       {/* Body */}
