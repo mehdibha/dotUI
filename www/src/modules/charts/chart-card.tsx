@@ -1,11 +1,10 @@
 'use client'
 
 import { Suspense } from 'react'
-import { CodeIcon } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
-import { LinkButton } from '@/registry/ui/button'
 
+import { ChartCodeModal } from './chart-code-modal'
 import { getDemoComponent, POLAR_FAMILIES } from './data'
 
 interface ChartCardProps {
@@ -36,15 +35,7 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between gap-2 pl-1">
         <span className="text-sm text-fg-muted capitalize">{label}</span>
-        <LinkButton
-          href="/docs/components/chart"
-          variant="quiet"
-          size="sm"
-          className="text-fg-muted hover:text-fg"
-        >
-          <CodeIcon />
-          Show code
-        </LinkButton>
+        <ChartCodeModal demoKey={demoKey} label={label} />
       </div>
       <div
         inert

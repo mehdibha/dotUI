@@ -2,13 +2,76 @@ import { DemosIndex } from '@/registry/__generated__/demos'
 
 /**
  * Data layer for the standalone `/charts` showcase. Live demo components come
- * from the generated `DemosIndex` (lazy). The showcase displays them only — no
- * source is shown here, so (unlike the docs) we don't pull in raw `?raw` text.
+ * from the generated `DemosIndex` (lazy). The "Show code" modal additionally
+ * pulls each variant's raw source on demand (see below).
  */
 
 /** Lazy demo component for a demo key, or `undefined` if it doesn't exist. */
 export function getDemoComponent(key: string) {
   return DemosIndex[key]?.component
+}
+
+/** Package managers offered in the install section, in display order. */
+export const PACKAGE_MANAGERS = ['npm', 'pnpm', 'yarn', 'bun'] as const
+export type PackageManager = (typeof PACKAGE_MANAGERS)[number]
+
+/** Family id from a demo key: `chart-bar/demos/multiple` → `chart-bar`. */
+export function familyOf(demoKey: string): string {
+  return demoKey.slice(0, demoKey.indexOf('/'))
+}
+
+/** The shadcn install command per package manager for a demo's family. */
+export function installCommands(
+  demoKey: string,
+): Record<PackageManager, string> {
+  const arg = `shadcn@latest add @dotui/${familyOf(demoKey)}`
+  return {
+    npm: `npx ${arg}`,
+    pnpm: `pnpm dlx ${arg}`,
+    yarn: `yarn dlx ${arg}`,
+    bun: `bunx ${arg}`,
+  }
+}
+
+// Raw demo sources, lazily loaded per variant — only the opened variant's
+// source is fetched. Keyed by file path; matched to a demo key by suffix.
+const rawDemoSources = import.meta.glob(
+  '../../registry/ui/chart-*/demos/*.tsx',
+  { query: '?raw', import: 'default' },
+) as Record<string, () => Promise<string>>
+
+/**
+ * Rewrite a demo's source the way the docs display it: registry imports become
+ * the installed `@/components/*` paths, the default export is unwrapped, and
+ * tabs become spaces. (Mirrors the docs transformer's full-source output; the
+ * ts-morph preview pass it also runs is build-only and unneeded here.)
+ */
+function toDisplaySource(raw: string): string {
+  return raw
+    .replace(/@\/registry\/ui\//g, '@/components/ui/')
+    .replace(/@\/registry\//g, '@/')
+    .replace('export default function', 'export function')
+    .replace(/\t/g, '  ')
+    .trim()
+}
+
+const sourceCache = new Map<string, Promise<string | null>>()
+
+/**
+ * A cached promise of a variant's display source, or `null` if the file is
+ * missing. Cached so React's `use()` gets a stable promise across renders.
+ */
+export function demoSource(demoKey: string): Promise<string | null> {
+  let promise = sourceCache.get(demoKey)
+  if (!promise) {
+    const suffix = `${demoKey}.tsx`
+    const entry = Object.entries(rawDemoSources).find(([p]) =>
+      p.endsWith(suffix),
+    )
+    promise = entry ? entry[1]().then(toDisplaySource) : Promise.resolve(null)
+    sourceCache.set(demoKey, promise)
+  }
+  return promise
 }
 
 /**
