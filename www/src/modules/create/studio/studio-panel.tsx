@@ -10,24 +10,19 @@
  * the user wants.
  */
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
-import { RotateCcwIcon, ShuffleIcon, Undo2Icon } from 'lucide-react'
 import { AnimatePresence, motion, type Transition } from 'motion/react'
 
 import { cn } from '@/registry/lib/utils'
-import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
 import { Input } from '@/registry/ui/input'
 import { SearchField } from '@/registry/ui/search-field'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 
 import { CodeOptionsDialog } from '../code-options'
 import { ExportFooter } from '../export'
-import { RADIUS_FACTOR_VAR } from '../layout'
-import { useDesignSystem } from '../preset'
+import { useStudioChrome } from './chrome'
 import {
   DEFAULT_SECTION,
   findSection,
@@ -38,95 +33,20 @@ import { StudioModeProvider } from './widgets'
 
 const routeApi = getRouteApi('/_app/create')
 
-/* "Surprise me" pools — the always-legible axes, each curated so any pick lands. */
-const SHUFFLE_ACCENTS = [
-  '#3b82f6',
-  '#6366f1',
-  '#8b5cf6',
-  '#ec4899',
-  '#f43f5e',
-  '#f59e0b',
-  '#22c55e',
-  '#14b8a6',
-  '#06b6d4',
-]
-const SHUFFLE_RADII = ['0', '0.5', '1', '1.5', '2']
-const SHUFFLE_DENSITIES = ['compact', 'default', 'comfortable'] as const
-
-function pickRandom<T>(arr: readonly T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)] as T
-}
-
 const fade: Transition = { duration: 0.18, ease: [0.32, 0.72, 0, 1] }
 
 export function StudioPanel({ className }: { className?: string }) {
-  const { panel, preset } = routeApi.useSearch()
+  const { panel } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const { designSystem, setDesignSystem } = useDesignSystem()
+  const { pro } = useStudioChrome()
 
-  const [pro, setPro] = useState(false)
   const [query, setQuery] = useState('')
 
   const active = findSection(panel ?? DEFAULT_SECTION)
-  const accent =
-    designSystem.color?.seeds.accent ?? DEFAULT_COLOR_CONFIG.seeds.accent
-
-  /* ----- Undo history. Every edit lands in `?preset=` with replace:true, so the
-     browser back button can't step through it. We keep our own stack, watching
-     `preset` to catch changes from every section regardless of which one made it. */
-  const history = useRef<(string | undefined)[]>([])
-  const prevPreset = useRef<string | undefined>(preset)
-  const undoing = useRef(false)
-  const [canUndo, setCanUndo] = useState(false)
-
-  useEffect(() => {
-    if (prevPreset.current === preset) return
-    if (undoing.current) {
-      undoing.current = false
-    } else {
-      history.current.push(prevPreset.current)
-      setCanUndo(true)
-    }
-    prevPreset.current = preset
-  }, [preset])
 
   function goTo(id: string) {
     setQuery('')
     navigate({ search: (prev) => ({ ...prev, panel: id }) })
-  }
-
-  function undo() {
-    if (history.current.length === 0) return
-    const previous = history.current.pop()
-    undoing.current = true
-    navigate({
-      search: (prev) => ({ ...prev, preset: previous }),
-      replace: true,
-    })
-    setCanUndo(history.current.length > 0)
-  }
-
-  function reset() {
-    navigate({
-      search: (prev) => ({ ...prev, preset: undefined }),
-      replace: true,
-    })
-  }
-
-  /* Shuffle the legible axes in one update so Undo reverts it in a single step. */
-  function shuffle() {
-    const accentPick = pickRandom(SHUFFLE_ACCENTS)
-    const radius = pickRandom(SHUFFLE_RADII)
-    const density = pickRandom(SHUFFLE_DENSITIES)
-    setDesignSystem((prev) => {
-      const base = prev.color ?? DEFAULT_COLOR_CONFIG
-      return {
-        ...prev,
-        density,
-        tokens: { ...prev.tokens, [RADIUS_FACTOR_VAR]: radius },
-        color: { ...base, seeds: { ...base.seeds, accent: accentPick } },
-      }
-    })
   }
 
   const results = searchSections(query)
@@ -139,80 +59,17 @@ export function StudioPanel({ className }: { className?: string }) {
         className,
       )}
     >
-      {/* Header */}
-      <div className="flex flex-col gap-2.5 border-b p-2.5">
-        <div className="flex items-center justify-between gap-2 pl-1">
-          <div className="flex items-center gap-2">
-            <span
-              className="size-4 rounded-full ring-1 ring-border ring-inset"
-              style={{ backgroundColor: accent }}
-              aria-hidden
-            />
-            <span className="text-sm font-semibold tracking-tight">Studio</span>
-          </div>
-          <ToggleButtonGroup
-            aria-label="Detail level"
-            selectionMode="single"
-            disallowEmptySelection
-            size="sm"
-            selectedKeys={[pro ? 'pro' : 'simple']}
-            onSelectionChange={(keys) => {
-              const next = keys.values().next().value
-              if (next) setPro(next === 'pro')
-            }}
-          >
-            <ToggleButton id="simple">Simple</ToggleButton>
-            <ToggleButton id="pro">Pro</ToggleButton>
-          </ToggleButtonGroup>
-        </div>
-
-        <div className="flex items-center gap-1.5">
-          <SearchField
-            aria-label="Search controls"
-            value={query}
-            onChange={setQuery}
-            className="flex-1"
-          >
-            <Input size="sm" placeholder="Search any control…" />
-          </SearchField>
-          <Tooltip delay={300}>
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              onPress={shuffle}
-              aria-label="Surprise me"
-            >
-              <ShuffleIcon />
-            </Button>
-            <TooltipContent>Surprise me</TooltipContent>
-          </Tooltip>
-          <Tooltip delay={300}>
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              onPress={undo}
-              isDisabled={!canUndo}
-              aria-label="Undo"
-            >
-              <Undo2Icon />
-            </Button>
-            <TooltipContent>Undo</TooltipContent>
-          </Tooltip>
-          <Tooltip delay={300}>
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              onPress={reset}
-              aria-label="Reset to defaults"
-            >
-              <RotateCcwIcon />
-            </Button>
-            <TooltipContent>Reset all</TooltipContent>
-          </Tooltip>
-        </div>
+      {/* Header — per-section command search. The depth switch and the
+          shuffle / undo / reset actions live in the /create top bar so the
+          builder reads as one cohesive bar, not two stacked headers. */}
+      <div className="border-b p-2.5">
+        <SearchField
+          aria-label="Search controls"
+          value={query}
+          onChange={setQuery}
+        >
+          <Input size="sm" placeholder="Search any control…" />
+        </SearchField>
       </div>
 
       {/* Body: domain rail + content */}
