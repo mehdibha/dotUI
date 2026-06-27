@@ -10,8 +10,14 @@ import { encodePreset, sendToIframe } from '@/modules/create/preset'
 import { PresetThumbnail } from './preset-thumbnail'
 import { PRESETS, type Preset } from './presets-data'
 
-/** Tiles are a fixed width so the scaled preview fits exactly; the grid centers them. */
-const TILE_WIDTH = 320
+/** Minimum gallery tile width; tiles flex to fill the row (`1fr`) above this. */
+const MIN_TILE = 280
+
+/**
+ * Fixed width of the preview panel. Constant during the open/close animation, so
+ * the iframe inside never changes size — only the panel's clip reveals it.
+ */
+const PREVIEW_WIDTH = 'clamp(520px, 62vw, 1100px)'
 
 export function PresetsPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null)
@@ -58,72 +64,73 @@ export function PresetsPage() {
   }, [selected])
 
   return (
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col p-4 pt-2 lg:p-6 lg:pt-2">
-      <div
-        className={cn(
-          'grid min-h-0 flex-1 gap-6',
-          'lg:[transition:grid-template-columns_520ms_cubic-bezier(0.32,0.72,0,1)]',
-          isSplit ? 'lg:grid-cols-[1.05fr_1.95fr]' : 'lg:grid-cols-[1fr_0fr]',
-        )}
-      >
-        {/* ---------------------------------------------------------------- */}
-        {/* Gallery column                                                    */}
-        {/* ---------------------------------------------------------------- */}
-        <div className="flex min-h-0 min-w-0 flex-col">
-          <GalleryHeader
-            isSplit={isSplit}
-            selected={selected}
-            onBack={() => setSelectedId(null)}
-          />
-          <div className="min-h-0 flex-1 scrollbar-thin overflow-y-auto overscroll-contain pt-1 pb-6">
-            <div
-              className="grid justify-center gap-5"
-              style={{
-                gridTemplateColumns: `repeat(auto-fill, ${TILE_WIDTH}px)`,
-              }}
-            >
-              {PRESETS.map((preset) => (
-                <PresetCard
-                  key={preset.id}
-                  preset={preset}
-                  isSelected={preset.id === selectedId}
-                  onSelect={() => handleSelect(preset)}
-                />
-              ))}
-            </div>
+    <div
+      className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 p-4 pt-2 lg:p-6 lg:pt-2"
+      style={{ '--pw': PREVIEW_WIDTH } as React.CSSProperties}
+    >
+      {/* ------------------------------------------------------------------ */}
+      {/* Gallery — fills the row; collapses to a rail when a preset opens.   */}
+      {/* ------------------------------------------------------------------ */}
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <GalleryHeader
+          isSplit={isSplit}
+          selected={selected}
+          onBack={() => setSelectedId(null)}
+        />
+        <div className="min-h-0 flex-1 scrollbar-thin overflow-y-auto overscroll-contain pt-1 pb-6">
+          <div
+            className="grid gap-5"
+            style={{
+              gridTemplateColumns: `repeat(auto-fill, minmax(${MIN_TILE}px, 1fr))`,
+            }}
+          >
+            {PRESETS.map((preset) => (
+              <PresetCard
+                key={preset.id}
+                preset={preset}
+                isSelected={preset.id === selectedId}
+                onSelect={() => handleSelect(preset)}
+              />
+            ))}
           </div>
         </div>
+      </div>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* Preview column — opens from the right on desktop, full-screen on  */}
-        {/* mobile (where the split layout can't fit).                        */}
-        {/* ---------------------------------------------------------------- */}
-        <div
-          className={cn(
-            'relative min-h-0 min-w-0 overflow-hidden max-lg:hidden',
-            isSplit &&
-              'max-lg:fixed max-lg:inset-0 max-lg:z-50 max-lg:block max-lg:bg-bg max-lg:p-4',
-          )}
-        >
+      {/* ------------------------------------------------------------------ */}
+      {/* Preview — fixed-width panel revealed by a width animation. The      */}
+      {/* iframe stays pinned to a constant width, so its content never       */}
+      {/* reflows as the panel opens; it's just clipped/revealed.             */}
+      {/* On mobile (no room to split) it becomes a full-screen overlay.      */}
+      {/* ------------------------------------------------------------------ */}
+      <div
+        className={cn(
+          'relative shrink-0 overflow-hidden',
+          'lg:transition-[width,margin-left] lg:duration-[520ms] lg:ease-[cubic-bezier(0.32,0.72,0,1)]',
+          isSplit
+            ? 'max-lg:fixed max-lg:inset-0 max-lg:z-50 max-lg:bg-bg lg:ml-6 lg:w-[var(--pw)]'
+            : 'max-lg:hidden lg:ml-0 lg:w-0',
+        )}
+      >
+        <div className="absolute inset-y-0 right-0 w-full lg:w-[var(--pw)]">
           {iframeSrc && (
             <iframe
               ref={iframeRef}
               src={iframeSrc}
               title="Preset preview"
-              className="size-full rounded-xl border bg-bg"
+              className="size-full rounded-xl border bg-bg max-lg:rounded-none max-lg:border-0"
             />
           )}
-          {isSplit && (
-            <Button
-              variant="quiet"
-              size="sm"
-              onPress={() => setSelectedId(null)}
-              className="absolute top-3 right-3 bg-card/80 backdrop-blur lg:hidden"
-            >
-              Close
-            </Button>
-          )}
         </div>
+        {isSplit && (
+          <Button
+            variant="quiet"
+            size="sm"
+            onPress={() => setSelectedId(null)}
+            className="absolute top-3 right-3 bg-card/80 backdrop-blur lg:hidden"
+          >
+            Close
+          </Button>
+        )}
       </div>
     </div>
   )
@@ -139,7 +146,7 @@ function GalleryHeader({
   onBack: () => void
 }) {
   return (
-    <div className="mb-4 flex items-center gap-2 px-1">
+    <div className="mb-4 flex items-center gap-2">
       <AnimatePresence initial={false}>
         {isSplit && (
           <motion.div
@@ -199,13 +206,9 @@ function PresetCard({
           ? 'border-primary ring-2 ring-primary/35'
           : 'group-has-[button:focus-visible]:border-border-hover',
       )}
-      style={{ width: TILE_WIDTH }}
     >
       <div className="relative h-[240px] overflow-hidden border-b">
-        <PresetThumbnail
-          designSystem={preset.designSystem}
-          width={TILE_WIDTH}
-        />
+        <PresetThumbnail designSystem={preset.designSystem} />
         {/* Fade the clipped bottom edge into the card chrome. */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card to-transparent" />
       </div>
