@@ -1,15 +1,7 @@
 {
   "name": "CommandContentProps",
-  "description": "Contains the command items, filtered to match the input's value.",
+  "description": "The list of commands, filtered to match the input's value. Renders a `ListBox`.",
   "props": {
-    "virtulized": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Whether to use virtualization for large lists."
-    },
     "autoFocus": {
       "type": "FocusStrategy | boolean",
       "detailedType": "FocusStrategy | boolean | undefined",

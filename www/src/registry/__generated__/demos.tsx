@@ -609,10 +609,6 @@ export const DemosIndex: Record<
 		files: ["ui/command/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/command/demos/basic")),
 	},
-	"command/demos/dialog": {
-		files: ["ui/command/demos/dialog.tsx"],
-		component: React.lazy(() => import("@/registry/ui/command/demos/dialog")),
-	},
 	"command/demos/in-modal": {
 		files: ["ui/command/demos/in-modal.tsx"],
 		component: React.lazy(() => import("@/registry/ui/command/demos/in-modal")),

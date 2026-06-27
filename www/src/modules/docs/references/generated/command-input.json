@@ -1,15 +1,7 @@
 {
   "name": "CommandInputProps",
-  "description": "The search input used to filter the commands.",
+  "description": "The search input used to filter the commands. Renders a `SearchField`.",
   "props": {
-    "placeholder": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Placeholder text for the search input."
-    },
     "onSubmit": {
       "type": "((value: string) => void)",
       "detailedType": "((value: string) => void) | undefined",

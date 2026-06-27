@@ -8,12 +8,11 @@ import {
   FileTextIcon,
   SearchIcon,
 } from 'lucide-react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
 
 import { Button } from '@/registry/ui/button'
 import { Command } from '@/registry/ui/command'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Input, InputGroup } from '@/registry/ui/input'
+import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 import {
   MenuContent,
   MenuItem,
@@ -27,59 +26,100 @@ interface SearchCommandProps {
   items: PageTree.Node[]
   keyboardShortcut?: boolean
   children: React.ReactNode
-  onAction?: () => void
 }
+
+const TOP_LEVEL_LINKS = [
+  { label: 'Docs', href: '/docs' },
+  { label: 'Components', href: '/docs/components' },
+] as const
 
 export function SearchCommand({
   items,
-  keyboardShortcut,
+  keyboardShortcut = false,
   children,
-  onAction,
 }: SearchCommandProps) {
-  const [search, setSearch] = React.useState('')
+  const [isOpen, setIsOpen] = React.useState(false)
+
+  React.useEffect(() => {
+    if (!keyboardShortcut) return
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || e.key === '/') {
+        const target = e.target
+        if (
+          (target instanceof HTMLElement && target.isContentEditable) ||
+          target instanceof HTMLInputElement ||
+          target instanceof HTMLTextAreaElement ||
+          target instanceof HTMLSelectElement
+        ) {
+          return
+        }
+
+        e.preventDefault()
+        setIsOpen((open) => !open)
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [keyboardShortcut])
 
   return (
-    <SearchCommandDialog keyboardShortcut={keyboardShortcut} trigger={children}>
-      <Command className="h-72">
-        <SearchField
-          aria-label="Search"
-          autoFocus
-          value={search}
-          onChange={setSearch}
+    <Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
+      {children}
+      <Overlay
+        modalProps={{
+          className: 'duration-0 entering:scale-100 exiting:scale-100',
+        }}
+      >
+        {/* Mounted only while open, so the Autocomplete (filter + focus) resets on each open. */}
+        <DialogContent
+          aria-label="Search documentation"
+          className="flex h-100 max-h-[70vh] flex-col overflow-hidden p-0!"
         >
-          <InputGroup>
-            <SearchIcon />
-            <Input placeholder="Search" />
-          </InputGroup>
-        </SearchField>
-        <MenuContent
-          onAction={() => {
-            setSearch('')
-            onAction?.()
-          }}
-        >
-          <MenuSection>
-            <MenuSectionHeader>Menu</MenuSectionHeader>
-            {(
-              [
-                { label: 'Docs', href: '/docs' },
-                { label: 'Components', href: '/docs/components' },
-              ] as const
-            ).map((item) => (
-              <MenuItem key={item.href} href={item.href} textValue={item.label}>
-                <ArrowRightIcon className="text-fg-muted!" />
-                {item.label}
-              </MenuItem>
-            ))}
-          </MenuSection>
-          {items.map((group, index) => {
-            if (group.type === 'folder') {
-              return (
-                // oxlint-disable-next-line react/no-array-index-key -- items is static navigation data
-                <MenuSection key={index}>
-                  <MenuSectionHeader>{group.name}</MenuSectionHeader>
-                  {group.children.map((item) => {
-                    if (item.type === 'page') {
+          <Command
+            aria-label="Search documentation"
+            className="min-h-0 flex-1 overflow-y-hidden"
+          >
+            <SearchField autoFocus aria-label="Search">
+              <InputGroup>
+                <InputGroupAddon>
+                  <SearchIcon />
+                </InputGroupAddon>
+                <Input placeholder="Search documentation..." />
+              </InputGroup>
+            </SearchField>
+            <MenuContent
+              aria-label="Search results"
+              className="min-h-0 flex-1 overflow-y-auto"
+              onAction={() => setIsOpen(false)}
+              renderEmptyState={() => (
+                <div className="py-8 text-center text-sm text-fg-muted">
+                  No results found.
+                </div>
+              )}
+            >
+              <MenuSection>
+                <MenuSectionHeader>Menu</MenuSectionHeader>
+                {TOP_LEVEL_LINKS.map((item) => (
+                  <MenuItem
+                    key={item.href}
+                    href={item.href}
+                    textValue={item.label}
+                  >
+                    <ArrowRightIcon className="text-fg-muted!" />
+                    {item.label}
+                  </MenuItem>
+                ))}
+              </MenuSection>
+              {items.map((group, index) => {
+                if (group.type !== 'folder') return null
+                return (
+                  // oxlint-disable-next-line react/no-array-index-key -- items is static navigation data
+                  <MenuSection key={index}>
+                    <MenuSectionHeader>{group.name}</MenuSectionHeader>
+                    {group.children.map((item) => {
+                      if (item.type !== 'page') return null
                       return (
                         <MenuItem
                           key={item.url}
@@ -94,86 +134,30 @@ export function SearchCommand({
                           {item.name}
                         </MenuItem>
                       )
-                    }
-                    return null
-                  })}
-                </MenuSection>
-              )
-            }
-            return null
-          })}
-        </MenuContent>
-        <div className="flex items-center justify-end gap-4 rounded-b-[inherit] border-t p-3 text-xs text-fg-muted [&_svg]:size-4">
-          <div className="flex items-center gap-1">
-            <ChevronsUpDownIcon />
-            <span>Navigate</span>
+                    })}
+                  </MenuSection>
+                )
+              })}
+            </MenuContent>
+          </Command>
+          <div className="flex items-center gap-4 border-t px-3 py-2.5 text-xs text-fg-muted [&_svg]:size-3.5">
+            <span className="flex items-center gap-1.5">
+              <ChevronsUpDownIcon />
+              Navigate
+            </span>
+            <span className="flex items-center gap-1.5">
+              <CornerDownLeftIcon />
+              Go to
+            </span>
+            <Button
+              slot="close"
+              variant="quiet"
+              size="sm"
+              className="ml-auto h-6 px-1.5 text-xs font-normal text-fg-muted"
+            >
+              Esc
+            </Button>
           </div>
-          <div className="flex items-center gap-1">
-            <CornerDownLeftIcon />
-            <span>Go</span>
-          </div>
-        </div>
-      </Command>
-    </SearchCommandDialog>
-  )
-}
-
-function SearchCommandDialog({
-  keyboardShortcut = false,
-  trigger,
-  children,
-}: {
-  keyboardShortcut?: boolean
-  trigger: React.ReactNode
-  children?: React.ReactNode
-}) {
-  const [isOpen, setIsOpen] = React.useState(false)
-
-  React.useEffect(() => {
-    if (!keyboardShortcut) return
-
-    const down = (e: KeyboardEvent) => {
-      if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || e.key === '/') {
-        if (
-          (e.target instanceof HTMLElement && e.target.isContentEditable) ||
-          e.target instanceof HTMLInputElement ||
-          e.target instanceof HTMLTextAreaElement ||
-          e.target instanceof HTMLSelectElement
-        ) {
-          return
-        }
-
-        e.preventDefault()
-        setIsOpen((open) => !open)
-      }
-    }
-
-    document.addEventListener('keydown', down)
-    return () => document.removeEventListener('keydown', down)
-  }, [keyboardShortcut])
-
-  return (
-    <Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
-      {trigger}
-      <Overlay
-        modalProps={{
-          className: 'duration-0 entering:scale-100 exiting:scale-100',
-        }}
-      >
-        <DialogContent className="p-0!">
-          {composeRenderProps(children, (children) => (
-            <>
-              {children}
-              <Button
-                slot="close"
-                variant="default"
-                size="sm"
-                className="absolute top-2 right-2 h-7 px-2 text-xs font-normal"
-              >
-                Esc
-              </Button>
-            </>
-          ))}
         </DialogContent>
       </Overlay>
     </Dialog>
