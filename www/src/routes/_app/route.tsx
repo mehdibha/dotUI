@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseHeader } from '@tanstack/react-start/server'
 import type * as PageTree from 'fumadocs-core/page-tree'
@@ -36,10 +36,16 @@ export const Route = createFileRoute('/_app')({
 function AppLayout() {
   const { pageTree } = Route.useLoaderData()
   const items = pageTree.children as PageTree.Node[]
+  // /create is a focused builder "app": it renders its own top bar (continuous
+  // with the site header) in place of the global site nav, so the marketing/docs
+  // links and "Search docs" don't stack over the editor. `--header-height` stays
+  // defined here because the builder's height math still depends on it.
+  const { pathname } = useLocation()
+  const isCreate = pathname === '/create'
 
   return (
     <div className="[--header-height:--spacing(14)]">
-      <Header items={items} />
+      {!isCreate && <Header items={items} />}
       <main id="content">
         <Outlet />
       </main>

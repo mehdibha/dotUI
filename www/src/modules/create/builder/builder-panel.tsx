@@ -1,114 +1,36 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { getRouteApi } from '@tanstack/react-router'
-import {
-  CheckIcon,
-  SearchIcon,
-  ShuffleIcon,
-  Undo2Icon,
-  XIcon,
-} from 'lucide-react'
+import { useCallback, useRef, useState } from 'react'
+import { CheckIcon, XIcon } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
 import { cn } from '@/registry/lib/utils'
-import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 
 import { CodeOptionsDialog } from '../code-options'
 import { ExportFooter } from '../export'
-import { useDesignSystem } from '../preset'
 import { CommandPalette } from './command-palette'
 import { ComponentsZone } from './components-zone'
 import { FOUNDATION_AXES, FoundationsZone } from './foundations'
 import { IntakeGate } from './intake'
-import { RADIUS_FACTOR_VAR } from './tokens'
 
-const routeApi = getRouteApi('/_app/create')
-
-const SHUFFLE_ACCENTS = [
-  '#3b82f6',
-  '#6366f1',
-  '#8b5cf6',
-  '#ec4899',
-  '#f43f5e',
-  '#f59e0b',
-  '#22c55e',
-  '#14b8a6',
-  '#06b6d4',
-]
-const SHUFFLE_RADII = ['0', '0.5', '1', '1.5', '2']
-const SHUFFLE_DENSITIES = ['compact', 'default', 'comfortable'] as const
-
-function pick<T>(arr: readonly T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)] as T
-}
-
-export function BuilderPanel({ className }: { className?: string }) {
-  const { preset } = routeApi.useSearch()
-  const navigate = routeApi.useNavigate()
-  const { designSystem, setDesignSystem } = useDesignSystem()
-
+export function BuilderPanel({
+  className,
+  showIntake,
+  onCloseIntake,
+  cmdOpen,
+  onCloseCommand,
+}: {
+  className?: string
+  showIntake: boolean
+  onCloseIntake: () => void
+  cmdOpen: boolean
+  onCloseCommand: () => void
+}) {
   const [openIds, setOpenIds] = useState<Set<string>>(
     () => new Set(['f:colors']),
   )
-  const [showIntake, setShowIntake] = useState(false)
-  const [cmdOpen, setCmdOpen] = useState(false)
   const [ribbonDismissed, setRibbonDismissed] = useState(false)
-  const [name, setName] = useState('Untitled system')
   const scrollRef = useRef<HTMLDivElement>(null)
-
-  // First-run: open the intake when landing with no preset (a shared ?preset=
-  // link skips it). Captured once so picking a colour mid-intake doesn't dismiss.
-  const inited = useRef(false)
-  useEffect(() => {
-    if (inited.current) return
-    inited.current = true
-    if (!preset) setShowIntake(true)
-  }, [preset])
-
-  /* ------------------------------- Undo -------------------------------- */
-  const historyRef = useRef<(string | undefined)[]>([])
-  const prevPresetRef = useRef<string | undefined>(preset)
-  const isUndoingRef = useRef(false)
-  const [canUndo, setCanUndo] = useState(false)
-  useEffect(() => {
-    if (prevPresetRef.current === preset) return
-    if (isUndoingRef.current) {
-      isUndoingRef.current = false
-    } else {
-      historyRef.current.push(prevPresetRef.current)
-      setCanUndo(true)
-    }
-    prevPresetRef.current = preset
-  }, [preset])
-
-  function undo() {
-    if (historyRef.current.length === 0) return
-    const previous = historyRef.current.pop()
-    isUndoingRef.current = true
-    navigate({
-      search: (prev) => ({ ...prev, preset: previous }),
-      replace: true,
-    })
-    setCanUndo(historyRef.current.length > 0)
-  }
-
-  function shuffle() {
-    const accent = pick(SHUFFLE_ACCENTS)
-    const radius = pick(SHUFFLE_RADII)
-    const density = pick(SHUFFLE_DENSITIES)
-    setDesignSystem((prev) => {
-      const base = prev.color ?? DEFAULT_COLOR_CONFIG
-      return {
-        ...prev,
-        density,
-        tokens: { ...prev.tokens, [RADIUS_FACTOR_VAR]: radius },
-        color: { ...base, seeds: { ...base.seeds, accent } },
-      }
-    })
-  }
 
   /* --------------------------- Open / accordion ------------------------ */
   // One-open accordion within each namespace ('f:' foundations, 'c:' components):
@@ -145,21 +67,6 @@ export function BuilderPanel({ className }: { className?: string }) {
     })
   }, [])
 
-  /* ------------------------------- ⌘K ---------------------------------- */
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault()
-        setCmdOpen((o) => !o)
-      }
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [])
-
-  const accent =
-    (designSystem.color ?? DEFAULT_COLOR_CONFIG).seeds.accent ?? '#6366f1'
-
   return (
     <div
       className={cn(
@@ -167,64 +74,10 @@ export function BuilderPanel({ className }: { className?: string }) {
         className,
       )}
     >
-      {/* Header */}
-      <div className="flex h-12 shrink-0 items-center gap-2 border-b px-2.5">
-        <Tooltip delay={300}>
-          <button
-            type="button"
-            onClick={() => setShowIntake(true)}
-            aria-label="Brand source"
-            className="size-5 shrink-0 rounded-[6px] focus-reset ring-1 ring-black/10 transition-transform ring-inset hover:scale-110 focus-visible:focus-ring"
-            style={{ backgroundColor: accent }}
-          />
-          <TooltipContent>Brand · reopen intake</TooltipContent>
-        </Tooltip>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          aria-label="System name"
-          spellCheck={false}
-          className="min-w-0 flex-1 truncate rounded-sm bg-transparent text-sm font-medium outline-none focus-visible:bg-neutral focus-visible:px-1"
-        />
-        <button
-          type="button"
-          onClick={() => setCmdOpen(true)}
-          className="flex items-center gap-1.5 rounded-md border bg-bg px-2 py-1 text-xs text-fg-muted focus-reset transition-colors hover:bg-neutral focus-visible:focus-ring"
-        >
-          <SearchIcon className="size-3" />
-          <kbd className="font-mono text-[10px]">⌘K</kbd>
-        </button>
-        <Tooltip delay={300}>
-          <Button
-            size="sm"
-            isIconOnly
-            variant="quiet"
-            aria-label="Shuffle"
-            onPress={shuffle}
-          >
-            <ShuffleIcon />
-          </Button>
-          <TooltipContent>Surprise me</TooltipContent>
-        </Tooltip>
-        <Tooltip delay={300}>
-          <Button
-            size="sm"
-            isIconOnly
-            variant="quiet"
-            aria-label="Undo"
-            onPress={undo}
-            isDisabled={!canUndo}
-          >
-            <Undo2Icon />
-          </Button>
-          <TooltipContent>Undo</TooltipContent>
-        </Tooltip>
-      </div>
-
       {/* Body */}
       <AnimatePresence mode="wait" initial={false}>
         {showIntake ? (
-          <IntakeGate key="intake" onGenerate={() => setShowIntake(false)} />
+          <IntakeGate key="intake" onGenerate={onCloseIntake} />
         ) : (
           <motion.div
             key="spine"
@@ -264,11 +117,7 @@ export function BuilderPanel({ className }: { className?: string }) {
         </div>
       )}
 
-      <CommandPalette
-        open={cmdOpen}
-        onClose={() => setCmdOpen(false)}
-        onJump={jump}
-      />
+      <CommandPalette open={cmdOpen} onClose={onCloseCommand} onJump={jump} />
     </div>
   )
 }
