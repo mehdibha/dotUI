@@ -3,10 +3,14 @@
 import { useState } from 'react'
 import { DicesIcon, RotateCcwIcon, SparklesIcon, Undo2Icon } from 'lucide-react'
 
+import { siteConfig } from '@/config/site'
 import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
+import { Button, buttonStyles } from '@/registry/ui/button'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { GitHubIcon } from '@/components/icons/github'
+import { Logo } from '@/components/layout/logo'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 import { useReroll } from '../panel/macros'
 import { Segmented } from '../panel/primitives'
@@ -38,10 +42,13 @@ export function AtelierExperience() {
 
 function StudioLayout() {
   const { aiOpen } = useStudio()
+  // No global site Header above us anymore (suppressed in _app for ?atelier),
+  // so the shell owns the full viewport: our own header-height top bar plus the
+  // remaining space for the three zones.
   return (
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-col">
+    <div className="flex h-svh min-h-0 flex-col">
       <TopBar />
-      <div className="flex min-h-0 flex-1 gap-3 p-4 pt-0 lg:gap-4 lg:p-5 lg:pt-0">
+      <div className="flex min-h-0 flex-1 gap-3 p-4 lg:gap-4 lg:p-5">
         <Inspector className="w-[360px] max-lg:hidden" />
         <div className="flex min-w-0 flex-1 flex-col gap-3">
           <Stage />
@@ -69,9 +76,16 @@ function TopBar() {
     (designSystem.color ?? DEFAULT_COLOR_CONFIG).seeds.accent ?? '#6366f1'
 
   return (
-    <div className="flex items-center gap-2 px-4 py-2.5 lg:px-5">
+    // One cohesive bar, visually continuous with the site Header it replaces on
+    // /create: same height token, sticky top, same px-6 gutter and button
+    // language. The Logo links home so the site ⇄ builder transition is two-way.
+    <header className="sticky top-0 z-30 flex h-(--header-height) shrink-0 items-center gap-2 border-b bg-bg/80 px-4 backdrop-blur-md lg:px-6">
+      <Logo />
+
+      <div className="mx-1 h-5 w-px bg-border max-sm:hidden" />
+
       <span
-        className="size-6 shrink-0 rounded-md ring-1 ring-black/10 ring-inset"
+        className="size-6 shrink-0 rounded-md ring-1 ring-black/10 ring-inset max-sm:hidden"
         style={{ backgroundColor: accent }}
         aria-hidden
       />
@@ -80,7 +94,7 @@ function TopBar() {
         onChange={(e) => setName(e.target.value)}
         aria-label="System name"
         spellCheck={false}
-        className="w-44 min-w-0 truncate rounded-sm bg-transparent text-sm font-semibold outline-none focus-visible:bg-neutral focus-visible:px-1.5 focus-visible:py-0.5"
+        className="w-32 min-w-0 truncate rounded-sm bg-transparent text-sm font-semibold outline-none focus-visible:bg-neutral focus-visible:px-1.5 focus-visible:py-0.5 lg:w-44"
       />
 
       <div className="mx-auto w-56 max-md:hidden">
@@ -143,7 +157,24 @@ function TopBar() {
         >
           <SparklesIcon /> Assistant
         </Button>
+
+        <div className="mx-1 h-5 w-px bg-border max-sm:hidden" />
+
+        <a
+          aria-label="GitHub"
+          href={siteConfig.links.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-icon-only=""
+          className={cn(
+            buttonStyles({ variant: 'quiet', size: 'sm' }),
+            'max-sm:hidden',
+          )}
+        >
+          <GitHubIcon />
+        </a>
+        <ThemeToggle variant="quiet" size="sm" isIconOnly />
       </div>
-    </div>
+    </header>
   )
 }
