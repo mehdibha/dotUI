@@ -65,3 +65,14 @@
     content: counter(step);
   }
 }
+
+/* Hide the scrollbar while keeping the element scrollable. Used on scroll
+   containers where a visible bar would be noise (the create panel's stacked
+   views, docs example preview frames). */
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -7,8 +7,9 @@ export const registryBase = [
     extends: 'none',
     dependencies: [
       'tailwind-variants',
-      'clsx',
+      // peer of tailwind-variants (its internal twMerge); cn uses cnfast now
       'tailwind-merge',
+      'cnfast',
       'react-aria-components',
       'tailwindcss-react-aria-components',
       'tw-animate-css',

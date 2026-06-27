@@ -1,4 +1,3 @@
-import { getBaseUrl } from '@/lib/url'
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
 import {
   CheckIcon,
@@ -9,6 +8,7 @@ import { Button } from '@/registry/ui/button'
 import { Group } from '@/registry/ui/group'
 import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
+import { getBaseUrl } from '@/modules/docs/url'
 
 function getPromptUrl(baseURL: string, url: string) {
   return `${baseURL}?q=${encodeURIComponent(
@@ -96,7 +96,7 @@ export function DocsCopyPage({
         {isCopied ? <CheckIcon /> : <CopyIcon />} Copy page
       </Button>
       <Menu>
-        <Button size="sm" isIconOnly>
+        <Button size="sm" isIconOnly aria-label="More copy options">
           <ChevronDownIcon />
         </Button>
         <Popover placement="bottom end">

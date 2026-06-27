@@ -28,6 +28,7 @@ import {
 // module scope so it runs once per route bundle load.
 setKnownDotuiNames(PUBLISHABLE_NAMES)
 
+import { resolveRequestPreset } from '@/lib/registry-preset'
 import type { Publishable, PublishPreset } from '@/publisher/types'
 
 const JSON_HEADERS = {
@@ -35,6 +36,11 @@ const JSON_HEADERS = {
   'Cache-Control':
     'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
 }
+
+// A fixed, conventional baseline — the consumer reformats with their own
+// Prettier/Biome rules on commit, so formatting isn't a `codeOptions` axis.
+// Only meant to keep the shipped + previewed source readable.
+const OUTPUT_FORMAT = { printWidth: 80 } as const
 
 export const Route = createFileRoute('/r/$name')({
   server: {
@@ -48,9 +54,7 @@ export const Route = createFileRoute('/r/$name')({
 
         const url = new URL(request.url)
         const encodedPreset = url.searchParams.get('preset') ?? undefined
-        const preset = encodedPreset
-          ? await decodePresetForRoute(encodedPreset)
-          : defaultPreset()
+        const preset = await resolveRequestPreset(encodedPreset)
 
         // Configure how transitive deps get rewritten — they become absolute
         // URLs back at this same origin (with the preset preserved) so
@@ -63,32 +67,27 @@ export const Route = createFileRoute('/r/$name')({
         const mod = await loader()
         const publishable = selectPublishable(mod, preset)
 
-        const { item, rawContent } = publish({ publishable, preset })
+        const { item } = publish({ publishable, preset })
 
-        // Run the component source through oxfmt so the consumer's `shadcn add`
-        // gets clean output. Don't let formatter failures break the response —
-        // the raw template still works, just less pretty.
-        let formatted = rawContent
-        try {
-          const result = await format(
-            publishable.meta.files?.[0]?.target ?? 'ui.tsx',
-            rawContent,
-            {
-              printWidth: 120,
-              useTabs: true,
-            },
-          )
-          formatted = result.code
-        } catch {
-          /* fall through with raw content */
-        }
-
-        // Re-apply formatted content to every file (in practice we only ever ship one).
+        // Run each file's source through oxfmt so the consumer's `shadcn add`
+        // gets clean output. Format per-file — a base `.tsx` and a secondary
+        // `.ts` hook carry different content and need their own parser. Don't
+        // let formatter failures break the response — raw content still works.
         if (item.files) {
-          item.files = item.files.map((f) => ({
-            ...f,
-            content: formatted,
-          })) as typeof item.files
+          item.files = (await Promise.all(
+            item.files.map(async (file) => {
+              try {
+                const result = await format(
+                  file.target ?? 'ui.tsx',
+                  file.content ?? '',
+                  OUTPUT_FORMAT,
+                )
+                return { ...file, content: result.code }
+              } catch {
+                return file
+              }
+            }),
+          )) as typeof item.files
         }
 
         return new Response(JSON.stringify(item, null, 2), {
@@ -125,18 +124,4 @@ function selectPublishable(
     if (hit) return hit
   }
   return mod.publishable
-}
-
-function defaultPreset(): PublishPreset {
-  return { density: 'compact', componentParams: {} }
-}
-
-async function decodePresetForRoute(encoded: string): Promise<PublishPreset> {
-  try {
-    const { decodePreset } = await import('@/modules/create/preset/codec')
-    const ds = decodePreset(encoded)
-    return { density: ds.density, componentParams: ds.componentParams }
-  } catch {
-    return defaultPreset()
-  }
 }

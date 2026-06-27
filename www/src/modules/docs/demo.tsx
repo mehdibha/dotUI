@@ -73,7 +73,7 @@ export function Demo({ component: Component, children, ...props }: DemoProps) {
   return (
     <div {...props}>
       {/* Preview frame */}
-      <div className="flex min-h-56 items-center justify-center rounded-t-lg border bg-bg p-10">
+      <div className="flex min-h-56 items-center justify-center overflow-x-auto rounded-t-lg border bg-bg p-6 sm:p-10">
         <Component />
       </div>
 

@@ -10,6 +10,8 @@
 import type { ColorConfig } from '@/registry/theme'
 import type { Density, RegistryItem, RegistryItemFile } from '@/registry/types'
 
+import type { CodeOptions } from './code-options'
+
 /**
  * A class value in a `tv` config. `tv` accepts more shapes (booleans, conditionals)
  * but we only emit string / string-array forms from `styles.ts` files.
@@ -62,6 +64,15 @@ export interface Publishable {
   template: string
   stylesConfig: StylesConfig
   meta: RegistryItem
+  /**
+   * Content for the secondary, non-base files in `meta.files` — e.g. a
+   * `use-x.ts` hook shipped alongside `base.tsx`. Keyed by the source `path`.
+   * These carry no `styles.ts` config and no `%%TV_CONFIG%%` placeholder, so
+   * they're already fully transformed (registry import paths rewritten) and
+   * preset-independent: publish() ships each verbatim instead of duplicating
+   * the resolved base template across every file.
+   */
+  extraFiles?: Record<string, string>
 }
 
 /** The preset slice the publisher needs. */
@@ -71,6 +82,8 @@ export interface PublishPreset {
   componentParams: Record<string, Record<string, string>>
   /** Generative color recipe; when present, its ramps override the static base palette. */
   color?: ColorConfig
+  /** Exported-code style. When omitted, the publisher applies `DEFAULT_CODE_OPTIONS`. */
+  codeOptions?: CodeOptions
 }
 
 /** Subset of `RegistryItemFile` we emit. */

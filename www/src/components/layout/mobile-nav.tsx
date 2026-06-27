@@ -40,9 +40,12 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
         containerPadding={0}
         className="size-full max-w-none rounded-none border-0 bg-bg/95 backdrop-blur-md"
       >
-        <DialogContent className="overflow-y-auto pt-4">
+        <DialogContent
+          aria-label="Mobile navigation"
+          className="overflow-y-auto pt-4"
+        >
           {({ close }) => (
-            <div className="flex flex-col gap-12">
+            <nav aria-label="Mobile" className="flex flex-col gap-12">
               <div className="space-y-2">
                 <div className="text-lg font-medium text-fg-muted">Menu</div>
                 <div className="flex flex-col gap-3">
@@ -53,6 +56,7 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
                     <MobileLink
                       key={item.name}
                       to={item.to}
+                      params={item.params}
                       onOpenChange={close}
                     >
                       {item.name}
@@ -89,7 +93,7 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
                 }
                 return null
               })}
-            </div>
+            </nav>
           )}
         </DialogContent>
       </Popover>
@@ -99,11 +103,13 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
 
 function MobileLink({
   to,
+  params,
   onOpenChange,
   className,
   children,
 }: {
   to: string
+  params?: { _splat: string }
   onOpenChange?: (open: boolean) => void
   children: React.ReactNode
   className?: string
@@ -111,6 +117,7 @@ function MobileLink({
   return (
     <Link
       to={to}
+      params={params}
       onClick={() => onOpenChange?.(false)}
       className={cn('text-2xl font-medium', className)}
     >

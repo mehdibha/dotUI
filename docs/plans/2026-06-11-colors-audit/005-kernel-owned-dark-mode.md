@@ -2,7 +2,7 @@
 
 > **Executor instructions**: Follow this plan step by step. Run every verification command and confirm the expected result before moving to the next step. If anything in the "STOP conditions" section occurs, stop and report — do not improvise. When done, update the status row for this plan in `docs/plans/2026-06-11-colors-audit/README.md` — unless a reviewer dispatched you and told you they maintain the index.
 >
-> **Drift check (run first)**: `git diff --stat 05b44151..HEAD -- packages/colors/src/producers/oklch.ts packages/colors/src/engine.test.ts www/src/registry/theme/primitives.ts www/src/registry/theme/primitives.spec.ts`
+> **Drift check (run first)**: `git diff --stat 05b44151..HEAD -- packages/colors/src/producers/oklch.ts packages/colors/src/engine.test.ts www/src/registry/theme/primitives.ts www/src/registry/theme/primitives.test.ts`
 > Plans 001–004 are EXPECTED to have landed (they touch some of these files); what must still match are the specific excerpts below. On a mismatch in an excerpt, treat it as a STOP condition.
 
 ## Status
@@ -74,7 +74,7 @@ it('light and dark ramps are identical (mode-agnostic, §4.7a)', () => {
   - `stretchLightness` (lines 50-66) + `NEUTRAL_L_MIN = 0.13` / `NEUTRAL_L_MAX = 0.985` (lines 69-70) — per-value smoothstep L remap applied to the neutral ramp only. **Keep this behavior, applied per mode** (see Step 3 reasoning).
   - The kernel call (lines 98-104): `createTheme({ algorithm, palettes, steps, modes: { light: true }, ...config.knobs })`.
   - Dark derivation (lines 121-123): `for (const [name, scale] of Object.entries(light)) dark[name] = reverseRamp(scale)`.
-- `www/src/registry/theme/primitives.spec.ts`:
+- `www/src/registry/theme/primitives.test.ts`:
   - `describe.each(GENERATIVE_ALGORITHMS)` block: the test `derives dark as the reversed light ladder (50 ↔ 950)` (lines 134-143) asserts reversal for EVERY algorithm — this plan splits it by algorithm.
   - Plan 002 added: mode-split value snapshots per algorithm, and a characterization test `wrapper dark for 'contrast' is the reversal, NOT the kernel-native dark solve` — this plan flips it to equality.
   - The AA test (lines 152-162): every step's `onBlackWhite` foreground clears WCAG 4.5 in both modes — must still pass with the new contrast/material dark values.
@@ -105,7 +105,7 @@ Mirroring index `i → n-1-i` for all per-step parameters (lightness, chroma-env
 - `packages/colors/src/producers/oklch.ts`
 - `packages/colors/src/engine.test.ts` + `packages/colors/src/__snapshots__/engine.test.ts.snap`
 - `www/src/registry/theme/primitives.ts`
-- `www/src/registry/theme/primitives.spec.ts` + `www/src/registry/theme/__snapshots__/primitives.spec.ts.snap`
+- `www/src/registry/theme/primitives.test.ts` + `www/src/registry/theme/__snapshots__/primitives.test.ts.snap`
 - `docs/research/2026-06-11-color-engine-spec.md` (append the §4.7a decision line)
 - `docs/plans/2026-06-11-colors-audit/README.md` (status row)
 
@@ -190,11 +190,11 @@ return { steps: Object.keys(light.neutral ?? {}), light, dark }
 
 4. Rewrite the header docstring (lines 1-12): the kernel now generates each mode (`oklch`/`tailwind` mirror the ladder; `contrast` solves against each mode's background; `material` uses Material's per-mode tone sets); the wrapper renames `primary`→`accent` and stretches the neutral span per mode. Keep the existing note about `--on-*` coming from the autocontrast plugin.
 
-**Verify**: `pnpm vitest run www/src/registry/theme/primitives.spec.ts` → expect failures ONLY in: the `describe.each` reversal test for `contrast`/`material`, the contrast/material **dark** snapshots, and plan 002's inequality characterization test. If anything else fails — especially any **light** snapshot or any `oklch`/`tailwind` snapshot — STOP.
+**Verify**: `pnpm vitest run www/src/registry/theme/primitives.test.ts` → expect failures ONLY in: the `describe.each` reversal test for `contrast`/`material`, the contrast/material **dark** snapshots, and plan 002's inequality characterization test. If anything else fails — especially any **light** snapshot or any `oklch`/`tailwind` snapshot — STOP.
 
 ### Step 3: Update the www spec to the new contract
 
-In `primitives.spec.ts`:
+In `primitives.test.ts`:
 
 1. Replace the per-algorithm reversal test (`derives dark as the reversed light ladder (50 ↔ 950)`, lines 134-143) with a split assertion inside the same `describe.each`:
 
@@ -214,7 +214,7 @@ it('dark mode comes from the kernel (mirrored for oklch/tailwind, native for con
 ```
 
 2. Replace plan 002's characterization test (`wrapper dark for 'contrast' is the reversal, NOT the kernel-native dark solve`) with the fixed-contract equality: wrapper dark for `contrast` equals the kernel-native dark (renamed, neutral-stretched). Concretely: build `native = createTheme({ algorithm: 'contrast', palettes: { primary: seeds.accent, neutral: seeds.neutral, success: true, warning: true, danger: true, info: true }, modes: { light: true, dark: true } }).dark`, then assert `resolved.dark.accent` deep-equals `native.scales.primary` and `resolved.dark.success` deep-equals `native.scales.success` (the neutral differs by stretch — skip it or compare post-stretch by calling nothing else; keeping to non-neutral palettes is sufficient and simpler).
-3. Update the contrast/material **dark** snapshots: `pnpm vitest run www/src/registry/theme/primitives.spec.ts -u`, then inspect `git diff www/src/registry/theme/__snapshots__/primitives.spec.ts.snap`: **only** `contrast`/`material` `dark` snapshot bodies changed; all `light` snapshots and the `oklch`/`tailwind` `dark` snapshots byte-identical.
+3. Update the contrast/material **dark** snapshots: `pnpm vitest run www/src/registry/theme/primitives.test.ts -u`, then inspect `git diff www/src/registry/theme/__snapshots__/primitives.test.ts.snap`: **only** `contrast`/`material` `dark` snapshot bodies changed; all `light` snapshots and the `oklch`/`tailwind` `dark` snapshots byte-identical.
 
 **Verify**: `pnpm vitest run www/src/registry/theme` → exit 0, including the AA foreground test (lines 152-162) over the new dark values.
 
@@ -240,7 +240,7 @@ Append to the §4.7a section of `docs/research/2026-06-11-color-engine-spec.md` 
 
 ## Test plan
 
-Steps 1 and 3 carry the test changes; plan 002's snapshots are the safety net. Net-new assertions: kernel mirroring test; per-algorithm dark-contract split test; wrapper≡kernel-native equality for `contrast`. Pattern files: the existing `describe.each` in `primitives.spec.ts` and `review regressions` in `engine.test.ts`.
+Steps 1 and 3 carry the test changes; plan 002's snapshots are the safety net. Net-new assertions: kernel mirroring test; per-algorithm dark-contract split test; wrapper≡kernel-native equality for `contrast`. Pattern files: the existing `describe.each` in `primitives.test.ts` and `review regressions` in `engine.test.ts`.
 
 ## Done criteria
 

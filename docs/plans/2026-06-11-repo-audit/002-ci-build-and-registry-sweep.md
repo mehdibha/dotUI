@@ -32,8 +32,8 @@ CI today runs lint, typecheck, unit tests, and a registry-drift diff — but nev
 - `www/src/publisher/publish.ts:108-118` — `publish()` returns `PublishedItem { item: RegistryItem; rawContent: string }`.
 - `www/src/registry/types.ts` — the repo's own `RegistryItem` type (read it before writing the schema; the sweep validates runtime shape, not just types).
 - Registered-vs-published mapping: `www/scripts/registry-build.ts` builds publishables from `registryUi` (imported at line 30 from `../src/registry/ui/registry`); items without a `base*.tsx` in `meta.files` legitimately skip (see `collectBaseFiles` in `www/src/publisher/build-time/build-publishables.ts:261-276`, exported).
-- Root `vitest.config.ts` — aliases `@/` → `www/src/`, default include patterns (any `*.spec.ts` under `www/src` runs), excludes `**/fixtures/**`, `**/templates/**`. A new spec file is picked up automatically. `zod` v4 is already a www dependency if you want it, but hand-rolled assertions are fine and avoid schema-version questions.
-- Existing test to model structure on: `www/src/publisher/publish.spec.ts` (it already imports `publish`, `setKnownDotuiNames`, `setDotuiDepResolver` — see its lines 18 and 32).
+- Root `vitest.config.ts` — aliases `@/` → `www/src/`, default include patterns (any `*.test.ts` under `www/src` runs), excludes `**/fixtures/**`, `**/templates/**`. A new spec file is picked up automatically. `zod` v4 is already a www dependency if you want it, but hand-rolled assertions are fine and avoid schema-version questions.
+- Existing test to model structure on: `www/src/publisher/publish.test.ts` (it already imports `publish`, `setKnownDotuiNames`, `setDotuiDepResolver` — see its lines 18 and 32).
 
 ## Commands you will need
 
@@ -50,7 +50,7 @@ CI today runs lint, typecheck, unit tests, and a registry-drift diff — but nev
 **In scope**:
 
 - `.github/workflows/ci.yml`
-- `www/src/publisher/publishables-sweep.spec.ts` (create)
+- `www/src/publisher/publishables-sweep.test.ts` (create)
 
 **Out of scope**:
 
@@ -103,10 +103,10 @@ Append a job mirroring the existing ones:
 
 ### Step 3: Write the sweep spec
 
-Create `www/src/publisher/publishables-sweep.spec.ts`. Shape:
+Create `www/src/publisher/publishables-sweep.test.ts`. Shape:
 
-- Imports: `publishables`, `PUBLISHABLE_NAMES` from `@/registry/__generated__/publishables`; `publish`, `setKnownDotuiNames`, `setDotuiDepResolver` from `@/publisher/publish` (if plan 004 has landed, `setDotuiDepResolver` is gone — pass the resolver through `publish()` instead, matching the updated `publish.spec.ts`); `registryUi` from `@/registry/ui/registry`; `collectBaseFiles` from `@/publisher/build-time/build-publishables`.
-- `beforeAll`: `setKnownDotuiNames(PUBLISHABLE_NAMES)` (mirror `publish.spec.ts`).
+- Imports: `publishables`, `PUBLISHABLE_NAMES` from `@/registry/__generated__/publishables`; `publish`, `setKnownDotuiNames`, `setDotuiDepResolver` from `@/publisher/publish` (if plan 004 has landed, `setDotuiDepResolver` is gone — pass the resolver through `publish()` instead, matching the updated `publish.test.ts`); `registryUi` from `@/registry/ui/registry`; `collectBaseFiles` from `@/publisher/build-time/build-publishables`.
+- `beforeAll`: `setKnownDotuiNames(PUBLISHABLE_NAMES)` (mirror `publish.test.ts`).
 - **Test A — completeness**: every `registryUi` item where `collectBaseFiles(meta).length > 0` must appear in `PUBLISHABLE_NAMES`. Assert the missing-set is empty and print it on failure.
 - **Test B — schema sweep**: `for (const name of PUBLISHABLE_NAMES)` (use `it.each` or a loop of `it(...)` so failures name the component): `const mod = await publishables[name]!()`, `const { item, rawContent } = publish({ publishable: mod.publishable, preset: { density: 'compact', componentParams: {} } })`, then assert:
   - `item.name === name`; `item.type === 'registry:ui'`
@@ -128,13 +128,13 @@ If plan 001 has NOT landed yet, Test A will fail on `input`, `otp-field`, `progr
 
 ## Test plan
 
-The sweep spec IS the test. Model file structure on `www/src/publisher/publish.spec.ts`. Cases: completeness (A), per-publishable schema (B), enum-file variants (C). Final: `pnpm test` all green, `pnpm check` and `pnpm typecheck` exit 0.
+The sweep spec IS the test. Model file structure on `www/src/publisher/publish.test.ts`. Cases: completeness (A), per-publishable schema (B), enum-file variants (C). Final: `pnpm test` all green, `pnpm check` and `pnpm typecheck` exit 0.
 
 ## Done criteria
 
 - [ ] `.github/workflows/ci.yml` has a `concurrency` block and a `build` job running `pnpm build:www`
 - [ ] `pnpm build:www` exits 0 locally
-- [ ] `www/src/publisher/publishables-sweep.spec.ts` exists; `pnpm test` exits 0
+- [ ] `www/src/publisher/publishables-sweep.test.ts` exists; `pnpm test` exits 0
 - [ ] Sweep covers every name in `PUBLISHABLE_NAMES` (assert count > 50 inside the spec so an accidentally-empty loop can't pass)
 - [ ] `pnpm check` and `pnpm typecheck` exit 0
 - [ ] `docs/plans/2026-06-11-repo-audit/README.md` status row updated

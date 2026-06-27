@@ -11,6 +11,13 @@ import UiBreadcrumbs from "@/registry/ui/breadcrumbs/meta";
 import UiButton from "@/registry/ui/button/meta";
 import UiCalendar from "@/registry/ui/calendar/meta";
 import UiCard from "@/registry/ui/card/meta";
+import UiChartArea from "@/registry/ui/chart-area/meta";
+import UiChartBar from "@/registry/ui/chart-bar/meta";
+import UiChartLine from "@/registry/ui/chart-line/meta";
+import UiChartPie from "@/registry/ui/chart-pie/meta";
+import UiChartRadar from "@/registry/ui/chart-radar/meta";
+import UiChartRadial from "@/registry/ui/chart-radial/meta";
+import UiChart from "@/registry/ui/chart/meta";
 import UiCheckboxGroup from "@/registry/ui/checkbox-group/meta";
 import UiCheckbox from "@/registry/ui/checkbox/meta";
 import UiColorArea from "@/registry/ui/color-area/meta";
@@ -23,6 +30,7 @@ import UiColorSwatch from "@/registry/ui/color-swatch/meta";
 import UiColorThumb from "@/registry/ui/color-thumb/meta";
 import UiCombobox from "@/registry/ui/combobox/meta";
 import UiCommand from "@/registry/ui/command/meta";
+import UiContextMenu from "@/registry/ui/context-menu/meta";
 import UiDateField from "@/registry/ui/date-field/meta";
 import UiDatePicker from "@/registry/ui/date-picker/meta";
 import UiDialog from "@/registry/ui/dialog/meta";
@@ -43,6 +51,7 @@ import UiModal from "@/registry/ui/modal/meta";
 import UiNumberField from "@/registry/ui/number-field/meta";
 import UiOtpField from "@/registry/ui/otp-field/meta";
 import UiOverlay from "@/registry/ui/overlay/meta";
+import UiPagination from "@/registry/ui/pagination/meta";
 import UiPopover from "@/registry/ui/popover/meta";
 import UiProgressBar from "@/registry/ui/progress-bar/meta";
 import UiRadioGroup from "@/registry/ui/radio-group/meta";
@@ -50,6 +59,7 @@ import UiScrollFade from "@/registry/ui/scroll-fade/meta";
 import UiSearchField from "@/registry/ui/search-field/meta";
 import UiSelect from "@/registry/ui/select/meta";
 import UiSeparator from "@/registry/ui/separator/meta";
+import UiSidebar from "@/registry/ui/sidebar/meta";
 import UiSkeleton from "@/registry/ui/skeleton/meta";
 import UiSlider from "@/registry/ui/slider/meta";
 import UiSwitch from "@/registry/ui/switch/meta";
@@ -76,6 +86,13 @@ export const registryUi: RegistryItem[] = [
 	UiButton,
 	UiCalendar,
 	UiCard,
+	UiChart,
+	UiChartArea,
+	UiChartBar,
+	UiChartLine,
+	UiChartPie,
+	UiChartRadar,
+	UiChartRadial,
 	UiCheckbox,
 	UiCheckboxGroup,
 	UiColorArea,
@@ -88,6 +105,7 @@ export const registryUi: RegistryItem[] = [
 	UiColorThumb,
 	UiCombobox,
 	UiCommand,
+	UiContextMenu,
 	UiDateField,
 	UiDatePicker,
 	UiDialog,
@@ -108,6 +126,7 @@ export const registryUi: RegistryItem[] = [
 	UiNumberField,
 	UiOtpField,
 	UiOverlay,
+	UiPagination,
 	UiPopover,
 	UiProgressBar,
 	UiRadioGroup,
@@ -115,6 +134,7 @@ export const registryUi: RegistryItem[] = [
 	UiSearchField,
 	UiSelect,
 	UiSeparator,
+	UiSidebar,
 	UiSkeleton,
 	UiSlider,
 	UiSwitch,

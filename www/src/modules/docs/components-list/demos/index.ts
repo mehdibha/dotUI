@@ -8,6 +8,12 @@ import { BreadcrumbsDemo } from './breadcrumbs'
 import { ButtonDemo } from './button'
 import { CalendarDemo } from './calendar'
 import { CardDemo } from './card'
+import { ChartAreaDemo } from './chart-area'
+import { ChartBarDemo } from './chart-bar'
+import { ChartLineDemo } from './chart-line'
+import { ChartPieDemo } from './chart-pie'
+import { ChartRadarDemo } from './chart-radar'
+import { ChartRadialDemo } from './chart-radial'
 import { CheckboxDemo } from './checkbox'
 import { CheckboxGroupDemo } from './checkbox-group'
 import { ColorAreaDemo } from './color-area'
@@ -42,6 +48,7 @@ import { ScrollFadeDemo } from './scroll-fade'
 import { SearchFieldDemo } from './search-field'
 import { SelectDemo } from './select'
 import { SeparatorDemo } from './separator'
+import { SidebarDemo } from './sidebar'
 import { SkeletonDemo } from './skeleton'
 import { SliderDemo } from './slider'
 import { SwitchDemo } from './switch'
@@ -66,6 +73,12 @@ export const componentDemos: Record<string, ComponentType> = {
   button: ButtonDemo,
   calendar: CalendarDemo,
   card: CardDemo,
+  'chart-area': ChartAreaDemo,
+  'chart-bar': ChartBarDemo,
+  'chart-line': ChartLineDemo,
+  'chart-pie': ChartPieDemo,
+  'chart-radar': ChartRadarDemo,
+  'chart-radial': ChartRadialDemo,
   checkbox: CheckboxDemo,
   'checkbox-group': CheckboxGroupDemo,
   'color-area': ColorAreaDemo,
@@ -100,6 +113,7 @@ export const componentDemos: Record<string, ComponentType> = {
   'search-field': SearchFieldDemo,
   select: SelectDemo,
   separator: SeparatorDemo,
+  sidebar: SidebarDemo,
   skeleton: SkeletonDemo,
   slider: SliderDemo,
   switch: SwitchDemo,

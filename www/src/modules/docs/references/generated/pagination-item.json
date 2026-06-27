@@ -1,0 +1,14 @@
+{
+  "name": "PaginationItemProps",
+  "description": "A single item in the pagination list.",
+  "extendsElement": "li",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -45,7 +45,7 @@ function RouteComponent() {
             <Modal className="w-full rounded-t-xl bg-muted/40 p-4">
               <Dialog className="flex flex-col gap-30">
                 <p>this is the dialog content</p>
-                <TextField>
+                <TextField aria-label="Playground input">
                   <Input />
                 </TextField>
               </Dialog>

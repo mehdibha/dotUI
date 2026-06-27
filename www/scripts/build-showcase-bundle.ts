@@ -2,8 +2,8 @@
  * Build the "showcase bundle" generated artifact.
  *
  * The "Open in v0" feature hands an external tool (v0) a *whole project* that
- * boots straight into the dotUI marketing showcase (`components/marketing/
- * showcase/cards.tsx`), with every component installed and the user's preset
+ * boots straight into the dotUI showcase (`modules/marketing/cards.tsx`),
+ * with every component installed and the user's preset
  * theme written into `globals.css`.
  *
  * v0 strips a registry item's `css` / `cssVars` fields, so the theme can't ride
@@ -50,7 +50,7 @@ const GENERATED = path.join(SRC, 'registry/__generated__')
 const OUT_FILE = path.join(GENERATED, 'showcase-bundle.ts')
 
 /** Entry point of the closure — the component the showcase renders first. */
-const ENTRY = 'components/marketing/showcase/cards.tsx'
+const ENTRY = 'modules/marketing/cards.tsx'
 
 /**
  * Full-file replacements, keyed by src-relative path. A file in this map is
@@ -63,7 +63,7 @@ const OVERRIDES: Record<string, string> = {
 
 /** Per-file content rewrites applied after read, before emit and import scan. */
 function transformContent(srcRel: string, content: string): string {
-  if (srcRel === 'components/marketing/showcase/invite-members.tsx') {
+  if (srcRel === 'components/showcase/invite-members.tsx') {
     const rewritten = content.replace(
       /import\s*\{\s*ExternalLinkIcon\s*\}\s*from\s*["']@\/registry\/__generated__\/icons["'];?/,
       `import { ExternalLink as ExternalLinkIcon } from "lucide-react";`,
@@ -98,6 +98,14 @@ const CSS_DEPENDENCIES = [
 const FRAMEWORK_PROVIDED = new Set(['react', 'react-dom', 'tailwindcss'])
 
 /**
+ * Runtime peer deps of bundled packages that the JS-import scan can't see:
+ * `tailwind-variants` imports `tailwind-merge` internally (its `twMerge`), and
+ * `cn` no longer pulls it in directly (it uses `cnfast`). Without this the v0
+ * bundle would ship `tailwind-variants` with an unmet `tailwind-merge` peer.
+ */
+const PEER_DEPENDENCIES = ['tailwind-merge']
+
+/**
  * Published versions to pin in the bundle's `dependencies`. `workspace:*` deps in
  * dotUI's package.json (the two tailwind plugins) resolve to these published
  * releases. Bare names left out default to latest; pinning avoids breakage when
@@ -108,15 +116,15 @@ const DEP_VERSIONS: Record<string, string> = {
   '@fontsource-variable/geist': '^5.2.8',
   '@fontsource/geist-mono': '^5.2.7',
   '@internationalized/date': '^3.12.2',
-  clsx: '^2.1.0',
+  cnfast: '^0.0.8',
   'lucide-react': '^1.16.0',
-  'react-aria': '^3.49.0',
-  'react-aria-components': '^1.18.0',
-  'react-stately': '^3.47.0',
+  'react-aria': '^3.50.0',
+  'react-aria-components': '^1.19.0',
+  'react-stately': '^3.48.0',
   'tailwind-merge': '^3.0.2',
   'tailwind-variants': '^3.1.1',
   'tailwindcss-autocontrast': '^0.0.4',
-  'tailwindcss-react-aria-components': '^2.1.1',
+  'tailwindcss-react-aria-components': '^2.2.0',
   'tailwindcss-with': '^0.0.2',
   'tw-animate-css': '^1.3.5',
 }
@@ -367,7 +375,9 @@ async function buildShowcaseBundle(): Promise<void> {
       content: rewriteImportsToRelative(srcRel, content),
     }))
 
-  const dependencies = [...new Set([...npmDeps, ...CSS_DEPENDENCIES])]
+  const dependencies = [
+    ...new Set([...npmDeps, ...CSS_DEPENDENCIES, ...PEER_DEPENDENCIES]),
+  ]
     .filter((d) => !d.startsWith('@/') && !FRAMEWORK_PROVIDED.has(d))
     .sort()
     .map((d) => (DEP_VERSIONS[d] ? `${d}@${DEP_VERSIONS[d]}` : d))

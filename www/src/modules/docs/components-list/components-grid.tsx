@@ -11,6 +11,7 @@ const CATEGORY_PREVIEW_HEIGHT: Record<string, string> = {
   navigation: 'h-52',
   'data-display': 'h-52',
   colors: 'h-52',
+  charts: 'h-72',
 }
 
 /**

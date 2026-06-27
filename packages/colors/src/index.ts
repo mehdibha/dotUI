@@ -42,6 +42,7 @@ export {
   gamutMap,
   type Oklch,
   oklchCss,
+  toHex,
   toOklch,
   wcag2,
 } from './shared/color'

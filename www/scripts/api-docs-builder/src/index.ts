@@ -24,7 +24,10 @@ import {
 } from './componentHandler'
 
 const CONFIG_PATH = path.join(process.cwd(), 'tsconfig.references.json')
-const OUTPUT_DIR = path.join(process.cwd(), 'src/modules/references/generated')
+const OUTPUT_DIR = path.join(
+  process.cwd(),
+  'src/modules/docs/references/generated',
+)
 
 interface RunOptions {
   files?: string[]

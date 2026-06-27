@@ -1,0 +1,14 @@
+{
+  "name": "SidebarMenuBadgeProps",
+  "description": "A badge (e.g. a count) anchored to the right of a `SidebarMenuItem`.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

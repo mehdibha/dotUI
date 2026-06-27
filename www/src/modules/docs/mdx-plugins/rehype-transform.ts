@@ -10,11 +10,6 @@ import { createHighlighter, type HighlighterGeneric } from 'shiki'
 import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 
-import { loadApiReference } from '../../references/loader'
-import {
-  type TransformedReference,
-  transformReference,
-} from '../../references/transform'
 import { buildSourceOverlay } from '../codegen/source-overlay'
 import {
   buildControlsFromReference,
@@ -27,6 +22,11 @@ import type {
   InteractiveDemoNodeInfo,
   ProcessedInteractiveDemo,
 } from '../interactive-demo/types'
+import { loadApiReference } from '../references/loader'
+import {
+  type TransformedReference,
+  transformReference,
+} from '../references/transform'
 import { transformDemo } from './transformer'
 
 // ============================================================================

@@ -18,6 +18,11 @@
 
 import type { RegistryItem } from '@/registry/types'
 
+import {
+  applySectionComments,
+  DEFAULT_CODE_OPTIONS,
+  flattenClassArrays,
+} from './code-options'
 import { flatten } from './flatten'
 import { buildScalarVarMap, resolveClasses } from './resolve-classes'
 import { serializeTvConfig } from './serialize'
@@ -118,8 +123,9 @@ export interface PublishInput {
 }
 
 export function publish({ publishable, preset }: PublishInput): PublishedItem {
-  const { template, stylesConfig, meta } = publishable
+  const { template, stylesConfig, meta, extraFiles } = publishable
   const paramSelections = preset.componentParams[meta.name] ?? {}
+  const codeOptions = preset.codeOptions ?? DEFAULT_CODE_OPTIONS
 
   // 1. Flatten base + density + param layers.
   const flat = flatten({
@@ -131,17 +137,33 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
 
   // 2. Rewrite scalar-param var refs to Tailwind suffixes.
   const varMap = buildScalarVarMap(meta, paramSelections)
-  const resolved = resolveClasses(flat, varMap)
+  let resolved = resolveClasses(flat, varMap)
+
+  // 2b. Code-style: collapse grouped class arrays to a single string per
+  // slot/variant when the user prefers one-line-per-slot tv configs.
+  if (!codeOptions.classArrays) {
+    resolved = flattenClassArrays(resolved)
+  }
 
   // 3+4. Serialize and substitute.
   const literal = serializeTvConfig(resolved)
-  const content = template.replace(TV_CONFIG_PLACEHOLDER, literal)
+  let content = template.replace(TV_CONFIG_PLACEHOLDER, literal)
+
+  // 4b. Resolve the source's `// MARK:` markers: always drop the internal
+  // `…Styles` injection marker; render the rest as section separators when the
+  // user wants them, or drop them too.
+  content = applySectionComments(content, codeOptions.sectionComments)
 
   // 5. Assemble shadcn item — drop dotui-only fields (params, group).
   // Shadcn's RegistryItem is a discriminated union on `type`. We can't carry the
   // discriminant through generic plumbing, so we build a structurally-correct
   // object and cast at the boundary.
-  const files = (meta.files ?? []).map((file) => ({ ...file, content }))
+  // Secondary files (e.g. a `use-x.ts` hook) carry their own pre-transformed
+  // content; only the base file gets the preset-resolved template.
+  const files = (meta.files ?? []).map((file) => ({
+    ...file,
+    content: extraFiles?.[file.path] ?? content,
+  }))
 
   const itemShape = {
     name: meta.name,
