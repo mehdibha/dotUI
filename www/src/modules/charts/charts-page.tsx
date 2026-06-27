@@ -1,4 +1,5 @@
 import { LinkButton } from '@/registry/ui/button'
+import { Eyebrow } from '@/components/eyebrow'
 import { Footer } from '@/components/layout/footer'
 
 import { ChartShowcase } from './chart-showcase'
@@ -13,9 +14,7 @@ export function ChartsPage() {
         {/* Hero — mirrors the landing page's centered, tracking-tight headline. */}
         <section className="container flex flex-col pt-6 sm:pt-8 md:pt-12">
           <div className="flex flex-col items-center gap-3 text-center md:gap-4">
-            <span className="rounded-full border bg-card px-3 py-1 text-xs text-fg-muted">
-              Built on Recharts · themed by your design system
-            </span>
+            <Eyebrow>Built on Recharts · themed by your design system</Eyebrow>
             <h1 className="text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl">
               Charts that look like{' '}
               <span className="font-bold italic">your product</span>.
