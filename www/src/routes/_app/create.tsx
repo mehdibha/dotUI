@@ -13,6 +13,7 @@ import {
   saveStoredPreset,
 } from '@/modules/create/preset/storage'
 import { PreviewPanel } from '@/modules/create/preview/preview-panel'
+import { StudioExperience } from '@/modules/create/studio'
 
 type MobilePane = 'customize' | 'preview'
 
@@ -25,6 +26,9 @@ export const createSearchSchema = z.object({
   // Coerced boolean: the search parser reads bare `1`/`true` as non-strings, so a
   // plain `z.string()` would reject them and the param would be dropped.
   lab: z.coerce.boolean().optional().catch(undefined),
+  // Opt-in flag for the canvas-first "studio" redesign (rail + inspector + AI bar)
+  // explored at /create?studio=true. Same coercion rationale as `lab`.
+  studio: z.coerce.boolean().optional().catch(undefined),
 })
 
 const searchDefaults = { preview: 'cards' }
@@ -38,7 +42,7 @@ export const Route = createFileRoute('/_app/create')({
 })
 
 function CreatePage() {
-  const { lab, preset } = Route.useSearch()
+  const { lab, studio, preset } = Route.useSearch()
   const { designSystem, setDesignSystem } = useDesignSystem()
   // Below `lg` the customizer and the live preview can't sit side by side (the iframe
   // would be a ~15px sliver), so they collapse into a single switchable pane toggled
@@ -71,6 +75,9 @@ function CreatePage() {
 
   // Opt-in exploration of the redesigned control panel + floating panel lab.
   if (lab) return <LabExperience />
+
+  // Opt-in exploration of the canvas-first studio redesign.
+  if (studio) return <StudioExperience />
 
   return (
     <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">
