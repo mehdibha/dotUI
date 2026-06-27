@@ -13,14 +13,21 @@ import { CHART_FAMILIES, variantsFor } from './data'
  */
 export function ChartShowcase() {
   return (
-    <Tabs defaultSelectedKey={CHART_FAMILIES[0].id} className="gap-8">
+    <Tabs
+      defaultSelectedKey={CHART_FAMILIES[0].id}
+      className="gap-8 [--tabs-list-height:2.75rem]"
+    >
       <TabList
         aria-label="Chart families"
         variant="default"
-        className="mx-auto flex-wrap justify-center gap-2 bg-transparent"
+        className="mx-auto flex-wrap justify-center gap-2 bg-transparent [&_[data-tab-indicator]]:rounded-full [&_[data-tab-indicator]]:bg-muted [&_[data-tab-indicator]]:shadow-none"
       >
         {CHART_FAMILIES.map((f) => (
-          <Tab key={f.id} id={f.id} className="px-4 py-2 text-base">
+          <Tab
+            key={f.id}
+            id={f.id}
+            className="rounded-full px-4 text-base selected:text-fg"
+          >
             {f.name} chart
           </Tab>
         ))}
