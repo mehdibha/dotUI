@@ -75,7 +75,7 @@ export function SearchCommand({
           const content = (
             <DialogContent
               aria-label="Search documentation"
-              className="flex flex-col overflow-hidden p-0!"
+              className="flex flex-col gap-0 overflow-hidden p-0!"
             >
               <Command
                 aria-label="Search documentation"
@@ -91,7 +91,7 @@ export function SearchCommand({
                 </SearchField>
                 <MenuContent
                   aria-label="Search results"
-                  className="max-h-[60vh] min-h-80 overflow-y-auto"
+                  className="max-h-80 overflow-y-auto"
                   onAction={() => setIsOpen(false)}
                   renderEmptyState={() => (
                     <div className="py-8 text-center text-sm text-fg-muted">
