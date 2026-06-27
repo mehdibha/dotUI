@@ -12,15 +12,12 @@ import {
   GitBranchIcon,
   GlobeIcon,
   HandIcon,
-  HeadphonesIcon,
   InfoIcon,
-  LaptopMinimalIcon,
   MicIcon,
   PaperclipIcon,
   PlugIcon,
   PlusIcon,
   SlidersHorizontalIcon,
-  SmartphoneIcon,
   TelescopeIcon,
   TriangleAlertIcon,
 } from 'lucide-react'
@@ -41,7 +38,15 @@ import { TextField } from '@/registry/ui/text-field'
 
 // Models offered by the model picker. The first four fill the menu; `legacy`
 // ones live behind the "More models" submenu. `name` is what the toolbar shows.
-const MODELS = [
+type ModelOption = {
+  id: string
+  name: string
+  description: string
+  disabled?: boolean
+  legacy?: boolean
+}
+
+const MODELS: ModelOption[] = [
   {
     id: 'fable',
     name: 'Fable 5',
@@ -67,7 +72,7 @@ const MODELS = [
     description: 'Previous generation',
     legacy: true,
   },
-] as const
+]
 
 const EFFORTS = [
   { id: 'high', name: 'High' },
@@ -76,14 +81,10 @@ const EFFORTS = [
 ] as const
 
 const DEVICES = [
-  {
-    id: 'macbook',
-    name: 'MacBook Pro Microphone (Built-in)',
-    icon: LaptopMinimalIcon,
-  },
-  { id: 'iphone', name: "mehdibha's iPhone Microphone", icon: SmartphoneIcon },
-  { id: 'airpods-default', name: 'Default - AirPods', icon: HeadphonesIcon },
-  { id: 'airpods', name: 'AirPods', icon: HeadphonesIcon },
+  { id: 'macbook', name: 'MacBook Pro Microphone (Built-in)' },
+  { id: 'iphone', name: "mehdibha's iPhone Microphone" },
+  { id: 'airpods-default', name: 'Default - AirPods' },
+  { id: 'airpods', name: 'AirPods' },
 ] as const
 
 // The showcase's lead card: an AI prompt composer — a text input with a toolbar
