@@ -18,7 +18,10 @@ import { StudioHeader } from './studio-header'
 export function StudioExperience() {
   return (
     <StudioProvider>
-      <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-col overflow-hidden">
+      {/* The Studio owns the whole viewport: the global site Header is skipped
+          on /create?studio (see _app/route.tsx), so StudioHeader is the only
+          top bar and the shell fills 100svh rather than subtracting it. */}
+      <div className="flex h-svh min-h-0 flex-col overflow-hidden">
         <StudioHeader />
         <div className="flex min-h-0 flex-1">
           <Rail />

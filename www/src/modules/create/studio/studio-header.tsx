@@ -2,33 +2,47 @@
 
 import { DicesIcon, DownloadIcon, SparklesIcon } from 'lucide-react'
 
-import { Button } from '@/registry/ui/button'
+import { siteConfig } from '@/config/site'
+import { Button, buttonStyles } from '@/registry/ui/button'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Overlay } from '@/registry/ui/overlay'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { GitHubIcon } from '@/components/icons/github'
+import { Logo } from '@/components/layout/logo'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 import { CodeOptionsDialog } from '../code-options'
 import { ExportFooter } from '../export'
 import { useReroll } from '../panel/macros'
 import { useStudio } from './studio-context'
 
+/**
+ * The Studio top bar — the single, full-width chrome on /create?studio. The
+ * global site Header is skipped on this route (see _app/route.tsx), so this bar
+ * carries the continuity language itself: the site Logo (linking home, the exit
+ * door), the shared --header-height and px-6 gutter, plus theme + GitHub on the
+ * right. Between those bookends sit the builder's genuinely-primary controls —
+ * editable name, surprise-me re-roll, Ask AI, and Export. Everything else stays
+ * in the inspector. Moving site → Studio → site stays one continuous product.
+ */
 export function StudioHeader() {
   const { name, setName, setActiveSection } = useStudio()
   const reroll = useReroll()
 
   return (
-    <header className="flex h-12 shrink-0 items-center gap-3 border-b bg-card px-3">
-      {/* Brand + editable name */}
-      <div className="flex min-w-0 items-center gap-2">
-        <span className="size-5 shrink-0 rounded-md bg-accent" aria-hidden />
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          aria-label="Design system name"
-          spellCheck={false}
-          className="max-w-56 min-w-0 truncate rounded-md bg-transparent px-1.5 py-1 text-sm font-medium outline-none hover:bg-neutral/60 focus:bg-neutral focus:ring-2 focus:ring-border-focus"
-        />
-      </div>
+    <header className="flex h-(--header-height) shrink-0 items-center gap-3 border-b bg-card px-6">
+      {/* Logo links home — the two-way door back out to the site. */}
+      <Logo />
+      <div className="h-5 w-px shrink-0 bg-border" aria-hidden />
+
+      {/* Editable system name */}
+      <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        aria-label="Design system name"
+        spellCheck={false}
+        className="max-w-56 min-w-0 truncate rounded-md bg-transparent px-1.5 py-1 text-sm font-medium outline-none hover:bg-neutral/60 focus:bg-neutral focus:ring-2 focus:ring-border-focus"
+      />
 
       <div className="ml-auto flex items-center gap-1.5">
         <Tooltip>
@@ -78,6 +92,20 @@ export function StudioHeader() {
             </DialogContent>
           </Overlay>
         </Dialog>
+
+        {/* Continuity with the site header: same theme + GitHub affordances. */}
+        <div className="mx-1 h-5 w-px shrink-0 bg-border" aria-hidden />
+        <a
+          aria-label="GitHub"
+          href={siteConfig.links.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-icon-only=""
+          className={buttonStyles({ variant: 'quiet', size: 'sm' })}
+        >
+          <GitHubIcon />
+        </a>
+        <ThemeToggle isIconOnly />
       </div>
     </header>
   )
