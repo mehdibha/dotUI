@@ -1,19 +1,12 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
-import {
-  CornerDownLeftIcon,
-  SearchIcon,
-  ShuffleIcon,
-  Undo2Icon,
-} from 'lucide-react'
+import { CornerDownLeftIcon } from 'lucide-react'
 import { motion } from 'motion/react'
 import * as ButtonPrimitives from 'react-aria-components/Button'
 
 import { cn } from '@/registry/lib/utils'
-import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
 import { registryUi } from '@/registry/ui/registry'
 import { SearchField } from '@/registry/ui/search-field'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
@@ -21,17 +14,8 @@ import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import { ExamplesIndex } from '../__generated__/examples'
 import { getComponentDisplayName } from '../components'
 import { ExportFooter } from '../export'
-import { RADIUS_FACTOR_VAR } from '../layout'
-import { useDesignSystem } from '../preset'
-import { StudioProvider, type SectionId, type StudioMode } from './context'
-import {
-  pickRandom,
-  SECTIONS,
-  SHUFFLE_ACCENTS,
-  SHUFFLE_DENSITIES,
-  SHUFFLE_RADII,
-} from './data'
-import { Segmented } from './primitives'
+import { StudioProvider, type SectionId } from './context'
+import { SECTIONS } from './data'
 import { BrandSection } from './sections/brand'
 import { ColorSection } from './sections/color'
 import { ComponentsSection } from './sections/components'
@@ -44,6 +28,7 @@ import {
   SurfaceSection,
   TypographySection,
 } from './sections/foundations'
+import { useStudioShell } from './shell'
 
 const routeApi = getRouteApi('/_app/create')
 
@@ -61,64 +46,11 @@ const SECTION_COMPONENTS: Record<SectionId, () => React.ReactNode> = {
 }
 
 export function StudioPanel({ className }: { className?: string }) {
-  const { preset } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const { designSystem, setDesignSystem } = useDesignSystem()
+  const { mode, searchOpen, setSearchOpen } = useStudioShell()
 
   const [section, setSection] = useState<SectionId>('brand')
-  const [mode, setMode] = useState<StudioMode>('simple')
   const [openComponent, setOpenComponentState] = useState<string | null>(null)
-  const [name, setName] = useState('Untitled system')
-  const [searchOpen, setSearchOpen] = useState(false)
-
-  const accent =
-    (designSystem.color ?? DEFAULT_COLOR_CONFIG).seeds.accent ?? '#438cd6'
-
-  /* --- Undo: snapshot every preset change, walk back through them. --- */
-  const historyRef = useRef<(string | undefined)[]>([])
-  const prevPresetRef = useRef<string | undefined>(preset)
-  const isUndoingRef = useRef(false)
-  const [canUndo, setCanUndo] = useState(false)
-  useEffect(() => {
-    if (prevPresetRef.current === preset) return
-    if (isUndoingRef.current) {
-      isUndoingRef.current = false
-    } else {
-      historyRef.current.push(prevPresetRef.current)
-      setCanUndo(true)
-    }
-    prevPresetRef.current = preset
-  }, [preset])
-  function undo() {
-    const previous = historyRef.current.pop()
-    if (previous === undefined && historyRef.current.length === 0 && !canUndo)
-      return
-    isUndoingRef.current = true
-    navigate({
-      search: (prev) => ({ ...prev, preset: previous }),
-      replace: true,
-    })
-    setCanUndo(historyRef.current.length > 0)
-  }
-
-  /* --- Shuffle the always-legible axes in one history entry. --- */
-  function shuffle() {
-    setDesignSystem((prev) => {
-      const base = prev.color ?? DEFAULT_COLOR_CONFIG
-      return {
-        ...prev,
-        density: pickRandom(SHUFFLE_DENSITIES),
-        tokens: {
-          ...prev.tokens,
-          [RADIUS_FACTOR_VAR]: pickRandom(SHUFFLE_RADII),
-        },
-        color: {
-          ...base,
-          seeds: { ...base.seeds, accent: pickRandom(SHUFFLE_ACCENTS) },
-        },
-      }
-    })
-  }
 
   /* --- Opening a component switches the live preview to it. --- */
   function setOpenComponent(componentName: string | null) {
@@ -132,19 +64,6 @@ export function StudioPanel({ className }: { className?: string }) {
     setSection(id)
     if (id !== 'components') setOpenComponentState(null)
   }
-
-  /* --- ⌘K opens the command search. --- */
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault()
-        setSearchOpen((o) => !o)
-      }
-      if (e.key === 'Escape') setSearchOpen(false)
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [])
 
   const ctx = useMemo(
     () => ({ mode, openComponent, setOpenComponent, goToSection }),
@@ -162,50 +81,6 @@ export function StudioPanel({ className }: { className?: string }) {
           className,
         )}
       >
-        {/* Header */}
-        <div className="shrink-0 border-b">
-          <div className="flex items-center gap-2 px-3 py-2.5">
-            <span
-              className="size-5 shrink-0 rounded-[6px] ring-1 ring-black/15 ring-inset"
-              style={{ backgroundColor: accent }}
-              aria-hidden
-            />
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              aria-label="System name"
-              spellCheck={false}
-              className="min-w-0 flex-1 truncate rounded-sm bg-transparent text-sm font-medium outline-none focus-visible:bg-neutral focus-visible:px-1.5 focus-visible:py-0.5"
-            />
-            <div className="flex shrink-0 items-center gap-0.5">
-              <HeaderIcon
-                label="Search (⌘K)"
-                onPress={() => setSearchOpen(true)}
-              >
-                <SearchIcon />
-              </HeaderIcon>
-              <HeaderIcon label="Surprise me" onPress={shuffle}>
-                <ShuffleIcon />
-              </HeaderIcon>
-              <HeaderIcon label="Undo" onPress={undo} isDisabled={!canUndo}>
-                <Undo2Icon />
-              </HeaderIcon>
-            </div>
-          </div>
-          {/* Persona switch — the one toggle that serves both audiences */}
-          <div className="px-3 pb-2.5">
-            <Segmented<StudioMode>
-              ariaLabel="Detail level"
-              value={mode}
-              onChange={setMode}
-              options={[
-                { value: 'simple', label: 'Simple' },
-                { value: 'pro', label: 'Pro' },
-              ]}
-            />
-          </div>
-        </div>
-
         {/* Body: rail + inspector */}
         <div className="relative flex min-h-0 flex-1">
           <Rail active={section} onSelect={goToSection} />
@@ -240,34 +115,6 @@ export function StudioPanel({ className }: { className?: string }) {
         </div>
       </div>
     </StudioProvider>
-  )
-}
-
-function HeaderIcon({
-  label,
-  onPress,
-  isDisabled,
-  children,
-}: {
-  label: string
-  onPress: () => void
-  isDisabled?: boolean
-  children: React.ReactNode
-}) {
-  return (
-    <Tooltip delay={300}>
-      <Button
-        size="sm"
-        variant="quiet"
-        isIconOnly
-        onPress={onPress}
-        isDisabled={isDisabled}
-        aria-label={label}
-      >
-        {children}
-      </Button>
-      <TooltipContent>{label}</TooltipContent>
-    </Tooltip>
   )
 }
 
