@@ -2,7 +2,7 @@ import { LinkButton } from '@/registry/ui/button'
 import { Footer } from '@/components/layout/footer'
 
 import { ChartShowcase } from './chart-showcase'
-import { CHART_FAMILIES, totalVariantCount } from './data'
+import { totalVariantCount } from './data'
 
 export function ChartsPage() {
   return (
@@ -16,18 +16,13 @@ export function ChartsPage() {
             <span className="rounded-full border bg-card px-3 py-1 text-xs text-fg-muted">
               Built on Recharts · themed by your design system
             </span>
-            <h1 className="max-w-3xl text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl">
+            <h1 className="text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl">
               Charts that look like{' '}
-              <span className="bg-gradient-to-r from-[var(--chart-1)] via-[var(--chart-4)] to-[var(--chart-2)] bg-clip-text text-transparent">
-                your product
-              </span>
-              .
+              <span className="font-bold italic">your product</span>.
             </h1>
-            <p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
-              A complete set of accessible, copy-paste chart components. Every
-              series follows your palette and adapts to light and dark —{' '}
-              {totalVariantCount()} variants across {CHART_FAMILIES.length}{' '}
-              families, no config, no restyling.
+            <p className="max-w-xl text-sm text-balance text-fg-muted sm:text-base">
+              {totalVariantCount()} copy-paste chart variants, themed by your
+              design system.
             </p>
             <div className="flex w-full flex-col gap-2 pt-1 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
               <LinkButton href="/create" variant="primary" size="lg">

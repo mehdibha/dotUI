@@ -1,8 +1,10 @@
 'use client'
 
 import { Suspense } from 'react'
+import { CodeIcon } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
+import { LinkButton } from '@/registry/ui/button'
 
 import { getDemoComponent, POLAR_FAMILIES } from './data'
 
@@ -16,12 +18,12 @@ interface ChartCardProps {
 }
 
 /**
- * One variant rendered in a gallery card: the live chart in a fixed-height box
- * above its name. The chart is decorative here (`inert` + `aria-hidden`) so the
- * grid stays keyboard-navigable across every variant at once — its accessible
- * description is the card label; the real, interactive component lives in the
- * docs and in installed code. The chart fills the box (overriding each demo's
- * own aspect / min-height): polar charts stay square so they don't stretch,
+ * One variant in the gallery: a subtle title and a "Show code" link sit in a
+ * header row above a card that holds nothing but the live chart. The chart is
+ * decorative (`inert` + `aria-hidden`) so it never traps focus across the grid —
+ * the real, interactive component (with its source) lives in the docs, which
+ * "Show code" links to. The chart fills the box (overriding each demo's own
+ * aspect / min-height): polar charts stay square so they don't stretch,
  * cartesian ones fill the full width.
  */
 export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
@@ -31,11 +33,23 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
   const isPolar = POLAR_FAMILIES.has(familyId)
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-2xl border bg-card">
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center justify-between gap-2 pl-1">
+        <span className="text-sm text-fg-muted capitalize">{label}</span>
+        <LinkButton
+          href="/docs/components/chart"
+          variant="quiet"
+          size="sm"
+          className="text-fg-muted hover:text-fg"
+        >
+          <CodeIcon />
+          Show code
+        </LinkButton>
+      </div>
       <div
         inert
         aria-hidden="true"
-        className="h-60 overflow-hidden border-b bg-bg/40"
+        className="h-60 overflow-hidden rounded-2xl border bg-card"
       >
         {/* Skeleton fills the whole box edge-to-edge; padding lives on the chart
             wrapper so it never insets the fallback. */}
@@ -53,9 +67,6 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
             <Component />
           </div>
         </Suspense>
-      </div>
-      <div className="px-4 py-3">
-        <span className="text-sm font-medium capitalize">{label}</span>
       </div>
     </div>
   )

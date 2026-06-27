@@ -27,41 +27,15 @@ export interface ChartFamily {
   id: string
   /** Tab label noun, e.g. `Bar`. */
   name: string
-  /** One-line description shown under the tab. */
-  tagline: string
 }
 
 export const CHART_FAMILIES = [
-  {
-    id: 'chart-bar',
-    name: 'Bar',
-    tagline: 'Compare values across categories.',
-  },
-  {
-    id: 'chart-line',
-    name: 'Line',
-    tagline: 'Trends and change over time.',
-  },
-  {
-    id: 'chart-area',
-    name: 'Area',
-    tagline: 'Magnitude and cumulative totals.',
-  },
-  {
-    id: 'chart-pie',
-    name: 'Pie',
-    tagline: 'Parts of a whole, at a glance.',
-  },
-  {
-    id: 'chart-radar',
-    name: 'Radar',
-    tagline: 'Multivariate comparison on shared axes.',
-  },
-  {
-    id: 'chart-radial',
-    name: 'Radial',
-    tagline: 'Progress and proportion, in the round.',
-  },
+  { id: 'chart-bar', name: 'Bar' },
+  { id: 'chart-line', name: 'Line' },
+  { id: 'chart-area', name: 'Area' },
+  { id: 'chart-pie', name: 'Pie' },
+  { id: 'chart-radar', name: 'Radar' },
+  { id: 'chart-radial', name: 'Radial' },
 ] as const satisfies readonly ChartFamily[]
 
 /** Variant entries for a family, derived from the demo index (always in sync). */

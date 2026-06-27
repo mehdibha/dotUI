@@ -16,8 +16,8 @@ export function ChartShowcase() {
     <Tabs defaultSelectedKey={CHART_FAMILIES[0].id} className="gap-8">
       <TabList
         aria-label="Chart families"
-        variant="line"
-        className="mx-auto flex-wrap justify-center gap-2"
+        variant="default"
+        className="mx-auto flex-wrap justify-center gap-2 bg-transparent"
       >
         {CHART_FAMILIES.map((f) => (
           <Tab key={f.id} id={f.id} className="px-4 py-2 text-base">
@@ -28,20 +28,19 @@ export function ChartShowcase() {
       {CHART_FAMILIES.map((f) => {
         const variants = variantsFor(f.id)
         return (
-          <TabPanel key={f.id} id={f.id} className="flex flex-col gap-5">
-            <p className="text-sm text-fg-muted">
-              {f.tagline} {variants.length} variants.
-            </p>
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-              {variants.map((v) => (
-                <ChartCard
-                  key={v.key}
-                  familyId={f.id}
-                  demoKey={v.key}
-                  label={v.label}
-                />
-              ))}
-            </div>
+          <TabPanel
+            key={f.id}
+            id={f.id}
+            className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
+          >
+            {variants.map((v) => (
+              <ChartCard
+                key={v.key}
+                familyId={f.id}
+                demoKey={v.key}
+                label={v.label}
+              />
+            ))}
           </TabPanel>
         )
       })}
