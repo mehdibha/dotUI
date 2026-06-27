@@ -23,8 +23,7 @@ import { ColorCard, ColorLab } from './color'
 import { CommandPalette } from './command-palette'
 import { ComponentAnatomy, ComponentsCard } from './components-panel'
 import { BuilderFooter } from './footer'
-import { IdentityBar } from './identity-bar'
-import { BuilderUiProvider, useBuilderUi } from './use-builder-ui'
+import { useBuilderUi } from './use-builder-ui'
 
 const drillTransition: Transition = {
   x: { type: 'tween', duration: 0.35, ease: [0.32, 0.72, 0, 1] },
@@ -36,16 +35,12 @@ const drillTransition: Transition = {
  * Two deep editors (the OKLCH color lab, a synced group's anatomy) take over the
  * rail when summoned. Everything writes one shared DesignSystem; Essentials ⇄
  * Everything is a pure view toggle; honest live/preview-only signals throughout.
+ *
+ * The system identity, undo/redo, ⌘K and the speed switch now live in the
+ * full-width CreateTopBar (the builder's own bar, replacing the site nav on
+ * /create); the provider is hoisted to the route so both share one UI store.
  */
 export function BuilderPanel({ className }: { className?: string }) {
-  return (
-    <BuilderUiProvider>
-      <BuilderColumn className={className} />
-    </BuilderUiProvider>
-  )
-}
-
-function BuilderColumn({ className }: { className?: string }) {
   const { flashId } = useBuilderUi()
   const scrollRef = useRef<HTMLDivElement>(null)
 
@@ -63,8 +58,6 @@ function BuilderColumn({ className }: { className?: string }) {
         className,
       )}
     >
-      <IdentityBar />
-
       <div className="relative min-h-0 flex-1 overflow-hidden">
         <div
           ref={scrollRef}

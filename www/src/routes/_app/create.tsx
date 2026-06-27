@@ -6,6 +6,11 @@ import { cn } from '@/registry/lib/utils'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { BuilderPanel } from '@/modules/create/builder'
+import {
+  CreateLabTopBar,
+  CreateTopBar,
+} from '@/modules/create/builder/create-top-bar'
+import { BuilderUiProvider } from '@/modules/create/builder/use-builder-ui'
 import { LabExperience } from '@/modules/create/panel'
 import { DEFAULTS, useDesignSystem } from '@/modules/create/preset'
 import {
@@ -69,33 +74,48 @@ function CreatePage() {
     saveStoredPreset(designSystem)
   }, [designSystem])
 
+  // /create owns its top bar now — the global site nav is skipped on this route
+  // (see routes/_app/route.tsx), so each path renders its own full-width bar that
+  // stays visually continuous with the site header.
+
   // Opt-in exploration of the redesigned control panel + floating panel lab.
-  if (lab) return <LabExperience />
+  if (lab)
+    return (
+      <>
+        <CreateLabTopBar />
+        <LabExperience />
+      </>
+    )
 
   return (
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">
-      {/* Mobile-only view switcher — hidden once the two panes fit side by side. */}
-      <ToggleButtonGroup
-        aria-label="Editor view"
-        selectionMode="single"
-        disallowEmptySelection
-        size="sm"
-        selectedKeys={[mobilePane]}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next === 'customize' || next === 'preview') setMobilePane(next)
-        }}
-        className="w-full shrink-0 *:flex-1 lg:hidden"
-      >
-        <ToggleButton id="customize">Customize</ToggleButton>
-        <ToggleButton id="preview">Preview</ToggleButton>
-      </ToggleButtonGroup>
-      <BuilderPanel
-        className={cn(mobilePane === 'preview' && 'max-lg:hidden')}
-      />
-      <PreviewPanel
-        className={cn(mobilePane === 'customize' && 'max-lg:hidden')}
-      />
-    </div>
+    // One BuilderUiProvider for the whole shell so the top bar and the panel
+    // share a single UI store (the speed switch, ⌘K, the system name).
+    <BuilderUiProvider>
+      <CreateTopBar />
+      <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">
+        {/* Mobile-only view switcher — hidden once the two panes fit side by side. */}
+        <ToggleButtonGroup
+          aria-label="Editor view"
+          selectionMode="single"
+          disallowEmptySelection
+          size="sm"
+          selectedKeys={[mobilePane]}
+          onSelectionChange={(keys) => {
+            const next = keys.values().next().value
+            if (next === 'customize' || next === 'preview') setMobilePane(next)
+          }}
+          className="w-full shrink-0 *:flex-1 lg:hidden"
+        >
+          <ToggleButton id="customize">Customize</ToggleButton>
+          <ToggleButton id="preview">Preview</ToggleButton>
+        </ToggleButtonGroup>
+        <BuilderPanel
+          className={cn(mobilePane === 'preview' && 'max-lg:hidden')}
+        />
+        <PreviewPanel
+          className={cn(mobilePane === 'customize' && 'max-lg:hidden')}
+        />
+      </div>
+    </BuilderUiProvider>
   )
 }
