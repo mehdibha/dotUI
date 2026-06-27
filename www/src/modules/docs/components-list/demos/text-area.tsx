@@ -1,5 +1,19 @@
+'use client'
+
 import { TextArea } from '@/registry/ui/input'
 
+import { DemoFocus, useTypewriter } from '../autoplay'
+
 export function TextAreaDemo() {
-  return <TextArea placeholder="Enter description..." className="w-full" />
+  const { value, active } = useTypewriter('Tell us a bit about yourself.')
+  return (
+    <DemoFocus active={active}>
+      <TextArea
+        value={value}
+        onChange={() => {}}
+        placeholder="Enter description..."
+        className="w-full max-w-[11.5rem]"
+      />
+    </DemoFocus>
+  )
 }

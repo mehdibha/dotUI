@@ -121,6 +121,22 @@
   --color-border-sidebar: var(--neutral-300);
 }
 
+/* -------------- Chart colors -------------- */
+/*
+ * Categorical palette for charts, referenced as `var(--chart-N)` (shadcn parity,
+ * default N=5). Interim defaults map to dotUI's semantic hues; each `--*-500`
+ * flips with `.dark`, so a series keeps its hue across light/dark (never the
+ * reverse-ramp trap). The /create builder turns this into a first-class,
+ * accent-derived axis with a manual override (see docs/plans/2026-06-13-charts/001).
+ */
+:root {
+  --chart-1: var(--accent-500);
+  --chart-2: var(--success-500);
+  --chart-3: var(--warning-500);
+  --chart-4: var(--danger-500);
+  --chart-5: var(--info-500);
+}
+
 /* -------------- Variant specific colors -------------- */
 
 @theme inline {

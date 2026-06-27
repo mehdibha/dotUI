@@ -1,32 +1,43 @@
+'use client'
+
 import { ChevronDownIcon } from 'lucide-react'
 
 import { Button } from '@/registry/ui/button'
-import { Combobox } from '@/registry/ui/combobox'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
+
+import { OverlayScene, useOpenAutoplay } from '../autoplay'
 
 export function ComboboxDemo() {
+  const { phase } = useOpenAutoplay()
   return (
-    <Combobox aria-label="Country" menuTrigger="focus">
-      <InputGroup>
-        <Input placeholder="Select country..." />
-        <InputGroupAddon>
-          <Button variant="quiet" isIconOnly>
-            <ChevronDownIcon />
-          </Button>
-        </InputGroupAddon>
-      </InputGroup>
-      <Popover>
-        <ListBox>
-          <ListBoxItem>Canada</ListBoxItem>
-          <ListBoxItem>France</ListBoxItem>
-          <ListBoxItem>Germany</ListBoxItem>
-          <ListBoxItem>Japan</ListBoxItem>
-          <ListBoxItem>United Kingdom</ListBoxItem>
-          <ListBoxItem>United States</ListBoxItem>
-        </ListBox>
-      </Popover>
-    </Combobox>
+    <OverlayScene
+      phase={phase}
+      variant="menu"
+      side="bottom"
+      fluid
+      surfaceClassName="w-full max-w-[11.5rem] p-0"
+      trigger={
+        <InputGroup className="w-full max-w-[11.5rem]">
+          <Input placeholder="Select country..." value="France" readOnly />
+          <InputGroupAddon>
+            <Button variant="quiet" isIconOnly>
+              <ChevronDownIcon />
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+      }
+    >
+      <ListBox
+        aria-label="Country"
+        selectionMode="single"
+        selectedKeys={['france']}
+        className="border-0 bg-transparent shadow-none"
+      >
+        <ListBoxItem id="canada">Canada</ListBoxItem>
+        <ListBoxItem id="france">France</ListBoxItem>
+        <ListBoxItem id="germany">Germany</ListBoxItem>
+      </ListBox>
+    </OverlayScene>
   )
 }

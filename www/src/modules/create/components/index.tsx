@@ -191,6 +191,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
           {toTitleCase(paramName)}
         </span>
         <Select
+          aria-label={toTitleCase(paramName)}
           selectedKey={selected ?? def.default}
           onSelectionChange={(key) => onChange(key as string)}
         >
@@ -256,6 +257,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
         {toTitleCase(paramName)}
       </span>
       <Select
+        aria-label={toTitleCase(paramName)}
         selectedKey={selected ?? def.default}
         onSelectionChange={(key) => onChange(key as string)}
       >

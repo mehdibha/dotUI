@@ -74,7 +74,12 @@ function DocsSidebarLink({
   }, [isActive])
 
   return (
-    <Link ref={ref} to={item.url} className="text-[0.8rem]">
+    <Link
+      ref={ref}
+      to="/docs/$"
+      params={{ _splat: item.url.replace(/^\/docs\/?/, '') }}
+      className="text-[0.8rem]"
+    >
       <span
         className={cn(
           'flex items-center gap-2 rounded-md bg-transparent px-2 py-1 text-fg-muted transition-colors hover:text-fg',

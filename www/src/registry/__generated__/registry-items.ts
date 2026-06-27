@@ -11,6 +11,13 @@ import UiBreadcrumbs from "@/registry/ui/breadcrumbs/meta";
 import UiButton from "@/registry/ui/button/meta";
 import UiCalendar from "@/registry/ui/calendar/meta";
 import UiCard from "@/registry/ui/card/meta";
+import UiChartArea from "@/registry/ui/chart-area/meta";
+import UiChartBar from "@/registry/ui/chart-bar/meta";
+import UiChartLine from "@/registry/ui/chart-line/meta";
+import UiChartPie from "@/registry/ui/chart-pie/meta";
+import UiChartRadar from "@/registry/ui/chart-radar/meta";
+import UiChartRadial from "@/registry/ui/chart-radial/meta";
+import UiChart from "@/registry/ui/chart/meta";
 import UiCheckboxGroup from "@/registry/ui/checkbox-group/meta";
 import UiCheckbox from "@/registry/ui/checkbox/meta";
 import UiColorArea from "@/registry/ui/color-area/meta";
@@ -65,6 +72,7 @@ import UiToast from "@/registry/ui/toast/meta";
 import UiToggleButtonGroup from "@/registry/ui/toggle-button-group/meta";
 import UiToggleButton from "@/registry/ui/toggle-button/meta";
 import UiTooltip from "@/registry/ui/tooltip/meta";
+import UiTree from "@/registry/ui/tree/meta";
 
 import type { RegistryItem } from "@/registry/types";
 
@@ -77,6 +85,13 @@ export const registryUi: RegistryItem[] = [
 	UiButton,
 	UiCalendar,
 	UiCard,
+	UiChart,
+	UiChartArea,
+	UiChartBar,
+	UiChartLine,
+	UiChartPie,
+	UiChartRadar,
+	UiChartRadial,
 	UiCheckbox,
 	UiCheckboxGroup,
 	UiColorArea,
@@ -131,6 +146,7 @@ export const registryUi: RegistryItem[] = [
 	UiToggleButton,
 	UiToggleButtonGroup,
 	UiTooltip,
+	UiTree,
 ];
 
 export const registryLib: RegistryItem[] = [LibFocusStyles, LibUtils];

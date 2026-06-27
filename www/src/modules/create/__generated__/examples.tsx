@@ -10,6 +10,12 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	button: () => import("@/registry/ui/button/examples"),
 	calendar: () => import("@/registry/ui/calendar/examples"),
 	card: () => import("@/registry/ui/card/examples"),
+	"chart-area": () => import("@/registry/ui/chart-area/examples"),
+	"chart-bar": () => import("@/registry/ui/chart-bar/examples"),
+	"chart-line": () => import("@/registry/ui/chart-line/examples"),
+	"chart-pie": () => import("@/registry/ui/chart-pie/examples"),
+	"chart-radar": () => import("@/registry/ui/chart-radar/examples"),
+	"chart-radial": () => import("@/registry/ui/chart-radial/examples"),
 	checkbox: () => import("@/registry/ui/checkbox/examples"),
 	"checkbox-group": () => import("@/registry/ui/checkbox-group/examples"),
 	"color-area": () => import("@/registry/ui/color-area/examples"),
@@ -65,6 +71,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"toggle-button": () => import("@/registry/ui/toggle-button/examples"),
 	"toggle-button-group": () => import("@/registry/ui/toggle-button-group/examples"),
 	tooltip: () => import("@/registry/ui/tooltip/examples"),
+	tree: () => import("@/registry/ui/tree/examples"),
 };
 
 export const GroupExamplesIndex: Record<string, () => Promise<{ default: React.ComponentType }>> = {
