@@ -5,6 +5,12 @@ export interface ComponentInfo {
   slug: string
   href: string
   scale?: number
+  /** Render the demo full-bleed (overlay "zoom out" scenes manage their own
+   *  framing) instead of the default centered + scaled preview. */
+  fill?: boolean
+  /** Render the demo full-width (responsive, not scaled) — for field-like demos
+   *  that should share one consistent, responsive width. */
+  stretch?: boolean
   status: ComponentStatus
 }
 
@@ -51,7 +57,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'Group',
         slug: 'group',
         href: '/docs/components/group',
-        scale: 0.9,
+        scale: 1,
         status: 'done',
       },
     ],
@@ -64,35 +70,35 @@ export const componentsData: ComponentCategory[] = [
         name: 'Input',
         slug: 'input',
         href: '/docs/components/input',
-        scale: 0.9,
+        stretch: true,
         status: 'done',
       },
       {
         name: 'TextArea',
         slug: 'text-area',
         href: '/docs/components/text-area',
-        scale: 0.9,
+        stretch: true,
         status: 'done',
       },
       {
         name: 'InputGroup',
         slug: 'input-group',
         href: '/docs/components/input-group',
-        scale: 0.9,
+        stretch: true,
         status: 'done',
       },
       {
         name: 'TextField',
         slug: 'text-field',
         href: '/docs/components/text-field',
-        scale: 0.9,
+        stretch: true,
         status: 'in review',
       },
       {
         name: 'SearchField',
         slug: 'search-field',
         href: '/docs/components/search-field',
-        scale: 0.9,
+        stretch: true,
         status: 'in review',
       },
       {
@@ -141,14 +147,14 @@ export const componentsData: ComponentCategory[] = [
         name: 'Slider',
         slug: 'slider',
         href: '/docs/components/slider',
-        scale: 0.9,
+        stretch: true,
         status: 'pending',
       },
       {
         name: 'Field',
         slug: 'field',
         href: '/docs/components/field',
-        scale: 0.9,
+        stretch: true,
         status: 'pending',
       },
     ],
@@ -162,6 +168,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'menu',
         href: '/docs/components/menu',
         scale: 1,
+        fill: true,
         status: 'in review',
       },
       {
@@ -169,6 +176,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'combobox',
         href: '/docs/components/combobox',
         scale: 0.9,
+        fill: true,
         status: 'done',
       },
       {
@@ -176,6 +184,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'select',
         href: '/docs/components/select',
         scale: 0.95,
+        fill: true,
         status: 'done',
       },
     ],
@@ -195,7 +204,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'DateField',
         slug: 'date-field',
         href: '/docs/components/date-field',
-        scale: 0.9,
+        stretch: true,
         status: 'done',
       },
       {
@@ -203,13 +212,14 @@ export const componentsData: ComponentCategory[] = [
         slug: 'date-picker',
         href: '/docs/components/date-picker',
         scale: 0.8,
+        fill: true,
         status: 'done',
       },
       {
         name: 'TimeField',
         slug: 'time-field',
         href: '/docs/components/time-field',
-        scale: 0.9,
+        stretch: true,
         status: 'in review',
       },
     ],
@@ -229,7 +239,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'ProgressBar',
         slug: 'progress-bar',
         href: '/docs/components/progress-bar',
-        scale: 1,
+        stretch: true,
         status: 'pending',
       },
       {
@@ -366,7 +376,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'Card',
         slug: 'card',
         href: '/docs/components/card',
-        scale: 0.45,
+        stretch: true,
         status: 'done',
       },
       {
@@ -407,7 +417,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'ColorField',
         slug: 'color-field',
         href: '/docs/components/color-field',
-        scale: 0.9,
+        stretch: true,
         status: 'pending',
       },
       {
@@ -415,6 +425,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'color-picker',
         href: '/docs/components/color-picker',
         scale: 0.65,
+        fill: true,
         status: 'pending',
       },
       {
@@ -442,6 +453,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'modal',
         href: '/docs/components/modal',
         scale: 1,
+        fill: true,
         status: 'done',
       },
       {
@@ -449,6 +461,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'popover',
         href: '/docs/components/popover',
         scale: 1,
+        fill: true,
         status: 'done',
       },
       {
@@ -456,6 +469,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'drawer',
         href: '/docs/components/drawer',
         scale: 1,
+        fill: true,
         status: 'in review',
       },
       {
@@ -463,6 +477,7 @@ export const componentsData: ComponentCategory[] = [
         slug: 'tooltip',
         href: '/docs/components/tooltip',
         scale: 1,
+        fill: true,
         status: 'pending',
       },
     ],

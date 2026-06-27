@@ -1,5 +1,6 @@
 'use client'
 
+import { DemoPreset } from '../demo-preset'
 import { ComponentCard } from './component-card'
 import { componentsData } from './components-data'
 
@@ -12,6 +13,9 @@ const CATEGORY_PREVIEW_HEIGHT: Record<string, string> = {
   'data-display': 'h-52',
   colors: 'h-52',
   charts: 'h-72',
+  // Overlay scenes (and the pickers' dropdowns) need room for the opened surface.
+  overlays: 'h-52',
+  pickers: 'h-52',
 }
 
 /**
@@ -32,17 +36,21 @@ export function ComponentsGrid({ category }: { category: string }) {
   }
 
   return (
-    <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
-      {data.components.map((component) => (
-        <ComponentCard
-          key={component.slug}
-          name={component.name}
-          slug={component.slug}
-          href={component.href}
-          scale={component.scale}
-          previewClassName={CATEGORY_PREVIEW_HEIGHT[category]}
-        />
-      ))}
-    </div>
+    <DemoPreset>
+      <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
+        {data.components.map((component) => (
+          <ComponentCard
+            key={component.slug}
+            name={component.name}
+            slug={component.slug}
+            href={component.href}
+            scale={component.scale}
+            fill={component.fill}
+            stretch={component.stretch}
+            previewClassName={CATEGORY_PREVIEW_HEIGHT[category]}
+          />
+        ))}
+      </div>
+    </DemoPreset>
   )
 }
