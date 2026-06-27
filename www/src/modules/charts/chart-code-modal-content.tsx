@@ -45,8 +45,8 @@ export default function ChartCodeModalContent({
   return (
     <>
       {/* Header — accessible title + close */}
-      <header className="flex shrink-0 items-center justify-between gap-2 border-b py-2 pr-2 pl-4">
-        <DialogTitle className="text-sm font-medium capitalize">
+      <header className="flex shrink-0 items-center justify-between gap-2 py-2 pr-2 pl-4">
+        <DialogTitle className="text-sm text-fg-muted capitalize">
           {label}
         </DialogTitle>
         <Button
