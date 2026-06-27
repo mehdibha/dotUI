@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { cn } from '@/registry/lib/utils'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
-import { CustomizerPanel } from '@/modules/create/customizer-panel'
+import { BuilderPanel } from '@/modules/create/builder'
 import { LabExperience } from '@/modules/create/panel'
 import { DEFAULTS, useDesignSystem } from '@/modules/create/preset'
 import {
@@ -90,7 +90,7 @@ function CreatePage() {
         <ToggleButton id="customize">Customize</ToggleButton>
         <ToggleButton id="preview">Preview</ToggleButton>
       </ToggleButtonGroup>
-      <CustomizerPanel
+      <BuilderPanel
         className={cn(mobilePane === 'preview' && 'max-lg:hidden')}
       />
       <PreviewPanel
