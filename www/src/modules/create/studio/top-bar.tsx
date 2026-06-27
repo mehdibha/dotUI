@@ -10,22 +10,29 @@ import {
 } from 'lucide-react'
 import { useTheme } from 'starter-themes'
 
+import { siteConfig } from '@/config/site'
 import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
+import { Button, buttonStyles } from '@/registry/ui/button'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Overlay } from '@/registry/ui/overlay'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { GitHubIcon } from '@/components/icons/github'
+import { Logo } from '@/components/layout/logo'
 
 import { ExportFooter } from '../export'
 import { useDesignSystem } from '../preset'
 import { useStudio } from './store'
 
 /* ----------------------------------------------------------------------------
- * The top bar — identity on the left, an always-on AI command field in the
- * middle (⌘K), and view + export actions on the right. The AI field is the
+ * The top bar — the studio's single, app-like chrome. It replaces the global
+ * site nav on /create?studio (the site header is suppressed there), so it leads
+ * with the dotUI logo (→ home, for a smooth two-way transition) and carries the
+ * builder's primary controls instead: system identity, an always-on AI command
+ * field (⌘K), view toggles, theme, GitHub, and export. The AI field is the
  * fastest path to a change from anywhere on the page; it routes into the same
- * copilot thread so history stays in one place.
+ * copilot thread so history stays in one place. The shared `--header-height`,
+ * sticky chrome, and button language keep it visually continuous with the site.
  * -------------------------------------------------------------------------- */
 
 export function TopBar() {
@@ -35,8 +42,12 @@ export function TopBar() {
     (designSystem.color ?? DEFAULT_COLOR_CONFIG).seeds.accent ?? '#438cd6'
 
   return (
-    <header className="flex h-14 shrink-0 items-center gap-3 border-b bg-card px-3">
-      {/* Identity */}
+    <header className="flex h-(--header-height) shrink-0 items-center gap-3 border-b bg-card px-3">
+      {/* Logo links home so leaving the builder feels like the same product. */}
+      <Logo className="shrink-0 max-sm:[&_[data-wordmark]]:hidden" />
+      <div className="h-5 w-px shrink-0 bg-border" />
+
+      {/* System identity */}
       <div className="flex min-w-0 items-center gap-2.5">
         <span
           className="size-6 shrink-0 rounded-md ring-1 ring-black/10 ring-inset"
@@ -60,6 +71,16 @@ export function TopBar() {
       <div className="flex shrink-0 items-center gap-1">
         <InspectToggle />
         <ModeToggle />
+        <a
+          aria-label="GitHub"
+          href={siteConfig.links.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-icon-only=""
+          className={buttonStyles({ variant: 'quiet', size: 'sm' })}
+        >
+          <GitHubIcon />
+        </a>
         <div className="mx-1 h-5 w-px bg-border" />
         <ExportButton />
       </div>

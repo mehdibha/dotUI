@@ -32,8 +32,10 @@ export function StudioExperience() {
 
 function StudioShell() {
   const { copilotOpen } = useStudio()
+  // The global site header is suppressed on /create?studio (see _app/route.tsx),
+  // so the studio owns the full viewport and its own TopBar is the only bar.
   return (
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-col bg-bg">
+    <div className="flex h-svh min-h-0 flex-col bg-bg">
       <TopBar />
       <div className="relative flex min-h-0 flex-1">
         <Dock />
