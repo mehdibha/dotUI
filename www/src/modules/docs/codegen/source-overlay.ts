@@ -181,12 +181,15 @@ function findExportFunction(sf: SourceFile): FunctionDeclaration | undefined {
   )
 }
 
-function getRootJsxElement(fn: FunctionDeclaration): JsxElement | undefined {
+function getRootJsxElement(
+  fn: FunctionDeclaration,
+): JsxElement | JsxSelfClosingElement | undefined {
   const ret = fn.getFirstDescendantByKind(SyntaxKind.ReturnStatement)
   let expr = ret?.getExpression()
   if (!expr) return undefined
   if (Node.isParenthesizedExpression(expr)) expr = expr.getExpression()
-  return Node.isJsxElement(expr) ? expr : undefined
+  if (Node.isJsxElement(expr) || Node.isJsxSelfClosingElement(expr)) return expr
+  return undefined
 }
 
 // ---------------------------------------------------------------------------
