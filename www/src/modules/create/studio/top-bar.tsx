@@ -2,8 +2,9 @@
 
 import { DicesIcon, Redo2Icon, RotateCcwIcon, Undo2Icon } from 'lucide-react'
 
+import { siteConfig } from '@/config/site'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
+import { Button, buttonStyles } from '@/registry/ui/button'
 import { ColorArea } from '@/registry/ui/color-area'
 import { ColorField } from '@/registry/ui/color-field'
 import { ColorPicker } from '@/registry/ui/color-picker'
@@ -12,6 +13,9 @@ import { DialogContent } from '@/registry/ui/dialog'
 import { Input } from '@/registry/ui/input'
 import { Popover } from '@/registry/ui/popover'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { GitHubIcon } from '@/components/icons/github'
+import { Logo } from '@/components/layout/logo'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 import { useDesignSystem } from '../preset'
 import { CommandPalette } from './command-palette'
@@ -21,44 +25,41 @@ import { useStudio } from './store'
 import { useHistory } from './use-history'
 
 /**
- * Two compact rows: identity + search, then mode + history. The theme toggle is
- * intentionally absent — the global site header already owns it, and the preview
- * has its own mode switch, so duplicating it here only spent a row.
+ * The builder's own top bar — it replaces the global site nav on /create so the
+ * studio reads as a focused "app" inside dotUI, not a second bar stacked over
+ * the marketing chrome. It stays visually continuous with the site header
+ * (same --header-height, sticky, blur-free, the Logo linking home for a smooth
+ * exit, the same ThemeToggle / GitHub buttons) while swapping the docs nav for
+ * the builder's genuinely-primary controls: brand identity, ⌘K, re-roll +
+ * undo/redo, and the Quick ↔ Studio depth switch. Secondary controls stay in
+ * the panels; the export payoff keeps its dedicated footer.
  */
-export function StudioHeader() {
+export function StudioTopBar() {
   const { name, setName, depth, setDepth } = useStudio()
   const { reroll, reset } = useStudioActions()
   const { canUndo, canRedo, undo, redo } = useHistory()
 
   return (
-    <div className="flex flex-col gap-2 border-b p-2">
-      {/* Identity + search */}
-      <div className="flex items-center gap-2">
-        <BrandSwatch />
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          aria-label="System name"
-          spellCheck={false}
-          className="min-w-0 flex-1 truncate rounded-sm bg-transparent text-sm font-semibold outline-none focus-visible:bg-neutral focus-visible:px-1"
-        />
-        <CommandPalette compact />
-      </div>
+    <header className="sticky top-0 z-30 flex h-(--header-height) w-full shrink-0 items-center gap-2 border-b bg-bg px-4 sm:gap-3 sm:px-6">
+      {/* Left: exit to the site, then the system's identity */}
+      <Logo />
+      <div className="mx-1 hidden h-5 w-px bg-border sm:block" />
+      <BrandSwatch />
+      <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        aria-label="System name"
+        spellCheck={false}
+        className="max-w-44 min-w-0 flex-1 truncate rounded-sm bg-transparent text-sm font-semibold outline-none focus-visible:bg-neutral focus-visible:px-1.5 sm:max-w-56"
+      />
 
-      {/* Mode + history */}
-      <div className="flex items-center gap-2">
-        <div className="min-w-0 flex-1">
-          <Segmented
-            ariaLabel="Depth"
-            value={depth}
-            onChange={setDepth}
-            options={[
-              { value: 'quick', label: 'Quick' },
-              { value: 'studio', label: 'Studio' },
-            ]}
-          />
-        </div>
-        <div className="flex shrink-0 items-center gap-0.5">
+      {/* Right: primary actions + continuity bits */}
+      <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+        <CommandPalette compact />
+
+        {/* History + shuffle — power actions; also reachable via ⌘K, so they
+            fold away on the narrowest screens to keep the bar uncluttered. */}
+        <div className="hidden shrink-0 items-center gap-0.5 sm:flex">
           <IconButton label="Re-roll the system" onPress={reroll}>
             <DicesIcon />
           </IconButton>
@@ -72,8 +73,36 @@ export function StudioHeader() {
             <RotateCcwIcon />
           </IconButton>
         </div>
+
+        <div className="mx-0.5 hidden h-5 w-px bg-border md:block" />
+
+        <div className="hidden w-40 md:block">
+          <Segmented
+            ariaLabel="Depth"
+            value={depth}
+            onChange={setDepth}
+            options={[
+              { value: 'quick', label: 'Quick' },
+              { value: 'studio', label: 'Studio' },
+            ]}
+          />
+        </div>
+
+        <div className="mx-0.5 h-5 w-px bg-border max-sm:hidden" />
+
+        <a
+          aria-label="GitHub"
+          href={siteConfig.links.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-icon-only=""
+          className={buttonStyles({ variant: 'quiet', size: 'sm' })}
+        >
+          <GitHubIcon />
+        </a>
+        <ThemeToggle variant="quiet" size="sm" isIconOnly />
       </div>
-    </div>
+    </header>
   )
 }
 
@@ -105,7 +134,7 @@ function IconButton({
   )
 }
 
-/** Live brand-color swatch — edit the accent from anywhere in the studio. */
+/** Live brand-color swatch — edit the accent from the top bar. */
 function BrandSwatch() {
   const { designSystem, setColorSeed } = useDesignSystem()
   const accent =
@@ -119,7 +148,7 @@ function BrandSwatch() {
         isIconOnly
         size="sm"
         aria-label="Brand color"
-        className="size-7 overflow-hidden p-0"
+        className="size-7 shrink-0 overflow-hidden p-0"
       >
         <span className="block size-full" style={{ backgroundColor: accent }} />
       </Button>

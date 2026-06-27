@@ -8,10 +8,10 @@ import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 
 import { PreviewPanel } from '../preview/preview-panel'
 import { ExportBar } from './export-bar'
-import { StudioHeader } from './header'
 import { Inspector } from './inspector'
 import { Rail } from './rail'
 import { StudioProvider } from './store'
+import { StudioTopBar } from './top-bar'
 
 type MobilePane = 'customize' | 'preview'
 
@@ -19,11 +19,18 @@ type MobilePane = 'customize' | 'preview'
  * The redesigned /create experience — "Studio". One living surface: a chapter
  * rail + an inspector that sharpens from Quick to Studio, beside the live
  * preview it drives. Replaces the old drill-down customizer panel entirely.
+ *
+ * On /create the global site nav is suppressed (see routes/_app/route.tsx); the
+ * builder owns its own full-width top bar instead so the whole page reads as one
+ * focused app rather than two stacked bars.
  */
 export function StudioExperience() {
   return (
     <StudioProvider>
-      <StudioLayout />
+      <div className="flex h-svh flex-col">
+        <StudioTopBar />
+        <StudioLayout />
+      </div>
     </StudioProvider>
   )
 }
@@ -35,7 +42,7 @@ function StudioLayout() {
   const [mobilePane, setMobilePane] = useState<MobilePane>('customize')
 
   return (
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">
+    <div className="flex min-h-0 flex-1 flex-col gap-3 p-4 pt-3 lg:flex-row lg:gap-6 lg:p-6 lg:pt-3">
       <ToggleButtonGroup
         aria-label="Editor view"
         selectionMode="single"
@@ -70,8 +77,6 @@ function StudioPanel({ className }: { className?: string }) {
         className,
       )}
     >
-      <StudioHeader />
-
       <div className="flex min-h-0 flex-1">
         <Rail />
         <Inspector />
