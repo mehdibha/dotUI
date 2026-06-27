@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { staticFunctionMiddleware } from "@tanstack/start-static-server-functions";
 
@@ -30,9 +30,16 @@ function AppLayout() {
 	const { pageTree } = Route.useLoaderData();
 	const items = pageTree.children as PageTree.Node[];
 
+	// The builder owns its own focused top bar, so the site nav is suppressed on
+	// /create only — every other route keeps the standard site Header. The
+	// --header-height token stays defined here so the builder's height math
+	// (calc(100svh - header-height)) and its own sticky bar line up.
+	const { pathname } = useLocation();
+	const isCreate = pathname === "/create";
+
 	return (
 		<div className="[--header-height:--spacing(14)]">
-			<Header items={items} />
+			{!isCreate && <Header items={items} />}
 			<Outlet />
 		</div>
 	);

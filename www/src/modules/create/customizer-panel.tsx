@@ -2,15 +2,12 @@ import { type ReactNode, useMemo } from "react";
 
 import { getRouteApi } from "@tanstack/react-router";
 
-import { ChevronLeftIcon, ChevronRightIcon, RotateCcwIcon, ShuffleIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { AnimatePresence, motion, type Transition } from "motion/react";
 import * as ButtonPrimitives from "react-aria-components/Button";
 
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme";
 import { Button } from "@/registry/ui/button";
-import { Tooltip, TooltipContent } from "@/registry/ui/tooltip";
-
-import type { ColorConfig } from "@/registry/theme";
 
 import { ColorsConfig } from "./colors-config";
 import {
@@ -29,9 +26,7 @@ import {
 	DEFAULT_CURSOR_INTERACTIVE,
 } from "./cursor-config";
 import { IconographyControls } from "./iconography-config";
-import { InstallCommand } from "./install-command";
 import { DEFAULT_RADIUS_FACTOR, DensityConfig, RADIUS_FACTOR_VAR, RadiusConfig } from "./layout-config";
-import { OpenInV0 } from "./open-in-v0";
 import { useDesignSystem } from "./preset";
 import { SeedColorPicker } from "./seed-color-picker";
 import { TypographyConfig, TypographyControls } from "./typography-config";
@@ -51,38 +46,6 @@ const CONFIG_TITLES: Record<string, string> = {
 };
 const CONFIG_IDS = new Set(Object.keys(CONFIG_TITLES));
 
-/* ------------------------------ Randomize ------------------------------- */
-
-function hslToHex(h: number, s: number, l: number): string {
-	const c = (1 - Math.abs(2 * l - 1)) * s;
-	const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
-	const m = l - c / 2;
-	let r = 0;
-	let g = 0;
-	let b = 0;
-	if (h < 60) [r, g, b] = [c, x, 0];
-	else if (h < 120) [r, g, b] = [x, c, 0];
-	else if (h < 180) [r, g, b] = [0, c, x];
-	else if (h < 240) [r, g, b] = [0, x, c];
-	else if (h < 300) [r, g, b] = [x, 0, c];
-	else [r, g, b] = [c, 0, x];
-	const toHex = (v: number) =>
-		Math.round((v + m) * 255)
-			.toString(16)
-			.padStart(2, "0");
-	return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-}
-
-/**
- * A fresh, usable palette: a vivid accent on a near-neutral base. Status hues are left intact;
- * tuning knobs are dropped — they were calibrated for the previous seed and would skew the new one.
- */
-function randomizeColors(base: ColorConfig): ColorConfig {
-	const accent = hslToHex(Math.floor(Math.random() * 360), 0.62 + Math.random() * 0.28, 0.5 + Math.random() * 0.08);
-	const neutral = hslToHex(Math.floor(Math.random() * 360), 0.03 + Math.random() * 0.05, 0.5);
-	return { ...base, seeds: { ...base.seeds, accent, neutral }, knobs: undefined };
-}
-
 /* -------------------------------- Panel -------------------------------- */
 
 const routeApi = getRouteApi("/_app/create");
@@ -90,7 +53,7 @@ const routeApi = getRouteApi("/_app/create");
 export function CustomizerPanel() {
 	const { panel } = routeApi.useSearch();
 	const navigate = routeApi.useNavigate();
-	const { designSystem, setComponentParam, setToken, setDensity, setColorSeed, setDesignSystem } = useDesignSystem();
+	const { designSystem, setComponentParam, setToken, setDensity, setColorSeed } = useDesignSystem();
 
 	const navStack = useMemo(() => (panel ? panel.split(".") : []), [panel]);
 
@@ -106,16 +69,6 @@ export function CustomizerPanel() {
 	// Opening a category's config also points the live preview at the whole group, so you edit what you see.
 	function selectGroup(group: string) {
 		navigate({ search: (prev) => ({ ...prev, preview: group, panel: [...navStack, group].join(".") }) });
-	}
-
-	function reset() {
-		// Clear the design system (preset), pop the nav (panel), and return the preview to its
-		// default — otherwise a previously selected component stays pointed at, desyncing the toolbar.
-		navigate({ search: (prev) => ({ ...prev, preset: undefined, panel: undefined, preview: undefined }) });
-	}
-
-	function randomize() {
-		setDesignSystem((prev) => ({ ...prev, color: randomizeColors(prev.color ?? DEFAULT_COLOR_CONFIG) }));
 	}
 
 	// Resolve global theme tokens with fallbacks to their defaults
@@ -182,22 +135,8 @@ export function CustomizerPanel() {
 	return (
 		<div className="relative flex w-80 shrink-0 flex-col overflow-hidden rounded-xl border bg-card">
 			{/* Header — h-12 to line up with the preview toolbar across the gap */}
-			<div className="flex h-12 shrink-0 items-center justify-between border-b pr-2 pl-3">
+			<div className="flex h-12 shrink-0 items-center border-b pr-2 pl-3">
 				<span className="text-sm font-medium">Customize</span>
-				<div className="flex items-center gap-0.5">
-					<Tooltip>
-						<Button size="sm" isIconOnly variant="quiet" onPress={randomize} aria-label="Randomize colors">
-							<ShuffleIcon />
-						</Button>
-						<TooltipContent>Randomize colors</TooltipContent>
-					</Tooltip>
-					<Tooltip>
-						<Button size="sm" isIconOnly variant="quiet" onPress={reset} aria-label="Reset to defaults">
-							<RotateCcwIcon />
-						</Button>
-						<TooltipContent>Reset to defaults</TooltipContent>
-					</Tooltip>
-				</div>
 			</div>
 
 			{/* Body */}
@@ -280,12 +219,6 @@ export function CustomizerPanel() {
 						);
 					})}
 				</AnimatePresence>
-			</div>
-
-			{/* Footer */}
-			<div className="flex shrink-0 flex-col gap-2 border-t p-3">
-				<InstallCommand />
-				<OpenInV0 />
 			</div>
 		</div>
 	);
