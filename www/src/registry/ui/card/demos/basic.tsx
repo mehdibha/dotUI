@@ -14,7 +14,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-xs">
       <CardHeader>
         <CardTitle>Login to your account</CardTitle>
         <CardDescription>

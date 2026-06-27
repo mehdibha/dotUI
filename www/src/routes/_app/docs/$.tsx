@@ -174,7 +174,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
               )}
             </div>
           </div>
-          <div className="sticky top-[calc(var(--header-height)+14px)] z-30 hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
+          <div className="sticky top-(--header-height) z-30 hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
             {hasToc && <TOC className="pr-12" />}
           </div>
         </PageLayout>

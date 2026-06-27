@@ -5,6 +5,7 @@ import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 import { Button } from '@/registry/ui/button'
 
 import { CodeBlock, Pre } from './code-block'
+import { DemoPreset } from './demo-preset'
 
 // ============================================================================
 // Slot Components
@@ -74,7 +75,9 @@ export function Demo({ component: Component, children, ...props }: DemoProps) {
     <div {...props}>
       {/* Preview frame */}
       <div className="flex min-h-56 items-center justify-center overflow-x-auto rounded-t-lg border bg-bg p-6 sm:p-10">
-        <Component />
+        <DemoPreset>
+          <Component />
+        </DemoPreset>
       </div>
 
       {/* Code block with toggle */}

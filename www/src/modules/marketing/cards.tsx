@@ -23,8 +23,8 @@ export function Cards() {
       <div className="relative flex justify-center gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] [--mask-clear:420px] [--mask-solid:980px] xl:[--mask-clear:370px] xl:[--mask-solid:880px]">
         <SkeletonRail side="left" />
         {/* The centered, capped real grid (shared with the /create preview), sized as
-				    a flex item that bleeds past the rails on small screens, caps at `--grid-max`
-				    on large ones, and bumps to 4-up at xl. Kept interactive on purpose: the
+				    a flex item that bleeds past the rails on small screens, caps at
+				    `--grid-max` on large ones, and bumps to 4-up at xl. Kept interactive on purpose: the
 				    showcase is a live playground, so visitors can poke the cards. */}
         <CardsGrid className="relative z-20 w-[max(52rem,120vw)] max-w-none shrink-0 lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink" />
         <SkeletonRail side="right" />

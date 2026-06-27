@@ -1,0 +1,71 @@
+{
+  "name": "ChartTooltipContentProps",
+  "description": "Styled content for a chart tooltip. Use inside `<ChartTooltip content={...} />`.",
+  "extendsElement": "div",
+  "props": {
+    "indicator": {
+      "type": "\"dashed\" | \"dot\" | \"line\"",
+      "detailedType": "'dashed' | 'dot' | 'line' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "dashed"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "dot"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "line"
+          }
+        ]
+      },
+      "description": "Shape of the color indicator shown next to each series.",
+      "default": "\"dot\""
+    },
+    "hideLabel": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Hide the tooltip label (the row header).",
+      "default": "false"
+    },
+    "hideIndicator": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Hide the colored indicator next to each value.",
+      "default": "false"
+    },
+    "nameKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Key used to resolve the series name against `config`."
+    },
+    "labelKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Key used to resolve the label against `config`."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

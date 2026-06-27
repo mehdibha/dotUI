@@ -23,8 +23,10 @@ import { Route as RInitRouteImport } from './routes/r/init'
 import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
+import { Route as AppPresetsRouteImport } from './routes/_app/presets'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
 import { Route as AppComponentsRouteImport } from './routes/_app/components'
+import { Route as AppChartsRouteImport } from './routes/_app/charts'
 import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-known/api-catalog'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
@@ -99,6 +101,11 @@ const DemosSlugRoute = DemosSlugRouteImport.update({
   path: '/demos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppPresetsRoute = AppPresetsRouteImport.update({
+  id: '/presets',
+  path: '/presets',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppCreateRoute = AppCreateRouteImport.update({
   id: '/create',
   path: '/create',
@@ -107,6 +114,11 @@ const AppCreateRoute = AppCreateRouteImport.update({
 const AppComponentsRoute = AppComponentsRouteImport.update({
   id: '/components',
   path: '/components',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const AppChartsRoute = AppChartsRouteImport.update({
+  id: '/charts',
+  path: '/charts',
   getParentRoute: () => AppRouteRoute,
 } as any)
 const DotwellKnownApiCatalogRoute = DotwellKnownApiCatalogRouteImport.update({
@@ -141,8 +153,10 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
+  '/charts': typeof AppChartsRoute
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
+  '/presets': typeof AppPresetsRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -161,8 +175,10 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
+  '/charts': typeof AppChartsRoute
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
+  '/presets': typeof AppPresetsRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -184,8 +200,10 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
+  '/_app/charts': typeof AppChartsRoute
   '/_app/components': typeof AppComponentsRoute
   '/_app/create': typeof AppCreateRoute
+  '/_app/presets': typeof AppPresetsRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -208,8 +226,10 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/docs'
     | '/.well-known/api-catalog'
+    | '/charts'
     | '/components'
     | '/create'
+    | '/presets'
     | '/demos/$slug'
     | '/preview/$slug'
     | '/r/$name'
@@ -228,8 +248,10 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/docs'
     | '/.well-known/api-catalog'
+    | '/charts'
     | '/components'
     | '/create'
+    | '/presets'
     | '/demos/$slug'
     | '/preview/$slug'
     | '/r/$name'
@@ -250,8 +272,10 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_app/docs'
     | '/.well-known/api-catalog'
+    | '/_app/charts'
     | '/_app/components'
     | '/_app/create'
+    | '/_app/presets'
     | '/demos/$slug'
     | '/preview/$slug'
     | '/r/$name'
@@ -380,6 +404,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/presets': {
+      id: '/_app/presets'
+      path: '/presets'
+      fullPath: '/presets'
+      preLoaderRoute: typeof AppPresetsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/create': {
       id: '/_app/create'
       path: '/create'
@@ -392,6 +423,13 @@ declare module '@tanstack/react-router' {
       path: '/components'
       fullPath: '/components'
       preLoaderRoute: typeof AppComponentsRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/_app/charts': {
+      id: '/_app/charts'
+      path: '/charts'
+      fullPath: '/charts'
+      preLoaderRoute: typeof AppChartsRouteImport
       parentRoute: typeof AppRouteRoute
     }
     '/.well-known/api-catalog': {
@@ -441,15 +479,19 @@ const AppDocsRouteRouteWithChildren = AppDocsRouteRoute._addFileChildren(
 
 interface AppRouteRouteChildren {
   AppDocsRouteRoute: typeof AppDocsRouteRouteWithChildren
+  AppChartsRoute: typeof AppChartsRoute
   AppComponentsRoute: typeof AppComponentsRoute
   AppCreateRoute: typeof AppCreateRoute
+  AppPresetsRoute: typeof AppPresetsRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDocsRouteRoute: AppDocsRouteRouteWithChildren,
+  AppChartsRoute: AppChartsRoute,
   AppComponentsRoute: AppComponentsRoute,
   AppCreateRoute: AppCreateRoute,
+  AppPresetsRoute: AppPresetsRoute,
   AppIndexRoute: AppIndexRoute,
 }
 

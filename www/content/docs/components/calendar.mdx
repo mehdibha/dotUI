@@ -6,7 +6,26 @@ links:
     href: https://react-spectrum.adobe.com/react-aria/Calendar.html
 ---
 
-<Demo name="calendar/demos/single" />
+<InteractiveDemo
+  name="calendar"
+  controls={[
+    {
+      type: 'boolean',
+      name: 'isDisabled',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'isReadOnly',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'isInvalid',
+      defaultValue: false,
+    },
+  ]}
+/>
 
 ## Installation
 

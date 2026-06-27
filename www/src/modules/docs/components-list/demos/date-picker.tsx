@@ -1,27 +1,54 @@
+'use client'
+
+import { parseDate } from '@internationalized/date'
+
 import { CalendarIcon } from '@/registry/__generated__/icons'
 import { Button } from '@/registry/ui/button'
 import { Calendar } from '@/registry/ui/calendar'
-import { DatePicker } from '@/registry/ui/date-picker'
-import { DialogContent } from '@/registry/ui/dialog'
+import { DateField } from '@/registry/ui/date-field'
 import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Popover } from '@/registry/ui/popover'
 
+import { OverlayScene, useOpenAutoplay } from '../autoplay'
+
+const VALUE = parseDate('2024-06-12')
+
+// Trigger → hover → click → the calendar popover unfolds and the scene zooms out.
+// The trigger is the real closed input group; the surface is the real Calendar,
+// its selection matching the date shown in the field.
 export function DatePickerDemo() {
+  const { phase } = useOpenAutoplay()
   return (
-    <DatePicker className="w-56" aria-label="Date">
-      <InputGroup>
-        <DateInput />
-        <InputGroupAddon>
-          <Button variant="default" size="sm" isIconOnly>
-            <CalendarIcon />
-          </Button>
-        </InputGroupAddon>
-      </InputGroup>
-      <Popover>
-        <DialogContent className="in-popover:p-0">
-          <Calendar className="mx-auto" />
-        </DialogContent>
-      </Popover>
-    </DatePicker>
+    <OverlayScene
+      phase={phase}
+      variant="popover"
+      side="bottom"
+      fluid
+      openScale={0.6}
+      surfaceClassName="p-2"
+      trigger={
+        <DateField
+          className="w-full max-w-[11.5rem]"
+          aria-label="Date"
+          value={VALUE}
+          onChange={() => {}}
+        >
+          <InputGroup className="w-full">
+            <DateInput />
+            <InputGroupAddon>
+              <Button variant="default" size="sm" isIconOnly>
+                <CalendarIcon />
+              </Button>
+            </InputGroupAddon>
+          </InputGroup>
+        </DateField>
+      }
+    >
+      <Calendar
+        aria-label="Date"
+        className="mx-auto"
+        value={VALUE}
+        onChange={() => {}}
+      />
+    </OverlayScene>
   )
 }

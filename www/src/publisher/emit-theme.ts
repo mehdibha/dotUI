@@ -29,20 +29,17 @@ export interface EmitThemeInput {
 
 const DEFAULT_DEPENDENCIES = [
   'tailwind-variants',
-  'clsx',
+  // Peer dependency of `tailwind-variants` (its internal `twMerge`). `cn` itself
+  // no longer depends on it directly — that's `cnfast` now.
   'tailwind-merge',
+  'cnfast',
   'react-aria-components',
   'tailwindcss-react-aria-components',
   'tw-animate-css',
   'tailwindcss-autocontrast',
 ]
 
-const CN_UTILS_TS = `import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-export function cn(...inputs: ClassValue[]) {
-\treturn twMerge(clsx(inputs));
-}
+const CN_UTILS_TS = `export { cn } from "cnfast";
 `
 
 /**

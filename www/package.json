@@ -35,7 +35,7 @@
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/router-plugin": "^1.168.2",
     "@vercel/og": "^0.11.1",
-    "clsx": "^2.1.0",
+    "cnfast": "^0.0.8",
     "fumadocs-core": "^16.8.11",
     "fumadocs-mdx": "^15.0.5",
     "globals-docs": "^2.4.1",
@@ -49,7 +49,9 @@
     "react-dom": "catalog:",
     "react-error-boundary": "^6.0.0",
     "react-hook-form": "^7.54.2",
+    "react-is": "^19.2.0",
     "react-stately": "^3.48.0",
+    "recharts": "^3.8.1",
     "shiki": "^4.0.2",
     "starter-themes": "^0.0.2",
     "tailwind-merge": "^3.0.2",
@@ -87,7 +89,7 @@
     "typescript": "catalog:",
     "typescript-api-extractor": "1.0.0-beta.4",
     "unified": "^11.0.5",
-    "vite": "^8.0.13",
+    "vite": "^8.1.0",
     "yargs": "^18.0.0"
   }
 }

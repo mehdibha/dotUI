@@ -297,6 +297,250 @@ export const DemosIndex: Record<
 		files: ["ui/card/demos/with-image.tsx"],
 		component: React.lazy(() => import("@/registry/ui/card/demos/with-image")),
 	},
+	"chart-area/demos/axes": {
+		files: ["ui/chart-area/demos/axes.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/axes")),
+	},
+	"chart-area/demos/default": {
+		files: ["ui/chart-area/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/default")),
+	},
+	"chart-area/demos/gradient": {
+		files: ["ui/chart-area/demos/gradient.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/gradient")),
+	},
+	"chart-area/demos/icons": {
+		files: ["ui/chart-area/demos/icons.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/icons")),
+	},
+	"chart-area/demos/interactive": {
+		files: ["ui/chart-area/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/interactive")),
+	},
+	"chart-area/demos/legend": {
+		files: ["ui/chart-area/demos/legend.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/legend")),
+	},
+	"chart-area/demos/linear": {
+		files: ["ui/chart-area/demos/linear.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/linear")),
+	},
+	"chart-area/demos/stacked-expand": {
+		files: ["ui/chart-area/demos/stacked-expand.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/stacked-expand")),
+	},
+	"chart-area/demos/stacked": {
+		files: ["ui/chart-area/demos/stacked.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/stacked")),
+	},
+	"chart-area/demos/step": {
+		files: ["ui/chart-area/demos/step.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/step")),
+	},
+	"chart-bar/demos/active": {
+		files: ["ui/chart-bar/demos/active.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/active")),
+	},
+	"chart-bar/demos/default": {
+		files: ["ui/chart-bar/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/default")),
+	},
+	"chart-bar/demos/horizontal": {
+		files: ["ui/chart-bar/demos/horizontal.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/horizontal")),
+	},
+	"chart-bar/demos/interactive": {
+		files: ["ui/chart-bar/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/interactive")),
+	},
+	"chart-bar/demos/label-custom": {
+		files: ["ui/chart-bar/demos/label-custom.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/label-custom")),
+	},
+	"chart-bar/demos/label": {
+		files: ["ui/chart-bar/demos/label.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/label")),
+	},
+	"chart-bar/demos/mixed": {
+		files: ["ui/chart-bar/demos/mixed.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/mixed")),
+	},
+	"chart-bar/demos/multiple": {
+		files: ["ui/chart-bar/demos/multiple.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/multiple")),
+	},
+	"chart-bar/demos/negative": {
+		files: ["ui/chart-bar/demos/negative.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/negative")),
+	},
+	"chart-bar/demos/stacked": {
+		files: ["ui/chart-bar/demos/stacked.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/stacked")),
+	},
+	"chart-line/demos/default": {
+		files: ["ui/chart-line/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/default")),
+	},
+	"chart-line/demos/dots-colors": {
+		files: ["ui/chart-line/demos/dots-colors.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/dots-colors")),
+	},
+	"chart-line/demos/dots-custom": {
+		files: ["ui/chart-line/demos/dots-custom.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/dots-custom")),
+	},
+	"chart-line/demos/dots": {
+		files: ["ui/chart-line/demos/dots.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/dots")),
+	},
+	"chart-line/demos/interactive": {
+		files: ["ui/chart-line/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/interactive")),
+	},
+	"chart-line/demos/label-custom": {
+		files: ["ui/chart-line/demos/label-custom.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/label-custom")),
+	},
+	"chart-line/demos/label": {
+		files: ["ui/chart-line/demos/label.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/label")),
+	},
+	"chart-line/demos/linear": {
+		files: ["ui/chart-line/demos/linear.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/linear")),
+	},
+	"chart-line/demos/multiple": {
+		files: ["ui/chart-line/demos/multiple.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/multiple")),
+	},
+	"chart-line/demos/step": {
+		files: ["ui/chart-line/demos/step.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/step")),
+	},
+	"chart-pie/demos/donut-active": {
+		files: ["ui/chart-pie/demos/donut-active.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/donut-active")),
+	},
+	"chart-pie/demos/donut-text": {
+		files: ["ui/chart-pie/demos/donut-text.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/donut-text")),
+	},
+	"chart-pie/demos/donut": {
+		files: ["ui/chart-pie/demos/donut.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/donut")),
+	},
+	"chart-pie/demos/interactive": {
+		files: ["ui/chart-pie/demos/interactive.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/interactive")),
+	},
+	"chart-pie/demos/label-custom": {
+		files: ["ui/chart-pie/demos/label-custom.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/label-custom")),
+	},
+	"chart-pie/demos/label-list": {
+		files: ["ui/chart-pie/demos/label-list.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/label-list")),
+	},
+	"chart-pie/demos/label": {
+		files: ["ui/chart-pie/demos/label.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/label")),
+	},
+	"chart-pie/demos/legend": {
+		files: ["ui/chart-pie/demos/legend.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/legend")),
+	},
+	"chart-pie/demos/separator-none": {
+		files: ["ui/chart-pie/demos/separator-none.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/separator-none")),
+	},
+	"chart-pie/demos/simple": {
+		files: ["ui/chart-pie/demos/simple.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/simple")),
+	},
+	"chart-pie/demos/stacked": {
+		files: ["ui/chart-pie/demos/stacked.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/stacked")),
+	},
+	"chart-radar/demos/default": {
+		files: ["ui/chart-radar/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/default")),
+	},
+	"chart-radar/demos/dots": {
+		files: ["ui/chart-radar/demos/dots.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/dots")),
+	},
+	"chart-radar/demos/grid-circle-fill": {
+		files: ["ui/chart-radar/demos/grid-circle-fill.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/grid-circle-fill")),
+	},
+	"chart-radar/demos/grid-circle-no-lines": {
+		files: ["ui/chart-radar/demos/grid-circle-no-lines.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/grid-circle-no-lines")),
+	},
+	"chart-radar/demos/grid-circle": {
+		files: ["ui/chart-radar/demos/grid-circle.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/grid-circle")),
+	},
+	"chart-radar/demos/grid-custom": {
+		files: ["ui/chart-radar/demos/grid-custom.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/grid-custom")),
+	},
+	"chart-radar/demos/grid-fill": {
+		files: ["ui/chart-radar/demos/grid-fill.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/grid-fill")),
+	},
+	"chart-radar/demos/grid-none": {
+		files: ["ui/chart-radar/demos/grid-none.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/grid-none")),
+	},
+	"chart-radar/demos/icons": {
+		files: ["ui/chart-radar/demos/icons.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/icons")),
+	},
+	"chart-radar/demos/label-custom": {
+		files: ["ui/chart-radar/demos/label-custom.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/label-custom")),
+	},
+	"chart-radar/demos/legend": {
+		files: ["ui/chart-radar/demos/legend.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/legend")),
+	},
+	"chart-radar/demos/lines-only": {
+		files: ["ui/chart-radar/demos/lines-only.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/lines-only")),
+	},
+	"chart-radar/demos/multiple": {
+		files: ["ui/chart-radar/demos/multiple.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/multiple")),
+	},
+	"chart-radar/demos/radius": {
+		files: ["ui/chart-radar/demos/radius.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radar/demos/radius")),
+	},
+	"chart-radial/demos/grid": {
+		files: ["ui/chart-radial/demos/grid.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radial/demos/grid")),
+	},
+	"chart-radial/demos/label": {
+		files: ["ui/chart-radial/demos/label.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radial/demos/label")),
+	},
+	"chart-radial/demos/shape": {
+		files: ["ui/chart-radial/demos/shape.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radial/demos/shape")),
+	},
+	"chart-radial/demos/simple": {
+		files: ["ui/chart-radial/demos/simple.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radial/demos/simple")),
+	},
+	"chart-radial/demos/stacked": {
+		files: ["ui/chart-radial/demos/stacked.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radial/demos/stacked")),
+	},
+	"chart-radial/demos/text": {
+		files: ["ui/chart-radial/demos/text.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-radial/demos/text")),
+	},
 	"checkbox/demos/basic": {
 		files: ["ui/checkbox/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox/demos/basic")),
@@ -1629,18 +1873,6 @@ export const DemosIndex: Record<
 		files: ["ui/react-hook-form/demos/register.tsx"],
 		component: React.lazy(() => import("@/registry/ui/react-hook-form/demos/register")),
 	},
-	"scroll-fade/demos/basic": {
-		files: ["ui/scroll-fade/demos/basic.tsx"],
-		component: React.lazy(() => import("@/registry/ui/scroll-fade/demos/basic")),
-	},
-	"scroll-fade/demos/both-axes": {
-		files: ["ui/scroll-fade/demos/both-axes.tsx"],
-		component: React.lazy(() => import("@/registry/ui/scroll-fade/demos/both-axes")),
-	},
-	"scroll-fade/demos/horizontal": {
-		files: ["ui/scroll-fade/demos/horizontal.tsx"],
-		component: React.lazy(() => import("@/registry/ui/scroll-fade/demos/horizontal")),
-	},
 	"search-field/demos/controlled": {
 		files: ["ui/search-field/demos/controlled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/search-field/demos/controlled")),
@@ -2296,5 +2528,37 @@ export const DemosIndex: Record<
 	"tooltip/demos/with-keyboard": {
 		files: ["ui/tooltip/demos/with-keyboard.tsx"],
 		component: React.lazy(() => import("@/registry/ui/tooltip/demos/with-keyboard")),
+	},
+	"tree/demos/basic": {
+		files: ["ui/tree/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/basic")),
+	},
+	"tree/demos/default-expanded": {
+		files: ["ui/tree/demos/default-expanded.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/default-expanded")),
+	},
+	"tree/demos/disabled": {
+		files: ["ui/tree/demos/disabled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/disabled")),
+	},
+	"tree/demos/drag-and-drop": {
+		files: ["ui/tree/demos/drag-and-drop.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/drag-and-drop")),
+	},
+	"tree/demos/dynamic": {
+		files: ["ui/tree/demos/dynamic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/dynamic")),
+	},
+	"tree/demos/empty": {
+		files: ["ui/tree/demos/empty.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/empty")),
+	},
+	"tree/demos/selection": {
+		files: ["ui/tree/demos/selection.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/selection")),
+	},
+	"tree/demos/with-icons": {
+		files: ["ui/tree/demos/with-icons.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tree/demos/with-icons")),
 	},
 };

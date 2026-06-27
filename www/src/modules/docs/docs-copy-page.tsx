@@ -93,7 +93,12 @@ export function DocsCopyPage({
   return (
     <Group>
       <Button size="sm" onPress={() => copyToClipboard(content)}>
-        {isCopied ? <CheckIcon /> : <CopyIcon />} Copy page
+        {isCopied ? (
+          <CheckIcon data-icon-start="" />
+        ) : (
+          <CopyIcon data-icon-start="" />
+        )}{' '}
+        Copy page
       </Button>
       <Menu>
         <Button size="sm" isIconOnly aria-label="More copy options">

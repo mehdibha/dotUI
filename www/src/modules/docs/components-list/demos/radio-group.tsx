@@ -1,9 +1,16 @@
+'use client'
+
 import { FieldGroup, Label } from '@/registry/ui/field'
 import { Radio, RadioControl, RadioGroup } from '@/registry/ui/radio-group'
 
+import { useStepAutoplay } from '../autoplay'
+
+const KEYS = ['nextjs', 'remix', 'gatsby']
+
 export function RadioGroupDemo() {
+  const { index } = useStepAutoplay(KEYS.length, { dwell: 1300 })
   return (
-    <RadioGroup defaultValue="nextjs">
+    <RadioGroup value={KEYS[index]} onChange={() => {}}>
       <Label>React frameworks</Label>
       <FieldGroup>
         <Radio value="nextjs">
