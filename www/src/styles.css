@@ -180,3 +180,25 @@
     opacity: 0;
   }
 }
+
+/* Studio inspector body enter — a quick rise+fade replayed on each axis switch
+   (the body is keyed per axis, so a remount re-runs the animation). CSS, not JS,
+   so it never strands content at opacity 0 the way an SSR'd motion enter can. */
+@keyframes studio-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.studio-rise {
+  animation: studio-rise 0.22s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .studio-rise {
+    animation: none;
+  }
+}
