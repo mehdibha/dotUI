@@ -75,11 +75,11 @@ export function SearchCommand({
           const content = (
             <DialogContent
               aria-label="Search documentation"
-              className="flex h-100 max-h-[70vh] flex-col overflow-hidden p-0!"
+              className="flex flex-col overflow-hidden p-0!"
             >
               <Command
                 aria-label="Search documentation"
-                className="min-h-0 flex-1 overflow-y-hidden"
+                className="overflow-y-hidden"
               >
                 <SearchField autoFocus aria-label="Search">
                   <InputGroup>
@@ -91,7 +91,7 @@ export function SearchCommand({
                 </SearchField>
                 <MenuContent
                   aria-label="Search results"
-                  className="min-h-0 flex-1 overflow-y-auto"
+                  className="max-h-[60vh] min-h-80 overflow-y-auto"
                   onAction={() => setIsOpen(false)}
                   renderEmptyState={() => (
                     <div className="py-8 text-center text-sm text-fg-muted">
@@ -163,7 +163,8 @@ export function SearchCommand({
           return isMobile ? (
             <Drawer>{content}</Drawer>
           ) : (
-            <Modal className="mt-[15vh] self-start duration-0 entering:scale-100 exiting:scale-100">
+            // Mirror shadcn.com's command menu: max-w-lg (512px), top-15%.
+            <Modal className="mt-[15vh] self-start duration-0 sm:max-w-lg entering:scale-100 exiting:scale-100">
               {content}
             </Modal>
           )
