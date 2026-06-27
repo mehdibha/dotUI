@@ -40,4 +40,5 @@ export const navItems: { name: string; to: string }[] = [
   { name: 'Docs', to: '/docs' },
   { name: 'Components', to: '/docs/components' },
   { name: 'Create', to: '/create' },
+  { name: 'Presets', to: '/presets' },
 ]
