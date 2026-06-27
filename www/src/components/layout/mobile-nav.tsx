@@ -56,6 +56,7 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
                     <MobileLink
                       key={item.name}
                       to={item.to}
+                      params={item.params}
                       onOpenChange={close}
                     >
                       {item.name}
@@ -102,11 +103,13 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
 
 function MobileLink({
   to,
+  params,
   onOpenChange,
   className,
   children,
 }: {
   to: string
+  params?: { _splat: string }
   onOpenChange?: (open: boolean) => void
   children: React.ReactNode
   className?: string
@@ -114,6 +117,7 @@ function MobileLink({
   return (
     <Link
       to={to}
+      params={params}
       onClick={() => onOpenChange?.(false)}
       className={cn('text-2xl font-medium', className)}
     >

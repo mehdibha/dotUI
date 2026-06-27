@@ -41,7 +41,12 @@ export function SearchCommand({
   return (
     <SearchCommandDialog keyboardShortcut={keyboardShortcut} trigger={children}>
       <Command className="h-72">
-        <SearchField autoFocus value={search} onChange={setSearch}>
+        <SearchField
+          aria-label="Search"
+          autoFocus
+          value={search}
+          onChange={setSearch}
+        >
           <InputGroup>
             <SearchIcon />
             <Input placeholder="Search" />
