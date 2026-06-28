@@ -180,6 +180,13 @@ export const componentsData: ComponentCategory[] = [
         status: 'done',
       },
       {
+        name: 'Mention',
+        slug: 'mention',
+        href: '/docs/components/mention',
+        stretch: true,
+        status: 'in review',
+      },
+      {
         name: 'Select',
         slug: 'select',
         href: '/docs/components/select',

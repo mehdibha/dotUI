@@ -37,6 +37,7 @@ import { KbdDemo } from './kbd'
 import { LinkDemo } from './link'
 import { ListBoxDemo } from './list-box'
 import { LoaderDemo } from './loader'
+import { MentionDemo } from './mention'
 import { MenuDemo } from './menu'
 import { ModalDemo } from './modal'
 import { NumberFieldDemo } from './number-field'
@@ -102,6 +103,7 @@ export const componentDemos: Record<string, ComponentType> = {
   link: LinkDemo,
   'list-box': ListBoxDemo,
   loader: LoaderDemo,
+  mention: MentionDemo,
   menu: MenuDemo,
   modal: ModalDemo,
   'number-field': NumberFieldDemo,

@@ -1,0 +1,90 @@
+---
+title: Mention
+description: Mention lets users type a trigger character to insert people, channels, or other tokens inline as they write.
+links:
+  - label: Docs
+    href: https://react-aria.adobe.com/Autocomplete#inline-completions
+wip: true
+---
+
+<InteractiveDemo
+  name="mention"
+  controls={[
+    {
+      type: 'string',
+      name: 'label',
+      defaultValue: 'Comment',
+    },
+    {
+      type: 'string',
+      name: 'placeholder',
+      defaultValue: 'Type @ to mention someone...',
+    },
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/mention
+```
+
+## Usage
+
+Use `Mention` to let users insert tokens — people, channels, anything — by typing
+a trigger character while they write. The suggestions list opens at the caret and
+filters as they type; selecting an item inserts it inline.
+
+```tsx
+import {
+  Mention,
+  MentionInput,
+  MentionItem,
+  MentionList,
+} from '@/components/ui/mention'
+```
+
+```tsx
+<Mention>
+  <MentionInput label="Comment" />
+  <MentionList items={people}>
+    {(person) => <MentionItem id={person.id}>{person.name}</MentionItem>}
+  </MentionList>
+</Mention>
+```
+
+The `trigger` prop changes the character that opens the list (`@` by default), and
+`getItemText` maps a selected item's key to the text inserted after the trigger.
+
+```tsx
+<Mention trigger="#" getItemText={(key) => String(key)}>
+  {/* ... */}
+</Mention>
+```
+
+## Examples
+
+<Examples>
+  <Example name="mention/demos/basic" />
+  <Example name="mention/demos/with-avatars" />
+  <Example name="mention/demos/custom-trigger" />
+  <Example name="mention/demos/controlled" />
+</Examples>
+
+## API Reference
+
+### Mention
+
+<Reference name="mention" />
+
+### MentionInput
+
+<Reference name="mention-input" />
+
+### MentionList
+
+<Reference name="mention-list" />
+
+### MentionItem
+
+<Reference name="mention-item" />
