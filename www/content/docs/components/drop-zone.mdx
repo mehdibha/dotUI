@@ -45,13 +45,15 @@ import { DropZone, DropZoneLabel } from '@/components/ui/drop-zone'
 
 ## Examples
 
-<Examples>
-  <Example name="drop-zone/demos/basic" />
-  <Example name="drop-zone/demos/label" />
-  <Example name="drop-zone/demos/visual-feedback" />
-  <Example name="drop-zone/demos/file-trigger" />
-  <Example name="drop-zone/demos/events" />
-  <Example name="drop-zone/demos/disabled" />
+<Examples className="sm:grid-cols-2">
+  <Example name="drop-zone/demos/basic" title="Basic Drop Zone" />
+  <Example name="drop-zone/demos/file-trigger" title="With File Trigger" />
+  <Example
+    name="drop-zone/demos/events"
+    title="Drag and Drop Events"
+    className="col-span-full"
+  />
+  <Example name="drop-zone/demos/visual-feedback" title="Visual Feedback" />
 </Examples>
 
 ## API Reference
