@@ -853,10 +853,6 @@ export const DemosIndex: Record<
 		files: ["ui/command/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/command/demos/basic")),
 	},
-	"command/demos/dialog": {
-		files: ["ui/command/demos/dialog.tsx"],
-		component: React.lazy(() => import("@/registry/ui/command/demos/dialog")),
-	},
 	"command/demos/in-modal": {
 		files: ["ui/command/demos/in-modal.tsx"],
 		component: React.lazy(() => import("@/registry/ui/command/demos/in-modal")),
@@ -1752,14 +1748,6 @@ export const DemosIndex: Record<
 	"otp-field/demos/separator": {
 		files: ["ui/otp-field/demos/separator.tsx"],
 		component: React.lazy(() => import("@/registry/ui/otp-field/demos/separator")),
-	},
-	"overlay/demos/basic": {
-		files: ["ui/overlay/demos/basic.tsx"],
-		component: React.lazy(() => import("@/registry/ui/overlay/demos/basic")),
-	},
-	"overlay/demos/type": {
-		files: ["ui/overlay/demos/type.tsx"],
-		component: React.lazy(() => import("@/registry/ui/overlay/demos/type")),
 	},
 	"pagination/demos/compact": {
 		files: ["ui/pagination/demos/compact.tsx"],

@@ -28,7 +28,7 @@ import { DatePicker } from '@/components/ui/date-picker'
 import { DialogContent } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/field'
 import { DateInput, InputAddon, InputGroup } from '@/components/ui/input'
-import { Overlay } from '@/components/ui/overlay'
+import { Popover } from '@/components/ui/popover'
 ```
 
 ```tsx
@@ -42,11 +42,11 @@ import { Overlay } from '@/components/ui/overlay'
       </Button>
     </InputAddon>
   </InputGroup>
-  <Overlay type="popover" mobileType="drawer">
+  <Popover>
     <DialogContent>
       <Calendar />
     </DialogContent>
-  </Overlay>
+  </Popover>
 </DatePicker>
 ```
 

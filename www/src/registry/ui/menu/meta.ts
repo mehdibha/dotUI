@@ -11,7 +11,14 @@ const menuMeta = {
       target: 'ui/menu.tsx',
     },
   ],
-  registryDependencies: ['kbd', 'overlay', 'text'],
+  registryDependencies: [
+    'kbd',
+    'responsive',
+    'modal',
+    'drawer',
+    'popover',
+    'text',
+  ],
   params: {
     highlight: {
       kind: 'enum',

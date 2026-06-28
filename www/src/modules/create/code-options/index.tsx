@@ -8,7 +8,7 @@ import { Code2Icon } from 'lucide-react'
 
 import { Button } from '@/registry/ui/button'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Overlay } from '@/registry/ui/overlay'
+import { Modal } from '@/registry/ui/modal'
 
 import { CodeOptionsControls } from './controls'
 import { CodeOptionsPreview } from './preview'
@@ -20,13 +20,7 @@ export function CodeOptionsDialog() {
         <Code2Icon data-icon-start="" />
         Code style
       </Button>
-      <Overlay
-        type="modal"
-        mobileType={null}
-        modalProps={{
-          className: 'h-[min(38rem,82vh)] w-[min(64rem,92vw)] sm:max-w-none',
-        }}
-      >
+      <Modal className="h-[min(38rem,82vh)] w-[min(64rem,92vw)] sm:max-w-none">
         <DialogContent
           showCloseButton
           aria-label="Code style"
@@ -43,7 +37,7 @@ export function CodeOptionsDialog() {
             <CodeOptionsPreview />
           </div>
         </DialogContent>
-      </Overlay>
+      </Modal>
     </Dialog>
   )
 }
