@@ -1,6 +1,6 @@
 {
   "name": "MentionProps",
-  "description": "A mention input lets users type a trigger character (like `@`) to open an\ninline list of suggestions and insert one as a token in the text.",
+  "description": "A mention input lets users type a trigger character (like `@`) to open an\ninline list of suggestions and insert one as a token in the text.\n\n`Mention` wires the behaviour onto composed primitives — a `TextField` +\n`TextArea` for the input, a `Popover` + `Menu`/`MenuItem` for the\nsuggestions — by injecting their props through context, so no bespoke\nsub-components are needed.",
   "props": {
     "trigger": {
       "type": "string",
@@ -77,6 +77,16 @@
       },
       "description": "Maps the key of a selected item to the text inserted after the trigger\ncharacter.",
       "default": "String(key)"
+    },
+    "placement": {
+      "type": "Placement",
+      "detailedType": "Placement | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Placement"
+      },
+      "description": "Where the suggestions popover is placed relative to the caret.",
+      "default": "\"bottom start\""
     },
     "className": {
       "type": "string",

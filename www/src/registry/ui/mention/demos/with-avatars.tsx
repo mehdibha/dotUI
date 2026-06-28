@@ -1,12 +1,12 @@
 'use client'
 
 import { Avatar, AvatarFallback } from '@/registry/ui/avatar'
-import {
-  Mention,
-  MentionInput,
-  MentionItem,
-  MentionList,
-} from '@/registry/ui/mention'
+import { Label } from '@/registry/ui/field'
+import { TextArea } from '@/registry/ui/input'
+import { Mention } from '@/registry/ui/mention'
+import { MenuContent, MenuItem } from '@/registry/ui/menu'
+import { Popover } from '@/registry/ui/popover'
+import { TextField } from '@/registry/ui/text-field'
 
 const people = [
   { id: 'alexmiller', name: 'Alex Miller' },
@@ -20,23 +20,25 @@ const people = [
 export default function Demo() {
   return (
     <Mention className="w-[320px]">
-      <MentionInput
-        label="Comment"
-        placeholder="Type @ to mention someone..."
-      />
-      <MentionList items={people} renderEmptyState={() => 'No people found.'}>
-        {(person) => (
-          <MentionItem id={person.id} textValue={person.id}>
-            <Avatar size="sm">
-              <AvatarFallback>{person.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col">
-              <span className="text-sm">{person.name}</span>
-              <span className="text-xs text-fg-muted">@{person.id}</span>
-            </div>
-          </MentionItem>
-        )}
-      </MentionList>
+      <TextField>
+        <Label>Comment</Label>
+        <TextArea placeholder="Type @ to mention someone..." />
+      </TextField>
+      <Popover>
+        <MenuContent items={people} renderEmptyState={() => 'No people found.'}>
+          {(person) => (
+            <MenuItem id={person.id} textValue={person.id}>
+              <Avatar size="sm">
+                <AvatarFallback>{person.name.charAt(0)}</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col">
+                <span className="text-sm">{person.name}</span>
+                <span className="text-xs text-fg-muted">@{person.id}</span>
+              </div>
+            </MenuItem>
+          )}
+        </MenuContent>
+      </Popover>
     </Mention>
   )
 }

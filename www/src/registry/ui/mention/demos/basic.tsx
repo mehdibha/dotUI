@@ -1,11 +1,11 @@
 'use client'
 
-import {
-  Mention,
-  MentionInput,
-  MentionItem,
-  MentionList,
-} from '@/registry/ui/mention'
+import { Label } from '@/registry/ui/field'
+import { TextArea } from '@/registry/ui/input'
+import { Mention } from '@/registry/ui/mention'
+import { MenuContent, MenuItem } from '@/registry/ui/menu'
+import { Popover } from '@/registry/ui/popover'
+import { TextField } from '@/registry/ui/text-field'
 
 const usernames = [
   'alexmiller',
@@ -23,20 +23,22 @@ const usernames = [
 export default function Demo() {
   return (
     <Mention className="w-[320px]">
-      <MentionInput
-        label="Comment"
-        placeholder="Type @ to mention someone..."
-      />
-      <MentionList
-        items={usernames}
-        renderEmptyState={() => 'No results found.'}
-      >
-        {(item) => (
-          <MentionItem id={item.id} textValue={item.id}>
-            {item.id}
-          </MentionItem>
-        )}
-      </MentionList>
+      <TextField>
+        <Label>Comment</Label>
+        <TextArea placeholder="Type @ to mention someone..." />
+      </TextField>
+      <Popover>
+        <MenuContent
+          items={usernames}
+          renderEmptyState={() => 'No results found.'}
+        >
+          {(item) => (
+            <MenuItem id={item.id} textValue={item.id}>
+              {item.id}
+            </MenuItem>
+          )}
+        </MenuContent>
+      </Popover>
     </Mention>
   )
 }

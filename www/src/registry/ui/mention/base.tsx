@@ -2,24 +2,15 @@
 
 import * as React from 'react'
 import { flushSync } from 'react-dom'
-import { chain } from 'react-aria'
 import * as AutocompletePrimitive from 'react-aria-components/Autocomplete'
+import { MenuContext } from 'react-aria-components/Menu'
 import type { Key } from 'react-aria-components/Menu'
+import { PopoverContext } from 'react-aria-components/Popover'
+import { Provider } from 'react-aria-components/slots'
+import { TextFieldContext } from 'react-aria-components/TextField'
 import { useControlledState } from 'react-stately/useControlledState'
 
-import { Description, Label } from '@/registry/ui/field'
-import { TextArea } from '@/registry/ui/input'
-import type { TextAreaProps } from '@/registry/ui/input'
-import {
-  MenuContent,
-  MenuItem,
-  MenuSection,
-  MenuSectionHeader,
-} from '@/registry/ui/menu'
-import type { MenuContentProps } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
 import type { PopoverProps } from '@/registry/ui/popover'
-import { TextField } from '@/registry/ui/text-field'
 
 import { useStyles } from './styles'
 
@@ -103,29 +94,6 @@ function getCaretRect(input: HTMLTextAreaElement, index: number) {
   return { top, left, height }
 }
 
-// MARK: MentionContext
-
-interface MentionContextValue {
-  trigger: string
-  inputValue: string
-  setInputValue: (value: string) => void
-  filterValue: string
-  anchorIndex: number
-  inputRef: React.RefObject<HTMLTextAreaElement | null>
-  updateFilter: () => void
-  insert: (key: Key) => void
-}
-
-const MentionContext = React.createContext<MentionContextValue | null>(null)
-
-function useMentionContext(component: string) {
-  const context = React.useContext(MentionContext)
-  if (!context) {
-    throw new Error(`<${component}> must be rendered inside a <Mention>.`)
-  }
-  return context
-}
-
 // MARK: Mention
 
 interface MentionProps {
@@ -135,20 +103,29 @@ interface MentionProps {
   defaultValue?: string
   onChange?: (value: string) => void
   /**
-   * Maps the key of a selected `MentionItem` to the text inserted after the
-   * trigger character. @default String(key)
+   * Maps the key of a selected item to the text inserted after the trigger
+   * character. @default String(key)
    */
   getItemText?: (key: Key) => string
+  /** Where the suggestions popover is placed relative to the caret. @default "bottom start" */
+  placement?: PopoverProps['placement']
   className?: string
   children?: React.ReactNode
 }
 
+/**
+ * Wires an `@`-mention experience onto composed primitives: it filters the
+ * `Menu` via React Aria's `Autocomplete` and injects the value, popover, and
+ * menu wiring through context, so consumers drop in a real `TextField` +
+ * `TextArea`, `Popover`, and `Menu`/`MenuItem` — no bespoke sub-components.
+ */
 function Mention({
   trigger = '@',
   value,
   defaultValue,
   onChange,
   getItemText = (key) => String(key),
+  placement = 'bottom start',
   className,
   children,
 }: MentionProps) {
@@ -163,13 +140,21 @@ function Mention({
   )
   const [anchorIndex, setAnchorIndex] = React.useState(-1)
   const [filterValue, setFilterValue] = React.useState('')
-  const inputRef = React.useRef<HTMLTextAreaElement | null>(null)
+  const rootRef = React.useRef<HTMLDivElement>(null)
+
+  // The TextArea is composed by the consumer, so its element is read from the
+  // DOM rather than threaded through context — `TextField` re-provides
+  // `TextAreaContext`, which would shadow an injected ref.
+  const getInput = React.useCallback(
+    () => rootRef.current?.querySelector('textarea') ?? null,
+    [],
+  )
 
   // Reads the caret position to decide whether the user is mid-mention: find the
   // nearest preceding trigger char, and if the text between it and the caret has
   // no whitespace, that's the active query. Otherwise close the list.
   const updateFilter = React.useCallback(() => {
-    const input = inputRef.current
+    const input = getInput()
     if (
       !input ||
       typeof document === 'undefined' ||
@@ -194,13 +179,29 @@ function Mention({
       }
     }
     setAnchorIndex(-1)
-  }, [trigger])
+  }, [trigger, getInput])
+
+  // Caret moves on typing, clicking, and arrowing all surface as
+  // `selectionchange`; each instance only reacts while its own textarea is
+  // focused (updateFilter guards on `document.activeElement`).
+  React.useEffect(() => {
+    document.addEventListener('selectionchange', updateFilter)
+    return () => document.removeEventListener('selectionchange', updateFilter)
+  }, [updateFilter])
+
+  const handleChange = React.useCallback(
+    (next: string) => {
+      setInputValue(next)
+      updateFilter()
+    },
+    [setInputValue, updateFilter],
+  )
 
   // Replace the active query (from the trigger char to the caret) with the
   // chosen mention, then drop the caret right after it.
   const insert = React.useCallback(
     (key: Key) => {
-      const input = inputRef.current
+      const input = getInput()
       if (!input || anchorIndex < 0) return
       const mention = `${trigger}${getItemText(key)} `
       const prefix = inputValue.slice(0, anchorIndex) + mention
@@ -219,141 +220,63 @@ function Mention({
       anchorIndex,
       setInputValue,
       updateFilter,
+      getInput,
     ],
   )
 
-  const context = React.useMemo<MentionContextValue>(
-    () => ({
-      trigger,
-      inputValue,
-      setInputValue,
-      filterValue,
-      anchorIndex,
-      inputRef,
-      updateFilter,
-      insert,
-    }),
-    [
-      trigger,
-      inputValue,
-      setInputValue,
-      filterValue,
-      anchorIndex,
-      updateFilter,
-      insert,
-    ],
+  const getTargetRect = React.useCallback(
+    (target: Element) => {
+      const input = getInput()
+      if (!input) return target.getBoundingClientRect()
+      const caret = getCaretRect(input, anchorIndex)
+      const rect = input.getBoundingClientRect()
+      return new DOMRect(
+        rect.left + caret.left,
+        rect.top + caret.top,
+        1,
+        caret.height,
+      )
+    },
+    [anchorIndex, getInput],
   )
+
+  // Close the list when the popover dismisses itself (outside press, Escape).
+  const onOpenChange = React.useCallback((isOpen: boolean) => {
+    if (!isOpen) setAnchorIndex(-1)
+  }, [])
 
   return (
-    <MentionContext.Provider value={context}>
-      <AutocompletePrimitive.Autocomplete
-        inputValue={filterValue}
-        filter={startsWith}
+    <AutocompletePrimitive.Autocomplete
+      inputValue={filterValue}
+      filter={startsWith}
+    >
+      <Provider
+        values={[
+          [TextFieldContext, { value: inputValue, onChange: handleChange }],
+          [
+            PopoverContext,
+            {
+              triggerRef: rootRef,
+              isOpen: anchorIndex >= 0,
+              onOpenChange,
+              isNonModal: true,
+              placement,
+              trigger: 'MenuTrigger',
+              getTargetRect,
+            },
+          ],
+          [MenuContext, { onAction: insert }],
+        ]}
       >
-        <div data-mention="" className={root({ className })}>
+        <div ref={rootRef} data-mention="" className={root({ className })}>
           {children}
         </div>
-      </AutocompletePrimitive.Autocomplete>
-    </MentionContext.Provider>
-  )
-}
-
-// MARK: MentionInput
-
-interface MentionInputProps extends Omit<
-  TextAreaProps,
-  'value' | 'defaultValue' | 'onChange'
-> {
-  label?: React.ReactNode
-  description?: React.ReactNode
-  fieldClassName?: string
-}
-
-function MentionInput({
-  label,
-  description,
-  fieldClassName,
-  onSelect,
-  onBlur,
-  ...props
-}: MentionInputProps) {
-  const { inputValue, setInputValue, inputRef, updateFilter } =
-    useMentionContext('MentionInput')
-  return (
-    <TextField
-      className={fieldClassName ?? 'w-full'}
-      value={inputValue}
-      onChange={(value) => {
-        setInputValue(value)
-        updateFilter()
-      }}
-    >
-      {label != null && <Label>{label}</Label>}
-      <TextArea
-        ref={inputRef}
-        onSelect={chain(onSelect, updateFilter)}
-        onBlur={chain(onBlur, updateFilter)}
-        {...props}
-      />
-      {description != null && <Description>{description}</Description>}
-    </TextField>
-  )
-}
-
-// MARK: MentionList
-
-interface MentionListProps<T extends object> extends Omit<
-  MenuContentProps<T>,
-  'onAction'
-> {
-  /** Where the popover is placed relative to the caret. @default "bottom start" */
-  placement?: PopoverProps['placement']
-  /**
-   * Called with the key of the selected item. Defaults to inserting
-   * `trigger + getItemText(key) + " "` at the trigger position.
-   */
-  onAction?: (key: Key) => void
-}
-
-function MentionList<T extends object>({
-  placement = 'bottom start',
-  onAction,
-  ...props
-}: MentionListProps<T>) {
-  const { inputRef, anchorIndex, insert } = useMentionContext('MentionList')
-  return (
-    <Popover
-      triggerRef={inputRef}
-      isOpen={anchorIndex >= 0}
-      isNonModal
-      placement={placement}
-      trigger="MenuTrigger"
-      getTargetRect={(target) => {
-        const input = inputRef.current
-        if (!input) return target.getBoundingClientRect()
-        const caret = getCaretRect(input, anchorIndex)
-        const rect = input.getBoundingClientRect()
-        return new DOMRect(
-          rect.left + caret.left,
-          rect.top + caret.top,
-          1,
-          caret.height,
-        )
-      }}
-    >
-      <MenuContent onAction={onAction ?? insert} {...props} />
-    </Popover>
+      </Provider>
+    </AutocompletePrimitive.Autocomplete>
   )
 }
 
 // MARK: exports
 
-export type { MentionProps, MentionInputProps, MentionListProps }
-export {
-  Mention,
-  MentionInput,
-  MentionList,
-  MenuItem as MentionItem,
-  MenuSection as MentionSection,
-  MenuSectionHeader as MentionSectionHeader,
-}
+export type { MentionProps }
+export { Mention }

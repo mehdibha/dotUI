@@ -1,13 +1,16 @@
 import type { ReactNode } from 'react'
 import type { Key } from 'react-aria-components/Menu'
 
-import type { TextAreaProps } from '@/registry/ui/input'
-import type { MenuContentProps, MenuItemProps } from '@/registry/ui/menu'
 import type { PopoverProps } from '@/registry/ui/popover'
 
 /**
  * A mention input lets users type a trigger character (like `@`) to open an
  * inline list of suggestions and insert one as a token in the text.
+ *
+ * `Mention` wires the behaviour onto composed primitives — a `TextField` +
+ * `TextArea` for the input, a `Popover` + `Menu`/`MenuItem` for the
+ * suggestions — by injecting their props through context, so no bespoke
+ * sub-components are needed.
  */
 export interface MentionProps {
   /** The character that opens the suggestions list. @default "@" */
@@ -23,39 +26,8 @@ export interface MentionProps {
    * character. @default String(key)
    */
   getItemText?: (key: Key) => string
+  /** Where the suggestions popover is placed relative to the caret. @default "bottom start" */
+  placement?: PopoverProps['placement']
   className?: string
   children?: ReactNode
 }
-
-/**
- * The text area users type into. Renders a label and description when provided.
- */
-export interface MentionInputProps extends Omit<
-  TextAreaProps,
-  'value' | 'defaultValue' | 'onChange'
-> {
-  /** A label rendered above the input. */
-  label?: ReactNode
-  /** A description rendered below the input. */
-  description?: ReactNode
-  /** Class name applied to the surrounding field wrapper. */
-  fieldClassName?: string
-}
-
-/**
- * The popover and list of suggestions, anchored at the trigger character.
- */
-export interface MentionListProps<T extends object> extends Omit<
-  MenuContentProps<T>,
-  'onAction'
-> {
-  /** Where the popover is placed relative to the caret. @default "bottom start" */
-  placement?: PopoverProps['placement']
-  /** Called with the key of the selected item. */
-  onAction?: (key: Key) => void
-}
-
-/**
- * A single suggestion shown in the list.
- */
-export interface MentionItemProps<T extends object> extends MenuItemProps<T> {}

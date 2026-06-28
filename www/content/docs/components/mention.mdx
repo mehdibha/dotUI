@@ -31,30 +31,32 @@ npx shadcn@latest add @dotui/mention
 
 ## Usage
 
-Use `Mention` to let users insert tokens — people, channels, anything — by typing
-a trigger character while they write. The suggestions list opens at the caret and
-filters as they type; selecting an item inserts it inline.
+`Mention` wires an `@`-mention experience onto your existing primitives: compose a `TextField` + `TextArea` for the input and a `Popover` + `Menu` for the suggestions, and `Mention` injects the wiring (caret-anchored popover, filtering, insertion) through context. Typing the trigger character (`@` by default) opens the list at the caret and filters as you type; selecting an item inserts it inline.
 
 ```tsx
-import {
-  Mention,
-  MentionInput,
-  MentionItem,
-  MentionList,
-} from '@/components/ui/mention'
+import { Label } from '@/components/ui/field'
+import { TextArea } from '@/components/ui/input'
+import { MenuContent, MenuItem } from '@/components/ui/menu'
+import { Mention } from '@/components/ui/mention'
+import { Popover } from '@/components/ui/popover'
+import { TextField } from '@/components/ui/text-field'
 ```
 
 ```tsx
 <Mention>
-  <MentionInput label="Comment" />
-  <MentionList items={people}>
-    {(person) => <MentionItem id={person.id}>{person.name}</MentionItem>}
-  </MentionList>
+  <TextField>
+    <Label>Comment</Label>
+    <TextArea />
+  </TextField>
+  <Popover>
+    <MenuContent items={people}>
+      {(person) => <MenuItem id={person.id}>{person.name}</MenuItem>}
+    </MenuContent>
+  </Popover>
 </Mention>
 ```
 
-The `trigger` prop changes the character that opens the list (`@` by default), and
-`getItemText` maps a selected item's key to the text inserted after the trigger.
+The `trigger` prop changes the character that opens the list, and `getItemText` maps a selected item's key to the text inserted after the trigger.
 
 ```tsx
 <Mention trigger="#" getItemText={(key) => String(key)}>
@@ -73,18 +75,8 @@ The `trigger` prop changes the character that opens the list (`@` by default), a
 
 ## API Reference
 
+`Mention` is the only component; the input and suggestion list are composed from the [TextField](/docs/components/text-field), [TextArea](/docs/components/text-area), [Popover](/docs/components/popover), and [Menu](/docs/components/menu) primitives.
+
 ### Mention
 
 <Reference name="mention" />
-
-### MentionInput
-
-<Reference name="mention-input" />
-
-### MentionList
-
-<Reference name="mention-list" />
-
-### MentionItem
-
-<Reference name="mention-item" />
