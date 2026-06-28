@@ -11,7 +11,14 @@ const mentionMeta = {
       target: 'ui/mention.tsx',
     },
   ],
-  registryDependencies: ['field', 'input', 'menu', 'popover', 'text-field'],
+  registryDependencies: [
+    'field',
+    'input',
+    'menu',
+    'popover',
+    'text-field',
+    'textarea-caret',
+  ],
 } satisfies RegistryItem
 
 export default mentionMeta
