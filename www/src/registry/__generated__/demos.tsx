@@ -1533,6 +1533,10 @@ export const DemosIndex: Record<
 		files: ["ui/mention/demos/with-avatars.tsx"],
 		component: React.lazy(() => import("@/registry/ui/mention/demos/with-avatars")),
 	},
+	"mention/demos/with-input": {
+		files: ["ui/mention/demos/with-input.tsx"],
+		component: React.lazy(() => import("@/registry/ui/mention/demos/with-input")),
+	},
 	"menu/demos/account": {
 		files: ["ui/menu/demos/account.tsx"],
 		component: React.lazy(() => import("@/registry/ui/menu/demos/account")),

@@ -31,16 +31,27 @@ npx shadcn@latest add @dotui/mention
 
 ## Usage
 
-`Mention` wires an `@`-mention experience onto your existing primitives: compose a `TextField` + `TextArea` for the input and a `Popover` + `Menu` for the suggestions, and `Mention` injects the wiring (caret-anchored popover, filtering, insertion) through context. Typing the trigger character (`@` by default) opens the list at the caret and filters as you type; selecting an item inserts it inline.
+`Mention` wires an `@`-mention experience onto your existing primitives: compose an input — a bare `TextArea` (or `Input`) — plus a `Popover` + `Menu` for the suggestions, and `Mention` injects the wiring (value, caret-anchored popover, filtering, keyboard navigation, insertion) through context. Typing the trigger character (`@` by default) opens the list at the caret and filters as you type; selecting an item inserts it inline.
 
 ```tsx
-import { Label } from '@/components/ui/field'
 import { TextArea } from '@/components/ui/input'
 import { MenuContent, MenuItem } from '@/components/ui/menu'
 import { Mention } from '@/components/ui/mention'
 import { Popover } from '@/components/ui/popover'
-import { TextField } from '@/components/ui/text-field'
 ```
+
+```tsx
+<Mention>
+  <TextArea aria-label="Comment" />
+  <Popover>
+    <MenuContent items={people}>
+      {(person) => <MenuItem id={person.id}>{person.name}</MenuItem>}
+    </MenuContent>
+  </Popover>
+</Mention>
+```
+
+The input is optional to wrap: drop in a bare `TextArea`/`Input` with an `aria-label`, or wrap it in a `TextField` when you want a visible `Label` (and its description/validation). Either way the suggestions stay keyboard-accessible.
 
 ```tsx
 <Mention>
@@ -48,11 +59,7 @@ import { TextField } from '@/components/ui/text-field'
     <Label>Comment</Label>
     <TextArea />
   </TextField>
-  <Popover>
-    <MenuContent items={people}>
-      {(person) => <MenuItem id={person.id}>{person.name}</MenuItem>}
-    </MenuContent>
-  </Popover>
+  <Popover>{/* ...suggestions */}</Popover>
 </Mention>
 ```
 
@@ -69,13 +76,14 @@ The `trigger` prop changes the character that opens the list, and `getItemText` 
 <Examples>
   <Example name="mention/demos/basic" />
   <Example name="mention/demos/with-avatars" />
+  <Example name="mention/demos/with-input" />
   <Example name="mention/demos/custom-trigger" />
   <Example name="mention/demos/controlled" />
 </Examples>
 
 ## API Reference
 
-`Mention` is the only component; the input and suggestion list are composed from the [TextField](/docs/components/text-field), [TextArea](/docs/components/text-area), [Popover](/docs/components/popover), and [Menu](/docs/components/menu) primitives.
+`Mention` is the only component; the input and suggestion list are composed from the [TextArea](/docs/components/text-area) / [Input](/docs/components/input) (optionally wrapped in a [TextField](/docs/components/text-field)), [Popover](/docs/components/popover), and [Menu](/docs/components/menu) primitives.
 
 ### Mention
 

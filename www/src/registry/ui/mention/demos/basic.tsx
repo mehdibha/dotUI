@@ -1,11 +1,9 @@
 'use client'
 
-import { Label } from '@/registry/ui/field'
 import { TextArea } from '@/registry/ui/input'
 import { Mention } from '@/registry/ui/mention'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
-import { TextField } from '@/registry/ui/text-field'
 
 const usernames = [
   'alexmiller',
@@ -20,13 +18,15 @@ const usernames = [
   'nataliasmith',
 ].map((id) => ({ id }))
 
+// A bare TextArea — no TextField wrapper. Use `aria-label` for the
+// accessible name, or wrap it in a TextField when you want a visible label.
 export default function Demo() {
   return (
     <Mention className="w-[320px]">
-      <TextField>
-        <Label>Comment</Label>
-        <TextArea placeholder="Type @ to mention someone..." />
-      </TextField>
+      <TextArea
+        aria-label="Comment"
+        placeholder="Type @ to mention someone..."
+      />
       <Popover>
         <MenuContent
           items={usernames}

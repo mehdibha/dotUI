@@ -3,10 +3,12 @@
 import * as React from 'react'
 import { flushSync } from 'react-dom'
 import * as AutocompletePrimitive from 'react-aria-components/Autocomplete'
+import { InputContext } from 'react-aria-components/Input'
 import { MenuContext } from 'react-aria-components/Menu'
 import type { Key } from 'react-aria-components/Menu'
 import { PopoverContext } from 'react-aria-components/Popover'
 import { Provider } from 'react-aria-components/slots'
+import { TextAreaContext } from 'react-aria-components/TextArea'
 import { TextFieldContext } from 'react-aria-components/TextField'
 import { useControlledState } from 'react-stately/useControlledState'
 
@@ -18,6 +20,8 @@ import { useStyles } from './styles'
 // MARK: mentionStyles
 
 // MARK: Mention
+
+type MentionInputElement = HTMLInputElement | HTMLTextAreaElement
 
 interface MentionProps {
   /** The character that opens the suggestions list. @default "@" */
@@ -39,8 +43,9 @@ interface MentionProps {
 /**
  * Wires an `@`-mention experience onto composed primitives: it filters the
  * `Menu` via React Aria's `Autocomplete` and injects the value, popover, and
- * menu wiring through context, so consumers drop in a real `TextField` +
- * `TextArea`, `Popover`, and `Menu`/`MenuItem` — no bespoke sub-components.
+ * menu wiring through context, so consumers drop in their own input — a bare
+ * `TextArea`/`Input`, or one wrapped in a `TextField` for a label — plus a
+ * `Popover` + `Menu`/`MenuItem`. No bespoke sub-components.
  */
 function Mention({
   trigger = '@',
@@ -65,11 +70,13 @@ function Mention({
   const [filterValue, setFilterValue] = React.useState('')
   const rootRef = React.useRef<HTMLDivElement>(null)
 
-  // The TextArea is composed by the consumer, so its element is read from the
-  // DOM rather than threaded through context — `TextField` re-provides
-  // `TextAreaContext`, which would shadow an injected ref.
+  // The input is composed by the consumer (and may be wrapped in a TextField,
+  // which re-provides Input/TextAreaContext), so its element is read from the
+  // DOM rather than threaded through context.
   const getInput = React.useCallback(
-    () => rootRef.current?.querySelector('textarea') ?? null,
+    () =>
+      rootRef.current?.querySelector<MentionInputElement>('textarea, input') ??
+      null,
     [],
   )
 
@@ -105,8 +112,8 @@ function Mention({
   }, [trigger, getInput])
 
   // Caret moves on typing, clicking, and arrowing all surface as
-  // `selectionchange`; each instance only reacts while its own textarea is
-  // focused (updateFilter guards on `document.activeElement`).
+  // `selectionchange`; each instance only reacts while its own input is focused
+  // (updateFilter guards on `document.activeElement`).
   React.useEffect(() => {
     document.addEventListener('selectionchange', updateFilter)
     return () => document.removeEventListener('selectionchange', updateFilter)
@@ -118,6 +125,14 @@ function Mention({
       updateFilter()
     },
     [setInputValue, updateFilter],
+  )
+
+  // A bare Input/TextArea reports changes via the native event; a TextField
+  // reports the value directly. Both feed the same handler.
+  const handleNativeChange = React.useCallback(
+    (event: React.ChangeEvent<MentionInputElement>) =>
+      handleChange(event.target.value),
+    [handleChange],
   )
 
   // Replace the active query (from the trigger char to the caret) with the
@@ -175,6 +190,9 @@ function Mention({
     >
       <Provider
         values={[
+          // TextField reads TextFieldContext for value/onChange; the popover and
+          // menu are wired here too. A bare TextArea/Input is wired by
+          // <MentionInputWiring> below (TextField shadows that for its own child).
           [TextFieldContext, { value: inputValue, onChange: handleChange }],
           [
             PopoverContext,
@@ -191,11 +209,55 @@ function Mention({
           [MenuContext, { onAction: insert }],
         ]}
       >
-        <div ref={rootRef} data-mention="" className={root({ className })}>
-          {children}
-        </div>
+        <MentionInputWiring value={inputValue} onChange={handleNativeChange}>
+          <div ref={rootRef} data-mention="" className={root({ className })}>
+            {children}
+          </div>
+        </MentionInputWiring>
       </Provider>
     </AutocompletePrimitive.Autocomplete>
+  )
+}
+
+// MARK: MentionInputWiring
+
+interface MentionInputWiringProps {
+  value: string
+  onChange: (event: React.ChangeEvent<MentionInputElement>) => void
+  children: React.ReactNode
+}
+
+/**
+ * Re-applies the Autocomplete's input wiring — keyboard navigation (`onKeyDown`)
+ * and the combobox ARIA (`aria-controls`/`aria-autocomplete`/
+ * `aria-activedescendant`) — onto a bare `TextArea`/`Input`. React Aria provides
+ * this through `FieldInputContext`, which only field components (`TextField`,
+ * `SearchField`) consume; this lets the input be used without one. When a
+ * `TextField` IS present it applies the wiring itself and re-provides
+ * Input/TextAreaContext to its child, shadowing what we set here.
+ */
+function MentionInputWiring({
+  value,
+  onChange,
+  children,
+}: MentionInputWiringProps) {
+  const fieldInput = React.useContext(AutocompletePrimitive.FieldInputContext)
+  const wiring =
+    fieldInput && typeof fieldInput === 'object' && !('slots' in fieldInput)
+      ? (fieldInput as Record<string, unknown>)
+      : undefined
+  // Our value/onChange win over the Autocomplete's (we control the full text and
+  // drive filtering ourselves); the rest of the wiring passes through.
+  const inputProps = { ...wiring, value, onChange }
+  return (
+    <Provider
+      values={[
+        [InputContext, inputProps],
+        [TextAreaContext, inputProps],
+      ]}
+    >
+      {children}
+    </Provider>
   )
 }
 

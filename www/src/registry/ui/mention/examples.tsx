@@ -5,6 +5,7 @@ import Basic from './demos/basic'
 import Controlled from './demos/controlled'
 import CustomTrigger from './demos/custom-trigger'
 import WithAvatars from './demos/with-avatars'
+import WithInput from './demos/with-input'
 
 export default function MentionExamples() {
   return (
@@ -14,6 +15,9 @@ export default function MentionExamples() {
       </Example>
       <Example title="With avatars">
         <WithAvatars />
+      </Example>
+      <Example title="Single-line input">
+        <WithInput />
       </Example>
       <Example title="Custom trigger">
         <CustomTrigger />

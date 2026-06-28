@@ -36,10 +36,14 @@ const CARET_MIRROR_PROPS = [
  * Returns the caret's `top`/`left` offset (px, relative to the textarea's border
  * box, accounting for scroll) and the line `height`.
  */
-export function getCaretRect(input: HTMLTextAreaElement, index: number) {
+export function getCaretRect(
+  input: HTMLTextAreaElement | HTMLInputElement,
+  index: number,
+) {
   const doc = input.ownerDocument
   const win = doc.defaultView ?? window
   const computed = win.getComputedStyle(input)
+  const isInput = input.nodeName === 'INPUT'
 
   const mirror = doc.createElement('div')
   const { style } = mirror
@@ -47,14 +51,15 @@ export function getCaretRect(input: HTMLTextAreaElement, index: number) {
   style.top = '0'
   style.left = '-9999px'
   style.visibility = 'hidden'
-  style.whiteSpace = 'pre-wrap'
+  // A textarea wraps; an input is a single non-wrapping line.
+  style.whiteSpace = isInput ? 'pre' : 'pre-wrap'
   style.overflowWrap = 'break-word'
   for (const prop of CARET_MIRROR_PROPS) {
     style.setProperty(prop, computed.getPropertyValue(prop))
   }
-  // Wrap at the same width as the textarea's content box so line breaks fall in
-  // the same places.
-  style.width = `${input.clientWidth}px`
+  // Match the textarea's content-box width so line breaks fall in the same
+  // places; an input never wraps, so let the mirror size to its content.
+  style.width = isInput ? 'auto' : `${input.clientWidth}px`
   style.height = 'auto'
 
   mirror.textContent = input.value.slice(0, index)
