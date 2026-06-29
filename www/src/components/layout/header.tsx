@@ -44,11 +44,13 @@ const BLUR_LAYERS = [
   { blur: 24, mask: 'linear-gradient(to top, transparent 70%, #000 100%)' },
 ]
 
-// Drives --blur-progress (0 → 1) on the blur layer from scroll position so the
-// nav's progressive blur ramps in smoothly. rAF-throttled and written straight
-// to the DOM node — no React re-render per scroll frame, and no reliance on
-// scroll-driven-animation support (works in every browser). rampPx is the scroll
-// distance over which the blur reaches full strength (≈ the header height).
+// Drives --blur-progress (0 → 1) from scroll position. The blur layers scale
+// their blur radius by it and the tint scales its opacity, so the progressive
+// blur ramps in smoothly as you scroll. Deliberately NOT applied as opacity on
+// the backdrop-filter container: a fractional opacity there makes it an opacity
+// group and breaks backdrop sampling (the blur vanishes). rAF-throttled, written
+// straight to the DOM node — no React re-render per frame, no scroll-timeline
+// dependency. rampPx is the scroll distance for the blur to reach full strength.
 function useScrollBlur(rampPx = 56) {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -100,15 +102,15 @@ export function Header({ className, items = [] }: HeaderProps) {
       <div
         ref={blurRef}
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] header-blur-reveal"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%]"
       >
         {BLUR_LAYERS.map(({ blur, mask }) => (
           <div
             key={blur}
             className="absolute inset-0"
             style={{
-              backdropFilter: `blur(${blur}px)`,
-              WebkitBackdropFilter: `blur(${blur}px)`,
+              backdropFilter: `blur(calc(var(--blur-progress, 0) * ${blur}px))`,
+              WebkitBackdropFilter: `blur(calc(var(--blur-progress, 0) * ${blur}px))`,
               maskImage: mask,
               WebkitMaskImage: mask,
             }}
@@ -117,6 +119,7 @@ export function Header({ className, items = [] }: HeaderProps) {
         <div
           className="absolute inset-0"
           style={{
+            opacity: 'var(--blur-progress, 0)',
             background:
               'linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--color-bg) 55%, transparent) 55%, color-mix(in oklab, var(--color-bg) 72%, transparent) 100%)',
           }}
