@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseHeader } from '@tanstack/react-start/server'
 import type * as PageTree from 'fumadocs-core/page-tree'
@@ -37,9 +37,17 @@ function AppLayout() {
   const { pageTree } = Route.useLoaderData()
   const items = pageTree.children as PageTree.Node[]
 
+  // The /create builder is a focused, full-viewport workspace that renders its
+  // own app-shell top bar (modules/create/studio/header.tsx), so the global
+  // site header doesn't belong over it. Every other route keeps the site header.
+  // --header-height stays defined on the wrapper either way, so the builder's
+  // height math (h-svh minus the bar) still resolves.
+  const { pathname } = useLocation()
+  const isCreate = pathname === '/create'
+
   return (
     <div className="[--header-height:--spacing(14)]">
-      <Header items={items} />
+      {!isCreate && <Header items={items} />}
       <main id="content">
         <Outlet />
       </main>
