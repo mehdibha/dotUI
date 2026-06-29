@@ -1517,6 +1517,30 @@ export const DemosIndex: Record<
 		files: ["ui/loader/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/loader/demos/basic")),
 	},
+	"mention/demos/basic": {
+		files: ["ui/mention/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/mention/demos/basic")),
+	},
+	"mention/demos/controlled": {
+		files: ["ui/mention/demos/controlled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/mention/demos/controlled")),
+	},
+	"mention/demos/custom-trigger": {
+		files: ["ui/mention/demos/custom-trigger.tsx"],
+		component: React.lazy(() => import("@/registry/ui/mention/demos/custom-trigger")),
+	},
+	"mention/demos/highlighted": {
+		files: ["ui/mention/demos/highlighted.tsx"],
+		component: React.lazy(() => import("@/registry/ui/mention/demos/highlighted")),
+	},
+	"mention/demos/with-avatars": {
+		files: ["ui/mention/demos/with-avatars.tsx"],
+		component: React.lazy(() => import("@/registry/ui/mention/demos/with-avatars")),
+	},
+	"mention/demos/with-input": {
+		files: ["ui/mention/demos/with-input.tsx"],
+		component: React.lazy(() => import("@/registry/ui/mention/demos/with-input")),
+	},
 	"menu/demos/account": {
 		files: ["ui/menu/demos/account.tsx"],
 		component: React.lazy(() => import("@/registry/ui/menu/demos/account")),

@@ -1,6 +1,7 @@
 import ColorPickerDemo from '@/registry/ui/color-picker/demos/basic'
 import ComboboxDemo from '@/registry/ui/combobox/demos/basic'
 import DatePickerDemo from '@/registry/ui/date-picker/demos/basic'
+import MentionDemo from '@/registry/ui/mention/demos/basic'
 import SelectDemo from '@/registry/ui/select/demos/basic'
 import { Example } from '@/modules/create/preview/example'
 import { Examples } from '@/modules/create/preview/examples'
@@ -13,6 +14,9 @@ export default function PickersGroupExamples() {
       </Example>
       <Example title="Combobox">
         <ComboboxDemo />
+      </Example>
+      <Example title="Mention">
+        <MentionDemo />
       </Example>
       <Example title="Date Picker">
         <DatePickerDemo />
