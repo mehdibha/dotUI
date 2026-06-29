@@ -10,6 +10,7 @@ export default function Demo({
 }: InputProps = {}) {
   return (
     <Input
+      className="max-w-xs"
       placeholder={placeholder}
       size={size}
       disabled={disabled}
