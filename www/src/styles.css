@@ -167,6 +167,29 @@
   --scroll-fade-size: --value([length], [percentage]);
 }
 
+/* header-blur-reveal — ramps the nav's progressive-blur opacity in across the
+   first header-height of scroll instead of snapping on at a fixed threshold, so
+   the blur tracks the scroll gesture. Compositor-driven (animation-timeline:
+   scroll(root)); the JS data-scrolled toggle in header.tsx stays as the fallback
+   where scroll timelines are unsupported (Firefox). Mirrors scroll-fade-y. */
+@keyframes header-blur-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility header-blur-reveal {
+  @supports (animation-timeline: scroll()) {
+    animation: header-blur-reveal 1ms linear;
+    animation-timeline: scroll(root y);
+    animation-range: 0 var(--header-height, calc(var(--spacing) * 14));
+    animation-fill-mode: both;
+  }
+}
+
 /* Click ripple for the docs component-gallery cursor (components-list/autoplay).
    Expands and fades from the pointer hotspot; mounts only during the press beat
    so it replays on each loop. */

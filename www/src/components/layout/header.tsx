@@ -44,9 +44,12 @@ const BLUR_LAYERS = [
   { blur: 24, mask: 'linear-gradient(to top, transparent 70%, #000 100%)' },
 ]
 
-function useScrolled(threshold = 8) {
+function useScrolled(threshold = 2) {
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
+    // Supported browsers drive the blur reveal via the header-blur-reveal scroll
+    // timeline (see styles.css); only the fallback path needs this listener.
+    if (CSS.supports('animation-timeline', 'scroll()')) return
     const onScroll = () => setScrolled(window.scrollY > threshold)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -61,7 +64,7 @@ interface HeaderProps {
 }
 
 export function Header({ className, items = [] }: HeaderProps) {
-  const scrolled = useScrolled(8)
+  const scrolled = useScrolled()
   const { pathname } = useLocation()
   // Longest-matching-prefix wins so "/docs/components" highlights Components (not
   // Docs) while "/docs/button" still highlights Docs.
@@ -82,7 +85,7 @@ export function Header({ className, items = [] }: HeaderProps) {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] opacity-0 transition-opacity duration-300 ease-out group-data-[scrolled]/header:opacity-100"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] header-blur-reveal opacity-0 transition-opacity duration-300 ease-out group-data-[scrolled]/header:opacity-100"
       >
         {BLUR_LAYERS.map(({ blur, mask }) => (
           <div
