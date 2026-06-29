@@ -26,7 +26,7 @@ export default function Demo() {
   })
 
   return (
-    <Combobox className="max-w-xs">
+    <Combobox className="w-52">
       <Label>Pokemon</Label>
       <InputGroup>
         <Input />

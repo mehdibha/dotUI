@@ -39,7 +39,7 @@ const timezones = [
 
 export default function Demo() {
   return (
-    <Combobox className="max-w-xs" aria-label="timezone">
+    <Combobox className="w-52" aria-label="timezone">
       <InputGroup>
         <Input placeholder="Select a timezone" />
         <InputGroupAddon>

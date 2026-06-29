@@ -14,7 +14,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <DatePicker
-      className="max-w-xs"
+      className="w-52"
       placeholderValue={new CalendarDate(1980, 1, 1)}
     >
       <Label>Meeting date</Label>

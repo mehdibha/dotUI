@@ -13,7 +13,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <Combobox className="max-w-xs" aria-label="Country">
+    <Combobox className="w-52" aria-label="Country">
       <InputGroup>
         <Input placeholder="Select a country..." />
         <InputGroupAddon>

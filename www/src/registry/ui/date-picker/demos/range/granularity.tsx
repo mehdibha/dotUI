@@ -18,7 +18,7 @@ export default function Demo() {
   }
 
   return (
-    <div className="flex w-full max-w-xs flex-col gap-6">
+    <div className="flex w-52 flex-col gap-6">
       <DateRangePicker granularity="hour" defaultValue={dates}>
         <Label>Hour</Label>
         <InputGroup>

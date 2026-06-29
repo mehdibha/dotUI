@@ -8,7 +8,7 @@ import {
 
 export default function Demo() {
   return (
-    <Select className="max-w-xs" isInvalid>
+    <Select className="w-52" isInvalid>
       <Label>Provider</Label>
       <SelectTrigger />
       <SelectContent>

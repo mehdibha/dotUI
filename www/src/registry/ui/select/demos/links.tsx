@@ -8,7 +8,7 @@ import {
 
 export default function Demo() {
   return (
-    <Select className="max-w-xs">
+    <Select className="w-52">
       <Label>Project</Label>
       <SelectTrigger />
       <SelectContent>

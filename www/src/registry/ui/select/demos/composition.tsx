@@ -7,7 +7,7 @@ import {
 
 export default function Demo() {
   return (
-    <Select className="max-w-xs" aria-label="Provider">
+    <Select className="w-52" aria-label="Provider">
       <SelectTrigger />
       <SelectContent>
         <SelectItem>Perplexity</SelectItem>

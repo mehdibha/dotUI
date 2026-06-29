@@ -15,7 +15,7 @@ const frameworks = ['Next.js', 'SvelteKit', 'Nuxt.js', 'Remix', 'Astro']
 
 export default function Demo() {
   return (
-    <Card className="w-full max-w-xs">
+    <Card className="w-52">
       <CardContent>
         <FormPrimitives.Form
           id="form-with-combobox"

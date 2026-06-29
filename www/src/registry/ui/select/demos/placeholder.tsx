@@ -9,7 +9,7 @@ import {
 export default function Demo() {
   return (
     <Select
-      className="max-w-xs"
+      className="w-52"
       aria-label="Provider"
       placeholder="Select a provider"
     >

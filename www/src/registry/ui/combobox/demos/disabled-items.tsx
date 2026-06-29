@@ -19,7 +19,7 @@ const disabledKeys = ['nuxt', 'remix']
 export default function Demo() {
   return (
     <Combobox
-      className="max-w-xs"
+      className="w-52"
       aria-label="framework"
       disabledKeys={disabledKeys}
     >

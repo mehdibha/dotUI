@@ -8,7 +8,7 @@ import { Modal } from '@/registry/ui/modal'
 
 export default function Demo() {
   return (
-    <DatePicker className="max-w-xs" aria-label="Meeting date">
+    <DatePicker className="w-52" aria-label="Meeting date">
       <InputGroup>
         <DateInput />
         <InputGroupAddon>

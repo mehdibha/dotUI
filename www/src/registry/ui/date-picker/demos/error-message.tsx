@@ -9,7 +9,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <DatePicker className="max-w-xs" aria-label="Meeting date" isInvalid>
+    <DatePicker className="w-52" aria-label="Meeting date" isInvalid>
       <Label>Meeting date</Label>
       <InputGroup>
         <DateInput />

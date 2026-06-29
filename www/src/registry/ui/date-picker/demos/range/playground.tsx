@@ -22,7 +22,7 @@ export function DateRangePickerPlayground({
 }: DateRangePickerPlaygroundProps) {
   return (
     <DateRangePicker
-      className="max-w-xs"
+      className="w-52"
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
     >

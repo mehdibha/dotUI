@@ -8,7 +8,7 @@ import { Modal } from '@/registry/ui/modal'
 
 export default function Demo() {
   return (
-    <DateRangePicker className="max-w-xs" aria-label="Meeting date">
+    <DateRangePicker className="w-52" aria-label="Meeting date">
       <InputGroup>
         <DateInput slot="start" />
         <span>–</span>

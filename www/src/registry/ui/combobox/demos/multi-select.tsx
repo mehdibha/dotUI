@@ -20,7 +20,7 @@ type Framework = (typeof frameworks)[number]
 export default function Demo() {
   return (
     <Combobox<Framework, 'multiple'>
-      className="max-w-xs"
+      className="w-52"
       selectionMode="multiple"
       defaultValue={['next']}
     >

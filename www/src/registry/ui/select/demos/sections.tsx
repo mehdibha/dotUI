@@ -11,7 +11,7 @@ import { Separator } from '@/registry/ui/separator'
 
 export default function Demo() {
   return (
-    <Select className="max-w-xs">
+    <Select className="w-52">
       <Label>Model</Label>
       <SelectTrigger />
       <SelectContent>

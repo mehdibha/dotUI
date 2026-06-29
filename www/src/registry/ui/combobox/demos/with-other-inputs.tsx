@@ -16,7 +16,7 @@ const frameworks = ['Next.js', 'SvelteKit', 'Nuxt.js', 'Remix', 'Astro']
 
 export default function Demo() {
   return (
-    <div className="flex max-w-xs flex-col items-start gap-2">
+    <div className="flex w-52 flex-col items-start gap-2">
       <Combobox aria-label="framework">
         <InputGroup className="w-52">
           <Input placeholder="Select a framework" />

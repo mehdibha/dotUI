@@ -23,7 +23,7 @@ export default function Demo() {
   const formatter = useDateFormatter({ dateStyle: 'long' })
 
   return (
-    <div className="flex w-full max-w-xs flex-col gap-6">
+    <div className="flex w-52 flex-col gap-6">
       <DateRangePicker value={value} onChange={setValue}>
         <Label>Meeting date</Label>
         <InputGroup>

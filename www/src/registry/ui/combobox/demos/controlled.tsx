@@ -13,7 +13,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   const [country, setCountry] = React.useState<MenuPrimitives.Key | null>('tn')
   return (
-    <div className="flex max-w-xs flex-col items-center gap-6">
+    <div className="flex w-52 flex-col items-center gap-6">
       <Combobox
         aria-label="country"
         selectedKey={country}

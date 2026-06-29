@@ -16,11 +16,7 @@ export default function Demo({
   isInvalid = false,
 } = {}) {
   return (
-    <Combobox
-      className="max-w-xs"
-      isDisabled={isDisabled}
-      isInvalid={isInvalid}
-    >
+    <Combobox className="w-52" isDisabled={isDisabled} isInvalid={isInvalid}>
       {label && <Label>{label}</Label>}
       <InputGroup>
         <Input data-control-target placeholder={placeholder} />
