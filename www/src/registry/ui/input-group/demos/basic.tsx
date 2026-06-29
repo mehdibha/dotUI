@@ -4,7 +4,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <TextField>
         <Label>Default (no InputGroup)</Label>
         <Input placeholder="Placeholder" />
@@ -39,6 +39,6 @@ export default function Demo() {
           <Input />
         </InputGroup>
       </TextField>
-    </>
+    </div>
   )
 }

@@ -19,7 +19,7 @@ import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 export default function Demo() {
   const [country, setCountry] = useState('+1')
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <TextField>
         <Label>Tooltip</Label>
         <InputGroup>
@@ -85,6 +85,6 @@ export default function Demo() {
         </InputGroup>
         <Description>This is a description of the input group.</Description>
       </TextField>
-    </>
+    </div>
   )
 }
