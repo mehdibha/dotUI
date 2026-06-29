@@ -17,6 +17,7 @@ export default function Demo({
 } = {}) {
   return (
     <NumberField
+      className="max-w-xs"
       defaultValue={1}
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}

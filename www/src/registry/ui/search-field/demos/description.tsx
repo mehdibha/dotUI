@@ -4,7 +4,7 @@ import { SearchField } from '@/registry/ui/search-field'
 
 export default function Demo() {
   return (
-    <SearchField>
+    <SearchField className="max-w-xs">
       <Label>Search</Label>
       <Input />
       <Description>Enter your search query</Description>

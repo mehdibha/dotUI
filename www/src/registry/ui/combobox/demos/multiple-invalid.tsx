@@ -19,7 +19,7 @@ type Framework = (typeof frameworks)[number]
 
 export default function Demo() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex max-w-xs flex-col gap-4">
       <Combobox<Framework, 'multiple'>
         aria-label="frameworks"
         selectionMode="multiple"

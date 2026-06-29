@@ -6,7 +6,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <TextField>
+    <TextField className="max-w-xs">
       <Label>Email</Label>
       <Input placeholder="hello@example.com" />
       <Description>Enter your email.</Description>

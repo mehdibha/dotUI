@@ -9,7 +9,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <Combobox>
+    <Combobox className="max-w-xs">
       <Label>Country</Label>
       <InputGroup>
         <Input />

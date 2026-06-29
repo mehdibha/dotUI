@@ -8,7 +8,7 @@ import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <DateRangePicker aria-label="Meeting date">
+    <DateRangePicker className="max-w-xs" aria-label="Meeting date">
       <InputGroup>
         <DateInput slot="start" />
         <span>–</span>

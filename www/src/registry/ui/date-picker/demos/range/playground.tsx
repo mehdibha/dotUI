@@ -21,7 +21,11 @@ export function DateRangePickerPlayground({
   isReadOnly = false,
 }: DateRangePickerPlaygroundProps) {
   return (
-    <DateRangePicker isDisabled={isDisabled} isReadOnly={isReadOnly}>
+    <DateRangePicker
+      className="max-w-xs"
+      isDisabled={isDisabled}
+      isReadOnly={isReadOnly}
+    >
       {label && <Label>{label}</Label>}
       <InputGroup>
         <DateInput slot="start" />

@@ -8,7 +8,7 @@ import {
 
 export default function Demo() {
   return (
-    <Select>
+    <Select className="max-w-xs">
       <Label>Provider</Label>
       <SelectTrigger />
       <SelectContent>

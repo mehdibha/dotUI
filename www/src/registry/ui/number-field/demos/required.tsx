@@ -9,7 +9,7 @@ import {
 
 export default function Demo() {
   return (
-    <NumberField defaultValue={1024} isRequired>
+    <NumberField className="max-w-xs" defaultValue={1024} isRequired>
       <Label>Width</Label>
       <Group>
         <NumberFieldDecrement />

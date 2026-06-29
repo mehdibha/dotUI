@@ -17,7 +17,7 @@ const items = Array.from({ length: 1000 }, (_, i) => ({
 
 export default function Demo() {
   return (
-    <Combobox aria-label="item">
+    <Combobox className="max-w-xs" aria-label="item">
       <InputGroup>
         <Input placeholder="Search from 1000 items" />
         <InputGroupAddon>

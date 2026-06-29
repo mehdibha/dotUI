@@ -7,7 +7,11 @@ import { DateInput } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <DateField aria-label="Event date" defaultValue={parseDate('2020-02-03')}>
+    <DateField
+      className="max-w-xs"
+      aria-label="Event date"
+      defaultValue={parseDate('2020-02-03')}
+    >
       <DateInput />
     </DateField>
   )

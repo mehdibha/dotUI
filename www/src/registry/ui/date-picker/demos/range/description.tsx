@@ -11,7 +11,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <DateRangePicker>
+    <DateRangePicker className="max-w-xs">
       <Label>Appointment</Label>
       <InputGroup>
         <DateInput slot="start" />

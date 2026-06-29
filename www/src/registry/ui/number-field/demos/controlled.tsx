@@ -13,7 +13,7 @@ import {
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState(69)
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex max-w-xs flex-col items-center gap-4">
       <NumberField
         aria-label="Width"
         value={inputValue}

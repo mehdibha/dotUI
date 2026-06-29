@@ -16,6 +16,7 @@ export default function Demo({
 } = {}) {
   return (
     <Select
+      className="max-w-xs"
       placeholder={placeholder}
       isDisabled={isDisabled}
       isInvalid={isInvalid}

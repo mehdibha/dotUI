@@ -8,7 +8,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <Combobox aria-label="country" defaultSelectedKey="tn">
+    <Combobox className="max-w-xs" aria-label="country" defaultSelectedKey="tn">
       <InputGroup>
         <Input />
         <InputGroupAddon>

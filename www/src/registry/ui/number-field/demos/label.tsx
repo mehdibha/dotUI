@@ -9,7 +9,7 @@ import {
 
 export default function Demo() {
   return (
-    <div className="space-y-4">
+    <div className="max-w-xs space-y-4">
       <NumberField defaultValue={1024}>
         <Label>Width</Label>
         <Group>

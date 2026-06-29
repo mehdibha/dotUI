@@ -7,7 +7,11 @@ import {
 
 export default function Demo() {
   return (
-    <Select aria-label="Provider" defaultSelectedKey="eleven-labs">
+    <Select
+      className="max-w-xs"
+      aria-label="Provider"
+      defaultSelectedKey="eleven-labs"
+    >
       <SelectTrigger />
       <SelectContent>
         <SelectItem id="perplexity">Perplexity</SelectItem>

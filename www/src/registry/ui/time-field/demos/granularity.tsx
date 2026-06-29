@@ -8,7 +8,7 @@ import { TimeField } from '@/registry/ui/time-field'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <TimeField granularity="hour" defaultValue={new Time(11, 45, 22)}>
         <Label>Hour</Label>
         <DateInput />
@@ -21,6 +21,6 @@ export default function Demo() {
         <Label>Second</Label>
         <DateInput />
       </TimeField>
-    </>
+    </div>
   )
 }

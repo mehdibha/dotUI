@@ -12,6 +12,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <DatePicker
+      className="max-w-xs"
       aria-label="Appointment date"
       granularity="minute"
       hourCycle={24}

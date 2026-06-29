@@ -23,7 +23,7 @@ export default function Demo() {
   const formatter = useDateFormatter({ dateStyle: 'long' })
 
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <DateRangePicker value={value} onChange={setValue}>
         <Label>Meeting date</Label>
         <InputGroup>
@@ -51,6 +51,6 @@ export default function Demo() {
             `${formatter.format(value.start.toDate(getLocalTimeZone()))} – ${formatter.format(value.end.toDate(getLocalTimeZone()))}`
           : '--'}
       </p>
-    </>
+    </div>
   )
 }

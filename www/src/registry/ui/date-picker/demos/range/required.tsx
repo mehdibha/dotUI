@@ -9,7 +9,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <DateRangePicker isRequired>
+    <DateRangePicker className="max-w-xs" isRequired>
       <Label>Event date</Label>
       <InputGroup>
         <DateInput slot="start" />

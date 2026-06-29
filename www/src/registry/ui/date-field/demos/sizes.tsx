@@ -4,7 +4,7 @@ import { DateInput } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <DateField>
         <Label>small (sm)</Label>
         <DateInput />
@@ -17,6 +17,6 @@ export default function Demo() {
         <Label>large (lg)</Label>
         <DateInput />
       </DateField>
-    </>
+    </div>
   )
 }

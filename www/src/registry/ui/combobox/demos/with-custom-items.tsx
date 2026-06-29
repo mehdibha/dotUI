@@ -43,7 +43,7 @@ const countries = [
 
 export default function Demo() {
   return (
-    <Combobox aria-label="country">
+    <Combobox className="max-w-xs" aria-label="country">
       <InputGroup>
         <Input placeholder="Search countries..." />
         <InputGroupAddon>

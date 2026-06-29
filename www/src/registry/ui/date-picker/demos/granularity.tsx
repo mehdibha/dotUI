@@ -13,7 +13,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <DatePicker
         granularity="hour"
         defaultValue={parseAbsoluteToLocal('2021-04-07T18:45:22Z')}
@@ -73,6 +73,6 @@ export default function Demo() {
           </DialogContent>
         </Popover>
       </DatePicker>
-    </>
+    </div>
   )
 }

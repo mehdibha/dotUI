@@ -4,7 +4,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <TextField isRequired>
+    <TextField className="max-w-xs" isRequired>
       <Label>Email</Label>
       <Input />
     </TextField>

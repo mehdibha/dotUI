@@ -4,7 +4,7 @@ import { TimeField } from '@/registry/ui/time-field'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <TimeField>
         <Label>small (sm)</Label>
         <DateInput size="sm" />
@@ -17,6 +17,6 @@ export default function Demo() {
         <Label>large (lg)</Label>
         <DateInput size="lg" />
       </TimeField>
-    </>
+    </div>
   )
 }

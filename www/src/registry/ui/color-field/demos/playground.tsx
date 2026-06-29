@@ -11,6 +11,7 @@ export default function Demo({
 } = {}) {
   return (
     <ColorField
+      className="max-w-xs"
       defaultValue="#ff0000"
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}

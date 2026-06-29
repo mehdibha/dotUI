@@ -11,7 +11,7 @@ export default function Demo() {
       aria-label="Appointment time"
       defaultValue={new Time(18, 45)}
       hourCycle={24}
-      className="w-auto"
+      className="w-auto max-w-xs"
     >
       <DateInput />
     </TimeField>

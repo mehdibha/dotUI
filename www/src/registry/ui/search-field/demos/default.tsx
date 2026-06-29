@@ -3,7 +3,7 @@ import { SearchField } from '@/registry/ui/search-field'
 
 export default function Demo() {
   return (
-    <SearchField aria-label="Search">
+    <SearchField className="max-w-xs" aria-label="Search">
       <Input />
     </SearchField>
   )

@@ -13,7 +13,10 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <DatePicker placeholderValue={new CalendarDate(1980, 1, 1)}>
+    <DatePicker
+      className="max-w-xs"
+      placeholderValue={new CalendarDate(1980, 1, 1)}
+    >
       <Label>Meeting date</Label>
       <InputGroup>
         <DateInput />

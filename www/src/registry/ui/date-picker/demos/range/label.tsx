@@ -9,7 +9,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <DateRangePicker>
         <Label>Meeting date</Label>
         <InputGroup>
@@ -45,6 +45,6 @@ export default function Demo() {
           </DialogContent>
         </Popover>
       </DateRangePicker>
-    </>
+    </div>
   )
 }

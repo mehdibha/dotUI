@@ -13,6 +13,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <DateRangePicker
+      className="max-w-xs"
       aria-label="Meeting date"
       defaultValue={{
         start: parseDate('2020-02-03'),

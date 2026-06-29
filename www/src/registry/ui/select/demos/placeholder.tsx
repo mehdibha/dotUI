@@ -8,7 +8,11 @@ import {
 
 export default function Demo() {
   return (
-    <Select aria-label="Provider" placeholder="Select a provider">
+    <Select
+      className="max-w-xs"
+      aria-label="Provider"
+      placeholder="Select a provider"
+    >
       <SelectTrigger>
         <SelectValue />
       </SelectTrigger>

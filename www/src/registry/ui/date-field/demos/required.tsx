@@ -5,7 +5,7 @@ import { DateInput } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <DateField aria-label="Event date" isRequired>
+    <DateField className="max-w-xs" aria-label="Event date" isRequired>
       <DateInput />
     </DateField>
   )
