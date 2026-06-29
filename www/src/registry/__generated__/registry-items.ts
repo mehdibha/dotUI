@@ -3,6 +3,7 @@
 
 import LibFocusStyles from "@/registry/lib/focus-styles/meta";
 import LibResponsive from "@/registry/lib/responsive/meta";
+import LibTextareaCaret from "@/registry/lib/textarea-caret/meta";
 import LibUtils from "@/registry/lib/utils/meta";
 import UiAccordion from "@/registry/ui/accordion/meta";
 import UiAlert from "@/registry/ui/alert/meta";
@@ -47,6 +48,7 @@ import UiKbd from "@/registry/ui/kbd/meta";
 import UiLink from "@/registry/ui/link/meta";
 import UiListBox from "@/registry/ui/list-box/meta";
 import UiLoader from "@/registry/ui/loader/meta";
+import UiMention from "@/registry/ui/mention/meta";
 import UiMenu from "@/registry/ui/menu/meta";
 import UiModal from "@/registry/ui/modal/meta";
 import UiNumberField from "@/registry/ui/number-field/meta";
@@ -120,6 +122,7 @@ export const registryUi: RegistryItem[] = [
 	UiLink,
 	UiListBox,
 	UiLoader,
+	UiMention,
 	UiMenu,
 	UiModal,
 	UiNumberField,
@@ -148,4 +151,4 @@ export const registryUi: RegistryItem[] = [
 	UiTree,
 ];
 
-export const registryLib: RegistryItem[] = [LibFocusStyles, LibResponsive, LibUtils];
+export const registryLib: RegistryItem[] = [LibFocusStyles, LibResponsive, LibTextareaCaret, LibUtils];

@@ -1,0 +1,99 @@
+{
+  "name": "MentionProps",
+  "description": "A mention input lets users type a trigger character (like `@`) to open an\ninline list of suggestions and insert one as a token in the text.\n\n`Mention` wires the behaviour onto composed primitives — a `TextField` +\n`TextArea` for the input, a `Popover` + `Menu`/`MenuItem` for the\nsuggestions — by injecting their props through context, so no bespoke\nsub-components are needed.",
+  "props": {
+    "trigger": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The character that opens the suggestions list.",
+      "default": "\"@\""
+    },
+    "value": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The text value (controlled)."
+    },
+    "defaultValue": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The default text value (uncontrolled)."
+    },
+    "onChange": {
+      "type": "((value: string) => void)",
+      "detailedType": "((value: string) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "string",
+              "name": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler called when the text value changes."
+    },
+    "getItemText": {
+      "type": "((key: Key) => string)",
+      "detailedType": "((key: Key) => string) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "key",
+            "value": {
+              "type": "link",
+              "id": "Key",
+              "name": "Key"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "string"
+        },
+        "typeParameters": []
+      },
+      "description": "Maps the key of a selected item to the text inserted after the trigger\ncharacter.",
+      "default": "String(key)"
+    },
+    "placement": {
+      "type": "Placement",
+      "detailedType": "Placement | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Placement"
+      },
+      "description": "Where the suggestions popover is placed relative to the caret.",
+      "default": "\"bottom start\""
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

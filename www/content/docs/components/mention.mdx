@@ -1,0 +1,91 @@
+---
+title: Mention
+description: Mention lets users type a trigger character to insert people, channels, or other tokens inline as they write.
+links:
+  - label: Docs
+    href: https://react-aria.adobe.com/Autocomplete#inline-completions
+wip: true
+---
+
+<InteractiveDemo
+  name="mention"
+  controls={[
+    {
+      type: 'string',
+      name: 'label',
+      defaultValue: 'Comment',
+    },
+    {
+      type: 'string',
+      name: 'placeholder',
+      defaultValue: 'Type @ to mention someone...',
+    },
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/mention
+```
+
+## Usage
+
+`Mention` wires an `@`-mention experience onto your existing primitives: compose an input — a bare `TextArea` (or `Input`) — plus a `Popover` + `Menu` for the suggestions, and `Mention` injects the wiring (value, caret-anchored popover, filtering, keyboard navigation, insertion) through context. Typing the trigger character (`@` by default) opens the list at the caret and filters as you type; selecting an item inserts it inline.
+
+```tsx
+import { TextArea } from '@/components/ui/input'
+import { MenuContent, MenuItem } from '@/components/ui/menu'
+import { Mention } from '@/components/ui/mention'
+import { Popover } from '@/components/ui/popover'
+```
+
+```tsx
+<Mention>
+  <TextArea aria-label="Comment" />
+  <Popover>
+    <MenuContent items={people}>
+      {(person) => <MenuItem id={person.id}>{person.name}</MenuItem>}
+    </MenuContent>
+  </Popover>
+</Mention>
+```
+
+The input is optional to wrap: drop in a bare `TextArea`/`Input` with an `aria-label`, or wrap it in a `TextField` when you want a visible `Label` (and its description/validation). Either way the suggestions stay keyboard-accessible.
+
+```tsx
+<Mention>
+  <TextField>
+    <Label>Comment</Label>
+    <TextArea />
+  </TextField>
+  <Popover>{/* ...suggestions */}</Popover>
+</Mention>
+```
+
+The `trigger` prop changes the character that opens the list, and `getItemText` maps a selected item's key to the text inserted after the trigger.
+
+```tsx
+<Mention trigger="#" getItemText={(key) => String(key)}>
+  {/* ... */}
+</Mention>
+```
+
+## Examples
+
+<Examples className="md:grid-cols-2">
+  <Example name="mention/demos/basic" title="Basic" />
+  <Example name="mention/demos/highlighted" title="Highlighted" />
+  <Example name="mention/demos/with-avatars" title="With avatars" />
+  <Example name="mention/demos/with-input" title="Single-line input" />
+  <Example name="mention/demos/custom-trigger" title="Custom trigger" />
+  <Example name="mention/demos/controlled" title="Controlled" />
+</Examples>
+
+## API Reference
+
+`Mention` is the only component; the input and suggestion list are composed from the [TextArea](/docs/components/text-area) / [Input](/docs/components/input) (optionally wrapped in a [TextField](/docs/components/text-field)), [Popover](/docs/components/popover), and [Menu](/docs/components/menu) primitives.
+
+### Mention
+
+<Reference name="mention" />
