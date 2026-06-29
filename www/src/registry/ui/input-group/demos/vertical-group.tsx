@@ -3,7 +3,7 @@ import { InputGroup, InputGroupAddon, TextArea } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <InputGroup>
+    <InputGroup className="max-w-xs">
       <TextArea placeholder="Write a comment..." />
       <InputGroupAddon>
         <Button size="sm" variant="primary" className="ml-auto">

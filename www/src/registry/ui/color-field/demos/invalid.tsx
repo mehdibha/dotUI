@@ -6,7 +6,7 @@ import { Input } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <ColorField isInvalid>
+    <ColorField className="max-w-xs" isInvalid>
       <Label>Color</Label>
       <Input />
       <FieldError>Please fill out this field.</FieldError>

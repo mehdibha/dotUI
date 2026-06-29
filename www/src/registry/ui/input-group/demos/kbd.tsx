@@ -14,7 +14,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <TextField aria-label="Search">
         <InputGroup>
           <Input />
@@ -120,6 +120,6 @@ export default function Demo() {
           </InputGroup>
         </TextField>
       </div>
-    </>
+    </div>
   )
 }

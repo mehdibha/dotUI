@@ -4,7 +4,7 @@ import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <DateField aria-label="Meeting date">
         <InputGroup>
           <InputGroupAddon>
@@ -21,6 +21,6 @@ export default function Demo() {
           </InputGroupAddon>
         </InputGroup>
       </DateField>
-    </>
+    </div>
   )
 }

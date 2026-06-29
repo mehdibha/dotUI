@@ -4,7 +4,7 @@ import { Input } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <ColorField defaultValue="#7f007f">
+    <ColorField className="max-w-xs" defaultValue="#7f007f">
       <Label>Color</Label>
       <Input />
     </ColorField>

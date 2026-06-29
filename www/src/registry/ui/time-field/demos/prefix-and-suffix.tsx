@@ -4,7 +4,7 @@ import { TimeField } from '@/registry/ui/time-field'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <TimeField aria-label="Event time">
         <InputGroup>
           <InputGroupAddon>
@@ -21,6 +21,6 @@ export default function Demo() {
           </InputGroupAddon>
         </InputGroup>
       </TimeField>
-    </>
+    </div>
   )
 }

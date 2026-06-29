@@ -12,6 +12,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <DateRangePicker
+      className="w-52"
       aria-label="Appointment date"
       granularity="minute"
       hourCycle={24}

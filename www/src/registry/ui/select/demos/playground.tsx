@@ -16,6 +16,7 @@ export default function Demo({
 } = {}) {
   return (
     <Select
+      className="w-52"
       placeholder={placeholder}
       isDisabled={isDisabled}
       isInvalid={isInvalid}

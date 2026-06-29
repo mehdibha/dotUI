@@ -13,7 +13,7 @@ export default function Demo() {
   const [inputValue, setInputValue] = React.useState('Hello world!')
   const inputRef = React.useRef<HTMLInputElement>(null)
   return (
-    <div className="space-y-2">
+    <div className="max-w-xs space-y-2">
       <TextField>
         <Label>Website</Label>
         <InputGroup>

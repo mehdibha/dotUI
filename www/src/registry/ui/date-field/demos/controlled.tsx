@@ -13,13 +13,13 @@ export default function Demo() {
   )
 
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <DateField aria-label="Event date" value={value} onChange={setValue}>
         <DateInput />
       </DateField>
       <p className="text-sm text-fg-muted">
         selected date: {value ? value.toString() : 'none'}
       </p>
-    </>
+    </div>
   )
 }

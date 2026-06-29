@@ -8,7 +8,7 @@ import { DateInput } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <DateField
         granularity="hour"
         defaultValue={parseAbsoluteToLocal('2021-04-07T18:45:22Z')}
@@ -30,6 +30,6 @@ export default function Demo() {
         <Label>Second</Label>
         <DateInput />
       </DateField>
-    </>
+    </div>
   )
 }

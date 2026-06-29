@@ -7,7 +7,7 @@ import {
 
 export default function Demo() {
   return (
-    <NumberField aria-label="Width" defaultValue={1024}>
+    <NumberField className="max-w-xs" aria-label="Width" defaultValue={1024}>
       <InputGroup>
         <Input />
         <InputGroupAddon>

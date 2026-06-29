@@ -13,7 +13,11 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <DatePicker value={new CalendarDate(1980, 1, 1)} isReadOnly>
+    <DatePicker
+      className="w-52"
+      value={new CalendarDate(1980, 1, 1)}
+      isReadOnly
+    >
       <Label>Event date</Label>
       <InputGroup>
         <DateInput />

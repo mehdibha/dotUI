@@ -8,7 +8,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <DatePicker aria-label="Event date" isDisabled>
+    <DatePicker className="w-52" aria-label="Event date" isDisabled>
       <InputGroup>
         <DateInput />
         <InputGroupAddon>

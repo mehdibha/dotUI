@@ -8,6 +8,7 @@ import { Input } from '@/registry/ui/input'
 export default function Demo() {
   return (
     <ColorField
+      className="max-w-xs"
       aria-label="Disabled color"
       value={parseColor('rgb(222,70,58)')}
       isDisabled

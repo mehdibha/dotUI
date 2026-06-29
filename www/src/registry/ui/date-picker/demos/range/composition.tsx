@@ -11,7 +11,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <DateRangePicker>
+    <DateRangePicker className="w-52">
       <Label>Meeting date</Label>
       <InputGroup>
         <DateInput slot="start" />

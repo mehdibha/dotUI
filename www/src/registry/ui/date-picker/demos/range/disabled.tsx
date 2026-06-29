@@ -8,7 +8,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <DateRangePicker aria-label="Event date" isDisabled>
+    <DateRangePicker className="w-52" aria-label="Event date" isDisabled>
       <InputGroup>
         <DateInput slot="start" />
         <span>–</span>

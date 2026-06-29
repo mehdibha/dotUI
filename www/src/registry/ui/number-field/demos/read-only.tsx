@@ -8,7 +8,7 @@ import {
 
 export default function Demo() {
   return (
-    <NumberField aria-label="Width" isReadOnly value={69}>
+    <NumberField className="max-w-xs" aria-label="Width" isReadOnly value={69}>
       <Group>
         <NumberFieldDecrement />
         <Input />
