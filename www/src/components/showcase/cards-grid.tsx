@@ -1,16 +1,21 @@
 import { cn } from '@/registry/lib/utils'
 import { AccountMenu } from '@/components/showcase/account-menu'
 import { AiPrompt } from '@/components/showcase/ai-prompt'
+import { Appearance } from '@/components/showcase/appearance'
 import { Booking } from '@/components/showcase/booking'
 import { ColorEditorCard } from '@/components/showcase/color-editor'
+import { CommandMenu } from '@/components/showcase/command-menu'
 import { ComputerUse } from '@/components/showcase/computer-use'
 import { CookiePreferences } from '@/components/showcase/cookie-preferences'
+import { DisplaySettings } from '@/components/showcase/display-settings'
 import { Faq } from '@/components/showcase/faq'
 import { Filters } from '@/components/showcase/filters'
 import { InviteMembers } from '@/components/showcase/invite-members'
 import { LoginForm } from '@/components/showcase/login-form'
+import { Metrics } from '@/components/showcase/metrics'
 import { Notifications } from '@/components/showcase/notifications'
 import { Payment } from '@/components/showcase/payment'
+import { PricingPlans } from '@/components/showcase/pricing-plans'
 import { Shortcuts } from '@/components/showcase/shortcuts'
 import { Storage } from '@/components/showcase/storage'
 import { TeamName } from '@/components/showcase/team-name'
@@ -43,6 +48,16 @@ const LAYOUTS = {
 // `break-inside-avoid` keeps each card whole instead of splitting across columns.
 function Cell({ children }: { children: React.ReactNode }) {
   return <div className="break-inside-avoid pb-4">{children}</div>
+}
+
+// A masonry cell shown only at xl. At xl the masonry and side columns sit beside the
+// AI banner with no banner above them, so they bottom out short of the rail; these
+// xl-only cards fill them level. Below xl the side folds under the masonry and the
+// rail's extra cards do the balancing instead, so these are hidden.
+function XlCell({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="hidden break-inside-avoid pb-4 xl:block">{children}</div>
+  )
 }
 
 // The showcase grid — the single source of truth for which cards render. Shared by
@@ -95,6 +110,16 @@ export function CardsGrid({
         <Filters />
         <Shortcuts />
         <AccountMenu />
+        {/* Below xl the side group folds under the masonry (see the side column),
+            which leaves this rail the shortest column. These extra cards refill it
+            so every column bottoms out at roughly the same level. They're dropped at
+            xl, where the rail is already full and the side becomes its own column. */}
+        {variant === 'landing' && (
+          <>
+            <CommandMenu className="xl:hidden" />
+            <DisplaySettings className="xl:hidden" />
+          </>
+        )}
       </div>
 
       {variant === 'landing' ? (
@@ -112,10 +137,26 @@ export function CardsGrid({
             <AiPrompt />
             <div className="columns-2 gap-4">
               {cells(cards.filter((c) => !sideKeys.has(c.key)))}
+              {/* xl-only masonry fillers. At xl the masonry sits beside the AI
+                  banner with no banner above it, so it bottoms out short; these top
+                  it up. CommandMenu also renders in the rail (below xl) — it lands in
+                  whichever column is short at each breakpoint, never both at once. */}
+              <XlCell>
+                <Metrics />
+              </XlCell>
+              <XlCell>
+                <CommandMenu />
+              </XlCell>
             </div>
           </div>
           <div className="columns-2 gap-4 xl:columns-1">
             {cells(cards.filter((c) => sideKeys.has(c.key)))}
+            <XlCell>
+              <PricingPlans />
+            </XlCell>
+            <XlCell>
+              <Appearance />
+            </XlCell>
           </div>
         </div>
       ) : (
