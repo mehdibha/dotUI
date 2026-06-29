@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link as RouterLink, useLocation } from '@tanstack/react-router'
 import type * as PageTree from 'fumadocs-core/page-tree'
 import { SearchIcon } from 'lucide-react'
@@ -44,18 +44,33 @@ const BLUR_LAYERS = [
   { blur: 24, mask: 'linear-gradient(to top, transparent 70%, #000 100%)' },
 ]
 
-function useScrolled(threshold = 2) {
-  const [scrolled, setScrolled] = useState(false)
+// Drives --blur-progress (0 → 1) on the blur layer from scroll position so the
+// nav's progressive blur ramps in smoothly. rAF-throttled and written straight
+// to the DOM node — no React re-render per scroll frame, and no reliance on
+// scroll-driven-animation support (works in every browser). rampPx is the scroll
+// distance over which the blur reaches full strength (≈ the header height).
+function useScrollBlur(rampPx = 56) {
+  const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    // Supported browsers drive the blur reveal via the header-blur-reveal scroll
-    // timeline (see styles.css); only the fallback path needs this listener.
-    if (CSS.supports('animation-timeline', 'scroll()')) return
-    const onScroll = () => setScrolled(window.scrollY > threshold)
-    onScroll()
+    const el = ref.current
+    if (!el) return
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const progress = Math.min(window.scrollY / rampPx, 1)
+      el.style.setProperty('--blur-progress', String(progress))
+    }
+    const onScroll = () => {
+      if (raf === 0) raf = requestAnimationFrame(update)
+    }
+    update()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [threshold])
-  return scrolled
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (raf !== 0) cancelAnimationFrame(raf)
+    }
+  }, [rampPx])
+  return ref
 }
 
 interface HeaderProps {
@@ -64,7 +79,7 @@ interface HeaderProps {
 }
 
 export function Header({ className, items = [] }: HeaderProps) {
-  const scrolled = useScrolled()
+  const blurRef = useScrollBlur()
   const { pathname } = useLocation()
   // Longest-matching-prefix wins so "/docs/components" highlights Components (not
   // Docs) while "/docs/button" still highlights Docs.
@@ -77,15 +92,15 @@ export function Header({ className, items = [] }: HeaderProps) {
 
   return (
     <header
-      data-scrolled={scrolled || undefined}
       className={cn(
-        'group/header sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between px-6',
+        'sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between px-6',
         className,
       )}
     >
       <div
+        ref={blurRef}
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] header-blur-reveal opacity-0 transition-opacity duration-300 ease-out group-data-[scrolled]/header:opacity-100"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] header-blur-reveal"
       >
         {BLUR_LAYERS.map(({ blur, mask }) => (
           <div
