@@ -1,0 +1,30 @@
+{
+  "name": "MessageAvatarProps",
+  "description": "The avatar shown next to a message. Renders a fallback from `name`'s initials\nand, when `src` loads, the image on top.",
+  "extendsElement": "span",
+  "props": {
+    "src": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Image URL for the sender's avatar."
+    },
+    "name": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Sender name — its initials are used as the fallback."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

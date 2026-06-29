@@ -1,0 +1,14 @@
+{
+  "name": "ConversationContentProps",
+  "description": "The scrollable region that holds the messages. Place `Message`s and\n`ConversationEmptyState` inside it.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

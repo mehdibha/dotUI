@@ -1,0 +1,33 @@
+{
+  "name": "MessageBubbleProps",
+  "description": "The message surface. Color and the tightened tail corner come from `from`\n(inherited from `Message`, or set explicitly when used standalone).",
+  "extendsElement": "div",
+  "props": {
+    "from": {
+      "type": "\"assistant\" | \"user\"",
+      "detailedType": "'assistant' | 'user' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "assistant"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "user"
+          }
+        ]
+      },
+      "description": "Override the inherited author for this bubble.",
+      "default": "inherited from `Message`"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

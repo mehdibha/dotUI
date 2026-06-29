@@ -33,6 +33,7 @@ import UiColorThumb from "@/registry/ui/color-thumb/meta";
 import UiCombobox from "@/registry/ui/combobox/meta";
 import UiCommand from "@/registry/ui/command/meta";
 import UiContextMenu from "@/registry/ui/context-menu/meta";
+import UiConversation from "@/registry/ui/conversation/meta";
 import UiDateField from "@/registry/ui/date-field/meta";
 import UiDatePicker from "@/registry/ui/date-picker/meta";
 import UiDialog from "@/registry/ui/dialog/meta";
@@ -50,6 +51,7 @@ import UiListBox from "@/registry/ui/list-box/meta";
 import UiLoader from "@/registry/ui/loader/meta";
 import UiMention from "@/registry/ui/mention/meta";
 import UiMenu from "@/registry/ui/menu/meta";
+import UiMessage from "@/registry/ui/message/meta";
 import UiModal from "@/registry/ui/modal/meta";
 import UiNumberField from "@/registry/ui/number-field/meta";
 import UiOtpField from "@/registry/ui/otp-field/meta";
@@ -107,6 +109,7 @@ export const registryUi: RegistryItem[] = [
 	UiCombobox,
 	UiCommand,
 	UiContextMenu,
+	UiConversation,
 	UiDateField,
 	UiDatePicker,
 	UiDialog,
@@ -124,6 +127,7 @@ export const registryUi: RegistryItem[] = [
 	UiLoader,
 	UiMention,
 	UiMenu,
+	UiMessage,
 	UiModal,
 	UiNumberField,
 	UiOtpField,

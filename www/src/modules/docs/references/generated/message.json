@@ -1,0 +1,33 @@
+{
+  "name": "MessageProps",
+  "description": "A row in a conversation: an optional avatar alongside a body that holds the\nheader, bubble, and actions. The `from` author flows down to children via\ncontext, driving alignment and bubble color.",
+  "extendsElement": "div",
+  "props": {
+    "from": {
+      "type": "\"assistant\" | \"user\"",
+      "detailedType": "'assistant' | 'user' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "assistant"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "user"
+          }
+        ]
+      },
+      "description": "Who sent the message. Sets row alignment and is inherited by the bubble,\navatar, and actions.",
+      "default": "'assistant'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

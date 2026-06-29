@@ -1,0 +1,14 @@
+{
+  "name": "ConversationProps",
+  "description": "A scrolling conversation container that keeps the view pinned to the latest\nmessage while new content streams in, and reveals a scroll-to-bottom control\nonce the reader scrolls away. Edges fade as content overflows.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

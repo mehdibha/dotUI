@@ -1,0 +1,14 @@
+:root {
+  --message-radius: var(--radius-lg);
+}
+
+/* Text shimmer for live streaming markers — "Thinking…", "Searching the web…".
+ * A muted-to-foreground gradient sweeps across the clipped text. */
+@keyframes dotui-message-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}

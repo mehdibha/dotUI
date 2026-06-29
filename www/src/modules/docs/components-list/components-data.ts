@@ -407,6 +407,20 @@ export const componentsData: ComponentCategory[] = [
         scale: 0.55,
         status: 'done',
       },
+      {
+        name: 'Message',
+        slug: 'message',
+        href: '/docs/components/message',
+        scale: 0.85,
+        status: 'in review',
+      },
+      {
+        name: 'Conversation',
+        slug: 'conversation',
+        href: '/docs/components/conversation',
+        scale: 0.55,
+        status: 'in review',
+      },
     ],
   },
   {

@@ -1,6 +1,8 @@
 import AvatarDemo from '@/registry/ui/avatar/demos/default'
 import CardDemo from '@/registry/ui/card/demos/default'
+import ConversationDemo from '@/registry/ui/conversation/demos/default'
 import GroupDemo from '@/registry/ui/group/demos/basic'
+import MessageDemo from '@/registry/ui/message/demos/default'
 import { Separator } from '@/registry/ui/separator'
 import TableDemo from '@/registry/ui/table/demos/basic'
 import { Example } from '@/modules/create/preview/example'
@@ -17,6 +19,12 @@ export default function ContainersGroupExamples() {
       </Example>
       <Example title="Avatar">
         <AvatarDemo />
+      </Example>
+      <Example title="Message">
+        <MessageDemo />
+      </Example>
+      <Example title="Conversation">
+        <ConversationDemo />
       </Example>
       <Example title="Group">
         <GroupDemo />

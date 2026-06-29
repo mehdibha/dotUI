@@ -949,6 +949,18 @@ export const DemosIndex: Record<
 		files: ["ui/context-menu/demos/with-submenu.tsx"],
 		component: React.lazy(() => import("@/registry/ui/context-menu/demos/with-submenu")),
 	},
+	"conversation/demos/default": {
+		files: ["ui/conversation/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/conversation/demos/default")),
+	},
+	"conversation/demos/empty": {
+		files: ["ui/conversation/demos/empty.tsx"],
+		component: React.lazy(() => import("@/registry/ui/conversation/demos/empty")),
+	},
+	"conversation/demos/streaming": {
+		files: ["ui/conversation/demos/streaming.tsx"],
+		component: React.lazy(() => import("@/registry/ui/conversation/demos/streaming")),
+	},
 	"date-field/demos/appointment": {
 		files: ["ui/date-field/demos/appointment.tsx"],
 		component: React.lazy(() => import("@/registry/ui/date-field/demos/appointment")),
@@ -1796,6 +1808,22 @@ export const DemosIndex: Record<
 	"menu/demos/with-submenu": {
 		files: ["ui/menu/demos/with-submenu.tsx"],
 		component: React.lazy(() => import("@/registry/ui/menu/demos/with-submenu")),
+	},
+	"message/demos/attachment": {
+		files: ["ui/message/demos/attachment.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message/demos/attachment")),
+	},
+	"message/demos/default": {
+		files: ["ui/message/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message/demos/default")),
+	},
+	"message/demos/markers": {
+		files: ["ui/message/demos/markers.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message/demos/markers")),
+	},
+	"message/demos/with-actions": {
+		files: ["ui/message/demos/with-actions.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message/demos/with-actions")),
 	},
 	"modal/demos/basic": {
 		files: ["ui/modal/demos/basic.tsx"],

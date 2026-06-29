@@ -23,6 +23,7 @@ import { ColorSliderDemo } from './color-slider'
 import { ColorSwatchPickerDemo } from './color-swatch-picker'
 import { ComboboxDemo } from './combobox'
 import { CommandDemo } from './command'
+import { ConversationDemo } from './conversation'
 import { DateFieldDemo } from './date-field'
 import { DatePickerDemo } from './date-picker'
 import { DialogDemo } from './dialog'
@@ -39,6 +40,7 @@ import { ListBoxDemo } from './list-box'
 import { LoaderDemo } from './loader'
 import { MentionDemo } from './mention'
 import { MenuDemo } from './menu'
+import { MessageDemo } from './message'
 import { ModalDemo } from './modal'
 import { NumberFieldDemo } from './number-field'
 import { OTPFieldDemo } from './otp-field'
@@ -89,6 +91,7 @@ export const componentDemos: Record<string, ComponentType> = {
   'color-swatch-picker': ColorSwatchPickerDemo,
   combobox: ComboboxDemo,
   command: CommandDemo,
+  conversation: ConversationDemo,
   'date-field': DateFieldDemo,
   'date-picker': DatePickerDemo,
   dialog: DialogDemo,
@@ -105,6 +108,7 @@ export const componentDemos: Record<string, ComponentType> = {
   loader: LoaderDemo,
   mention: MentionDemo,
   menu: MenuDemo,
+  message: MessageDemo,
   modal: ModalDemo,
   'number-field': NumberFieldDemo,
   'otp-field': OTPFieldDemo,

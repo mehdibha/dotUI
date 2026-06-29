@@ -1,0 +1,86 @@
+---
+title: Message
+description: A message in a conversation — bubble, avatar, header, actions, markers, and attachments.
+---
+
+<InteractiveDemo
+  name="message"
+  controls={[
+    {
+      name: 'children',
+      type: 'string',
+      defaultValue: 'Hey! How can I help you today?',
+    },
+    'from',
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/message
+```
+
+## Usage
+
+```tsx
+import { Message, MessageAvatar, MessageBubble } from '@/components/ui/message'
+```
+
+```tsx
+<Message from="assistant">
+  <MessageAvatar name="dotUI" />
+  <MessageBubble>Hey! How can I help you today?</MessageBubble>
+</Message>
+```
+
+The author set on `Message` flows down to the bubble, avatar, and actions, so
+alignment and color stay consistent across a turn. Wrap the header, bubble, and
+actions in `MessageBody` when a message needs more than a bubble.
+
+## Examples
+
+<Examples className="grid-cols-1 lg:grid-cols-2">
+  <Example name="message/demos/default" title="Conversation" />
+  <Example name="message/demos/with-actions" title="Header & actions" />
+  <Example name="message/demos/markers" title="Markers" />
+  <Example name="message/demos/attachment" title="Attachment" />
+</Examples>
+
+## API Reference
+
+### Message
+
+<Reference name="message" />
+
+### MessageAvatar
+
+<Reference name="message-avatar" />
+
+### MessageBody
+
+<Reference name="message-body" />
+
+### MessageHeader
+
+<Reference name="message-header" />
+
+### MessageBubble
+
+<Reference name="message-bubble" />
+
+### MessageActions
+
+<Reference name="message-actions" />
+
+### MessageGroup
+
+<Reference name="message-group" />
+
+### MessageMarker
+
+<Reference name="message-marker" />
+
+### MessageAttachment
+
+<Reference name="message-attachment" />

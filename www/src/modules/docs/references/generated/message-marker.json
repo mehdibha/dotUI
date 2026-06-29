@@ -1,0 +1,37 @@
+{
+  "name": "MessageMarkerProps",
+  "description": "A centered row between turns: a labeled separator, a system note, or a live\nstreaming status with a shimmering label.",
+  "extendsElement": "div",
+  "props": {
+    "variant": {
+      "type": "\"note\" | \"separator\" | \"status\"",
+      "detailedType": "'note' | 'separator' | 'status' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "note"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "separator"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "status"
+          }
+        ]
+      },
+      "description": "Marker style.\n- `separator`: a label centered between two hairlines (e.g. a date break).\n- `note`: a pill-shaped system note.\n- `status`: a left-aligned live status whose label shimmers.",
+      "default": "'separator'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
