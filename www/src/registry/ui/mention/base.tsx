@@ -69,6 +69,9 @@ function Mention({
   const [anchorIndex, setAnchorIndex] = React.useState(-1)
   const [filterValue, setFilterValue] = React.useState('')
   const rootRef = React.useRef<HTMLDivElement>(null)
+  // The mention query the user explicitly dismissed (Escape / outside press),
+  // so a caret move alone doesn't immediately reopen the same query.
+  const dismissedRef = React.useRef<string | null>(null)
 
   // The input is composed by the consumer (and may be wrapped in a TextField,
   // which re-provides Input/TextAreaContext), so its element is read from the
@@ -103,11 +106,18 @@ function Mention({
       const precededBySpace = index === 0 || /\s/.test(text[index - 1] ?? '')
       const slice = text.slice(index + trigger.length, selectionStart)
       if (precededBySpace && !/\s/.test(slice)) {
+        // Stay closed for the exact query the user just dismissed.
+        if (dismissedRef.current === `${index}:${slice}`) {
+          setAnchorIndex(-1)
+          return
+        }
+        dismissedRef.current = null
         setAnchorIndex(index)
         setFilterValue(slice)
         return
       }
     }
+    dismissedRef.current = null
     setAnchorIndex(-1)
   }, [trigger, getInput])
 
@@ -118,6 +128,13 @@ function Mention({
     document.addEventListener('selectionchange', updateFilter)
     return () => document.removeEventListener('selectionchange', updateFilter)
   }, [updateFilter])
+
+  // Re-validate when the value changes from outside (controlled prop, form
+  // reset) — those paths bypass onChange/selectionchange, so a stale popover
+  // could otherwise linger on text that no longer exists.
+  React.useEffect(() => {
+    updateFilter()
+  }, [inputValue, updateFilter])
 
   const handleChange = React.useCallback(
     (next: string) => {
@@ -142,8 +159,11 @@ function Mention({
       const input = getInput()
       if (!input || anchorIndex < 0) return
       const mention = `${trigger}${getItemText(key)} `
-      const prefix = inputValue.slice(0, anchorIndex) + mention
-      const suffix = inputValue.slice(input.selectionEnd ?? anchorIndex)
+      // Slice the DOM value so the indices (anchorIndex, selectionEnd) stay
+      // consistent with the string they index.
+      const text = input.value
+      const prefix = text.slice(0, anchorIndex) + mention
+      const suffix = text.slice(input.selectionEnd ?? anchorIndex)
       // Commit the value before moving the caret, so the caret lands after the
       // inserted text rather than at the stale position.
       flushSync(() => setInputValue(prefix + suffix))
@@ -151,15 +171,7 @@ function Mention({
       input.focus()
       updateFilter()
     },
-    [
-      trigger,
-      getItemText,
-      inputValue,
-      anchorIndex,
-      setInputValue,
-      updateFilter,
-      getInput,
-    ],
+    [trigger, getItemText, anchorIndex, setInputValue, updateFilter, getInput],
   )
 
   const getTargetRect = React.useCallback(
@@ -178,10 +190,17 @@ function Mention({
     [anchorIndex, getInput],
   )
 
-  // Close the list when the popover dismisses itself (outside press, Escape).
-  const onOpenChange = React.useCallback((isOpen: boolean) => {
-    if (!isOpen) setAnchorIndex(-1)
-  }, [])
+  // Close the list when the popover dismisses itself (outside press, Escape),
+  // remembering the query so a caret move doesn't immediately reopen it.
+  const onOpenChange = React.useCallback(
+    (isOpen: boolean) => {
+      if (isOpen) return
+      dismissedRef.current =
+        anchorIndex >= 0 ? `${anchorIndex}:${filterValue}` : null
+      setAnchorIndex(-1)
+    },
+    [anchorIndex, filterValue],
+  )
 
   return (
     <AutocompletePrimitive.Autocomplete
