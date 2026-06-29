@@ -69,6 +69,8 @@ interface ProcessedDemo {
   importPath: string
   sourceHast: Root
   previewHast: Root
+  /** Registry items to install for this demo (the page component + extra imports). */
+  install: string[]
 }
 
 interface ReferenceNodeInfo {
@@ -290,6 +292,7 @@ async function processDemoNode(
       importPath,
       sourceHast,
       previewHast,
+      install: computeInstallItems(info.name, rawSource),
     }
   } catch (error) {
     console.error(
@@ -330,6 +333,22 @@ function generateImportName(demoName: string): string {
     .split(/[/-]/)
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join('')
+}
+
+/**
+ * Registry items to install for a demo: the page component (the demo key's first
+ * segment) plus any other registry UI components its source imports — so a
+ * composed example (e.g. a login card) lists every `@dotui/*` it needs. Mirrors
+ * the chart gallery's `installItems`.
+ */
+function computeInstallItems(demoName: string, source: string): string[] {
+  const pageItem = demoName.slice(0, demoName.indexOf('/')) || demoName
+  const extras = new Set<string>()
+  for (const match of source.matchAll(/@\/registry\/ui\/([a-z0-9-]+)/g)) {
+    const name = match[1]
+    if (name && name !== pageItem) extras.add(name)
+  }
+  return [pageItem, ...[...extras].sort()]
 }
 
 // ============================================================================
@@ -493,30 +512,6 @@ function transformDemoNode(processed: ProcessedDemo): void {
   }
   node.attributes.push(componentAttr)
 
-  // Example doesn't consume the code slots — only Demo does. Inject a real
-  // <h3 id="{slug}">{title}</h3> from the `title` prop so it shows up in the
-  // TOC, then strip the prop from the JSX.
-  if (processed.nodeInfo.type === 'Example') {
-    const { title, titleId } = processed.nodeInfo
-    const existing = (node.children ?? []) as ElementContent[]
-
-    if (title && titleId) {
-      node.attributes = node.attributes.filter(
-        (attr) => !(attr.type === 'mdxJsxAttribute' && attr.name === 'title'),
-      )
-      const heading: Element = {
-        type: 'element',
-        tagName: 'h3',
-        properties: { id: titleId },
-        children: [{ type: 'text', value: title }],
-      }
-      node.children = [heading, ...existing]
-    } else {
-      node.children = existing
-    }
-    return
-  }
-
   // Create DemoCode wrapper with highlighted code HAST
   // sourceHast.children contains the <pre><code>...</code></pre> structure
   const demoCodeElement: MdxJsxFlowElementHast = {
@@ -524,6 +519,33 @@ function transformDemoNode(processed: ProcessedDemo): void {
     name: 'DemoCode',
     attributes: [],
     children: processed.sourceHast.children as ElementContent[],
+  }
+
+  // The Example card renders the demo live and exposes its source via a "Show
+  // code" modal. Inject a real <h3 id="{slug}">{title}</h3> so the title shows
+  // up in the TOC (the `title` prop is kept too, for the modal heading), the
+  // install items for the modal, and the highlighted source as a DemoCode slot
+  // the card routes into the modal.
+  if (processed.nodeInfo.type === 'Example') {
+    const { title, titleId } = processed.nodeInfo
+    const existing = (node.children ?? []) as ElementContent[]
+
+    node.attributes.push(
+      makeJsonParseAttr('install', JSON.stringify(processed.install)),
+    )
+
+    if (title && titleId) {
+      const heading: Element = {
+        type: 'element',
+        tagName: 'h3',
+        properties: { id: titleId },
+        children: [{ type: 'text', value: title }],
+      }
+      node.children = [heading, ...existing, demoCodeElement]
+    } else {
+      node.children = [...existing, demoCodeElement]
+    }
+    return
   }
 
   // Create DemoCodePreview wrapper with highlighted preview HAST

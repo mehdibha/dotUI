@@ -33,6 +33,14 @@ export const DemosIndex: Record<
 		files: ["ui/accordion/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/accordion/demos/disabled")),
 	},
+	"accordion/demos/product-features": {
+		files: ["ui/accordion/demos/product-features.tsx"],
+		component: React.lazy(() => import("@/registry/ui/accordion/demos/product-features")),
+	},
+	"accordion/demos/settings-panel": {
+		files: ["ui/accordion/demos/settings-panel.tsx"],
+		component: React.lazy(() => import("@/registry/ui/accordion/demos/settings-panel")),
+	},
 	"alert/demos/action": {
 		files: ["ui/alert/demos/action.tsx"],
 		component: React.lazy(() => import("@/registry/ui/alert/demos/action")),
@@ -48,6 +56,14 @@ export const DemosIndex: Record<
 	"alert/demos/default": {
 		files: ["ui/alert/demos/default.tsx"],
 		component: React.lazy(() => import("@/registry/ui/alert/demos/default")),
+	},
+	"alert/demos/dismissible": {
+		files: ["ui/alert/demos/dismissible.tsx"],
+		component: React.lazy(() => import("@/registry/ui/alert/demos/dismissible")),
+	},
+	"alert/demos/form-error": {
+		files: ["ui/alert/demos/form-error.tsx"],
+		component: React.lazy(() => import("@/registry/ui/alert/demos/form-error")),
 	},
 	"alert/demos/success": {
 		files: ["ui/alert/demos/success.tsx"],
@@ -156,6 +172,10 @@ export const DemosIndex: Record<
 	"breadcrumbs/demos/menu": {
 		files: ["ui/breadcrumbs/demos/menu.tsx"],
 		component: React.lazy(() => import("@/registry/ui/breadcrumbs/demos/menu")),
+	},
+	"breadcrumbs/demos/with-icons": {
+		files: ["ui/breadcrumbs/demos/with-icons.tsx"],
+		component: React.lazy(() => import("@/registry/ui/breadcrumbs/demos/with-icons")),
 	},
 	"button/demos/default": {
 		files: ["ui/button/demos/default.tsx"],
@@ -565,6 +585,10 @@ export const DemosIndex: Record<
 		files: ["ui/checkbox/demos/invalid.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox/demos/invalid")),
 	},
+	"checkbox/demos/preferences-list": {
+		files: ["ui/checkbox/demos/preferences-list.tsx"],
+		component: React.lazy(() => import("@/registry/ui/checkbox/demos/preferences-list")),
+	},
 	"checkbox/demos/read-only": {
 		files: ["ui/checkbox/demos/read-only.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox/demos/read-only")),
@@ -572,6 +596,10 @@ export const DemosIndex: Record<
 	"checkbox/demos/standalone": {
 		files: ["ui/checkbox/demos/standalone.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox/demos/standalone")),
+	},
+	"checkbox/demos/terms-acceptance": {
+		files: ["ui/checkbox/demos/terms-acceptance.tsx"],
+		component: React.lazy(() => import("@/registry/ui/checkbox/demos/terms-acceptance")),
 	},
 	"checkbox-group/demos/cards": {
 		files: ["ui/checkbox-group/demos/cards.tsx"],
@@ -597,9 +625,17 @@ export const DemosIndex: Record<
 		files: ["ui/checkbox-group/demos/error-message.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox-group/demos/error-message")),
 	},
+	"checkbox-group/demos/form": {
+		files: ["ui/checkbox-group/demos/form.tsx"],
+		component: React.lazy(() => import("@/registry/ui/checkbox-group/demos/form")),
+	},
 	"checkbox-group/demos/label": {
 		files: ["ui/checkbox-group/demos/label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox-group/demos/label")),
+	},
+	"checkbox-group/demos/permissions": {
+		files: ["ui/checkbox-group/demos/permissions.tsx"],
+		component: React.lazy(() => import("@/registry/ui/checkbox-group/demos/permissions")),
 	},
 	"checkbox-group/demos/read-only": {
 		files: ["ui/checkbox-group/demos/read-only.tsx"],
@@ -612,6 +648,10 @@ export const DemosIndex: Record<
 	"checkbox-group/demos/uncontrolled": {
 		files: ["ui/checkbox-group/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox-group/demos/uncontrolled")),
+	},
+	"color-area/demos/brand-color": {
+		files: ["ui/color-area/demos/brand-color.tsx"],
+		component: React.lazy(() => import("@/registry/ui/color-area/demos/brand-color")),
 	},
 	"color-area/demos/channels": {
 		files: ["ui/color-area/demos/channels.tsx"],
@@ -628,6 +668,10 @@ export const DemosIndex: Record<
 	"color-area/demos/disabled": {
 		files: ["ui/color-area/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/color-area/demos/disabled")),
+	},
+	"color-area/demos/theme-customizer": {
+		files: ["ui/color-area/demos/theme-customizer.tsx"],
+		component: React.lazy(() => import("@/registry/ui/color-area/demos/theme-customizer")),
 	},
 	"color-area/demos/uncontrolled": {
 		files: ["ui/color-area/demos/uncontrolled.tsx"],
@@ -733,13 +777,25 @@ export const DemosIndex: Record<
 		files: ["ui/color-slider/demos/vertical.tsx"],
 		component: React.lazy(() => import("@/registry/ui/color-slider/demos/vertical")),
 	},
+	"color-swatch/demos/color-palette": {
+		files: ["ui/color-swatch/demos/color-palette.tsx"],
+		component: React.lazy(() => import("@/registry/ui/color-swatch/demos/color-palette")),
+	},
 	"color-swatch/demos/default": {
 		files: ["ui/color-swatch/demos/default.tsx"],
 		component: React.lazy(() => import("@/registry/ui/color-swatch/demos/default")),
 	},
+	"color-swatch/demos/in-button": {
+		files: ["ui/color-swatch/demos/in-button.tsx"],
+		component: React.lazy(() => import("@/registry/ui/color-swatch/demos/in-button")),
+	},
 	"color-swatch-picker/demos/basic": {
 		files: ["ui/color-swatch-picker/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/color-swatch-picker/demos/basic")),
+	},
+	"color-swatch-picker/demos/brand-color": {
+		files: ["ui/color-swatch-picker/demos/brand-color.tsx"],
+		component: React.lazy(() => import("@/registry/ui/color-swatch-picker/demos/brand-color")),
 	},
 	"color-swatch-picker/demos/controlled": {
 		files: ["ui/color-swatch-picker/demos/controlled.tsx"],
@@ -748,6 +804,10 @@ export const DemosIndex: Record<
 	"color-swatch-picker/demos/disabled": {
 		files: ["ui/color-swatch-picker/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/color-swatch-picker/demos/disabled")),
+	},
+	"color-swatch-picker/demos/theme-colors": {
+		files: ["ui/color-swatch-picker/demos/theme-colors.tsx"],
+		component: React.lazy(() => import("@/registry/ui/color-swatch-picker/demos/theme-colors")),
 	},
 	"combobox/demos/async-loading": {
 		files: ["ui/combobox/demos/async-loading.tsx"],
@@ -889,6 +949,10 @@ export const DemosIndex: Record<
 		files: ["ui/context-menu/demos/with-submenu.tsx"],
 		component: React.lazy(() => import("@/registry/ui/context-menu/demos/with-submenu")),
 	},
+	"date-field/demos/appointment": {
+		files: ["ui/date-field/demos/appointment.tsx"],
+		component: React.lazy(() => import("@/registry/ui/date-field/demos/appointment")),
+	},
 	"date-field/demos/basic": {
 		files: ["ui/date-field/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/date-field/demos/basic")),
@@ -908,6 +972,10 @@ export const DemosIndex: Record<
 	"date-field/demos/error-message": {
 		files: ["ui/date-field/demos/error-message.tsx"],
 		component: React.lazy(() => import("@/registry/ui/date-field/demos/error-message")),
+	},
+	"date-field/demos/event-form": {
+		files: ["ui/date-field/demos/event-form.tsx"],
+		component: React.lazy(() => import("@/registry/ui/date-field/demos/event-form")),
 	},
 	"date-field/demos/granularity": {
 		files: ["ui/date-field/demos/granularity.tsx"],
@@ -948,6 +1016,10 @@ export const DemosIndex: Record<
 	"date-field/demos/time-zones": {
 		files: ["ui/date-field/demos/time-zones.tsx"],
 		component: React.lazy(() => import("@/registry/ui/date-field/demos/time-zones")),
+	},
+	"date-field/demos/trip-dates": {
+		files: ["ui/date-field/demos/trip-dates.tsx"],
+		component: React.lazy(() => import("@/registry/ui/date-field/demos/trip-dates")),
 	},
 	"date-field/demos/uncontrolled": {
 		files: ["ui/date-field/demos/uncontrolled.tsx"],
@@ -1161,6 +1233,14 @@ export const DemosIndex: Record<
 		files: ["ui/disclosure/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/disclosure/demos/disabled")),
 	},
+	"disclosure/demos/faq-section": {
+		files: ["ui/disclosure/demos/faq-section.tsx"],
+		component: React.lazy(() => import("@/registry/ui/disclosure/demos/faq-section")),
+	},
+	"disclosure/demos/feature-details": {
+		files: ["ui/disclosure/demos/feature-details.tsx"],
+		component: React.lazy(() => import("@/registry/ui/disclosure/demos/feature-details")),
+	},
 	"drawer/demos/basic": {
 		files: ["ui/drawer/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/drawer/demos/basic")),
@@ -1253,6 +1333,18 @@ export const DemosIndex: Record<
 		files: ["ui/empty/demos/with-muted-background.tsx"],
 		component: React.lazy(() => import("@/registry/ui/empty/demos/with-muted-background")),
 	},
+	"field/demos/login-form": {
+		files: ["ui/field/demos/login-form.tsx"],
+		component: React.lazy(() => import("@/registry/ui/field/demos/login-form")),
+	},
+	"field/demos/profile-settings": {
+		files: ["ui/field/demos/profile-settings.tsx"],
+		component: React.lazy(() => import("@/registry/ui/field/demos/profile-settings")),
+	},
+	"field/demos/registration": {
+		files: ["ui/field/demos/registration.tsx"],
+		component: React.lazy(() => import("@/registry/ui/field/demos/registration")),
+	},
 	"file-trigger/demos/default": {
 		files: ["ui/file-trigger/demos/default.tsx"],
 		component: React.lazy(() => import("@/registry/ui/file-trigger/demos/default")),
@@ -1261,9 +1353,17 @@ export const DemosIndex: Record<
 		files: ["ui/file-trigger/demos/directory-selection.tsx"],
 		component: React.lazy(() => import("@/registry/ui/file-trigger/demos/directory-selection")),
 	},
+	"file-trigger/demos/document-upload": {
+		files: ["ui/file-trigger/demos/document-upload.tsx"],
+		component: React.lazy(() => import("@/registry/ui/file-trigger/demos/document-upload")),
+	},
 	"file-trigger/demos/file-types": {
 		files: ["ui/file-trigger/demos/file-types.tsx"],
 		component: React.lazy(() => import("@/registry/ui/file-trigger/demos/file-types")),
+	},
+	"file-trigger/demos/image-gallery-upload": {
+		files: ["ui/file-trigger/demos/image-gallery-upload.tsx"],
+		component: React.lazy(() => import("@/registry/ui/file-trigger/demos/image-gallery-upload")),
 	},
 	"file-trigger/demos/media-capture": {
 		files: ["ui/file-trigger/demos/media-capture.tsx"],
@@ -1272,6 +1372,10 @@ export const DemosIndex: Record<
 	"file-trigger/demos/multiple-files": {
 		files: ["ui/file-trigger/demos/multiple-files.tsx"],
 		component: React.lazy(() => import("@/registry/ui/file-trigger/demos/multiple-files")),
+	},
+	"file-trigger/demos/profile-picture": {
+		files: ["ui/file-trigger/demos/profile-picture.tsx"],
+		component: React.lazy(() => import("@/registry/ui/file-trigger/demos/profile-picture")),
 	},
 	"form/demos/basic": {
 		files: ["ui/form/demos/basic.tsx"],
@@ -1353,9 +1457,17 @@ export const DemosIndex: Record<
 		files: ["ui/input/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/input/demos/disabled")),
 	},
+	"input/demos/email-field": {
+		files: ["ui/input/demos/email-field.tsx"],
+		component: React.lazy(() => import("@/registry/ui/input/demos/email-field")),
+	},
 	"input/demos/invalid": {
 		files: ["ui/input/demos/invalid.tsx"],
 		component: React.lazy(() => import("@/registry/ui/input/demos/invalid")),
+	},
+	"input/demos/search-bar": {
+		files: ["ui/input/demos/search-bar.tsx"],
+		component: React.lazy(() => import("@/registry/ui/input/demos/search-bar")),
 	},
 	"input/demos/sizes": {
 		files: ["ui/input/demos/sizes.tsx"],
@@ -1445,6 +1557,22 @@ export const DemosIndex: Record<
 		files: ["ui/kbd/demos/with-samp.tsx"],
 		component: React.lazy(() => import("@/registry/ui/kbd/demos/with-samp")),
 	},
+	"link/demos/default": {
+		files: ["ui/link/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/link/demos/default")),
+	},
+	"link/demos/footer-navigation": {
+		files: ["ui/link/demos/footer-navigation.tsx"],
+		component: React.lazy(() => import("@/registry/ui/link/demos/footer-navigation")),
+	},
+	"link/demos/in-text": {
+		files: ["ui/link/demos/in-text.tsx"],
+		component: React.lazy(() => import("@/registry/ui/link/demos/in-text")),
+	},
+	"link/demos/with-icon": {
+		files: ["ui/link/demos/with-icon.tsx"],
+		component: React.lazy(() => import("@/registry/ui/link/demos/with-icon")),
+	},
 	"list-box/demos/async": {
 		files: ["ui/list-box/demos/async.tsx"],
 		component: React.lazy(() => import("@/registry/ui/list-box/demos/async")),
@@ -1516,6 +1644,18 @@ export const DemosIndex: Record<
 	"loader/demos/basic": {
 		files: ["ui/loader/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/loader/demos/basic")),
+	},
+	"loader/demos/in-button": {
+		files: ["ui/loader/demos/in-button.tsx"],
+		component: React.lazy(() => import("@/registry/ui/loader/demos/in-button")),
+	},
+	"loader/demos/in-input": {
+		files: ["ui/loader/demos/in-input.tsx"],
+		component: React.lazy(() => import("@/registry/ui/loader/demos/in-input")),
+	},
+	"loader/demos/overlay": {
+		files: ["ui/loader/demos/overlay.tsx"],
+		component: React.lazy(() => import("@/registry/ui/loader/demos/overlay")),
 	},
 	"mention/demos/basic": {
 		files: ["ui/mention/demos/basic.tsx"],
@@ -1741,6 +1881,10 @@ export const DemosIndex: Record<
 		files: ["ui/otp-field/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/otp-field/demos/disabled")),
 	},
+	"otp-field/demos/email-verification": {
+		files: ["ui/otp-field/demos/email-verification.tsx"],
+		component: React.lazy(() => import("@/registry/ui/otp-field/demos/email-verification")),
+	},
 	"otp-field/demos/error-message": {
 		files: ["ui/otp-field/demos/error-message.tsx"],
 		component: React.lazy(() => import("@/registry/ui/otp-field/demos/error-message")),
@@ -1756,6 +1900,10 @@ export const DemosIndex: Record<
 	"otp-field/demos/separator": {
 		files: ["ui/otp-field/demos/separator.tsx"],
 		component: React.lazy(() => import("@/registry/ui/otp-field/demos/separator")),
+	},
+	"otp-field/demos/two-factor-auth": {
+		files: ["ui/otp-field/demos/two-factor-auth.tsx"],
+		component: React.lazy(() => import("@/registry/ui/otp-field/demos/two-factor-auth")),
 	},
 	"pagination/demos/compact": {
 		files: ["ui/pagination/demos/compact.tsx"],
@@ -1776,6 +1924,14 @@ export const DemosIndex: Record<
 	"pagination/demos/sizes": {
 		files: ["ui/pagination/demos/sizes.tsx"],
 		component: React.lazy(() => import("@/registry/ui/pagination/demos/sizes")),
+	},
+	"pagination/demos/table-integration": {
+		files: ["ui/pagination/demos/table-integration.tsx"],
+		component: React.lazy(() => import("@/registry/ui/pagination/demos/table-integration")),
+	},
+	"pagination/demos/with-results": {
+		files: ["ui/pagination/demos/with-results.tsx"],
+		component: React.lazy(() => import("@/registry/ui/pagination/demos/with-results")),
 	},
 	"popover/demos/basic": {
 		files: ["ui/popover/demos/basic.tsx"],
@@ -1881,6 +2037,10 @@ export const DemosIndex: Record<
 		files: ["ui/radio-group/demos/label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/radio-group/demos/label")),
 	},
+	"radio-group/demos/notification-preferences": {
+		files: ["ui/radio-group/demos/notification-preferences.tsx"],
+		component: React.lazy(() => import("@/registry/ui/radio-group/demos/notification-preferences")),
+	},
 	"radio-group/demos/read-only": {
 		files: ["ui/radio-group/demos/read-only.tsx"],
 		component: React.lazy(() => import("@/registry/ui/radio-group/demos/read-only")),
@@ -1888,6 +2048,10 @@ export const DemosIndex: Record<
 	"radio-group/demos/required": {
 		files: ["ui/radio-group/demos/required.tsx"],
 		component: React.lazy(() => import("@/registry/ui/radio-group/demos/required")),
+	},
+	"radio-group/demos/subscription-plan": {
+		files: ["ui/radio-group/demos/subscription-plan.tsx"],
+		component: React.lazy(() => import("@/registry/ui/radio-group/demos/subscription-plan")),
 	},
 	"radio-group/demos/uncontrolled": {
 		files: ["ui/radio-group/demos/uncontrolled.tsx"],
@@ -1917,6 +2081,14 @@ export const DemosIndex: Record<
 		files: ["ui/search-field/demos/error-message.tsx"],
 		component: React.lazy(() => import("@/registry/ui/search-field/demos/error-message")),
 	},
+	"search-field/demos/filterable-list": {
+		files: ["ui/search-field/demos/filterable-list.tsx"],
+		component: React.lazy(() => import("@/registry/ui/search-field/demos/filterable-list")),
+	},
+	"search-field/demos/header-search": {
+		files: ["ui/search-field/demos/header-search.tsx"],
+		component: React.lazy(() => import("@/registry/ui/search-field/demos/header-search")),
+	},
 	"search-field/demos/label": {
 		files: ["ui/search-field/demos/label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/search-field/demos/label")),
@@ -1936,6 +2108,10 @@ export const DemosIndex: Record<
 	"search-field/demos/uncontrolled": {
 		files: ["ui/search-field/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/search-field/demos/uncontrolled")),
+	},
+	"search-field/demos/with-suggestions": {
+		files: ["ui/search-field/demos/with-suggestions.tsx"],
+		component: React.lazy(() => import("@/registry/ui/search-field/demos/with-suggestions")),
 	},
 	"select/demos/async-loading": {
 		files: ["ui/select/demos/async-loading.tsx"],
@@ -1997,6 +2173,18 @@ export const DemosIndex: Record<
 		files: ["ui/separator/demos/card.tsx"],
 		component: React.lazy(() => import("@/registry/ui/separator/demos/card")),
 	},
+	"separator/demos/default": {
+		files: ["ui/separator/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/separator/demos/default")),
+	},
+	"separator/demos/list-menu": {
+		files: ["ui/separator/demos/list-menu.tsx"],
+		component: React.lazy(() => import("@/registry/ui/separator/demos/list-menu")),
+	},
+	"separator/demos/menu-section": {
+		files: ["ui/separator/demos/menu-section.tsx"],
+		component: React.lazy(() => import("@/registry/ui/separator/demos/menu-section")),
+	},
 	"separator/demos/orientation": {
 		files: ["ui/separator/demos/orientation.tsx"],
 		component: React.lazy(() => import("@/registry/ui/separator/demos/orientation")),
@@ -2056,6 +2244,10 @@ export const DemosIndex: Record<
 	"skeleton/demos/card": {
 		files: ["ui/skeleton/demos/card.tsx"],
 		component: React.lazy(() => import("@/registry/ui/skeleton/demos/card")),
+	},
+	"skeleton/demos/list-items": {
+		files: ["ui/skeleton/demos/list-items.tsx"],
+		component: React.lazy(() => import("@/registry/ui/skeleton/demos/list-items")),
 	},
 	"slider/demos/composition": {
 		files: ["ui/slider/demos/composition.tsx"],
@@ -2137,13 +2329,25 @@ export const DemosIndex: Record<
 		files: ["ui/switch/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/switch/demos/disabled")),
 	},
+	"switch/demos/feature-flags": {
+		files: ["ui/switch/demos/feature-flags.tsx"],
+		component: React.lazy(() => import("@/registry/ui/switch/demos/feature-flags")),
+	},
 	"switch/demos/label": {
 		files: ["ui/switch/demos/label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/switch/demos/label")),
 	},
+	"switch/demos/notification-preferences": {
+		files: ["ui/switch/demos/notification-preferences.tsx"],
+		component: React.lazy(() => import("@/registry/ui/switch/demos/notification-preferences")),
+	},
 	"switch/demos/read-only": {
 		files: ["ui/switch/demos/read-only.tsx"],
 		component: React.lazy(() => import("@/registry/ui/switch/demos/read-only")),
+	},
+	"switch/demos/settings-panel": {
+		files: ["ui/switch/demos/settings-panel.tsx"],
+		component: React.lazy(() => import("@/registry/ui/switch/demos/settings-panel")),
 	},
 	"switch/demos/sizes": {
 		files: ["ui/switch/demos/sizes.tsx"],
@@ -2257,9 +2461,21 @@ export const DemosIndex: Record<
 		files: ["ui/tabs/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/tabs/demos/disabled")),
 	},
+	"tabs/demos/documentation": {
+		files: ["ui/tabs/demos/documentation.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tabs/demos/documentation")),
+	},
 	"tabs/demos/keyboard-activation": {
 		files: ["ui/tabs/demos/keyboard-activation.tsx"],
 		component: React.lazy(() => import("@/registry/ui/tabs/demos/keyboard-activation")),
+	},
+	"tabs/demos/product-details": {
+		files: ["ui/tabs/demos/product-details.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tabs/demos/product-details")),
+	},
+	"tabs/demos/settings-panel": {
+		files: ["ui/tabs/demos/settings-panel.tsx"],
+		component: React.lazy(() => import("@/registry/ui/tabs/demos/settings-panel")),
 	},
 	"tabs/demos/variant": {
 		files: ["ui/tabs/demos/variant.tsx"],
@@ -2333,6 +2549,14 @@ export const DemosIndex: Record<
 		files: ["ui/text-area/demos/error-message.tsx"],
 		component: React.lazy(() => import("@/registry/ui/text-area/demos/error-message")),
 	},
+	"text-area/demos/feedback-form": {
+		files: ["ui/text-area/demos/feedback-form.tsx"],
+		component: React.lazy(() => import("@/registry/ui/text-area/demos/feedback-form")),
+	},
+	"text-area/demos/issue-description": {
+		files: ["ui/text-area/demos/issue-description.tsx"],
+		component: React.lazy(() => import("@/registry/ui/text-area/demos/issue-description")),
+	},
 	"text-area/demos/label": {
 		files: ["ui/text-area/demos/label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/text-area/demos/label")),
@@ -2380,6 +2604,14 @@ export const DemosIndex: Record<
 	"text-field/demos/label": {
 		files: ["ui/text-field/demos/label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/text-field/demos/label")),
+	},
+	"text-field/demos/login-form": {
+		files: ["ui/text-field/demos/login-form.tsx"],
+		component: React.lazy(() => import("@/registry/ui/text-field/demos/login-form")),
+	},
+	"text-field/demos/newsletter-signup": {
+		files: ["ui/text-field/demos/newsletter-signup.tsx"],
+		component: React.lazy(() => import("@/registry/ui/text-field/demos/newsletter-signup")),
 	},
 	"text-field/demos/prefix-and-suffix": {
 		files: ["ui/text-field/demos/prefix-and-suffix.tsx"],
@@ -2481,6 +2713,10 @@ export const DemosIndex: Record<
 		files: ["ui/toggle-button/demos/disabled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/disabled")),
 	},
+	"toggle-button/demos/favorite-button": {
+		files: ["ui/toggle-button/demos/favorite-button.tsx"],
+		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/favorite-button")),
+	},
 	"toggle-button/demos/prefix-and-suffix": {
 		files: ["ui/toggle-button/demos/prefix-and-suffix.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/prefix-and-suffix")),
@@ -2493,6 +2729,10 @@ export const DemosIndex: Record<
 		files: ["ui/toggle-button/demos/sizes.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/sizes")),
 	},
+	"toggle-button/demos/text-formatting-toolbar": {
+		files: ["ui/toggle-button/demos/text-formatting-toolbar.tsx"],
+		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/text-formatting-toolbar")),
+	},
 	"toggle-button/demos/uncontrolled": {
 		files: ["ui/toggle-button/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/uncontrolled")),
@@ -2500,6 +2740,10 @@ export const DemosIndex: Record<
 	"toggle-button/demos/variants": {
 		files: ["ui/toggle-button/demos/variants.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/variants")),
+	},
+	"toggle-button/demos/view-switcher": {
+		files: ["ui/toggle-button/demos/view-switcher.tsx"],
+		component: React.lazy(() => import("@/registry/ui/toggle-button/demos/view-switcher")),
 	},
 	"toggle-button-group/demos/default": {
 		files: ["ui/toggle-button-group/demos/default.tsx"],

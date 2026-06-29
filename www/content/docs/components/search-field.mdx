@@ -58,17 +58,18 @@ import { Label } from '@/components/ui/field'
 
 ## Examples
 
-<Examples>
-  <Example name="search-field/demos/default" />
-  <Example name="search-field/demos/sizes" />
-  <Example name="search-field/demos/label" />
-  <Example name="search-field/demos/description" />
-  <Example name="search-field/demos/error-message" />
-  <Example name="search-field/demos/disabled" />
-  <Example name="search-field/demos/read-only" />
-  <Example name="search-field/demos/required" />
-  <Example name="search-field/demos/uncontrolled" />
-  <Example name="search-field/demos/controlled" />
+<Examples className="sm:grid-cols-2">
+  <Example name="search-field/demos/default" title="Basic Search" />
+  <Example
+    name="search-field/demos/with-suggestions"
+    title="Search with Suggestions"
+  />
+  <Example name="search-field/demos/header-search" title="Header Search" />
+  <Example
+    name="search-field/demos/filterable-list"
+    title="Search with Filtered Results"
+    className="col-span-full"
+  />
 </Examples>
 
 ## API Reference

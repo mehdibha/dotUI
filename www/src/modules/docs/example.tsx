@@ -1,21 +1,23 @@
-import type React from 'react'
+import React from 'react'
 
 import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { Dialog, DialogBody, DialogContent } from '@/registry/ui/dialog'
-import { Modal } from '@/registry/ui/modal'
 
+import { DemoCode, getSlotContent } from './demo'
 import { DemoPreset } from './demo-preset'
+import { ExampleCodeModal } from './example-code-modal'
 
 export interface ExampleProps extends React.ComponentProps<'div'> {
   component: React.ComponentType
   title?: string
+  /** Registry items to install, injected by the rehype transform. */
+  install?: string[]
   children?: React.ReactNode
 }
 
 export function Example({
   component: Component,
   title,
+  install,
   children,
   className,
   ...props
@@ -25,41 +27,44 @@ export function Example({
   // render nothing instead.
   if (!Component) return null
 
+  // The rehype transform injects two children: the title `<h3>` (kept in the TOC)
+  // and a `<DemoCode>` slot holding the build-time-highlighted source. The source
+  // is routed to the "Show code" modal, never rendered inline.
+  const code = getSlotContent(children, DemoCode)
+  const heading = React.Children.toArray(children).filter(
+    (child) => !(React.isValidElement(child) && child.type === DemoCode),
+  )
+
   return (
     <div
       className={cn(
-        'flex flex-col gap-1',
-        '[&_h3]:mt-0 [&_h3]:px-1.5 [&_h3]:py-2 [&_h3]:text-sm [&_h3]:font-normal [&_h3]:tracking-normal [&_h3]:text-fg-muted',
+        'flex flex-col gap-2',
+        '[&_h3]:mt-0 [&_h3]:truncate [&_h3]:text-sm [&_h3]:font-normal [&_h3]:tracking-normal [&_h3]:text-fg-muted',
         className,
       )}
       {...props}
     >
-      {children ?? (title ? <h3>{title}</h3> : null)}
+      {/* Header row: title left, "Show code" right — like the gallery cards on /charts. */}
+      <div className="flex min-h-7 items-center justify-between gap-2 pl-1">
+        <div className="min-w-0">{heading}</div>
+        {code ? (
+          <ExampleCodeModal
+            title={title ?? 'Example'}
+            component={Component}
+            code={code}
+            install={install ?? []}
+          />
+        ) : null}
+      </div>
+
+      {/* The demo renders live and interactive in place. Height grows with
+          content so tall demos (tables, forms, sidebars) aren't clipped. */}
       <DemoPreset>
-        <div className="relative flex flex-1 flex-col">
-          <div
-            data-example-preview=""
-            tabIndex={-1}
-            className="pointer-events-none scrollbar-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 overflow-x-auto p-6 sm:p-10"
-          >
-            <Component />
-          </div>
-          <Dialog>
-            <Button
-              variant="quiet"
-              aria-label={title ? `Expand ${title} example` : 'Expand example'}
-              className="absolute inset-0 z-2 size-auto h-auto! border hover:border-border-hover"
-            />
-            <Modal>
-              <DialogContent
-                aria-label={title ? `${title} example` : 'Example'}
-              >
-                <DialogBody>
-                  <Component />
-                </DialogBody>
-              </DialogContent>
-            </Modal>
-          </Dialog>
+        <div
+          data-example-preview=""
+          className="scrollbar-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 overflow-x-auto rounded-2xl border bg-card p-6 sm:p-10"
+        >
+          <Component />
         </div>
       </DemoPreset>
     </div>
