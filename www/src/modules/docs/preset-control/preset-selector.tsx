@@ -142,20 +142,16 @@ export function PreviewModeToggle({ className }: { className?: string }) {
 }
 
 /**
- * The per-demo preview controls: a slim header row (design-system preset + light/
- * dark mode), top-left, that sits in its OWN space at the top of each demo /
- * playground frame — not absolutely positioned over the preview. The controls are
- * site chrome (outside DemoPreset), so a forced mode themes the canvas below, not
- * the toolbar. The choice is global, so every demo's controls stay in sync.
+ * The per-demo preview controls: the design-system preset + light/dark mode,
+ * top-left, in their own space at the top of each demo / playground frame (not
+ * absolutely positioned over the preview). Deliberately backdrop-free — no bg or
+ * divider — so they read as part of the preview rather than a detached toolbar.
+ * The controls are site chrome (outside DemoPreset), so a forced mode themes the
+ * canvas below, not them. The choice is global, so every demo's controls sync.
  */
 export function PreviewControls({ className }: { className?: string }) {
   return (
-    <div
-      className={cn(
-        'flex items-center gap-2 border-b bg-card px-2 py-1.5',
-        className,
-      )}
-    >
+    <div className={cn('flex items-center gap-2 p-2', className)}>
       <PresetSelector />
       <PreviewModeToggle />
     </div>
