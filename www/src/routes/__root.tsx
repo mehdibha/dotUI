@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import {
   createRootRoute,
   HeadContent,
@@ -23,6 +23,13 @@ import { ToastProvider } from '@/registry/ui/toast'
 import { usePreviewForcedTheme } from '@/modules/create/preset'
 
 import appCss from '@/styles.css?url'
+
+// Dev-only floating panel for live design/layout exploration (see src/dev/tweaker).
+// Lazily imported behind the DEV constant so the whole tweaker is dead-code-eliminated
+// from production builds.
+const DevTweaker = import.meta.env.DEV
+  ? lazy(() => import('@/dev/tweaker').then((m) => ({ default: m.DevTweaker })))
+  : null
 
 export const Route = createRootRoute({
   head: ({ matches }) => {
@@ -166,6 +173,11 @@ function RootComponent() {
         <ToastProvider>
           <Outlet />
         </ToastProvider>
+        {DevTweaker && (
+          <Suspense fallback={null}>
+            <DevTweaker />
+          </Suspense>
+        )}
       </RootDocument>
     </ThemeProvider>
   )

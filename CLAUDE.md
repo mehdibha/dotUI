@@ -70,6 +70,15 @@ After modifying `www/src/registry/`, run `pnpm build:registry` and commit the re
 - `pnpm typecheck`; `pnpm test` if you touched `packages/colors`.
 - Touched the registry? Regenerate first (see Registry changes).
 
+## Dev tweaker (design exploration)
+
+`www/src/dev/tweaker` is a **dev-only** floating panel (gated on `import.meta.env.DEV`, dead-code-eliminated from production) for exploring designs/layouts live: you add `useTweak()` calls to a feature component, the user flips the options in the panel and picks one. Full API + workflow: [`www/src/dev/tweaker/README.md`](www/src/dev/tweaker/README.md).
+
+- **When (strict):** only during active PR/feature-branch work, and only when the user explicitly asks for tweaks/options on a specific feature. Never unprompted, never on `main`, never as a way to add real config.
+- **How:** add `useTweak('Label', { type, default, group? })` in the relevant **www** feature component and branch the JSX/styles on the returned value. Keep each `default` equal to the current look (nothing changes until a control moves); offer a small set (≤~5) of meaningful named variants per axis; `group` related controls. Types: `select`, `boolean`, `number`, `color`, `text`.
+- **Boundaries:** never author `useTweak` in `www/src/registry/` — the product source stays clean (the panel reuses registry UI, but the calls live only in site/feature/module code). It's throwaway scaffolding, **not** a `/create` axis: adding a real axis/variant/token is still a product decision (propose-and-approve, below).
+- **Cleanup:** once the user picks (their "Copy for AI" output or a verbal choice), bake the values into the code and **remove the `useTweak` scaffolding** before finalizing the PR — unless they want to keep iterating. Don't merge `useTweak` calls into feature code.
+
 ## Conventions & gotchas
 
 - Issues and PRDs are tracked in GitHub Issues for `mehdibha/dotUI`.
