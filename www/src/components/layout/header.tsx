@@ -9,7 +9,6 @@ import { Kbd } from '@/registry/ui/kbd'
 import { GitHubIcon } from '@/components/icons/github'
 import { Logo } from '@/components/layout/logo'
 import { MobileNav } from '@/components/layout/mobile-nav'
-import { NavTweaker } from '@/components/layout/nav-tweaker'
 import { SearchCommand } from '@/components/search-command'
 import { ThemeToggle } from '@/components/theme-toggle'
 
@@ -86,10 +85,10 @@ export function Header({ className, items = [] }: HeaderProps) {
         <div
           className="absolute inset-0"
           style={{
-            // Darkness rides this element's opacity (tunable via --nav-tint, default
-            // 0.88) — never the backdrop-filter layers, which would form an opacity
-            // group and drop the blur. Gradient peaks at full --color-bg at the top.
-            opacity: 'calc(var(--blur-progress, 0) * var(--nav-tint, 0.88))',
+            // Darkness rides this element's opacity (0.9 at full scroll) — never the
+            // backdrop-filter layers, which would form an opacity group and drop the
+            // blur. The gradient peaks at full --color-bg at the top.
+            opacity: 'calc(var(--blur-progress, 0) * 0.9)',
             background:
               'linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--color-bg) 76%, transparent) 55%, var(--color-bg) 100%)',
           }}
@@ -98,7 +97,7 @@ export function Header({ className, items = [] }: HeaderProps) {
           aria-hidden
           className="absolute inset-0 header-blur-dither"
           style={{
-            opacity: 'calc(var(--blur-progress, 0) * var(--nav-dither, 0.05))',
+            opacity: 'calc(var(--blur-progress, 0) * 0.035)',
           }}
         />
       </div>
@@ -157,7 +156,6 @@ export function Header({ className, items = [] }: HeaderProps) {
         </a>
         <ThemeToggle isIconOnly />
       </div>
-      <NavTweaker />
     </header>
   )
 }
