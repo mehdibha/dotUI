@@ -1,0 +1,38 @@
+{
+  "name": "AudioPlayerProps",
+  "description": "An audio player renders a themeable control bar over a native `<audio>`\nelement: play/pause, a seek slider with elapsed/total time, and volume.\nThe transport controls are built on React Aria `Button` and `Slider`.",
+  "extendsElement": "div",
+  "props": {
+    "src": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The audio source URL.",
+      "required": true
+    },
+    "title": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Track title shown in the now-playing area."
+    },
+    "artist": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Artist / subtitle shown next to the title."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

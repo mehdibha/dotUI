@@ -1,0 +1,14 @@
+{
+  "name": "SortableItemHandleProps",
+  "description": "The drag handle for a `SortableItem`. Renders a grip icon by default and\ncarries the drag listeners; keyboard-accessible (focus it and use the arrow\nkeys to reorder).",
+  "extendsElement": "button",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

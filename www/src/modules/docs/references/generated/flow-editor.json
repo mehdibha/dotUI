@@ -1,0 +1,2509 @@
+{
+  "name": "FlowEditorProps",
+  "description": "A node/flow editor built on React Flow. Renders an interactive canvas with a\nbackground grid, zoom/pan controls, and a minimap inside a bordered,\nfixed-height container. Nodes and edges are managed internally; new edges are\ncreated when the user connects two handles.\n\nAccepts any other `ReactFlow` prop (except the internally-managed `nodes`,\n`edges`, and `onConnect`).",
+  "props": {
+    "initialNodes": {
+      "type": "Node[]",
+      "detailedType": "Node[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "identifier",
+              "name": "Node"
+            }
+          }
+        ]
+      },
+      "description": "The nodes the editor starts with.",
+      "default": "a three-node input → process → output graph"
+    },
+    "initialEdges": {
+      "type": "Edge[]",
+      "detailedType": "Edge[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "identifier",
+              "name": "Edge"
+            }
+          }
+        ]
+      },
+      "description": "The edges the editor starts with.",
+      "default": "edges connecting the three default nodes"
+    },
+    "ariaLabelConfig": {
+      "type": "Partial<{ 'node.a11yDescription.default': string; 'node.a11yDescription.keyboardDisabled': string; 'node.a11yDescription.ariaLiveMessage': ({ direction, x, y }: { direction: string; x: number; y: number; }) => string; 'edge.a11yDescription.default': string; 'controls.ariaLabel': string; 'controls.zoomIn.ariaLabel': string; 'controls.zoomOut.ariaLabel': string; 'controls.fitView.ariaLabel': string; 'controls.interactive.ariaLabel': string; 'minimap.ariaLabel': string; 'handle.ariaLabel': string; }>",
+      "detailedType": "| Partial<{\n    'node.a11yDescription.default': string\n    'node.a11yDescription.keyboardDisabled': string\n    'node.a11yDescription.ariaLiveMessage': ({\n      direction,\n      x,\n      y,\n    }: {\n      direction: string\n      x: number\n      y: number\n    }) => string\n    'edge.a11yDescription.default': string\n    'controls.ariaLabel': string\n    'controls.zoomIn.ariaLabel': string\n    'controls.zoomOut.ariaLabel': string\n    'controls.fitView.ariaLabel': string\n    'controls.interactive.ariaLabel': string\n    'minimap.ariaLabel': string\n    'handle.ariaLabel': string\n  }>\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "Partial"
+            },
+            "typeParameters": [
+              {
+                "type": "objectLiteral",
+                "properties": {
+                  "controls.ariaLabel": {
+                    "type": "property",
+                    "name": "controls.ariaLabel",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false,
+                    "readonly": false,
+                    "description": ""
+                  },
+                  "controls.fitView.ariaLabel": {
+                    "type": "property",
+                    "name": "controls.fitView.ariaLabel",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false,
+                    "readonly": false,
+                    "description": ""
+                  },
+                  "controls.interactive.ariaLabel": {
+                    "type": "property",
+                    "name": "controls.interactive.ariaLabel",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false,
+                    "readonly": false,
+                    "description": ""
+                  },
+                  "controls.zoomIn.ariaLabel": {
+                    "type": "property",
+                    "name": "controls.zoomIn.ariaLabel",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false,
+                    "readonly": false,
+                    "description": ""
+                  },
+                  "controls.zoomOut.ariaLabel": {
+                    "type": "property",
+                    "name": "controls.zoomOut.ariaLabel",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false,
+                    "readonly": false,
+                    "description": ""
+                  },
+                  "edge.a11yDescription.default": {
+                    "type": "property",
+                    "name": "edge.a11yDescription.default",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false,
+                    "readonly": false,
+                    "description": ""
+                  },
+                  "handle.ariaLabel": {
+                    "type": "property",
+                    "name": "handle.ariaLabel",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false,
+                    "readonly": false,
+                    "description": ""
+                  },
+                  "minimap.ariaLabel": {
+                    "type": "property",
+                    "name": "minimap.ariaLabel",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false,
+                    "readonly": false,
+                    "description": ""
+                  },
+                  "node.a11yDescription.ariaLiveMessage": {
+                    "type": "method",
+                    "name": "node.a11yDescription.ariaLiveMessage",
+                    "value": {
+                      "type": "function",
+                      "parameters": [
+                        {
+                          "type": "parameter",
+                          "name": "__0",
+                          "value": {
+                            "type": "objectLiteral",
+                            "properties": {
+                              "direction": {
+                                "type": "property",
+                                "name": "direction",
+                                "value": {
+                                  "type": "string"
+                                },
+                                "optional": false,
+                                "readonly": false,
+                                "description": ""
+                              },
+                              "x": {
+                                "type": "property",
+                                "name": "x",
+                                "value": {
+                                  "type": "number"
+                                },
+                                "optional": false,
+                                "readonly": false,
+                                "description": ""
+                              },
+                              "y": {
+                                "type": "property",
+                                "name": "y",
+                                "value": {
+                                  "type": "number"
+                                },
+                                "optional": false,
+                                "readonly": false,
+                                "description": ""
+                              }
+                            }
+                          },
+                          "optional": false,
+                          "rest": false
+                        }
+                      ],
+                      "return": {
+                        "type": "string"
+                      },
+                      "typeParameters": []
+                    },
+                    "optional": false,
+                    "description": ""
+                  },
+                  "node.a11yDescription.default": {
+                    "type": "property",
+                    "name": "node.a11yDescription.default",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false,
+                    "readonly": false,
+                    "description": ""
+                  },
+                  "node.a11yDescription.keyboardDisabled": {
+                    "type": "property",
+                    "name": "node.a11yDescription.keyboardDisabled",
+                    "value": {
+                      "type": "string"
+                    },
+                    "optional": false,
+                    "readonly": false,
+                    "description": ""
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Configuration for customizable labels, descriptions, and UI text. Provided keys will override the corresponding defaults.\nAllows localization, customization of ARIA descriptions, control labels, minimap labels, and other UI strings."
+    },
+    "attributionPosition": {
+      "type": "PanelPosition",
+      "detailedType": "PanelPosition | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "PanelPosition"
+      },
+      "description": "By default, React Flow will render a small attribution in the bottom right corner of the flow.\n\nYou can use this prop to change its position in case you want to place something else there.",
+      "default": "'bottom-right'"
+    },
+    "autoPanOnConnect": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "When `true`, the viewport will pan automatically when the cursor moves to the edge of the\nviewport while creating a connection.",
+      "default": "true"
+    },
+    "autoPanOnNodeDrag": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "When `true`, the viewport will pan automatically when the cursor moves to the edge of the\nviewport while dragging a node.",
+      "default": "true"
+    },
+    "autoPanOnNodeFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "When `true`, the viewport will pan when a node is focused.",
+      "default": "true"
+    },
+    "autoPanOnSelection": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "When `true`, the viewport will pan automatically when the cursor moves to the edge of the\nviewport while creating a selection box.",
+      "default": "true"
+    },
+    "autoPanSpeed": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The speed at which the viewport pans while dragging a node or a selection box.",
+      "default": "15"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    },
+    "colorMode": {
+      "type": "ColorMode",
+      "detailedType": "ColorMode | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ColorMode"
+      },
+      "description": "Controls color scheme used for styling the flow.",
+      "default": "'light'"
+    },
+    "connectOnClick": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "The `connectOnClick` option lets you click or tap on a source handle to start a connection\nand then click on a target handle to complete the connection.\n\nIf you set this option to `false`, users will need to drag the connection line to the target\nhandle to create a connection.",
+      "default": "true"
+    },
+    "connectionDragThreshold": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The threshold in pixels that the mouse must move before a connection line starts to drag.\nThis is useful to prevent accidental connections when clicking on a handle.",
+      "default": "1"
+    },
+    "connectionLineComponent": {
+      "type": "ConnectionLineComponent<Node>",
+      "detailedType": "ConnectionLineComponent<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "props",
+                "value": {
+                  "type": "identifier",
+                  "name": "ConnectionLineComponentProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "union",
+              "elements": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "undefined"
+                },
+                {
+                  "type": "bigint"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "identifier",
+                  "name": "ReactElement"
+                },
+                {
+                  "type": "link",
+                  "id": "@types/react/index.d.ts:ReactPortal",
+                  "name": "ReactPortal"
+                },
+                {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "Iterable"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "ReactNode"
+                    }
+                  ]
+                },
+                {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "Promise"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "AwaitedReactNode"
+                    }
+                  ]
+                },
+                {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "Promise"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "ReactNode"
+                    }
+                  ]
+                }
+              ]
+            },
+            "typeParameters": []
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "@types/react/index.d.ts:ComponentClass",
+              "name": "ComponentClass"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "ConnectionLineComponentProps"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "React Component to be used as a connection line."
+    },
+    "connectionLineContainerStyle": {
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "CSSProperties"
+      },
+      "description": "Styles to be applied to the container of the connection line."
+    },
+    "connectionLineStyle": {
+      "type": "CSSProperties",
+      "detailedType": "CSSProperties | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "CSSProperties"
+      },
+      "description": "Styles to be applied to the connection line."
+    },
+    "connectionLineType": {
+      "type": "ConnectionLineType",
+      "detailedType": "ConnectionLineType | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ConnectionLineType"
+      },
+      "description": "The type of edge path to use for connection lines.\nAlthough created edges can be of any type, React Flow needs to know what type of path to render for the connection line before the edge is created!",
+      "default": "ConnectionLineType.Bezier"
+    },
+    "connectionMode": {
+      "type": "ConnectionMode",
+      "detailedType": "ConnectionMode | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ConnectionMode"
+      },
+      "description": "A loose connection mode will allow you to connect handles with differing types, including\nsource-to-source connections. However, it does not support target-to-target connections. Strict\nmode allows only connections between source handles and target handles.",
+      "default": "'strict'"
+    },
+    "connectionRadius": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The radius around a handle where you drop a connection line to create a new edge.",
+      "default": "20"
+    },
+    "debug": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "If set `true`, some debug information will be logged to the console like which events are fired.",
+      "default": "false"
+    },
+    "defaultEdgeOptions": {
+      "type": "DefaultEdgeOptions",
+      "detailedType": "DefaultEdgeOptions | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "DefaultEdgeOptions"
+      },
+      "description": "Defaults to be applied to all new edges that are added to the flow.\nProperties on a new edge will override these defaults if they exist."
+    },
+    "defaultEdges": {
+      "type": "Edge[]",
+      "detailedType": "Edge[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "identifier",
+              "name": "Edge"
+            }
+          }
+        ]
+      },
+      "description": "The initial edges to render in an uncontrolled flow."
+    },
+    "defaultMarkerColor": {
+      "type": "null | string",
+      "detailedType": "null | string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "Color of edge markers.\nYou can pass `null` to use the CSS variable `--xy-edge-stroke` for the marker color.",
+      "default": "'#b1b1b7'"
+    },
+    "defaultNodes": {
+      "type": "Node[]",
+      "detailedType": "Node[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "identifier",
+              "name": "Node"
+            }
+          }
+        ]
+      },
+      "description": "The initial nodes to render in an uncontrolled flow."
+    },
+    "defaultViewport": {
+      "type": "Viewport",
+      "detailedType": "Viewport | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Viewport"
+      },
+      "description": "Sets the initial position and zoom of the viewport. If a default viewport is provided but\n`fitView` is enabled, the default viewport will be ignored.",
+      "default": "{ x: 0, y: 0, zoom: 1 }"
+    },
+    "deleteKeyCode": {
+      "type": "KeyCode | null",
+      "detailedType": "KeyCode | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "If set, pressing the key or chord will delete any selected nodes and edges. Passing an array\nrepresents multiple keys that can be pressed.\n\nFor example, `[\"Delete\", \"Backspace\"]` will delete selected elements when either key is pressed.",
+      "default": "'Backspace'"
+    },
+    "disableKeyboardA11y": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "You can use this prop to disable keyboard accessibility features such as selecting nodes or\nmoving selected nodes with the arrow keys.",
+      "default": "false"
+    },
+    "edgeTypes": {
+      "type": "EdgeTypes",
+      "detailedType": "EdgeTypes | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "EdgeTypes"
+      },
+      "description": "Custom edge types to be available in a flow.\nReact Flow matches an edge's type to a component in the `edgeTypes` object.",
+      "default": "{\ndefault: BezierEdge,\nstraight: StraightEdge,\nstep: StepEdge,\nsmoothstep: SmoothStepEdge,\nsimplebezier: SimpleBezier\n}"
+    },
+    "edgesFocusable": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "When `true`, focus between edges can be cycled with the `Tab` key and selected with the `Enter`\nkey. This option can be overridden by individual edges by setting their `focusable` prop.",
+      "default": "true"
+    },
+    "edgesReconnectable": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether edges can be updated once they are created. When both this prop is `true` and an\n`onReconnect` handler is provided, the user can drag an existing edge to a new source or\ntarget. Individual edges can override this value with their reconnectable property.",
+      "default": "true"
+    },
+    "elementsSelectable": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "When `true`, elements (nodes and edges) can be selected by clicking on them. This option can be\noverridden by individual elements by setting their `selectable` prop.",
+      "default": "true"
+    },
+    "elevateEdgesOnSelect": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Enabling this option will raise the z-index of edges when they are selected.",
+      "default": "false"
+    },
+    "elevateNodesOnSelect": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Enabling this option will raise the z-index of nodes when they are selected.",
+      "default": "true"
+    },
+    "fitView": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "When `true`, the flow will be zoomed and panned to fit all the nodes initially provided."
+    },
+    "fitViewOptions": {
+      "type": "FitViewOptions",
+      "detailedType": "FitViewOptions | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "FitViewOptions"
+      },
+      "description": "When you typically call `fitView` on a `ReactFlowInstance`, you can provide an object of\noptions to customize its behavior. This prop lets you do the same for the initial `fitView`\ncall."
+    },
+    "height": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Sets a fixed height for the flow."
+    },
+    "isValidConnection": {
+      "type": "IsValidConnection<Edge>",
+      "detailedType": "IsValidConnection<Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "IsValidConnection"
+          }
+        ]
+      },
+      "description": "This callback can be used to validate a new connection\n\nIf you return `false`, the edge will not be added to your flow.\nIf you have custom connection logic its preferred to use this callback over the\n`isValidConnection` prop on the handle component for performance reasons."
+    },
+    "maxZoom": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Maximum zoom level.",
+      "default": "2"
+    },
+    "minZoom": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Minimum zoom level.",
+      "default": "0.5"
+    },
+    "multiSelectionKeyCode": {
+      "type": "KeyCode | null",
+      "detailedType": "KeyCode | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "Pressing down this key you can select multiple elements by clicking.",
+      "default": "\"Meta\" for macOS, \"Control\" for other systems"
+    },
+    "noDragClassName": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "If a node is draggable, clicking and dragging that node will move it around the canvas. Adding\nthe `\"nodrag\"` class prevents this behavior and this prop allows you to change the name of that\nclass.",
+      "default": "\"nodrag\""
+    },
+    "noPanClassName": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "If an element in the canvas does not stop mouse events from propagating, clicking and dragging\nthat element will pan the viewport. Adding the `\"nopan\"` class prevents this behavior and this\nprop allows you to change the name of that class.",
+      "default": "\"nopan\""
+    },
+    "noWheelClassName": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Typically, scrolling the mouse wheel when the mouse is over the canvas will zoom the viewport.\nAdding the `\"nowheel\"` class to an element in the canvas will prevent this behavior and this prop\nallows you to change the name of that class.",
+      "default": "\"nowheel\""
+    },
+    "nodeClickDistance": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Distance that the mouse can move between mousedown/up that will trigger a click.",
+      "default": "0"
+    },
+    "nodeDragThreshold": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "With a threshold greater than zero you can delay node drag events.\nIf threshold equals 1, you need to drag the node 1 pixel before a drag event is fired.\n1 is the default value, so that clicks don't trigger drag events.",
+      "default": "1"
+    },
+    "nodeExtent": {
+      "type": "CoordinateExtent",
+      "detailedType": "CoordinateExtent | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "CoordinateExtent"
+      },
+      "description": "By default, nodes can be placed on an infinite flow. You can use this prop to set a boundary.\nThe first pair of coordinates is the top left boundary and the second pair is the bottom right."
+    },
+    "nodeOrigin": {
+      "type": "NodeOrigin",
+      "detailedType": "NodeOrigin | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "NodeOrigin"
+      },
+      "description": "The origin of the node to use when placing it in the flow or looking up its `x` and `y`\nposition. An origin of `[0, 0]` means that a node's top left corner will be placed at the `x`\nand `y` position.",
+      "default": "[0, 0]"
+    },
+    "nodeTypes": {
+      "type": "NodeTypes",
+      "detailedType": "NodeTypes | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "NodeTypes"
+      },
+      "description": "Custom node types to be available in a flow.\nReact Flow matches a node's type to a component in the `nodeTypes` object.",
+      "default": "{\ninput: InputNode,\ndefault: DefaultNode,\noutput: OutputNode,\ngroup: GroupNode\n}"
+    },
+    "nodesConnectable": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Controls whether all nodes should be connectable or not. Individual nodes can override this\nsetting by setting their `connectable` prop.",
+      "default": "true"
+    },
+    "nodesDraggable": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Controls whether all nodes should be draggable or not. Individual nodes can override this\nsetting by setting their `draggable` prop. If you want to use the mouse handlers on\nnon-draggable nodes, you need to add the `\"nopan\"` class to those nodes.",
+      "default": "true"
+    },
+    "nodesFocusable": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "When `true`, focus between nodes can be cycled with the `Tab` key and selected with the `Enter`\nkey. This option can be overridden by individual nodes by setting their `focusable` prop.",
+      "default": "true"
+    },
+    "onBeforeDelete": {
+      "type": "OnBeforeDelete<Node, Edge>",
+      "detailedType": "OnBeforeDelete<Node, Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "OnBeforeDelete"
+          }
+        ]
+      },
+      "description": "This handler is called before nodes or edges are deleted, allowing the deletion to be aborted\nby returning `false` or modified by returning updated nodes and edges."
+    },
+    "onConnectEnd": {
+      "type": "OnConnectEnd",
+      "detailedType": "OnConnectEnd | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "OnConnectEnd"
+      },
+      "description": "This callback will fire regardless of whether a valid connection could be made or not. You can\nuse the second `connectionState` parameter to have different behavior when a connection was\nunsuccessful."
+    },
+    "onConnectStart": {
+      "type": "OnConnectStart",
+      "detailedType": "OnConnectStart | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "OnConnectStart"
+      },
+      "description": "This event handler gets called when a user starts to drag a connection line."
+    },
+    "onDelete": {
+      "type": "OnDelete<Node, Edge>",
+      "detailedType": "OnDelete<Node, Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "OnDelete"
+          }
+        ]
+      },
+      "description": "This event handler gets called when a node or edge is deleted."
+    },
+    "onEdgeClick": {
+      "type": "((event: MouseEvent<Element, MouseEvent>, edge: Edge) => void)",
+      "detailedType": "| ((\n    event: MouseEvent<Element, MouseEvent>,\n    edge: Edge,\n  ) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "identifier",
+                  "name": "MouseEvent"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "edge",
+                "value": {
+                  "type": "identifier",
+                  "name": "Edge"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "This event handler is called when a user clicks on an edge."
+    },
+    "onEdgeContextMenu": {
+      "type": "EdgeMouseHandler<Edge>",
+      "detailedType": "EdgeMouseHandler<Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "EdgeMouseHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Edge"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when a user right-clicks on an edge."
+    },
+    "onEdgeDoubleClick": {
+      "type": "EdgeMouseHandler<Edge>",
+      "detailedType": "EdgeMouseHandler<Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "EdgeMouseHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Edge"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when a user double-clicks on an edge."
+    },
+    "onEdgeMouseEnter": {
+      "type": "EdgeMouseHandler<Edge>",
+      "detailedType": "EdgeMouseHandler<Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "EdgeMouseHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Edge"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when mouse of a user enters an edge."
+    },
+    "onEdgeMouseLeave": {
+      "type": "EdgeMouseHandler<Edge>",
+      "detailedType": "EdgeMouseHandler<Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "EdgeMouseHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Edge"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when mouse of a user leaves an edge."
+    },
+    "onEdgeMouseMove": {
+      "type": "EdgeMouseHandler<Edge>",
+      "detailedType": "EdgeMouseHandler<Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "EdgeMouseHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Edge"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when mouse of a user moves over an edge."
+    },
+    "onEdgesChange": {
+      "type": "OnEdgesChange<Edge>",
+      "detailedType": "OnEdgesChange<Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "OnEdgesChange"
+          }
+        ]
+      },
+      "description": "Use this event handler to add interactivity to a controlled flow. It is called on edge select\nand remove."
+    },
+    "onEdgesDelete": {
+      "type": "OnEdgesDelete<Edge>",
+      "detailedType": "OnEdgesDelete<Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "OnEdgesDelete"
+          }
+        ]
+      },
+      "description": "This event handler gets called when an edge is deleted."
+    },
+    "onError": {
+      "type": "OnError",
+      "detailedType": "OnError | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "OnError"
+      },
+      "description": "Occasionally something may happen that causes React Flow to throw an error.\n\nInstead of exploding your application, we log a message to the console and then call this event handler.\nYou might use it for additional logging or to show a message to the user."
+    },
+    "onInit": {
+      "type": "OnInit<Node, Edge>",
+      "detailedType": "OnInit<Node, Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "OnInit"
+          }
+        ]
+      },
+      "description": "The `onInit` callback is called when the viewport is initialized. At this point you can use the\ninstance to call methods like `fitView` or `zoomTo`."
+    },
+    "onMove": {
+      "type": "OnMove",
+      "detailedType": "OnMove | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "OnMove"
+      },
+      "description": "This event handler is called while the user is either panning or zooming the viewport."
+    },
+    "onMoveEnd": {
+      "type": "OnMove",
+      "detailedType": "OnMove | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "OnMove"
+      },
+      "description": "This event handler is called when panning or zooming viewport movement stops.\nIf the movement is not user-initiated, the event parameter will be `null`."
+    },
+    "onMoveStart": {
+      "type": "OnMove",
+      "detailedType": "OnMove | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "OnMove"
+      },
+      "description": "This event handler is called when the user begins to pan or zoom the viewport."
+    },
+    "onNodeClick": {
+      "type": "NodeMouseHandler<Node>",
+      "detailedType": "NodeMouseHandler<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "NodeMouseHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when a user clicks on a node."
+    },
+    "onNodeContextMenu": {
+      "type": "NodeMouseHandler<Node>",
+      "detailedType": "NodeMouseHandler<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "NodeMouseHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when a user right-clicks on a node."
+    },
+    "onNodeDoubleClick": {
+      "type": "NodeMouseHandler<Node>",
+      "detailedType": "NodeMouseHandler<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "NodeMouseHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when a user double-clicks on a node."
+    },
+    "onNodeDrag": {
+      "type": "OnNodeDrag<Node>",
+      "detailedType": "OnNodeDrag<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "OnNodeDrag"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when a user drags a node."
+    },
+    "onNodeDragStart": {
+      "type": "OnNodeDrag<Node>",
+      "detailedType": "OnNodeDrag<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "OnNodeDrag"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when a user starts to drag a node."
+    },
+    "onNodeDragStop": {
+      "type": "OnNodeDrag<Node>",
+      "detailedType": "OnNodeDrag<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "OnNodeDrag"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when a user stops dragging a node."
+    },
+    "onNodeMouseEnter": {
+      "type": "NodeMouseHandler<Node>",
+      "detailedType": "NodeMouseHandler<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "NodeMouseHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when mouse of a user enters a node."
+    },
+    "onNodeMouseLeave": {
+      "type": "NodeMouseHandler<Node>",
+      "detailedType": "NodeMouseHandler<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "NodeMouseHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when mouse of a user leaves a node."
+    },
+    "onNodeMouseMove": {
+      "type": "NodeMouseHandler<Node>",
+      "detailedType": "NodeMouseHandler<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "NodeMouseHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler is called when mouse of a user moves over a node."
+    },
+    "onNodesChange": {
+      "type": "OnNodesChange<Node>",
+      "detailedType": "OnNodesChange<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "OnNodesChange"
+          }
+        ]
+      },
+      "description": "Use this event handler to add interactivity to a controlled flow.\nIt is called on node drag, select, and move."
+    },
+    "onNodesDelete": {
+      "type": "OnNodesDelete<Node>",
+      "detailedType": "OnNodesDelete<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "OnNodesDelete"
+          }
+        ]
+      },
+      "description": "This event handler gets called when a node is deleted."
+    },
+    "onPaneClick": {
+      "type": "((event: MouseEvent<Element, MouseEvent>) => void)",
+      "detailedType": "| ((event: MouseEvent<Element, MouseEvent>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "identifier",
+                  "name": "MouseEvent"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "This event handler gets called when user clicks inside the pane."
+    },
+    "onPaneContextMenu": {
+      "type": "((event: MouseEvent | MouseEvent<Element, MouseEvent>) => void)",
+      "detailedType": "| ((\n    event: MouseEvent | MouseEvent<Element, MouseEvent>,\n  ) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "identifier",
+                      "name": "MouseEvent"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "MouseEvent"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "This event handler gets called when user right clicks inside the pane."
+    },
+    "onPaneMouseEnter": {
+      "type": "((event: MouseEvent<Element, MouseEvent>) => void)",
+      "detailedType": "| ((event: MouseEvent<Element, MouseEvent>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "identifier",
+                  "name": "MouseEvent"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "This event handler gets called when mouse enters the pane."
+    },
+    "onPaneMouseLeave": {
+      "type": "((event: MouseEvent<Element, MouseEvent>) => void)",
+      "detailedType": "| ((event: MouseEvent<Element, MouseEvent>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "identifier",
+                  "name": "MouseEvent"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "This event handler gets called when mouse leaves the pane."
+    },
+    "onPaneMouseMove": {
+      "type": "((event: MouseEvent<Element, MouseEvent>) => void)",
+      "detailedType": "| ((event: MouseEvent<Element, MouseEvent>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "identifier",
+                  "name": "MouseEvent"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "This event handler gets called when mouse moves over the pane."
+    },
+    "onPaneScroll": {
+      "type": "((event?: WheelEvent<Element> | undefined) => void)",
+      "detailedType": "| ((event?: WheelEvent<Element> | undefined) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "WheelEvent"
+                    }
+                  ]
+                },
+                "optional": true,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "This event handler gets called when user scroll inside the pane."
+    },
+    "onReconnect": {
+      "type": "OnReconnect<Edge>",
+      "detailedType": "OnReconnect<Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "OnReconnect"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Edge"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This handler is called when the source or target of a reconnectable edge is dragged from the\ncurrent node. It will fire even if the edge's source or target do not end up changing.\nYou can use the `reconnectEdge` utility to convert the connection to a new edge."
+    },
+    "onReconnectEnd": {
+      "type": "((event: MouseEvent | TouchEvent, edge: Edge, handleType: HandleType, connectionState: FinalConnectionState) => void)",
+      "detailedType": "| ((\n    event: MouseEvent | TouchEvent,\n    edge: Edge,\n    handleType: HandleType,\n    connectionState: FinalConnectionState,\n  ) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "identifier",
+                      "name": "MouseEvent"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "TouchEvent"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "edge",
+                "value": {
+                  "type": "identifier",
+                  "name": "Edge"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "handleType",
+                "value": {
+                  "type": "identifier",
+                  "name": "HandleType"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "connectionState",
+                "value": {
+                  "type": "identifier",
+                  "name": "FinalConnectionState"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "This event fires when the user releases the source or target of an editable edge. It is called\neven if an edge update does not occur."
+    },
+    "onReconnectStart": {
+      "type": "((event: MouseEvent<Element, MouseEvent>, edge: Edge, handleType: HandleType) => void)",
+      "detailedType": "| ((\n    event: MouseEvent<Element, MouseEvent>,\n    edge: Edge,\n    handleType: HandleType,\n  ) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "identifier",
+                  "name": "MouseEvent"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "edge",
+                "value": {
+                  "type": "identifier",
+                  "name": "Edge"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "handleType",
+                "value": {
+                  "type": "identifier",
+                  "name": "HandleType"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "This event fires when the user begins dragging the source or target of an editable edge."
+    },
+    "onSelectionChange": {
+      "type": "OnSelectionChangeFunc<Node, Edge>",
+      "detailedType": "OnSelectionChangeFunc<Node, Edge> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "identifier",
+            "name": "OnSelectionChangeFunc"
+          }
+        ]
+      },
+      "description": "This event handler gets called when a user changes group of selected elements in the flow."
+    },
+    "onSelectionContextMenu": {
+      "type": "((event: MouseEvent<Element, MouseEvent>, nodes: Node[]) => void)",
+      "detailedType": "| ((\n    event: MouseEvent<Element, MouseEvent>,\n    nodes: Node[],\n  ) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "event",
+                "value": {
+                  "type": "identifier",
+                  "name": "MouseEvent"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "nodes",
+                "value": {
+                  "type": "array",
+                  "elementType": {
+                    "type": "identifier",
+                    "name": "Node"
+                  }
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "This event handler is called when a user right-clicks on a node selection."
+    },
+    "onSelectionDrag": {
+      "type": "SelectionDragHandler<Node>",
+      "detailedType": "SelectionDragHandler<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "SelectionDragHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler gets called when a user drags a selection box."
+    },
+    "onSelectionDragStart": {
+      "type": "SelectionDragHandler<Node>",
+      "detailedType": "SelectionDragHandler<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "SelectionDragHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler gets called when a user starts to drag a selection box."
+    },
+    "onSelectionDragStop": {
+      "type": "SelectionDragHandler<Node>",
+      "detailedType": "SelectionDragHandler<Node> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "SelectionDragHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "Node"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "This event handler gets called when a user stops dragging a selection box."
+    },
+    "onViewportChange": {
+      "type": "((viewport: Viewport) => void)",
+      "detailedType": "((viewport: Viewport) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "viewport",
+            "value": {
+              "type": "link",
+              "id": "Viewport",
+              "name": "Viewport"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Used when working with a controlled viewport for updating the user viewport state."
+    },
+    "onlyRenderVisibleElements": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "You can enable this optimisation to instruct React Flow to only render nodes and edges that would be visible in the viewport.\n\nThis might improve performance when you have a large number of nodes and edges but also adds an overhead.",
+      "default": "false"
+    },
+    "panActivationKeyCode": {
+      "type": "KeyCode | null",
+      "detailedType": "KeyCode | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "If a key is set, you can pan the viewport while that key is held down even if `panOnScroll`\nis set to `false`.\n\nBy setting this prop to `null` you can disable this functionality.",
+      "default": "'Space'"
+    },
+    "panOnDrag": {
+      "type": "boolean | number[]",
+      "detailedType": "boolean | number[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "number"
+            }
+          }
+        ]
+      },
+      "description": "Enabling this prop allows users to pan the viewport by clicking and dragging.\nYou can also set this prop to an array of numbers to limit which mouse buttons can activate panning.",
+      "default": "true"
+    },
+    "panOnScroll": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Controls if the viewport should pan by scrolling inside the container.\nCan be limited to a specific direction with `panOnScrollMode`.",
+      "default": "false"
+    },
+    "panOnScrollMode": {
+      "type": "PanOnScrollMode",
+      "detailedType": "PanOnScrollMode | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "PanOnScrollMode"
+      },
+      "description": "This prop is used to limit the direction of panning when `panOnScroll` is enabled.\nThe `\"free\"` option allows panning in any direction.",
+      "default": "\"free\""
+    },
+    "panOnScrollSpeed": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Controls how fast viewport should be panned on scroll.\nUse together with `panOnScroll` prop.",
+      "default": "0.5"
+    },
+    "paneClickDistance": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Distance that the mouse can move between mousedown/up that will trigger a click.",
+      "default": "0"
+    },
+    "preventScrolling": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Disabling this prop will allow the user to scroll the page even when their pointer is over the flow.",
+      "default": "true"
+    },
+    "proOptions": {
+      "type": "ProOptions",
+      "detailedType": "ProOptions | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ProOptions"
+      },
+      "description": "By default, we render a small attribution in the corner of your flows that links back to the project.\n\nAnyone is free to remove this attribution whether they're a Pro subscriber or not\nbut we ask that you take a quick look at our {@link https://reactflow.dev/learn/troubleshooting/remove-attribution removing attribution guide}\nbefore doing so."
+    },
+    "reconnectRadius": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The radius around an edge connection that can trigger an edge reconnection.",
+      "default": "10"
+    },
+    "selectNodesOnDrag": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "If `true`, nodes get selected on drag.",
+      "default": "true"
+    },
+    "selectionKeyCode": {
+      "type": "KeyCode | null",
+      "detailedType": "KeyCode | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "If set, holding this key will let you click and drag to draw a selection box around multiple\nnodes and edges. Passing an array represents multiple keys that can be pressed.\n\nFor example, `[\"Shift\", \"Meta\"]` will allow you to draw a selection box when either key is\npressed.",
+      "default": "'Shift'"
+    },
+    "selectionMode": {
+      "type": "SelectionMode",
+      "detailedType": "SelectionMode | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "SelectionMode"
+      },
+      "description": "When set to `\"partial\"`, when the user creates a selection box by click and dragging nodes that\nare only partially in the box are still selected.",
+      "default": "'full'"
+    },
+    "selectionOnDrag": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Select multiple elements with a selection box, without pressing down `selectionKey`.",
+      "default": "false"
+    },
+    "snapGrid": {
+      "type": "SnapGrid",
+      "detailedType": "SnapGrid | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "SnapGrid"
+      },
+      "description": "If `snapToGrid` is enabled, this prop configures the grid that nodes will snap to."
+    },
+    "snapToGrid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "When enabled, nodes will snap to the grid when dragged."
+    },
+    "translateExtent": {
+      "type": "CoordinateExtent",
+      "detailedType": "CoordinateExtent | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "CoordinateExtent"
+      },
+      "description": "By default, the viewport extends infinitely. You can use this prop to set a boundary.\nThe first pair of coordinates is the top left boundary and the second pair is the bottom right.",
+      "default": "[[-∞, -∞], [+∞, +∞]]"
+    },
+    "viewport": {
+      "type": "Viewport",
+      "detailedType": "Viewport | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Viewport"
+      },
+      "description": "When you pass a `viewport` prop, it's controlled, and you also need to pass `onViewportChange`\nto handle internal changes."
+    },
+    "width": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Sets a fixed width for the flow."
+    },
+    "zIndexMode": {
+      "type": "ZIndexMode",
+      "detailedType": "ZIndexMode | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ZIndexMode"
+      },
+      "description": "Used to define how z-indexing is calculated for nodes and edges.\n'auto' is for selections and sub flows, 'basic' for selections only, and 'manual' for no auto z-indexing.",
+      "default": "'basic'"
+    },
+    "zoomActivationKeyCode": {
+      "type": "KeyCode | null",
+      "detailedType": "KeyCode | null | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "If a key is set, you can zoom the viewport while that key is held down even if `panOnScroll`\nis set to `false`.\n\nBy setting this prop to `null` you can disable this functionality.",
+      "default": "\"Meta\" for macOS, \"Control\" for other systems"
+    },
+    "zoomOnDoubleClick": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Controls if the viewport should zoom by double-clicking somewhere on the flow.",
+      "default": "true"
+    },
+    "zoomOnPinch": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Controls if the viewport should zoom by pinching on a touch screen.",
+      "default": "true"
+    },
+    "zoomOnScroll": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Controls if the viewport should zoom by scrolling inside the container.",
+      "default": "true"
+    }
+  },
+  "typeLinks": {
+    "@types/react/index.d.ts:ComponentClass": {
+      "type": "interface",
+      "id": "@types/react/index.d.ts:ComponentClass",
+      "name": "ComponentClass",
+      "extends": [
+        {
+          "type": "application",
+          "base": {
+            "type": "link",
+            "id": "@types/react/index.d.ts:StaticLifecycle",
+            "name": "StaticLifecycle"
+          },
+          "typeParameters": [
+            {
+              "type": "typeParameter",
+              "name": "P",
+              "constraint": null,
+              "default": {
+                "type": "identifier",
+                "name": "{}"
+              }
+            },
+            {
+              "type": "typeParameter",
+              "name": "S",
+              "constraint": null,
+              "default": {
+                "type": "any"
+              }
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "contextType": {
+          "type": "property",
+          "name": "contextType",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "function",
+                "parameters": [
+                  {
+                    "type": "parameter",
+                    "name": "props",
+                    "value": {
+                      "type": "application",
+                      "base": {
+                        "type": "link",
+                        "id": "@types/react/index.d.ts:ProviderProps",
+                        "name": "ProviderProps"
+                      },
+                      "typeParameters": [
+                        {
+                          "type": "identifier",
+                          "name": "any"
+                        }
+                      ]
+                    },
+                    "optional": false,
+                    "rest": false
+                  }
+                ],
+                "return": {
+                  "type": "identifier",
+                  "name": "ReactNode"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "defaultProps": {
+          "type": "property",
+          "name": "defaultProps",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "identifier",
+                  "name": "Partial"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "ConnectionLineComponentProps"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "displayName": {
+          "type": "property",
+          "name": "displayName",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Used in debugging messages. You might want to set it\nexplicitly if you want to display a different name for\ndebugging purposes."
+        },
+        "getDerivedStateFromError": {
+          "type": "property",
+          "name": "getDerivedStateFromError",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "identifier",
+                  "name": "GetDerivedStateFromError"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "ConnectionLineComponentProps"
+                  },
+                  {
+                    "type": "any"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "getDerivedStateFromProps": {
+          "type": "property",
+          "name": "getDerivedStateFromProps",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "identifier",
+                  "name": "GetDerivedStateFromProps"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "ConnectionLineComponentProps"
+                  },
+                  {
+                    "type": "any"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "propTypes": {
+          "type": "property",
+          "name": "propTypes",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Ignored by React."
+        }
+      },
+      "typeParameters": [],
+      "description": "Represents a component class in React."
+    },
+    "@types/react/index.d.ts:StaticLifecycle": {
+      "type": "interface",
+      "id": "@types/react/index.d.ts:StaticLifecycle",
+      "name": "StaticLifecycle",
+      "extends": [],
+      "properties": {
+        "getDerivedStateFromError": {
+          "type": "property",
+          "name": "getDerivedStateFromError",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "identifier",
+                  "name": "GetDerivedStateFromError"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "P"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "S"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "getDerivedStateFromProps": {
+          "type": "property",
+          "name": "getDerivedStateFromProps",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "identifier",
+                  "name": "GetDerivedStateFromProps"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "P"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "S"
+                  }
+                ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    }
+  }
+}

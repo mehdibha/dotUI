@@ -1,0 +1,61 @@
+---
+title: Comment Thread
+description: A composable comment thread with avatars, nested replies, and actions.
+wip: true
+---
+
+<Demo name="comment-thread/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/comment-thread
+```
+
+## Usage
+
+Compose `Comment`s inside a `CommentThread`. Each comment is an `Avatar` followed by `CommentContent` (header, body, actions). Nest a `CommentThread` inside a comment for indented replies.
+
+```tsx
+import {
+  Comment,
+  CommentActions,
+  CommentAuthor,
+  CommentBody,
+  CommentContent,
+  CommentHeader,
+  CommentThread,
+  CommentTimestamp,
+} from '@/components/ui/comment-thread'
+```
+
+```tsx
+<CommentThread>
+  <Comment>
+    <Avatar size="sm">…</Avatar>
+    <CommentContent>
+      <CommentHeader>
+        <CommentAuthor>Sofia Davis</CommentAuthor>
+        <CommentTimestamp>2h ago</CommentTimestamp>
+      </CommentHeader>
+      <CommentBody>Looks great!</CommentBody>
+    </CommentContent>
+  </Comment>
+</CommentThread>
+```
+
+## Examples
+
+<Examples>
+  <Example name="comment-thread/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### CommentThread
+
+<Reference name="comment-thread" />
+
+### Comment
+
+<Reference name="comment" />

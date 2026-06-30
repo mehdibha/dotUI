@@ -1,0 +1,196 @@
+{
+  "name": "EventCalendarProps",
+  "description": "A month-grid calendar that renders events as colored chips. Composed of a header\n(heading + navigation) and a 7-column grid of day cells.",
+  "extendsElement": "div",
+  "props": {
+    "events": {
+      "type": "CalendarEvent[]",
+      "detailedType": "CalendarEvent[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "link",
+              "id": "src/registry/ui/event-calendar/types.ts:CalendarEvent",
+              "name": "CalendarEvent"
+            }
+          }
+        ]
+      },
+      "description": "Events to render across the visible month."
+    },
+    "month": {
+      "type": "Date",
+      "detailedType": "Date | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Date"
+      },
+      "description": "The controlled visible month — any `Date` within the month to display."
+    },
+    "defaultMonth": {
+      "type": "Date",
+      "detailedType": "Date | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Date"
+      },
+      "description": "The initial visible month for uncontrolled usage.",
+      "default": "the current month"
+    },
+    "onMonthChange": {
+      "type": "((date: Date) => void)",
+      "detailedType": "((date: Date) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "date",
+            "value": {
+              "type": "link",
+              "id": "Date",
+              "name": "Date"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Called with the new month whenever navigation changes the visible month."
+    },
+    "weekStartsOn": {
+      "type": "0 | 1",
+      "detailedType": "0 | 1 | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "numberLiteral",
+            "value": 0
+          },
+          {
+            "type": "numberLiteral",
+            "value": 1
+          },
+          {
+            "type": "undefined"
+          }
+        ]
+      },
+      "description": "The first day of the week: `0` for Sunday, `1` for Monday.",
+      "default": "1"
+    },
+    "maxEventsPerDay": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The maximum number of event chips shown in a day cell before a\n\"+N more\" overflow indicator is rendered.",
+      "default": "3"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  },
+  "typeLinks": {
+    "src/registry/ui/event-calendar/types.ts:CalendarEvent": {
+      "type": "interface",
+      "id": "src/registry/ui/event-calendar/types.ts:CalendarEvent",
+      "name": "CalendarEvent",
+      "extends": [],
+      "properties": {
+        "color": {
+          "type": "property",
+          "name": "color",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "accent"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "danger"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "info"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "neutral"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "primary"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "success"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "warning"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The semantic color of the event chip."
+        },
+        "date": {
+          "type": "property",
+          "name": "date",
+          "value": {
+            "type": "identifier",
+            "name": "Date"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The day the event falls on. Only the date portion is compared."
+        },
+        "id": {
+          "type": "property",
+          "name": "id",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Stable unique identifier, used as the React key."
+        },
+        "title": {
+          "type": "property",
+          "name": "title",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The text shown on the event chip."
+        }
+      },
+      "typeParameters": [],
+      "description": "A single event rendered on the calendar grid."
+    }
+  }
+}

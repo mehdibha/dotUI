@@ -1,0 +1,82 @@
+{
+  "name": "ImageCropperProps",
+  "description": "An image cropper presents an interactive crop surface over an image, with\ncontrols for zoom, rotation, and aspect ratio. It reports the cropped region\nin pixel coordinates so you can produce the final image with `getCroppedImg`.",
+  "extendsElement": "div",
+  "props": {
+    "image": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The source URL of the image to crop.",
+      "required": true
+    },
+    "aspect": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The aspect ratio of the crop area, expressed as `width / height`.\nOmit for a free-form crop."
+    },
+    "showZoom": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to show the zoom slider.",
+      "default": "true"
+    },
+    "showRotate": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to show the rotate slider.",
+      "default": "false"
+    },
+    "showAspectPresets": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to show the aspect-ratio presets.",
+      "default": "false"
+    },
+    "onCropComplete": {
+      "type": "((croppedAreaPixels: Area) => void)",
+      "detailedType": "((croppedAreaPixels: Area) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "croppedAreaPixels",
+            "value": {
+              "type": "link",
+              "id": "Area",
+              "name": "Area"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Called whenever the crop selection settles, with the cropped region in\npixel coordinates. Pass the result to `getCroppedImg` to render the output."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "EventCalendarChipProps",
+  "description": "A colored event chip rendered inside a day cell.",
+  "extendsElement": "span",
+  "props": {
+    "event": {
+      "type": "CalendarEvent",
+      "typeAst": {
+        "type": "identifier",
+        "name": "CalendarEvent"
+      },
+      "description": "The event to render.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

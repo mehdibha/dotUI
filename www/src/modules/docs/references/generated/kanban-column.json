@@ -1,0 +1,34 @@
+{
+  "name": "KanbanColumnProps",
+  "description": "A droppable column with its own sortable context. Holds a header and the\ncolumn's cards.",
+  "props": {
+    "id": {
+      "type": "UniqueIdentifier",
+      "typeAst": {
+        "type": "identifier",
+        "name": "UniqueIdentifier"
+      },
+      "description": "Must match the `id` of the corresponding entry in the board's `columns`.",
+      "required": true
+    },
+    "itemIds": {
+      "type": "UniqueIdentifier[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "identifier",
+          "name": "UniqueIdentifier"
+        }
+      },
+      "description": "The card ids in this column, top to bottom — drives the sortable order.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "SortableItemProps",
+  "description": "A single sortable row. Wrap each item from the list's render prop in a\n`SortableItem`, giving it the same `id` as the underlying data.",
+  "extendsElement": "div",
+  "props": {
+    "id": {
+      "type": "number | string",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "The item's unique identifier, matching its data `id`.",
+      "required": true
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether this item is locked in place and cannot be dragged."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

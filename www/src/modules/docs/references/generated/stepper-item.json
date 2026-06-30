@@ -1,0 +1,22 @@
+{
+  "name": "StepperItemProps",
+  "description": "A single step within a `Stepper`.",
+  "extendsElement": "div",
+  "props": {
+    "step": {
+      "type": "number",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "This step's index (0-based), compared against the stepper's `activeStep`.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

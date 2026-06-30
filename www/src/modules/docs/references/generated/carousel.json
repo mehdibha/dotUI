@@ -1,0 +1,117 @@
+{
+  "name": "CarouselProps",
+  "description": "A carousel — slides, arrows, and dots — built on Embla. The chrome\n(`CarouselPrevious`/`CarouselNext` arrows, `CarouselDots`) is React Aria;\nEmbla is the (peer-dependency) scroll engine.",
+  "extendsElement": "div",
+  "props": {
+    "opts": {
+      "type": "Partial<OptionsType>",
+      "detailedType": "Partial<OptionsType> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "Partial"
+            },
+            "typeParameters": [
+              {
+                "type": "identifier",
+                "name": "OptionsType"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Embla options (loop, align, dragFree, …)."
+    },
+    "orientation": {
+      "type": "\"horizontal\" | \"vertical\"",
+      "detailedType": "'horizontal' | 'vertical' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "horizontal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "vertical"
+          }
+        ]
+      },
+      "description": "Scroll axis.",
+      "default": "'horizontal'"
+    },
+    "autoplay": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Auto-advance slides on an interval.",
+      "default": "false"
+    },
+    "autoplayDelay": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Autoplay interval in milliseconds.",
+      "default": "4000"
+    },
+    "setApi": {
+      "type": "((api: EmblaCarouselType | undefined) => void)",
+      "detailedType": "| ((api: EmblaCarouselType | undefined) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "api",
+                "value": {
+                  "type": "union",
+                  "elements": [
+                    {
+                      "type": "undefined"
+                    },
+                    {
+                      "type": "identifier",
+                      "name": "EmblaCarouselType"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Receives the Embla API once ready, for external control."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

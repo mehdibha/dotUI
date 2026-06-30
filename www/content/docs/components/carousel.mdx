@@ -1,0 +1,55 @@
+---
+title: Carousel
+description: A slides carousel with arrows, dots, and autoplay, powered by Embla.
+links:
+  - label: Embla
+    href: https://www.embla-carousel.com
+wip: true
+---
+
+<Demo name="carousel/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/carousel
+```
+
+## Usage
+
+Compose slides inside `CarouselContent` / `CarouselItem`, then add `CarouselPrevious`, `CarouselNext`, and `CarouselDots`. The arrows and dots are React Aria; [Embla](https://www.embla-carousel.com) is the scroll engine (installed as a dependency).
+
+```tsx
+import {
+  Carousel,
+  CarouselContent,
+  CarouselDots,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
+```
+
+```tsx
+<Carousel opts={{ loop: true }}>
+  <CarouselContent>
+    <CarouselItem>Slide 1</CarouselItem>
+    <CarouselItem>Slide 2</CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+  <CarouselDots />
+</Carousel>
+```
+
+## Examples
+
+<Examples>
+  <Example name="carousel/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### Carousel
+
+<Reference name="carousel" />

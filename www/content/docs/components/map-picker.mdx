@@ -1,0 +1,47 @@
+---
+title: Map Picker
+description: A map location picker for selecting a coordinate by clicking the map or dragging a marker.
+links:
+  - label: Leaflet
+    href: https://leafletjs.com
+  - label: react-leaflet
+    href: https://react-leaflet.js.org
+wip: true
+---
+
+<Demo name="map-picker/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/map-picker
+```
+
+## Usage
+
+Render `MapPicker` with an initial coordinate. Click anywhere on the map or drag
+the marker to pick a location; read the selected `{ lat, lng }` from `onChange`.
+
+```tsx
+import { MapPicker } from '@/components/ui/map-picker'
+```
+
+```tsx
+<MapPicker
+  defaultValue={{ lat: 37.7749, lng: -122.4194 }}
+  zoom={12}
+  onChange={(value) => setLocation(value)}
+/>
+```
+
+## Examples
+
+<Examples>
+  <Example name="map-picker/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### MapPicker
+
+<Reference name="map-picker" />

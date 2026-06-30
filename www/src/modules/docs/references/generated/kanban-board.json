@@ -1,0 +1,110 @@
+{
+  "name": "KanbanBoardProps",
+  "description": "The board root. Wraps the drag-and-drop context and implements moving cards\nwithin and between columns. Compose `KanbanColumn`s inside it, mirroring the\n`columns` data.",
+  "props": {
+    "columns": {
+      "type": "TColumn[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "typeParameter",
+          "name": "TColumn",
+          "constraint": {
+            "type": "link",
+            "id": "src/registry/ui/kanban/base.tsx:KanbanColumnData",
+            "name": "KanbanColumnData"
+          },
+          "default": {
+            "type": "link",
+            "id": "src/registry/ui/kanban/base.tsx:KanbanColumnData",
+            "name": "KanbanColumnData"
+          }
+        }
+      },
+      "description": "The columns and their cards. The board reorders this on drag.",
+      "required": true
+    },
+    "onColumnsChange": {
+      "type": "(columns: TColumn[]) => void",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "columns",
+            "value": {
+              "type": "array",
+              "elementType": {
+                "type": "typeParameter",
+                "name": "TColumn",
+                "constraint": {
+                  "type": "link",
+                  "id": "src/registry/ui/kanban/base.tsx:KanbanColumnData",
+                  "name": "KanbanColumnData"
+                },
+                "default": {
+                  "type": "link",
+                  "id": "src/registry/ui/kanban/base.tsx:KanbanColumnData",
+                  "name": "KanbanColumnData"
+                }
+              }
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Called with the next column layout after a card is moved or reordered.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  },
+  "typeLinks": {
+    "src/registry/ui/kanban/base.tsx:KanbanColumnData": {
+      "type": "interface",
+      "id": "src/registry/ui/kanban/base.tsx:KanbanColumnData",
+      "name": "KanbanColumnData",
+      "extends": [],
+      "properties": {
+        "id": {
+          "type": "property",
+          "name": "id",
+          "value": {
+            "type": "identifier",
+            "name": "UniqueIdentifier"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": ""
+        },
+        "items": {
+          "type": "property",
+          "name": "items",
+          "value": {
+            "type": "array",
+            "elementType": {
+              "type": "link",
+              "id": "src/registry/ui/kanban/base.tsx:KanbanItem",
+              "name": "KanbanItem"
+            }
+          },
+          "optional": false,
+          "readonly": false,
+          "description": ""
+        }
+      },
+      "typeParameters": [],
+      "description": "A column and the cards it holds. Add column fields (e.g. a `title`) freely."
+    }
+  }
+}

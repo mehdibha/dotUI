@@ -1,0 +1,22 @@
+{
+  "name": "VideoCallUiProps",
+  "description": "The container for a video call. Renders a dark stage that auto-lays out its\nparticipant tiles into a responsive grid. Pair it with a `VideoCallControls`\nbar to build a complete call surface.",
+  "extendsElement": "div",
+  "props": {
+    "columns": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Number of columns in the tile grid. When omitted, the grid lays out\nautomatically: 1 tile → 1 column, 2 → 2 columns, 3 or more → 3 columns."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

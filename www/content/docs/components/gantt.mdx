@@ -1,0 +1,57 @@
+---
+title: Gantt
+description: A Gantt chart lays out tasks across a horizontal date axis to visualize a schedule.
+wip: true
+---
+
+<Demo name="gantt/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/gantt
+```
+
+## Usage
+
+Pass a list of tasks, each with a `start` and `end` date. The timeline range is
+derived from the tasks unless you set `start` and `end` explicitly.
+
+```tsx
+import { Gantt } from '@/components/ui/gantt'
+```
+
+```tsx
+<Gantt
+  tasks={[
+    {
+      id: 'design',
+      name: 'Design',
+      start: new Date('2025-01-01'),
+      end: new Date('2025-01-05'),
+    },
+    {
+      id: 'build',
+      name: 'Build',
+      start: new Date('2025-01-04'),
+      end: new Date('2025-01-12'),
+    },
+  ]}
+/>
+```
+
+## Examples
+
+<Examples>
+  <Example name="gantt/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### Gantt
+
+<Reference name="gantt" />
+
+### GanttTask
+
+<Reference name="gantt-task" />

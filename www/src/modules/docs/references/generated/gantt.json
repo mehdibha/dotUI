@@ -1,0 +1,117 @@
+{
+  "name": "GanttProps",
+  "description": "A Gantt chart lays out tasks across a horizontal date axis, with a sidebar of\ntask names beside a scrollable timeline. Each task renders a positioned bar\nwhose offset and width are derived from its start and end dates.",
+  "extendsElement": "div",
+  "props": {
+    "tasks": {
+      "type": "readonly GanttTask[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "link",
+          "id": "src/registry/ui/gantt/types.ts:GanttTask",
+          "name": "GanttTask"
+        }
+      },
+      "description": "The tasks to lay out on the timeline.",
+      "required": true
+    },
+    "start": {
+      "type": "Date",
+      "detailedType": "Date | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Date"
+      },
+      "description": "Start of the visible timeline range. Defaults to the earliest task start,\npadded by two days."
+    },
+    "end": {
+      "type": "Date",
+      "detailedType": "Date | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Date"
+      },
+      "description": "End of the visible timeline range. Defaults to the latest task end, padded\nby two days."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  },
+  "typeLinks": {
+    "src/registry/ui/gantt/types.ts:GanttTask": {
+      "type": "interface",
+      "id": "src/registry/ui/gantt/types.ts:GanttTask",
+      "name": "GanttTask",
+      "extends": [],
+      "properties": {
+        "color": {
+          "type": "property",
+          "name": "color",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Tailwind background class applied to the task bar."
+        },
+        "end": {
+          "type": "property",
+          "name": "end",
+          "value": {
+            "type": "identifier",
+            "name": "Date"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "End date of the task (inclusive)."
+        },
+        "id": {
+          "type": "property",
+          "name": "id",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Unique identifier for the task."
+        },
+        "name": {
+          "type": "property",
+          "name": "name",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Display name shown in the sidebar and inside the task bar."
+        },
+        "start": {
+          "type": "property",
+          "name": "start",
+          "value": {
+            "type": "identifier",
+            "name": "Date"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Start date of the task (inclusive)."
+        }
+      },
+      "typeParameters": [],
+      "description": "A single task plotted on the Gantt timeline."
+    }
+  }
+}

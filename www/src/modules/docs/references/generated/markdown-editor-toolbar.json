@@ -1,0 +1,14 @@
+{
+  "name": "MarkdownEditorToolbarProps",
+  "description": "The formatting toolbar. Renders the built-in bold / italic / list / link /\ncode actions and the Write/Preview tab list by default; pass children to\nsupply your own set of `MarkdownEditorAction` buttons.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "MarkdownEditorPreviewProps",
+  "description": "The Preview tab panel: renders the markdown value with `react-markdown` and\n`remark-gfm`, styled with a small prose-like set of classes.",
+  "extendsElement": "div",
+  "props": {
+    "components": {
+      "type": "Components",
+      "detailedType": "Components | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Components"
+      },
+      "description": "Override the `react-markdown` component map for custom element rendering."
+    },
+    "placeholder": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Text shown when there is nothing to preview.",
+      "default": "\"Nothing to preview.\""
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

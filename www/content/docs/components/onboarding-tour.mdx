@@ -1,0 +1,69 @@
+---
+title: Onboarding Tour
+description: A guided product tour that highlights elements with coachmark popovers.
+links:
+  - label: Driver.js
+    href: https://driverjs.com
+wip: true
+---
+
+<Demo name="onboarding-tour/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/onboarding-tour
+```
+
+## Usage
+
+`OnboardingTour` is a thin wrapper around [driver.js](https://driverjs.com). You give it an ordered list of `steps` — each targets an element by CSS selector and shows a popover — and it renders a `Button` that starts the tour. For full control, use the `useOnboardingTour` hook instead and trigger the tour from your own UI.
+
+```tsx
+import { OnboardingTour } from '@/components/ui/onboarding-tour'
+import type { DriveStep } from 'driver.js'
+```
+
+```tsx
+const steps: DriveStep[] = [
+  {
+    element: '#search',
+    popover: { title: 'Search', description: 'Jump to anything from here.' },
+  },
+  {
+    element: '#settings',
+    popover: { title: 'Settings', description: 'Manage your workspace.' },
+  },
+]
+
+;<OnboardingTour steps={steps}>Start tour</OnboardingTour>
+```
+
+For a custom trigger, call the `useOnboardingTour` hook and wire `start` to any control:
+
+```tsx
+import { useOnboardingTour } from '@/components/ui/onboarding-tour'
+
+function Toolbar() {
+  const tour = useOnboardingTour(steps)
+  return <Button onPress={() => tour.start()}>Take the tour</Button>
+}
+```
+
+## Examples
+
+<Examples>
+  <Example name="onboarding-tour/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### OnboardingTour
+
+<Reference name="onboarding-tour" />
+
+### useOnboardingTour
+
+`useOnboardingTour(steps, options?)` returns an imperative handle for driving the tour.
+
+<Reference name="onboarding-tour-handle" />

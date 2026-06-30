@@ -1,0 +1,72 @@
+---
+title: Kanban
+description: A drag-and-drop kanban board with columns and cards, powered by dnd-kit.
+links:
+  - label: dnd-kit
+    href: https://dndkit.com
+wip: true
+---
+
+<Demo name="kanban/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/kanban
+```
+
+## Usage
+
+Compose `KanbanColumn`s inside a controlled `KanbanBoard` (`columns` + `onColumnsChange`); each column holds a `KanbanCardList` of `KanbanCard`s. Cards drag within and between columns. The drag chrome is dotUI; [dnd-kit](https://dndkit.com) is the engine (installed as a dependency).
+
+```tsx
+import {
+  KanbanBoard,
+  KanbanCard,
+  KanbanCardList,
+  KanbanColumn,
+  KanbanColumnCount,
+  KanbanColumnHeader,
+  KanbanColumnTitle,
+} from '@/components/ui/kanban'
+```
+
+```tsx
+<KanbanBoard columns={columns} onColumnsChange={setColumns}>
+  {(column) => (
+    <KanbanColumn id={column.id}>
+      <KanbanColumnHeader>
+        <KanbanColumnTitle>{column.title}</KanbanColumnTitle>
+        <KanbanColumnCount>{column.cards.length}</KanbanColumnCount>
+      </KanbanColumnHeader>
+      <KanbanCardList>
+        {column.cards.map((card) => (
+          <KanbanCard key={card.id} id={card.id}>
+            {card.title}
+          </KanbanCard>
+        ))}
+      </KanbanCardList>
+    </KanbanColumn>
+  )}
+</KanbanBoard>
+```
+
+## Examples
+
+<Examples>
+  <Example name="kanban/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### KanbanBoard
+
+<Reference name="kanban-board" />
+
+### KanbanColumn
+
+<Reference name="kanban-column" />
+
+### KanbanCard
+
+<Reference name="kanban-card" />
