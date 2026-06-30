@@ -42,6 +42,7 @@ import UiDropZone from "@/registry/ui/drop-zone/meta";
 import UiEmpty from "@/registry/ui/empty/meta";
 import UiField from "@/registry/ui/field/meta";
 import UiFileTrigger from "@/registry/ui/file-trigger/meta";
+import UiFlowEditor from "@/registry/ui/flow-editor/meta";
 import UiGroup from "@/registry/ui/group/meta";
 import UiInput from "@/registry/ui/input/meta";
 import UiKbd from "@/registry/ui/kbd/meta";
@@ -116,6 +117,7 @@ export const registryUi: RegistryItem[] = [
 	UiEmpty,
 	UiField,
 	UiFileTrigger,
+	UiFlowEditor,
 	UiGroup,
 	UiInput,
 	UiKbd,
