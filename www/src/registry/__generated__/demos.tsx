@@ -1305,6 +1305,10 @@ export const DemosIndex: Record<
 		files: ["ui/drop-zone/demos/visual-feedback.tsx"],
 		component: React.lazy(() => import("@/registry/ui/drop-zone/demos/visual-feedback")),
 	},
+	"emoji-picker/demos/default": {
+		files: ["ui/emoji-picker/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/emoji-picker/demos/default")),
+	},
 	"empty/demos/basic": {
 		files: ["ui/empty/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/empty/demos/basic")),
