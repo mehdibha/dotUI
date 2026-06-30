@@ -1,0 +1,30 @@
+{
+  "name": "VoiceMessageProps",
+  "description": "A chat-style voice message bubble: a play/pause control, a `wavesurfer.js`\nwaveform, and an elapsed/total duration readout. Click or drag the waveform\nto seek. Theming (wave and progress colors) is resolved from dotUI tokens at\nruntime.",
+  "extendsElement": "div",
+  "props": {
+    "src": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The audio source URL to play.",
+      "required": true
+    },
+    "duration": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Total duration in seconds, shown before the audio metadata loads. Once the\nwaveform is ready the real duration replaces it."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

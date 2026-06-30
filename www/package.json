@@ -63,6 +63,7 @@
     "ts-morph": "^28.0.0",
     "tw-animate-css": "^1.3.5",
     "unist-util-visit": "^5.0.0",
+    "wavesurfer.js": "^7.12.8",
     "zod": "^4.2.1"
   },
   "devDependencies": {
