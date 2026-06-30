@@ -16,7 +16,6 @@ import {
   PageHeaderHeading,
   PageLayout,
 } from '@/modules/docs/page-layout'
-import { PreviewPresetBar } from '@/modules/docs/preset-control'
 import { TOC, TOCItems, TOCProvider } from '@/modules/docs/toc'
 import browserCollections from '@/.source/browser'
 
@@ -131,10 +130,6 @@ const clientLoader = browserCollections.docs.createClientLoader({
     }: { url: string; rawContent: string; neighbours: SerializedNeighbours },
   ) {
     const hasToc = toc?.length
-    // Only the component pages and the gallery (all under /docs/components) hold
-    // themed previews, so the preset bar belongs there and nowhere else in docs.
-    const showPresetBar =
-      url === '/docs/components' || url.startsWith('/docs/components/')
 
     return (
       <TOCProvider toc={toc}>
@@ -157,7 +152,6 @@ const clientLoader = browserCollections.docs.createClientLoader({
               </div>
               <div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_40%,transparent)] via-[color-mix(in_oklab,var(--color-border)_90%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
             </div>
-            {showPresetBar && <PreviewPresetBar />}
             {/* Tablet/mobile fallback for the right-rail TOC, which is xl-only.
                 Below xl there's otherwise no in-page navigation at all. */}
             {hasToc ? (

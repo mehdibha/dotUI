@@ -1,4 +1,4 @@
-export { PresetSelector, PreviewPresetBar } from './preset-selector'
+export { PresetSelector, PreviewControls } from './preset-selector'
 export { useResolvedPreset } from './resolve'
 export {
   setSelectedMode,

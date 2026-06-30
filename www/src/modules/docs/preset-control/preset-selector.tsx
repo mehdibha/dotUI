@@ -142,16 +142,17 @@ export function PreviewModeToggle({ className }: { className?: string }) {
 }
 
 /**
- * The in-content preview controls: a slim bar at the top of the docs body with
- * the design-system preset (left) and the light/dark mode (right). It lives with
- * the previews (not the site header) so its scope reads honestly — it themes the
- * component previews below, not the surrounding docs chrome.
+ * The per-demo preview controls: a slim header row (design-system preset + light/
+ * dark mode), top-left, that sits in its OWN space at the top of each demo /
+ * playground frame — not absolutely positioned over the preview. The controls are
+ * site chrome (outside DemoPreset), so a forced mode themes the canvas below, not
+ * the toolbar. The choice is global, so every demo's controls stay in sync.
  */
-export function PreviewPresetBar({ className }: { className?: string }) {
+export function PreviewControls({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex items-center justify-between gap-2 rounded-lg border bg-card p-1.5 pl-2',
+        'flex items-center gap-2 border-b bg-card px-2 py-1.5',
         className,
       )}
     >

@@ -16,6 +16,7 @@ import { renderCode } from '@/modules/docs/codegen/code-template'
 import type { CodeTemplate } from '@/modules/docs/codegen/code-template'
 import { DemoPreset } from '@/modules/docs/demo-preset'
 import { DynamicPre } from '@/modules/docs/dynamic-pre'
+import { PreviewControls } from '@/modules/docs/preset-control'
 
 import { defaultControlValues } from './control-defaults'
 import { availableIcons, Controls } from './controls'
@@ -118,6 +119,7 @@ export function InteractiveDemo({
 
   return (
     <div className={cn('overflow-hidden rounded-lg border', className)}>
+      <PreviewControls />
       <div className={cn('flex flex-col', horizontal && 'md:flex-row')}>
         {/* Preview — a themed canvas (`bg-bg` inside DemoPreset) so a forced
             light/dark mode and the preset theme the whole stage, not just the
