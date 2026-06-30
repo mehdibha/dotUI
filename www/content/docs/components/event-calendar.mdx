@@ -1,0 +1,99 @@
+---
+title: Event Calendar
+description: A month-grid calendar that displays events as colored chips.
+wip: true
+links:
+  - label: date-fns
+    href: https://date-fns.org/
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/event-calendar
+```
+
+## Usage
+
+Pass an array of `events` and an optional starting `month`. The calendar renders a
+month grid with each event shown as a colored chip on its day.
+
+```tsx
+import { EventCalendar } from '@/components/ui/event-calendar'
+```
+
+```tsx
+<EventCalendar
+  events={[{ id: '1', title: 'Standup', date: new Date(), color: 'primary' }]}
+/>
+```
+
+Control the visible month with `month` and `onMonthChange`.
+
+```tsx
+import { useState } from 'react'
+
+const [month, setMonth] = useState(new Date())
+
+;<EventCalendar events={events} month={month} onMonthChange={setMonth} />
+```
+
+## Composition
+
+For full control, compose the calendar from its parts.
+
+```tsx
+import {
+  EventCalendar,
+  EventCalendarHeader,
+  EventCalendarHeading,
+  EventCalendarNav,
+  EventCalendarGrid,
+} from '@/components/ui/event-calendar'
+```
+
+```tsx
+<EventCalendar events={events}>
+  <EventCalendarHeader>
+    <EventCalendarHeading />
+    <EventCalendarNav />
+  </EventCalendarHeader>
+  <EventCalendarGrid />
+</EventCalendar>
+```
+
+## Examples
+
+<Examples>
+  <Example name="event-calendar/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### EventCalendar
+
+<Reference name="event-calendar" />
+
+### EventCalendarHeader
+
+<Reference name="event-calendar-header" />
+
+### EventCalendarHeading
+
+<Reference name="event-calendar-heading" />
+
+### EventCalendarNav
+
+<Reference name="event-calendar-nav" />
+
+### EventCalendarGrid
+
+<Reference name="event-calendar-grid" />
+
+### EventCalendarDay
+
+<Reference name="event-calendar-day" />
+
+### EventCalendarChip
+
+<Reference name="event-calendar-chip" />
