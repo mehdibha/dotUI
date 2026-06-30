@@ -23,6 +23,7 @@ import {
   DEFAULT_CODE_OPTIONS,
   flattenClassArrays,
 } from './code-options'
+import { emitStylexComponent } from './emit-stylex'
 import { flatten } from './flatten'
 import { buildScalarVarMap, resolveClasses } from './resolve-classes'
 import { serializeTvConfig } from './serialize'
@@ -122,6 +123,22 @@ export interface PublishInput {
   preset: PublishPreset
 }
 
+/**
+ * The Tailwind styling path: serialize the resolved IR to a `tv(...)` literal
+ * and substitute it into the template. Honors the `classArrays` code option.
+ */
+function renderTailwind(
+  template: string,
+  resolved: ReturnType<typeof resolveClasses>,
+  classArrays: boolean,
+): string {
+  // Collapse grouped class arrays to one string per slot/variant when the user
+  // prefers one-line-per-slot tv configs.
+  const layer = classArrays ? resolved : flattenClassArrays(resolved)
+  const literal = serializeTvConfig(layer)
+  return template.replace(TV_CONFIG_PLACEHOLDER, literal)
+}
+
 export function publish({ publishable, preset }: PublishInput): PublishedItem {
   const { template, stylesConfig, meta, extraFiles } = publishable
   const paramSelections = preset.componentParams[meta.name] ?? {}
@@ -139,17 +156,31 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
   const varMap = buildScalarVarMap(meta, paramSelections)
   let resolved = resolveClasses(flat, varMap)
 
-  // 2b. Code-style: collapse grouped class arrays to a single string per
-  // slot/variant when the user prefers one-line-per-slot tv configs.
-  if (!codeOptions.classArrays) {
-    resolved = flattenClassArrays(resolved)
+  // 3. Render the styling. StyleX and Tailwind emit from the SAME resolved IR;
+  // the style engine only changes how the leaves are expressed.
+  let content: string
+  let usedStylex = false
+  if (codeOptions.styleEngine === 'stylex') {
+    const stylex = emitStylexComponent({
+      template,
+      flat: resolved,
+      meta,
+      placeholder: TV_CONFIG_PLACEHOLDER,
+    })
+    if (stylex.handled) {
+      content = stylex.content
+      usedStylex = true
+    } else {
+      // Shape outside the emitter's scope (slots / compound variants). Keep the
+      // Tailwind output rather than ship broken code — this component's StyleX
+      // port is part of the rollout (see the dual-backend research doc).
+      content = renderTailwind(template, resolved, codeOptions.classArrays)
+    }
+  } else {
+    content = renderTailwind(template, resolved, codeOptions.classArrays)
   }
 
-  // 3+4. Serialize and substitute.
-  const literal = serializeTvConfig(resolved)
-  let content = template.replace(TV_CONFIG_PLACEHOLDER, literal)
-
-  // 4b. Resolve the source's `// MARK:` markers: always drop the internal
+  // 4. Resolve the source's `// MARK:` markers: always drop the internal
   // `…Styles` injection marker; render the rest as section separators when the
   // user wants them, or drop them too.
   content = applySectionComments(content, codeOptions.sectionComments)
@@ -165,6 +196,13 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
     content: extraFiles?.[file.path] ?? content,
   }))
 
+  // A StyleX export imports `@stylexjs/stylex` and needs the StyleX build plugin —
+  // declare the runtime dependency so `shadcn add` installs it. (The build-plugin
+  // setup is a one-time project step, surfaced in the init bundle / docs.)
+  const dependencies = usedStylex
+    ? [...new Set([...(meta.dependencies ?? []), '@stylexjs/stylex'])]
+    : meta.dependencies
+
   const itemShape = {
     name: meta.name,
     type: meta.type,
@@ -172,7 +210,7 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
     ...(meta.description !== undefined
       ? { description: meta.description }
       : {}),
-    ...(meta.dependencies ? { dependencies: meta.dependencies } : {}),
+    ...(dependencies && dependencies.length > 0 ? { dependencies } : {}),
     ...(meta.registryDependencies
       ? {
           registryDependencies:

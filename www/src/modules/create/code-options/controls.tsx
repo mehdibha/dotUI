@@ -109,19 +109,34 @@ function EnumRow<T extends string>({
 export function CodeOptionsControls() {
   const { designSystem, setCodeOption } = useDesignSystem()
   const opts = designSystem.codeOptions ?? DEFAULT_CODE_OPTIONS
+  const isStylex = opts.styleEngine === 'stylex'
 
   return (
     <div className="flex flex-col gap-5">
       <EnumRow
-        label="Class lists"
-        description="tv() base & slot classes"
-        value={opts.classArrays ? 'arrays' : 'string'}
+        label="Style engine"
+        description="The styling library the export uses"
+        value={opts.styleEngine}
         options={[
-          { value: 'arrays', label: 'Arrays' },
-          { value: 'string', label: 'String' },
+          { value: 'tailwind', label: 'Tailwind' },
+          { value: 'stylex', label: 'StyleX' },
         ]}
-        onChange={(v) => setCodeOption('classArrays', v === 'arrays')}
+        onChange={(v) => setCodeOption('styleEngine', v)}
       />
+      {/* `classArrays` only shapes the `tv()` config literal — meaningless for
+          the StyleX export, which has no class lists. Hide it there. */}
+      {!isStylex ? (
+        <EnumRow
+          label="Class lists"
+          description="tv() base & slot classes"
+          value={opts.classArrays ? 'arrays' : 'string'}
+          options={[
+            { value: 'arrays', label: 'Arrays' },
+            { value: 'string', label: 'String' },
+          ]}
+          onChange={(v) => setCodeOption('classArrays', v === 'arrays')}
+        />
+      ) : null}
       <SwitchRow
         label="Section separators"
         description="Divide the file with comment rules"
