@@ -72,11 +72,11 @@ Blocks and layouts ship as a new family of registry items under `www/src/registr
 | Plan | Title | Status |
 |---|---|---|
 | 000 | Phase 0 product decisions | DONE — resolved 2026-06-30 (one `Blocks` section; blocks consume the DS, zero new axes; one named `variant` tweak; resolved-at-publish canonical file via loader's enum-with-files; empty/optional; starter-not-editor; `/blocks` page; coherence + app-shell-axis deferred) |
-| [001](001-block-registry-items.md) | Block & layout registry items + variant model | TODO |
-| [002](002-publisher-and-manifest.md) | Publisher + `registryBlocks` manifest + init bundling | TODO |
-| [003](003-create-blocks-section.md) | `/create` Blocks section | TODO |
-| [004](004-blocks-explore-page.md) | Public `/blocks` explorer page | TODO |
-| [005](005-build-publish-and-verification.md) | Build / publish / drift + verification | TODO |
+| [001](001-block-registry-items.md) | Block & layout registry items + variant model | DONE — `BlockRegistryItem`/`BlockCategory` in `registry/types.ts`; `registry/blocks/login/` ships 3 token-only variants (centered/split/minimal) via enum-with-files; no `ComponentGroup` |
+| [002](002-publisher-and-manifest.md) | Publisher + `registryBlocks` manifest + init bundling | DONE — `registryBlocks` globbed from `blocks/*`; `isBaseFile`/`buildOne` accept `blocks/`; drift guards + dep-drift cover all variant files; `/r/login` resolves variant → canonical `components/login.tsx`; `/r/init` bundles included blocks as absolute deps |
+| [003](003-create-blocks-section.md) | `/create` Blocks section | DONE — `Blocks` menu entry (`modules/create/blocks/`); explorer add → slot-card + variant chooser; `includedBlocks` in DS state/codec/storage; `group-examples/block-login.tsx` previews live + morphs on variant change; verified live |
+| [004](004-blocks-explore-page.md) | Public `/blocks` explorer page | DONE — plain route `_app/blocks.tsx` + `modules/blocks/`; `PageHero`/`ShowcaseCard` reused; live scaled iframe preview in visitor's DS; editor deeplink (pre-adds block); nav entry; verified live |
+| [005](005-build-publish-and-verification.md) | Build / publish / drift + verification | DONE — `build:registry`/`check`/`typecheck` green; 240 tests pass (codec gains 2 included-blocks cases); `/r/login` + `/r/init` verified over HTTP; login axis-robust across light/dark × centered/split. Follow-ups: more starter blocks (dashboard/settings/app-shell), a detail modal, coherence helper |
 
 ## Verified gotchas (confirmed in the working tree at `744a9179`)
 

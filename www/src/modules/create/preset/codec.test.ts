@@ -48,3 +48,24 @@ describe('preset codec — color recipe', () => {
     expect(decodePreset(encoded ?? '').color).toEqual(custom)
   })
 })
+
+describe('preset codec — included blocks', () => {
+  it('omits included blocks when none are added', () => {
+    expect(encodePreset({ ...DEFAULTS, includedBlocks: [] })).toBeUndefined()
+  })
+
+  it('round-trips included blocks and their variant selection', () => {
+    const encoded = encodePreset({
+      ...DEFAULTS,
+      includedBlocks: ['login'],
+      componentParams: {
+        ...DEFAULTS.componentParams,
+        login: { variant: 'split' },
+      },
+    })
+    expect(encoded).toBeTypeOf('string')
+    const decoded = decodePreset(encoded ?? '')
+    expect(decoded.includedBlocks).toEqual(['login'])
+    expect(decoded.componentParams.login).toEqual({ variant: 'split' })
+  })
+})
