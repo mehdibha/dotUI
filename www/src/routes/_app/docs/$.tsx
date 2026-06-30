@@ -16,6 +16,7 @@ import {
   PageHeaderHeading,
   PageLayout,
 } from '@/modules/docs/page-layout'
+import { PresetSelectorSlot } from '@/modules/docs/preset-control'
 import { TOC, TOCItems, TOCProvider } from '@/modules/docs/toc'
 import browserCollections from '@/.source/browser'
 
@@ -146,6 +147,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
                   </PageHeaderDescription>
                 </div>
                 <div className="flex shrink-0 items-center gap-2">
+                  <PresetSelectorSlot place="page" />
                   <DocsPager neighbours={neighbours} />
                   <DocsCopyPage content={rawContent} url={url} />
                 </div>

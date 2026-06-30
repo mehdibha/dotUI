@@ -6,6 +6,7 @@ import { Button } from '@/registry/ui/button'
 
 import { CodeBlock, Pre } from './code-block'
 import { DemoPreset } from './demo-preset'
+import { PresetSelectorSlot } from './preset-control'
 
 // ============================================================================
 // Slot Components
@@ -74,7 +75,11 @@ export function Demo({ component: Component, children, ...props }: DemoProps) {
   return (
     <div {...props}>
       {/* Preview frame */}
-      <div className="flex min-h-56 items-center justify-center overflow-x-auto rounded-t-lg border bg-bg p-6 sm:p-10">
+      <div className="relative flex min-h-56 items-center justify-center overflow-x-auto rounded-t-lg border bg-bg p-6 sm:p-10">
+        <PresetSelectorSlot
+          place="each"
+          className="absolute top-2 right-2 z-10"
+        />
         <DemoPreset>
           <Component />
         </DemoPreset>

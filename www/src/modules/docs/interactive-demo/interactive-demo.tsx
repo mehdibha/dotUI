@@ -14,7 +14,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/registry/ui/card'
 import { CodeBlock } from '@/modules/docs/code-block'
 import { renderCode } from '@/modules/docs/codegen/code-template'
 import type { CodeTemplate } from '@/modules/docs/codegen/code-template'
+import { DemoPreset } from '@/modules/docs/demo-preset'
 import { DynamicPre } from '@/modules/docs/dynamic-pre'
+import { PresetSelectorSlot } from '@/modules/docs/preset-control'
 
 import { defaultControlValues } from './control-defaults'
 import { availableIcons, Controls } from './controls'
@@ -119,8 +121,12 @@ export function InteractiveDemo({
     <div className={cn('overflow-hidden rounded-lg border', className)}>
       <div className={cn('flex flex-col', horizontal && 'md:flex-row')}>
         {/* Preview — borderless open space (no card, no backdrop); the demo just sits in it */}
-        <div className="flex min-h-56 flex-1 items-center justify-center p-10">
-          {previewElement}
+        <div className="relative flex min-h-56 flex-1 items-center justify-center p-10">
+          <PresetSelectorSlot
+            place="each"
+            className="absolute top-2 right-2 z-10"
+          />
+          <DemoPreset>{previewElement}</DemoPreset>
         </div>
 
         {/* Controls — always grouped in a titled card; a fixed-width column to the right at md+

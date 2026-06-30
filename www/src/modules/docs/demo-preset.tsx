@@ -3,17 +3,19 @@
 import type { ReactNode } from 'react'
 
 import { DesignSystemProvider } from '@/lib/styles'
-import { useStoredPreset } from '@/modules/create/preset/storage'
+
+import { useResolvedPreset } from './preset-control'
 
 /**
- * Renders a docs demo subtree in the user's selected design-system preset (the
- * one they build at /create, persisted in localStorage). Scoped, so only the
- * demo re-themes — the surrounding docs chrome stays in the site theme — and any
- * overlays the demo portals are themed too. When the user hasn't customized
- * anything it resolves to the defaults and injects nothing.
+ * Renders a docs demo subtree in the globally selected design-system preset —
+ * either one of the curated presets or the user's own /create design system,
+ * chosen via the preset selector (see preset-control). Scoped, so only the demo
+ * re-themes — the surrounding docs chrome stays in the site theme — and any
+ * overlays the demo portals are themed too. When the selection resolves to the
+ * defaults it injects nothing.
  */
 export function DemoPreset({ children }: { children: ReactNode }) {
-  const ds = useStoredPreset()
+  const ds = useResolvedPreset()
   return (
     <DesignSystemProvider
       params={ds.componentParams}
