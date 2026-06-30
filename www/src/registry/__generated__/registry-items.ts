@@ -7,6 +7,7 @@ import LibTextareaCaret from "@/registry/lib/textarea-caret/meta";
 import LibUtils from "@/registry/lib/utils/meta";
 import UiAccordion from "@/registry/ui/accordion/meta";
 import UiAlert from "@/registry/ui/alert/meta";
+import UiAudioPlayer from "@/registry/ui/audio-player/meta";
 import UiAvatar from "@/registry/ui/avatar/meta";
 import UiBadge from "@/registry/ui/badge/meta";
 import UiBreadcrumbs from "@/registry/ui/breadcrumbs/meta";
@@ -81,6 +82,7 @@ import type { RegistryItem } from "@/registry/types";
 export const registryUi: RegistryItem[] = [
 	UiAccordion,
 	UiAlert,
+	UiAudioPlayer,
 	UiAvatar,
 	UiBadge,
 	UiBreadcrumbs,
