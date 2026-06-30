@@ -67,6 +67,13 @@ function FlowEditor({
   const [nodes, _setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
 
+  // React Flow measures the DOM on mount, so it can't render during SSR /
+  // prerendering — gate it behind a client-only mount.
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const onConnect = React.useCallback(
     (connection: Connection) => {
       setEdges((eds) => addEdge(connection, eds))
@@ -76,21 +83,23 @@ function FlowEditor({
 
   return (
     <div className={root({ className })}>
-      <ReactFlow
-        className={flow()}
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        fitView
-        proOptions={{ hideAttribution: true }}
-        {...props}
-      >
-        <Background />
-        <Controls />
-        <MiniMap pannable zoomable />
-      </ReactFlow>
+      {mounted && (
+        <ReactFlow
+          className={flow()}
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          fitView
+          proOptions={{ hideAttribution: true }}
+          {...props}
+        >
+          <Background />
+          <Controls />
+          <MiniMap pannable zoomable />
+        </ReactFlow>
+      )}
     </div>
   )
 }
