@@ -28,6 +28,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	combobox: () => import("@/registry/ui/combobox/examples"),
 	command: () => import("@/registry/ui/command/examples"),
 	"context-menu": () => import("@/registry/ui/context-menu/examples"),
+	"data-grid": () => import("@/registry/ui/data-grid/examples"),
 	"date-field": () => import("@/registry/ui/date-field/examples"),
 	"date-picker": () => import("@/registry/ui/date-picker/examples"),
 	dialog: () => import("@/registry/ui/dialog/examples"),
