@@ -1865,6 +1865,10 @@ export const DemosIndex: Record<
 		files: ["ui/number-field/demos/with-input-group.tsx"],
 		component: React.lazy(() => import("@/registry/ui/number-field/demos/with-input-group")),
 	},
+	"onboarding-tour/demos/default": {
+		files: ["ui/onboarding-tour/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/onboarding-tour/demos/default")),
+	},
 	"otp-field/demos/alphanumeric": {
 		files: ["ui/otp-field/demos/alphanumeric.tsx"],
 		component: React.lazy(() => import("@/registry/ui/otp-field/demos/alphanumeric")),

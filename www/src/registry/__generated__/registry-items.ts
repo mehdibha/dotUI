@@ -52,6 +52,7 @@ import UiMention from "@/registry/ui/mention/meta";
 import UiMenu from "@/registry/ui/menu/meta";
 import UiModal from "@/registry/ui/modal/meta";
 import UiNumberField from "@/registry/ui/number-field/meta";
+import UiOnboardingTour from "@/registry/ui/onboarding-tour/meta";
 import UiOtpField from "@/registry/ui/otp-field/meta";
 import UiPagination from "@/registry/ui/pagination/meta";
 import UiPopover from "@/registry/ui/popover/meta";
@@ -126,6 +127,7 @@ export const registryUi: RegistryItem[] = [
 	UiMenu,
 	UiModal,
 	UiNumberField,
+	UiOnboardingTour,
 	UiOtpField,
 	UiPagination,
 	UiPopover,
