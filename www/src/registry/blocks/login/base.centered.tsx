@@ -21,7 +21,9 @@ export default function Login() {
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <CardTitle>Welcome back</CardTitle>
-          <CardDescription>Sign in to your account to continue.</CardDescription>
+          <CardDescription>
+            Sign in to your account to continue.
+          </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <TextField isRequired>

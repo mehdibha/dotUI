@@ -13,7 +13,7 @@ export default function Login() {
       <div className="hidden flex-col justify-between bg-primary p-10 text-fg-on-primary lg:flex">
         <div className="text-lg font-semibold">Acme Inc.</div>
         <blockquote className="space-y-3">
-          <p className="text-2xl font-medium leading-snug">
+          <p className="text-2xl leading-snug font-medium">
             “This is the design system we wish we’d had from day one.”
           </p>
           <footer className="text-sm text-fg-on-primary/80">

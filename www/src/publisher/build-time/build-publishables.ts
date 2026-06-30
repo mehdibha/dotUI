@@ -169,8 +169,11 @@ async function buildOne({
   const baseFiles = collectBaseFiles(meta)
   if (baseFiles.length === 0) return 'skipped'
 
-  // Extract the styles config once per component (it's shared across enum-file variants).
-  const componentDir = path.join(registryDir, 'ui', meta.name)
+  // Extract the styles config once per component (it's shared across enum-file
+  // variants). Blocks live under `blocks/<name>/` and are styles-less, so the
+  // styles.ts / styles.css lookups below simply find nothing for them.
+  const scope = meta.type === 'registry:block' ? 'blocks' : 'ui'
+  const componentDir = path.join(registryDir, scope, meta.name)
   const stylesTsPath = path.join(componentDir, 'styles.ts')
   const hasStyles = existsSync(stylesTsPath)
   const stylesConfig: StylesConfig = hasStyles
@@ -309,12 +312,14 @@ export function collectBaseFiles(meta: RegistryItem): RegistryItemFile[] {
 }
 
 function isBaseFile(file: RegistryItemFile, componentName: string): boolean {
-  // We treat any tsx whose source path lives under `ui/<name>/` and starts with
-  // `base` as a base file.
+  // We treat any tsx whose source path lives under `ui/<name>/` or
+  // `blocks/<name>/` and starts with `base` as a base file. Blocks are
+  // styles-less compositions whose named variants are separate `base.<variant>`
+  // files (the `loader` enum-with-files shape), so they go through the same path.
   const segments = file.path.split('/')
   const last = segments.at(-1) ?? ''
   return (
-    segments[0] === 'ui' &&
+    (segments[0] === 'ui' || segments[0] === 'blocks') &&
     segments[1] === componentName &&
     last.startsWith('base') &&
     last.endsWith('.tsx')
