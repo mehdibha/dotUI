@@ -649,6 +649,10 @@ export const DemosIndex: Record<
 		files: ["ui/checkbox-group/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox-group/demos/uncontrolled")),
 	},
+	"code-block/demos/default": {
+		files: ["ui/code-block/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/code-block/demos/default")),
+	},
 	"color-area/demos/brand-color": {
 		files: ["ui/color-area/demos/brand-color.tsx"],
 		component: React.lazy(() => import("@/registry/ui/color-area/demos/brand-color")),

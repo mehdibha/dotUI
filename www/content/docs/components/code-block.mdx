@@ -1,0 +1,38 @@
+---
+title: Code Block
+description: A syntax-highlighted code snippet with a filename header and copy button.
+links:
+  - label: Shiki
+    href: https://shiki.style
+wip: true
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/code-block
+```
+
+## Usage
+
+Pass the snippet as `code` and the language as `lang`. Highlighting is done with [Shiki](https://shiki.style) using dual light/dark themes.
+
+```tsx
+import { CodeBlock } from '@/components/ui/code-block'
+```
+
+```tsx
+<CodeBlock title="app.tsx" lang="tsx" code={`export const answer = 42`} />
+```
+
+## Examples
+
+<Examples>
+  <Example name="code-block/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### CodeBlock
+
+<Reference name="code-block" />
