@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link as RouterLink, useLocation } from '@tanstack/react-router'
 import type * as PageTree from 'fumadocs-core/page-tree'
 import { SearchIcon } from 'lucide-react'
@@ -49,11 +50,17 @@ interface HeaderProps {
 }
 
 export function Header({ className, items = [] }: HeaderProps) {
-  const { pathname, searchStr } = useLocation()
+  const { pathname } = useLocation()
   // TEMP tweaker (#305): A/B the navbar dither that fights dark-gradient banding.
   // `?dither` / `?dither=on` enables it; `?dither=0.05` sets a custom opacity;
-  // absent or `?dither=off` keeps it off. Remove this block + the div once decided.
-  const ditherParam = new URLSearchParams(searchStr).get('dither')
+  // absent or `?dither=off` keeps it off. Read from the URL after mount — the home
+  // route is prerendered, so the router's searchStr is empty on first load even when
+  // the param is present; client-only keeps SSR/hydration in sync. Remove this block
+  // + the div once decided.
+  const [ditherParam, setDitherParam] = useState<string | null>(null)
+  useEffect(() => {
+    setDitherParam(new URLSearchParams(window.location.search).get('dither'))
+  }, [])
   const ditherEnabled =
     ditherParam !== null && !['off', '0', 'false'].includes(ditherParam)
   const ditherOpacity =
