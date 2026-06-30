@@ -1,0 +1,102 @@
+---
+title: Video Call UI
+description: A presentational video-call surface — a dark stage of participant tiles and a control bar.
+links:
+  - label: LiveKit React
+    href: https://docs.livekit.io/reference/components/react/
+wip: true
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/video-call-ui
+```
+
+## Usage
+
+`VideoCallUI` is the dark stage that auto-grids its `VideoCallTile` children. Compose it with a `VideoCallControls` bar to build a complete call surface.
+
+```tsx
+import {
+  VideoCallControlButton,
+  VideoCallControls,
+  VideoCallLeaveButton,
+  VideoCallTile,
+  VideoCallUI,
+} from '@/components/ui/video-call-ui'
+```
+
+```tsx
+<VideoCallUI>
+  <VideoCallTile name="Ada Lovelace" poster="/frames/ada.jpg" />
+  <VideoCallTile name="Alan Turing" isMuted />
+  <VideoCallTile name="Grace Hopper" isCameraOff />
+  <VideoCallControls className="col-span-full">
+    <VideoCallControlButton aria-label="Mute">
+      <MicIcon />
+    </VideoCallControlButton>
+    <VideoCallControlButton aria-label="Camera">
+      <VideoIcon />
+    </VideoCallControlButton>
+    <VideoCallLeaveButton />
+  </VideoCallControls>
+</VideoCallUI>
+```
+
+This component is presentational only — it owns the chrome, not the media. To wire a real call, keep your media engine (e.g. [LiveKit](https://docs.livekit.io/reference/components/react/)) as a peer dependency and map its state onto these tiles. With LiveKit, read participants with `useParticipants()` / `useTracks()` and render one `VideoCallTile` per participant, driving `isMuted` and `isCameraOff` from each track's publication. Attach the live stream by rendering a `VideoCallTileVideo` inside the tile and pointing the track's `attach()` target at it (or wrapping LiveKit's own `<VideoTrack />`).
+
+```tsx
+import { useTracks } from '@livekit/components-react'
+import { Track } from 'livekit-client'
+
+function CallGrid() {
+  const tracks = useTracks([Track.Source.Camera, Track.Source.Microphone])
+  return (
+    <VideoCallUI>
+      {tracks.map(({ participant, publication }) => (
+        <VideoCallTile
+          key={participant.identity}
+          name={participant.name}
+          isMuted={participant.isMicrophoneEnabled === false}
+          isCameraOff={participant.isCameraEnabled === false}
+        >
+          <VideoCallTileVideo ref={(el) => publication?.track?.attach(el)} />
+        </VideoCallTile>
+      ))}
+    </VideoCallUI>
+  )
+}
+```
+
+## Examples
+
+<Examples>
+  <Example name="video-call-ui/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### VideoCallUI
+
+<Reference name="video-call-ui" />
+
+### VideoCallTile
+
+<Reference name="video-call-tile" />
+
+### VideoCallTileVideo
+
+<Reference name="video-call-tile-video" />
+
+### VideoCallControls
+
+<Reference name="video-call-controls" />
+
+### VideoCallControlButton
+
+<Reference name="video-call-control-button" />
+
+### VideoCallLeaveButton
+
+<Reference name="video-call-leave-button" />

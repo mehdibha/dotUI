@@ -75,6 +75,7 @@ import UiToggleButtonGroup from "@/registry/ui/toggle-button-group/meta";
 import UiToggleButton from "@/registry/ui/toggle-button/meta";
 import UiTooltip from "@/registry/ui/tooltip/meta";
 import UiTree from "@/registry/ui/tree/meta";
+import UiVideoCallUi from "@/registry/ui/video-call-ui/meta";
 
 import type { RegistryItem } from "@/registry/types";
 
@@ -149,6 +150,7 @@ export const registryUi: RegistryItem[] = [
 	UiToggleButtonGroup,
 	UiTooltip,
 	UiTree,
+	UiVideoCallUi,
 ];
 
 export const registryLib: RegistryItem[] = [LibFocusStyles, LibResponsive, LibTextareaCaret, LibUtils];

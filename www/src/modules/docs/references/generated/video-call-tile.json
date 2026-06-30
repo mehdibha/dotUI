@@ -1,0 +1,48 @@
+{
+  "name": "VideoCallTileProps",
+  "description": "A single participant tile. Renders a 16:9 video area (poster, live `<video>`\nvia `VideoCallTileVideo`, or custom children), the participant's name label,\nand a muted-mic indicator. When the camera is off it falls back to an avatar.",
+  "extendsElement": "div",
+  "props": {
+    "name": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The participant's display name, shown in the bottom-left label and used to\nderive the avatar fallback initials."
+    },
+    "poster": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Poster image rendered in the video area, e.g. the last received frame or a\nthumbnail. Ignored when the camera is off."
+    },
+    "isMuted": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the participant's microphone is muted. Shows a muted-mic indicator.",
+      "default": "false"
+    },
+    "isCameraOff": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the participant's camera is off. Falls back to the avatar (or custom\nchildren) placeholder instead of the video area.",
+      "default": "false"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

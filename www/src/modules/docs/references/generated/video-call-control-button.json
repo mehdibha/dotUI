@@ -1,0 +1,57 @@
+{
+  "name": "VideoCallControlButtonProps",
+  "description": "An icon-only toggle button for the control bar (mic, camera, screen share).\nReflects its on/off state via `aria-pressed` and a danger style when inactive.",
+  "extendsElement": "button",
+  "props": {
+    "isActive": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the control is active (e.g. mic on, camera on). When `false`, the\nbutton reads as the \"off\" state and adopts the danger style.",
+      "default": "true"
+    },
+    "variant": {
+      "type": "\"danger\" | \"default\" | \"link\" | \"primary\" | \"quiet\" | \"warning\"",
+      "detailedType": "| 'danger'\n| 'default'\n| 'link'\n| 'primary'\n| 'quiet'\n| 'warning'\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "danger"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "default"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "link"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "primary"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "quiet"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "warning"
+          }
+        ]
+      },
+      "description": "The visual style of the underlying button. Overrides the active/inactive\ndefault styling when set."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
