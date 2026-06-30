@@ -79,15 +79,15 @@ Every config needs a `default` — and it **must match the current design** so n
 
 ## The panel
 
-Docked bottom-center, collapsed to a pill by default (a count badge shows how many controls are registered).
+A small **trigger** is always docked to a screen edge (default: centre-right; a count badge shows how many controls are registered). Drag it to reposition — it follows the cursor and **snaps to the nearest edge** (left/right) when you let go, keeping the height you dropped it at.
 
-- **Pill** → click to expand.
-- **Minimize** (–) → back to the pill.
-- **Hide** (×) → dismiss. Press **⌘ .** (or **Ctrl .**) anywhere to bring it back.
+- **Click the trigger** → opens the panel as a popover beside it (the trigger stays put).
+- **Close** (×), click outside, or press **Escape** → closes the popover.
+- **⌘ .** (or **Ctrl .**) → toggles the popover from anywhere.
 - **Reset** (↺) → all controls back to their defaults.
 - **Copy for AI** (⧉) → copies a summary of the current selections to paste back to the agent.
 
-State (values, collapsed/hidden, control order) persists in `localStorage` under `dotui:tweaker`, so a choice survives reloads and HMR edits to the feature file.
+State (open, side, vertical position, control values + order) persists in `localStorage` under `dotui:tweaker`, so it survives reloads and HMR edits to the feature file.
 
 ## How it stays out of production
 

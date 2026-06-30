@@ -82,10 +82,12 @@ export interface RegisteredControl {
 
 /** Floating-panel chrome state. */
 export interface TweakerUiState {
-  /** Collapsed to the pill (true) vs the full expanded panel (false). */
-  collapsed: boolean
-  /** Dismissed entirely; restore with ⌘. */
-  hidden: boolean
+  /** Whether the popover panel is open (the docked trigger is always visible). */
+  open: boolean
+  /** Which edge the trigger is docked to. */
+  side: 'left' | 'right'
+  /** Vertical position of the trigger as a fraction (0–1) of the viewport height. */
+  y: number
 }
 
 /** What we persist to localStorage. Versioned so a schema change can drop it cleanly. */

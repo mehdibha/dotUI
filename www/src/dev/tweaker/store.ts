@@ -33,8 +33,9 @@ import type {
 const STORAGE_KEY = 'dotui:tweaker'
 
 const DEFAULT_UI: TweakerUiState = {
-  collapsed: true,
-  hidden: false,
+  open: false,
+  side: 'right',
+  y: 0.5,
 }
 
 /* ------------------------------ module state ------------------------------ */
