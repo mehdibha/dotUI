@@ -23,13 +23,14 @@ import {
   DEFAULT_CODE_OPTIONS,
   flattenClassArrays,
 } from './code-options'
+import { TV_CONFIG_PLACEHOLDER } from './constants'
 import { emitStylexComponent } from './emit-stylex'
 import { flatten } from './flatten'
 import { buildScalarVarMap, resolveClasses } from './resolve-classes'
 import { serializeTvConfig } from './serialize'
 import type { Publishable, PublishPreset } from './types'
 
-export const TV_CONFIG_PLACEHOLDER = '%%TV_CONFIG%%'
+export { TV_CONFIG_PLACEHOLDER }
 
 /**
  * Names of registry items that live in the dotui registry — i.e. anything
