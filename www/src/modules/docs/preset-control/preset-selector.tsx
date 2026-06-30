@@ -15,6 +15,7 @@ import {
 } from '@/registry/ui/select'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+import { useDesignSystemName } from '@/modules/create/preset/storage'
 import { PRESETS } from '@/modules/presets/presets-data'
 
 import { presetAccent } from './resolve'
@@ -63,6 +64,9 @@ export function PresetSelector({
   placement = 'bottom',
 }: PresetSelectorProps) {
   const selected = useSelectedPreset()
+  // The user's own design system shows its name (defaults to "Untitled" until
+  // renamed at /create), not a generic label.
+  const yoursLabel = useDesignSystemName().trim() || 'Untitled'
 
   return (
     // The field slot is `w-full`; a `w-fit` wrapper keeps the control sized to
@@ -84,10 +88,10 @@ export function PresetSelector({
           <SelectValue />
         </SelectTrigger>
         <SelectContent placement={placement}>
-          <SelectItem id={YOURS} textValue="Your design system">
+          <SelectItem id={YOURS} textValue={yoursLabel}>
             <span className="flex items-center gap-2">
               <PresetSwatch id={YOURS} className="size-2.5" />
-              Your design system
+              {yoursLabel}
             </span>
           </SelectItem>
           {PRESETS.map((preset) => (
