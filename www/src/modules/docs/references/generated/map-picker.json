@@ -1,0 +1,85 @@
+{
+  "name": "MapPickerProps",
+  "description": "A map location picker built on Leaflet and OpenStreetMap. Click anywhere on\nthe map or drag the marker to pick a coordinate; the selection is reported as\n`{ lat, lng }` and the readout footer shows the current value.",
+  "extendsElement": "div",
+  "props": {
+    "value": {
+      "type": "LatLng",
+      "detailedType": "LatLng | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "LatLng"
+      },
+      "description": "The selected coordinate (controlled)."
+    },
+    "defaultValue": {
+      "type": "LatLng",
+      "detailedType": "LatLng | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "LatLng"
+      },
+      "description": "The initial coordinate (uncontrolled).",
+      "default": "{ lat: 48.8566, lng: 2.3522 }"
+    },
+    "onChange": {
+      "type": "((value: LatLng) => void)",
+      "detailedType": "((value: LatLng) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "LatLng",
+              "name": "LatLng"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Called with the new coordinate whenever the marker moves, whether from a\nmap click, a marker drag, or the locate button."
+    },
+    "zoom": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The initial zoom level of the map.",
+      "default": "13"
+    },
+    "hideFooter": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to hide the coordinate readout footer.",
+      "default": "false"
+    },
+    "showLocateButton": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to show a button that recenters the picker on the device's\nlocation via the Geolocation API.",
+      "default": "true"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

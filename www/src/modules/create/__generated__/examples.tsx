@@ -44,6 +44,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	kbd: () => import("@/registry/ui/kbd/examples"),
 	"list-box": () => import("@/registry/ui/list-box/examples"),
 	loader: () => import("@/registry/ui/loader/examples"),
+	"map-picker": () => import("@/registry/ui/map-picker/examples"),
 	mention: () => import("@/registry/ui/mention/examples"),
 	menu: () => import("@/registry/ui/menu/examples"),
 	modal: () => import("@/registry/ui/modal/examples"),

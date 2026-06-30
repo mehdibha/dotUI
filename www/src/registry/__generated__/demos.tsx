@@ -1657,6 +1657,10 @@ export const DemosIndex: Record<
 		files: ["ui/loader/demos/overlay.tsx"],
 		component: React.lazy(() => import("@/registry/ui/loader/demos/overlay")),
 	},
+	"map-picker/demos/default": {
+		files: ["ui/map-picker/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/map-picker/demos/default")),
+	},
 	"mention/demos/basic": {
 		files: ["ui/mention/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/mention/demos/basic")),
