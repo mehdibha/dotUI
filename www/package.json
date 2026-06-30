@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "postinstall": "fumadocs-mdx",
+    "postinstall": "NODE_OPTIONS='--import tsx' fumadocs-mdx",
     "dev": "vite dev",
     "dev:clean": "rm -rf node_modules/.vite .cache && vite dev",
     "build:registry": "tsx scripts/registry-build.ts && tsx scripts/build-showcase-bundle.ts",
