@@ -175,20 +175,23 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Re-enable the browser's native scroll restoration for full-page
-            loads. The router runs `scrollRestoration: true`, which sets
-            `history.scrollRestoration = "manual"` and restores scroll from JS —
-            but our pages are server-rendered, so the browser paints the content
-            at the top before that JS runs. A reload at a non-zero scroll then
-            flashes at the top and jumps down. This blocking head script runs
-            before first paint and flips the mode back to "auto", so the browser
-            restores the scroll as part of layout (no flash). The router re-arms
-            "manual" during hydration, leaving in-app navigation restoration —
-            the reason it's enabled — untouched. */}
+        {/* Reload-at-scroll flash fix. The router runs `scrollRestoration:
+            true`, restoring scroll from JS. Our pages are server-rendered, so on
+            a heavy page the browser paints the content at the top *before* the
+            scroll is restored (this is true of the browser's own native restore
+            too — it can't reach the saved offset until the document is tall
+            enough, which is after first paint). A reload partway down then
+            flashes at the top and jumps. Fix: when — and only when — we're
+            reloading at a saved non-zero scroll, hide the document until the
+            scroll has actually landed, so the first paint the user sees is
+            already at the right place. First visits and reloads at the top read
+            no saved offset, so they never hide and pay no cost. Reads the
+            router's scroll cache; if its shape ever changes this no-ops back to
+            the previous behavior. */}
         <script
           // oxlint-disable-next-line react/no-danger -- static, hardcoded inline script (no user input)
           dangerouslySetInnerHTML={{
-            __html: `try{history.scrollRestoration="auto"}catch(e){}`,
+            __html: `(function(){try{history.scrollRestoration="auto";var c=JSON.parse(sessionStorage.getItem("tsr-scroll-restoration-v1_3")||"{}");var k=(history.state&&history.state.__TSR_key)||location.href;var w=c[k]&&c[k].window;var y=w&&w.scrollY;if(!(y>0))return;var e=document.documentElement;e.style.visibility="hidden";var shown=false;function show(){if(shown)return;shown=true;e.style.visibility="";removeEventListener("scroll",chk,true)}function chk(){if(window.scrollY>=y-4)show()}addEventListener("scroll",chk,true);setTimeout(show,1500);function loop(){chk();if(!shown)requestAnimationFrame(loop)}requestAnimationFrame(loop)}catch(_){}})()`,
           }}
         />
         {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}

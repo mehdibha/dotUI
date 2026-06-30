@@ -1,6 +1,6 @@
 # Scroll-restoration flash + performance comparison (dotUI vs TanStack vs shadcn)
 
-> Status: investigated and fixed 2026-06-30. Fix = a one-line head script that re-enables native scroll restoration (`www/src/routes/__root.tsx`). Benchmark numbers are a point-in-time snapshot of the live production sites; do not treat them as kept-current.
+> Status: investigated and fixed 2026-06-30. Fix = a head script that defers the first paint until scroll restoration has landed, but only when reloading at a saved non-zero scroll (`www/src/routes/__root.tsx`). An earlier attempt (re-enabling native restoration) was proven insufficient on a real browser — see Root cause. Benchmark numbers are a point-in-time snapshot of the live production sites; do not treat them as kept-current.
 
 ## 1. The scroll-restoration flash
 
@@ -10,45 +10,47 @@ Reload any dotUI page while scrolled down (e.g. scrolled to the bottom). For one
 
 ### Root cause
 
-dotUI runs `scrollRestoration: true` on the router (`www/src/router.tsx`). TanStack implements that by setting `history.scrollRestoration = "manual"` — turning off the browser's native restoration — and restoring scroll from JavaScript instead, via two paths: a small inline script near `</body>`, and a post-hydration `onRendered` handler.
+dotUI runs `scrollRestoration: true` on the router (`www/src/router.tsx`); TanStack restores scroll from JavaScript after hydration. But the real cause is more fundamental than the restore mechanism: **our pages are server-rendered, so the browser paints the content at the top before the scroll can be restored.** On a heavy page the browser can't reach the saved offset until the document is parsed and tall enough — which is *after* first paint.
 
-Our pages are server-rendered, so the browser has paintable content immediately and paints it at the top early. The JavaScript restore then lands after that first paint, and you see the jump. Measured on the live site (instrumented headless Chrome, scroll to bottom then reload):
+Crucially this is true of the browser's own **native** scroll restoration too, not just TanStack's JS. Measured in a real (headful) browser, forcing native restoration on and blocking all JS scroll:
 
-- `onRendered` restore consistently fires **~100 ms after** first contentful paint (e.g. FCP 1384 ms, restore 1487 ms).
-- The before-paint inline script only wins by a razor-thin **~40–45 ms** in headless — and headless paints once at end-of-parse. A real browser progressively paints a heavy (~440 KB / ~2000-node) document and shows the top before that end-of-body script runs, so the visible restore becomes the post-paint `onRendered`. That is the flash.
+- first paint at **184 ms** with the page still at the top (scrollY 0),
+- native restore lands at **239 ms** — **55 ms after** first paint → the flash.
+
+So you cannot fix this by switching the restore mechanism (native vs JS); both lose to the early paint. Headless Chrome hides the bug entirely — it paints once, at end-of-parse, after restoration — which is why a native-restoration-only attempt (my first commit) looked clean in headless yet still flashed on a real browser.
 
 ### Why tanstack.com looks fine despite the same config
 
-tanstack.com also sets `scrollRestoration: true`, on near-identical versions (router 1.170.x, start 1.168.x). The difference is **timing, not configuration**. Measured the same way on a long tanstack docs page (scrolled to 19140 px, reloaded): the restore fires at **548 ms, before first paint at 656 ms** — 108 ms early. Their restore wins the race against paint; ours loses it on heavier pages. So this is not something tanstack does differently in code; it is an emergent property of page weight and hydration timing.
+tanstack.com also sets `scrollRestoration: true`, on near-identical versions (router 1.170.x, start 1.168.x). The difference is **what gets painted when, not configuration.** Its docs content is largely client-rendered — the document is short until JS builds it — so the browser has nothing to paint until *after* hydration runs and scroll is restored. It paints late, already in the right place. dotUI's SSR content is paintable immediately, so it paints early, before restore. The fix makes dotUI behave the same way: paint after restoration.
 
 ### The fix
 
-Re-enable the browser's **native** scroll restoration for full-page loads. Native restoration runs as part of the browser's layout pipeline, before any paint — it cannot lose the race the way a script can. A blocking inline script in `<head>`, which runs before first paint, flips the mode back:
+Defer the first paint until the scroll has actually landed — but only when it matters. When (and only when) we're reloading at a saved non-zero scroll, the head script hides `<html>` and reveals it the moment `scrollY` reaches the saved offset, so the first paint the user sees is already in the right place. First visits and reloads at the top read no saved offset, so they never hide and pay nothing.
 
-```html
-<script>try{history.scrollRestoration="auto"}catch(e){}</script>
+```js
+// runs before first paint, inline in <head>
+var target = savedScrollForThisEntry()        // the router's sessionStorage scroll cache
+if (target > 0) {
+  document.documentElement.style.visibility = "hidden"
+  // reveal as soon as scroll lands: scroll event + rAF loop, 1.5s safety net
+  reveal when window.scrollY >= target
+}
 ```
 
-The router re-arms `"manual"` during hydration (verified), so in-app client-side navigation restoration — the reason `scrollRestoration: true` is enabled — is untouched. The head script only governs the brief window of the initial document load, where native restoration is strictly better for our SSR'd content.
+It also flips `history.scrollRestoration` back to `"auto"` so native restoration helps the scroll land sooner (shorter hidden window); TanStack re-arms `"manual"` during hydration, so in-app navigation restoration is untouched.
 
-### Verification
+Trade-off: on a reload partway down the page, the user now sees a brief blank (~0.2–0.4 s in dev, less in prod) instead of a flash-and-jump — scoped to that case only. Normal navigations, first loads and reloads at the top are unchanged, so Core Web Vitals (measured cold, at scroll 0) are unaffected. The deeper fix is to make dotUI paint less eagerly / hydrate faster (see §3) so paint and restore coincide the way tanstack's do; the head script is the pragmatic stopgap.
 
-- **Mechanism (live site):** with `history.scrollRestoration="auto"` set at document start and *every* JS `window.scrollTo` blocked, the page still restored to the saved position, at t≈31 ms, before FCP (156 ms). The browser records scroll even in manual mode and restores it natively before paint.
-- **Emission:** React 19 SSR emits the inline `<script>` inside `<head>`; confirmed in the dev server's served HTML (script present before `</head>`).
-- **End-to-end (local build with the fix):** with all JS `scrollTo` blocked, scroll still restored to the saved position — purely native — and `history.scrollRestoration` ended as `"manual"`, i.e. TanStack's in-app restoration re-armed.
+### Verification (real browser)
 
-Caveat: the visible flash is a real-browser progressive-paint effect that headless Chrome (single paint at end-of-parse) does not reproduce, so the final confirmation is the timing/native-restore evidence above plus a manual reload on a real browser.
+Headless can't reproduce the flash, so this was verified headful (real Chrome, instrumented frame-by-frame) on a local production build, fix toggled on/off:
 
-### Before / after on dotUI (same local build)
+| dotUI, real browser, reload at the bottom | what the user sees |
+|---|---|
+| **Before** (no fix / native-only attempt) | first paint at the top (scrollY 0), restore ~55 ms later → **flash** |
+| **After** (this PR) | every frame while `scrollY < target` is `visibility: hidden`; first *visible* frame is already at the restored offset (`y = 1456 = target`) → **no flash** |
 
-The fix changes *when* scroll is restored, not page-load weight — it's a ~30-byte head script, so FCP/LCP/bytes/requests are unchanged. To isolate its effect, the test below blocks every JS `window.scrollTo` on reload, so only the browser's native restoration can act. Same local production build, fix toggled on/off:
-
-| dotUI | JS `scrollTo` blocked | final scroll | restored before paint? |
-|---|---|---|---|
-| **Before** (no head script) | yes (2×) | **0 px** — stuck at top | ❌ no — the only restore is the after-paint JS one → this is the flash |
-| **After** (this PR) | yes (2×) | **1343 px** | ✅ yes — native, ~100 ms before first paint (restore t≈216 ms, FCP ≈316 ms) |
-
-Without the fix, nothing restores the scroll before paint (JS is the only mechanism and it lands ~100 ms after first paint → the flash). With the fix, the browser restores natively, before paint, so there is no after-paint jump. `history.scrollRestoration` ends `"manual"` in both cases — i.e. the fix doesn't disturb TanStack's in-app navigation restoration.
+A screenshot 400 ms post-reload shows the restored (bottom) content, not the top. `history.scrollRestoration` still ends `"manual"`, so TanStack's in-app restoration is untouched. The script is gated on the router's scroll cache; if that cache's shape ever changes it no-ops back to the previous behavior.
 
 ## 2. Performance comparison
 
