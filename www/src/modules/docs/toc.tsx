@@ -4,7 +4,6 @@ import {
   TOCItem as PrimitiveTOCItem,
   ScrollProvider,
   type TOCItemType,
-  useActiveAnchors,
 } from 'fumadocs-core/toc'
 import { mergeRefs } from 'react-aria/mergeRefs'
 
@@ -66,7 +65,7 @@ export function TOCScrollArea({
     <div
       ref={mergeRefs(viewRef, ref)}
       className={cn(
-        'relative ms-px scrollbar-none min-h-0 scroll-fade-y overflow-auto pt-6 pb-3 text-sm scroll-fade-4',
+        'scrollbar-none min-h-0 scroll-fade-y overflow-auto pt-10 pb-3 text-sm scroll-fade-4',
         className,
       )}
       {...props}
@@ -76,110 +75,26 @@ export function TOCScrollArea({
   )
 }
 
-type TocThumb = [top: number, height: number]
-
-interface RefProps {
-  containerRef: React.RefObject<HTMLElement | null>
-}
-
-export function TocThumb({
-  containerRef,
-  ...props
-}: React.ComponentProps<'div'> & RefProps) {
-  const thumbRef = React.useRef<HTMLDivElement>(null)
-
-  return (
-    <>
-      <div ref={thumbRef} role="none" {...props} />
-      <Updater containerRef={containerRef} thumbRef={thumbRef} />
-    </>
-  )
-}
-
-function Updater({
-  containerRef,
-  thumbRef,
-}: RefProps & { thumbRef: React.RefObject<HTMLElement | null> }) {
-  const active = useActiveAnchors()
-  const updateThumb = React.useCallback(() => {
-    if (!containerRef.current || !thumbRef.current) return
-    update(thumbRef.current, calc(containerRef.current, active))
-  }, [active, containerRef, thumbRef])
-
-  React.useEffect(() => {
-    if (!containerRef.current) return
-    const container = containerRef.current
-
-    const observer = new ResizeObserver(updateThumb)
-    observer.observe(container)
-
-    return () => observer.disconnect()
-  }, [containerRef, updateThumb])
-
-  React.useEffect(() => {
-    updateThumb()
-  }, [updateThumb])
-
-  return null
-}
-
-function calc(container: HTMLElement, active: string[]): TocThumb {
-  if (active.length === 0 || container.clientHeight === 0) {
-    return [0, 0]
-  }
-
-  let upper = Number.MAX_VALUE
-  let lower = 0
-
-  for (const item of active) {
-    const element = container.querySelector<HTMLElement>(`a[href="#${item}"]`)
-    if (!element) continue
-
-    const styles = getComputedStyle(element)
-    upper = Math.min(upper, element.offsetTop + parseFloat(styles.paddingTop))
-    lower = Math.max(
-      lower,
-      element.offsetTop +
-        element.clientHeight -
-        parseFloat(styles.paddingBottom),
-    )
-  }
-
-  return [upper, lower - upper]
-}
-
-function update(element: HTMLElement, info: TocThumb): void {
-  element.style.setProperty('--toc-top', `${info[0]}px`)
-  element.style.setProperty('--toc-height', `${info[1]}px`)
-}
-
 export function TOCItems({
   ref,
   className,
   ...props
 }: React.ComponentProps<'div'>) {
-  const containerRef = React.useRef<HTMLDivElement>(null)
   const items = useTOCItems()
 
   if (items.length === 0) return null
 
   return (
-    <>
-      <TocThumb
-        containerRef={containerRef}
-        className="absolute top-(--toc-top) h-(--toc-height) w-px bg-primary transition-[height,top]"
-      />
-      <nav
-        ref={mergeRefs(ref, containerRef)}
-        aria-label="On this page"
-        className={cn('flex flex-col', className)}
-        {...props}
-      >
-        {items.map((item) => (
-          <TOCItem key={item.url} item={item} />
-        ))}
-      </nav>
-    </>
+    <nav
+      ref={ref}
+      aria-label="On this page"
+      className={cn('flex flex-col', className)}
+      {...props}
+    >
+      {items.map((item) => (
+        <TOCItem key={item.url} item={item} />
+      ))}
+    </nav>
   )
 }
 
@@ -188,7 +103,7 @@ function TOCItem({ item }: { item: TOCItemType }) {
     <PrimitiveTOCItem
       href={item.url}
       className={cn(
-        'py-1 text-sm wrap-anywhere text-fg-muted transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg',
+        'py-1 text-[0.8rem] wrap-anywhere text-fg-muted transition-colors first:pt-0 last:pb-0 data-[active=true]:text-fg',
         item.depth <= 2 && 'pl-3',
         item.depth === 3 && 'pl-6',
         item.depth >= 4 && 'pl-8',
