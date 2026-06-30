@@ -12,7 +12,6 @@ import { Logo } from '@/components/layout/logo'
 import { MobileNav } from '@/components/layout/mobile-nav'
 import { SearchCommand } from '@/components/search-command'
 import { ThemeToggle } from '@/components/theme-toggle'
-import { PresetSelectorSlot } from '@/modules/docs/preset-control'
 
 // iOS-style progressive blur: each layer adds a larger backdrop blur over an
 // overlapping gradient window. Where the windows overlap the blurs compound,
@@ -64,10 +63,6 @@ interface HeaderProps {
 export function Header({ className, items = [] }: HeaderProps) {
   const scrolled = useScrolled(8)
   const { pathname } = useLocation()
-  // The preset selector only acts on themed previews (docs demos, the component
-  // gallery), so in "header" placement only surface it on those pages.
-  const showsPreviews =
-    pathname.startsWith('/docs') || pathname.startsWith('/components')
   // Longest-matching-prefix wins so "/docs/components" highlights Components (not
   // Docs) while "/docs/button" still highlights Docs.
   const activeMatch = [...navItems]
@@ -141,9 +136,6 @@ export function Header({ className, items = [] }: HeaderProps) {
         </nav>
       </div>
       <div className="flex items-center gap-2">
-        {showsPreviews && (
-          <PresetSelectorSlot place="header" className="max-md:hidden" />
-        )}
         <SearchCommand keyboardShortcut items={items}>
           <Button
             variant="default"

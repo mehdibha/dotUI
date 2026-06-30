@@ -5,7 +5,6 @@ import type * as PageTree from 'fumadocs-core/page-tree'
 
 import type { SerializedPageTree } from '@/lib/source'
 import { Header } from '@/components/layout/header'
-import { PresetSelectorPlacementTweaker } from '@/modules/docs/preset-control'
 
 const getPageTree = createServerFn({ method: 'GET' }).handler(
   async (): Promise<SerializedPageTree> => {
@@ -44,7 +43,6 @@ function AppLayout() {
       <main id="content">
         <Outlet />
       </main>
-      <PresetSelectorPlacementTweaker />
     </div>
   )
 }

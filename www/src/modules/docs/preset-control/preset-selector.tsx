@@ -15,13 +15,7 @@ import {
 import { PRESETS } from '@/modules/presets/presets-data'
 
 import { presetAccent } from './resolve'
-import {
-  setSelectedPreset,
-  useSelectedPreset,
-  useSelectorPlacement,
-  YOURS,
-  type SelectorPlacement,
-} from './store'
+import { setSelectedPreset, useSelectedPreset, YOURS } from './store'
 
 /** A small dot in the preset's accent color (site primary for "your design system"). */
 function PresetSwatch({ id, className }: { id: string; className?: string }) {
@@ -47,9 +41,9 @@ interface PresetSelectorProps {
 }
 
 /**
- * Picks the design-system preset every demo renders in. The choice is global
- * (stored in localStorage via the preset store), so changing it here re-themes
- * every demo/playground on the site at once.
+ * Picks the design-system preset every docs preview renders in. The choice is
+ * global (stored in localStorage via the preset store), so changing it here
+ * re-themes every demo/playground/example on the site at once.
  */
 export function PresetSelector({
   className,
@@ -62,8 +56,7 @@ export function PresetSelector({
 
   return (
     // The field slot is `w-full`; a `w-fit` wrapper keeps the control sized to
-    // its content in every placement (inline in a header row, or absolutely
-    // positioned over a demo) instead of stretching.
+    // its content instead of stretching to fill the bar.
     <div className={cn('w-fit', className)}>
       <Select
         aria-label="Preview design system"
@@ -94,15 +87,21 @@ export function PresetSelector({
 }
 
 /**
- * Renders the selector only when the active placement matches `place`. Lets call
- * sites (demo frame, page header, site header) each drop in one line and stay
- * agnostic of which placement is currently selected by the tweaker.
+ * The in-content control: a slim "Previewing components in [preset]" bar that
+ * sits at the top of the docs body. It lives with the previews (not the site
+ * header) so its scope reads honestly — it themes the components below, not the
+ * surrounding docs chrome.
  */
-export function PresetSelectorSlot({
-  place,
-  ...props
-}: PresetSelectorProps & { place: SelectorPlacement }) {
-  const placement = useSelectorPlacement()
-  if (placement !== place) return null
-  return <PresetSelector {...props} />
+export function PreviewPresetBar({ className }: { className?: string }) {
+  return (
+    <div
+      className={cn(
+        'flex items-center gap-1.5 rounded-lg border bg-card py-1.5 pr-1.5 pl-3 text-sm',
+        className,
+      )}
+    >
+      <span className="text-fg-muted">Previewing components in</span>
+      <PresetSelector />
+    </div>
+  )
 }
