@@ -1385,6 +1385,10 @@ export const DemosIndex: Record<
 		files: ["ui/form/demos/react-aria.tsx"],
 		component: React.lazy(() => import("@/registry/ui/form/demos/react-aria")),
 	},
+	"gantt/demos/default": {
+		files: ["ui/gantt/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/gantt/demos/default")),
+	},
 	"group/demos/basic": {
 		files: ["ui/group/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/group/demos/basic")),
