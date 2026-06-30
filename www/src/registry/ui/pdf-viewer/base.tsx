@@ -10,10 +10,6 @@ import {
   ZoomInIcon,
   ZoomOutIcon,
 } from 'lucide-react'
-import type {
-  Document as DocumentComponent,
-  Page as PageComponent,
-} from 'react-pdf'
 
 import { Button } from '@/registry/ui/button'
 
@@ -21,15 +17,17 @@ import { useStyles } from './styles'
 
 // MARK: ssr
 
-// pdf.js (react-pdf's renderer) reads browser-only globals at import time, which
-// crash Node during SSR / prerendering. Stub the ones it touches so the chunk can
-// load on the server — guarded to where they're missing (never the browser) and
-// never exercised there, since the viewer renders only on the client.
-if (typeof window === 'undefined') {
+// pdf.js (react-pdf's renderer) constructs `new DOMMatrix()` at module load,
+// which throws under SSR / prerendering where these browser globals are absent.
+// Probe each global directly (rather than gating on `typeof window`) because
+// some prerender environments define `window` but not the canvas globals — so a
+// `window` check would skip the stub and crash. Only the missing ones are
+// stubbed; the viewer itself renders solely on the client.
+{
   const globals = globalThis as Record<string, unknown>
-  globals.DOMMatrix ??= class DOMMatrixStub {}
-  globals.Path2D ??= class Path2DStub {}
-  globals.ImageData ??= class ImageDataStub {}
+  if (globals.DOMMatrix === undefined) globals.DOMMatrix = class {}
+  if (globals.Path2D === undefined) globals.Path2D = class {}
+  if (globals.ImageData === undefined) globals.ImageData = class {}
 }
 
 // MARK: engine
@@ -37,12 +35,15 @@ if (typeof window === 'undefined') {
 /**
  * react-pdf pulls in pdf.js, which references browser-only globals (DOMMatrix,
  * Path2D, …) at import time and crashes server-side rendering / prerendering.
- * It's loaded lazily in an effect (client-only) and held here; the types above
- * are import-only (erased). The worker is pinned to the bundled pdfjs version.
+ * It is loaded lazily in an effect (client-only) and held here. The component
+ * types are referenced via a `typeof import(...)` type query (fully erased), so
+ * nothing pulls react-pdf into the server bundle — only the runtime `import()`
+ * below ever touches it, on the client. The worker is pinned to the bundled
+ * pdfjs version.
  */
 interface ReactPdf {
-  Document: typeof DocumentComponent
-  Page: typeof PageComponent
+  Document: (typeof import('react-pdf'))['Document']
+  Page: (typeof import('react-pdf'))['Page']
 }
 
 const MIN_SCALE = 0.5
