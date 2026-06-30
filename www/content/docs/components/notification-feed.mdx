@@ -1,0 +1,57 @@
+---
+title: Notification Feed
+description: A composable notifications / activity inbox with unread state and actions.
+wip: true
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/notification-feed
+```
+
+## Usage
+
+Compose `Notification`s inside a `NotificationFeed`. Each row pairs an `Avatar` (or icon) with `NotificationContent` (title, description, time) and optional `NotificationActions`. Mark a row `unread` for the accent bar + tinted background.
+
+```tsx
+import {
+  Notification,
+  NotificationActions,
+  NotificationContent,
+  NotificationDescription,
+  NotificationFeed,
+  NotificationTime,
+  NotificationTitle,
+} from '@/components/ui/notification-feed'
+```
+
+```tsx
+<NotificationFeed>
+  <Notification unread>
+    <Avatar size="sm">…</Avatar>
+    <NotificationContent>
+      <NotificationTitle>
+        <strong>Olivia</strong> requested your review
+      </NotificationTitle>
+      <NotificationTime>5m</NotificationTime>
+    </NotificationContent>
+  </Notification>
+</NotificationFeed>
+```
+
+## Examples
+
+<Examples>
+  <Example name="notification-feed/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### NotificationFeed
+
+<Reference name="notification-feed" />
+
+### Notification
+
+<Reference name="notification" />
