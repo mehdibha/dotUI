@@ -73,12 +73,14 @@ export function Demo({ component: Component, children, ...props }: DemoProps) {
 
   return (
     <div {...props}>
-      {/* Preview frame */}
-      <div className="flex min-h-56 items-center justify-center overflow-x-auto rounded-t-lg border bg-bg p-6 sm:p-10">
-        <DemoPreset>
+      {/* Preview frame — the themed `bg`/`border` live INSIDE DemoPreset so a
+          forced light/dark mode (and the preset) themes the whole canvas, not
+          just the component sitting on it. */}
+      <DemoPreset>
+        <div className="flex min-h-56 items-center justify-center overflow-x-auto rounded-t-lg border bg-bg p-6 sm:p-10">
           <Component />
-        </DemoPreset>
-      </div>
+        </div>
+      </DemoPreset>
 
       {/* Code block with toggle */}
       <CodeBlock

@@ -119,10 +119,15 @@ export function InteractiveDemo({
   return (
     <div className={cn('overflow-hidden rounded-lg border', className)}>
       <div className={cn('flex flex-col', horizontal && 'md:flex-row')}>
-        {/* Preview — borderless open space (no card, no backdrop); the demo just sits in it */}
-        <div className="flex min-h-56 flex-1 items-center justify-center p-10">
-          <DemoPreset>{previewElement}</DemoPreset>
-        </div>
+        {/* Preview — a themed canvas (`bg-bg` inside DemoPreset) so a forced
+            light/dark mode and the preset theme the whole stage, not just the
+            component. In the default "system" mode `bg-bg` equals the page bg,
+            so the open, backdrop-free look is unchanged. */}
+        <DemoPreset>
+          <div className="flex min-h-56 flex-1 items-center justify-center bg-bg p-10">
+            {previewElement}
+          </div>
+        </DemoPreset>
 
         {/* Controls — always grouped in a titled card; a fixed-width column to the right at md+
 				    when horizontal, otherwise a wrapping row beneath the preview (also on small screens). */}
