@@ -1,0 +1,14 @@
+{
+  "name": "AIAssistantProps",
+  "description": "The container for an AI assistant chat experience. Lays out a scrollable\nmessage log and an input as a vertical column inside a card surface.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

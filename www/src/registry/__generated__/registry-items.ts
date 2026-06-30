@@ -6,6 +6,7 @@ import LibResponsive from "@/registry/lib/responsive/meta";
 import LibTextareaCaret from "@/registry/lib/textarea-caret/meta";
 import LibUtils from "@/registry/lib/utils/meta";
 import UiAccordion from "@/registry/ui/accordion/meta";
+import UiAiAssistant from "@/registry/ui/ai-assistant/meta";
 import UiAlert from "@/registry/ui/alert/meta";
 import UiAvatar from "@/registry/ui/avatar/meta";
 import UiBadge from "@/registry/ui/badge/meta";
@@ -80,6 +81,7 @@ import type { RegistryItem } from "@/registry/types";
 
 export const registryUi: RegistryItem[] = [
 	UiAccordion,
+	UiAiAssistant,
 	UiAlert,
 	UiAvatar,
 	UiBadge,

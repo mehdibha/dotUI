@@ -3,6 +3,7 @@
 
 export const ExamplesIndex: Record<string, () => Promise<{ default: React.ComponentType }>> = {
 	accordion: () => import("@/registry/ui/accordion/examples"),
+	"ai-assistant": () => import("@/registry/ui/ai-assistant/examples"),
 	alert: () => import("@/registry/ui/alert/examples"),
 	avatar: () => import("@/registry/ui/avatar/examples"),
 	badge: () => import("@/registry/ui/badge/examples"),

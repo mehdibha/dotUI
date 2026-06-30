@@ -1,0 +1,64 @@
+---
+title: AI Assistant
+description: A chat surface for an AI assistant, composing a message log and a composer from primitives.
+wip: true
+---
+
+<Demo name="ai-assistant/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/ai-assistant
+```
+
+## Usage
+
+`AIAssistant` is composition-first: it lays out a scrollable `AIAssistantMessages` log and an `AIAssistantInput` composer inside a card. Render one `AIAssistantMessage` per turn — `role` aligns the bubble (`user` to the end in the primary color, `assistant` to the start in a muted bubble with an avatar). Wire the composer to your own state; it calls `onSend` with the trimmed value and submits on Enter (Shift+Enter inserts a newline).
+
+```tsx
+import {
+  AIAssistant,
+  AIAssistantInput,
+  AIAssistantMessage,
+  AIAssistantMessages,
+} from '@/components/ui/ai-assistant'
+```
+
+```tsx
+<AIAssistant>
+  <AIAssistantMessages>
+    <AIAssistantMessage role="assistant">How can I help?</AIAssistantMessage>
+    <AIAssistantMessage role="user">Summarize this page.</AIAssistantMessage>
+  </AIAssistantMessages>
+  <AIAssistantInput value={value} onValueChange={setValue} onSend={send} />
+</AIAssistant>
+```
+
+## Examples
+
+<Examples>
+  <Example name="ai-assistant/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### AIAssistant
+
+<Reference name="ai-assistant" />
+
+### AIAssistantMessages
+
+<Reference name="ai-assistant-messages" />
+
+### AIAssistantMessage
+
+<Reference name="ai-assistant-message" />
+
+### AIAssistantMessageAvatar
+
+<Reference name="ai-assistant-message-avatar" />
+
+### AIAssistantInput
+
+<Reference name="ai-assistant-input" />
