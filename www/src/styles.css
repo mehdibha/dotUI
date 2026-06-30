@@ -173,8 +173,8 @@
    --blur-progress 0 → 1 across the first header-height of scroll; the blur layers
    scale their radius by it and the tint scales its opacity (see header.tsx), so the
    container never carries a fractional opacity — which would make it an opacity
-   group and break backdrop sampling. Falls back to a statically-revealed blur where
-   scroll timelines are unsupported. */
+   group and break backdrop sampling. Where scroll timelines are unsupported the blur
+   stays at 0 and the header falls back to a solid background (see header-blur-fallback). */
 @property --blur-progress {
   syntax: '<number>';
   inherits: true;
@@ -197,9 +197,15 @@
     animation-range: 0 var(--header-height, calc(var(--spacing) * 14));
     animation-fill-mode: both;
   }
+}
 
+/* header-blur-fallback — where scroll-driven animations are unsupported the blur
+   above can't track scroll; rather than pin the full blur on over the hero, give the
+   header a solid background. Lives on the header (not the taller blur wrapper) so it
+   covers exactly the bar. */
+@utility header-blur-fallback {
   @supports not (animation-timeline: scroll()) {
-    --blur-progress: 1;
+    background-color: var(--color-bg);
   }
 }
 
