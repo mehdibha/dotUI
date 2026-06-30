@@ -1,0 +1,43 @@
+---
+title: Image Cropper
+description: An interactive crop surface for selecting and exporting a region of an image.
+links:
+  - label: react-easy-crop
+    href: https://github.com/ValentinH/react-easy-crop
+wip: true
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/image-cropper
+```
+
+## Usage
+
+Compose `ImageCropper` over an image source and read the cropped region from
+`onCropComplete`. Pass the result to `getCroppedImg` to render the final image.
+
+```tsx
+import { getCroppedImg, ImageCropper } from '@/components/ui/image-cropper'
+```
+
+```tsx
+<ImageCropper
+  image="/photo.jpg"
+  aspect={1}
+  onCropComplete={(croppedAreaPixels) => setArea(croppedAreaPixels)}
+/>
+```
+
+## Examples
+
+<Examples>
+  <Example name="image-cropper/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### ImageCropper
+
+<Reference name="image-cropper" />

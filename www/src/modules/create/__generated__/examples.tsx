@@ -39,6 +39,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"file-trigger": () => import("@/registry/ui/file-trigger/examples"),
 	form: () => import("@/registry/ui/form/examples"),
 	group: () => import("@/registry/ui/group/examples"),
+	"image-cropper": () => import("@/registry/ui/image-cropper/examples"),
 	input: () => import("@/registry/ui/input/examples"),
 	"input-group": () => import("@/registry/ui/input-group/examples"),
 	kbd: () => import("@/registry/ui/kbd/examples"),

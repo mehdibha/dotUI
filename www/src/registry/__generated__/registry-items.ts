@@ -43,6 +43,7 @@ import UiEmpty from "@/registry/ui/empty/meta";
 import UiField from "@/registry/ui/field/meta";
 import UiFileTrigger from "@/registry/ui/file-trigger/meta";
 import UiGroup from "@/registry/ui/group/meta";
+import UiImageCropper from "@/registry/ui/image-cropper/meta";
 import UiInput from "@/registry/ui/input/meta";
 import UiKbd from "@/registry/ui/kbd/meta";
 import UiLink from "@/registry/ui/link/meta";
@@ -117,6 +118,7 @@ export const registryUi: RegistryItem[] = [
 	UiField,
 	UiFileTrigger,
 	UiGroup,
+	UiImageCropper,
 	UiInput,
 	UiKbd,
 	UiLink,

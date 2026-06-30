@@ -1449,6 +1449,10 @@ export const DemosIndex: Record<
 		files: ["ui/group/demos/with-text.tsx"],
 		component: React.lazy(() => import("@/registry/ui/group/demos/with-text")),
 	},
+	"image-cropper/demos/default": {
+		files: ["ui/image-cropper/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/image-cropper/demos/default")),
+	},
 	"input/demos/default": {
 		files: ["ui/input/demos/default.tsx"],
 		component: React.lazy(() => import("@/registry/ui/input/demos/default")),
