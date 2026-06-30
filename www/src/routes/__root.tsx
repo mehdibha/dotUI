@@ -187,6 +187,24 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Keep the browser's NATIVE scroll restoration on for full-page loads.
+            The router runs `scrollRestoration: true`, which sets
+            `history.scrollRestoration = "manual"` and restores scroll from JS —
+            but our pages are server-rendered, so the browser paints the content
+            at the top before that JS runs and a reload partway down flashes to
+            the top then jumps. The browser's own restoration runs as part of
+            layout, before paint (this is what shadcn/Next.js rely on). We force
+            it back to "auto" AND lock the property, because the router re-sets
+            "manual" during hydration — without the lock that flip lands right
+            when the browser is about to restore and disables it. In-app
+            navigation is unaffected: the router's `onRendered` handler scrolls
+            to top / restores from its cache in JS regardless of this mode. */}
+        <script
+          // oxlint-disable-next-line react/no-danger -- static, hardcoded inline script (no user input)
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{history.scrollRestoration="auto";var d=Object.getOwnPropertyDescriptor(History.prototype,"scrollRestoration");Object.defineProperty(history,"scrollRestoration",{configurable:true,get:function(){return d.get.call(history)},set:function(){}})}catch(_){}})()`,
+          }}
+        />
         {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
         <HeadContent />
       </head>
