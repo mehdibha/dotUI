@@ -2301,6 +2301,10 @@ export const DemosIndex: Record<
 		files: ["ui/slider/demos/vertical.tsx"],
 		component: React.lazy(() => import("@/registry/ui/slider/demos/vertical")),
 	},
+	"stepper/demos/default": {
+		files: ["ui/stepper/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/stepper/demos/default")),
+	},
 	"switch/demos/basic": {
 		files: ["ui/switch/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/switch/demos/basic")),

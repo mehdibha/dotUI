@@ -1,0 +1,53 @@
+---
+title: Stepper
+description: A progress indicator for a numbered sequence of steps in a wizard or flow.
+wip: true
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/stepper
+```
+
+## Usage
+
+Compose `StepperItem`s inside a `Stepper`, each with its own `step` index. Steps before `activeStep` render as completed, the matching one as active, and the rest as inactive.
+
+```tsx
+import {
+  Stepper,
+  StepperIndicator,
+  StepperItem,
+  StepperSeparator,
+  StepperTitle,
+} from '@/components/ui/stepper'
+```
+
+```tsx
+<Stepper activeStep={1}>
+  {['Account', 'Profile', 'Confirm'].map((label, index) => (
+    <StepperItem key={label} step={index}>
+      <StepperIndicator />
+      <StepperTitle>{label}</StepperTitle>
+      <StepperSeparator />
+    </StepperItem>
+  ))}
+</Stepper>
+```
+
+## Examples
+
+<Examples>
+  <Example name="stepper/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### Stepper
+
+<Reference name="stepper" />
+
+### StepperItem
+
+<Reference name="stepper-item" />
