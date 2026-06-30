@@ -39,6 +39,17 @@ The router re-arms `"manual"` during hydration (verified), so in-app client-side
 
 Caveat: the visible flash is a real-browser progressive-paint effect that headless Chrome (single paint at end-of-parse) does not reproduce, so the final confirmation is the timing/native-restore evidence above plus a manual reload on a real browser.
 
+### Before / after on dotUI (same local build)
+
+The fix changes *when* scroll is restored, not page-load weight — it's a ~30-byte head script, so FCP/LCP/bytes/requests are unchanged. To isolate its effect, the test below blocks every JS `window.scrollTo` on reload, so only the browser's native restoration can act. Same local production build, fix toggled on/off:
+
+| dotUI | JS `scrollTo` blocked | final scroll | restored before paint? |
+|---|---|---|---|
+| **Before** (no head script) | yes (2×) | **0 px** — stuck at top | ❌ no — the only restore is the after-paint JS one → this is the flash |
+| **After** (this PR) | yes (2×) | **1343 px** | ✅ yes — native, ~100 ms before first paint (restore t≈216 ms, FCP ≈316 ms) |
+
+Without the fix, nothing restores the scroll before paint (JS is the only mechanism and it lands ~100 ms after first paint → the flash). With the fix, the browser restores natively, before paint, so there is no after-paint jump. `history.scrollRestoration` ends `"manual"` in both cases — i.e. the fix doesn't disturb TanStack's in-app navigation restoration.
+
 ## 2. Performance comparison
 
 ### Methodology
