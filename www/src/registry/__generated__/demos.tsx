@@ -2113,6 +2113,14 @@ export const DemosIndex: Record<
 		files: ["ui/search-field/demos/with-suggestions.tsx"],
 		component: React.lazy(() => import("@/registry/ui/search-field/demos/with-suggestions")),
 	},
+	"segmented-control/demos/default": {
+		files: ["ui/segmented-control/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/segmented-control/demos/default")),
+	},
+	"segmented-control/demos/with-icons": {
+		files: ["ui/segmented-control/demos/with-icons.tsx"],
+		component: React.lazy(() => import("@/registry/ui/segmented-control/demos/with-icons")),
+	},
 	"select/demos/async-loading": {
 		files: ["ui/select/demos/async-loading.tsx"],
 		component: React.lazy(() => import("@/registry/ui/select/demos/async-loading")),
