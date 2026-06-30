@@ -1,19 +1,9 @@
 ---
 title: Message
-description: A message in a conversation — bubble, avatar, header, actions, markers, and attachments.
+description: A row in a conversation — avatar, content, header, footer, and grouping.
 ---
 
-<InteractiveDemo
-  name="message"
-  controls={[
-    {
-      name: 'children',
-      type: 'string',
-      defaultValue: 'Hey! How can I help you today?',
-    },
-    'from',
-  ]}
-/>
+<Demo name="message/demos/default" />
 
 ## Installation
 
@@ -24,27 +14,32 @@ npx shadcn@latest add @dotui/message
 ## Usage
 
 ```tsx
-import { Message, MessageAvatar, MessageBubble } from '@/components/ui/message'
+import { Message, MessageAvatar, MessageContent } from '@/components/ui/message'
 ```
 
 ```tsx
-<Message from="assistant">
-  <MessageAvatar name="dotUI" />
-  <MessageBubble>Hey! How can I help you today?</MessageBubble>
+<Message align="start">
+  <MessageAvatar>
+    <Avatar>
+      <AvatarFallback>Q</AvatarFallback>
+    </Avatar>
+  </MessageAvatar>
+  <MessageContent>
+    <Bubble variant="muted" align="start">
+      <BubbleContent>Hey! How can I help you today?</BubbleContent>
+    </Bubble>
+  </MessageContent>
 </Message>
 ```
 
-The author set on `Message` flows down to the bubble, avatar, and actions, so
-alignment and color stay consistent across a turn. Wrap the header, bubble, and
-actions in `MessageBody` when a message needs more than a bubble.
+`align` sets which side the row sits on and flows down to the content via
+context. Compose a `Bubble` inside `MessageContent`, and wrap the avatar around
+your own `Avatar`.
 
 ## Examples
 
-<Examples className="grid-cols-1 lg:grid-cols-2">
-  <Example name="message/demos/default" title="Conversation" />
-  <Example name="message/demos/with-actions" title="Header & actions" />
-  <Example name="message/demos/markers" title="Markers" />
-  <Example name="message/demos/attachment" title="Attachment" />
+<Examples className="grid-cols-1">
+  <Example name="message/demos/header-actions" title="Header & actions" />
 </Examples>
 
 ## API Reference
@@ -57,30 +52,18 @@ actions in `MessageBody` when a message needs more than a bubble.
 
 <Reference name="message-avatar" />
 
-### MessageBody
+### MessageContent
 
-<Reference name="message-body" />
+<Reference name="message-content" />
 
 ### MessageHeader
 
 <Reference name="message-header" />
 
-### MessageBubble
+### MessageFooter
 
-<Reference name="message-bubble" />
-
-### MessageActions
-
-<Reference name="message-actions" />
+<Reference name="message-footer" />
 
 ### MessageGroup
 
 <Reference name="message-group" />
-
-### MessageMarker
-
-<Reference name="message-marker" />
-
-### MessageAttachment
-
-<Reference name="message-attachment" />

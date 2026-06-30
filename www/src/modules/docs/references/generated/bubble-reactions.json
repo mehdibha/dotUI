@@ -1,0 +1,33 @@
+{
+  "name": "BubbleReactionsProps",
+  "description": "A row of reaction chips attached to a bubble. Each child renders as a pill.",
+  "extendsElement": "div",
+  "props": {
+    "side": {
+      "type": "\"bottom\" | \"top\"",
+      "detailedType": "'bottom' | 'top' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top"
+          }
+        ]
+      },
+      "description": "Whether the reactions sit below or above the bubble content.",
+      "default": "'bottom'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

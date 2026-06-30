@@ -1,0 +1,14 @@
+{
+  "name": "AttachmentActionProps",
+  "description": "An icon action button for an attachment. Spreads `Button` props.",
+  "extendsElement": "button",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

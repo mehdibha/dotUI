@@ -1,0 +1,14 @@
+{
+  "name": "MessageScrollerContentProps",
+  "description": "The transcript container — a polite live region by default.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

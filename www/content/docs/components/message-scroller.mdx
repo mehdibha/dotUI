@@ -1,0 +1,76 @@
+---
+title: MessageScroller
+description: The scroll container for a transcript — stick-to-bottom, jump-to-message, and scroll controls.
+---
+
+<Demo name="message-scroller/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/message-scroller
+```
+
+## Usage
+
+```tsx
+import {
+  MessageScroller,
+  MessageScrollerButton,
+  MessageScrollerContent,
+  MessageScrollerItem,
+  MessageScrollerProvider,
+  MessageScrollerViewport,
+} from '@/components/ui/message-scroller'
+```
+
+```tsx
+<MessageScrollerProvider autoScroll>
+  <MessageScroller className="h-full">
+    <MessageScrollerViewport>
+      <MessageScrollerContent>
+        {messages.map((m) => (
+          <MessageScrollerItem
+            key={m.id}
+            messageId={m.id}
+            scrollAnchor={m.role === 'user'}
+          >
+            <Message align={m.role === 'user' ? 'end' : 'start'}>…</Message>
+          </MessageScrollerItem>
+        ))}
+      </MessageScrollerContent>
+    </MessageScrollerViewport>
+    <MessageScrollerButton />
+  </MessageScroller>
+</MessageScrollerProvider>
+```
+
+The provider owns the scroll state: it pins to the bottom while replies stream
+(`autoScroll`), releases on scroll-up, registers items by `messageId` for
+jump-to-message, and fades the edges. Needs a height-constrained parent.
+
+## API Reference
+
+### MessageScrollerProvider
+
+<Reference name="message-scroller-provider" />
+
+### MessageScroller
+
+<Reference name="message-scroller" />
+
+### MessageScrollerViewport
+
+<Reference name="message-scroller-viewport" />
+
+### MessageScrollerContent
+
+<Reference name="message-scroller-content" />
+
+### MessageScrollerItem
+
+<Reference name="message-scroller-item" />
+
+### MessageScrollerButton
+
+<Reference name="message-scroller-button" />

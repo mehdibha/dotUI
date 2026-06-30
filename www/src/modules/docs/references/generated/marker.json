@@ -1,0 +1,46 @@
+{
+  "name": "MarkerProps",
+  "description": "A centered row between turns: a status update, a system note, or a labeled\nseparator. Compose `MarkerIcon` and `MarkerContent` inside. Set `role=\"status\"`\nfor live streaming markers.",
+  "extendsElement": "div",
+  "props": {
+    "variant": {
+      "type": "\"border\" | \"default\" | \"separator\"",
+      "detailedType": "'border' | 'default' | 'separator' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "border"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "default"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "separator"
+          }
+        ]
+      },
+      "description": "Marker layout.\n- `default`: an inline row for status, notes, and actions.\n- `border`: a row boundary with a bottom border.\n- `separator`: a centered label with divider lines on each side.",
+      "default": "'default'"
+    },
+    "asChild": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Merge props onto the single child element (e.g. a link or button) instead\nof rendering a div.",
+      "default": "false"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

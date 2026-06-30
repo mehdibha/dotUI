@@ -1,0 +1,14 @@
+{
+  "name": "AttachmentTriggerProps",
+  "description": "A transparent overlay that turns the whole card into one click target. Set\n`asChild` to render it as a link.",
+  "extendsElement": "button",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

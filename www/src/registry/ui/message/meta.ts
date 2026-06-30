@@ -11,15 +11,6 @@ const messageMeta = {
       target: 'ui/message.tsx',
     },
   ],
-  registryDependencies: ['avatar'],
-  params: {
-    radius: {
-      kind: 'scalar',
-      type: 'radius',
-      cssVar: '--message-radius',
-      default: '--radius-lg',
-    },
-  },
 } satisfies RegistryItem
 
 export default messageMeta

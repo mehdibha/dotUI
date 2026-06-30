@@ -1,0 +1,63 @@
+---
+title: Bubble
+description: The message surface — variants, alignment, reactions, and interactive content.
+---
+
+<InteractiveDemo
+  name="bubble"
+  controls={[
+    {
+      name: 'children',
+      type: 'string',
+      defaultValue: 'How can I help you today?',
+    },
+    'variant',
+    'align',
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/bubble
+```
+
+## Usage
+
+```tsx
+import { Bubble, BubbleContent } from '@/components/ui/bubble'
+```
+
+```tsx
+<Bubble variant="muted" align="start">
+  <BubbleContent>How can I help you today?</BubbleContent>
+</Bubble>
+```
+
+Set `BubbleContent`'s `asChild` to render the body as a link or button, and add
+`BubbleReactions` for reaction chips.
+
+## Examples
+
+<Examples className="grid-cols-1 lg:grid-cols-2">
+  <Example name="bubble/demos/variants" title="Variants" />
+  <Example name="bubble/demos/reactions" title="Reactions" />
+</Examples>
+
+## API Reference
+
+### Bubble
+
+<Reference name="bubble" />
+
+### BubbleContent
+
+<Reference name="bubble-content" />
+
+### BubbleReactions
+
+<Reference name="bubble-reactions" />
+
+### BubbleGroup
+
+<Reference name="bubble-group" />

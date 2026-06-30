@@ -1,0 +1,14 @@
+{
+  "name": "MessageScrollerViewportProps",
+  "description": "The scrollable element that preserves position and drives anchoring.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

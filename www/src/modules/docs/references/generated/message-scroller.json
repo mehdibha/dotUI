@@ -1,0 +1,14 @@
+{
+  "name": "MessageScrollerProps",
+  "description": "The styled frame around the viewport and controls. Needs a height-constrained\nparent.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "name": "BubbleProps",
+  "description": "The message surface — a chat bubble. `variant` paints it; `align` sets which\nside it hugs and which corner tightens into a tail. Compose `BubbleContent`\nand `BubbleReactions` inside.",
+  "extendsElement": "div",
+  "props": {
+    "variant": {
+      "type": "\"default\" | \"destructive\" | \"ghost\" | \"muted\" | \"outline\" | \"secondary\" | \"tinted\"",
+      "detailedType": "| 'default'\n| 'destructive'\n| 'ghost'\n| 'muted'\n| 'outline'\n| 'secondary'\n| 'tinted'\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "default"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "destructive"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "ghost"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "muted"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "outline"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "secondary"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tinted"
+          }
+        ]
+      },
+      "description": "The surface style.",
+      "default": "'muted'"
+    },
+    "align": {
+      "type": "\"end\" | \"start\"",
+      "detailedType": "'end' | 'start' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start"
+          }
+        ]
+      },
+      "description": "Which side the bubble hugs (and which corner becomes the tail).",
+      "default": "'start'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

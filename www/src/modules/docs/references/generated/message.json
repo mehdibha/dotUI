@@ -1,26 +1,26 @@
 {
   "name": "MessageProps",
-  "description": "A row in a conversation: an optional avatar alongside a body that holds the\nheader, bubble, and actions. The `from` author flows down to children via\ncontext, driving alignment and bubble color.",
+  "description": "A row in a conversation: an optional avatar beside a content column that\nholds the header, bubble, and footer. `align` sets which side the row sits on\nand flows down to the content via context.",
   "extendsElement": "div",
   "props": {
-    "from": {
-      "type": "\"assistant\" | \"user\"",
-      "detailedType": "'assistant' | 'user' | undefined",
+    "align": {
+      "type": "\"end\" | \"start\"",
+      "detailedType": "'end' | 'start' | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "assistant"
+            "value": "end"
           },
           {
             "type": "stringLiteral",
-            "value": "user"
+            "value": "start"
           }
         ]
       },
-      "description": "Who sent the message. Sets row alignment and is inherited by the bubble,\navatar, and actions.",
-      "default": "'assistant'"
+      "description": "Which side the message sits on.",
+      "default": "'start'"
     },
     "className": {
       "type": "string",

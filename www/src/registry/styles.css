@@ -16,7 +16,9 @@
 @import './ui/field/styles.css';
 @import './ui/input/styles.css';
 @import './ui/list-box/styles.css';
-@import './ui/message/styles.css';
+@import './ui/bubble/styles.css';
+@import './ui/marker/styles.css';
+@import './ui/attachment/styles.css';
 @import './ui/modal/styles.css';
 @import './ui/popover/styles.css';
 @import './ui/radio-group/styles.css';

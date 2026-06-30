@@ -1,6 +1,6 @@
 {
   "name": "MessageGroupProps",
-  "description": "Groups consecutive messages from the same author with tighter spacing.",
+  "description": "Groups consecutive messages from the same sender with tight spacing.",
   "extendsElement": "div",
   "props": {
     "className": {
