@@ -1,0 +1,14 @@
+{
+  "name": "CommentThreadProps",
+  "description": "A comment thread — a composable display block for discussions. Compose\n`Comment`s (each an `Avatar` + `CommentContent`) inside; nest a\n`CommentThread` within a comment for indented replies.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
