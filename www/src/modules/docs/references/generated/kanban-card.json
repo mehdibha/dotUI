@@ -1,0 +1,32 @@
+{
+  "name": "KanbanCardProps",
+  "description": "A draggable, sortable card.",
+  "extendsElement": "div",
+  "props": {
+    "id": {
+      "type": "UniqueIdentifier",
+      "typeAst": {
+        "type": "identifier",
+        "name": "UniqueIdentifier"
+      },
+      "description": "Must match the `id` of the corresponding item in the board's `columns`.",
+      "required": true
+    },
+    "withHandle": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Restrict dragging to a `KanbanCardHandle` instead of the whole card, so the\nrest of the card stays interactive.",
+      "default": "false"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

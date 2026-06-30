@@ -1521,6 +1521,10 @@ export const DemosIndex: Record<
 		files: ["ui/input-group/demos/vertical-group.tsx"],
 		component: React.lazy(() => import("@/registry/ui/input-group/demos/vertical-group")),
 	},
+	"kanban/demos/default": {
+		files: ["ui/kanban/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/kanban/demos/default")),
+	},
 	"kbd/demos/arrow-keys": {
 		files: ["ui/kbd/demos/arrow-keys.tsx"],
 		component: React.lazy(() => import("@/registry/ui/kbd/demos/arrow-keys")),
