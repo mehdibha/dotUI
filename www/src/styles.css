@@ -167,6 +167,42 @@
   --scroll-fade-size: --value([length], [percentage]);
 }
 
+/* header-blur-reveal — reveals the nav's progressive blur on scroll with the same
+   technique as scroll-fade above (scroll-driven animation of a registered
+   @property), retargeted from a mask to backdrop-filter. The scroll timeline ramps
+   --blur-progress 0 → 1 across the first header-height of scroll; the blur layers
+   scale their radius by it and the tint scales its opacity (see header.tsx), so the
+   container never carries a fractional opacity — which would make it an opacity
+   group and break backdrop sampling. Falls back to a statically-revealed blur where
+   scroll timelines are unsupported. */
+@property --blur-progress {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes blur-reveal {
+  from {
+    --blur-progress: 0;
+  }
+  to {
+    --blur-progress: 1;
+  }
+}
+
+@utility header-blur-reveal {
+  @supports (animation-timeline: scroll()) {
+    animation: blur-reveal 1ms linear;
+    animation-timeline: scroll(root y);
+    animation-range: 0 var(--header-height, calc(var(--spacing) * 14));
+    animation-fill-mode: both;
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    --blur-progress: 1;
+  }
+}
+
 /* Click ripple for the docs component-gallery cursor (components-list/autoplay).
    Expands and fades from the pointer hotspot; mounts only during the press beat
    so it replays on each loop. */

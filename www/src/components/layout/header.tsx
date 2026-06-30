@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react'
 import { Link as RouterLink, useLocation } from '@tanstack/react-router'
 import type * as PageTree from 'fumadocs-core/page-tree'
 import { SearchIcon } from 'lucide-react'
@@ -44,44 +43,12 @@ const BLUR_LAYERS = [
   { blur: 24, mask: 'linear-gradient(to top, transparent 70%, #000 100%)' },
 ]
 
-// Drives --blur-progress (0 → 1) from scroll position. The blur layers scale
-// their blur radius by it and the tint scales its opacity, so the progressive
-// blur ramps in smoothly as you scroll. Deliberately NOT applied as opacity on
-// the backdrop-filter container: a fractional opacity there makes it an opacity
-// group and breaks backdrop sampling (the blur vanishes). rAF-throttled, written
-// straight to the DOM node — no React re-render per frame, no scroll-timeline
-// dependency. rampPx is the scroll distance for the blur to reach full strength.
-function useScrollBlur(rampPx = 56) {
-  const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    let raf = 0
-    const update = () => {
-      raf = 0
-      const progress = Math.min(window.scrollY / rampPx, 1)
-      el.style.setProperty('--blur-progress', String(progress))
-    }
-    const onScroll = () => {
-      if (raf === 0) raf = requestAnimationFrame(update)
-    }
-    update()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      if (raf !== 0) cancelAnimationFrame(raf)
-    }
-  }, [rampPx])
-  return ref
-}
-
 interface HeaderProps {
   className?: string
   items?: PageTree.Node[]
 }
 
 export function Header({ className, items = [] }: HeaderProps) {
-  const blurRef = useScrollBlur()
   const { pathname } = useLocation()
   // Longest-matching-prefix wins so "/docs/components" highlights Components (not
   // Docs) while "/docs/button" still highlights Docs.
@@ -100,9 +67,8 @@ export function Header({ className, items = [] }: HeaderProps) {
       )}
     >
       <div
-        ref={blurRef}
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%]"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] header-blur-reveal"
       >
         {BLUR_LAYERS.map(({ blur, mask }) => (
           <div
