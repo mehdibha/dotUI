@@ -1,0 +1,49 @@
+---
+title: File Upload
+description: A drag-and-drop file upload block with a file list, progress, and remove.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/DropZone.html
+wip: true
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/file-upload
+```
+
+## Usage
+
+`FileUpload` is a React Aria `DropZone` + `FileTrigger` drag/browse target built on the existing `drop-zone`, `file-trigger` and `progress-bar`. Transport stays your job: `onAdd` hands back the selected `File`s and you render the list with `FileUploadItem` (passing `progress` while you upload).
+
+```tsx
+import {
+  FileUpload,
+  FileUploadItem,
+  FileUploadList,
+} from '@/components/ui/file-upload'
+```
+
+```tsx
+<FileUpload onAdd={(files) => upload(files)} />
+<FileUploadList>
+  <FileUploadItem name="report.pdf" size={248000} status="complete" onRemove={remove} />
+</FileUploadList>
+```
+
+## Examples
+
+<Examples>
+  <Example name="file-upload/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### FileUpload
+
+<Reference name="file-upload" />
+
+### FileUploadItem
+
+<Reference name="file-upload-item" />
