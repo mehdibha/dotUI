@@ -2061,6 +2061,10 @@ export const DemosIndex: Record<
 		files: ["ui/react-hook-form/demos/register.tsx"],
 		component: React.lazy(() => import("@/registry/ui/react-hook-form/demos/register")),
 	},
+	"rich-text-editor/demos/default": {
+		files: ["ui/rich-text-editor/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/rich-text-editor/demos/default")),
+	},
 	"search-field/demos/controlled": {
 		files: ["ui/search-field/demos/controlled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/search-field/demos/controlled")),
