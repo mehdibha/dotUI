@@ -10,17 +10,27 @@ import {
   ZoomInIcon,
   ZoomOutIcon,
 } from 'lucide-react'
-import { Document, Page, pdfjs } from 'react-pdf'
+import type {
+  Document as DocumentComponent,
+  Page as PageComponent,
+} from 'react-pdf'
 
 import { Button } from '@/registry/ui/button'
 
 import { useStyles } from './styles'
 
-// MARK: worker
+// MARK: engine
 
-// react-pdf needs the pdf.js worker. Point it at the CDN build that matches the
-// bundled pdfjs version so the worker and the API never drift apart.
-pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
+/**
+ * react-pdf pulls in pdf.js, which references browser-only globals (DOMMatrix,
+ * Path2D, …) at import time and crashes server-side rendering / prerendering.
+ * It's loaded lazily in an effect (client-only) and held here; the types above
+ * are import-only (erased). The worker is pinned to the bundled pdfjs version.
+ */
+interface ReactPdf {
+  Document: typeof DocumentComponent
+  Page: typeof PageComponent
+}
 
 const MIN_SCALE = 0.5
 const MAX_SCALE = 3
@@ -62,6 +72,22 @@ function PdfViewer({
   const [numPages, setNumPages] = React.useState<number | null>(null)
   const [pageNumber, setPageNumber] = React.useState(defaultPage)
   const [scale, setScale] = React.useState(defaultScale)
+  const [pdf, setPdf] = React.useState<ReactPdf | null>(null)
+
+  React.useEffect(() => {
+    let active = true
+    // pdf.js references browser-only globals (DOMMatrix, …) and only runs in the
+    // browser; swallow the rejection so server prerendering keeps the fallback.
+    import('react-pdf')
+      .then((mod) => {
+        mod.pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${mod.pdfjs.version}/build/pdf.worker.min.mjs`
+        if (active) setPdf({ Document: mod.Document, Page: mod.Page })
+      })
+      .catch(() => {})
+    return () => {
+      active = false
+    }
+  }, [])
 
   const onLoadSuccess = ({ numPages: loaded }: { numPages: number }) => {
     setNumPages(loaded)
@@ -141,21 +167,25 @@ function PdfViewer({
         </div>
       </div>
       <div data-pdf-viewer-viewport="" className={viewport()}>
-        <Document
-          file={file}
-          onLoadSuccess={onLoadSuccess}
-          className={document()}
-          loading={<div className={message()}>Loading PDF…</div>}
-          error={<div className={message()}>Failed to load PDF.</div>}
-          noData={<div className={message()}>No PDF file specified.</div>}
-        >
-          <Page
-            pageNumber={pageNumber}
-            scale={scale}
-            className={page()}
-            loading={<div className={message()}>Loading page…</div>}
-          />
-        </Document>
+        {pdf ? (
+          <pdf.Document
+            file={file}
+            onLoadSuccess={onLoadSuccess}
+            className={document()}
+            loading={<div className={message()}>Loading PDF…</div>}
+            error={<div className={message()}>Failed to load PDF.</div>}
+            noData={<div className={message()}>No PDF file specified.</div>}
+          >
+            <pdf.Page
+              pageNumber={pageNumber}
+              scale={scale}
+              className={page()}
+              loading={<div className={message()}>Loading page…</div>}
+            />
+          </pdf.Document>
+        ) : (
+          <div className={message()}>Loading PDF…</div>
+        )}
       </div>
     </div>
   )
