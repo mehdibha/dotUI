@@ -11,7 +11,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
   return (
     <nav
       aria-label="Docs"
-      className="scrollbar-none flex h-full scroll-fade-y flex-col gap-6 overflow-y-auto scroll-smooth rounded-2xl py-6 pr-3 pl-4 scroll-fade-6"
+      className="scrollbar-none flex h-full scroll-fade-y flex-col gap-6 overflow-y-auto scroll-smooth rounded-2xl pt-10 pr-3 pb-6 pl-4 scroll-fade-6"
     >
       {items.map((item) => {
         if (item.type === 'folder') {

@@ -134,7 +134,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
     return (
       <TOCProvider toc={toc}>
         <PageLayout className="mt-4 flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
-          <div className="mx-auto flex w-full max-w-3xl min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
+          <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
             <div data-page-header="" className="relative mb-2 space-y-3 pb-4">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="flex min-w-0 flex-col gap-2">
@@ -174,7 +174,10 @@ const clientLoader = browserCollections.docs.createClientLoader({
               )}
             </div>
           </div>
-          <div className="sticky top-(--header-height) z-30 hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
+          {/* -mt-4 cancels PageLayout's mt-4 so the TOC top lines up with the
+              sidebar (which isn't inside PageLayout) at scroll 0, matching the
+              already-aligned scrolled/sticky state. */}
+          <div className="sticky top-(--header-height) z-30 -mt-4 hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
             {hasToc && <TOC className="pr-12" />}
           </div>
         </PageLayout>
