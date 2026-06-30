@@ -62,6 +62,28 @@ export function useDesignSystem() {
     [setDesignSystem],
   )
 
+  /**
+   * Set one param across every member of a synced group in a single update, so
+   * Button ⇄ ToggleButton stay in sync and Undo reverts the whole group at once
+   * (one history entry — same pattern as `shuffle`). Members that don't declare
+   * the param are skipped.
+   */
+  const setGroupParam = useCallback(
+    (members: readonly string[], paramName: string, value: string) => {
+      setDesignSystem((prev) => {
+        const componentParams = { ...prev.componentParams }
+        for (const member of members) {
+          componentParams[member] = {
+            ...(componentParams[member] ?? {}),
+            [paramName]: value,
+          }
+        }
+        return { ...prev, componentParams }
+      })
+    },
+    [setDesignSystem],
+  )
+
   const setDensity = useCallback(
     (density: Density) => {
       setDesignSystem((prev) => ({ ...prev, density }))
@@ -123,6 +145,7 @@ export function useDesignSystem() {
     designSystem,
     setDesignSystem,
     setComponentParam,
+    setGroupParam,
     setToken,
     setDensity,
     setColorSeed,

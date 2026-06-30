@@ -66,10 +66,29 @@ export function isGroupId(id: string): boolean {
   return GROUP_IDS.has(id)
 }
 
-function getComponentsInGroup(group: string): RegistryItem[] {
+export function getComponentsInGroup(group: string): RegistryItem[] {
   return registryUi
     .filter((item) => item.group === group)
     .sort((a, b) => a.name.localeCompare(b.name))
+}
+
+/** All component groups present in the registry, alphabetically. */
+export { allGroups }
+
+/** Metadata for one component, or undefined if it isn't a registered UI item. */
+export function getComponentMeta(name: string): RegistryItem | undefined {
+  return componentMetaMap.get(name)
+}
+
+/** The group a component belongs to (if any) plus its synced siblings. */
+export function getSyncedGroup(
+  name: string,
+): { group: string; members: RegistryItem[] } | null {
+  const meta = componentMetaMap.get(name)
+  if (!meta?.group) return null
+  const members = getComponentsInGroup(meta.group)
+  if (members.length < 2) return null
+  return { group: meta.group, members }
 }
 
 function paramCount(item: RegistryItem): number {
