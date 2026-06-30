@@ -36,6 +36,7 @@
     "@tanstack/router-plugin": "^1.168.2",
     "@vercel/og": "^0.11.1",
     "cnfast": "^0.0.8",
+    "embla-carousel-react": "^8.6.0",
     "fumadocs-core": "^16.8.11",
     "fumadocs-mdx": "^15.0.5",
     "globals-docs": "^2.4.1",

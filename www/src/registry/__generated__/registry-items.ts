@@ -13,6 +13,7 @@ import UiBreadcrumbs from "@/registry/ui/breadcrumbs/meta";
 import UiButton from "@/registry/ui/button/meta";
 import UiCalendar from "@/registry/ui/calendar/meta";
 import UiCard from "@/registry/ui/card/meta";
+import UiCarousel from "@/registry/ui/carousel/meta";
 import UiChartArea from "@/registry/ui/chart-area/meta";
 import UiChartBar from "@/registry/ui/chart-bar/meta";
 import UiChartLine from "@/registry/ui/chart-line/meta";
@@ -87,6 +88,7 @@ export const registryUi: RegistryItem[] = [
 	UiButton,
 	UiCalendar,
 	UiCard,
+	UiCarousel,
 	UiChart,
 	UiChartArea,
 	UiChartBar,

@@ -10,6 +10,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	button: () => import("@/registry/ui/button/examples"),
 	calendar: () => import("@/registry/ui/calendar/examples"),
 	card: () => import("@/registry/ui/card/examples"),
+	carousel: () => import("@/registry/ui/carousel/examples"),
 	"chart-area": () => import("@/registry/ui/chart-area/examples"),
 	"chart-bar": () => import("@/registry/ui/chart-bar/examples"),
 	"chart-line": () => import("@/registry/ui/chart-line/examples"),
