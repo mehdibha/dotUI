@@ -6,6 +6,7 @@ import { Button } from '@/registry/ui/button'
 
 import { CodeBlock, Pre } from './code-block'
 import { DemoPreset } from './demo-preset'
+import { PreviewControls } from './preset-control'
 
 // ============================================================================
 // Slot Components
@@ -73,10 +74,15 @@ export function Demo({ component: Component, children, ...props }: DemoProps) {
 
   return (
     <div {...props}>
-      {/* Preview frame */}
-      <div className="flex min-h-56 items-center justify-center overflow-x-auto rounded-t-lg border bg-bg p-6 sm:p-10">
+      {/* Preview frame: a controls header (chrome) in its own space, then the
+          themed canvas. The canvas `bg` lives inside DemoPreset so a forced mode /
+          preset themes the whole stage, not just the component on it. */}
+      <div className="overflow-hidden rounded-t-lg border">
+        <PreviewControls />
         <DemoPreset>
-          <Component />
+          <div className="flex min-h-56 items-center justify-center overflow-x-auto bg-bg p-6 sm:p-10">
+            <Component />
+          </div>
         </DemoPreset>
       </div>
 

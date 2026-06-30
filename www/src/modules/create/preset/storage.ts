@@ -81,3 +81,53 @@ function getServerSnapshot(): DesignSystem {
 export function useStoredPreset(): DesignSystem {
   return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }
+
+/* --------------------------- design-system name --------------------------- */
+
+/**
+ * A human label for the user's design system, default "Untitled". Kept separate
+ * from the preset's visual data (it's just a name) and persisted so /create can
+ * rename it and the docs preset selector can show it instead of a generic label.
+ */
+const NAME_STORAGE_KEY = 'dotui:design-system-name'
+const NAME_CHANGE_EVENT = 'dotui:design-system-name-change'
+
+/** Shown for a design system the user hasn't named. */
+export const DEFAULT_DESIGN_SYSTEM_NAME = 'Untitled'
+
+export function saveDesignSystemName(name: string): void {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.setItem(NAME_STORAGE_KEY, name)
+    window.dispatchEvent(new Event(NAME_CHANGE_EVENT))
+  } catch {
+    // Private mode / quota / disabled storage — non-fatal, the name just won't persist.
+  }
+}
+
+function getNameSnapshot(): string {
+  try {
+    const raw = window.localStorage.getItem(NAME_STORAGE_KEY)
+    return raw === null ? DEFAULT_DESIGN_SYSTEM_NAME : raw
+  } catch {
+    return DEFAULT_DESIGN_SYSTEM_NAME
+  }
+}
+
+function subscribeName(onChange: () => void): () => void {
+  window.addEventListener('storage', onChange)
+  window.addEventListener(NAME_CHANGE_EVENT, onChange)
+  return () => {
+    window.removeEventListener('storage', onChange)
+    window.removeEventListener(NAME_CHANGE_EVENT, onChange)
+  }
+}
+
+/** Subscribe to the design system's name (default "Untitled"; SSR-safe). */
+export function useDesignSystemName(): string {
+  return useSyncExternalStore(
+    subscribeName,
+    getNameSnapshot,
+    () => DEFAULT_DESIGN_SYSTEM_NAME,
+  )
+}

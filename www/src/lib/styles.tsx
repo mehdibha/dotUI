@@ -190,6 +190,7 @@ function harvestRootClosure(): RootClosure {
 function buildScopedThemeCss(
   selector: string,
   color: ColorConfig | undefined,
+  forcedMode: 'light' | 'dark' | undefined,
 ): string | null {
   const { light, dark } = harvestRootClosure()
   // No closure to clone — we're on the server, or the document's stylesheets aren't
@@ -197,6 +198,40 @@ function buildScopedThemeCss(
   // closure), so emit nothing here; it applies once mounted on the client. Rendering a
   // partial closure now would also mismatch the client during hydration.
   if (!light && !dark) return null
+
+  // When a mode is forced, pin the scope to ONE mode regardless of the page's
+  // `.dark`: emit that mode's primitives on BOTH the base and `.dark` scope
+  // selectors, so an ancestor `.dark` can't flip the cloned closure back. Tokens
+  // (which all component styles read) override correctly in both directions; the
+  // handful of raw `dark:` utilities in the registry are fixed-color examples that
+  // don't visibly differ, so they're left alone.
+  const closure =
+    forcedMode === 'dark' ? dark : forcedMode === 'light' ? light : null
+  if (closure !== null) {
+    const blocks = [
+      `${selector} {\n${closure}\n}`,
+      `.dark ${selector} {\n${closure}\n}`,
+      emitCss(DEFAULT_SEMANTICS, { selector }),
+    ]
+    if (color) {
+      const resolved = resolveColorConfig(color)
+      const ramp = forcedMode === 'dark' ? resolved.dark : resolved.light
+      // Both blocks emit the forced mode's ramp, so an ancestor `.dark` can't
+      // swap it. Spread keeps any other fields on the resolved palette intact.
+      blocks.push(
+        emitPrimitivesCss(
+          { ...resolved, light: ramp, dark: ramp },
+          {
+            onColors: true,
+            lightSelector: selector,
+            darkSelector: `.dark ${selector}`,
+          },
+        ),
+      )
+    }
+    return blocks.join('\n')
+  }
+
   const blocks = [
     `${selector} {\n${light}\n}`,
     `.dark ${selector} {\n${dark}\n}`,
@@ -230,6 +265,12 @@ interface DesignSystemProviderProps {
    * `UNSAFE_PortalProvider` into a scope-marked container so they're themed too.
    */
   scoped?: boolean
+  /**
+   * Pin this (scoped) subtree to `light` or `dark` regardless of the page theme.
+   * Only meaningful in `scoped` mode; omit to follow the page. Used by the docs
+   * preview controls to render demos in a chosen mode without flipping the site.
+   */
+  forcedMode?: 'light' | 'dark'
   children: React.ReactNode
 }
 
@@ -239,6 +280,7 @@ function DesignSystemProvider({
   density = 'default',
   color,
   scoped = false,
+  forcedMode,
   children,
 }: DesignSystemProviderProps) {
   const value = React.useMemo(
@@ -322,13 +364,16 @@ function DesignSystemProvider({
   const hasTokenOverrides = Object.keys(cssVars).length > 0
   const themeCss = React.useMemo(() => {
     if (scoped) {
-      const diverges = Boolean(color) || hasTokenOverrides
-      return diverges ? buildScopedThemeCss(scopeSelector, color) : null
+      const diverges =
+        Boolean(color) || hasTokenOverrides || Boolean(forcedMode)
+      return diverges
+        ? buildScopedThemeCss(scopeSelector, color, forcedMode)
+        : null
     }
     return color
       ? emitPrimitivesCss(resolveColorConfig(color), { onColors: true })
       : null
-  }, [scoped, scopeSelector, color, hasTokenOverrides])
+  }, [scoped, scopeSelector, color, hasTokenOverrides, forcedMode])
 
   // The palette / scoped-closure stylesheet as a real node, rendered into the tree rather
   // than appended via an effect. `themeCss` is null until something diverges (and, when

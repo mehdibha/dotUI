@@ -14,7 +14,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/registry/ui/card'
 import { CodeBlock } from '@/modules/docs/code-block'
 import { renderCode } from '@/modules/docs/codegen/code-template'
 import type { CodeTemplate } from '@/modules/docs/codegen/code-template'
+import { DemoPreset } from '@/modules/docs/demo-preset'
 import { DynamicPre } from '@/modules/docs/dynamic-pre'
+import { PreviewControls } from '@/modules/docs/preset-control'
 
 import { defaultControlValues } from './control-defaults'
 import { availableIcons, Controls } from './controls'
@@ -118,9 +120,19 @@ export function InteractiveDemo({
   return (
     <div className={cn('overflow-hidden rounded-lg border', className)}>
       <div className={cn('flex flex-col', horizontal && 'md:flex-row')}>
-        {/* Preview — borderless open space (no card, no backdrop); the demo just sits in it */}
-        <div className="flex min-h-56 flex-1 items-center justify-center p-10">
-          {previewElement}
+        {/* Preview column: controls (top) + a themed canvas (`bg-bg` inside
+            DemoPreset, so a forced light/dark mode and the preset theme the whole
+            stage, not just the component; in the default "system" mode `bg-bg`
+            equals the page bg, so the open, backdrop-free look is unchanged).
+            Keeping the controls inside this column — not a full-width header above
+            the row — lets the Props panel stay full height beside it. */}
+        <div className="flex min-w-0 flex-1 flex-col">
+          <PreviewControls />
+          <DemoPreset>
+            <div className="flex min-h-56 flex-1 items-center justify-center bg-bg p-10">
+              {previewElement}
+            </div>
+          </DemoPreset>
         </div>
 
         {/* Controls — always grouped in a titled card; a fixed-width column to the right at md+
