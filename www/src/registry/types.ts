@@ -89,6 +89,39 @@ export type RegistryItem = ShadcnRegistryItem & {
   params?: Record<string, ParamDef>
 }
 
+/* ------------------------------- Blocks ------------------------------- */
+
+/**
+ * Category a block/layout belongs to. Drives the explorer + /create grouping.
+ * `'interactive'` is intentionally reserved for future real-world blocks
+ * (kanban, media players) and is NOT part of v1 — adding it is a product
+ * decision, not a code change.
+ */
+export type BlockCategory = 'layout' | 'page' | 'section'
+
+/**
+ * A block (or layout): a curated, multi-variant composition of already-themed
+ * components — a login page, a sidebar app-shell, a dashboard. Unlike a
+ * `ComponentGroup` item it has no `group` (so it never appears in the components
+ * list or docs gallery), and its single tweak is always a named `variant`
+ * modeled as enum-with-files: each variant is its own composition file resolved
+ * at publish to one canonical `target` — the `loader` enum-with-files mechanism
+ * at screen scale. Blocks add no tokens or axes; they consume the design system.
+ */
+export type BlockRegistryItem = ShadcnRegistryItem & {
+  /** Explorer + builder category. */
+  category: BlockCategory
+  /** The single tweak. Always present, always named `variant`, always enum-with-files. */
+  params: { variant: EnumParamDef }
+  /** Display metadata for the builder + `/blocks` page. */
+  display: {
+    title: string
+    description: string
+    /** value -> human label, e.g. `{ split: 'Split' }` */
+    variantLabels?: Record<string, string>
+  }
+}
+
 export type Registry = Omit<ShadcnRegistry, 'items'> & {
   items: RegistryItem[]
 }
