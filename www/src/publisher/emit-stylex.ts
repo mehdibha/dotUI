@@ -78,14 +78,21 @@ function discoverAxes(variants: TvLayer['variants']): AxisSpec[] {
   return axes
 }
 
-/** The `type XVariants = { … }` declaration built from the axis specs. */
+/** The `type XVariants = { … }` declaration, or `''` for a variant-less component. */
 function buildVariantType(typeIdent: string, axes: AxisSpec[]): string {
+  if (axes.length === 0) return ''
   const lines = axes.map((axis) =>
     axis.kind === 'boolean'
       ? `\t${axis.name}?: boolean;`
       : `\t${axis.name}?: ${axis.order.map((v) => JSON.stringify(v)).join(' | ')};`,
   )
   return `type ${typeIdent} = {\n${lines.join('\n')}\n};`
+}
+
+/** The variant-props type ref for a param annotation — empty string when there
+ *  are no axes (so we don't reference an undefined type). */
+function typePrefix(typeIdent: string, axes: AxisSpec[]): string {
+  return axes.length > 0 ? `${typeIdent} & ` : ''
 }
 
 /**
@@ -237,7 +244,7 @@ function emitFlat({
 
   const resolver = [
     `function ${ident}(`,
-    `\t{ ${params.join(', ')} }: ${typeIdent} & { className?: string } = {},`,
+    `\t{ ${params.join(', ')} }: ${typePrefix(typeIdent, axes)}{ className?: string } = {},`,
     `) {`,
     `\t// dotUI theming is all static var() references, so stylex.props' \`style\``,
     `\t// is empty and the className string alone carries the styles.`,
@@ -353,7 +360,7 @@ function emitSlotted({
           : `${nsIdent(slot, axis.name)}[${axis.name}]`,
       )
     return [
-      `\t\t${slotKey(slot)}: (slotProps: ${typeIdent} & { className?: string } = {}) => {`,
+      `\t\t${slotKey(slot)}: (slotProps: ${typePrefix(typeIdent, axes)}{ className?: string } = {}) => {`,
       `\t\t\tconst { ${destructure} } = { ...props, ...slotProps };`,
       `\t\t\tconst { className: sx } = stylex.props(${args.join(', ')});`,
       `\t\t\t${returnExpr(slotPass[slot]!, 'className')}`,
@@ -362,7 +369,7 @@ function emitSlotted({
   })
 
   const resolver = [
-    `function ${ident}(props: ${typeIdent} = {}) {`,
+    `function ${ident}(props${axes.length > 0 ? `: ${typeIdent}` : ''} = {}) {`,
     `\t// dotUI theming is all static var() references, so stylex.props' \`style\``,
     `\t// is empty and the className string alone carries the styles.`,
     `\treturn {`,
@@ -419,7 +426,10 @@ function finalize(
   // TS hoists type aliases, so position doesn't matter — defining the variant type
   // here also covers components whose interface uses `VariantProps<…>` inline with
   // no `type X = …` line of their own.
-  content = content.replace(tvDeclRe, `${variantType}\n\n${declBody}`)
+  content = content.replace(
+    tvDeclRe,
+    variantType ? `${variantType}\n\n${declBody}` : declBody,
+  )
 
   // Drop a now-redundant `type X = VariantProps<typeof ident>` alias, then point any
   // remaining inline `VariantProps<typeof ident>` use at the emitted type.
