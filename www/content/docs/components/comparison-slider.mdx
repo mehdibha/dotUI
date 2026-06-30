@@ -1,0 +1,43 @@
+---
+title: Comparison Slider
+description: A draggable handle that reveals one layer over another, for before/after comparisons.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Slider.html
+wip: true
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/comparison-slider
+```
+
+## Usage
+
+Pass the base layer as `children` and the clipped overlay as `reveal`.
+
+```tsx
+import { ComparisonSlider } from '@/components/ui/comparison-slider'
+```
+
+```tsx
+<ComparisonSlider
+  aria-label="Compare"
+  reveal={<img src="/before.jpg" alt="Before" />}
+>
+  <img src="/after.jpg" alt="After" />
+</ComparisonSlider>
+```
+
+## Examples
+
+<Examples>
+  <Example name="comparison-slider/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### ComparisonSlider
+
+<Reference name="comparison-slider" />
