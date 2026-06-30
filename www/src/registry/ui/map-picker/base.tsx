@@ -3,20 +3,21 @@
 import 'leaflet/dist/leaflet.css'
 
 import * as React from 'react'
-import L from 'leaflet'
-import {
-  MapContainer,
-  Marker,
-  TileLayer,
-  useMap,
-  useMapEvents,
+import type {
+  Icon,
+  LeafletEvent,
+  LeafletMouseEvent,
+  Map as LeafletMap,
+} from 'leaflet'
+import type {
+  MapContainer as MapContainerComponent,
+  Marker as MarkerComponent,
+  TileLayer as TileLayerComponent,
 } from 'react-leaflet'
 
 import { Button } from '@/registry/ui/button'
 
 import { useStyles } from './styles'
-
-// MARK: mapPickerStyles
 
 // MARK: helpers
 
@@ -28,45 +29,18 @@ interface LatLng {
 
 const DEFAULT_CENTER: LatLng = { lat: 48.8566, lng: 2.3522 }
 
-/**
- * Leaflet ships its default marker icon as CSS `background-image`, which breaks
- * under bundlers that fingerprint asset URLs. Point the default icon at the
- * CDN-hosted images so the marker renders without a local asset pipeline.
- */
-const markerIcon = L.icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  iconRetinaUrl:
-    'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-})
-
 const round = (n: number): number => Math.round(n * 1e6) / 1e6
 
-// MARK: ClickHandler
-
-/** Moves the marker to wherever the user clicks the map. */
-function ClickHandler({ onPick }: { onPick: (value: LatLng) => void }) {
-  useMapEvents({
-    click: (event) => {
-      onPick({ lat: event.latlng.lat, lng: event.latlng.lng })
-    },
-  })
-  return null
-}
-
-// MARK: Recenter
-
-/** Pans the map when the controlled value changes from outside. */
-function Recenter({ value }: { value: LatLng }) {
-  const map = useMap()
-  React.useEffect(() => {
-    map.panTo(value)
-  }, [map, value])
-  return null
+/**
+ * Leaflet touches `window`/`document` at import time, so a static value import
+ * crashes server-side rendering / prerendering. The engine is loaded lazily in
+ * an effect (client-only) and held here; types above are import-only (erased).
+ */
+interface LeafletBundle {
+  MapContainer: typeof MapContainerComponent
+  TileLayer: typeof TileLayerComponent
+  Marker: typeof MarkerComponent
+  icon: Icon
 }
 
 // MARK: MapPicker
@@ -102,9 +76,41 @@ function MapPicker({
 }: MapPickerProps) {
   const { root, surface, footer, coords } = useStyles()()
 
-  const [mounted, setMounted] = React.useState(false)
+  const [bundle, setBundle] = React.useState<LeafletBundle | null>(null)
+  const [map, setMap] = React.useState<LeafletMap | null>(null)
+
   React.useEffect(() => {
-    setMounted(true)
+    let active = true
+    void Promise.all([import('react-leaflet'), import('leaflet')]).then(
+      ([reactLeaflet, leafletModule]) => {
+        const L = leafletModule.default
+        // Leaflet ships its marker icon as a CSS background, which breaks under
+        // asset-fingerprinting bundlers; point it at the CDN-hosted images.
+        const icon = L.icon({
+          iconUrl:
+            'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+          iconRetinaUrl:
+            'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+          shadowUrl:
+            'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+          popupAnchor: [1, -34],
+          shadowSize: [41, 41],
+        })
+        if (active) {
+          setBundle({
+            MapContainer: reactLeaflet.MapContainer,
+            TileLayer: reactLeaflet.TileLayer,
+            Marker: reactLeaflet.Marker,
+            icon,
+          })
+        }
+      },
+    )
+    return () => {
+      active = false
+    }
   }, [])
 
   const [uncontrolled, setUncontrolled] = React.useState<LatLng>(
@@ -121,6 +127,25 @@ function MapPicker({
     [isControlled, onChange],
   )
 
+  // Move the marker to wherever the user clicks (imperative — avoids the
+  // useMapEvents hook so the engine can stay lazily loaded).
+  React.useEffect(() => {
+    if (!map) return
+    const onClick = (event: LeafletEvent) => {
+      const { latlng } = event as LeafletMouseEvent
+      setValue({ lat: latlng.lat, lng: latlng.lng })
+    }
+    map.on('click', onClick)
+    return () => {
+      map.off('click', onClick)
+    }
+  }, [map, setValue])
+
+  // Pan when a controlled value changes from outside.
+  React.useEffect(() => {
+    if (map && isControlled) map.panTo(value)
+  }, [map, isControlled, value])
+
   const handleLocate = React.useCallback(() => {
     if (typeof navigator === 'undefined' || !navigator.geolocation) return
     navigator.geolocation.getCurrentPosition((position) => {
@@ -134,20 +159,21 @@ function MapPicker({
   return (
     <div data-map-picker="" className={root({ className })} {...props}>
       <div data-map-picker-surface="" className={surface()}>
-        {mounted && (
-          <MapContainer
+        {bundle && (
+          <bundle.MapContainer
             center={value}
             zoom={zoom}
             scrollWheelZoom
+            ref={setMap}
             className="size-full"
           >
-            <TileLayer
+            <bundle.TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker
+            <bundle.Marker
               position={value}
-              icon={markerIcon}
+              icon={bundle.icon}
               draggable
               eventHandlers={{
                 dragend: (event) => {
@@ -156,9 +182,7 @@ function MapPicker({
                 },
               }}
             />
-            <ClickHandler onPick={setValue} />
-            {isControlled && <Recenter value={value} />}
-          </MapContainer>
+          </bundle.MapContainer>
         )}
       </div>
 
