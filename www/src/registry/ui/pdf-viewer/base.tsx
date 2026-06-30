@@ -19,6 +19,19 @@ import { Button } from '@/registry/ui/button'
 
 import { useStyles } from './styles'
 
+// MARK: ssr
+
+// pdf.js (react-pdf's renderer) reads browser-only globals at import time, which
+// crash Node during SSR / prerendering. Stub the ones it touches so the chunk can
+// load on the server — guarded to where they're missing (never the browser) and
+// never exercised there, since the viewer renders only on the client.
+if (typeof window === 'undefined') {
+  const globals = globalThis as Record<string, unknown>
+  globals.DOMMatrix ??= class DOMMatrixStub {}
+  globals.Path2D ??= class Path2DStub {}
+  globals.ImageData ??= class ImageDataStub {}
+}
+
 // MARK: engine
 
 /**
