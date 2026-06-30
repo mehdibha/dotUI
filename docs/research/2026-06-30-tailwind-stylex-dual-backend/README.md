@@ -93,9 +93,9 @@ The verifier is backend-agnostic by construction: it only needs two React trees 
 
 > **66 components — 26 reach exact parity now, 4 need a mechanical translator/emitter extension, 5 need `when.*` marker plumbing, 31 need a per-component descendant refactor.** ~290 distinct uncovered same-element utilities remain to map (the `unknown` bucket — the table-growing work-list). Snapshot, not kept current; regenerate as the translator grows.
 
-> **66 publishable components — 44 emit a StyleX backend, 22 have no styling at all (identical file either engine). All 66 work with both backends; 0 fall back.** Every emitted export carries its per-component descendant/group/has remainder inline as a `PARITY-TODO` work-list (~288 distinct uncovered same-element utilities across the registry — the translator's table-growing to-do list). (4 further components — input, otp-field, progress-bar, slider — are skipped by `build:registry` for a **pre-existing** reason unrelated to StyleX: their `styles.ts` uses dynamic `fieldStyles()`/computed values the static extractor can't read, so they have no publishable in *either* engine.)
+> **66 publishable components — 44 emit a StyleX backend, 22 have no styling at all (identical file either engine). All 66 work with both backends; 0 fall back.** The translator now maps the same-element utility vocabulary near-completely: only **7** distinct uncovered same-element utilities remain across the whole registry (down from ~288) — all genuine custom-plugin (`skeleton--*`, `popover`, `separator`), keyframes (`animate-spin`), or a dotUI semantic-set gap (`fg-onMutedDanger`). What each export still flags inline as `PARITY-TODO` is the **at-a-distance** remainder (descendant/group/`has-*`) that StyleX can't express on the element — resolved by `when.*` markers or a slot refactor, not table growth. (4 further components — input, otp-field, progress-bar, slider — are skipped by `build:registry` for a **pre-existing** reason unrelated to StyleX: their `styles.ts` uses dynamic `fieldStyles()`/computed values the static extractor can't read, so they have no publishable in *either* engine.)
 
-This audit sizes what's left honestly: the system + both shapes work and every component emits its target backend today; closing the `PARITY-TODO` remainder (utility-table growth + descendant refactors) is the tracked, multi-week rollout for pixel-exact parity.
+This audit sizes what's left honestly: the system, both shapes, and the same-element utility table are effectively complete; the remaining `PARITY-TODO` work is the descendant/`when.*` rollout for pixel-exact parity.
 
 ## Token strategy: consume, don't redefine
 
@@ -136,7 +136,7 @@ The PoC was driven through an adversarial find→verify review (26 agents over 6
 ## Rollout plan (per-component, after the system lands)
 
 1. **Audit** — done and automated: `analyzeParity` buckets every component (see `parity-audit-snapshot.md`). Re-run it to track progress; the `unknown` bucket is the translator's to-do list.
-2. **Extend the utility table** until the trivial bucket is fully covered (the verifier's untranslated report drives this).
+2. ✅ **Done (effectively)** — the utility table now covers the same-element vocabulary near-completely (positioning, z, overflow, shadows/ring, per-corner radius, per-side borders, grid, transitions, transforms via the `--tw-*` var model, sizing/containers, typography, RAC state+enum prefixes, responsive `@media`/`@supports`/`@container`, `nth-*`/`not-*`/`aria-*`, stacked nested conditions). Registry-wide `unknown` is **7** (custom-plugin / keyframes / one semantic-set gap). Re-run the audit to track.
 3. **Port marker-plumbing components**: emit `when.*` + markers on both the styled element and its parent.
 4. **Refactor descendant components**: lift `**:[svg]`/child rules into real slots/`gap` so both backends can express them — this is a change to the *canonical* Tailwind source too (it stays the single source; the refactor is backend-neutral and improves the Tailwind output as well).
 5. **Synced groups stay synced** (Button ⇄ ToggleButton): port a group together.

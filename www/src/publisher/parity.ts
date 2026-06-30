@@ -63,9 +63,13 @@ const PSEUDO_ELEMENT_PREFIXES = new Set([
 ])
 
 const MARKER_RE = /^(group|peer)(\/.+)?$/
-const ANCESTOR_PREFIX_RE = /^(group-|peer-|in-)/
+const ANCESTOR_PREFIX_RE = /^(group-|peer-|in-|not-in-)/
 const HAS_PREFIX_RE = /^(group-has-|peer-has-|has-)/
-const DESCENDANT_PREFIX_RE = /^(\*\*|\*|\[&)/
+// Sibling/child/class-presence/tag arbitrary selectors + the custom `with` plugin —
+// kept in sync with the translator's DESCENDANT_PREFIX_RE.
+const DESCENDANT_PREFIX_RE = /^(\*\*|\*|\[&|\[\.|\[\[|\[[a-z]|with-|not-with-)/
+// Utilities that style children (no prefix): `space-x-*`, `divide-*`.
+const DESCENDANT_UTILITY_RE = /^-?(space-[xy]-|divide(-|$))/
 
 /** The utility (last `:`-segment) of a token, bracket-depth aware. */
 function utilityOf(token: string): string {
@@ -99,7 +103,9 @@ export function classifyUntranslated(token: string): ParityBucket {
     if (ANCESTOR_PREFIX_RE.test(p)) return 'ancestor'
     if (PSEUDO_ELEMENT_PREFIXES.has(p)) return 'pseudo'
   }
-  if (PASSTHROUGH_UTILITIES.has(utilityOf(token))) return 'composite'
+  const util = utilityOf(token)
+  if (DESCENDANT_UTILITY_RE.test(util)) return 'descendant'
+  if (PASSTHROUGH_UTILITIES.has(util)) return 'composite'
   return 'unknown'
 }
 

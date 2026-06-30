@@ -7,6 +7,124 @@ import { describe, expect, test } from 'vitest'
 
 import { translateClasses, translateUtility } from './tw-to-stylex'
 
+describe('translateUtility — extended coverage', () => {
+  test('positioning, z-index, overflow', () => {
+    expect(translateUtility('top-1/2')).toEqual({ top: 'calc(1 / 2 * 100%)' })
+    expect(translateUtility('inset-0')).toEqual({ inset: '0' })
+    expect(translateUtility('inset-x-0')).toEqual({ insetInline: '0' })
+    expect(translateUtility('z-10')).toEqual({ zIndex: 10 })
+    expect(translateUtility('isolate')).toEqual({ isolation: 'isolate' })
+  })
+
+  test('shadow + ring reference theme vars', () => {
+    expect(translateUtility('shadow-md')).toEqual({
+      boxShadow: 'var(--shadow-md)',
+    })
+    expect(translateUtility('ring-2')).toEqual({
+      boxShadow: '0 0 0 2px var(--tw-ring-color, currentcolor)',
+    })
+  })
+
+  test('per-corner radius + per-side border', () => {
+    expect(translateUtility('rounded-t-xl')).toEqual({
+      borderTopLeftRadius: 'var(--radius-xl)',
+      borderTopRightRadius: 'var(--radius-xl)',
+    })
+    expect(translateUtility('rounded-b-(--card-radius)')).toEqual({
+      borderBottomLeftRadius: 'var(--card-radius)',
+      borderBottomRightRadius: 'var(--card-radius)',
+    })
+    expect(translateUtility('border-t')).toEqual({
+      borderTopStyle: 'solid',
+      borderTopWidth: '1px',
+    })
+    expect(translateUtility('border-2')).toEqual({
+      borderStyle: 'solid',
+      borderWidth: '2px',
+    })
+  })
+
+  test('grid, transitions, transforms, sizing, type', () => {
+    expect(translateUtility('grid-cols-7')).toEqual({
+      gridTemplateColumns: 'repeat(7, minmax(0, 1fr))',
+    })
+    expect(translateUtility('col-span-2')).toEqual({
+      gridColumn: 'span 2 / span 2',
+    })
+    expect(translateUtility('duration-200')).toEqual({
+      transitionDuration: '200ms',
+    })
+    expect(translateUtility('ease-out')).toEqual({
+      transitionTimingFunction: 'var(--ease-out)',
+    })
+    expect(translateUtility('scale-95')).toEqual({ scale: '0.95' })
+    expect(translateUtility('max-w-sm')).toEqual({
+      maxWidth: 'var(--container-sm)',
+    })
+    expect(translateUtility('font-sans')).toEqual({
+      fontFamily: 'var(--font-sans)',
+    })
+    expect(translateUtility('aspect-square')).toEqual({ aspectRatio: '1 / 1' })
+  })
+
+  test('translate uses the --tw var model so axes compose', () => {
+    expect(translateUtility('translate-x-2')).toEqual({
+      '--tw-translate-x': 'calc(var(--spacing) * 2)',
+      translate:
+        'var(--tw-translate-x, 0) var(--tw-translate-y, 0) var(--tw-translate-z, 0)',
+    })
+    expect(translateUtility('-translate-y-1/2')).toEqual({
+      '--tw-translate-y': 'calc(calc(1 / 2 * 100%) * -1)',
+      translate:
+        'var(--tw-translate-x, 0) var(--tw-translate-y, 0) var(--tw-translate-z, 0)',
+    })
+  })
+
+  test('@container context + outline + origin', () => {
+    expect(translateUtility('@container/card-header')).toEqual({
+      containerType: 'inline-size',
+      containerName: 'card-header',
+    })
+    expect(translateUtility('outline-hidden')).toEqual({ outlineStyle: 'none' })
+    expect(translateUtility('origin-left')).toEqual({ transformOrigin: 'left' })
+  })
+})
+
+describe('translateClasses — extended prefixes', () => {
+  test('new RAC state booleans → data attributes', () => {
+    expect(translateClasses('entering:opacity-0').style).toEqual({
+      opacity: { '[data-entering]': 0 },
+    })
+    expect(translateClasses('invalid:border-border-danger').style).toEqual({
+      borderColor: { '[data-invalid]': 'var(--color-border-danger)' },
+    })
+  })
+
+  test('RAC enum + native-pseudo + nth + aria prefixes', () => {
+    expect(translateClasses('placement-bottom:top-0').style).toEqual({
+      top: { '[data-placement="bottom"]': '0' },
+    })
+    expect(translateClasses('last:mt-0').style).toEqual({
+      marginTop: { ':last-child': '0' },
+    })
+    expect(translateClasses('aria-disabled:opacity-50').style).toEqual({
+      opacity: { '[aria-disabled="true"]': 0.5 },
+    })
+  })
+
+  test('a data-attribute substring selector survives', () => {
+    expect(translateClasses('data-[position*=bottom]:bottom-0').style).toEqual({
+      bottom: { '[data-position*="bottom"]': '0' },
+    })
+  })
+
+  test('important marker is stripped (StyleX has no !important)', () => {
+    expect(translateClasses('disabled:bg-disabled!').style).toEqual({
+      backgroundColor: { '[data-disabled]': 'var(--color-disabled)' },
+    })
+  })
+})
+
 describe('translateUtility — static utilities', () => {
   test('layout keywords', () => {
     expect(translateUtility('relative')).toEqual({ position: 'relative' })
@@ -211,8 +329,21 @@ describe('translateClasses — the descendant wall', () => {
     expect(style.backgroundColor).toBe('var(--color-primary)')
   })
 
-  test('stacked multi-state prefixes are deferred to the parity step', () => {
-    const { untranslated } = translateClasses('hover:focus:bg-primary')
-    expect(untranslated).toContain('hover:focus:bg-primary')
+  test('stacked multi-state prefixes nest into a condition map', () => {
+    const { style, untranslated } = translateClasses(
+      'disabled:selected:bg-disabled',
+    )
+    expect(untranslated).toEqual([])
+    expect(style).toEqual({
+      backgroundColor: {
+        '[data-disabled]': { '[data-selected]': 'var(--color-disabled)' },
+      },
+    })
+  })
+
+  test('a responsive breakpoint becomes an @media condition', () => {
+    expect(translateClasses('sm:flex-row').style).toEqual({
+      flexDirection: { '@media (width >= 40rem)': 'row' },
+    })
   })
 })
