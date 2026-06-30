@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { Link as RouterLink, useLocation } from '@tanstack/react-router'
 import type * as PageTree from 'fumadocs-core/page-tree'
 import { SearchIcon } from 'lucide-react'
@@ -10,6 +9,7 @@ import { Kbd } from '@/registry/ui/kbd'
 import { GitHubIcon } from '@/components/icons/github'
 import { Logo } from '@/components/layout/logo'
 import { MobileNav } from '@/components/layout/mobile-nav'
+import { NavTweaker } from '@/components/layout/nav-tweaker'
 import { SearchCommand } from '@/components/search-command'
 import { ThemeToggle } from '@/components/theme-toggle'
 
@@ -51,22 +51,6 @@ interface HeaderProps {
 
 export function Header({ className, items = [] }: HeaderProps) {
   const { pathname } = useLocation()
-  // TEMP tweaker (#305): A/B the navbar dither that fights dark-gradient banding.
-  // `?dither` / `?dither=on` enables it; `?dither=0.05` sets a custom opacity;
-  // absent or `?dither=off` keeps it off. Read from the URL after mount — the home
-  // route is prerendered, so the router's searchStr is empty on first load even when
-  // the param is present; client-only keeps SSR/hydration in sync. Remove this block
-  // + the div once decided.
-  const [ditherParam, setDitherParam] = useState<string | null>(null)
-  useEffect(() => {
-    setDitherParam(new URLSearchParams(window.location.search).get('dither'))
-  }, [])
-  const ditherEnabled =
-    ditherParam !== null && !['off', '0', 'false'].includes(ditherParam)
-  const ditherOpacity =
-    Number(ditherParam) > 0 && Number(ditherParam) < 1
-      ? Number(ditherParam)
-      : 0.035
   // Longest-matching-prefix wins so "/docs/components" highlights Components (not
   // Docs) while "/docs/button" still highlights Docs.
   const activeMatch = [...navItems]
@@ -102,21 +86,19 @@ export function Header({ className, items = [] }: HeaderProps) {
         <div
           className="absolute inset-0"
           style={{
-            opacity: 'var(--blur-progress, 0)',
+            // Darkness rides this element's opacity (tunable via --nav-tint, default
+            // 0.88) — never the backdrop-filter layers, which would form an opacity
+            // group and drop the blur. Gradient peaks at full --color-bg at the top.
+            opacity: 'calc(var(--blur-progress, 0) * var(--nav-tint, 0.88))',
             background:
-              'linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--color-bg) 55%, transparent) 55%, color-mix(in oklab, var(--color-bg) 72%, transparent) 100%)',
+              'linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--color-bg) 76%, transparent) 55%, var(--color-bg) 100%)',
           }}
         />
         <div
           aria-hidden
-          className={cn(
-            'absolute inset-0',
-            ditherEnabled && 'header-blur-dither',
-          )}
+          className="absolute inset-0 header-blur-dither"
           style={{
-            opacity: ditherEnabled
-              ? `calc(var(--blur-progress, 0) * ${ditherOpacity})`
-              : 0,
+            opacity: 'calc(var(--blur-progress, 0) * var(--nav-dither, 0.05))',
           }}
         />
       </div>
@@ -175,6 +157,7 @@ export function Header({ className, items = [] }: HeaderProps) {
         </a>
         <ThemeToggle isIconOnly />
       </div>
+      <NavTweaker />
     </header>
   )
 }
