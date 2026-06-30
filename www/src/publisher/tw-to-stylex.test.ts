@@ -16,13 +16,49 @@ describe('translateUtility — extended coverage', () => {
     expect(translateUtility('isolate')).toEqual({ isolation: 'isolate' })
   })
 
-  test('shadow + ring reference theme vars', () => {
-    expect(translateUtility('shadow-md')).toEqual({
-      boxShadow: 'var(--shadow-md)',
+  test('shadow + ring use slot vars so they layer (no clobber)', () => {
+    // Each writes a distinct --tw-* slot + the shared composition, so a shadow
+    // and a ring on one element coexist (matching Tailwind v4) instead of the
+    // last one winning the single boxShadow property.
+    const shadow = translateUtility('shadow-md')!
+    const ring = translateUtility('ring-2')!
+    expect(shadow['--tw-shadow']).toBe('var(--shadow-md)')
+    expect(ring['--tw-ring-shadow']).toBe(
+      '0 0 0 2px var(--tw-ring-color, currentcolor)',
+    )
+    expect(shadow.boxShadow).toBe(ring.boxShadow)
+    // Both slots survive when the two utilities are merged on one element.
+    const both = translateClasses('shadow-md ring-2').style
+    expect(both['--tw-shadow']).toBe('var(--shadow-md)')
+    expect(both['--tw-ring-shadow']).toBe(
+      '0 0 0 2px var(--tw-ring-color, currentcolor)',
+    )
+  })
+
+  test('ease-linear is the literal keyword, transition-colors a property list', () => {
+    expect(translateUtility('ease-linear')).toEqual({
+      transitionTimingFunction: 'linear',
     })
-    expect(translateUtility('ring-2')).toEqual({
-      boxShadow: '0 0 0 2px var(--tw-ring-color, currentcolor)',
+    expect(translateUtility('transition-colors')!.transitionProperty).toContain(
+      'background-color',
+    )
+  })
+
+  test('opacity modifier resolves bare / arbitrary / var alphas', () => {
+    expect(translateClasses('bg-black/70').style).toEqual({
+      backgroundColor:
+        'color-mix(in oklab, var(--color-black) 70%, transparent)',
     })
+    expect(
+      translateClasses('bg-black/(--modal-backdrop-opacity)').style,
+    ).toEqual({
+      backgroundColor:
+        'color-mix(in oklab, var(--color-black) var(--modal-backdrop-opacity), transparent)',
+    })
+  })
+
+  test('negative z-index', () => {
+    expect(translateUtility('-z-10')).toEqual({ zIndex: -10 })
   })
 
   test('per-corner radius + per-side border', () => {

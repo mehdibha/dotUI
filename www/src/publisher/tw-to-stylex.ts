@@ -406,18 +406,25 @@ function color(token: string): string | undefined {
     else if (SEMANTIC_COLOR_NAMES.has(name)) base = `var(--color-${name})`
     // black/white + palette ramps (`neutral-900`) use Tailwind's `--color-*`
     // names — the same vars the Tailwind backend resolves to, so parity holds.
-    else if (
-      name === 'black' ||
-      name === 'white' ||
-      /^[a-z]+-\d{2,3}$/.test(name)
-    )
+    // The ramp must be a real Tailwind color family (not e.g. `linear-45`).
+    else if (name === 'black' || name === 'white' || RAMP_RE.test(name))
       base = `var(--color-${name})`
   }
   if (base === undefined) return undefined
   if (opacity === undefined) return base
-  // Tailwind v4 opacity modifier compiles to color-mix(in oklab, <c> N%, transparent).
-  return `color-mix(in oklab, ${base} ${opacity}%, transparent)`
+  // Tailwind v4 opacity modifier → color-mix(in oklab, <c> <alpha>, transparent).
+  // The alpha may be a bare percent (`/50`), an arbitrary value (`/[71.37%]`),
+  // or a CSS var shorthand (`/(--a)`).
+  const alpha =
+    arbitrary(opacity) ??
+    (/^\d+(\.\d+)?$/.test(opacity) ? `${opacity}%` : opacity)
+  return `color-mix(in oklab, ${base} ${alpha}, transparent)`
 }
+
+// Tailwind v4 color family names (so the ramp fallback can't swallow non-color
+// utilities like `linear-45` or `gradient-to-r`).
+const RAMP_RE =
+  /^(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|primary|secondary|tertiary|accent|danger|warning|success|info|muted)-\d{1,3}$/
 
 /* ------------------------------ utility table ---------------------------- */
 
@@ -568,7 +575,8 @@ const KEYWORDS: Record<string, StyleXStyle> = {
 }
 
 /* CSS properties whose value is safe to negate for `-<util>` forms. */
-const NEGATABLE_PROP = /^(margin|top|right|bottom|left|inset|outlineOffset)/
+const NEGATABLE_PROP =
+  /^(margin|top|right|bottom|left|inset|outlineOffset|zIndex)/
 
 /** Resolve an inset/position value (`0`, `2`, `1/2`, `full`, `auto`, `[…]`, `(--v)`). */
 function insetValue(value: string): string | undefined {
@@ -617,6 +625,23 @@ const SHADOW_SIZES = new Set([
   '2xl',
   'shine',
 ])
+
+// Tailwind v4's `transition-<x>` property lists (bare `transition` = `default`).
+const TRANSITION_PROPERTIES: Record<string, string> = {
+  default:
+    'color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter',
+  all: 'all',
+  colors:
+    'color, background-color, border-color, outline-color, text-decoration-color, fill, stroke',
+  opacity: 'opacity',
+  shadow: 'box-shadow',
+  transform: 'transform, translate, scale, rotate',
+}
+
+// The 5-slot box-shadow composition Tailwind v4 uses so shadow + ring + inset
+// layers coexist (each writes a distinct `--tw-*` slot; unused slots are no-ops).
+const SHADOW_SLOTS =
+  'var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000)'
 const CONTAINER_SIZES = new Set([
   '3xs',
   '2xs',
@@ -703,8 +728,8 @@ export function translateUtility(util: string): StyleXStyle | null {
     if (!inner) return null
     const out: StyleXStyle = {}
     for (const [k, v] of Object.entries(inner)) {
-      if (!NEGATABLE_PROP.test(k) || typeof v !== 'string') return null
-      out[k] = v === '0' ? '0' : `calc(${v} * -1)`
+      if (!NEGATABLE_PROP.test(k)) return null
+      out[k] = typeof v === 'number' ? -v : v === '0' ? '0' : `calc(${v} * -1)`
     }
     return out
   }
@@ -801,7 +826,13 @@ export function translateUtility(util: string): StyleXStyle | null {
       return null
     case 'transition': {
       const arb = arbitrary(rest)
-      const props = arb !== undefined ? arb.replace(/,/g, ', ') : undefined
+      // `transition-none` sets only the property; everything else also carries
+      // Tailwind's default timing-function + duration.
+      if (rest === 'none') return { transitionProperty: 'none' }
+      const props =
+        arb !== undefined
+          ? arb.replace(/,/g, ', ')
+          : (TRANSITION_PROPERTIES[rest] ?? TRANSITION_PROPERTIES.default)
       return {
         transitionProperty: props ?? 'all',
         transitionTimingFunction:
@@ -901,18 +932,28 @@ export function translateUtility(util: string): StyleXStyle | null {
       const arb = arbitrary(rest)
       if (arb !== undefined) return { zIndex: arb }
       if (rest === 'auto') return { zIndex: 'auto' }
-      return /^\d+$/.test(rest) ? { zIndex: Number(rest) } : null
+      return /^-?\d+$/.test(rest) ? { zIndex: Number(rest) } : null
     }
     case 'shadow': {
-      if (SHADOW_SIZES.has(rest)) return { boxShadow: `var(--shadow-${rest})` }
+      // Use Tailwind v4's `--tw-shadow` slot + 5-slot composition so a shadow and
+      // a `ring-*` on the same element LAYER instead of clobbering each other.
+      if (SHADOW_SIZES.has(rest))
+        return {
+          '--tw-shadow': `var(--shadow-${rest})`,
+          boxShadow: SHADOW_SLOTS,
+        }
       const arb = arbitrary(rest)
-      return arb === undefined ? null : { boxShadow: arb }
+      return arb === undefined
+        ? null
+        : { '--tw-shadow': arb, boxShadow: SHADOW_SLOTS }
     }
     case 'ring': {
-      // Approximate Tailwind's ring as a single box-shadow ring (no offset/compose).
+      // Ring lives in the `--tw-ring-shadow` slot of the same composition (a flat
+      // approximation of the ring value — no offset/inset toggle, which dotUI doesn't use).
       if (rest === '' || /^\d+$/.test(rest))
         return {
-          boxShadow: `0 0 0 ${rest === '' ? 1 : rest}px var(--tw-ring-color, currentcolor)`,
+          '--tw-ring-shadow': `0 0 0 ${rest === '' ? 1 : rest}px var(--tw-ring-color, currentcolor)`,
+          boxShadow: SHADOW_SLOTS,
         }
       const c = color(rest)
       return c === undefined ? null : { '--tw-ring-color': c }
@@ -944,6 +985,9 @@ export function translateUtility(util: string): StyleXStyle | null {
       return /^\d+$/.test(rest) ? { transitionDuration: `${rest}ms` } : null
     }
     case 'ease': {
+      // `linear`/`initial` are literal keywords (no `--ease-linear` var exists).
+      if (rest === 'linear' || rest === 'initial')
+        return { transitionTimingFunction: rest }
       const arb = arbitrary(rest)
       return { transitionTimingFunction: arb ?? `var(--ease-${rest})` }
     }
