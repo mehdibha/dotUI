@@ -105,8 +105,15 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
     extends: 'none',
     dependencies: DEFAULT_DEPENDENCIES,
     // shadcn's `cn` utils sit in a 4xx-gated path under v4 Tailwind, so we ship our own copy
-    // in `files[]` rather than declaring a registry dependency.
-    registryDependencies: [],
+    // in `files[]` rather than declaring a registry dependency. The only registry
+    // deps are the blocks the user added: absolute `/r/<slot>` URLs (preset
+    // attached) so `shadcn init` pulls each block — and, transitively, the
+    // components it composes — at the chosen variant.
+    registryDependencies: blockDependencyUrls(
+      preset.includedBlocks,
+      registryRoot,
+      encodedPreset,
+    ),
     ...(css ? { css } : {}),
     ...(cssVars ? { cssVars } : {}),
     files: [
@@ -128,6 +135,17 @@ function registryConfigUrl(
   encodedPreset: string | undefined,
 ): string {
   return `${registryRoot}/r/{name}?preset=${encodedPreset ?? ''}`
+}
+
+/** Absolute `/r/<slot>` URLs (preset attached) for the user's added blocks. */
+function blockDependencyUrls(
+  slots: string[] | undefined,
+  registryRoot: string,
+  encodedPreset: string | undefined,
+): string[] {
+  if (!slots || slots.length === 0) return []
+  const query = encodedPreset ? `?preset=${encodedPreset}` : ''
+  return slots.map((slot) => `${registryRoot}/r/${slot}${query}`)
 }
 
 /** Flatten resolved per-palette ramps into `--<palette>-<step>` CSS var entries. */

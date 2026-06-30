@@ -15,6 +15,7 @@ import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
 
 import { ExamplesIndex } from './__generated__/examples'
+import { BlocksConfig, BlocksSummary } from './blocks'
 import { ChartColorsConfig, ChartColorsSummary } from './chart-colors'
 import { CodeOptionsDialog } from './code-options'
 import { ColorsConfig, ColorsSummary } from './colors'
@@ -138,6 +139,12 @@ const menu: MenuItem[] = [
     title: 'Cursor',
     preview: 'dynamic',
     config: 'dynamic',
+  },
+  {
+    id: 'blocks',
+    title: 'Blocks',
+    preview: <BlocksSummary />,
+    config: <BlocksConfig />,
   },
 ]
 

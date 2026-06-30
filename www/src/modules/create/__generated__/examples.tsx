@@ -75,6 +75,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 };
 
 export const GroupExamplesIndex: Record<string, () => Promise<{ default: React.ComponentType }>> = {
+	"block-login": () => import("@/modules/create/preview/group-examples/block-login"),
 	buttons: () => import("@/modules/create/preview/group-examples/buttons"),
 	calendar: () => import("@/modules/create/preview/group-examples/calendar"),
 	cards: () => import("@/modules/create/preview/group-examples/cards"),

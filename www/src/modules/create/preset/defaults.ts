@@ -14,7 +14,7 @@ function deriveDefaults(): DesignSystem {
     if (Object.keys(entries).length > 0) componentParams[item.name] = entries
   }
 
-  return { componentParams, tokens: {}, density: 'compact' }
+  return { componentParams, tokens: {}, density: 'compact', includedBlocks: [] }
 }
 
 export const DEFAULTS: DesignSystem = deriveDefaults()
