@@ -209,6 +209,18 @@
   }
 }
 
+/* header-blur-dither — TEMP (#305): a low-opacity tiled noise that dithers the
+   navbar tint's near-black gradient so 8-bit banding doesn't show as horizontal
+   steps. Opacity is ramped by --blur-progress inline (see header.tsx) and gated by
+   a `?dither` tweaker; masked to the upper band where the tint sits. Remove with
+   its tweaker once the look is settled. */
+@utility header-blur-dither {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.85'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+  mask-image: linear-gradient(to top, transparent 10%, #000 60%);
+  -webkit-mask-image: linear-gradient(to top, transparent 10%, #000 60%);
+}
+
 /* Click ripple for the docs component-gallery cursor (components-list/autoplay).
    Expands and fades from the pointer hotspot; mounts only during the press beat
    so it replays on each loop. */

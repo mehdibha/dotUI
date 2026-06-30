@@ -49,7 +49,17 @@ interface HeaderProps {
 }
 
 export function Header({ className, items = [] }: HeaderProps) {
-  const { pathname } = useLocation()
+  const { pathname, searchStr } = useLocation()
+  // TEMP tweaker (#305): A/B the navbar dither that fights dark-gradient banding.
+  // `?dither` / `?dither=on` enables it; `?dither=0.05` sets a custom opacity;
+  // absent or `?dither=off` keeps it off. Remove this block + the div once decided.
+  const ditherParam = new URLSearchParams(searchStr).get('dither')
+  const ditherEnabled =
+    ditherParam !== null && !['off', '0', 'false'].includes(ditherParam)
+  const ditherOpacity =
+    Number(ditherParam) > 0 && Number(ditherParam) < 1
+      ? Number(ditherParam)
+      : 0.035
   // Longest-matching-prefix wins so "/docs/components" highlights Components (not
   // Docs) while "/docs/button" still highlights Docs.
   const activeMatch = [...navItems]
@@ -88,6 +98,18 @@ export function Header({ className, items = [] }: HeaderProps) {
             opacity: 'var(--blur-progress, 0)',
             background:
               'linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--color-bg) 55%, transparent) 55%, color-mix(in oklab, var(--color-bg) 72%, transparent) 100%)',
+          }}
+        />
+        <div
+          aria-hidden
+          className={cn(
+            'absolute inset-0',
+            ditherEnabled && 'header-blur-dither',
+          )}
+          style={{
+            opacity: ditherEnabled
+              ? `calc(var(--blur-progress, 0) * ${ditherOpacity})`
+              : 0,
           }}
         />
       </div>
