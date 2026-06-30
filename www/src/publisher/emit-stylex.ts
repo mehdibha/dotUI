@@ -57,17 +57,65 @@ function sliceIsFlat(
   )
 }
 
-interface VariantAxis {
+interface AxisSpec {
   name: string
-  /** Boolean axes only have `true`/`false` keys → applied as `name && styles.x`. */
+  /** Boolean axes only have `true`/`false` keys → applied as `name && …`. */
   kind: 'enum' | 'boolean'
-  /** value name → translated StyleX style. */
-  values: Record<string, StyleXStyle>
   /** ordered value names (for the type union). */
   order: string[]
 }
 
 const BOOLEAN_KEYS = new Set(['true', 'false'])
+
+/** Discover the variant axes (name, enum vs boolean, value order) from the IR. */
+function discoverAxes(variants: TvLayer['variants']): AxisSpec[] {
+  const axes: AxisSpec[] = []
+  for (const [name, values] of Object.entries(variants ?? {})) {
+    const order = Object.keys(values)
+    const kind = order.every((v) => BOOLEAN_KEYS.has(v)) ? 'boolean' : 'enum'
+    axes.push({ name, kind, order })
+  }
+  return axes
+}
+
+/** The `type XVariants = { … }` declaration built from the axis specs. */
+function buildVariantType(typeIdent: string, axes: AxisSpec[]): string {
+  const lines = axes.map((axis) =>
+    axis.kind === 'boolean'
+      ? `\t${axis.name}?: boolean;`
+      : `\t${axis.name}?: ${axis.order.map((v) => JSON.stringify(v)).join(' | ')};`,
+  )
+  return `type ${typeIdent} = {\n${lines.join('\n')}\n};`
+}
+
+/**
+ * Translate one class string, splitting dotUI composite passthrough utilities
+ * (`focus-ring`, …) out of the genuinely-untranslated set (which feeds the
+ * PARITY-TODO list). The passthrough classes are layered back as literal classNames.
+ */
+function translatePartitioned(
+  classes: string,
+  untranslatedSink: string[],
+): { style: StyleXStyle; passthrough: string[] } {
+  const res = translateClasses(classes)
+  const passthrough: string[] = []
+  for (const token of res.untranslated) {
+    if (isPassthroughToken(token)) passthrough.push(token)
+    else untranslatedSink.push(token)
+  }
+  return { style: res.style, passthrough }
+}
+
+const IDENT_RE = /^[A-Za-z_$][A-Za-z0-9_$]*$/
+/** Quote a slot name when it isn't a valid object-key identifier. */
+function slotKey(slot: string): string {
+  return IDENT_RE.test(slot) ? slot : JSON.stringify(slot)
+}
+/** A namespace identifier for a slot (+ optional axis): `root`, `rootVariantStyles`. */
+function nsIdent(slot: string, axis?: string): string {
+  const s = toCamelCase(slot)
+  return axis ? `${s}${capitalize(axis)}Styles` : `${s}Styles`
+}
 
 export interface EmitStylexResult {
   /** True when the IR shape is one the emitter handles (flat, no compounds). */
@@ -90,8 +138,9 @@ interface EmitInput {
 
 /**
  * Emit a StyleX component file from the transformed Tailwind template + IR.
- * Returns `handled: false` (with the template untouched) for shapes outside the
- * flat single-resolver case.
+ * Dispatches to the flat (single-element) or slotted path. Returns
+ * `handled: false` (template untouched) only for shapes still out of scope
+ * (compound variants — none exist in dotUI today), so the route never breaks.
  */
 export function emitStylexComponent({
   template,
@@ -101,136 +150,290 @@ export function emitStylexComponent({
 }: EmitInput): EmitStylexResult {
   const untranslated: string[] = []
 
-  // Out-of-scope shapes → let the caller keep Tailwind.
-  if (flat.slots && Object.keys(flat.slots).length > 0)
-    return { handled: false, untranslated, content: template }
+  // Compound variants aren't used by any dotUI styles.ts today; bail rather than
+  // silently drop them if that ever changes.
   if (flat.compoundVariants && flat.compoundVariants.length > 0)
     return { handled: false, untranslated, content: template }
-  // No `tv(...)` to swap → nothing for us to do.
+  // No `tv(...)` placeholder to swap → nothing for us to do.
   if (!template.includes(placeholder))
     return { handled: false, untranslated, content: template }
 
   const ident = `${toCamelCase(meta.name)}Variants`
   const typeIdent = `${capitalize(toCamelCase(meta.name))}Variants`
+  const slots =
+    flat.slots && Object.keys(flat.slots).length > 0 ? flat.slots : null
+  const base = { template, flat, ident, typeIdent, placeholder, untranslated }
+  return slots ? emitSlotted({ ...base, slots }) : emitFlat(base)
+}
 
-  // 1. Translate the base layer. dotUI composite utilities (`focus-ring`, …) have
-  // no same-element StyleX form, but they ship as real classes to every consumer,
-  // so keep them as literal classNames rather than dropping them — that preserves
-  // e.g. the focus ring. (Base-layer only; variant-scoped composites, which would
-  // need conditional className logic, stay on the PARITY-TODO list for the rollout.)
-  const baseRes = translateClasses(joinClassValue(flat.base))
-  const passthrough: string[] = []
-  for (const token of baseRes.untranslated) {
-    if (isPassthroughToken(token)) passthrough.push(token)
-    else untranslated.push(token)
-  }
-  const baseStyles: Record<string, StyleXStyle> = { base: baseRes.style }
+interface PathInput {
+  template: string
+  flat: TvLayer
+  ident: string
+  typeIdent: string
+  placeholder: string
+  untranslated: string[]
+}
 
-  // 2. Translate each variant axis.
-  const axes: VariantAxis[] = []
+/**
+ * Flat (single-element) components — Button, ToggleButton… The resolver returns a
+ * className string, the exact shape `tv()` returns, so the JSX body is untouched.
+ */
+function emitFlat({
+  template,
+  flat,
+  ident,
+  typeIdent,
+  placeholder,
+  untranslated,
+}: PathInput): EmitStylexResult {
+  const base = translatePartitioned(joinClassValue(flat.base), untranslated)
+  const baseStyles: Record<string, StyleXStyle> = { base: base.style }
+
+  const axes = discoverAxes(flat.variants)
+  const enumStyles: Record<string, Record<string, StyleXStyle>> = {}
   for (const [axisName, values] of Object.entries(flat.variants ?? {})) {
-    const valueNames = Object.keys(values)
-    const isBoolean = valueNames.every((v) => BOOLEAN_KEYS.has(v))
+    const axis = axes.find((a) => a.name === axisName)!
     const translated: Record<string, StyleXStyle> = {}
     for (const [valueName, slice] of Object.entries(values)) {
       if (!sliceIsFlat(slice))
-        return { handled: false, untranslated, content: template } // slot map → unsupported
-      const res = translateClasses(joinClassValue(slice))
-      untranslated.push(...res.untranslated)
-      translated[valueName] = res.style
+        return { handled: false, untranslated, content: template }
+      translated[valueName] = translatePartitioned(
+        joinClassValue(slice),
+        untranslated,
+      ).style
     }
-    if (isBoolean) {
-      // Fold the `true` style into the shared `styles` create.
-      baseStyles[axisName] = translated['true'] ?? {}
-    }
-    axes.push({
-      name: axisName,
-      kind: isBoolean ? 'boolean' : 'enum',
-      values: translated,
-      order: valueNames,
-    })
+    // Boolean axes fold the `true` style into the shared `styles` namespace.
+    if (axis.kind === 'boolean') baseStyles[axisName] = translated['true'] ?? {}
+    else enumStyles[axisName] = translated
   }
 
   const defaults = flat.defaultVariants ?? {}
-
-  // 3. Build the StyleX declarations.
-  const decls: string[] = []
-  decls.push(`const styles = stylex.create(${serializeStyleMap(baseStyles)});`)
+  const decls = [
+    `const styles = stylex.create(${serializeStyleMap(baseStyles)});`,
+  ]
   for (const axis of axes) {
-    if (axis.kind === 'boolean') continue // folded into `styles`
-    decls.push(
-      `const ${axis.name}Styles = stylex.create(${serializeStyleMap(axis.values)});`,
-    )
+    if (axis.kind === 'enum')
+      decls.push(
+        `const ${axis.name}Styles = stylex.create(${serializeStyleMap(enumStyles[axis.name]!)});`,
+      )
   }
 
-  // 4. The variant props type (replaces `VariantProps<typeof …>`).
-  const typeLines = axes.map((axis) => {
-    if (axis.kind === 'boolean') return `\t${axis.name}?: boolean;`
-    const union = axis.order.map((v) => JSON.stringify(v)).join(' | ')
-    return `\t${axis.name}?: ${union};`
-  })
-  const variantType = `type ${typeIdent} = {\n${typeLines.join('\n')}\n};`
-
-  // 5. The resolver — same call signature as the tv() function it replaces.
-  const params = axes.map((axis) => {
-    const def = defaults[axis.name]
-    return def !== undefined
-      ? `${axis.name} = ${JSON.stringify(def)}`
-      : axis.name
-  })
-  params.push('className')
+  const params = axes
+    .map((axis) => {
+      const def = defaults[axis.name]
+      return def !== undefined
+        ? `${axis.name} = ${JSON.stringify(def)}`
+        : axis.name
+    })
+    .concat('className')
   const applyArgs = ['styles.base']
-  for (const axis of axes) {
+  for (const axis of axes)
     applyArgs.push(
       axis.kind === 'boolean'
         ? `${axis.name} && styles.${axis.name}`
         : `${axis.name}Styles[${axis.name}]`,
     )
-  }
+
   const resolver = [
     `function ${ident}(`,
     `\t{ ${params.join(', ')} }: ${typeIdent} & { className?: string } = {},`,
     `) {`,
-    `\t// All dotUI theming is static var() references, so stylex.props' \`style\``,
+    `\t// dotUI theming is all static var() references, so stylex.props' \`style\``,
     `\t// is empty and the className string alone carries the styles.`,
     `\tconst { className: sx } = stylex.props(`,
     ...applyArgs.map((a) => `\t\t${a},`),
     `\t);`,
-    // Order: StyleX atomic classes, then dotUI composite passthrough classes,
-    // then the consumer's className override last so it can win.
-    passthrough.length > 0
-      ? `\treturn [sx, ${JSON.stringify(passthrough.join(' '))}, className].filter(Boolean).join(" ");`
-      : `\treturn [sx, className].filter(Boolean).join(" ");`,
+    `\t${returnExpr(base.passthrough, 'className')}`,
     `}`,
   ].join('\n')
 
-  // 6. Splice into the template.
-  const declarationBlock = `${decls.join('\n\n')}\n\n${resolver}`
-  let content = template
+  return finalize(
+    template,
+    placeholder,
+    ident,
+    typeIdent,
+    `${decls.join('\n\n')}\n\n${resolver}`,
+    buildVariantType(typeIdent, axes),
+    untranslated,
+  )
+}
 
-  // 6a. tailwind-variants import → stylex import.
-  content = content.replace(
+/**
+ * Slotted components — Alert, Card… `tv()` returns a function whose call yields a
+ * `{ slot: (props) => className }` map; we reproduce that exact shape so the JSX
+ * (`const { root } = xVariants(); root({ variant, className })`) is untouched.
+ * Each slot gets its own `stylex.create` namespaces (base + per-variant).
+ */
+function emitSlotted({
+  template,
+  flat,
+  slots,
+  ident,
+  typeIdent,
+  placeholder,
+  untranslated,
+}: PathInput & { slots: Record<string, ClassValue> }): EmitStylexResult {
+  const slotNames = Object.keys(slots)
+  const axes = discoverAxes(flat.variants)
+  const defaults = flat.defaultVariants ?? {}
+
+  // Slotted variant values must be slot maps; a flat value here is out of scope.
+  for (const values of Object.values(flat.variants ?? {}))
+    for (const slice of Object.values(values))
+      if (sliceIsFlat(slice))
+        return { handled: false, untranslated, content: template }
+
+  // Per slot: base style + composite passthrough classes.
+  const slotBase: Record<string, StyleXStyle> = {}
+  const slotPass: Record<string, string[]> = {}
+  for (const slot of slotNames) {
+    const r = translatePartitioned(joinClassValue(slots[slot]), untranslated)
+    slotBase[slot] = r.style
+    slotPass[slot] = r.passthrough
+  }
+
+  // Per slot, per axis: { value: style }. Skip a namespace when no value carries
+  // content for that slot (keeps the emitted module lean).
+  const slotAxis: Record<
+    string,
+    Record<string, Record<string, StyleXStyle>>
+  > = {}
+  for (const slot of slotNames) slotAxis[slot] = {}
+  for (const [axisName, values] of Object.entries(flat.variants ?? {}))
+    for (const slot of slotNames) {
+      const perValue: Record<string, StyleXStyle> = {}
+      let hasContent = false
+      for (const [valueName, slice] of Object.entries(values)) {
+        const slotMap = slice as Record<string, ClassValue>
+        const style = translatePartitioned(
+          joinClassValue(slotMap[slot]),
+          untranslated,
+        ).style
+        perValue[valueName] = style
+        if (Object.keys(style).length > 0) hasContent = true
+      }
+      if (hasContent) slotAxis[slot]![axisName] = perValue
+    }
+
+  const decls: string[] = []
+  for (const slot of slotNames) {
+    decls.push(
+      `const ${nsIdent(slot)} = stylex.create(${serializeStyleMap({ base: slotBase[slot]! })});`,
+    )
+    for (const axis of axes) {
+      const perValue = slotAxis[slot]![axis.name]
+      if (perValue)
+        decls.push(
+          `const ${nsIdent(slot, axis.name)} = stylex.create(${serializeStyleMap(perValue)});`,
+        )
+    }
+  }
+
+  // Each slot fn resolves its own variant props (merged over any top-level props),
+  // mirroring tv's slotted API, and appends its passthrough + the consumer className.
+  // Only the axes a slot actually styles are destructured, so the shipped code has
+  // no unused bindings.
+  const slotFns = slotNames.map((slot) => {
+    const usedAxes = axes.filter((axis) => slotAxis[slot]![axis.name])
+    const destructure = usedAxes
+      .map((axis) => {
+        const def = defaults[axis.name]
+        return def !== undefined
+          ? `${axis.name} = ${JSON.stringify(def)}`
+          : axis.name
+      })
+      .concat('className')
+      .join(', ')
+    const args = [`${nsIdent(slot)}.base`]
+    for (const axis of usedAxes)
+      args.push(
+        axis.kind === 'boolean'
+          ? `${axis.name} && ${nsIdent(slot, axis.name)}.true`
+          : `${nsIdent(slot, axis.name)}[${axis.name}]`,
+      )
+    return [
+      `\t\t${slotKey(slot)}: (slotProps: ${typeIdent} & { className?: string } = {}) => {`,
+      `\t\t\tconst { ${destructure} } = { ...props, ...slotProps };`,
+      `\t\t\tconst { className: sx } = stylex.props(${args.join(', ')});`,
+      `\t\t\t${returnExpr(slotPass[slot]!, 'className')}`,
+      `\t\t},`,
+    ].join('\n')
+  })
+
+  const resolver = [
+    `function ${ident}(props: ${typeIdent} = {}) {`,
+    `\t// dotUI theming is all static var() references, so stylex.props' \`style\``,
+    `\t// is empty and the className string alone carries the styles.`,
+    `\treturn {`,
+    ...slotFns,
+    `\t};`,
+    `}`,
+  ].join('\n')
+
+  return finalize(
+    template,
+    placeholder,
+    ident,
+    typeIdent,
+    `${decls.join('\n')}\n\n${resolver}`,
+    buildVariantType(typeIdent, axes),
+    untranslated,
+  )
+}
+
+/** `return [sx, "<passthrough>", className].filter(Boolean).join(" ");` */
+function returnExpr(passthrough: string[], classNameVar: string): string {
+  const parts =
+    passthrough.length > 0
+      ? `[sx, ${JSON.stringify(passthrough.join(' '))}, ${classNameVar}]`
+      : `[sx, ${classNameVar}]`
+  return `return ${parts}.filter(Boolean).join(" ");`
+}
+
+/**
+ * Splice the StyleX declarations + variant type into the transformed template,
+ * swap the `tailwind-variants` import for StyleX, retarget the variant-props type
+ * (both the `type X = VariantProps<…>` alias and inline `VariantProps<typeof X>`
+ * uses), and prepend the PARITY-TODO work-list. Shared by both paths.
+ */
+function finalize(
+  template: string,
+  placeholder: string,
+  ident: string,
+  typeIdent: string,
+  declBody: string,
+  variantType: string,
+  untranslated: string[],
+): EmitStylexResult {
+  let content = template.replace(
     /import\s*\{[^}]*\}\s*from\s*["']tailwind-variants["'];?/,
     'import * as stylex from "@stylexjs/stylex";',
   )
 
-  // 6b. `const <ident> = tv(%%TV_CONFIG%%);` → StyleX declarations + resolver.
   const tvDeclRe = new RegExp(
     `const\\s+${ident}\\s*=\\s*tv\\(${escapeRegex(placeholder)}\\);?`,
   )
   if (!tvDeclRe.test(content))
-    return { handled: false, untranslated, content: template }
-  content = content.replace(tvDeclRe, declarationBlock)
+    return { handled: false, untranslated: [], content: template }
+  // TS hoists type aliases, so position doesn't matter — defining the variant type
+  // here also covers components whose interface uses `VariantProps<…>` inline with
+  // no `type X = …` line of their own.
+  content = content.replace(tvDeclRe, `${variantType}\n\n${declBody}`)
 
-  // 6c. `type <Type> = VariantProps<typeof <ident>>;` → explicit type.
+  // Drop a now-redundant `type X = VariantProps<typeof ident>` alias, then point any
+  // remaining inline `VariantProps<typeof ident>` use at the emitted type.
   content = content.replace(
     new RegExp(
-      `type\\s+${typeIdent}\\s*=\\s*VariantProps<typeof\\s+${ident}>;?`,
+      `type\\s+${typeIdent}\\s*=\\s*VariantProps<typeof\\s+${ident}>;?\\s*`,
     ),
-    variantType,
+    '',
+  )
+  content = content.replace(
+    new RegExp(`VariantProps<typeof\\s+${ident}>`, 'g'),
+    typeIdent,
   )
 
-  // 7. PARITY-TODO header for anything the translator couldn't express.
   const unique = [...new Set(untranslated)]
   if (unique.length > 0) {
     const header = [

@@ -7,6 +7,7 @@
 
 import { describe, expect, test } from 'vitest'
 
+import { alertPublishable } from './__fixtures__/alert-publishable'
 import { buttonPublishable } from './__fixtures__/button-publishable'
 import { DEFAULT_CODE_OPTIONS } from './code-options'
 import { emitStylexComponent } from './emit-stylex'
@@ -103,17 +104,48 @@ describe('publish + styleEngine: stylex', () => {
   })
 })
 
-describe('emitStylexComponent — scope gating', () => {
-  test('slotted IR is not handled (caller keeps Tailwind)', () => {
-    const res = emitStylexComponent({
-      template: `const xVariants = tv(${TV_CONFIG_PLACEHOLDER});`,
-      flat: { slots: { root: 'flex', label: 'text-sm' } },
-      meta: { name: 'x', type: 'registry:ui' },
-      placeholder: TV_CONFIG_PLACEHOLDER,
-    })
-    expect(res.handled).toBe(false)
+describe('publish + styleEngine: stylex (slotted component)', () => {
+  const { item, rawContent } = publish({
+    publishable: alertPublishable,
+    preset: STYLEX_PRESET,
   })
 
+  test('emits a per-slot stylex.create + a slot-map resolver', () => {
+    expect(rawContent).toContain('import * as stylex from "@stylexjs/stylex";')
+    // one base namespace per slot
+    expect(rawContent).toContain('const rootStyles = stylex.create(')
+    expect(rawContent).toContain('const titleStyles = stylex.create(')
+    expect(rawContent).toContain('const actionStyles = stylex.create(')
+    // per-slot per-variant namespace where the slot is themed
+    expect(rawContent).toContain('const rootVariantStyles = stylex.create(')
+    // the resolver returns slot functions
+    expect(rawContent).toMatch(/root: \(slotProps[^)]*\) =>/)
+    expect(rawContent).toContain('rootVariantStyles[variant]')
+  })
+
+  test('leaves the slotted JSX body untouched', () => {
+    expect(rawContent).toContain('const { root } = alertVariants();')
+    expect(rawContent).toContain('root({ variant, className })')
+    expect(rawContent).toContain('const { title } = alertVariants();')
+  })
+
+  test('retargets the inline VariantProps<AlertStyles> to the emitted type', () => {
+    expect(rawContent).not.toContain('VariantProps')
+    expect(rawContent).toContain('type AlertVariants = {')
+    expect(rawContent).toContain(
+      'extends React.ComponentProps<"div">, AlertVariants',
+    )
+  })
+
+  test('declares the StyleX dependency and flags descendant gaps', () => {
+    expect((item as { dependencies?: string[] }).dependencies).toContain(
+      '@stylexjs/stylex',
+    )
+    expect(rawContent).toContain('PARITY-TODO')
+  })
+})
+
+describe('emitStylexComponent — scope gating', () => {
   test('compound variants are not handled yet', () => {
     const res = emitStylexComponent({
       template: `const xVariants = tv(${TV_CONFIG_PLACEHOLDER});`,

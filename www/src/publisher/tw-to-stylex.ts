@@ -378,6 +378,10 @@ export function translateUtility(util: string): StyleXStyle | null {
     }
     case 'leading':
       return { lineHeight: leading(rest) }
+    case 'tracking': {
+      const arb = arbitrary(rest)
+      return { letterSpacing: arb ?? `var(--tracking-${rest})` }
+    }
     case 'cursor':
       return CURSOR_VARS.has(rest)
         ? { cursor: `var(--cursor-${rest})` }

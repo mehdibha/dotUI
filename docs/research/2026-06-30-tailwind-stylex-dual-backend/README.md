@@ -1,6 +1,6 @@
 # Tailwind ↔ StyleX dual styling backend
 
-> Status: design + working, adversarially-hardened proof-of-concept (Button). Set as a `/goal` on 2026-06-30 (branch `claude/friendly-shockley-158a55`).
+> Status: working, adversarially-hardened system — flat **and** slotted components emit StyleX (63/66 work with both; 3 use a non-canonical inline-`tv()` pattern). Set as a `/goal` on 2026-06-30 (branch `claude/friendly-shockley-158a55`).
 > This folder: `README.md` (architecture + rollout, this file), `astryx-stylex-briefing.md` (the verified StyleX/Astryx API briefing), and `parity-audit-snapshot.md` (the registry-wide coverage audit — the rollout sizing).
 >
 > Decision (2026-06-30, empirically verified): bare `[data-*]` attribute selectors **are** valid StyleX condition keys (compiled against `@stylexjs/babel-plugin@0.19.0`), so the RAC data-attribute states the dual backend depends on are expressible. The PoC was then hardened against an adversarial review (26 agents) — see "Verification & hardening" below.
@@ -93,7 +93,9 @@ The verifier is backend-agnostic by construction: it only needs two React trees 
 
 > **66 components — 26 reach exact parity now, 4 need a mechanical translator/emitter extension, 5 need `when.*` marker plumbing, 31 need a per-component descendant refactor.** ~290 distinct uncovered same-element utilities remain to map (the `unknown` bucket — the table-growing work-list). Snapshot, not kept current; regenerate as the translator grows.
 
-This audit is what sizes the goal honestly: the system + the trivial bucket work today; the descendant bucket is the real multi-week effort.
+> **66 components — 41 emit a StyleX backend, 22 have no styling at all (identical file either engine), 3 use an inline `tv()` authoring pattern** (not `createStyles`, so there's no IR to lower — they need conversion to the canonical pattern, or a build-time inline-`tv` extractor). So **63/66 work with both backends today**; every emitted export carries its per-component descendant/group/has remainder inline as a `PARITY-TODO` work-list (~290 distinct uncovered utilities across the registry).
+
+This audit is what sizes the goal honestly: the system + both shapes (flat and slotted) work today; the inline-`tv` trio and the descendant parity remainder are the tracked rollout.
 
 ## Token strategy: consume, don't redefine
 
@@ -112,7 +114,7 @@ Recommendation: authoring mode for the shadcn-CLI export (consistent with "code 
 
 - `codeOptions.styleEngine: 'tailwind' | 'stylex'` — added to `publisher/code-options.ts` (default `tailwind`), sanitized, surfaced in the `/create` "Code style" modal (`code-options/controls.tsx`), persisted through the codec automatically.
 - `publisher/tw-to-stylex.ts` — the translation engine (utility→property map + variant-prefix folding + untranslated-token report). Covers Button's vocabulary + a broad core; table-driven for extension.
-- `publisher/emit-stylex.ts` — IR → `stylex.create` namespaces → assembled StyleX component; wired into `publish()` behind the axis (covered components emit StyleX; uncovered ones keep Tailwind so the route is never broken).
+- `publisher/emit-stylex.ts` — IR → `stylex.create` namespaces → assembled StyleX component, for **flat and slotted** shapes; wired into `publish()` behind the axis (covered components emit StyleX; the 3 inline-`tv()` ones keep Tailwind so the route is never broken).
 - `publisher/parity.ts` — the coverage analyzer/auditor (above).
 - `publish()` declares `@stylexjs/stylex` as a dependency on the emitted item, so `shadcn add` installs it.
 - Tests prove Button's translation + emission, the RAC-state mapping, composite passthrough, and pin the parity contract.
@@ -129,7 +131,7 @@ The PoC was driven through an adversarial find→verify review (26 agents over 6
 ### Still open / known limits
 
 - **The var contract.** dotUI's `theme.css`/`base.css` are authored in Tailwind v4 (`@theme`, `@utility`), so `--spacing`/`--text-*`/`--color-*`/`--radius-*` all come from the Tailwind theme layer. The StyleX components consume those `var()`s, so the realistic model is **StyleX component files layered over dotUI's (Tailwind-authored) theme + utility CSS** — not "no Tailwind at all." Going fully Tailwind-free would mean emitting a plain-CSS theme. Product decision (see below).
-- **Scope gating.** The emitter handles the flat, single-resolver shape (Button, ToggleButton…). Slotted + compound-variant components return `handled: false` and keep Tailwind output, so the route is never broken — they're the rollout.
+- **Shapes handled.** The emitter now covers **both** the flat single-resolver shape (Button, ToggleButton…) *and* slotted components (Alert, Card…) — slotted emits per-slot `stylex.create` namespaces and a `{ slot: (props) => className }` resolver matching tv's slotted API, so the JSX body is untouched. It also retargets the variant-props type whether the source uses a `type X = VariantProps<…>` alias or inline `VariantProps<…>` in an `interface … extends`. Compound variants would return `handled: false` (none exist in dotUI today). The 3 inline-`tv()` components keep Tailwind output (no IR), so the route is never broken.
 
 ## Rollout plan (per-component, after the system lands)
 
@@ -138,7 +140,8 @@ The PoC was driven through an adversarial find→verify review (26 agents over 6
 3. **Port marker-plumbing components**: emit `when.*` + markers on both the styled element and its parent.
 4. **Refactor descendant components**: lift `**:[svg]`/child rules into real slots/`gap` so both backends can express them — this is a change to the *canonical* Tailwind source too (it stays the single source; the refactor is backend-neutral and improves the Tailwind output as well).
 5. **Synced groups stay synced** (Button ⇄ ToggleButton): port a group together.
-6. **Wire the matrix verifier into CI** as each component goes green.
+6. **Convert the 3 inline-`tv()` components** (avatar, checkbox-group, color-swatch) to the canonical `createStyles` pattern (a CLAUDE.md-endorsed cleanup) — or teach the build-time extractor to pull an inline `tv({…})` config out of `base.tsx` — so they too lower to the IR and emit StyleX.
+7. **Wire the matrix verifier into CI** as each component goes green.
 
 ## Open questions for the user (product decisions)
 
