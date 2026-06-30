@@ -1,0 +1,103 @@
+{
+  "name": "LightboxViewerProps",
+  "description": "The fullscreen viewer rendered inside the modal. Displays the active image\nwith previous/next controls, a counter, and an optional caption. Exposed for\nadvanced use; most consumers should use `Lightbox`.",
+  "props": {
+    "images": {
+      "type": "LightboxImage[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "link",
+          "id": "src/registry/ui/lightbox/types.ts:LightboxImage",
+          "name": "LightboxImage"
+        }
+      },
+      "description": "The full set of images to navigate between.",
+      "required": true
+    },
+    "index": {
+      "type": "number",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The index of the currently displayed image.",
+      "required": true
+    },
+    "onIndexChange": {
+      "type": "(index: number) => void",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "index",
+            "value": {
+              "type": "number"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Called with the next index when the user navigates.",
+      "required": true
+    },
+    "onClose": {
+      "type": "() => void",
+      "typeAst": {
+        "type": "function",
+        "parameters": [],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Called when the user requests to close the viewer.",
+      "required": true
+    }
+  },
+  "typeLinks": {
+    "src/registry/ui/lightbox/types.ts:LightboxImage": {
+      "type": "interface",
+      "id": "src/registry/ui/lightbox/types.ts:LightboxImage",
+      "name": "LightboxImage",
+      "extends": [],
+      "properties": {
+        "alt": {
+          "type": "property",
+          "name": "alt",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Alternative text for the image. Also used as the viewer caption and the\nthumbnail's accessible label."
+        },
+        "src": {
+          "type": "property",
+          "name": "src",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The image source URL."
+        }
+      },
+      "typeParameters": [],
+      "description": "A single image entry rendered in the lightbox grid and viewer."
+    }
+  }
+}
