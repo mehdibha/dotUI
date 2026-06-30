@@ -1,0 +1,38 @@
+---
+title: PDF Viewer
+description: A PDF viewer with page navigation and zoom controls.
+wip: true
+---
+
+<Demo name="pdf-viewer/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/pdf-viewer
+```
+
+## Usage
+
+Pass the `file` URL of the document you want to render. The viewer handles page
+navigation and zoom out of the box.
+
+```tsx
+import { PdfViewer } from '@/components/ui/pdf-viewer'
+```
+
+```tsx
+<PdfViewer file="/document.pdf" />
+```
+
+## Examples
+
+<Examples>
+  <Example name="pdf-viewer/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### PdfViewer
+
+<Reference name="pdf-viewer" />

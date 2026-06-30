@@ -54,6 +54,7 @@ import UiModal from "@/registry/ui/modal/meta";
 import UiNumberField from "@/registry/ui/number-field/meta";
 import UiOtpField from "@/registry/ui/otp-field/meta";
 import UiPagination from "@/registry/ui/pagination/meta";
+import UiPdfViewer from "@/registry/ui/pdf-viewer/meta";
 import UiPopover from "@/registry/ui/popover/meta";
 import UiProgressBar from "@/registry/ui/progress-bar/meta";
 import UiRadioGroup from "@/registry/ui/radio-group/meta";
@@ -128,6 +129,7 @@ export const registryUi: RegistryItem[] = [
 	UiNumberField,
 	UiOtpField,
 	UiPagination,
+	UiPdfViewer,
 	UiPopover,
 	UiProgressBar,
 	UiRadioGroup,
