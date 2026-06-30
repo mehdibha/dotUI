@@ -1,0 +1,66 @@
+---
+title: Markdown Editor
+description: A markdown editor with a formatting toolbar and Write/Preview tabs.
+links:
+  - label: react-markdown
+    href: https://github.com/remarkjs/react-markdown
+wip: true
+---
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/markdown-editor
+```
+
+## Usage
+
+Compose the editor from its parts. The `value` is fully controlled — the
+toolbar actions and the Write panel both call `onChange` with the next source.
+
+```tsx
+import {
+  MarkdownEditor,
+  MarkdownEditorPreview,
+  MarkdownEditorToolbar,
+  MarkdownEditorWrite,
+} from '@/components/ui/markdown-editor'
+```
+
+```tsx
+const [value, setValue] = React.useState('# Hello')
+
+<MarkdownEditor value={value} onChange={setValue}>
+  <MarkdownEditorToolbar />
+  <MarkdownEditorWrite />
+  <MarkdownEditorPreview />
+</MarkdownEditor>
+```
+
+## Examples
+
+<Examples>
+  <Example name="markdown-editor/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### MarkdownEditor
+
+<Reference name="markdown-editor" />
+
+### MarkdownEditorToolbar
+
+<Reference name="markdown-editor-toolbar" />
+
+### MarkdownEditorAction
+
+<Reference name="markdown-editor-action" />
+
+### MarkdownEditorWrite
+
+<Reference name="markdown-editor-write" />
+
+### MarkdownEditorPreview
+
+<Reference name="markdown-editor-preview" />

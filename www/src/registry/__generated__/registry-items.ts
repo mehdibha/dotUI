@@ -48,6 +48,7 @@ import UiKbd from "@/registry/ui/kbd/meta";
 import UiLink from "@/registry/ui/link/meta";
 import UiListBox from "@/registry/ui/list-box/meta";
 import UiLoader from "@/registry/ui/loader/meta";
+import UiMarkdownEditor from "@/registry/ui/markdown-editor/meta";
 import UiMention from "@/registry/ui/mention/meta";
 import UiMenu from "@/registry/ui/menu/meta";
 import UiModal from "@/registry/ui/modal/meta";
@@ -122,6 +123,7 @@ export const registryUi: RegistryItem[] = [
 	UiLink,
 	UiListBox,
 	UiLoader,
+	UiMarkdownEditor,
 	UiMention,
 	UiMenu,
 	UiModal,

@@ -1,0 +1,14 @@
+{
+  "name": "MarkdownEditorWriteProps",
+  "description": "The Write tab panel: a monospace textarea bound to the editor value.",
+  "extendsElement": "textarea",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

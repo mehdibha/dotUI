@@ -1657,6 +1657,10 @@ export const DemosIndex: Record<
 		files: ["ui/loader/demos/overlay.tsx"],
 		component: React.lazy(() => import("@/registry/ui/loader/demos/overlay")),
 	},
+	"markdown-editor/demos/default": {
+		files: ["ui/markdown-editor/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/markdown-editor/demos/default")),
+	},
 	"mention/demos/basic": {
 		files: ["ui/mention/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/mention/demos/basic")),
