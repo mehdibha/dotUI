@@ -1,0 +1,23 @@
+{
+  "name": "BubbleContentProps",
+  "description": "The content inside a bubble. Set `asChild` to render the bubble's body as a\nlink or button instead of a div.",
+  "extendsElement": "div",
+  "props": {
+    "asChild": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Merge props onto the single child element instead of rendering a div.",
+      "default": "false"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

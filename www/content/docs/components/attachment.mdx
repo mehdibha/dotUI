@@ -1,0 +1,84 @@
+---
+title: Attachment
+description: File and image cards — media, metadata, upload state, actions, and a full-card trigger.
+---
+
+<Demo name="attachment/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/attachment
+```
+
+## Usage
+
+```tsx
+import {
+  Attachment,
+  AttachmentContent,
+  AttachmentDescription,
+  AttachmentMedia,
+  AttachmentTitle,
+} from '@/components/ui/attachment'
+```
+
+```tsx
+<Attachment>
+  <AttachmentMedia>
+    <FileTextIcon />
+  </AttachmentMedia>
+  <AttachmentContent>
+    <AttachmentTitle>roadmap.pdf</AttachmentTitle>
+    <AttachmentDescription>PDF · 2.4 MB</AttachmentDescription>
+  </AttachmentContent>
+</Attachment>
+```
+
+Add `AttachmentActions` for controls, an `AttachmentTrigger` to make the whole
+card clickable, and set `state` to reflect an upload.
+
+## Examples
+
+<Examples className="grid-cols-1 lg:grid-cols-2">
+  <Example name="attachment/demos/states" title="Upload states" />
+  <Example name="attachment/demos/image" title="Images" />
+</Examples>
+
+## API Reference
+
+### Attachment
+
+<Reference name="attachment" />
+
+### AttachmentMedia
+
+<Reference name="attachment-media" />
+
+### AttachmentContent
+
+<Reference name="attachment-content" />
+
+### AttachmentTitle
+
+<Reference name="attachment-title" />
+
+### AttachmentDescription
+
+<Reference name="attachment-description" />
+
+### AttachmentActions
+
+<Reference name="attachment-actions" />
+
+### AttachmentAction
+
+<Reference name="attachment-action" />
+
+### AttachmentTrigger
+
+<Reference name="attachment-trigger" />
+
+### AttachmentGroup
+
+<Reference name="attachment-group" />

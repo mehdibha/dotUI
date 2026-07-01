@@ -1,0 +1,10 @@
+/* Text shimmer for live markers — "Thinking…", "Generating response…".
+ * A muted-to-foreground gradient sweeps across the clipped text. */
+@keyframes dotui-marker-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}

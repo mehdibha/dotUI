@@ -1,0 +1,30 @@
+{
+  "name": "MessageScrollerItemProps",
+  "description": "Wraps a single row for measurement and addressing.",
+  "extendsElement": "div",
+  "props": {
+    "messageId": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Stable id used by jump-to-message."
+    },
+    "scrollAnchor": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Marks a turn boundary (typically the user's message)."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

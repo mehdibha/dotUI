@@ -1,0 +1,15 @@
+{
+  "name": "MessageScrollerProviderProps",
+  "description": "Owns the scroll state for a transcript: stick-to-bottom while replies stream,\nrelease on scroll-up, jump-to-message, and visibility tracking. Wrap the\n`MessageScroller` in it.",
+  "props": {
+    "autoScroll": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Follow new output by pinning to the bottom while already at the bottom.",
+      "default": "true"
+    }
+  }
+}

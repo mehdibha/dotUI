@@ -73,6 +73,18 @@ export const DemosIndex: Record<
 		files: ["ui/alert/demos/warning.tsx"],
 		component: React.lazy(() => import("@/registry/ui/alert/demos/warning")),
 	},
+	"attachment/demos/default": {
+		files: ["ui/attachment/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/attachment/demos/default")),
+	},
+	"attachment/demos/image": {
+		files: ["ui/attachment/demos/image.tsx"],
+		component: React.lazy(() => import("@/registry/ui/attachment/demos/image")),
+	},
+	"attachment/demos/states": {
+		files: ["ui/attachment/demos/states.tsx"],
+		component: React.lazy(() => import("@/registry/ui/attachment/demos/states")),
+	},
 	"avatar/demos/avatar-group-count": {
 		files: ["ui/avatar/demos/avatar-group-count.tsx"],
 		component: React.lazy(() => import("@/registry/ui/avatar/demos/avatar-group-count")),
@@ -176,6 +188,18 @@ export const DemosIndex: Record<
 	"breadcrumbs/demos/with-icons": {
 		files: ["ui/breadcrumbs/demos/with-icons.tsx"],
 		component: React.lazy(() => import("@/registry/ui/breadcrumbs/demos/with-icons")),
+	},
+	"bubble/demos/default": {
+		files: ["ui/bubble/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/bubble/demos/default")),
+	},
+	"bubble/demos/reactions": {
+		files: ["ui/bubble/demos/reactions.tsx"],
+		component: React.lazy(() => import("@/registry/ui/bubble/demos/reactions")),
+	},
+	"bubble/demos/variants": {
+		files: ["ui/bubble/demos/variants.tsx"],
+		component: React.lazy(() => import("@/registry/ui/bubble/demos/variants")),
 	},
 	"button/demos/default": {
 		files: ["ui/button/demos/default.tsx"],
@@ -1657,6 +1681,14 @@ export const DemosIndex: Record<
 		files: ["ui/loader/demos/overlay.tsx"],
 		component: React.lazy(() => import("@/registry/ui/loader/demos/overlay")),
 	},
+	"marker/demos/default": {
+		files: ["ui/marker/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/marker/demos/default")),
+	},
+	"marker/demos/variants": {
+		files: ["ui/marker/demos/variants.tsx"],
+		component: React.lazy(() => import("@/registry/ui/marker/demos/variants")),
+	},
 	"mention/demos/basic": {
 		files: ["ui/mention/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/mention/demos/basic")),
@@ -1796,6 +1828,18 @@ export const DemosIndex: Record<
 	"menu/demos/with-submenu": {
 		files: ["ui/menu/demos/with-submenu.tsx"],
 		component: React.lazy(() => import("@/registry/ui/menu/demos/with-submenu")),
+	},
+	"message/demos/default": {
+		files: ["ui/message/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message/demos/default")),
+	},
+	"message/demos/header-actions": {
+		files: ["ui/message/demos/header-actions.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message/demos/header-actions")),
+	},
+	"message-scroller/demos/default": {
+		files: ["ui/message-scroller/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message-scroller/demos/default")),
 	},
 	"modal/demos/basic": {
 		files: ["ui/modal/demos/basic.tsx"],

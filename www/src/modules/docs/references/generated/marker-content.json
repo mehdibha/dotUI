@@ -1,0 +1,23 @@
+{
+  "name": "MarkerContentProps",
+  "description": "The label of a marker. Set `shimmer` to animate it for live streaming text.",
+  "extendsElement": "span",
+  "props": {
+    "shimmer": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Animate the label with a shimmer — for \"Thinking…\" / \"Generating…\".",
+      "default": "false"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

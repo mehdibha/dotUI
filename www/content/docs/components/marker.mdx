@@ -1,0 +1,53 @@
+---
+title: Marker
+description: Status updates, system notes, and labeled separators between turns.
+---
+
+<InteractiveDemo
+  name="marker"
+  controls={[
+    { name: 'children', type: 'string', defaultValue: 'Explored 4 files' },
+    'variant',
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/marker
+```
+
+## Usage
+
+```tsx
+import { Marker, MarkerContent, MarkerIcon } from '@/components/ui/marker'
+```
+
+```tsx
+<Marker role="status">
+  <MarkerContent shimmer>Thinking…</MarkerContent>
+</Marker>
+```
+
+Set `MarkerContent`'s `shimmer` for live streaming text, and `role="status"` so
+assistive tech announces it.
+
+## Examples
+
+<Examples className="grid-cols-1">
+  <Example name="marker/demos/variants" title="Variants" />
+</Examples>
+
+## API Reference
+
+### Marker
+
+<Reference name="marker" />
+
+### MarkerIcon
+
+<Reference name="marker-icon" />
+
+### MarkerContent
+
+<Reference name="marker-content" />

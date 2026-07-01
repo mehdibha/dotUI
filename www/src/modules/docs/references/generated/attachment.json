@@ -1,0 +1,56 @@
+{
+  "name": "AttachmentProps",
+  "description": "A file or image attachment card. Compose `AttachmentMedia`,\n`AttachmentContent`, `AttachmentActions`, and an optional `AttachmentTrigger`.",
+  "extendsElement": "div",
+  "props": {
+    "orientation": {
+      "type": "\"horizontal\" | \"vertical\"",
+      "detailedType": "'horizontal' | 'vertical' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "horizontal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "vertical"
+          }
+        ]
+      },
+      "description": "Layout direction — `vertical` puts the media on top (image cards).",
+      "default": "'horizontal'"
+    },
+    "state": {
+      "type": "\"error\" | \"idle\" | \"uploading\"",
+      "detailedType": "'error' | 'idle' | 'uploading' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "error"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "idle"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "uploading"
+          }
+        ]
+      },
+      "description": "Upload state. `uploading` shows a progress bar; `error` flags the card.",
+      "default": "'idle'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

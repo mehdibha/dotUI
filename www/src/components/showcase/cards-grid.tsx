@@ -2,6 +2,7 @@ import { cn } from '@/registry/lib/utils'
 import { AccountMenu } from '@/components/showcase/account-menu'
 import { AiPrompt } from '@/components/showcase/ai-prompt'
 import { Booking } from '@/components/showcase/booking'
+import { Chat } from '@/components/showcase/chat'
 import { ColorEditorCard } from '@/components/showcase/color-editor'
 import { ComputerUse } from '@/components/showcase/computer-use'
 import { CookiePreferences } from '@/components/showcase/cookie-preferences'
@@ -71,6 +72,7 @@ export function CardsGrid({
   const cards = [
     { key: 'storage', node: <Storage /> },
     { key: 'notifications', node: <Notifications className="h-100" /> },
+    { key: 'chat', node: <Chat /> },
     { key: 'cookie', node: <CookiePreferences /> },
     { key: 'invite', node: <InviteMembers /> },
     { key: 'payment', node: <Payment /> },

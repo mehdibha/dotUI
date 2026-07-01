@@ -1,0 +1,33 @@
+{
+  "name": "MessageProps",
+  "description": "A row in a conversation: an optional avatar beside a content column that\nholds the header, bubble, and footer. `align` sets which side the row sits on\nand flows down to the content via context.",
+  "extendsElement": "div",
+  "props": {
+    "align": {
+      "type": "\"end\" | \"start\"",
+      "detailedType": "'end' | 'start' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start"
+          }
+        ]
+      },
+      "description": "Which side the message sits on.",
+      "default": "'start'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

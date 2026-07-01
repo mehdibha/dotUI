@@ -1,0 +1,69 @@
+---
+title: Message
+description: A row in a conversation — avatar, content, header, footer, and grouping.
+---
+
+<Demo name="message/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/message
+```
+
+## Usage
+
+```tsx
+import { Message, MessageAvatar, MessageContent } from '@/components/ui/message'
+```
+
+```tsx
+<Message align="start">
+  <MessageAvatar>
+    <Avatar>
+      <AvatarFallback>Q</AvatarFallback>
+    </Avatar>
+  </MessageAvatar>
+  <MessageContent>
+    <Bubble variant="muted" align="start">
+      <BubbleContent>Hey! How can I help you today?</BubbleContent>
+    </Bubble>
+  </MessageContent>
+</Message>
+```
+
+`align` sets which side the row sits on and flows down to the content via
+context. Compose a `Bubble` inside `MessageContent`, and wrap the avatar around
+your own `Avatar`.
+
+## Examples
+
+<Examples className="grid-cols-1">
+  <Example name="message/demos/header-actions" title="Header & actions" />
+</Examples>
+
+## API Reference
+
+### Message
+
+<Reference name="message" />
+
+### MessageAvatar
+
+<Reference name="message-avatar" />
+
+### MessageContent
+
+<Reference name="message-content" />
+
+### MessageHeader
+
+<Reference name="message-header" />
+
+### MessageFooter
+
+<Reference name="message-footer" />
+
+### MessageGroup
+
+<Reference name="message-group" />

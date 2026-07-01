@@ -1,0 +1,14 @@
+{
+  "name": "MessageAvatarProps",
+  "description": "The avatar slot for a message — compose an `Avatar` inside. Anchors to the\nbottom of the row. Render an empty one on grouped follow-up messages to keep\nthem aligned.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

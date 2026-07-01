@@ -1,0 +1,14 @@
+{
+  "name": "AttachmentGroupProps",
+  "description": "Lays out multiple attachments in a wrapping row.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

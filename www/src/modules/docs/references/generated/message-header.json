@@ -1,0 +1,14 @@
+{
+  "name": "MessageHeaderProps",
+  "description": "A line above the bubble — typically the sender's name and a timestamp.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

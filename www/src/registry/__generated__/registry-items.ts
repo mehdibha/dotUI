@@ -7,9 +7,11 @@ import LibTextareaCaret from "@/registry/lib/textarea-caret/meta";
 import LibUtils from "@/registry/lib/utils/meta";
 import UiAccordion from "@/registry/ui/accordion/meta";
 import UiAlert from "@/registry/ui/alert/meta";
+import UiAttachment from "@/registry/ui/attachment/meta";
 import UiAvatar from "@/registry/ui/avatar/meta";
 import UiBadge from "@/registry/ui/badge/meta";
 import UiBreadcrumbs from "@/registry/ui/breadcrumbs/meta";
+import UiBubble from "@/registry/ui/bubble/meta";
 import UiButton from "@/registry/ui/button/meta";
 import UiCalendar from "@/registry/ui/calendar/meta";
 import UiCard from "@/registry/ui/card/meta";
@@ -48,8 +50,11 @@ import UiKbd from "@/registry/ui/kbd/meta";
 import UiLink from "@/registry/ui/link/meta";
 import UiListBox from "@/registry/ui/list-box/meta";
 import UiLoader from "@/registry/ui/loader/meta";
+import UiMarker from "@/registry/ui/marker/meta";
 import UiMention from "@/registry/ui/mention/meta";
 import UiMenu from "@/registry/ui/menu/meta";
+import UiMessageScroller from "@/registry/ui/message-scroller/meta";
+import UiMessage from "@/registry/ui/message/meta";
 import UiModal from "@/registry/ui/modal/meta";
 import UiNumberField from "@/registry/ui/number-field/meta";
 import UiOtpField from "@/registry/ui/otp-field/meta";
@@ -81,9 +86,11 @@ import type { RegistryItem } from "@/registry/types";
 export const registryUi: RegistryItem[] = [
 	UiAccordion,
 	UiAlert,
+	UiAttachment,
 	UiAvatar,
 	UiBadge,
 	UiBreadcrumbs,
+	UiBubble,
 	UiButton,
 	UiCalendar,
 	UiCard,
@@ -122,8 +129,11 @@ export const registryUi: RegistryItem[] = [
 	UiLink,
 	UiListBox,
 	UiLoader,
+	UiMarker,
 	UiMention,
 	UiMenu,
+	UiMessage,
+	UiMessageScroller,
 	UiModal,
 	UiNumberField,
 	UiOtpField,
