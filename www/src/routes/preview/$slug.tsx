@@ -13,6 +13,7 @@ import {
   useIframeMessageListener,
 } from '@/modules/create/preset'
 import type { DesignSystem } from '@/modules/create/preset'
+import { PreviewBridge, bridgeAttrs } from '@/modules/create/preview/bridge'
 
 const promiseCache = new Map<
   string,
@@ -79,7 +80,11 @@ function PreviewPage() {
       density={designSystem.density}
       color={designSystem.color}
     >
-      <div className={embedded ? 'pt-11' : undefined}>
+      <PreviewBridge tokens={designSystem.tokens} />
+      <div
+        className={embedded ? 'pt-11' : undefined}
+        {...bridgeAttrs(designSystem)}
+      >
         <Examples />
       </div>
     </DesignSystemProvider>
