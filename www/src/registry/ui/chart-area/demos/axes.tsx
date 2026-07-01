@@ -44,6 +44,7 @@ export default function ChartAreaAxes() {
             tickFormatter={(value) => value.slice(0, 3)}
           />
           <YAxis
+            width="auto"
             tickLine={false}
             axisLine={false}
             tickMargin={8}
