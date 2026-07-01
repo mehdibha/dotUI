@@ -15,6 +15,8 @@ interface ChartCardProps {
   demoKey: string
   /** Human label for the card, e.g. `multiple`. */
   label: string
+  /** Bump to replay the chart's entry animation (remounts the chart). */
+  replayKey?: number
 }
 
 /**
@@ -29,7 +31,12 @@ interface ChartCardProps {
  * frame width, polar charts (pie/radar/radial) stay square and are capped at
  * 250px (shadcn's size) so they don't balloon, centered in the frame.
  */
-export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
+export function ChartCard({
+  familyId,
+  demoKey,
+  label,
+  replayKey,
+}: ChartCardProps) {
   const Component = getDemoComponent(demoKey)
   if (!Component) return null
 
@@ -54,7 +61,7 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
               : '[&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!',
           )}
         >
-          <Component />
+          <Component key={replayKey} />
         </div>
       </Suspense>
     </ShowcaseCard>
