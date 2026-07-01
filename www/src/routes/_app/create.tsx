@@ -18,7 +18,7 @@ type MobilePane = 'customize' | 'preview'
 
 export const createSearchSchema = z.object({
   panel: z.string().optional().catch(undefined),
-  preview: z.string().default('cards').catch('cards'),
+  preview: z.string().default('overview').catch('overview'),
   preset: z.string().optional().catch(undefined),
   // Opt-in flag for the in-progress control-panel redesign + panel lab. Keeps
   // the shipped /create untouched while the new IA is explored at /create?lab=true.
@@ -27,7 +27,7 @@ export const createSearchSchema = z.object({
   lab: z.coerce.boolean().optional().catch(undefined),
 })
 
-const searchDefaults = { preview: 'cards' }
+const searchDefaults = { preview: 'overview' }
 
 export const Route = createFileRoute('/_app/create')({
   validateSearch: createSearchSchema,

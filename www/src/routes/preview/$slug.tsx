@@ -1,4 +1,4 @@
-import { use, useCallback, useState } from 'react'
+import { type ReactNode, use, useCallback, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
@@ -13,6 +13,7 @@ import {
   useIframeMessageListener,
 } from '@/modules/create/preset'
 import type { DesignSystem } from '@/modules/create/preset'
+import { PresetOverview } from '@/modules/create/preview/overview'
 
 const promiseCache = new Map<
   string,
@@ -53,17 +54,24 @@ function PreviewPage() {
     useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
   )
 
-  const promise = getExamplesPromise(slug)
-
-  if (!promise) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <span className="text-fg-muted">Preview not found</span>
-      </div>
-    )
+  // The "overview" slug isn't a component/group example — it's a bespoke style-guide
+  // view that needs the raw designSystem (for the generated color ramps), so it's
+  // rendered directly here rather than through the generated examples index.
+  let content: ReactNode
+  if (slug === 'overview') {
+    content = <PresetOverview designSystem={designSystem} />
+  } else {
+    const promise = getExamplesPromise(slug)
+    if (!promise) {
+      return (
+        <div className="flex h-screen items-center justify-center">
+          <span className="text-fg-muted">Preview not found</span>
+        </div>
+      )
+    }
+    const { default: Examples } = use(promise)
+    content = <Examples />
   }
-
-  const { default: Examples } = use(promise)
 
   // Embedded in the /create builder, the preview renders under a translucent toolbar the
   // height of the app header. Offset the content so it clears the toolbar at rest while
@@ -79,9 +87,7 @@ function PreviewPage() {
       density={designSystem.density}
       color={designSystem.color}
     >
-      <div className={embedded ? 'pt-11' : undefined}>
-        <Examples />
-      </div>
+      <div className={embedded ? 'pt-11' : undefined}>{content}</div>
     </DesignSystemProvider>
   )
 }
