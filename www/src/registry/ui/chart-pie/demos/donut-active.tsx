@@ -1,8 +1,7 @@
 'use client'
 
-import * as React from 'react'
 import { Pie, PieChart, Sector } from 'recharts'
-import type { PieSectorDataItem } from 'recharts'
+import type { PieSectorShapeProps } from 'recharts'
 
 import type { ChartConfig } from '@/registry/ui/chart'
 import {
@@ -46,9 +45,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export default function ChartPieDonutActive() {
-  const [activeIndex, setActiveIndex] = React.useState(0)
+// The highlighted slice. Static so the "active" state reads at a glance,
+// without needing hover/interaction.
+const ACTIVE_INDEX = 0
 
+export default function ChartPieDonutActive() {
   return (
     <>
       <ChartContainer
@@ -66,15 +67,18 @@ export default function ChartPieDonutActive() {
             nameKey="browser"
             innerRadius={60}
             strokeWidth={5}
-            activeShape={({ outerRadius = 0, ...props }: PieSectorDataItem) => (
-              <Sector {...props} outerRadius={outerRadius + 10} />
-            )}
-            onMouseEnter={(_, index) => setActiveIndex(index)}
+            shape={({
+              index,
+              outerRadius = 0,
+              ...props
+            }: PieSectorShapeProps) =>
+              index === ACTIVE_INDEX ? (
+                <Sector {...props} outerRadius={outerRadius + 10} />
+              ) : (
+                <Sector {...props} outerRadius={outerRadius} />
+              )
+            }
           />
-          {/* keep activeIndex referenced for SSR-stable render */}
-          <text x={0} y={0} display="none">
-            {activeIndex}
-          </text>
         </PieChart>
       </ChartContainer>
       <ChartDataTable
