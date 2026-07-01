@@ -149,6 +149,12 @@ function selectorFor(prefixes: string[]): Parsed | null {
       inDescendant = true
       continue
     }
+    // Sibling-before `[<sel>~&]` / `[<sel>+&]` → the element follows `<sel>`.
+    const sib = /^\[([^[\]]+)([~+])&\]$/.exec(p)
+    if (sib) {
+      ancestor = `${sib[1]} ${sib[2]} ` + ancestor
+      continue
+    }
     // `has-*` → `:has(…)` on the scope (not a descendant step).
     const hasArb = /^has-\[(.+)\]$/.exec(p)
     if (hasArb) {
