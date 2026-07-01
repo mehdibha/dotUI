@@ -23,12 +23,14 @@ import {
   DEFAULT_CODE_OPTIONS,
   flattenClassArrays,
 } from './code-options'
+import { TV_CONFIG_PLACEHOLDER } from './constants'
+import { emitStylexComponent } from './emit-stylex'
 import { flatten } from './flatten'
 import { buildScalarVarMap, resolveClasses } from './resolve-classes'
 import { serializeTvConfig } from './serialize'
 import type { Publishable, PublishPreset } from './types'
 
-export const TV_CONFIG_PLACEHOLDER = '%%TV_CONFIG%%'
+export { TV_CONFIG_PLACEHOLDER }
 
 /**
  * Names of registry items that live in the dotui registry — i.e. anything
@@ -115,11 +117,30 @@ export interface PublishedItem {
   item: RegistryItem
   /** The pre-format component source — caller passes this through oxfmt. */
   rawContent: string
+  /** Scoped companion CSS for the StyleX export's descendant styling (empty
+   *  otherwise) — also folded into `item.css`, exposed for previews/tests. */
+  descendantCss: string
 }
 
 export interface PublishInput {
   publishable: Publishable
   preset: PublishPreset
+}
+
+/**
+ * The Tailwind styling path: serialize the resolved IR to a `tv(...)` literal
+ * and substitute it into the template. Honors the `classArrays` code option.
+ */
+function renderTailwind(
+  template: string,
+  resolved: ReturnType<typeof resolveClasses>,
+  classArrays: boolean,
+): string {
+  // Collapse grouped class arrays to one string per slot/variant when the user
+  // prefers one-line-per-slot tv configs.
+  const layer = classArrays ? resolved : flattenClassArrays(resolved)
+  const literal = serializeTvConfig(layer)
+  return template.replace(TV_CONFIG_PLACEHOLDER, literal)
 }
 
 export function publish({ publishable, preset }: PublishInput): PublishedItem {
@@ -139,17 +160,33 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
   const varMap = buildScalarVarMap(meta, paramSelections)
   let resolved = resolveClasses(flat, varMap)
 
-  // 2b. Code-style: collapse grouped class arrays to a single string per
-  // slot/variant when the user prefers one-line-per-slot tv configs.
-  if (!codeOptions.classArrays) {
-    resolved = flattenClassArrays(resolved)
+  // 3. Render the styling. StyleX and Tailwind emit from the SAME resolved IR;
+  // the style engine only changes how the leaves are expressed.
+  let content: string
+  let usedStylex = false
+  let descendantCss = ''
+  if (codeOptions.styleEngine === 'stylex') {
+    const stylex = emitStylexComponent({
+      template,
+      flat: resolved,
+      meta,
+      placeholder: TV_CONFIG_PLACEHOLDER,
+    })
+    if (stylex.handled) {
+      content = stylex.content
+      usedStylex = true
+      descendantCss = stylex.css
+    } else {
+      // Shape outside the emitter's scope (slots / compound variants). Keep the
+      // Tailwind output rather than ship broken code — this component's StyleX
+      // port is part of the rollout (see the dual-backend research doc).
+      content = renderTailwind(template, resolved, codeOptions.classArrays)
+    }
+  } else {
+    content = renderTailwind(template, resolved, codeOptions.classArrays)
   }
 
-  // 3+4. Serialize and substitute.
-  const literal = serializeTvConfig(resolved)
-  let content = template.replace(TV_CONFIG_PLACEHOLDER, literal)
-
-  // 4b. Resolve the source's `// MARK:` markers: always drop the internal
+  // 4. Resolve the source's `// MARK:` markers: always drop the internal
   // `…Styles` injection marker; render the rest as section separators when the
   // user wants them, or drop them too.
   content = applySectionComments(content, codeOptions.sectionComments)
@@ -165,6 +202,19 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
     content: extraFiles?.[file.path] ?? content,
   }))
 
+  // A StyleX export imports `@stylexjs/stylex` and needs the StyleX build plugin —
+  // declare the runtime dependency so `shadcn add` installs it. (The build-plugin
+  // setup is a one-time project step, surfaced in the init bundle / docs.)
+  const dependencies = usedStylex
+    ? [...new Set([...(meta.dependencies ?? []), '@stylexjs/stylex'])]
+    : meta.dependencies
+
+  // The StyleX export's scoped descendant CSS ships in the item's `css` field so
+  // `shadcn add` writes it into the consumer's global stylesheet.
+  const css = descendantCss
+    ? { ...meta.css, ...cssTextToShadcnCss(descendantCss) }
+    : meta.css
+
   const itemShape = {
     name: meta.name,
     type: meta.type,
@@ -172,18 +222,42 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
     ...(meta.description !== undefined
       ? { description: meta.description }
       : {}),
-    ...(meta.dependencies ? { dependencies: meta.dependencies } : {}),
+    ...(dependencies && dependencies.length > 0 ? { dependencies } : {}),
     ...(meta.registryDependencies
       ? {
           registryDependencies:
             rewriteDeps(meta.registryDependencies) ?? meta.registryDependencies,
         }
       : {}),
-    ...(meta.css ? { css: meta.css } : {}),
+    ...(css ? { css } : {}),
     ...(meta.cssVars ? { cssVars: meta.cssVars } : {}),
     files,
   }
   const item = itemShape as unknown as RegistryItem
 
-  return { item, rawContent: content }
+  return { item, rawContent: content, descendantCss }
+}
+
+/**
+ * Convert the emitter's flat descendant CSS (one `.<selector> { … }` rule per
+ * line) into shadcn's structured `css` field: `{ selector: { prop: value } }`.
+ * Same-selector rules merge.
+ */
+function cssTextToShadcnCss(
+  css: string,
+): Record<string, Record<string, string>> {
+  const out: Record<string, Record<string, string>> = {}
+  for (const rule of css.split('\n')) {
+    const m = /^(.+?)\s*\{\s*(.+?)\s*\}$/.exec(rule.trim())
+    if (!m) continue
+    const decls: Record<string, string> = {}
+    for (const d of m[2]!.split(';')) {
+      const i = d.indexOf(':')
+      if (i === -1) continue
+      const prop = d.slice(0, i).trim()
+      if (prop) decls[prop] = d.slice(i + 1).trim()
+    }
+    out[m[1]!] = { ...out[m[1]!], ...decls }
+  }
+  return out
 }

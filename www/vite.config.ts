@@ -50,7 +50,8 @@ export default defineConfig({
     tanstackStart({
       prerender: {
         enabled: true,
-        filter: ({ path }) => !path.includes('?'),
+        // Skip query-string routes and dev-only routes (`/dev/*` 404 in prod).
+        filter: ({ path }) => !path.includes('?') && !path.startsWith('/dev'),
       },
     }),
     viteReact(),

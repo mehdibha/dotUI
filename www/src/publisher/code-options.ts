@@ -17,6 +17,13 @@
  *     `['a', 'b']` ↔ `'a b'`.
  *   - section separators — whether the file is divided into sections with
  *     comment rules (`applySectionComments`).
+ *   - style engine — which styling solution the exported component uses:
+ *     Tailwind utility classes via `tv(...)` (the canonical source) or Facebook
+ *     StyleX style objects via `stylex.create(...)`. Both consume dotUI's CSS
+ *     custom-property theme, so they're visually identical; the choice only
+ *     changes which tool the user's codebase pulls in. The actual StyleX
+ *     emission lives in the publisher (`emit-stylex.ts`), not here — this file
+ *     only carries the user's *selection* (it must stay import-free; see below).
  *
  * Pure JS, no external imports — safe to import from anywhere: the request-time
  * route bundle, the `/create` client bundle, AND the "Open in v0" showcase
@@ -27,11 +34,24 @@ import type { ClassValue, TvLayer, VariantSliceValue } from './types'
 
 /* --------------------------------- types --------------------------------- */
 
+/**
+ * The styling solution the exported component is authored in. Both render an
+ * identical component (they share dotUI's CSS-variable theme); this only
+ * decides which library the consumer's project depends on.
+ *   - `tailwind` → `tv(...)` + Tailwind utility classes (the canonical source).
+ *   - `stylex`   → `stylex.create(...)` style objects + `stylex.props(...)`.
+ */
+export type StyleEngine = 'tailwind' | 'stylex'
+
+export const STYLE_ENGINES: readonly StyleEngine[] = ['tailwind', 'stylex']
+
 export interface CodeOptions {
   /**
    * How multi-group class values render inside the `tv(...)` config:
    *   - `true`  → an array of strings, one authored group per line (grouped).
    *   - `false` → a single space-joined string per slot/variant (compact).
+   *
+   * Tailwind-only; ignored when `styleEngine` is `stylex`.
    */
   classArrays: boolean
   /**
@@ -39,6 +59,10 @@ export interface CodeOptions {
    * the source carries `// MARK:` markers). When off, no separators are added.
    */
   sectionComments: boolean
+  /**
+   * Which styling solution the exported component uses. See `StyleEngine`.
+   */
+  styleEngine: StyleEngine
 }
 
 /**
@@ -51,12 +75,19 @@ export interface CodeOptions {
 export const DEFAULT_CODE_OPTIONS: CodeOptions = {
   classArrays: true,
   sectionComments: false,
+  styleEngine: 'tailwind',
 }
 
 /* ------------------------------- validation ------------------------------- */
 
 function pickBool(value: unknown, fallback: boolean): boolean {
   return typeof value === 'boolean' ? value : fallback
+}
+
+function pickStyleEngine(value: unknown, fallback: StyleEngine): StyleEngine {
+  return STYLE_ENGINES.includes(value as StyleEngine)
+    ? (value as StyleEngine)
+    : fallback
 }
 
 /**
@@ -73,6 +104,7 @@ export function sanitizeCodeOptions(input: unknown): CodeOptions {
   return {
     classArrays: pickBool(raw.classArrays, d.classArrays),
     sectionComments: pickBool(raw.sectionComments, d.sectionComments),
+    styleEngine: pickStyleEngine(raw.styleEngine, d.styleEngine),
   }
 }
 

@@ -62,4 +62,16 @@ describe('codeOptions end-to-end (preset → publish → format)', () => {
     })
     expect(decoded?.sectionComments).toBe(true)
   })
+
+  test('styleEngine:stylex round-trips and yields a StyleX export', async () => {
+    // The whole user flow: pick StyleX in /create → encode → decode → publish.
+    const { decoded, code } = await exportButton({
+      ...DEFAULT_CODE_OPTIONS,
+      styleEngine: 'stylex',
+    })
+    expect(decoded?.styleEngine).toBe('stylex')
+    expect(code).toContain('import * as stylex from "@stylexjs/stylex";')
+    expect(code).toContain('stylex.create(')
+    expect(code).not.toMatch(/\btv\(/)
+  })
 })

@@ -34,7 +34,11 @@
 import { IndentationText, Node, Project, QuoteKind, SyntaxKind } from 'ts-morph'
 import type { ImportDeclaration, SourceFile } from 'ts-morph'
 
-import { TV_CONFIG_PLACEHOLDER } from '../publish'
+// Import the placeholder from the import-free constants module, NOT from
+// `../publish`: `publish.ts` pulls in `emit-stylex` → `tw-to-stylex` →
+// `@/registry/theme` (a value import), and this file is reached by the docs
+// codegen / Vite config graph, which can't resolve `@/registry` at config-load.
+import { TV_CONFIG_PLACEHOLDER } from '../constants'
 
 const TS_PLACEHOLDER_IDENT = '__TV_CONFIG__'
 

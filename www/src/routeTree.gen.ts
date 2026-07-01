@@ -22,6 +22,7 @@ import { Route as RRegistryDotjsonRouteImport } from './routes/r/registry[.]json
 import { Route as RInitRouteImport } from './routes/r/init'
 import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
+import { Route as DevParityRouteImport } from './routes/dev.parity'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as AppPresetsRouteImport } from './routes/_app/presets'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
@@ -96,6 +97,11 @@ const PreviewSlugRoute = PreviewSlugRouteImport.update({
   path: '/preview/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DevParityRoute = DevParityRouteImport.update({
+  id: '/dev/parity',
+  path: '/dev/parity',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemosSlugRoute = DemosSlugRouteImport.update({
   id: '/demos/$slug',
   path: '/demos/$slug',
@@ -158,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/create': typeof AppCreateRoute
   '/presets': typeof AppPresetsRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/dev/parity': typeof DevParityRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
@@ -180,6 +187,7 @@ export interface FileRoutesByTo {
   '/create': typeof AppCreateRoute
   '/presets': typeof AppPresetsRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/dev/parity': typeof DevParityRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
@@ -205,6 +213,7 @@ export interface FileRoutesById {
   '/_app/create': typeof AppCreateRoute
   '/_app/presets': typeof AppPresetsRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/dev/parity': typeof DevParityRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
@@ -231,6 +240,7 @@ export interface FileRouteTypes {
     | '/create'
     | '/presets'
     | '/demos/$slug'
+    | '/dev/parity'
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
@@ -253,6 +263,7 @@ export interface FileRouteTypes {
     | '/create'
     | '/presets'
     | '/demos/$slug'
+    | '/dev/parity'
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
@@ -277,6 +288,7 @@ export interface FileRouteTypes {
     | '/_app/create'
     | '/_app/presets'
     | '/demos/$slug'
+    | '/dev/parity'
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
@@ -297,6 +309,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   DotwellKnownApiCatalogRoute: typeof DotwellKnownApiCatalogRoute
   DemosSlugRoute: typeof DemosSlugRoute
+  DevParityRoute: typeof DevParityRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   RNameRoute: typeof RNameRoute
   RInitRoute: typeof RInitRoute
@@ -395,6 +408,13 @@ declare module '@tanstack/react-router' {
       path: '/preview/$slug'
       fullPath: '/preview/$slug'
       preLoaderRoute: typeof PreviewSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev/parity': {
+      id: '/dev/parity'
+      path: '/dev/parity'
+      fullPath: '/dev/parity'
+      preLoaderRoute: typeof DevParityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demos/$slug': {
@@ -509,6 +529,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   DotwellKnownApiCatalogRoute: DotwellKnownApiCatalogRoute,
   DemosSlugRoute: DemosSlugRoute,
+  DevParityRoute: DevParityRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   RNameRoute: RNameRoute,
   RInitRoute: RInitRoute,
