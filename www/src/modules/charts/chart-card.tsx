@@ -25,6 +25,13 @@ interface ChartCardProps {
  * "Show code" links to. The chart fills the box (overriding each demo's own
  * aspect / min-height): polar charts stay square so they don't stretch,
  * cartesian ones fill the full width.
+ *
+ * Padding is the same for every card so the gallery reads as one coherent set;
+ * only the frame's height changes with the chart's shape. Cartesian charts
+ * (line/bar/area) look best short and wide, so they keep a compact frame. Polar
+ * charts (pie/radar/radial) are round and their demos draw at a fixed pixel
+ * radius (up to ~140px) — a compact frame clips them, so they get a taller,
+ * square-ish frame with room to breathe.
  */
 export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
   const Component = getDemoComponent(demoKey)
@@ -36,6 +43,7 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
     <ShowcaseCard
       label={label}
       action={<ChartCodeModal demoKey={demoKey} label={label} />}
+      className={isPolar ? 'h-[22rem]' : 'h-64'}
       inert
       aria-hidden="true"
     >
@@ -44,10 +52,10 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
       <Suspense fallback={<div className="size-full animate-pulse bg-muted" />}>
         <div
           className={cn(
-            'flex size-full items-center justify-center [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!',
+            'flex size-full items-center justify-center p-6 [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!',
             isPolar
-              ? 'p-2 [&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:w-auto!'
-              : 'p-4 [&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!',
+              ? '[&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:w-auto!'
+              : '[&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!',
           )}
         >
           <Component />
