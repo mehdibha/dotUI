@@ -1,0 +1,48 @@
+---
+title: Segmented Control
+description: A segmented control lets users pick one option from a small set, with a pill indicator that slides to the selection.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/ToggleButtonGroup.html
+wip: true
+---
+
+<Demo name="segmented-control/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/segmented-control
+```
+
+## Usage
+
+Use a segmented control for a small set of mutually exclusive options — view modes, ranges, filters. It's built on `ToggleButtonGroup` with single selection, and the indicator slides between segments (React Aria's `SelectionIndicator`).
+
+```tsx
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from '@/components/ui/segmented-control'
+```
+
+```tsx
+<SegmentedControl aria-label="Date range" defaultSelectedKeys={['week']}>
+  <SegmentedControlItem id="day">Day</SegmentedControlItem>
+  <SegmentedControlItem id="week">Week</SegmentedControlItem>
+  <SegmentedControlItem id="month">Month</SegmentedControlItem>
+</SegmentedControl>
+```
+
+## Examples
+
+<Examples className="grid-cols-1">
+  <Example name="segmented-control/demos/default" title="Default" />
+  <Example name="segmented-control/demos/with-icons" title="With icons" />
+</Examples>
+
+## API Reference
+
+<Reference name="segmented-control" />
+
+<Reference name="segmented-control-item" />
