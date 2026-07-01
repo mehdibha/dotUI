@@ -43,7 +43,7 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
     <ShowcaseCard
       label={label}
       action={<ChartCodeModal demoKey={demoKey} label={label} />}
-      className={isPolar ? 'h-[22rem]' : 'h-64'}
+      className={isPolar ? 'h-96' : 'h-72'}
       inert
       aria-hidden="true"
     >
@@ -52,7 +52,7 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
       <Suspense fallback={<div className="size-full animate-pulse bg-muted" />}>
         <div
           className={cn(
-            'flex size-full items-center justify-center p-6 [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!',
+            'flex size-full items-center justify-center p-9 [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!',
             isPolar
               ? '[&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:w-auto!'
               : '[&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!',
