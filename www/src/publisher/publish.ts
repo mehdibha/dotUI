@@ -117,6 +117,9 @@ export interface PublishedItem {
   item: RegistryItem
   /** The pre-format component source — caller passes this through oxfmt. */
   rawContent: string
+  /** Scoped companion CSS for the StyleX export's descendant styling (empty
+   *  otherwise) — also folded into `item.css`, exposed for previews/tests. */
+  descendantCss: string
 }
 
 export interface PublishInput {
@@ -161,6 +164,7 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
   // the style engine only changes how the leaves are expressed.
   let content: string
   let usedStylex = false
+  let descendantCss = ''
   if (codeOptions.styleEngine === 'stylex') {
     const stylex = emitStylexComponent({
       template,
@@ -171,6 +175,7 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
     if (stylex.handled) {
       content = stylex.content
       usedStylex = true
+      descendantCss = stylex.css
     } else {
       // Shape outside the emitter's scope (slots / compound variants). Keep the
       // Tailwind output rather than ship broken code — this component's StyleX
@@ -204,6 +209,12 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
     ? [...new Set([...(meta.dependencies ?? []), '@stylexjs/stylex'])]
     : meta.dependencies
 
+  // The StyleX export's scoped descendant CSS ships in the item's `css` field so
+  // `shadcn add` writes it into the consumer's global stylesheet.
+  const css = descendantCss
+    ? { ...meta.css, ...cssTextToShadcnCss(descendantCss) }
+    : meta.css
+
   const itemShape = {
     name: meta.name,
     type: meta.type,
@@ -218,11 +229,35 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
             rewriteDeps(meta.registryDependencies) ?? meta.registryDependencies,
         }
       : {}),
-    ...(meta.css ? { css: meta.css } : {}),
+    ...(css ? { css } : {}),
     ...(meta.cssVars ? { cssVars: meta.cssVars } : {}),
     files,
   }
   const item = itemShape as unknown as RegistryItem
 
-  return { item, rawContent: content }
+  return { item, rawContent: content, descendantCss }
+}
+
+/**
+ * Convert the emitter's flat descendant CSS (one `.<selector> { … }` rule per
+ * line) into shadcn's structured `css` field: `{ selector: { prop: value } }`.
+ * Same-selector rules merge.
+ */
+function cssTextToShadcnCss(
+  css: string,
+): Record<string, Record<string, string>> {
+  const out: Record<string, Record<string, string>> = {}
+  for (const rule of css.split('\n')) {
+    const m = /^(.+?)\s*\{\s*(.+?)\s*\}$/.exec(rule.trim())
+    if (!m) continue
+    const decls: Record<string, string> = {}
+    for (const d of m[2]!.split(';')) {
+      const i = d.indexOf(':')
+      if (i === -1) continue
+      const prop = d.slice(0, i).trim()
+      if (prop) decls[prop] = d.slice(i + 1).trim()
+    }
+    out[m[1]!] = { ...out[m[1]!], ...decls }
+  }
+  return out
 }

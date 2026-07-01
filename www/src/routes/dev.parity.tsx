@@ -11,7 +11,7 @@
 
 import { createFileRoute, notFound } from '@tanstack/react-router'
 
-import { buildButtonMatrix } from '@/dev/parity/harness'
+import { SCOPE, buildButtonMatrix } from '@/dev/parity/harness'
 
 export const Route = createFileRoute('/dev/parity')({
   // Dev-only scaffolding — 404 in production builds.
@@ -32,6 +32,15 @@ const STATES: { label: string; attrs: Record<string, string> }[] = [
   { label: 'disabled', attrs: { 'data-disabled': '' } },
   { label: 'focus-visible', attrs: { 'data-focus-visible': '' } },
 ]
+
+// A sizeless icon so the `**:[svg]:size-4` descendant rule is what sizes it.
+function Icon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <circle cx="12" cy="12" r="10" />
+    </svg>
+  )
+}
 
 function ParityPage() {
   const { cells, css } = buildButtonMatrix(VARIANTS)
@@ -65,7 +74,9 @@ function ParityPage() {
                     data-cell={`${state.label}-${cell.variant}`}
                     className={cell.tw}
                   >
+                    <Icon />
                     Button
+                    <span data-icon-end="" />
                   </button>
                   <button
                     data-button=""
@@ -73,9 +84,11 @@ function ParityPage() {
                     {...state.attrs}
                     data-parity="sx"
                     data-cell={`${state.label}-${cell.variant}`}
-                    className={`${cell.sxClass} ${cell.passthrough}`}
+                    className={`${cell.sxClass} ${cell.passthrough} ${SCOPE}`}
                   >
+                    <Icon />
                     Button
+                    <span data-icon-end="" />
                   </button>
                 </div>
               ))}

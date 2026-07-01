@@ -10,11 +10,15 @@
 
 import { publishable } from '@/registry/__generated__/publishables/button'
 import type { RegistryItem } from '@/registry/types'
+import { emitDescendantCss } from '@/publisher/descendant-css'
 import { flatten } from '@/publisher/flatten'
 import { isPassthroughToken, translateClasses } from '@/publisher/tw-to-stylex'
 import type { StylesConfig } from '@/publisher/types'
 
 import { styleToCss } from './emit-css'
+
+/** Scope class the companion descendant CSS keys off (mirrors the emitter). */
+export const SCOPE = 'dotui-button'
 
 type ClassVal = string | string[] | null | undefined | false
 
@@ -66,7 +70,12 @@ export function buildButtonMatrix(variants: string[], size = 'md'): Matrix {
     // (they resolve via the shipped base.css) — mirror that so the proxy matches.
     const passthrough = untranslated.filter(isPassthroughToken).join(' ')
     const rest = untranslated.filter((t) => !isPassthroughToken(t))
+    // Descendant styling (`**:[svg]`, `has-data-icon-*`) renders via the emitter's
+    // scoped companion CSS; the sx proxy carries the same SCOPE class + that CSS.
+    const { css: descCss } = emitDescendantCss(SCOPE, rest)
+    if (descCss) cssParts.push(descCss)
     cells.push({ variant, tw, sxClass, passthrough, untranslated: rest })
   }
-  return { cells, css: cssParts.join('\n') }
+  // The companion CSS is identical across variants (all in base); emit it once.
+  return { cells, css: [...new Set(cssParts)].join('\n') }
 }

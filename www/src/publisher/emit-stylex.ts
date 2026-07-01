@@ -23,6 +23,7 @@
 
 import type { RegistryItem } from '@/registry/types'
 
+import { emitDescendantCss } from './descendant-css'
 import { serializeTvConfig } from './serialize'
 import { isPassthroughToken, translateClasses } from './tw-to-stylex'
 import type { StyleXStyle } from './tw-to-stylex'
@@ -131,6 +132,9 @@ export interface EmitStylexResult {
   untranslated: string[]
   /** The full component file content (only meaningful when `handled`). */
   content: string
+  /** Scoped companion CSS rendering the descendant/at-a-distance styling StyleX
+   *  can't express on the element (empty when there is none). Shipped alongside. */
+  css: string
 }
 
 interface EmitInput {
@@ -160,16 +164,25 @@ export function emitStylexComponent({
   // Compound variants aren't used by any dotUI styles.ts today; bail rather than
   // silently drop them if that ever changes.
   if (flat.compoundVariants && flat.compoundVariants.length > 0)
-    return { handled: false, untranslated, content: template }
+    return { handled: false, untranslated, content: template, css: '' }
   // No `tv(...)` placeholder to swap → nothing for us to do.
   if (!template.includes(placeholder))
-    return { handled: false, untranslated, content: template }
+    return { handled: false, untranslated, content: template, css: '' }
 
   const ident = `${toCamelCase(meta.name)}Variants`
   const typeIdent = `${capitalize(toCamelCase(meta.name))}Variants`
+  const scope = `dotui-${meta.name}`
   const slots =
     flat.slots && Object.keys(flat.slots).length > 0 ? flat.slots : null
-  const base = { template, flat, ident, typeIdent, placeholder, untranslated }
+  const base = {
+    template,
+    flat,
+    ident,
+    typeIdent,
+    placeholder,
+    untranslated,
+    scope,
+  }
   return slots ? emitSlotted({ ...base, slots }) : emitFlat(base)
 }
 
@@ -180,6 +193,8 @@ interface PathInput {
   typeIdent: string
   placeholder: string
   untranslated: string[]
+  /** The scope class the emitter applies for any companion descendant CSS. */
+  scope: string
 }
 
 /**
@@ -193,6 +208,7 @@ function emitFlat({
   typeIdent,
   placeholder,
   untranslated,
+  scope,
 }: PathInput): EmitStylexResult {
   const base = translatePartitioned(joinClassValue(flat.base), untranslated)
   const baseStyles: Record<string, StyleXStyle> = { base: base.style }
@@ -204,7 +220,7 @@ function emitFlat({
     const translated: Record<string, StyleXStyle> = {}
     for (const [valueName, slice] of Object.entries(values)) {
       if (!sliceIsFlat(slice))
-        return { handled: false, untranslated, content: template }
+        return { handled: false, untranslated, content: template, css: '' }
       translated[valueName] = translatePartitioned(
         joinClassValue(slice),
         untranslated,
@@ -214,6 +230,14 @@ function emitFlat({
     if (axis.kind === 'boolean') baseStyles[axisName] = translated['true'] ?? {}
     else enumStyles[axisName] = translated
   }
+
+  // Render the descendant/at-a-distance remainder as scoped companion CSS; what
+  // it can't express stays on the PARITY-TODO list. The scope class rides on the
+  // element (appended like a passthrough class) when any CSS was produced.
+  const desc = emitDescendantCss(scope, untranslated)
+  untranslated.length = 0
+  untranslated.push(...desc.unhandled)
+  const scoped = desc.css ? [scope] : []
 
   const defaults = flat.defaultVariants ?? {}
   const decls = [
@@ -251,7 +275,7 @@ function emitFlat({
     `\tconst { className: sx } = stylex.props(`,
     ...applyArgs.map((a) => `\t\t${a},`),
     `\t);`,
-    `\t${returnExpr(base.passthrough, 'className')}`,
+    `\t${returnExpr([...base.passthrough, ...scoped], 'className')}`,
     `}`,
   ].join('\n')
 
@@ -263,6 +287,7 @@ function emitFlat({
     `${decls.join('\n\n')}\n\n${resolver}`,
     buildVariantType(typeIdent, axes),
     untranslated,
+    desc.css,
   )
 }
 
@@ -280,6 +305,7 @@ function emitSlotted({
   typeIdent,
   placeholder,
   untranslated,
+  scope,
 }: PathInput & { slots: Record<string, ClassValue> }): EmitStylexResult {
   const slotNames = Object.keys(slots)
   const axes = discoverAxes(flat.variants)
@@ -289,15 +315,25 @@ function emitSlotted({
   for (const values of Object.values(flat.variants ?? {}))
     for (const slice of Object.values(values))
       if (sliceIsFlat(slice))
-        return { handled: false, untranslated, content: template }
+        return { handled: false, untranslated, content: template, css: '' }
 
-  // Per slot: base style + composite passthrough classes.
+  // Per slot: base style, composite passthrough, and scoped descendant CSS
+  // (each slot's at-a-distance styling keyed by its own `${scope}-${slot}` class).
   const slotBase: Record<string, StyleXStyle> = {}
   const slotPass: Record<string, string[]> = {}
+  const cssParts: string[] = []
   for (const slot of slotNames) {
-    const r = translatePartitioned(joinClassValue(slots[slot]), untranslated)
+    const slotUntranslated: string[] = []
+    const r = translatePartitioned(
+      joinClassValue(slots[slot]),
+      slotUntranslated,
+    )
     slotBase[slot] = r.style
-    slotPass[slot] = r.passthrough
+    const slotScope = `${scope}-${slot}`
+    const desc = emitDescendantCss(slotScope, slotUntranslated)
+    untranslated.push(...desc.unhandled)
+    if (desc.css) cssParts.push(desc.css)
+    slotPass[slot] = [...r.passthrough, ...(desc.css ? [slotScope] : [])]
   }
 
   // Per slot, per axis: { value: style }. Skip a namespace when no value carries
@@ -386,6 +422,7 @@ function emitSlotted({
     `${decls.join('\n')}\n\n${resolver}`,
     buildVariantType(typeIdent, axes),
     untranslated,
+    cssParts.join('\n'),
   )
 }
 
@@ -412,6 +449,7 @@ function finalize(
   declBody: string,
   variantType: string,
   untranslated: string[],
+  css: string,
 ): EmitStylexResult {
   let content = template.replace(
     /import\s*\{[^}]*\}\s*from\s*["']tailwind-variants["'];?/,
@@ -422,7 +460,7 @@ function finalize(
     `const\\s+${ident}\\s*=\\s*tv\\(${escapeRegex(placeholder)}\\);?`,
   )
   if (!tvDeclRe.test(content))
-    return { handled: false, untranslated: [], content: template }
+    return { handled: false, untranslated: [], content: template, css: '' }
   // TS hoists type aliases, so position doesn't matter — defining the variant type
   // here also covers components whose interface uses `VariantProps<…>` inline with
   // no `type X = …` line of their own.
@@ -456,7 +494,7 @@ function finalize(
     content = `${header}\n${content}`
   }
 
-  return { handled: true, untranslated: unique, content }
+  return { handled: true, untranslated: unique, content, css }
 }
 
 /* ------------------------------ serialization ----------------------------- */

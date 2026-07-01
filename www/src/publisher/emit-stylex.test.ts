@@ -84,13 +84,27 @@ describe('publish + styleEngine: stylex', () => {
     )
   })
 
-  test('surfaces only genuine descendant classes as a PARITY-TODO work-list', () => {
-    expect(rawContent).toContain('PARITY-TODO')
-    expect(rawContent).toContain('**:[svg]:pointer-events-none')
-    expect(rawContent).toMatch(/has-data-icon-(end|start)/)
-    // composites are handled (passthrough), so they are NOT on the TODO list.
-    const todoBlock = rawContent.slice(0, rawContent.indexOf('"use client"'))
-    expect(todoBlock).not.toContain('focus-reset')
+  test('renders descendant styling as scoped CSS, leaving no PARITY-TODO', () => {
+    // Button's `**:[svg]`, `has-data-icon-*`, and `pending:**` spinner rules are
+    // all expressible as scoped companion CSS, so nothing remains flagged and the
+    // element carries the `dotui-button` scope class the CSS keys off.
+    expect(rawContent).not.toContain('PARITY-TODO')
+    expect(rawContent).toContain('dotui-button')
+  })
+
+  test('emits scoped companion CSS for the descendant styling', () => {
+    const { descendantCss, item } = publish({
+      publishable: buttonPublishable,
+      preset: STYLEX_PRESET,
+    })
+    expect(descendantCss).toContain('.dotui-button svg')
+    expect(descendantCss).toContain('.dotui-button:has([data-icon-end])')
+    expect(descendantCss).toContain(
+      '.dotui-button[data-pending] [data-slot="spinner"]',
+    )
+    // …and it's folded into the shadcn `css` field so `shadcn add` installs it.
+    const css = (item as { css?: Record<string, unknown> }).css ?? {}
+    expect(Object.keys(css)).toContain('.dotui-button svg')
   })
 
   test('declares @stylexjs/stylex as a dependency to install', () => {
