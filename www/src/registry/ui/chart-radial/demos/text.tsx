@@ -33,7 +33,7 @@ export default function ChartRadialText() {
           startAngle={0}
           endAngle={250}
           innerRadius={80}
-          outerRadius={110}
+          outerRadius={90}
         >
           <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
             <Label
