@@ -12,14 +12,10 @@ import { useStoredPreset } from '@/modules/create/preset/storage'
  * overlays the demo portals are themed too. When the user hasn't customized
  * anything it resolves to the defaults and injects nothing.
  *
- * Wrapped in a Suspense boundary: the scoped provider injects a client-only
- * `<style>` (the `:root` closure it clones doesn't exist during prerender), so
- * the prerendered HTML lacks a child the client renders — a hydration mismatch.
- * Without a boundary, React recovers by re-rendering up to the nearest one, which
- * sits above the whole docs shell, briefly blanking the prose + table of contents.
- * This boundary scopes that recovery to the demo. `fallback` is `null` on purpose:
- * React recovers a hydration mismatch synchronously and never shows the fallback
- * (verified — a probe fallback never rendered), so a skeleton here would be dead code.
+ * Wrapped in Suspense so any remaining mismatch recovery stays inside the demo
+ * instead of blanking the docs shell + table of contents. Scoped mode also
+ * mount-gates its client-only `<style>` and body portal (see DesignSystemProvider)
+ * so server HTML and the hydration pass match — Suspense alone cannot do that.
  */
 export function DemoPreset({ children }: { children: ReactNode }) {
   const ds = useStoredPreset()
