@@ -116,13 +116,11 @@ export function HomePage() {
           <Cards />
         </section>
 
-        {/* Built on modern tools — pulled up to sit on the cards' bottom fade. The
-				    masonry's tallest column leaves a tall, masked-to-black tail below the
-				    other columns; without a big pull-up that reads as dead space. We pull
-				    this row up to where the cards are nearly gone (~15% opacity) so it sits
-				    right on the fade instead. The xl grid (4 columns) is shorter and denser
-				    at the bottom, so it needs a slightly smaller pull than the 3-col layout. */}
-        <section className="relative z-10 -mt-[380px] py-12 shadow-xs xl:-mt-[330px]">
+        {/* Built on modern tools — pulled up to sit just under the cards' bottom
+            fade. The grid balances its columns to bottom out level (see
+            cards-grid.tsx), so there's no masked tail to cover — a small pull tucks
+            this row against the 200px fade, and one value holds across breakpoints. */}
+        <section className="relative z-10 -mt-[100px] py-12 shadow-xs">
           <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
             <h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
               Built on modern tools

@@ -156,11 +156,11 @@ export function InteractiveDemo({
           <div
             className={cn(
               '**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted',
-              'w-full overflow-hidden transition-[height] duration-300 ease-fluid-out [interpolate-size:allow-keywords] motion-reduce:transition-none starting:h-56 md:w-64',
+              'w-full overflow-hidden transition-[height] duration-300 ease-fluid-out [interpolate-size:allow-keywords] motion-reduce:transition-none md:w-64 starting:h-56',
               controlsOpen ? 'h-auto' : 'h-56',
             )}
           >
-            <div className="relative flex flex-col gap-4 px-5 pb-5 pt-9">
+            <div className="relative flex flex-col gap-4 px-5 pt-9 pb-5">
               <Tooltip>
                 <Button
                   variant="quiet"
