@@ -33,7 +33,7 @@ export default function ChartAreaAxes() {
         <AreaChart
           accessibilityLayer
           data={chartData}
-          margin={{ left: 12, right: 12 }}
+          margin={{ left: 0, right: 12 }}
         >
           <CartesianGrid vertical={false} />
           <XAxis
@@ -47,7 +47,7 @@ export default function ChartAreaAxes() {
             width="auto"
             tickLine={false}
             axisLine={false}
-            tickMargin={8}
+            tickMargin={4}
             tickCount={4}
             tickFormatter={(value) => `${value}`}
           />
