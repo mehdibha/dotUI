@@ -62,6 +62,16 @@ Key StyleX facts the emitter encodes (full detail in `astryx-stylex-briefing.md`
 - **Variants**: namespace-per-value + bracket-select (`variants[variant]`) + ordered merge. Types via `keyof typeof sizes`. No `compoundVariants` sugar — compound conditions become extra `cond && styles.x` arguments or compound-keyed namespaces.
 - **Applying styles**: `stylex.props(...)` returns `{ className, style }`. Because dotUI's theming is all *static* `var()` references (no StyleX dynamic styles), `style` is empty, so `stylex.props(...).className` is a plain string that composes cleanly with React Aria's `className`-as-function render props. Nothing is lost. (Genuinely runtime values — e.g. a dragged size — would use StyleX's dynamic function form and produce an inline `style`; dotUI has very few of these, flagged per-component during rollout.)
 
+## Update (2026-07-01): descendant/ancestor styling now renders via scoped companion CSS
+
+The "hard wall" below is now largely crossed. Rather than leave the at-a-distance tokens unrendered, the emitter renders them as a small **scoped companion CSS** block keyed by a generated `dotui-<name>` scope class it also applies to the element (`publisher/descendant-css.ts`, folded into the shadcn `css` field by `publish()`). This is the escape hatch this doc names, and is consistent with Astryx shipping prebuilt CSS. It covers:
+
+- **descendants** — `**:` (descendant), `*:` (child), `[&_x]`/`[&>x]`, `[tag]`/`[tag[attr]]`, native pseudo, state-prefixed descendants;
+- **`has-*`** — `:has(…)` on the scope;
+- **ancestors** — `group-<cond>[/name]` → `.group\/name[cond] .scope`, `peer-*` → `~`, `in-data-x` → `[data-x] .scope`.
+
+The leaf utility is translated by the same table the StyleX path uses, so values stay at parity. **Registry-wide `PARITY-TODO` dropped 577 → 237**, with 16 components (incl. Button and all flat components) fully clean. Verified visually: `/dev/parity` renders an icon child and the descendant `svg` matches (0 mismatches / 240 comparisons). The remaining ~237 are the custom `skeleton` `@utility` (needs its expansion), deeply-nested calendar range selectors, sibling combinators, and a few dotUI semantic-set gaps — the narrow final frontier. `stylex.when.*` markers remain the more StyleX-native alternative for the ancestor cases if pure-StyleX output (no companion CSS) is later preferred.
+
 ## The hard wall: StyleX forbids "styling at a distance"
 
 StyleX bans descendant/child/sibling/arbitrary selectors by design. dotUI leans on them heavily. Every such usage must be classified:
