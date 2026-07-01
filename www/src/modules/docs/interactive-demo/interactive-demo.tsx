@@ -6,11 +6,16 @@ import {
   type ComponentType,
 } from 'react'
 import { flushSync } from 'react-dom'
-import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  SlidersHorizontalIcon,
+  XIcon,
+} from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/registry/ui/card'
+import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import { CodeBlock } from '@/modules/docs/code-block'
 import { renderCode } from '@/modules/docs/codegen/code-template'
 import type { CodeTemplate } from '@/modules/docs/codegen/code-template'
@@ -24,6 +29,12 @@ import type { ControlValues, SerializableControl } from './types'
  * Interactive demo component.
  * Renders the playground, controls, and live code output.
  *
+ * The preview is the hero: the demo owns the full card and the controls hide
+ * behind a corner toggle. Opening slides a panel in from the right that *pushes*
+ * the preview (the flex sibling reflows) rather than overlaying it — animated
+ * with the drawer easing (--ease-fluid-out). The panel takes its natural height,
+ * so a tall control set extends the card instead of scrolling.
+ *
  * The displayed code is filled from a build-time template-with-holes over the
  * real demo source (see codegen/source-overlay.ts). Preview and code derive
  * from one `values` state, so they can never diverge — and the rendered code
@@ -36,11 +47,6 @@ interface InteractiveDemoProps {
   controls: SerializableControl[]
   codeTemplate: CodeTemplate
   className?: string
-  /**
-   * Where the controls sit on ≥md screens: a column to the right ("horizontal")
-   * or a row beneath the preview ("vertical"). Small screens are always "vertical".
-   */
-  layout?: 'horizontal' | 'vertical'
 }
 
 export function InteractiveDemo({
@@ -48,19 +54,9 @@ export function InteractiveDemo({
   controls,
   codeTemplate,
   className,
-  layout = 'horizontal',
 }: InteractiveDemoProps) {
   const [isExpanded, setIsExpanded] = useState(false)
-
-  // "horizontal" puts the controls in a column to the right of the preview at md+; below md
-  // (and for "vertical") they sit in a wrapping row beneath it. The small↔large switch is pure
-  // CSS via md: variants — no JS media query — so SSR and the first client render match exactly
-  // (no hydration mismatch, no flash). A side column wouldn't fit on small screens anyway.
-  const horizontal = layout === 'horizontal'
-  const controlListClass = cn(
-    'flex-row flex-wrap items-start gap-x-6 gap-y-4',
-    horizontal && 'md:flex-col md:flex-nowrap',
-  )
+  const [controlsOpen, setControlsOpen] = useState(false)
 
   const initialValues = useMemo(
     () => defaultControlValues(controls),
@@ -117,36 +113,75 @@ export function InteractiveDemo({
 
   return (
     <div className={cn('overflow-hidden rounded-lg border', className)}>
-      <div className={cn('flex flex-col', horizontal && 'md:flex-row')}>
-        {/* Preview — borderless open space (no card, no backdrop); the demo just sits in it */}
-        <div className="flex min-h-56 flex-1 items-center justify-center p-10">
+      <div className="flex flex-col md:flex-row">
+        {/* Preview — borderless open space; the demo is the hero and the controls
+            toggle hides in the corner until opened. */}
+        <div className="relative flex min-h-56 flex-1 items-center justify-center p-10">
           {previewElement}
+
+          {!controlsOpen && (
+            <Tooltip>
+              <Button
+                variant="quiet"
+                size="sm"
+                isIconOnly
+                aria-label="Controls"
+                className="absolute top-3 right-3 text-fg-muted"
+                onPress={() => setControlsOpen(true)}
+              >
+                <SlidersHorizontalIcon />
+              </Button>
+              <TooltipContent>Controls</TooltipContent>
+            </Tooltip>
+          )}
         </div>
 
-        {/* Controls — always grouped in a titled card; a fixed-width column to the right at md+
-				    when horizontal, otherwise a wrapping row beneath the preview (also on small screens). */}
+        {/* Controls column — slides in from the right and pushes the preview (the
+            preview is flex-1, so it gives up width as the column grows). The column
+            stretches to the row height and carries the bg/divider, so its surface
+            always fills the panel — no gap while the height animates. */}
         <div
           className={cn(
-            '**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted',
-            'p-5',
-            horizontal && 'md:w-64 md:shrink-0',
+            'overflow-hidden border-t bg-card transition-[width,opacity,display] transition-discrete duration-300 ease-fluid-out motion-reduce:transition-none md:shrink-0 md:border-t-0 md:border-l',
+            'starting:opacity-0 md:starting:w-0',
+            controlsOpen
+              ? 'block w-full opacity-100 md:w-64'
+              : 'hidden w-full opacity-0 md:w-0',
           )}
         >
-          <Card size="sm" className="md:h-full">
-            <CardHeader>
-              <CardTitle className="text-xs font-medium text-fg-muted">
-                Props
-              </CardTitle>
-            </CardHeader>
-            <CardContent className={cn('flex', controlListClass)}>
+          {/* Inner wrapper animates its height from the closed row height (h-56,
+              = the preview's min height) up to content via interpolate-size. Starting
+              at h-56 (not 0) means the card height isn't clamped by the preview, so it
+              grows in lock-step with the width — same start, duration, and easing. */}
+          <div
+            className={cn(
+              '**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted',
+              'w-full overflow-hidden transition-[height] duration-300 ease-fluid-out [interpolate-size:allow-keywords] motion-reduce:transition-none md:w-64 starting:h-56',
+              controlsOpen ? 'h-auto' : 'h-56',
+            )}
+          >
+            <div className="relative flex flex-col gap-4 px-5 pt-9 pb-5">
+              <Tooltip>
+                <Button
+                  variant="quiet"
+                  size="sm"
+                  isIconOnly
+                  aria-label="Hide controls"
+                  className="absolute top-1.5 right-1.5 z-10 text-fg-muted hover:text-fg"
+                  onPress={() => setControlsOpen(false)}
+                >
+                  <XIcon className="size-3.5" />
+                </Button>
+                <TooltipContent>Hide controls</TooltipContent>
+              </Tooltip>
               <Controls
                 controls={controls}
                 values={values}
                 onChange={handleChange}
-                layout={layout}
+                layout="horizontal"
               />
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </div>
 

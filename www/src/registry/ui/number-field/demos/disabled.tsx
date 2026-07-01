@@ -9,7 +9,12 @@ import {
 
 export default function Demo() {
   return (
-    <NumberField aria-label="Width" defaultValue={20} isDisabled>
+    <NumberField
+      className="max-w-xs"
+      aria-label="Width"
+      defaultValue={20}
+      isDisabled
+    >
       <Label>Width</Label>
       <Group>
         <NumberFieldDecrement />

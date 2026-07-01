@@ -8,6 +8,7 @@ import { DateInput } from '@/registry/ui/input'
 export default function Demo() {
   return (
     <DateField
+      className="max-w-xs"
       aria-label="Event date"
       value={new CalendarDate(1980, 1, 1)}
       isReadOnly

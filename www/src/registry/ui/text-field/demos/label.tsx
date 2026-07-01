@@ -4,7 +4,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <TextField>
         <Label>Email</Label>
         <Input />
@@ -12,6 +12,6 @@ export default function Demo() {
       <TextField aria-label="Email">
         <Input />
       </TextField>
-    </>
+    </div>
   )
 }

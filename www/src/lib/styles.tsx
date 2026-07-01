@@ -215,6 +215,15 @@ function buildScopedThemeCss(
   return blocks.join('\n')
 }
 
+/* ----------------------- Preset-change transition ----------------------- */
+
+// How long the subtree stays flagged for tweening after a scoped design-system
+// change, in ms. Must stay >= the CSS transition duration in styles.css
+// (`--dotui-transition-duration`, default 400ms) so the flag outlives the tween;
+// the small buffer covers timer/paint jitter.
+const PRESET_TRANSITION_MS = 400
+const PRESET_TRANSITION_BUFFER_MS = 80
+
 interface DesignSystemProviderProps {
   params?: ParamSelections
   tokens?: GlobalTokenSelections
@@ -230,6 +239,14 @@ interface DesignSystemProviderProps {
    * `UNSAFE_PortalProvider` into a scope-marked container so they're themed too.
    */
   scoped?: boolean
+  /**
+   * Whether a scoped design-system change should auto-tween via the CSS paint-only
+   * morph (the `data-dotui-transition` flag + the rule in styles.css). Default on.
+   * Set false when the caller animates the swap itself — e.g. the landing showcase
+   * drives swaps through the View Transitions API where supported, which crossfades
+   * the change (density included) on the compositor; the CSS tween would double up.
+   */
+  transitionOnChange?: boolean
   children: React.ReactNode
 }
 
@@ -239,6 +256,7 @@ function DesignSystemProvider({
   density = 'default',
   color,
   scoped = false,
+  transitionOnChange = true,
   children,
 }: DesignSystemProviderProps) {
   const value = React.useMemo(
@@ -284,6 +302,56 @@ function DesignSystemProvider({
   // constant across renders, so the injected <style> and the wrapper element always agree.
   const scopeId = React.useId()
   const scopeSelector = `[data-dotui-scope="${scopeId}"]`
+
+  // --- Smooth preset transitions (scoped mode only) --------------------------
+  // When the design system changes (a preset swap on the landing showcase), tween
+  // the whole subtree from the old theme to the new instead of snapping. A
+  // signature of the live inputs distinguishes a real change from an unrelated
+  // re-render; on a change we flag the scope with `data-dotui-transition` *in the
+  // same commit* as the new tokens/classes (so the paint-only CSS transition in
+  // styles.css catches the old→new value change), then a timer clears the flag
+  // once the tween is done. Off for global (`:root`) mode — its sole consumer is
+  // the live /create preview, where slider drags should track the cursor, not lag
+  // behind a tween.
+  //
+  // The CSS rule tweens both the paint axes (color/radius/shadow) and the density
+  // axes (padding/gap/sizes), so the whole subtree morphs — including the spacing
+  // growing/shrinking. That's a per-frame layout tween across the subtree, which is
+  // why the showcase only triggers it on an explicit user pick, never on a loop (see
+  // modules/marketing/cards.tsx). A caller that animates the swap some other way can
+  // pass `transitionOnChange={false}` to suppress the flag. Honors
+  // `prefers-reduced-motion` via the media query in styles.css.
+  const signature = React.useMemo(
+    () => (scoped ? JSON.stringify({ params, tokens, density, color }) : ''),
+    [scoped, params, tokens, density, color],
+  )
+  const prevSignatureRef = React.useRef<string | null>(null)
+  const [transitioning, setTransitioning] = React.useState(false)
+
+  if (scoped) {
+    if (prevSignatureRef.current === null) {
+      // First render: record the baseline; never animate the initial paint.
+      prevSignatureRef.current = signature
+    } else if (prevSignatureRef.current !== signature) {
+      // A real change. Record the new baseline and flag the tween for THIS commit:
+      // setting state during render re-runs the component before paint, so the flag
+      // and the new tokens land together — required for the transition to fire.
+      prevSignatureRef.current = signature
+      if (transitionOnChange && !transitioning) setTransitioning(true)
+    }
+  }
+
+  // Clear the flag once the tween finishes. `signature` in the deps re-arms the
+  // timer on every change, so a swap mid-tween extends the window instead of
+  // cutting the previous one short.
+  React.useEffect(() => {
+    if (!transitioning) return
+    const timer = setTimeout(
+      () => setTransitioning(false),
+      PRESET_TRANSITION_MS + PRESET_TRANSITION_BUFFER_MS,
+    )
+    return () => clearTimeout(timer)
+  }, [transitioning, signature])
 
   // Apply the global token vars to :root so values that reference each other via calc() +
   // var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor))) recompute correctly —
@@ -371,6 +439,7 @@ function DesignSystemProvider({
   return (
     <div
       data-dotui-scope={scopeId}
+      data-dotui-transition={transitioning ? '' : undefined}
       style={{ display: 'contents', ...scopeStyle }}
     >
       {themeStyle}
@@ -385,6 +454,7 @@ function DesignSystemProvider({
             <div
               id={portalDomId}
               data-dotui-scope={scopeId}
+              data-dotui-transition={transitioning ? '' : undefined}
               style={scopeStyle}
             />,
             document.body,

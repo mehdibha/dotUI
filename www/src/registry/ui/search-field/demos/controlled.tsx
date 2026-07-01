@@ -10,7 +10,7 @@ export default function Demo() {
     'Is dotUI the next-gen ui lib?',
   )
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex max-w-xs flex-col items-center gap-4">
       <SearchField
         aria-label="Search"
         value={inputValue}

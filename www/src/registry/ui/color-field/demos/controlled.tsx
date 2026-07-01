@@ -11,7 +11,7 @@ export default function Demo() {
   const [color, setColor] = React.useState<Color | null>(parseColor('#7f007f'))
 
   return (
-    <div className="flex w-full flex-col items-center gap-4">
+    <div className="flex w-full max-w-xs flex-col items-center gap-4">
       <ColorField value={color} onChange={setColor}>
         <Label>Color</Label>
         <Input />

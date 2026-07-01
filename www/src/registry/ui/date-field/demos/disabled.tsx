@@ -4,7 +4,7 @@ import { DateInput } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <DateField isDisabled>
+    <DateField className="max-w-xs" isDisabled>
       <Label>Event date</Label>
       <DateInput />
     </DateField>

@@ -8,7 +8,7 @@ import {
 
 export default function Demo() {
   return (
-    <Select>
+    <Select className="w-52">
       <Label>Project</Label>
       <SelectTrigger />
       <SelectContent>

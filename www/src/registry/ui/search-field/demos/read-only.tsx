@@ -4,7 +4,7 @@ import { SearchField } from '@/registry/ui/search-field'
 
 export default function Demo() {
   return (
-    <SearchField isReadOnly defaultValue="Marvel movies">
+    <SearchField className="max-w-xs" isReadOnly defaultValue="Marvel movies">
       <Label>Search</Label>
       <Input />
     </SearchField>

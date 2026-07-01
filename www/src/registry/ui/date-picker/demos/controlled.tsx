@@ -18,7 +18,7 @@ export default function Demo() {
     parseDate('2020-02-03'),
   )
   return (
-    <>
+    <div className="flex w-52 flex-col gap-6">
       <DatePicker value={value} onChange={setValue}>
         <Label>Meeting date</Label>
         <InputGroup>
@@ -38,6 +38,6 @@ export default function Demo() {
       <p className="text-sm text-fg-muted">
         selected date: {value?.toString()}
       </p>
-    </>
+    </div>
   )
 }

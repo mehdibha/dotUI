@@ -13,6 +13,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <DatePicker
+      className="w-52"
       aria-label="Date picker with time zones"
       defaultValue={parseAbsoluteToLocal('2021-11-07T07:45:00Z')}
     >

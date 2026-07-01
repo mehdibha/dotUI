@@ -4,7 +4,7 @@ import { TimeField } from '@/registry/ui/time-field'
 
 export default function Demo() {
   return (
-    <TimeField isRequired>
+    <TimeField className="max-w-xs" isRequired>
       <Label>Event time</Label>
       <DateInput />
     </TimeField>

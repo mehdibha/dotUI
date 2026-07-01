@@ -12,7 +12,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <Combobox aria-label="Timezone">
+    <Combobox className="w-52" aria-label="Timezone">
       <InputGroup>
         <InputGroupAddon>
           <GlobeIcon />

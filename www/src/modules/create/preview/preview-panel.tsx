@@ -226,6 +226,13 @@ export function PreviewPanel({ className }: { className?: string }) {
                 </SearchField>
                 <ListBox>
                   <ListBoxSection>
+                    <ListBoxSectionHeader>Overview</ListBoxSectionHeader>
+                    {/* The style-guide view — a designer walkthrough of the whole system. */}
+                    <ListBoxItem id="overview" textValue="Overview">
+                      <span className="truncate">Style guide</span>
+                    </ListBoxItem>
+                  </ListBoxSection>
+                  <ListBoxSection>
                     <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
                     {/* Composed, real-world UI (the landing cards grid), themed live. */}
                     <ListBoxItem id="cards" textValue="Cards">

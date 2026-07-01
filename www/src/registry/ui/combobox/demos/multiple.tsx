@@ -19,6 +19,7 @@ type Framework = (typeof frameworks)[number]
 export default function Demo() {
   return (
     <Combobox<Framework, 'multiple'>
+      className="w-52"
       aria-label="frameworks"
       selectionMode="multiple"
       defaultValue={['next']}

@@ -23,7 +23,7 @@ export default function Demo() {
   )
 
   return (
-    <div className="flex w-full max-w-sm flex-col gap-3 rounded-lg border bg-bg p-4">
+    <div className="flex w-full max-w-xs flex-col gap-3 rounded-lg border bg-bg p-4">
       <SearchField
         aria-label="Search members"
         value={query}

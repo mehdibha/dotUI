@@ -9,7 +9,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-52 flex-col gap-6">
       <Combobox aria-label="Country" isInvalid>
         <InputGroup>
           <Input placeholder="Select a country..." />
@@ -54,6 +54,6 @@ export default function Demo() {
           </ListBox>
         </Popover>
       </Combobox>
-    </>
+    </div>
   )
 }

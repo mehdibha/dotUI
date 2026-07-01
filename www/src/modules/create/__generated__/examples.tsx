@@ -55,6 +55,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"radio-group": () => import("@/registry/ui/radio-group/examples"),
 	"react-hook-form": () => import("@/registry/ui/react-hook-form/examples"),
 	"search-field": () => import("@/registry/ui/search-field/examples"),
+	"segmented-control": () => import("@/registry/ui/segmented-control/examples"),
 	select: () => import("@/registry/ui/select/examples"),
 	separator: () => import("@/registry/ui/separator/examples"),
 	sidebar: () => import("@/registry/ui/sidebar/examples"),

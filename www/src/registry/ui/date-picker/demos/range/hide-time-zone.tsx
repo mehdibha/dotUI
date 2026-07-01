@@ -14,6 +14,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <DateRangePicker
+      className="w-52"
       granularity="minute"
       defaultValue={{
         start: parseAbsoluteToLocal('2021-04-07T18:45:22Z'),

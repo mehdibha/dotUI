@@ -8,7 +8,10 @@ import { DateInput } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <DateField placeholderValue={new CalendarDate(1980, 1, 1)}>
+    <DateField
+      className="max-w-xs"
+      placeholderValue={new CalendarDate(1980, 1, 1)}
+    >
       <Label>Meeting date</Label>
       <DateInput />
     </DateField>

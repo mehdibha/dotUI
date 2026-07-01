@@ -18,7 +18,11 @@ const disabledKeys = ['nuxt', 'remix']
 
 export default function Demo() {
   return (
-    <Combobox aria-label="framework" disabledKeys={disabledKeys}>
+    <Combobox
+      className="w-52"
+      aria-label="framework"
+      disabledKeys={disabledKeys}
+    >
       <InputGroup>
         <Input placeholder="Select a framework" />
         <InputGroupAddon>

@@ -4,7 +4,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <TextField defaultValue="Ada">
+    <TextField className="max-w-xs" defaultValue="Ada">
       <Label>Name</Label>
       <Input />
     </TextField>

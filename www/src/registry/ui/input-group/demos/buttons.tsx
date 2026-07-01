@@ -15,7 +15,7 @@ const variants = [
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       {variants.map((variant) => (
         <TextField key={variant} aria-label={variant}>
           <InputGroup>
@@ -54,6 +54,6 @@ export default function Demo() {
           </InputGroupAddon>
         </InputGroup>
       </TextField>
-    </>
+    </div>
   )
 }

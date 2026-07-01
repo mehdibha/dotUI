@@ -6,7 +6,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <TextField isReadOnly defaultValue="hello@example.com">
+    <TextField className="max-w-xs" isReadOnly defaultValue="hello@example.com">
       <Label>Email</Label>
       <Input />
     </TextField>

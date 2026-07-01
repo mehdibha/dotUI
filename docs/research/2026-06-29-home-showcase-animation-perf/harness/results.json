@@ -1,0 +1,136 @@
+{
+  "cpu_1x": {
+    "nodeCount": 1320,
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+    "dpr": 1,
+    "modes": {
+      "current": {
+        "swaps": 5,
+        "frames": 83,
+        "meanFrameMs": 37.79,
+        "p95FrameMs": 66.6,
+        "maxFrameMs": 67.6,
+        "jankFrames32": 83,
+        "jankFrames50": 11,
+        "longTaskCount": 5,
+        "longTaskMsTotal": 297,
+        "maxLongTaskMs": 66
+      },
+      "paintOnly_density": {
+        "swaps": 5,
+        "frames": 95,
+        "meanFrameMs": 33.33,
+        "p95FrameMs": 34.3,
+        "maxFrameMs": 34.4,
+        "jankFrames32": 95,
+        "jankFrames50": 0,
+        "longTaskCount": 0,
+        "longTaskMsTotal": 0,
+        "maxLongTaskMs": 0
+      },
+      "paintOnly_constDens": {
+        "swaps": 5,
+        "frames": 95,
+        "meanFrameMs": 33.23,
+        "p95FrameMs": 34.2,
+        "maxFrameMs": 34.3,
+        "jankFrames32": 92,
+        "jankFrames50": 0,
+        "longTaskCount": 0,
+        "longTaskMsTotal": 0,
+        "maxLongTaskMs": 0
+      },
+      "paintNoShadow": {
+        "swaps": 5,
+        "frames": 95,
+        "meanFrameMs": 33.32,
+        "p95FrameMs": 34.1,
+        "maxFrameMs": 34.4,
+        "jankFrames32": 95,
+        "jankFrames50": 0,
+        "longTaskCount": 0,
+        "longTaskMsTotal": 0,
+        "maxLongTaskMs": 0
+      },
+      "colorOnly": {
+        "swaps": 5,
+        "frames": 95,
+        "meanFrameMs": 33.32,
+        "p95FrameMs": 34,
+        "maxFrameMs": 34.3,
+        "jankFrames32": 95,
+        "jankFrames50": 0,
+        "longTaskCount": 0,
+        "longTaskMsTotal": 0,
+        "maxLongTaskMs": 0
+      }
+    }
+  },
+  "cpu_4x": {
+    "nodeCount": 1320,
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/149.0.0.0 Safari/537.36",
+    "dpr": 1,
+    "modes": {
+      "current": {
+        "swaps": 5,
+        "frames": 19,
+        "meanFrameMs": 173.93,
+        "p95FrameMs": 233.5,
+        "maxFrameMs": 233.5,
+        "jankFrames32": 19,
+        "jankFrames50": 19,
+        "longTaskCount": 16,
+        "longTaskMsTotal": 3002,
+        "maxLongTaskMs": 261
+      },
+      "paintOnly_density": {
+        "swaps": 5,
+        "frames": 37,
+        "meanFrameMs": 85.56,
+        "p95FrameMs": 167.11,
+        "maxFrameMs": 199.3,
+        "jankFrames32": 37,
+        "jankFrames50": 24,
+        "longTaskCount": 25,
+        "longTaskMsTotal": 2810,
+        "maxLongTaskMs": 216
+      },
+      "paintOnly_constDens": {
+        "swaps": 5,
+        "frames": 31,
+        "meanFrameMs": 101.98,
+        "p95FrameMs": 195.3,
+        "maxFrameMs": 199.41,
+        "jankFrames32": 31,
+        "jankFrames50": 22,
+        "longTaskCount": 22,
+        "longTaskMsTotal": 2892,
+        "maxLongTaskMs": 227
+      },
+      "paintNoShadow": {
+        "swaps": 5,
+        "frames": 39,
+        "meanFrameMs": 81.04,
+        "p95FrameMs": 166.1,
+        "maxFrameMs": 166.9,
+        "jankFrames32": 39,
+        "jankFrames50": 21,
+        "longTaskCount": 25,
+        "longTaskMsTotal": 2779,
+        "maxLongTaskMs": 190
+      },
+      "colorOnly": {
+        "swaps": 5,
+        "frames": 43,
+        "meanFrameMs": 73.52,
+        "p95FrameMs": 132.61,
+        "maxFrameMs": 133.21,
+        "jankFrames32": 43,
+        "jankFrames50": 28,
+        "longTaskCount": 30,
+        "longTaskMsTotal": 2761,
+        "maxLongTaskMs": 154
+      }
+    }
+  }
+}
