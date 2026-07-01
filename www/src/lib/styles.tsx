@@ -285,6 +285,15 @@ function DesignSystemProvider({
   const scopeId = React.useId()
   const scopeSelector = `[data-dotui-scope="${scopeId}"]`
 
+  // Scoped mode emits a `<style>` (buildScopedThemeCss reads the live CSSOM — unavailable
+  // during SSR) and a body portal. DEFAULTS still sets hasTokenOverrides, so the client
+  // almost always renders a <style> the server omitted — a structural hydration mismatch
+  // Suspense cannot prevent (it only walls off recovery). Gate both until after commit.
+  const [scopedMounted, setScopedMounted] = React.useState(false)
+  useIsomorphicLayoutEffect(() => {
+    if (scoped) setScopedMounted(true)
+  }, [scoped])
+
   // Apply the global token vars to :root so values that reference each other via calc() +
   // var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor))) recompute correctly —
   // setting them on a wrapper <div> would leave the :root-declared tokens frozen. In `scoped`
@@ -322,21 +331,15 @@ function DesignSystemProvider({
   const hasTokenOverrides = Object.keys(cssVars).length > 0
   const themeCss = React.useMemo(() => {
     if (scoped) {
+      if (!scopedMounted) return null
       const diverges = Boolean(color) || hasTokenOverrides
       return diverges ? buildScopedThemeCss(scopeSelector, color) : null
     }
     return color
       ? emitPrimitivesCss(resolveColorConfig(color), { onColors: true })
       : null
-  }, [scoped, scopeSelector, color, hasTokenOverrides])
+  }, [scoped, scopedMounted, scopeSelector, color, hasTokenOverrides])
 
-  // The palette / scoped-closure stylesheet as a real node, rendered into the tree rather
-  // than appended via an effect. `themeCss` is null until something diverges (and, when
-  // scoped, is client-only — see buildScopedThemeCss), so an untouched provider renders no
-  // <style> and SSR/first paint stay byte-identical to the bare children. A plain <style>
-  // (no `precedence`) is not hoisted by React; it renders in place, which is fine — its
-  // rules are global selectors (`:root`, `.dark`, `[data-dotui-scope]`) that apply wherever
-  // the tag sits, and `<style>` carries the UA `display: none`, so it never affects layout.
   const themeStyle = themeCss ? (
     <style data-dotui-color>{themeCss}</style>
   ) : null
@@ -379,16 +382,16 @@ function DesignSystemProvider({
       >
         {tree}
       </UNSAFE_PortalProvider>
-      {typeof document === 'undefined'
-        ? null
-        : createPortal(
+      {scopedMounted
+        ? createPortal(
             <div
               id={portalDomId}
               data-dotui-scope={scopeId}
               style={scopeStyle}
             />,
             document.body,
-          )}
+          )
+        : null}
     </div>
   )
 }
