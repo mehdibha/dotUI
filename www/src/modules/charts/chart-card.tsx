@@ -15,6 +15,8 @@ interface ChartCardProps {
   demoKey: string
   /** Human label for the card, e.g. `multiple`. */
   label: string
+  /** Bump to replay the chart's entry animation (remounts the chart). */
+  replayKey?: number
 }
 
 /**
@@ -22,11 +24,19 @@ interface ChartCardProps {
  * header row above a card that holds nothing but the live chart. The chart is
  * decorative (`inert` + `aria-hidden`) so it never traps focus across the grid —
  * the real, interactive component (with its source) lives in the docs, which
- * "Show code" links to. The chart fills the box (overriding each demo's own
- * aspect / min-height): polar charts stay square so they don't stretch,
- * cartesian ones fill the full width.
+ * "Show code" links to.
+ *
+ * Every card is the same height and padding so the gallery reads as one set.
+ * Sizing mirrors shadcn's charts page: cartesian charts (line/bar/area) fill the
+ * frame width, polar charts (pie/radar/radial) stay square and are capped at
+ * 250px (shadcn's size) so they don't balloon, centered in the frame.
  */
-export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
+export function ChartCard({
+  familyId,
+  demoKey,
+  label,
+  replayKey,
+}: ChartCardProps) {
   const Component = getDemoComponent(demoKey)
   if (!Component) return null
 
@@ -36,6 +46,7 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
     <ShowcaseCard
       label={label}
       action={<ChartCodeModal demoKey={demoKey} label={label} />}
+      className="h-80"
       inert
       aria-hidden="true"
     >
@@ -44,13 +55,13 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
       <Suspense fallback={<div className="size-full animate-pulse bg-muted" />}>
         <div
           className={cn(
-            'flex size-full items-center justify-center [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!',
+            'flex size-full items-center justify-center p-9 [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!',
             isPolar
-              ? 'p-2 [&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:w-auto!'
-              : 'p-4 [&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!',
+              ? '[&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:max-h-[250px]! [&_[data-slot=chart]]:w-auto!'
+              : '[&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!',
           )}
         >
-          <Component />
+          <Component key={replayKey} />
         </div>
       </Suspense>
     </ShowcaseCard>

@@ -71,6 +71,7 @@ import UiTagGroup from "@/registry/ui/tag-group/meta";
 import UiTextField from "@/registry/ui/text-field/meta";
 import UiText from "@/registry/ui/text/meta";
 import UiTimeField from "@/registry/ui/time-field/meta";
+import UiTimePicker from "@/registry/ui/time-picker/meta";
 import UiToast from "@/registry/ui/toast/meta";
 import UiToggleButtonGroup from "@/registry/ui/toggle-button-group/meta";
 import UiToggleButton from "@/registry/ui/toggle-button/meta";
@@ -146,6 +147,7 @@ export const registryUi: RegistryItem[] = [
 	UiText,
 	UiTextField,
 	UiTimeField,
+	UiTimePicker,
 	UiToast,
 	UiToggleButton,
 	UiToggleButtonGroup,

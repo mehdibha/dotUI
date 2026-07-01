@@ -51,7 +51,7 @@ export default function ChartRadialGrid() {
         config={chartConfig}
         className="mx-auto aspect-square min-h-[250px] w-full"
       >
-        <RadialBarChart data={chartData} innerRadius={30} outerRadius={110}>
+        <RadialBarChart data={chartData} innerRadius={30} outerRadius={100}>
           <ChartTooltip
             cursor={false}
             content={<ChartTooltipContent hideLabel nameKey="browser" />}
