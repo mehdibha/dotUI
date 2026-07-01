@@ -65,11 +65,30 @@ describe('emitDescendantCss', () => {
     expect(css).toContain('.sx:has([data-icon-start])')
   })
 
-  test('ancestor (`group-*`) prefixes stay unhandled', () => {
+  test('group-*/peer-*/in-* become prepended ancestor selectors', () => {
+    expect(
+      emitDescendantCss('sx', ['group-data-[loading]:opacity-0']).css,
+    ).toBe('.group[data-loading] .sx { opacity: 0; }')
+    // named group + a descendant part
+    expect(
+      emitDescendantCss('sx', ['group-data-[size=lg]/avatar:[&>svg]:size-2'])
+        .css,
+    ).toBe(
+      '.group\\/avatar[data-size="lg"] .sx > svg { width: calc(var(--spacing) * 2); height: calc(var(--spacing) * 2); }',
+    )
+    expect(emitDescendantCss('sx', ['peer-focus:text-fg']).css).toBe(
+      '.peer[data-focused] ~ .sx { color: var(--color-fg); }',
+    )
+    expect(emitDescendantCss('sx', ['in-data-calendar:rounded-sm']).css).toBe(
+      '[data-calendar] .sx { border-radius: var(--radius-sm); }',
+    )
+  })
+
+  test('custom-plugin (`with-*`) prefixes stay unhandled', () => {
     const { css, unhandled } = emitDescendantCss('sx', [
-      'group-data-[loading]:opacity-0',
+      'with-[left]:right-auto',
     ])
     expect(css).toBe('')
-    expect(unhandled).toEqual(['group-data-[loading]:opacity-0'])
+    expect(unhandled).toEqual(['with-[left]:right-auto'])
   })
 })

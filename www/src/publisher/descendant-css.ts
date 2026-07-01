@@ -71,17 +71,23 @@ function parts(token: string): { prefixes: string[]; utility: string } {
 function attrFor(prefix: string): string | null {
   const named: Record<string, string> = {
     hover: '[data-hovered]',
-    pressed: '[data-pressed]',
-    disabled: '[data-disabled]',
+    focus: '[data-focused]',
     focused: '[data-focused]',
     'focus-visible': '[data-focus-visible]',
+    'focus-within': '[data-focus-within]',
+    active: '[data-active]',
+    pressed: '[data-pressed]',
+    disabled: '[data-disabled]',
     selected: '[data-selected]',
     pending: '[data-pending]',
     current: '[data-current]',
     entering: '[data-entering]',
     exiting: '[data-exiting]',
+    expanded: '[data-expanded]',
+    open: '[data-open]',
     indeterminate: '[data-indeterminate]',
     invalid: '[data-invalid]',
+    'outside-month': '[data-outside-month]',
   }
   if (prefix in named) return named[prefix]!
   const arb = /^data-\[(.+)\]$/.exec(prefix)
@@ -97,12 +103,28 @@ function attrFor(prefix: string): string | null {
 }
 
 interface Parsed {
+  ancestor: string // prepended ancestor/sibling selector (`.group\/x[data-y] `)
   scope: string // suffixes on the scope element (`[data-pending]`, `:has(…)`)
   descendant: string // combinator + descendant selector (`  svg`, ` > svg`)
 }
 
-/** Build the scope/descendant selector for a descendant token, or null if unsupported. */
+/** `group-<cond>[/name]` / `peer-<cond>[/name]` → the marker's ancestor/sibling selector. */
+function markerSelector(marker: string, inner: string): string | null {
+  let name = ''
+  const slash = inner.lastIndexOf('/')
+  if (slash !== -1 && !inner.slice(slash).includes(']')) {
+    name = inner.slice(slash + 1)
+    inner = inner.slice(0, slash)
+  }
+  const cond = attrFor(inner)
+  if (!cond) return null
+  const sel = `.${marker}${name ? `\\/${name}` : ''}${cond}`
+  return marker === 'peer' ? `${sel} ~ ` : `${sel} `
+}
+
+/** Build the ancestor/scope/descendant selector for a token, or null if unsupported. */
 function selectorFor(prefixes: string[]): Parsed | null {
+  let ancestor = ''
   let scope = ''
   let descendant = ''
   let inDescendant = false
@@ -177,13 +199,31 @@ function selectorFor(prefixes: string[]): Parsed | null {
       else scope += attr
       continue
     }
-    // Ancestor (`group-*`/`peer-*`/`in-*`) and custom-plugin (`with-*`) prefixes
-    // have no scoped-CSS form here — bail so the token stays on PARITY-TODO.
+    // Ancestor markers: `group-<cond>[/name]`, `peer-<cond>[/name]` → the marked
+    // parent/sibling prepended; `in-<data|[sel]>` → any matching ancestor.
+    const grp = /^(group|peer)-(.+)$/.exec(p)
+    if (grp) {
+      const sel = markerSelector(grp[1]!, grp[2]!)
+      if (!sel) return null
+      ancestor = sel + ancestor
+      continue
+    }
+    const inV = /^in-(.+)$/.exec(p)
+    if (inV) {
+      const data = /^data-([a-z][a-z0-9-]*)$/.exec(inV[1]!)
+      if (data) {
+        ancestor = `[data-${data[1]}] ` + ancestor
+        continue
+      }
+      return null // arbitrary `in-[…]` selectors are too varied to render safely
+    }
+    // Custom-plugin (`with-*`) and anything else has no scoped-CSS form here —
+    // bail so the token stays on PARITY-TODO.
     return null
   }
 
-  if (!inDescendant && scope === '') return null // no at-a-distance part
-  return { scope, descendant }
+  if (ancestor === '' && !inDescendant && scope === '') return null
+  return { ancestor, scope, descendant }
 }
 
 /* ---------------------------------- entry --------------------------------- */
@@ -214,7 +254,9 @@ export function emitDescendantCss(
       unhandled.push(token)
       continue
     }
-    rules.push(`.${scope}${sel.scope}${sel.descendant} { ${decls} }`)
+    rules.push(
+      `${sel.ancestor}.${scope}${sel.scope}${sel.descendant} { ${decls} }`,
+    )
     handled.push(token)
   }
 
