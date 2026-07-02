@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { TypeIcon } from 'lucide-react'
 import { useTheme } from 'starter-themes'
 
 import { siteConfig } from '@/config/site'
@@ -19,12 +20,18 @@ function BrandAssetPreview({
       <img
         src={`/brand/${file}.svg`}
         alt=""
-        className={cn('h-4 w-auto dark:hidden', className)}
+        className={cn(
+          'h-4 w-auto opacity-60 in-data-focused:opacity-100 dark:hidden',
+          className,
+        )}
       />
       <img
         src={`/brand/${file}-white.svg`}
         alt=""
-        className={cn('hidden h-4 w-auto dark:block', className)}
+        className={cn(
+          'hidden h-4 w-auto opacity-60 in-data-focused:opacity-100 dark:block',
+          className,
+        )}
       />
     </>
   )
@@ -89,17 +96,21 @@ export function Logo({
       ) : (
         <span className={cn('flex items-center', className)}>{mark}</span>
       )}
-      <Popover className="w-64">
+      <Popover className="w-56">
         <MenuContent>
-          <MenuItem onAction={() => copyBrandAsset(`dotui-logo${suffix}.svg`)}>
+          <MenuItem
+            className="text-fg-muted"
+            onAction={() => copyBrandAsset(`dotui-logo${suffix}.svg`)}
+          >
             Copy logo as SVG
             <BrandAssetPreview file="dotui-logo" className="ml-auto" />
           </MenuItem>
           <MenuItem
+            className="text-fg-muted"
             onAction={() => copyBrandAsset(`dotui-wordmark${suffix}.svg`)}
           >
             Copy wordmark as SVG
-            <BrandAssetPreview file="dotui-wordmark" className="ml-auto" />
+            <TypeIcon aria-hidden className="ml-auto" />
           </MenuItem>
         </MenuContent>
       </Popover>
