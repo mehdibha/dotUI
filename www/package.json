@@ -47,6 +47,7 @@
     "react-aria": "^3.50.0",
     "react-aria-components": "^1.19.0",
     "react-dom": "catalog:",
+    "react-easy-crop": "^6.0.2",
     "react-error-boundary": "^6.0.0",
     "react-hook-form": "^7.54.2",
     "react-is": "^19.2.0",
