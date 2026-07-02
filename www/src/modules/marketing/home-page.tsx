@@ -1,3 +1,5 @@
+import { Link } from 'react-aria-components'
+
 import { LinkButton } from '@/registry/ui/button'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import { Announcement } from '@/components/announcement'
@@ -63,7 +65,7 @@ export function HomePage() {
       </section>
 
       {/* Tools section. */}
-      <section className="relative z-10 -mt-[10px] py-12 shadow-xs">
+      <section className="relative z-10 -mt-[20px] py-12 shadow-xs">
         <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
           <h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
             Built on modern tools
@@ -71,7 +73,7 @@ export function HomePage() {
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
             {tools.map(({ icon, label, href }) => (
               <Tooltip key={href}>
-                <a
+                <Link
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
@@ -79,7 +81,7 @@ export function HomePage() {
                   href={href}
                 >
                   {icon}
-                </a>
+                </Link>
                 <TooltipContent placement="top">{label}</TooltipContent>
               </Tooltip>
             ))}

@@ -33,14 +33,14 @@ export function Notifications({
 
   return (
     <Card className={cn('gap-2 pb-0', className)} {...props}>
-      <CardHeader className="flex min-w-0 flex-wrap items-center justify-between gap-2">
-        <CardTitle className="flex items-center gap-2">
+      <CardHeader className="flex min-w-0 items-center justify-between gap-2">
+        <CardTitle className="flex shrink-0 items-center gap-2">
           Notifications
           <Badge className="px-1.5">{unreadCount}</Badge>
         </CardTitle>
-        <CardAction>
-          <Button size="sm">
-            <span className="truncate">Mark all as read</span>
+        <CardAction className="flex min-w-0">
+          <Button size="sm" className="min-w-0 shrink">
+            <span className="min-w-0 truncate">Mark all as read</span>
           </Button>
         </CardAction>
       </CardHeader>
@@ -48,7 +48,7 @@ export function Notifications({
         <Tabs
           selectedKey={filter}
           onSelectionChange={(key) => setFilter(key as NotificationFilter)}
-          className="shrink-0 px-4"
+          className="shrink-0 border-b px-4"
         >
           <TabList variant="line">
             <Tab id="all">All</Tab>
@@ -56,7 +56,7 @@ export function Notifications({
             <Tab id="read">Read</Tab>
           </TabList>
         </Tabs>
-        <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto border-t">
+        <div className="no-scrollbar min-h-0 flex-1 scroll-fade-y overflow-x-hidden overflow-y-auto scroll-fade-4">
           <ListBox
             aria-label="Notifications"
             className="max-h-none w-full rounded-none border-0 bg-transparent p-0 **:data-[slot=list-box-item]:rounded-none [&_.separator]:m-0"
