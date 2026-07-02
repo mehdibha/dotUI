@@ -1,0 +1,50 @@
+---
+title: Lightbox
+description: A media lightbox that opens a fullscreen viewer from a thumbnail grid.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Modal.html
+wip: true
+---
+
+<Demo name="lightbox/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/lightbox
+```
+
+## Usage
+
+Pass an array of images. The lightbox renders a responsive grid of thumbnails; clicking one opens a fullscreen viewer with previous/next navigation, a close button, and keyboard support (ArrowLeft, ArrowRight, Escape).
+
+```tsx
+import { Lightbox } from '@/components/ui/lightbox'
+```
+
+```tsx
+<Lightbox
+  images={[
+    { src: '/photos/1.jpg', alt: 'Mountain lake at sunrise' },
+    { src: '/photos/2.jpg', alt: 'Foggy forest valley' },
+    { src: '/photos/3.jpg', alt: 'Green valley with a river' },
+  ]}
+/>
+```
+
+## Examples
+
+<Examples>
+  <Example name="lightbox/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### Lightbox
+
+<Reference name="lightbox" />
+
+### LightboxViewer
+
+<Reference name="lightbox-viewer" />

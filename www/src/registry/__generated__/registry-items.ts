@@ -45,6 +45,7 @@ import UiFileTrigger from "@/registry/ui/file-trigger/meta";
 import UiGroup from "@/registry/ui/group/meta";
 import UiInput from "@/registry/ui/input/meta";
 import UiKbd from "@/registry/ui/kbd/meta";
+import UiLightbox from "@/registry/ui/lightbox/meta";
 import UiLink from "@/registry/ui/link/meta";
 import UiListBox from "@/registry/ui/list-box/meta";
 import UiLoader from "@/registry/ui/loader/meta";
@@ -121,6 +122,7 @@ export const registryUi: RegistryItem[] = [
 	UiGroup,
 	UiInput,
 	UiKbd,
+	UiLightbox,
 	UiLink,
 	UiListBox,
 	UiLoader,

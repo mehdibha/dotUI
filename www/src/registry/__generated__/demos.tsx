@@ -1541,6 +1541,10 @@ export const DemosIndex: Record<
 		files: ["ui/kbd/demos/with-samp.tsx"],
 		component: React.lazy(() => import("@/registry/ui/kbd/demos/with-samp")),
 	},
+	"lightbox/demos/default": {
+		files: ["ui/lightbox/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/lightbox/demos/default")),
+	},
 	"link/demos/default": {
 		files: ["ui/link/demos/default.tsx"],
 		component: React.lazy(() => import("@/registry/ui/link/demos/default")),
