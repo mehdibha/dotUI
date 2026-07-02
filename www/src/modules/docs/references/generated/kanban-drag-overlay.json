@@ -1,0 +1,32 @@
+{
+  "name": "KanbanDragOverlayProps",
+  "description": "Renders a floating copy of the card under the cursor while dragging, detached\nfrom the column's scroll and overflow.",
+  "props": {
+    "children": {
+      "type": "((activeId: UniqueIdentifier) => ReactNode)",
+      "detailedType": "| ((activeId: UniqueIdentifier) => ReactNode)\n| undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "activeId",
+            "value": {
+              "type": "link",
+              "id": "UniqueIdentifier",
+              "name": "UniqueIdentifier"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "identifier",
+          "name": "ReactNode"
+        },
+        "typeParameters": []
+      },
+      "description": "Called with the active card id to render the overlay contents."
+    }
+  }
+}

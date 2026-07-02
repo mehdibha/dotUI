@@ -44,6 +44,7 @@ import UiField from "@/registry/ui/field/meta";
 import UiFileTrigger from "@/registry/ui/file-trigger/meta";
 import UiGroup from "@/registry/ui/group/meta";
 import UiInput from "@/registry/ui/input/meta";
+import UiKanban from "@/registry/ui/kanban/meta";
 import UiKbd from "@/registry/ui/kbd/meta";
 import UiLink from "@/registry/ui/link/meta";
 import UiListBox from "@/registry/ui/list-box/meta";
@@ -120,6 +121,7 @@ export const registryUi: RegistryItem[] = [
 	UiFileTrigger,
 	UiGroup,
 	UiInput,
+	UiKanban,
 	UiKbd,
 	UiLink,
 	UiListBox,
