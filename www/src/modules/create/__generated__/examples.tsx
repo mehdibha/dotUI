@@ -27,6 +27,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"color-swatch-picker": () => import("@/registry/ui/color-swatch-picker/examples"),
 	combobox: () => import("@/registry/ui/combobox/examples"),
 	command: () => import("@/registry/ui/command/examples"),
+	"comparison-slider": () => import("@/registry/ui/comparison-slider/examples"),
 	"context-menu": () => import("@/registry/ui/context-menu/examples"),
 	"date-field": () => import("@/registry/ui/date-field/examples"),
 	"date-picker": () => import("@/registry/ui/date-picker/examples"),

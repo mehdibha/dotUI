@@ -909,6 +909,10 @@ export const DemosIndex: Record<
 		files: ["ui/command/demos/with-tag-group.tsx"],
 		component: React.lazy(() => import("@/registry/ui/command/demos/with-tag-group")),
 	},
+	"comparison-slider/demos/default": {
+		files: ["ui/comparison-slider/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/comparison-slider/demos/default")),
+	},
 	"context-menu/demos/basic": {
 		files: ["ui/context-menu/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/context-menu/demos/basic")),

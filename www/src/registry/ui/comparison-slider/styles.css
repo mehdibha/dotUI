@@ -1,0 +1,8 @@
+:root {
+  --comparison-slider-radius: var(--radius-lg);
+  --comparison-slider-handle-size: calc(var(--spacing) * 8);
+  --comparison-slider-handle-color: var(--color-bg);
+  --comparison-slider-divider-width: calc(var(--spacing) * 0.5);
+  --comparison-slider-divider-color: var(--color-bg);
+  --comparison-slider-cursor: var(--cursor-interactive);
+}
