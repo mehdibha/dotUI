@@ -1,0 +1,36 @@
+{
+  "name": "MarkdownEditorActionProps",
+  "description": "A toolbar button that wraps or inserts markdown around the current textarea\nselection.",
+  "props": {
+    "transform": {
+      "type": "\"bold\" | \"code\" | \"italic\" | \"link\" | \"list\"",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "bold"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "code"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "italic"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "link"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "list"
+          }
+        ]
+      },
+      "description": "Which built-in transform to apply to the selection.",
+      "required": true
+    }
+  }
+}

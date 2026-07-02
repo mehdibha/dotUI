@@ -1,0 +1,45 @@
+{
+  "name": "MarkdownEditorProps",
+  "description": "A markdown editor with a formatting toolbar and Write/Preview tabs.\nComposition-first: drop in a `MarkdownEditorToolbar`, `MarkdownEditorWrite`,\nand `MarkdownEditorPreview` as children. The value is fully controlled.",
+  "extendsElement": "div",
+  "props": {
+    "value": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The current markdown source.",
+      "required": true
+    },
+    "onChange": {
+      "type": "(value: string) => void",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler called with the next markdown source whenever it changes —\nfrom typing in the Write panel or pressing a toolbar action.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
