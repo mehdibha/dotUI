@@ -1,0 +1,46 @@
+---
+title: Voice message
+description: A chat-style voice message bubble with a play control, a waveform, and an elapsed/total duration readout.
+links:
+  - label: wavesurfer.js
+    href: https://wavesurfer.xyz
+wip: true
+---
+
+<Demo name="voice-message/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/voice-message
+```
+
+## Usage
+
+`VoiceMessage` wraps [wavesurfer.js](https://wavesurfer.xyz) to render a chat-style bubble: a play/pause [Button](/docs/components/button), the audio waveform, and an elapsed/total duration. Click or drag the waveform to seek. Wave and progress colors are resolved from your design system tokens at runtime, so the bubble follows your theme.
+
+```tsx
+import { VoiceMessage } from '@/components/ui/voice-message'
+```
+
+```tsx
+<VoiceMessage src="/audio/message.mp3" />
+```
+
+Pass `duration` (in seconds) to show the total length before the audio metadata loads.
+
+```tsx
+<VoiceMessage src="/audio/message.mp3" duration={12} />
+```
+
+## Examples
+
+<Examples>
+  <Example name="voice-message/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### VoiceMessage
+
+<Reference name="voice-message" />
