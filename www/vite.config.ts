@@ -31,6 +31,17 @@ export default defineConfig({
     nitro({
       preset: process.env.VERCEL ? 'vercel' : 'node',
       rollupConfig: {
+        output: {
+          // pdf.js (pdfjs-dist, pulled by react-pdf) constructs `new DOMMatrix()`
+          // and friends at module-evaluation time. During prerendering Nitro warms
+          // dynamic chunks server-side, so that runs in Node where these canvas
+          // globals are absent → "DOMMatrix is not defined". Prepending the stubs
+          // to every server chunk guarantees they exist before any chunk's body
+          // (incl. pdfjs-dist's) evaluates. Server build only; harmless in the
+          // browser where the real globals already exist.
+          banner:
+            'globalThis.DOMMatrix||=class{};globalThis.Path2D||=class{};globalThis.ImageData||=class{};globalThis.DOMPoint||=class{};',
+        },
         onwarn(warning, warn) {
           if (
             warning.code === 'MODULE_LEVEL_DIRECTIVE' &&

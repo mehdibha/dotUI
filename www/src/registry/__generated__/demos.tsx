@@ -1917,6 +1917,10 @@ export const DemosIndex: Record<
 		files: ["ui/pagination/demos/with-results.tsx"],
 		component: React.lazy(() => import("@/registry/ui/pagination/demos/with-results")),
 	},
+	"pdf-viewer/demos/default": {
+		files: ["ui/pdf-viewer/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/pdf-viewer/demos/default")),
+	},
 	"popover/demos/basic": {
 		files: ["ui/popover/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/popover/demos/basic")),
