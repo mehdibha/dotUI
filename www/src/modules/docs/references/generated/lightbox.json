@@ -1,0 +1,67 @@
+{
+  "name": "LightboxProps",
+  "description": "A media lightbox: a responsive grid of thumbnails that opens a fullscreen\nviewer with previous/next navigation, a close button, and keyboard support\n(ArrowLeft, ArrowRight, Escape).",
+  "extendsElement": "div",
+  "props": {
+    "images": {
+      "type": "LightboxImage[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "link",
+          "id": "src/registry/ui/lightbox/types.ts:LightboxImage",
+          "name": "LightboxImage"
+        }
+      },
+      "description": "The images to display in the grid and viewer.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  },
+  "typeLinks": {
+    "src/registry/ui/lightbox/types.ts:LightboxImage": {
+      "type": "interface",
+      "id": "src/registry/ui/lightbox/types.ts:LightboxImage",
+      "name": "LightboxImage",
+      "extends": [],
+      "properties": {
+        "alt": {
+          "type": "property",
+          "name": "alt",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "Alternative text for the image. Also used as the viewer caption and the\nthumbnail's accessible label."
+        },
+        "src": {
+          "type": "property",
+          "name": "src",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The image source URL."
+        }
+      },
+      "typeParameters": [],
+      "description": "A single image entry rendered in the lightbox grid and viewer."
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "RichTextEditorProps",
+  "description": "A WYSIWYG rich-text editor built on Tiptap. `RichTextEditor` owns the editor\ninstance and shares it through context, so the toolbar and content area are\ncomposed: drop in `RichTextEditorToolbar` (or your own controls built with\n`RichTextEditorButton`) and `RichTextEditorContent`.",
+  "extendsElement": "div",
+  "props": {
+    "content": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Initial HTML content of the editor (uncontrolled)."
+    },
+    "placeholder": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Placeholder shown while the editor is empty."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the editor is read-only.",
+      "default": "false"
+    },
+    "onContentChange": {
+      "type": "((html: string) => void)",
+      "detailedType": "((html: string) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "html",
+            "value": {
+              "type": "link",
+              "id": "string",
+              "name": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler called with the editor's HTML whenever the content changes."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "NotificationProps",
+  "description": "A single notification row.",
+  "extendsElement": "div",
+  "props": {
+    "unread": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Highlight the row as unread (accent bar + tinted background)."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -1,0 +1,80 @@
+---
+title: Rich Text Editor
+description: A WYSIWYG rich-text editor built on Tiptap, with a composable formatting toolbar and a themed editing surface.
+links:
+  - label: Docs
+    href: https://tiptap.dev/docs/editor/getting-started/overview
+wip: true
+---
+
+<Demo name="rich-text-editor/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/rich-text-editor
+```
+
+## Usage
+
+`RichTextEditor` owns the Tiptap editor instance and shares it through context, so the toolbar and editing surface are composed rather than hardcoded. Drop in `RichTextEditorToolbar` for the default formatting controls and `RichTextEditorContent` for the editable surface.
+
+```tsx
+import {
+  RichTextEditor,
+  RichTextEditorContent,
+  RichTextEditorToolbar,
+} from '@/components/ui/rich-text-editor'
+```
+
+```tsx
+<RichTextEditor content="<p>Hello world</p>">
+  <RichTextEditorToolbar />
+  <RichTextEditorContent />
+</RichTextEditor>
+```
+
+Pass `onContentChange` to read the editor's HTML as the user types, and `placeholder` to show prompt text while it is empty.
+
+```tsx
+<RichTextEditor
+  placeholder="Write something..."
+  onContentChange={(html) => console.log(html)}
+>
+  <RichTextEditorToolbar />
+  <RichTextEditorContent />
+</RichTextEditor>
+```
+
+Build your own toolbar by composing `RichTextEditorButton`s — each one reflects and toggles a single format — or read the editor directly with `useRichTextEditor` for fully custom controls.
+
+```tsx
+<RichTextEditorToolbar>
+  <RichTextEditorButton format="bold" icon={BoldIcon} label="Bold" />
+  <RichTextEditorButton format="italic" icon={ItalicIcon} label="Italic" />
+</RichTextEditorToolbar>
+```
+
+## Examples
+
+<Examples>
+  <Example name="rich-text-editor/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### RichTextEditor
+
+<Reference name="rich-text-editor" />
+
+### RichTextEditorToolbar
+
+<Reference name="rich-text-editor-toolbar" />
+
+### RichTextEditorButton
+
+<Reference name="rich-text-editor-button" />
+
+### RichTextEditorContent
+
+<Reference name="rich-text-editor-content" />

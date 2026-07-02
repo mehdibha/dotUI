@@ -1,0 +1,22 @@
+{
+  "name": "VideoPlayerProps",
+  "description": "A video player renders a themeable control bar over a native `<video>`\nelement: play/pause, a seek slider, volume, time, picture-in-picture, and\nfullscreen. Controls are built on React Aria `Button` and `Slider`, with no\nmedia engine — only stable browser APIs (works with `hls.js` if you wire\nstreaming yourself). Extra props are forwarded to the `<video>` element.",
+  "extendsElement": "video",
+  "props": {
+    "src": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The video source URL.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

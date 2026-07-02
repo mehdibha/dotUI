@@ -1,0 +1,32 @@
+{
+  "name": "AIAssistantMessageProps",
+  "description": "A single message in the conversation. The `role` aligns the bubble and, for\nthe assistant, renders an avatar alongside it.",
+  "extendsElement": "div",
+  "props": {
+    "role": {
+      "type": "\"assistant\" | \"user\"",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "assistant"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "user"
+          }
+        ]
+      },
+      "description": "Who sent the message. `user` aligns the bubble to the end with the primary\ncolor; `assistant` aligns to the start with a muted bubble and an avatar.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

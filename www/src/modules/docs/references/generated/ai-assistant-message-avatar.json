@@ -1,0 +1,38 @@
+{
+  "name": "AIAssistantMessageAvatarProps",
+  "description": "The avatar shown next to an assistant message. Falls back to a bot icon (or a\ncustom node) when no image is provided or the image fails to load.",
+  "extendsElement": "span",
+  "props": {
+    "src": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The URL of the avatar image."
+    },
+    "alt": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Alternative text for the avatar image."
+    },
+    "fallback": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Content shown when no image is available. Defaults to a bot icon."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

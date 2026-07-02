@@ -1,0 +1,85 @@
+{
+  "name": "FileUploadItemProps",
+  "description": "A single row in the uploaded-file list, with optional progress and remove.",
+  "extendsElement": "div",
+  "props": {
+    "name": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "File name.",
+      "required": true
+    },
+    "size": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "File size in bytes, formatted for display."
+    },
+    "progress": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Upload progress 0–100; renders a progress bar while uploading."
+    },
+    "status": {
+      "type": "\"complete\" | \"error\" | \"pending\" | \"uploading\"",
+      "detailedType": "| 'complete'\n| 'error'\n| 'pending'\n| 'uploading'\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "complete"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "error"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "pending"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "uploading"
+          }
+        ]
+      },
+      "description": "Upload status, exposed as `data-status` for styling."
+    },
+    "onRemove": {
+      "type": "(() => void)",
+      "detailedType": "(() => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Called when the remove button is pressed."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

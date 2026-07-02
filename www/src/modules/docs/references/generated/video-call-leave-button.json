@@ -1,0 +1,14 @@
+{
+  "name": "VideoCallLeaveButtonProps",
+  "description": "The danger button that ends/leaves the call. Defaults to a phone-off icon and\na \"Leave\" label; pass children to override.",
+  "extendsElement": "button",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

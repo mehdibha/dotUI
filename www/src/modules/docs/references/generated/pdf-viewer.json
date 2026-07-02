@@ -1,0 +1,40 @@
+{
+  "name": "PdfViewerProps",
+  "description": "A PDF viewer that renders a document one page at a time with controls for\npage navigation and zoom. Built on `react-pdf` (pdf.js).",
+  "extendsElement": "div",
+  "props": {
+    "file": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "URL or path of the PDF document to render.",
+      "required": true
+    },
+    "defaultPage": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The page shown when the viewer first mounts.",
+      "default": "1"
+    },
+    "defaultScale": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The zoom level the viewer starts at, where `1` is 100%.",
+      "default": "1"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

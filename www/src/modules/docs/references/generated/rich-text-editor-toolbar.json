@@ -1,0 +1,14 @@
+{
+  "name": "RichTextEditorToolbarProps",
+  "description": "The default formatting toolbar — bold, italic, strikethrough, heading,\nbullet/ordered lists, blockquote, and inline code. Pass `children` to replace\nthe default controls with your own `RichTextEditorButton`s.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

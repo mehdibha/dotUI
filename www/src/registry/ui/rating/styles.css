@@ -1,0 +1,5 @@
+:root {
+  --rating-color: var(--color-primary);
+  --rating-size: calc(var(--spacing) * 5);
+  --rating-cursor: var(--cursor-interactive);
+}

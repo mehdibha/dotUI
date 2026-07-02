@@ -1,0 +1,101 @@
+{
+  "name": "EmojiPickerProps",
+  "description": "An emoji picker panel — search, categories, and a virtualized grid — built\non the headless [frimousse](https://frimousse.liveblocks.io) engine with\ndotUI chrome. Drop it inside a React Aria `Popover` for the usual\ntrigger-and-overlay pattern. `onEmojiSelect` fires with the chosen emoji.",
+  "props": {
+    "onEmojiSelect": {
+      "type": "((emoji: { emoji: string; label: string; }) => void)",
+      "detailedType": "| ((emoji: { emoji: string; label: string }) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "emoji",
+                "value": {
+                  "type": "identifier",
+                  "name": "{ emoji: string; label: string; }"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "A callback invoked when an emoji is selected."
+    },
+    "locale": {
+      "type": "Locale",
+      "detailedType": "Locale | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Locale"
+      },
+      "description": "The locale of the emoji picker.",
+      "default": "\"en\""
+    },
+    "skinTone": {
+      "type": "SkinTone",
+      "detailedType": "SkinTone | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "SkinTone"
+      },
+      "description": "The skin tone of the emoji picker.",
+      "default": "\"none\""
+    },
+    "columns": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The number of columns in the list.",
+      "default": "10"
+    },
+    "emojiVersion": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Which {@link https://emojipedia.org/emoji-versions Emoji version} to use,\nto manually control which emojis are visible regardless of the current\nbrowser's supported Emoji versions.",
+      "default": "The most recent version supported by the current browser"
+    },
+    "emojibaseUrl": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The base URL of where the {@link https://emojibase.dev/docs/datasets/ Emojibase data}\nshould be fetched from, used as follows: `${emojibaseUrl}/${locale}/${file}.json`.\n(e.g. `${emojibaseUrl}/en/data.json`).\n\nThe URL can be set to another CDN hosting the {@link https://www.npmjs.com/package/emojibase-data `emojibase-data`}\npackage and its raw JSON files, or to a self-hosted location. When self-hosting\nwith a single locale (e.g. `en`), only that locale's directory needs to be hosted\ninstead of the entire package.",
+      "default": "\"https://cdn.jsdelivr.net/npm/emojibase-data\""
+    },
+    "sticky": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the category headers should be sticky.",
+      "default": "true"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

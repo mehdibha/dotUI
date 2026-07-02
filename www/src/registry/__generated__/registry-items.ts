@@ -6,13 +6,16 @@ import LibResponsive from "@/registry/lib/responsive/meta";
 import LibTextareaCaret from "@/registry/lib/textarea-caret/meta";
 import LibUtils from "@/registry/lib/utils/meta";
 import UiAccordion from "@/registry/ui/accordion/meta";
+import UiAiAssistant from "@/registry/ui/ai-assistant/meta";
 import UiAlert from "@/registry/ui/alert/meta";
+import UiAudioPlayer from "@/registry/ui/audio-player/meta";
 import UiAvatar from "@/registry/ui/avatar/meta";
 import UiBadge from "@/registry/ui/badge/meta";
 import UiBreadcrumbs from "@/registry/ui/breadcrumbs/meta";
 import UiButton from "@/registry/ui/button/meta";
 import UiCalendar from "@/registry/ui/calendar/meta";
 import UiCard from "@/registry/ui/card/meta";
+import UiCarousel from "@/registry/ui/carousel/meta";
 import UiChartArea from "@/registry/ui/chart-area/meta";
 import UiChartBar from "@/registry/ui/chart-bar/meta";
 import UiChartLine from "@/registry/ui/chart-line/meta";
@@ -22,6 +25,8 @@ import UiChartRadial from "@/registry/ui/chart-radial/meta";
 import UiChart from "@/registry/ui/chart/meta";
 import UiCheckboxGroup from "@/registry/ui/checkbox-group/meta";
 import UiCheckbox from "@/registry/ui/checkbox/meta";
+import UiCodeBlock from "@/registry/ui/code-block/meta";
+import UiCodeEditor from "@/registry/ui/code-editor/meta";
 import UiColorArea from "@/registry/ui/color-area/meta";
 import UiColorEditor from "@/registry/ui/color-editor/meta";
 import UiColorField from "@/registry/ui/color-field/meta";
@@ -32,31 +37,48 @@ import UiColorSwatch from "@/registry/ui/color-swatch/meta";
 import UiColorThumb from "@/registry/ui/color-thumb/meta";
 import UiCombobox from "@/registry/ui/combobox/meta";
 import UiCommand from "@/registry/ui/command/meta";
+import UiCommentThread from "@/registry/ui/comment-thread/meta";
 import UiContextMenu from "@/registry/ui/context-menu/meta";
+import UiDataGrid from "@/registry/ui/data-grid/meta";
 import UiDateField from "@/registry/ui/date-field/meta";
 import UiDatePicker from "@/registry/ui/date-picker/meta";
 import UiDialog from "@/registry/ui/dialog/meta";
 import UiDisclosure from "@/registry/ui/disclosure/meta";
 import UiDrawer from "@/registry/ui/drawer/meta";
 import UiDropZone from "@/registry/ui/drop-zone/meta";
+import UiEmojiPicker from "@/registry/ui/emoji-picker/meta";
 import UiEmpty from "@/registry/ui/empty/meta";
+import UiEventCalendar from "@/registry/ui/event-calendar/meta";
 import UiField from "@/registry/ui/field/meta";
 import UiFileTrigger from "@/registry/ui/file-trigger/meta";
+import UiFileUpload from "@/registry/ui/file-upload/meta";
+import UiFlowEditor from "@/registry/ui/flow-editor/meta";
+import UiGantt from "@/registry/ui/gantt/meta";
 import UiGroup from "@/registry/ui/group/meta";
+import UiImageCropper from "@/registry/ui/image-cropper/meta";
 import UiInput from "@/registry/ui/input/meta";
+import UiKanban from "@/registry/ui/kanban/meta";
 import UiKbd from "@/registry/ui/kbd/meta";
+import UiLightbox from "@/registry/ui/lightbox/meta";
 import UiLink from "@/registry/ui/link/meta";
 import UiListBox from "@/registry/ui/list-box/meta";
 import UiLoader from "@/registry/ui/loader/meta";
+import UiMapPicker from "@/registry/ui/map-picker/meta";
+import UiMarkdownEditor from "@/registry/ui/markdown-editor/meta";
 import UiMention from "@/registry/ui/mention/meta";
 import UiMenu from "@/registry/ui/menu/meta";
 import UiModal from "@/registry/ui/modal/meta";
+import UiNotificationFeed from "@/registry/ui/notification-feed/meta";
 import UiNumberField from "@/registry/ui/number-field/meta";
+import UiOnboardingTour from "@/registry/ui/onboarding-tour/meta";
 import UiOtpField from "@/registry/ui/otp-field/meta";
 import UiPagination from "@/registry/ui/pagination/meta";
+import UiPdfViewer from "@/registry/ui/pdf-viewer/meta";
 import UiPopover from "@/registry/ui/popover/meta";
 import UiProgressBar from "@/registry/ui/progress-bar/meta";
 import UiRadioGroup from "@/registry/ui/radio-group/meta";
+import UiRating from "@/registry/ui/rating/meta";
+import UiRichTextEditor from "@/registry/ui/rich-text-editor/meta";
 import UiSearchField from "@/registry/ui/search-field/meta";
 import UiSegmentedControl from "@/registry/ui/segmented-control/meta";
 import UiSelect from "@/registry/ui/select/meta";
@@ -64,6 +86,8 @@ import UiSeparator from "@/registry/ui/separator/meta";
 import UiSidebar from "@/registry/ui/sidebar/meta";
 import UiSkeleton from "@/registry/ui/skeleton/meta";
 import UiSlider from "@/registry/ui/slider/meta";
+import UiSortableList from "@/registry/ui/sortable-list/meta";
+import UiStepper from "@/registry/ui/stepper/meta";
 import UiSwitch from "@/registry/ui/switch/meta";
 import UiTable from "@/registry/ui/table/meta";
 import UiTabs from "@/registry/ui/tabs/meta";
@@ -77,18 +101,24 @@ import UiToggleButtonGroup from "@/registry/ui/toggle-button-group/meta";
 import UiToggleButton from "@/registry/ui/toggle-button/meta";
 import UiTooltip from "@/registry/ui/tooltip/meta";
 import UiTree from "@/registry/ui/tree/meta";
+import UiVideoCallUi from "@/registry/ui/video-call-ui/meta";
+import UiVideoPlayer from "@/registry/ui/video-player/meta";
+import UiVoiceMessage from "@/registry/ui/voice-message/meta";
 
 import type { RegistryItem } from "@/registry/types";
 
 export const registryUi: RegistryItem[] = [
 	UiAccordion,
+	UiAiAssistant,
 	UiAlert,
+	UiAudioPlayer,
 	UiAvatar,
 	UiBadge,
 	UiBreadcrumbs,
 	UiButton,
 	UiCalendar,
 	UiCard,
+	UiCarousel,
 	UiChart,
 	UiChartArea,
 	UiChartBar,
@@ -98,6 +128,8 @@ export const registryUi: RegistryItem[] = [
 	UiChartRadial,
 	UiCheckbox,
 	UiCheckboxGroup,
+	UiCodeBlock,
+	UiCodeEditor,
 	UiColorArea,
 	UiColorEditor,
 	UiColorField,
@@ -108,31 +140,48 @@ export const registryUi: RegistryItem[] = [
 	UiColorThumb,
 	UiCombobox,
 	UiCommand,
+	UiCommentThread,
 	UiContextMenu,
+	UiDataGrid,
 	UiDateField,
 	UiDatePicker,
 	UiDialog,
 	UiDisclosure,
 	UiDrawer,
 	UiDropZone,
+	UiEmojiPicker,
 	UiEmpty,
+	UiEventCalendar,
 	UiField,
 	UiFileTrigger,
+	UiFileUpload,
+	UiFlowEditor,
+	UiGantt,
 	UiGroup,
+	UiImageCropper,
 	UiInput,
+	UiKanban,
 	UiKbd,
+	UiLightbox,
 	UiLink,
 	UiListBox,
 	UiLoader,
+	UiMapPicker,
+	UiMarkdownEditor,
 	UiMention,
 	UiMenu,
 	UiModal,
+	UiNotificationFeed,
 	UiNumberField,
+	UiOnboardingTour,
 	UiOtpField,
 	UiPagination,
+	UiPdfViewer,
 	UiPopover,
 	UiProgressBar,
 	UiRadioGroup,
+	UiRating,
+	UiRichTextEditor,
 	UiSearchField,
 	UiSegmentedControl,
 	UiSelect,
@@ -140,6 +189,8 @@ export const registryUi: RegistryItem[] = [
 	UiSidebar,
 	UiSkeleton,
 	UiSlider,
+	UiSortableList,
+	UiStepper,
 	UiSwitch,
 	UiTable,
 	UiTabs,
@@ -153,6 +204,9 @@ export const registryUi: RegistryItem[] = [
 	UiToggleButtonGroup,
 	UiTooltip,
 	UiTree,
+	UiVideoCallUi,
+	UiVideoPlayer,
+	UiVoiceMessage,
 ];
 
 export const registryLib: RegistryItem[] = [LibFocusStyles, LibResponsive, LibTextareaCaret, LibUtils];

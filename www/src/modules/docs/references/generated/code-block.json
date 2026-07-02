@@ -1,0 +1,47 @@
+{
+  "name": "CodeBlockProps",
+  "description": "A code block highlights a snippet with Shiki using dual light/dark themes,\nwith an optional filename header and a copy-to-clipboard button.",
+  "extendsElement": "figure",
+  "props": {
+    "code": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The source code to display.",
+      "required": true
+    },
+    "lang": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The language to highlight.",
+      "default": "'tsx'"
+    },
+    "title": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Optional filename shown in the header."
+    },
+    "showLineNumbers": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show a line-number gutter."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -1,0 +1,46 @@
+---
+title: Flow Editor
+description: An interactive node-and-edge editor built on React Flow.
+links:
+  - label: React Flow
+    href: https://reactflow.dev
+wip: true
+---
+
+<Demo name="flow-editor/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/flow-editor
+```
+
+## Usage
+
+```tsx
+import { FlowEditor } from '@/components/ui/flow-editor'
+```
+
+```tsx
+<FlowEditor
+  initialNodes={[
+    { id: '1', position: { x: 0, y: 0 }, data: { label: 'Start' } },
+    { id: '2', position: { x: 0, y: 120 }, data: { label: 'End' } },
+  ]}
+  initialEdges={[{ id: 'e1-2', source: '1', target: '2' }]}
+/>
+```
+
+The editor manages its nodes and edges internally — pass `initialNodes` and `initialEdges` to seed them, and connect two handles on the canvas to create a new edge. Any other [React Flow](https://reactflow.dev) prop is forwarded to the underlying `<ReactFlow>`.
+
+## Examples
+
+<Examples>
+  <Example name="flow-editor/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### FlowEditor
+
+<Reference name="flow-editor" />

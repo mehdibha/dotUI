@@ -1,0 +1,64 @@
+---
+title: Sortable List
+description: A vertical list whose items can be reordered by dragging.
+wip: true
+---
+
+<Demo name="sortable-list/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/sortable-list
+```
+
+## Usage
+
+```tsx
+import {
+  SortableItem,
+  SortableItemContent,
+  SortableItemHandle,
+  SortableList,
+} from '@/components/ui/sortable-list'
+```
+
+```tsx
+const [items, setItems] = useState([
+  { id: '1', title: 'First' },
+  { id: '2', title: 'Second' },
+])
+
+<SortableList items={items} onReorder={setItems}>
+  {(item) => (
+    <SortableItem id={item.id}>
+      <SortableItemHandle />
+      <SortableItemContent>{item.title}</SortableItemContent>
+    </SortableItem>
+  )}
+</SortableList>
+```
+
+## Examples
+
+<Examples>
+  <Example name="sortable-list/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### SortableList
+
+<Reference name="sortable-list" />
+
+### SortableItem
+
+<Reference name="sortable-item" />
+
+### SortableItemHandle
+
+<Reference name="sortable-item-handle" />
+
+### SortableItemContent
+
+<Reference name="sortable-item-content" />

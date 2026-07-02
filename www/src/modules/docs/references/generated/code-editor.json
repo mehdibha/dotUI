@@ -1,0 +1,101 @@
+{
+  "name": "CodeEditorProps",
+  "description": "A controlled code editor built on CodeMirror 6 (via `@uiw/react-codemirror`).\nRenders in a bordered, rounded container with an optional header bar showing a\nfilename and the active language. Pass `value` and `onChange` to control it.",
+  "props": {
+    "value": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The current source. Controlled.",
+      "required": true
+    },
+    "onChange": {
+      "type": "((value: string) => void)",
+      "detailedType": "((value: string) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "string",
+              "name": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Called with the next source whenever the user edits."
+    },
+    "language": {
+      "type": "Language",
+      "detailedType": "Language | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Language"
+      },
+      "description": "Language grammar used for syntax highlighting.",
+      "default": "\"javascript\""
+    },
+    "readOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Render the contents but block edits.",
+      "default": "false"
+    },
+    "filename": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Filename shown in the header bar. Defaults to \"untitled\" when the header shows."
+    },
+    "hideHeader": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Hide the header bar (filename + language label).",
+      "default": "false"
+    },
+    "extensions": {
+      "type": "unknown[]",
+      "detailedType": "undefined | unknown[]",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "unknown"
+            }
+          }
+        ]
+      },
+      "description": "Extra CodeMirror extensions appended after the language grammar."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

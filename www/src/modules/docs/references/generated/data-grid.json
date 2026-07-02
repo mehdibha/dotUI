@@ -1,0 +1,100 @@
+{
+  "name": "DataGridProps",
+  "description": "An advanced data grid built on TanStack Table over the dotUI Table. Accepts\nTanStack `ColumnDef`s and a `data` array, and adds click-to-toggle column\nsorting and Previous/Next pagination on top of the accessible table.",
+  "extendsElement": "div",
+  "props": {
+    "columns": {
+      "type": "ColumnDef<TData>[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "application",
+          "base": {
+            "type": "identifier",
+            "name": "ColumnDef"
+          },
+          "typeParameters": [
+            {
+              "type": "typeParameter",
+              "name": "TData",
+              "constraint": null,
+              "default": null
+            }
+          ]
+        }
+      },
+      "description": "Column definitions, in TanStack Table's `ColumnDef` shape. Set\n`enableSorting: false` on a column to make its header non-sortable.",
+      "required": true
+    },
+    "data": {
+      "type": "TData[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "typeParameter",
+          "name": "TData",
+          "constraint": null,
+          "default": null
+        }
+      },
+      "description": "The rows to render. Sorting and pagination are derived from this array.",
+      "required": true
+    },
+    "pageSize": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Number of rows shown per page.",
+      "default": "10"
+    },
+    "pagination": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to render the pagination footer.",
+      "default": "true"
+    },
+    "renderEmptyState": {
+      "type": "(() => ReactNode)",
+      "detailedType": "(() => ReactNode) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Rendered inside the table body when there are no rows to display."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Accessible label for the underlying table.",
+      "default": "\"Data grid\""
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

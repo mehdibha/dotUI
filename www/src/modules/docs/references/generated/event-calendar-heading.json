@@ -1,0 +1,14 @@
+{
+  "name": "EventCalendarHeadingProps",
+  "description": "The month/year heading. Falls back to the formatted visible month.",
+  "extendsElement": "h2",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "StepperProps",
+  "description": "A stepper communicates a user's progress through a numbered sequence of\nsteps. Composable: place `StepperItem`s inside, each with `StepperIndicator`,\noptional `StepperTitle`/`StepperDescription`, and a `StepperSeparator`.",
+  "extendsElement": "div",
+  "props": {
+    "activeStep": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "The index (0-based) of the active step. Earlier steps render as completed,\nlater steps as inactive.",
+      "default": "0"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

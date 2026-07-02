@@ -1,0 +1,14 @@
+{
+  "name": "VideoCallTileVideoProps",
+  "description": "A live `<video>` element scoped to a `VideoCallTile`. Wire a `MediaStream` or\na LiveKit track's `attach()` target to it. Renders nothing while the tile's\ncamera is off.",
+  "extendsElement": "video",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

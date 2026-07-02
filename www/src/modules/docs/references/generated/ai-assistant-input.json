@@ -1,0 +1,94 @@
+{
+  "name": "AIAssistantInputProps",
+  "description": "The composer at the bottom of the assistant. Renders an auto-growing textarea\nand a send button; submits on Enter (Shift+Enter inserts a newline).",
+  "extendsElement": "form",
+  "props": {
+    "value": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The controlled value of the textarea.",
+      "required": true
+    },
+    "onValueChange": {
+      "type": "(value: string) => void",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Called when the textarea value changes.",
+      "required": true
+    },
+    "onSend": {
+      "type": "(value: string) => void",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Called with the trimmed message when the user submits a non-empty value.",
+      "required": true
+    },
+    "placeholder": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Placeholder text shown in the textarea.",
+      "default": "'Send a message...'"
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Disables the textarea and send button."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Accessible label for the textarea.",
+      "default": "'Message'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
