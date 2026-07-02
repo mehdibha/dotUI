@@ -1,0 +1,14 @@
+{
+  "name": "RichTextEditorContentProps",
+  "description": "Renders the editable surface (`EditorContent`). Reads the editor from context\nand renders nothing until it is mounted.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
