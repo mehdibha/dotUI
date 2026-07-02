@@ -22,6 +22,7 @@ import UiChartRadial from "@/registry/ui/chart-radial/meta";
 import UiChart from "@/registry/ui/chart/meta";
 import UiCheckboxGroup from "@/registry/ui/checkbox-group/meta";
 import UiCheckbox from "@/registry/ui/checkbox/meta";
+import UiCodeBlock from "@/registry/ui/code-block/meta";
 import UiColorArea from "@/registry/ui/color-area/meta";
 import UiColorEditor from "@/registry/ui/color-editor/meta";
 import UiColorField from "@/registry/ui/color-field/meta";
@@ -98,6 +99,7 @@ export const registryUi: RegistryItem[] = [
 	UiChartRadial,
 	UiCheckbox,
 	UiCheckboxGroup,
+	UiCodeBlock,
 	UiColorArea,
 	UiColorEditor,
 	UiColorField,
