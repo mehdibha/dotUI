@@ -5,7 +5,7 @@ import { SearchIcon } from 'lucide-react'
 import { navItems, siteConfig } from '@/config/site'
 import { cn } from '@/registry/lib/utils'
 import { Button, buttonStyles } from '@/registry/ui/button'
-import { Kbd } from '@/registry/ui/kbd'
+import { Separator } from '@/registry/ui/separator'
 import { GitHubIcon } from '@/components/icons/github'
 import { Logo } from '@/components/layout/logo'
 import { MobileNav } from '@/components/layout/mobile-nav'
@@ -62,7 +62,7 @@ export function Header({ className, items = [] }: HeaderProps) {
   return (
     <header
       className={cn(
-        'sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between header-blur-fallback px-6',
+        'sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between header-blur-fallback pr-3 pl-4',
         className,
       )}
     >
@@ -109,7 +109,6 @@ export function Header({ className, items = [] }: HeaderProps) {
         />
       </div>
       <div className="flex items-center gap-3 md:gap-6">
-        <MobileNav items={items} />
         <Logo />
         <nav
           aria-label="Main"
@@ -139,16 +138,10 @@ export function Header({ className, items = [] }: HeaderProps) {
           })}
         </nav>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-0.5">
         <SearchCommand keyboardShortcut items={items}>
-          <Button
-            variant="default"
-            aria-label="Search docs"
-            className="max-md:size-8 max-md:px-0 md:text-fg-muted"
-          >
-            <SearchIcon className="md:hidden" />
-            <span className="mr-6 flex-1 max-md:hidden">Search docs...</span>
-            <Kbd className="max-md:hidden">⌘ K</Kbd>
+          <Button variant="quiet" isIconOnly aria-label="Search docs">
+            <SearchIcon />
           </Button>
         </SearchCommand>
         <a
@@ -157,11 +150,13 @@ export function Header({ className, items = [] }: HeaderProps) {
           target="_blank"
           rel="noopener noreferrer"
           data-icon-only=""
-          className={buttonStyles({ variant: 'default' })}
+          className={buttonStyles({ variant: 'quiet', isIconOnly: true })}
         >
           <GitHubIcon />
         </a>
-        <ThemeToggle isIconOnly />
+        <ThemeToggle variant="quiet" isIconOnly />
+        <Separator orientation="vertical" className="mx-1.5 h-4 md:hidden" />
+        <MobileNav items={items} />
       </div>
     </header>
   )
