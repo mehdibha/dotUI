@@ -1,0 +1,14 @@
+{
+  "name": "VideoCallControlsProps",
+  "description": "The control bar of a video call. A horizontal toolbar that holds the call's\ntoggle buttons (mic, camera, screen share) and the leave button.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
