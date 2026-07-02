@@ -22,7 +22,6 @@ import type { CodeTemplate } from '@/modules/docs/codegen/code-template'
 import { DemoPreset } from '@/modules/docs/demo-preset'
 import { DynamicPre } from '@/modules/docs/dynamic-pre'
 import { PreviewControls } from '@/modules/docs/preset-control'
-import { useTweak } from '@/dev/tweaker'
 
 import { defaultControlValues } from './control-defaults'
 import { availableIcons, Controls } from './controls'
@@ -60,23 +59,6 @@ export function InteractiveDemo({
 }: InteractiveDemoProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [controlsOpen, setControlsOpen] = useState(false)
-
-  // Tweak: how the props-panel trigger behaves.
-  //  - toolbar      — current look: trigger sits in the toolbar row, fades out
-  //                   while the panel (with its own close button) is open.
-  //  - pinned-hide  — trigger pinned top-right of the card; opening fades it out
-  //                   and pushes only the light/dark toggle (the panel keeps its
-  //                   close button).
-  //  - pinned-morph — trigger pinned top-right and stays put above the panel,
-  //                   morphing into the collapse button (no close button inside).
-  const triggerVariant = useTweak('Controls trigger', {
-    type: 'select',
-    options: ['toolbar', 'pinned-hide', 'pinned-morph'],
-    default: 'toolbar',
-    group: 'Interactive demo',
-  })
-  const pinned = triggerVariant !== 'toolbar'
-  const morph = triggerVariant === 'pinned-morph'
 
   const initialValues = useMemo(
     () => defaultControlValues(controls),
@@ -131,77 +113,45 @@ export function InteractiveDemo({
     }
   }
 
-  // The props-panel trigger. Always mounted so its visibility can tween
-  // (opacity/scale) instead of popping in and out with a conditional render.
-  // In the pinned variants it's absolutely positioned in the card's top-right
-  // corner (above the panel); in the morph variant it stays interactive while
-  // open and crossfades its icon into an X.
-  const controlsTrigger = (
-    <Tooltip>
-      <Button
-        variant="quiet"
-        size="sm"
-        isIconOnly
-        aria-label={morph && controlsOpen ? 'Hide controls' : 'Controls'}
-        className={cn(
-          'text-fg-muted transition-[opacity,scale] duration-300 ease-fluid-out motion-reduce:transition-none',
-          pinned && 'absolute top-2 right-2 z-10',
-          morph
-            ? controlsOpen && 'hover:text-fg'
-            : controlsOpen && 'pointer-events-none scale-50 opacity-0',
-        )}
-        onPress={() => setControlsOpen(morph ? !controlsOpen : true)}
-      >
-        {morph ? (
-          <span className="grid *:col-start-1 *:row-start-1">
-            <SlidersHorizontalIcon
-              className={cn(
-                'transition-[opacity,rotate] duration-300 ease-fluid-out motion-reduce:transition-none',
-                controlsOpen && '-rotate-90 opacity-0',
-              )}
-            />
-            <XIcon
-              className={cn(
-                'transition-[opacity,rotate] duration-300 ease-fluid-out motion-reduce:transition-none',
-                !controlsOpen && 'rotate-90 opacity-0',
-              )}
-            />
-          </span>
-        ) : (
-          <SlidersHorizontalIcon />
-        )}
-      </Button>
-      <TooltipContent>
-        {morph && controlsOpen ? 'Hide controls' : 'Controls'}
-      </TooltipContent>
-    </Tooltip>
-  )
-
   return (
     <div
       className={cn('relative overflow-hidden rounded-lg border', className)}
     >
-      {pinned && controlsTrigger}
+      {/* The props-panel trigger, pinned to the card's top-right corner above
+          the panel. Always mounted so its visibility can tween (opacity/scale)
+          instead of popping in and out with a conditional render: opening the
+          panel fades it out and the panel's own close button takes over. */}
+      <Tooltip>
+        <Button
+          variant="quiet"
+          size="sm"
+          isIconOnly
+          aria-label="Controls"
+          className={cn(
+            'absolute top-2 right-2 z-10 text-fg-muted transition-[opacity,scale] duration-300 ease-fluid-out motion-reduce:transition-none',
+            controlsOpen && 'pointer-events-none scale-50 opacity-0',
+          )}
+          onPress={() => setControlsOpen(true)}
+        >
+          <SlidersHorizontalIcon />
+        </Button>
+        <TooltipContent>Controls</TooltipContent>
+      </Tooltip>
       <div className="flex flex-col md:flex-row">
         {/* Preview column: preview controls (top) + a themed canvas (`bg-bg`
             inside DemoPreset, so a forced light/dark mode and the preset theme
             the whole stage, not just the component; in the default "system"
             mode `bg-bg` equals the page bg, so the open, backdrop-free look is
-            unchanged). In the toolbar variant the props-controls trigger rides
-            in the same toolbar row; pinned variants reserve its corner with
-            padding instead while it floats over the card. */}
+            unchanged). While the panel is closed the toolbar reserves the
+            trigger's corner with padding, so the mode toggle sits beside it;
+            opening the panel releases it and pushes only the mode toggle. */}
         <div className="flex min-w-0 flex-1 flex-col">
-          <div className={cn('flex items-center', !pinned && 'pr-2')}>
-            <PreviewControls
-              className={cn(
-                'flex-1',
-                pinned &&
-                  'transition-[padding] duration-300 ease-fluid-out motion-reduce:transition-none',
-                pinned && !controlsOpen && 'pr-11',
-              )}
-            />
-            {!pinned && controlsTrigger}
-          </div>
+          <PreviewControls
+            className={cn(
+              'transition-[padding] duration-300 ease-fluid-out motion-reduce:transition-none',
+              !controlsOpen && 'pr-11',
+            )}
+          />
           <DemoPreset>
             <div className="flex min-h-56 flex-1 items-center justify-center bg-bg p-10">
               {previewElement}
@@ -218,7 +168,7 @@ export function InteractiveDemo({
             'overflow-hidden border-t bg-card transition-[width,opacity,display] transition-discrete duration-300 ease-fluid-out motion-reduce:transition-none md:shrink-0 md:border-t-0 md:border-l',
             'starting:opacity-0 md:starting:w-0',
             controlsOpen
-              ? 'block w-full opacity-100 md:w-64'
+              ? 'block w-full opacity-100 md:w-56'
               : 'hidden w-full opacity-0 md:w-0',
           )}
         >
@@ -229,28 +179,30 @@ export function InteractiveDemo({
           <div
             className={cn(
               '**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted',
-              'w-full overflow-hidden transition-[height] duration-300 ease-fluid-out [interpolate-size:allow-keywords] motion-reduce:transition-none md:w-64 starting:h-56',
+              'w-full overflow-hidden transition-[height] duration-300 ease-fluid-out [interpolate-size:allow-keywords] motion-reduce:transition-none md:w-56 starting:h-56',
               controlsOpen ? 'h-auto' : 'h-56',
             )}
           >
-            <div className="relative flex flex-col gap-4 px-5 pt-9 pb-5">
-              {/* In the morph variant the pinned trigger doubles as the
-                  collapse button, so the panel carries no close button. */}
-              {!morph && (
+            <div className="flex flex-col gap-4 px-5 pt-3 pb-5">
+              {/* Panel header — a subtle title with the close button opposite. */}
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-fg-muted">
+                  Controls
+                </span>
                 <Tooltip>
                   <Button
                     variant="quiet"
                     size="sm"
                     isIconOnly
                     aria-label="Hide controls"
-                    className="absolute top-1.5 right-1.5 z-10 text-fg-muted hover:text-fg"
+                    className="-mr-2 text-fg-muted hover:text-fg"
                     onPress={() => setControlsOpen(false)}
                   >
                     <XIcon className="size-3.5" />
                   </Button>
                   <TooltipContent>Hide controls</TooltipContent>
                 </Tooltip>
-              )}
+              </div>
               <Controls
                 controls={controls}
                 values={values}
