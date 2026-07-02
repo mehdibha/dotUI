@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseHeader } from '@tanstack/react-start/server'
 import type * as PageTree from 'fumadocs-core/page-tree'
@@ -37,9 +37,22 @@ function AppLayout() {
   const { pageTree } = Route.useLoaderData()
   const items = pageTree.children as PageTree.Node[]
 
+  // The /create builder is its own focused "app": it renders a builder-specific
+  // top bar (StudioTopBar) in place of the site nav, so the global Header would
+  // stack a second bar on top of it. Skip it there and let /create own its bar.
+  // The opt-in panel-lab experiment (?lab=true) still depends on the site Header
+  // above it, so keep rendering it for that view only. `--header-height` stays
+  // defined here so the builder's `100svh - --header-height` math is unchanged.
+  const { pathname, search } = useLocation()
+  // Mirror the /create route's `lab: z.coerce.boolean()` (i.e. plain `Boolean`)
+  // so the same `?lab=…` values that open the panel-lab experiment also keep the
+  // site Header above it. `useLocation` here is the unvalidated parent search.
+  const isLab = Boolean((search as { lab?: unknown }).lab)
+  const isBuilder = pathname === '/create' && !isLab
+
   return (
     <div className="[--header-height:--spacing(14)]">
-      <Header items={items} />
+      {!isBuilder && <Header items={items} />}
       <main id="content">
         <Outlet />
       </main>
