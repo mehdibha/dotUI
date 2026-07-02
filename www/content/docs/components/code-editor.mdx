@@ -1,0 +1,55 @@
+---
+title: Code Editor
+description: A controlled code editor built on CodeMirror 6, themed by your design system.
+links:
+  - label: CodeMirror
+    href: https://codemirror.net
+wip: true
+---
+
+<Demo name="code-editor/demos/default" />
+
+`CodeEditor` is a thin, themeable layer over [CodeMirror 6](https://codemirror.net) via [`@uiw/react-codemirror`](https://uiwjs.github.io/react-codemirror). It owns the chrome — a bordered, rounded container with an optional header bar — and keeps the editor itself as a peer dependency, so you control the source through `value` and `onChange` like any other input.
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/code-editor
+```
+
+## Usage
+
+Render `CodeEditor` as a controlled component: pass `value` and an `onChange` handler. Choose a grammar with `language` and add a header with `filename`.
+
+```tsx
+import { CodeEditor } from '@/components/ui/code-editor'
+```
+
+```tsx
+const [value, setValue] = React.useState('const x = 1')
+
+<CodeEditor
+  value={value}
+  onChange={setValue}
+  language="typescript"
+  filename="example.ts"
+/>
+```
+
+Set `readOnly` to render the source without allowing edits, and `hideHeader` to drop the filename and language label.
+
+```tsx
+<CodeEditor value={value} language="tsx" readOnly hideHeader />
+```
+
+## Examples
+
+<Examples>
+  <Example name="code-editor/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### CodeEditor
+
+<Reference name="code-editor" />
