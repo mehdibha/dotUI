@@ -85,20 +85,22 @@ export default function ChartCodeModalContent({
 
       {/* RIGHT: variant source, filling the full modal height */}
       <div className="flex min-h-0 min-w-0 flex-1 flex-col border-t bg-card md:border-t-0">
-        <div className="no-scrollbar min-h-0 flex-1 scroll-fade-y overflow-y-auto">
-          {source ? (
-            <CodeBlock className="rounded-none border-0 bg-transparent">
-              <DynamicPre
-                lang="tsx"
-                className="no-scrollbar w-full scroll-fade-x overflow-x-auto *:[code]:w-max *:[code]:min-w-full"
-              >
-                {source}
-              </DynamicPre>
-            </CodeBlock>
-          ) : (
-            <p className="p-4 text-sm text-fg-muted">Source unavailable.</p>
-          )}
-        </div>
+        {source ? (
+          <CodeBlock
+            title={`${demoKey.split('/').pop()}.tsx`}
+            className="flex min-h-0 flex-1 flex-col rounded-none border-0 bg-transparent"
+            contentClassName="no-scrollbar min-h-0 flex-1 scroll-fade-y overflow-y-auto"
+          >
+            <DynamicPre
+              lang="tsx"
+              className="no-scrollbar w-full scroll-fade-x overflow-x-auto *:[code]:w-max *:[code]:min-w-full"
+            >
+              {source}
+            </DynamicPre>
+          </CodeBlock>
+        ) : (
+          <p className="p-4 text-sm text-fg-muted">Source unavailable.</p>
+        )}
       </div>
     </div>
   )

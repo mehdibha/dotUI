@@ -22,6 +22,8 @@ export interface ExampleCodeModalProps {
   component: React.ComponentType
   /** Pre-highlighted source (the `DemoCode` slot content built at MDX build time). */
   code: React.ReactNode
+  /** Demo file name shown as the code block title, e.g. `disabled.tsx`. */
+  file?: string
   /** Registry items to install, e.g. `["button"]`. */
   install: string[]
 }
@@ -37,6 +39,7 @@ export function ExampleCodeModal({
   title,
   component: Component,
   code,
+  file,
   install,
 }: ExampleCodeModalProps) {
   const commands = buildInstallCommands(install)
@@ -108,13 +111,15 @@ export function ExampleCodeModal({
 
             {/* RIGHT: example source, filling the full modal height */}
             <div className="flex min-h-0 min-w-0 flex-1 flex-col border-t bg-card md:border-t-0">
-              <div className="no-scrollbar min-h-0 flex-1 scroll-fade-y overflow-y-auto">
-                <CodeBlock className="rounded-none border-0 bg-transparent">
-                  <Pre className="no-scrollbar w-full scroll-fade-x overflow-x-auto *:[code]:w-max *:[code]:min-w-full">
-                    {code}
-                  </Pre>
-                </CodeBlock>
-              </div>
+              <CodeBlock
+                title={file}
+                className="flex min-h-0 flex-1 flex-col rounded-none border-0 bg-transparent"
+                contentClassName="no-scrollbar min-h-0 flex-1 scroll-fade-y overflow-y-auto"
+              >
+                <Pre className="no-scrollbar w-full scroll-fade-x overflow-x-auto *:[code]:w-max *:[code]:min-w-full">
+                  {code}
+                </Pre>
+              </CodeBlock>
             </div>
           </div>
         </DialogContent>
