@@ -44,13 +44,13 @@ export function Notifications({
           </Button>
         </CardAction>
       </CardHeader>
-      <CardContent className="flex min-h-0 flex-1 flex-col gap-3 px-0">
+      <CardContent className="flex min-h-0 flex-1 flex-col px-0">
         <Tabs
           selectedKey={filter}
           onSelectionChange={(key) => setFilter(key as NotificationFilter)}
           className="shrink-0 px-4"
         >
-          <TabList>
+          <TabList variant="line">
             <Tab id="all">All</Tab>
             <Tab id="unread">Unread</Tab>
             <Tab id="read">Read</Tab>

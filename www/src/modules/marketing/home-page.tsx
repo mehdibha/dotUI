@@ -63,7 +63,7 @@ export function HomePage() {
       </section>
 
       {/* Tools section. */}
-      <section className="relative z-10 -mt-[100px] py-12 shadow-xs">
+      <section className="relative z-10 -mt-[10px] py-12 shadow-xs">
         <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
           <h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
             Built on modern tools

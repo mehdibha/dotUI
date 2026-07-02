@@ -12,9 +12,11 @@ import {
   CardTitle,
 } from '@/registry/ui/card'
 import { Label } from '@/registry/ui/field'
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from '@/registry/ui/segmented-control'
 import { Switch, SwitchControl } from '@/registry/ui/switch'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 
 const themes = [
   { id: 'light', label: 'Light', icon: SunIcon },
@@ -47,10 +49,8 @@ export function Appearance({
       <CardContent className="space-y-4">
         <div className="flex flex-col gap-2">
           <Label id="theme-label">Theme</Label>
-          <ToggleButtonGroup
+          <SegmentedControl
             aria-labelledby="theme-label"
-            selectionMode="single"
-            disallowEmptySelection
             selectedKeys={new Set([theme])}
             onSelectionChange={(keys) => {
               const next = [...keys][0]
@@ -59,12 +59,12 @@ export function Appearance({
             className="grid w-full grid-cols-3"
           >
             {themes.map((t) => (
-              <ToggleButton key={t.id} id={t.id}>
+              <SegmentedControlItem key={t.id} id={t.id}>
                 <t.icon className="size-4" aria-hidden />
                 {t.label}
-              </ToggleButton>
+              </SegmentedControlItem>
             ))}
-          </ToggleButtonGroup>
+          </SegmentedControl>
         </div>
 
         <div className="flex items-center justify-between gap-2">

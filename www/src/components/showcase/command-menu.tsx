@@ -1,24 +1,27 @@
 'use client'
 
-import { useState } from 'react'
 import {
   FilePlusIcon,
   MoonIcon,
   SearchIcon,
   SettingsIcon,
   UserPlusIcon,
+  XIcon,
 } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
+import { Button } from '@/registry/ui/button'
 import { Card, CardContent } from '@/registry/ui/card'
-import { Kbd } from '@/registry/ui/kbd'
 import {
-  ListBox,
-  ListBoxItem,
-  ListBoxSection,
-  ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { SearchField } from '@/registry/ui/search-field'
+  Command,
+  CommandContent,
+  CommandInput,
+  CommandItem,
+  CommandSection,
+  CommandSectionHeader,
+} from '@/registry/ui/command'
+import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { Kbd } from '@/registry/ui/kbd'
 
 const commands = [
   { id: 'new-file', label: 'New file', icon: FilePlusIcon, shortcut: '⌘N' },
@@ -37,45 +40,36 @@ export function CommandMenu({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
-  const [query, setQuery] = useState('')
-
-  const results = commands.filter((c) =>
-    c.label.toLowerCase().includes(query.trim().toLowerCase()),
-  )
-
   return (
     <Card className={cn(className)} {...props}>
       <CardContent className="space-y-2">
-        <SearchField
-          aria-label="Type a command or search"
-          placeholder="Type a command or search…"
-          value={query}
-          onChange={setQuery}
-          className="border-b pb-2"
-        />
-
-        {results.length > 0 ? (
-          <ListBox
-            aria-label="Commands"
-            selectionMode="single"
-            className="border-0 shadow-none"
-          >
-            <ListBoxSection>
-              <ListBoxSectionHeader>Actions</ListBoxSectionHeader>
-              {results.map((c) => (
-                <ListBoxItem key={c.id} id={c.id} textValue={c.label}>
+        <Command aria-label="Command menu">
+          <CommandInput aria-label="Type a command or search">
+            <InputGroup>
+              <InputGroupAddon>
+                <SearchIcon />
+              </InputGroupAddon>
+              <Input placeholder="Type a command or search…" />
+              <InputGroupAddon className="[--addon-button-inset:--spacing(2)]">
+                <Button isIconOnly variant="quiet">
+                  <XIcon aria-hidden="true" />
+                </Button>
+              </InputGroupAddon>
+            </InputGroup>
+          </CommandInput>
+          <CommandContent aria-label="Commands">
+            <CommandSection>
+              <CommandSectionHeader>Actions</CommandSectionHeader>
+              {commands.map((c) => (
+                <CommandItem key={c.id} id={c.id} textValue={c.label}>
                   <c.icon />
                   {c.label}
                   <Kbd className="ml-auto">{c.shortcut}</Kbd>
-                </ListBoxItem>
+                </CommandItem>
               ))}
-            </ListBoxSection>
-          </ListBox>
-        ) : (
-          <p className="px-2 py-6 text-center text-xs text-fg-muted">
-            No commands found.
-          </p>
-        )}
+            </CommandSection>
+          </CommandContent>
+        </Command>
       </CardContent>
     </Card>
   )
