@@ -147,6 +147,9 @@ importers:
       cnfast:
         specifier: ^0.0.8
         version: 0.0.8
+      driver.js:
+        specifier: ^1.6.0
+        version: 1.6.0
       fumadocs-core:
         specifier: ^16.8.11
         version: 16.8.11(@mdx-js/mdx@3.1.1)(@tanstack/react-router@1.170.1(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(@types/estree-jsx@1.0.5)(@types/hast@3.0.4)(@types/mdast@4.0.4)(@types/react@19.2.2)(lucide-react@1.16.0(react@19.2.1))(next@16.0.8(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(zod@4.3.6)
@@ -3611,6 +3614,9 @@ packages:
   dotenv@17.4.2:
     resolution: {integrity: sha512-nI4U3TottKAcAD9LLud4Cb7b2QztQMUEfHbvhTH09bqXTxnSie8WnjPALV/WMCrJZ6UV/qHJ6L03OqO3LcdYZw==}
     engines: {node: '>=12'}
+
+  driver.js@1.6.0:
+    resolution: {integrity: sha512-gryo9QS7AZhz8J0bmdf42dwaTzcd1BgSJLnaSM7cPJbu8bTW8wIEuiGDy4MoCvB4Sr8wA9g5o2G9EFNVYZGeVQ==}
 
   drizzle-orm@0.44.7:
     resolution: {integrity: sha512-quIpnYznjU9lHshEOAYLoZ9s3jweleHlZIAWR/jX9gAWNg/JhQ1wj0KGRf7/Zm+obRrYd9GjPVJg790QY9N5AQ==}
@@ -8112,7 +8118,7 @@ snapshots:
       '@alloc/quick-lru': 5.2.0
       '@tailwindcss/node': 4.3.0
       '@tailwindcss/oxide': 4.3.0
-      postcss: 8.5.14
+      postcss: 8.5.15
       tailwindcss: 4.3.0
 
   '@tailwindcss/vite@4.3.0(vite@8.1.0(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.21.0))':
@@ -9209,6 +9215,8 @@ snapshots:
       domhandler: 5.0.3
 
   dotenv@17.4.2: {}
+
+  driver.js@1.6.0: {}
 
   drizzle-orm@0.44.7(@types/pg@8.15.6)(@vercel/postgres@0.10.0)(kysely@0.28.8)(pg@8.16.3):
     optionalDependencies:

@@ -48,6 +48,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	menu: () => import("@/registry/ui/menu/examples"),
 	modal: () => import("@/registry/ui/modal/examples"),
 	"number-field": () => import("@/registry/ui/number-field/examples"),
+	"onboarding-tour": () => import("@/registry/ui/onboarding-tour/examples"),
 	"otp-field": () => import("@/registry/ui/otp-field/examples"),
 	pagination: () => import("@/registry/ui/pagination/examples"),
 	popover: () => import("@/registry/ui/popover/examples"),
