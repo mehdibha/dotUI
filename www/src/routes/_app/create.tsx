@@ -5,7 +5,6 @@ import { z } from 'zod'
 import { cn } from '@/registry/lib/utils'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
-import { CustomizerPanel } from '@/modules/create/customizer-panel'
 import { LabExperience } from '@/modules/create/panel'
 import { DEFAULTS, useDesignSystem } from '@/modules/create/preset'
 import {
@@ -13,6 +12,9 @@ import {
   saveStoredPreset,
 } from '@/modules/create/preset/storage'
 import { PreviewPanel } from '@/modules/create/preview/preview-panel'
+import { StudioPanel } from '@/modules/create/studio'
+import { StudioProvider } from '@/modules/create/studio/nav'
+import { CreateTopBar } from '@/modules/create/studio/top-bar'
 
 type MobilePane = 'customize' | 'preview'
 
@@ -69,33 +71,44 @@ function CreatePage() {
     saveStoredPreset(designSystem)
   }, [designSystem])
 
-  // Opt-in exploration of the redesigned control panel + floating panel lab.
-  if (lab) return <LabExperience />
-
+  // The global site Header is suppressed on /create (see _app/route.tsx); the
+  // builder owns its chrome instead. A single StudioProvider wraps the top bar
+  // and the studio panel so they share the same identity / depth / undo state.
   return (
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">
-      {/* Mobile-only view switcher — hidden once the two panes fit side by side. */}
-      <ToggleButtonGroup
-        aria-label="Editor view"
-        selectionMode="single"
-        disallowEmptySelection
-        size="sm"
-        selectedKeys={[mobilePane]}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next === 'customize' || next === 'preview') setMobilePane(next)
-        }}
-        className="w-full shrink-0 *:flex-1 lg:hidden"
-      >
-        <ToggleButton id="customize">Customize</ToggleButton>
-        <ToggleButton id="preview">Preview</ToggleButton>
-      </ToggleButtonGroup>
-      <CustomizerPanel
-        className={cn(mobilePane === 'preview' && 'max-lg:hidden')}
-      />
-      <PreviewPanel
-        className={cn(mobilePane === 'customize' && 'max-lg:hidden')}
-      />
-    </div>
+    <StudioProvider>
+      <div className="flex h-[100svh] flex-col">
+        <CreateTopBar />
+        {/* Opt-in exploration of the redesigned control panel + floating lab. */}
+        {lab ? (
+          <LabExperience />
+        ) : (
+          <div className="flex min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">
+            {/* Mobile-only view switcher — hidden once the two panes fit side by side. */}
+            <ToggleButtonGroup
+              aria-label="Editor view"
+              selectionMode="single"
+              disallowEmptySelection
+              size="sm"
+              selectedKeys={[mobilePane]}
+              onSelectionChange={(keys) => {
+                const next = keys.values().next().value
+                if (next === 'customize' || next === 'preview')
+                  setMobilePane(next)
+              }}
+              className="w-full shrink-0 *:flex-1 lg:hidden"
+            >
+              <ToggleButton id="customize">Customize</ToggleButton>
+              <ToggleButton id="preview">Preview</ToggleButton>
+            </ToggleButtonGroup>
+            <StudioPanel
+              className={cn(mobilePane === 'preview' && 'max-lg:hidden')}
+            />
+            <PreviewPanel
+              className={cn(mobilePane === 'customize' && 'max-lg:hidden')}
+            />
+          </div>
+        )}
+      </div>
+    </StudioProvider>
   )
 }
