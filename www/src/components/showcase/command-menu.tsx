@@ -1,76 +1,88 @@
 'use client'
 
+import { cn } from 'cnfast'
 import {
-  FilePlusIcon,
-  MoonIcon,
+  BoxIcon,
+  CircleDotIcon,
   SearchIcon,
   SettingsIcon,
-  UserPlusIcon,
-  XIcon,
+  SignalHighIcon,
+  SquarePenIcon,
+  TagIcon,
+  UserIcon,
 } from 'lucide-react'
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { Card, CardContent } from '@/registry/ui/card'
-import {
-  Command,
-  CommandContent,
-  CommandInput,
-  CommandItem,
-  CommandSection,
-  CommandSectionHeader,
-} from '@/registry/ui/command'
+import { Card } from '@/registry/ui/card'
+import { Command } from '@/registry/ui/command'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 import { Kbd } from '@/registry/ui/kbd'
-
-const commands = [
-  { id: 'new-file', label: 'New file', icon: FilePlusIcon, shortcut: '⌘N' },
-  { id: 'search-docs', label: 'Search docs', icon: SearchIcon, shortcut: '⌘K' },
-  { id: 'toggle-theme', label: 'Toggle theme', icon: MoonIcon, shortcut: '⌘D' },
-  { id: 'invite', label: 'Invite people', icon: UserPlusIcon, shortcut: '⌘I' },
-  {
-    id: 'settings',
-    label: 'Open settings',
-    icon: SettingsIcon,
-    shortcut: '⌘,',
-  },
-]
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxSection,
+  ListBoxSectionHeader,
+} from '@/registry/ui/list-box'
+import { SearchField } from '@/registry/ui/search-field'
+import { Separator } from '@/registry/ui/separator'
 
 export function CommandMenu({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
   return (
-    <Card className={cn(className)} {...props}>
-      <CardContent className="space-y-2">
-        <Command aria-label="Command menu">
-          <CommandInput aria-label="Type a command or search">
-            <InputGroup>
-              <InputGroupAddon>
-                <SearchIcon />
-              </InputGroupAddon>
-              <Input placeholder="Type a command or search…" />
-              <InputGroupAddon className="[--addon-button-inset:--spacing(2)]">
-                <Button isIconOnly variant="quiet">
-                  <XIcon aria-hidden="true" />
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </CommandInput>
-          <CommandContent aria-label="Commands">
-            <CommandSection>
-              <CommandSectionHeader>Actions</CommandSectionHeader>
-              {commands.map((c) => (
-                <CommandItem key={c.id} id={c.id} textValue={c.label}>
-                  <c.icon />
-                  {c.label}
-                  <Kbd className="ml-auto">{c.shortcut}</Kbd>
-                </CommandItem>
-              ))}
-            </CommandSection>
-          </CommandContent>
-        </Command>
-      </CardContent>
+    <Card className={cn('p-0', className)} {...props}>
+      <Command aria-label="Command menu">
+        <SearchField aria-label="Search">
+          <InputGroup>
+            <InputGroupAddon>
+              <SearchIcon />
+            </InputGroupAddon>
+            <Input placeholder="Type a command or search..." />
+          </InputGroup>
+        </SearchField>
+        <ListBox aria-label="Commands" onAction={() => console.log('action')}>
+          <ListBoxSection>
+            <ListBoxSectionHeader>Issue</ListBoxSectionHeader>
+            <ListBoxItem textValue="Assign to">
+              <UserIcon />
+              <span>Assign to...</span>
+              <Kbd>A</Kbd>
+            </ListBoxItem>
+            <ListBoxItem textValue="Change status">
+              <CircleDotIcon />
+              <span>Change status...</span>
+              <Kbd>S</Kbd>
+            </ListBoxItem>
+            <ListBoxItem textValue="Set priority">
+              <SignalHighIcon />
+              <span>Set priority...</span>
+              <Kbd>P</Kbd>
+            </ListBoxItem>
+            <ListBoxItem textValue="Add label">
+              <TagIcon />
+              <span>Add label...</span>
+              <Kbd>L</Kbd>
+            </ListBoxItem>
+          </ListBoxSection>
+          <Separator />
+          <ListBoxSection>
+            <ListBoxSectionHeader>Navigation</ListBoxSectionHeader>
+            <ListBoxItem textValue="Create new issue">
+              <SquarePenIcon />
+              <span>Create new issue</span>
+              <Kbd>C</Kbd>
+            </ListBoxItem>
+            <ListBoxItem textValue="Go to project">
+              <BoxIcon />
+              <span>Go to project</span>
+            </ListBoxItem>
+            <ListBoxItem textValue="Open settings">
+              <SettingsIcon />
+              <span>Open settings</span>
+            </ListBoxItem>
+          </ListBoxSection>
+        </ListBox>
+      </Command>
     </Card>
   )
 }

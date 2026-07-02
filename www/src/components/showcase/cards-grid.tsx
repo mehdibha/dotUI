@@ -62,13 +62,13 @@ const RAIL: CardKey[] = [
   'booking',
   'twoFactor',
   'filters',
-  'shortcuts',
   'accountMenu',
+  'shortcuts',
 ]
 const MAIN_LEFT: CardKey[] = [
+  'colorEditor',
   'storage',
   'inviteMembers',
-  'colorEditor',
   'loginForm',
   'teamName',
 ]
@@ -80,12 +80,12 @@ const MAIN_RIGHT: CardKey[] = [
   'appearance',
 ]
 const SIDE: CardKey[] = [
-  'cookiePreferences',
+  'commandMenu',
   'computerUse',
   'uploadAvatar',
-  'commandMenu',
   'pricingPlans',
   'displaySettings',
+  'cookiePreferences',
 ]
 
 // A fixed flex column of cards. Fixed columns (rather than CSS `columns`) keep
