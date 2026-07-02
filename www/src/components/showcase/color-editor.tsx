@@ -21,9 +21,7 @@ export function ColorEditorCard({
         <CardDescription>Edit the accent color of the app.</CardDescription>
       </CardHeader>
       <CardContent>
-        {/* Stretch the editor to fill the card: full-width root, and let the
-				    color area grow to fill its row instead of its fixed `w-48`. */}
-        <ColorEditor className="w-full [&_.aspect-square]:flex-1" />
+        <ColorEditor className="w-full" />
       </CardContent>
     </Card>
   )

@@ -10,14 +10,11 @@ import {
 } from '@/registry/theme'
 import type { AlgorithmId, PaletteSeeds } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
-import { ColorArea } from '@/registry/ui/color-area'
-import { ColorField } from '@/registry/ui/color-field'
+import { ColorEditor } from '@/registry/ui/color-editor'
 import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSlider } from '@/registry/ui/color-slider'
 import { ColorSwatch } from '@/registry/ui/color-swatch'
 import { DialogContent } from '@/registry/ui/dialog'
 import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
 import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
 import { Popover } from '@/registry/ui/popover'
 import { Select, SelectValue } from '@/registry/ui/select'
@@ -129,27 +126,8 @@ export function ColorsConfig() {
                   </Button>
                 </div>
                 <Popover>
-                  <DialogContent className="flex flex-col gap-2">
-                    {/* Raw primitives so they consume THIS ColorPicker's context. ColorEditor
-										    wraps its own ColorPickerPrimitives.ColorPicker (defaultValue "#6366F1"),
-										    which would shadow the outer value/onChange and make the seed uneditable. */}
-                    <div className="flex gap-2">
-                      <ColorArea
-                        colorSpace="hsb"
-                        xChannel="saturation"
-                        yChannel="brightness"
-                      />
-                      {/* h-auto self-stretch: match the ColorArea's height at any density/width. */}
-                      <ColorSlider
-                        orientation="vertical"
-                        colorSpace="hsb"
-                        channel="hue"
-                        className="h-auto self-stretch"
-                      />
-                    </div>
-                    <ColorField aria-label="Hex" className="w-full">
-                      <Input size="sm" className="w-full" />
-                    </ColorField>
+                  <DialogContent>
+                    <ColorEditor showFormatSelector={false} />
                   </DialogContent>
                 </Popover>
               </>

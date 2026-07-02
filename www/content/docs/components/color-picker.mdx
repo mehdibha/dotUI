@@ -20,20 +20,21 @@ npx shadcn@latest add @dotui/color-picker
 Use color pickers to allow users to select a color from a palette or input a custom color value.
 
 ```tsx
+import { Button } from '@/components/ui/button'
 import { ColorEditor } from '@/components/ui/color-editor'
-import {
-  ColorPicker,
-  ColorPickerContent,
-  ColorPickerTrigger,
-} from '@/components/ui/color-picker'
+import { ColorPicker } from '@/components/ui/color-picker'
+import { DialogContent } from '@/components/ui/dialog'
+import { Popover } from '@/components/ui/popover'
 ```
 
 ```tsx
 <ColorPicker defaultValue="#ff0000">
-  <ColorPickerTrigger />
-  <ColorPickerContent>
-    <ColorEditor />
-  </ColorPickerContent>
+  <Button aria-label="Pick a color" />
+  <Popover>
+    <DialogContent>
+      <ColorEditor />
+    </DialogContent>
+  </Popover>
 </ColorPicker>
 ```
 
@@ -57,3 +58,11 @@ import {
 ### ColorEditor
 
 <Reference name="color-editor" />
+
+### ColorEditorArea
+
+<Reference name="color-editor-area" />
+
+### ColorEditorFields
+
+<Reference name="color-editor-fields" />
