@@ -74,6 +74,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"toggle-button-group": () => import("@/registry/ui/toggle-button-group/examples"),
 	tooltip: () => import("@/registry/ui/tooltip/examples"),
 	tree: () => import("@/registry/ui/tree/examples"),
+	"video-player": () => import("@/registry/ui/video-player/examples"),
 };
 
 export const GroupExamplesIndex: Record<string, () => Promise<{ default: React.ComponentType }>> = {

@@ -1,0 +1,40 @@
+---
+title: Video Player
+description: A themeable control bar over a native video — seek, volume, PiP, and fullscreen.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Slider.html
+wip: true
+---
+
+<Demo name="video-player/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/video-player
+```
+
+## Usage
+
+Pass the video `src`. The control bar (play/pause, seek, volume, picture-in-picture, fullscreen) is built on the React Aria `Button` and `Slider`, over a native `<video>` element — no media engine, only stable browser APIs.
+
+```tsx
+import { VideoPlayer } from '@/components/ui/video-player'
+```
+
+```tsx
+<VideoPlayer src="/clip.mp4" poster="/poster.jpg" />
+```
+
+## Examples
+
+<Examples>
+  <Example name="video-player/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### VideoPlayer
+
+<Reference name="video-player" />

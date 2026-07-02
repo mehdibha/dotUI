@@ -2873,4 +2873,8 @@ export const DemosIndex: Record<
 		files: ["ui/tree/demos/with-icons.tsx"],
 		component: React.lazy(() => import("@/registry/ui/tree/demos/with-icons")),
 	},
+	"video-player/demos/default": {
+		files: ["ui/video-player/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/video-player/demos/default")),
+	},
 };
