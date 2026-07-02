@@ -6,7 +6,7 @@ import { Button } from '@/registry/ui/button'
 
 import { CodeBlock, Pre } from './code-block'
 import { DemoPreset } from './demo-preset'
-import { PreviewControls } from './preview-controls'
+import { PreviewControls, PreviewPanel } from './preview-controls'
 
 // ============================================================================
 // Slot Components
@@ -74,15 +74,17 @@ export function Demo({ component: Component, children, ...props }: DemoProps) {
 
   return (
     <div {...props}>
-      {/* The canvas bg lives inside DemoPreset so a preset/forced mode themes
-          the whole stage, not just the component; the controls stay site chrome. */}
+      {/* PreviewPanel pins the whole frame (toolbar included) to the preview
+          mode; the preset only themes the canvas inside DemoPreset. */}
       <div className="overflow-hidden rounded-t-lg border">
-        <PreviewControls />
-        <DemoPreset>
-          <div className="flex min-h-56 items-center justify-center overflow-x-auto bg-bg p-6 sm:p-10">
-            <Component />
-          </div>
-        </DemoPreset>
+        <PreviewPanel>
+          <PreviewControls />
+          <DemoPreset>
+            <div className="flex min-h-56 items-center justify-center overflow-x-auto bg-bg p-6 sm:p-10">
+              <Component />
+            </div>
+          </DemoPreset>
+        </PreviewPanel>
       </div>
 
       {/* Code block with toggle */}

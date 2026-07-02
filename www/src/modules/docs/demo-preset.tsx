@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 
 import { DesignSystemProvider } from '@/lib/styles'
 
-import { useResolvedPreset, useSelectedMode } from './preview-controls'
+import { useForcedPreviewMode, useResolvedPreset } from './preview-controls'
 
 /**
  * Themes a docs preview subtree with the globally selected preset and preview
@@ -15,14 +15,13 @@ import { useResolvedPreset, useSelectedMode } from './preview-controls'
  */
 export function DemoPreset({ children }: { children: ReactNode }) {
   const ds = useResolvedPreset()
-  const mode = useSelectedMode()
   return (
     <DesignSystemProvider
       params={ds.componentParams}
       tokens={ds.tokens}
       density={ds.density}
       color={ds.color}
-      forcedMode={mode === 'system' ? undefined : mode}
+      forcedMode={useForcedPreviewMode()}
       scoped
     >
       {children}

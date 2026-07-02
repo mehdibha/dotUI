@@ -1,9 +1,12 @@
 'use client'
 
-import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react'
+import type { ReactNode } from 'react'
+import { MoonIcon, SunIcon } from 'lucide-react'
 import type { Key } from 'react-aria-components'
+import { useTheme } from 'starter-themes'
 
 import { createPersistedStore, enumCodec } from '@/lib/persisted-store'
+import { DesignSystemProvider } from '@/lib/styles'
 import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
@@ -26,7 +29,8 @@ import { PRESETS } from '@/modules/presets/presets-data'
 /**
  * Which design system and light/dark mode the docs previews render in. Global
  * and persisted, so every demo on the site stays in sync; `yours` is the design
- * system built at /create, `system` follows the site theme.
+ * system built at /create. The mode defaults to the site theme until the user
+ * picks one, then pins previews to that choice.
  */
 
 const YOURS = 'yours'
@@ -37,15 +41,33 @@ const presetStore = createPersistedStore(
   enumCodec([YOURS, ...PRESETS.map((p) => p.id)], YOURS),
 )
 
-type PreviewMode = 'system' | 'light' | 'dark'
+type PreviewMode = 'light' | 'dark'
 
-const modeStore = createPersistedStore<PreviewMode>(
+const modeStore = createPersistedStore<PreviewMode | null>(
   'dotui:preview-mode',
-  'system',
-  enumCodec(['system', 'light', 'dark'], 'system'),
+  null,
+  {
+    decode: (raw) => (raw === 'light' || raw === 'dark' ? raw : null),
+    encode: (mode) => mode,
+  },
 )
 
-export const useSelectedMode = modeStore.useValue
+/** The stored choice, else the site theme; undefined until that is known. */
+function usePreviewMode(): PreviewMode | undefined {
+  const stored = modeStore.useValue()
+  const { resolvedTheme } = useTheme()
+  if (stored) return stored
+  return resolvedTheme === 'dark' || resolvedTheme === 'light'
+    ? resolvedTheme
+    : undefined
+}
+
+/** The mode previews must pin, or undefined when the site theme already provides it. */
+export function useForcedPreviewMode(): PreviewMode | undefined {
+  const mode = usePreviewMode()
+  const { resolvedTheme } = useTheme()
+  return mode === undefined || mode === resolvedTheme ? undefined : mode
+}
 
 /** The design system the docs previews render in, resolved from the selection. */
 export function useResolvedPreset(): DesignSystem {
@@ -53,6 +75,25 @@ export function useResolvedPreset(): DesignSystem {
   const yours = useStoredPreset()
   if (selected === YOURS) return yours
   return PRESETS.find((p) => p.id === selected)?.designSystem ?? DEFAULTS
+}
+
+/**
+ * The frame around a docs preview: pins the whole panel — toolbar included — to
+ * the selected preview mode, staying in the site design system. The preset only
+ * applies inside DemoPreset, so the toolbar switches mode but never re-themes.
+ */
+export function PreviewPanel({
+  className,
+  children,
+}: {
+  className?: string
+  children: ReactNode
+}) {
+  return (
+    <DesignSystemProvider forcedMode={useForcedPreviewMode()} scoped>
+      <div className={cn('bg-bg', className)}>{children}</div>
+    </DesignSystemProvider>
+  )
 }
 
 function PresetSwatch({
@@ -120,18 +161,10 @@ function PresetSelector() {
   )
 }
 
-const PREVIEW_MODES: Record<
-  PreviewMode,
-  { label: string; Icon: typeof SunIcon; next: PreviewMode }
-> = {
-  system: { label: 'Match site theme', Icon: MonitorIcon, next: 'light' },
-  light: { label: 'Light', Icon: SunIcon, next: 'dark' },
-  dark: { label: 'Dark', Icon: MoonIcon, next: 'system' },
-}
-
 function PreviewModeToggle({ className }: { className?: string }) {
-  const mode = useSelectedMode()
-  const { label, Icon, next } = PREVIEW_MODES[mode]
+  const mode = usePreviewMode() ?? 'light'
+  const next = mode === 'light' ? 'dark' : 'light'
+  const Icon = mode === 'light' ? SunIcon : MoonIcon
 
   return (
     <Tooltip>
@@ -139,22 +172,18 @@ function PreviewModeToggle({ className }: { className?: string }) {
         variant="quiet"
         size="sm"
         isIconOnly
-        aria-label={`Preview mode: ${label}. Switch to ${PREVIEW_MODES[next].label.toLowerCase()}`}
+        aria-label={`Switch preview to ${next} mode`}
         className={cn('text-fg-muted', className)}
         onPress={() => modeStore.set(next)}
       >
         <Icon />
       </Button>
-      <TooltipContent>{label}</TooltipContent>
+      <TooltipContent>Switch to {next} mode</TooltipContent>
     </Tooltip>
   )
 }
 
-/**
- * The toolbar above each docs preview: preset selector left, mode toggle right.
- * Site chrome — it sits outside DemoPreset, so a forced mode themes the canvas
- * below it, not the controls.
- */
+/** The toolbar above each docs preview: preset selector left, mode toggle right. */
 export function PreviewControls({ className }: { className?: string }) {
   return (
     <div
