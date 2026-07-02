@@ -317,6 +317,10 @@ export const DemosIndex: Record<
 		files: ["ui/card/demos/with-image.tsx"],
 		component: React.lazy(() => import("@/registry/ui/card/demos/with-image")),
 	},
+	"carousel/demos/default": {
+		files: ["ui/carousel/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/carousel/demos/default")),
+	},
 	"chart-area/demos/axes": {
 		files: ["ui/chart-area/demos/axes.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-area/demos/axes")),
