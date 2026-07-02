@@ -75,7 +75,7 @@ export function Header({ className, items = [] }: HeaderProps) {
       <div
         key={pathname}
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] header-blur-reveal"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] header-blur-reveal"
       >
         {BLUR_LAYERS.map(({ blur, mask }) => (
           <div
