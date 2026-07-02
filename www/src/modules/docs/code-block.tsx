@@ -136,6 +136,7 @@ function CopyButton() {
     <Button
       variant="quiet"
       size="xs"
+      isIconOnly
       onPress={handleCopy}
       aria-label={isCopied ? 'Copied!' : 'Copy code'}
     >
