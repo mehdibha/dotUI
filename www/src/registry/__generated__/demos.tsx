@@ -1361,6 +1361,10 @@ export const DemosIndex: Record<
 		files: ["ui/file-trigger/demos/profile-picture.tsx"],
 		component: React.lazy(() => import("@/registry/ui/file-trigger/demos/profile-picture")),
 	},
+	"file-upload/demos/default": {
+		files: ["ui/file-upload/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/file-upload/demos/default")),
+	},
 	"form/demos/basic": {
 		files: ["ui/form/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/form/demos/basic")),
