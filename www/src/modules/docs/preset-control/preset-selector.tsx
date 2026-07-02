@@ -4,7 +4,7 @@ import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react'
 import type { Key } from 'react-aria-components'
 
 import { cn } from '@/registry/lib/utils'
-import type { ButtonProps } from '@/registry/ui/button'
+import { Button, type ButtonProps } from '@/registry/ui/button'
 import type { PopoverProps } from '@/registry/ui/popover'
 import {
   Select,
@@ -13,8 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/registry/ui/select'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import { useDesignSystemName } from '@/modules/create/preset/storage'
 import { PRESETS } from '@/modules/presets/presets-data'
 
@@ -108,40 +107,38 @@ export function PresetSelector({
   )
 }
 
-const PREVIEW_MODES: {
-  id: PreviewMode
-  label: string
-  Icon: typeof SunIcon
-}[] = [
-  { id: 'system', label: 'Match site theme', Icon: MonitorIcon },
-  { id: 'light', label: 'Light', Icon: SunIcon },
-  { id: 'dark', label: 'Dark', Icon: MoonIcon },
-]
+const PREVIEW_MODES: Record<
+  PreviewMode,
+  { label: string; Icon: typeof SunIcon; next: PreviewMode }
+> = {
+  system: { label: 'Match site theme', Icon: MonitorIcon, next: 'light' },
+  light: { label: 'Light', Icon: SunIcon, next: 'dark' },
+  dark: { label: 'Dark', Icon: MoonIcon, next: 'system' },
+}
 
-/** Forces the previews to light/dark, or follows the site theme ("system"). */
+/**
+ * Forces the previews to light/dark, or follows the site theme ("system").
+ * A single icon button cycling system → light → dark; the icon shows the
+ * current mode.
+ */
 export function PreviewModeToggle({ className }: { className?: string }) {
   const mode = useSelectedMode()
+  const { label, Icon, next } = PREVIEW_MODES[mode]
 
   return (
-    <ToggleButtonGroup
-      aria-label="Preview light or dark mode"
-      size="sm"
-      isIconOnly
-      selectionMode="single"
-      disallowEmptySelection
-      selectedKeys={new Set([mode])}
-      onSelectionChange={(keys: Set<Key>) => {
-        const next = [...keys][0]
-        if (next) setSelectedMode(next as PreviewMode)
-      }}
-      className={className}
-    >
-      {PREVIEW_MODES.map(({ id, label, Icon }) => (
-        <ToggleButton key={id} id={id} aria-label={label}>
-          <Icon />
-        </ToggleButton>
-      ))}
-    </ToggleButtonGroup>
+    <Tooltip>
+      <Button
+        variant="quiet"
+        size="sm"
+        isIconOnly
+        aria-label={`Preview mode: ${label}. Switch to ${PREVIEW_MODES[next].label.toLowerCase()}`}
+        className={cn('text-fg-muted', className)}
+        onPress={() => setSelectedMode(next)}
+      >
+        <Icon />
+      </Button>
+      <TooltipContent>{label}</TooltipContent>
+    </Tooltip>
   )
 }
 
