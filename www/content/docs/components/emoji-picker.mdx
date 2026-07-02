@@ -1,0 +1,48 @@
+---
+title: Emoji Picker
+description: A searchable emoji picker with categories, built on frimousse.
+links:
+  - label: frimousse
+    href: https://frimousse.liveblocks.io
+wip: true
+---
+
+<Demo name="emoji-picker/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/emoji-picker
+```
+
+## Usage
+
+`EmojiPicker` is the picker panel — search, categories, and a virtualized grid — built on the headless [frimousse](https://frimousse.liveblocks.io) engine (installed as a dependency) with dotUI chrome. Drop it inside a React Aria `Popover` for the usual trigger-and-overlay pattern.
+
+```tsx
+import { Button } from '@/components/ui/button'
+import { Dialog } from '@/components/ui/dialog'
+import { EmojiPicker } from '@/components/ui/emoji-picker'
+import { Popover } from '@/components/ui/popover'
+```
+
+```tsx
+<Dialog>
+  <Button>Add reaction</Button>
+  <Popover>
+    <EmojiPicker onEmojiSelect={(emoji) => console.log(emoji.emoji)} />
+  </Popover>
+</Dialog>
+```
+
+## Examples
+
+<Examples>
+  <Example name="emoji-picker/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### EmojiPicker
+
+<Reference name="emoji-picker" />

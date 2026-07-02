@@ -34,6 +34,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	disclosure: () => import("@/registry/ui/disclosure/examples"),
 	drawer: () => import("@/registry/ui/drawer/examples"),
 	"drop-zone": () => import("@/registry/ui/drop-zone/examples"),
+	"emoji-picker": () => import("@/registry/ui/emoji-picker/examples"),
 	empty: () => import("@/registry/ui/empty/examples"),
 	field: () => import("@/registry/ui/field/examples"),
 	"file-trigger": () => import("@/registry/ui/file-trigger/examples"),
