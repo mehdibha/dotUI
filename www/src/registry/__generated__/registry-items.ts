@@ -64,6 +64,7 @@ import UiSeparator from "@/registry/ui/separator/meta";
 import UiSidebar from "@/registry/ui/sidebar/meta";
 import UiSkeleton from "@/registry/ui/skeleton/meta";
 import UiSlider from "@/registry/ui/slider/meta";
+import UiStepper from "@/registry/ui/stepper/meta";
 import UiSwitch from "@/registry/ui/switch/meta";
 import UiTable from "@/registry/ui/table/meta";
 import UiTabs from "@/registry/ui/tabs/meta";
@@ -140,6 +141,7 @@ export const registryUi: RegistryItem[] = [
 	UiSidebar,
 	UiSkeleton,
 	UiSlider,
+	UiStepper,
 	UiSwitch,
 	UiTable,
 	UiTabs,
