@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { cn } from '@/registry/lib/utils'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+import { AtelierExperience } from '@/modules/create/atelier'
 import { CustomizerPanel } from '@/modules/create/customizer-panel'
 import { LabExperience } from '@/modules/create/panel'
 import { DEFAULTS, useDesignSystem } from '@/modules/create/preset'
@@ -25,6 +26,10 @@ export const createSearchSchema = z.object({
   // Coerced boolean: the search parser reads bare `1`/`true` as non-strings, so a
   // plain `z.string()` would reject them and the param would be dropped.
   lab: z.coerce.boolean().optional().catch(undefined),
+  // Opt-in flag for the Atelier redesign — a three-zone rethink of the builder
+  // (inspector · stage + spec sheet · AI assistant). Coexists with the shipped
+  // page and the panel lab; preview it at /create?atelier=true.
+  atelier: z.coerce.boolean().optional().catch(undefined),
 })
 
 const searchDefaults = { preview: 'overview' }
@@ -38,7 +43,7 @@ export const Route = createFileRoute('/_app/create')({
 })
 
 function CreatePage() {
-  const { lab, preset } = Route.useSearch()
+  const { lab, atelier, preset } = Route.useSearch()
   const { designSystem, setDesignSystem } = useDesignSystem()
   // Below `lg` the customizer and the live preview can't sit side by side (the iframe
   // would be a ~15px sliver), so they collapse into a single switchable pane toggled
@@ -71,6 +76,9 @@ function CreatePage() {
 
   // Opt-in exploration of the redesigned control panel + floating panel lab.
   if (lab) return <LabExperience />
+
+  // Opt-in Atelier redesign — the full three-zone rethink with the AI assistant.
+  if (atelier) return <AtelierExperience />
 
   return (
     <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">

@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseHeader } from '@tanstack/react-start/server'
 import type * as PageTree from 'fumadocs-core/page-tree'
@@ -36,10 +36,17 @@ export const Route = createFileRoute('/_app')({
 function AppLayout() {
   const { pageTree } = Route.useLoaderData()
   const items = pageTree.children as PageTree.Node[]
+  // The Atelier builder owns its own focused top bar (logo, view modes, AI…),
+  // so the global site nav would stack a redundant second bar over it. Suppress
+  // it on /create?atelier=true only — every other route (and the shipped /create
+  // + ?lab builders) keeps the normal site Header unchanged.
+  const { pathname, search } = useLocation()
+  const isAtelier =
+    pathname === '/create' && (search as { atelier?: boolean }).atelier === true
 
   return (
     <div className="[--header-height:--spacing(14)]">
-      <Header items={items} />
+      {!isAtelier && <Header items={items} />}
       <main id="content">
         <Outlet />
       </main>
