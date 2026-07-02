@@ -66,7 +66,14 @@ export function Header({ className, items = [] }: HeaderProps) {
         className,
       )}
     >
+      {/* Keyed by pathname: navigating to a page with no root overflow (/create
+          fills the viewport exactly) turns the scroll timeline inactive, and a
+          newly inactive timeline HOLDS the animation's last progress — arriving
+          from a scrolled page would freeze the blur fully on. Remounting restarts
+          the animation; on an inactive timeline its time is unresolved, so no fill
+          applies and --blur-progress falls back to its initial 0. */}
       <div
+        key={pathname}
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] header-blur-reveal"
       >
