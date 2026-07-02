@@ -109,7 +109,17 @@ export function encodePreset(ds: DesignSystem): string | undefined {
   )
     compact.o = ds.codeOptions
 
-  if (!compact.p && !compact.t && !compact.d && !compact.c && !compact.o)
+  if (ds.includedBlocks && ds.includedBlocks.length > 0)
+    compact.b = ds.includedBlocks
+
+  if (
+    !compact.p &&
+    !compact.t &&
+    !compact.d &&
+    !compact.c &&
+    !compact.o &&
+    !compact.b
+  )
     return undefined
 
   const json = JSON.stringify(compact)
@@ -153,6 +163,7 @@ export function decodePreset(encoded: string): DesignSystem {
       codeOptions: ds.codeOptions
         ? sanitizeCodeOptions(ds.codeOptions)
         : undefined,
+      includedBlocks: ds.includedBlocks,
     }
   } catch {
     return DEFAULTS

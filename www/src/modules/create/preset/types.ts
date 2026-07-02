@@ -12,6 +12,7 @@ export type { CodeOptions, Density }
  *   d = density
  *   c = color config (algorithm + palette seeds); present only when it differs from the default
  *   o = code options (exported-code style); present only when they differ from the default
+ *   b = included blocks (slot names, e.g. ["login"]); each block's chosen variant lives in `p[slot].variant`
  */
 export type DesignSystemState = {
   p?: Record<string, Record<string, string>>
@@ -19,6 +20,7 @@ export type DesignSystemState = {
   d?: Density
   c?: ColorConfig
   o?: CodeOptions
+  b?: string[]
 }
 
 /**
@@ -34,6 +36,13 @@ export type DesignSystem = {
   color?: ColorConfig
   /** Exported-code style; `undefined` means the default code style. */
   codeOptions?: CodeOptions
+  /**
+   * Block/layout slots the user has added (e.g. `["login"]`). The chosen variant
+   * of each lives in `componentParams[slot].variant` so the publisher resolves it
+   * for free; this list tracks membership (which to show as slot-cards and bundle
+   * into the export). Empty/undefined means no blocks added.
+   */
+  includedBlocks?: string[]
 }
 
 export function fromCompact(state: DesignSystemState): DesignSystem {
@@ -43,5 +52,6 @@ export function fromCompact(state: DesignSystemState): DesignSystem {
     density: state.d ?? 'compact',
     color: state.c,
     codeOptions: state.o,
+    includedBlocks: state.b,
   }
 }

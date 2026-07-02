@@ -1,6 +1,7 @@
 // AUTO-GENERATED - DO NOT EDIT
 // Run "tsx scripts/registry-build.ts" to regenerate
 
+import BlocksLogin from "@/registry/blocks/login/meta";
 import LibFocusStyles from "@/registry/lib/focus-styles/meta";
 import LibResponsive from "@/registry/lib/responsive/meta";
 import LibTextareaCaret from "@/registry/lib/textarea-caret/meta";
@@ -78,7 +79,7 @@ import UiToggleButton from "@/registry/ui/toggle-button/meta";
 import UiTooltip from "@/registry/ui/tooltip/meta";
 import UiTree from "@/registry/ui/tree/meta";
 
-import type { RegistryItem } from "@/registry/types";
+import type { BlockRegistryItem, RegistryItem } from "@/registry/types";
 
 export const registryUi: RegistryItem[] = [
 	UiAccordion,
@@ -156,3 +157,5 @@ export const registryUi: RegistryItem[] = [
 ];
 
 export const registryLib: RegistryItem[] = [LibFocusStyles, LibResponsive, LibTextareaCaret, LibUtils];
+
+export const registryBlocks: BlockRegistryItem[] = [BlocksLogin];

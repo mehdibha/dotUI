@@ -108,6 +108,48 @@ export function useDesignSystem() {
     [setDesignSystem],
   )
 
+  /** Add a block/layout slot to the system at a chosen variant (no-op if already present). */
+  const addBlock = useCallback(
+    (slot: string, variant: string) => {
+      setDesignSystem((prev) => {
+        const included = prev.includedBlocks ?? []
+        if (included.includes(slot)) return prev
+        return {
+          ...prev,
+          includedBlocks: [...included, slot],
+          componentParams: {
+            ...prev.componentParams,
+            [slot]: { ...(prev.componentParams[slot] ?? {}), variant },
+          },
+        }
+      })
+    },
+    [setDesignSystem],
+  )
+
+  /** Remove a block/layout slot (and its variant selection) from the system. */
+  const removeBlock = useCallback(
+    (slot: string) => {
+      setDesignSystem((prev) => {
+        const { [slot]: _dropped, ...componentParams } = prev.componentParams
+        return {
+          ...prev,
+          includedBlocks: (prev.includedBlocks ?? []).filter((s) => s !== slot),
+          componentParams,
+        }
+      })
+    },
+    [setDesignSystem],
+  )
+
+  /** Change a block's variant. Stored in `componentParams[slot].variant` so publish resolves it. */
+  const setBlockVariant = useCallback(
+    (slot: string, variant: string) => {
+      setComponentParam(slot, 'variant', variant)
+    },
+    [setComponentParam],
+  )
+
   /** Set one exported-code style option (starting from the default code style). */
   const setCodeOption = useCallback(
     <K extends keyof CodeOptions>(key: K, value: CodeOptions[K]) => {
@@ -129,5 +171,8 @@ export function useDesignSystem() {
     setColorAlgorithm,
     setColorKnob,
     setCodeOption,
+    addBlock,
+    removeBlock,
+    setBlockVariant,
   }
 }

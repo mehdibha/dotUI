@@ -28,6 +28,7 @@ export async function resolveRequestPreset(
       density: ds.density,
       componentParams: ds.componentParams,
       codeOptions: ds.codeOptions,
+      includedBlocks: ds.includedBlocks,
     }
   } catch {
     return defaultPreset()

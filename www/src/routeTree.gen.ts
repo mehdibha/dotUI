@@ -27,6 +27,7 @@ import { Route as AppPresetsRouteImport } from './routes/_app/presets'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
 import { Route as AppComponentsRouteImport } from './routes/_app/components'
 import { Route as AppChartsRouteImport } from './routes/_app/charts'
+import { Route as AppBlocksRouteImport } from './routes/_app/blocks'
 import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-known/api-catalog'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
@@ -121,6 +122,11 @@ const AppChartsRoute = AppChartsRouteImport.update({
   path: '/charts',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const AppBlocksRoute = AppBlocksRouteImport.update({
+  id: '/blocks',
+  path: '/blocks',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const DotwellKnownApiCatalogRoute = DotwellKnownApiCatalogRouteImport.update({
   id: '/.well-known/api-catalog',
   path: '/.well-known/api-catalog',
@@ -153,6 +159,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
+  '/blocks': typeof AppBlocksRoute
   '/charts': typeof AppChartsRoute
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
@@ -175,6 +182,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
+  '/blocks': typeof AppBlocksRoute
   '/charts': typeof AppChartsRoute
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
@@ -200,6 +208,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_app/docs': typeof AppDocsRouteRouteWithChildren
   '/.well-known/api-catalog': typeof DotwellKnownApiCatalogRoute
+  '/_app/blocks': typeof AppBlocksRoute
   '/_app/charts': typeof AppChartsRoute
   '/_app/components': typeof AppComponentsRoute
   '/_app/create': typeof AppCreateRoute
@@ -226,6 +235,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/docs'
     | '/.well-known/api-catalog'
+    | '/blocks'
     | '/charts'
     | '/components'
     | '/create'
@@ -248,6 +258,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/docs'
     | '/.well-known/api-catalog'
+    | '/blocks'
     | '/charts'
     | '/components'
     | '/create'
@@ -272,6 +283,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_app/docs'
     | '/.well-known/api-catalog'
+    | '/_app/blocks'
     | '/_app/charts'
     | '/_app/components'
     | '/_app/create'
@@ -432,6 +444,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChartsRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/_app/blocks': {
+      id: '/_app/blocks'
+      path: '/blocks'
+      fullPath: '/blocks'
+      preLoaderRoute: typeof AppBlocksRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/.well-known/api-catalog': {
       id: '/.well-known/api-catalog'
       path: '/.well-known/api-catalog'
@@ -479,6 +498,7 @@ const AppDocsRouteRouteWithChildren = AppDocsRouteRoute._addFileChildren(
 
 interface AppRouteRouteChildren {
   AppDocsRouteRoute: typeof AppDocsRouteRouteWithChildren
+  AppBlocksRoute: typeof AppBlocksRoute
   AppChartsRoute: typeof AppChartsRoute
   AppComponentsRoute: typeof AppComponentsRoute
   AppCreateRoute: typeof AppCreateRoute
@@ -488,6 +508,7 @@ interface AppRouteRouteChildren {
 
 const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppDocsRouteRoute: AppDocsRouteRouteWithChildren,
+  AppBlocksRoute: AppBlocksRoute,
   AppChartsRoute: AppChartsRoute,
   AppComponentsRoute: AppComponentsRoute,
   AppCreateRoute: AppCreateRoute,

@@ -18,6 +18,7 @@ import {
 } from '../src/publisher/build-time/build-publishables'
 import { deriveRegistryDeps } from '../src/publisher/build-time/derive-registry-deps'
 import { registryBase } from '../src/registry/base/registry'
+import { registryBlocks } from '../src/registry/blocks/registry'
 import { registryHooks } from '../src/registry/hooks/registry'
 import { iconLibraries, registryIcons } from '../src/registry/icons/icon-map'
 import { registryLib } from '../src/registry/lib/registry'
@@ -308,8 +309,13 @@ ${groupEntries.join('\n')}
 // Generated item manifest: registryUi / registryLib globbed from meta.ts
 // ============================================================================
 
+// Registry scopes globbed into the generated manifest. `blocks` are multi-variant
+// compositions (login, dashboard…) kept separate from `ui` so they carry no
+// ComponentGroup and never leak into the components list / docs gallery.
+type RegistryScope = 'ui' | 'lib' | 'blocks'
+
 // PascalCase identifier for a scope+slug, e.g. ("ui","color-area") -> "UiColorArea".
-function toItemIdent(scope: 'ui' | 'lib', slug: string): string {
+function toItemIdent(scope: RegistryScope, slug: string): string {
   const pascal = slug
     .split(/[^a-zA-Z0-9]+/)
     .filter(Boolean)
@@ -327,11 +333,17 @@ async function buildRegistryItemsManifest() {
   const targetPath = path.join(GENERATED_DIR, 'registry-items.ts')
   const ui = await listRegistryFolders('ui')
   const lib = await listRegistryFolders('lib')
+  const blocks = await listRegistryFolders('blocks')
 
-  const importLine = (scope: 'ui' | 'lib', slug: string) =>
+  const importLine = (scope: RegistryScope, slug: string) =>
     `import ${toItemIdent(scope, slug)} from "@/registry/${scope}/${slug}/meta";`
-  const arrayBlock = (name: string, scope: 'ui' | 'lib', slugs: string[]) =>
-    `export const ${name}: RegistryItem[] = [\n${slugs.map((s) => `\t${toItemIdent(scope, s)},`).join('\n')}\n];`
+  const arrayBlock = (
+    name: string,
+    scope: RegistryScope,
+    slugs: string[],
+    itemType: string,
+  ) =>
+    `export const ${name}: ${itemType}[] = [\n${slugs.map((s) => `\t${toItemIdent(scope, s)},`).join('\n')}\n];`
 
   // Sort value imports by module specifier (NOT identifier) to match oxfmt's
   // sortImports "value-internal" group — e.g. "ui/checkbox-group" sorts before
@@ -340,6 +352,10 @@ async function buildRegistryItemsManifest() {
   // import follows the value group with no blank line; the header comment is
   // detached by a blank line so oxfmt leaves it at the top.
   const valueImports = [
+    ...blocks.map((s) => ({
+      spec: `@/registry/blocks/${s}/meta`,
+      line: importLine('blocks', s),
+    })),
     ...lib.map((s) => ({
       spec: `@/registry/lib/${s}/meta`,
       line: importLine('lib', s),
@@ -357,16 +373,18 @@ async function buildRegistryItemsManifest() {
 
 ${valueImports.join('\n')}
 
-import type { RegistryItem } from "@/registry/types";
+import type { BlockRegistryItem, RegistryItem } from "@/registry/types";
 
-${arrayBlock('registryUi', 'ui', ui)}
+${arrayBlock('registryUi', 'ui', ui, 'RegistryItem')}
 
-${arrayBlock('registryLib', 'lib', lib)}
+${arrayBlock('registryLib', 'lib', lib, 'RegistryItem')}
+
+${arrayBlock('registryBlocks', 'blocks', blocks, 'BlockRegistryItem')}
 `
 
   await writeGeneratedFile(targetPath, content)
   console.log(
-    `  ✓ __generated__/registry-items.ts (${ui.length} ui, ${lib.length} lib)`,
+    `  ✓ __generated__/registry-items.ts (${ui.length} ui, ${lib.length} lib, ${blocks.length} blocks)`,
   )
 }
 
@@ -403,7 +421,7 @@ const ORPHAN_ALLOWLIST = new Set<string>([
  * — both the manifest emitter and the drift guard call it, so they can never
  * disagree about what is registered.
  */
-async function listRegistryFolders(scope: 'ui' | 'lib'): Promise<string[]> {
+async function listRegistryFolders(scope: RegistryScope): Promise<string[]> {
   const scopeDir = path.join(REGISTRY_DIR, scope)
   const dirEntries = await fs.readdir(scopeDir, { withFileTypes: true })
   const folders: string[] = []
@@ -428,14 +446,19 @@ async function listRegistryFolders(scope: 'ui' | 'lib'): Promise<string[]> {
  * the same module instance under tsx's ESM cache.
  */
 async function checkScopeDrift(
-  scope: 'ui' | 'lib',
+  scope: RegistryScope,
   registered: RegistryItem[],
 ): Promise<string[]> {
   const folders = await listRegistryFolders(scope)
   const registeredSet = new Set<RegistryItem>(registered)
   const globbed = new Set<RegistryItem>()
   const errors: string[] = []
-  const arrayName = scope === 'ui' ? 'registryUi' : 'registryLib'
+  const arrayName =
+    scope === 'ui'
+      ? 'registryUi'
+      : scope === 'lib'
+        ? 'registryLib'
+        : 'registryBlocks'
 
   for (const slug of folders) {
     const mod = (await import(`../src/registry/${scope}/${slug}/meta`)) as {
@@ -518,13 +541,21 @@ const UNREGISTERED_DEP_ALLOWLIST = new Set([
  */
 async function checkRegistryDepsDrift(): Promise<string[]> {
   const registeredNames = new Set<string>(
-    [...registryBase, ...registryUi, ...registryLib, ...registryHooks].map(
-      (item) => item.name,
-    ),
+    [
+      ...registryBase,
+      ...registryUi,
+      ...registryLib,
+      ...registryHooks,
+      ...registryBlocks,
+    ].map((item) => item.name),
   )
   const errors: string[] = []
 
-  for (const meta of registryUi) {
+  // Cover ui items AND blocks. `collectBaseFiles` returns every variant file for
+  // a block (enum-with-files), so a component imported only by a non-default
+  // variant is still required.
+  for (const meta of [...registryUi, ...registryBlocks]) {
+    const metaScope = meta.type === 'registry:block' ? 'blocks' : 'ui'
     const derived = deriveRegistryDeps({
       registryDir: REGISTRY_DIR,
       baseFiles: collectBaseFiles(meta),
@@ -538,7 +569,7 @@ async function checkRegistryDepsDrift(): Promise<string[]> {
       if (registeredNames.has(dep)) {
         errors.push(
           `registryDependencies drift: "${meta.name}" base file imports "${dep}" but meta omits it. ` +
-            `Add "${dep}" to registryDependencies in ui/${meta.name}/meta.ts.`,
+            `Add "${dep}" to registryDependencies in ${metaScope}/${meta.name}/meta.ts.`,
         )
       } else {
         errors.push(
@@ -564,6 +595,7 @@ function checkUniqueRegisteredNames(): string[] {
     ['ui', registryUi],
     ['lib', registryLib],
     ['hooks', registryHooks],
+    ['blocks', registryBlocks],
   ]
 
   for (const [scope, items] of groups) {
@@ -588,6 +620,7 @@ async function checkRegistryIntegrity() {
   const errors = [
     ...(await checkScopeDrift('ui', registryUi)),
     ...(await checkScopeDrift('lib', registryLib)),
+    ...(await checkScopeDrift('blocks', registryBlocks)),
     ...checkAllowlistStale(),
     ...(await checkRegistryDepsDrift()),
     ...checkUniqueRegisteredNames(),
@@ -610,7 +643,7 @@ async function checkRegistryIntegrity() {
 async function buildShadcnPublishables() {
   const { written, skipped } = await buildPublishables({
     registryDir: REGISTRY_DIR,
-    items: registryUi,
+    items: [...registryUi, ...registryBlocks],
   })
   for (const filePath of written) {
     console.log(`  ✓ ${path.relative(REGISTRY_DIR, filePath)}`)

@@ -84,6 +84,12 @@ export interface PublishPreset {
   color?: ColorConfig
   /** Exported-code style. When omitted, the publisher applies `DEFAULT_CODE_OPTIONS`. */
   codeOptions?: CodeOptions
+  /**
+   * Block/layout slots the user added (e.g. `["login"]`). The init item turns
+   * these into absolute `registryDependencies` so `shadcn init` installs the
+   * blocks; each block's variant rides along in `componentParams[slot]`.
+   */
+  includedBlocks?: string[]
 }
 
 /** Subset of `RegistryItemFile` we emit. */
