@@ -1,0 +1,40 @@
+---
+title: Audio Player
+description: A themeable control bar over a native audio element — play, seek, and volume.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/Slider.html
+wip: true
+---
+
+<Demo name="audio-player/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/audio-player
+```
+
+## Usage
+
+Pass the audio `src`. The control bar (play/pause, seek, volume) is built on the React Aria `Button` and `Slider`, over a native `<audio>` element — no media library required.
+
+```tsx
+import { AudioPlayer } from '@/components/ui/audio-player'
+```
+
+```tsx
+<AudioPlayer src="/track.mp3" title="Midnight City" artist="M83" />
+```
+
+## Examples
+
+<Examples>
+  <Example name="audio-player/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### AudioPlayer
+
+<Reference name="audio-player" />

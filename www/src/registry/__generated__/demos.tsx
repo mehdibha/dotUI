@@ -73,6 +73,10 @@ export const DemosIndex: Record<
 		files: ["ui/alert/demos/warning.tsx"],
 		component: React.lazy(() => import("@/registry/ui/alert/demos/warning")),
 	},
+	"audio-player/demos/default": {
+		files: ["ui/audio-player/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/audio-player/demos/default")),
+	},
 	"avatar/demos/avatar-group-count": {
 		files: ["ui/avatar/demos/avatar-group-count.tsx"],
 		component: React.lazy(() => import("@/registry/ui/avatar/demos/avatar-group-count")),
