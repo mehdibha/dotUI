@@ -61,6 +61,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	sidebar: () => import("@/registry/ui/sidebar/examples"),
 	skeleton: () => import("@/registry/ui/skeleton/examples"),
 	slider: () => import("@/registry/ui/slider/examples"),
+	"sortable-list": () => import("@/registry/ui/sortable-list/examples"),
 	switch: () => import("@/registry/ui/switch/examples"),
 	table: () => import("@/registry/ui/table/examples"),
 	tabs: () => import("@/registry/ui/tabs/examples"),

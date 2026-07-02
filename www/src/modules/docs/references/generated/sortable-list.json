@@ -1,0 +1,135 @@
+{
+  "name": "SortableListProps",
+  "description": "A vertical list whose items can be reordered by dragging. Controlled: it\nrenders the `items` you pass and calls `onReorder` with the next order after\na drag completes. Render each row through the `children` render prop.",
+  "extendsElement": "div",
+  "props": {
+    "items": {
+      "type": "T[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "typeParameter",
+          "name": "T",
+          "constraint": {
+            "type": "link",
+            "id": "src/registry/ui/sortable-list/types.ts:SortableItemData",
+            "name": "SortableItemData"
+          },
+          "default": null
+        }
+      },
+      "description": "The ordered list of items to render. Each item needs a unique `id`.",
+      "required": true
+    },
+    "onReorder": {
+      "type": "(items: T[]) => void",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "items",
+            "value": {
+              "type": "array",
+              "elementType": {
+                "type": "typeParameter",
+                "name": "T",
+                "constraint": {
+                  "type": "link",
+                  "id": "src/registry/ui/sortable-list/types.ts:SortableItemData",
+                  "name": "SortableItemData"
+                },
+                "default": null
+              }
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Called with the next ordered array after a drag-and-drop reorder.",
+      "required": true
+    },
+    "children": {
+      "type": "(item: T, index: number) => ReactNode",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "item",
+            "value": {
+              "type": "typeParameter",
+              "name": "T",
+              "constraint": {
+                "type": "link",
+                "id": "src/registry/ui/sortable-list/types.ts:SortableItemData",
+                "name": "SortableItemData"
+              },
+              "default": null
+            },
+            "optional": false,
+            "rest": false
+          },
+          {
+            "type": "parameter",
+            "name": "index",
+            "value": {
+              "type": "number"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "identifier",
+          "name": "ReactNode"
+        },
+        "typeParameters": []
+      },
+      "description": "Render prop invoked for each item to produce its row.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  },
+  "typeLinks": {
+    "src/registry/ui/sortable-list/types.ts:SortableItemData": {
+      "type": "interface",
+      "id": "src/registry/ui/sortable-list/types.ts:SortableItemData",
+      "name": "SortableItemData",
+      "extends": [],
+      "properties": {
+        "id": {
+          "type": "property",
+          "name": "id",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Stable unique identifier for the item."
+        }
+      },
+      "typeParameters": [],
+      "description": "The shape every sortable item must satisfy: a stable, unique `id` used to\ntrack the item across reorders."
+    }
+  }
+}
