@@ -7,7 +7,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <ColorPicker defaultValue="#5100FF">
-      <Button />
+      <Button aria-label="Pick a color" />
       <Popover>
         <DialogContent>
           <ColorEditor />

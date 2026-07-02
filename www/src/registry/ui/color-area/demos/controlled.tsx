@@ -12,6 +12,7 @@ export default function Demo() {
   return (
     <div className="flex flex-col items-center gap-4">
       <ColorArea
+        aria-label="Color"
         value={value}
         onChange={setValue}
         xChannel="saturation"

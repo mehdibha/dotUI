@@ -5,7 +5,11 @@ import { ColorThumb } from '@/registry/ui/color-thumb'
 
 export default function Demo({ isDisabled = false }: ColorAreaProps = {}) {
   return (
-    <ColorArea defaultValue="#ff0000" isDisabled={isDisabled}>
+    <ColorArea
+      aria-label="Color"
+      defaultValue="#ff0000"
+      isDisabled={isDisabled}
+    >
       <ColorThumb />
     </ColorArea>
   )
