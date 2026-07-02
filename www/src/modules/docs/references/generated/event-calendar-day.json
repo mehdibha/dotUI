@@ -1,0 +1,122 @@
+{
+  "name": "EventCalendarDayProps",
+  "description": "A single day cell, showing the day number and its event chips with overflow.",
+  "extendsElement": "div",
+  "props": {
+    "day": {
+      "type": "Date",
+      "typeAst": {
+        "type": "identifier",
+        "name": "Date"
+      },
+      "description": "The day this cell represents.",
+      "required": true
+    },
+    "events": {
+      "type": "CalendarEvent[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "link",
+          "id": "src/registry/ui/event-calendar/types.ts:CalendarEvent",
+          "name": "CalendarEvent"
+        }
+      },
+      "description": "The events that fall on this day.",
+      "required": true
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  },
+  "typeLinks": {
+    "src/registry/ui/event-calendar/types.ts:CalendarEvent": {
+      "type": "interface",
+      "id": "src/registry/ui/event-calendar/types.ts:CalendarEvent",
+      "name": "CalendarEvent",
+      "extends": [],
+      "properties": {
+        "color": {
+          "type": "property",
+          "name": "color",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "accent"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "danger"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "info"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "neutral"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "primary"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "success"
+              },
+              {
+                "type": "stringLiteral",
+                "value": "warning"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The semantic color of the event chip."
+        },
+        "date": {
+          "type": "property",
+          "name": "date",
+          "value": {
+            "type": "identifier",
+            "name": "Date"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The day the event falls on. Only the date portion is compared."
+        },
+        "id": {
+          "type": "property",
+          "name": "id",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Stable unique identifier, used as the React key."
+        },
+        "title": {
+          "type": "property",
+          "name": "title",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The text shown on the event chip."
+        }
+      },
+      "typeParameters": [],
+      "description": "A single event rendered on the calendar grid."
+    }
+  }
+}

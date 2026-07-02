@@ -1,0 +1,111 @@
+{
+  "name": "EventCalendarGridProps",
+  "description": "The 7-column month grid: a row of weekday headers followed by day cells.",
+  "extendsElement": "div",
+  "props": {
+    "renderDay": {
+      "type": "((day: Date, events: CalendarEvent[]) => ReactNode)",
+      "detailedType": "| ((day: Date, events: CalendarEvent[]) => ReactNode)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "day",
+                "value": {
+                  "type": "identifier",
+                  "name": "Date"
+                },
+                "optional": false,
+                "rest": false
+              },
+              {
+                "type": "parameter",
+                "name": "events",
+                "value": {
+                  "type": "array",
+                  "elementType": {
+                    "type": "link",
+                    "id": "src/registry/ui/event-calendar/types.ts:CalendarEvent",
+                    "name": "CalendarEvent"
+                  }
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Render a custom day cell in place of the default one."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  },
+  "typeLinks": {
+    "src/registry/ui/event-calendar/types.ts:CalendarEvent": {
+      "type": "interface",
+      "name": "CalendarEvent",
+      "properties": {
+        "color": {
+          "type": "property",
+          "name": "color",
+          "value": {
+            "type": "identifier",
+            "name": "EventColor | undefined"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": "The semantic color of the event chip."
+        },
+        "date": {
+          "type": "property",
+          "name": "date",
+          "value": {
+            "type": "identifier",
+            "name": "Date"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The day the event falls on. Only the date portion is compared."
+        },
+        "id": {
+          "type": "property",
+          "name": "id",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Stable unique identifier, used as the React key."
+        },
+        "title": {
+          "type": "property",
+          "name": "title",
+          "value": {
+            "type": "string"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The text shown on the event chip."
+        }
+      }
+    }
+  }
+}

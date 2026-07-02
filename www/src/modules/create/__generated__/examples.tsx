@@ -35,6 +35,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	drawer: () => import("@/registry/ui/drawer/examples"),
 	"drop-zone": () => import("@/registry/ui/drop-zone/examples"),
 	empty: () => import("@/registry/ui/empty/examples"),
+	"event-calendar": () => import("@/registry/ui/event-calendar/examples"),
 	field: () => import("@/registry/ui/field/examples"),
 	"file-trigger": () => import("@/registry/ui/file-trigger/examples"),
 	form: () => import("@/registry/ui/form/examples"),

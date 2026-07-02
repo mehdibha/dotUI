@@ -40,6 +40,7 @@ import UiDisclosure from "@/registry/ui/disclosure/meta";
 import UiDrawer from "@/registry/ui/drawer/meta";
 import UiDropZone from "@/registry/ui/drop-zone/meta";
 import UiEmpty from "@/registry/ui/empty/meta";
+import UiEventCalendar from "@/registry/ui/event-calendar/meta";
 import UiField from "@/registry/ui/field/meta";
 import UiFileTrigger from "@/registry/ui/file-trigger/meta";
 import UiGroup from "@/registry/ui/group/meta";
@@ -116,6 +117,7 @@ export const registryUi: RegistryItem[] = [
 	UiDrawer,
 	UiDropZone,
 	UiEmpty,
+	UiEventCalendar,
 	UiField,
 	UiFileTrigger,
 	UiGroup,

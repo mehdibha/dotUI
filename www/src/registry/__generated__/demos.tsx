@@ -1317,6 +1317,10 @@ export const DemosIndex: Record<
 		files: ["ui/empty/demos/with-muted-background.tsx"],
 		component: React.lazy(() => import("@/registry/ui/empty/demos/with-muted-background")),
 	},
+	"event-calendar/demos/default": {
+		files: ["ui/event-calendar/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/event-calendar/demos/default")),
+	},
 	"field/demos/login-form": {
 		files: ["ui/field/demos/login-form.tsx"],
 		component: React.lazy(() => import("@/registry/ui/field/demos/login-form")),
