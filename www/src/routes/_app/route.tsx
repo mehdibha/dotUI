@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseHeader } from '@tanstack/react-start/server'
 import type * as PageTree from 'fumadocs-core/page-tree'
@@ -37,9 +37,16 @@ function AppLayout() {
   const { pageTree } = Route.useLoaderData()
   const items = pageTree.children as PageTree.Node[]
 
+  // The /create builder is a focused mode of dotUI: it owns its own top bar
+  // (see modules/create) in place of the site nav — Docs/Components links and
+  // "Search docs" are irrelevant inside it. Skip the global Header there so the
+  // builder never stacks two bars; every other route keeps the site nav.
+  const { pathname } = useLocation()
+  const isCreate = pathname === '/create'
+
   return (
     <div className="[--header-height:--spacing(14)]">
-      <Header items={items} />
+      {!isCreate && <Header items={items} />}
       <main id="content">
         <Outlet />
       </main>
