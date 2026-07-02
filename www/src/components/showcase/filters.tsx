@@ -11,11 +11,13 @@ import {
   CardTitle,
 } from '@/registry/ui/card'
 import { Description, Label } from '@/registry/ui/field'
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from '@/registry/ui/segmented-control'
 import { Slider, SliderControl, SliderOutput } from '@/registry/ui/slider'
 import { Switch, SwitchControl } from '@/registry/ui/switch'
 import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 
 export function Filters({ className, ...props }: React.ComponentProps<'div'>) {
   return (
@@ -26,16 +28,17 @@ export function Filters({ className, ...props }: React.ComponentProps<'div'>) {
       <CardContent className="space-y-4">
         <div className="flex flex-col gap-2">
           <Label id="type-of-place">Type of place</Label>
-          <ToggleButtonGroup
+          <SegmentedControl
             aria-labelledby="type-of-place"
-            selectionMode="single"
             defaultSelectedKeys={['any-type']}
             className="grid w-full grid-cols-3"
           >
-            <ToggleButton id="any-type">Any type</ToggleButton>
-            <ToggleButton id="room">Room</ToggleButton>
-            <ToggleButton id="entire-home">Entire home</ToggleButton>
-          </ToggleButtonGroup>
+            <SegmentedControlItem id="any-type">Any type</SegmentedControlItem>
+            <SegmentedControlItem id="room">Room</SegmentedControlItem>
+            <SegmentedControlItem id="entire-home">
+              Entire home
+            </SegmentedControlItem>
+          </SegmentedControl>
         </div>
         <Slider
           defaultValue={[200, 800]}

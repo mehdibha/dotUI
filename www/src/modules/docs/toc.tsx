@@ -65,7 +65,7 @@ export function TOCScrollArea({
     <div
       ref={mergeRefs(viewRef, ref)}
       className={cn(
-        'scrollbar-none min-h-0 scroll-fade-y overflow-auto pt-10 pb-3 text-sm scroll-fade-4',
+        'no-scrollbar min-h-0 scroll-fade-y overflow-auto pt-10 pb-3 text-sm scroll-fade-4',
         className,
       )}
       {...props}

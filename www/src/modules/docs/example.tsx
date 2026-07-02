@@ -62,7 +62,7 @@ export function Example({
       <DemoPreset>
         <div
           data-example-preview=""
-          className="scrollbar-none flex min-h-32 flex-1 flex-col items-center justify-center gap-6 overflow-x-auto rounded-2xl border bg-card p-6 sm:p-10"
+          className="no-scrollbar flex min-h-32 flex-1 flex-col items-center justify-center gap-6 overflow-x-auto rounded-2xl border bg-card p-6 sm:p-10"
         >
           <Component />
         </div>

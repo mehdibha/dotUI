@@ -81,7 +81,7 @@ function TabsLayout({ sections }: { sections: Section[] }) {
   if (sections.length === 0) return null
   return (
     <Tabs defaultSelectedKey={sections[0]?.id} className="flex flex-col gap-3">
-      <div className="sticky top-0 z-10 scrollbar-none overflow-x-auto bg-card/85 px-3 pt-3 backdrop-blur-sm">
+      <div className="sticky top-0 z-10 no-scrollbar overflow-x-auto bg-card/85 px-3 pt-3 backdrop-blur-sm">
         <TabList className="w-max">
           {sections.map((section) => (
             <Tab key={section.id} id={section.id} className="gap-1.5">

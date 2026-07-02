@@ -6,7 +6,7 @@ import { navItems } from '@/config/site'
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Popover } from '@/registry/ui/popover'
+import { Drawer } from '@/registry/ui/drawer'
 
 export function MobileNav({ items }: { items: PageTree.Node[] }) {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -15,6 +15,7 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
     <Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
       <Button
         aria-label="Toggle Menu"
+        variant="quiet"
         size="md"
         isIconOnly
         className="relative flex items-center justify-center md:hidden"
@@ -35,68 +36,62 @@ export function MobileNav({ items }: { items: PageTree.Node[] }) {
           />
         </div>
       </Button>
-      <Popover
-        offset={12}
-        containerPadding={0}
-        className="size-full max-w-none rounded-none border-0 bg-bg/95 backdrop-blur-md"
-      >
-        <DialogContent
-          aria-label="Mobile navigation"
-          className="overflow-y-auto pt-4"
-        >
-          {({ close }) => (
-            <nav aria-label="Mobile" className="flex flex-col gap-12">
-              <div className="space-y-2">
-                <div className="text-lg font-medium text-fg-muted">Menu</div>
-                <div className="flex flex-col gap-3">
-                  <MobileLink to="/" onOpenChange={close}>
-                    Home
+      <Drawer>
+        <DialogContent aria-label="Mobile navigation" className="p-0">
+          <nav
+            aria-label="Mobile"
+            className="no-scrollbar flex min-h-0 flex-1 scroll-fade-y flex-col gap-12 overflow-y-auto p-6"
+          >
+            <div className="space-y-2">
+              <div className="text-lg font-medium text-fg-muted">Menu</div>
+              <div className="flex flex-col gap-3">
+                <MobileLink to="/" onOpenChange={setIsOpen}>
+                  Home
+                </MobileLink>
+                {navItems.map((item) => (
+                  <MobileLink
+                    key={item.name}
+                    to={item.to}
+                    params={item.params}
+                    onOpenChange={setIsOpen}
+                  >
+                    {item.name}
                   </MobileLink>
-                  {navItems.map((item) => (
-                    <MobileLink
-                      key={item.name}
-                      to={item.to}
-                      params={item.params}
-                      onOpenChange={close}
-                    >
-                      {item.name}
-                    </MobileLink>
-                  ))}
-                </div>
+                ))}
               </div>
-              {items?.map((group, index) => {
-                if (group.type === 'folder') {
-                  return (
-                    // oxlint-disable-next-line react/no-array-index-key -- items is static navigation data
-                    <div key={index} className="flex flex-col gap-3">
-                      <div className="text-lg font-medium text-fg-muted">
-                        {group.name}
-                      </div>
-                      <div className="flex flex-col gap-3">
-                        {group.children.map((item) => {
-                          if (item.type === 'page') {
-                            return (
-                              <MobileLink
-                                key={item.url}
-                                to={item.url}
-                                onOpenChange={close}
-                              >
-                                {item.name}
-                              </MobileLink>
-                            )
-                          }
-                          return null
-                        })}
-                      </div>
+            </div>
+            {items?.map((group, index) => {
+              if (group.type === 'folder') {
+                return (
+                  // oxlint-disable-next-line react/no-array-index-key -- items is static navigation data
+                  <div key={index} className="flex flex-col gap-3">
+                    <div className="text-lg font-medium text-fg-muted">
+                      {group.name}
                     </div>
-                  )
-                }
-                return null
-              })}
-            </nav>
-          )}
+                    <div className="flex flex-col gap-3">
+                      {group.children.map((item) => {
+                        if (item.type === 'page') {
+                          return (
+                            <MobileLink
+                              key={item.url}
+                              to={item.url}
+                              onOpenChange={setIsOpen}
+                            >
+                              {item.name}
+                            </MobileLink>
+                          )
+                        }
+                        return null
+                      })}
+                    </div>
+                  </div>
+                )
+              }
+              return null
+            })}
+          </nav>
         </DialogContent>
-      </Popover>
+      </Drawer>
     </Dialog>
   )
 }

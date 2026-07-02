@@ -496,7 +496,7 @@ export function CustomizerPanel({ className }: { className?: string }) {
                 animate={{ x: isCovered ? '-50%' : 0 }}
                 exit={{ x: '100%' }}
                 transition={stackTransition}
-                className="absolute inset-0 scrollbar-none overflow-y-auto overscroll-contain bg-card p-3"
+                className="absolute inset-0 no-scrollbar overflow-y-auto overscroll-contain bg-card p-3"
               >
                 {renderStackedView(index)}
               </motion.div>
