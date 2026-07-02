@@ -17,6 +17,12 @@ import {
   SelectTrigger,
 } from '@/registry/ui/select'
 
+import { useStyles } from './styles'
+
+// MARK: colorEditorStyles
+
+// MARK: Separator
+
 type ColorFormat = 'hex' | 'rgb' | 'hsl' | 'hsb'
 
 interface ColorEditorProps extends Omit<
@@ -43,8 +49,9 @@ const ColorEditor = ({
   ...props
 }: ColorEditorProps) => {
   const state = React.use(ColorPickerPrimitives.ColorPickerStateContext)
+  const { root } = useStyles()()
   const content = (
-    <div className={cn('flex w-fit flex-col gap-2', className)} {...props}>
+    <div className={root({ className })} {...props}>
       {children ?? (
         <>
           <ColorEditorArea showAlphaChannel={showAlphaChannel} />
@@ -81,8 +88,9 @@ const ColorEditorArea = ({
   className,
   ...props
 }: ColorEditorAreaProps) => {
+  const { area } = useStyles()()
   return (
-    <div className={cn('flex gap-2', className)} {...props}>
+    <div className={area({ className })} {...props}>
       {props.children ?? (
         <>
           {/* grow (not flex-1): keep the density width as flex basis so the
@@ -141,13 +149,12 @@ const ColorEditorFields = ({
     defaultFormat,
     onFormatChange,
   )
+  const { fields, fieldGroup } = useStyles()()
   return (
     <div
-      className={cn(
-        'flex flex-col gap-2',
-        format === 'hex' && 'flex-row',
-        className,
-      )}
+      className={fields({
+        className: cn(format === 'hex' && 'flex-row', className),
+      })}
       {...props}
     >
       {showFormatSelector && (
@@ -166,7 +173,7 @@ const ColorEditorFields = ({
           </SelectContent>
         </Select>
       )}
-      <div className="flex flex-1 items-center gap-2">
+      <div className={fieldGroup()}>
         {format === 'hex' ? (
           <ColorField aria-label="Hex" className="w-10 flex-1">
             <Input size="sm" className="w-full" />
