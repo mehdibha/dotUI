@@ -24,6 +24,11 @@ export type Domain =
   | 'component'
   | 'icon'
   | 'mode'
+  // Extra domains exercised only by the /create?studio experiment (see studio/tweaks).
+  | 'brand'
+  | 'surface'
+  | 'a11y'
+  | 'states'
 
 /** Token altitude — the "by tier" grouping (primitive → semantic → component). */
 export type Tier = 'primitive' | 'semantic' | 'component'
