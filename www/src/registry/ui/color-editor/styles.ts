@@ -37,6 +37,16 @@ const { useStyles, styles } = createStyles(colorEditorMeta, {
       },
     },
   },
+  params: {
+    style: {
+      default: {},
+      hammamet: {
+        slots: {
+          root: 'rounded-lg border bg-card p-3',
+        },
+      },
+    },
+  },
 })
 
 export type ColorEditorStyles = typeof styles
