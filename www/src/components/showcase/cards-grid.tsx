@@ -26,8 +26,6 @@ import { UploadAvatar } from '@/components/showcase/upload-avatar'
 // lets the main region take the rest: the outer grid splits the row into N equal
 // units, the rail takes 1, the main takes N-1.
 const LAYOUTS = {
-  // Landing: 3 columns, 4 at xl. The main region (N-1 wide) carries the AI banner
-  // and the bulk of the cards; see the landing branch below for how it's split.
   landing: {
     outer: 'grid-cols-3 xl:grid-cols-4',
     main: 'col-span-2 xl:col-span-3',

@@ -162,23 +162,15 @@ export function SkeletonRail({ side }: { side: 'left' | 'right' }) {
       ? ([RAIL_COLUMNS[0], RAIL_COLUMNS[1]] as const)
       : ([RAIL_COLUMNS[2], RAIL_COLUMNS[3]] as const)
   return (
-    // A flex item that grows to fill the gutter beside the real grid on large
-    // screens. Hidden below `lg`, where the real grid bleeds off the edges instead.
-    // The card content is absolutely positioned so it can run taller than the real
-    // grid — reaching all the way down to the bottom fade on every screen — *without*
-    // dictating the row's height: that stays driven by the real grid, so the shorter
-    // 4-column `xl` layout keeps its height and the rails are simply clipped lower by
-    // `overflow-hidden`. The content hugs the inner edge (next to the real grid) and
-    // overflows toward the screen edge, where a horizontal mask fades it darker.
     <Skeleton
       isLoading
       aria-hidden="true"
       className={cn(
-        'relative hidden shrink-0 grow basis-(--rail-peek) overflow-hidden lg:block',
+        'relative hidden shrink-0 grow basis-(--rail-peek) overflow-hidden lg:block opacity-70',
         '[--rail-col:18rem] [--rail-w:calc(var(--rail-col)*2+var(--rail-gap))]',
         side === 'left'
-          ? '[mask-image:linear-gradient(to_left,black_25%,transparent)]'
-          : '[mask-image:linear-gradient(to_right,black_25%,transparent)]',
+          ? '[mask-image:linear-gradient(to_left,black_85%,transparent)]'
+          : '[mask-image:linear-gradient(to_right,black_85%,transparent)]',
       )}
     >
       <div
