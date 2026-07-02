@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, useLocation } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseHeader } from '@tanstack/react-start/server'
 import type * as PageTree from 'fumadocs-core/page-tree'
@@ -37,9 +37,19 @@ function AppLayout() {
   const { pageTree } = Route.useLoaderData()
   const items = pageTree.children as PageTree.Node[]
 
+  // The /create builder is a focused "app" mode: it owns its own full-height
+  // top bar (logo→home, builder controls, theme/github) so the marketing/docs
+  // nav must not stack on top of it. The legacy `?lab=true` panel has no bar of
+  // its own, so it keeps the site Header. Matched on the parsed location rather
+  // than a route-tree match to read the child route's `lab` search param here.
+  const location = useLocation()
+  const onStudio =
+    location.pathname === '/create' &&
+    !(location.search as { lab?: boolean }).lab
+
   return (
     <div className="[--header-height:--spacing(14)]">
-      <Header items={items} />
+      {!onStudio && <Header items={items} />}
       <main id="content">
         <Outlet />
       </main>
