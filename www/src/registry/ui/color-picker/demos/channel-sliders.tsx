@@ -22,7 +22,7 @@ export default function Demo() {
     React.useState<ColorAreaPrimitives.ColorSpace>('rgb')
   return (
     <ColorPicker defaultValue="#5100FF">
-      <Button aria-label="Pick a color">
+      <Button aria-label="Pick a color" isIconOnly>
         <ColorSwatch />
       </Button>
       <Popover>

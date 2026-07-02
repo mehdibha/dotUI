@@ -32,6 +32,26 @@ const Button = ({
 }: ButtonProps) => {
   const styles = useStyles()
 
+  const renderChildren = composeRenderProps(
+    children,
+    (children, { isPending }) => (
+      <>
+        {isPending && (
+          <Loader
+            data-slot="spinner"
+            aria-label="loading"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
+        )}
+        {typeof children === 'string' ? (
+          <span className="truncate">{children}</span>
+        ) : (
+          children
+        )}
+      </>
+    ),
+  )
+
   return (
     <ButtonPrimitive.Button
       data-button=""
@@ -40,24 +60,11 @@ const Button = ({
         styles({ variant, size, isIconOnly, className: cn }),
       )}
       {...props}
-    >
-      {composeRenderProps(children, (children, { isPending }) => (
-        <>
-          {isPending && (
-            <Loader
-              data-slot="spinner"
-              aria-label="loading"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-            />
-          )}
-          {typeof children === 'string' ? (
-            <span className="truncate">{children}</span>
-          ) : (
-            children
-          )}
-        </>
-      ))}
-    </ButtonPrimitive.Button>
+      // Only wrap provided children: passing a render function when `children`
+      // is undefined would override context-injected children (e.g. the
+      // ColorPicker trigger's default swatch) in RAC's context merge.
+      children={children === undefined ? undefined : renderChildren}
+    />
   )
 }
 
