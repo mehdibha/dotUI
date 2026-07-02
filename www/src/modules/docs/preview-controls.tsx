@@ -187,7 +187,10 @@ function PreviewModeToggle({ className }: { className?: string }) {
 export function PreviewControls({ className }: { className?: string }) {
   return (
     <div
-      className={cn('flex items-center justify-between gap-2 p-2', className)}
+      className={cn(
+        'flex items-center justify-between gap-2 px-2 pt-2',
+        className,
+      )}
     >
       <PresetSelector />
       <PreviewModeToggle />
