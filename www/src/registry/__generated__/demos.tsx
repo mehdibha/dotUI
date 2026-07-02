@@ -41,6 +41,10 @@ export const DemosIndex: Record<
 		files: ["ui/accordion/demos/settings-panel.tsx"],
 		component: React.lazy(() => import("@/registry/ui/accordion/demos/settings-panel")),
 	},
+	"ai-assistant/demos/default": {
+		files: ["ui/ai-assistant/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/ai-assistant/demos/default")),
+	},
 	"alert/demos/action": {
 		files: ["ui/alert/demos/action.tsx"],
 		component: React.lazy(() => import("@/registry/ui/alert/demos/action")),

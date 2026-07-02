@@ -1,0 +1,14 @@
+{
+  "name": "AIAssistantMessagesProps",
+  "description": "The scrollable region that holds the conversation. Announces new content to\nassistive technology via an `aria-live` log region.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
