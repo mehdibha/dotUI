@@ -7,6 +7,29 @@ import { ContextMenu } from '@/registry/ui/context-menu'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
 
+function BrandAssetPreview({
+  file,
+  className,
+}: {
+  file: string
+  className?: string
+}) {
+  return (
+    <>
+      <img
+        src={`/brand/${file}.svg`}
+        alt=""
+        className={cn('h-4 w-auto dark:hidden', className)}
+      />
+      <img
+        src={`/brand/${file}-white.svg`}
+        alt=""
+        className={cn('hidden h-4 w-auto dark:block', className)}
+      />
+    </>
+  )
+}
+
 export function Logo({
   className,
   type = 'link',
@@ -66,15 +89,17 @@ export function Logo({
       ) : (
         <span className={cn('flex items-center', className)}>{mark}</span>
       )}
-      <Popover className="w-56">
+      <Popover className="w-64">
         <MenuContent>
           <MenuItem onAction={() => copyBrandAsset(`dotui-logo${suffix}.svg`)}>
             Copy logo as SVG
+            <BrandAssetPreview file="dotui-logo" className="ml-auto" />
           </MenuItem>
           <MenuItem
             onAction={() => copyBrandAsset(`dotui-wordmark${suffix}.svg`)}
           >
             Copy wordmark as SVG
+            <BrandAssetPreview file="dotui-wordmark" className="ml-auto" />
           </MenuItem>
         </MenuContent>
       </Popover>
