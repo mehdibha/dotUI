@@ -53,6 +53,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	popover: () => import("@/registry/ui/popover/examples"),
 	"progress-bar": () => import("@/registry/ui/progress-bar/examples"),
 	"radio-group": () => import("@/registry/ui/radio-group/examples"),
+	rating: () => import("@/registry/ui/rating/examples"),
 	"react-hook-form": () => import("@/registry/ui/react-hook-form/examples"),
 	"search-field": () => import("@/registry/ui/search-field/examples"),
 	"segmented-control": () => import("@/registry/ui/segmented-control/examples"),
