@@ -1,0 +1,58 @@
+---
+title: Data Grid
+description: An advanced data grid built on TanStack Table, with sortable column headers and pagination on top of the accessible Table.
+links:
+  - label: Docs
+    href: https://tanstack.com/table/latest
+wip: true
+---
+
+<Demo name="data-grid/demos/default" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/data-grid
+```
+
+## Usage
+
+`DataGrid` wires [TanStack Table](https://tanstack.com/table/latest) onto the dotUI `Table`. Pass TanStack `ColumnDef`s and a `data` array; it handles sorting (click a header to toggle) and pagination for you.
+
+```tsx
+import { DataGrid } from '@/components/ui/data-grid'
+import type { ColumnDef } from '@tanstack/react-table'
+```
+
+```tsx
+const columns: ColumnDef<Invoice>[] = [
+  { accessorKey: 'id', header: 'Invoice' },
+  { accessorKey: 'email', header: 'Email' },
+  { accessorKey: 'amount', header: 'Amount' },
+]
+
+<DataGrid aria-label="Invoices" columns={columns} data={invoices} />
+```
+
+Set `enableSorting: false` on a column to make its header non-sortable, `pageSize` to change rows per page, and `pagination={false}` to render every row without a footer.
+
+```tsx
+<DataGrid
+  aria-label="Invoices"
+  columns={columns}
+  data={invoices}
+  pageSize={5}
+/>
+```
+
+## Examples
+
+<Examples>
+  <Example name="data-grid/demos/default" title="Default" />
+</Examples>
+
+## API Reference
+
+### DataGrid
+
+<Reference name="data-grid" />
