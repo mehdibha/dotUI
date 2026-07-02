@@ -1,3 +1,5 @@
+Important note: Much of the current code was written by AI agents and it's slop, when we're working on something don't hesitate to simplify code, remove unecessary comments, etc
+
 # dotUI
 
 This is the dotUI repository — a design-system builder. Users compose a complete design system at dotui.org/create — colors, typography, icons, density, radius, per-component styles — preview every change live on real components, and export it as code they own: into their codebase via the shadcn CLI, or straight into v0 — with Bolt, Lovable, Figma and more planned. It's built on React Aria Components with Tailwind CSS v4 and tailwind-variants, themed by an OKLCH color engine, and distributed as a shadcn-compatible registry served from a TanStack Start app.

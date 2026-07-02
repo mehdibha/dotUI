@@ -42,9 +42,10 @@ export function PresetSwitcher({
   }
 
   return (
-    <div className="mb-6 flex max-w-full justify-center overflow-x-auto px-4 sm:mb-8">
+    <div className="mb-6 no-scrollbar flex max-w-full scroll-fade-x overflow-x-auto px-4 sm:mb-8">
       <SegmentedControl
         aria-label="Preview design system"
+        className="mx-auto bg-transparent p-0"
         selectedKeys={activeId ? [activeId] : []}
         onSelectionChange={handleChange}
       >

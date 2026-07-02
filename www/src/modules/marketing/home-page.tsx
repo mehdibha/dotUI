@@ -1,3 +1,5 @@
+import { Link } from 'react-aria-components'
+
 import { LinkButton } from '@/registry/ui/button'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import { Announcement } from '@/components/announcement'
@@ -17,22 +19,115 @@ import {
 } from '@/components/rotating-text'
 import Cards from '@/modules/marketing/cards'
 
-// dotUI's brand font (the "dotUI" wordmark uses Josefin Sans), loaded locally. Weight,
-// letter-spacing and size come from the original headline classes on the <h1>.
-const HEADLINE_STYLE = { fontFamily: 'var(--font-josefin)' }
+export function HomePage() {
+  return (
+    <div>
+      {/* Hero section */}
+      <section className="container flex flex-col pt-6 sm:pt-8 md:pt-12">
+        <div className="flex flex-col items-center gap-3 text-center md:gap-4">
+          <Announcement />
+          <h1
+            aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your code, or anywhere."
+            className="text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl"
+          >
+            <span aria-hidden="true">
+              <AnimatedHeadline
+                lead="Build your design system. Ship it"
+                items={EXPORT_TARGETS}
+                trailing="."
+              />
+            </span>
+          </h1>
+          <p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
+            Beautiful components, accessibility out of the box, composition, and
+            more.
+            <br />
+            Powered by{' '}
+            <ReactAriaIcon className="inline-flex h-[0.85em] w-auto translate-y-[-0.08em]" />{' '}
+            <span className="font-medium text-fg">React Aria</span> and{' '}
+            <BaseUiIcon className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" />{' '}
+            <span className="font-medium text-fg">Base&nbsp;UI</span>.
+            {/* Install with <ShadcnIcon  className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" /> Shadcn CLI */}
+          </p>
+          <div className="flex w-full flex-col gap-2 pt-1 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
+            <LinkButton href="/create" variant="primary" size="lg">
+              Launch the editor
+            </LinkButton>
+            <LinkButton href="/docs/components" variant="default" size="lg">
+              View components
+            </LinkButton>
+          </div>
+        </div>
+      </section>
 
-// Shared connector for the tool / codebase frames. The trailing space is a non-breaking
-// space on purpose: the rotator sizes the connector slot from this text, and a normal
-// trailing space gets trimmed in the flex slot (so "to" would butt against the logo).
+      <section className="mt-16">
+        <Cards />
+      </section>
+
+      {/* Tools section. */}
+      <section className="relative z-10 -mt-[20px] py-12 shadow-xs">
+        <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
+          <h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
+            Built on modern tools
+          </h2>
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
+            {tools.map(({ icon, label, href }) => (
+              <Tooltip key={href}>
+                <Link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex items-center justify-center opacity-60 grayscale-100 transition-opacity hover:opacity-100 hover:grayscale-0"
+                  href={href}
+                >
+                  {icon}
+                </Link>
+                <TooltipContent placement="top">{label}</TooltipContent>
+              </Tooltip>
+            ))}
+          </div>
+        </div>
+      </section>
+      <Footer />
+    </div>
+  )
+}
+
+const tools = [
+  {
+    label: 'Shadcn CLI',
+    icon: <ShadcnIcon className="size-7 sm:size-9" />,
+    href: 'https://ui.shadcn.com/docs/cli',
+  },
+  {
+    label: 'React 19',
+    icon: <ReactJsIcon className="size-7 sm:size-9" />,
+    href: 'https://react.dev',
+  },
+  {
+    label: 'React Aria',
+    icon: <ReactAriaIcon className="size-7 sm:size-9" />,
+    href: 'https://react-spectrum.adobe.com/react-aria/index.html',
+  },
+  {
+    label: 'Base UI',
+    icon: <BaseUiIcon className="h-7 w-auto sm:h-9" />,
+    href: 'https://base-ui.com',
+  },
+  {
+    label: 'TypeScript 5',
+    icon: <TypeScriptIcon className="size-7 sm:size-9" />,
+    href: 'https://www.typescriptlang.org/',
+  },
+  {
+    label: 'Tailwind CSS v4',
+    icon: <TailwindWordmark className="h-5 sm:h-7" />,
+    href: 'https://tailwindcss.com',
+  },
+]
+
 const TO = 'to\u00A0'
 
-// Swappable destinations in the hero headline — "Ship it ___". The shared "to" lives in
-// `connector`, not the lead, so it renders once in the lead's font and — because the
-// rotator keys the connector slot by this string — stays put across the v0 / bolt.new /
-// Lovable / your-code frames instead of re-animating; only the destination swaps.
-// "anywhere" reads without a connector. v0 / bolt.new / Lovable are their official brand
-// wordmarks (logo-only); the rest are text. Everything inherits the headline color
-// (white); the Lovable heart keeps its brand gradient.
 const EXPORT_TARGETS: RotatingTextItem[] = [
   {
     id: 'anywhere',
@@ -66,116 +161,3 @@ const EXPORT_TARGETS: RotatingTextItem[] = [
     segments: [{ text: 'your code', className: 'font-bold italic' }],
   },
 ]
-
-export function HomePage() {
-  return (
-    <div className="min-h-[calc(100vh-var(--header-height))]">
-      {/* The <main> landmark lives in the shared _app layout; use a fragment here
-          so we don't nest a second one. */}
-      <>
-        {/* Hero section */}
-        <section className="container flex flex-col pt-6 sm:pt-8 md:pt-12">
-          <div className="flex flex-col items-center gap-3 text-center md:gap-4">
-            <Announcement />
-            <h1
-              aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your code, or anywhere."
-              className="text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl"
-            >
-              <span aria-hidden="true">
-                <AnimatedHeadline
-                  lead="Build your design system. Ship it"
-                  items={EXPORT_TARGETS}
-                  trailing="."
-                  wordStyle={HEADLINE_STYLE}
-                />
-              </span>
-            </h1>
-            <p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
-              Beautiful components, accessibility out of the box, composition,
-              and more.
-              <br />
-              Powered by{' '}
-              <ReactAriaIcon className="inline-flex h-[0.85em] w-auto translate-y-[-0.08em]" />{' '}
-              <span className="font-medium text-fg">React Aria</span> and{' '}
-              <BaseUiIcon className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" />{' '}
-              <span className="font-medium text-fg">Base&nbsp;UI</span>.
-              {/* Install with <ShadcnIcon  className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" /> Shadcn CLI */}
-            </p>
-            <div className="flex w-full flex-col gap-2 pt-1 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
-              <LinkButton href="/create" variant="primary" size="lg">
-                Launch the editor
-              </LinkButton>
-              <LinkButton href="/docs/components" variant="default" size="lg">
-                View components
-              </LinkButton>
-            </div>
-          </div>
-        </section>
-
-        <section className="mt-16">
-          <Cards />
-        </section>
-
-        {/* Built on modern tools — pulled up to sit just under the cards' bottom
-            fade. The grid balances its columns to bottom out level (see
-            cards-grid.tsx), so there's no masked tail to cover — a small pull tucks
-            this row against the 200px fade, and one value holds across breakpoints. */}
-        <section className="relative z-10 -mt-[100px] py-12 shadow-xs">
-          <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
-            <h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
-              Built on modern tools
-            </h2>
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
-              {[
-                {
-                  label: 'Shadcn CLI',
-                  icon: <ShadcnIcon className="size-7 sm:size-9" />,
-                  href: 'https://ui.shadcn.com/docs/cli',
-                },
-                {
-                  label: 'React 19',
-                  icon: <ReactJsIcon className="size-7 sm:size-9" />,
-                  href: 'https://react.dev',
-                },
-                {
-                  label: 'React Aria',
-                  icon: <ReactAriaIcon className="size-7 sm:size-9" />,
-                  href: 'https://react-spectrum.adobe.com/react-aria/index.html',
-                },
-                {
-                  label: 'Base UI',
-                  icon: <BaseUiIcon className="h-7 w-auto sm:h-9" />,
-                  href: 'https://base-ui.com',
-                },
-                {
-                  label: 'TypeScript 5',
-                  icon: <TypeScriptIcon className="size-7 sm:size-9" />,
-                  href: 'https://www.typescriptlang.org/',
-                },
-                {
-                  label: 'Tailwind CSS v4',
-                  icon: <TailwindWordmark className="h-5 sm:h-7" />,
-                  href: 'https://tailwindcss.com',
-                },
-              ].map(({ icon, label, href }) => (
-                <Tooltip key={href}>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="flex items-center justify-center opacity-60 grayscale-100 transition-opacity hover:opacity-100 hover:grayscale-0"
-                    href={href}
-                  >
-                    {icon}
-                  </a>
-                  <TooltipContent placement="top">{label}</TooltipContent>
-                </Tooltip>
-              ))}
-            </div>
-          </div>
-        </section>
-      </>
-      <Footer />
-    </div>
-  )
-}

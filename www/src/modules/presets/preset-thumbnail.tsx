@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { DesignSystemProvider } from '@/lib/styles'
-import { CardsGrid } from '@/components/showcase/cards-grid'
+import { CardsMasonry } from '@/components/showcase/cards-grid'
 import type { DesignSystem } from '@/modules/create/preset'
 
 /**
@@ -62,7 +62,7 @@ export function PresetThumbnail({
             }}
           >
             <div className="p-4">
-              <CardsGrid variant="preview" />
+              <CardsMasonry />
             </div>
           </div>
         </DesignSystemProvider>
