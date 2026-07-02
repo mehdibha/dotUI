@@ -13,6 +13,12 @@ export type Preset = {
   id: string
   name: string
   description: string
+  /**
+   * Illustrative accent for picker dots — curated, not derived from the seeds,
+   * so each reads clearly on UI surfaces in both modes (e.g. Vercel's
+   * near-black accent would vanish; it shows as a monochrome light dot).
+   */
+  swatch: string
   designSystem: DesignSystem
 }
 
@@ -44,12 +50,14 @@ export const PRESETS: Preset[] = [
     id: 'default',
     name: 'Default',
     description: 'dotUI out of the box.',
+    swatch: '#a1a1aa',
     designSystem: { ...DEFAULTS },
   },
   {
     id: 'vercel',
     name: 'Vercel',
     description: 'Monochrome, tight radii.',
+    swatch: '#cbd5e1',
     designSystem: makeDesignSystem({
       neutral: '#737373',
       accent: '#171717',
@@ -64,6 +72,7 @@ export const PRESETS: Preset[] = [
     id: 'supabase',
     name: 'Supabase',
     description: 'Emerald on cool gray.',
+    swatch: '#3ecf8e',
     designSystem: makeDesignSystem({
       neutral: '#6b7280',
       accent: '#3ecf8e',
@@ -74,6 +83,7 @@ export const PRESETS: Preset[] = [
     id: 'material',
     name: 'Material You',
     description: 'Soft purple, generous round.',
+    swatch: '#a78bfa',
     designSystem: makeDesignSystem({
       algorithm: 'material',
       neutral: '#79747e',
@@ -86,6 +96,7 @@ export const PRESETS: Preset[] = [
     id: 'linear',
     name: 'Linear',
     description: 'Indigo, crisp and compact.',
+    swatch: '#818cf8',
     designSystem: makeDesignSystem({
       neutral: '#8a8f98',
       accent: '#5e6ad2',
@@ -96,6 +107,7 @@ export const PRESETS: Preset[] = [
     id: 'claude',
     name: 'Claude',
     description: 'Warm coral on sand.',
+    swatch: '#e0916f',
     designSystem: makeDesignSystem({
       neutral: '#8a8278',
       accent: '#d97757',
@@ -107,6 +119,7 @@ export const PRESETS: Preset[] = [
     id: 'rose',
     name: 'Rosé',
     description: 'Pink, pill-soft radii.',
+    swatch: '#fb7185',
     designSystem: makeDesignSystem({
       neutral: '#7d7d7d',
       accent: '#e11d48',
@@ -118,6 +131,7 @@ export const PRESETS: Preset[] = [
     id: 'contrast',
     name: 'Contrast',
     description: 'APCA-tuned emerald.',
+    swatch: '#34d399',
     designSystem: makeDesignSystem({
       algorithm: 'contrast',
       neutral: '#71717a',

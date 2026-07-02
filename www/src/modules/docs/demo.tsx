@@ -6,7 +6,7 @@ import { Button } from '@/registry/ui/button'
 
 import { CodeBlock, Pre } from './code-block'
 import { DemoPreset } from './demo-preset'
-import { PreviewControls } from './preset-control'
+import { PreviewControls } from './preview-controls'
 
 // ============================================================================
 // Slot Components
@@ -74,9 +74,8 @@ export function Demo({ component: Component, children, ...props }: DemoProps) {
 
   return (
     <div {...props}>
-      {/* Preview frame: a controls header (chrome) in its own space, then the
-          themed canvas. The canvas `bg` lives inside DemoPreset so a forced mode /
-          preset themes the whole stage, not just the component on it. */}
+      {/* The canvas bg lives inside DemoPreset so a preset/forced mode themes
+          the whole stage, not just the component; the controls stay site chrome. */}
       <div className="overflow-hidden rounded-t-lg border">
         <PreviewControls />
         <DemoPreset>

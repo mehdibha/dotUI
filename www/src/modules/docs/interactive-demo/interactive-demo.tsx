@@ -21,7 +21,7 @@ import { renderCode } from '@/modules/docs/codegen/code-template'
 import type { CodeTemplate } from '@/modules/docs/codegen/code-template'
 import { DemoPreset } from '@/modules/docs/demo-preset'
 import { DynamicPre } from '@/modules/docs/dynamic-pre'
-import { PreviewControls } from '@/modules/docs/preset-control'
+import { PreviewControls } from '@/modules/docs/preview-controls'
 
 import { defaultControlValues } from './control-defaults'
 import { availableIcons, Controls } from './controls'
@@ -117,34 +117,30 @@ export function InteractiveDemo({
     <div
       className={cn('relative overflow-hidden rounded-lg border', className)}
     >
-      {/* The props-panel trigger, pinned to the card's top-right corner above
-          the panel. Always mounted so its visibility can tween (opacity/scale)
-          instead of popping in and out with a conditional render: opening the
-          panel fades it out and the panel's own close button takes over. */}
-      <Tooltip>
-        <Button
-          variant="quiet"
-          size="sm"
-          isIconOnly
-          aria-label="Controls"
-          className={cn(
-            'absolute top-2 right-2 z-10 text-fg-muted transition-[opacity,scale] duration-300 ease-fluid-out motion-reduce:transition-none',
-            controlsOpen && 'pointer-events-none scale-50 opacity-0',
-          )}
-          onPress={() => setControlsOpen(true)}
-        >
-          <SlidersHorizontalIcon />
-        </Button>
-        <TooltipContent>Controls</TooltipContent>
-      </Tooltip>
+      {/* The panel trigger stays mounted so its visibility can tween; `inert`
+          takes it out of the tab order and the a11y tree while hidden. */}
+      <span className="contents" inert={controlsOpen}>
+        <Tooltip>
+          <Button
+            variant="quiet"
+            size="sm"
+            isIconOnly
+            aria-label="Controls"
+            className={cn(
+              'absolute top-2 right-2 z-10 text-fg-muted transition-[opacity,scale] duration-300 ease-fluid-out motion-reduce:transition-none',
+              controlsOpen && 'scale-50 opacity-0',
+            )}
+            onPress={() => setControlsOpen(true)}
+          >
+            <SlidersHorizontalIcon />
+          </Button>
+          <TooltipContent>Controls</TooltipContent>
+        </Tooltip>
+      </span>
       <div className="flex flex-col md:flex-row">
-        {/* Preview column: preview controls (top) + a themed canvas (`bg-bg`
-            inside DemoPreset, so a forced light/dark mode and the preset theme
-            the whole stage, not just the component; in the default "system"
-            mode `bg-bg` equals the page bg, so the open, backdrop-free look is
-            unchanged). While the panel is closed the toolbar reserves the
-            trigger's corner with padding, so the mode toggle sits beside it;
-            opening the panel releases it and pushes only the mode toggle. */}
+        {/* The canvas bg lives inside DemoPreset so a preset/forced mode themes
+            the whole stage. While the panel is closed, right padding keeps the
+            mode toggle clear of the trigger pinned in the corner. */}
         <div className="flex min-w-0 flex-1 flex-col">
           <PreviewControls
             className={cn(
@@ -184,7 +180,6 @@ export function InteractiveDemo({
             )}
           >
             <div className="flex flex-col gap-4 px-5 pt-3 pb-5">
-              {/* Panel header — a subtle title with the close button opposite. */}
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-fg-muted">
                   Controls
