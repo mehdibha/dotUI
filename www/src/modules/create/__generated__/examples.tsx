@@ -38,6 +38,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	field: () => import("@/registry/ui/field/examples"),
 	"file-trigger": () => import("@/registry/ui/file-trigger/examples"),
 	form: () => import("@/registry/ui/form/examples"),
+	gantt: () => import("@/registry/ui/gantt/examples"),
 	group: () => import("@/registry/ui/group/examples"),
 	input: () => import("@/registry/ui/input/examples"),
 	"input-group": () => import("@/registry/ui/input-group/examples"),
