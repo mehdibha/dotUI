@@ -1,0 +1,14 @@
+{
+  "name": "NotificationFeedProps",
+  "description": "A notification feed / inbox — a composable list of activity items. Compose\n`Notification`s inside, each with `NotificationContent` (title, description,\ntime) and optional `NotificationActions`. Reuses `Avatar` for actor avatars.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -1801,6 +1801,10 @@ export const DemosIndex: Record<
 		files: ["ui/modal/demos/with-form.tsx"],
 		component: React.lazy(() => import("@/registry/ui/modal/demos/with-form")),
 	},
+	"notification-feed/demos/default": {
+		files: ["ui/notification-feed/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/notification-feed/demos/default")),
+	},
 	"number-field/demos/basic": {
 		files: ["ui/number-field/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/number-field/demos/basic")),

@@ -51,6 +51,7 @@ import UiLoader from "@/registry/ui/loader/meta";
 import UiMention from "@/registry/ui/mention/meta";
 import UiMenu from "@/registry/ui/menu/meta";
 import UiModal from "@/registry/ui/modal/meta";
+import UiNotificationFeed from "@/registry/ui/notification-feed/meta";
 import UiNumberField from "@/registry/ui/number-field/meta";
 import UiOtpField from "@/registry/ui/otp-field/meta";
 import UiPagination from "@/registry/ui/pagination/meta";
@@ -127,6 +128,7 @@ export const registryUi: RegistryItem[] = [
 	UiMention,
 	UiMenu,
 	UiModal,
+	UiNotificationFeed,
 	UiNumberField,
 	UiOtpField,
 	UiPagination,

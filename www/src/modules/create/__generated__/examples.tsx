@@ -47,6 +47,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	mention: () => import("@/registry/ui/mention/examples"),
 	menu: () => import("@/registry/ui/menu/examples"),
 	modal: () => import("@/registry/ui/modal/examples"),
+	"notification-feed": () => import("@/registry/ui/notification-feed/examples"),
 	"number-field": () => import("@/registry/ui/number-field/examples"),
 	"otp-field": () => import("@/registry/ui/otp-field/examples"),
 	pagination: () => import("@/registry/ui/pagination/examples"),
