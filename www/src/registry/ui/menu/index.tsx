@@ -45,7 +45,11 @@ function MenuItem<T extends object>({ href, ...props }: MenuItemProps<T>) {
           return <div {...domProps} />
         }
         if (typeof href === 'object') {
-          return <RouterLink {...href} {...domProps} />
+          // Drop react-aria's echoed `href` attribute: router.navigate treats a
+          // present `href` option as the navigation source, re-deriving
+          // to/search/hash from the raw string and losing the ToOptions hash.
+          const { href: _, ...routerLinkProps } = domProps
+          return <RouterLink {...href} {...routerLinkProps} />
         }
         return <a {...domProps} />
       }}
