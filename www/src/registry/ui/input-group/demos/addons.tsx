@@ -14,7 +14,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <TextField>
         <Label>label</Label>
         <InputGroup>
@@ -82,6 +82,6 @@ export default function Demo() {
           <InputGroupAddon>(optional)</InputGroupAddon>
         </InputGroup>
       </TextField>
-    </>
+    </div>
   )
 }

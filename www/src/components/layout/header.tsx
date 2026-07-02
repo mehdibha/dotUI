@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { Link as RouterLink, useLocation } from '@tanstack/react-router'
 import type * as PageTree from 'fumadocs-core/page-tree'
 import { SearchIcon } from 'lucide-react'
@@ -44,24 +43,12 @@ const BLUR_LAYERS = [
   { blur: 24, mask: 'linear-gradient(to top, transparent 70%, #000 100%)' },
 ]
 
-function useScrolled(threshold = 8) {
-  const [scrolled, setScrolled] = useState(false)
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > threshold)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [threshold])
-  return scrolled
-}
-
 interface HeaderProps {
   className?: string
   items?: PageTree.Node[]
 }
 
 export function Header({ className, items = [] }: HeaderProps) {
-  const scrolled = useScrolled(8)
   const { pathname } = useLocation()
   // Longest-matching-prefix wins so "/docs/components" highlights Components (not
   // Docs) while "/docs/button" still highlights Docs.
@@ -74,23 +61,29 @@ export function Header({ className, items = [] }: HeaderProps) {
 
   return (
     <header
-      data-scrolled={scrolled || undefined}
       className={cn(
-        'group/header sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between px-6',
+        'sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between header-blur-fallback px-6',
         className,
       )}
     >
+      {/* Keyed by pathname: navigating to a page with no root overflow (/create
+          fills the viewport exactly) turns the scroll timeline inactive, and a
+          newly inactive timeline HOLDS the animation's last progress — arriving
+          from a scrolled page would freeze the blur fully on. Remounting restarts
+          the animation; on an inactive timeline its time is unresolved, so no fill
+          applies and --blur-progress falls back to its initial 0. */}
       <div
+        key={pathname}
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] opacity-0 transition-opacity duration-300 ease-out group-data-[scrolled]/header:opacity-100"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[180%] header-blur-reveal"
       >
         {BLUR_LAYERS.map(({ blur, mask }) => (
           <div
             key={blur}
             className="absolute inset-0"
             style={{
-              backdropFilter: `blur(${blur}px)`,
-              WebkitBackdropFilter: `blur(${blur}px)`,
+              backdropFilter: `blur(calc(var(--blur-progress, 0) * ${blur}px))`,
+              WebkitBackdropFilter: `blur(calc(var(--blur-progress, 0) * ${blur}px))`,
               maskImage: mask,
               WebkitMaskImage: mask,
             }}
@@ -99,8 +92,19 @@ export function Header({ className, items = [] }: HeaderProps) {
         <div
           className="absolute inset-0"
           style={{
+            // Darkness rides this element's opacity (0.9 at full scroll) — never the
+            // backdrop-filter layers, which would form an opacity group and drop the
+            // blur. The gradient peaks at full --color-bg at the top.
+            opacity: 'calc(var(--blur-progress, 0) * 0.9)',
             background:
-              'linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--color-bg) 55%, transparent) 55%, color-mix(in oklab, var(--color-bg) 72%, transparent) 100%)',
+              'linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--color-bg) 76%, transparent) 55%, var(--color-bg) 100%)',
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 header-blur-dither"
+          style={{
+            opacity: 'calc(var(--blur-progress, 0) * 0.035)',
           }}
         />
       </div>

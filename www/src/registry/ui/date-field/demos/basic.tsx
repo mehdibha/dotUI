@@ -3,7 +3,7 @@ import { DateInput } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <DateField aria-label="Meeting date">
+    <DateField className="max-w-xs" aria-label="Meeting date">
       <DateInput />
     </DateField>
   )

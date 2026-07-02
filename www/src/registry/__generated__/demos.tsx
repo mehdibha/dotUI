@@ -333,10 +333,6 @@ export const DemosIndex: Record<
 		files: ["ui/chart-area/demos/icons.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-area/demos/icons")),
 	},
-	"chart-area/demos/interactive": {
-		files: ["ui/chart-area/demos/interactive.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-area/demos/interactive")),
-	},
 	"chart-area/demos/legend": {
 		files: ["ui/chart-area/demos/legend.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-area/demos/legend")),
@@ -368,10 +364,6 @@ export const DemosIndex: Record<
 	"chart-bar/demos/horizontal": {
 		files: ["ui/chart-bar/demos/horizontal.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/horizontal")),
-	},
-	"chart-bar/demos/interactive": {
-		files: ["ui/chart-bar/demos/interactive.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/interactive")),
 	},
 	"chart-bar/demos/label-custom": {
 		files: ["ui/chart-bar/demos/label-custom.tsx"],
@@ -413,10 +405,6 @@ export const DemosIndex: Record<
 		files: ["ui/chart-line/demos/dots.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-line/demos/dots")),
 	},
-	"chart-line/demos/interactive": {
-		files: ["ui/chart-line/demos/interactive.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-line/demos/interactive")),
-	},
 	"chart-line/demos/label-custom": {
 		files: ["ui/chart-line/demos/label-custom.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-line/demos/label-custom")),
@@ -448,10 +436,6 @@ export const DemosIndex: Record<
 	"chart-pie/demos/donut": {
 		files: ["ui/chart-pie/demos/donut.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/donut")),
-	},
-	"chart-pie/demos/interactive": {
-		files: ["ui/chart-pie/demos/interactive.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-pie/demos/interactive")),
 	},
 	"chart-pie/demos/label-custom": {
 		files: ["ui/chart-pie/demos/label-custom.tsx"],
@@ -2113,6 +2097,14 @@ export const DemosIndex: Record<
 		files: ["ui/search-field/demos/with-suggestions.tsx"],
 		component: React.lazy(() => import("@/registry/ui/search-field/demos/with-suggestions")),
 	},
+	"segmented-control/demos/default": {
+		files: ["ui/segmented-control/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/segmented-control/demos/default")),
+	},
+	"segmented-control/demos/with-icons": {
+		files: ["ui/segmented-control/demos/with-icons.tsx"],
+		component: React.lazy(() => import("@/registry/ui/segmented-control/demos/with-icons")),
+	},
 	"select/demos/async-loading": {
 		files: ["ui/select/demos/async-loading.tsx"],
 		component: React.lazy(() => import("@/registry/ui/select/demos/async-loading")),
@@ -2700,6 +2692,58 @@ export const DemosIndex: Record<
 	"time-field/demos/uncontrolled": {
 		files: ["ui/time-field/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/time-field/demos/uncontrolled")),
+	},
+	"time-picker/demos/basic": {
+		files: ["ui/time-picker/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/basic")),
+	},
+	"time-picker/demos/composition": {
+		files: ["ui/time-picker/demos/composition.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/composition")),
+	},
+	"time-picker/demos/controlled": {
+		files: ["ui/time-picker/demos/controlled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/controlled")),
+	},
+	"time-picker/demos/description": {
+		files: ["ui/time-picker/demos/description.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/description")),
+	},
+	"time-picker/demos/disabled": {
+		files: ["ui/time-picker/demos/disabled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/disabled")),
+	},
+	"time-picker/demos/error-message": {
+		files: ["ui/time-picker/demos/error-message.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/error-message")),
+	},
+	"time-picker/demos/granularity": {
+		files: ["ui/time-picker/demos/granularity.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/granularity")),
+	},
+	"time-picker/demos/hour-cycle": {
+		files: ["ui/time-picker/demos/hour-cycle.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/hour-cycle")),
+	},
+	"time-picker/demos/label": {
+		files: ["ui/time-picker/demos/label.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/label")),
+	},
+	"time-picker/demos/placeholder": {
+		files: ["ui/time-picker/demos/placeholder.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/placeholder")),
+	},
+	"time-picker/demos/read-only": {
+		files: ["ui/time-picker/demos/read-only.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/read-only")),
+	},
+	"time-picker/demos/required": {
+		files: ["ui/time-picker/demos/required.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/required")),
+	},
+	"time-picker/demos/uncontrolled": {
+		files: ["ui/time-picker/demos/uncontrolled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/time-picker/demos/uncontrolled")),
 	},
 	"toggle-button/demos/controlled": {
 		files: ["ui/toggle-button/demos/controlled.tsx"],

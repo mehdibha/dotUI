@@ -58,6 +58,7 @@ import UiPopover from "@/registry/ui/popover/meta";
 import UiProgressBar from "@/registry/ui/progress-bar/meta";
 import UiRadioGroup from "@/registry/ui/radio-group/meta";
 import UiSearchField from "@/registry/ui/search-field/meta";
+import UiSegmentedControl from "@/registry/ui/segmented-control/meta";
 import UiSelect from "@/registry/ui/select/meta";
 import UiSeparator from "@/registry/ui/separator/meta";
 import UiSidebar from "@/registry/ui/sidebar/meta";
@@ -70,6 +71,7 @@ import UiTagGroup from "@/registry/ui/tag-group/meta";
 import UiTextField from "@/registry/ui/text-field/meta";
 import UiText from "@/registry/ui/text/meta";
 import UiTimeField from "@/registry/ui/time-field/meta";
+import UiTimePicker from "@/registry/ui/time-picker/meta";
 import UiToast from "@/registry/ui/toast/meta";
 import UiToggleButtonGroup from "@/registry/ui/toggle-button-group/meta";
 import UiToggleButton from "@/registry/ui/toggle-button/meta";
@@ -132,6 +134,7 @@ export const registryUi: RegistryItem[] = [
 	UiProgressBar,
 	UiRadioGroup,
 	UiSearchField,
+	UiSegmentedControl,
 	UiSelect,
 	UiSeparator,
 	UiSidebar,
@@ -144,6 +147,7 @@ export const registryUi: RegistryItem[] = [
 	UiText,
 	UiTextField,
 	UiTimeField,
+	UiTimePicker,
 	UiToast,
 	UiToggleButton,
 	UiToggleButtonGroup,

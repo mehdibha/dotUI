@@ -14,6 +14,7 @@ export default function Demo({
 } = {}) {
   return (
     <TextField
+      className="max-w-xs"
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
       isInvalid={isInvalid}

@@ -13,7 +13,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <TextField>
         <Label>Default Textarea (no InputGroup)</Label>
         <TextArea placeholder="Enter your text here..." />
@@ -105,6 +105,6 @@ export default function Demo() {
           </InputGroupAddon>
         </InputGroup>
       </TextField>
-    </>
+    </div>
   )
 }

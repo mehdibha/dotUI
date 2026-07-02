@@ -7,7 +7,7 @@ import {
 
 export default function Demo() {
   return (
-    <Select aria-label="Provider" isDisabled>
+    <Select className="w-52" aria-label="Provider" isDisabled>
       <SelectTrigger />
       <SelectContent>
         <SelectItem>Perplexity</SelectItem>

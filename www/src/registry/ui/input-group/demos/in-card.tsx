@@ -21,7 +21,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <Card className="w-full">
+    <Card className="w-full max-w-xs">
       <CardHeader>
         <CardTitle>Card with Input Group</CardTitle>
         <CardDescription>This is a card with an input group.</CardDescription>

@@ -99,10 +99,10 @@ function ContextualHelp({
         <Button
           size="sm"
           variant="quiet"
-          className="size-6 shrink-0 [&_svg]:size-3"
+          className="size-5 shrink-0 text-fg-muted/70 hover:text-fg-muted"
           aria-label={`Info about ${name}`}
         >
-          <InfoIcon />
+          <InfoIcon className="size-3" />
         </Button>
         <Popover placement="top" className="max-w-xs">
           <DialogContent className="gap-2">

@@ -8,6 +8,7 @@ import { TimeField } from '@/registry/ui/time-field'
 export default function Demo() {
   return (
     <TimeField
+      className="max-w-xs"
       aria-label="Meeting time"
       defaultValue={parseZonedDateTime('2022-11-07T00:45[America/Los_Angeles]')}
     >

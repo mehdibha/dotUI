@@ -4,7 +4,7 @@ import { SearchField } from '@/registry/ui/search-field'
 
 export default function Demo() {
   return (
-    <div className="space-y-4">
+    <div className="max-w-xs space-y-4">
       <SearchField>
         <Label>Search</Label>
         <Input placeholder="Visible label" />

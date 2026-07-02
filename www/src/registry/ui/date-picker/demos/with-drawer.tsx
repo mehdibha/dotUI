@@ -8,7 +8,7 @@ import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <DatePicker aria-label="Meeting date">
+    <DatePicker className="w-52" aria-label="Meeting date">
       <InputGroup>
         <DateInput />
         <InputGroupAddon>

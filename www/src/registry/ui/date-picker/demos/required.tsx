@@ -9,7 +9,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <DatePicker isRequired>
+    <DatePicker className="w-52" isRequired>
       <Label>Event date</Label>
       <InputGroup>
         <DateInput />

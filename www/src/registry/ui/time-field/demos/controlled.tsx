@@ -12,13 +12,13 @@ export default function Demo() {
     new Time(11, 45),
   )
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <TimeField aria-label="Event time" value={time} onChange={setTime}>
         <DateInput />
       </TimeField>
       <p className="text-sm text-fg-muted">
         selected time: {time ? time.toString() : 'none'}
       </p>
-    </>
+    </div>
   )
 }

@@ -4,7 +4,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <TextField>
+    <TextField className="max-w-xs">
       <Label>Invalid</Label>
       <Input placeholder="Invalid input" />
     </TextField>

@@ -26,6 +26,7 @@ export default function Demo({
 
   return (
     <Select
+      className="w-52"
       aria-label={trimmedLabel ? undefined : 'Provider'}
       placeholder={trimmedPlaceholder || undefined}
       isDisabled={isDisabled}

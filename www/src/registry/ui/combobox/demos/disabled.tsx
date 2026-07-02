@@ -8,7 +8,7 @@ import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <Combobox isDisabled aria-label="Animal">
+    <Combobox className="w-52" isDisabled aria-label="Animal">
       <InputGroup>
         <Input placeholder="Select a country..." />
         <InputGroupAddon>

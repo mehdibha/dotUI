@@ -8,7 +8,7 @@ import { TimeField } from '@/registry/ui/time-field'
 
 export default function Demo() {
   return (
-    <TimeField placeholderValue={new Time(9)}>
+    <TimeField className="max-w-xs" placeholderValue={new Time(9)}>
       <Label>Event time</Label>
       <DateInput />
     </TimeField>

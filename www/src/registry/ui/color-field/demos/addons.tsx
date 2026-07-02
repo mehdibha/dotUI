@@ -5,7 +5,7 @@ import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 
 export default function Demo() {
   return (
-    <div className="flex w-full flex-col items-center gap-4">
+    <div className="flex w-full max-w-xs flex-col items-center gap-4">
       <ColorField aria-label="Color field with prefix">
         <InputGroup>
           <Input />

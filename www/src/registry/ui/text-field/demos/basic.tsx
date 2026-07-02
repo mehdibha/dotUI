@@ -3,7 +3,7 @@ import { TextField } from '@/registry/ui/text-field'
 
 export default function Demo() {
   return (
-    <TextField aria-label="Email">
+    <TextField className="max-w-xs" aria-label="Email">
       <Input placeholder="hello@example.com" />
     </TextField>
   )

@@ -4,7 +4,7 @@ import { TimeField } from '@/registry/ui/time-field'
 
 export default function Demo() {
   return (
-    <TimeField isInvalid>
+    <TimeField className="max-w-xs" isInvalid>
       <Label>Meeting time</Label>
       <DateInput />
       <FieldError>Meetings start every 15 minutes.</FieldError>

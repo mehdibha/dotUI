@@ -52,6 +52,7 @@ interface ColorSliderControlProps extends React.ComponentProps<
 
 const ColorSliderControl = ({
   className,
+  style,
   ...props
 }: ColorSliderControlProps) => {
   const { track } = useStyles()()
@@ -61,6 +62,12 @@ const ColorSliderControl = ({
       className={composeRenderProps(className, (cn, { orientation }) =>
         track({ orientation, className: cn }),
       )}
+      style={composeRenderProps(style, (style, { defaultStyle }) => ({
+        ...defaultStyle,
+        ...style,
+        background: `${defaultStyle?.background},
+      repeating-conic-gradient(#e6e6e6 0% 25%, #fff 0% 50%) 50% / 16px 16px`,
+      }))}
       {...props}
     >
       {props.children ?? <ColorThumb />}

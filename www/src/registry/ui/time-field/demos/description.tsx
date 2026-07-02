@@ -6,7 +6,7 @@ import { TimeField } from '@/registry/ui/time-field'
 
 export default function Demo() {
   return (
-    <TimeField>
+    <TimeField className="max-w-xs">
       <Label>Appointment time</Label>
       <DateInput />
       <Description>Please select a time between 9 AM and 5 PM.</Description>

@@ -30,7 +30,7 @@ export default function Demo() {
   })
 
   return (
-    <Select aria-label="Pokemon">
+    <Select className="w-52" aria-label="Pokemon">
       <SelectTrigger />
       <SelectContent
         className="max-h-64 overflow-auto overscroll-none"

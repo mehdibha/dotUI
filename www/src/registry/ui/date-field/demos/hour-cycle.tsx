@@ -9,7 +9,7 @@ export default function Demo() {
       aria-label="Appointment date"
       granularity="minute"
       hourCycle={24}
-      className="w-auto"
+      className="w-auto max-w-xs"
     >
       <DateInput />
     </DateField>

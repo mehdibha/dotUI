@@ -11,7 +11,11 @@ export default function Demo({
   isReadOnly = false,
 } = {}) {
   return (
-    <SearchField isDisabled={isDisabled} isReadOnly={isReadOnly}>
+    <SearchField
+      className="max-w-xs"
+      isDisabled={isDisabled}
+      isReadOnly={isReadOnly}
+    >
       {label && <Label>{label}</Label>}
       <Input data-control-target placeholder={placeholder} />
     </SearchField>

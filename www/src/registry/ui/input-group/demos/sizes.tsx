@@ -14,7 +14,7 @@ const sizes = ['sm', 'md', 'lg'] as const
 
 export default function Demo() {
   return (
-    <>
+    <div className="flex w-full max-w-xs flex-col gap-6">
       <div className="flex w-full flex-col gap-2">
         {sizes.map((size) => (
           <TextField key={size} aria-label={`Size ${size}`}>
@@ -109,6 +109,6 @@ export default function Demo() {
           </TextField>
         ))}
       </div>
-    </>
+    </div>
   )
 }

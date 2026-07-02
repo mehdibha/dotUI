@@ -1,16 +1,21 @@
 import { cn } from '@/registry/lib/utils'
 import { AccountMenu } from '@/components/showcase/account-menu'
 import { AiPrompt } from '@/components/showcase/ai-prompt'
+import { Appearance } from '@/components/showcase/appearance'
 import { Booking } from '@/components/showcase/booking'
 import { ColorEditorCard } from '@/components/showcase/color-editor'
+import { CommandMenu } from '@/components/showcase/command-menu'
 import { ComputerUse } from '@/components/showcase/computer-use'
 import { CookiePreferences } from '@/components/showcase/cookie-preferences'
+import { DisplaySettings } from '@/components/showcase/display-settings'
 import { Faq } from '@/components/showcase/faq'
 import { Filters } from '@/components/showcase/filters'
 import { InviteMembers } from '@/components/showcase/invite-members'
 import { LoginForm } from '@/components/showcase/login-form'
+import { Metrics } from '@/components/showcase/metrics'
 import { Notifications } from '@/components/showcase/notifications'
 import { Payment } from '@/components/showcase/payment'
+import { PricingPlans } from '@/components/showcase/pricing-plans'
 import { Shortcuts } from '@/components/showcase/shortcuts'
 import { Storage } from '@/components/showcase/storage'
 import { TeamName } from '@/components/showcase/team-name'
@@ -43,6 +48,51 @@ const LAYOUTS = {
 // `break-inside-avoid` keeps each card whole instead of splitting across columns.
 function Cell({ children }: { children: React.ReactNode }) {
   return <div className="break-inside-avoid pb-4">{children}</div>
+}
+
+// A masonry laid out as `count` FIXED flex columns instead of CSS `columns`. This is
+// what makes the landing preset morph smooth: with real `columns`, changing card
+// heights forces the multi-column balancer to re-flow cards *between* columns every
+// frame (expensive, and cards visibly jump). Fixed columns just grow each card in
+// place — and, being plain block flow, they let `content-visibility:auto` actually
+// skip the off-screen cards, so only the few on-screen ones re-lay-out per frame.
+// Cards are distributed round-robin (the ragged bottom is masked away anyway). The
+// /create preview keeps CSS `columns` — it never animates, so it pays none of this.
+function FixedColumns({
+  items,
+  count,
+  className,
+  columnClassName,
+}: {
+  items: { key: string; node: React.ReactNode }[]
+  count: number
+  className?: string
+  columnClassName?: string
+}) {
+  const columns: { key: string; node: React.ReactNode }[][] = Array.from(
+    { length: count },
+    () => [],
+  )
+  items.forEach((item, i) => columns[i % count]!.push(item))
+  return (
+    <div className={cn('flex gap-4', className)}>
+      {columns.map((column, ci) => (
+        <div
+          key={ci}
+          className={cn('flex min-w-0 flex-1 flex-col gap-4', columnClassName)}
+        >
+          {column.map((item) => (
+            <div
+              key={item.key}
+              className="[contain-intrinsic-size:auto_320px] [content-visibility:auto]"
+            >
+              {item.node}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
 }
 
 // The showcase grid — the single source of truth for which cards render. Shared by
@@ -86,6 +136,56 @@ export function CardsGrid({
   // On landing these cards live in the side column, beside (not under) the banner.
   const sideKeys = new Set(['team', 'cookie', 'computer', 'upload'])
 
+  const masonryCards = cards.filter((c) => !sideKeys.has(c.key))
+  const sideCards = cards.filter((c) => sideKeys.has(c.key))
+
+  // xl-only fillers for the landing variant. At xl the masonry and side columns sit
+  // beside the AI banner with no banner above them, so they bottom out short; these
+  // top them up. Below xl the side folds under the masonry and the rail's extra cards
+  // do the balancing instead, so these are hidden.
+  const masonryFillers =
+    variant === 'landing'
+      ? [
+          {
+            key: 'metrics-xl',
+            node: (
+              <div className="hidden xl:block">
+                <Metrics />
+              </div>
+            ),
+          },
+          {
+            key: 'command-xl',
+            node: (
+              <div className="hidden xl:block">
+                <CommandMenu />
+              </div>
+            ),
+          },
+        ]
+      : []
+  const sideFillers =
+    variant === 'landing'
+      ? [
+          {
+            key: 'pricing-xl',
+            node: (
+              <div className="hidden xl:block">
+                <PricingPlans />
+              </div>
+            ),
+          },
+          {
+            key: 'appearance-xl',
+            node: (
+              <div className="hidden xl:block">
+                <Appearance />
+              </div>
+            ),
+          },
+        ]
+      : []
+
   return (
     <div className={cn('grid items-start gap-4', layout.outer, className)}>
       {/* Left rail: its own single-column stack. */}
@@ -95,6 +195,16 @@ export function CardsGrid({
         <Filters />
         <Shortcuts />
         <AccountMenu />
+        {/* Below xl the side group folds under the masonry (see the side column),
+            which leaves this rail the shortest column. These extra cards refill it
+            so every column bottoms out at roughly the same level. They're dropped at
+            xl, where the rail is already full and the side becomes its own column. */}
+        {variant === 'landing' && (
+          <>
+            <CommandMenu className="xl:hidden" />
+            <DisplaySettings className="xl:hidden" />
+          </>
+        )}
       </div>
 
       {variant === 'landing' ? (
@@ -110,13 +220,20 @@ export function CardsGrid({
         >
           <div className="flex flex-col gap-4 xl:col-span-2">
             <AiPrompt />
-            <div className="columns-2 gap-4">
-              {cells(cards.filter((c) => !sideKeys.has(c.key)))}
-            </div>
+            <FixedColumns
+              items={[...masonryCards, ...masonryFillers]}
+              count={2}
+            />
           </div>
-          <div className="columns-2 gap-4 xl:columns-1">
-            {cells(cards.filter((c) => sideKeys.has(c.key)))}
-          </div>
+          {/* Side: two columns below xl; at xl the outer stacks (`flex-col`) and the
+				      inner columns un-flex (`flex-none`), so all four cards form the single 4th
+				      column. */}
+          <FixedColumns
+            items={[...sideCards, ...sideFillers]}
+            count={2}
+            className="xl:flex-col"
+            columnClassName="xl:flex-none"
+          />
         </div>
       ) : (
         // Preview: the banner full-width over a single masonry of every card.
