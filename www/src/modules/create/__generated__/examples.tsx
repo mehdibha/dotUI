@@ -37,6 +37,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	empty: () => import("@/registry/ui/empty/examples"),
 	field: () => import("@/registry/ui/field/examples"),
 	"file-trigger": () => import("@/registry/ui/file-trigger/examples"),
+	"flow-editor": () => import("@/registry/ui/flow-editor/examples"),
 	form: () => import("@/registry/ui/form/examples"),
 	group: () => import("@/registry/ui/group/examples"),
 	input: () => import("@/registry/ui/input/examples"),
