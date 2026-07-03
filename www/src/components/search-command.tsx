@@ -254,17 +254,20 @@ function SearchDialog({
           data-command=""
           className={commandStyles({ className: 'overflow-y-hidden p-0' })}
         >
-          <SearchField autoFocus aria-label="Search">
-            <InputGroup>
+          <SearchField autoFocus aria-label="Search" className="px-1.5 pt-1.5">
+            <InputGroup size="lg">
               <InputGroupAddon>
                 <SearchIcon />
               </InputGroupAddon>
               <Input placeholder="Search documentation..." />
             </InputGroup>
           </SearchField>
+          {/* The menu is the scroll container and must span the full panel
+              width (scrollbar at the edge), so the list padding lives inside
+              it rather than on the wrapper. */}
           <MenuContent
             aria-label="Search results"
-            className="max-h-80 overflow-y-auto p-0"
+            className="max-h-80 overflow-y-auto p-1.5 pt-0"
             onAction={onClose}
             renderEmptyState={() => (
               <div className="py-8 text-center text-sm text-fg-muted">
