@@ -177,9 +177,8 @@ function harvestRootClosure(): RootClosure {
   const toText = (map: Map<string, string>) =>
     [...map].map(([prop, value]) => `\t${prop}: ${value};`).join('\n')
   const closure = { light: toText(light), dark: toText(dark) }
-  // An empty harvest means the document's stylesheets weren't parsed yet — don't cache
-  // it, or every later attempt would rebuild null forever and scoped theming would stay
-  // off for the whole session.
+  // An empty harvest means the stylesheets weren't parsed yet — don't cache it, or scoped
+  // theming would stay off for the whole session.
   if (closure.light || closure.dark) rootClosureCache = closure
   return closure
 }
@@ -257,13 +256,12 @@ function buildScopedThemeCss(
 /* ----------------------- Shared scoped theme styles ----------------------- */
 
 /*
- * The closure-clone stylesheet is ~10KB and fully determined by `color` + `forcedMode`
- * (the harvested closure and semantic layer are the same for everyone), so scoped
- * providers with the same theme share one scope token and one injected <style> instead
- * of each carrying their own: a docs page rendering N demos in the user's stored preset
- * injects one style node, not N. Entries are refcounted; the node is removed when the
- * last provider using it unmounts or moves to a different theme. Injection is
- * effect-based and client-only, matching buildScopedThemeCss (null during SSR).
+ * The closure-clone stylesheet is ~10KB and fully determined by `color` + `forcedMode`,
+ * so scoped providers on the same theme share one scope token and one injected <style>
+ * instead of each carrying their own — a docs page rendering N demos in the user's
+ * stored preset injects one style node, not N. Entries are refcounted; the node is
+ * removed when the last provider using it unmounts or moves to a different theme.
+ * Client-only, like buildScopedThemeCss (null during SSR).
  */
 
 interface SharedThemeEntry {
@@ -295,9 +293,8 @@ function useSharedScopedTheme(
   forcedMode: 'light' | 'dark' | undefined,
   enabled: boolean,
 ): string | undefined {
-  // Content key: everything the stylesheet is built from — the color config and the
-  // pinned mode; token-only divergence (inline vars over the cloned closure, no
-  // palette) shares a per-mode colorless entry.
+  // Content key = everything the stylesheet is built from (color config + pinned mode).
+  // Token-only divergence (inline vars, no palette) shares a per-mode colorless entry.
   const [key, token] = React.useMemo(() => {
     if (!enabled) return [null, undefined] as const
     const k = `${forcedMode ?? 'auto'}:${color ? JSON.stringify(color) : 'default'}`
@@ -341,10 +338,9 @@ function useSharedScopedTheme(
         sharedThemes.delete(key)
       }
     }
-    // `color`/`forcedMode` are deliberately not deps: `key` pins their content (any
-    // captured pair is content-equal to it), and an identity-only `color` change must
-    // not release and re-acquire the entry — a sole holder would remove and rebuild
-    // the shared node every render.
+    // `color`/`forcedMode` are deliberately not deps: `key` pins their content, and an
+    // identity-only `color` change must not release/re-acquire — a sole holder would
+    // remove and rebuild the shared node every render.
   }, [key, token])
 
   return token
@@ -521,14 +517,11 @@ function DesignSystemProvider({
     if (scoped) harvestRootClosure()
   }, [scoped])
 
-  // Scoped mode: the closure-clone stylesheet (semantic + component vars recomputing from
-  // the scope, ramps overridden there) is shared across providers with the same theme —
-  // and only joined once something actually diverges (a color, or a token like
-  // --radius-factor); an untouched preview injects nothing and inherits the page defaults.
-  //
-  // `cssVars` themselves ride inline on the scope element and never enter the CSS text, so
-  // divergence is whether any override EXISTS (a boolean) rather than the object's identity —
-  // otherwise every radius-slider tick would rebuild a byte-identical stylesheet.
+  // Scoped mode: join the shared closure-clone stylesheet, but only once something
+  // actually diverges (a color, or a token like --radius-factor); an untouched preview
+  // injects nothing and inherits the page defaults. `cssVars` ride inline on the scope
+  // element and never enter the CSS text, so divergence keys on whether any override
+  // EXISTS (a boolean), not object identity — else every radius tick rebuilds identical CSS.
   const hasTokenOverrides = Object.keys(cssVars).length > 0
   const scopeToken = useSharedScopedTheme(
     color,
@@ -536,13 +529,11 @@ function DesignSystemProvider({
     scoped && (Boolean(color) || hasTokenOverrides || Boolean(forcedMode)),
   )
 
-  // Global mode: generative palette as a rendered <style> (declared in the returned tree
-  // below, not imperatively appended), writing :root + .dark (the flat-token path above
-  // only writes :root). Null until a color is set, so an untouched provider renders no
-  // <style> and SSR/first paint stay byte-identical to the bare children. A plain <style>
-  // (no `precedence`) is not hoisted by React; it renders in place, which is fine — its
-  // rules are global selectors (`:root`, `.dark`) that apply wherever the tag sits, and
-  // `<style>` carries the UA `display: none`, so it never affects layout.
+  // Global mode: generative palette as a rendered <style>, writing :root + .dark (the
+  // flat-token path above only writes :root). Null until a color is set, so an untouched
+  // provider renders no <style> and SSR/first paint stay byte-identical to the bare
+  // children. A plain <style> (no `precedence`) renders in place — fine, its rules are
+  // global selectors and `<style>` carries the UA `display: none`, so layout is untouched.
   const themeCss = React.useMemo(() => {
     if (scoped || !color) return null
     return emitPrimitivesCss(resolveColorConfigCached(color), {
