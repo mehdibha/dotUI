@@ -157,6 +157,9 @@ export const questionBank: Question[] = [
             'build-time',
             'css-in-js',
             'inline-style',
+            // Added 2026-07-03 (spectrum-2): native CSS light-dark() driven by
+            // the color-scheme property — no custom-property re-pointing.
+            'css-light-dark',
           ]),
         )
         .min(1),

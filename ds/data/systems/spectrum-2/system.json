@@ -1,0 +1,15 @@
+{
+  "slug": "spectrum-2",
+  "name": "Adobe Spectrum 2",
+  "org": "Adobe",
+  "type": "corporate-design-system",
+  "upstream": ["leonardo"],
+  "sources": {
+    "docs": "https://react-spectrum.adobe.com",
+    "repo": "https://github.com/adobe/spectrum-design-data",
+    "site": "https://s2.spectrum.adobe.com",
+    "figma": null
+  },
+  "status": "researched",
+  "addedAt": "2026-07-03"
+}
