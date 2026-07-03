@@ -25,9 +25,11 @@ import type {
 type ParamSelections = Record<string, Record<string, string>>
 type GlobalTokenSelections = Record<string, string>
 
+// Only what consumers (useStyles / useComponentParams) actually read. Tokens and
+// color deliberately stay OUT of the context: they apply as CSS vars / stylesheets
+// from the provider, so a palette/radius-only preset swap re-renders zero consumers.
 interface DesignSystemContextValue {
   params: ParamSelections
-  tokens: GlobalTokenSelections
   density: Density
 }
 
@@ -35,7 +37,6 @@ interface DesignSystemContextValue {
 
 const DesignSystemContext = React.createContext<DesignSystemContextValue>({
   params: {},
-  tokens: {},
   density: 'default',
 })
 
@@ -302,10 +303,7 @@ function DesignSystemProvider({
   transitionOnChange = true,
   children,
 }: DesignSystemProviderProps) {
-  const value = React.useMemo(
-    () => ({ params, tokens, density }),
-    [params, tokens, density],
-  )
+  const value = React.useMemo(() => ({ params, density }), [params, density])
 
   const cssVars = React.useMemo(() => {
     const vars: Record<string, string> = {}
@@ -786,14 +784,34 @@ function createStyles<const M extends RegistryItem, const Base>(
     return current
   }
 
+  // Composition is pure in (density, selections), and every instance of a
+  // component sees the same inputs (selection objects are stable references:
+  // preset/store constants or `emptyParamSelections`). Cache at module level so
+  // a design-system change composes once per component TYPE instead of once per
+  // instance — and so `useStyles` returns a stable reference across instances.
+  const composeCache = new Map<
+    Density,
+    WeakMap<object, ReturnType<typeof tv>>
+  >()
+  function composeCached(d: Density, selections: Record<string, string>) {
+    let byRef = composeCache.get(d)
+    if (!byRef) {
+      byRef = new WeakMap()
+      composeCache.set(d, byRef)
+    }
+    let composed = byRef.get(selections)
+    if (!composed) {
+      composed = compose(d, selections)
+      byRef.set(selections, composed)
+    }
+    return composed
+  }
+
   function useStyles() {
     const { params: paramSelections, density } =
       React.useContext(DesignSystemContext)
     const componentParams = paramSelections[meta.name] ?? emptyParamSelections
-    return React.useMemo(
-      () => compose(density, componentParams) as InferTv<Base>,
-      [density, componentParams],
-    )
+    return composeCached(density, componentParams) as InferTv<Base>
   }
 
   return {

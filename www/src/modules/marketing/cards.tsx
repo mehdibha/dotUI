@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { startTransition, useCallback, useState } from 'react'
 
 import { DesignSystemProvider } from '@/lib/styles'
 import { CardsGrid } from '@/components/showcase/cards-grid'
@@ -11,9 +11,16 @@ export function Cards() {
   const [selected, setSelected] = useState(0)
   const preset = PRESETS[selected]?.designSystem ?? DEFAULTS
 
+  // Re-theming the grid re-renders every styled component in it. As a transition,
+  // that render is interruptible and doesn't block the click — the switcher's
+  // pill responds immediately.
+  const handleSelect = useCallback((index: number) => {
+    startTransition(() => setSelected(index))
+  }, [])
+
   return (
     <div className="flex flex-col [--grid-max:1500px] [--rail-gap:--spacing(4)] [--rail-peek:2.5rem] sm:[--rail-peek:3.5rem] md:[--rail-peek:5rem] lg:[--rail-peek:7rem]">
-      <PresetSwitcher selected={selected} onSelect={setSelected} />
+      <PresetSwitcher selected={selected} onSelect={handleSelect} />
       <div className="relative flex justify-center gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] [--mask-clear:45px] [--mask-solid:180px]">
         <SkeletonRail side="left" />
         <DesignSystemProvider
