@@ -7,13 +7,11 @@ interface AccordionProps extends React.ComponentProps<
   typeof AccordionPrimitives.DisclosureGroup
 > {}
 function Accordion({ className, ...props }: AccordionProps) {
-  const accordionStyles = useStyles()
+  const styles = useStyles()
   return (
     <AccordionPrimitives.DisclosureGroup
       data-accordion=""
-      className={composeRenderProps(className, (c) =>
-        accordionStyles({ className: c }),
-      )}
+      className={composeRenderProps(className, (c) => styles({ className: c }))}
       {...props}
     />
   )

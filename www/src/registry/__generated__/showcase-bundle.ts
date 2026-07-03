@@ -265,7 +265,7 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	{
 		target: "registry/ui/accordion/base.tsx",
 		content:
-			"import { composeRenderProps } from 'react-aria-components/composeRenderProps'\nimport * as AccordionPrimitives from 'react-aria-components/DisclosureGroup'\n\nimport { useStyles } from './styles'\n\ninterface AccordionProps extends React.ComponentProps<\n  typeof AccordionPrimitives.DisclosureGroup\n> {}\nfunction Accordion({ className, ...props }: AccordionProps) {\n  const accordionStyles = useStyles()\n  return (\n    <AccordionPrimitives.DisclosureGroup\n      data-accordion=\"\"\n      className={composeRenderProps(className, (c) =>\n        accordionStyles({ className: c }),\n      )}\n      {...props}\n    />\n  )\n}\n\nexport type { AccordionProps }\nexport { Accordion }\n",
+			"import { composeRenderProps } from 'react-aria-components/composeRenderProps'\nimport * as AccordionPrimitives from 'react-aria-components/DisclosureGroup'\n\nimport { useStyles } from './styles'\n\ninterface AccordionProps extends React.ComponentProps<\n  typeof AccordionPrimitives.DisclosureGroup\n> {}\nfunction Accordion({ className, ...props }: AccordionProps) {\n  const styles = useStyles()\n  return (\n    <AccordionPrimitives.DisclosureGroup\n      data-accordion=\"\"\n      className={composeRenderProps(className, (c) => styles({ className: c }))}\n      {...props}\n    />\n  )\n}\n\nexport type { AccordionProps }\nexport { Accordion }\n",
 	},
 	{
 		target: "registry/ui/accordion/index.tsx",
@@ -303,7 +303,7 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	{
 		target: "registry/ui/badge/base.tsx",
 		content:
-			"import type * as React from 'react'\nimport type { VariantProps } from 'tailwind-variants'\n\nimport { useStyles } from './styles'\nimport type { BadgeStyles } from './styles'\n\n// MARK: badgeStyles\n\ninterface BadgeProps\n  extends React.ComponentProps<'span'>, VariantProps<BadgeStyles> {}\nconst Badge = ({\n  className,\n  appearance,\n  variant,\n  size,\n  ...props\n}: BadgeProps) => {\n  const badgeStyles = useStyles()\n  return (\n    <span\n      role=\"presentation\"\n      data-badge=\"\"\n      className={badgeStyles({ appearance, variant, size, className })}\n      {...props}\n    />\n  )\n}\n\nexport type { BadgeProps }\nexport { Badge }\n",
+			"import type * as React from 'react'\nimport type { VariantProps } from 'tailwind-variants'\n\nimport { useStyles } from './styles'\nimport type { BadgeStyles } from './styles'\n\n// MARK: badgeStyles\n\ninterface BadgeProps\n  extends React.ComponentProps<'span'>, VariantProps<BadgeStyles> {}\nconst Badge = ({\n  className,\n  appearance,\n  variant,\n  size,\n  ...props\n}: BadgeProps) => {\n  const styles = useStyles()\n  return (\n    <span\n      role=\"presentation\"\n      data-badge=\"\"\n      className={styles({ appearance, variant, size, className })}\n      {...props}\n    />\n  )\n}\n\nexport type { BadgeProps }\nexport { Badge }\n",
 	},
 	{
 		target: "registry/ui/badge/index.tsx",
@@ -563,7 +563,7 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	{
 		target: "registry/ui/command/base.tsx",
 		content:
-			"'use client'\n\nimport * as AutocompletePrimitive from 'react-aria-components/Autocomplete'\n\nimport {\n  ListBox,\n  ListBoxItem,\n  ListBoxSection,\n  ListBoxSectionHeader,\n} from '../list-box'\nimport { SearchField } from '../search-field'\n\nimport { useStyles } from './styles'\n\n// MARK: commandStyles\n\n// MARK: Separator\n\ninterface CommandProps<T extends object>\n  extends\n    Omit<AutocompletePrimitive.AutocompleteProps<T>, 'children' | 'filter'>,\n    Omit<React.ComponentProps<'div'>, 'slot'> {\n  filter?: Intl.CollatorOptions\n}\n\nfunction Command<T extends object>({\n  className,\n  slot,\n  filter,\n  ...props\n}: CommandProps<T>) {\n  const commandStyles = useStyles()\n  const { contains } = AutocompletePrimitive.useFilter({\n    sensitivity: 'base',\n    ignorePunctuation: true,\n    ...filter,\n  })\n\n  return (\n    <AutocompletePrimitive.Autocomplete filter={contains}>\n      <div\n        data-command=\"\"\n        className={commandStyles({ className })}\n        {...props}\n      />\n    </AutocompletePrimitive.Autocomplete>\n  )\n}\n\n// MARK: Separator\n\nexport type { CommandProps }\nexport {\n  Command,\n  ListBox as CommandContent,\n  ListBoxItem as CommandItem,\n  ListBoxSection as CommandSection,\n  ListBoxSectionHeader as CommandSectionHeader,\n  SearchField as CommandInput,\n}\n",
+			"'use client'\n\nimport * as AutocompletePrimitive from 'react-aria-components/Autocomplete'\n\nimport {\n  ListBox,\n  ListBoxItem,\n  ListBoxSection,\n  ListBoxSectionHeader,\n} from '../list-box'\nimport { SearchField } from '../search-field'\n\nimport { useStyles } from './styles'\n\n// MARK: commandStyles\n\n// MARK: Separator\n\ninterface CommandProps<T extends object>\n  extends\n    Omit<AutocompletePrimitive.AutocompleteProps<T>, 'children' | 'filter'>,\n    Omit<React.ComponentProps<'div'>, 'slot'> {\n  filter?: Intl.CollatorOptions\n}\n\nfunction Command<T extends object>({\n  className,\n  slot,\n  filter,\n  ...props\n}: CommandProps<T>) {\n  const styles = useStyles()\n  const { contains } = AutocompletePrimitive.useFilter({\n    sensitivity: 'base',\n    ignorePunctuation: true,\n    ...filter,\n  })\n\n  return (\n    <AutocompletePrimitive.Autocomplete filter={contains}>\n      <div data-command=\"\" className={styles({ className })} {...props} />\n    </AutocompletePrimitive.Autocomplete>\n  )\n}\n\n// MARK: Separator\n\nexport type { CommandProps }\nexport {\n  Command,\n  ListBox as CommandContent,\n  ListBoxItem as CommandItem,\n  ListBoxSection as CommandSection,\n  ListBoxSectionHeader as CommandSectionHeader,\n  SearchField as CommandInput,\n}\n",
 	},
 	{
 		target: "registry/ui/command/index.tsx",
@@ -763,7 +763,7 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	{
 		target: "registry/ui/link/base.tsx",
 		content:
-			"'use client'\n\nimport { composeRenderProps } from 'react-aria-components/composeRenderProps'\nimport * as LinkPrimitives from 'react-aria-components/Link'\nimport type { VariantProps } from 'tailwind-variants'\n\nimport { useStyles } from './styles'\nimport type { LinkStyles } from './styles'\n\n// MARK: linkStyles\n\ninterface LinkProps\n  extends LinkPrimitives.LinkProps, VariantProps<LinkStyles> {}\n\nconst Link = ({ variant, ...props }: LinkProps) => {\n  const linkStyles = useStyles()\n  return (\n    <LinkPrimitives.Link\n      {...props}\n      className={composeRenderProps(props.className, (className) =>\n        linkStyles({ variant, className }),\n      )}\n    />\n  )\n}\n\nexport type { LinkProps }\nexport { Link }\n",
+			"'use client'\n\nimport { composeRenderProps } from 'react-aria-components/composeRenderProps'\nimport * as LinkPrimitives from 'react-aria-components/Link'\nimport type { VariantProps } from 'tailwind-variants'\n\nimport { useStyles } from './styles'\nimport type { LinkStyles } from './styles'\n\n// MARK: linkStyles\n\ninterface LinkProps\n  extends LinkPrimitives.LinkProps, VariantProps<LinkStyles> {}\n\nconst Link = ({ variant, ...props }: LinkProps) => {\n  const styles = useStyles()\n  return (\n    <LinkPrimitives.Link\n      {...props}\n      className={composeRenderProps(props.className, (className) =>\n        styles({ variant, className }),\n      )}\n    />\n  )\n}\n\nexport type { LinkProps }\nexport { Link }\n",
 	},
 	{
 		target: "registry/ui/link/index.tsx",
@@ -990,7 +990,7 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	{
 		target: "registry/ui/separator/base.tsx",
 		content:
-			"'use client'\n\nimport type React from 'react'\nimport * as SeparatorPrimitives from 'react-aria-components/Separator'\nimport { useSlottedContext } from 'react-aria-components/slots'\n\nimport { useStyles } from './styles'\n\n// MARK: separatorStyles\n\ninterface SeparatorProps extends React.ComponentProps<\n  typeof SeparatorPrimitives.Separator\n> {}\n\nconst Separator = ({ orientation, className, ...props }: SeparatorProps) => {\n  const separatorStyles = useStyles()\n  const ctx = useSlottedContext(SeparatorPrimitives.SeparatorContext)\n\n  return (\n    <SeparatorPrimitives.Separator\n      data-separator=\"\"\n      orientation={orientation}\n      className={separatorStyles({\n        orientation: orientation ?? ctx?.orientation,\n        className,\n      })}\n      {...props}\n    />\n  )\n}\n\nexport type { SeparatorProps }\nexport { Separator }\n",
+			"'use client'\n\nimport type React from 'react'\nimport * as SeparatorPrimitives from 'react-aria-components/Separator'\nimport { useSlottedContext } from 'react-aria-components/slots'\n\nimport { useStyles } from './styles'\n\n// MARK: separatorStyles\n\ninterface SeparatorProps extends React.ComponentProps<\n  typeof SeparatorPrimitives.Separator\n> {}\n\nconst Separator = ({ orientation, className, ...props }: SeparatorProps) => {\n  const styles = useStyles()\n  const ctx = useSlottedContext(SeparatorPrimitives.SeparatorContext)\n\n  return (\n    <SeparatorPrimitives.Separator\n      data-separator=\"\"\n      orientation={orientation}\n      className={styles({\n        orientation: orientation ?? ctx?.orientation,\n        className,\n      })}\n      {...props}\n    />\n  )\n}\n\nexport type { SeparatorProps }\nexport { Separator }\n",
 	},
 	{
 		target: "registry/ui/separator/index.tsx",
@@ -1092,7 +1092,7 @@ export const SHOWCASE_BUNDLE_SOURCE_FILES: BundleFile[] = [
 	{
 		target: "registry/ui/tabs/meta.ts",
 		content:
-			"import type { RegistryItem } from '../../types'\n\nconst tabsMeta = {\n  name: 'tabs',\n  type: 'registry:ui',\n  group: 'navigation',\n  files: [\n    {\n      type: 'registry:ui',\n      path: 'ui/tabs/base.tsx',\n      target: 'ui/tabs.tsx',\n    },\n  ],\n  registryDependencies: ['focus-styles'],\n} satisfies RegistryItem\n\nexport default tabsMeta\n",
+			"import type { RegistryItem } from '../../types'\n\nconst tabsMeta = {\n  name: 'tabs',\n  type: 'registry:ui',\n  group: 'navigation',\n  files: [\n    {\n      type: 'registry:ui',\n      path: 'ui/tabs/base.tsx',\n      target: 'ui/tabs.tsx',\n    },\n    // base.tsx imports @/lib/context, which has no installable registry item —\n    // ship the file with tabs until lib items become publishable.\n    {\n      type: 'registry:lib',\n      path: 'lib/context/index.tsx',\n      target: 'lib/context.tsx',\n    },\n  ],\n  registryDependencies: ['focus-styles'],\n} satisfies RegistryItem\n\nexport default tabsMeta\n",
 	},
 	{
 		target: "registry/ui/tabs/styles.ts",

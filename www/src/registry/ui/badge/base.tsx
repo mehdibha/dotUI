@@ -15,12 +15,12 @@ const Badge = ({
   size,
   ...props
 }: BadgeProps) => {
-  const badgeStyles = useStyles()
+  const styles = useStyles()
   return (
     <span
       role="presentation"
       data-badge=""
-      className={badgeStyles({ appearance, variant, size, className })}
+      className={styles({ appearance, variant, size, className })}
       {...props}
     />
   )

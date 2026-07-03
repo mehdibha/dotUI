@@ -80,10 +80,8 @@ export function setDotuiDepResolver(origin: string, depQuery = ''): void {
   dotuiDepQuery = depQuery
 }
 
-function rewriteDeps(
-  deps: readonly string[] | undefined,
-): string[] | undefined {
-  if (!deps || deps.length === 0) return undefined
+function rewriteDeps(deps: readonly string[] | undefined): string[] {
+  if (!deps || deps.length === 0) return []
   const known = knownDotuiNames
   const out: string[] = []
   for (const dep of deps) {
@@ -107,7 +105,31 @@ function rewriteDeps(
     // Otherwise pass through — let shadcn resolve via the default registry.
     out.push(dep)
   }
-  return out.length > 0 ? out : undefined
+  return out
+}
+
+/**
+ * Npm packages shipped files may import that the init base doesn't install.
+ * Detected from the emitted content so `shadcn add` installs them — metas
+ * historically omit them (icons especially), which breaks fresh consumers.
+ */
+const FILE_IMPORT_NPM_DEPS = ['lucide-react', 'react-aria', 'react-stately']
+
+function depsFromFileImports(
+  files: ReadonlyArray<{ content?: string }>,
+): string[] {
+  const found: string[] = []
+  for (const pkg of FILE_IMPORT_NPM_DEPS) {
+    const hit = files.some((file) => {
+      const content = file.content ?? ''
+      return ['"', "'"].some(
+        (q) =>
+          content.includes(`${q}${pkg}${q}`) || content.includes(`${q}${pkg}/`),
+      )
+    })
+    if (hit) found.push(pkg)
+  }
+  return found
 }
 
 export interface PublishedItem {
@@ -165,6 +187,11 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
     content: extraFiles?.[file.path] ?? content,
   }))
 
+  const registryDependencies = rewriteDeps(meta.registryDependencies)
+  const dependencies = [
+    ...new Set([...(meta.dependencies ?? []), ...depsFromFileImports(files)]),
+  ]
+
   const itemShape = {
     name: meta.name,
     type: meta.type,
@@ -172,13 +199,8 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
     ...(meta.description !== undefined
       ? { description: meta.description }
       : {}),
-    ...(meta.dependencies ? { dependencies: meta.dependencies } : {}),
-    ...(meta.registryDependencies
-      ? {
-          registryDependencies:
-            rewriteDeps(meta.registryDependencies) ?? meta.registryDependencies,
-        }
-      : {}),
+    ...(dependencies.length > 0 ? { dependencies } : {}),
+    ...(registryDependencies.length > 0 ? { registryDependencies } : {}),
     ...(meta.css ? { css: meta.css } : {}),
     ...(meta.cssVars ? { cssVars: meta.cssVars } : {}),
     files,
