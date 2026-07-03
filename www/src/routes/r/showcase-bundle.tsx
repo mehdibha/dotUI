@@ -117,7 +117,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 }
 
 function buildPageTsx(preset: PublishPreset): string {
-  const density = JSON.stringify(preset.density ?? 'compact')
+  const density = JSON.stringify(preset.density ?? 'default')
   const params = JSON.stringify(preset.componentParams ?? {})
   // Import the theme from the page too (not just the layout): if v0 keeps its
   // own root layout, the page still pulls in globals.css so the theme loads.

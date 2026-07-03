@@ -40,7 +40,7 @@ export function fromCompact(state: DesignSystemState): DesignSystem {
   return {
     componentParams: state.p ?? {},
     tokens: state.t ?? {},
-    density: state.d ?? 'compact',
+    density: state.d ?? 'default',
     color: state.c,
     codeOptions: state.o,
   }

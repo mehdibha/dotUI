@@ -46,11 +46,11 @@ const CN_UTILS_TS = `export { cn } from "cnfast";
 `
 
 /**
- * Map the preset's compact density key to a `:root` value. dotui's default
- * density is `compact`, so an empty value omits the declaration.
+ * Map the preset's density key to a `:root` value. dotui's default density
+ * is `default`, so an empty value omits the declaration.
  */
 function densityRootValue(density: Density): string | undefined {
-  if (density === 'compact') return undefined
+  if (density === 'default') return undefined
   return density
 }
 

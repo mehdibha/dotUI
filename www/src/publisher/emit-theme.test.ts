@@ -35,7 +35,7 @@ describe('emitInitItem', () => {
   test('emits base CSS through registry fields instead of a CSS file', () => {
     const item = emitInitItem({
       baseRegistryCss,
-      preset: { density: 'compact', componentParams: {} },
+      preset: { density: 'default', componentParams: {} },
       registryRoot: 'https://dotui.com',
     })
 
@@ -58,7 +58,7 @@ describe('emitInitItem', () => {
           dark: { 'neutral-50': 'hsl(0, 6%, 4%)' },
         },
       },
-      preset: { density: 'compact', componentParams: {} },
+      preset: { density: 'default', componentParams: {} },
       registryRoot: 'https://dotui.com',
     })
 
@@ -72,7 +72,7 @@ describe('emitInitItem', () => {
   test('writes the preset into the @dotui registry URL string', () => {
     const item = emitInitItem({
       baseRegistryCss,
-      preset: { density: 'compact', componentParams: {} },
+      preset: { density: 'default', componentParams: {} },
       encodedPreset: 'abc123',
       registryRoot: 'https://dotui.com',
     })
@@ -82,14 +82,14 @@ describe('emitInitItem', () => {
     )
   })
 
-  test('adds non-compact density as a root css var without mutating the base fields', () => {
+  test('adds non-default density as a root css var without mutating the base fields', () => {
     const item = emitInitItem({
       baseRegistryCss,
-      preset: { density: 'default', componentParams: {} },
+      preset: { density: 'compact', componentParams: {} },
       registryRoot: 'https://dotui.com',
     })
 
-    expect(item.css?.[':root']).toMatchObject({ '--dotui-density': 'default' })
+    expect(item.css?.[':root']).toMatchObject({ '--dotui-density': 'compact' })
     expect(baseRegistryCss.css[':root']).not.toHaveProperty('--dotui-density')
   })
 
