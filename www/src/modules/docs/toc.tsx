@@ -38,7 +38,7 @@ export function TOC({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       className={cn(
-        'sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden',
+        'sticky top-10 flex max-h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden',
         className,
       )}
       {...props}
@@ -65,7 +65,7 @@ export function TOCScrollArea({
     <div
       ref={mergeRefs(viewRef, ref)}
       className={cn(
-        'no-scrollbar min-h-0 scroll-fade-y overflow-auto pt-10 pb-3 text-sm scroll-fade-4',
+        'no-scrollbar min-h-0 scroll-fade-y overflow-auto pt-10 pb-3 text-sm scroll-fade-6',
         className,
       )}
       {...props}
