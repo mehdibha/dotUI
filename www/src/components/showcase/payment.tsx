@@ -167,9 +167,13 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
 
               <div className="space-y-3 pt-1">
                 <Checkbox>I'm purchasing as a business</Checkbox>
-                <Checkbox>
+                {/* items-start + block label: the registry Label is
+                    inline-flex (for short labels/icons), which breaks this long
+                    label into wrapping columns — block lets it flow as text and
+                    the checkbox aligns to the first line. */}
+                <Checkbox className="items-start">
                   <CheckboxControl />
-                  <Label>
+                  <Label className="block">
                     Save my information with{' '}
                     <span className="underline decoration-dotted underline-offset-3">
                       Link
