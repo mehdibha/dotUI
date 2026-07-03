@@ -180,16 +180,39 @@ function harvestRootClosure(): RootClosure {
   return rootClosureCache
 }
 
+// resolveColorConfig runs the full color kernel (schema parse + ramp generation).
+// Configs are stable references (module constants, cached store snapshots) and
+// every demo on a docs page shares one, so memoize by reference.
+const resolvedColorCache = new WeakMap<
+  ColorConfig,
+  ReturnType<typeof resolveColorConfig>
+>()
+function resolveColorConfigCached(color: ColorConfig) {
+  let resolved = resolvedColorCache.get(color)
+  if (!resolved) {
+    resolved = resolveColorConfig(color)
+    resolvedColorCache.set(color, resolved)
+  }
+  return resolved
+}
+
 /**
  * Build the `<style>` text that themes only `selector`'s subtree: clone `:root`'s token closure
  * onto the scope (primitives + component vars, so they recompute there), add the semantic
  * `--color-*` layer from `DEFAULT_SEMANTICS` (the reliable source — see `harvestRootClosure`),
  * then, when a `color` is given, override the primitive ramps with the scoped palette.
  * `--radius-factor` + param vars ride inline on the scope element.
+ *
+ * A forced mode pins one mode's values on both the base and the `.dark`-page selector, so
+ * the page theme can't flip them. The dark harvest holds only `.dark`'s overrides over
+ * `:root`, so pinned-dark layers it on the full light closure. Raw `dark:` utilities are
+ * class-keyed and can't be pinned from here — the scope's `data-mode` attribute handles
+ * them via the dark custom-variant in registry/base/base.css.
  */
 function buildScopedThemeCss(
   selector: string,
   color: ColorConfig | undefined,
+  forcedMode: 'light' | 'dark' | undefined,
 ): string | null {
   const { light, dark } = harvestRootClosure()
   // No closure to clone — we're on the server, or the document's stylesheets aren't
@@ -197,15 +220,27 @@ function buildScopedThemeCss(
   // closure), so emit nothing here; it applies once mounted on the client. Rendering a
   // partial closure now would also mismatch the client during hydration.
   if (!light && !dark) return null
+
+  const base = forcedMode === 'dark' ? `${light}\n${dark}` : light
+  const darkOverrides = forcedMode === 'light' ? light : dark
+
   const blocks = [
-    `${selector} {\n${light}\n}`,
-    `.dark ${selector} {\n${dark}\n}`,
-    // Mode-agnostic `--color-*` (they reference primitives that flip via the `.dark` block above).
+    // `color` re-establishes the base text color from the scope's own tokens,
+    // as `body { text-fg }` does for the page — otherwise text with no explicit
+    // color class inherits the page's, which is wrong once the scope diverges.
+    `${selector} {\n${base}\n\tcolor: var(--color-fg);\n}`,
+    `.dark ${selector} {\n${darkOverrides}\n}`,
+    // Mode-agnostic `--color-*` (they reference primitives that flip via the blocks above).
     emitCss(DEFAULT_SEMANTICS, { selector }),
   ]
   if (color) {
+    let resolved = resolveColorConfigCached(color)
+    if (forcedMode) {
+      const ramp = forcedMode === 'dark' ? resolved.dark : resolved.light
+      resolved = { ...resolved, light: ramp, dark: ramp }
+    }
     blocks.push(
-      emitPrimitivesCss(resolveColorConfig(color), {
+      emitPrimitivesCss(resolved, {
         onColors: true,
         lightSelector: selector,
         darkSelector: `.dark ${selector}`,
@@ -240,6 +275,13 @@ interface DesignSystemProviderProps {
    */
   scoped?: boolean
   /**
+   * Pin this (scoped) subtree to `light` or `dark` regardless of the page theme.
+   * Only meaningful in `scoped` mode; omit to follow the page. Pins the token
+   * closure via the scoped stylesheet and sets `data-mode` on the scope, which
+   * the registry's dark custom-variant honors for raw `dark:` utilities.
+   */
+  forcedMode?: 'light' | 'dark'
+  /**
    * Whether a scoped design-system change should auto-tween via the CSS paint-only
    * morph (the `data-dotui-transition` flag + the rule in styles.css). Default on.
    * Set false when the caller animates the swap itself — e.g. the landing showcase
@@ -256,6 +298,7 @@ function DesignSystemProvider({
   density = 'default',
   color,
   scoped = false,
+  forcedMode,
   transitionOnChange = true,
   children,
 }: DesignSystemProviderProps) {
@@ -321,6 +364,8 @@ function DesignSystemProvider({
   // modules/marketing/cards.tsx). A caller that animates the swap some other way can
   // pass `transitionOnChange={false}` to suppress the flag. Honors
   // `prefers-reduced-motion` via the media query in styles.css.
+  // `forcedMode` is deliberately not part of the signature: mode flips snap
+  // everywhere on the site (the root ThemeProvider disables transitions too).
   const signature = React.useMemo(
     () => (scoped ? JSON.stringify({ params, tokens, density, color }) : ''),
     [scoped, params, tokens, density, color],
@@ -390,13 +435,16 @@ function DesignSystemProvider({
   const hasTokenOverrides = Object.keys(cssVars).length > 0
   const themeCss = React.useMemo(() => {
     if (scoped) {
-      const diverges = Boolean(color) || hasTokenOverrides
-      return diverges ? buildScopedThemeCss(scopeSelector, color) : null
+      const diverges =
+        Boolean(color) || hasTokenOverrides || Boolean(forcedMode)
+      return diverges
+        ? buildScopedThemeCss(scopeSelector, color, forcedMode)
+        : null
     }
     return color
-      ? emitPrimitivesCss(resolveColorConfig(color), { onColors: true })
+      ? emitPrimitivesCss(resolveColorConfigCached(color), { onColors: true })
       : null
-  }, [scoped, scopeSelector, color, hasTokenOverrides])
+  }, [scoped, scopeSelector, color, hasTokenOverrides, forcedMode])
 
   // The palette / scoped-closure stylesheet as a real node, rendered into the tree rather
   // than appended via an effect. `themeCss` is null until something diverges (and, when
@@ -439,6 +487,7 @@ function DesignSystemProvider({
   return (
     <div
       data-dotui-scope={scopeId}
+      data-mode={forcedMode}
       data-dotui-transition={transitioning ? '' : undefined}
       style={{ display: 'contents', ...scopeStyle }}
     >
@@ -454,6 +503,7 @@ function DesignSystemProvider({
             <div
               id={portalDomId}
               data-dotui-scope={scopeId}
+              data-mode={forcedMode}
               data-dotui-transition={transitioning ? '' : undefined}
               style={scopeStyle}
             />,

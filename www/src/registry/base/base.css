@@ -6,7 +6,10 @@
 }
 @plugin 'tailwindcss-with';
 
-@custom-variant dark (&:is(.dark *));
+/* Page mode comes from the `.dark` class; a subtree can pin its own mode with
+   `data-mode="light|dark"` (e.g. a themed preview inside a differently-themed
+   page), which wins over the page class. */
+@custom-variant dark (&:is(.dark *, [data-mode='dark'] *):not([data-mode='light'] *));
 
 @utility focus-reset {
   @apply ring-0 ring-transparent outline-none;

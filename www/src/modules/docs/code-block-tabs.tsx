@@ -1,5 +1,4 @@
-import { useCallback, useSyncExternalStore } from 'react'
-
+import { createPersistedStore, enumCodec } from '@/lib/persisted-store'
 import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
 import type {
   TabListProps,
@@ -10,53 +9,11 @@ import type {
 
 type PackageManager = 'npm' | 'yarn' | 'pnpm' | 'bun'
 
-const STORAGE_KEY = 'dotui-package-manager'
-const DEFAULT_VALUE: PackageManager = 'pnpm'
-
-const listeners = new Set<() => void>()
-
-function getSnapshot(): PackageManager {
-  if (typeof window === 'undefined') return DEFAULT_VALUE
-  return (localStorage.getItem(STORAGE_KEY) as PackageManager) || DEFAULT_VALUE
-}
-
-function getServerSnapshot(): PackageManager {
-  return DEFAULT_VALUE
-}
-
-function subscribe(callback: () => void) {
-  listeners.add(callback)
-
-  const handleStorage = (e: StorageEvent) => {
-    if (e.key === STORAGE_KEY) callback()
-  }
-  window.addEventListener('storage', handleStorage)
-
-  return () => {
-    listeners.delete(callback)
-    window.removeEventListener('storage', handleStorage)
-  }
-}
-
-function setPackageManager(value: PackageManager) {
-  localStorage.setItem(STORAGE_KEY, value)
-  listeners.forEach((listener) => {
-    listener()
-  })
-}
-
-function usePackageManager() {
-  const packageManager = useSyncExternalStore(
-    subscribe,
-    getSnapshot,
-    getServerSnapshot,
-  )
-  const set = useCallback(
-    (value: PackageManager) => setPackageManager(value),
-    [],
-  )
-  return [packageManager, set] as const
-}
+const packageManagerStore = createPersistedStore<PackageManager>(
+  'dotui-package-manager',
+  'pnpm',
+  enumCodec(['npm', 'yarn', 'pnpm', 'bun'], 'pnpm'),
+)
 
 export function CodeBlockTabs({
   groupId,
@@ -67,7 +24,7 @@ export function CodeBlockTabs({
   groupId?: string
   defaultValue?: string
 }) {
-  const [packageManager, setPackageManager] = usePackageManager()
+  const packageManager = packageManagerStore.useValue()
 
   return (
     <Tabs
@@ -78,7 +35,7 @@ export function CodeBlockTabs({
         ? {
             selectedKey: packageManager,
             onSelectionChange: (key) =>
-              setPackageManager(key as PackageManager),
+              packageManagerStore.set(key as PackageManager),
           }
         : {})}
     >

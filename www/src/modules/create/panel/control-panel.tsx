@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import {
   DicesIcon,
   MoonIcon,
@@ -17,6 +16,11 @@ import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 
 import { ExportFooter } from '../export'
 import { useDesignSystem } from '../preset'
+import {
+  DEFAULT_DESIGN_SYSTEM_NAME,
+  saveDesignSystemName,
+  useDesignSystemName,
+} from '../preset/storage'
 import { usePanelConfig } from './config'
 import { PanelBody } from './layouts'
 import { useReroll } from './macros'
@@ -57,7 +61,7 @@ function PanelHeader() {
   const { designSystem } = useDesignSystem()
   const { resolvedTheme, setTheme } = useTheme()
   const reroll = useReroll()
-  const [name, setName] = useState('Untitled system')
+  const name = useDesignSystemName()
 
   const accent =
     (designSystem.color ?? DEFAULT_COLOR_CONFIG).seeds.accent ?? '#6366f1'
@@ -79,7 +83,8 @@ function PanelHeader() {
       {header.showName ? (
         <input
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => saveDesignSystemName(e.target.value)}
+          placeholder={DEFAULT_DESIGN_SYSTEM_NAME}
           aria-label="System name"
           spellCheck={false}
           className="min-w-0 flex-1 truncate rounded-sm bg-transparent text-sm font-medium outline-none focus-visible:bg-neutral focus-visible:px-1"
