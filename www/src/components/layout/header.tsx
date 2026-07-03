@@ -62,7 +62,7 @@ export function Header({ className, items = [] }: HeaderProps) {
   return (
     <header
       className={cn(
-        'sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between header-blur-fallback pr-3 pl-4',
+        'sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between header-blur-fallback pr-3 pl-4 md:pl-6',
         className,
       )}
     >
