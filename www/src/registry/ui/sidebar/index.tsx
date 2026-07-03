@@ -61,30 +61,22 @@ type SidebarMenuButtonProps = Omit<BaseSidebarMenuButtonProps, 'href'> & {
 }
 
 function SidebarMenuButton({ href, ...props }: SidebarMenuButtonProps) {
-  // Only pass `href`/`render` for actual links: an explicit `href={undefined}`
-  // still counts as a link prop to react-aria (`'href' in props`), which turns
-  // every plain item into an <a href="">.
+  // href={undefined} still counts as a link prop to react-aria ('href' in props).
   if (href === undefined) {
     return <SidebarMenuButtonPrimitive {...props} />
   }
-  // `ToOptions.to` defaults to the current route, so a hash/search-only
-  // object (e.g. `{ hash: 'section' }`) is valid and has no `.to` — fall
-  // back to a placeholder so it's still treated as a link.
+  // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
   const hrefString = typeof href === 'object' ? (href.to ?? '#') : href
   return (
     <SidebarMenuButtonPrimitive
       href={hrefString}
       render={(domProps) => {
-        // The `in` check narrows the span|anchor props union; render is only
-        // passed for links, so the span branch is a type-level fallback.
         if (!('href' in domProps)) {
           return <span {...domProps} />
         }
         if (typeof href === 'object') {
-          // Drop the literal `href` DOM prop: TanStack Router's `navigate`
-          // treats a stray `href` as authoritative and re-derives `to`/
-          // `search`/`hash` from it, silently discarding the ToOptions
-          // fields (e.g. `hash`) we actually want to navigate with.
+          // RouterLink treats a literal `href` as authoritative and recomputes
+          // to/search/hash from it, dropping the ToOptions fields.
           const { href: _domHref, ...routerDomProps } = domProps
           return <RouterLink {...href} {...routerDomProps} />
         }
@@ -103,9 +95,6 @@ function SidebarMenuSubButton({ href, ...props }: SidebarMenuSubButtonProps) {
   if (href === undefined) {
     return <SidebarMenuSubButtonPrimitive {...props} />
   }
-  // `ToOptions.to` defaults to the current route, so a hash/search-only
-  // object (e.g. `{ hash: 'section' }`) is valid and has no `.to` — fall
-  // back to a placeholder so it's still treated as a link.
   const hrefString = typeof href === 'object' ? (href.to ?? '#') : href
   return (
     <SidebarMenuSubButtonPrimitive
@@ -115,10 +104,6 @@ function SidebarMenuSubButton({ href, ...props }: SidebarMenuSubButtonProps) {
           return <span {...domProps} />
         }
         if (typeof href === 'object') {
-          // Drop the literal `href` DOM prop: TanStack Router's `navigate`
-          // treats a stray `href` as authoritative and re-derives `to`/
-          // `search`/`hash` from it, silently discarding the ToOptions
-          // fields (e.g. `hash`) we actually want to navigate with.
           const { href: _domHref, ...routerDomProps } = domProps
           return <RouterLink {...href} {...routerDomProps} />
         }
