@@ -23,6 +23,7 @@ import { Route as RInitRouteImport } from './routes/r/init'
 import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
+import { Route as ApiSearchRouteImport } from './routes/api/search'
 import { Route as AppPresetsRouteImport } from './routes/_app/presets'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
 import { Route as AppComponentsRouteImport } from './routes/_app/components'
@@ -101,6 +102,11 @@ const DemosSlugRoute = DemosSlugRouteImport.update({
   path: '/demos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSearchRoute = ApiSearchRouteImport.update({
+  id: '/api/search',
+  path: '/api/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppPresetsRoute = AppPresetsRouteImport.update({
   id: '/presets',
   path: '/presets',
@@ -157,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
   '/presets': typeof AppPresetsRoute
+  '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -179,6 +186,7 @@ export interface FileRoutesByTo {
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
   '/presets': typeof AppPresetsRoute
+  '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -204,6 +212,7 @@ export interface FileRoutesById {
   '/_app/components': typeof AppComponentsRoute
   '/_app/create': typeof AppCreateRoute
   '/_app/presets': typeof AppPresetsRoute
+  '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -230,6 +239,7 @@ export interface FileRouteTypes {
     | '/components'
     | '/create'
     | '/presets'
+    | '/api/search'
     | '/demos/$slug'
     | '/preview/$slug'
     | '/r/$name'
@@ -252,6 +262,7 @@ export interface FileRouteTypes {
     | '/components'
     | '/create'
     | '/presets'
+    | '/api/search'
     | '/demos/$slug'
     | '/preview/$slug'
     | '/r/$name'
@@ -276,6 +287,7 @@ export interface FileRouteTypes {
     | '/_app/components'
     | '/_app/create'
     | '/_app/presets'
+    | '/api/search'
     | '/demos/$slug'
     | '/preview/$slug'
     | '/r/$name'
@@ -296,6 +308,7 @@ export interface RootRouteChildren {
   PlaygroundRoute: typeof PlaygroundRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   DotwellKnownApiCatalogRoute: typeof DotwellKnownApiCatalogRoute
+  ApiSearchRoute: typeof ApiSearchRoute
   DemosSlugRoute: typeof DemosSlugRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   RNameRoute: typeof RNameRoute
@@ -404,6 +417,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/search': {
+      id: '/api/search'
+      path: '/api/search'
+      fullPath: '/api/search'
+      preLoaderRoute: typeof ApiSearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app/presets': {
       id: '/_app/presets'
       path: '/presets'
@@ -508,6 +528,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlaygroundRoute: PlaygroundRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   DotwellKnownApiCatalogRoute: DotwellKnownApiCatalogRoute,
+  ApiSearchRoute: ApiSearchRoute,
   DemosSlugRoute: DemosSlugRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   RNameRoute: RNameRoute,

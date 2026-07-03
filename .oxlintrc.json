@@ -17,8 +17,7 @@
     "**/.output/**",
     "**/.source/**",
     "www/src/routeTree.gen.ts",
-    "ds/src/routeTree.gen.ts",
-    ".design-sync/**"
+    "ds/src/routeTree.gen.ts"
   ],
   "rules": {
     "eslint/no-unused-vars": [

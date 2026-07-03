@@ -43,9 +43,3 @@ Thumbs.db
 www/src/registry/__generated__/publishables/
 # Generated ds data index — emitted by `pnpm --filter=ds build:data`.
 ds/src/data/__generated__/
-.ds-sync/
-ds-bundle/
-.design-sync/.cache/
-.design-sync/learnings/
-www/.ds-sync-build/
-.env*

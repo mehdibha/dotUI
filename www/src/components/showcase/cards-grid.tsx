@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 import { cn } from '@/registry/lib/utils'
 import { AccountMenu } from '@/components/showcase/account-menu'
 import { AiPrompt } from '@/components/showcase/ai-prompt'
@@ -89,10 +91,10 @@ const SIDE: CardKey[] = [
 ]
 
 // A fixed flex column of cards. Fixed columns (rather than CSS `columns`) keep
-// the landing preset morph smooth: the multi-column balancer would re-flow cards
-// between columns on every animation frame, while fixed columns just grow each
-// card in place. `content-visibility` lets the browser skip laying out the
-// off-screen cards.
+// a preset swap cheap: the multi-column balancer could re-flow cards between
+// columns when densities change, while fixed columns just grow each card in
+// place. `content-visibility` lets the browser skip laying out the off-screen
+// cards.
 function CardColumn({
   cards,
   className,
@@ -116,8 +118,13 @@ function CardColumn({
 
 // The landing showcase grid: a rail, the AI banner over two card columns, and a
 // side column wherever four columns fit. Three equal columns, four at sm–lg
-// and xl.
-export function CardsGrid({ className }: { className?: string }) {
+// and xl. Memoized: the grid re-themes via context and CSS vars, so a parent
+// re-render (preset swap) never needs to re-render the cards themselves.
+export const CardsGrid = memo(function CardsGrid({
+  className,
+}: {
+  className?: string
+}) {
   return (
     <div
       className={cn(
@@ -136,7 +143,7 @@ export function CardsGrid({ className }: { className?: string }) {
       <CardColumn cards={SIDE} className="hidden sm:flex lg:hidden xl:flex" />
     </div>
   )
-}
+})
 
 // The /create preview and preset thumbnails: the banner over a CSS-columns
 // masonry of every card. It never animates, so the column balancer's per-frame

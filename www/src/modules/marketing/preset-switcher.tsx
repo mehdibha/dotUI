@@ -7,10 +7,9 @@ import {
 import { PRESETS } from '@/modules/presets/presets-data'
 
 // The landing showcase's design-system selector: a segmented control over the cards.
-// Picking a preset re-skins the scoped grid below and tweens the whole change —
-// palette, radius, and the spacing growing/tightening (see cards.tsx + styles.css).
-// The pill slides smoothly between segments (React Aria's SelectionIndicator). It
-// lives outside the scoped provider, so it always wears the site theme.
+// Picking a preset re-skins the scoped grid below instantly (no tween — repainting
+// the ~1k-node grid every frame for a morph costs more than it's worth). It lives
+// outside the scoped provider, so it always wears the site theme.
 export function PresetSwitcher({
   selected,
   onSelect,

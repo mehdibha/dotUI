@@ -1,3 +1,0 @@
----
-category: Drop Zone
----

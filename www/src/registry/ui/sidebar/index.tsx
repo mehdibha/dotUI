@@ -61,24 +61,24 @@ type SidebarMenuButtonProps = Omit<BaseSidebarMenuButtonProps, 'href'> & {
 }
 
 function SidebarMenuButton({ href, ...props }: SidebarMenuButtonProps) {
-  // Only pass `href`/`render` for actual links: an explicit `href={undefined}`
-  // still counts as a link prop to react-aria (`'href' in props`), which turns
-  // every plain item into an <a href="">.
-  const hrefString = typeof href === 'object' ? href.to : href
-  if (!hrefString) {
+  // href={undefined} still counts as a link prop to react-aria ('href' in props).
+  if (href === undefined) {
     return <SidebarMenuButtonPrimitive {...props} />
   }
+  // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
+  const hrefString = typeof href === 'object' ? (href.to ?? '#') : href
   return (
     <SidebarMenuButtonPrimitive
       href={hrefString}
       render={(domProps) => {
-        // The `in` check narrows the span|anchor props union; render is only
-        // passed for links, so the span branch is a type-level fallback.
         if (!('href' in domProps)) {
           return <span {...domProps} />
         }
         if (typeof href === 'object') {
-          return <RouterLink {...href} {...domProps} />
+          // RouterLink treats a literal `href` as authoritative and recomputes
+          // to/search/hash from it, dropping the ToOptions fields.
+          const { href: _domHref, ...routerDomProps } = domProps
+          return <RouterLink {...href} {...routerDomProps} />
         }
         return <a {...domProps} />
       }}
@@ -92,10 +92,10 @@ type SidebarMenuSubButtonProps = Omit<BaseSidebarMenuSubButtonProps, 'href'> & {
 }
 
 function SidebarMenuSubButton({ href, ...props }: SidebarMenuSubButtonProps) {
-  const hrefString = typeof href === 'object' ? href.to : href
-  if (!hrefString) {
+  if (href === undefined) {
     return <SidebarMenuSubButtonPrimitive {...props} />
   }
+  const hrefString = typeof href === 'object' ? (href.to ?? '#') : href
   return (
     <SidebarMenuSubButtonPrimitive
       href={hrefString}
@@ -104,7 +104,8 @@ function SidebarMenuSubButton({ href, ...props }: SidebarMenuSubButtonProps) {
           return <span {...domProps} />
         }
         if (typeof href === 'object') {
-          return <RouterLink {...href} {...domProps} />
+          const { href: _domHref, ...routerDomProps } = domProps
+          return <RouterLink {...href} {...routerDomProps} />
         }
         return <a {...domProps} />
       }}
