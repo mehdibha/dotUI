@@ -85,6 +85,22 @@ export const tokenGroupSchema = z.object({
   tokens: z.array(tokenSchema).min(1),
 })
 
+export const sectionIdSchema = z.enum([
+  'overview',
+  'architecture',
+  'palette',
+  'tokens',
+  'focus',
+  'contrast',
+])
+
+/** Editorial finding attached to a section — sourced, not derivable from the raw data. */
+export const noteSchema = z.object({
+  section: sectionIdSchema,
+  text: z.string().min(1),
+  sources: z.array(z.url()).default([]),
+})
+
 export const contrastPairSchema = z.object({
   label: z.string().min(1),
   /** Resolved colors for preview; null when the pair is documented but not resolvable. */
@@ -105,6 +121,7 @@ export const colorsFileSchema = z.object({
   tokenGroups: z.array(tokenGroupSchema),
   focus: z.array(specEntrySchema),
   contrast: z.array(contrastPairSchema),
+  notes: z.array(noteSchema).default([]),
   sources: z.array(z.url()).min(1),
 })
 
@@ -140,6 +157,8 @@ export type Layer = z.infer<typeof layerSchema>
 export type Ramp = z.infer<typeof rampSchema>
 export type Token = z.infer<typeof tokenSchema>
 export type TokenGroup = z.infer<typeof tokenGroupSchema>
+export type SectionId = z.infer<typeof sectionIdSchema>
+export type Note = z.infer<typeof noteSchema>
 export type ContrastPair = z.infer<typeof contrastPairSchema>
 export type ColorsFile = z.infer<typeof colorsFileSchema>
 export type RosterEntry = z.infer<typeof rosterEntrySchema>

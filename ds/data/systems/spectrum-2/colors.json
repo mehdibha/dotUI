@@ -6670,5 +6670,77 @@
     "https://github.com/adobe/spectrum-design-data",
     "https://react-spectrum.adobe.com",
     "https://unpkg.com/@adobe/spectrum-tokens@14.13.2/dist/json/variables.json"
+  ],
+  "notes": [
+    {
+      "section": "overview",
+      "text": "Spectrum 1's gray system was deliberately built to recede \u2014 a Dieter Rams-inspired brutalism. Adobe judged it a liability at scale: grays felt washed out on complex multi-layer screens and unwelcoming to new users, which is the core motivation for S2's brighter, more expressive palette.",
+      "sources": [
+        "https://adobe.design/stories/design-for-scale/introducing-spectrum-2"
+      ]
+    },
+    {
+      "section": "overview",
+      "text": "S2 planning began in late 2021 with 100+ team members across 12 themed working groups (Color and Data Visualization among them), targeting a portfolio of 100+ applications; the larger rollout landed in 2024.",
+      "sources": [
+        "https://adobe.design/stories/design-for-scale/introducing-spectrum-2"
+      ]
+    },
+    {
+      "section": "overview",
+      "text": "Off-palette color is a hard boundary, not a negotiation: the Spectrum team rejects product designs that use colors from outside the system and steers teams back to tokens rather than absorbing one-off colors.",
+      "sources": [
+        "https://adobe.design/stories/design-for-scale/designing-design-systems-supporting-implementation-and-adoption"
+      ]
+    },
+    {
+      "section": "palette",
+      "text": "The S2 color direction wasn't invented from scratch \u2014 it was inherited from the 2019 'Spectrum for Adobe Express' theme (lighter, bolder, rounder, brighter), which became the literal starting point for the S2 palette.",
+      "sources": [
+        "https://adobe.design/stories/design-for-scale/introducing-spectrum-2"
+      ]
+    },
+    {
+      "section": "palette",
+      "text": "S2 did two distinct things to color: increased contrast in the gray system, and rebuilt the chromatic system around Adobe's brand colors so product UI and brand could integrate \u2014 the named brand families are Orange, Celery, Cyan, Indigo, Fuchsia and Magenta.",
+      "sources": [
+        "https://adobe.design/stories/design-for-scale/introducing-spectrum-2"
+      ]
+    },
+    {
+      "section": "tokens",
+      "text": "Highlight color is treated as a scarce resource: S2 stripped extraneous accent color out of common controls to reserve it for high-attention, high-action moments \u2014 'when everything is important, nothing is important.'",
+      "sources": [
+        "https://adobe.design/stories/design-for-scale/introducing-spectrum-2"
+      ]
+    },
+    {
+      "section": "tokens",
+      "text": "S2 icons ship as single SVGs driven by CSS color variables rather than baked-in fills \u2014 one asset flips between themes, takes custom colors, and supports gradients without duplication. The icon is a shape; color is injected at runtime.",
+      "sources": [
+        "https://adobe.design/stories/design-for-scale/designing-design-systems-constructing-an-icon-system"
+      ]
+    },
+    {
+      "section": "architecture",
+      "text": "Icons and design tokens are governed from the same production source of truth, explicitly to keep thousands of production assets, the tokens, and designers' daily mockups in parity \u2014 code, tokens and design can't drift.",
+      "sources": [
+        "https://adobe.design/stories/design-for-scale/designing-design-systems-constructing-an-icon-system"
+      ]
+    },
+    {
+      "section": "contrast",
+      "text": "Rather than fixed light/dark themes, S2 claims 'adaptive palettes' that generate accessible colors in real time, exposing user-facing Dark mode, Density and Contrast controls \u2014 contrast framed as built into the color system, not bolted on.",
+      "sources": [
+        "https://adobe.design/stories/design-for-scale/introducing-spectrum-2"
+      ]
+    },
+    {
+      "section": "contrast",
+      "text": "Color-vision-deficiency support drove concrete palette decisions, including a full overhaul of the data-visualization colors \u2014 one named criterion is avoiding 'color name conflicts' (peach vs orange vs salmon), a problem compounded across languages.",
+      "sources": [
+        "https://adobe.design/stories/design-for-scale/introducing-spectrum-2"
+      ]
+    }
   ]
 }
