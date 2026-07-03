@@ -1,0 +1,86 @@
+---
+title: Color Editor
+description: A color editor allows users to adjust a color value using a color area, channel sliders, and field inputs in multiple color formats.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/ColorPicker.html
+wip: true
+---
+
+<InteractiveDemo
+  name="color-editor"
+  controls={[
+    {
+      type: 'boolean',
+      name: 'showAlphaChannel',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'showFormatSelector',
+      defaultValue: true,
+    },
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/color-editor
+```
+
+## Usage
+
+Use a color editor to let users adjust a color with a saturation/brightness area, channel sliders, and format-aware fields. Standalone, it manages its own color value; inside a [Color Picker](/docs/components/color-picker), it edits the picker's color instead.
+
+```tsx
+import { ColorEditor } from '@/components/ui/color-editor'
+```
+
+```tsx
+<ColorEditor defaultValue="#5100FF" />
+```
+
+### Composition
+
+The default children render an area row and a fields row. Pass your own children to reorder, drop, or extend them.
+
+```tsx
+import {
+  ColorEditor,
+  ColorEditorArea,
+  ColorEditorFields,
+} from '@/components/ui/color-editor'
+```
+
+```tsx
+<ColorEditor>
+  <ColorEditorArea showAlphaChannel />
+  <ColorEditorFields defaultFormat="rgb" />
+</ColorEditor>
+```
+
+## Examples
+
+<Examples className="sm:grid-cols-2">
+  <Example name="color-editor/demos/alpha-channel" title="Alpha channel" />
+  <Example
+    name="color-editor/demos/with-color-picker"
+    title="In a color picker"
+  />
+  <Example name="color-editor/demos/composition" title="Custom composition" />
+</Examples>
+
+## API Reference
+
+### ColorEditor
+
+<Reference name="color-editor" />
+
+### ColorEditorArea
+
+<Reference name="color-editor-area" />
+
+### ColorEditorFields
+
+<Reference name="color-editor-fields" />

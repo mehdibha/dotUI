@@ -661,9 +661,21 @@ export const DemosIndex: Record<
 		files: ["ui/color-area/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/color-area/demos/uncontrolled")),
 	},
+	"color-editor/demos/alpha-channel": {
+		files: ["ui/color-editor/demos/alpha-channel.tsx"],
+		component: React.lazy(() => import("@/registry/ui/color-editor/demos/alpha-channel")),
+	},
+	"color-editor/demos/composition": {
+		files: ["ui/color-editor/demos/composition.tsx"],
+		component: React.lazy(() => import("@/registry/ui/color-editor/demos/composition")),
+	},
 	"color-editor/demos/default": {
 		files: ["ui/color-editor/demos/default.tsx"],
 		component: React.lazy(() => import("@/registry/ui/color-editor/demos/default")),
+	},
+	"color-editor/demos/with-color-picker": {
+		files: ["ui/color-editor/demos/with-color-picker.tsx"],
+		component: React.lazy(() => import("@/registry/ui/color-editor/demos/with-color-picker")),
 	},
 	"color-field/demos/addons": {
 		files: ["ui/color-field/demos/addons.tsx"],

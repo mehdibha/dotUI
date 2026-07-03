@@ -16,7 +16,7 @@ export default function Demo() {
 
   return (
     <ColorPicker value={value} onChange={setValue}>
-      <Button />
+      <Button aria-label="Pick a color" isIconOnly />
       <Popover>
         <DialogContent>
           <ColorEditor />
