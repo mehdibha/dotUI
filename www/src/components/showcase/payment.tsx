@@ -45,11 +45,12 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
   const [method, setMethod] = useState('card')
   const [announcement, setAnnouncement] = useState('')
 
+  // py-1.5 matches CardContent's px-1.5 so the radio rows sit in a uniform 6px
+  // frame — same gap on all four sides and between rows/separators.
   return (
-    <Card className={cn(className)} {...props}>
-      {/* Reduced from the card's default px-4: the rows/panels/separators carry
-          their own 10px inset (row p-2.5, panel + separator mx-2.5), so the
-          hover highlight reaches near the card edge while content stays aligned. */}
+    <Card className={cn('py-1.5', className)} {...props}>
+      {/* Reduced from the card's default px-4: the row's own p-2.5 provides the
+          inset, so the hover highlight reaches near the card edge. */}
       <CardContent className="px-1.5">
         <RadioGroup
           aria-label="Payment method"
