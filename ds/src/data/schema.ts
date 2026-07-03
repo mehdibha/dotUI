@@ -9,12 +9,6 @@ const isoDate = z
   .string()
   .regex(/^\d{4}-\d{2}-\d{2}$/, 'expected an ISO date (YYYY-MM-DD)')
 
-export const methodSchema = z.enum([
-  'documented',
-  'source-read',
-  'reverse-engineered',
-])
-
 export const systemTypeSchema = z.enum([
   'corporate-design-system',
   'component-library',
@@ -125,32 +119,60 @@ export const colorsFileSchema = z.object({
   sources: z.array(z.url()).min(1),
 })
 
+export const rosterCategorySchema = z.enum([
+  'big-tech',
+  'saas',
+  'fintech-devtools',
+  'oss-libraries',
+  'government',
+  'consumer-media',
+  'international',
+  'primitives-tokens',
+])
+
+/** How much of the system can be studied: source, docs, extractable CSS, or nothing. */
+export const rosterAccessSchema = z.enum([
+  'open',
+  'docs-only',
+  'shipped-css',
+  'closed',
+])
+
+const domainScore = z.number().int().min(0).max(10)
+
+/** Recon-level prioritization scores from docs/research/2026-07-03-ds-catalog — not published verdicts. */
+export const rosterScoresSchema = z.object({
+  color: domainScore,
+  typography: domainScore,
+  spacing: domainScore,
+  components: domainScore,
+  motion: domainScore,
+  icons: domainScore,
+  accessibility: domainScore,
+  docs: domainScore,
+  openness: domainScore,
+})
+
 export const rosterEntrySchema = z.object({
-  slug: z.string().min(1),
+  slug: z.string().regex(/^[a-z0-9-]+$/),
   name: z.string().min(1),
   org: z.string().min(1),
-  type: systemTypeSchema,
-  status: z.enum(['tier1', 'watchlist', 'rejected']),
-  method: methodSchema,
-  upstream: z.array(z.string()),
-  scores: z.array(z.number().int().min(0).max(3)).length(5),
-  sources: z.object({
-    docs: z.url().nullable(),
-    repo: z.url().nullable(),
-    npm: z.array(z.string()),
-    other: z.array(z.url()),
-  }),
-  rationale: z.string().min(1),
+  category: rosterCategorySchema,
+  status: rosterAccessSchema,
+  homepage: z.url(),
+  repo: z.url().nullable(),
+  general: z.number().int().min(0).max(100),
+  scores: rosterScoresSchema,
+  note: z.string().min(1),
 })
 
 export const rosterSchema = z.object({
   $comment: z.string().optional(),
   version: z.number().int(),
-  approvedAt: isoDate,
+  createdAt: isoDate,
   systems: z.array(rosterEntrySchema),
 })
 
-export type Method = z.infer<typeof methodSchema>
 export type System = z.infer<typeof systemSchema>
 export type SpecEntry = z.infer<typeof specEntrySchema>
 export type Layer = z.infer<typeof layerSchema>

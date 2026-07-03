@@ -47,7 +47,7 @@ export const Route = createFileRoute('/systems/$slug')({
   },
   loader: ({ params }) => {
     const rosterEntry = dataIndex.roster.find(
-      (entry) => entry.slug === params.slug && entry.status === 'tier1',
+      (entry) => entry.slug === params.slug,
     )
     const system = dataIndex.systems.find((s) => s.slug === params.slug)
     if (!rosterEntry && !system) throw notFound()
@@ -60,8 +60,8 @@ function SystemPage() {
   const { rosterEntry, system } = Route.useLoaderData()
   const name = system?.name ?? rosterEntry?.name ?? ''
   const org = system?.org ?? rosterEntry?.org ?? ''
-  const docs = system?.sources.docs ?? rosterEntry?.sources.docs
-  const repo = system?.sources.repo ?? rosterEntry?.sources.repo
+  const docs = system?.sources.docs ?? rosterEntry?.homepage
+  const repo = system?.sources.repo ?? rosterEntry?.repo
   const site = system?.sources.site
 
   return (
@@ -79,7 +79,7 @@ function SystemPage() {
           >
             {system?.status ?? 'planned'}
           </Badge>
-          {rosterEntry?.method === 'reverse-engineered' && (
+          {rosterEntry?.status === 'shipped-css' && (
             <Badge appearance="subtle" variant="info">
               reverse-engineered
             </Badge>

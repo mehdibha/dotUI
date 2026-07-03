@@ -12,7 +12,12 @@ const systemsBySlug = new Map(
   dataIndex.systems.map((system) => [system.slug, system]),
 )
 
-const roster = dataIndex.roster.filter((entry) => entry.status === 'tier1')
+// Explorable systems first, then by overall catalog score.
+const roster = [...dataIndex.roster].sort((a, b) => {
+  const explorable =
+    Number(systemsBySlug.has(b.slug)) - Number(systemsBySlug.has(a.slug))
+  return explorable !== 0 ? explorable : b.general - a.general
+})
 
 function paletteStrip(system: SystemWithColors | undefined) {
   if (!system) return null
@@ -57,8 +62,7 @@ function Home() {
       </section>
 
       <section className="mt-12">
-        <h2 className="text-xl font-semibold">The roster</h2>
-        <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {roster.map((entry) => {
             const system = systemsBySlug.get(entry.slug)
             const strip = paletteStrip(system)
@@ -89,7 +93,7 @@ function Home() {
                     >
                       {system ? 'explorable' : 'planned'}
                     </Badge>
-                    {entry.method === 'reverse-engineered' && (
+                    {entry.status === 'shipped-css' && (
                       <Badge appearance="subtle" variant="info">
                         reverse-engineered
                       </Badge>
