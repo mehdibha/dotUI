@@ -90,29 +90,6 @@
   -webkit-mask-image: linear-gradient(to top, transparent 10%, #000 60%);
 }
 
-/* dotUI design-system morph — when a *scoped* DesignSystemProvider's design system
-   changes (the landing showcase's preset selector), the provider flags its subtree
-   with `data-dotui-transition` for one beat (see lib/styles.tsx) and this rule
-   tweens only the paint axes (color, radius, shadow); everything else (density,
-   spacing, sizes) snaps instantly. Layout-inducing properties re-run layout every
-   frame across the ~1k-node subtree, which is too costly for a preset swap, so only
-   cheap paint properties animate.
-
-   Tune via `--dotui-transition-duration` / `--dotui-transition-ease`; skipped under
-   reduced-motion (those visitors get an instant snap). */
-@media (prefers-reduced-motion: no-preference) {
-  [data-dotui-transition],
-  [data-dotui-transition] * {
-    transition-property:
-      color, background-color, border-color, box-shadow, border-radius;
-    transition-duration: var(--dotui-transition-duration, 400ms);
-    transition-timing-function: var(
-      --dotui-transition-ease,
-      cubic-bezier(0.33, 1, 0.68, 1)
-    );
-  }
-}
-
 /* Click ripple for the docs component-gallery cursor (components-list/autoplay).
    Expands and fades from the pointer hotspot; mounts only during the press beat
    so it replays on each loop. */

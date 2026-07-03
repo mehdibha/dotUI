@@ -91,10 +91,10 @@ const SIDE: CardKey[] = [
 ]
 
 // A fixed flex column of cards. Fixed columns (rather than CSS `columns`) keep
-// the landing preset morph smooth: the multi-column balancer would re-flow cards
-// between columns on every animation frame, while fixed columns just grow each
-// card in place. `content-visibility` lets the browser skip laying out the
-// off-screen cards.
+// a preset swap cheap: the multi-column balancer could re-flow cards between
+// columns when densities change, while fixed columns just grow each card in
+// place. `content-visibility` lets the browser skip laying out the off-screen
+// cards.
 function CardColumn({
   cards,
   className,
