@@ -80,6 +80,13 @@ function SidebarMenuButton({ href, ...props }: SidebarMenuButtonProps) {
           const { href: _domHref, ...routerDomProps } = domProps
           return <RouterLink {...href} {...routerDomProps} />
         }
+        if (href.startsWith('/')) {
+          // Internal paths need RouterLink too — a bare <a> full-page reloads.
+          const { href: _domHref, ...routerDomProps } = domProps
+          return (
+            <RouterLink {...({ to: href } as ToOptions)} {...routerDomProps} />
+          )
+        }
         return <a {...domProps} />
       }}
       {...props}
@@ -106,6 +113,12 @@ function SidebarMenuSubButton({ href, ...props }: SidebarMenuSubButtonProps) {
         if (typeof href === 'object') {
           const { href: _domHref, ...routerDomProps } = domProps
           return <RouterLink {...href} {...routerDomProps} />
+        }
+        if (href.startsWith('/')) {
+          const { href: _domHref, ...routerDomProps } = domProps
+          return (
+            <RouterLink {...({ to: href } as ToOptions)} {...routerDomProps} />
+          )
         }
         return <a {...domProps} />
       }}
