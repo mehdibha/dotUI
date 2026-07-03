@@ -11,9 +11,8 @@ export function Cards() {
   const [selected, setSelected] = useState(0)
   const preset = PRESETS[selected]?.designSystem ?? DEFAULTS
 
-  // Re-theming the grid re-renders every styled component in it. As a transition,
-  // that render is interruptible and doesn't block the click — the switcher's
-  // pill responds immediately.
+  // Re-theming the grid re-renders every styled component in it; as a transition
+  // that render is interruptible and doesn't block the click.
   const handleSelect = useCallback((index: number) => {
     startTransition(() => setSelected(index))
   }, [])

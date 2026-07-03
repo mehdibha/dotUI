@@ -714,11 +714,10 @@ function createStyles<const M extends RegistryItem, const Base>(
     return current
   }
 
-  // Composition is pure in (density, selections), and every instance of a
-  // component sees the same inputs (selection objects are stable references:
-  // preset/store constants or `emptyParamSelections`). Cache at module level so
-  // a design-system change composes once per component TYPE instead of once per
-  // instance — and so `useStyles` returns a stable reference across instances.
+  // Selection objects are stable references (preset/store constants or
+  // `emptyParamSelections`), so composition can be cached per (density,
+  // selections) at module level: once per component type, not per instance,
+  // and `useStyles` returns a stable reference across instances.
   const composeCache = new Map<
     Density,
     WeakMap<object, ReturnType<typeof tv>>

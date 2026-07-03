@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import type { Selection } from 'react-aria-components'
 
 import {
@@ -9,9 +8,8 @@ import { PRESETS } from '@/modules/presets/presets-data'
 
 // The landing showcase's design-system selector: a segmented control over the cards.
 // Picking a preset re-skins the scoped grid below instantly (no tween — repainting
-// the ~1k-node grid every frame for a morph costs more than it's worth). The pill
-// slides between segments (React Aria's SelectionIndicator). It lives outside the
-// scoped provider, so it always wears the site theme.
+// the ~1k-node grid every frame for a morph costs more than it's worth). It lives
+// outside the scoped provider, so it always wears the site theme.
 export function PresetSwitcher({
   selected,
   onSelect,
@@ -19,20 +17,13 @@ export function PresetSwitcher({
   selected: number
   onSelect: (index: number) => void
 }) {
-  // The grid re-theme runs in a transition (see cards.tsx), so `selected` commits
-  // late. Track the pick locally too, so the pill moves on the next frame instead
-  // of waiting out the grid render.
-  const [picked, setPicked] = useState<number | null>(null)
-  const activeId = PRESETS[picked ?? selected]?.id
+  const activeId = PRESETS[selected]?.id
 
   const handleChange = (keys: Selection) => {
     if (keys === 'all') return
     const id = [...keys][0]
     const index = PRESETS.findIndex((preset) => preset.id === id)
-    if (index >= 0) {
-      setPicked(index)
-      onSelect(index)
-    }
+    if (index >= 0) onSelect(index)
   }
 
   return (
