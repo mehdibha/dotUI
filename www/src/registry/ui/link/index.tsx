@@ -7,29 +7,29 @@ import type { LinkProps as BaseLinkProps } from './base'
 type LinkProps = Omit<BaseLinkProps, 'href'> & { href?: string | ToOptions }
 
 function Link({ href, ...props }: LinkProps) {
-  // Only pass `href`/`render` for actual links: an explicit `href={undefined}`
-  // still counts as a link prop to react-aria (`'href' in props`), which turns
-  // a plain link into an <a href="">.
-  const hrefString = typeof href === 'object' ? href.to : href
-  if (!hrefString) {
+  // href={undefined} still counts as a link prop to react-aria ('href' in props).
+  if (href === undefined) {
     return <LinkPrimitive {...props} />
   }
-  // react-aria renders a disabled Link as a <span> natively; skip the custom
-  // render so the expected element type matches.
-  if (props.isDisabled) {
-    return <LinkPrimitive href={hrefString} {...props} />
-  }
+  // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
+  const hrefString = typeof href === 'object' ? (href.to ?? '#') : href
   return (
     <LinkPrimitive
       href={hrefString}
       render={(domProps) => {
-        // The `in` check narrows the span|anchor props union; render is only
-        // passed for links, so the span branch is a type-level fallback.
         if (!('href' in domProps)) {
           return <span {...domProps} />
         }
+        // isDisabled can come from context, not just props — read it off the
+        // resolved DOM props instead.
+        if ((domProps as unknown as Record<string, unknown>)['data-disabled']) {
+          return <span {...domProps} />
+        }
         if (typeof href === 'object') {
-          return <RouterLink {...href} {...domProps} />
+          // RouterLink treats a literal `href` as authoritative and recomputes
+          // to/search/hash from it, dropping the ToOptions fields.
+          const { href: _domHref, ...routerDomProps } = domProps
+          return <RouterLink {...href} {...routerDomProps} />
         }
         return <a {...domProps} />
       }}

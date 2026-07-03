@@ -13,19 +13,23 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <ColorPicker defaultValue="#5100FF">
-      <Button isIconOnly>
+      <Button aria-label="Pick a color" isIconOnly>
         <ColorSwatch />
       </Button>
       <Popover>
         <DialogContent>
           <ColorArea
+            aria-label="Color"
             colorSpace="hsb"
             xChannel="saturation"
             yChannel="brightness"
             className="w-full"
           />
           <ColorSlider colorSpace="hsb" channel="hue" />
-          <ColorSwatchPicker className="mt-2 justify-between">
+          <ColorSwatchPicker
+            aria-label="Color swatches"
+            className="mt-2 justify-between"
+          >
             <ColorSwatchPickerItem color="#A00" />
             <ColorSwatchPickerItem color="#f80" />
             <ColorSwatchPickerItem color="#080" />

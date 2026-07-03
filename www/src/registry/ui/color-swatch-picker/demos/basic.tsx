@@ -5,7 +5,7 @@ import {
 
 export default function Demo() {
   return (
-    <ColorSwatchPicker defaultValue="#fff">
+    <ColorSwatchPicker aria-label="Color swatches" defaultValue="#fff">
       <ColorSwatchPickerItem color="#fff" />
       <ColorSwatchPickerItem color="#A00" />
       <ColorSwatchPickerItem color="#f80" />

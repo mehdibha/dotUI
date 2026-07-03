@@ -1,0 +1,23 @@
+{
+  "name": "ColorEditorAreaProps",
+  "description": "A color editor area displays a saturation/brightness area next to a hue\nslider and an optional alpha slider.",
+  "extendsElement": "div",
+  "props": {
+    "showAlphaChannel": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to show the alpha channel slider.",
+      "default": "false"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

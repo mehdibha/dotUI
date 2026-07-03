@@ -13,7 +13,12 @@ export default function Demo() {
     ColorAreaPrimitives.parseColor('#f80'),
   )
   return (
-    <ColorSwatchPicker defaultValue="#fff" value={value} onChange={setValue}>
+    <ColorSwatchPicker
+      aria-label="Color swatches"
+      defaultValue="#fff"
+      value={value}
+      onChange={setValue}
+    >
       <ColorSwatchPickerItem color="#fff" />
       <ColorSwatchPickerItem color="#A00" />
       <ColorSwatchPickerItem color="#f80" />

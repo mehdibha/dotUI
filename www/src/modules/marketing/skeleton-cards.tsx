@@ -1,3 +1,5 @@
+import { memo } from 'react'
+
 import { cn } from '@/registry/lib/utils'
 import { Card, CardContent, CardFooter, CardHeader } from '@/registry/ui/card'
 import { Skeleton } from '@/registry/ui/skeleton'
@@ -156,7 +158,13 @@ function RailColumn({
   )
 }
 
-export function SkeletonRail({ side }: { side: 'left' | 'right' }) {
+// Memoized: the rails are static decoration outside the themed scope, so a
+// preset swap in the parent never needs to re-render them.
+export const SkeletonRail = memo(function SkeletonRail({
+  side,
+}: {
+  side: 'left' | 'right'
+}) {
   const [colA, colB] =
     side === 'left'
       ? ([RAIL_COLUMNS[0], RAIL_COLUMNS[1]] as const)
@@ -184,4 +192,4 @@ export function SkeletonRail({ side }: { side: 'left' | 'right' }) {
       </div>
     </Skeleton>
   )
-}
+})

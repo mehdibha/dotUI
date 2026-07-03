@@ -7,7 +7,7 @@ import {
 
 export default function Demo({ isDisabled = false } = {}) {
   return (
-    <ColorSwatchPicker defaultValue="#ff0000">
+    <ColorSwatchPicker aria-label="Color swatches" defaultValue="#ff0000">
       <ColorSwatchPickerItem
         data-control-target
         color="#ff0000"

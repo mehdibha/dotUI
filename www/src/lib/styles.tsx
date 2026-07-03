@@ -25,9 +25,11 @@ import type {
 type ParamSelections = Record<string, Record<string, string>>
 type GlobalTokenSelections = Record<string, string>
 
+// Only what consumers (useStyles / useComponentParams) actually read. Tokens and
+// color deliberately stay OUT of the context: they apply as CSS vars / stylesheets
+// from the provider, so a palette/radius-only preset swap re-renders zero consumers.
 interface DesignSystemContextValue {
   params: ParamSelections
-  tokens: GlobalTokenSelections
   density: Density
 }
 
@@ -35,7 +37,6 @@ interface DesignSystemContextValue {
 
 const DesignSystemContext = React.createContext<DesignSystemContextValue>({
   params: {},
-  tokens: {},
   density: 'default',
 })
 
@@ -176,8 +177,27 @@ function harvestRootClosure(): RootClosure {
 
   const toText = (map: Map<string, string>) =>
     [...map].map(([prop, value]) => `\t${prop}: ${value};`).join('\n')
-  rootClosureCache = { light: toText(light), dark: toText(dark) }
-  return rootClosureCache
+  const closure = { light: toText(light), dark: toText(dark) }
+  // An empty harvest means the stylesheets weren't parsed yet — don't cache it, or scoped
+  // theming would stay off for the whole session.
+  if (closure.light || closure.dark) rootClosureCache = closure
+  return closure
+}
+
+// resolveColorConfig runs the full color kernel (schema parse + ramp generation).
+// Configs are stable references (module constants, cached store snapshots) and
+// every demo on a docs page shares one, so memoize by reference.
+const resolvedColorCache = new WeakMap<
+  ColorConfig,
+  ReturnType<typeof resolveColorConfig>
+>()
+function resolveColorConfigCached(color: ColorConfig) {
+  let resolved = resolvedColorCache.get(color)
+  if (!resolved) {
+    resolved = resolveColorConfig(color)
+    resolvedColorCache.set(color, resolved)
+  }
+  return resolved
 }
 
 /**
@@ -186,10 +206,17 @@ function harvestRootClosure(): RootClosure {
  * `--color-*` layer from `DEFAULT_SEMANTICS` (the reliable source — see `harvestRootClosure`),
  * then, when a `color` is given, override the primitive ramps with the scoped palette.
  * `--radius-factor` + param vars ride inline on the scope element.
+ *
+ * A forced mode pins one mode's values on both the base and the `.dark`-page selector, so
+ * the page theme can't flip them. The dark harvest holds only `.dark`'s overrides over
+ * `:root`, so pinned-dark layers it on the full light closure. Raw `dark:` utilities are
+ * class-keyed and can't be pinned from here — the scope's `data-mode` attribute handles
+ * them via the dark custom-variant in registry/base/base.css.
  */
 function buildScopedThemeCss(
   selector: string,
   color: ColorConfig | undefined,
+  forcedMode: 'light' | 'dark' | undefined,
 ): string | null {
   const { light, dark } = harvestRootClosure()
   // No closure to clone — we're on the server, or the document's stylesheets aren't
@@ -197,15 +224,27 @@ function buildScopedThemeCss(
   // closure), so emit nothing here; it applies once mounted on the client. Rendering a
   // partial closure now would also mismatch the client during hydration.
   if (!light && !dark) return null
+
+  const base = forcedMode === 'dark' ? `${light}\n${dark}` : light
+  const darkOverrides = forcedMode === 'light' ? light : dark
+
   const blocks = [
-    `${selector} {\n${light}\n}`,
-    `.dark ${selector} {\n${dark}\n}`,
-    // Mode-agnostic `--color-*` (they reference primitives that flip via the `.dark` block above).
+    // `color` re-establishes the base text color from the scope's own tokens,
+    // as `body { text-fg }` does for the page — otherwise text with no explicit
+    // color class inherits the page's, which is wrong once the scope diverges.
+    `${selector} {\n${base}\n\tcolor: var(--color-fg);\n}`,
+    `.dark ${selector} {\n${darkOverrides}\n}`,
+    // Mode-agnostic `--color-*` (they reference primitives that flip via the blocks above).
     emitCss(DEFAULT_SEMANTICS, { selector }),
   ]
   if (color) {
+    let resolved = resolveColorConfigCached(color)
+    if (forcedMode) {
+      const ramp = forcedMode === 'dark' ? resolved.dark : resolved.light
+      resolved = { ...resolved, light: ramp, dark: ramp }
+    }
     blocks.push(
-      emitPrimitivesCss(resolveColorConfig(color), {
+      emitPrimitivesCss(resolved, {
         onColors: true,
         lightSelector: selector,
         darkSelector: `.dark ${selector}`,
@@ -215,14 +254,98 @@ function buildScopedThemeCss(
   return blocks.join('\n')
 }
 
-/* ----------------------- Preset-change transition ----------------------- */
+/* ----------------------- Shared scoped theme styles ----------------------- */
 
-// How long the subtree stays flagged for tweening after a scoped design-system
-// change, in ms. Must stay >= the CSS transition duration in styles.css
-// (`--dotui-transition-duration`, default 400ms) so the flag outlives the tween;
-// the small buffer covers timer/paint jitter.
-const PRESET_TRANSITION_MS = 400
-const PRESET_TRANSITION_BUFFER_MS = 80
+/*
+ * The closure-clone stylesheet is ~10KB and fully determined by `color` + `forcedMode`,
+ * so scoped providers on the same theme share one scope token and one injected <style>
+ * instead of each carrying their own — a docs page rendering N demos in the user's
+ * stored preset injects one style node, not N. Entries are refcounted; the node is
+ * removed when the last provider using it unmounts or moves to a different theme.
+ * Client-only, like buildScopedThemeCss (null during SSR).
+ */
+
+interface SharedThemeEntry {
+  refs: number
+  el: HTMLStyleElement
+}
+const sharedThemes = new Map<string, SharedThemeEntry>()
+
+/**
+ * djb2 over the theme key. Deterministic from content — the token renders as the
+ * `data-dotui-scope` attribute on the server too, so it must hydrate identically
+ * (a session counter would drift between server and client).
+ */
+function themeTokenFor(key: string): string {
+  let hash = 5381
+  for (let i = 0; i < key.length; i++) {
+    hash = ((hash << 5) + hash + key.charCodeAt(i)) | 0
+  }
+  return `t${(hash >>> 0).toString(36)}${key.length.toString(36)}`
+}
+
+/**
+ * Join (or create) the shared <style> for a scoped theme and return its scope token —
+ * the value the provider renders as `data-dotui-scope`. `undefined` when the provider
+ * doesn't diverge from the page theme (nothing to inject).
+ */
+function useSharedScopedTheme(
+  color: ColorConfig | undefined,
+  forcedMode: 'light' | 'dark' | undefined,
+  enabled: boolean,
+): string | undefined {
+  // Content key = everything the stylesheet is built from (color config + pinned mode).
+  // Token-only divergence (inline vars, no palette) shares a per-mode colorless entry.
+  const [key, token] = React.useMemo(() => {
+    if (!enabled) return [null, undefined] as const
+    const k = `${forcedMode ?? 'auto'}:${color ? JSON.stringify(color) : 'default'}`
+    return [k, themeTokenFor(k)] as const
+  }, [enabled, color, forcedMode])
+
+  useIsomorphicLayoutEffect(() => {
+    if (key === null || token === undefined) return
+    // Layout effect, so the style lands in the same frame as the commit that rendered
+    // the scope attribute — before paint, no flash of the page theme.
+    let acquired = false
+    const entry = sharedThemes.get(key)
+    if (entry) {
+      entry.refs += 1
+      acquired = true
+    } else {
+      const css = buildScopedThemeCss(
+        `[data-dotui-scope="${token}"]`,
+        color,
+        forcedMode,
+      )
+      // null: no closure to harvest yet — skip; a later theme change re-runs this.
+      if (css) {
+        const el = document.createElement('style')
+        el.setAttribute('data-dotui-color', token)
+        el.textContent = css
+        document.head.append(el)
+        sharedThemes.set(key, { refs: 1, el })
+        acquired = true
+      }
+    }
+    return () => {
+      // Only release what this effect actually acquired — a skipped (css: null)
+      // acquire must not decrement an entry another instance created since.
+      if (!acquired) return
+      const current = sharedThemes.get(key)
+      if (!current) return
+      current.refs -= 1
+      if (current.refs === 0) {
+        current.el.remove()
+        sharedThemes.delete(key)
+      }
+    }
+    // `color`/`forcedMode` are deliberately not deps: `key` pins their content, and an
+    // identity-only `color` change must not release/re-acquire — a sole holder would
+    // remove and rebuild the shared node every render.
+  }, [key, token])
+
+  return token
+}
 
 interface DesignSystemProviderProps {
   params?: ParamSelections
@@ -240,13 +363,12 @@ interface DesignSystemProviderProps {
    */
   scoped?: boolean
   /**
-   * Whether a scoped design-system change should auto-tween via the CSS paint-only
-   * morph (the `data-dotui-transition` flag + the rule in styles.css). Default on.
-   * Set false when the caller animates the swap itself — e.g. the landing showcase
-   * drives swaps through the View Transitions API where supported, which crossfades
-   * the change (density included) on the compositor; the CSS tween would double up.
+   * Pin this (scoped) subtree to `light` or `dark` regardless of the page theme.
+   * Only meaningful in `scoped` mode; omit to follow the page. Pins the token
+   * closure via the scoped stylesheet and sets `data-mode` on the scope, which
+   * the registry's dark custom-variant honors for raw `dark:` utilities.
    */
-  transitionOnChange?: boolean
+  forcedMode?: 'light' | 'dark'
   children: React.ReactNode
 }
 
@@ -256,13 +378,10 @@ function DesignSystemProvider({
   density = 'default',
   color,
   scoped = false,
-  transitionOnChange = true,
+  forcedMode,
   children,
 }: DesignSystemProviderProps) {
-  const value = React.useMemo(
-    () => ({ params, tokens, density }),
-    [params, tokens, density],
-  )
+  const value = React.useMemo(() => ({ params, density }), [params, density])
 
   const cssVars = React.useMemo(() => {
     const vars: Record<string, string> = {}
@@ -298,60 +417,9 @@ function DesignSystemProvider({
     return vars
   }, [tokens, params])
 
-  // A stable, unique scope selector (only used in `scoped` mode). useId is SSR-safe and
-  // constant across renders, so the injected <style> and the wrapper element always agree.
+  // Per-instance id for the overlay portal target (only used in `scoped` mode). The
+  // scope *selector* is no longer per-instance — see useSharedScopedTheme.
   const scopeId = React.useId()
-  const scopeSelector = `[data-dotui-scope="${scopeId}"]`
-
-  // --- Smooth preset transitions (scoped mode only) --------------------------
-  // When the design system changes (a preset swap on the landing showcase), tween
-  // the whole subtree from the old theme to the new instead of snapping. A
-  // signature of the live inputs distinguishes a real change from an unrelated
-  // re-render; on a change we flag the scope with `data-dotui-transition` *in the
-  // same commit* as the new tokens/classes (so the paint-only CSS transition in
-  // styles.css catches the old→new value change), then a timer clears the flag
-  // once the tween is done. Off for global (`:root`) mode — its sole consumer is
-  // the live /create preview, where slider drags should track the cursor, not lag
-  // behind a tween.
-  //
-  // The CSS rule tweens both the paint axes (color/radius/shadow) and the density
-  // axes (padding/gap/sizes), so the whole subtree morphs — including the spacing
-  // growing/shrinking. That's a per-frame layout tween across the subtree, which is
-  // why the showcase only triggers it on an explicit user pick, never on a loop (see
-  // modules/marketing/cards.tsx). A caller that animates the swap some other way can
-  // pass `transitionOnChange={false}` to suppress the flag. Honors
-  // `prefers-reduced-motion` via the media query in styles.css.
-  const signature = React.useMemo(
-    () => (scoped ? JSON.stringify({ params, tokens, density, color }) : ''),
-    [scoped, params, tokens, density, color],
-  )
-  const prevSignatureRef = React.useRef<string | null>(null)
-  const [transitioning, setTransitioning] = React.useState(false)
-
-  if (scoped) {
-    if (prevSignatureRef.current === null) {
-      // First render: record the baseline; never animate the initial paint.
-      prevSignatureRef.current = signature
-    } else if (prevSignatureRef.current !== signature) {
-      // A real change. Record the new baseline and flag the tween for THIS commit:
-      // setting state during render re-runs the component before paint, so the flag
-      // and the new tokens land together — required for the transition to fire.
-      prevSignatureRef.current = signature
-      if (transitionOnChange && !transitioning) setTransitioning(true)
-    }
-  }
-
-  // Clear the flag once the tween finishes. `signature` in the deps re-arms the
-  // timer on every change, so a swap mid-tween extends the window instead of
-  // cutting the previous one short.
-  React.useEffect(() => {
-    if (!transitioning) return
-    const timer = setTimeout(
-      () => setTransitioning(false),
-      PRESET_TRANSITION_MS + PRESET_TRANSITION_BUFFER_MS,
-    )
-    return () => clearTimeout(timer)
-  }, [transitioning, signature])
 
   // Apply the global token vars to :root so values that reference each other via calc() +
   // var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor))) recompute correctly —
@@ -377,34 +445,29 @@ function DesignSystemProvider({
     if (scoped) harvestRootClosure()
   }, [scoped])
 
-  // Generative palette as a rendered <style> (the element is declared in the returned tree
-  // below, not imperatively appended). Global mode writes :root + .dark (the flat-token
-  // path above only writes :root). Scoped mode clones :root's token closure onto the wrapper
-  // (so semantic + component vars recompute from the scope) and overrides the ramps there — but
-  // only once something actually diverges (a color, or a token like --radius-factor); an
-  // untouched preview emits nothing and just inherits the page defaults.
-  //
-  // `cssVars` themselves ride inline on the scope element and never enter the CSS text, so the
-  // memo depends on whether any override EXISTS (a boolean) rather than the object's identity —
-  // otherwise every radius-slider tick would rebuild a byte-identical stylesheet.
+  // Scoped mode: join the shared closure-clone stylesheet, but only once something
+  // actually diverges (a color, or a token like --radius-factor); an untouched preview
+  // injects nothing and inherits the page defaults. `cssVars` ride inline on the scope
+  // element and never enter the CSS text, so divergence keys on whether any override
+  // EXISTS (a boolean), not object identity — else every radius tick rebuilds identical CSS.
   const hasTokenOverrides = Object.keys(cssVars).length > 0
-  const themeCss = React.useMemo(() => {
-    if (scoped) {
-      const diverges = Boolean(color) || hasTokenOverrides
-      return diverges ? buildScopedThemeCss(scopeSelector, color) : null
-    }
-    return color
-      ? emitPrimitivesCss(resolveColorConfig(color), { onColors: true })
-      : null
-  }, [scoped, scopeSelector, color, hasTokenOverrides])
+  const scopeToken = useSharedScopedTheme(
+    color,
+    forcedMode,
+    scoped && (Boolean(color) || hasTokenOverrides || Boolean(forcedMode)),
+  )
 
-  // The palette / scoped-closure stylesheet as a real node, rendered into the tree rather
-  // than appended via an effect. `themeCss` is null until something diverges (and, when
-  // scoped, is client-only — see buildScopedThemeCss), so an untouched provider renders no
-  // <style> and SSR/first paint stay byte-identical to the bare children. A plain <style>
-  // (no `precedence`) is not hoisted by React; it renders in place, which is fine — its
-  // rules are global selectors (`:root`, `.dark`, `[data-dotui-scope]`) that apply wherever
-  // the tag sits, and `<style>` carries the UA `display: none`, so it never affects layout.
+  // Global mode: generative palette as a rendered <style>, writing :root + .dark (the
+  // flat-token path above only writes :root). Null until a color is set, so an untouched
+  // provider renders no <style> and SSR/first paint stay byte-identical to the bare
+  // children. A plain <style> (no `precedence`) renders in place — fine, its rules are
+  // global selectors and `<style>` carries the UA `display: none`, so layout is untouched.
+  const themeCss = React.useMemo(() => {
+    if (scoped || !color) return null
+    return emitPrimitivesCss(resolveColorConfigCached(color), {
+      onColors: true,
+    })
+  }, [scoped, color])
   const themeStyle = themeCss ? (
     <style data-dotui-color>{themeCss}</style>
   ) : null
@@ -429,20 +492,21 @@ function DesignSystemProvider({
 
   // `display: contents` keeps the wrapper out of layout (the children stay direct flow/flex
   // items of the real parent) while still carrying the scope marker + inline token vars.
+  // The marker value is the shared theme token (absent while nothing diverges), so every
+  // provider on the same theme is targeted by the one shared closure <style>.
   //
   // Card overlays (Select / popovers / tooltips) portal to `document.body` by default — outside
   // this subtree — so they'd escape the scope and render with the page's default theme.
   // `UNSAFE_PortalProvider` redirects every overlay rendered by the children into `#portalDomId`:
-  // a body-level node that also carries `data-dotui-scope` (so the injected closure `<style>`
+  // a body-level node that also carries `data-dotui-scope` (so the shared closure `<style>`
   // themes it) but lives outside the showcase's `overflow-hidden`/masked container, so overlays
   // inherit the scoped theme without being clipped.
   return (
     <div
-      data-dotui-scope={scopeId}
-      data-dotui-transition={transitioning ? '' : undefined}
+      data-dotui-scope={scopeToken}
+      data-mode={forcedMode}
       style={{ display: 'contents', ...scopeStyle }}
     >
-      {themeStyle}
       <UNSAFE_PortalProvider
         getContainer={() => document.getElementById(portalDomId)}
       >
@@ -453,8 +517,8 @@ function DesignSystemProvider({
         : createPortal(
             <div
               id={portalDomId}
-              data-dotui-scope={scopeId}
-              data-dotui-transition={transitioning ? '' : undefined}
+              data-dotui-scope={scopeToken}
+              data-mode={forcedMode}
               style={scopeStyle}
             />,
             document.body,
@@ -738,14 +802,33 @@ function createStyles<const M extends RegistryItem, const Base>(
     return current
   }
 
+  // Selection objects are stable references (preset/store constants or
+  // `emptyParamSelections`), so composition can be cached per (density,
+  // selections) at module level: once per component type, not per instance,
+  // and `useStyles` returns a stable reference across instances.
+  const composeCache = new Map<
+    Density,
+    WeakMap<object, ReturnType<typeof tv>>
+  >()
+  function composeCached(d: Density, selections: Record<string, string>) {
+    let byRef = composeCache.get(d)
+    if (!byRef) {
+      byRef = new WeakMap()
+      composeCache.set(d, byRef)
+    }
+    let composed = byRef.get(selections)
+    if (!composed) {
+      composed = compose(d, selections)
+      byRef.set(selections, composed)
+    }
+    return composed
+  }
+
   function useStyles() {
     const { params: paramSelections, density } =
       React.useContext(DesignSystemContext)
     const componentParams = paramSelections[meta.name] ?? emptyParamSelections
-    return React.useMemo(
-      () => compose(density, componentParams) as InferTv<Base>,
-      [density, componentParams],
-    )
+    return composeCached(density, componentParams) as InferTv<Base>
   }
 
   return {

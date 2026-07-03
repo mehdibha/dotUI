@@ -18,6 +18,13 @@ const colorEditorMeta = {
     'input',
     'select',
   ],
+  params: {
+    style: {
+      kind: 'enum',
+      default: 'default',
+      values: ['default', 'hammamet'] as const,
+    },
+  },
 } satisfies RegistryItem
 
 export default colorEditorMeta

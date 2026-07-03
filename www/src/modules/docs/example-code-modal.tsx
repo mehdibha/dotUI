@@ -22,6 +22,8 @@ export interface ExampleCodeModalProps {
   component: React.ComponentType
   /** Pre-highlighted source (the `DemoCode` slot content built at MDX build time). */
   code: React.ReactNode
+  /** Demo file name shown as the code block title, e.g. `disabled.tsx`. */
+  file?: string
   /** Registry items to install, e.g. `["button"]`. */
   install: string[]
 }
@@ -37,6 +39,7 @@ export function ExampleCodeModal({
   title,
   component: Component,
   code,
+  file,
   install,
 }: ExampleCodeModalProps) {
   const commands = buildInstallCommands(install)
@@ -50,7 +53,7 @@ export function ExampleCodeModal({
       <Modal className="h-[80vh] w-full sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl">
         <DialogContent
           aria-label={`${title} code`}
-          className="relative flex h-full min-h-0 flex-col p-0"
+          className="relative flex h-full min-h-0 flex-col rounded-[inherit] p-0"
         >
           {/* Close sits just outside the panel's top-right corner. Kept inside
               the dialog (so slot="close" works) but escaping the rounded body. */}
@@ -64,9 +67,9 @@ export function ExampleCodeModal({
           >
             <XIcon />
           </Button>
-          <div className="flex h-full min-h-0 flex-col md:flex-row">
+          <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[inherit] md:flex-row">
             {/* LEFT: title, live preview, install command */}
-            <div className="flex min-h-0 flex-col md:w-2/5 md:border-r lg:w-1/2">
+            <div className="flex min-h-0 min-w-0 flex-col md:w-2/5 md:border-r lg:w-1/2">
               <DialogTitle className="shrink-0 px-4 pt-3 text-sm text-fg-muted">
                 {title}
               </DialogTitle>
@@ -107,12 +110,16 @@ export function ExampleCodeModal({
             </div>
 
             {/* RIGHT: example source, filling the full modal height */}
-            <div className="flex min-h-0 flex-1 flex-col border-t bg-card md:border-t-0">
-              <div className="min-h-0 flex-1 overflow-auto">
-                <CodeBlock className="rounded-none border-0 bg-transparent">
-                  <Pre>{code}</Pre>
-                </CodeBlock>
-              </div>
+            <div className="flex min-h-0 min-w-0 flex-1 flex-col border-t bg-card md:border-t-0">
+              <CodeBlock
+                title={file}
+                className="flex min-h-0 flex-1 flex-col rounded-none border-0 bg-transparent"
+                contentClassName="no-scrollbar min-h-0 flex-1 scroll-fade-y overflow-y-auto"
+              >
+                <Pre className="no-scrollbar w-full scroll-fade-x overflow-x-auto *:[code]:w-max *:[code]:min-w-full">
+                  {code}
+                </Pre>
+              </CodeBlock>
             </div>
           </div>
         </DialogContent>

@@ -3,17 +3,18 @@
 import { Button } from '@/registry/ui/button'
 import { ColorEditor } from '@/registry/ui/color-editor'
 import { ColorPicker } from '@/registry/ui/color-picker'
-import { DialogContent } from '@/registry/ui/dialog'
+import { ColorSwatch } from '@/registry/ui/color-swatch'
 import { Popover } from '@/registry/ui/popover'
 
 export default function Demo() {
   return (
-    <ColorPicker defaultValue="#ff0000">
-      <Button />
-      <Popover>
-        <DialogContent>
-          <ColorEditor />
-        </DialogContent>
+    <ColorPicker defaultValue="#5100FF">
+      <Button>
+        <ColorSwatch />
+        Accent
+      </Button>
+      <Popover className="p-2.5">
+        <ColorEditor />
       </Popover>
     </ColorPicker>
   )

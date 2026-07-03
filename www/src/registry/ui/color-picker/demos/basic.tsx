@@ -9,12 +9,13 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <ColorPicker>
-      <Button isIconOnly>
+      <Button aria-label="Pick a color" isIconOnly>
         <ColorSwatch />
       </Button>
       <Popover>
         <DialogContent>
           <ColorArea
+            aria-label="Color"
             colorSpace="hsb"
             xChannel="saturation"
             yChannel="brightness"

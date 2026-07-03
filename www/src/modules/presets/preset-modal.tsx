@@ -78,7 +78,7 @@ export function PresetModal({
     >
       <DialogContent
         aria-label={active ? `${active.name} design system` : 'Design system'}
-        className="relative flex h-full min-h-0 flex-col overflow-hidden p-0"
+        className="relative flex h-full min-h-0 flex-col rounded-[inherit] p-0"
       >
         {/* Close sits just outside the panel's top-right corner (kept inside the
             dialog so focus management still scopes to it). */}
@@ -160,7 +160,7 @@ function PresetModalBody({ preset }: { preset: Preset }) {
   ]
 
   return (
-    <div className="flex h-full min-h-0 flex-col md:flex-row">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[inherit] md:flex-row">
       {/* LEFT: the editorial spec sheet. Capped on mobile (where it stacks above
           the preview) so the live showcase always keeps a usable share. */}
       <div className="flex min-h-0 flex-col gap-6 overflow-auto border-b p-6 max-md:max-h-[55%] md:w-[340px] md:shrink-0 md:border-r md:border-b-0 lg:w-[380px]">
