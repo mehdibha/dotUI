@@ -177,7 +177,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
           {/* -mt-4 cancels PageLayout's mt-4 so the TOC top lines up with the
               sidebar (which isn't inside PageLayout) at scroll 0, matching the
               already-aligned scrolled/sticky state. */}
-          <div className="sticky top-(--header-height) z-30 -mt-4 hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
+          <div className="sticky top-(--header-height) z-30 -mt-4 hidden max-h-[90svh] w-(--sidebar-width) flex-col gap-4 self-start overflow-hidden overscroll-none pb-8 xl:flex">
             {hasToc && <TOC className="pr-12" />}
           </div>
         </PageLayout>

@@ -38,7 +38,7 @@ export function TOC({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       className={cn(
-        'sticky top-10 flex h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden',
+        'sticky top-10 flex max-h-[calc(100svh-var(--header-height))] flex-col max-xl:hidden',
         className,
       )}
       {...props}
