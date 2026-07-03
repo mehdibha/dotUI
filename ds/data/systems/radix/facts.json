@@ -1,0 +1,350 @@
+[
+  {
+    "questionId": "palette.structure",
+    "status": "answered",
+    "answer": {
+      "organization": "stepped-ramps",
+      "rampCount": 31,
+      "stepsPerRamp": 12,
+      "stepNumbering": "1-12",
+      "stepRoles": "defined-per-step",
+      "alphaVariants": true
+    },
+    "summary": "Radix Colors ships 31 twelve-step scales (6 tinted grays: gray, mauve, slate, sage, olive, sand; 25 chromatic hues), each in light and dark versions with solid, alpha, P3 and P3-alpha variants, plus blackA/whiteA overlay scales. Every step has a documented role: 1-2 app backgrounds, 3-5 component backgrounds (normal/hover/pressed), 6-8 borders (8 for stronger borders and focus rings), 9-10 solid backgrounds (9 is the highest-chroma step), 11-12 text.",
+    "evidence": [
+      {
+        "url": "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale",
+        "kind": "docs",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "Steps 1-2 are designed for app backgrounds and subtle component backgrounds; step 9 has the highest chroma of all steps in the scale; step 8 for stronger borders on interactive components and focus rings.",
+        "note": "Per-step role table for all 12 steps."
+      },
+      {
+        "url": "https://github.com/radix-ui/colors/blob/main/src/light.ts",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "export const blue = { blue1: \"#fbfdff\", blue2: \"#f4faff\", ... }; export const blueA = { blueA1: \"#0080ff04\", ... }; export const blueP3 = { blue1: \"color(display-p3 0.986 0.992 0.999)\", ... }",
+        "note": "31 scale families exported, each as solid/A/P3/P3A objects of 12 steps."
+      }
+    ],
+    "method": "documented",
+    "verifiedAt": "2026-07-03",
+    "confidence": "verified"
+  },
+  {
+    "questionId": "palette.generation",
+    "status": "answered",
+    "answer": {
+      "approach": "hand-authored",
+      "algorithm": null,
+      "inputs": ["reference colors (custom palette tool only)"],
+      "implementation": "hosted-tool"
+    },
+    "summary": "The published scales are static hand-authored tables — the repo ships literal hex/P3 values with no generation code, and no authoring methodology is documented. Releases describe wholesale manual reworks ('a complete rework of all colors' in both 2.0.0 and 3.0.0). A hosted custom-palette tool generates full 12-step scales from 'a couple reference colors', but its algorithm is closed; the docs say only that generated scales 'are based on the Radix Colors scales themselves'.",
+    "evidence": [
+      {
+        "url": "https://www.radix-ui.com/colors/docs/overview/custom-palettes",
+        "kind": "docs",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "Use the custom color palette tool to generate a Radix Colors scale based just on a couple reference colors. [...] The generated scales are based on the Radix Colors scales themselves.",
+        "note": "Tool is hosted at radix-ui.com/colors/custom; no algorithm published."
+      },
+      {
+        "url": "https://www.radix-ui.com/colors/docs/overview/releases",
+        "kind": "changelog",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "2.0.0 (Aug 2023): A complete rework of all colors, dramatically improving contrast across the board. 3.0.0 (Oct 2023): A complete rework of all colors.",
+        "note": "Rework language implies manual curation rather than parameter changes to an open algorithm."
+      },
+      {
+        "url": "https://github.com/radix-ui/colors/blob/main/src/light.ts",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "note": "Repo contains only literal value tables (light.ts, dark.ts, blackA.ts, whiteA.ts, index.ts) — no generation code."
+      }
+    ],
+    "method": "source-read",
+    "verifiedAt": "2026-07-03",
+    "confidence": "inferred",
+    "notes": "'Hand-authored' is inferred from the absence of generation code and the rework-style changelog; the team has never published its authoring process."
+  },
+  {
+    "questionId": "palette.colorspace",
+    "status": "answered",
+    "answer": {
+      "workingSpaces": null,
+      "outputFormats": [
+        "sRGB hex",
+        "8-digit hex alpha",
+        "color(display-p3 ...)",
+        "color(display-p3 ... / alpha)"
+      ],
+      "wideGamut": "full"
+    },
+    "summary": "Shipped formats are sRGB hex (solid), 8-digit hex (alpha), and color(display-p3 ...) for the wide-gamut variants added in 3.0.0 ('Add P3 colorspace versions of all scales' — every scale has P3 and P3-alpha versions). The authoring/working color space is not published. Radix Themes gates P3 values behind @supports (color: color(display-p3 1 1 1)) plus @media (color-gamut: p3).",
+    "evidence": [
+      {
+        "url": "https://github.com/radix-ui/colors/blob/main/src/light.ts",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "blue1: \"#fbfdff\" / blueA1: \"#0080ff04\" / blueP3: blue1: \"color(display-p3 0.986 0.992 0.999)\""
+      },
+      {
+        "url": "https://www.radix-ui.com/colors/docs/overview/releases",
+        "kind": "changelog",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "3.0.0 (October 2, 2023): Add P3 colorspace versions of all scales."
+      },
+      {
+        "url": "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "@supports (color: color(display-p3 1 1 1)) { @media (color-gamut: p3) { .radix-themes { --color-transparent: color(display-p3 0 0 0 / 0); } } }",
+        "note": "P3 delivery mechanism; even 'transparent' is redefined in P3 to avoid Chrome box-shadow transition bugs."
+      }
+    ],
+    "method": "source-read",
+    "verifiedAt": "2026-07-03",
+    "confidence": "verified"
+  },
+  {
+    "questionId": "contrast.strategy",
+    "status": "answered",
+    "answer": {
+      "enforcement": "by-construction",
+      "standard": "apca",
+      "guaranteedPairings": [
+        "step 11 text on step 2 background: APCA Lc 60",
+        "step 12 text on step 2 background: APCA Lc 90",
+        "step 9 solid backgrounds pair with white foreground (except sky, mint, lime, yellow, amber, which pair with dark text)"
+      ]
+    },
+    "summary": "Text contrast is guaranteed by construction against APCA, not WCAG 2.x: the docs state that steps 11 and 12 'are guaranteed to Lc 60 and Lc 90 APCA contrast ratio on top of a step 2 background from the same scale'. Step-9 solid backgrounds have designated foreground colors (white for most scales, dark text for five bright hues), which Radix Themes operationalizes as the --accent-contrast token. No tooling-based checking is documented — the guarantee is baked into the hand-tuned values.",
+    "evidence": [
+      {
+        "url": "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale",
+        "kind": "docs",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "Steps 11 and 12—which are designed for text—are guaranteed to Lc 60 and Lc 90 APCA contrast ratio on top of a step 2 background from the same scale. [...] Sky, Mint, Lime, Yellow, and Amber are designed for dark foreground text."
+      },
+      {
+        "url": "https://www.radix-ui.com/colors/docs/overview/releases",
+        "kind": "changelog",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "2.0.0: A complete rework of all colors, dramatically improving contrast across the board.",
+        "note": "The APCA targets date from the 2.0 rework era."
+      }
+    ],
+    "method": "documented",
+    "verifiedAt": "2026-07-03",
+    "confidence": "verified"
+  },
+  {
+    "questionId": "tokens.layers",
+    "status": "answered",
+    "answer": {
+      "layers": [
+        {
+          "name": "color scales (@radix-ui/colors)",
+          "kind": "primitive",
+          "example": "--blue-9, --blue-a9"
+        },
+        {
+          "name": "role scales (accent/gray remapping)",
+          "kind": "semantic",
+          "example": "--accent-9 → var(--blue-9) under [data-accent-color='blue']; --focus-8 → var(--accent-8)"
+        },
+        {
+          "name": "functional tokens",
+          "kind": "semantic",
+          "example": "--color-background, --color-surface, --color-panel-solid, --color-overlay, --accent-contrast, --accent-indicator, --accent-track"
+        }
+      ]
+    },
+    "summary": "Three effective layers, two of them semantic: primitive scales from @radix-ui/colors; role scales where the chosen accent and gray are remapped step-for-step onto --accent-1..12 / --gray-1..12 (plus the parallel --focus-1..12 scale) via [data-accent-color] selectors; and functional tokens for backgrounds, surfaces, panels, overlays, and accent extras (--accent-contrast, --accent-surface, --accent-indicator, --accent-track). There is no component color-token layer — components consume role and functional tokens directly.",
+    "evidence": [
+      {
+        "url": "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "[data-accent-color='blue'] { --accent-1: var(--blue-1); ... } / [data-accent-color]:where(:not(...)) { --focus-1: var(--accent-1); ... --focus-8: var(--accent-8); } / :where(.radix-themes) { --color-background: white; --color-panel-solid: white; --color-surface: rgba(255, 255, 255, 0.85); }"
+      },
+      {
+        "url": "https://www.radix-ui.com/themes/docs/theme/color",
+        "kind": "docs",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "Functional tokens: --accent-surface, --accent-indicator, --accent-track, --accent-contrast; --color-background, --color-panel-solid, --color-panel-translucent, --color-surface, --color-overlay.",
+        "note": "Docs also describe 'color aliasing' — remapping Radix tokens onto preferred names."
+      }
+    ],
+    "method": "source-read",
+    "verifiedAt": "2026-07-03",
+    "confidence": "verified"
+  },
+  {
+    "questionId": "tokens.scope",
+    "status": "answered",
+    "answer": {
+      "color": true,
+      "spacing": true,
+      "radius": true,
+      "typography": true,
+      "elevation": true,
+      "motion": false,
+      "breakpoints": false,
+      "cursor": true,
+      "zIndex": false,
+      "opacity": false,
+      "other": [
+        "global scaling factor (--scaling)",
+        "per-component cursor tokens (--cursor-button, --cursor-checkbox, ...)"
+      ]
+    },
+    "summary": "Radix Themes tokenizes color, space (--space-1..9), radius (--radius-1..6 plus --radius-factor/--radius-full/--radius-thumb), shadows (--shadow-1..6), typography (font families, sizes, weights, letter-spacing, code-specific vars), cursors (unusually, one token per interactive component kind), and a global --scaling factor. Motion, breakpoints, z-index and opacity are not tokenized — breakpoints exist only as responsive prop syntax, not CSS variables.",
+    "evidence": [
+      {
+        "url": "https://github.com/radix-ui/themes/tree/main/packages/radix-ui-themes/src/styles/tokens",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "tokens/: base.css, color.css, colors/, cursor.css, radius.css, scaling.css, shadow.css, space.css, typography.css",
+        "note": "Per-file variable inventories confirmed: --space-1..9, --radius-1..6 + factor/full/thumb, --shadow-1..6, --cursor-button etc., --scaling. No motion or breakpoint token file exists."
+      }
+    ],
+    "method": "source-read",
+    "verifiedAt": "2026-07-03",
+    "confidence": "verified"
+  },
+  {
+    "questionId": "tokens.naming",
+    "status": "answered",
+    "answer": {
+      "caseStyle": "kebab-case",
+      "pattern": "--{scale}-{step} and --{scale}-a{step} for primitives; --accent-{step} / --gray-{step} / --focus-{step} for role scales; --color-{purpose} and --accent-{purpose} for functional tokens",
+      "examples": [
+        "--blue-9",
+        "--blue-a9",
+        "--accent-9",
+        "--focus-8",
+        "--accent-contrast",
+        "--color-panel-solid"
+      ],
+      "themingMechanisms": [
+        "css-custom-properties",
+        "class-switch",
+        "data-attribute"
+      ]
+    },
+    "summary": "Kebab-case CSS custom properties throughout (the 1.0.0 release standardized gray1 → gray-1). Alpha variants use an 'a' infix on the step. Theming is fully runtime: light/dark via .light/.dark (or .light-theme/.dark-theme) class switching, accent/gray/radius choices via data attributes ([data-accent-color], [data-radius]) set by the Theme component, all resolving through CSS custom properties.",
+    "evidence": [
+      {
+        "url": "https://www.radix-ui.com/colors/docs/overview/releases",
+        "kind": "changelog",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "1.0.0 (June 23, 2023): CSS variable names changed from gray1 to gray-1; file names from grayDarkA.css to gray-dark-alpha.css."
+      },
+      {
+        "url": "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "excerpt": ":is(.dark, .dark-theme), :is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) { --color-background: var(--gray-1); ... } / [data-accent-color='blue'] { --accent-1: var(--blue-1); ... }"
+      }
+    ],
+    "method": "source-read",
+    "verifiedAt": "2026-07-03",
+    "confidence": "verified"
+  },
+  {
+    "questionId": "modes.support",
+    "status": "answered",
+    "answer": {
+      "modes": ["light", "dark"],
+      "darkStrategy": "separate-palette",
+      "highContrast": "per-component-option",
+      "systemSync": "delegated"
+    },
+    "summary": "Light and dark ship as separately hand-tuned palettes (dark.ts values are independent, not transforms of light.ts), switched by class; semantic tokens like --color-background re-point on top of the swapped scales. There is no dedicated high-contrast mode — instead components accept a highContrast prop. OS sync is explicitly delegated: the docs call system-appearance matching 'a deceptively complex problem' and recommend next-themes class switching, warning 'Do not try to set <Theme appearance={resolvedTheme}>'.",
+    "evidence": [
+      {
+        "url": "https://www.radix-ui.com/themes/docs/theme/dark-mode",
+        "kind": "docs",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "By default, the root Theme appearance is light. [...] a deceptively complex problem to solve given SSR, SSG and client side hydration considerations. [...] Do not try to set <Theme appearance={resolvedTheme}>. Instead, rely just on class switching that next-themes provides."
+      },
+      {
+        "url": "https://github.com/radix-ui/colors/blob/main/src/light.ts",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "note": "light.ts and dark.ts are parallel hand-authored tables; dark values are not derived from light values by any code in the repo."
+      }
+    ],
+    "method": "documented",
+    "verifiedAt": "2026-07-03",
+    "confidence": "verified"
+  },
+  {
+    "questionId": "focus.construction",
+    "status": "answered",
+    "answer": {
+      "technique": "outline",
+      "width": "2px",
+      "offset": "2px",
+      "colorSource": "--focus-8 (a full --focus-1..12 scale remapped from the accent scale)",
+      "focusVisibleOnly": true
+    },
+    "summary": "Focus rings are outlines gated on :focus-visible: base-button.css uses 'outline: 2px solid var(--focus-8); outline-offset: 2px'. The color comes from a dedicated focus scale — --focus-1..12 is remapped step-for-step from the accent scale in color.css — matching the scale documentation that assigns step 8 to 'stronger borders and focus rings'. Touch devices get a separate affordance: an 0.5em outline of --accent-a4 on :active for coarse pointers.",
+    "evidence": [
+      {
+        "url": "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/components/_internal/base-button.css",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "&:where(:focus-visible) { outline: 2px solid var(--focus-8); outline-offset: 2px; } / @media (pointer: coarse) { &:where(:active:not([data-state='open'])) { outline: 0.5em solid var(--accent-a4); outline-offset: 0; } }"
+      },
+      {
+        "url": "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "[data-accent-color]:where(:not([data-accent-color=''], [data-accent-color='gray'])) { --focus-1: var(--accent-1); ... --focus-8: var(--accent-8); ... }"
+      }
+    ],
+    "method": "source-read",
+    "verifiedAt": "2026-07-03",
+    "confidence": "verified"
+  },
+  {
+    "questionId": "component.color-usage",
+    "status": "answered",
+    "answer": {
+      "component": "Button (via base-button)",
+      "layersConsumed": ["semantic"],
+      "variantNames": [
+        "classic",
+        "solid",
+        "soft",
+        "surface",
+        "outline",
+        "ghost-offset",
+        "ghost"
+      ],
+      "accentOptions": 26,
+      "hardcodedValues": false
+    },
+    "summary": "Button touches only the semantic layers — role scales and functional tokens, never raw scale names: solid is background --accent-9 / color --accent-contrast, hover --accent-10, highContrast swaps to --accent-12 with --gray-1 text; disabled uses --gray-a8 on --gray-2; classic builds its depth from --gray-a* inset shadows. Seven style variants times 26 accentColor options (25 hues + gray) times an optional highContrast boolean. No hardcoded color literals beyond 'transparent' in gradients.",
+    "evidence": [
+      {
+        "url": "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/components/_internal/base-button.css",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "background-color: var(--accent-9); color: var(--accent-contrast); [...] &:where(:hover) { background-color: var(--accent-10); } [...] color: var(--gray-a8); background-color: var(--gray-2);"
+      },
+      {
+        "url": "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/components/_internal/base-button.props.ts",
+        "kind": "source",
+        "retrievedAt": "2026-07-03",
+        "excerpt": "const variants = ['classic', 'solid', 'soft', 'surface', 'outline', 'ghost-offset', 'ghost'] as const; [...] ...accentColorPropDef, ...highContrastPropDef"
+      }
+    ],
+    "method": "source-read",
+    "verifiedAt": "2026-07-03",
+    "confidence": "verified"
+  }
+]

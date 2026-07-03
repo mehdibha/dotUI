@@ -1,0 +1,538 @@
+{
+  "$comment": "ds.dotui.org tier-1 roster — approved by maintainer 2026-07-03. Canonical copy (moved here per plan 003); selection evidence in docs/research/2026-07-03-ds-roster-selection/. Scores: color/token dimension only, 0-3: [technical-depth, originality-lessons, inspectability, docs-quality, influence].",
+  "version": 1,
+  "approvedAt": "2026-07-03",
+  "systems": [
+    {
+      "slug": "spectrum-2",
+      "name": "Adobe Spectrum 2",
+      "org": "Adobe",
+      "type": "corporate-design-system",
+      "status": "tier1",
+      "method": "source-read",
+      "upstream": ["leonardo"],
+      "scores": [3, 3, 3, 2, 3],
+      "sources": {
+        "docs": "https://s2.spectrum.adobe.com",
+        "repo": "https://github.com/adobe/spectrum-design-data",
+        "npm": ["@adobe/spectrum-tokens"],
+        "other": [
+          "https://github.com/adobe/leonardo",
+          "https://adobe.design/stories/design-for-scale/reinventing-adobe-spectrum-s-colors",
+          "https://medium.com/thinking-design/adaptive-color-in-spectrum-adobes-design-system-feeeec89a2c7"
+        ]
+      },
+      "rationale": "Contrast-solved generation (Leonardo, CAM02-UCS), true 3-tier tokens with light/dark/wireframe modes, JSON-Schema-validated pipeline."
+    },
+    {
+      "slug": "material-3",
+      "name": "Google Material 3",
+      "org": "Google",
+      "type": "corporate-design-system",
+      "status": "tier1",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [3, 3, 3, 2, 2],
+      "sources": {
+        "docs": "https://m3.material.io",
+        "repo": "https://github.com/material-foundation/material-color-utilities",
+        "npm": ["@material/material-color-utilities"],
+        "other": []
+      },
+      "rationale": "HCT color space, runtime dynamic color from a seed, contrast-by-construction via tone deltas; open in six language ports."
+    },
+    {
+      "slug": "radix",
+      "name": "Radix Colors + Themes",
+      "org": "WorkOS",
+      "type": "token-or-color-system",
+      "status": "tier1",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [3, 3, 2, 3, 3],
+      "sources": {
+        "docs": "https://www.radix-ui.com/colors",
+        "repo": "https://github.com/radix-ui/colors",
+        "npm": ["@radix-ui/colors"],
+        "other": []
+      },
+      "rationale": "12-step role semantics the industry imitates; only major APCA-by-construction system (step 11 = Lc 60, step 12 = Lc 90); P3 progressive enhancement. Plan-002 pilot (open method)."
+    },
+    {
+      "slug": "uswds",
+      "name": "USWDS",
+      "org": "U.S. GSA",
+      "type": "corporate-design-system",
+      "status": "tier1",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [3, 3, 3, 3, 2],
+      "sources": {
+        "docs": "https://designsystem.digital.gov/design-tokens/color/overview/",
+        "repo": "https://github.com/uswds/uswds",
+        "npm": ["@uswds/uswds"],
+        "other": []
+      },
+      "rationale": "Luminance-locked color grades: numeric grade difference deterministically guarantees WCAG contrast (the 'magic number' system)."
+    },
+    {
+      "slug": "ant-design",
+      "name": "Ant Design",
+      "org": "Ant Group",
+      "type": "component-library",
+      "status": "tier1",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [3, 3, 3, 3, 3],
+      "sources": {
+        "docs": "https://ant.design/docs/spec/colors",
+        "repo": "https://github.com/ant-design/ant-design-colors",
+        "npm": ["@ant-design/colors", "antd"],
+        "other": ["https://ant.design/docs/react/customize-theme"]
+      },
+      "rationale": "Fully open parametric HSV ramp algorithm plus the seed-to-map-to-alias derivation pipeline (derived non-color tokens too)."
+    },
+    {
+      "slug": "fluent-2",
+      "name": "Microsoft Fluent 2",
+      "org": "Microsoft",
+      "type": "corporate-design-system",
+      "status": "tier1",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [3, 3, 3, 2, 2],
+      "sources": {
+        "docs": "https://fluent2.microsoft.design/color",
+        "repo": "https://github.com/microsoft/fluentui",
+        "npm": ["@fluentui/react-theme", "@fluentui/tokens"],
+        "other": []
+      },
+      "rationale": "Open Lab/LCH curve-based ramp generator (paletteShadesFromCurve) with a public Theme Designer; clean global-to-alias token split; high-contrast theme factory."
+    },
+    {
+      "slug": "polaris",
+      "name": "Shopify Polaris",
+      "org": "Shopify",
+      "type": "corporate-design-system",
+      "status": "tier1",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [3, 3, 2, 2, 2],
+      "sources": {
+        "docs": "https://polaris-react.shopify.com/design/colors/palettes-and-roles",
+        "repo": "https://github.com/Shopify/polaris",
+        "npm": ["@shopify/polaris-tokens"],
+        "other": ["https://github.com/Shopify/polaris-tokens"]
+      },
+      "rationale": "Open HSLuv color factory built for cross-hue contrast parity at equal lightness."
+    },
+    {
+      "slug": "primer",
+      "name": "GitHub Primer",
+      "org": "GitHub",
+      "type": "corporate-design-system",
+      "status": "tier1",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [3, 2, 3, 2, 2],
+      "sources": {
+        "docs": "https://primer.style/foundations/color",
+        "repo": "https://github.com/primer/primitives",
+        "npm": ["@primer/primitives"],
+        "other": [
+          "https://github.com/primer/prism",
+          "https://github.blog/engineering/user-experience/unlocking-inclusive-design-how-primers-color-system-is-making-github-com-more-inclusive/"
+        ]
+      },
+      "rationale": "3-tier Style Dictionary pipeline (base/functional/component), HSLuv Prism authoring, automated WCAG token-pair audits, org.primer.llm machine-readable extension."
+    },
+    {
+      "slug": "astryx",
+      "name": "Astryx",
+      "org": "Meta",
+      "type": "corporate-design-system",
+      "status": "tier1",
+      "method": "source-read",
+      "upstream": ["stylex"],
+      "scores": [3, 3, 3, 3, 2],
+      "sources": {
+        "docs": "https://astryx.atmeta.com",
+        "repo": "https://github.com/facebook/astryx",
+        "npm": ["@astryxdesign/core"],
+        "other": [
+          "https://astryx.atmeta.com/blog/introducing-astryx",
+          "https://astryx.atmeta.com/blog/how-astryx-works"
+        ]
+      },
+      "rationale": "Semantic-purpose tokens with no numeric ramps, light-dark() dual-mode values, 10 swappable CSS-variable themes; the strongest counter-model to ramp-based systems. Open since June 2026."
+    },
+    {
+      "slug": "linear",
+      "name": "Linear",
+      "org": "Linear",
+      "type": "corporate-design-system",
+      "status": "tier1",
+      "method": "reverse-engineered",
+      "upstream": [],
+      "scores": [2, 2, 1, 1, 3],
+      "sources": {
+        "docs": null,
+        "repo": null,
+        "npm": [],
+        "other": [
+          "https://linear.app/now/how-we-redesigned-the-linear-ui",
+          "https://linear.app/changelog/2020-12-04-themes",
+          "https://static.linear.app/web/_next/static/css/"
+        ]
+      },
+      "rationale": "LCH three-variable theme generation (base/accent/contrast) replacing 98 per-theme variables; semantic token layer extractable from shipped CSS. Plan-002 pilot (reverse-engineered method)."
+    },
+    {
+      "slug": "stripe",
+      "name": "Stripe",
+      "org": "Stripe",
+      "type": "corporate-design-system",
+      "status": "tier1",
+      "method": "reverse-engineered",
+      "upstream": [],
+      "scores": [3, 3, 1, 2, 3],
+      "sources": {
+        "docs": null,
+        "repo": null,
+        "npm": [],
+        "other": ["https://stripe.com/blog/accessible-color-systems"]
+      },
+      "rationale": "Canonical CIELAB contrast methodology (2019 post, still live) plus 284 color custom properties extractable from shipped dashboard CSS — a claimed-vs-shipped study."
+    },
+    {
+      "slug": "carbon",
+      "name": "IBM Carbon",
+      "org": "IBM",
+      "type": "corporate-design-system",
+      "status": "tier1",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [2, 2, 3, 2, 3],
+      "sources": {
+        "docs": "https://carbondesignsystem.com",
+        "repo": "https://github.com/carbon-design-system/carbon",
+        "npm": ["@carbon/colors", "@carbon/themes"],
+        "other": [
+          "https://medium.com/carbondesign/because-colors-are-beautiful-52dd4cc39f09"
+        ]
+      },
+      "rationale": "Mature 3-tier token layering at enterprise scale (~235 semantic tokens, 4 built-in themes); palette hand-picked — architecture lessons, not generation."
+    },
+    {
+      "slug": "geist",
+      "name": "Vercel Geist",
+      "org": "Vercel",
+      "type": "corporate-design-system",
+      "status": "tier1",
+      "method": "documented",
+      "upstream": [],
+      "scores": [1, 1, 1, 3, 2],
+      "sources": {
+        "docs": "https://vercel.com/geist/introduction",
+        "repo": null,
+        "npm": ["@vercel/geistcn"],
+        "other": [
+          "https://vercel.com/design.md",
+          "https://vercel.com/geist/colors"
+        ]
+      },
+      "rationale": "Step-as-role 100-1000 numbering and the machine-readable design.md spec; maintainer pick for dev-tool relevance despite thin color science."
+    },
+    {
+      "slug": "shadcn-ui",
+      "name": "shadcn/ui",
+      "org": "shadcn / Vercel",
+      "type": "styling-distribution",
+      "status": "tier1",
+      "method": "source-read",
+      "upstream": ["radix", "tailwind"],
+      "scores": [1, 1, 3, 2, 3],
+      "sources": {
+        "docs": "https://ui.shadcn.com/docs/theming",
+        "repo": "https://github.com/shadcn-ui/ui",
+        "npm": ["shadcn"],
+        "other": ["https://ui.shadcn.com/colors"]
+      },
+      "rationale": "The ecosystem reference point: semantic CSS-variable convention over borrowed static scales, no generation, no contrast strategy — the honest profile is itself a finding."
+    },
+    {
+      "slug": "tailwind",
+      "name": "Tailwind CSS palette",
+      "org": "Tailwind Labs",
+      "type": "token-or-color-system",
+      "status": "tier1",
+      "method": "documented",
+      "upstream": [],
+      "scores": [2, 2, 2, 3, 3],
+      "sources": {
+        "docs": "https://tailwindcss.com/docs/colors",
+        "repo": "https://github.com/tailwindlabs/tailwindcss",
+        "npm": ["tailwindcss"],
+        "other": ["https://tailwindcss.com/blog/tailwindcss-v4"]
+      },
+      "rationale": "dotUI's substrate: 26x11 curated palette, the v4 hex-to-OKLCH migration preserving cross-hue balance, @theme token namespaces; no semantic layer or contrast strategy — a load-bearing absence."
+    },
+    {
+      "slug": "lightning",
+      "name": "Salesforce Lightning",
+      "org": "Salesforce",
+      "type": "corporate-design-system",
+      "status": "watchlist",
+      "method": "documented",
+      "upstream": [],
+      "scores": [2, 3, 2, 3, 3],
+      "sources": {
+        "docs": "https://www.lightningdesignsystem.com",
+        "repo": "https://github.com/salesforce-ux/design-system",
+        "npm": ["@salesforce-ux/design-system"],
+        "other": [
+          "https://medium.com/salesforce-ux/the-salesforce-color-system-c7c6b5b9c577"
+        ]
+      },
+      "rationale": "Origin of 'design tokens'; SLDS 2 global styling hooks and the hard SLDS1-to-2 break; generation tooling not open. Candidate for a history topic page."
+    },
+    {
+      "slug": "atlassian",
+      "name": "Atlassian Design System",
+      "org": "Atlassian",
+      "type": "corporate-design-system",
+      "status": "watchlist",
+      "method": "documented",
+      "upstream": [],
+      "scores": [2, 3, 1, 2, 2],
+      "sources": {
+        "docs": "https://atlassian.design/foundations/color",
+        "repo": null,
+        "npm": ["@atlaskit/tokens"],
+        "other": ["https://atlassian.design/DESIGN.md"]
+      },
+      "rationale": "Foundation.Property.Modifier naming grammar and 4-plane elevation model; generation story thin, docs resist inspection."
+    },
+    {
+      "slug": "chakra",
+      "name": "Chakra UI v3",
+      "org": "Chakra",
+      "type": "component-library",
+      "status": "watchlist",
+      "method": "source-read",
+      "upstream": ["panda-css"],
+      "scores": [2, 2, 3, 3, 3],
+      "sources": {
+        "docs": "https://www.chakra-ui.com/docs/theming/overview",
+        "repo": "https://github.com/chakra-ui/chakra-ui",
+        "npm": ["@chakra-ui/react"],
+        "other": []
+      },
+      "rationale": "Hand-picked hex, but the per-palette semantic shape and colorPalette CSS-variable indirection are a clean re-theming pattern."
+    },
+    {
+      "slug": "mantine",
+      "name": "Mantine",
+      "org": "Mantine",
+      "type": "component-library",
+      "status": "watchlist",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [2, 2, 3, 2, 2],
+      "sources": {
+        "docs": "https://mantine.dev/theming/colors/",
+        "repo": "https://github.com/mantinedev/mantine",
+        "npm": ["@mantine/core", "@mantine/colors-generator"],
+        "other": []
+      },
+      "rationale": "Open HSL fixed-map generator with self-admitted light-hue failure modes plus off-by-default luminance autoContrast — an honest legacy counter-example."
+    },
+    {
+      "slug": "open-props",
+      "name": "Open Props",
+      "org": "Adam Argyle",
+      "type": "token-or-color-system",
+      "status": "watchlist",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [2, 2, 3, 2, 2],
+      "sources": {
+        "docs": "https://open-props.style",
+        "repo": "https://github.com/argyleink/open-props",
+        "npm": ["open-props"],
+        "other": ["https://nerdy.dev/open-props-oklch-palettes-beta"]
+      },
+      "rationale": "Dual generation strategies (composited palettes vs parametric OKLCH single-hue curve); no semantic layer or contrast tooling."
+    },
+    {
+      "slug": "govuk",
+      "name": "GOV.UK Design System",
+      "org": "UK Government Digital Service",
+      "type": "corporate-design-system",
+      "status": "watchlist",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [2, 1, 3, 3, 2],
+      "sources": {
+        "docs": "https://design-system.service.gov.uk/styles/colour/",
+        "repo": "https://github.com/alphagov/govuk-frontend",
+        "npm": ["govuk-frontend"],
+        "other": []
+      },
+      "rationale": "Accessibility-process exemplar with a functional-colour Sass layer; contrast is developer-verified convention, palette hand-authored."
+    },
+    {
+      "slug": "arco",
+      "name": "Arco Design",
+      "org": "ByteDance",
+      "type": "component-library",
+      "status": "watchlist",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [2, 2, 3, 1, 1],
+      "sources": {
+        "docs": "https://arco.design",
+        "repo": "https://github.com/arco-design/color",
+        "npm": ["@arco-design/color"],
+        "other": []
+      },
+      "rationale": "Targeted look only: hue-band-dependent dark-mode palette algorithm (palette-dark.js); docs unreachable and the color package is stale."
+    },
+    {
+      "slug": "hero-ui",
+      "name": "Hero UI",
+      "org": "HeroUI",
+      "type": "component-library",
+      "status": "watchlist",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [2, 2, 3, 1, 2],
+      "sources": {
+        "docs": "https://heroui.com",
+        "repo": "https://github.com/heroui-inc/heroui",
+        "npm": ["@heroui/theme"],
+        "other": []
+      },
+      "rationale": "Footnote-level case study: v2-to-v3 abandoned shade scales plus computed contrast for flat OKLCH roles with color-mix() states."
+    },
+    {
+      "slug": "airbnb-dls",
+      "name": "Airbnb DLS",
+      "org": "Airbnb",
+      "type": "corporate-design-system",
+      "status": "rejected",
+      "method": "reverse-engineered",
+      "upstream": [],
+      "scores": [1, 1, 0, 1, 2],
+      "sources": {
+        "docs": null,
+        "repo": null,
+        "npm": [],
+        "other": ["https://karrisaarinen.com/dls/"]
+      },
+      "rationale": "Effectively closed: no public artifacts, site blocks bot inspection, only philosophy pieces and community reconstructions."
+    },
+    {
+      "slug": "nord",
+      "name": "Nord Design System",
+      "org": "Nordhealth",
+      "type": "corporate-design-system",
+      "status": "rejected",
+      "method": "documented",
+      "upstream": [],
+      "scores": [2, 1, 1, 2, 1],
+      "sources": {
+        "docs": "https://nordhealth.design/tokens/",
+        "repo": null,
+        "npm": ["@nordhealth/tokens"],
+        "other": []
+      },
+      "rationale": "Source repo not public, npm ships compiled output only, usage restricted to Nordhealth products; generation algorithm undisclosed."
+    },
+    {
+      "slug": "orbit",
+      "name": "Orbit",
+      "org": "Kiwi.com",
+      "type": "corporate-design-system",
+      "status": "rejected",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [1, 1, 2, 1, 1],
+      "sources": {
+        "docs": "https://orbit.kiwi",
+        "repo": "https://github.com/kiwicom/orbit",
+        "npm": ["@kiwicom/orbit-components"],
+        "other": []
+      },
+      "rationale": "Thin color/token story; docs unreachable during recon; dedicated tokens repo archived."
+    },
+    {
+      "slug": "base-web",
+      "name": "Uber Base",
+      "org": "Uber",
+      "type": "component-library",
+      "status": "rejected",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [1, 1, 3, 2, 1],
+      "sources": {
+        "docs": "https://base.uber.com",
+        "repo": "https://github.com/uber/baseweb",
+        "npm": ["baseui"],
+        "other": []
+      },
+      "rationale": "Hand-curated hex, Styletron CSS-in-JS theming, no contrast methodology, internal-first posture; little transferable."
+    },
+    {
+      "slug": "park-ui",
+      "name": "Park UI",
+      "org": "Chakra",
+      "type": "component-library",
+      "status": "rejected",
+      "method": "source-read",
+      "upstream": ["radix", "panda-css", "ark-ui"],
+      "scores": [1, 1, 3, 2, 1],
+      "sources": {
+        "docs": "https://park-ui.com",
+        "repo": "https://github.com/chakra-ui/park-ui",
+        "npm": [],
+        "other": []
+      },
+      "rationale": "Curation layer: the color science is Radix's (vendored) and the token mechanics are Panda's — study those instead."
+    },
+    {
+      "slug": "once-ui",
+      "name": "Once UI",
+      "org": "Once UI",
+      "type": "component-library",
+      "status": "rejected",
+      "method": "source-read",
+      "upstream": [],
+      "scores": [1, 0, 3, 1, 0],
+      "sources": {
+        "docs": "https://docs.once-ui.com",
+        "repo": "https://github.com/once-ui-system/core",
+        "npm": ["@once-ui-system/core"],
+        "other": []
+      },
+      "rationale": "The algorithmic-generation impression did not survive source inspection: hardcoded palettes swapped by data-brand attribute, an unfinished custom escape hatch, no contrast code."
+    },
+    {
+      "slug": "untitled-ui",
+      "name": "Untitled UI",
+      "org": "Untitled UI",
+      "type": "component-library",
+      "status": "rejected",
+      "method": "source-read",
+      "upstream": ["tailwind", "react-aria"],
+      "scores": [1, 1, 3, 1, 2],
+      "sources": {
+        "docs": "https://www.untitledui.com/react/docs/theming",
+        "repo": "https://github.com/untitleduico/react",
+        "npm": [],
+        "other": []
+      },
+      "rationale": "Not slop, but not color science: real 3-layer semantic architecture in an open repo, undermined by plain-RGB values, no generation methodology, and marketing-only WCAG claims. Footnote in the token-layers topic page at most."
+    }
+  ]
+}

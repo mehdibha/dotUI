@@ -17,6 +17,7 @@
     "**/.output/**",
     "**/.source/**",
     "www/src/routeTree.gen.ts",
+    "ds/src/routeTree.gen.ts",
     ".design-sync/**"
   ],
   "rules": {

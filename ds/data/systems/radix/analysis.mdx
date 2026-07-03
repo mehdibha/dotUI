@@ -1,0 +1,40 @@
+---
+system: radix
+dimension: color-tokens
+verifiedAt: 2026-07-03
+---
+
+# Radix Colors + Themes: color & tokens
+
+Radix is the rare color system where the _interface_ is more influential than the
+_implementation_. The 12-step scale with per-step roles (<Fact q="palette.structure" />)
+has been imitated across the industry — yet the values behind it are static hand-authored
+tables with no published methodology (<Fact q="palette.generation" />). The repo is open;
+the process is not. The custom-palette generator that extends the system to brand colors
+is a hosted black box.
+
+What makes the system substantively distinctive is its contrast stance
+(<Fact q="contrast.strategy" />): it is the only major system that guarantees text
+contrast in APCA terms by construction — steps 11/12 hit Lc 60/90 on a step-2 background,
+full stop. There is no audit tooling and no WCAG 2.x language; the guarantee lives in the
+values themselves, which is only possible because the values are curated, not generated.
+The five bright hues that flip to dark foreground text (sky, mint, lime, yellow, amber)
+show the same by-hand honesty — the system encodes exceptions rather than pretending an
+algorithm handles them.
+
+The token architecture (<Fact q="tokens.layers" />) is a three-layer stack with an unusual
+middle: instead of naming semantic purposes directly, Radix Themes remaps whole scales —
+the chosen accent becomes `--accent-1..12`, its step semantics intact, via
+`[data-accent-color]` selectors. Purpose-named functional tokens (`--color-background`,
+`--accent-contrast`) sit on top, but thin. Components consume role scales directly
+(<Fact q="component.color-usage" />): Button's solid variant is literally
+`--accent-9`/`--accent-contrast`, exactly what the scale docs prescribe for step 9. The
+scale documentation _is_ the semantic layer.
+
+Two smaller findings worth carrying into comparisons: the dedicated `--focus-1..12` scale
+(<Fact q="focus.construction" />) — a full 12-step ramp maintained purely so focus rings
+can re-point independently of accent — and per-component cursor tokens
+(<Fact q="tokens.scope" />), both signs of a system that tokenizes interaction mechanics,
+not just paint. Dark mode is a second hand-tuned palette behind a class switch
+(<Fact q="modes.support" />), with OS sync explicitly pushed out to next-themes — a
+notable humility for a system this polished: it refuses to own the SSR appearance problem.

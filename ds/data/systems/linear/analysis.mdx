@@ -1,0 +1,43 @@
+---
+system: linear
+dimension: color-tokens
+verifiedAt: 2026-07-03
+---
+
+# Linear: color & tokens (as shipped, 2026-07-03)
+
+Everything here is read from linear.app's shipped marketing-site CSS on 2026-07-03,
+corroborated by Linear's own writing where it exists. The product app sits behind
+authentication; its theme generator is closed code. Facts are labeled accordingly.
+
+Linear is the cleanest real-world example of the semantic-only architecture
+(<Fact q="palette.structure" />): no ramps ship at all. A dozen named primitives in
+`:root`, then per-theme blocks that re-point one stable semantic vocabulary
+(<Fact q="modes.support" />) — dark, light, and a translucent "glass" theme, switched by
+`data-theme` on `<html>`. The interesting part is what you _can't_ see in the CSS: per the
+team's first-party account, those static hex blocks are the pre-resolved output of an
+LCH-space generator that derives whole themes from three variables — base, accent,
+contrast — replacing 98 hand-set variables (<Fact q="palette.generation" />). The shipped
+CSS quietly confirms the LCH story at runtime: selection colors are derived with
+`color-mix(in lch, …)` (<Fact q="palette.colorspace" />), while wide gamut is a single
+upgraded primitive — P3 is an afterthought here, not a strategy.
+
+The token vocabulary itself is mid-migration (<Fact q="tokens.layers" />): an ordinal set
+(`--color-bg-primary…quinary`, `--color-text-primary…quaternary`) coexists with a newer
+surface-oriented set (`--color-bg-level-0..3`, `--color-fg-*`, `--color-line-*`,
+`--color-accent-*`) that covers the same ground with a different mental model — rank vs
+elevation. Two semantic generations shipping side by side is a rare public glimpse of a
+token system being refactored live.
+
+Two more findings travel well. First, focus is a token group, not a component style
+(<Fact q="focus.construction" />): `--focus-ring-color/width/offset` plus a composed
+`--focus-ring-outline`, indigo by default, swapped to translucent black in light mode —
+though component rules also use `var(--color-accent)`, so two focus color sources coexist.
+Second, the Button spot-check (<Fact q="component.color-usage" />) shows the semantic
+layer actually holding: 16 distinct tokens consumed, zero direct primitive references,
+with hardcoded values confined to translucent sheen literals that no token covers.
+
+The honest gap: contrast (<Fact q="contrast.strategy" />). Contrast is a first-class
+_input_ — the third theme variable, powering auto-generated high-contrast themes — but no
+standard, target, or per-token guarantee is published or recoverable from shipped CSS.
+Mechanism documented, guarantees unknown.
