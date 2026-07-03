@@ -58,7 +58,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
           {/* The panel is a sibling of the radio, never a child: it holds
               interactive fields, and sitting right after the radio in DOM
               order lets Tab flow from the checked radio into the form. */}
-          {method === 'card' && (
+          <MethodPanel expanded={method === 'card'}>
             <div className="space-y-4 pt-4 pb-1">
               <div
                 role="group"
@@ -154,7 +154,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
                 </Checkbox>
               </div>
             </div>
-          )}
+          </MethodPanel>
 
           <Separator className="my-3.5" />
 
@@ -164,12 +164,12 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
             <Label>Crypto</Label>
           </Radio>
 
-          {method === 'crypto' && (
+          <MethodPanel expanded={method === 'crypto'}>
             <p className="pt-3 text-sm text-fg-muted">
               You'll be redirected to connect a wallet. Bitcoin, Ethereum and
               USDC are supported.
             </p>
-          )}
+          </MethodPanel>
         </RadioGroup>
 
         <div aria-live="polite" className="sr-only">
@@ -177,6 +177,31 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
         </div>
       </CardContent>
     </Card>
+  )
+}
+
+// Accordion-style expand/collapse: grid-rows 0fr→1fr animates the panel to
+// its intrinsic height without measuring (same duration/easing as the
+// registry disclosure). Panels stay mounted, so inert keeps the collapsed
+// one's fields out of Tab order and the accessibility tree. Clip is y-only
+// so focus rings aren't cut off at the panel edges.
+function MethodPanel({
+  expanded,
+  children,
+}: {
+  expanded: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <div
+      inert={!expanded}
+      className={cn(
+        'grid grid-rows-[0fr] opacity-0 duration-300 ease-fluid-out motion-safe:transition-[grid-template-rows,opacity]',
+        expanded && 'grid-rows-[1fr] opacity-100',
+      )}
+    >
+      <div className="min-h-0 overflow-y-clip">{children}</div>
+    </div>
   )
 }
 
