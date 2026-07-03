@@ -40,6 +40,14 @@ system. Superseding decisions:
 
 Migration note in `ds/data/RETRO.md`.
 
+### Amendment — 2026-07-03 (maintainer, reordering)
+
+Plans 004–006 are superseded in their ordering: the site design, system pages, playgrounds,
+and interactive widgets get built **first** (against the pilot systems' data), the data shape
+freezes from what those pages need, and only then does the research fan-out (004) run.
+`ds/README.md` is now the project's front door and states the order of work; this folder is
+planning history.
+
 ## Execution order
 
 ```
