@@ -2,12 +2,15 @@ import { useDeferredValue, useMemo } from 'react'
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime'
 import { toJsxRuntime } from 'hast-util-to-jsx-runtime'
 
+import { cn } from '@/registry/lib/utils'
+
 import { Pre } from './code-block'
 import { highlightTsx } from './highlight'
 
 export interface DynamicPreProps {
   lang: 'tsx'
   children: string
+  className?: string
 }
 
 /**
@@ -16,7 +19,7 @@ export interface DynamicPreProps {
  * already highlighted — no fallback state. `useDeferredValue` keeps control
  * interactions responsive by letting React defer re-highlights under load.
  */
-export function DynamicPre({ children: code }: DynamicPreProps) {
+export function DynamicPre({ children: code, className }: DynamicPreProps) {
   const deferredCode = useDeferredValue(code)
   return useMemo(
     () =>
@@ -24,8 +27,12 @@ export function DynamicPre({ children: code }: DynamicPreProps) {
         Fragment,
         jsx,
         jsxs,
-        components: { pre: Pre },
+        components: {
+          pre: (props) => (
+            <Pre {...props} className={cn(props.className, className)} />
+          ),
+        },
       }),
-    [deferredCode],
+    [deferredCode, className],
   )
 }

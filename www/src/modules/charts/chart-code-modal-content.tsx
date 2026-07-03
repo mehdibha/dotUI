@@ -45,7 +45,7 @@ export default function ChartCodeModalContent({
   return (
     <div className="flex h-full min-h-0 flex-col md:flex-row">
       {/* LEFT: title, live preview, install command */}
-      <div className="flex min-h-0 flex-col md:w-2/5 md:border-r lg:w-1/2">
+      <div className="flex min-h-0 min-w-0 flex-col md:w-2/5 md:border-r lg:w-1/2">
         <DialogTitle className="shrink-0 px-4 pt-3 text-sm text-fg-muted capitalize">
           {label}
         </DialogTitle>
@@ -84,16 +84,23 @@ export default function ChartCodeModalContent({
       </div>
 
       {/* RIGHT: variant source, filling the full modal height */}
-      <div className="flex min-h-0 flex-1 flex-col border-t bg-card md:border-t-0">
-        <div className="min-h-0 flex-1 overflow-auto">
-          {source ? (
-            <CodeBlock className="rounded-none border-0 bg-transparent">
-              <DynamicPre lang="tsx">{source}</DynamicPre>
-            </CodeBlock>
-          ) : (
-            <p className="p-4 text-sm text-fg-muted">Source unavailable.</p>
-          )}
-        </div>
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col border-t bg-card md:border-t-0">
+        {source ? (
+          <CodeBlock
+            title={`${demoKey.split('/').pop()}.tsx`}
+            className="flex min-h-0 flex-1 flex-col rounded-none border-0 bg-transparent"
+            contentClassName="no-scrollbar min-h-0 flex-1 scroll-fade-y overflow-y-auto"
+          >
+            <DynamicPre
+              lang="tsx"
+              className="no-scrollbar w-full scroll-fade-x overflow-x-auto *:[code]:w-max *:[code]:min-w-full"
+            >
+              {source}
+            </DynamicPre>
+          </CodeBlock>
+        ) : (
+          <p className="p-4 text-sm text-fg-muted">Source unavailable.</p>
+        )}
       </div>
     </div>
   )
