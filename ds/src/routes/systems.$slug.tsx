@@ -1,50 +1,17 @@
-import { useState } from 'react'
 import {
   createFileRoute,
   Link as RouterLink,
   notFound,
+  Outlet,
 } from '@tanstack/react-router'
 
-import { cn } from '@/lib/utils'
-import { ContrastTable } from '@/components/explorer/contrast-table'
-import { LayerDiagram } from '@/components/explorer/layer-diagram'
-import { ModeSwitcher } from '@/components/explorer/mode-switcher'
-import { OverviewCards } from '@/components/explorer/overview-cards'
-import { RampGrid } from '@/components/explorer/ramp-grid'
-import { SectionNotes } from '@/components/explorer/section-notes'
-import { SourceLinks } from '@/components/explorer/source-links'
-import { SpecTable } from '@/components/explorer/spec-table'
-import { TokenTable } from '@/components/explorer/token-table'
+import { SpecimenMural } from '@/components/plate'
 import { dataIndex } from '@/data'
-import type { SectionId, SystemWithColors } from '@/data/schema'
+import type { SystemWithColors } from '@/data/schema'
 import { Badge } from '@/ui/badge'
 import { Link } from '@/ui/link'
 
-const sectionIds = [
-  'overview',
-  'architecture',
-  'palette',
-  'tokens',
-  'focus',
-  'contrast',
-] as const
-
-const sectionLabels: Record<SectionId, string> = {
-  overview: 'Overview',
-  architecture: 'Architecture',
-  palette: 'Palette',
-  tokens: 'Tokens',
-  focus: 'Focus',
-  contrast: 'Contrast',
-}
-
 export const Route = createFileRoute('/systems/$slug')({
-  validateSearch: (search): { section?: SectionId } => {
-    const section = search.section
-    return sectionIds.includes(section as SectionId)
-      ? { section: section as SectionId }
-      : {}
-  },
   loader: ({ params }) => {
     const rosterEntry = dataIndex.roster.find(
       (entry) => entry.slug === params.slug,
@@ -56,6 +23,39 @@ export const Route = createFileRoute('/systems/$slug')({
   component: SystemPage,
 })
 
+function sectionsFor(system: SystemWithColors) {
+  const { colors } = system
+  const hasNotes = (id: string) =>
+    colors.notes.some((note) => note.section === id)
+  return [
+    { path: '/systems/$slug', label: 'Overview', exact: true },
+    (colors.layers.length > 0 || hasNotes('architecture')) && {
+      path: '/systems/$slug/architecture',
+      label: 'Architecture',
+    },
+    (colors.ramps.length > 0 || hasNotes('palette')) && {
+      path: '/systems/$slug/palette',
+      label: 'Palette',
+    },
+    colors.stepRoles && { path: '/systems/$slug/scale', label: 'Scale' },
+    (colors.tokenGroups.length > 0 || hasNotes('tokens')) && {
+      path: '/systems/$slug/tokens',
+      label: 'Tokens',
+    },
+    (colors.focus.length > 0 || hasNotes('focus')) && {
+      path: '/systems/$slug/focus',
+      label: 'Focus',
+    },
+    (colors.contrast.length > 0 || hasNotes('contrast')) && {
+      path: '/systems/$slug/contrast',
+      label: 'Contrast',
+    },
+  ].filter(
+    (section): section is { path: string; label: string; exact?: boolean } =>
+      Boolean(section),
+  )
+}
+
 function SystemPage() {
   const { rosterEntry, system } = Route.useLoaderData()
   const name = system?.name ?? rosterEntry?.name ?? ''
@@ -65,11 +65,28 @@ function SystemPage() {
   const site = system?.sources.site
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-12">
-      <header className="flex flex-col gap-2">
-        <h1 className="text-3xl font-semibold tracking-tight">{name}</h1>
-        <p className="text-fg-muted">{org}</p>
-        <div className="flex flex-wrap items-center gap-3 pt-1 text-sm">
+    <div>
+      {system && (
+        <SpecimenMural
+          system={system}
+          rows={4}
+          className="flex h-24 flex-col border-b sm:h-32"
+        />
+      )}
+      <header className="mx-auto w-full max-w-6xl px-6 pt-10">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            {name}
+          </h1>
+          {system && (
+            <p className="font-mono text-[11px] text-fg-muted">
+              added {system.createdAt} · updated {system.updatedAt} · reviewed{' '}
+              {system.reviewedAt}
+            </p>
+          )}
+        </div>
+        <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
+          <span className="text-fg-muted">{org}</span>
           {docs && <Link href={docs}>Docs</Link>}
           {repo && <Link href={repo}>Source</Link>}
           {site && site !== docs && <Link href={site}>Site</Link>}
@@ -85,147 +102,44 @@ function SystemPage() {
             </Badge>
           )}
         </div>
-        {system && (
-          <p className="text-xs text-fg-muted">
-            Created {system.createdAt} · Updated {system.updatedAt} · Reviewed{' '}
-            {system.reviewedAt}
-          </p>
-        )}
       </header>
 
       {system ? (
-        <SystemExplorer system={system} />
-      ) : (
-        <p className="mt-12 max-w-2xl rounded-lg border p-6 text-fg-muted">
-          Research planned. This system&apos;s full color architecture —
-          palette, semantic tokens, focus and contrast behavior — will be
-          explorable here.
-        </p>
-      )}
-    </div>
-  )
-}
-
-function SystemExplorer({ system }: { system: SystemWithColors }) {
-  const { colors } = system
-  const { section } = Route.useSearch()
-  const [mode, setMode] = useState(colors.modes[0] ?? 'light')
-
-  const hasNotes = (id: SectionId) =>
-    colors.notes.some((note) => note.section === id)
-  const visible = sectionIds.filter((id) => {
-    if (id === 'architecture') return colors.layers.length > 0 || hasNotes(id)
-    if (id === 'palette') return colors.ramps.length > 0 || hasNotes(id)
-    if (id === 'focus') return colors.focus.length > 0 || hasNotes(id)
-    if (id === 'contrast') return colors.contrast.length > 0 || hasNotes(id)
-    return true
-  })
-  const active = section && visible.includes(section) ? section : 'overview'
-  const notes = colors.notes.filter((note) => note.section === active)
-
-  return (
-    <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:gap-12">
-      <nav
-        aria-label="Sections"
-        className="flex shrink-0 gap-1 overflow-x-auto lg:sticky lg:top-10 lg:h-fit lg:w-36 lg:flex-col"
-      >
-        {visible.map((id) => (
-          <RouterLink
-            key={id}
-            from={Route.fullPath}
-            search={id === 'overview' ? {} : { section: id }}
-            replace
-            className={cn(
-              'rounded-md px-2.5 py-1.5 text-sm whitespace-nowrap transition-colors lg:border-l-2 lg:pl-3',
-              id === active
-                ? 'bg-muted font-medium lg:border-fg lg:bg-transparent'
-                : 'text-fg-muted hover:text-fg lg:border-transparent',
-            )}
+        <>
+          <nav
+            aria-label="Sections"
+            className="sticky top-0 z-20 mt-8 border-b bg-bg/90 backdrop-blur"
           >
-            {sectionLabels[id]}
-          </RouterLink>
-        ))}
-      </nav>
-
-      <div className="min-w-0 flex-1">
-        {active === 'overview' && (
-          <>
-            <OverviewCards entries={colors.overview} />
-            <footer className="mt-8 border-t pt-5">
-              <p className="text-xs text-fg-muted">
-                Primary sources for this system:
-              </p>
-              <SourceLinks sources={colors.sources} className="mt-2" />
-            </footer>
-          </>
-        )}
-
-        {active === 'architecture' && (
-          <>
-            <p className="text-sm text-fg-muted">
-              How raw values become component styles.
-            </p>
-            <div className="mt-5">
-              <LayerDiagram layers={colors.layers} />
+            <div className="mx-auto flex w-full max-w-6xl gap-1 overflow-x-auto px-6">
+              {sectionsFor(system).map((section) => (
+                <RouterLink
+                  key={section.path}
+                  to={section.path}
+                  params={{ slug: system.slug }}
+                  activeOptions={{ exact: section.exact ?? false }}
+                  className="-mb-px border-b-2 border-transparent px-3 py-2.5 text-sm whitespace-nowrap text-fg-muted transition-colors hover:text-fg"
+                  activeProps={{
+                    className: 'border-fg font-medium text-fg',
+                  }}
+                >
+                  {section.label}
+                </RouterLink>
+              ))}
             </div>
-          </>
-        )}
-
-        {active === 'palette' && (
-          <>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="text-sm text-fg-muted">
-                Every shipped ramp, exactly as the system resolves it. Click a
-                swatch to copy its value.
-              </p>
-              <ModeSwitcher
-                modes={colors.modes}
-                mode={mode}
-                onChange={setMode}
-              />
-            </div>
-            <div className="mt-6">
-              <RampGrid ramps={colors.ramps} mode={mode} />
-            </div>
-          </>
-        )}
-
-        {active === 'tokens' && (
-          <>
-            <p className="text-sm text-fg-muted">
-              The semantic and component vocabulary, searchable across names,
-              references and values.
-            </p>
-            <div className="mt-5">
-              <TokenTable groups={colors.tokenGroups} modes={colors.modes} />
-            </div>
-          </>
-        )}
-
-        {active === 'focus' && (
-          <>
-            <p className="text-sm text-fg-muted">
-              How the focus highlight is built and where its color comes from.
-            </p>
-            <div className="mt-5">
-              <SpecTable entries={colors.focus} />
-            </div>
-          </>
-        )}
-
-        {active === 'contrast' && (
-          <>
-            <p className="text-sm text-fg-muted">
-              Documented guarantees and observed measurements — never conflated.
-            </p>
-            <div className="mt-5">
-              <ContrastTable pairs={colors.contrast} />
-            </div>
-          </>
-        )}
-
-        <SectionNotes notes={notes} />
-      </div>
+          </nav>
+          <div className="mx-auto w-full max-w-6xl px-6 py-10">
+            <Outlet />
+          </div>
+        </>
+      ) : (
+        <div className="mx-auto w-full max-w-6xl px-6 pb-16">
+          <p className="mt-10 max-w-2xl rounded-lg border p-6 text-fg-muted">
+            Research planned. This system&apos;s full color architecture —
+            palette, semantic tokens, focus and contrast behavior — will be
+            explorable here.
+          </p>
+        </div>
+      )}
     </div>
   )
 }
