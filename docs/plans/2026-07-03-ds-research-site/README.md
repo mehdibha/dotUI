@@ -45,7 +45,7 @@ All resolved with the maintainer; these are binding for every plan in this folde
 | Plan | Title | Status |
 |---|---|---|
 | 000 | Phase 0 product decisions | DONE — resolved 2026-07-03 (grill session; 12 decisions above) |
-| [001](001-roster-selection.md) | Roster selection research | TODO |
+| [001](001-roster-selection.md) | Roster selection research | DONE — 2026-07-03; ~30 candidates recon'd by 8 parallel agent sessions, report + `roster.json` in [docs/research/2026-07-03-ds-roster-selection/](../../research/2026-07-03-ds-roster-selection/README.md). Maintainer-approved tier-1 = **15 systems** (approved deviation from the 8–12 cap; STOP condition honored — tradeoff was presented): Spectrum 2 (+Leonardo), Material 3, Radix, USWDS, Ant Design, Fluent 2, Polaris, Primer, Astryx (Meta — verified real, June 2026), Linear (RE), Stripe (RE), Carbon, Geist, shadcn/ui, Tailwind palette. 8 watchlist, 8 rejected with reasons (binding). |
 | [002](002-schema-and-question-bank.md) | Fact schema + canonical question bank + 2-system pilot | TODO |
 | [003](003-app-scaffold.md) | `ds/` app scaffold, Vercel project, dogfooded UI, data build pipeline | TODO |
 | [004](004-research-execution.md) | Per-system research execution across the roster | TODO |
