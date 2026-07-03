@@ -36,8 +36,10 @@ const segmentClassName =
 // inside RadioControl (rather than as siblings) makes its native label wrap
 // all three. Overrides the registry's bordered/tinted "radio card" look —
 // this picker only wants a subtle hover background, no persistent selected fill.
+// The `selected:hover` rule outranks `selected` (extra pseudo-class), so hover
+// stays visible on the checked row instead of the transparent selected fill.
 const methodControlClassName =
-  'has-data-label:border-transparent has-data-label:selected:border-transparent has-data-label:selected:bg-transparent hover:bg-muted'
+  'has-data-label:border-transparent has-data-label:selected:border-transparent has-data-label:selected:bg-transparent hover:bg-muted has-data-label:selected:hover:bg-muted'
 
 export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
   const [method, setMethod] = useState('card')
@@ -310,7 +312,8 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
 // its intrinsic height without measuring (same duration/easing as the
 // registry disclosure). Panels stay mounted, so inert keeps the collapsed
 // one's fields out of Tab order and the accessibility tree. Clip is y-only
-// so focus rings aren't cut off at the panel edges.
+// so focus rings aren't cut off at the panel edges. `px-2.5` matches the
+// row's own padding so the fields line up under the radio indicator.
 function MethodPanel({
   expanded,
   children,
@@ -326,7 +329,7 @@ function MethodPanel({
         expanded && 'grid-rows-[1fr] opacity-100',
       )}
     >
-      <div className="min-h-0 overflow-y-clip">{children}</div>
+      <div className="min-h-0 overflow-y-clip px-2.5">{children}</div>
     </div>
   )
 }
