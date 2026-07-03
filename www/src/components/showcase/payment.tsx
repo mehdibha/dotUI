@@ -180,10 +180,10 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
             </div>
           </MethodPanel>
 
-          {/* w-auto drops the separator's w-full so the mx-2.5 actually insets
-              it (in the flex-col group it then stretches to the margins), lining
-              it up with the radio indicator and panel fields. */}
-          <Separator className="mx-2.5 my-3.5 w-auto" />
+          {/* Full-width divider; my matches the card's px so each radio row
+              sits in a uniform gap — same distance to the separator as to the
+              card edge. */}
+          <Separator className="my-1.5" />
 
           <Radio value="apple-pay">
             <RadioControl className={methodControlClassName}>
@@ -199,10 +199,10 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
             </div>
           </MethodPanel>
 
-          {/* w-auto drops the separator's w-full so the mx-2.5 actually insets
-              it (in the flex-col group it then stretches to the margins), lining
-              it up with the radio indicator and panel fields. */}
-          <Separator className="mx-2.5 my-3.5 w-auto" />
+          {/* Full-width divider; my matches the card's px so each radio row
+              sits in a uniform gap — same distance to the separator as to the
+              card edge. */}
+          <Separator className="my-1.5" />
 
           <Radio value="crypto">
             <RadioControl className={methodControlClassName}>
