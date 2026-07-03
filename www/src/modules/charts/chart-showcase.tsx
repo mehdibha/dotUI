@@ -1,9 +1,5 @@
 'use client'
 
-import { useState } from 'react'
-import { RotateCcwIcon } from 'lucide-react'
-
-import { Button } from '@/registry/ui/button'
 import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
 
 import { ChartCard } from './chart-card'
@@ -16,40 +12,26 @@ import { CHART_FAMILIES, variantsFor } from './data'
  * the design system as usual.
  */
 export function ChartShowcase() {
-  // Bumping this key remounts the charts in the active tab, replaying their
-  // entry animation on demand.
-  const [replayKey, setReplayKey] = useState(0)
-
   return (
     <Tabs
       defaultSelectedKey={CHART_FAMILIES[0].id}
       className="gap-8 [--tabs-list-height:2.75rem]"
     >
-      <div className="flex flex-wrap items-center justify-center gap-3">
-        <TabList
-          aria-label="Chart families"
-          variant="default"
-          className="flex-wrap justify-center gap-2 bg-transparent [&_[data-tab-indicator]]:rounded-full [&_[data-tab-indicator]]:bg-muted [&_[data-tab-indicator]]:shadow-none"
-        >
-          {CHART_FAMILIES.map((f) => (
-            <Tab
-              key={f.id}
-              id={f.id}
-              className="rounded-full px-4 text-base selected:text-fg"
-            >
-              {f.name} chart
-            </Tab>
-          ))}
-        </TabList>
-        <Button
-          size="sm"
-          className="rounded-full"
-          onPress={() => setReplayKey((k) => k + 1)}
-        >
-          <RotateCcwIcon />
-          Replay
-        </Button>
-      </div>
+      <TabList
+        aria-label="Chart families"
+        variant="default"
+        className="flex-wrap justify-center gap-2 self-center bg-transparent [&_[data-tab-indicator]]:rounded-full [&_[data-tab-indicator]]:bg-muted [&_[data-tab-indicator]]:shadow-none"
+      >
+        {CHART_FAMILIES.map((f) => (
+          <Tab
+            key={f.id}
+            id={f.id}
+            className="rounded-full px-4 text-base selected:text-fg"
+          >
+            {f.name} chart
+          </Tab>
+        ))}
+      </TabList>
       {CHART_FAMILIES.map((f) => {
         const variants = variantsFor(f.id)
         return (
@@ -64,7 +46,6 @@ export function ChartShowcase() {
                 familyId={f.id}
                 demoKey={v.key}
                 label={v.label}
-                replayKey={replayKey}
               />
             ))}
           </TabPanel>

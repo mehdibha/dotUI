@@ -1,8 +1,10 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
+import { RotateCcwIcon } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
+import { Button } from '@/registry/ui/button'
 import { ShowcaseCard } from '@/components/showcase-card'
 
 import { ChartCodeModal } from './chart-code-modal'
@@ -15,13 +17,11 @@ interface ChartCardProps {
   demoKey: string
   /** Human label for the card, e.g. `multiple`. */
   label: string
-  /** Bump to replay the chart's entry animation (remounts the chart). */
-  replayKey?: number
 }
 
 /**
- * One variant in the gallery: a subtle title and a "Show code" link sit in a
- * header row above a card that holds nothing but the live chart. The chart is
+ * One variant in the gallery: a subtle title, a replay action and a "Show code"
+ * link sit in a header row above a card that holds nothing but the live chart. The chart is
  * decorative (`inert` + `aria-hidden`) so it never traps focus across the grid —
  * the real, interactive component (with its source) lives in the docs, which
  * "Show code" links to.
@@ -31,12 +31,9 @@ interface ChartCardProps {
  * frame width, polar charts (pie/radar/radial) stay square and are capped at
  * 250px (shadcn's size) so they don't balloon, centered in the frame.
  */
-export function ChartCard({
-  familyId,
-  demoKey,
-  label,
-  replayKey,
-}: ChartCardProps) {
+export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
+  // Bumping this key remounts the chart, replaying its entry animation.
+  const [replayKey, setReplayKey] = useState(0)
   const Component = getDemoComponent(demoKey)
   if (!Component) return null
 
@@ -45,7 +42,21 @@ export function ChartCard({
   return (
     <ShowcaseCard
       label={label}
-      action={<ChartCodeModal demoKey={demoKey} label={label} />}
+      action={
+        <div className="flex items-center">
+          <Button
+            variant="quiet"
+            size="sm"
+            isIconOnly
+            aria-label="Replay animation"
+            className="text-fg-muted hover:text-fg"
+            onPress={() => setReplayKey((k) => k + 1)}
+          >
+            <RotateCcwIcon />
+          </Button>
+          <ChartCodeModal demoKey={demoKey} label={label} />
+        </div>
+      }
       className="h-80"
       inert
       aria-hidden="true"

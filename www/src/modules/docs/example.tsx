@@ -11,6 +11,8 @@ export interface ExampleProps extends React.ComponentProps<'div'> {
   title?: string
   /** Registry items to install, injected by the rehype transform. */
   install?: string[]
+  /** Demo file name (e.g. `disabled.tsx`), injected by the rehype transform. */
+  file?: string
   children?: React.ReactNode
 }
 
@@ -18,6 +20,7 @@ export function Example({
   component: Component,
   title,
   install,
+  file,
   children,
   className,
   ...props
@@ -52,6 +55,7 @@ export function Example({
             title={title ?? 'Example'}
             component={Component}
             code={code}
+            file={file}
             install={install ?? []}
           />
         ) : null}

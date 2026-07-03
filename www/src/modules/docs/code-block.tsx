@@ -12,6 +12,8 @@ export interface CodeBlockProps extends React.ComponentProps<'figure'> {
   title?: string
   actions?: React.ReactNode
   icon?: string | React.ReactNode
+  /** Extra classes for the scrollable code container, e.g. to make it a modal's scroller. */
+  contentClassName?: string
   'data-line-numbers'?: boolean
 }
 
@@ -21,6 +23,7 @@ export function CodeBlock({
   actions: actionsProp,
   children,
   className,
+  contentClassName,
   ...props
 }: CodeBlockProps) {
   const containerRef = useRef<HTMLElement>(null)
@@ -56,7 +59,7 @@ export function CodeBlock({
           </div>
         )}
         <div
-          className="relative overflow-auto"
+          className={cn('relative overflow-auto', contentClassName)}
           style={{
             counterReset: 'line',
           }}
@@ -133,6 +136,7 @@ function CopyButton() {
     <Button
       variant="quiet"
       size="xs"
+      isIconOnly
       onPress={handleCopy}
       aria-label={isCopied ? 'Copied!' : 'Copy code'}
     >

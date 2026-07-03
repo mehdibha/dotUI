@@ -33,7 +33,7 @@ export function ChartCodeModal({ demoKey, label }: ChartCodeModalProps) {
       <Modal className="h-[80vh] w-full sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl">
         <DialogContent
           aria-label={`${label} chart code`}
-          className="relative flex h-full min-h-0 flex-col p-0"
+          className="relative flex h-full min-h-0 flex-col rounded-[inherit] p-0"
         >
           {/* Close sits just outside the panel's top-right corner. Kept inside
               the dialog (so slot="close" works) but escaping the rounded body. */}
@@ -47,7 +47,7 @@ export function ChartCodeModal({ demoKey, label }: ChartCodeModalProps) {
           >
             <XIcon />
           </Button>
-          <div className="min-h-0 flex-1 overflow-hidden">
+          <div className="min-h-0 flex-1 overflow-hidden rounded-[inherit]">
             <Suspense
               fallback={
                 <div className="flex h-full items-center justify-center">

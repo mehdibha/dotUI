@@ -524,8 +524,8 @@ function transformDemoNode(processed: ProcessedDemo): void {
   // The Example card renders the demo live and exposes its source via a "Show
   // code" modal. Inject a real <h3 id="{slug}">{title}</h3> so the title shows
   // up in the TOC (the `title` prop is kept too, for the modal heading), the
-  // install items for the modal, and the highlighted source as a DemoCode slot
-  // the card routes into the modal.
+  // install items and demo file name for the modal, and the highlighted source
+  // as a DemoCode slot the card routes into the modal.
   if (processed.nodeInfo.type === 'Example') {
     const { title, titleId } = processed.nodeInfo
     const existing = (node.children ?? []) as ElementContent[]
@@ -533,6 +533,11 @@ function transformDemoNode(processed: ProcessedDemo): void {
     node.attributes.push(
       makeJsonParseAttr('install', JSON.stringify(processed.install)),
     )
+    node.attributes.push({
+      type: 'mdxJsxAttribute',
+      name: 'file',
+      value: `${processed.nodeInfo.name.split('/').pop()}.tsx`,
+    })
 
     if (title && titleId) {
       const heading: Element = {
