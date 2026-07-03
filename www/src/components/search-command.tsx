@@ -196,7 +196,7 @@ export function SearchCommand({
             <ModalOverlay>
               <ModalBackdrop className="duration-0 group-exiting/modal:duration-0" />
               <ModalViewport>
-                <ModalPanel className="mt-[15vh] self-start duration-0 [--modal-background:var(--neutral-200)] [--modal-radius:var(--radius-xl)] sm:max-w-lg entering:scale-100 exiting:scale-100">
+                <ModalPanel className="mt-[15vh] self-start duration-0 [--modal-background:var(--neutral-200)] [--modal-radius:var(--radius-2xl)] sm:max-w-lg entering:scale-100 exiting:scale-100">
                   {content}
                 </ModalPanel>
               </ModalViewport>
@@ -265,7 +265,13 @@ function SearchDialog({
         className={commandStyles({ className: 'gap-0 overflow-y-hidden p-0' })}
       >
         <SearchField autoFocus aria-label="Search" className="px-1.5 pt-1.5">
-          <InputGroup size="lg" className="bg-(--neutral-50)">
+          {/* Radius stays concentric with the modal (2xl − 6px inset); the
+              filled input needs no focus treatment, so the ring is off and the
+              border stays the neutral field color on focus. */}
+          <InputGroup
+            size="lg"
+            className="rounded-[10px]! border-border-field! bg-(--neutral-300) ring-0!"
+          >
             <InputGroupAddon>
               <SearchIcon />
             </InputGroupAddon>
@@ -277,7 +283,7 @@ function SearchDialog({
               it rather than on the wrapper. */}
         <MenuContent
           aria-label="Search results"
-          className="max-h-80 overflow-y-auto p-1.5 **:data-menu-item:py-2"
+          className="max-h-80 overflow-y-auto p-1.5 pt-3 **:data-menu-item:py-2"
           onAction={onClose}
           renderEmptyState={() => (
             <div className="py-8 text-center text-sm text-fg-muted">
