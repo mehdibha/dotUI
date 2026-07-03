@@ -1,0 +1,17 @@
+{
+  "slug": "radix",
+  "name": "Radix Colors + Themes",
+  "org": "WorkOS",
+  "type": "token-or-color-system",
+  "upstream": [],
+  "sources": {
+    "docs": "https://www.radix-ui.com/colors",
+    "repo": "https://github.com/radix-ui/colors",
+    "site": "https://www.radix-ui.com",
+    "figma": null
+  },
+  "status": "researched",
+  "createdAt": "2026-07-03",
+  "updatedAt": "2026-07-03",
+  "reviewedAt": "2026-07-03"
+}

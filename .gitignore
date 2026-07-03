@@ -41,3 +41,5 @@ Thumbs.db
 
 # Generated shadcn publishables — emitted by `pnpm build:registry`.
 www/src/registry/__generated__/publishables/
+# Generated ds data index — emitted by `pnpm --filter=ds build:data`.
+ds/src/data/__generated__/

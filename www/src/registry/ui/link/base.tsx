@@ -13,12 +13,12 @@ interface LinkProps
   extends LinkPrimitives.LinkProps, VariantProps<LinkStyles> {}
 
 const Link = ({ variant, ...props }: LinkProps) => {
-  const linkStyles = useStyles()
+  const styles = useStyles()
   return (
     <LinkPrimitives.Link
       {...props}
       className={composeRenderProps(props.className, (className) =>
-        linkStyles({ variant, className }),
+        styles({ variant, className }),
       )}
     />
   )

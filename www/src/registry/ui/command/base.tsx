@@ -29,7 +29,7 @@ function Command<T extends object>({
   filter,
   ...props
 }: CommandProps<T>) {
-  const commandStyles = useStyles()
+  const styles = useStyles()
   const { contains } = AutocompletePrimitive.useFilter({
     sensitivity: 'base',
     ignorePunctuation: true,
@@ -38,11 +38,7 @@ function Command<T extends object>({
 
   return (
     <AutocompletePrimitive.Autocomplete filter={contains}>
-      <div
-        data-command=""
-        className={commandStyles({ className })}
-        {...props}
-      />
+      <div data-command="" className={styles({ className })} {...props} />
     </AutocompletePrimitive.Autocomplete>
   )
 }

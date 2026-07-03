@@ -16,7 +16,8 @@
     "**/.nitro/**",
     "**/.output/**",
     "**/.source/**",
-    "www/src/routeTree.gen.ts"
+    "www/src/routeTree.gen.ts",
+    "ds/src/routeTree.gen.ts"
   ],
   "rules": {
     "eslint/no-unused-vars": [

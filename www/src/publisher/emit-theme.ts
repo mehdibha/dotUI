@@ -37,6 +37,9 @@ const DEFAULT_DEPENDENCIES = [
   'tailwindcss-react-aria-components',
   'tw-animate-css',
   'tailwindcss-autocontrast',
+  // The init css emits `@plugin 'tailwindcss-with'` — without the package the
+  // consumer's first Tailwind build fails.
+  'tailwindcss-with',
 ]
 
 const CN_UTILS_TS = `export { cn } from "cnfast";

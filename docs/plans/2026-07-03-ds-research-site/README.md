@@ -23,6 +23,23 @@ All resolved with the maintainer; these are binding for every plan in this folde
 11. **Research→create pipeline — implications → GitHub issues.** Every topic page ends with a neutral "implications for builders" section; each finding `/create` should adopt becomes a GitHub issue on `mehdibha/dotUI` labeled `research-finding`, linking the evidence. Traceable: page → issue → axis.
 12. **Name & voice — "ds." on ds.dotui.org.** Plain disclosure in the footer: built by dotUI; the builder follows this research, not the reverse. Voice: rigorous, human, cited; occasional fun.
 
+### Amendment — 2026-07-03 (maintainer, post-pilot)
+
+After the first fan-out system shipped, the maintainer scrapped the question-bank/facts
+content shape (part of decisions 3–4): prose fact-blocks are a bad way to explore a color
+system. Superseding decisions:
+
+- **Profiles are exploration pages** built from structured color-system data per system
+  (`colors.json`: ramps, token groups, layers, focus, contrast, overview) rendered by
+  shared visual components — swatch ramp grids, searchable token tables, diagrams. Topic
+  pages (views over the question bank) were removed with the bank; cross-system topic
+  pages will be rebuilt later over the same structured data.
+- **Dating model**: per-evidence `retrievedAt` is gone; each system carries
+  `createdAt` / `updatedAt` / `reviewedAt`. Sources survive as plain URL lists attached
+  to every section — the citation standard (decision 4) otherwise stands.
+
+Migration note in `ds/data/RETRO.md`.
+
 ## Execution order
 
 ```
@@ -46,8 +63,8 @@ All resolved with the maintainer; these are binding for every plan in this folde
 |---|---|---|
 | 000 | Phase 0 product decisions | DONE — resolved 2026-07-03 (grill session; 12 decisions above) |
 | [001](001-roster-selection.md) | Roster selection research | DONE — 2026-07-03; ~30 candidates recon'd by 8 parallel agent sessions, report + `roster.json` in [docs/research/2026-07-03-ds-roster-selection/](../../research/2026-07-03-ds-roster-selection/README.md). Maintainer-approved tier-1 = **15 systems** (approved deviation from the 8–12 cap; STOP condition honored — tradeoff was presented): Spectrum 2 (+Leonardo), Material 3, Radix, USWDS, Ant Design, Fluent 2, Polaris, Primer, Astryx (Meta — verified real, June 2026), Linear (RE), Stripe (RE), Carbon, Geist, shadcn/ui, Tailwind palette. 8 watchlist, 8 rejected with reasons (binding). |
-| [002](002-schema-and-question-bank.md) | Fact schema + canonical question bank + 2-system pilot | TODO |
-| [003](003-app-scaffold.md) | `ds/` app scaffold, Vercel project, dogfooded UI, data build pipeline | TODO |
+| [002](002-schema-and-question-bank.md) | Fact schema + canonical question bank + 2-system pilot | DONE — 2026-07-03; schema + 10-question `color-tokens` bank v1 frozen (`ds/src/data/schema.ts`, `ds/src/data/question-bank.ts`), both pilots 10/10 answered with cited evidence, validation green via `pnpm --filter=ds check:data`. Pilot data in `ds/data/systems/{radix,linear}/`. See [ds/data/RETRO.md](../../../ds/data/RETRO.md) for the freeze + flagged maintainer decisions (Linear contrast unknowns, marketing-site scoping). |
+| [003](003-app-scaffold.md) | `ds/` app scaffold, Vercel project, dogfooded UI, data build pipeline | DONE — 2026-07-03; `ds/` TanStack Start app live on [ds.dotui.org](https://ds.dotui.org) (Vercel project `dotui-ds`, rootDirectory `ds`, git-linked). Routes `/`, `/systems/$slug`, `/topics/$slug`, `/methodology` prerendered (27 pages); data pipeline (zod validation → static index) proven end-to-end with 002's pilot data rendering citations + verified-dates on the profile shells. Dogfood found 13 registry/publisher bugs — 5 fixed in-branch, rest logged in [ds/DOGFOOD.md](../../../ds/DOGFOOD.md) (table/checkbox/field left out: field-family publisher bug, STOP honored). |
 | [004](004-research-execution.md) | Per-system research execution across the roster | TODO |
 | [005](005-topic-showpieces.md) | Topic deep-dive pages + interactive widget kit | TODO |
 | [006](006-profiles-matrices-launch.md) | Profiles, generated matrices, research→create pipeline, launch | TODO |

@@ -1,0 +1,800 @@
+{
+  "modes": ["dark", "light", "glass"],
+  "overview": [
+    {
+      "label": "Palette",
+      "value": "No ramps \u2014 a dozen named primitives in :root plus per-theme semantic tokens",
+      "note": "Scope: linear.app's marketing-site CSS; the product app is behind authentication. Translucency is per-token 8-digit hex, not alpha ramps.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ]
+    },
+    {
+      "label": "Generation",
+      "value": "LCH-space theme generator \u2014 three inputs: base color, accent color, contrast (closed)",
+      "note": "First-party: 'instead of having to define 98 specific variables for each theme, we defined three'. Shipped CSS carries only the pre-resolved output.",
+      "sources": [
+        "https://linear.app/now/how-we-redesigned-the-linear-ui",
+        "https://linear.app/changelog/2020-12-04-themes"
+      ]
+    },
+    {
+      "label": "Color space",
+      "value": "LCH working space; ships pre-resolved sRGB hex plus runtime color-mix(in lch, ...)",
+      "note": "Wide gamut is a single upgraded primitive (--color-blue in display-p3 under @supports) \u2014 an afterthought, not a strategy.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css",
+        "https://linear.app/now/how-we-redesigned-the-linear-ui"
+      ]
+    },
+    {
+      "label": "Contrast",
+      "value": "Contrast is a generator input powering auto-generated high-contrast themes; standard and targets unpublished",
+      "note": "Mechanism documented, guarantees unknown \u2014 nothing recoverable from shipped CSS.",
+      "sources": ["https://linear.app/now/how-we-redesigned-the-linear-ui"]
+    },
+    {
+      "label": "Theming",
+      "value": "CSS custom properties re-pointed per data-theme on <html> \u2014 dark, light, glass",
+      "note": null,
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ]
+    },
+    {
+      "label": "Naming",
+      "value": "kebab-case --color-{concept}-{variant}; two semantic generations coexist",
+      "note": "An ordinal set (bg-primary\u2026quinary, text-primary\u2026quaternary) ships alongside a newer surface set (bg-level-0..3, fg-*, line-*) \u2014 rank vs elevation, a token refactor visible live.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "named primitives (:root)",
+      "kind": "primitive",
+      "example": "--color-blue: #4ea7fc",
+      "note": "A dozen single-value colors \u2014 no ramps ship at all."
+    },
+    {
+      "name": "ordinal semantic set",
+      "kind": "semantic",
+      "example": "--color-bg-primary \u2026 --color-bg-quinary",
+      "note": "The older generation: rank-based naming."
+    },
+    {
+      "name": "surface semantic set",
+      "kind": "semantic",
+      "example": "--color-bg-level-0..3, --color-fg-*, --color-line-*",
+      "note": "The newer generation: elevation-based naming, covering the same ground."
+    }
+  ],
+  "ramps": [],
+  "tokenGroups": [
+    {
+      "name": "Primitives",
+      "layer": "primitive",
+      "note": "Named single-value colors in :root \u2014 no ramps ship at all. Scope: extracted from the marketing site's shipped CSS bundle only (linear.app); the authenticated product app's stylesheet is not included.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ],
+      "tokens": [
+        {
+          "name": "--color-white",
+          "ref": null,
+          "values": {
+            "dark": "#fff",
+            "light": "#fff",
+            "glass": "#fff"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-black",
+          "ref": null,
+          "values": {
+            "dark": "#000",
+            "light": "#000",
+            "glass": "#000"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-blue",
+          "ref": null,
+          "values": {
+            "dark": "#4ea7fc",
+            "light": "#4ea7fc",
+            "glass": "#4ea7fc"
+          },
+          "note": "Base sRGB value; :root also ships a wide-gamut override (#5eb0ff at color-gamut:p3, then color(display-p3 .431 .6816 .9988) when display-p3 is supported) \u2014 not modeled as a separate mode."
+        },
+        {
+          "name": "--color-red",
+          "ref": null,
+          "values": {
+            "dark": "#eb5757",
+            "light": "#eb5757",
+            "glass": "#eb5757"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-green",
+          "ref": null,
+          "values": {
+            "dark": "#27a644",
+            "light": "#27a644",
+            "glass": "#27a644"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-orange",
+          "ref": null,
+          "values": {
+            "dark": "#fc7840",
+            "light": "#fc7840",
+            "glass": "#fc7840"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-yellow",
+          "ref": null,
+          "values": {
+            "dark": "#f0bf00",
+            "light": "#f0bf00",
+            "glass": "#f0bf00"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-indigo",
+          "ref": null,
+          "values": {
+            "dark": "#5e6ad2",
+            "light": "#5e6ad2",
+            "glass": "#5e6ad2"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-teal",
+          "ref": null,
+          "values": {
+            "dark": "#00b8cc",
+            "light": "#00b8cc",
+            "glass": "#00b8cc"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-linear-plan",
+          "ref": null,
+          "values": {
+            "dark": "#68cc58",
+            "light": "#68cc58",
+            "glass": "#68cc58"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-linear-build",
+          "ref": null,
+          "values": {
+            "dark": "#d4b144",
+            "light": "#d4b144",
+            "glass": "#d4b144"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-linear-security",
+          "ref": null,
+          "values": {
+            "dark": "#7a7fad",
+            "light": "#7a7fad",
+            "glass": "#7a7fad"
+          },
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "Backgrounds (ordinal)",
+      "layer": "semantic",
+      "note": "Ordinal background surfaces (primary..quinary) plus translucent/marketing/panel backgrounds, from [data-theme=...] blocks.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ],
+      "tokens": [
+        {
+          "name": "--color-bg-primary",
+          "ref": null,
+          "values": {
+            "dark": "#08090a",
+            "light": "#fff",
+            "glass": "#000212"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-bg-secondary",
+          "ref": null,
+          "values": {
+            "dark": "#1c1c1f",
+            "light": "#f9f8f9",
+            "glass": "#ffffff08"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-bg-tertiary",
+          "ref": null,
+          "values": {
+            "dark": "#232326",
+            "light": "#f4f2f4",
+            "glass": "#ffffff12"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-bg-quaternary",
+          "ref": null,
+          "values": {
+            "dark": "#28282c",
+            "light": "#eeedef",
+            "glass": "#ffffff26"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-bg-quinary",
+          "ref": null,
+          "values": {
+            "dark": "#282828",
+            "light": "#e9e8ea",
+            "glass": "#fff3"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-bg-translucent",
+          "ref": null,
+          "values": {
+            "dark": "#ffffff0d",
+            "light": "#00000005"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-bg-marketing",
+          "ref": null,
+          "values": {
+            "dark": "#010102"
+          },
+          "note": "Dark-only token; no light/glass equivalent ships."
+        },
+        {
+          "name": "--color-bg-panel",
+          "ref": null,
+          "values": {
+            "dark": "#0f1011"
+          },
+          "note": "Dark-only token; no light/glass equivalent ships."
+        }
+      ]
+    },
+    {
+      "name": "Surfaces (levels)",
+      "layer": "semantic",
+      "note": "Stacked elevation levels (bg-level-0..3), foreground-on-surface (fg-*), hairlines (line-*), and border tokens.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ],
+      "tokens": [
+        {
+          "name": "--color-bg-level-0",
+          "ref": null,
+          "values": {
+            "dark": "#08090a",
+            "light": "#fff",
+            "glass": "#08090a"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-bg-level-1",
+          "ref": null,
+          "values": {
+            "dark": "#0f1011",
+            "light": "#f8f8f8",
+            "glass": "#0f1011"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-bg-level-2",
+          "ref": null,
+          "values": {
+            "dark": "#141516",
+            "light": "#f4f4f4",
+            "glass": "#141516"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-bg-level-3",
+          "ref": null,
+          "values": {
+            "dark": "#191a1b",
+            "light": "#f0f0f0",
+            "glass": "#191a1b"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-bg-tint",
+          "ref": null,
+          "values": {
+            "dark": "#141516",
+            "light": "#f4f4f5",
+            "glass": "#141516"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-fg-primary",
+          "ref": null,
+          "values": {
+            "dark": "#f7f8f8",
+            "light": "#282a2f"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-fg-secondary",
+          "ref": null,
+          "values": {
+            "dark": "#d0d6e0",
+            "light": "#3c4149"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-fg-tertiary",
+          "ref": null,
+          "values": {
+            "dark": "#8a8f98",
+            "light": "#6f6e77"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-fg-quaternary",
+          "ref": null,
+          "values": {
+            "dark": "#62666d",
+            "light": "#86848d"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-line-primary",
+          "ref": null,
+          "values": {
+            "dark": "#37393a",
+            "light": "#d4d4d6"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-line-secondary",
+          "ref": null,
+          "values": {
+            "dark": "#202122",
+            "light": "#eaeaeb"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-line-tertiary",
+          "ref": null,
+          "values": {
+            "dark": "#18191a",
+            "light": "#f0f0f0"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-line-quaternary",
+          "ref": null,
+          "values": {
+            "dark": "#141515",
+            "light": "#f4f4f4"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-line-tint",
+          "ref": null,
+          "values": {
+            "dark": "#141516",
+            "light": "#f4f4f5"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-border-primary",
+          "ref": null,
+          "values": {
+            "dark": "#23252a",
+            "light": "#e9e8ea",
+            "glass": "#ffffff14"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-border-secondary",
+          "ref": null,
+          "values": {
+            "dark": "#34343a",
+            "light": "#e4e2e4",
+            "glass": "#ffffff1f"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-border-tertiary",
+          "ref": null,
+          "values": {
+            "dark": "#3e3e44",
+            "light": "#dcdbdd",
+            "glass": "#ffffff26"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-border-translucent",
+          "ref": null,
+          "values": {
+            "dark": "#ffffff0d",
+            "light": "#0000000d"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-border-translucent-strong",
+          "ref": null,
+          "values": {
+            "dark": "#ffffff14",
+            "light": "#00000014"
+          },
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "Text",
+      "layer": "semantic",
+      "note": "Text color ordinal scale plus link colors.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ],
+      "tokens": [
+        {
+          "name": "--color-text-primary",
+          "ref": null,
+          "values": {
+            "dark": "#f7f8f8",
+            "light": "#282a30",
+            "glass": "#f7f8f8"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-text-secondary",
+          "ref": null,
+          "values": {
+            "dark": "#d0d6e0",
+            "light": "#3c4149",
+            "glass": "#b4bcd0"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-text-tertiary",
+          "ref": null,
+          "values": {
+            "dark": "#8a8f98",
+            "light": "#6f6e77",
+            "glass": "#b4bcd099"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-text-quaternary",
+          "ref": null,
+          "values": {
+            "dark": "#62666d",
+            "light": "#86848d",
+            "glass": "#b4bcd066"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-link-primary",
+          "ref": null,
+          "values": {
+            "dark": "#828fff",
+            "light": "#7070ff",
+            "glass": "#828fff"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-link-hover",
+          "ref": null,
+          "values": {
+            "dark": "#fff",
+            "light": "var(--color-text-primary)",
+            "glass": "var(--color-text-primary)"
+          },
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "Accent & brand",
+      "layer": "semantic",
+      "note": "Accent (interactive highlight) and brand tokens, including inverted-button colors.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ],
+      "tokens": [
+        {
+          "name": "--color-accent",
+          "ref": null,
+          "values": {
+            "dark": "#7170ff",
+            "light": "#7170ff"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-accent-hover",
+          "ref": null,
+          "values": {
+            "dark": "#828fff",
+            "light": "#8989f0"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-accent-tint",
+          "ref": null,
+          "values": {
+            "dark": "#18182f",
+            "light": "#f1f1ff"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-brand-bg",
+          "ref": null,
+          "values": {
+            "dark": "#5e6ad2",
+            "light": "#7070ff",
+            "glass": "#5e6ad2"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-brand-text",
+          "ref": null,
+          "values": {
+            "dark": "#fff",
+            "light": "#fff",
+            "glass": "#fff"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-button-invert-bg",
+          "ref": null,
+          "values": {
+            "dark": "#e5e5e6",
+            "light": "#282a30"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-button-invert-bg-hover",
+          "ref": null,
+          "values": {
+            "dark": "#fff",
+            "light": "#1f2024"
+          },
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "Focus",
+      "layer": "semantic",
+      "note": "Focus ring tokens used by :focus-visible. Width/offset are literal pixel values, not colors.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ],
+      "tokens": [
+        {
+          "name": "--focus-ring-color",
+          "ref": null,
+          "values": {
+            "dark": "var(--color-indigo)",
+            "light": "#0006",
+            "glass": "var(--color-indigo)"
+          },
+          "note": null
+        },
+        {
+          "name": "--focus-ring-width",
+          "ref": null,
+          "values": {
+            "dark": "2px",
+            "light": "2px",
+            "glass": "2px"
+          },
+          "note": null
+        },
+        {
+          "name": "--focus-ring-offset",
+          "ref": null,
+          "values": {
+            "dark": "2px",
+            "light": "2px",
+            "glass": "2px"
+          },
+          "note": null
+        },
+        {
+          "name": "--focus-ring-outline",
+          "ref": null,
+          "values": {
+            "dark": "var(--focus-ring-width) solid var(--focus-ring-color)",
+            "light": "var(--focus-ring-width) solid var(--focus-ring-color)",
+            "glass": "var(--focus-ring-width) solid var(--focus-ring-color)"
+          },
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "Selection & chrome",
+      "layer": "semantic",
+      "note": "Text-selection colors, overlay/dim tokens, and site header chrome colors.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ],
+      "tokens": [
+        {
+          "name": "--color-selection-text",
+          "ref": null,
+          "values": {
+            "dark": "var(--color-white)",
+            "light": "currentColor",
+            "glass": "var(--color-white)"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-selection-bg",
+          "ref": null,
+          "values": {
+            "dark": "color-mix(in lch, var(--color-brand-bg), black 10%)",
+            "light": "color-mix(in lch, var(--color-brand-bg), transparent 64%)",
+            "glass": "color-mix(in lch, var(--color-brand-bg), transparent 30%)"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-selection-dim",
+          "ref": null,
+          "values": {
+            "dark": "color-mix(in lch, var(--color-brand-bg), transparent 80%)",
+            "light": "color-mix(in lch, var(--color-brand-bg), transparent 80%)",
+            "glass": "color-mix(in lch, var(--color-brand-bg), transparent 80%)"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-overlay-dim-rgb",
+          "ref": null,
+          "values": {
+            "dark": "255, 255, 255",
+            "light": "0, 0, 0",
+            "glass": "255, 255, 255"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-overlay-primary",
+          "ref": null,
+          "values": {
+            "dark": "#000000d9",
+            "light": "#ffffffa6",
+            "glass": "#000000d9"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-alpha",
+          "ref": null,
+          "values": {
+            "dark": "255",
+            "light": "0",
+            "glass": "255"
+          },
+          "note": null
+        },
+        {
+          "name": "--header-bg",
+          "ref": null,
+          "values": {
+            "dark": "#0b0b0bcc",
+            "light": "var(--color-bg-primary)",
+            "glass": "var(--color-bg-primary)"
+          },
+          "note": "Site header background; var(--color-bg-primary) in light/glass, a translucent literal in dark."
+        },
+        {
+          "name": "--header-border",
+          "ref": null,
+          "values": {
+            "dark": "#ffffff14",
+            "light": "#00000014",
+            "glass": "#ffffff14"
+          },
+          "note": "Site header border color."
+        }
+      ]
+    }
+  ],
+  "focus": [
+    {
+      "label": "Construction",
+      "value": "A token group, not a component style \u2014 --focus-ring-color/width/offset plus composed --focus-ring-outline",
+      "note": "Component rules also use var(--color-accent) for focus, so two focus color sources coexist.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ]
+    },
+    {
+      "label": "Color",
+      "value": "var(--color-indigo)",
+      "note": "Indigo by default, swapped to translucent black in light mode.",
+      "sources": [
+        "https://static.linear.app/web/_next/static/index-pNKhUyF9.css"
+      ]
+    }
+  ],
+  "contrast": [
+    {
+      "label": "text-primary on bg-primary",
+      "fgColor": "#f7f8f8",
+      "bgColor": "#08090a",
+      "mode": "dark",
+      "metric": "wcag2",
+      "value": "18.73:1",
+      "kind": "measured",
+      "note": "Computed from shipped marketing-site CSS (observed, not official)."
+    }
+  ],
+  "sources": [
+    "https://static.linear.app/web/_next/static/index-pNKhUyF9.css",
+    "https://linear.app/",
+    "https://linear.app/now/how-we-redesigned-the-linear-ui"
+  ]
+}

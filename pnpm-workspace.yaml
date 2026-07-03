@@ -1,16 +1,24 @@
 packages:
   - www
+  - ds
   - packages/*
 
 catalog:
+  '@tailwindcss/vite': ^4.3.0
   '@tanstack/react-router': ^1.170.1
   '@tanstack/react-start': ^1.168.2
+  '@tanstack/router-plugin': ^1.168.2
+  '@types/node': ^24.12.4
   '@types/react': ^19.2.2
   '@types/react-dom': ^19.2.1
+  '@vitejs/plugin-react': ^6.0.2
+  nitro: ^3.0.260429-beta
   react: ^19.2.1
   react-dom: ^19.2.1
   tailwindcss: ^4.3.0
   typescript: ^6.0.3
+  vite: ^8.1.0
+  zod: ^4.2.1
 
 allowBuilds:
   '@tailwindcss/oxide': true
