@@ -188,7 +188,8 @@ export function SearchCommand({
             </DialogContent>
           )
           return isMobile ? (
-            <Drawer>{content}</Drawer>
+            // Match the desktop modal's raised surface.
+            <Drawer className="bg-(--neutral-200)">{content}</Drawer>
           ) : (
             // Composed (not <Modal>) so the panel AND backdrop appear
             // instantly — duration-0 on both. Mirror shadcn.com: max-w-lg
