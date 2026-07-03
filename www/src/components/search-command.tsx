@@ -196,7 +196,7 @@ export function SearchCommand({
             <ModalOverlay>
               <ModalBackdrop className="duration-0 group-exiting/modal:duration-0" />
               <ModalViewport>
-                <ModalPanel className="mt-[15vh] self-start duration-0 [--modal-background:var(--neutral-100)] [--modal-radius:var(--radius-xl)] sm:max-w-lg entering:scale-100 exiting:scale-100">
+                <ModalPanel className="mt-[15vh] self-start duration-0 [--modal-background:var(--neutral-200)] [--modal-radius:var(--radius-xl)] sm:max-w-lg entering:scale-100 exiting:scale-100">
                   {content}
                 </ModalPanel>
               </ModalViewport>
@@ -265,7 +265,7 @@ function SearchDialog({
         className={commandStyles({ className: 'gap-0 overflow-y-hidden p-0' })}
       >
         <SearchField autoFocus aria-label="Search" className="px-1.5 pt-1.5">
-          <InputGroup size="lg">
+          <InputGroup size="lg" className="bg-(--neutral-50)">
             <InputGroupAddon>
               <SearchIcon />
             </InputGroupAddon>
