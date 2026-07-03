@@ -13,7 +13,7 @@ V1 covers **color & token systems only**, across ~15 curated systems ([data/rost
 - One folder per system in [data/systems/](data/systems/): `system.json` (identity, sources, dates) + `colors.json` (ramps, token groups, layers, focus, contrast). Zod-validated — `pnpm --filter=ds check:data`.
 - The site renders that data as **exploration pages**: swatch ramps, searchable token tables, playgrounds — not prose. Every fact carries source URLs and a date; reverse-engineered facts (e.g. Linear's shipped CSS) are labeled as observed, not official.
 - No database. Git is the source of truth; a build step compiles the data into a static index.
-- The site's UI is installed from the dotUI registry via the shadcn CLI — we dogfood our own product, and installation bugs get fixed upstream ([DOGFOOD.md](DOGFOOD.md)).
+- The site's UI is the full dotUI component kit, vendored into [src/ui/](src/ui/) as the resolved output of the registry publisher (default density, default styles) — the same code a consumer gets from `shadcn add`, minus the CLI.
 
 ## Order of work
 

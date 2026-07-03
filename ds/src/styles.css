@@ -5,14 +5,14 @@
 @plugin 'tailwindcss-autocontrast';
 @plugin 'tailwindcss-with';
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --ease-fluid-out: cubic-bezier(0.32, 0.72, 0, 1);
   --cursor-interactive: pointer;
   --cursor-disabled: not-allowed;
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* The registry theme points these at Geist font variables nothing defines
+     in this app — pin system stacks instead. */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
   --radius-xs: calc(0.125rem * var(--radius-factor));
   --radius-sm: calc(0.25rem * var(--radius-factor));
   --radius-md: calc(0.375rem * var(--radius-factor));
@@ -226,6 +226,34 @@
   --btn-font-weight: var(--font-weight-medium);
   --checkbox-radius: 4px;
   --checkbox-card-radius: var(--radius-lg);
+  --alert-radius: var(--radius-lg);
+  --avatar-radius: calc(infinity * 1px);
+  --calendar-cell-radius: var(--radius-lg);
+  --calendar-cell-size: --spacing(8);
+  --calendar-range-radius: var(--radius-sm);
+  --card-radius: var(--radius-lg);
+  --color-area-radius: var(--radius-md);
+  --color-swatch-picker-item-radius: var(--radius-md);
+  --input-radius: var(--radius-md);
+  --list-box-item-radius: var(--radius-sm);
+  --modal-backdrop-blur: var(--blur-sm);
+  --modal-backdrop-opacity: 40%;
+  --modal-background: var(--color-bg);
+  --modal-radius: var(--radius-lg);
+  --radio-radius: 9999px;
+  --radio-card-radius: var(--radius-lg);
+  --slider-track-radius: var(--radius-full);
+  --slider-thumb-radius: var(--radius-full);
+  --slider-thumb-size: calc(var(--spacing) * 3);
+  --slider-thumb-shadow: none;
+  --slider-fill-color: var(--color-primary);
+  --slider-cursor: var(--cursor-interactive);
+  --slider-dragging-cursor: var(--cursor-interactive);
+  --slider-size: calc(var(--spacing) * 1);
+  --switch-radius: 9999px;
+  --switch-card-radius: var(--radius-lg);
+  --tag-radius: var(--radius-lg);
+  --tree-item-radius: var(--radius-sm);
 }
 
 .dark {
@@ -300,9 +328,179 @@
 [data-required] [data-label]::after {
   content: '*' / '';
 }
-/* ds: the init theme points --font-sans at Geist variables nothing defines
-   (see DOGFOOD.md) — pin system stacks instead. */
-@theme {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+
+@utility skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-muted);
+  background-position: 100%;
+
+  &:where(img, video, canvas, svg) {
+    content-visibility: hidden;
+  }
+}
+
+@utility skeleton--shimmer {
+  &:where(.skeleton),
+  &
+    :where(
+      .skeleton,
+      [data-skeleton],
+      [data-text],
+      [data-label],
+      [data-description],
+      [data-card-title],
+      [data-card-description],
+      [data-menu-item-label],
+      [data-menu-item-description],
+      [data-listbox-item-label],
+      [data-listbox-item-description],
+      [data-button],
+      [data-input-control],
+      [data-badge],
+      [data-tag],
+      [data-kbd],
+      [data-combobox-value],
+      [data-avatar],
+      [data-avatar-group-count],
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      small,
+      strong,
+      em,
+      code,
+      kbd,
+      samp,
+      figcaption,
+      legend
+    ) {
+    overflow: hidden;
+    background-image: linear-gradient(
+      to right,
+      var(--color-muted) 33%,
+      color-mix(in oklab, var(--color-muted), var(--color-bg) 45%),
+      var(--color-muted) 66%
+    );
+    background-size: 300% 100%;
+    background-position: 100%;
+    background-repeat: no-repeat;
+  }
+}
+
+@utility skeleton--pulse {
+  &:where(.skeleton),
+  &
+    :where(
+      .skeleton,
+      [data-skeleton],
+      [data-text],
+      [data-label],
+      [data-description],
+      [data-card-title],
+      [data-card-description],
+      [data-menu-item-label],
+      [data-menu-item-description],
+      [data-listbox-item-label],
+      [data-listbox-item-description],
+      [data-button],
+      [data-input-control],
+      [data-badge],
+      [data-tag],
+      [data-kbd],
+      [data-combobox-value],
+      [data-avatar],
+      [data-avatar-group-count],
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      small,
+      strong,
+      em,
+      code,
+      kbd,
+      samp,
+      figcaption,
+      legend
+    ) {
+    opacity: 1;
+  }
+}
+
+@utility skeleton--none {
+  &:where(.skeleton),
+  &
+    :where(
+      .skeleton,
+      [data-skeleton],
+      [data-text],
+      [data-label],
+      [data-description],
+      [data-card-title],
+      [data-card-description],
+      [data-menu-item-label],
+      [data-menu-item-description],
+      [data-listbox-item-label],
+      [data-listbox-item-description],
+      [data-button],
+      [data-input-control],
+      [data-badge],
+      [data-tag],
+      [data-kbd],
+      [data-combobox-value],
+      [data-avatar],
+      [data-avatar-group-count],
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      small,
+      strong,
+      em,
+      code,
+      kbd,
+      samp,
+      figcaption,
+      legend
+    ) {
+    background-image: none;
+    animation: none;
+  }
+}
+
+@theme inline {
+  /* progress-bar */
+  --animate-progress-indeterminate:
+    progress-grow var(--progress-duration) 1 both normal,
+    progress-pulse 1s ease var(--progress-duration) infinite normal none running;
+}
+
+@keyframes progress-grow {
+  0% {
+    transform: scaleX(0.01);
+  }
+  20% {
+    transform: scaleX(0.1);
+  }
+  30% {
+    transform: scaleX(0.6);
+  }
+  40%,
+  50% {
+    transform: scaleX(0.9);
+  }
+  100% {
+    transform: scaleX(1);
+  }
 }
