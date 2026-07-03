@@ -41,8 +41,3 @@ Thumbs.db
 
 # Generated shadcn publishables — emitted by `pnpm build:registry`.
 www/src/registry/__generated__/publishables/
-.ds-sync/
-ds-bundle/
-.design-sync/.cache/
-.design-sync/learnings/
-www/.ds-sync-build/
