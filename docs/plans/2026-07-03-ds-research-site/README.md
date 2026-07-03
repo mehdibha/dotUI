@@ -43,8 +43,9 @@ Migration note in `ds/data/RETRO.md`.
 ### Amendment — 2026-07-03 (maintainer, reordering)
 
 Plans 004–006 are superseded in their ordering: the site design, system pages, playgrounds,
-and interactive widgets get built **first** (against the pilot systems' data), the data shape
-freezes from what those pages need, and only then does the research fan-out (004) run.
+and interactive widgets get built **first** — V1 goes deep on a single flagship system,
+**Radix**, while the full roster is listed on the site as `planned` from day 1. The data shape
+freezes from what Radix's pages need, and only then does the research fan-out (004) run.
 `ds/README.md` is now the project's front door and states the order of work; this folder is
 planning history.
 

@@ -17,7 +17,9 @@ V1 covers **color & token systems only**, across ~15 curated systems ([data/rost
 
 ## Order of work
 
-1. Design the site and build the system pages, playgrounds, and interactive widgets against the pilot systems already in `data/systems/` — the pages decide what data we actually need.
+The full roster is on the site from day 1 — every system shows as `planned` until it becomes explorable.
+
+1. **V1 = Radix only.** Design the site and build all of Radix's exploration pages, playgrounds, showcase, and interactive widgets. Going deep on one system decides what data we actually need — and what "done" looks like for every other system.
 2. Freeze that data shape.
 3. Research the rest of the roster, one system per session/PR.
 4. Cross-system analysis and comparison pages.
