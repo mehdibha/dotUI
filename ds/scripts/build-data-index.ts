@@ -4,9 +4,12 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import { questionBankVersion, questionById } from '../src/data/question-bank'
-import { factsFileSchema, rosterSchema, systemSchema } from '../src/data/schema'
-import type { DataIndex, SystemWithFacts } from '../src/data/schema'
+import {
+  colorsFileSchema,
+  rosterSchema,
+  systemSchema,
+} from '../src/data/schema'
+import type { DataIndex, SystemWithColors } from '../src/data/schema'
 
 const root = path.resolve(import.meta.dirname, '..')
 const dataDir = path.join(root, 'data')
@@ -39,7 +42,7 @@ const systemDirs = fs.existsSync(systemsDir)
       .sort()
   : []
 
-const systems: SystemWithFacts[] = []
+const systems: SystemWithColors[] = []
 
 for (const dir of systemDirs) {
   const rel = `data/systems/${dir}`
@@ -56,56 +59,46 @@ for (const dir of systemDirs) {
     )
   }
 
-  const factsResult = factsFileSchema.safeParse(
-    readJson(path.join(systemsDir, dir, 'facts.json')),
+  const colorsResult = colorsFileSchema.safeParse(
+    readJson(path.join(systemsDir, dir, 'colors.json')),
   )
-  if (!factsResult.success) {
-    errors.push(`${rel}/facts.json: ${factsResult.error.message}`)
+  if (!colorsResult.success) {
+    errors.push(`${rel}/colors.json: ${colorsResult.error.message}`)
     continue
   }
 
-  const seenIds = new Set<string>()
-  factsResult.data.forEach((fact, i) => {
-    const question = questionById.get(fact.questionId)
-    if (!question) {
-      errors.push(
-        `${rel}/facts.json[${i}]: unknown questionId "${fact.questionId}"`,
-      )
-      return
-    }
-    if (seenIds.has(fact.questionId)) {
-      errors.push(
-        `${rel}/facts.json[${i}]: duplicate questionId "${fact.questionId}"`,
-      )
-    }
-    seenIds.add(fact.questionId)
-    if (fact.status === 'answered') {
-      const answer = question.answerShape.safeParse(fact.answer)
-      if (!answer.success) {
+  // Every per-mode value must use a declared mode, so the mode switcher and
+  // table columns can trust `modes` as the complete set.
+  const colors = colorsResult.data
+  const modes = new Set(colors.modes)
+  const checkValues = (values: Record<string, string>, where: string) => {
+    for (const mode of Object.keys(values)) {
+      if (!modes.has(mode)) {
         errors.push(
-          `${rel}/facts.json[${i}] (${fact.questionId}): answer does not match the question's shape — ${answer.error.message}`,
+          `${rel}/colors.json: ${where} uses undeclared mode "${mode}"`,
         )
       }
     }
-    // Single-session research retrieves and verifies the same day; phase-2
-    // re-verification will relax this.
-    for (const evidence of fact.evidence) {
-      if (evidence.retrievedAt !== fact.verifiedAt) {
-        errors.push(
-          `${rel}/facts.json[${i}] (${fact.questionId}): evidence retrievedAt ${evidence.retrievedAt} != verifiedAt ${fact.verifiedAt}`,
-        )
-      }
+  }
+  for (const ramp of colors.ramps) {
+    for (const step of ramp.steps) {
+      checkValues(step.values, `ramp "${ramp.name}" step ${step.step}`)
     }
-  })
-
-  // Every researched system answers the full bank, or says why it can't.
-  for (const question of questionById.values()) {
-    if (!seenIds.has(question.id)) {
-      errors.push(`${rel}/facts.json: missing fact for "${question.id}"`)
+  }
+  for (const group of colors.tokenGroups) {
+    for (const token of group.tokens) {
+      checkValues(token.values, `token "${token.name}"`)
+    }
+  }
+  for (const pair of colors.contrast) {
+    if (pair.mode !== null && !modes.has(pair.mode)) {
+      errors.push(
+        `${rel}/colors.json: contrast pair "${pair.label}" uses undeclared mode "${pair.mode}"`,
+      )
     }
   }
 
-  systems.push({ ...systemResult.data, facts: factsResult.data })
+  systems.push({ ...systemResult.data, colors })
 }
 
 if (errors.length > 0) {
@@ -116,10 +109,6 @@ if (errors.length > 0) {
 
 if (!checkOnly) {
   const index: DataIndex = {
-    questionBankVersion,
-    questionBank: [...questionById.values()].map(
-      ({ answerShape: _answerShape, ...meta }) => meta,
-    ),
     roster: rosterResult.success ? rosterResult.data.systems : [],
     systems,
   }
@@ -128,5 +117,5 @@ if (!checkOnly) {
 }
 
 console.log(
-  `[build-data-index] ${systemDirs.length} system(s), ${questionById.size} questions${checkOnly ? ' — valid' : ` → ${path.relative(root, outFile)}`}`,
+  `[build-data-index] ${systemDirs.length} system(s)${checkOnly ? ' — valid' : ` → ${path.relative(root, outFile)}`}`,
 )

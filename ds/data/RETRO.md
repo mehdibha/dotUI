@@ -1,3 +1,22 @@
+# Schema retro
+
+## v2 migration — 2026-07-03 (maintainer pivot, same day as the pilot)
+
+The question-bank/facts model below was scrapped after the first fan-out system
+(spectrum-2) shipped: reading 10 prose fact-blocks per system is a bad way to explore a
+color system. v2 replaces it with structured color-system data per system —
+`colors.json` (ramps, token groups, layers, focus spec, contrast pairs, overview
+entries) rendered by shared exploration components (ramp grids, searchable token
+tables, diagrams). `system.json` now carries three dates (`createdAt`, `updatedAt`,
+`reviewedAt`) instead of `addedAt`, and per-evidence `retrievedAt` is gone — sources
+survive as plain URL lists on each section. `question-bank.ts` and per-system
+`facts.json`/`analysis.mdx` were removed; topic pages (views over the question bank)
+were removed with them.
+
+Everything below is the v1 record, kept for history.
+
+---
+
 # Schema retro — plan 002 pilot (Radix + Linear), 2026-07-03
 
 What churned while researching two real systems through all 10 questions, and the freeze

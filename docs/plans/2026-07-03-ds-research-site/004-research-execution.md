@@ -42,11 +42,14 @@ No automation in v1 (deferred, Phase-0 decision 7). Two cheap habits instead:
 
 ## Roster progress
 
+Note (2026-07-03): statuses below predate the same-day v2 data-model pivot (see the
+README amendment); all three systems were migrated to the `colors.json` shape.
+
 | System | Status |
 |---|---|
 | radix | DONE — plan-002 pilot (open method) |
 | linear | DONE — plan-002 pilot (reverse-engineered) |
-| spectrum-2 | DONE — 2026-07-03; 10/10 answered, adversarial cross-check 11/11; added `css-light-dark` to the `tokens.naming` themingMechanisms enum (additive) |
+| spectrum-2 | DONE — 2026-07-03; researched via the v1 question bank (adversarial cross-check 11/11), then migrated to v2 structured data |
 
 ## Done criteria (plan)
 

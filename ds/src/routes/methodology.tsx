@@ -43,19 +43,28 @@ function Methodology() {
 
         <h2>The truth standard</h2>
         <p>
-          Every published fact carries evidence: source URLs, a retrieval date,
-          a verification date, and a method tag —{' '}
+          Every system page is built from structured data extracted from real
+          sources — token source files, shipped CSS, first-party docs — and
+          every section links the sources it came from. Systems are labeled with
+          how they were read:{' '}
           <code className="font-mono text-sm">documented</code>,{' '}
           <code className="font-mono text-sm">source-read</code>, or{' '}
           <code className="font-mono text-sm">reverse-engineered</code>.
-          Reverse-engineered facts (like CSS variables read from a shipped site)
-          are first-class but always labeled as observed, never as official
-          documentation. Facts without evidence fail the build.
+          Reverse-engineered data (like CSS variables read from a shipped site)
+          is first-class but always labeled as observed, never as official
+          documentation. Measured numbers — like contrast ratios computed from
+          shipped values — are marked measured, never conflated with published
+          guarantees. Data without sources fails the build.
+        </p>
+        <p>
+          Every system carries three dates: when its research was created, when
+          the data last changed, and when a human last reviewed it against the
+          sources. Staleness is shown, not hidden.
         </p>
         <p>
           Selection recon is not held to that bar — scorecards were good enough
-          to rank candidates. Everything published on a system profile or topic
-          page is re-verified to the per-fact citation standard first.
+          to rank candidates. Everything published on a system page is
+          re-verified against its sources first.
         </p>
 
         <h2>Editorial line</h2>

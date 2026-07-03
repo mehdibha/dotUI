@@ -23,6 +23,23 @@ All resolved with the maintainer; these are binding for every plan in this folde
 11. **Research→create pipeline — implications → GitHub issues.** Every topic page ends with a neutral "implications for builders" section; each finding `/create` should adopt becomes a GitHub issue on `mehdibha/dotUI` labeled `research-finding`, linking the evidence. Traceable: page → issue → axis.
 12. **Name & voice — "ds." on ds.dotui.org.** Plain disclosure in the footer: built by dotUI; the builder follows this research, not the reverse. Voice: rigorous, human, cited; occasional fun.
 
+### Amendment — 2026-07-03 (maintainer, post-pilot)
+
+After the first fan-out system shipped, the maintainer scrapped the question-bank/facts
+content shape (part of decisions 3–4): prose fact-blocks are a bad way to explore a color
+system. Superseding decisions:
+
+- **Profiles are exploration pages** built from structured color-system data per system
+  (`colors.json`: ramps, token groups, layers, focus, contrast, overview) rendered by
+  shared visual components — swatch ramp grids, searchable token tables, diagrams. Topic
+  pages (views over the question bank) were removed with the bank; cross-system topic
+  pages will be rebuilt later over the same structured data.
+- **Dating model**: per-evidence `retrievedAt` is gone; each system carries
+  `createdAt` / `updatedAt` / `reviewedAt`. Sources survive as plain URL lists attached
+  to every section — the citation standard (decision 4) otherwise stands.
+
+Migration note in `ds/data/RETRO.md`.
+
 ## Execution order
 
 ```

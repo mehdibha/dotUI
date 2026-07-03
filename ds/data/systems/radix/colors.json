@@ -1,0 +1,6241 @@
+{
+  "modes": ["light", "dark"],
+  "overview": [
+    {
+      "label": "Palette",
+      "value": "31 twelve-step scales \u2014 6 tinted grays + 25 hues \u2014 each hand-tuned separately for light and dark, with alpha, P3 and P3-alpha variants",
+      "note": "Every step has a documented role: 1-2 app backgrounds, 3-5 component states, 6-8 borders, 9-10 solid backgrounds, 11-12 text. P3 variants are not shown on this page.",
+      "sources": [
+        "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale",
+        "https://github.com/radix-ui/colors/blob/main/src/light.ts"
+      ]
+    },
+    {
+      "label": "Generation",
+      "value": "Hand-authored static tables; hosted custom-palette tool (closed)",
+      "note": "The repo ships literal values with no generation code; releases describe wholesale manual reworks ('a complete rework of all colors' in 2.0 and 3.0).",
+      "sources": [
+        "https://www.radix-ui.com/colors/docs/overview/custom-palettes",
+        "https://www.radix-ui.com/colors/docs/overview/releases"
+      ]
+    },
+    {
+      "label": "Color space",
+      "value": "sRGB hex + 8-digit hex alpha; full P3 via color(display-p3) scale variants",
+      "note": "Authoring space unpublished. Radix Themes gates P3 values behind @supports + @media (color-gamut: p3).",
+      "sources": [
+        "https://github.com/radix-ui/colors/blob/main/src/light.ts",
+        "https://www.radix-ui.com/colors/docs/overview/releases"
+      ]
+    },
+    {
+      "label": "Contrast",
+      "value": "APCA by construction \u2014 steps 11/12 guaranteed Lc 60/90 on a step-2 background",
+      "note": "The guarantee lives in the hand-tuned values; no audit tooling, no WCAG 2.x language. Five bright hues (sky, mint, lime, yellow, amber) flip to dark foreground text on step 9.",
+      "sources": [
+        "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale"
+      ]
+    },
+    {
+      "label": "Theming",
+      "value": "Runtime CSS custom properties \u2014 .light/.dark class switch + [data-accent-color] attributes",
+      "note": "OS sync is explicitly delegated to next-themes ('Do not try to set <Theme appearance={resolvedTheme}>').",
+      "sources": [
+        "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css",
+        "https://www.radix-ui.com/themes/docs/theme/dark-mode"
+      ]
+    },
+    {
+      "label": "Naming",
+      "value": "kebab-case \u2014 --{scale}-{step}, 'a' infix for alpha (--blue-a9); role scales --accent-* / --gray-* / --focus-*",
+      "note": null,
+      "sources": [
+        "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css"
+      ]
+    },
+    {
+      "label": "Token scope",
+      "value": "Color, space, radius, shadows, typography, per-component cursors, global scaling",
+      "note": "No motion, breakpoint, z-index or opacity tokens; breakpoints exist only as responsive prop syntax.",
+      "sources": [
+        "https://github.com/radix-ui/themes/tree/main/packages/radix-ui-themes/src/styles/tokens"
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "color scales (@radix-ui/colors)",
+      "kind": "primitive",
+      "example": "--blue-9, --blue-a9",
+      "note": "31 hand-authored 12-step scale families."
+    },
+    {
+      "name": "role scales (accent/gray remapping)",
+      "kind": "semantic",
+      "example": "--accent-9 = var(--blue-9) under [data-accent-color='blue']",
+      "note": "Whole scales remapped step-for-step, step semantics intact; includes the dedicated --focus-1..12 scale."
+    },
+    {
+      "name": "functional tokens",
+      "kind": "semantic",
+      "example": "--color-background, --accent-contrast, --color-panel-solid",
+      "note": "A thin purpose-named layer; components mostly consume role scales directly."
+    }
+  ],
+  "ramps": [
+    {
+      "name": "gray",
+      "kind": "neutral",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fcfcfc",
+            "dark": "#111111"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f9f9f9",
+            "dark": "#191919"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f0f0f0",
+            "dark": "#222222"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#e8e8e8",
+            "dark": "#2a2a2a"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#e0e0e0",
+            "dark": "#313131"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#d9d9d9",
+            "dark": "#3a3a3a"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#cecece",
+            "dark": "#484848"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#bbbbbb",
+            "dark": "#606060"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#8d8d8d",
+            "dark": "#6e6e6e"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#838383",
+            "dark": "#7b7b7b"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#646464",
+            "dark": "#b4b4b4"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#202020",
+            "dark": "#eeeeee"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mauve",
+      "kind": "neutral",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fdfcfd",
+            "dark": "#121113"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#faf9fb",
+            "dark": "#1a191b"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f2eff3",
+            "dark": "#232225"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#eae7ec",
+            "dark": "#2b292d"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#e3dfe6",
+            "dark": "#323035"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#dbd8e0",
+            "dark": "#3c393f"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#d0cdd7",
+            "dark": "#49474e"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#bcbac7",
+            "dark": "#625f69"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#8e8c99",
+            "dark": "#6f6d78"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#84828e",
+            "dark": "#7c7a85"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#65636d",
+            "dark": "#b5b2bc"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#211f26",
+            "dark": "#eeeef0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "slate",
+      "kind": "neutral",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fcfcfd",
+            "dark": "#111113"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f9f9fb",
+            "dark": "#18191b"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f0f0f3",
+            "dark": "#212225"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#e8e8ec",
+            "dark": "#272a2d"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#e0e1e6",
+            "dark": "#2e3135"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#d9d9e0",
+            "dark": "#363a3f"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#cdced6",
+            "dark": "#43484e"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#b9bbc6",
+            "dark": "#5a6169"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#8b8d98",
+            "dark": "#696e77"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#80838d",
+            "dark": "#777b84"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#60646c",
+            "dark": "#b0b4ba"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#1c2024",
+            "dark": "#edeef0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "sage",
+      "kind": "neutral",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fbfdfc",
+            "dark": "#101211"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f7f9f8",
+            "dark": "#171918"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#eef1f0",
+            "dark": "#202221"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#e6e9e8",
+            "dark": "#272a29"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#dfe2e0",
+            "dark": "#2e3130"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#d7dad9",
+            "dark": "#373b39"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#cbcfcd",
+            "dark": "#444947"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#b8bcba",
+            "dark": "#5b625f"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#868e8b",
+            "dark": "#63706b"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#7c8481",
+            "dark": "#717d79"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#5f6563",
+            "dark": "#adb5b2"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#1a211e",
+            "dark": "#eceeed"
+          }
+        }
+      ]
+    },
+    {
+      "name": "olive",
+      "kind": "neutral",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fcfdfc",
+            "dark": "#111210"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f8faf8",
+            "dark": "#181917"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#eff1ef",
+            "dark": "#212220"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#e7e9e7",
+            "dark": "#282a27"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#dfe2df",
+            "dark": "#2f312e"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#d7dad7",
+            "dark": "#383a36"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#cccfcc",
+            "dark": "#454843"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#b9bcb8",
+            "dark": "#5c625b"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#898e87",
+            "dark": "#687066"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#7f847d",
+            "dark": "#767d74"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#60655f",
+            "dark": "#afb5ad"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#1d211c",
+            "dark": "#eceeec"
+          }
+        }
+      ]
+    },
+    {
+      "name": "sand",
+      "kind": "neutral",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fdfdfc",
+            "dark": "#111110"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f9f9f8",
+            "dark": "#191918"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f1f0ef",
+            "dark": "#222221"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#e9e8e6",
+            "dark": "#2a2a28"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#e2e1de",
+            "dark": "#31312e"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#dad9d6",
+            "dark": "#3b3a37"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#cfceca",
+            "dark": "#494844"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#bcbbb5",
+            "dark": "#62605b"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#8d8d86",
+            "dark": "#6f6d66"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#82827c",
+            "dark": "#7c7b74"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#63635e",
+            "dark": "#b5b3ad"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#21201c",
+            "dark": "#eeeeec"
+          }
+        }
+      ]
+    },
+    {
+      "name": "tomato",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fffcfc",
+            "dark": "#181111"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fff8f7",
+            "dark": "#1f1513"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#feebe7",
+            "dark": "#391714"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ffdcd3",
+            "dark": "#4e1511"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ffcdc2",
+            "dark": "#5e1c16"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#fdbdaf",
+            "dark": "#6e2920"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#f5a898",
+            "dark": "#853a2d"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#ec8e7b",
+            "dark": "#ac4d39"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#e54d2e",
+            "dark": "#e54d2e"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#dd4425",
+            "dark": "#ec6142"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#d13415",
+            "dark": "#ff977d"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#5c271f",
+            "dark": "#fbd3cb"
+          }
+        }
+      ]
+    },
+    {
+      "name": "red",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fffcfc",
+            "dark": "#191111"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fff7f7",
+            "dark": "#201314"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#feebec",
+            "dark": "#3b1219"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ffdbdc",
+            "dark": "#500f1c"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ffcdce",
+            "dark": "#611623"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#fdbdbe",
+            "dark": "#72232d"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#f4a9aa",
+            "dark": "#8c333a"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#eb8e90",
+            "dark": "#b54548"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#e5484d",
+            "dark": "#e5484d"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#dc3e42",
+            "dark": "#ec5d5e"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#ce2c31",
+            "dark": "#ff9592"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#641723",
+            "dark": "#ffd1d9"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ruby",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fffcfd",
+            "dark": "#191113"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fff7f8",
+            "dark": "#1e1517"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#feeaed",
+            "dark": "#3a141e"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ffdce1",
+            "dark": "#4e1325"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ffced6",
+            "dark": "#5e1a2e"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#f8bfc8",
+            "dark": "#6f2539"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#efacb8",
+            "dark": "#883447"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#e592a3",
+            "dark": "#b3445a"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#e54666",
+            "dark": "#e54666"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#dc3b5d",
+            "dark": "#ec5a72"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#ca244d",
+            "dark": "#ff949d"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#64172b",
+            "dark": "#fed2e1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "crimson",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fffcfd",
+            "dark": "#191114"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fef7f9",
+            "dark": "#201318"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#ffe9f0",
+            "dark": "#381525"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#fedce7",
+            "dark": "#4d122f"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#facedd",
+            "dark": "#5c1839"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#f3bed1",
+            "dark": "#6d2545"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#eaacc3",
+            "dark": "#873356"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#e093b2",
+            "dark": "#b0436e"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#e93d82",
+            "dark": "#e93d82"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#df3478",
+            "dark": "#ee518a"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#cb1d63",
+            "dark": "#ff92ad"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#621639",
+            "dark": "#fdd3e8"
+          }
+        }
+      ]
+    },
+    {
+      "name": "pink",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fffcfe",
+            "dark": "#191117"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fef7fb",
+            "dark": "#21121d"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#fee9f5",
+            "dark": "#37172f"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#fbdcef",
+            "dark": "#4b143d"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#f6cee7",
+            "dark": "#591c47"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#efbfdd",
+            "dark": "#692955"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#e7acd0",
+            "dark": "#833869"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#dd93c2",
+            "dark": "#a84885"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#d6409f",
+            "dark": "#d6409f"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#cf3897",
+            "dark": "#de51a8"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#c2298a",
+            "dark": "#ff8dcc"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#651249",
+            "dark": "#fdd1ea"
+          }
+        }
+      ]
+    },
+    {
+      "name": "plum",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fefcff",
+            "dark": "#181118"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fdf7fd",
+            "dark": "#201320"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#fbebfb",
+            "dark": "#351a35"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#f7def8",
+            "dark": "#451d47"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#f2d1f3",
+            "dark": "#512454"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#e9c2ec",
+            "dark": "#5e3061"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#deade3",
+            "dark": "#734079"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#cf91d8",
+            "dark": "#92549c"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#ab4aba",
+            "dark": "#ab4aba"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#a144af",
+            "dark": "#b658c4"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#953ea3",
+            "dark": "#e796f3"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#53195d",
+            "dark": "#f4d4f4"
+          }
+        }
+      ]
+    },
+    {
+      "name": "purple",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fefcfe",
+            "dark": "#18111b"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fbf7fe",
+            "dark": "#1e1523"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f7edfe",
+            "dark": "#301c3b"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#f2e2fc",
+            "dark": "#3d224e"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ead5f9",
+            "dark": "#48295c"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#e0c4f4",
+            "dark": "#54346b"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#d1afec",
+            "dark": "#664282"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#be93e4",
+            "dark": "#8457aa"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#8e4ec6",
+            "dark": "#8e4ec6"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#8347b9",
+            "dark": "#9a5cd0"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#8145b5",
+            "dark": "#d19dff"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#402060",
+            "dark": "#ecd9fa"
+          }
+        }
+      ]
+    },
+    {
+      "name": "violet",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fdfcfe",
+            "dark": "#14121f"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#faf8ff",
+            "dark": "#1b1525"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f4f0fe",
+            "dark": "#291f43"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ebe4ff",
+            "dark": "#33255b"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#e1d9ff",
+            "dark": "#3c2e69"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#d4cafe",
+            "dark": "#473876"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#c2b5f5",
+            "dark": "#56468b"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#aa99ec",
+            "dark": "#6958ad"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#6e56cf",
+            "dark": "#6e56cf"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#654dc4",
+            "dark": "#7d66d9"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#6550b9",
+            "dark": "#baa7ff"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#2f265f",
+            "dark": "#e2ddfe"
+          }
+        }
+      ]
+    },
+    {
+      "name": "iris",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fdfdff",
+            "dark": "#13131e"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f8f8ff",
+            "dark": "#171625"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f0f1fe",
+            "dark": "#202248"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#e6e7ff",
+            "dark": "#262a65"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#dadcff",
+            "dark": "#303374"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#cbcdff",
+            "dark": "#3d3e82"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#b8baf8",
+            "dark": "#4a4a95"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#9b9ef0",
+            "dark": "#5958b1"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#5b5bd6",
+            "dark": "#5b5bd6"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#5151cd",
+            "dark": "#6e6ade"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#5753c6",
+            "dark": "#b1a9ff"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#272962",
+            "dark": "#e0dffe"
+          }
+        }
+      ]
+    },
+    {
+      "name": "indigo",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fdfdfe",
+            "dark": "#11131f"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f7f9ff",
+            "dark": "#141726"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#edf2fe",
+            "dark": "#182449"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#e1e9ff",
+            "dark": "#1d2e62"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#d2deff",
+            "dark": "#253974"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#c1d0ff",
+            "dark": "#304384"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#abbdf9",
+            "dark": "#3a4f97"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#8da4ef",
+            "dark": "#435db1"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#3e63dd",
+            "dark": "#3e63dd"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#3358d4",
+            "dark": "#5472e4"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#3a5bc7",
+            "dark": "#9eb1ff"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#1f2d5c",
+            "dark": "#d6e1ff"
+          }
+        }
+      ]
+    },
+    {
+      "name": "blue",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fbfdff",
+            "dark": "#0d1520"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f4faff",
+            "dark": "#111927"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#e6f4fe",
+            "dark": "#0d2847"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#d5efff",
+            "dark": "#003362"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#c2e5ff",
+            "dark": "#004074"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#acd8fc",
+            "dark": "#104d87"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#8ec8f6",
+            "dark": "#205d9e"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#5eb1ef",
+            "dark": "#2870bd"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#0090ff",
+            "dark": "#0090ff"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#0588f0",
+            "dark": "#3b9eff"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#0d74ce",
+            "dark": "#70b8ff"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#113264",
+            "dark": "#c2e6ff"
+          }
+        }
+      ]
+    },
+    {
+      "name": "cyan",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fafdfe",
+            "dark": "#0b161a"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f2fafb",
+            "dark": "#101b20"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#def7f9",
+            "dark": "#082c36"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#caf1f6",
+            "dark": "#003848"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#b5e9f0",
+            "dark": "#004558"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#9ddde7",
+            "dark": "#045468"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#7dcedc",
+            "dark": "#12677e"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#3db9cf",
+            "dark": "#11809c"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#00a2c7",
+            "dark": "#00a2c7"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#0797b9",
+            "dark": "#23afd0"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#107d98",
+            "dark": "#4ccce6"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#0d3c48",
+            "dark": "#b6ecf7"
+          }
+        }
+      ]
+    },
+    {
+      "name": "teal",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fafefd",
+            "dark": "#0d1514"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f3fbf9",
+            "dark": "#111c1b"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#e0f8f3",
+            "dark": "#0d2d2a"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ccf3ea",
+            "dark": "#023b37"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#b8eae0",
+            "dark": "#084843"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#a1ded2",
+            "dark": "#145750"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#83cdc1",
+            "dark": "#1c6961"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#53b9ab",
+            "dark": "#207e73"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#12a594",
+            "dark": "#12a594"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#0d9b8a",
+            "dark": "#0eb39e"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#008573",
+            "dark": "#0bd8b6"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#0d3d38",
+            "dark": "#adf0dd"
+          }
+        }
+      ]
+    },
+    {
+      "name": "jade",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fbfefd",
+            "dark": "#0d1512"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f4fbf7",
+            "dark": "#121c18"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#e6f7ed",
+            "dark": "#0f2e22"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#d6f1e3",
+            "dark": "#0b3b2c"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#c3e9d7",
+            "dark": "#114837"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#acdec8",
+            "dark": "#1b5745"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#8bceb6",
+            "dark": "#246854"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#56ba9f",
+            "dark": "#2a7e68"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#29a383",
+            "dark": "#29a383"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#26997b",
+            "dark": "#27b08b"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#208368",
+            "dark": "#1fd8a4"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#1d3b31",
+            "dark": "#adf0d4"
+          }
+        }
+      ]
+    },
+    {
+      "name": "green",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fbfefc",
+            "dark": "#0e1512"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f4fbf6",
+            "dark": "#121b17"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#e6f6eb",
+            "dark": "#132d21"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#d6f1df",
+            "dark": "#113b29"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#c4e8d1",
+            "dark": "#174933"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#adddc0",
+            "dark": "#20573e"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#8eceaa",
+            "dark": "#28684a"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#5bb98b",
+            "dark": "#2f7c57"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#30a46c",
+            "dark": "#30a46c"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#2b9a66",
+            "dark": "#33b074"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#218358",
+            "dark": "#3dd68c"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#193b2d",
+            "dark": "#b1f1cb"
+          }
+        }
+      ]
+    },
+    {
+      "name": "grass",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fbfefb",
+            "dark": "#0e1511"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f5fbf5",
+            "dark": "#141a15"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#e9f6e9",
+            "dark": "#1b2a1e"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#daf1db",
+            "dark": "#1d3a24"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#c9e8ca",
+            "dark": "#25482d"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#b2ddb5",
+            "dark": "#2d5736"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#94ce9a",
+            "dark": "#366740"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#65ba74",
+            "dark": "#3e7949"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#46a758",
+            "dark": "#46a758"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#3e9b4f",
+            "dark": "#53b365"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#2a7e3b",
+            "dark": "#71d083"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#203c25",
+            "dark": "#c2f0c2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "bronze",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fdfcfc",
+            "dark": "#141110"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fdf7f5",
+            "dark": "#1c1917"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f6edea",
+            "dark": "#262220"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#efe4df",
+            "dark": "#302a27"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#e7d9d3",
+            "dark": "#3b3330"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#dfcdc5",
+            "dark": "#493e3a"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#d3bcb3",
+            "dark": "#5a4c47"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#c2a499",
+            "dark": "#6f5f58"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#a18072",
+            "dark": "#a18072"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#957468",
+            "dark": "#ae8c7e"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#7d5e54",
+            "dark": "#d4b3a5"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#43302b",
+            "dark": "#ede0d9"
+          }
+        }
+      ]
+    },
+    {
+      "name": "gold",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fdfdfc",
+            "dark": "#121211"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#faf9f2",
+            "dark": "#1b1a17"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f2f0e7",
+            "dark": "#24231f"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#eae6db",
+            "dark": "#2d2b26"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#e1dccf",
+            "dark": "#38352e"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#d8d0bf",
+            "dark": "#444039"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#cbc0aa",
+            "dark": "#544f46"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#b9a88d",
+            "dark": "#696256"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#978365",
+            "dark": "#978365"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#8c7a5e",
+            "dark": "#a39073"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#71624b",
+            "dark": "#cbb99f"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#3b352b",
+            "dark": "#e8e2d9"
+          }
+        }
+      ]
+    },
+    {
+      "name": "brown",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fefdfc",
+            "dark": "#12110f"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fcf9f6",
+            "dark": "#1c1816"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f6eee7",
+            "dark": "#28211d"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#f0e4d9",
+            "dark": "#322922"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ebdaca",
+            "dark": "#3e3128"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#e4cdb7",
+            "dark": "#4d3c2f"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#dcbc9f",
+            "dark": "#614a39"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#cea37e",
+            "dark": "#7c5f46"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#ad7f58",
+            "dark": "#ad7f58"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#a07553",
+            "dark": "#b88c67"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#815e46",
+            "dark": "#dbb594"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#3e332e",
+            "dark": "#f2e1ca"
+          }
+        }
+      ]
+    },
+    {
+      "name": "orange",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fefcfb",
+            "dark": "#17120e"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fff7ed",
+            "dark": "#1e160f"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#ffefd6",
+            "dark": "#331e0b"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ffdfb5",
+            "dark": "#462100"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ffd19a",
+            "dark": "#562800"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#ffc182",
+            "dark": "#66350c"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#f5ae73",
+            "dark": "#7e451d"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#ec9455",
+            "dark": "#a35829"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#f76b15",
+            "dark": "#f76b15"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#ef5f00",
+            "dark": "#ff801f"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#cc4e00",
+            "dark": "#ffa057"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#582d1d",
+            "dark": "#ffe0c2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "amber",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fefdfb",
+            "dark": "#16120c"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fefbe9",
+            "dark": "#1d180f"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#fff7c2",
+            "dark": "#302008"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ffee9c",
+            "dark": "#3f2700"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#fbe577",
+            "dark": "#4d3000"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#f3d673",
+            "dark": "#5c3d05"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#e9c162",
+            "dark": "#714f19"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#e2a336",
+            "dark": "#8f6424"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#ffc53d",
+            "dark": "#ffc53d"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#ffba18",
+            "dark": "#ffd60a"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#ab6400",
+            "dark": "#ffca16"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#4f3422",
+            "dark": "#ffe7b3"
+          }
+        }
+      ]
+    },
+    {
+      "name": "yellow",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fdfdf9",
+            "dark": "#14120b"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#fefce9",
+            "dark": "#1b180f"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#fffab8",
+            "dark": "#2d2305"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#fff394",
+            "dark": "#362b00"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ffe770",
+            "dark": "#433500"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#f3d768",
+            "dark": "#524202"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#e4c767",
+            "dark": "#665417"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#d5ae39",
+            "dark": "#836a21"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#ffe629",
+            "dark": "#ffe629"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#ffdc00",
+            "dark": "#ffff57"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#9e6c00",
+            "dark": "#f5e147"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#473b1f",
+            "dark": "#f6eeb4"
+          }
+        }
+      ]
+    },
+    {
+      "name": "lime",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#fcfdfa",
+            "dark": "#11130c"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f8faf3",
+            "dark": "#151a10"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#eef6d6",
+            "dark": "#1f2917"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#e2f0bd",
+            "dark": "#29371d"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#d3e7a6",
+            "dark": "#334423"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#c2da91",
+            "dark": "#3d522a"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#abc978",
+            "dark": "#496231"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#8db654",
+            "dark": "#577538"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#bdee63",
+            "dark": "#bdee63"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#b0e64c",
+            "dark": "#d4ff70"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#5c7c2f",
+            "dark": "#bde56c"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#37401c",
+            "dark": "#e3f7ba"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mint",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#f9fefd",
+            "dark": "#0e1515"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f2fbf9",
+            "dark": "#0f1b1b"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#ddf9f2",
+            "dark": "#092c2b"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#c8f4e9",
+            "dark": "#003a38"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#b3ecde",
+            "dark": "#004744"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#9ce0d0",
+            "dark": "#105650"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#7ecfbd",
+            "dark": "#1e685f"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#4cbba5",
+            "dark": "#277f70"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#86ead4",
+            "dark": "#86ead4"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#7de0cb",
+            "dark": "#a8f5e5"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#027864",
+            "dark": "#58d5ba"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#16433c",
+            "dark": "#c4f5e1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "sky",
+      "kind": "chromatic",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#f9feff",
+            "dark": "#0d141f"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f1fafd",
+            "dark": "#111a27"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#e1f6fd",
+            "dark": "#112840"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#d1f0fa",
+            "dark": "#113555"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#bee7f5",
+            "dark": "#154467"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#a9daed",
+            "dark": "#1b537b"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#8dcae3",
+            "dark": "#1f6692"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#60b3d7",
+            "dark": "#197cae"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#7ce2fe",
+            "dark": "#7ce2fe"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#74daf8",
+            "dark": "#a8eeff"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#00749e",
+            "dark": "#75c7f0"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#1d3e56",
+            "dark": "#c2f3ff"
+          }
+        }
+      ]
+    },
+    {
+      "name": "gray (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#00000003",
+            "dark": "#00000000"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#00000006",
+            "dark": "#ffffff09"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#0000000f",
+            "dark": "#ffffff12"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#00000017",
+            "dark": "#ffffff1b"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#0000001f",
+            "dark": "#ffffff22"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#00000026",
+            "dark": "#ffffff2c"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#00000031",
+            "dark": "#ffffff3b"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#00000044",
+            "dark": "#ffffff55"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#00000072",
+            "dark": "#ffffff64"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#0000007c",
+            "dark": "#ffffff72"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#0000009b",
+            "dark": "#ffffffaf"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#000000df",
+            "dark": "#ffffffed"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mauve (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#55005503",
+            "dark": "#00000000"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#2b005506",
+            "dark": "#f5f4f609"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#30004010",
+            "dark": "#ebeaf814"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#20003618",
+            "dark": "#eee5f81d"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#20003820",
+            "dark": "#efe6fe25"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#14003527",
+            "dark": "#f1e6fd30"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#10003332",
+            "dark": "#eee9ff40"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#08003145",
+            "dark": "#eee7ff5d"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#05001d73",
+            "dark": "#eae6fd6e"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#0500197d",
+            "dark": "#ece9fd7c"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#0400119c",
+            "dark": "#f5f1ffb7"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#020008e0",
+            "dark": "#fdfdffef"
+          }
+        }
+      ]
+    },
+    {
+      "name": "slate (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#00005503",
+            "dark": "#00000000"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#00005506",
+            "dark": "#d8f4f609"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#0000330f",
+            "dark": "#ddeaf814"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#00002d17",
+            "dark": "#d3edf81d"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#0009321f",
+            "dark": "#d9edfe25"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#00002f26",
+            "dark": "#d6ebfd30"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#00062e32",
+            "dark": "#d9edff40"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#00083046",
+            "dark": "#d9edff5d"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#00051d74",
+            "dark": "#dfebfd6d"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#00071b7f",
+            "dark": "#e5edfd7b"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#0007149f",
+            "dark": "#f1f7feb5"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#000509e3",
+            "dark": "#fcfdffef"
+          }
+        }
+      ]
+    },
+    {
+      "name": "sage (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#00804004",
+            "dark": "#00000000"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#00402008",
+            "dark": "#f0f2f108"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#002d1e11",
+            "dark": "#f3f5f412"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#001f1519",
+            "dark": "#f2fefd1a"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#00180820",
+            "dark": "#f1fbfa22"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#00140d28",
+            "dark": "#edfbf42d"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#00140a34",
+            "dark": "#edfcf73c"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#000f0847",
+            "dark": "#ebfdf657"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#00110b79",
+            "dark": "#dffdf266"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#00100a83",
+            "dark": "#e5fdf674"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#000a07a0",
+            "dark": "#f4fefbb0"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#000805e5",
+            "dark": "#fdfffeed"
+          }
+        }
+      ]
+    },
+    {
+      "name": "olive (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#00550003",
+            "dark": "#00000000"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#00490007",
+            "dark": "#f1f2f008"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#00200010",
+            "dark": "#f4f5f312"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#00160018",
+            "dark": "#f3fef21a"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#00180020",
+            "dark": "#f2fbf122"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#00140028",
+            "dark": "#f4faed2c"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#000f0033",
+            "dark": "#f2fced3b"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#040f0047",
+            "dark": "#edfdeb57"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#050f0078",
+            "dark": "#ebfde766"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#040e0082",
+            "dark": "#f0fdec74"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#020a00a0",
+            "dark": "#f6fef4b0"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#010600e3",
+            "dark": "#fdfffded"
+          }
+        }
+      ]
+    },
+    {
+      "name": "sand (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#55550003",
+            "dark": "#00000000"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#25250007",
+            "dark": "#f4f4f309"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#20100010",
+            "dark": "#f6f6f513"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#1f150019",
+            "dark": "#fefef31b"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#1f180021",
+            "dark": "#fbfbeb23"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#19130029",
+            "dark": "#fffaed2d"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#19140035",
+            "dark": "#fffbed3c"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#1915014a",
+            "dark": "#fff9eb57"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#0f0f0079",
+            "dark": "#fffae965"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#0c0c0083",
+            "dark": "#fffdee73"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#080800a1",
+            "dark": "#fffcf4b0"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#060500e3",
+            "dark": "#fffffded"
+          }
+        }
+      ]
+    },
+    {
+      "name": "tomato (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#ff000003",
+            "dark": "#f1121208"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#ff200008",
+            "dark": "#ff55330f"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f52b0018",
+            "dark": "#ff35232b"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ff35002c",
+            "dark": "#fd201142"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ff2e003d",
+            "dark": "#fe332153"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#f92d0050",
+            "dark": "#ff4f3864"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#e7280067",
+            "dark": "#fd644a7d"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#db250084",
+            "dark": "#fe6d4ea7"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#df2600d1",
+            "dark": "#fe5431e4"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#d72400da",
+            "dark": "#ff6847eb"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#cd2200ea",
+            "dark": "#ff977d"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#460900e0",
+            "dark": "#ffd6cefb"
+          }
+        }
+      ]
+    },
+    {
+      "name": "red (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#ff000003",
+            "dark": "#f4121209"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#ff000008",
+            "dark": "#f22f3e11"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f3000d14",
+            "dark": "#ff173f2d"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ff000824",
+            "dark": "#fe0a3b44"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ff000632",
+            "dark": "#ff204756"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#f8000442",
+            "dark": "#ff3e5668"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#df000356",
+            "dark": "#ff536184"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#d2000571",
+            "dark": "#ff5d61b0"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#db0007b7",
+            "dark": "#fe4e54e4"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#d10005c1",
+            "dark": "#ff6465eb"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#c40006d3",
+            "dark": "#ff9592"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#55000de8",
+            "dark": "#ffd1d9"
+          }
+        }
+      ]
+    },
+    {
+      "name": "ruby (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#ff005503",
+            "dark": "#f4124a09"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#ff002008",
+            "dark": "#fe5a7f0e"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f3002515",
+            "dark": "#ff235d2c"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ff002523",
+            "dark": "#fd195e42"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ff002a31",
+            "dark": "#fe2d6b53"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#e4002440",
+            "dark": "#ff447665"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#ce002553",
+            "dark": "#ff577d80"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#c300286d",
+            "dark": "#ff5c7cae"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#db002cb9",
+            "dark": "#fe4c70e4"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#d2002cc4",
+            "dark": "#ff617beb"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#c10030db",
+            "dark": "#ff949d"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#550016e8",
+            "dark": "#ffd3e2fe"
+          }
+        }
+      ]
+    },
+    {
+      "name": "crimson (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#ff005503",
+            "dark": "#f4126709"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#e0004008",
+            "dark": "#f22f7a11"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#ff005216",
+            "dark": "#fe2a8b2a"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#f8005123",
+            "dark": "#fd158741"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#e5004f31",
+            "dark": "#fd278f51"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#d0004b41",
+            "dark": "#fe459763"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#bf004753",
+            "dark": "#fd559b7f"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#b6004a6c",
+            "dark": "#fe5b9bab"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#e2005bc2",
+            "dark": "#fe418de8"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#d70056cb",
+            "dark": "#ff5693ed"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#c4004fe2",
+            "dark": "#ff92ad"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#530026e9",
+            "dark": "#ffd5eafd"
+          }
+        }
+      ]
+    },
+    {
+      "name": "pink (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#ff00aa03",
+            "dark": "#f412bc09"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#e0008008",
+            "dark": "#f420bb12"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#f4008c16",
+            "dark": "#fe37cc29"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#e2008b23",
+            "dark": "#fc1ec43f"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#d1008331",
+            "dark": "#fd35c24e"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#c0007840",
+            "dark": "#fd51c75f"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#b6006f53",
+            "dark": "#fd62c87b"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#af006f6c",
+            "dark": "#ff68c8a2"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#c8007fbf",
+            "dark": "#fe49bcd4"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#c2007ac7",
+            "dark": "#ff5cc0dc"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#b60074d6",
+            "dark": "#ff8dcc"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#59003bed",
+            "dark": "#ffd3ecfd"
+          }
+        }
+      ]
+    },
+    {
+      "name": "plum (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#aa00ff03",
+            "dark": "#f112f108"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#c000c008",
+            "dark": "#f22ff211"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#cc00cc14",
+            "dark": "#fd4cfd27"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#c200c921",
+            "dark": "#f646ff3a"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#b700bd2e",
+            "dark": "#f455ff48"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#a400b03d",
+            "dark": "#f66dff56"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#9900a852",
+            "dark": "#f07cfd70"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#9000a56e",
+            "dark": "#ee84ff95"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#89009eb5",
+            "dark": "#e961feb6"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#7f0092bb",
+            "dark": "#ed70ffc0"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#730086c1",
+            "dark": "#f19cfef3"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#40004be6",
+            "dark": "#feddfef4"
+          }
+        }
+      ]
+    },
+    {
+      "name": "purple (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#aa00aa03",
+            "dark": "#b412f90b"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#8000e008",
+            "dark": "#b744f714"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#8e00f112",
+            "dark": "#c150ff2d"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#8d00e51d",
+            "dark": "#bb53fd42"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#8000db2a",
+            "dark": "#be5cfd51"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#7a01d03b",
+            "dark": "#c16dfd61"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#6d00c350",
+            "dark": "#c378fd7a"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#6600c06c",
+            "dark": "#c47effa4"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#5c00adb1",
+            "dark": "#b661ffc2"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#53009eb8",
+            "dark": "#bc6fffcd"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#52009aba",
+            "dark": "#d19dff"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#250049df",
+            "dark": "#f1ddfffa"
+          }
+        }
+      ]
+    },
+    {
+      "name": "violet (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#5500aa03",
+            "dark": "#4422ff0f"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#4900ff07",
+            "dark": "#853ff916"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#4400ee0f",
+            "dark": "#8354fe36"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#4300ff1b",
+            "dark": "#7d51fd50"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#3600ff26",
+            "dark": "#845ffd5f"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#3100fb35",
+            "dark": "#8f6cfd6d"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#2d01dd4a",
+            "dark": "#9879ff83"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#2b00d066",
+            "dark": "#977dfea8"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#2400b7a9",
+            "dark": "#8668ffcc"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#2300abb2",
+            "dark": "#9176fed7"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#1f0099af",
+            "dark": "#baa7ff"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#0b0043d9",
+            "dark": "#e3defffe"
+          }
+        }
+      ]
+    },
+    {
+      "name": "iris (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#0000ff02",
+            "dark": "#3636fe0e"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#0000ff07",
+            "dark": "#564bf916"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#0011ee0f",
+            "dark": "#525bff3b"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#000bff19",
+            "dark": "#4d58ff5a"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#000eff25",
+            "dark": "#5b62fd6b"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#000aff34",
+            "dark": "#6d6ffd7a"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#0008e647",
+            "dark": "#7777fe8e"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#0008d964",
+            "dark": "#7b7afeac"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#0000c0a4",
+            "dark": "#6a6afed4"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#0000b6ae",
+            "dark": "#7d79ffdc"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#0600abac",
+            "dark": "#b1a9ff"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#000246d8",
+            "dark": "#e1e0fffe"
+          }
+        }
+      ]
+    },
+    {
+      "name": "indigo (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#00008002",
+            "dark": "#1133ff0f"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#0040ff08",
+            "dark": "#3354fa17"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#0047f112",
+            "dark": "#2f62ff3c"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#0044ff1e",
+            "dark": "#3566ff57"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#0044ff2d",
+            "dark": "#4171fd6b"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#003eff3e",
+            "dark": "#5178fd7c"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#0037ed54",
+            "dark": "#5a7fff90"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#0034dc72",
+            "dark": "#5b81feac"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#0031d2c1",
+            "dark": "#4671ffdb"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#002ec9cc",
+            "dark": "#5c7efee3"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#002bb7c5",
+            "dark": "#9eb1ff"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#001046e0",
+            "dark": "#d6e1ff"
+          }
+        }
+      ]
+    },
+    {
+      "name": "blue (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#0080ff04",
+            "dark": "#004df211"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#008cff0b",
+            "dark": "#1166fb18"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#008ff519",
+            "dark": "#0077ff3a"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#009eff2a",
+            "dark": "#0075ff57"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#0093ff3d",
+            "dark": "#0081fd6b"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#0088f653",
+            "dark": "#0f89fd7f"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#0083eb71",
+            "dark": "#2a91fe98"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#0084e6a1",
+            "dark": "#3094feb9"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#0090ff",
+            "dark": "#0090ff"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#0086f0fa",
+            "dark": "#3b9eff"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#006dcbf2",
+            "dark": "#70b8ff"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#002359ee",
+            "dark": "#c2e6ff"
+          }
+        }
+      ]
+    },
+    {
+      "name": "cyan (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#0099cc05",
+            "dark": "#0091f70a"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#009db10d",
+            "dark": "#02a7f211"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#00c2d121",
+            "dark": "#00befd28"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#00bcd435",
+            "dark": "#00baff3b"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#01b4cc4a",
+            "dark": "#00befd4d"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#00a7c162",
+            "dark": "#00c7fd5e"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#009fbb82",
+            "dark": "#14cdff75"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#00a3c0c2",
+            "dark": "#11cfff95"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#00a2c7",
+            "dark": "#00cfffc3"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#0094b7f8",
+            "dark": "#28d6ffcd"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#007491ef",
+            "dark": "#52e1fee5"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#00323ef2",
+            "dark": "#bbf3fef7"
+          }
+        }
+      ]
+    },
+    {
+      "name": "teal (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#00cc9905",
+            "dark": "#00deab05"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#00aa800c",
+            "dark": "#12fbe60c"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#00c69d1f",
+            "dark": "#00ffe61e"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#00c39633",
+            "dark": "#00ffe92d"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#00b49047",
+            "dark": "#00ffea3b"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#00a6855e",
+            "dark": "#1cffe84b"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#0099807c",
+            "dark": "#2efde85f"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#009783ac",
+            "dark": "#32ffe775"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#009e8ced",
+            "dark": "#13ffe49f"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#009684f2",
+            "dark": "#0dffe0ae"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#008573",
+            "dark": "#0afed5d6"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#00332df2",
+            "dark": "#b8ffebef"
+          }
+        }
+      ]
+    },
+    {
+      "name": "jade (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#00c08004",
+            "dark": "#00de4505"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#00a3460b",
+            "dark": "#27fba60c"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#00ae4819",
+            "dark": "#02f99920"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#00a85129",
+            "dark": "#00ffaa2d"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#00a2553c",
+            "dark": "#11ffb63b"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#009a5753",
+            "dark": "#34ffc24b"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#00945f74",
+            "dark": "#45fdc75e"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#00976ea9",
+            "dark": "#48ffcf75"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#00916bd6",
+            "dark": "#38feca9d"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#008764d9",
+            "dark": "#31fec7ab"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#007152df",
+            "dark": "#21fec0d6"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#002217e2",
+            "dark": "#b8ffe1ef"
+          }
+        }
+      ]
+    },
+    {
+      "name": "green (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#00c04004",
+            "dark": "#00de4505"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#00a32f0b",
+            "dark": "#29f99d0b"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#00a43319",
+            "dark": "#22ff991e"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#00a83829",
+            "dark": "#11ff992d"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#019c393b",
+            "dark": "#2bffa23c"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#00963c52",
+            "dark": "#44ffaa4b"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#00914071",
+            "dark": "#50fdac5e"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#00924ba4",
+            "dark": "#54ffad73"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#008f4acf",
+            "dark": "#44ffa49e"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#008647d4",
+            "dark": "#43fea4ab"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#00713fde",
+            "dark": "#46fea5d4"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#002616e6",
+            "dark": "#bbffd7f0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "grass (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#00c00004",
+            "dark": "#00de1205"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#0099000a",
+            "dark": "#5ef7780a"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#00970016",
+            "dark": "#70fe8c1b"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#009f0725",
+            "dark": "#57ff802c"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#00930536",
+            "dark": "#68ff8b3b"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#008f0a4d",
+            "dark": "#71ff8f4b"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#018b0f6b",
+            "dark": "#77fd925d"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#008d199a",
+            "dark": "#77fd9070"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#008619b9",
+            "dark": "#65ff82a1"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#007b17c1",
+            "dark": "#72ff8dae"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#006514d5",
+            "dark": "#89ff9fcd"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#002006df",
+            "dark": "#ceffceef"
+          }
+        }
+      ]
+    },
+    {
+      "name": "bronze (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#55000003",
+            "dark": "#d1110004"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#cc33000a",
+            "dark": "#fbbc910c"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#92250015",
+            "dark": "#faceb817"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#80280020",
+            "dark": "#facdb622"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#7423002c",
+            "dark": "#ffd2c12d"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#7324003a",
+            "dark": "#ffd1c03c"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#6c1f004c",
+            "dark": "#fdd0c04f"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#671c0066",
+            "dark": "#ffd6c565"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#551a008d",
+            "dark": "#fec7b09b"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#4c150097",
+            "dark": "#fecab5a9"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#3d0f00ab",
+            "dark": "#ffd7c6d1"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#1d0600d4",
+            "dark": "#fff1e9ec"
+          }
+        }
+      ]
+    },
+    {
+      "name": "gold (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#55550003",
+            "dark": "#91911102"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#9d8a000d",
+            "dark": "#f9e29d0b"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#75600018",
+            "dark": "#f8ecbb15"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#6b4e0024",
+            "dark": "#ffeec41e"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#60460030",
+            "dark": "#feecc22a"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#64440040",
+            "dark": "#feebcb37"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#63420055",
+            "dark": "#ffedcd48"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#633d0072",
+            "dark": "#fdeaca5f"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#5332009a",
+            "dark": "#ffdba690"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#492d00a1",
+            "dark": "#fedfb09d"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#362100b4",
+            "dark": "#fee7c6c8"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#130c00d4",
+            "dark": "#fef7ede7"
+          }
+        }
+      ]
+    },
+    {
+      "name": "brown (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#aa550003",
+            "dark": "#91110002"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#aa550009",
+            "dark": "#fba67c0c"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#a04b0018",
+            "dark": "#fcb58c19"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#9b4a0026",
+            "dark": "#fbbb8a24"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#9f4d0035",
+            "dark": "#fcb88931"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#a04e0048",
+            "dark": "#fdba8741"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#a34e0060",
+            "dark": "#ffbb8856"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#9f4a0081",
+            "dark": "#ffbe8773"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#823c00a7",
+            "dark": "#feb87da8"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#723300ac",
+            "dark": "#ffc18cb3"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#522100b9",
+            "dark": "#fed1aad9"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#140600d1",
+            "dark": "#feecd4f2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "orange (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#c0400004",
+            "dark": "#ec360007"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#ff8e0012",
+            "dark": "#fe6d000e"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#ff9c0029",
+            "dark": "#fb6a0025"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ff91014a",
+            "dark": "#ff590039"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ff8b0065",
+            "dark": "#ff61004a"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#ff81007d",
+            "dark": "#fd75045c"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#ed6c008c",
+            "dark": "#ff832c75"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#e35f00aa",
+            "dark": "#fe84389d"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#f65e00ea",
+            "dark": "#fe6d15f7"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#ef5f00",
+            "dark": "#ff801f"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#cc4e00",
+            "dark": "#ffa057"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#431200e2",
+            "dark": "#ffe0c2"
+          }
+        }
+      ]
+    },
+    {
+      "name": "amber (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#c0800004",
+            "dark": "#e63c0006"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f4d10016",
+            "dark": "#fd9b000d"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#ffde003d",
+            "dark": "#fa820022"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ffd40063",
+            "dark": "#fc820032"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#f8cf0088",
+            "dark": "#fd8b0041"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#eab5008c",
+            "dark": "#fd9b0051"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#dc9b009d",
+            "dark": "#ffab2567"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#da8a00c9",
+            "dark": "#ffae3587"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#ffb300c2",
+            "dark": "#ffc53d"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#ffb300e7",
+            "dark": "#ffd60a"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#ab6400",
+            "dark": "#ffca16"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#341500dd",
+            "dark": "#ffe7b3"
+          }
+        }
+      ]
+    },
+    {
+      "name": "yellow (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#aaaa0006",
+            "dark": "#d1510004"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#f4dd0016",
+            "dark": "#f9b4000b"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#ffee0047",
+            "dark": "#ffaa001e"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#ffe3016b",
+            "dark": "#fdb70028"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#ffd5008f",
+            "dark": "#febb0036"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#ebbc0097",
+            "dark": "#fec40046"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#d2a10098",
+            "dark": "#fdcb225c"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#c99700c6",
+            "dark": "#fdca327b"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#ffe100d6",
+            "dark": "#ffe629"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#ffdc00",
+            "dark": "#ffff57"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#9e6c00",
+            "dark": "#fee949f5"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#2e2000e0",
+            "dark": "#fef6baf6"
+          }
+        }
+      ]
+    },
+    {
+      "name": "lime (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#66990005",
+            "dark": "#11bb0003"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#6b95000c",
+            "dark": "#78f7000a"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#96c80029",
+            "dark": "#9bfd4c1a"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#8fc60042",
+            "dark": "#a7fe5c29"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#81bb0059",
+            "dark": "#affe6537"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#72aa006e",
+            "dark": "#b2fe6d46"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#61990087",
+            "dark": "#b6ff6f57"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#559200ab",
+            "dark": "#b6fd6d6c"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#93e4009c",
+            "dark": "#caff69ed"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#8fdc00b3",
+            "dark": "#d4ff70"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#375f00d0",
+            "dark": "#d1fe77e4"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#1e2900e3",
+            "dark": "#e9febff7"
+          }
+        }
+      ]
+    },
+    {
+      "name": "mint (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#00d5aa06",
+            "dark": "#00dede05"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#00b18a0d",
+            "dark": "#00f9f90b"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#00d29e22",
+            "dark": "#00fff61d"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#00cc9937",
+            "dark": "#00fff42c"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#00c0914c",
+            "dark": "#00fff23a"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#00b08663",
+            "dark": "#0effeb4a"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#00a17d81",
+            "dark": "#34fde55e"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#009e7fb3",
+            "dark": "#41ffdf76"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#00d3a579",
+            "dark": "#92ffe7e9"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#00c39982",
+            "dark": "#aefeedf5"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#007763fd",
+            "dark": "#67ffded2"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#00312ae9",
+            "dark": "#cbfee9f5"
+          }
+        }
+      ]
+    },
+    {
+      "name": "sky (alpha)",
+      "kind": "alpha",
+      "note": null,
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "#00d5ff06",
+            "dark": "#0044ff0f"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "#00a4db0e",
+            "dark": "#1171fb18"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "#00b3ee1e",
+            "dark": "#1184fc33"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "#00ace42e",
+            "dark": "#128fff49"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "#00a1d841",
+            "dark": "#1c9dfd5d"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "#0092ca56",
+            "dark": "#28a5ff72"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "#0089c172",
+            "dark": "#2badfe8b"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "#0085bf9f",
+            "dark": "#1db2fea9"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "#00c7fe83",
+            "dark": "#7ce3fffe"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "#00bcf38b",
+            "dark": "#a8eeff"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "#00749e",
+            "dark": "#7cd3ffef"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "#002540e2",
+            "dark": "#c2f3ff"
+          }
+        }
+      ]
+    },
+    {
+      "name": "blackA",
+      "kind": "overlay",
+      "note": "mode-invariant (same value in light and dark)",
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.05)",
+            "dark": "rgba(0, 0, 0, 0.05)"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.1)",
+            "dark": "rgba(0, 0, 0, 0.1)"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.15)",
+            "dark": "rgba(0, 0, 0, 0.15)"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.2)",
+            "dark": "rgba(0, 0, 0, 0.2)"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.3)",
+            "dark": "rgba(0, 0, 0, 0.3)"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.4)",
+            "dark": "rgba(0, 0, 0, 0.4)"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.5)",
+            "dark": "rgba(0, 0, 0, 0.5)"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.6)",
+            "dark": "rgba(0, 0, 0, 0.6)"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.7)",
+            "dark": "rgba(0, 0, 0, 0.7)"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.8)",
+            "dark": "rgba(0, 0, 0, 0.8)"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.9)",
+            "dark": "rgba(0, 0, 0, 0.9)"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "rgba(0, 0, 0, 0.95)",
+            "dark": "rgba(0, 0, 0, 0.95)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "whiteA",
+      "kind": "overlay",
+      "note": "mode-invariant (same value in light and dark)",
+      "steps": [
+        {
+          "step": "1",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.05)",
+            "dark": "rgba(255, 255, 255, 0.05)"
+          }
+        },
+        {
+          "step": "2",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.1)",
+            "dark": "rgba(255, 255, 255, 0.1)"
+          }
+        },
+        {
+          "step": "3",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.15)",
+            "dark": "rgba(255, 255, 255, 0.15)"
+          }
+        },
+        {
+          "step": "4",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.2)",
+            "dark": "rgba(255, 255, 255, 0.2)"
+          }
+        },
+        {
+          "step": "5",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.3)",
+            "dark": "rgba(255, 255, 255, 0.3)"
+          }
+        },
+        {
+          "step": "6",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.4)",
+            "dark": "rgba(255, 255, 255, 0.4)"
+          }
+        },
+        {
+          "step": "7",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.5)",
+            "dark": "rgba(255, 255, 255, 0.5)"
+          }
+        },
+        {
+          "step": "8",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.6)",
+            "dark": "rgba(255, 255, 255, 0.6)"
+          }
+        },
+        {
+          "step": "9",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.7)",
+            "dark": "rgba(255, 255, 255, 0.7)"
+          }
+        },
+        {
+          "step": "10",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.8)",
+            "dark": "rgba(255, 255, 255, 0.8)"
+          }
+        },
+        {
+          "step": "11",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.9)",
+            "dark": "rgba(255, 255, 255, 0.9)"
+          }
+        },
+        {
+          "step": "12",
+          "values": {
+            "light": "rgba(255, 255, 255, 0.95)",
+            "dark": "rgba(255, 255, 255, 0.95)"
+          }
+        }
+      ]
+    }
+  ],
+  "tokenGroups": [
+    {
+      "name": "Functional tokens",
+      "layer": "semantic",
+      "note": "Purpose-named tokens on top of the role scales.",
+      "sources": [
+        "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css"
+      ],
+      "tokens": [
+        {
+          "name": "--color-background",
+          "ref": null,
+          "values": {
+            "light": "white",
+            "dark": "var(--gray-1)"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-overlay",
+          "ref": null,
+          "values": {
+            "light": "var(--black-a6)",
+            "dark": "var(--black-a8)"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-panel-solid",
+          "ref": null,
+          "values": {
+            "light": "white",
+            "dark": "var(--gray-2)"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-panel-translucent",
+          "ref": null,
+          "values": {
+            "light": "rgba(255, 255, 255, 0.7)",
+            "dark": "var(--gray-a2)"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-surface",
+          "ref": null,
+          "values": {
+            "light": "rgba(255, 255, 255, 0.85)",
+            "dark": "rgba(0, 0, 0, 0.25)"
+          },
+          "note": null
+        },
+        {
+          "name": "--color-transparent",
+          "ref": null,
+          "values": {
+            "light": "rgb(0 0 0 / 0)",
+            "dark": "rgb(0 0 0 / 0)"
+          },
+          "note": "same expression both modes; P3 override exists under @supports/@media color-gamut:p3, skipped (P3 excluded)"
+        },
+        {
+          "name": "--focus-1..12 / --focus-a1..a12",
+          "ref": "var(--accent-1..12) / var(--accent-a1..a12)",
+          "values": {
+            "light": "var(--accent-*)",
+            "dark": "var(--accent-*)"
+          },
+          "note": "focus scale mirrors the active accent scale 1:1; applied on .radix-themes and any non-gray [data-accent-color]"
+        },
+        {
+          "name": "--accent-contrast (blue default)",
+          "ref": "var(--blue-contrast)",
+          "values": {
+            "light": "white",
+            "dark": "white"
+          },
+          "note": "text/icon color placed on top of accent-9 solid fills; shown for the default blue accent"
+        },
+        {
+          "name": "--accent-surface (blue default)",
+          "ref": "var(--blue-surface)",
+          "values": {
+            "light": "#f1f9ffcc",
+            "dark": "#11213d80"
+          },
+          "note": "translucent tinted surface for Soft/Surface variants; P3 override exists, skipped"
+        },
+        {
+          "name": "--accent-indicator (blue default)",
+          "ref": "var(--blue-9)",
+          "values": {
+            "light": "#0090ff",
+            "dark": "#0090ff"
+          },
+          "note": "solid color used for indicators (checkboxes, switches, etc.)"
+        },
+        {
+          "name": "--accent-track (blue default)",
+          "ref": "var(--blue-9)",
+          "values": {
+            "light": "#0090ff",
+            "dark": "#0090ff"
+          },
+          "note": "solid color used for slider/progress tracks"
+        }
+      ]
+    },
+    {
+      "name": "Role scales",
+      "layer": "semantic",
+      "note": "The chosen accent and gray are remapped step-for-step onto --accent-1..12 / --gray-1..12 / --focus-1..12.",
+      "sources": [
+        "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css",
+        "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/colors/blue.css"
+      ],
+      "tokens": [
+        {
+          "name": "--accent-1",
+          "ref": "var(--blue-1) under [data-accent-color='blue']",
+          "values": {
+            "light": "#fbfdff",
+            "dark": "#0d1520"
+          },
+          "note": "shown for the default blue accent"
+        },
+        {
+          "name": "--accent-2",
+          "ref": "var(--blue-2) under [data-accent-color='blue']",
+          "values": {
+            "light": "#f4faff",
+            "dark": "#111927"
+          },
+          "note": null
+        },
+        {
+          "name": "--accent-3",
+          "ref": "var(--blue-3) under [data-accent-color='blue']",
+          "values": {
+            "light": "#e6f4fe",
+            "dark": "#0d2847"
+          },
+          "note": null
+        },
+        {
+          "name": "--accent-4",
+          "ref": "var(--blue-4) under [data-accent-color='blue']",
+          "values": {
+            "light": "#d5efff",
+            "dark": "#003362"
+          },
+          "note": null
+        },
+        {
+          "name": "--accent-5",
+          "ref": "var(--blue-5) under [data-accent-color='blue']",
+          "values": {
+            "light": "#c2e5ff",
+            "dark": "#004074"
+          },
+          "note": null
+        },
+        {
+          "name": "--accent-6",
+          "ref": "var(--blue-6) under [data-accent-color='blue']",
+          "values": {
+            "light": "#acd8fc",
+            "dark": "#104d87"
+          },
+          "note": null
+        },
+        {
+          "name": "--accent-7",
+          "ref": "var(--blue-7) under [data-accent-color='blue']",
+          "values": {
+            "light": "#8ec8f6",
+            "dark": "#205d9e"
+          },
+          "note": null
+        },
+        {
+          "name": "--accent-8",
+          "ref": "var(--blue-8) under [data-accent-color='blue']",
+          "values": {
+            "light": "#5eb1ef",
+            "dark": "#2870bd"
+          },
+          "note": null
+        },
+        {
+          "name": "--accent-9",
+          "ref": "var(--blue-9) under [data-accent-color='blue']",
+          "values": {
+            "light": "#0090ff",
+            "dark": "#0090ff"
+          },
+          "note": null
+        },
+        {
+          "name": "--accent-10",
+          "ref": "var(--blue-10) under [data-accent-color='blue']",
+          "values": {
+            "light": "#0588f0",
+            "dark": "#3b9eff"
+          },
+          "note": null
+        },
+        {
+          "name": "--accent-11",
+          "ref": "var(--blue-11) under [data-accent-color='blue']",
+          "values": {
+            "light": "#0d74ce",
+            "dark": "#70b8ff"
+          },
+          "note": null
+        },
+        {
+          "name": "--accent-12",
+          "ref": "var(--blue-12) under [data-accent-color='blue']",
+          "values": {
+            "light": "#113264",
+            "dark": "#c2e6ff"
+          },
+          "note": null
+        },
+        {
+          "name": "--accent-a9",
+          "ref": "var(--blue-a9) under [data-accent-color='blue']",
+          "values": {
+            "light": "#0090ff",
+            "dark": "#0090ff"
+          },
+          "note": "representative alpha step; shown for the default blue accent"
+        },
+        {
+          "name": "--focus-8",
+          "ref": "var(--accent-8) (= var(--blue-8) for the default blue accent)",
+          "values": {
+            "light": "#5eb1ef",
+            "dark": "#2870bd"
+          },
+          "note": "focus ring color mirrors accent-8 for the active accent"
+        },
+        {
+          "name": "--gray-9 (mauve remap example)",
+          "ref": "var(--mauve-9) under [data-gray-color='mauve']",
+          "values": {
+            "light": "#8e8c99",
+            "dark": "#6f6d78"
+          },
+          "note": "--gray-1..12 / --gray-a1..a12 / --gray-contrast / --gray-surface / --gray-indicator / --gray-track are remapped step-for-step onto whichever neutral family (mauve, slate, sage, olive, sand, or gray itself) is selected via [data-gray-color]"
+        }
+      ]
+    }
+  ],
+  "focus": [
+    {
+      "label": "Technique",
+      "value": "outline, 2px width, 2px offset",
+      "note": "base-button.css: outline: 2px solid var(--focus-8); outline-offset: 2px.",
+      "sources": [
+        "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/components/_internal/base-button.css"
+      ]
+    },
+    {
+      "label": "Color",
+      "value": "--focus-8 \u2014 a full --focus-1..12 scale remapped from the accent scale",
+      "note": "A 12-step ramp maintained purely so focus rings can re-point independently of accent; matches the scale docs assigning step 8 to focus rings.",
+      "sources": [
+        "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css"
+      ]
+    },
+    {
+      "label": "Visibility",
+      "value": ":focus-visible only",
+      "note": "Touch devices get a separate affordance: an 0.5em outline of --accent-a4 on :active for coarse pointers.",
+      "sources": [
+        "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/components/_internal/base-button.css"
+      ]
+    }
+  ],
+  "contrast": [
+    {
+      "label": "step 11 text on step 2 background",
+      "fgColor": "#0d74ce",
+      "bgColor": "#f4faff",
+      "mode": "light",
+      "metric": "apca",
+      "value": "Lc 60 (guaranteed)",
+      "kind": "documented",
+      "note": "Documented for every scale; shown here on blue."
+    },
+    {
+      "label": "step 12 text on step 2 background",
+      "fgColor": "#113264",
+      "bgColor": "#f4faff",
+      "mode": "light",
+      "metric": "apca",
+      "value": "Lc 90 (guaranteed)",
+      "kind": "documented",
+      "note": "Documented for every scale; shown here on blue."
+    },
+    {
+      "label": "step 11 text on step 2 background",
+      "fgColor": "#70b8ff",
+      "bgColor": "#111927",
+      "mode": "dark",
+      "metric": "apca",
+      "value": "Lc 60 (guaranteed)",
+      "kind": "documented",
+      "note": "Documented for every scale; shown here on blue."
+    },
+    {
+      "label": "step 12 text on step 2 background",
+      "fgColor": "#c2e6ff",
+      "bgColor": "#111927",
+      "mode": "dark",
+      "metric": "apca",
+      "value": "Lc 90 (guaranteed)",
+      "kind": "documented",
+      "note": "Documented for every scale; shown here on blue."
+    }
+  ],
+  "sources": [
+    "https://github.com/radix-ui/colors",
+    "https://github.com/radix-ui/themes",
+    "https://www.radix-ui.com/colors"
+  ]
+}

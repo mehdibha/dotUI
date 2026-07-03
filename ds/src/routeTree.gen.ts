@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MethodologyRouteImport } from './routes/methodology'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as TopicsSlugRouteImport } from './routes/topics.$slug'
 import { Route as SystemsSlugRouteImport } from './routes/systems.$slug'
 
 const MethodologyRoute = MethodologyRouteImport.update({
@@ -24,11 +23,6 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TopicsSlugRoute = TopicsSlugRouteImport.update({
-  id: '/topics/$slug',
-  path: '/topics/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const SystemsSlugRoute = SystemsSlugRouteImport.update({
   id: '/systems/$slug',
   path: '/systems/$slug',
@@ -39,34 +33,30 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/methodology': typeof MethodologyRoute
   '/systems/$slug': typeof SystemsSlugRoute
-  '/topics/$slug': typeof TopicsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/methodology': typeof MethodologyRoute
   '/systems/$slug': typeof SystemsSlugRoute
-  '/topics/$slug': typeof TopicsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/methodology': typeof MethodologyRoute
   '/systems/$slug': typeof SystemsSlugRoute
-  '/topics/$slug': typeof TopicsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/methodology' | '/systems/$slug' | '/topics/$slug'
+  fullPaths: '/' | '/methodology' | '/systems/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/methodology' | '/systems/$slug' | '/topics/$slug'
-  id: '__root__' | '/' | '/methodology' | '/systems/$slug' | '/topics/$slug'
+  to: '/' | '/methodology' | '/systems/$slug'
+  id: '__root__' | '/' | '/methodology' | '/systems/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MethodologyRoute: typeof MethodologyRoute
   SystemsSlugRoute: typeof SystemsSlugRoute
-  TopicsSlugRoute: typeof TopicsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -85,13 +75,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/topics/$slug': {
-      id: '/topics/$slug'
-      path: '/topics/$slug'
-      fullPath: '/topics/$slug'
-      preLoaderRoute: typeof TopicsSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/systems/$slug': {
       id: '/systems/$slug'
       path: '/systems/$slug'
@@ -106,7 +89,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MethodologyRoute: MethodologyRoute,
   SystemsSlugRoute: SystemsSlugRoute,
-  TopicsSlugRoute: TopicsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
