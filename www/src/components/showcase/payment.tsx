@@ -9,7 +9,12 @@ import { Card, CardContent } from '@/registry/ui/card'
 import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
 import { Label } from '@/registry/ui/field'
 import { Input } from '@/registry/ui/input'
-import { Radio, RadioControl, RadioGroup } from '@/registry/ui/radio-group'
+import {
+  Radio,
+  RadioControl,
+  RadioGroup,
+  RadioIndicator,
+} from '@/registry/ui/radio-group'
 import {
   Select,
   SelectContent,
@@ -26,6 +31,13 @@ const inputClassName =
 // own focus ring on focus, instead of ringing the whole group.
 const segmentClassName =
   'relative flex items-center px-3 focus-within:z-10 focus-within:rounded-(--input-radius) focus-within:border-transparent focus-within:bg-field focus-within:ring-2 focus-within:ring-border-focus'
+
+// The whole row (radio dot + icon + label) is one click target: nesting them
+// inside RadioControl (rather than as siblings) makes its native label wrap
+// all three. Overrides the registry's bordered/tinted "radio card" look —
+// this picker only wants a subtle hover background, no persistent selected fill.
+const methodControlClassName =
+  'has-data-label:border-transparent has-data-label:selected:border-transparent has-data-label:selected:bg-transparent hover:bg-muted'
 
 export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
   const [method, setMethod] = useState('card')
@@ -55,9 +67,11 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
           className="gap-0"
         >
           <Radio value="card">
-            <RadioControl />
-            <CreditCardIcon aria-hidden className="size-4.5" />
-            <Label>Card</Label>
+            <RadioControl className={methodControlClassName}>
+              <RadioIndicator />
+              <CreditCardIcon aria-hidden className="size-4.5" />
+              <Label>Card</Label>
+            </RadioControl>
           </Radio>
 
           {/* The panel is a sibling of the radio, never a child: it holds
@@ -164,9 +178,11 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
           <Separator className="my-3.5" />
 
           <Radio value="apple-pay">
-            <RadioControl />
-            <ApplePayBadge />
-            <Label>Apple Pay</Label>
+            <RadioControl className={methodControlClassName}>
+              <RadioIndicator />
+              <ApplePayBadge />
+              <Label>Apple Pay</Label>
+            </RadioControl>
           </Radio>
 
           <MethodPanel expanded={method === 'apple-pay'}>
@@ -178,9 +194,11 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
           <Separator className="my-3.5" />
 
           <Radio value="crypto">
-            <RadioControl />
-            <BitcoinIcon aria-hidden className="size-4.5" />
-            <Label>Crypto</Label>
+            <RadioControl className={methodControlClassName}>
+              <RadioIndicator />
+              <BitcoinIcon aria-hidden className="size-4.5" />
+              <Label>Crypto</Label>
+            </RadioControl>
           </Radio>
 
           <MethodPanel expanded={method === 'crypto'}>
