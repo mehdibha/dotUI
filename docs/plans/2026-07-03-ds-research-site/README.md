@@ -40,6 +40,15 @@ system. Superseding decisions:
 
 Migration note in `ds/data/RETRO.md`.
 
+### Amendment — 2026-07-03 (maintainer, reordering)
+
+Plans 004–006 are superseded in their ordering: the site design, system pages, playgrounds,
+and interactive widgets get built **first** — V1 goes deep on a single flagship system,
+**Radix**, while the full roster is listed on the site as `planned` from day 1. The data shape
+freezes from what Radix's pages need, and only then does the research fan-out (004) run.
+`ds/README.md` is now the project's front door and states the order of work; this folder is
+planning history.
+
 ## Execution order
 
 ```
@@ -64,7 +73,7 @@ Migration note in `ds/data/RETRO.md`.
 | 000 | Phase 0 product decisions | DONE — resolved 2026-07-03 (grill session; 12 decisions above) |
 | [001](001-roster-selection.md) | Roster selection research | DONE — 2026-07-03; ~30 candidates recon'd by 8 parallel agent sessions, report + `roster.json` in [docs/research/2026-07-03-ds-roster-selection/](../../research/2026-07-03-ds-roster-selection/README.md). Maintainer-approved tier-1 = **15 systems** (approved deviation from the 8–12 cap; STOP condition honored — tradeoff was presented): Spectrum 2 (+Leonardo), Material 3, Radix, USWDS, Ant Design, Fluent 2, Polaris, Primer, Astryx (Meta — verified real, June 2026), Linear (RE), Stripe (RE), Carbon, Geist, shadcn/ui, Tailwind palette. 8 watchlist, 8 rejected with reasons (binding). |
 | [002](002-schema-and-question-bank.md) | Fact schema + canonical question bank + 2-system pilot | DONE — 2026-07-03; schema + 10-question `color-tokens` bank v1 frozen (`ds/src/data/schema.ts`, `ds/src/data/question-bank.ts`), both pilots 10/10 answered with cited evidence, validation green via `pnpm --filter=ds check:data`. Pilot data in `ds/data/systems/{radix,linear}/`. See [ds/data/RETRO.md](../../../ds/data/RETRO.md) for the freeze + flagged maintainer decisions (Linear contrast unknowns, marketing-site scoping). |
-| [003](003-app-scaffold.md) | `ds/` app scaffold, Vercel project, dogfooded UI, data build pipeline | DONE — 2026-07-03; `ds/` TanStack Start app live on [ds.dotui.org](https://ds.dotui.org) (Vercel project `dotui-ds`, rootDirectory `ds`, git-linked). Routes `/`, `/systems/$slug`, `/topics/$slug`, `/methodology` prerendered (27 pages); data pipeline (zod validation → static index) proven end-to-end with 002's pilot data rendering citations + verified-dates on the profile shells. Dogfood found 13 registry/publisher bugs — 5 fixed in-branch, rest logged in [ds/DOGFOOD.md](../../../ds/DOGFOOD.md) (table/checkbox/field left out: field-family publisher bug, STOP honored). |
+| [003](003-app-scaffold.md) | `ds/` app scaffold, Vercel project, dogfooded UI, data build pipeline | DONE — 2026-07-03; `ds/` TanStack Start app live on [ds.dotui.org](https://ds.dotui.org) (Vercel project `dotui-ds`, rootDirectory `ds`, git-linked). Routes `/`, `/systems/$slug`, `/topics/$slug`, `/methodology` prerendered (27 pages); data pipeline (zod validation → static index) proven end-to-end with 002's pilot data rendering citations + verified-dates on the profile shells. Dogfood found 13 registry/publisher bugs — 5 fixed in-branch, rest were logged in `ds/DOGFOOD.md` (table/checkbox/field left out: field-family publisher bug, STOP honored). 2026-07-03: the friction log is retired and removed — `ds/` now vendors the full resolved kit directly (see `ds/README.md`), ending the CLI-install experiment. |
 | [004](004-research-execution.md) | Per-system research execution across the roster | TODO |
 | [005](005-topic-showpieces.md) | Topic deep-dive pages + interactive widget kit | TODO |
 | [006](006-profiles-matrices-launch.md) | Profiles, generated matrices, research→create pipeline, launch | TODO |

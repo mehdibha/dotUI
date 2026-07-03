@@ -12,31 +12,28 @@ function Methodology() {
       <h1 className="text-3xl font-semibold tracking-tight">Methodology</h1>
 
       <section className="mt-8 flex flex-col gap-4 text-fg-muted [&_h2]:mt-4 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:text-fg">
-        <h2>How the roster was chosen</h2>
+        <h2>How the catalog was chosen</h2>
         <p>
-          Around 30 candidate systems were researched in parallel recon sessions
-          (2026-07-03) under one ground rule: no scoring from memory or
+          Nearly a hundred candidate systems were researched in parallel recon
+          sessions (2026-07-03) under one ground rule: no scoring from memory or
           reputation. Every claim had to come from a docs page, a source file,
           npm metadata, or shipped CSS that was actually opened. Closed systems
           (Linear, Stripe) were probed specifically for what their shipped CSS
           exposes.
         </p>
         <p>
-          Each candidate was scored 0–3 on five criteria, for the color/token
-          dimension only: <strong>technical depth</strong> (real generation,
-          layering, and contrast architecture vs a flat palette),{' '}
-          <strong>originality</strong> (does studying it teach something the
-          others don&apos;t?), <strong>inspectability</strong> (public repo down
-          to effectively closed), <strong>docs quality</strong> (can facts be
-          cited to stable URLs?), and <strong>influence</strong> as a
-          tiebreaker. Quality over popularity — popular doesn&apos;t mean good.
+          The 77 that made the catalog were each scored across nine domains —
+          color, typography, spacing, components, motion, icons, accessibility,
+          docs, and openness — against fixed anchors, plus a holistic overall
+          score. Those scores prioritize what gets researched first; they are
+          recon-level evidence, not published verdicts. Quality over popularity
+          — popular doesn&apos;t mean good.
         </p>
         <p>
-          The result: 15 tier-1 systems, 8 on a watchlist, and 8 rejected with
-          recorded reasons. The full scorecards and the machine-readable roster
-          live in the open —{' '}
-          <Link href="https://github.com/mehdibha/dotUI/tree/main/docs/research/2026-07-03-ds-roster-selection">
-            selection report on GitHub
+          The full scorecards, the rubric, and the machine-readable catalog live
+          in the open —{' '}
+          <Link href="https://github.com/mehdibha/dotUI/tree/main/docs/research/2026-07-03-ds-catalog">
+            catalog report on GitHub
           </Link>
           .
         </p>
@@ -45,13 +42,9 @@ function Methodology() {
         <p>
           Every system page is built from structured data extracted from real
           sources — token source files, shipped CSS, first-party docs — and
-          every section links the sources it came from. Systems are labeled with
-          how they were read:{' '}
-          <code className="font-mono text-sm">documented</code>,{' '}
-          <code className="font-mono text-sm">source-read</code>, or{' '}
-          <code className="font-mono text-sm">reverse-engineered</code>.
-          Reverse-engineered data (like CSS variables read from a shipped site)
-          is first-class but always labeled as observed, never as official
+          every section links the sources it came from. Closed systems studied
+          through their shipped CSS are labeled reverse-engineered: that data is
+          first-class but always presented as observed, never as official
           documentation. Measured numbers — like contrast ratios computed from
           shipped values — are marked measured, never conflated with published
           guarantees. Data without sources fails the build.

@@ -9,7 +9,7 @@
 import type { PublishPreset } from '@/publisher/types'
 
 export function defaultPreset(): PublishPreset {
-  return { density: 'compact', componentParams: {} }
+  return { density: 'default', componentParams: {} }
 }
 
 /**

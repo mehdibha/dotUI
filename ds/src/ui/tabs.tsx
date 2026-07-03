@@ -16,11 +16,11 @@ const tabsVariants = tv({
       'text-fg-muted hover:text-fg disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50',
       '**:[svg]:pointer-events-none **:[svg]:shrink-0',
       '[&:has([data-tab-indicator])_>_[data-tab-default-indicator]]:hidden',
-      'gap-1.5 px-1.5 py-0.5 text-xs has-data-icon-end:pr-1 has-data-icon-start:pl-1 **:[svg]:not-with-[size]:size-3.5',
+      'gap-1.5 px-1.5 py-0.5 text-sm has-data-icon-end:pr-1 has-data-icon-start:pl-1 **:[svg]:not-with-[size]:size-4',
     ],
     selectionIndicator:
       'pointer-events-none absolute rounded-md duration-150 ease-out motion-safe:transition-[translate,width,height]',
-    panel: ['flex-1 outline-none data-[inert=true]:hidden', 'text-xs/relaxed'],
+    panel: ['flex-1 outline-none data-[inert=true]:hidden', 'text-sm'],
   },
   variants: {
     orientation: {

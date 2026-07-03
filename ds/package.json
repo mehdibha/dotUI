@@ -12,6 +12,8 @@
     "clean": "git clean -xdf .output .nitro .cache .turbo node_modules"
   },
   "dependencies": {
+    "@base-ui/react": "1.4.1",
+    "@internationalized/date": "^3.12.2",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/react-router": "catalog:",
     "@tanstack/react-start": "catalog:",
@@ -21,6 +23,8 @@
     "react-aria": "^3.50.0",
     "react-aria-components": "^1.19.0",
     "react-dom": "catalog:",
+    "react-stately": "^3.48.0",
+    "recharts": "^3.8.1",
     "starter-themes": "^0.0.2",
     "tailwind-merge": "^3.4.0",
     "tailwind-variants": "^3.2.2",

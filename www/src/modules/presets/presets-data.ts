@@ -32,7 +32,7 @@ function makeDesignSystem(opts: {
   /** Per-producer tuning (e.g. force a gray accent to stay gray). */
   knobs?: ColorConfig['knobs']
 }): DesignSystem {
-  const { algorithm = 'oklch', neutral, accent, density = 'compact' } = opts
+  const { algorithm = 'oklch', neutral, accent, density = 'default' } = opts
   return {
     ...DEFAULTS,
     density,
