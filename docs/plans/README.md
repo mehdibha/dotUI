@@ -10,6 +10,7 @@ Audit-generated, executor-ready implementation plans. One date-prefixed folder p
 | [2026-06-11-colors-audit/](2026-06-11-colors-audit/README.md) | `packages/colors` kernel + its `www/src/registry/theme` consumption boundary — spec recovery, characterization, open algorithm registry, kernel dark mode, new color axes | `05b44151` | 9 |
 | [2026-06-12-docs-module-audit/](2026-06-12-docs-module-audit/README.md) | Docs module — `modules/docs` + `modules/references` + `content/docs` + docs/llms routes + api-docs-builder: typeLinks payload/determinism, fail-loud MDX pipeline, fumadocs security bump, legacy engine retirement, shiki deploy weight, content fixes | `e0ca5b16` | 7 |
 | [2026-06-13-charts/](2026-06-13-charts/README.md) | Charts feature (design plan, not an audit) — Recharts-based chart registry items with shadcn parity, a `--chart-N` builder colors axis, a new Charts docs section + gallery + nav, and the build/publish/SSR/a11y discipline to ship them | `a4c39a38` | 5 |
+| [2026-07-03-ds-research-site/](2026-07-03-ds-research-site/README.md) | ds.dotui.org (design plan, not an audit) — new `ds/` app: citation-backed research on design systems' color & token architectures across a curated ~8–12 system roster; agent-driven research pipeline, interactive topic showpieces, generated matrices, and a research→`/create` findings pipeline | `9c86ac02` | 6 |
 
 ## Cross-audit notes
 
