@@ -277,7 +277,7 @@ function SearchDialog({
               it rather than on the wrapper. */}
         <MenuContent
           aria-label="Search results"
-          className="max-h-80 scroll-fade-y overflow-y-auto p-1.5 pt-0 **:data-menu-item:py-2"
+          className="max-h-80 scroll-fade-y overflow-y-auto p-1.5 **:data-menu-item:py-2"
           onAction={onClose}
           renderEmptyState={() => (
             <div className="py-8 text-center text-sm text-fg-muted">
