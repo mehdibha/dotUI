@@ -357,13 +357,11 @@ function DesignSystemProvider({
   // the live /create preview, where slider drags should track the cursor, not lag
   // behind a tween.
   //
-  // The CSS rule tweens both the paint axes (color/radius/shadow) and the density
-  // axes (padding/gap/sizes), so the whole subtree morphs — including the spacing
-  // growing/shrinking. That's a per-frame layout tween across the subtree, which is
-  // why the showcase only triggers it on an explicit user pick, never on a loop (see
-  // modules/marketing/cards.tsx). A caller that animates the swap some other way can
-  // pass `transitionOnChange={false}` to suppress the flag. Honors
-  // `prefers-reduced-motion` via the media query in styles.css.
+  // The CSS rule tweens only the paint axes (color/radius/shadow); density
+  // (padding/gap/sizes) snaps instantly, since a per-frame layout tween across the
+  // subtree is too costly to justify for a preset swap. A caller that animates the
+  // swap some other way can pass `transitionOnChange={false}` to suppress the flag.
+  // Honors `prefers-reduced-motion` via the media query in styles.css.
   // `forcedMode` is deliberately not part of the signature: mode flips snap
   // everywhere on the site (the root ThemeProvider disables transitions too).
   const signature = React.useMemo(
