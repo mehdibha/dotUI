@@ -11,7 +11,7 @@ export default function Demo() {
     <ColorPicker defaultValue="#5100FF">
       <Button>
         <ColorSwatch />
-        Background
+        Accent
       </Button>
       <Popover className="p-2.5">
         <ColorEditor />
