@@ -15,24 +15,24 @@ export type {
 type TabProps = Omit<BaseTabProps, 'href'> & { href?: string | ToOptions }
 
 function Tab({ href, ...props }: TabProps) {
-  // Only pass `href`/`render` for actual links: an explicit `href={undefined}`
-  // still counts as a link prop to react-aria (`'href' in props`), which turns
-  // every plain tab into an <a href="">.
-  const hrefString = typeof href === 'object' ? href.to : href
-  if (!hrefString) {
+  // href={undefined} still counts as a link prop to react-aria ('href' in props).
+  if (href === undefined) {
     return <TabPrimitive {...props} />
   }
+  // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
+  const hrefString = typeof href === 'object' ? (href.to ?? '#') : href
   return (
     <TabPrimitive
       href={hrefString}
       render={(domProps) => {
-        // The `in` check narrows the div|anchor props union; render is only
-        // passed for links, so the div branch is a type-level fallback.
         if (!('href' in domProps)) {
           return <div {...domProps} />
         }
         if (typeof href === 'object') {
-          return <RouterLink {...href} {...domProps} />
+          // RouterLink treats a literal `href` as authoritative and recomputes
+          // to/search/hash from it, dropping the ToOptions fields.
+          const { href: _domHref, ...routerDomProps } = domProps
+          return <RouterLink {...href} {...routerDomProps} />
         }
         return <a {...domProps} />
       }}

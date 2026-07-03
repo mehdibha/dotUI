@@ -177,8 +177,11 @@ function harvestRootClosure(): RootClosure {
 
   const toText = (map: Map<string, string>) =>
     [...map].map(([prop, value]) => `\t${prop}: ${value};`).join('\n')
-  rootClosureCache = { light: toText(light), dark: toText(dark) }
-  return rootClosureCache
+  const closure = { light: toText(light), dark: toText(dark) }
+  // An empty harvest means the stylesheets weren't parsed yet — don't cache it, or scoped
+  // theming would stay off for the whole session.
+  if (closure.light || closure.dark) rootClosureCache = closure
+  return closure
 }
 
 // resolveColorConfig runs the full color kernel (schema parse + ramp generation).
@@ -251,6 +254,99 @@ function buildScopedThemeCss(
   return blocks.join('\n')
 }
 
+/* ----------------------- Shared scoped theme styles ----------------------- */
+
+/*
+ * The closure-clone stylesheet is ~10KB and fully determined by `color` + `forcedMode`,
+ * so scoped providers on the same theme share one scope token and one injected <style>
+ * instead of each carrying their own — a docs page rendering N demos in the user's
+ * stored preset injects one style node, not N. Entries are refcounted; the node is
+ * removed when the last provider using it unmounts or moves to a different theme.
+ * Client-only, like buildScopedThemeCss (null during SSR).
+ */
+
+interface SharedThemeEntry {
+  refs: number
+  el: HTMLStyleElement
+}
+const sharedThemes = new Map<string, SharedThemeEntry>()
+
+/**
+ * djb2 over the theme key. Deterministic from content — the token renders as the
+ * `data-dotui-scope` attribute on the server too, so it must hydrate identically
+ * (a session counter would drift between server and client).
+ */
+function themeTokenFor(key: string): string {
+  let hash = 5381
+  for (let i = 0; i < key.length; i++) {
+    hash = ((hash << 5) + hash + key.charCodeAt(i)) | 0
+  }
+  return `t${(hash >>> 0).toString(36)}${key.length.toString(36)}`
+}
+
+/**
+ * Join (or create) the shared <style> for a scoped theme and return its scope token —
+ * the value the provider renders as `data-dotui-scope`. `undefined` when the provider
+ * doesn't diverge from the page theme (nothing to inject).
+ */
+function useSharedScopedTheme(
+  color: ColorConfig | undefined,
+  forcedMode: 'light' | 'dark' | undefined,
+  enabled: boolean,
+): string | undefined {
+  // Content key = everything the stylesheet is built from (color config + pinned mode).
+  // Token-only divergence (inline vars, no palette) shares a per-mode colorless entry.
+  const [key, token] = React.useMemo(() => {
+    if (!enabled) return [null, undefined] as const
+    const k = `${forcedMode ?? 'auto'}:${color ? JSON.stringify(color) : 'default'}`
+    return [k, themeTokenFor(k)] as const
+  }, [enabled, color, forcedMode])
+
+  useIsomorphicLayoutEffect(() => {
+    if (key === null || token === undefined) return
+    // Layout effect, so the style lands in the same frame as the commit that rendered
+    // the scope attribute — before paint, no flash of the page theme.
+    let acquired = false
+    const entry = sharedThemes.get(key)
+    if (entry) {
+      entry.refs += 1
+      acquired = true
+    } else {
+      const css = buildScopedThemeCss(
+        `[data-dotui-scope="${token}"]`,
+        color,
+        forcedMode,
+      )
+      // null: no closure to harvest yet — skip; a later theme change re-runs this.
+      if (css) {
+        const el = document.createElement('style')
+        el.setAttribute('data-dotui-color', token)
+        el.textContent = css
+        document.head.append(el)
+        sharedThemes.set(key, { refs: 1, el })
+        acquired = true
+      }
+    }
+    return () => {
+      // Only release what this effect actually acquired — a skipped (css: null)
+      // acquire must not decrement an entry another instance created since.
+      if (!acquired) return
+      const current = sharedThemes.get(key)
+      if (!current) return
+      current.refs -= 1
+      if (current.refs === 0) {
+        current.el.remove()
+        sharedThemes.delete(key)
+      }
+    }
+    // `color`/`forcedMode` are deliberately not deps: `key` pins their content, and an
+    // identity-only `color` change must not release/re-acquire — a sole holder would
+    // remove and rebuild the shared node every render.
+  }, [key, token])
+
+  return token
+}
+
 interface DesignSystemProviderProps {
   params?: ParamSelections
   tokens?: GlobalTokenSelections
@@ -321,10 +417,9 @@ function DesignSystemProvider({
     return vars
   }, [tokens, params])
 
-  // A stable, unique scope selector (only used in `scoped` mode). useId is SSR-safe and
-  // constant across renders, so the injected <style> and the wrapper element always agree.
+  // Per-instance id for the overlay portal target (only used in `scoped` mode). The
+  // scope *selector* is no longer per-instance — see useSharedScopedTheme.
   const scopeId = React.useId()
-  const scopeSelector = `[data-dotui-scope="${scopeId}"]`
 
   // Apply the global token vars to :root so values that reference each other via calc() +
   // var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor))) recompute correctly —
@@ -350,37 +445,29 @@ function DesignSystemProvider({
     if (scoped) harvestRootClosure()
   }, [scoped])
 
-  // Generative palette as a rendered <style> (the element is declared in the returned tree
-  // below, not imperatively appended). Global mode writes :root + .dark (the flat-token
-  // path above only writes :root). Scoped mode clones :root's token closure onto the wrapper
-  // (so semantic + component vars recompute from the scope) and overrides the ramps there — but
-  // only once something actually diverges (a color, or a token like --radius-factor); an
-  // untouched preview emits nothing and just inherits the page defaults.
-  //
-  // `cssVars` themselves ride inline on the scope element and never enter the CSS text, so the
-  // memo depends on whether any override EXISTS (a boolean) rather than the object's identity —
-  // otherwise every radius-slider tick would rebuild a byte-identical stylesheet.
+  // Scoped mode: join the shared closure-clone stylesheet, but only once something
+  // actually diverges (a color, or a token like --radius-factor); an untouched preview
+  // injects nothing and inherits the page defaults. `cssVars` ride inline on the scope
+  // element and never enter the CSS text, so divergence keys on whether any override
+  // EXISTS (a boolean), not object identity — else every radius tick rebuilds identical CSS.
   const hasTokenOverrides = Object.keys(cssVars).length > 0
-  const themeCss = React.useMemo(() => {
-    if (scoped) {
-      const diverges =
-        Boolean(color) || hasTokenOverrides || Boolean(forcedMode)
-      return diverges
-        ? buildScopedThemeCss(scopeSelector, color, forcedMode)
-        : null
-    }
-    return color
-      ? emitPrimitivesCss(resolveColorConfigCached(color), { onColors: true })
-      : null
-  }, [scoped, scopeSelector, color, hasTokenOverrides, forcedMode])
+  const scopeToken = useSharedScopedTheme(
+    color,
+    forcedMode,
+    scoped && (Boolean(color) || hasTokenOverrides || Boolean(forcedMode)),
+  )
 
-  // The palette / scoped-closure stylesheet as a real node, rendered into the tree rather
-  // than appended via an effect. `themeCss` is null until something diverges (and, when
-  // scoped, is client-only — see buildScopedThemeCss), so an untouched provider renders no
-  // <style> and SSR/first paint stay byte-identical to the bare children. A plain <style>
-  // (no `precedence`) is not hoisted by React; it renders in place, which is fine — its
-  // rules are global selectors (`:root`, `.dark`, `[data-dotui-scope]`) that apply wherever
-  // the tag sits, and `<style>` carries the UA `display: none`, so it never affects layout.
+  // Global mode: generative palette as a rendered <style>, writing :root + .dark (the
+  // flat-token path above only writes :root). Null until a color is set, so an untouched
+  // provider renders no <style> and SSR/first paint stay byte-identical to the bare
+  // children. A plain <style> (no `precedence`) renders in place — fine, its rules are
+  // global selectors and `<style>` carries the UA `display: none`, so layout is untouched.
+  const themeCss = React.useMemo(() => {
+    if (scoped || !color) return null
+    return emitPrimitivesCss(resolveColorConfigCached(color), {
+      onColors: true,
+    })
+  }, [scoped, color])
   const themeStyle = themeCss ? (
     <style data-dotui-color>{themeCss}</style>
   ) : null
@@ -405,20 +492,21 @@ function DesignSystemProvider({
 
   // `display: contents` keeps the wrapper out of layout (the children stay direct flow/flex
   // items of the real parent) while still carrying the scope marker + inline token vars.
+  // The marker value is the shared theme token (absent while nothing diverges), so every
+  // provider on the same theme is targeted by the one shared closure <style>.
   //
   // Card overlays (Select / popovers / tooltips) portal to `document.body` by default — outside
   // this subtree — so they'd escape the scope and render with the page's default theme.
   // `UNSAFE_PortalProvider` redirects every overlay rendered by the children into `#portalDomId`:
-  // a body-level node that also carries `data-dotui-scope` (so the injected closure `<style>`
+  // a body-level node that also carries `data-dotui-scope` (so the shared closure `<style>`
   // themes it) but lives outside the showcase's `overflow-hidden`/masked container, so overlays
   // inherit the scoped theme without being clipped.
   return (
     <div
-      data-dotui-scope={scopeId}
+      data-dotui-scope={scopeToken}
       data-mode={forcedMode}
       style={{ display: 'contents', ...scopeStyle }}
     >
-      {themeStyle}
       <UNSAFE_PortalProvider
         getContainer={() => document.getElementById(portalDomId)}
       >
@@ -429,7 +517,7 @@ function DesignSystemProvider({
         : createPortal(
             <div
               id={portalDomId}
-              data-dotui-scope={scopeId}
+              data-dotui-scope={scopeToken}
               data-mode={forcedMode}
               style={scopeStyle}
             />,

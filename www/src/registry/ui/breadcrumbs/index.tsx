@@ -15,34 +15,33 @@ export function BreadcrumbLink({
   href,
   ...props
 }: Omit<BreadcrumbLinkProps, 'href'> & { href?: string | ToOptions }) {
-  // Only pass `href`/`render` for actual links: an explicit `href={undefined}`
-  // still counts as a link prop to react-aria (`'href' in props`), which turns
-  // the current-page breadcrumb into an <a href="">.
-  const hrefString = typeof href === 'object' ? href.to : href
-  if (!hrefString) {
+  // href={undefined} still counts as a link prop to react-aria ('href' in props).
+  if (href === undefined) {
     return <BreadcrumbLinkPrimitive {...props} />
   }
-  // react-aria renders a disabled Link as a <span> natively; skip the custom
-  // render so the expected element type matches.
-  if (props.isDisabled) {
-    return <BreadcrumbLinkPrimitive href={hrefString} {...props} />
-  }
+  // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
+  const hrefString = typeof href === 'object' ? (href.to ?? '#') : href
   return (
     <BreadcrumbLinkPrimitive
       href={hrefString}
       render={({ ref, ...domProps }) => {
-        // react-aria expects a <span> for disabled links. The isDisabled prop check
-        // above can't see links disabled through context (e.g. `<Breadcrumbs isDisabled>`),
-        // but the computed DOM props carry data-disabled in that case.
+        // isDisabled can come from context (e.g. a parent Breadcrumbs), so it
+        // won't show up in `props` — read it off the resolved DOM props instead.
         if ((domProps as Record<string, unknown>)['data-disabled']) {
           return <span ref={ref as React.Ref<HTMLSpanElement>} {...domProps} />
         }
         if (typeof href === 'object') {
+          // RouterLink treats a literal `href` as authoritative and recomputes
+          // to/search/hash from it, dropping the ToOptions fields.
+          const { href: _domHref, ...routerDomProps } = domProps as Extract<
+            typeof domProps,
+            { href: unknown }
+          >
           return (
             <RouterLink
               ref={ref as React.Ref<HTMLAnchorElement>}
               {...href}
-              {...domProps}
+              {...routerDomProps}
             />
           )
         }
