@@ -6,10 +6,8 @@ import { useDocsSearch } from 'fumadocs-core/search/client'
 import { oramaStaticClient } from 'fumadocs-core/search/client/orama-static'
 import {
   ArrowRightIcon,
-  ChevronsUpDownIcon,
   CircleDashedIcon,
   ClockIcon,
-  CornerDownLeftIcon,
   FileTextIcon,
   HashIcon,
   MoonIcon,
@@ -22,7 +20,6 @@ import { useTheme } from 'starter-themes'
 
 import { navItems, siteConfig } from '@/config/site'
 import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
 import { useStyles as useCommandStyles } from '@/registry/ui/command/styles'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Drawer } from '@/registry/ui/drawer'
@@ -199,7 +196,7 @@ export function SearchCommand({
             <ModalOverlay>
               <ModalBackdrop className="duration-0 group-exiting/modal:duration-0" />
               <ModalViewport>
-                <ModalPanel className="mt-[15vh] self-start duration-0 sm:max-w-lg entering:scale-100 exiting:scale-100">
+                <ModalPanel className="mt-[15vh] self-start duration-0 [--modal-background:var(--neutral-100)] [--modal-radius:var(--radius-xl)] sm:max-w-lg entering:scale-100 exiting:scale-100">
                   {content}
                 </ModalPanel>
               </ModalViewport>
@@ -262,175 +259,155 @@ function SearchDialog({
   }
 
   return (
-    <>
-      <Autocomplete inputValue={search} onInputChange={setSearch}>
-        <div
-          data-command=""
-          className={commandStyles({ className: 'overflow-y-hidden p-0' })}
-        >
-          <SearchField autoFocus aria-label="Search" className="px-1.5 pt-1.5">
-            <InputGroup size="lg">
-              <InputGroupAddon>
-                <SearchIcon />
-              </InputGroupAddon>
-              <Input placeholder="Search documentation..." />
-            </InputGroup>
-          </SearchField>
-          {/* The menu is the scroll container and must span the full panel
+    <Autocomplete inputValue={search} onInputChange={setSearch}>
+      <div
+        data-command=""
+        className={commandStyles({ className: 'gap-0 overflow-y-hidden p-0' })}
+      >
+        <SearchField autoFocus aria-label="Search" className="px-1.5 pt-1.5">
+          <InputGroup size="lg">
+            <InputGroupAddon>
+              <SearchIcon />
+            </InputGroupAddon>
+            <Input placeholder="Search documentation..." />
+          </InputGroup>
+        </SearchField>
+        {/* The menu is the scroll container and must span the full panel
               width (scrollbar at the edge), so the list padding lives inside
               it rather than on the wrapper. */}
-          <MenuContent
-            aria-label="Search results"
-            className="max-h-80 overflow-y-auto p-1.5 pt-0"
-            onAction={onClose}
-            renderEmptyState={() => (
-              <div className="py-8 text-center text-sm text-fg-muted">
-                {query.error
-                  ? 'Search is unavailable right now.'
-                  : query.isLoading
-                    ? 'Searching…'
-                    : `No results for “${search.trim()}”`}
-              </div>
-            )}
-          >
-            {[
-              filteredRecents.length > 0 && (
-                <MenuSection key="recent">
-                  <MenuSectionHeader>Recent</MenuSectionHeader>
-                  {filteredRecents.map((recent) => (
+        <MenuContent
+          aria-label="Search results"
+          className="max-h-80 scroll-fade-y overflow-y-auto p-1.5 pt-0 **:data-menu-item:py-2"
+          onAction={onClose}
+          renderEmptyState={() => (
+            <div className="py-8 text-center text-sm text-fg-muted">
+              {query.error
+                ? 'Search is unavailable right now.'
+                : query.isLoading
+                  ? 'Searching…'
+                  : `No results for “${search.trim()}”`}
+            </div>
+          )}
+        >
+          {[
+            filteredRecents.length > 0 && (
+              <MenuSection key="recent">
+                <MenuSectionHeader>Recent</MenuSectionHeader>
+                {filteredRecents.map((recent) => (
+                  <MenuItem
+                    key={recent.url}
+                    href={docsHref(recent.url)}
+                    textValue={recent.title}
+                  >
+                    <ClockIcon className="text-fg-muted!" />
+                    <MenuItemLabel className="truncate">
+                      {recent.title}
+                    </MenuItemLabel>
+                  </MenuItem>
+                ))}
+              </MenuSection>
+            ),
+            filteredNav.length > 0 && (
+              <MenuSection key="navigation">
+                <MenuSectionHeader>Navigation</MenuSectionHeader>
+                {filteredNav.map((item) => (
+                  <MenuItem
+                    key={item.name}
+                    // navItems is typed loosely (`to: string`) for the
+                    // header's Link props; its values are valid routes.
+                    href={{ to: item.to, params: item.params } as ToOptions}
+                    textValue={item.name}
+                  >
+                    <ArrowRightIcon className="text-fg-muted!" />
+                    {item.name}
+                  </MenuItem>
+                ))}
+              </MenuSection>
+            ),
+            ...items.map((group, index) => {
+              if (group.type !== 'folder') return null
+              const pages = group.children.filter(
+                (item): item is PageTree.Item =>
+                  item.type === 'page' && matches(item.name as string),
+              )
+              if (pages.length === 0) return null
+              return (
+                // oxlint-disable-next-line react/no-array-index-key -- items is static navigation data
+                <MenuSection key={`folder-${index}`}>
+                  <MenuSectionHeader>{group.name}</MenuSectionHeader>
+                  {pages.map((item) => (
                     <MenuItem
-                      key={recent.url}
-                      href={docsHref(recent.url)}
-                      textValue={recent.title}
+                      key={item.url}
+                      href={item.url}
+                      textValue={item.name as string}
                     >
-                      <ClockIcon className="text-fg-muted!" />
-                      <MenuItemLabel className="truncate">
-                        {recent.title}
-                      </MenuItemLabel>
-                    </MenuItem>
-                  ))}
-                </MenuSection>
-              ),
-              filteredNav.length > 0 && (
-                <MenuSection key="navigation">
-                  <MenuSectionHeader>Navigation</MenuSectionHeader>
-                  {filteredNav.map((item) => (
-                    <MenuItem
-                      key={item.name}
-                      // navItems is typed loosely (`to: string`) for the
-                      // header's Link props; its values are valid routes.
-                      href={{ to: item.to, params: item.params } as ToOptions}
-                      textValue={item.name}
-                    >
-                      <ArrowRightIcon className="text-fg-muted!" />
+                      {group.name === 'Components' ? (
+                        <CircleDashedIcon className="text-fg-muted!" />
+                      ) : (
+                        <FileTextIcon className="text-fg-muted!" />
+                      )}
                       {item.name}
                     </MenuItem>
                   ))}
                 </MenuSection>
-              ),
-              ...items.map((group, index) => {
-                if (group.type !== 'folder') return null
-                const pages = group.children.filter(
-                  (item): item is PageTree.Item =>
-                    item.type === 'page' && matches(item.name as string),
-                )
-                if (pages.length === 0) return null
-                return (
-                  // oxlint-disable-next-line react/no-array-index-key -- items is static navigation data
-                  <MenuSection key={`folder-${index}`}>
-                    <MenuSectionHeader>{group.name}</MenuSectionHeader>
-                    {pages.map((item) => (
-                      <MenuItem
-                        key={item.url}
-                        href={item.url}
-                        textValue={item.name as string}
-                      >
-                        {group.name === 'Components' ? (
-                          <CircleDashedIcon className="text-fg-muted!" />
-                        ) : (
-                          <FileTextIcon className="text-fg-muted!" />
-                        )}
-                        {item.name}
-                      </MenuItem>
-                    ))}
-                  </MenuSection>
-                )
-              }),
-              (matches('Toggle theme') || matches('GitHub')) && (
-                <MenuSection key="general">
-                  <MenuSectionHeader>General</MenuSectionHeader>
-                  {matches('Toggle theme') && (
-                    <MenuItem
-                      textValue="Toggle theme"
-                      onAction={() => {
-                        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
-                        onClose()
-                      }}
-                    >
-                      <SunIcon className="block text-fg-muted! dark:hidden" />
-                      <MoonIcon className="hidden text-fg-muted! dark:block" />
-                      Toggle theme
-                    </MenuItem>
-                  )}
-                  {matches('GitHub') && (
-                    <MenuItem
-                      href={siteConfig.links.github}
-                      target="_blank"
-                      textValue="GitHub"
-                    >
-                      <GitHubIcon className="text-fg-muted!" />
-                      GitHub
-                    </MenuItem>
-                  )}
-                </MenuSection>
-              ),
-              nestedResults.length > 0 && (
-                <MenuSection key="search-results">
-                  <MenuSectionHeader>Search results</MenuSectionHeader>
-                  {nestedResults.map(({ page, child }) => (
-                    <MenuItem
-                      key={child.id}
-                      href={docsHref(child.url)}
-                      textValue={stripMarks(child.content)}
-                      onAction={() => rememberChild(page, child)}
-                    >
-                      {child.type === 'heading' ? (
-                        <HashIcon className="text-fg-muted!" />
-                      ) : (
-                        <TextIcon className="text-fg-muted!" />
-                      )}
-                      <MenuItemLabel className="truncate">
-                        <Highlight text={child.content} />
-                      </MenuItemLabel>
-                      <span className="ml-auto shrink-0 text-xs text-fg-muted">
-                        {stripMarks(page.content)}
-                      </span>
-                    </MenuItem>
-                  ))}
-                </MenuSection>
-              ),
-            ]}
-          </MenuContent>
-        </div>
-      </Autocomplete>
-      <div className="flex items-center gap-4 border-t px-3 py-2.5 text-xs text-fg-muted [&_svg]:size-3.5">
-        <span className="flex items-center gap-1.5">
-          <ChevronsUpDownIcon />
-          Navigate
-        </span>
-        <span className="flex items-center gap-1.5">
-          <CornerDownLeftIcon />
-          Go to
-        </span>
-        <Button
-          slot="close"
-          variant="quiet"
-          size="sm"
-          className="ml-auto h-6 px-1.5 text-xs font-normal text-fg-muted"
-        >
-          Esc
-        </Button>
+              )
+            }),
+            (matches('Toggle theme') || matches('GitHub')) && (
+              <MenuSection key="general">
+                <MenuSectionHeader>General</MenuSectionHeader>
+                {matches('Toggle theme') && (
+                  <MenuItem
+                    textValue="Toggle theme"
+                    onAction={() => {
+                      setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
+                      onClose()
+                    }}
+                  >
+                    <SunIcon className="block text-fg-muted! dark:hidden" />
+                    <MoonIcon className="hidden text-fg-muted! dark:block" />
+                    Toggle theme
+                  </MenuItem>
+                )}
+                {matches('GitHub') && (
+                  <MenuItem
+                    href={siteConfig.links.github}
+                    target="_blank"
+                    textValue="GitHub"
+                  >
+                    <GitHubIcon className="text-fg-muted!" />
+                    GitHub
+                  </MenuItem>
+                )}
+              </MenuSection>
+            ),
+            nestedResults.length > 0 && (
+              <MenuSection key="search-results">
+                <MenuSectionHeader>Search results</MenuSectionHeader>
+                {nestedResults.map(({ page, child }) => (
+                  <MenuItem
+                    key={child.id}
+                    href={docsHref(child.url)}
+                    textValue={stripMarks(child.content)}
+                    onAction={() => rememberChild(page, child)}
+                  >
+                    {child.type === 'heading' ? (
+                      <HashIcon className="text-fg-muted!" />
+                    ) : (
+                      <TextIcon className="text-fg-muted!" />
+                    )}
+                    <MenuItemLabel className="truncate">
+                      <Highlight text={child.content} />
+                    </MenuItemLabel>
+                    <span className="ml-auto shrink-0 text-xs text-fg-muted">
+                      {stripMarks(page.content)}
+                    </span>
+                  </MenuItem>
+                ))}
+              </MenuSection>
+            ),
+          ]}
+        </MenuContent>
       </div>
-    </>
+    </Autocomplete>
   )
 }
