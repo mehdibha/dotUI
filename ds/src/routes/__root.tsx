@@ -7,8 +7,10 @@ import {
   Outlet,
   Scripts,
 } from '@tanstack/react-router'
+import { ThemeProvider } from 'starter-themes'
 
 import { siteConfig } from '@/config/site'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 import appCss from '@/styles.css?url'
 
@@ -32,6 +34,14 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
+    <ThemeProvider>
+      <RootDocument />
+    </ThemeProvider>
+  )
+}
+
+function RootDocument() {
+  return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
@@ -49,6 +59,7 @@ function RootComponent() {
               <Link to="/methodology" className="hover:text-fg">
                 Methodology
               </Link>
+              <ThemeToggle variant="quiet" size="sm" isIconOnly />
             </nav>
           </div>
         </header>
