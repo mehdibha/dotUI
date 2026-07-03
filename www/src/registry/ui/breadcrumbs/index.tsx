@@ -45,6 +45,20 @@ export function BreadcrumbLink({
             />
           )
         }
+        if (href.startsWith('/')) {
+          // Internal paths need RouterLink too — a bare <a> full-page reloads.
+          const { href: _domHref, ...routerDomProps } = domProps as Extract<
+            typeof domProps,
+            { href: unknown }
+          >
+          return (
+            <RouterLink
+              ref={ref as React.Ref<HTMLAnchorElement>}
+              {...({ to: href } as ToOptions)}
+              {...routerDomProps}
+            />
+          )
+        }
         return (
           <a
             ref={ref as React.Ref<HTMLAnchorElement>}

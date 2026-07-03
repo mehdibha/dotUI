@@ -47,6 +47,13 @@ function MenuItem<T extends object>({ href, ...props }: MenuItemProps<T>) {
           const { href: _domHref, ...routerDomProps } = domProps
           return <RouterLink {...href} {...routerDomProps} />
         }
+        if (href.startsWith('/')) {
+          // Internal paths need RouterLink too — a bare <a> full-page reloads.
+          const { href: _domHref, ...routerDomProps } = domProps
+          return (
+            <RouterLink {...({ to: href } as ToOptions)} {...routerDomProps} />
+          )
+        }
         return <a {...domProps} />
       }}
       {...props}
