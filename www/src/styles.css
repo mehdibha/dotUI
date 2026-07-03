@@ -93,17 +93,10 @@
 /* dotUI design-system morph — when a *scoped* DesignSystemProvider's design system
    changes (the landing showcase's preset selector), the provider flags its subtree
    with `data-dotui-transition` for one beat (see lib/styles.tsx) and this rule
-   tweens the whole change so it glides instead of snapping: the paint axes (color,
-   radius, shadow) AND the density axes (the box-model + type sizes that grow/shrink
-   the spacing). So picking a denser preset visibly tightens the spacing, a looser
-   one opens it up — a real layout tween, not a crossfade.
-
-   The layout-inducing properties here (padding, gap, width, height, font-size, …)
-   re-run layout every frame across the ~1k-node subtree, which is why the original
-   auto-cycling version (a swap every 3s, forever) was janky. This fires only on an
-   explicit user pick — a one-off ~half-second tween — where that cost is fine. The
-   flag is time-boxed by the provider, so it never touches the components' own
-   hover/press transitions outside a swap.
+   tweens only the paint axes (color, radius, shadow); everything else (density,
+   spacing, sizes) snaps instantly. Layout-inducing properties re-run layout every
+   frame across the ~1k-node subtree, which is too costly for a preset swap, so only
+   cheap paint properties animate.
 
    Tune via `--dotui-transition-duration` / `--dotui-transition-ease`; skipped under
    reduced-motion (those visitors get an instant snap). */
@@ -111,20 +104,7 @@
   [data-dotui-transition],
   [data-dotui-transition] * {
     transition-property:
-      /* paint */
-      color,
-      background-color,
-      border-color,
-      box-shadow,
-      border-radius,
-      /* density: the spacing *sources* only — animating derived sizes (width/
-         height) makes a parent's padding change cascade into children re-animating
-         their own size, which explodes the work. Let those follow instantly. */
-        padding,
-      gap;
-    /* A brisk ease-out: spacing animation is layout-bound (it re-lays-out the grid
-       each frame), so a shorter morph shows fewer of those frames and reads smoother
-       than a long slow one, while still clearly growing/tightening the space. */
+      color, background-color, border-color, box-shadow, border-radius;
     transition-duration: var(--dotui-transition-duration, 400ms);
     transition-timing-function: var(
       --dotui-transition-ease,
