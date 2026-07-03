@@ -47,7 +47,10 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
 
   return (
     <Card className={cn(className)} {...props}>
-      <CardContent>
+      {/* Reduced from the card's default px-4: the rows/panels/separators carry
+          their own 10px inset (row p-2.5, panel + separator mx-2.5), so the
+          hover highlight reaches near the card edge while content stays aligned. */}
+      <CardContent className="px-1.5">
         <RadioGroup
           aria-label="Payment method"
           value={method}
@@ -177,7 +180,10 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
             </div>
           </MethodPanel>
 
-          <Separator className="my-3.5" />
+          {/* w-auto drops the separator's w-full so the mx-2.5 actually insets
+              it (in the flex-col group it then stretches to the margins), lining
+              it up with the radio indicator and panel fields. */}
+          <Separator className="mx-2.5 my-3.5 w-auto" />
 
           <Radio value="apple-pay">
             <RadioControl className={methodControlClassName}>
@@ -193,7 +199,10 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
             </div>
           </MethodPanel>
 
-          <Separator className="my-3.5" />
+          {/* w-auto drops the separator's w-full so the mx-2.5 actually insets
+              it (in the flex-col group it then stretches to the margins), lining
+              it up with the radio indicator and panel fields. */}
+          <Separator className="mx-2.5 my-3.5 w-auto" />
 
           <Radio value="crypto">
             <RadioControl className={methodControlClassName}>
@@ -329,7 +338,9 @@ function MethodPanel({
         expanded && 'grid-rows-[1fr] opacity-100',
       )}
     >
-      <div className="min-h-0 overflow-y-clip px-2.5">{children}</div>
+      {/* min-w-0 lets the grid item shrink to the card width instead of the
+          joined field's min-content forcing a horizontal overflow. */}
+      <div className="min-h-0 min-w-0 overflow-y-clip px-2.5">{children}</div>
     </div>
   )
 }
