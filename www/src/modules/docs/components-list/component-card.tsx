@@ -1,28 +1,38 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 
 import { cn } from '@/registry/lib/utils'
 
-import { CardHoverProvider } from './autoplay'
+import { CardHoverProvider, DemoCursor } from './autoplay'
 import { componentDemos } from './demos'
 
 function ComponentPreview({
   children,
   className,
+  stageRef,
 }: {
   children: React.ReactNode
   className?: string
+  stageRef?: React.Ref<HTMLDivElement>
 }) {
   return (
     <div
       className={cn(
-        'relative flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border bg-bg p-4',
+        'relative h-40 w-full overflow-hidden rounded-lg border bg-bg',
         className,
       )}
     >
-      {children}
+      {/* Clip on this inset, not the padded box (which clips at the border), so no
+          demo — any scale, overlay, preset or density — paints past the gap. The
+          stage is also the follower cursor's positioning + measurement frame. */}
+      <div
+        ref={stageRef}
+        className="absolute inset-4 flex items-center justify-center overflow-hidden"
+      >
+        {children}
+      </div>
     </div>
   )
 }
@@ -33,12 +43,15 @@ interface ComponentCardProps {
   href: string
   scale?: number
   previewClassName?: string
-  /** Full-bleed demos (overlay scenes) fill the preview instead of being centered
-   *  and scaled — they manage their own framing and the "zoom out" choreography. */
+  /** Overlay-scene demos fill the stage instead of being centered and scaled —
+   *  they manage their own framing and the "zoom out" choreography. */
   fill?: boolean
   /** Field-like demos render full-width (not scaled), so the field is responsive
    *  to the card and consistent across the set; the demo caps itself via max-width. */
   stretch?: boolean
+  /** Show a macOS pointer that follows the demo's simulated clicks (see DemoCursor).
+   *  Opt-in per component — only the demos that press/select a control. */
+  cursor?: boolean
 }
 
 export function ComponentCard({
@@ -49,12 +62,14 @@ export function ComponentCard({
   previewClassName,
   fill = false,
   stretch = false,
+  cursor = false,
 }: ComponentCardProps) {
   const Demo = componentDemos[slug]
   // Hover/keyboard-focus on the card drives the demo's autoplay animation. The
   // demo itself is `inert`, so the card is the only thing that can be pointed at
   // or focused — it broadcasts that state down through CardHoverProvider.
   const [active, setActive] = useState(false)
+  const stageRef = useRef<HTMLDivElement>(null)
 
   const content = Demo ? (
     <Demo />
@@ -75,6 +90,7 @@ export function ComponentCard({
       onBlur={() => setActive(false)}
     >
       <ComponentPreview
+        stageRef={stageRef}
         className={cn(
           'w-full transition-colors group-hover:border-border-hover',
           previewClassName,
@@ -104,6 +120,9 @@ export function ComponentCard({
             </div>
           )}
         </CardHoverProvider>
+        {cursor && !fill && (
+          <DemoCursor containerRef={stageRef} active={active} />
+        )}
       </ComponentPreview>
       <span className="text-sm font-medium text-fg group-hover:underline">
         {name}

@@ -9,7 +9,7 @@ import { DemoPress, useToggleAutoplay } from '../autoplay'
 export function ToggleButtonDemo() {
   const { selected, pressing } = useToggleAutoplay({ initial: true })
   return (
-    <DemoPress pressing={pressing}>
+    <DemoPress pressing={pressing} selected={selected}>
       <ToggleButton
         isIconOnly
         aria-label="Toggle pin"

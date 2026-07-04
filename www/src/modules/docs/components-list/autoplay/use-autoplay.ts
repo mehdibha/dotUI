@@ -286,28 +286,28 @@ export function useCycle<T>(
   return { item: items[safe] as T, index: safe, pressing }
 }
 
-export type ScenePhase = 'idle' | 'hover' | 'press' | 'open'
+export type ScenePhase = 'open' | 'closed'
 
 /**
- * The shared timeline for overlay triggers: trigger sits idle, a cursor moves in
- * and hovers, presses, then the overlay opens and holds before looping. Feed the
- * returned `phase` straight into `<OverlayScene>`.
+ * The overlay timeline. At rest — un-hovered or under reduced motion — the
+ * overlay sits OPEN (the resting phase is index 0), so the card previews the
+ * surface with no interaction. On hover it loops open → closed forever, replaying
+ * the open/close animation. Feed the returned `phase` straight into
+ * `<OverlayScene>`.
  */
 export function useOpenAutoplay(
   options: AutoplayOptions & {
-    /** How long the opened overlay holds before looping, in ms. */
+    /** How long the overlay stays open each loop, in ms. */
     holdOpen?: number
+    /** How long it stays closed between loops, in ms. */
+    holdClosed?: number
   } = {},
 ): { phase: ScenePhase; cycle: number } {
-  const { holdOpen = 2000, ...rest } = options
+  const { holdOpen = 1500, holdClosed = 620, ...rest } = options
   const { phase, cycle } = useAutoplay(
     [
-      { name: 'idle', duration: 700 },
-      // Long enough for the cursor's ~520ms glide-in to settle before the click.
-      { name: 'hover', duration: 640 },
-      // Covers the click ripple (~320ms) plus a brief hold.
-      { name: 'press', duration: 360 },
       { name: 'open', duration: holdOpen },
+      { name: 'closed', duration: holdClosed },
     ],
     rest,
   )
