@@ -120,7 +120,7 @@ export function InteractiveDemo({
             included) to the preview mode; the preset only themes the canvas.
             While the panel is closed, right padding keeps the mode toggle
             clear of the trigger pinned in the corner. */}
-        <PreviewPanel className="relative flex min-w-0 flex-1 flex-col">
+        <PreviewPanel className="flex min-w-0 flex-1 flex-col">
           {/* The panel trigger stays mounted so its visibility can tween;
               `inert` takes it out of the tab order and the a11y tree while
               hidden. */}

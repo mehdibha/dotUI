@@ -91,7 +91,8 @@ export function PreviewPanel({
 }) {
   return (
     <DesignSystemProvider forcedMode={useForcedPreviewMode()} scoped>
-      <div className={cn('bg-bg', className)}>{children}</div>
+      {/* `relative` anchors the absolutely-positioned PreviewControls toolbar. */}
+      <div className={cn('relative bg-bg', className)}>{children}</div>
     </DesignSystemProvider>
   )
 }
@@ -183,12 +184,15 @@ function PreviewModeToggle({ className }: { className?: string }) {
   )
 }
 
-/** The toolbar above each docs preview: preset selector left, mode toggle right. */
+/**
+ * The toolbar over each docs preview: preset selector left, mode toggle right.
+ * Absolutely positioned so it overlays the canvas instead of taking its own row.
+ */
 export function PreviewControls({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex items-center justify-between gap-2 px-2 pt-2',
+        'absolute inset-x-0 top-0 z-10 flex items-center justify-between gap-2 px-2 pt-2',
         className,
       )}
     >
