@@ -18,11 +18,15 @@ function ComponentPreview({
   return (
     <div
       className={cn(
-        'relative flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border bg-bg p-4',
+        'relative h-40 w-full overflow-hidden rounded-lg border bg-bg',
         className,
       )}
     >
-      {children}
+      {/* Clip on this inset, not the padded box (which clips at the border), so no
+          demo — any scale, overlay, preset or density — paints past the gap. */}
+      <div className="absolute inset-4 flex items-center justify-center overflow-hidden">
+        {children}
+      </div>
     </div>
   )
 }
@@ -33,8 +37,8 @@ interface ComponentCardProps {
   href: string
   scale?: number
   previewClassName?: string
-  /** Full-bleed demos (overlay scenes) fill the preview instead of being centered
-   *  and scaled — they manage their own framing and the "zoom out" choreography. */
+  /** Overlay-scene demos fill the stage instead of being centered and scaled —
+   *  they manage their own framing and the "zoom out" choreography. */
   fill?: boolean
   /** Field-like demos render full-width (not scaled), so the field is responsive
    *  to the card and consistent across the set; the demo caps itself via max-width. */
