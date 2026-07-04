@@ -149,7 +149,7 @@ export function InteractiveDemo({
             )}
           />
           <DemoPreset>
-            <div className="flex min-h-56 flex-1 items-center justify-center bg-bg p-10">
+            <div className="flex min-h-56 flex-1 items-center justify-center bg-bg p-10 pt-14">
               {previewElement}
             </div>
           </DemoPreset>
