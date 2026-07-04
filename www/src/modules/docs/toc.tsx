@@ -7,6 +7,7 @@ import {
 } from 'fumadocs-core/toc'
 import { mergeRefs } from 'react-aria/mergeRefs'
 
+import { nodeText } from '@/lib/node-text'
 import { cn } from '@/registry/lib/utils'
 
 export type { TableOfContents, TOCItemType } from 'fumadocs-core/toc'
@@ -164,15 +165,4 @@ function MiniTOCLine({ item }: { item: TOCItemType }) {
       />
     </PrimitiveTOCItem>
   )
-}
-
-/** Flatten a heading's ReactNode title into plain text for aria-label. */
-function nodeText(node: React.ReactNode): string {
-  if (node == null || typeof node === 'boolean') return ''
-  if (typeof node === 'string' || typeof node === 'number') return String(node)
-  if (Array.isArray(node)) return node.map(nodeText).join('')
-  if (React.isValidElement<{ children?: React.ReactNode }>(node)) {
-    return nodeText(node.props.children)
-  }
-  return ''
 }

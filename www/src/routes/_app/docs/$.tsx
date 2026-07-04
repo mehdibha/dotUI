@@ -2,9 +2,9 @@ import { createFileRoute, notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseHeader } from '@tanstack/react-start/server'
 import { findNeighbour } from 'fumadocs-core/page-tree'
-import { ChevronDownIcon } from 'lucide-react'
 
 import { siteConfig } from '@/config/site'
+import { nodeText } from '@/lib/node-text'
 import { docsSource } from '@/lib/source'
 import { truncateOnWord } from '@/lib/text'
 import { DocsCopyPage } from '@/modules/docs/docs-copy-page'
@@ -16,7 +16,7 @@ import {
   PageHeaderHeading,
   PageLayout,
 } from '@/modules/docs/page-layout'
-import { MiniTOC, TOC, TOCItems, TOCProvider } from '@/modules/docs/toc'
+import { MiniTOC, TOC, TOCProvider } from '@/modules/docs/toc'
 import browserCollections from '@/.source/browser'
 
 export const Route = createFileRoute('/_app/docs/$')({
@@ -91,6 +91,9 @@ const serverLoader = createServerFn({ method: 'GET' })
     const pageTree = docsSource.getPageTree()
     const { previous, next } = findNeighbour(pageTree, page.url)
     const rawContent = await page.data.getText('processed')
+    // Serializable copy of the page's toc (titles flattened to text) so the
+    // header — which lives above the TOCProvider — can read it from route data.
+    const { toc } = await page.data.load()
 
     return {
       path: page.path,
@@ -98,6 +101,11 @@ const serverLoader = createServerFn({ method: 'GET' })
       title: page.data.title,
       description: page.data.description,
       rawContent,
+      toc: toc.map((item) => ({
+        url: item.url,
+        title: nodeText(item.title),
+        depth: item.depth,
+      })),
       neighbours: {
         previous: previous
           ? {
@@ -152,19 +160,6 @@ const clientLoader = browserCollections.docs.createClientLoader({
               </div>
               <div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_40%,transparent)] via-[color-mix(in_oklab,var(--color-border)_90%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
             </div>
-            {/* Mobile fallback for the right-rail TOC. The md–xl range uses the
-                in-flow MiniTOC column instead; below md there's no room. */}
-            {hasToc ? (
-              <details className="group rounded-lg border bg-card md:hidden">
-                <summary className="flex cursor-pointer list-none items-center justify-between px-3 py-2 text-sm font-medium [&::-webkit-details-marker]:hidden">
-                  On this page
-                  <ChevronDownIcon className="size-4 text-fg-muted transition-transform group-open:rotate-180" />
-                </summary>
-                <div className="relative border-t px-2 py-2">
-                  <TOCItems />
-                </div>
-              </details>
-            ) : null}
             <div>
               <MDX components={mdxComponents} />
             </div>
