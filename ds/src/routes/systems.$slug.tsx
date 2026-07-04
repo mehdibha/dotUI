@@ -1,6 +1,7 @@
 import { type ComponentType, useEffect, useState } from 'react'
 import { createFileRoute, notFound } from '@tanstack/react-router'
 
+import { cn } from '@/lib/utils'
 import { ContrastLab } from '@/components/explorer/contrast-lab'
 import { ContrastTable } from '@/components/explorer/contrast-table'
 import { FocusAnatomy } from '@/components/explorer/focus-anatomy'
@@ -15,7 +16,6 @@ import { StepRoleExplorer } from '@/components/explorer/step-role-explorer'
 import { TokenTable } from '@/components/explorer/token-table'
 import { dataIndex } from '@/data'
 import type { SystemWithColors } from '@/data/schema'
-import { cn } from '@/lib/utils'
 import { Badge } from '@/ui/badge'
 import { Link } from '@/ui/link'
 
@@ -199,7 +199,12 @@ function sectionsFor(system: SystemWithColors) {
     colors.notes.some((note) => note.section === id)
   return (
     [
-      { id: 'overview', label: 'Overview', Content: OverviewContent, show: true },
+      {
+        id: 'overview',
+        label: 'Overview',
+        Content: OverviewContent,
+        show: true,
+      },
       {
         id: 'architecture',
         label: 'Architecture',
@@ -239,7 +244,12 @@ function sectionsFor(system: SystemWithColors) {
         Content: ContrastContent,
         show: colors.contrast.length > 0 || hasNotes('contrast'),
       },
-    ] satisfies { id: string; label: string; Content: SectionContent; show: boolean }[]
+    ] satisfies {
+      id: string
+      label: string
+      Content: SectionContent
+      show: boolean
+    }[]
   ).filter((section) => section.show)
 }
 
@@ -250,7 +260,7 @@ function useScrollSpy(ids: string[]) {
 
   useEffect(() => {
     const onScroll = () => {
-      let current = ids[0]
+      let current = ids[0] ?? ''
       for (const id of ids) {
         const el = document.getElementById(id)
         if (el && el.getBoundingClientRect().top <= 140) current = id
@@ -258,7 +268,7 @@ function useScrollSpy(ids: string[]) {
       const atBottom =
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 4
-      if (atBottom) current = ids[ids.length - 1]
+      if (atBottom) current = ids[ids.length - 1] ?? current
       setActive(current)
     }
     onScroll()
@@ -320,11 +330,7 @@ function SystemBody({ system }: { system: SystemWithColors }) {
     <div className="relative mx-auto flex w-full max-w-4xl flex-col gap-8 px-6 py-10 lg:flex-row lg:gap-12 xl:block">
       <aside className="lg:sticky lg:top-6 lg:h-fit lg:w-44 lg:shrink-0 xl:absolute xl:inset-y-0 xl:right-full xl:mr-8 xl:h-auto xl:w-36">
         <div className="xl:sticky xl:top-10">
-          <SectionNav
-            sections={sections}
-            activeId={activeId}
-            onSelect={goTo}
-          />
+          <SectionNav sections={sections} activeId={activeId} onSelect={goTo} />
         </div>
       </aside>
       <div className="min-w-0 flex-1">

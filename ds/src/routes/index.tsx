@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
-import { ListFilterIcon } from 'lucide-react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import { ListFilterIcon } from 'lucide-react'
 import type { Selection } from 'react-aria-components/Menu'
 
 import { dataIndex } from '@/data'
@@ -71,16 +71,16 @@ const accessBadges: Record<
 
 const categoryOptions = [
   { id: 'all', label: 'All categories' },
-  ...(Object.entries(categoryLabels) as [RosterEntry['category'], string][]).map(
-    ([id, label]) => ({ id, label }),
-  ),
+  ...(
+    Object.entries(categoryLabels) as [RosterEntry['category'], string][]
+  ).map(([id, label]) => ({ id, label })),
 ]
 
 const accessOptions = [
   { id: 'all', label: 'All access' },
-  ...(Object.entries(accessBadges) as [RosterEntry['status'], { label: string }][]).map(
-    ([id, { label }]) => ({ id, label }),
-  ),
+  ...(
+    Object.entries(accessBadges) as [RosterEntry['status'], { label: string }][]
+  ).map(([id, { label }]) => ({ id, label })),
 ]
 
 function Home() {
@@ -90,7 +90,7 @@ function Home() {
         <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
           The design system directory.
         </h1>
-        <p className="mt-4 max-w-xl text-base text-fg-muted text-balance">
+        <p className="mt-4 max-w-xl text-base text-balance text-fg-muted">
           Explore the systems worth learning from — every color ramp, token, and
           contrast rule, measured from the source.
         </p>
@@ -123,7 +123,8 @@ function Directory() {
     })
   }, [query, category, access])
 
-  const activeFilters = (category !== 'all' ? 1 : 0) + (access !== 'all' ? 1 : 0)
+  const activeFilters =
+    (category !== 'all' ? 1 : 0) + (access !== 'all' ? 1 : 0)
 
   // Section-level single select over globally-unique `${prefix}:${value}` keys:
   // keep the newly picked key, drop the previous.
