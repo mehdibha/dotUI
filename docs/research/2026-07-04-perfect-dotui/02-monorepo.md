@@ -34,6 +34,264 @@ dotui/
 
 The naming is deliberate. The application is `apps/web`, not `www` — it is one app among a family that could grow (a Figma plugin host, a desktop CLI companion) without renaming the first one. The seven packages are each one concern, each a noun a contributor can hold in their head.
 
+### The complete file tree
+
+The whole workspace, expanded. The one shape to internalize: every `packages/registry/ui/<c>/` item folder is the same eight files plus `demos/` — `button/` is shown in full; the other ~72 components are identical in structure. `manifest/` sits *beside* `registry/src/`, never inside it (committed artifact, not source); tests live *with* the package they prove.
+
+```
+dotui/
+├── apps/
+│   └── web/                                  # dotui.org — the only application; a thin shell over the packages
+│       ├── src/
+│       │   ├── routes/                        # TanStack Start file routes
+│       │   │   ├── __root.tsx
+│       │   │   ├── index.tsx                  # marketing home
+│       │   │   ├── create.tsx                 # the builder route
+│       │   │   ├── r/                          # registry endpoints — call compile()
+│       │   │   │   ├── manifest.$version.ts
+│       │   │   │   ├── registry.$name.ts
+│       │   │   │   ├── init.ts
+│       │   │   │   ├── styles.$name.ts
+│       │   │   │   └── bundle.$target.ts       # v0 / Bolt / Lovable
+│       │   │   ├── api/
+│       │   │   │   ├── share.ts
+│       │   │   │   ├── compile.ts
+│       │   │   │   └── og.tsx
+│       │   │   ├── llms.txt.ts
+│       │   │   └── sitemap.xml.ts
+│       │   ├── builder/                        # the /create UI — five regions
+│       │   │   ├── Builder.tsx
+│       │   │   ├── TopBar.tsx
+│       │   │   ├── Panel/                       # generated from AxisDecl[]
+│       │   │   │   ├── Panel.tsx
+│       │   │   │   ├── AxisControl.tsx
+│       │   │   │   ├── ColorSection.tsx
+│       │   │   │   └── ComponentsSection.tsx
+│       │   │   ├── Stage/
+│       │   │   │   ├── Stage.tsx
+│       │   │   │   ├── ViewSwitcher.tsx
+│       │   │   │   └── DeviceFrame.tsx
+│       │   │   ├── Inspector/
+│       │   │   │   ├── Inspector.tsx
+│       │   │   │   └── ContrastReadout.tsx
+│       │   │   ├── AiDock/
+│       │   │   │   ├── AiDock.tsx
+│       │   │   │   └── importScreenshot.ts      # → { commands, unmapped }
+│       │   │   ├── state/                       # op-log · Command dispatch
+│       │   │   │   ├── store.ts
+│       │   │   │   ├── commands.ts
+│       │   │   │   ├── opLog.ts
+│       │   │   │   └── useDoc.ts
+│       │   │   └── export/
+│       │   │       ├── ExportDialog.tsx
+│       │   │       └── CodeStyleTab.tsx
+│       │   ├── docs/                            # fumadocs content + components
+│       │   ├── mcp/                             # agent-native access
+│       │   │   ├── server.ts
+│       │   │   └── tools.ts                     # compose · edit · export
+│       │   ├── render-harness/                  # DOM seam for parity + golden-dsdoc tests
+│       │   │   └── renderMatrix.tsx
+│       │   ├── fixtures/
+│       │   │   └── default-preview.json         # cold-start PreviewOutput
+│       │   ├── router.tsx
+│       │   ├── routeTree.gen.ts                 # generated
+│       │   └── styles.css
+│       ├── tests/
+│       │   ├── parity.test.ts                   # tw = stylex = preview
+│       │   ├── golden-dsdocs.test.ts
+│       │   └── cold-start.test.ts
+│       ├── app.config.ts
+│       ├── vite.config.ts
+│       ├── package.json
+│       └── tsconfig.json
+├── packages/                                  # the engine — publishable, app-unaware
+│   ├── schema/                                # @dotui/schema — taproot · zod only
+│   │   ├── src/
+│   │   │   ├── index.ts
+│   │   │   ├── dsdoc.ts
+│   │   │   ├── manifest.ts
+│   │   │   ├── axis.ts
+│   │   │   ├── code-style.ts
+│   │   │   ├── lock.ts
+│   │   │   ├── validate.ts
+│   │   │   ├── canonicalize.ts                 # sorted keys → content hash
+│   │   │   ├── reconcile.ts
+│   │   │   ├── migrate/
+│   │   │   │   ├── index.ts
+│   │   │   │   └── ladder.ts                    # the frozen migration ladder
+│   │   │   └── json-schema/
+│   │   │       ├── dsdoc.schema.json
+│   │   │       └── manifest.schema.json
+│   │   ├── tests/
+│   │   │   ├── migrate.test.ts
+│   │   │   └── migration-corpus/*.dsdoc.json
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   ├── tokens/                                # @dotui/tokens — Dimensional Token Graph · subsumes @dotui/colors
+│   │   ├── src/
+│   │   │   ├── index.ts
+│   │   │   ├── graph.ts
+│   │   │   ├── resolve-graph.ts
+│   │   │   ├── merge-overlay.ts
+│   │   │   ├── apply-edit.ts                    # edge-rule invariants
+│   │   │   ├── contract.ts                      # defineContract · surface · scalar
+│   │   │   ├── semantics.ts                     # 76-token baseline vocabulary
+│   │   │   ├── producers/                       # open registry
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── oklch.ts
+│   │   │   │   ├── tailwind.ts
+│   │   │   │   ├── contrast.ts
+│   │   │   │   ├── material.ts
+│   │   │   │   └── fixed.ts
+│   │   │   ├── verify/
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── wcag2.ts
+│   │   │   │   ├── apca.ts
+│   │   │   │   └── nudge.ts
+│   │   │   └── emit/
+│   │   │       ├── css.ts
+│   │   │       ├── stylex.ts
+│   │   │       └── dtcg.ts
+│   │   ├── tests/
+│   │   │   ├── cascade-resolution.test.ts
+│   │   │   └── contrast-matrix.test.ts
+│   │   ├── package.json                         # sideEffects:false
+│   │   └── tsconfig.json
+│   ├── style/                                 # @dotui/style — Style Contract · lift · two emitters
+│   │   ├── src/
+│   │   │   ├── index.ts
+│   │   │   ├── contract.ts                      # StyleContract types
+│   │   │   ├── lint.ts                          # dotui/style-subset = lift dry-run
+│   │   │   ├── lift.ts
+│   │   │   ├── normalize.ts                     # owned-slot re-homing
+│   │   │   ├── subset/
+│   │   │   │   ├── prop-keys.ts                 # closed PropKey catalog
+│   │   │   │   └── state-vocab.ts               # dual-bound states
+│   │   │   ├── emitters/
+│   │   │   │   ├── tailwind.ts                  # tv()
+│   │   │   │   └── stylex.ts                    # stylex.create
+│   │   │   └── authoring/
+│   │   │       ├── define-component-styles.ts
+│   │   │       └── sizes.ts                     # density × size table
+│   │   ├── tests/
+│   │   │   ├── catalog-completeness.test.ts
+│   │   │   └── round-trip.test.ts
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   ├── compiler/                              # @dotui/compiler — resolve() + compile()
+│   │   ├── src/
+│   │   │   ├── index.ts
+│   │   │   ├── resolve.ts
+│   │   │   ├── compile.ts
+│   │   │   ├── resolved-system.ts
+│   │   │   ├── targets/
+│   │   │   │   ├── preview.ts
+│   │   │   │   ├── export.ts
+│   │   │   │   ├── tokens.ts
+│   │   │   │   └── static-embed.ts
+│   │   │   └── code-style/
+│   │   │       └── apply-ast.ts                 # codeStyle AST transforms
+│   │   ├── tests/
+│   │   │   └── code-style-equivalence.test.ts
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   ├── registry/                              # @dotui/registry — THE product source
+│   │   ├── src/
+│   │   │   ├── index.ts
+│   │   │   ├── build-manifest.ts               # lifts source → RegistryManifest
+│   │   │   ├── sync-groups.ts
+│   │   │   ├── axes/                            # system-level AxisDecls
+│   │   │   │   ├── color.ts
+│   │   │   │   ├── typography.ts
+│   │   │   │   ├── shape.ts
+│   │   │   │   ├── elevation.ts
+│   │   │   │   └── overlays.ts                  # translucent fan-out
+│   │   │   ├── icons/
+│   │   │   │   ├── index.ts
+│   │   │   │   └── map.ts                       # cross-library import table
+│   │   │   ├── lib/
+│   │   │   │   ├── cn.ts
+│   │   │   │   └── focus-styles.ts
+│   │   │   ├── hooks/
+│   │   │   │   ├── use-media-query.ts
+│   │   │   │   └── use-controlled-state.ts
+│   │   │   ├── base/                            # style/base init payload
+│   │   │   │   ├── base.css
+│   │   │   │   └── init.ts
+│   │   │   └── ui/                              # ~72 items — every one this same shape
+│   │   │       ├── button/
+│   │   │       │   ├── base.tsx                 # RAC behavior + slots
+│   │   │       │   ├── styles.ts                # Tailwind strings · sizes()
+│   │   │       │   ├── contract.ts              # surface() · scalar()
+│   │   │       │   ├── axes.ts                  # button.fill · hoverEffect
+│   │   │       │   ├── meta.ts
+│   │   │       │   ├── types.ts                 # → API reference
+│   │   │       │   ├── index.tsx               # site wrapper — never shipped
+│   │   │       │   ├── examples.tsx
+│   │   │       │   └── demos/
+│   │   │       │       ├── default.tsx
+│   │   │       │       └── variants.tsx
+│   │   │       ├── toggle-button/               # synced with button — identical shape
+│   │   │       ├── menu/  listbox/  select/  combobox/  dialog/  popover/
+│   │   │       ├── tooltip/  calendar/  date-picker/  table/  tabs/
+│   │   │       ├── color-picker/  checkbox/  …
+│   │   │       └── (…~58 more — each the same 8 files + demos/)
+│   │   ├── manifest/                            # committed build artifact — src never imports it
+│   │   │   ├── 2028.03.01-a3f.json              # immutable, content-addressed
+│   │   │   └── latest.json
+│   │   ├── tests/
+│   │   │   └── lints.corpus.test.ts
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   ├── runtime/                               # @dotui/runtime — live-preview substrate
+│   │   ├── src/
+│   │   │   ├── index.ts
+│   │   │   ├── design-scope.tsx                 # scoped-inline provider
+│   │   │   ├── create-live-variants.ts          # live twin of tv()
+│   │   │   ├── adopted-sheets.ts
+│   │   │   └── worker/
+│   │   │       ├── client.ts
+│   │   │       ├── worker.ts                    # runs resolve/compile
+│   │   │       └── protocol.ts                  # VarOp · StyleTree · sheets
+│   │   ├── tests/
+│   │   │   └── live-variants-conformance.test.ts
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   └── cli/                                   # dotui — the published binary · schema + HTTP only
+│       ├── src/
+│       │   ├── bin.ts
+│       │   ├── init.ts
+│       │   ├── add.ts
+│       │   ├── update.ts
+│       │   ├── plan.ts                          # clean · 3-way merge
+│       │   ├── lock.ts                          # dotui.lock.json
+│       │   └── http.ts
+│       ├── tests/
+│       │   └── plan.test.ts
+│       ├── package.json                         # bin: dotui
+│       └── tsconfig.json
+├── tooling/
+│   ├── ts-config/                             # @dotui/ts-config
+│   │   ├── base.json
+│   │   └── package.json
+│   └── eslint-config/                         # @dotui/eslint-config — the dotui/* boundary lints
+│       ├── src/rules/
+│       │   ├── style-subset.ts
+│       │   ├── import-boundaries.ts
+│       │   ├── id-permanence.ts
+│       │   ├── contract-integrity.ts
+│       │   └── owned-slot.ts
+│       └── package.json
+├── docs/                                      # repo docs (this study) — not the site
+│   └── research/
+├── .dependency-cruiser.jsonc                  # the DAG, enforced
+├── .oxlintrc.json
+├── pnpm-workspace.yaml                        # apps/* · packages/* · tooling/*
+├── turbo.json
+├── package.json
+└── tsconfig.json
+```
+
 ---
 
 ## 2. The seven packages

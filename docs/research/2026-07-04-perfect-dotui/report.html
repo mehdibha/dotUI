@@ -215,6 +215,41 @@ svg .edash{stroke-dasharray:5 4}
 svg .enone{marker-end:none}
 svg .hair{stroke:var(--line);stroke-width:1}
 
+/* file tree (IDE explorer) */
+.ftree{margin:26px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);font-family:'Geist Mono';font-size:12.5px;line-height:1.85;overflow-x:auto}
+.ftree-bar{display:flex;gap:8px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line-soft);position:sticky;left:0}
+.ftree-bar .tt{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-right:auto}
+.ftree-bar button{font-family:'Geist Mono';font-size:10.5px;padding:4px 10px;border:1px solid var(--line);background:var(--sunken);color:var(--ink-2);border-radius:6px;cursor:pointer}
+.ftree-bar button:hover{color:var(--ink);border-color:var(--accent)}
+.ftree-bar button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.ftree-body{padding:9px 12px 14px;min-width:max-content}
+.ftree details{margin:0}
+.ftree summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:7px;padding:1.5px 8px;border-radius:6px;white-space:nowrap}
+.ftree summary::-webkit-details-marker{display:none}
+.ftree summary:hover{background:var(--sunken)}
+.ftree summary:focus-visible{outline:2px solid var(--accent);outline-offset:-1px}
+.ftree .cv{width:9px;flex:none;color:var(--ink-3);transition:transform .12s ease;font-size:9px}
+.ftree details[open]>summary .cv{transform:rotate(90deg)}
+.ftree .ico{display:inline-block;width:14px;height:12px;flex:none;background:var(--accent-ink);opacity:.92;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z'/%3E%3C/svg%3E") center/contain no-repeat}
+.ftree .dn{color:var(--ink);font-weight:560}
+.ftree .kids{margin-left:16px;padding-left:9px;border-left:1px solid var(--line-soft)}
+.ftree .f{display:flex;align-items:center;gap:7px;padding:1.5px 8px 1.5px 24px;border-radius:6px;white-space:nowrap}
+.ftree .f:hover{background:var(--sunken)}
+.ftree .fn{color:var(--ink-2)}
+.ftree .cmt{color:var(--ink-3);font-size:11px;opacity:.9}
+.ftree .cmt::before{content:"— "}
+.ftree .dot{width:7px;height:7px;border-radius:2px;flex:none;background:var(--ink-3)}
+.ftree .tsx{background:var(--accent)}
+.ftree .ts{background:var(--amber)}
+.ftree .json,.ftree .jsonc{background:var(--green)}
+.ftree .css{background:oklch(0.64 0.13 200)}
+.ftree .md,.ftree .txt{background:var(--ink-3)}
+.ftree .cfg{background:var(--red)}
+.ftree .pkg>summary .dn{color:var(--accent-ink);font-weight:640}
+.ftree .pkg>summary .ico{background:var(--accent)}
+.ftree .tag{font-size:9px;color:var(--ink-3);border:1px solid var(--line);border-radius:999px;padding:0 6px}
+.ftree .more{padding:2px 8px 2px 24px;color:var(--ink-3);font-style:normal}
+.ftree .more b{color:var(--ink-2);font-weight:600}
 footer{margin-top:90px;padding-top:26px;border-top:1px solid var(--line-soft);font-family:'Geist Mono';font-size:11.5px;color:var(--ink-3);line-height:1.8}
 footer a{color:var(--ink-2)}
 .skip{position:absolute;left:-9999px}
@@ -245,6 +280,7 @@ footer a{color:var(--ink-2)}
     <li><a href="#decisions"><span class="n">00</span>Decision log</a></li>
     <li class="toc-gap" aria-hidden="true"></li>
     <li><a href="#monorepo"><span class="n">02</span>Monorepo</a></li>
+    <li><a href="#filetree"><span class="n">└─</span>File tree</a></li>
     <li><a href="#registry"><span class="n">03</span>Registry</a></li>
     <li><a href="#styles"><span class="n">04</span>Styles</a></li>
     <li><a href="#tokens"><span class="n">05</span>Tokens</a></li>
@@ -618,6 +654,464 @@ footer a{color:var(--ink-2)}
     </div>
   </div>
 </section>
+
+<!-- ================= 02+ FILE TREE ================= -->
+<section id="filetree">
+  <div class="prose">
+    <div class="eyebrow">Chapter 02 <span class="file">the complete tree</span></div>
+    <h2>Every file, in its place</h2>
+    <p class="kicker">The whole workspace as it stands in the editor — one app, seven engine packages, two tooling packages. Folders collapse; file dots are colored by type (<span class="mono" style="color:var(--accent-ink)">▪ tsx</span> · <span class="mono" style="color:var(--amber)">▪ ts</span> · <span class="mono" style="color:var(--green)">▪ json</span> · <span class="mono" style="color:oklch(0.64 0.13 200)">▪ css</span> · <span class="mono" style="color:var(--ink-3)">▪ md</span> · <span class="mono" style="color:var(--red)">▪ config</span>). The one shape to notice: a <code>packages/registry</code> item folder is always the same eight files plus <code>demos/</code> — <code>button/</code> is expanded to show it; the other ~72 follow it exactly.</p>
+  </div>
+
+  <div class="wide">
+    <div class="ftree" id="ftree">
+      <div class="ftree-bar">
+        <span class="tt">dotui/ · pnpm workspace</span>
+        <button id="ft-expand" type="button">Expand all</button>
+        <button id="ft-collapse" type="button">Collapse all</button>
+      </div>
+      <div class="ftree-body">
+      <details open class="dir root"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">dotui/</span></summary>
+      <div class="kids">
+
+        <!-- apps -->
+        <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">apps/</span></summary>
+        <div class="kids">
+          <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">web/</span> <span class="cmt">dotui.org — the only application; a thin shell over the packages</span></summary>
+          <div class="kids">
+            <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">src/</span></summary>
+            <div class="kids">
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">routes/</span> <span class="cmt">TanStack Start file routes</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot tsx"></span><span class="fn">__root.tsx</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">index.tsx</span> <span class="cmt">marketing home</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">create.tsx</span> <span class="cmt">the builder route</span></div>
+                <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">r/</span> <span class="cmt">registry endpoints — call compile()</span></summary>
+                <div class="kids">
+                  <div class="f"><span class="dot ts"></span><span class="fn">manifest.$version.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">registry.$name.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">init.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">styles.$name.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">bundle.$target.ts</span> <span class="cmt">v0 / Bolt / Lovable</span></div>
+                </div></details>
+                <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">api/</span></summary>
+                <div class="kids">
+                  <div class="f"><span class="dot ts"></span><span class="fn">share.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">compile.ts</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">og.tsx</span></div>
+                </div></details>
+                <div class="f"><span class="dot ts"></span><span class="fn">llms.txt.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">sitemap.xml.ts</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">builder/</span> <span class="cmt">the /create UI — five regions</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot tsx"></span><span class="fn">Builder.tsx</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">TopBar.tsx</span></div>
+                <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">Panel/</span> <span class="cmt">generated from AxisDecl[]</span></summary>
+                <div class="kids">
+                  <div class="f"><span class="dot tsx"></span><span class="fn">Panel.tsx</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">AxisControl.tsx</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">ColorSection.tsx</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">ComponentsSection.tsx</span></div>
+                </div></details>
+                <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">Stage/</span></summary>
+                <div class="kids">
+                  <div class="f"><span class="dot tsx"></span><span class="fn">Stage.tsx</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">ViewSwitcher.tsx</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">DeviceFrame.tsx</span></div>
+                </div></details>
+                <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">Inspector/</span></summary>
+                <div class="kids">
+                  <div class="f"><span class="dot tsx"></span><span class="fn">Inspector.tsx</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">ContrastReadout.tsx</span></div>
+                </div></details>
+                <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">AiDock/</span></summary>
+                <div class="kids">
+                  <div class="f"><span class="dot tsx"></span><span class="fn">AiDock.tsx</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">importScreenshot.ts</span> <span class="cmt">→ &#123;commands, unmapped&#125;</span></div>
+                </div></details>
+                <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">state/</span> <span class="cmt">op-log · Command dispatch</span></summary>
+                <div class="kids">
+                  <div class="f"><span class="dot ts"></span><span class="fn">store.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">commands.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">opLog.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">useDoc.ts</span></div>
+                </div></details>
+                <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">export/</span></summary>
+                <div class="kids">
+                  <div class="f"><span class="dot tsx"></span><span class="fn">ExportDialog.tsx</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">CodeStyleTab.tsx</span></div>
+                </div></details>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">docs/</span> <span class="cmt">fumadocs content + components</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot tsx"></span><span class="fn">components/</span></div>
+                <div class="f"><span class="dot md"></span><span class="fn">content/</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">mcp/</span> <span class="cmt">agent-native access</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">server.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">tools.ts</span> <span class="cmt">compose · edit · export</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">render-harness/</span> <span class="cmt">DOM seam for parity + golden-dsdoc tests</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot tsx"></span><span class="fn">renderMatrix.tsx</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">fixtures/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot json"></span><span class="fn">default-preview.json</span> <span class="cmt">cold-start PreviewOutput</span></div>
+              </div></details>
+              <div class="f"><span class="dot ts"></span><span class="fn">router.tsx</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">routeTree.gen.ts</span> <span class="cmt">generated</span></div>
+              <div class="f"><span class="dot css"></span><span class="fn">styles.css</span></div>
+            </div></details>
+            <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">tests/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">parity.test.ts</span> <span class="cmt">tw = stylex = preview</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">golden-dsdocs.test.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">cold-start.test.ts</span></div>
+            </div></details>
+            <div class="f"><span class="dot ts"></span><span class="fn">app.config.ts</span></div>
+            <div class="f"><span class="dot ts"></span><span class="fn">vite.config.ts</span></div>
+            <div class="f"><span class="dot json"></span><span class="fn">package.json</span></div>
+            <div class="f"><span class="dot json"></span><span class="fn">tsconfig.json</span></div>
+          </div></details>
+        </div></details>
+
+        <!-- packages -->
+        <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">packages/</span> <span class="cmt">the engine — publishable, app-unaware</span></summary>
+        <div class="kids">
+
+          <!-- schema -->
+          <details class="dir pkg"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">schema/</span> <span class="tag">@dotui/schema</span> <span class="cmt">taproot · zod only</span></summary>
+          <div class="kids">
+            <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">src/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">index.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">dsdoc.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">manifest.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">axis.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">code-style.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">lock.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">validate.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">canonicalize.ts</span> <span class="cmt">sorted keys → content hash</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">reconcile.ts</span></div>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">migrate/</span> <span class="cmt">the frozen ladder</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">index.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">ladder.ts</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">json-schema/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot json"></span><span class="fn">dsdoc.schema.json</span></div>
+                <div class="f"><span class="dot json"></span><span class="fn">manifest.schema.json</span></div>
+              </div></details>
+            </div></details>
+            <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">tests/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">migrate.test.ts</span></div>
+              <div class="f"><span class="dot json"></span><span class="fn">migration-corpus/*.dsdoc.json</span></div>
+            </div></details>
+            <div class="f"><span class="dot json"></span><span class="fn">package.json</span></div>
+            <div class="f"><span class="dot json"></span><span class="fn">tsconfig.json</span></div>
+          </div></details>
+
+          <!-- tokens -->
+          <details class="dir pkg"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">tokens/</span> <span class="tag">@dotui/tokens</span> <span class="cmt">Dimensional Token Graph · subsumes @dotui/colors</span></summary>
+          <div class="kids">
+            <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">src/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">index.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">graph.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">resolve-graph.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">merge-overlay.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">apply-edit.ts</span> <span class="cmt">edge-rule invariants</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">contract.ts</span> <span class="cmt">defineContract · surface · scalar</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">semantics.ts</span> <span class="cmt">76-token baseline vocabulary</span></div>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">producers/</span> <span class="cmt">open registry</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">index.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">oklch.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">tailwind.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">contrast.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">material.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">fixed.ts</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">verify/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">index.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">wcag2.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">apca.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">nudge.ts</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">emit/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">css.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">stylex.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">dtcg.ts</span></div>
+              </div></details>
+            </div></details>
+            <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">tests/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">cascade-resolution.test.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">contrast-matrix.test.ts</span></div>
+            </div></details>
+            <div class="f"><span class="dot json"></span><span class="fn">package.json</span> <span class="cmt">sideEffects:false</span></div>
+            <div class="f"><span class="dot json"></span><span class="fn">tsconfig.json</span></div>
+          </div></details>
+
+          <!-- style -->
+          <details class="dir pkg"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">style/</span> <span class="tag">@dotui/style</span> <span class="cmt">Style Contract · lift · two emitters</span></summary>
+          <div class="kids">
+            <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">src/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">index.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">contract.ts</span> <span class="cmt">StyleContract types</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">lint.ts</span> <span class="cmt">dotui/style-subset = lift dry-run</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">lift.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">normalize.ts</span> <span class="cmt">owned-slot re-homing</span></div>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">subset/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">prop-keys.ts</span> <span class="cmt">closed PropKey catalog</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">state-vocab.ts</span> <span class="cmt">dual-bound states</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">emitters/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">tailwind.ts</span> <span class="cmt">tv()</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">stylex.ts</span> <span class="cmt">stylex.create</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">authoring/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">define-component-styles.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">sizes.ts</span> <span class="cmt">density × size table</span></div>
+              </div></details>
+            </div></details>
+            <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">tests/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">catalog-completeness.test.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">round-trip.test.ts</span></div>
+            </div></details>
+            <div class="f"><span class="dot json"></span><span class="fn">package.json</span></div>
+            <div class="f"><span class="dot json"></span><span class="fn">tsconfig.json</span></div>
+          </div></details>
+
+          <!-- compiler -->
+          <details class="dir pkg"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">compiler/</span> <span class="tag">@dotui/compiler</span> <span class="cmt">resolve() + compile() — the pure pipeline</span></summary>
+          <div class="kids">
+            <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">src/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">index.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">resolve.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">compile.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">resolved-system.ts</span></div>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">targets/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">preview.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">export.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">tokens.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">static-embed.ts</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">code-style/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">apply-ast.ts</span> <span class="cmt">codeStyle AST transforms</span></div>
+              </div></details>
+            </div></details>
+            <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">tests/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">code-style-equivalence.test.ts</span></div>
+            </div></details>
+            <div class="f"><span class="dot json"></span><span class="fn">package.json</span></div>
+            <div class="f"><span class="dot json"></span><span class="fn">tsconfig.json</span></div>
+          </div></details>
+
+          <!-- registry -->
+          <details open class="dir pkg"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">registry/</span> <span class="tag">@dotui/registry</span> <span class="cmt">THE product source</span></summary>
+          <div class="kids">
+            <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">src/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">index.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">build-manifest.ts</span> <span class="cmt">lifts source → RegistryManifest</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">sync-groups.ts</span></div>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">axes/</span> <span class="cmt">system-level AxisDecls</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">color.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">typography.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">shape.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">elevation.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">overlays.ts</span> <span class="cmt">translucent fan-out</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">icons/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">index.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">map.ts</span> <span class="cmt">cross-library import table</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">lib/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">cn.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">focus-styles.ts</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">hooks/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">use-media-query.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">use-controlled-state.ts</span></div>
+              </div></details>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">base/</span> <span class="cmt">style/base init payload</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot css"></span><span class="fn">base.css</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">init.ts</span></div>
+              </div></details>
+              <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">ui/</span> <span class="cmt">~72 items — every one this same shape</span></summary>
+              <div class="kids">
+                <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">button/</span></summary>
+                <div class="kids">
+                  <div class="f"><span class="dot tsx"></span><span class="fn">base.tsx</span> <span class="cmt">RAC behavior + slots</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">styles.ts</span> <span class="cmt">Tailwind strings · sizes()</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">contract.ts</span> <span class="cmt">surface() · scalar()</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">axes.ts</span> <span class="cmt">button.fill · hoverEffect</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">meta.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">types.ts</span> <span class="cmt">→ API reference</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">index.tsx</span> <span class="cmt">site wrapper — never shipped</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">examples.tsx</span></div>
+                  <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">demos/</span></summary>
+                  <div class="kids">
+                    <div class="f"><span class="dot tsx"></span><span class="fn">default.tsx</span></div>
+                    <div class="f"><span class="dot tsx"></span><span class="fn">variants.tsx</span></div>
+                  </div></details>
+                </div></details>
+                <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">toggle-button/</span> <span class="cmt">synced with button — identical shape</span></summary>
+                <div class="kids">
+                  <div class="f"><span class="dot tsx"></span><span class="fn">base.tsx</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">styles.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">contract.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">axes.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">meta.ts</span></div>
+                  <div class="f"><span class="dot ts"></span><span class="fn">types.ts</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">index.tsx</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">examples.tsx</span></div>
+                  <div class="f"><span class="dot tsx"></span><span class="fn">demos/</span></div>
+                </div></details>
+                <div class="f"><span class="dot tsx"></span><span class="fn">menu/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">listbox/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">select/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">combobox/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">dialog/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">popover/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">tooltip/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">calendar/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">date-picker/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">table/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">tabs/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">color-picker/</span></div>
+                <div class="f"><span class="dot tsx"></span><span class="fn">checkbox/</span></div>
+                <div class="more">…and <b>~58 more</b> — each the same 8 files + <span class="mono">demos/</span></div>
+              </div></details>
+            </div></details>
+            <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">manifest/</span> <span class="cmt">committed build artifact — src never imports it</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot json"></span><span class="fn">2028.03.01-a3f.json</span> <span class="cmt">immutable, content-addressed</span></div>
+              <div class="f"><span class="dot json"></span><span class="fn">latest.json</span></div>
+            </div></details>
+            <div class="f"><span class="dot json"></span><span class="fn">package.json</span></div>
+            <div class="f"><span class="dot json"></span><span class="fn">tsconfig.json</span></div>
+          </div></details>
+
+          <!-- runtime -->
+          <details class="dir pkg"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">runtime/</span> <span class="tag">@dotui/runtime</span> <span class="cmt">live-preview substrate</span></summary>
+          <div class="kids">
+            <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">src/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">index.ts</span></div>
+              <div class="f"><span class="dot tsx"></span><span class="fn">design-scope.tsx</span> <span class="cmt">scoped-inline provider</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">create-live-variants.ts</span> <span class="cmt">live twin of tv()</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">adopted-sheets.ts</span></div>
+              <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">worker/</span></summary>
+              <div class="kids">
+                <div class="f"><span class="dot ts"></span><span class="fn">client.ts</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">worker.ts</span> <span class="cmt">runs resolve/compile</span></div>
+                <div class="f"><span class="dot ts"></span><span class="fn">protocol.ts</span> <span class="cmt">VarOp · StyleTree · sheets</span></div>
+              </div></details>
+            </div></details>
+            <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">tests/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">live-variants-conformance.test.ts</span></div>
+            </div></details>
+            <div class="f"><span class="dot json"></span><span class="fn">package.json</span></div>
+            <div class="f"><span class="dot json"></span><span class="fn">tsconfig.json</span></div>
+          </div></details>
+
+          <!-- cli -->
+          <details class="dir pkg"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">cli/</span> <span class="tag">dotui</span> <span class="cmt">the published binary · schema + HTTP only</span></summary>
+          <div class="kids">
+            <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">src/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">bin.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">init.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">add.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">update.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">plan.ts</span> <span class="cmt">clean · 3-way merge</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">lock.ts</span> <span class="cmt">dotui.lock.json</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">http.ts</span></div>
+            </div></details>
+            <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">tests/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">plan.test.ts</span></div>
+            </div></details>
+            <div class="f"><span class="dot json"></span><span class="fn">package.json</span> <span class="cmt">bin: dotui</span></div>
+            <div class="f"><span class="dot json"></span><span class="fn">tsconfig.json</span></div>
+          </div></details>
+
+        </div></details>
+
+        <!-- tooling -->
+        <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">tooling/</span></summary>
+        <div class="kids">
+          <details class="dir pkg"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">ts-config/</span> <span class="tag">@dotui/ts-config</span></summary>
+          <div class="kids">
+            <div class="f"><span class="dot json"></span><span class="fn">base.json</span></div>
+            <div class="f"><span class="dot json"></span><span class="fn">package.json</span></div>
+          </div></details>
+          <details class="dir pkg"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">eslint-config/</span> <span class="tag">@dotui/eslint-config</span> <span class="cmt">the dotui/* boundary lints</span></summary>
+          <div class="kids">
+            <details open class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">src/rules/</span></summary>
+            <div class="kids">
+              <div class="f"><span class="dot ts"></span><span class="fn">style-subset.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">import-boundaries.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">id-permanence.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">contract-integrity.ts</span></div>
+              <div class="f"><span class="dot ts"></span><span class="fn">owned-slot.ts</span></div>
+            </div></details>
+            <div class="f"><span class="dot json"></span><span class="fn">package.json</span></div>
+          </div></details>
+        </div></details>
+
+        <!-- docs -->
+        <details class="dir"><summary><span class="cv">▸</span><span class="ico"></span><span class="dn">docs/</span> <span class="cmt">repo docs (this study) — not the site</span></summary>
+        <div class="kids">
+          <div class="f"><span class="dot md"></span><span class="fn">research/</span></div>
+        </div></details>
+
+        <!-- root files -->
+        <div class="f"><span class="dot cfg"></span><span class="fn">.dependency-cruiser.jsonc</span> <span class="cmt">the DAG, enforced</span></div>
+        <div class="f"><span class="dot cfg"></span><span class="fn">.oxlintrc.json</span></div>
+        <div class="f"><span class="dot cfg"></span><span class="fn">pnpm-workspace.yaml</span> <span class="cmt">apps/* · packages/* · tooling/*</span></div>
+        <div class="f"><span class="dot cfg"></span><span class="fn">turbo.json</span></div>
+        <div class="f"><span class="dot json"></span><span class="fn">package.json</span></div>
+        <div class="f"><span class="dot json"></span><span class="fn">tsconfig.json</span></div>
+
+      </div></details>
+      </div>
+    </div>
+    <figcaption style="max-width:69rem;margin:14px auto 0;font-family:'Geist Mono';font-size:11.5px;color:var(--ink-3);line-height:1.55"><b style="color:var(--ink-2)">Fig. 4b — The workspace tree.</b> Dependency direction is legible in the folder order: <code>schema</code> at the root of <code>packages/</code>, then <code>tokens</code>/<code>style</code>, then <code>compiler</code>, then <code>registry</code>/<code>runtime</code>. <code>manifest/</code> sits beside <code>registry/src/</code>, never inside it — committed artifact, not source.</figcaption>
+  </div>
+</section>
+<script>
+(function(){
+  var tree=document.getElementById('ftree'); if(!tree) return;
+  var ex=document.getElementById('ft-expand'), col=document.getElementById('ft-collapse');
+  ex&&ex.addEventListener('click',function(){tree.querySelectorAll('details').forEach(function(d){d.open=true;});});
+  col&&col.addEventListener('click',function(){tree.querySelectorAll('details').forEach(function(d){if(!d.classList.contains('root'))d.open=false;});});
+})();
+</script>
 
 <!-- ================= 03 REGISTRY ================= -->
 <section id="registry">
