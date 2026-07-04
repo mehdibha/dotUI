@@ -7,15 +7,14 @@ import { ContrastTable } from '@/components/explorer/contrast-table'
 import { FocusAnatomy } from '@/components/explorer/focus-anatomy'
 import { LayerDiagram } from '@/components/explorer/layer-diagram'
 import { ModeSwitcher } from '@/components/explorer/mode-switcher'
-import { OverviewCards } from '@/components/explorer/overview-cards'
 import { RampGrid } from '@/components/explorer/ramp-grid'
 import { SectionNotes } from '@/components/explorer/section-notes'
-import { SourceLinks } from '@/components/explorer/source-links'
 import { SpecTable } from '@/components/explorer/spec-table'
 import { StepRoleExplorer } from '@/components/explorer/step-role-explorer'
+import { SystemOverview } from '@/components/explorer/system-overview'
 import { TokenTable } from '@/components/explorer/token-table'
 import { dataIndex } from '@/data'
-import type { SystemWithColors } from '@/data/schema'
+import type { RosterEntry, SystemWithColors } from '@/data/schema'
 import { Badge } from '@/ui/badge'
 import { Link } from '@/ui/link'
 
@@ -31,24 +30,19 @@ export const Route = createFileRoute('/systems/$slug')({
   component: SystemPage,
 })
 
-type SectionContent = ComponentType<{ system: SystemWithColors }>
+type SectionContent = ComponentType<{
+  system: SystemWithColors
+  rosterEntry?: RosterEntry
+}>
 
-function OverviewContent({ system }: { system: SystemWithColors }) {
-  const { colors } = system
-  return (
-    <>
-      <OverviewCards entries={colors.overview} />
-      <SectionNotes
-        notes={colors.notes.filter((note) => note.section === 'overview')}
-      />
-      <div className="mt-8 border-t pt-5">
-        <p className="text-xs text-fg-muted">
-          Primary sources for this system:
-        </p>
-        <SourceLinks sources={colors.sources} className="mt-2" />
-      </div>
-    </>
-  )
+function OverviewContent({
+  system,
+  rosterEntry,
+}: {
+  system: SystemWithColors
+  rosterEntry?: RosterEntry
+}) {
+  return <SystemOverview system={system} rosterEntry={rosterEntry} />
 }
 
 function ArchitectureContent({ system }: { system: SystemWithColors }) {
@@ -313,7 +307,13 @@ function SectionNav({
   )
 }
 
-function SystemBody({ system }: { system: SystemWithColors }) {
+function SystemBody({
+  system,
+  rosterEntry,
+}: {
+  system: SystemWithColors
+  rosterEntry?: RosterEntry
+}) {
   const sections = sectionsFor(system)
   const ids = sections.map((section) => section.id)
   const [activeId, setActiveId] = useScrollSpy(ids)
@@ -344,7 +344,7 @@ function SystemBody({ system }: { system: SystemWithColors }) {
               {section.label}
             </h2>
             <div className="mt-5">
-              <section.Content system={system} />
+              <section.Content system={system} rosterEntry={rosterEntry} />
             </div>
           </section>
         ))}
@@ -395,7 +395,7 @@ function SystemPage() {
       </header>
 
       {system ? (
-        <SystemBody system={system} />
+        <SystemBody system={system} rosterEntry={rosterEntry} />
       ) : (
         <div className="mx-auto w-full max-w-4xl px-6 pb-16">
           <p className="mt-10 max-w-2xl rounded-lg border p-6 text-fg-muted">
