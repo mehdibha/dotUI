@@ -17,7 +17,6 @@ export type {
   ValueAutoplayState,
   ScenePhase,
 } from './use-autoplay'
-export { FakeCursor } from './cursor'
 export {
   DemoState,
   DemoPress,

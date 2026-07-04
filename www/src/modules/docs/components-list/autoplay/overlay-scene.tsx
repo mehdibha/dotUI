@@ -1,26 +1,34 @@
 'use client'
 
-import type * as React from 'react'
+import {
+  type ReactNode,
+  type RefObject,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react'
 
 import { cn } from '@/registry/lib/utils'
 
-import { FakeCursor } from './cursor'
-import { DemoPress } from './interaction'
 import type { ScenePhase } from './use-autoplay'
 
 /**
- * The cinematic for overlay triggers. A trigger sits centered; a cursor moves in,
- * hovers and clicks; then the overlay opens and the whole scene "zooms out" — the
- * trigger rides up and shrinks as the surface unfolds, so the entire interaction
- * stays framed inside the small preview.
+ * The cinematic for overlay triggers. A trigger sits centered and the surface
+ * unfolds beside it — at rest the overlay is OPEN so the card previews it, and on
+ * hover the timeline loops it open/closed (see `useOpenAutoplay`).
  *
- * Everything is presentational: the trigger is a real component, the surface uses
- * the real token classes, but the open state is faked so nothing portals out of
- * the card or touches real focus. Animations are CSS transitions (the previews
+ * Everything is presentational: the trigger is a real component and the surface
+ * uses the real token classes, but the open state is faked so nothing portals out
+ * of the card or touches real focus. Animations are CSS transitions (the previews
  * are `inert`, where script-driven animation libraries don't run): surfaces stay
  * mounted and toggle their visual state, so they animate in and out, and the
  * anchored layout uses the grid-rows `0fr → 1fr` trick to reflow the column
- * height — which is what carries the trigger up.
+ * height — which carries the trigger up as the surface opens.
+ *
+ * The open composition is measured and scaled down (`useFitScale`) so the surface
+ * always fits inside the small preview — whatever the card width or the surface's
+ * intrinsic size — instead of cropping against the card edge.
  */
 
 export type SurfaceVariant = 'popover' | 'menu' | 'modal' | 'drawer' | 'tooltip'
@@ -34,15 +42,13 @@ interface OverlaySceneProps {
   trigger: React.ReactNode
   /** The surface contents — real sub-components (DialogHeader, ListBox…). */
   children: React.ReactNode
-  /** Scale of the trigger+surface stack when open (anchored variants). */
+  /** Upper bound on the fit scale — the surface never renders larger than this. */
   openScale?: number
   /** Field-style trigger: fill the width so it matches the stretched field demos
    *  (combobox, select, date-picker) instead of sizing to content. */
   fluid?: boolean
   /** Extra classes for the surface frame. */
   surfaceClassName?: string
-  /** Position the cursor over the trigger (defaults to the bottom-right corner). */
-  cursorClassName?: string
 }
 
 const SURFACE_FRAME: Record<SurfaceVariant, string> = {
@@ -67,59 +73,114 @@ const SURFACE_DATA: Partial<Record<SurfaceVariant, Record<string, string>>> = {
 const SCENE_ROOT =
   'relative flex h-full w-full items-center justify-center overflow-hidden'
 const EASE = 'cubic-bezier(0.32,0.72,0,1)'
+// How much of the card the open composition may occupy before it's scaled down.
+const FIT_MARGIN = 0.86
 
-// The trigger is a real component; it only ever shows real hover/pressed styles
-// (via DemoPress → real RAC state attributes), never a synthetic scale. When an
-// overlay opens it can dim back (a depth cue), but it does not resize — the only
-// scaling is the scene "camera" on the anchored column below.
+const useIsoLayoutEffect =
+  typeof window === 'undefined' ? useEffect : useLayoutEffect
+
+/**
+ * Scale factor that keeps the open composition inside the preview card. Measures
+ * the surface (and, when stacked, the trigger) against the scene and returns the
+ * largest scale ≤ `maxScale` that still fits with a margin. `offset*` sizes are
+ * layout sizes, immune to the grid clip and our own scale transform, so the
+ * measurement is stable in any phase.
+ */
+function useFitScale({
+  sceneRef,
+  surfaceRef,
+  triggerRef,
+  stacked,
+  gap = 0,
+  maxScale = 1,
+}: {
+  sceneRef: RefObject<HTMLDivElement | null>
+  surfaceRef: RefObject<HTMLDivElement | null>
+  triggerRef: RefObject<HTMLDivElement | null>
+  stacked: boolean
+  gap?: number
+  maxScale?: number
+}): number {
+  const [scale, setScale] = useState(maxScale)
+
+  useIsoLayoutEffect(() => {
+    const scene = sceneRef.current
+    const surface = surfaceRef.current
+    if (!scene || !surface) return
+
+    const compute = () => {
+      const availW = scene.clientWidth
+      const availH = scene.clientHeight
+      if (!availW || !availH) return
+      const trigger = stacked ? triggerRef.current : null
+      const natW = Math.max(surface.offsetWidth, trigger?.offsetWidth ?? 0)
+      const natH =
+        surface.offsetHeight + (trigger ? trigger.offsetHeight + gap : 0)
+      if (!natW || !natH) return
+      setScale(
+        Math.min(
+          maxScale,
+          (availW * FIT_MARGIN) / natW,
+          (availH * FIT_MARGIN) / natH,
+        ),
+      )
+    }
+
+    compute()
+    const ro = new ResizeObserver(compute)
+    ro.observe(scene)
+    ro.observe(surface)
+    if (triggerRef.current) ro.observe(triggerRef.current)
+    return () => ro.disconnect()
+  }, [stacked, gap, maxScale])
+
+  return scale
+}
+
+// The trigger is a real component in its default state. When an overlay opens it
+// can dim back (a depth cue for modal/drawer), but it never resizes on its own —
+// the only scaling is the scene "camera" on the anchored column.
 function Trigger({
-  phase,
+  triggerRef,
   dim,
   fluid,
-  cursorClassName,
   children,
 }: {
-  phase: ScenePhase
+  triggerRef: RefObject<HTMLDivElement | null>
   dim?: boolean
   fluid?: boolean
-  cursorClassName?: string
-  children: React.ReactNode
+  children: ReactNode
 }) {
   return (
     <div
+      ref={triggerRef}
       // `fluid` field triggers fill the column so their width matches the
-      // stretched field demos; the cursor still anchors to the field's corner.
+      // stretched field demos; icon-button triggers stay content-sized.
       className={cn('relative', fluid && 'w-full')}
-      style={{
-        opacity: dim ? 0.55 : 1,
-        transition: 'opacity 300ms ease',
-      }}
+      style={{ opacity: dim ? 0.55 : 1, transition: 'opacity 300ms ease' }}
     >
-      <DemoPress phase={phase}>{children}</DemoPress>
-      <FakeCursor
-        phase={phase}
-        className={cn(
-          'right-0 bottom-0 translate-x-1 translate-y-1',
-          cursorClassName,
-        )}
-      />
+      {children}
     </div>
   )
 }
 
-/** A surface that grows in/out of the column flow (driving the trigger's ride). */
+/** A surface that grows in/out of the column flow (driving the trigger's ride).
+ *  `fluid` stretches it to the full column width so field dropdowns (select,
+ *  combobox) match their trigger instead of shrinking to their content. */
 function AnchoredSurface({
   open,
   side,
+  fluid,
   children,
 }: {
   open: boolean
   side: 'top' | 'bottom'
-  children: React.ReactNode
+  fluid?: boolean
+  children: ReactNode
 }) {
   return (
     <div
-      className="grid overflow-hidden"
+      className={cn('grid overflow-hidden', fluid && 'w-full grid-cols-1')}
       style={{
         gridTemplateRows: open ? '1fr' : '0fr',
         transition: `grid-template-rows 360ms ${EASE}`,
@@ -127,7 +188,7 @@ function AnchoredSurface({
     >
       <div className="min-h-0">
         <div
-          className={side === 'bottom' ? 'pt-2' : 'pb-2'}
+          className={cn(side === 'bottom' ? 'pt-2' : 'pb-2', fluid && 'w-full')}
           style={{
             opacity: open ? 1 : 0,
             transform: open
@@ -152,11 +213,27 @@ export function OverlayScene({
   openScale,
   fluid = false,
   surfaceClassName,
-  cursorClassName,
 }: OverlaySceneProps) {
   const open = phase === 'open'
+  const sceneRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLDivElement>(null)
+  const surfaceRef = useRef<HTMLDivElement>(null)
+
+  // Anchored variants stack trigger + surface and scale as one; overlay variants
+  // (modal/drawer) float the surface over the trigger.
+  const anchored = variant !== 'modal' && variant !== 'drawer'
+  const fitScale = useFitScale({
+    sceneRef,
+    surfaceRef,
+    triggerRef,
+    stacked: anchored,
+    gap: 8,
+    maxScale: openScale ?? 1,
+  })
+
   const surface = (
     <div
+      ref={surfaceRef}
       {...SURFACE_DATA[variant]}
       className={cn(SURFACE_FRAME[variant], surfaceClassName)}
     >
@@ -167,8 +244,8 @@ export function OverlayScene({
   // Modal: centered panel over a dimming backdrop; the trigger dims behind it.
   if (variant === 'modal') {
     return (
-      <div className={SCENE_ROOT}>
-        <Trigger phase={phase} dim={open} cursorClassName={cursorClassName}>
+      <div ref={sceneRef} className={SCENE_ROOT}>
+        <Trigger triggerRef={triggerRef} dim={open}>
           {trigger}
         </Trigger>
         <div
@@ -182,7 +259,7 @@ export function OverlayScene({
             style={{
               opacity: open ? 1 : 0,
               transform: open
-                ? `scale(${openScale ?? 0.92})`
+                ? `scale(${fitScale})`
                 : 'translateY(6px) scale(0.9)',
               transformOrigin: 'center',
               transition: `opacity 250ms ease, transform 300ms ${EASE}`,
@@ -198,8 +275,8 @@ export function OverlayScene({
   // Drawer: bottom sheet slides up over a dimming backdrop.
   if (variant === 'drawer') {
     return (
-      <div className={SCENE_ROOT}>
-        <Trigger phase={phase} dim={open} cursorClassName={cursorClassName}>
+      <div ref={sceneRef} className={SCENE_ROOT}>
+        <Trigger triggerRef={triggerRef} dim={open}>
           {trigger}
         </Trigger>
         <div
@@ -222,31 +299,29 @@ export function OverlayScene({
 
   // Anchored (popover / menu / tooltip): the trigger + surface share a column
   // that scales down when open so both fit — the "zoom out" the trigger rides.
-  const resolvedScale = openScale ?? (variant === 'tooltip' ? 0.92 : 0.7)
-
   return (
-    <div className={SCENE_ROOT}>
+    <div ref={sceneRef} className={SCENE_ROOT}>
       <div
         // `fluid` makes field-style triggers (combobox, select, date-picker) fill
         // the width + horizontal inset so they match the stretched field demos;
         // icon-button triggers stay content-sized and centered.
         className={cn('flex flex-col items-center', fluid && 'w-full px-4')}
         style={{
-          transform: `scale(${open ? resolvedScale : 1})`,
+          transform: `scale(${open ? fitScale : 1})`,
           transformOrigin: 'center',
           transition: `transform 400ms ${EASE}`,
         }}
       >
         {side === 'top' && (
-          <AnchoredSurface open={open} side="top">
+          <AnchoredSurface open={open} side="top" fluid={fluid}>
             {surface}
           </AnchoredSurface>
         )}
-        <Trigger phase={phase} fluid={fluid} cursorClassName={cursorClassName}>
+        <Trigger triggerRef={triggerRef} fluid={fluid}>
           {trigger}
         </Trigger>
         {side === 'bottom' && (
-          <AnchoredSurface open={open} side="bottom">
+          <AnchoredSurface open={open} side="bottom" fluid={fluid}>
             {surface}
           </AnchoredSurface>
         )}
