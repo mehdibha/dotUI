@@ -2,6 +2,7 @@
 
 import { cn } from '@/registry/lib/utils'
 
+import { Pointer } from './pointer'
 import type { ScenePhase } from './use-autoplay'
 
 /**
@@ -53,26 +54,7 @@ export function FakeCursor({
           style={{ left: 4, top: 3 }}
         />
       )}
-      {/* The arrow itself dips on press for the tactile click. */}
-      <svg
-        viewBox="0 0 24 24"
-        width={20}
-        height={20}
-        className="relative drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]"
-        style={{
-          transform: pressed ? 'scale(0.82)' : 'scale(1)',
-          transformOrigin: '5px 4px',
-          transition: 'transform 130ms cubic-bezier(0.32, 0.72, 0, 1)',
-        }}
-      >
-        <path
-          d="M5 3.5 L5 19 L9 15 L11.5 20.5 L14 19.3 L11.6 14 L17 14 Z"
-          fill="white"
-          stroke="black"
-          strokeWidth={1.4}
-          strokeLinejoin="round"
-        />
-      </svg>
+      <Pointer pressed={pressed} />
     </div>
   )
 }
