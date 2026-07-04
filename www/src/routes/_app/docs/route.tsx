@@ -15,7 +15,7 @@ function DocsLayout() {
 
   return (
     <div className="flex min-h-[calc(100vh-var(--header-height))] [--sidebar-width:228px]">
-      <aside className="sticky top-(--header-height) hidden h-[calc(100vh-var(--header-height))] w-(--sidebar-width) shrink-0 md:block">
+      <aside className="sticky top-(--header-height) hidden h-[calc(100vh-var(--header-height))] w-(--sidebar-width) shrink-0 lg:block">
         <DocsSidebar items={items} />
       </aside>
       <div className="min-w-0 flex-1">

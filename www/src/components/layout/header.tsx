@@ -112,7 +112,7 @@ export function Header({ className, items = [] }: HeaderProps) {
         <Logo />
         <nav
           aria-label="Main"
-          className="flex items-center gap-3 text-sm max-md:hidden"
+          className="flex items-center gap-3 text-sm max-lg:hidden"
         >
           {navItems.map((item) => {
             // Color highlights the whole section (Docs stays lit on /docs/button)
@@ -155,7 +155,7 @@ export function Header({ className, items = [] }: HeaderProps) {
           <GitHubIcon />
         </a>
         <ThemeToggle variant="quiet" isIconOnly />
-        <Separator orientation="vertical" className="mx-1.5 h-4 md:hidden" />
+        <Separator orientation="vertical" className="mx-1.5 h-4 lg:hidden" />
         <MobileNav items={items} />
       </div>
     </header>
