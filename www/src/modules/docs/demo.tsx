@@ -80,7 +80,7 @@ export function Demo({ component: Component, children, ...props }: DemoProps) {
         <PreviewPanel>
           <PreviewControls />
           <DemoPreset>
-            <div className="flex min-h-56 items-center justify-center overflow-x-auto bg-bg p-6 sm:p-10">
+            <div className="flex min-h-56 items-center justify-center overflow-x-auto bg-bg p-6 pt-10 sm:p-10 sm:pt-14">
               <Component />
             </div>
           </DemoPreset>
