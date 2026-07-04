@@ -3,7 +3,7 @@
   "overview": [
     {
       "label": "Palette",
-      "value": "31 twelve-step scales \u2014 6 tinted grays + 25 hues \u2014 each hand-tuned separately for light and dark, with alpha, P3 and P3-alpha variants",
+      "value": "31 twelve-step scales — 6 tinted grays + 25 hues — each hand-tuned separately for light and dark, with alpha, P3 and P3-alpha variants",
       "note": "Every step has a documented role: 1-2 app backgrounds, 3-5 component states, 6-8 borders, 9-10 solid backgrounds, 11-12 text. P3 variants are not shown on this page.",
       "sources": [
         "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale",
@@ -30,7 +30,7 @@
     },
     {
       "label": "Contrast",
-      "value": "APCA by construction \u2014 steps 11/12 guaranteed Lc 60/90 on a step-2 background",
+      "value": "APCA by construction — steps 11/12 guaranteed Lc 60/90 on a step-2 background",
       "note": "The guarantee lives in the hand-tuned values; no audit tooling, no WCAG 2.x language. Five bright hues (sky, mint, lime, yellow, amber) flip to dark foreground text on step 9.",
       "sources": [
         "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale"
@@ -38,7 +38,7 @@
     },
     {
       "label": "Theming",
-      "value": "Runtime CSS custom properties \u2014 .light/.dark class switch + [data-accent-color] attributes",
+      "value": "Runtime CSS custom properties — .light/.dark class switch + [data-accent-color] attributes",
       "note": "OS sync is explicitly delegated to next-themes ('Do not try to set <Theme appearance={resolvedTheme}>').",
       "sources": [
         "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css",
@@ -47,7 +47,7 @@
     },
     {
       "label": "Naming",
-      "value": "kebab-case \u2014 --{scale}-{step}, 'a' infix for alpha (--blue-a9); role scales --accent-* / --gray-* / --focus-*",
+      "value": "kebab-case — --{scale}-{step}, 'a' infix for alpha (--blue-a9); role scales --accent-* / --gray-* / --focus-*",
       "note": null,
       "sources": [
         "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css"
@@ -6165,6 +6165,74 @@
       ]
     }
   ],
+  "stepRoles": {
+    "note": "One shared 12-step scale model: every color plays the same role at the same step, which is what makes the accent/gray remapping onto --accent-* and --gray-* safe.",
+    "sources": [
+      "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale"
+    ],
+    "steps": [
+      {
+        "step": "1",
+        "role": "App background",
+        "description": "The page background itself — barely tinted, designed to sit under everything."
+      },
+      {
+        "step": "2",
+        "role": "Subtle background",
+        "description": "Stripes, code blocks, cards and sidebars a hair off the app background."
+      },
+      {
+        "step": "3",
+        "role": "UI element background",
+        "description": "Resting background for components: buttons, inputs, menu items."
+      },
+      {
+        "step": "4",
+        "role": "Hovered UI element background",
+        "description": "Hover state paired with step-3 components."
+      },
+      {
+        "step": "5",
+        "role": "Active / selected UI element background",
+        "description": "Pressed and selected states paired with step-3 components."
+      },
+      {
+        "step": "6",
+        "role": "Subtle borders and separators",
+        "description": "Borders on non-interactive components and separators."
+      },
+      {
+        "step": "7",
+        "role": "UI element border and focus rings",
+        "description": "Borders on interactive components; also the documented home of focus rings."
+      },
+      {
+        "step": "8",
+        "role": "Hovered UI element border",
+        "description": "Stronger border for hovered interactive components."
+      },
+      {
+        "step": "9",
+        "role": "Solid background",
+        "description": "The purest, highest-chroma step — solid buttons, badges, indicators. Bright scales (sky, mint, lime, yellow, amber) pair it with dark text instead of white."
+      },
+      {
+        "step": "10",
+        "role": "Hovered solid background",
+        "description": "Hover state paired with step-9 solids."
+      },
+      {
+        "step": "11",
+        "role": "Low-contrast text",
+        "description": "Secondary text — designed for accessible contrast on backgrounds 1-2 (APCA Lc 60 on step 2)."
+      },
+      {
+        "step": "12",
+        "role": "High-contrast text",
+        "description": "Primary text — designed for accessible contrast on backgrounds 1-2 (APCA Lc 90 on step 2)."
+      }
+    ]
+  },
   "focus": [
     {
       "label": "Technique",
@@ -6176,7 +6244,7 @@
     },
     {
       "label": "Color",
-      "value": "--focus-8 \u2014 a full --focus-1..12 scale remapped from the accent scale",
+      "value": "--focus-8 — a full --focus-1..12 scale remapped from the accent scale",
       "note": "A 12-step ramp maintained purely so focus rings can re-point independently of accent; matches the scale docs assigning step 8 to focus rings.",
       "sources": [
         "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css"
@@ -6191,6 +6259,16 @@
       ]
     }
   ],
+  "focusRing": {
+    "technique": "outline",
+    "width": "2px",
+    "offset": "2px",
+    "step": "8",
+    "sources": [
+      "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/components/_internal/base-button.css",
+      "https://github.com/radix-ui/themes/blob/main/packages/radix-ui-themes/src/styles/tokens/color.css"
+    ]
+  },
   "contrast": [
     {
       "label": "step 11 text on step 2 background",
@@ -6200,7 +6278,12 @@
       "metric": "apca",
       "value": "Lc 60 (guaranteed)",
       "kind": "documented",
-      "note": "Documented for every scale; shown here on blue."
+      "note": "Documented for every scale; shown here on blue.",
+      "sweep": {
+        "fgStep": "11",
+        "bgStep": "2",
+        "minLc": 60
+      }
     },
     {
       "label": "step 12 text on step 2 background",
@@ -6210,7 +6293,12 @@
       "metric": "apca",
       "value": "Lc 90 (guaranteed)",
       "kind": "documented",
-      "note": "Documented for every scale; shown here on blue."
+      "note": "Documented for every scale; shown here on blue.",
+      "sweep": {
+        "fgStep": "12",
+        "bgStep": "2",
+        "minLc": 90
+      }
     },
     {
       "label": "step 11 text on step 2 background",
@@ -6220,7 +6308,12 @@
       "metric": "apca",
       "value": "Lc 60 (guaranteed)",
       "kind": "documented",
-      "note": "Documented for every scale; shown here on blue."
+      "note": "Documented for every scale; shown here on blue.",
+      "sweep": {
+        "fgStep": "11",
+        "bgStep": "2",
+        "minLc": 60
+      }
     },
     {
       "label": "step 12 text on step 2 background",
@@ -6230,12 +6323,26 @@
       "metric": "apca",
       "value": "Lc 90 (guaranteed)",
       "kind": "documented",
-      "note": "Documented for every scale; shown here on blue."
+      "note": "Documented for every scale; shown here on blue.",
+      "sweep": {
+        "fgStep": "12",
+        "bgStep": "2",
+        "minLc": 90
+      }
     }
   ],
   "sources": [
     "https://github.com/radix-ui/colors",
     "https://github.com/radix-ui/themes",
     "https://www.radix-ui.com/colors"
+  ],
+  "notes": [
+    {
+      "section": "contrast",
+      "text": "Re-measured with APCA-W3 0.1.9 over the shipped hex values: Lc 60 for step-11 text holds on every scale in both modes, and Lc 90 for step-12 holds everywhere in light mode — but 19 chromatic scales land at Lc 84–89 for step-12 text on step 2 in dark mode. Reverse-polarity APCA reads lower, so the documented guarantee is best understood as light-mode-anchored.",
+      "sources": [
+        "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale"
+      ]
+    }
   ]
 }

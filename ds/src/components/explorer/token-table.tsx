@@ -8,7 +8,7 @@ import type { TokenGroup } from '@/data/schema'
 import { Badge } from '@/ui/badge'
 
 import { SourceLinks } from './source-links'
-import { Swatch } from './swatch'
+import { SwatchPopover } from './swatch-popover'
 
 const layerVariant = {
   primitive: 'neutral',
@@ -154,9 +154,12 @@ export function TokenTable({ groups, modes }: TokenTableProps) {
                           <td key={mode} className="px-3 py-1.5">
                             {value ? (
                               <span className="flex items-center gap-2">
-                                <Swatch
+                                <SwatchPopover
+                                  title={token.name}
                                   value={value}
-                                  label={`${token.name} (${mode})`}
+                                  values={token.values}
+                                  refText={token.ref}
+                                  note={token.note}
                                   className="h-5 w-5 flex-none rounded border"
                                 />
                                 <span className="hidden max-w-40 truncate font-mono text-xs text-fg-muted lg:inline">

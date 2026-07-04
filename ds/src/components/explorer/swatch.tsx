@@ -1,5 +1,7 @@
 'use client'
 
+import type React from 'react'
+
 import { cn } from '@/lib/utils'
 
 /** A value the browser can paint directly (no unresolved var(), no bare numbers). */
@@ -8,8 +10,13 @@ export function isPaintable(value: string) {
   return /^(#|rgb|hsl|oklch|lab|lch|color\(|color-mix\()/i.test(value.trim())
 }
 
-const checkerboard =
-  'linear-gradient(45deg, rgba(127,127,127,0.25) 25%, transparent 25%, transparent 75%, rgba(127,127,127,0.25) 75%), linear-gradient(45deg, rgba(127,127,127,0.25) 25%, transparent 25%, transparent 75%, rgba(127,127,127,0.25) 75%)'
+/** Checkerboard underlay so translucent values read as translucent. */
+export const checkerboard: React.CSSProperties = {
+  backgroundImage:
+    'linear-gradient(45deg, rgba(127,127,127,0.25) 25%, transparent 25%, transparent 75%, rgba(127,127,127,0.25) 75%), linear-gradient(45deg, rgba(127,127,127,0.25) 25%, transparent 25%, transparent 75%, rgba(127,127,127,0.25) 75%)',
+  backgroundSize: '12px 12px',
+  backgroundPosition: '0 0, 6px 6px',
+}
 
 interface SwatchProps {
   value: string
@@ -30,15 +37,7 @@ export function Swatch({ value, label, className }: SwatchProps) {
         !paintable && 'border border-dashed',
         className,
       )}
-      style={
-        paintable
-          ? {
-              backgroundImage: checkerboard,
-              backgroundSize: '12px 12px',
-              backgroundPosition: '0 0, 6px 6px',
-            }
-          : undefined
-      }
+      style={paintable ? checkerboard : undefined}
     >
       {paintable ? (
         <span className="absolute inset-0" style={{ backgroundColor: value }} />

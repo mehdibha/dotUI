@@ -83,6 +83,7 @@ export const sectionIdSchema = z.enum([
   'overview',
   'architecture',
   'palette',
+  'scale',
   'tokens',
   'focus',
   'contrast',
@@ -105,6 +106,40 @@ export const contrastPairSchema = z.object({
   value: z.string().min(1),
   kind: z.enum(['documented', 'measured']),
   note: z.string().nullable(),
+  /** Structured form of a scale-wide guarantee, so pages can re-measure it on
+      every ramp. Additive — 2026-07-03. */
+  sweep: z
+    .object({
+      fgStep: z.string().min(1),
+      bgStep: z.string().min(1),
+      minLc: z.number(),
+    })
+    .nullable()
+    .default(null),
+})
+
+/** What one step of the system's shared scale model means, in the system's own words. */
+export const stepRoleSchema = z.object({
+  step: z.string().min(1),
+  role: z.string().min(1),
+  description: z.string().nullable(),
+})
+
+/** Systems with a fixed step→role scale model (e.g. Radix's 12 steps). Additive — 2026-07-03. */
+export const stepRolesSchema = z.object({
+  note: z.string().nullable(),
+  sources: z.array(z.url()).min(1),
+  steps: z.array(stepRoleSchema).min(1),
+})
+
+/** Structured focus-ring construction, enough to rebuild the ring live. Additive — 2026-07-03. */
+export const focusRingSchema = z.object({
+  technique: z.enum(['outline', 'box-shadow', 'border']),
+  width: z.string().min(1),
+  offset: z.string().nullable(),
+  /** Scale step that paints the ring, when the system works that way. */
+  step: z.string().nullable(),
+  sources: z.array(z.url()).default([]),
 })
 
 export const colorsFileSchema = z.object({
@@ -113,7 +148,9 @@ export const colorsFileSchema = z.object({
   layers: z.array(layerSchema),
   ramps: z.array(rampSchema),
   tokenGroups: z.array(tokenGroupSchema),
+  stepRoles: stepRolesSchema.nullable().default(null),
   focus: z.array(specEntrySchema),
+  focusRing: focusRingSchema.nullable().default(null),
   contrast: z.array(contrastPairSchema),
   notes: z.array(noteSchema).default([]),
   sources: z.array(z.url()).min(1),
@@ -181,6 +218,9 @@ export type Token = z.infer<typeof tokenSchema>
 export type TokenGroup = z.infer<typeof tokenGroupSchema>
 export type SectionId = z.infer<typeof sectionIdSchema>
 export type Note = z.infer<typeof noteSchema>
+export type StepRole = z.infer<typeof stepRoleSchema>
+export type StepRoles = z.infer<typeof stepRolesSchema>
+export type FocusRing = z.infer<typeof focusRingSchema>
 export type ContrastPair = z.infer<typeof contrastPairSchema>
 export type ColorsFile = z.infer<typeof colorsFileSchema>
 export type RosterEntry = z.infer<typeof rosterEntrySchema>

@@ -10,7 +10,9 @@ import {
 import { ThemeProvider } from 'starter-themes'
 
 import { siteConfig } from '@/config/site'
+import { GitHubIcon } from '@/components/icons/github'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { LinkButton } from '@/ui/button'
 
 import appCss from '@/styles.css?url'
 
@@ -47,18 +49,23 @@ function RootDocument() {
         <HeadContent />
       </head>
       <body className="flex min-h-screen flex-col bg-bg font-sans text-fg antialiased">
-        <header className="border-b">
-          <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-4">
-            <Link to="/" className="text-lg font-semibold tracking-tight">
-              ds.
+        <header>
+          <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-3.5">
+            <Link to="/" className="flex items-baseline gap-3">
+              <span className="text-lg font-semibold tracking-tight">
+                ds.<span className="text-fg-muted">directory</span>
+              </span>
             </Link>
-            <nav className="flex items-center gap-6 text-sm text-fg-muted">
-              <Link to="/" className="hover:text-fg">
-                Systems
-              </Link>
-              <Link to="/methodology" className="hover:text-fg">
-                Methodology
-              </Link>
+            <nav className="flex items-center gap-1 text-sm text-fg-muted">
+              <LinkButton
+                href="https://github.com/mehdibha/dotUI/tree/main/ds"
+                aria-label="GitHub"
+                variant="quiet"
+                size="sm"
+                isIconOnly
+              >
+                <GitHubIcon />
+              </LinkButton>
               <ThemeToggle variant="quiet" size="sm" isIconOnly />
             </nav>
           </div>
@@ -66,16 +73,18 @@ function RootDocument() {
         <main className="flex-1">
           <Outlet />
         </main>
-        <footer className="border-t">
-          <p className="mx-auto w-full max-w-4xl px-6 py-6 text-sm text-fg-muted">
-            Built by{' '}
+        <footer className="flex items-center justify-center py-10">
+          <p className="text-sm text-fg-muted">
+            Built with passion by{' '}
             <a
-              href="https://dotui.org"
-              className="text-fg underline underline-offset-2"
+              href="https://x.com/mehdibha"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-4"
             >
-              dotUI
+              @mehdibha
             </a>
-            . The builder follows this research — not the reverse.
+            .
           </p>
         </footer>
         <Scripts />
