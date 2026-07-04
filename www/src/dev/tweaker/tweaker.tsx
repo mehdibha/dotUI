@@ -179,6 +179,9 @@ export function DevTweaker() {
 
   const count = controls.length
 
+  // Nothing to tweak → render nothing (no floating trigger).
+  if (count === 0) return null
+
   return (
     <>
       {/* Trigger — always visible, docked to a side, draggable (snaps to an edge). z-40 keeps
@@ -199,11 +202,9 @@ export function DevTweaker() {
         )}
       >
         <SlidersHorizontalIcon className="size-4 text-fg-muted" />
-        {count > 0 && (
-          <span className="absolute -top-1 -right-1 flex min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-fg-on-primary">
-            {count}
-          </span>
-        )}
+        <span className="absolute -top-1 -right-1 flex min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-fg-on-primary">
+          {count}
+        </span>
       </button>
 
       {/* Popover panel — anchored beside the trigger; the trigger stays visible. */}
@@ -217,11 +218,9 @@ export function DevTweaker() {
             <div className="flex items-center gap-2">
               <SlidersHorizontalIcon className="size-4 text-fg-muted" />
               <span className="text-sm font-medium">Tweaker</span>
-              {count > 0 && (
-                <span className="flex min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-fg-on-primary">
-                  {count}
-                </span>
-              )}
+              <span className="flex min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-fg-on-primary">
+                {count}
+              </span>
             </div>
             <div className="flex items-center gap-0.5">
               <Button
@@ -255,11 +254,7 @@ export function DevTweaker() {
           </div>
 
           <div className="flex-1 overflow-y-auto p-3">
-            {count === 0 ? (
-              <EmptyState />
-            ) : (
-              <GroupedControls controls={controls} />
-            )}
+            <GroupedControls controls={controls} />
           </div>
 
           <div className="flex items-center justify-between border-t border-border px-3 py-1.5 text-[10px] text-fg-muted">
@@ -271,18 +266,6 @@ export function DevTweaker() {
         </div>
       )}
     </>
-  )
-}
-
-function EmptyState() {
-  return (
-    <div className="flex flex-col items-center gap-1.5 px-2 py-6 text-center">
-      <SlidersHorizontalIcon className="size-5 text-fg-muted" />
-      <p className="text-sm font-medium text-fg">No tweaks yet</p>
-      <p className="text-xs text-balance text-fg-muted">
-        Ask the agent to add tweaks for the feature you&rsquo;re exploring.
-      </p>
-    </div>
   )
 }
 
