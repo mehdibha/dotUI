@@ -11,6 +11,7 @@ import { ThemeProvider } from 'starter-themes'
 
 import { siteConfig } from '@/config/site'
 import { GitHubIcon } from '@/components/icons/github'
+import { ProgressiveBlur } from '@/components/progressive-blur'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { LinkButton } from '@/ui/button'
 
@@ -49,7 +50,11 @@ function RootDocument() {
         <HeadContent />
       </head>
       <body className="flex min-h-screen flex-col bg-bg font-sans text-fg antialiased">
-        <header>
+        <header className="sticky top-0 z-30 header-blur-fallback">
+          {/* iOS-style progressive blur revealed on scroll — the header-blur-reveal
+              scroll timeline (styles.css) ramps --blur-progress over the first
+              header-height of scroll. */}
+          <ProgressiveBlur className="header-blur-reveal" />
           <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-3.5">
             <Link to="/" className="flex items-baseline gap-3">
               <span className="text-lg font-semibold tracking-tight">

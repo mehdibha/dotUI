@@ -129,6 +129,52 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* header-blur-reveal — reveals the nav's iOS-style progressive blur on scroll. A
+   scroll timeline ramps --blur-progress 0 → 1 across the first header-height; the
+   stacked blur layers scale their radius by it and the tint scales its opacity (see
+   __root.tsx), so the container never carries a fractional opacity — which would make
+   it an opacity group and break backdrop sampling. Where scroll timelines are
+   unsupported the blur stays at 0 and the header falls back to a solid background. */
+@property --blur-progress {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@keyframes blur-reveal {
+  from {
+    --blur-progress: 0;
+  }
+  to {
+    --blur-progress: 1;
+  }
+}
+
+@utility header-blur-reveal {
+  @supports (animation-timeline: scroll()) {
+    animation: blur-reveal 1ms linear;
+    animation-timeline: scroll(root y);
+    animation-range: 0 var(--header-height, calc(var(--spacing) * 14));
+    animation-fill-mode: both;
+  }
+}
+
+@utility header-blur-fallback {
+  @supports not (animation-timeline: scroll()) {
+    background-color: var(--color-bg);
+  }
+}
+
+/* header-blur-dither — low-opacity tiled noise that dithers the tint gradient so
+   8-bit color banding doesn't show as horizontal steps. Opacity is ramped by
+   --blur-progress inline; masked to the upper band where the tint sits. */
+@utility header-blur-dither {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.85'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+  mask-image: linear-gradient(to top, transparent 10%, #000 60%);
+  -webkit-mask-image: linear-gradient(to top, transparent 10%, #000 60%);
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -148,6 +194,7 @@
 
 :root {
   --radius-factor: 1;
+  --header-height: --spacing(14);
   /* Warm-paper neutrals — the archive's chrome stays ink-on-paper so each
      studied system's palette is the only saturated color on the page. */
   --neutral-50: oklch(0.9777 0.0041 91.45);
