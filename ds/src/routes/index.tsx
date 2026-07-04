@@ -1,9 +1,21 @@
+import { useMemo, useState } from 'react'
+import { ListFilterIcon } from 'lucide-react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
+import type { Selection } from 'react-aria-components/Menu'
 
-import { SpecimenMural } from '@/components/plate'
 import { dataIndex } from '@/data'
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { RosterEntry } from '@/data/schema'
 import { Badge } from '@/ui/badge'
+import { Button } from '@/ui/button'
+import {
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuSection,
+  MenuSectionHeader,
+} from '@/ui/menu'
+import { Popover } from '@/ui/popover'
+import { SearchField } from '@/ui/search-field'
 import {
   Table,
   TableBody,
@@ -22,9 +34,19 @@ const systemsBySlug = new Map(
   dataIndex.systems.map((system) => [system.slug, system]),
 )
 
-const catalog = [...dataIndex.roster].sort((a, b) => b.general - a.general)
+const catalog = [...dataIndex.roster].sort((a, b) => {
+  const aExplorable = systemsBySlug.has(a.slug) ? 1 : 0
+  const bExplorable = systemsBySlug.has(b.slug) ? 1 : 0
+  if (aExplorable !== bExplorable) return bExplorable - aExplorable
+  return b.general - a.general
+})
 
 const explorable = catalog.filter((entry) => systemsBySlug.has(entry.slug))
+
+// Systems without an exploration page yet — disabled in the table.
+const plannedKeys = catalog
+  .filter((entry) => !systemsBySlug.has(entry.slug))
+  .map((entry) => entry.slug)
 
 const categoryLabels: Record<RosterEntry['category'], string> = {
   'big-tech': 'Big tech',
@@ -47,175 +69,184 @@ const accessBadges: Record<
   closed: { label: 'closed', variant: 'neutral' },
 }
 
-function plateMeta(system: SystemWithColors): string {
-  const { colors } = system
-  const tokens = colors.tokenGroups.reduce(
-    (sum, group) => sum + group.tokens.length,
-    0,
-  )
-  const parts = [
-    colors.ramps.length > 0 && `${colors.ramps.length} ramps`,
-    tokens > 0 && `${tokens} tokens`,
-    colors.modes.join(' / '),
-  ].filter(Boolean)
-  return parts.join(' · ')
-}
+const categoryOptions = [
+  { id: 'all', label: 'All categories' },
+  ...(Object.entries(categoryLabels) as [RosterEntry['category'], string][]).map(
+    ([id, label]) => ({ id, label }),
+  ),
+]
+
+const accessOptions = [
+  { id: 'all', label: 'All access' },
+  ...(Object.entries(accessBadges) as [RosterEntry['status'], { label: string }][]).map(
+    ([id, { label }]) => ({ id, label }),
+  ),
+]
 
 function Home() {
   return (
-    <div className="mx-auto w-full max-w-6xl px-6">
-      <section className="max-w-3xl py-16 sm:py-24">
-        <p className="font-mono text-[11px] tracking-widest text-fg-muted uppercase">
-          Part I — color & token systems
-        </p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-          How the best design systems actually work.
+    <div className="mx-auto w-full max-w-4xl px-6">
+      <section className="py-12 sm:py-16">
+        <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+          The design system directory.
         </h1>
-        <p className="mt-5 max-w-2xl text-lg text-fg-muted">
-          An archive of the design systems worth learning from. We read the
-          source, measure the shipped CSS, and publish what we find — every
-          ramp, token and contrast guarantee, exactly as shipped, with sources
-          attached.
+        <p className="mt-4 max-w-xl text-base text-fg-muted text-balance">
+          Explore the systems worth learning from — every color ramp, token, and
+          contrast rule, measured from the source.
         </p>
         <p className="mt-8 font-mono text-xs text-fg-muted">
-          {catalog.length} systems cataloged · {explorable.length} explorable ·
-          growing in the open
+          {catalog.length} systems · {explorable.length} explorable · growing in
+          the open
         </p>
       </section>
 
-      <section>
-        <div className="flex items-baseline justify-between border-t pt-5">
-          <h2 className="font-mono text-[11px] tracking-widest text-fg-muted uppercase">
-            In the archive
-          </h2>
-          <Link
-            to="/methodology"
-            className="text-sm text-fg-muted transition-colors hover:text-fg"
-          >
-            How we research →
-          </Link>
-        </div>
-        <ul className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {explorable.map((entry) => {
-            const system = systemsBySlug.get(entry.slug)!
-            return (
-              <li key={entry.slug}>
-                <Link
-                  to="/systems/$slug"
-                  params={{ slug: entry.slug }}
-                  className="group flex h-full flex-col overflow-hidden rounded-(--card-radius) border transition-colors hover:border-border-hover"
-                >
-                  <SpecimenMural
-                    system={system}
-                    className="flex h-28 flex-col"
-                  />
-                  <div className="flex flex-1 flex-col gap-1 border-t p-4">
-                    <div className="flex items-baseline justify-between gap-2">
-                      <span className="font-medium">{entry.name}</span>
-                      <span className="text-sm text-fg-muted">{entry.org}</span>
-                    </div>
-                    <div className="flex items-center justify-between gap-2 pt-1">
-                      <span className="font-mono text-[11px] text-fg-muted">
-                        {plateMeta(system)}
-                      </span>
-                      {entry.status === 'shipped-css' && (
-                        <Badge appearance="subtle" variant="info">
-                          observed
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                </Link>
-              </li>
-            )
-          })}
-        </ul>
-      </section>
-
-      <section className="mt-20 pb-24">
-        <div className="flex items-baseline justify-between border-t pt-5">
-          <h2 className="font-mono text-[11px] tracking-widest text-fg-muted uppercase">
-            The catalog
-          </h2>
-          <span className="font-mono text-xs text-fg-muted">
-            scored for research priority — not verdicts
-          </span>
-        </div>
-        <p className="mt-4 max-w-2xl text-sm text-fg-muted">
-          Every candidate we recon&apos;d, scored across nine domains against
-          fixed anchors. Scores decide what gets researched first; the archive
-          entries above are the published research.
-        </p>
-        <div className="mt-6">
-          <CatalogTable />
-        </div>
-      </section>
+      <Directory />
     </div>
   )
 }
 
-function CatalogTable() {
+function Directory() {
   const navigate = useNavigate()
+  const [query, setQuery] = useState('')
+  const [category, setCategory] = useState('all')
+  const [access, setAccess] = useState('all')
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    return catalog.filter((entry) => {
+      if (category !== 'all' && entry.category !== category) return false
+      if (access !== 'all' && entry.status !== access) return false
+      if (q && !`${entry.name} ${entry.org}`.toLowerCase().includes(q)) {
+        return false
+      }
+      return true
+    })
+  }, [query, category, access])
+
+  const activeFilters = (category !== 'all' ? 1 : 0) + (access !== 'all' ? 1 : 0)
+
+  // Section-level single select over globally-unique `${prefix}:${value}` keys:
+  // keep the newly picked key, drop the previous.
+  const pickOne =
+    (prefix: string, current: string, setter: (value: string) => void) =>
+    (keys: Selection) => {
+      if (keys === 'all') return
+      const active = `${prefix}:${current}`
+      const next = [...keys].map(String).find((key) => key !== active)
+      if (next) setter(next.slice(prefix.length + 1))
+    }
+
   return (
-    <TableContainer className="max-h-[36rem]">
-      <Table
-        aria-label="Design-systems catalog"
-        onRowAction={(key) =>
-          navigate({ to: '/systems/$slug', params: { slug: String(key) } })
-        }
-      >
-        <TableHeader>
-          <TableColumn className="w-10 text-right">#</TableColumn>
-          <TableColumn isRowHeader>System</TableColumn>
-          <TableColumn>Category</TableColumn>
-          <TableColumn>Access</TableColumn>
-          <TableColumn className="text-right">Color</TableColumn>
-          <TableColumn className="text-right">Overall</TableColumn>
-        </TableHeader>
-        <TableBody>
-          {catalog.map((entry, index) => {
-            const access = accessBadges[entry.status]
-            return (
-              <TableRow key={entry.slug} id={entry.slug}>
-                <TableCell className="text-right font-mono text-xs text-fg-muted">
-                  {index + 1}
-                </TableCell>
-                <TableCell>
-                  <span className="flex items-baseline gap-2">
-                    <Link
-                      to="/systems/$slug"
-                      params={{ slug: entry.slug }}
-                      className="font-medium"
-                    >
-                      {entry.name}
-                    </Link>
-                    <span className="text-xs text-fg-muted">{entry.org}</span>
-                    {systemsBySlug.has(entry.slug) && (
-                      <Badge appearance="subtle" variant="success" size="sm">
-                        explorable
-                      </Badge>
-                    )}
-                  </span>
-                </TableCell>
-                <TableCell className="text-fg-muted">
-                  {categoryLabels[entry.category]}
-                </TableCell>
-                <TableCell>
-                  <Badge appearance="subtle" variant={access.variant} size="sm">
-                    {access.label}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-right font-mono text-xs">
-                  {entry.scores.color}
-                </TableCell>
-                <TableCell className="text-right font-mono text-xs">
-                  {entry.general}
-                </TableCell>
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <section className="pb-24">
+      <div className="flex items-center gap-3 pt-6">
+        <SearchField
+          aria-label="Search systems"
+          placeholder="Search systems…"
+          value={query}
+          onChange={setQuery}
+          className="flex-1"
+        />
+        <Menu>
+          <Button aria-label="Filters" size="md" isIconOnly>
+            <ListFilterIcon />
+            {activeFilters > 0 && (
+              <span className="absolute -top-1 -right-1 size-2 rounded-full bg-accent" />
+            )}
+          </Button>
+          <Popover placement="bottom end">
+            <MenuContent className="min-w-52">
+              <MenuSection
+                selectionMode="multiple"
+                disallowEmptySelection
+                selectedKeys={new Set([`category:${category}`])}
+                onSelectionChange={pickOne('category', category, setCategory)}
+              >
+                <MenuSectionHeader>Category</MenuSectionHeader>
+                {categoryOptions.map((option) => (
+                  <MenuItem key={option.id} id={`category:${option.id}`}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </MenuSection>
+              <MenuSection
+                selectionMode="multiple"
+                disallowEmptySelection
+                selectedKeys={new Set([`access:${access}`])}
+                onSelectionChange={pickOne('access', access, setAccess)}
+              >
+                <MenuSectionHeader>Access</MenuSectionHeader>
+                {accessOptions.map((option) => (
+                  <MenuItem key={option.id} id={`access:${option.id}`}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </MenuSection>
+            </MenuContent>
+          </Popover>
+        </Menu>
+      </div>
+
+      <div className="mt-4">
+        <TableContainer className="rounded-none border-0 bg-transparent">
+          <Table
+            aria-label="Design systems"
+            className="[&_[data-slot=table-cell]]:h-16 [&_[data-slot=table-cell]]:px-0 [&_[data-slot=table-column]]:h-11 [&_[data-slot=table-column]]:px-0"
+            disabledKeys={plannedKeys}
+            onRowAction={(key) =>
+              navigate({ to: '/systems/$slug', params: { slug: String(key) } })
+            }
+          >
+            <TableHeader>
+              <TableColumn className="w-10">#</TableColumn>
+              <TableColumn isRowHeader>System</TableColumn>
+              <TableColumn className="text-right">Score</TableColumn>
+            </TableHeader>
+            <TableBody
+              renderEmptyState={() => 'No systems match your filters.'}
+            >
+              {filtered.map((entry, index) => {
+                const isExplorable = systemsBySlug.has(entry.slug)
+                return (
+                  <TableRow key={entry.slug} id={entry.slug}>
+                    <TableCell className="font-mono text-xs text-fg-muted">
+                      {index + 1}
+                    </TableCell>
+                    <TableCell>
+                      <span className="flex items-baseline gap-2">
+                        {isExplorable ? (
+                          <Link
+                            to="/systems/$slug"
+                            params={{ slug: entry.slug }}
+                            className="font-medium"
+                          >
+                            {entry.name}
+                          </Link>
+                        ) : (
+                          <span className="font-medium">{entry.name}</span>
+                        )}
+                        <span className="text-xs text-fg-muted">
+                          {entry.org}
+                        </span>
+                        {!isExplorable && (
+                          <Badge
+                            size="sm"
+                            className="bg-disabled text-fg-disabled"
+                          >
+                            planned
+                          </Badge>
+                        )}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-right font-mono text-xs">
+                      {entry.general}
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </section>
   )
 }

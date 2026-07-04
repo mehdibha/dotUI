@@ -9,22 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as MethodologyRouteImport } from './routes/methodology'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SystemsSlugRouteImport } from './routes/systems.$slug'
-import { Route as SystemsSlugIndexRouteImport } from './routes/systems.$slug.index'
-import { Route as SystemsSlugTokensRouteImport } from './routes/systems.$slug.tokens'
-import { Route as SystemsSlugScaleRouteImport } from './routes/systems.$slug.scale'
-import { Route as SystemsSlugPaletteRouteImport } from './routes/systems.$slug.palette'
-import { Route as SystemsSlugFocusRouteImport } from './routes/systems.$slug.focus'
-import { Route as SystemsSlugContrastRouteImport } from './routes/systems.$slug.contrast'
-import { Route as SystemsSlugArchitectureRouteImport } from './routes/systems.$slug.architecture'
 
-const MethodologyRoute = MethodologyRouteImport.update({
-  id: '/methodology',
-  path: '/methodology',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -35,131 +22,35 @@ const SystemsSlugRoute = SystemsSlugRouteImport.update({
   path: '/systems/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SystemsSlugIndexRoute = SystemsSlugIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => SystemsSlugRoute,
-} as any)
-const SystemsSlugTokensRoute = SystemsSlugTokensRouteImport.update({
-  id: '/tokens',
-  path: '/tokens',
-  getParentRoute: () => SystemsSlugRoute,
-} as any)
-const SystemsSlugScaleRoute = SystemsSlugScaleRouteImport.update({
-  id: '/scale',
-  path: '/scale',
-  getParentRoute: () => SystemsSlugRoute,
-} as any)
-const SystemsSlugPaletteRoute = SystemsSlugPaletteRouteImport.update({
-  id: '/palette',
-  path: '/palette',
-  getParentRoute: () => SystemsSlugRoute,
-} as any)
-const SystemsSlugFocusRoute = SystemsSlugFocusRouteImport.update({
-  id: '/focus',
-  path: '/focus',
-  getParentRoute: () => SystemsSlugRoute,
-} as any)
-const SystemsSlugContrastRoute = SystemsSlugContrastRouteImport.update({
-  id: '/contrast',
-  path: '/contrast',
-  getParentRoute: () => SystemsSlugRoute,
-} as any)
-const SystemsSlugArchitectureRoute = SystemsSlugArchitectureRouteImport.update({
-  id: '/architecture',
-  path: '/architecture',
-  getParentRoute: () => SystemsSlugRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/methodology': typeof MethodologyRoute
-  '/systems/$slug': typeof SystemsSlugRouteWithChildren
-  '/systems/$slug/architecture': typeof SystemsSlugArchitectureRoute
-  '/systems/$slug/contrast': typeof SystemsSlugContrastRoute
-  '/systems/$slug/focus': typeof SystemsSlugFocusRoute
-  '/systems/$slug/palette': typeof SystemsSlugPaletteRoute
-  '/systems/$slug/scale': typeof SystemsSlugScaleRoute
-  '/systems/$slug/tokens': typeof SystemsSlugTokensRoute
-  '/systems/$slug/': typeof SystemsSlugIndexRoute
+  '/systems/$slug': typeof SystemsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/methodology': typeof MethodologyRoute
-  '/systems/$slug/architecture': typeof SystemsSlugArchitectureRoute
-  '/systems/$slug/contrast': typeof SystemsSlugContrastRoute
-  '/systems/$slug/focus': typeof SystemsSlugFocusRoute
-  '/systems/$slug/palette': typeof SystemsSlugPaletteRoute
-  '/systems/$slug/scale': typeof SystemsSlugScaleRoute
-  '/systems/$slug/tokens': typeof SystemsSlugTokensRoute
-  '/systems/$slug': typeof SystemsSlugIndexRoute
+  '/systems/$slug': typeof SystemsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/methodology': typeof MethodologyRoute
-  '/systems/$slug': typeof SystemsSlugRouteWithChildren
-  '/systems/$slug/architecture': typeof SystemsSlugArchitectureRoute
-  '/systems/$slug/contrast': typeof SystemsSlugContrastRoute
-  '/systems/$slug/focus': typeof SystemsSlugFocusRoute
-  '/systems/$slug/palette': typeof SystemsSlugPaletteRoute
-  '/systems/$slug/scale': typeof SystemsSlugScaleRoute
-  '/systems/$slug/tokens': typeof SystemsSlugTokensRoute
-  '/systems/$slug/': typeof SystemsSlugIndexRoute
+  '/systems/$slug': typeof SystemsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/methodology'
-    | '/systems/$slug'
-    | '/systems/$slug/architecture'
-    | '/systems/$slug/contrast'
-    | '/systems/$slug/focus'
-    | '/systems/$slug/palette'
-    | '/systems/$slug/scale'
-    | '/systems/$slug/tokens'
-    | '/systems/$slug/'
+  fullPaths: '/' | '/systems/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/methodology'
-    | '/systems/$slug/architecture'
-    | '/systems/$slug/contrast'
-    | '/systems/$slug/focus'
-    | '/systems/$slug/palette'
-    | '/systems/$slug/scale'
-    | '/systems/$slug/tokens'
-    | '/systems/$slug'
-  id:
-    | '__root__'
-    | '/'
-    | '/methodology'
-    | '/systems/$slug'
-    | '/systems/$slug/architecture'
-    | '/systems/$slug/contrast'
-    | '/systems/$slug/focus'
-    | '/systems/$slug/palette'
-    | '/systems/$slug/scale'
-    | '/systems/$slug/tokens'
-    | '/systems/$slug/'
+  to: '/' | '/systems/$slug'
+  id: '__root__' | '/' | '/systems/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  MethodologyRoute: typeof MethodologyRoute
-  SystemsSlugRoute: typeof SystemsSlugRouteWithChildren
+  SystemsSlugRoute: typeof SystemsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/methodology': {
-      id: '/methodology'
-      path: '/methodology'
-      fullPath: '/methodology'
-      preLoaderRoute: typeof MethodologyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -174,86 +65,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SystemsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/systems/$slug/': {
-      id: '/systems/$slug/'
-      path: '/'
-      fullPath: '/systems/$slug/'
-      preLoaderRoute: typeof SystemsSlugIndexRouteImport
-      parentRoute: typeof SystemsSlugRoute
-    }
-    '/systems/$slug/tokens': {
-      id: '/systems/$slug/tokens'
-      path: '/tokens'
-      fullPath: '/systems/$slug/tokens'
-      preLoaderRoute: typeof SystemsSlugTokensRouteImport
-      parentRoute: typeof SystemsSlugRoute
-    }
-    '/systems/$slug/scale': {
-      id: '/systems/$slug/scale'
-      path: '/scale'
-      fullPath: '/systems/$slug/scale'
-      preLoaderRoute: typeof SystemsSlugScaleRouteImport
-      parentRoute: typeof SystemsSlugRoute
-    }
-    '/systems/$slug/palette': {
-      id: '/systems/$slug/palette'
-      path: '/palette'
-      fullPath: '/systems/$slug/palette'
-      preLoaderRoute: typeof SystemsSlugPaletteRouteImport
-      parentRoute: typeof SystemsSlugRoute
-    }
-    '/systems/$slug/focus': {
-      id: '/systems/$slug/focus'
-      path: '/focus'
-      fullPath: '/systems/$slug/focus'
-      preLoaderRoute: typeof SystemsSlugFocusRouteImport
-      parentRoute: typeof SystemsSlugRoute
-    }
-    '/systems/$slug/contrast': {
-      id: '/systems/$slug/contrast'
-      path: '/contrast'
-      fullPath: '/systems/$slug/contrast'
-      preLoaderRoute: typeof SystemsSlugContrastRouteImport
-      parentRoute: typeof SystemsSlugRoute
-    }
-    '/systems/$slug/architecture': {
-      id: '/systems/$slug/architecture'
-      path: '/architecture'
-      fullPath: '/systems/$slug/architecture'
-      preLoaderRoute: typeof SystemsSlugArchitectureRouteImport
-      parentRoute: typeof SystemsSlugRoute
-    }
   }
 }
 
-interface SystemsSlugRouteChildren {
-  SystemsSlugArchitectureRoute: typeof SystemsSlugArchitectureRoute
-  SystemsSlugContrastRoute: typeof SystemsSlugContrastRoute
-  SystemsSlugFocusRoute: typeof SystemsSlugFocusRoute
-  SystemsSlugPaletteRoute: typeof SystemsSlugPaletteRoute
-  SystemsSlugScaleRoute: typeof SystemsSlugScaleRoute
-  SystemsSlugTokensRoute: typeof SystemsSlugTokensRoute
-  SystemsSlugIndexRoute: typeof SystemsSlugIndexRoute
-}
-
-const SystemsSlugRouteChildren: SystemsSlugRouteChildren = {
-  SystemsSlugArchitectureRoute: SystemsSlugArchitectureRoute,
-  SystemsSlugContrastRoute: SystemsSlugContrastRoute,
-  SystemsSlugFocusRoute: SystemsSlugFocusRoute,
-  SystemsSlugPaletteRoute: SystemsSlugPaletteRoute,
-  SystemsSlugScaleRoute: SystemsSlugScaleRoute,
-  SystemsSlugTokensRoute: SystemsSlugTokensRoute,
-  SystemsSlugIndexRoute: SystemsSlugIndexRoute,
-}
-
-const SystemsSlugRouteWithChildren = SystemsSlugRoute._addFileChildren(
-  SystemsSlugRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  MethodologyRoute: MethodologyRoute,
-  SystemsSlugRoute: SystemsSlugRouteWithChildren,
+  SystemsSlugRoute: SystemsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

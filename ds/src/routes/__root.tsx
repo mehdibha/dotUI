@@ -10,7 +10,9 @@ import {
 import { ThemeProvider } from 'starter-themes'
 
 import { siteConfig } from '@/config/site'
+import { GitHubIcon } from '@/components/icons/github'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { LinkButton } from '@/ui/button'
 
 import appCss from '@/styles.css?url'
 
@@ -47,36 +49,23 @@ function RootDocument() {
         <HeadContent />
       </head>
       <body className="flex min-h-screen flex-col bg-bg font-sans text-fg antialiased">
-        <header className="border-b">
-          <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3.5">
+        <header>
+          <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-3.5">
             <Link to="/" className="flex items-baseline gap-3">
-              <span className="text-lg font-semibold tracking-tight">ds.</span>
-              <span className="hidden font-mono text-[11px] tracking-widest text-fg-muted uppercase sm:inline">
-                design-systems archive
+              <span className="text-lg font-semibold tracking-tight">
+                ds.<span className="text-fg-muted">directory</span>
               </span>
             </Link>
-            <nav className="flex items-center gap-5 text-sm text-fg-muted">
-              <Link
-                to="/"
-                className="transition-colors hover:text-fg"
-                activeProps={{ className: 'text-fg' }}
-                activeOptions={{ exact: true }}
-              >
-                Archive
-              </Link>
-              <Link
-                to="/methodology"
-                className="transition-colors hover:text-fg"
-                activeProps={{ className: 'text-fg' }}
-              >
-                Methodology
-              </Link>
-              <a
+            <nav className="flex items-center gap-1 text-sm text-fg-muted">
+              <LinkButton
                 href="https://github.com/mehdibha/dotUI/tree/main/ds"
-                className="transition-colors hover:text-fg"
+                aria-label="GitHub"
+                variant="quiet"
+                size="sm"
+                isIconOnly
               >
-                GitHub
-              </a>
+                <GitHubIcon />
+              </LinkButton>
               <ThemeToggle variant="quiet" size="sm" isIconOnly />
             </nav>
           </div>
@@ -84,22 +73,19 @@ function RootDocument() {
         <main className="flex-1">
           <Outlet />
         </main>
-        <footer className="border-t">
-          <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-6 py-8 sm:flex-row sm:items-baseline sm:justify-between">
-            <p className="text-sm text-fg-muted">
-              Built by{' '}
-              <a
-                href="https://dotui.org"
-                className="text-fg underline underline-offset-2"
-              >
-                dotUI
-              </a>
-              . The builder follows this research — not the reverse.
-            </p>
-            <p className="font-mono text-xs text-fg-muted">
-              open data · every fact cited and dated
-            </p>
-          </div>
+        <footer className="flex items-center justify-center py-10">
+          <p className="text-sm text-fg-muted">
+            Built with passion by{' '}
+            <a
+              href="https://x.com/mehdibha"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-4"
+            >
+              @mehdibha
+            </a>
+            .
+          </p>
         </footer>
         <Scripts />
       </body>
