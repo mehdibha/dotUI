@@ -183,7 +183,7 @@ export const componentsData: ComponentCategory[] = [
         name: 'Mention',
         slug: 'mention',
         href: '/docs/components/mention',
-        stretch: true,
+        fill: true,
         status: 'in review',
       },
       {
