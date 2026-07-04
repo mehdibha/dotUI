@@ -21,8 +21,21 @@ export function DocsTocSelect({ className }: { className?: string }) {
     shouldThrow: false,
     select: (match) => match.loaderData?.toc,
   })
-  if (!toc || toc.length === 0) return null
+  const scrolled = useScrolled()
+  // Only surfaces once scrolled — at the top the page title is still in view.
+  if (!toc || toc.length === 0 || !scrolled) return null
   return <TocSelect toc={toc} className={className} />
+}
+
+function useScrolled() {
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 0)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+  return scrolled
 }
 
 function TocSelect({

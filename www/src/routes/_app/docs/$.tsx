@@ -177,9 +177,12 @@ const clientLoader = browserCollections.docs.createClientLoader({
           </div>
           {/* In-flow TOC column for md–xl: it reserves layout space (instead of
               floating) so the content column stays centered. Mirrors the xl
-              rail's sticky/-mt-4 alignment; pt lands the lines on the title. */}
+              rail's sticky/-mt-4 alignment; pt lands the lines on the title.
+              px-6 lines the bars up with the header's right-edge icon glyph
+              (which is inset ~8px inside its button), mirroring how the sidebar
+              text lines up with the logo on the left. */}
           {hasToc && (
-            <div className="sticky top-(--header-height) z-30 -mt-4 hidden w-16 shrink-0 justify-end self-start pt-10 pr-4 md:flex lg:pt-12 xl:hidden">
+            <div className="sticky top-(--header-height) z-30 -mt-4 hidden w-16 shrink-0 justify-end self-start px-6 pt-10 md:flex lg:pt-12 xl:hidden">
               <MiniTOC />
             </div>
           )}
