@@ -59,18 +59,38 @@ import { Label } from '@/components/ui/field'
 </Checkbox>
 ```
 
-## Selection
+## Anatomy
 
-Use `defaultSelected` for uncontrolled checkboxes, or `isSelected` and `onChange` for controlled checkboxes.
+Pass a plain string and `Checkbox` wraps it in a `CheckboxControl` and `Label` for you. Pass elements instead and you compose the tree yourself — `CheckboxControl` renders the `CheckboxIndicator` (the box) and can hold `FieldContent` with a `Label` and `Description`.
 
 ```tsx
-<Checkbox defaultSelected />
+import {
+  Checkbox,
+  CheckboxControl,
+  CheckboxIndicator,
+} from '@/components/ui/checkbox'
+import { Description, FieldContent, Label } from '@/components/ui/field'
+;<Checkbox>
+  <CheckboxControl>
+    <CheckboxIndicator />
+    <FieldContent>
+      <Label>I agree to the terms</Label>
+      <Description>Please read them before proceeding</Description>
+    </FieldContent>
+  </CheckboxControl>
+</Checkbox>
 ```
 
-```tsx
-const [isSelected, setIsSelected] = useState(false)
+## Selection
 
-;<Checkbox isSelected={isSelected} onChange={setIsSelected} />
+The checkbox is selected or not. Use `defaultSelected` for uncontrolled state, or `isSelected` with `onChange` to control it.
+
+```tsx
+const [isSelected, setIsSelected] = React.useState(false)
+
+<Checkbox isSelected={isSelected} onChange={setIsSelected}>
+  Accept terms
+</Checkbox>
 ```
 
 ## Examples

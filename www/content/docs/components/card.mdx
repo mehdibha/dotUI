@@ -41,6 +41,38 @@ import {
 </Card>
 ```
 
+## Anatomy
+
+```tsx
+<Card>
+  <CardHeader>
+    <CardTitle />
+    <CardDescription />
+    <CardAction />
+  </CardHeader>
+  <CardContent />
+  <CardFooter />
+</Card>
+```
+
+`CardHeader` holds the `CardTitle`, `CardDescription`, and an optional `CardAction` pinned at the end of the header row. `CardContent` is the main body and `CardFooter` sits below it, usually for actions.
+
+## Size
+
+Pass `size="sm"` to `Card` for a more compact card with tighter spacing.
+
+```tsx
+<Card size="sm">{/* ... */}</Card>
+```
+
+## Section borders
+
+Add `border-b` to `CardHeader` or `border-t` to `CardFooter` to visually separate them from the content.
+
+```tsx
+<CardHeader className="border-b">{/* ... */}</CardHeader>
+```
+
 ## Examples
 
 <Examples className="lg:grid-cols-2">

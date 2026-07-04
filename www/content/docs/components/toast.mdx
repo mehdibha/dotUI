@@ -30,6 +30,73 @@ toastManager.add({
 })
 ```
 
+## Imperative API
+
+Toasts aren't rendered as JSX. Mount `<ToastProvider />` once at your app root, then push notifications imperatively with `toastManager`. `add` returns an id you can pass to `close`.
+
+```tsx
+import { ToastProvider, toastManager } from '@/components/ui/toast'
+;<ToastProvider />
+
+const id = toastManager.add({ title: 'Your message has been sent.' })
+toastManager.close(id)
+```
+
+## Variants
+
+Pass `type` to `add` to select a semantic variant, each with its own icon and color. Values are `neutral`, `success`, `error`, `danger`, `warning`, `info`, and `loading`. `neutral` renders no icon.
+
+```tsx
+toastManager.add({
+  title: 'Changes saved',
+  description: 'Your update is live.',
+  type: 'success',
+})
+```
+
+## Actions
+
+Pass `actionProps` to render an action button inside the toast, typically to undo the operation and close the current toast by id.
+
+```tsx
+const id = toastManager.add({
+  title: 'Message archived',
+  type: 'info',
+  actionProps: {
+    children: 'Undo',
+    onClick: () => toastManager.close(id),
+  },
+})
+```
+
+## Promise
+
+Use `toastManager.promise` to drive loading, success, and error states from a promise. Each key takes the same options as `add`.
+
+```tsx
+toastManager.promise(publish(), {
+  loading: { title: 'Publishing changes', type: 'loading' },
+  success: { title: 'Published', type: 'success' },
+  error: { title: 'Publish failed', type: 'error' },
+})
+```
+
+## Placement
+
+The `position` prop on `ToastProvider` sets the viewport corner and derives the swipe-to-dismiss direction. Values are `top-left`, `top-center`, `top-right`, `bottom-left`, `bottom-center`, and `bottom-right`; it defaults to `bottom-right`.
+
+```tsx
+<ToastProvider position="top-center" />
+```
+
+## Provider options
+
+`ToastProvider` caps visible toasts with `limit` (default `3`) and sets the auto-dismiss duration in milliseconds with `timeout` (default `5000`).
+
+```tsx
+<ToastProvider limit={5} timeout={8000} />
+```
+
 ## Examples
 
 <Examples>

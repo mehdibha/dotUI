@@ -44,22 +44,127 @@ npx shadcn@latest add @dotui/combobox
 Use `Combobox` to allow users to filter a list of options to items matching a query and select an item from the list.
 
 ```tsx
-import {
-  Combobox,
-  ComboboxContent,
-  ComboboxInput,
-  ComboboxItem,
-} from '@/components/ui/combobox'
+import { Combobox } from '@/components/ui/combobox'
+import { Input, InputGroup, InputGroupAddon } from '@/components/ui/input'
+import { ListBox, ListBoxItem } from '@/components/ui/list-box'
+import { Popover } from '@/components/ui/popover'
 ```
 
 ```tsx
-<Combobox>
-  <ComboboxInput />
-  <ComboboxContent>
-    <ComboboxItem>Option 1</ComboboxItem>
-    <ComboboxItem>Option 2</ComboboxItem>
-  </ComboboxContent>
+<Combobox aria-label="Country">
+  <InputGroup>
+    <Input placeholder="Select a country..." />
+    <InputGroupAddon>
+      <Button variant="quiet" isIconOnly>
+        <ChevronDownIcon />
+      </Button>
+    </InputGroupAddon>
+  </InputGroup>
+  <Popover>
+    <ListBox>
+      <ListBoxItem>Canada</ListBoxItem>
+      <ListBoxItem>France</ListBoxItem>
+    </ListBox>
+  </Popover>
 </Combobox>
+```
+
+## Anatomy
+
+`Combobox` is assembled from the field, input, list-box, and popover primitives. `InputGroup` wraps the text `Input` and an `InputGroupAddon` trigger; the `Popover` holds a `ListBox` of `ListBoxItem` options.
+
+```tsx
+<Combobox>
+  <Label />
+  <InputGroup>
+    <Input />
+    <InputGroupAddon />
+  </InputGroup>
+  <Popover>
+    <ListBox>
+      <ListBoxItem />
+    </ListBox>
+  </Popover>
+</Combobox>
+```
+
+## Value
+
+The value is the selected item's key. Use `defaultSelectedKey` for uncontrolled state, or `selectedKey` with `onSelectionChange` to control it.
+
+```tsx
+const [country, setCountry] = React.useState<Key | null>('tn')
+
+<Combobox selectedKey={country} onSelectionChange={setCountry}>
+  {/* ... */}
+</Combobox>
+```
+
+## Multiple selection
+
+Set `selectionMode="multiple"` to select several items; the value becomes an array of keys via `defaultValue`/`value`. Render `ComboboxValue` with a function to display the selected items as a `TagGroup`.
+
+```tsx
+<Combobox<Framework, 'multiple'>
+  selectionMode="multiple"
+  defaultValue={['next']}
+>
+  <InputGroup>
+    <ComboboxValue<Framework>>
+      {({ selectedItems, state }) => (
+        <TagGroup
+          onRemove={(keys) =>
+            state.setValue(state.value.filter((k) => !keys.has(k)))
+          }
+        >
+          <TagList items={selectedItems.filter(Boolean)}>
+            {(item) => <Tag>{item.name}</Tag>}
+          </TagList>
+        </TagGroup>
+      )}
+    </ComboboxValue>
+    <Input placeholder="Select frameworks" />
+  </InputGroup>
+  {/* ... */}
+</Combobox>
+```
+
+## Content
+
+Pass static `ListBoxItem` children, or render options from data with `items` and a render function. Give each item a stable `id`, and a `textValue` when its content isn't a plain string.
+
+```tsx
+<ListBox items={countries}>
+  {(item) => (
+    <ListBoxItem id={item.id} textValue={item.label}>
+      {item.label}
+    </ListBoxItem>
+  )}
+</ListBox>
+```
+
+## Sections
+
+Group options with `ListBoxSection` and `ListBoxSectionHeader` — see the [Sections](#examples) demo.
+
+## Async loading
+
+Source items from `useAsyncList` and pass `isLoading` to the `ListBox` to show a loading state while fetching.
+
+```tsx
+const list = useAsyncList({ async load({ signal }) { /* ... */ } })
+
+<ListBox items={list.items} isLoading={list.isLoading}>
+  {(item) => <ListBoxItem id={item.name}>{item.name}</ListBoxItem>}
+</ListBox>
+```
+
+## Custom values
+
+Set `allowsCustomValue` to let users submit text that doesn't match any option.
+
+```tsx
+<Combobox allowsCustomValue>{/* ... */}</Combobox>
 ```
 
 ## Examples

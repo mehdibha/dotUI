@@ -43,6 +43,45 @@ import { Switch, SwitchControl } from '@/components/ui/switch'
 </Switch>
 ```
 
+## Anatomy
+
+A `Switch` wraps a `SwitchControl` (which auto-renders its `SwitchIndicator` and `SwitchThumb`) and a `Label`. Pass a string child for the label shorthand, or omit children for a standalone control with an `aria-label`.
+
+```tsx
+import { Label } from '@/components/ui/field'
+import {
+  Switch,
+  SwitchControl,
+  SwitchIndicator,
+  SwitchThumb,
+} from '@/components/ui/switch'
+
+<Switch>
+  <SwitchControl>
+    <SwitchIndicator>
+      <SwitchThumb />
+    </SwitchIndicator>
+  </SwitchControl>
+  <Label>Focus mode</Label>
+</Switch>
+
+<Switch>Focus mode</Switch>
+
+<Switch aria-label="Focus mode" />
+```
+
+## Value
+
+The switch is on or off. Use `defaultSelected` for uncontrolled state, or `isSelected` with `onChange` to control it.
+
+```tsx
+const [isSelected, setSelected] = React.useState(true)
+
+<Switch isSelected={isSelected} onChange={setSelected}>
+  Focus mode
+</Switch>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

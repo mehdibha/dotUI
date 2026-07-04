@@ -68,6 +68,53 @@ import { Label } from '@/components/ui/field'
 </TextField>
 ```
 
+## Anatomy
+
+A `TextField` wraps a `Label`, an `Input`, and optional `Description` and `FieldError`. Wrap the `Input` in an `InputGroup` with `InputGroupAddon` to render a prefix or suffix inside the field.
+
+```tsx
+import { TextField } from '@/components/ui/text-field'
+import { Label, Description, FieldError } from '@/components/ui/field'
+import { Input, InputGroup, InputGroupAddon } from '@/components/ui/input'
+;<TextField>
+  <Label />
+  <InputGroup>
+    <InputGroupAddon />
+    <Input />
+  </InputGroup>
+  <Description />
+  <FieldError />
+</TextField>
+```
+
+## Value
+
+The value is a string. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it.
+
+```tsx
+const [value, setValue] = React.useState('')
+
+<TextField value={value} onChange={setValue}>
+  <Label>Email</Label>
+  <Input />
+</TextField>
+```
+
+## Validation
+
+Mark a field with `isRequired`, and supply a custom `validate` function that returns an error string. By default validation is native (browser); set `validationBehavior="aria"` to defer to your own logic. Errors render in `FieldError`.
+
+```tsx
+<TextField
+  isRequired
+  validate={(value) => (value.includes('@') ? null : 'Enter a valid email')}
+>
+  <Label>Email</Label>
+  <Input />
+  <FieldError />
+</TextField>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

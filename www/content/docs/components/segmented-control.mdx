@@ -34,6 +34,38 @@ import {
 </SegmentedControl>
 ```
 
+## Anatomy
+
+A `SegmentedControl` wraps one `SegmentedControlItem` per option. Each item needs a unique `id`, which is the value the control reports as selected.
+
+```tsx
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from '@/components/ui/segmented-control'
+;<SegmentedControl>
+  <SegmentedControlItem id="…">…</SegmentedControlItem>
+</SegmentedControl>
+```
+
+## Selection
+
+Selection is single-only and can never be empty (`disallowEmptySelection`). Use `defaultSelectedKeys` for uncontrolled state, or `selectedKeys` with `onSelectionChange` to control it — both are a `Set` of item ids.
+
+```tsx
+const [selected, setSelected] = React.useState(new Set(['week']))
+
+<SegmentedControl
+  aria-label="Date range"
+  selectedKeys={selected}
+  onSelectionChange={setSelected}
+>
+  <SegmentedControlItem id="day">Day</SegmentedControlItem>
+  <SegmentedControlItem id="week">Week</SegmentedControlItem>
+  <SegmentedControlItem id="month">Month</SegmentedControlItem>
+</SegmentedControl>
+```
+
 ## Examples
 
 <Examples className="grid-cols-1">

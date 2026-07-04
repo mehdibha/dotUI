@@ -39,6 +39,39 @@ import { Popover } from '@/components/ui/popover'
 </ContextMenu>
 ```
 
+## Anatomy
+
+`ContextMenu` is a right-click / long-press trigger wrapping a `Popover` and a `MenuContent`. Items, submenus (`MenuSub`), and every menu concept come from the [Menu](/docs/components/menu) component.
+
+```tsx
+import { ContextMenu } from '@/components/ui/context-menu'
+import { MenuContent, MenuItem, MenuSub } from '@/components/ui/menu'
+import { Popover } from '@/components/ui/popover'
+import { Separator } from '@/components/ui/separator'
+;<ContextMenu>
+  {/* trigger content */}
+  <Popover>
+    <MenuContent>
+      <MenuItem />
+      <Separator />
+      <MenuSub />
+    </MenuContent>
+  </Popover>
+</ContextMenu>
+```
+
+## Open state
+
+The menu is uncontrolled by default. Pass `defaultOpen` for uncontrolled state, or `isOpen` with `onOpenChange` to control it. Use `isDisabled` to suppress the trigger entirely.
+
+```tsx
+const [isOpen, setIsOpen] = React.useState(false)
+
+<ContextMenu isOpen={isOpen} onOpenChange={setIsOpen}>
+  {/* ... */}
+</ContextMenu>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

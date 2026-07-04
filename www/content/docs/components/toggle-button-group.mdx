@@ -32,6 +32,25 @@ import { ToggleButtonGroup } from '@/components/ui/toggle-button-group'
 </ToggleButtonGroup>
 ```
 
+## Selection
+
+Each `ToggleButton` needs an `id`; selection keys map to those ids. Selection is `single` by default — set `selectionMode="multiple"` to allow several. Use `defaultSelectedKeys` for uncontrolled state, or `selectedKeys` with `onSelectionChange` to control it, and pass `disallowEmptySelection` to keep at least one selected.
+
+```tsx
+const [selected, setSelected] = React.useState(new Set(['bold']))
+
+<ToggleButtonGroup
+  selectionMode="multiple"
+  selectedKeys={selected}
+  onSelectionChange={setSelected}
+  aria-label="Text formatting"
+>
+  <ToggleButton id="bold">Bold</ToggleButton>
+  <ToggleButton id="italic">Italic</ToggleButton>
+  <ToggleButton id="underline">Underline</ToggleButton>
+</ToggleButtonGroup>
+```
+
 ## Examples
 
 <Examples className="grid-cols-2">

@@ -52,6 +52,43 @@ import { Label } from '@/components/ui/field'
 </ColorSlider>
 ```
 
+## Anatomy
+
+`ColorSlider` wraps a `ColorSliderControl` (the draggable track) and, optionally, a `ColorSliderOutput` (the current value as text) and a `Label`. If you render no children, `ColorSlider` falls back to a bare `ColorSliderControl`.
+
+```tsx
+import {
+  ColorSlider,
+  ColorSliderControl,
+  ColorSliderOutput,
+} from '@/components/ui/color-slider'
+import { Label } from '@/components/ui/field'
+```
+
+```tsx
+<ColorSlider>
+  <Label />
+  <ColorSliderOutput />
+  <ColorSliderControl />
+</ColorSlider>
+```
+
+## Value
+
+The value is a `Color` object. Use `defaultValue` for uncontrolled state — it accepts a color string like `#f00` or `hsl(0, 100%, 50%)`. For controlled state, pass `value` + `onChange`, where `value` is a parsed `Color` from `parseColor` and `onChange` receives a `Color`.
+
+```tsx
+import { parseColor } from 'react-aria-components'
+
+const [value, setValue] = React.useState(parseColor('hsl(0, 100%, 50%)'))
+
+<ColorSlider value={value} onChange={setValue} channel="hue">
+  <ColorSliderControl />
+</ColorSlider>
+```
+
+Use `channel` to pick which channel the slider edits (`hue`, `saturation`, `lightness`, `alpha`…), and `colorSpace` (`rgb`, `hsl`, `hsb`) to interpret the value in a given space.
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

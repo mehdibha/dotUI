@@ -56,6 +56,68 @@ import { Label } from '@/components/ui/field'
 </TimeField>
 ```
 
+## Anatomy
+
+`TimeField` wraps a `Label`, the `DateInput` that holds the editable time segments, and an optional `Description` or `FieldError`.
+
+```tsx
+import { TimeField } from '@/components/ui/time-field'
+import { DateInput } from '@/components/ui/input'
+import { Label, Description, FieldError } from '@/components/ui/field'
+;<TimeField>
+  <Label />
+  <DateInput />
+  <Description />
+  <FieldError />
+</TimeField>
+```
+
+## Value
+
+Values are `Time` objects from `@internationalized/date`. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it. Parse a string with `parseTime`.
+
+```tsx
+import { Time } from '@internationalized/date'
+;<TimeField defaultValue={new Time(11, 45)}>
+  <Label>Time</Label>
+  <DateInput />
+</TimeField>
+```
+
+## Granularity
+
+`granularity` sets the smallest editable segment — `hour`, `minute` (the default), or `second`.
+
+```tsx
+<TimeField granularity="second" defaultValue={new Time(11, 45, 22)}>
+  <Label>Time</Label>
+  <DateInput />
+</TimeField>
+```
+
+## Hour cycle
+
+`hourCycle` forces 12- or 24-hour display regardless of the locale.
+
+```tsx
+<TimeField hourCycle={24} defaultValue={new Time(18, 45)}>
+  <Label>Time</Label>
+  <DateInput />
+</TimeField>
+```
+
+## Validation
+
+Set `isRequired` or `isInvalid` and render messages with `FieldError`; `minValue` and `maxValue` constrain the allowed time.
+
+```tsx
+<TimeField isRequired minValue={new Time(9)} maxValue={new Time(17)}>
+  <Label>Meeting time</Label>
+  <DateInput />
+  <FieldError />
+</TimeField>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2 md:grid-cols-2">

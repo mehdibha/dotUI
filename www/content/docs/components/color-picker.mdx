@@ -38,6 +38,46 @@ import { Popover } from '@/components/ui/popover'
 </ColorPicker>
 ```
 
+## Anatomy
+
+`ColorPicker` wraps a `Button` trigger and a `Popover` holding the editing surface. A `Button` with no children auto-fills with a `ColorSwatch` reflecting the current value.
+
+```tsx
+<ColorPicker>
+  <Button isIconOnly />
+  <Popover>
+    <DialogContent>
+      <ColorArea />
+      <ColorSlider />
+    </DialogContent>
+  </Popover>
+</ColorPicker>
+```
+
+## Value
+
+`ColorPicker` syncs a `Color` value across its children. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it. Both accept a hex string or a `Color` from `parseColor`.
+
+```tsx
+import { parseColor } from 'react-aria-components'
+
+const [value, setValue] = React.useState(parseColor('hsl(26, 33%, 78%)'))
+
+<ColorPicker value={value} onChange={setValue}>
+  {/* ... */}
+</ColorPicker>
+```
+
+## Open state
+
+The popover is uncontrolled by default. Use `defaultOpen`, or `isOpen` with `onOpenChange` to control it; `ColorPicker` forwards these to its internal dialog.
+
+```tsx
+<ColorPicker isOpen={isOpen} onOpenChange={setIsOpen}>
+  {/* ... */}
+</ColorPicker>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2 md:grid-cols-3">

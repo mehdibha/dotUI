@@ -50,6 +50,43 @@ import { ProgressBar, ProgressBarControl } from '@/components/ui/progress-bar'
 </ProgressBar>
 ```
 
+## Anatomy
+
+`ProgressBar` wraps `ProgressBarControl` (the track) and an optional `ProgressBarOutput` that renders the value as text.
+
+```tsx
+import {
+  ProgressBar,
+  ProgressBarControl,
+  ProgressBarOutput,
+} from '@/components/ui/progress-bar'
+;<ProgressBar>
+  <ProgressBarOutput />
+  <ProgressBarControl />
+</ProgressBar>
+```
+
+## Value
+
+`value` is measured against `minValue` and `maxValue`, which default to `0` and `100`. When progress can't be measured, set `isIndeterminate`.
+
+```tsx
+<ProgressBar minValue={50} maxValue={150} value={100}>
+  <ProgressBarControl />
+</ProgressBar>
+```
+
+## Value formatting
+
+Pass `formatOptions` (an `Intl.NumberFormat` config) to format the value `ProgressBarOutput` renders, or replace the text entirely with `valueLabel`.
+
+```tsx
+<ProgressBar formatOptions={{ style: 'currency', currency: 'JPY' }} value={60}>
+  <ProgressBarOutput />
+  <ProgressBarControl />
+</ProgressBar>
+```
+
 ## Examples
 
 <Examples className="md:grid-cols-2">

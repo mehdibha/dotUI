@@ -36,6 +36,15 @@ import { ColorSwatch } from '@/components/ui/color-swatch'
 <ColorSwatch color="#ff0000" />
 ```
 
+## Value
+
+The `color` prop accepts a hex or CSS color string, or a `Color` object from `parseColor`. Translucent colors render over a checkerboard so their transparency shows through.
+
+```tsx
+import { parseColor } from 'react-aria-components'
+;<ColorSwatch color={parseColor('#7f0000aa')} />
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2 lg:grid-cols-3">

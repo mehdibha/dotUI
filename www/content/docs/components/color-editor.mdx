@@ -41,9 +41,9 @@ import { ColorEditor } from '@/components/ui/color-editor'
 <ColorEditor defaultValue="#5100FF" />
 ```
 
-### Composition
+## Anatomy
 
-The default children render an area row and a fields row. Pass your own children to reorder, drop, or extend them.
+`ColorEditor` renders a saturation/brightness area with channel sliders, then a row of format-aware fields. Omit children for the default layout, or compose the parts yourself.
 
 ```tsx
 import {
@@ -58,6 +58,42 @@ import {
   <ColorEditorArea showAlphaChannel />
   <ColorEditorFields defaultFormat="rgb" />
 </ColorEditor>
+```
+
+- `ColorEditorArea` — the color area, hue slider, and optional alpha slider.
+- `ColorEditorFields` — channel inputs for the current format, with an optional format selector.
+
+## Composition
+
+The default children render an area row and a fields row. Pass your own children to reorder, drop, or extend them — for example, dropping a swatch picker between the two parts.
+
+```tsx
+<ColorEditor defaultValue="#f80">
+  <ColorEditorArea showAlphaChannel />
+  <ColorSwatchPicker>{/* ... */}</ColorSwatchPicker>
+  <ColorEditorFields defaultFormat="rgb" showFormatSelector={false} />
+</ColorEditor>
+```
+
+## Value
+
+The value is a React Aria `Color`. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it. Pass a hex string (including alpha, e.g. `#5100FF80`) or a `Color` from `parseColor`.
+
+```tsx
+<ColorEditor defaultValue="#5100FF" onChange={setColor} />
+```
+
+<Alert>
+  Inside a [Color Picker](/docs/components/color-picker), the editor adopts the
+  picker's color — `value`, `defaultValue`, and `onChange` are ignored.
+</Alert>
+
+## Color format
+
+`ColorEditorFields` picks its channel inputs from the current format. Set the initial format with `defaultFormat` (`hex`, `rgb`, `hsl`, or `hsb`), or control it with `format` and `onFormatChange`.
+
+```tsx
+<ColorEditorFields format={format} onFormatChange={setFormat} />
 ```
 
 ## Examples

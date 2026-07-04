@@ -39,6 +39,28 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 </Alert>
 ```
 
+## Anatomy
+
+An alert composes a title, a description, and an optional action. To add an icon, place an icon element as the alert's first child — styles pick it up positionally, there is no icon prop.
+
+```tsx
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  AlertAction,
+} from '@/components/ui/alert'
+import { CircleAlert } from 'lucide-react'
+;<Alert>
+  <CircleAlert />
+  <AlertTitle>Title</AlertTitle>
+  <AlertDescription>Description</AlertDescription>
+  <AlertAction>Action</AlertAction>
+</Alert>
+```
+
+`AlertAction` renders at the end and typically wraps a `Button` or `Badge`.
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

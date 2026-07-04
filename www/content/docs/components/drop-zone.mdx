@@ -43,6 +43,59 @@ import { DropZone, DropZoneLabel } from '@/components/ui/drop-zone'
 </DropZone>
 ```
 
+## Anatomy
+
+`DropZoneLabel` nests inside `DropZone` and provides its accessible name.
+
+```tsx
+<DropZone>
+  <DropZoneLabel />
+</DropZone>
+```
+
+## Handling drops
+
+Read dropped data in `onDrop` from `e.items`, filtering by `kind` and `types`, and call `getText` on text items.
+
+```tsx
+import type { TextDropItem } from 'react-aria-components'
+;<DropZone
+  onDrop={async (e) => {
+    const items = await Promise.all(
+      e.items
+        .filter((item) => item.kind === 'text' && item.types.has('text/plain'))
+        .map((item) => (item as TextDropItem).getText('text/plain')),
+    )
+  }}
+>
+  <DropZoneLabel>Droppable</DropZoneLabel>
+</DropZone>
+```
+
+## Accepted drop types
+
+Restrict what the zone accepts by returning `'copy'` or `'cancel'` from `getDropOperation` based on the dragged `types`.
+
+```tsx
+<DropZone
+  getDropOperation={(types) => (types.has('image/png') ? 'copy' : 'cancel')}
+  onDrop={handleDrop}
+/>
+```
+
+## Pairing with FileTrigger
+
+Add a `FileTrigger` with a `Button` so users can drop files or click to browse.
+
+```tsx
+<DropZone>
+  <DropZoneLabel>Drag and drop files here</DropZoneLabel>
+  <FileTrigger>
+    <Button>Select files</Button>
+  </FileTrigger>
+</DropZone>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

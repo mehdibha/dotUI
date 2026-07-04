@@ -78,6 +78,58 @@ import { Collection } from 'react-aria-components'
 </Tree>
 ```
 
+## Anatomy
+
+A `Tree` wraps `TreeItem`s. Each `TreeItem` holds a `TreeItemContent` for its row — the expand chevron, optional checkbox and drag handle, and the label — and nests child `TreeItem`s directly beneath it.
+
+```tsx
+<Tree>
+  <TreeItem>
+    <TreeItemContent />
+    <TreeItem>
+      <TreeItemContent />
+    </TreeItem>
+  </TreeItem>
+</Tree>
+```
+
+## Selection
+
+Set `selectionMode` to `single` or `multiple` to make rows selectable. Control the selection with `selectedKeys` and `onSelectionChange`, typed as `Selection` from `react-aria-components`. Use `disabledKeys` to make specific rows non-interactive.
+
+```tsx
+import { useState } from 'react'
+import type { Selection } from 'react-aria-components'
+
+const [selectedKeys, setSelectedKeys] = useState<Selection>(new Set(['report']))
+
+<Tree
+  selectionMode="multiple"
+  selectedKeys={selectedKeys}
+  onSelectionChange={setSelectedKeys}
+>
+  {items}
+</Tree>
+```
+
+## Expansion
+
+Set `defaultExpandedKeys` to expand parents by default (uncontrolled), or control which parents are open with `expandedKeys` and `onExpandedChange`.
+
+```tsx
+<Tree defaultExpandedKeys={['documents']}>{items}</Tree>
+```
+
+## Links
+
+Pass `href` to a `TreeItem` to render it as an `<a>`; add `target` for the link target. Client-side routing depends on your router setup.
+
+```tsx
+<TreeItem href="/documents/report" textValue="Weekly report">
+  <TreeItemContent>Weekly report</TreeItemContent>
+</TreeItem>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

@@ -47,6 +47,53 @@ import { Popover } from '@/components/ui/popover'
 </Dialog>
 ```
 
+## Anatomy
+
+A `Dialog` wraps the trigger `Button` and the `Popover`; the popover holds a `DialogContent` with its title and body.
+
+```tsx
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { Popover } from '@/components/ui/popover'
+;<Dialog>
+  <Button />
+  <Popover>
+    <DialogContent>
+      <DialogTitle />
+    </DialogContent>
+  </Popover>
+</Dialog>
+```
+
+## Placement
+
+Set `placement` to position the popover relative to its trigger. Values are a side with an optional alignment, e.g. `bottom start` or `bottom end`.
+
+```tsx
+<Popover placement="bottom start" />
+```
+
+## Arrow
+
+Set `showArrow` to render an arrow pointing at the trigger (default `false`).
+
+```tsx
+<Popover showArrow />
+```
+
+## Open state
+
+Control visibility with `isOpen` and `onOpenChange` on the `Dialog` trigger (or `defaultOpen` for uncontrolled).
+
+```tsx
+<Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
+  <Button />
+  <Popover>
+    <DialogContent>...</DialogContent>
+  </Popover>
+</Dialog>
+```
+
 ## Examples
 
 <Examples className="md:grid-cols-2">

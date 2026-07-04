@@ -20,6 +20,18 @@ import { Kbd } from '@/components/ui/kbd'
 ;<Kbd>⌘</Kbd> + <Kbd>K</Kbd>
 ```
 
+## Anatomy
+
+Use `Kbd` for a single key. Wrap several in `KbdGroup` to present a key combination as one unit.
+
+```tsx
+import { Kbd, KbdGroup } from '@/components/ui/kbd'
+;<KbdGroup>
+  <Kbd>⌘</Kbd>
+  <Kbd>K</Kbd>
+</KbdGroup>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

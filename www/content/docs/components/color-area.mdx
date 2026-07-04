@@ -38,6 +38,38 @@ import { ColorThumb } from '@/components/ui/color-thumb'
 </ColorArea>
 ```
 
+## Anatomy
+
+A `ColorArea` renders the gradient and positions a `ColorThumb`. If you omit children, a default `ColorThumb` is rendered for you.
+
+```tsx
+import { ColorArea } from '@/components/ui/color-area'
+import { ColorThumb } from '@/components/ui/color-thumb'
+;<ColorArea>
+  <ColorThumb />
+</ColorArea>
+```
+
+## Value
+
+Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it. Uncontrolled values accept a color string; controlled values are `Color` objects created with `parseColor`.
+
+```tsx
+import { parseColor } from 'react-aria-components'
+
+const [value, setValue] = React.useState(parseColor('hsl(0, 100%, 50%)'))
+
+<ColorArea value={value} onChange={setValue} />
+```
+
+## Channels
+
+`xChannel` and `yChannel` map two channels of the color to the horizontal and vertical axes of the gradient.
+
+```tsx
+<ColorArea xChannel="saturation" yChannel="lightness" />
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

@@ -70,6 +70,60 @@ import { Modal } from '@/components/ui/modal'
 </Dialog>
 ```
 
+## Anatomy
+
+The trigger `Button` and the overlay are siblings inside `Dialog`. The overlay (`Modal`, `Drawer`, or `Popover`) is a separate component the dialog does not ship, and `DialogContent` renders inside it. Pass `showCloseButton` to `DialogContent` for a built-in close button.
+
+```tsx
+<Dialog>
+  <Button>Open dialog</Button>
+  <Modal>
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Title</DialogTitle>
+        <DialogDescription>Description</DialogDescription>
+      </DialogHeader>
+      <DialogBody>Content</DialogBody>
+      <DialogFooter>
+        <Button slot="close">Close</Button>
+      </DialogFooter>
+    </DialogContent>
+  </Modal>
+</Dialog>
+```
+
+## Role
+
+Pass `role="alertdialog"` to `DialogContent` for destructive confirmations that interrupt the user and require a response.
+
+```tsx
+<DialogContent role="alertdialog">
+  <DialogHeader>
+    <DialogTitle>Delete project</DialogTitle>
+    <DialogDescription>This action cannot be undone.</DialogDescription>
+  </DialogHeader>
+  <DialogFooter>
+    <Button slot="close">Cancel</Button>
+    <Button slot="close" variant="danger">
+      Delete
+    </Button>
+  </DialogFooter>
+</DialogContent>
+```
+
+## Open state
+
+The dialog opens when the trigger is pressed. Control it with `isOpen` and `onOpenChange` (or set `defaultOpen`), and close it from inside with a `Button` that has `slot="close"`.
+
+```tsx
+const [isOpen, setOpen] = React.useState(false)
+
+<Dialog isOpen={isOpen} onOpenChange={setOpen}>
+  <Button>Open dialog</Button>
+  <Modal>{/* ... */}</Modal>
+</Dialog>
+```
+
 ## Examples
 
 <Examples>

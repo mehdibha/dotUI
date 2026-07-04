@@ -30,6 +30,66 @@ import { TagGroup, TagList, Tag } from '@/components/ui/tag-group'
 </TagGroup>
 ```
 
+## Anatomy
+
+A `TagGroup` wraps an optional `Label` and a `TagList` of `Tag` items.
+
+```tsx
+import { TagGroup, TagList, Tag } from '@/components/ui/tag-group'
+import { Label } from '@/components/ui/field'
+;<TagGroup>
+  <Label />
+  <TagList>
+    <Tag />
+  </TagList>
+</TagGroup>
+```
+
+## Selection
+
+Set `selectionMode` to `single` or `multiple` to make tags selectable, giving each `Tag` an `id`. Control selection with `selectedKeys` + `onSelectionChange`, or default it with `defaultSelectedKeys`.
+
+```tsx
+<TagGroup selectionMode="multiple" defaultSelectedKeys={['news', 'gaming']}>
+  <TagList>
+    <Tag id="news">News</Tag>
+    <Tag id="gaming">Gaming</Tag>
+    <Tag id="travel">Travel</Tag>
+  </TagList>
+</TagGroup>
+```
+
+## Removal
+
+Pass `onRemove` to `TagGroup` to make tags removable — each `Tag` renders a remove button, and users can also delete a focused tag with <kbd>⌫</kbd>.
+
+```tsx
+<TagGroup onRemove={(keys) => remove(keys)}>
+  <TagList>
+    <Tag id="news">News</Tag>
+    <Tag id="gaming">Gaming</Tag>
+  </TagList>
+</TagGroup>
+```
+
+## Content
+
+Render tags statically as children, or pass `items` to `TagList` with a render function to build them from data.
+
+```tsx
+<TagList items={items}>{(item) => <Tag>{item.name}</Tag>}</TagList>
+```
+
+## Links
+
+Pass `href` to a `Tag` to render it as an `<a>`; add `target` for the link target. Client-side routing depends on your router setup.
+
+```tsx
+<Tag href="https://tailwindcss.com" target="_blank">
+  Tailwind
+</Tag>
+```
+
 ## Examples
 
 <Examples>

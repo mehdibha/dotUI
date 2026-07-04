@@ -71,6 +71,42 @@ The `trigger` prop changes the character that opens the list, and `getItemText` 
 </Mention>
 ```
 
+## Anatomy
+
+```tsx
+import { TextArea } from '@/components/ui/input'
+import { MenuContent, MenuItem } from '@/components/ui/menu'
+import { Mention } from '@/components/ui/mention'
+import { Popover } from '@/components/ui/popover'
+```
+
+```tsx
+<Mention>
+  <TextArea />
+  <Popover>
+    <MenuContent>
+      <MenuItem />
+    </MenuContent>
+  </Popover>
+</Mention>
+```
+
+`Mention` owns the value and caret-anchored popover, the input renders the text, and the `Popover` + `MenuContent` render the suggestions. These are children, not props — there are no bespoke sub-components.
+
+## Value
+
+The value is a plain `string`. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it — controlling the value is what powers highlight-overlay patterns that re-render the text with styled mention tokens.
+
+```tsx
+<Mention value={value} onChange={setValue}>
+  {/* ... */}
+</Mention>
+```
+
+## Placement
+
+Set `placement` to move the suggestions popover relative to the caret (default `"bottom start"`).
+
 ## Examples
 
 <Examples className="md:grid-cols-2">

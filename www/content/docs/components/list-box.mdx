@@ -47,6 +47,85 @@ import { ListBox, ListBoxItem } from '@/components/ui/list-box'
 </ListBox>
 ```
 
+## Anatomy
+
+```tsx
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxItemLabel,
+  ListBoxItemDescription,
+  ListBoxSection,
+  ListBoxSectionHeader,
+} from '@/components/ui/list-box'
+```
+
+```tsx
+<ListBox>
+  <ListBoxSection>
+    <ListBoxSectionHeader />
+    <ListBoxItem>
+      <ListBoxItemLabel />
+      <ListBoxItemDescription />
+    </ListBoxItem>
+  </ListBoxSection>
+</ListBox>
+```
+
+`ListBox` is the container. Each `ListBoxItem` is an option; give it a `ListBoxItemLabel` and optional `ListBoxItemDescription` when it holds more than a string. Group options under a `ListBoxSection` with a `ListBoxSectionHeader`.
+
+## Content
+
+Pass items statically as children, or dynamically via `items` plus a render function. Each item needs a stable `id`.
+
+```tsx
+<ListBox aria-label="Animals" items={animals}>
+  {(item) => <ListBoxItem id={item.id}>{item.name}</ListBoxItem>}
+</ListBox>
+```
+
+## Selection
+
+`selectionMode` sets whether options are selectable and how many. Control the selection with `selectedKeys` and `onSelectionChange`, or use `defaultSelectedKeys` for uncontrolled state. Pass `onAction` to make rows pressable without selecting them.
+
+```tsx
+<ListBox
+  aria-label="Options"
+  selectionMode="multiple"
+  selectedKeys={selected}
+  onSelectionChange={setSelected}
+>
+  <ListBoxItem id="a">Option A</ListBoxItem>
+  <ListBoxItem id="b">Option B</ListBoxItem>
+</ListBox>
+```
+
+## Disabled items
+
+Disable individual options by passing their keys to `disabledKeys` — the rest of the list stays interactive.
+
+```tsx
+<ListBox aria-label="Options" disabledKeys={['b']}>
+  <ListBoxItem id="a">Option A</ListBoxItem>
+  <ListBoxItem id="b">Option B</ListBoxItem>
+</ListBox>
+```
+
+## Async loading
+
+Load items on scroll with `isLoading` and `onLoadMore`, typically driven by `useAsyncList`, and render an empty state via `renderEmptyState`. See the [Async Loading](#examples) example.
+
+## Links
+
+Give a `ListBoxItem` an `href` to render it as a link. With a client router configured, links use client-side navigation.
+
+```tsx
+<ListBox aria-label="Links">
+  <ListBoxItem href="/home">Home</ListBoxItem>
+  <ListBoxItem href="/settings">Settings</ListBoxItem>
+</ListBox>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

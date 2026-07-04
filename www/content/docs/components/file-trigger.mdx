@@ -39,6 +39,22 @@ import { FileTrigger } from '@/components/ui/file-trigger'
 </FileTrigger>
 ```
 
+## File selection
+
+`onSelect` receives a `FileList` (or `null`), so wrap it in `Array.from` to work with the files. Restrict what users can pick with `acceptedFileTypes`, allow multiple with `allowsMultiple`, pick whole folders with `acceptDirectory`, or open a device camera with `defaultCamera` (`user` or `environment`).
+
+```tsx
+<FileTrigger
+  acceptedFileTypes={['image/*']}
+  allowsMultiple
+  onSelect={(e) => {
+    if (e) console.log(Array.from(e).map((file) => file.name))
+  }}
+>
+  <Button>Upload images</Button>
+</FileTrigger>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2 lg:grid-cols-3">
