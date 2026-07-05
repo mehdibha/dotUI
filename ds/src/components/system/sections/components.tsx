@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 import { Badge } from '@/ui/badge'
 import { Button } from '@/ui/button'
 
@@ -152,7 +152,7 @@ const dsSizeMap: Record<S2Size, 'xs' | 'sm' | 'md' | 'lg'> = {
 
 export function ComponentsSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [variant, setVariant] = useState<S2Variant>('accent')
   const [size, setSize] = useState<S2Size>('M')

@@ -12,6 +12,7 @@ import { ThemeProvider } from 'starter-themes'
 import { siteConfig } from '@/config/site'
 import { GitHubIcon } from '@/components/icons/github'
 import { ProgressiveBlur } from '@/components/progressive-blur'
+import { SystemTocSelect } from '@/components/system/toc-select'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { LinkButton } from '@/ui/button'
 
@@ -56,11 +57,16 @@ function RootDocument() {
               header-height of scroll. */}
           <ProgressiveBlur className="header-blur-reveal" />
           <div className="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-3.5">
-            <Link to="/" className="flex items-baseline gap-3">
-              <span className="text-lg font-semibold tracking-tight">
-                ds.<span className="text-fg-muted">directory</span>
-              </span>
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link to="/" className="flex items-baseline gap-3">
+                <span className="text-lg font-semibold tracking-tight">
+                  ds.<span className="text-fg-muted">directory</span>
+                </span>
+              </Link>
+              {/* Small screens have no in-page lines TOC (that's lg+); surface
+                  the sections here next to the logo instead. Null off system pages. */}
+              <SystemTocSelect className="lg:hidden" />
+            </div>
             <nav className="flex items-center gap-1 text-sm text-fg-muted">
               <LinkButton
                 href="https://github.com/mehdibha/dotUI/tree/main/ds"
@@ -78,7 +84,7 @@ function RootDocument() {
         <main className="flex-1">
           <Outlet />
         </main>
-        <footer className="flex items-center justify-center py-10">
+        <footer className="mx-auto w-full max-w-4xl px-6 py-10">
           <p className="text-sm text-fg-muted">
             Built with passion by{' '}
             <a

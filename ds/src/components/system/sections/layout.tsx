@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 import { Badge } from '@/ui/badge'
 
 import {
@@ -109,7 +109,7 @@ function PatternDiagram({ name }: { name: (typeof patterns)[number]['name'] }) {
 
 export function LayoutSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [width, setWidth] = useState(1024)
   const [gridMode, setGridMode] = useState<'fluid' | 'fixed'>('fluid')

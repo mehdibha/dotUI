@@ -1,15 +1,15 @@
-// Validates ds/data (roster + every system dir) against the schema and emits
-// the static index consumed by routes at build time. `--check` validates only.
-// Exits non-zero on any violation so CI fails on bad data.
+// Validates ds/data/catalog.json + every ds/systems dir against the schema and
+// emits the static index consumed by routes at build time. `--check` validates
+// only. Exits non-zero on any violation so CI fails on bad data.
 import fs from 'node:fs'
 import path from 'node:path'
 
 import {
+  catalogSchema,
   colorsFileSchema,
-  rosterSchema,
   systemSchema,
 } from '../src/data/schema'
-import type { DataIndex, SystemWithColors } from '../src/data/schema'
+import type { DataIndex, SystemEntry } from '../src/data/schema'
 
 const root = path.resolve(import.meta.dirname, '..')
 const dataDir = path.join(root, 'data')
@@ -27,13 +27,13 @@ function readJson(file: string): unknown {
   }
 }
 
-const rosterRaw = readJson(path.join(dataDir, 'roster.json'))
-const rosterResult = rosterSchema.safeParse(rosterRaw)
-if (!rosterResult.success) {
-  errors.push(`data/roster.json: ${rosterResult.error.message}`)
+const catalogRaw = readJson(path.join(dataDir, 'catalog.json'))
+const catalogResult = catalogSchema.safeParse(catalogRaw)
+if (!catalogResult.success) {
+  errors.push(`data/catalog.json: ${catalogResult.error.message}`)
 }
 
-const systemsDir = path.join(dataDir, 'systems')
+const systemsDir = path.join(root, 'systems')
 const systemDirs = fs.existsSync(systemsDir)
   ? fs
       .readdirSync(systemsDir, { withFileTypes: true })
@@ -42,10 +42,10 @@ const systemDirs = fs.existsSync(systemsDir)
       .sort()
   : []
 
-const systems: SystemWithColors[] = []
+const systems: SystemEntry[] = []
 
 for (const dir of systemDirs) {
-  const rel = `data/systems/${dir}`
+  const rel = `systems/${dir}`
   const systemResult = systemSchema.safeParse(
     readJson(path.join(systemsDir, dir, 'system.json')),
   )
@@ -59,9 +59,15 @@ for (const dir of systemDirs) {
     )
   }
 
-  const colorsResult = colorsFileSchema.safeParse(
-    readJson(path.join(systemsDir, dir, 'colors.json')),
-  )
+  // Color data is optional — a system can be explorable before its ramps and
+  // tokens have been researched.
+  const colorsPath = path.join(systemsDir, dir, 'colors.json')
+  if (!fs.existsSync(colorsPath)) {
+    systems.push(systemResult.data)
+    continue
+  }
+
+  const colorsResult = colorsFileSchema.safeParse(readJson(colorsPath))
   if (!colorsResult.success) {
     errors.push(`${rel}/colors.json: ${colorsResult.error.message}`)
     continue
@@ -109,7 +115,7 @@ if (errors.length > 0) {
 
 if (!checkOnly) {
   const index: DataIndex = {
-    roster: rosterResult.success ? rosterResult.data.systems : [],
+    catalog: catalogResult.success ? catalogResult.data.systems : [],
     systems,
   }
   fs.mkdirSync(path.dirname(outFile), { recursive: true })

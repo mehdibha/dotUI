@@ -3,7 +3,7 @@
 import { type ReactNode, useState } from 'react'
 
 import { cn } from '@/lib/utils'
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 
 import {
   Block,
@@ -50,7 +50,7 @@ function Tile({
 
 export function LayoutPrimitivesSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [stackGap, setStackGap] = useState('16')
   const [clusterGap, setClusterGap] = useState('12')

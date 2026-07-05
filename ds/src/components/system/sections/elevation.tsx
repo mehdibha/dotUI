@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 
 import {
   Block,
@@ -74,7 +74,7 @@ const STACK = [
 
 export function ElevationSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [galleryMode, setGalleryMode] = useState<Mode>('light')
   const [level, setLevel] = useState<Level>('elevated')

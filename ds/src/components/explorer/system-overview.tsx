@@ -18,7 +18,7 @@ import {
 } from 'recharts'
 
 import { cn } from '@/lib/utils'
-import type { ColorsFile, RosterEntry, SystemWithColors } from '@/data/schema'
+import type { ColorsFile, CatalogEntry, SystemWithColors } from '@/data/schema'
 import { Badge } from '@/ui/badge'
 import type { ChartConfig } from '@/ui/chart'
 import {
@@ -43,9 +43,9 @@ const SCORE_AXES = [
   { key: 'accessibility', label: 'A11y' },
   { key: 'docs', label: 'Docs' },
   { key: 'openness', label: 'Openness' },
-] satisfies { key: keyof RosterEntry['scores']; label: string }[]
+] satisfies { key: keyof CatalogEntry['scores']; label: string }[]
 
-const categoryLabels: Record<RosterEntry['category'], string> = {
+const categoryLabels: Record<CatalogEntry['category'], string> = {
   'big-tech': 'Big tech',
   saas: 'SaaS',
   'fintech-devtools': 'Fintech & devtools',
@@ -63,7 +63,7 @@ const typeLabels: Record<SystemWithColors['type'], string> = {
   'styling-distribution': 'Styling distribution',
 }
 
-const accessLabels: Record<RosterEntry['status'], string> = {
+const accessLabels: Record<CatalogEntry['status'], string> = {
   open: 'open source',
   'docs-only': 'docs only',
   'shipped-css': 'shipped CSS',
@@ -106,22 +106,22 @@ function deriveMetrics(colors: ColorsFile): Metrics {
 
 function IdentityStrip({
   system,
-  rosterEntry,
+  catalogEntry,
 }: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   return (
     <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b pb-5">
       <div className="flex flex-col gap-2">
         <p className="text-xs font-medium tracking-wide text-fg-muted uppercase">
-          {rosterEntry && `${categoryLabels[rosterEntry.category]} · `}
+          {catalogEntry && `${categoryLabels[catalogEntry.category]} · `}
           {typeLabels[system.type]}
         </p>
         <div className="flex flex-wrap items-center gap-2">
-          {rosterEntry && (
+          {catalogEntry && (
             <Badge appearance="subtle" variant="neutral">
-              {accessLabels[rosterEntry.status]}
+              {accessLabels[catalogEntry.status]}
             </Badge>
           )}
           {system.upstream.length > 0 && (
@@ -131,14 +131,14 @@ function IdentityStrip({
           )}
         </div>
       </div>
-      {rosterEntry && (
+      {catalogEntry && (
         <div className="text-right">
           <p className="text-xs font-medium tracking-wide text-fg-muted uppercase">
             Overall
           </p>
           <p className="leading-none">
             <span className="font-mono text-3xl font-semibold tabular-nums">
-              {rosterEntry.general}
+              {catalogEntry.general}
             </span>
             <span className="text-sm text-fg-muted">/100</span>
           </p>
@@ -273,7 +273,7 @@ function CoverageProfile({
   scores,
   name,
 }: {
-  scores: RosterEntry['scores']
+  scores: CatalogEntry['scores']
   name: string
 }) {
   const data = SCORE_AXES.map((axis) => ({
@@ -431,23 +431,23 @@ function ColorDecisions({ colors }: { colors: ColorsFile }) {
 }
 
 function Characterization({
-  rosterEntry,
+  catalogEntry,
   notes,
 }: {
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
   notes: ColorsFile['notes']
 }) {
   const overviewNotes = notes.filter((note) => note.section === 'overview')
-  if (!rosterEntry?.note && overviewNotes.length === 0) return null
+  if (!catalogEntry?.note && overviewNotes.length === 0) return null
   return (
     <div>
-      {rosterEntry?.note && (
+      {catalogEntry?.note && (
         <>
           <h3 className="mb-2 text-xs font-medium tracking-wide text-fg-muted uppercase">
             Characterization
           </h3>
           <p className="max-w-2xl text-[15px] leading-relaxed text-fg">
-            {rosterEntry.note}
+            {catalogEntry.note}
           </p>
         </>
       )}
@@ -458,22 +458,22 @@ function Characterization({
 
 export function SystemOverview({
   system,
-  rosterEntry,
+  catalogEntry,
 }: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const { colors } = system
   return (
     <div className="flex flex-col gap-8">
-      <IdentityStrip system={system} rosterEntry={rosterEntry} />
+      <IdentityStrip system={system} catalogEntry={catalogEntry} />
       <StatTileGrid system={system} />
-      {rosterEntry && (
-        <CoverageProfile scores={rosterEntry.scores} name={system.name} />
+      {catalogEntry && (
+        <CoverageProfile scores={catalogEntry.scores} name={system.name} />
       )}
       <TokenArchitectureBar colors={colors} />
       <ColorDecisions colors={colors} />
-      <Characterization rosterEntry={rosterEntry} notes={colors.notes} />
+      <Characterization catalogEntry={catalogEntry} notes={colors.notes} />
       <div className="border-t pt-5">
         <p className="text-xs text-fg-muted">
           Primary sources for this system:

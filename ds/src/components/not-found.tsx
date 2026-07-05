@@ -8,7 +8,7 @@ export function NotFound() {
         This page doesn&apos;t exist — or isn&apos;t researched yet.
       </p>
       <Link to="/" className="text-fg-accent underline underline-offset-2">
-        Back to the roster
+        Back to the catalog
       </Link>
     </div>
   )

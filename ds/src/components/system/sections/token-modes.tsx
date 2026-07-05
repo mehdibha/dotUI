@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 
 import {
   Block,
@@ -68,7 +68,7 @@ const DIMENSION_SET_JSON = `"base-padding-horizontal-2x-large": {
 
 export function TokenModesSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [scheme, setScheme] = useState<Scheme>('light')
   const [scale, setScale] = useState<Scale>('desktop')

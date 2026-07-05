@@ -4,7 +4,7 @@ import { ListFilterIcon } from 'lucide-react'
 import type { Selection } from 'react-aria-components/Menu'
 
 import { dataIndex } from '@/data'
-import type { RosterEntry } from '@/data/schema'
+import type { CatalogEntry } from '@/data/schema'
 import { Badge } from '@/ui/badge'
 import { Button } from '@/ui/button'
 import {
@@ -34,7 +34,7 @@ const systemsBySlug = new Map(
   dataIndex.systems.map((system) => [system.slug, system]),
 )
 
-const catalog = [...dataIndex.roster].sort((a, b) => {
+const catalog = [...dataIndex.catalog].sort((a, b) => {
   const aExplorable = systemsBySlug.has(a.slug) ? 1 : 0
   const bExplorable = systemsBySlug.has(b.slug) ? 1 : 0
   if (aExplorable !== bExplorable) return bExplorable - aExplorable
@@ -48,7 +48,7 @@ const plannedKeys = catalog
   .filter((entry) => !systemsBySlug.has(entry.slug))
   .map((entry) => entry.slug)
 
-const categoryLabels: Record<RosterEntry['category'], string> = {
+const categoryLabels: Record<CatalogEntry['category'], string> = {
   'big-tech': 'Big tech',
   saas: 'SaaS',
   'fintech-devtools': 'Fintech & devtools',
@@ -60,7 +60,7 @@ const categoryLabels: Record<RosterEntry['category'], string> = {
 }
 
 const accessBadges: Record<
-  RosterEntry['status'],
+  CatalogEntry['status'],
   { label: string; variant: 'success' | 'info' | 'warning' | 'neutral' }
 > = {
   open: { label: 'open', variant: 'success' },
@@ -72,14 +72,17 @@ const accessBadges: Record<
 const categoryOptions = [
   { id: 'all', label: 'All categories' },
   ...(
-    Object.entries(categoryLabels) as [RosterEntry['category'], string][]
+    Object.entries(categoryLabels) as [CatalogEntry['category'], string][]
   ).map(([id, label]) => ({ id, label })),
 ]
 
 const accessOptions = [
   { id: 'all', label: 'All access' },
   ...(
-    Object.entries(accessBadges) as [RosterEntry['status'], { label: string }][]
+    Object.entries(accessBadges) as [
+      CatalogEntry['status'],
+      { label: string },
+    ][]
   ).map(([id, { label }]) => ({ id, label })),
 ]
 
@@ -208,8 +211,18 @@ function Directory() {
               {filtered.map((entry, index) => {
                 const isExplorable = systemsBySlug.has(entry.slug)
                 return (
-                  <TableRow key={entry.slug} id={entry.slug}>
-                    <TableCell className="font-mono text-xs text-fg-muted">
+                  <TableRow
+                    key={entry.slug}
+                    id={entry.slug}
+                    className={isExplorable ? undefined : 'border-disabled'}
+                  >
+                    <TableCell
+                      className={
+                        isExplorable
+                          ? 'font-mono text-xs text-fg-muted'
+                          : 'font-mono text-xs text-fg-disabled'
+                      }
+                    >
                       {index + 1}
                     </TableCell>
                     <TableCell>
@@ -223,10 +236,18 @@ function Directory() {
                             {entry.name}
                           </Link>
                         ) : (
-                          <span className="font-medium">{entry.name}</span>
+                          <span className="font-medium text-fg-disabled">
+                            {entry.name}
+                          </span>
                         )}
-                        <span className="text-xs text-fg-muted">
-                          {entry.org}
+                        <span
+                          className={
+                            isExplorable
+                              ? 'text-xs text-fg-muted'
+                              : 'text-xs text-fg-disabled'
+                          }
+                        >
+                          by {entry.org}
                         </span>
                         {!isExplorable && (
                           <Badge
@@ -238,7 +259,13 @@ function Directory() {
                         )}
                       </span>
                     </TableCell>
-                    <TableCell className="text-right font-mono text-xs">
+                    <TableCell
+                      className={
+                        isExplorable
+                          ? 'text-right font-mono text-xs'
+                          : 'text-right font-mono text-xs text-fg-disabled'
+                      }
+                    >
                       {entry.general}
                     </TableCell>
                   </TableRow>

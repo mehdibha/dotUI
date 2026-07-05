@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 import { Button } from '@/ui/button'
 
 import {
@@ -159,7 +159,7 @@ function EasingPlot({
 
 export function MotionSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [easingId, setEasingId] = useState<EasingId>('ease-out')
   const [durationToken, setDurationToken] =

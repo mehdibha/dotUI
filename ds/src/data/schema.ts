@@ -156,7 +156,7 @@ export const colorsFileSchema = z.object({
   sources: z.array(z.url()).min(1),
 })
 
-export const rosterCategorySchema = z.enum([
+export const catalogCategorySchema = z.enum([
   'big-tech',
   'saas',
   'fintech-devtools',
@@ -168,7 +168,7 @@ export const rosterCategorySchema = z.enum([
 ])
 
 /** How much of the system can be studied: source, docs, extractable CSS, or nothing. */
-export const rosterAccessSchema = z.enum([
+export const catalogAccessSchema = z.enum([
   'open',
   'docs-only',
   'shipped-css',
@@ -178,7 +178,7 @@ export const rosterAccessSchema = z.enum([
 const domainScore = z.number().int().min(0).max(10)
 
 /** Recon-level prioritization scores from docs/research/2026-07-03-ds-catalog — not published verdicts. */
-export const rosterScoresSchema = z.object({
+export const catalogScoresSchema = z.object({
   color: domainScore,
   typography: domainScore,
   spacing: domainScore,
@@ -190,24 +190,24 @@ export const rosterScoresSchema = z.object({
   openness: domainScore,
 })
 
-export const rosterEntrySchema = z.object({
+export const catalogEntrySchema = z.object({
   slug: z.string().regex(/^[a-z0-9-]+$/),
   name: z.string().min(1),
   org: z.string().min(1),
-  category: rosterCategorySchema,
-  status: rosterAccessSchema,
+  category: catalogCategorySchema,
+  status: catalogAccessSchema,
   homepage: z.url(),
   repo: z.url().nullable(),
   general: z.number().int().min(0).max(100),
-  scores: rosterScoresSchema,
+  scores: catalogScoresSchema,
   note: z.string().min(1),
 })
 
-export const rosterSchema = z.object({
+export const catalogSchema = z.object({
   $comment: z.string().optional(),
   version: z.number().int(),
   createdAt: isoDate,
-  systems: z.array(rosterEntrySchema),
+  systems: z.array(catalogEntrySchema),
 })
 
 export type System = z.infer<typeof systemSchema>
@@ -223,14 +223,19 @@ export type StepRoles = z.infer<typeof stepRolesSchema>
 export type FocusRing = z.infer<typeof focusRingSchema>
 export type ContrastPair = z.infer<typeof contrastPairSchema>
 export type ColorsFile = z.infer<typeof colorsFileSchema>
-export type RosterEntry = z.infer<typeof rosterEntrySchema>
+export type CatalogEntry = z.infer<typeof catalogEntrySchema>
 
 export interface SystemWithColors extends System {
   colors: ColorsFile
 }
 
+/** A researched system; `colors` is present once its color data has been added. */
+export interface SystemEntry extends System {
+  colors?: ColorsFile
+}
+
 /** Shape of the generated `src/data/__generated__/index.json`. */
 export interface DataIndex {
-  roster: RosterEntry[]
-  systems: SystemWithColors[]
+  catalog: CatalogEntry[]
+  systems: SystemEntry[]
 }

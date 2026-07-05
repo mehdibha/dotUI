@@ -24,7 +24,10 @@ export function Section({
             {kicker}
           </p>
         )}
-        <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
+        <h2 className="text-lg font-semibold tracking-tight lowercase">
+          <span className="mr-1.5 text-fg-disabled">#</span>
+          {title}
+        </h2>
         {intro && (
           <p className="mt-3 text-[15px] leading-relaxed text-balance text-fg-muted">
             {intro}

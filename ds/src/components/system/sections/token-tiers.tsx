@@ -4,7 +4,7 @@ import { useState, type ReactNode } from 'react'
 import { ArrowDownIcon } from 'lucide-react'
 
 import { LayerDiagram } from '@/components/explorer/layer-diagram'
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 
 import {
   Block,
@@ -42,7 +42,7 @@ export function TokenTiersSection({
   system,
 }: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [mode, setMode] = useState<Mode>('light')
   const primitive = PRIMITIVE_BY_MODE[mode]

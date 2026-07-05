@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 
 import {
   Block,
@@ -162,7 +162,7 @@ const STATE_COMPOUNDS = [
 
 export function TokenNamingSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [concept, setConcept] = useState<Concept>('accent')
   const [property, setProperty] = useState<Property>('background')

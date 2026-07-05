@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 
 import { cn } from '@/lib/utils'
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 import { Input } from '@/ui/input'
 
 import { Block, Mono, Note, Playground, Section, SpecList } from '../primitives'
@@ -140,7 +140,7 @@ const toneClass = {
 
 export function TokenDocsSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [query, setQuery] = useState('')
 

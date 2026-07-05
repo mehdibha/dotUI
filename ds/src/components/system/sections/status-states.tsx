@@ -8,7 +8,7 @@ import {
   TriangleAlertIcon,
 } from 'lucide-react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 import { Alert, AlertDescription, AlertTitle } from '@/ui/alert'
 import { Avatar, AvatarFallback } from '@/ui/avatar'
 import { Badge } from '@/ui/badge'
@@ -129,7 +129,7 @@ function RecentFilesCard({ state }: { state: CardState }) {
 
 export function StatusStatesSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [cardState, setCardState] = useState<CardState>('loaded')
   const [determinateValue, setDeterminateValue] = useState(62)

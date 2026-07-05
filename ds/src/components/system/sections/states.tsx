@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 import { Button } from '@/ui/button'
 
 import { Choice } from '../primitives/controls'
@@ -153,7 +153,7 @@ const precedenceRows = [
 
 export function StatesSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [state, setState] = useState<DemoState>('default')
   const [pending, setPending] = useState(false)
