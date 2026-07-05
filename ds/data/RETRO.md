@@ -85,5 +85,5 @@ The frozen artifacts live in `ds/src/data/schema.ts` and `ds/src/data/question-b
 
 ## Running the validation
 
-`pnpm --filter=ds check:data` — validates every `data/systems/<slug>/` against the
+`pnpm --filter=ds check:data` — validates every `systems/<slug>/` against the
 schema and question bank (also runs inside ds's `build` and `typecheck`).

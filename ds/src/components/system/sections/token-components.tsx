@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 
 import {
   Block,
@@ -123,7 +123,7 @@ const OVERRIDE_CODE = `.my-scope {
 
 export function TokenComponentsSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [selected, setSelected] = useState(COMPONENTS[0]!.id)
   const active = COMPONENTS.find((c) => c.id === selected) ?? COMPONENTS[0]!

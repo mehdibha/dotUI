@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 
 import {
   Block,
@@ -146,7 +146,7 @@ function clampVisual(px: number, capPx: number) {
 
 export function TypographySection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [rampScale, setRampScale] = useState<Scale>('desktop')
   const [scaleTrackScale, setScaleTrackScale] = useState<Scale>('desktop')

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 
 import {
   Block,
@@ -113,7 +113,7 @@ const toolchainRows = [
 
 export function TokenPipelineSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [stage, setStage] = useState<Stage>('source')
   const active = codeByStage[stage]

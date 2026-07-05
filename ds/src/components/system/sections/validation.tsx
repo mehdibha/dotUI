@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { CheckIcon, InfoIcon, TriangleAlertIcon } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 import { Alert, AlertDescription, AlertTitle } from '@/ui/alert'
 import { Description, FieldError, Label } from '@/ui/field'
 import { Input } from '@/ui/input'
@@ -88,7 +88,7 @@ const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
 
 export function ValidationSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [email, setEmail] = useState('')
   const [blurred, setBlurred] = useState(false)

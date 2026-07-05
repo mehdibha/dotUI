@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 
 import {
   Block,
@@ -160,7 +160,7 @@ const ABSENT_TYPES = ['duration', 'cubic-bezier', 'easing']
 
 export function TokenTaxonomySection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [activeType, setActiveType] = useState<TokenTypeKey>('color')
   const active = TYPE_EXAMPLES[activeType]

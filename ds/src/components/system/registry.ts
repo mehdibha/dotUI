@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react'
 
-import type { RosterEntry, SystemEntry } from '@/data/schema'
+import type { CatalogEntry, SystemEntry } from '@/data/schema'
 
 import { ColorSection } from './sections/color'
 import { ComponentsSection } from './sections/components'
@@ -30,7 +30,7 @@ import { ValidationSection } from './sections/validation'
 
 export type SectionComponent = ComponentType<{
   system: SystemEntry
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }>
 
 export interface SectionDef {

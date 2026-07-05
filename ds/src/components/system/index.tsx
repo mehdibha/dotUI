@@ -1,15 +1,15 @@
 'use client'
 
-import type { RosterEntry, SystemEntry } from '@/data/schema'
+import type { CatalogEntry, SystemEntry } from '@/data/schema'
 
 import { getSectionGroups } from './registry'
 
 export function SystemExplorer({
   system,
-  rosterEntry,
+  catalogEntry,
 }: {
   system: SystemEntry
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const groups = getSectionGroups(system.slug)
 
@@ -35,7 +35,10 @@ export function SystemExplorer({
                 id={section.id}
                 className="scroll-mt-24"
               >
-                <section.Component system={system} rosterEntry={rosterEntry} />
+                <section.Component
+                  system={system}
+                  catalogEntry={catalogEntry}
+                />
               </section>
             ))}
           </div>

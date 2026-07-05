@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 import { Button } from '@/ui/button'
 
 import { Range, Toggle } from '../primitives/controls'
@@ -71,7 +71,7 @@ const mediumFamilyButtons = [
 
 export function ShapeSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [radius, setRadius] = useState(8)
   const [pill, setPill] = useState(false)

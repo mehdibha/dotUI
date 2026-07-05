@@ -14,7 +14,7 @@ import {
   TrashIcon,
 } from 'lucide-react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 
 import {
   Block,
@@ -57,7 +57,7 @@ const representativeIcons = [
 
 export function IconsSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [scale, setScale] = useState<DocScale>('desktop')
   const [strokeWidth, setStrokeWidth] = useState(2)

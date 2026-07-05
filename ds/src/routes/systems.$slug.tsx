@@ -7,22 +7,22 @@ import { Link } from '@/ui/link'
 
 export const Route = createFileRoute('/systems/$slug')({
   loader: ({ params }) => {
-    const rosterEntry = dataIndex.roster.find(
+    const catalogEntry = dataIndex.catalog.find(
       (entry) => entry.slug === params.slug,
     )
     const system = dataIndex.systems.find((s) => s.slug === params.slug)
-    if (!rosterEntry && !system) throw notFound()
-    return { rosterEntry, system }
+    if (!catalogEntry && !system) throw notFound()
+    return { catalogEntry, system }
   },
   component: SystemPage,
 })
 
 function SystemPage() {
-  const { rosterEntry, system } = Route.useLoaderData()
-  const name = system?.name ?? rosterEntry?.name ?? ''
-  const org = system?.org ?? rosterEntry?.org ?? ''
-  const docs = system?.sources.docs ?? rosterEntry?.homepage
-  const repo = system?.sources.repo ?? rosterEntry?.repo
+  const { catalogEntry, system } = Route.useLoaderData()
+  const name = system?.name ?? catalogEntry?.name ?? ''
+  const org = system?.org ?? catalogEntry?.org ?? ''
+  const docs = system?.sources.docs ?? catalogEntry?.homepage
+  const repo = system?.sources.repo ?? catalogEntry?.repo
   const site = system?.sources.site
 
   return (
@@ -50,7 +50,7 @@ function SystemPage() {
       </header>
 
       {system ? (
-        <SystemExplorer system={system} rosterEntry={rosterEntry} />
+        <SystemExplorer system={system} catalogEntry={catalogEntry} />
       ) : (
         <div className="px-6 pb-16">
           <p className="mt-10 max-w-2xl rounded-lg border p-6 text-fg-muted">

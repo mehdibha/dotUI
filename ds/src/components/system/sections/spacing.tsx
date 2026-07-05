@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { CatalogEntry, SystemWithColors } from '@/data/schema'
 
 import {
   Block,
@@ -51,7 +51,7 @@ const componentHeights = [
 
 export function SpacingSection(_props: {
   system: SystemWithColors
-  rosterEntry?: RosterEntry
+  catalogEntry?: CatalogEntry
 }) {
   const [scale, setScale] = useState<ScaleMode>('desktop')
 
