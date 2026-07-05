@@ -11,6 +11,7 @@ import { Logo } from '@/components/layout/logo'
 import { MobileNav } from '@/components/layout/mobile-nav'
 import { SearchCommand } from '@/components/search-command'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { DocsTocSelect } from '@/modules/docs/docs-toc-select'
 
 // iOS-style progressive blur: each layer adds a larger backdrop blur over an
 // overlapping gradient window. Where the windows overlap the blurs compound,
@@ -110,9 +111,12 @@ export function Header({ className, items = [] }: HeaderProps) {
       </div>
       <div className="flex items-center gap-3 md:gap-6">
         <Logo />
+        {/* Small screens have no in-page TOC (the MiniTOC is md–xl); surface it
+            here next to the logo instead. Renders null off docs pages. */}
+        <DocsTocSelect className="md:hidden" />
         <nav
           aria-label="Main"
-          className="flex items-center gap-3 text-sm max-md:hidden"
+          className="flex items-center gap-3 text-sm max-lg:hidden"
         >
           {navItems.map((item) => {
             // Color highlights the whole section (Docs stays lit on /docs/button)
@@ -155,7 +159,7 @@ export function Header({ className, items = [] }: HeaderProps) {
           <GitHubIcon />
         </a>
         <ThemeToggle variant="quiet" isIconOnly />
-        <Separator orientation="vertical" className="mx-1.5 h-4 md:hidden" />
+        <Separator orientation="vertical" className="mx-1.5 h-4 lg:hidden" />
         <MobileNav items={items} />
       </div>
     </header>

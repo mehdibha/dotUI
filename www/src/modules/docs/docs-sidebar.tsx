@@ -82,11 +82,20 @@ function DocsSidebarLink({
     >
       <span
         className={cn(
-          'flex items-center gap-2 rounded-md bg-transparent px-2 py-1 text-fg-muted transition-colors hover:text-fg',
-          isActive && 'bg-neutral font-medium text-fg',
+          'flex items-center gap-2 px-2 py-1 text-fg-muted transition-colors hover:text-fg',
+          isActive && 'font-medium text-fg',
         )}
       >
-        <span>{item.name}</span>
+        {/* Highlight hugs the text, not the full-width row: padding sizes the
+            pill, negative margins cancel it so nothing shifts when active. */}
+        <span
+          className={cn(
+            '-mx-1.5 -my-0.5 rounded-md px-1.5 py-0.5',
+            isActive && 'bg-neutral',
+          )}
+        >
+          {item.name}
+        </span>
       </span>
     </Link>
   )

@@ -2,9 +2,9 @@ import { createFileRoute, notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseHeader } from '@tanstack/react-start/server'
 import { findNeighbour } from 'fumadocs-core/page-tree'
-import { ChevronDownIcon } from 'lucide-react'
 
 import { siteConfig } from '@/config/site'
+import { nodeText } from '@/lib/node-text'
 import { docsSource } from '@/lib/source'
 import { truncateOnWord } from '@/lib/text'
 import { DocsCopyPage } from '@/modules/docs/docs-copy-page'
@@ -16,7 +16,7 @@ import {
   PageHeaderHeading,
   PageLayout,
 } from '@/modules/docs/page-layout'
-import { TOC, TOCItems, TOCProvider } from '@/modules/docs/toc'
+import { MiniTOC, TOC, TOCProvider } from '@/modules/docs/toc'
 import browserCollections from '@/.source/browser'
 
 export const Route = createFileRoute('/_app/docs/$')({
@@ -91,6 +91,9 @@ const serverLoader = createServerFn({ method: 'GET' })
     const pageTree = docsSource.getPageTree()
     const { previous, next } = findNeighbour(pageTree, page.url)
     const rawContent = await page.data.getText('processed')
+    // Serializable copy of the page's toc (titles flattened to text) so the
+    // header — which lives above the TOCProvider — can read it from route data.
+    const { toc } = await page.data.load()
 
     return {
       path: page.path,
@@ -98,6 +101,11 @@ const serverLoader = createServerFn({ method: 'GET' })
       title: page.data.title,
       description: page.data.description,
       rawContent,
+      toc: toc.map((item) => ({
+        url: item.url,
+        title: nodeText(item.title),
+        depth: item.depth,
+      })),
       neighbours: {
         previous: previous
           ? {
@@ -134,7 +142,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
     return (
       <TOCProvider toc={toc}>
         <PageLayout className="mt-4 flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
-          <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
+          <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 lg:px-0 lg:py-8 dark:text-neutral-300">
             <div data-page-header="" className="relative mb-2 space-y-3 pb-4">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="flex min-w-0 flex-col gap-2">
@@ -152,19 +160,6 @@ const clientLoader = browserCollections.docs.createClientLoader({
               </div>
               <div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_40%,transparent)] via-[color-mix(in_oklab,var(--color-border)_90%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
             </div>
-            {/* Tablet/mobile fallback for the right-rail TOC, which is xl-only.
-                Below xl there's otherwise no in-page navigation at all. */}
-            {hasToc ? (
-              <details className="group rounded-lg border bg-card xl:hidden">
-                <summary className="flex cursor-pointer list-none items-center justify-between px-3 py-2 text-sm font-medium [&::-webkit-details-marker]:hidden">
-                  On this page
-                  <ChevronDownIcon className="size-4 text-fg-muted transition-transform group-open:rotate-180" />
-                </summary>
-                <div className="relative border-t px-2 py-2">
-                  <TOCItems />
-                </div>
-              </details>
-            ) : null}
             <div>
               <MDX components={mdxComponents} />
             </div>
@@ -180,6 +175,17 @@ const clientLoader = browserCollections.docs.createClientLoader({
           <div className="sticky top-(--header-height) z-30 -mt-4 hidden max-h-[90svh] w-(--sidebar-width) flex-col gap-4 self-start overflow-hidden overscroll-none pb-8 xl:flex">
             {hasToc && <TOC className="pr-12" />}
           </div>
+          {/* In-flow TOC column for md–xl: it reserves layout space (instead of
+              floating) so the content column stays centered. Mirrors the xl
+              rail's sticky/-mt-4 alignment; pt lands the lines on the title.
+              px-6 lines the bars up with the header's right-edge icon glyph
+              (which is inset ~8px inside its button), mirroring how the sidebar
+              text lines up with the logo on the left. */}
+          {hasToc && (
+            <div className="sticky top-(--header-height) z-30 -mt-4 hidden w-16 shrink-0 justify-end self-start px-6 pt-10 md:flex lg:pt-12 xl:hidden">
+              <MiniTOC />
+            </div>
+          )}
         </PageLayout>
       </TOCProvider>
     )
