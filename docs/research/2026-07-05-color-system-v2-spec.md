@@ -49,6 +49,33 @@ Notes from the measurement:
 - Contrast metric: WCAG 2.1 ratios vs APCA. Leaning: WCAG 2.1 as the enforced floor (the auditable standard), APCA as advisory readout.
 - The dark-mode target ladder (measure from Radix dark in the playground phase).
 
+> Decision (2026-07-05, playground phase): dark ladder measured from Radix dark — table below. The 11-step defaults are derived by a measured transfer, not invented: each Tailwind light target is located on the Radix *light* ladder (log-interpolated fractional position), and the Radix *dark* median is read at that same position. The transfer is job-consistent where it matters (Tailwind 500 lands at Radix position 9.6 — the solid step).
+
+**Measured dark ladder** (WCAG 2.1 of each Radix dark step vs its own step 1, from `radix-scales.json` in `dcdd548b`):
+
+| scale | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| blue | 1.00 | 1.04 | 1.23 | 1.44 | 1.73 | 2.12 | 2.73 | 3.62 | 5.62 | 6.57 | 8.72 | 14.02 |
+| red | 1.00 | 1.03 | 1.14 | 1.26 | 1.46 | 1.77 | 2.35 | 3.46 | 4.75 | 5.57 | 8.82 | 13.61 |
+| green | 1.00 | 1.05 | 1.26 | 1.48 | 1.80 | 2.20 | 2.79 | 3.65 | 5.86 | 6.70 | 9.87 | 14.38 |
+| yellow | 1.00 | 1.06 | 1.21 | 1.34 | 1.56 | 1.91 | 2.54 | 3.61 | 14.81 | 17.57 | 14.04 | 15.88 |
+| amber | 1.00 | 1.06 | 1.19 | 1.33 | 1.54 | 1.89 | 2.52 | 3.57 | 11.82 | 13.21 | 12.18 | 15.39 |
+| violet | 1.00 | 1.04 | 1.21 | 1.37 | 1.57 | 1.84 | 2.33 | 3.17 | 3.43 | 4.20 | 8.85 | 14.09 |
+| iris | 1.00 | 1.03 | 1.21 | 1.41 | 1.62 | 1.94 | 2.37 | 3.03 | 3.43 | 4.19 | 8.77 | 14.18 |
+| **median** | **1.00** | **1.04** | **1.21** | **1.37** | **1.57** | **1.91** | **2.52** | **3.57** | **5.62** | **6.57** | **8.85** | **14.18** |
+| gray | 1.00 | 1.07 | 1.19 | 1.32 | 1.45 | 1.66 | 2.06 | 3.00 | 3.70 | 4.46 | 9.11 | 16.28 |
+
+Medians, not means: yellow and amber solids (steps 9–10) sit at 11.8–17.6 — Radix pairs them with dark text, the same per-hue latitude the light section absorbs via the computed `-contrast` foreground. A mean would drag the solid target to ~7–8 on outlier weight alone.
+
+**Derived v2 dark defaults** (vs the dark mode surface; light targets repeated for comparison):
+
+| step | 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| light (Tailwind, measured) | 1.06 | 1.15 | 1.31 | 1.62 | 2.34 | 3.41 | 4.95 | 6.82 | 9.29 | 11.22 | 15.87 |
+| dark (derived) | 1.11 | 1.31 | 1.58 | 2.17 | 3.57 | 6.16 | 9.11 | 10.66 | 12.41 | 13.61 | 16.14 |
+
+Shape notes: dark solids are brighter relative to their surface than light solids (500 = 6.16 vs 3.41) — confirmed by Radix, not a transfer artifact. The 400→500 jump (3.57→6.16) inherits Radix's real border→solid cliff (dark 8 = 3.57 → 9 = 5.62); watch it in the playground before ratifying. Neutral dark ramps track the gray row (notably flatter through the middle, steeper at the text end) — the solver may want a neutral-specific ladder later; not derived here.
+
 ## Generation
 
 - **One contrast-first producer** is the default engine, plus a **fixed producer** for pasted/exact scales — paste-my-palette and "start from Tailwind `<hue>` / Radix `<scale>`" are first-class product paths (prior doc A4: the current product rejects exactly these). Editing any step of a generated ramp converts that ramp to fixed — no half-generated ramps.
