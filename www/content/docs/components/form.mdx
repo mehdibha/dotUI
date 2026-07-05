@@ -39,6 +39,25 @@ import { Input } from '@/components/ui/input'
 </Form>
 ```
 
+## Validation
+
+Mark fields `isRequired` (or add `validate` per field) to enforce validation. By default `validationBehavior` is `'native'`, using the browser's constraint validation; set it to `'aria'` to keep the DOM valid and surface errors purely through ARIA. Pass server-side errors keyed by field `name` via `validationErrors`.
+
+```tsx
+<Form
+  validationBehavior="aria"
+  validationErrors={{ email: 'Email already taken' }}
+>
+  <TextField name="email" isRequired>
+    <Label>Email</Label>
+    <Input type="email" />
+  </TextField>
+  <Button type="submit" variant="primary">
+    Submit
+  </Button>
+</Form>
+```
+
 ## Examples
 
 <Examples>

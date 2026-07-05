@@ -52,6 +52,22 @@ import {
 </Breadcrumbs>
 ```
 
+## Anatomy
+
+Each `BreadcrumbItem` wraps a `BreadcrumbLink` and its own `BreadcrumbSeparator`. The separator lives inside the item, so omit it on the last one. It defaults to a chevron; pass `children` to override.
+
+```tsx
+<Breadcrumbs>
+  <BreadcrumbItem>
+    <BreadcrumbLink href="#">Home</BreadcrumbLink>
+    <BreadcrumbSeparator>/</BreadcrumbSeparator>
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+    <BreadcrumbLink>Current</BreadcrumbLink>
+  </BreadcrumbItem>
+</Breadcrumbs>
+```
+
 ## Framework Setup
 
 By default, `BreadcrumbLink` renders a plain `<a>` tag. To integrate with your framework's router, override the component in your project's `breadcrumbs.tsx`.

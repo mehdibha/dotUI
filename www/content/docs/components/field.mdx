@@ -24,6 +24,70 @@ import { Field, Label, Description, FieldError } from '@/components/ui/field'
 </Field>
 ```
 
+## Anatomy
+
+```tsx
+import {
+  Field,
+  FieldContent,
+  Label,
+  Description,
+  FieldError,
+  FieldGroup,
+  Fieldset,
+  Legend,
+} from '@/components/ui/field'
+```
+
+```tsx
+<Fieldset>
+  <Legend>…</Legend>
+  <FieldGroup>
+    <Field>
+      <FieldContent>
+        <Label>…</Label>
+        <Description>…</Description>
+      </FieldContent>
+      <FieldError>…</FieldError>
+    </Field>
+  </FieldGroup>
+</Fieldset>
+```
+
+`Field` wraps a control with its `Label`, `Description`, and `FieldError`. `FieldContent` stacks the label and description so they can sit beside the control. `FieldGroup` spaces stacked fields, and `Fieldset` with `Legend` semantically groups related fields.
+
+## Accessible wiring
+
+`Field` links the `Label` (`htmlFor`), the control (`id`), and the `Description` (`aria-describedby`) through context, so no manual ids are needed. Input-specific wrappers like `TextField`, `Select`, and `Checkbox` do this themselves — reach for `Field` only around standalone controls like `Switch`.
+
+```tsx
+<Field>
+  <Label>Notifications</Label>
+  <Switch>
+    <SwitchControl />
+  </Switch>
+  <Description>Send me product updates.</Description>
+</Field>
+```
+
+`FieldError` renders validation messages and accepts a render function for the current validation state.
+
+## Orientation
+
+Set `orientation="horizontal"` to place the control beside its label, using `FieldContent` to stack the label and description on the left.
+
+```tsx
+<Field orientation="horizontal">
+  <FieldContent>
+    <Label>Airplane Mode</Label>
+    <Description>Disable all connections.</Description>
+  </FieldContent>
+  <Switch aria-label="Airplane Mode">
+    <SwitchControl />
+  </Switch>
+</Field>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

@@ -20,6 +20,14 @@ import { Loader } from '@/components/ui/loader'
 <Loader />
 ```
 
+## Accessibility
+
+`Loader` renders a React Aria `ProgressBar` and has no visible text, so pass `aria-label` to name the operation for screen readers.
+
+```tsx
+<Loader aria-label="Loading" />
+```
+
 ## Examples
 
 <Examples className="grid-cols-2 md:grid-cols-3">

@@ -40,6 +40,65 @@ import { Input } from '@/components/ui/input'
 </OTPField>
 ```
 
+## Anatomy
+
+`OTPField` wraps a `Label`, one or more `Group`s of single-character `Input` slots, and optional `Description`, `FieldError`, and `OTPFieldSeparator` parts. `length` sets how many slots render. Split the slots across `Group`s with an `OTPFieldSeparator` between them.
+
+```tsx
+import { OTPField, OTPFieldSeparator } from '@/components/ui/otp-field'
+import { Description, FieldError, Label } from '@/components/ui/field'
+import { Group } from '@/components/ui/group'
+import { Input } from '@/components/ui/input'
+```
+
+```tsx
+<OTPField length={6}>
+  <Label />
+  <Group>
+    <Input />
+  </Group>
+  <OTPFieldSeparator />
+  <Group>
+    <Input />
+  </Group>
+  <Description />
+  <FieldError />
+</OTPField>
+```
+
+## Value
+
+The value is a string sized by `length`. Pass `defaultValue` for uncontrolled state, or `value` with `onChange` to control it.
+
+```tsx
+const [value, setValue] = React.useState('')
+
+<OTPField length={6} value={value} onChange={setValue}>
+  {/* ... */}
+</OTPField>
+```
+
+## Validation
+
+Mark the field `isRequired`, drive `isInvalid` to surface a `FieldError` alongside a `Description`, and set `name` for form submission. Use `validationType` to restrict input to `"numeric"` (default) or `"alphanumeric"`.
+
+```tsx
+<OTPField
+  length={6}
+  name="code"
+  isInvalid={isInvalid}
+  validationType="alphanumeric"
+>
+  <Label>Recovery code</Label>
+  <Group>
+    <Input />
+    {/* ... */}
+  </Group>
+  <Description>Enter the code we sent you.</Description>
+  <FieldError>Enter all six characters.</FieldError>
+</OTPField>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

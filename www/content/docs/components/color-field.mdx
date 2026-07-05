@@ -51,6 +51,49 @@ import { Input } from '@/components/ui/input'
 </ColorField>
 ```
 
+## Anatomy
+
+A `ColorField` wraps a `Label` and an `Input`. To attach an icon, replace the bare `Input` with an `InputGroup` and place an `InputGroupAddon` on either side.
+
+```tsx
+import { ColorField } from '@/components/ui/color-field'
+import { Label } from '@/components/ui/field'
+import { Input, InputGroup, InputGroupAddon } from '@/components/ui/input'
+;<ColorField>
+  <Label />
+  <InputGroup>
+    <InputGroupAddon />
+    <Input />
+  </InputGroup>
+</ColorField>
+```
+
+## Value
+
+The value is a `Color` object. Pass a hex string to `defaultValue` for uncontrolled state, or control it with `value` + `onChange` using `parseColor`, and read it back with `color.toString('hex')`.
+
+```tsx
+import { type Color, parseColor } from 'react-aria-components'
+
+const [color, setColor] = React.useState<Color | null>(parseColor('#7f007f'))
+
+<ColorField value={color} onChange={setColor}>
+  <Label>Color</Label>
+  <Input />
+</ColorField>
+```
+
+## Channels
+
+Set `colorSpace` and `channel` to bind the field to a single channel of a color space instead of the full hex value.
+
+```tsx
+<ColorField colorSpace="hsl" channel="hue" value={color} onChange={setColor}>
+  <Label>Hue</Label>
+  <Input />
+</ColorField>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

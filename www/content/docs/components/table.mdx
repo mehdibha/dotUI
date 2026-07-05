@@ -104,6 +104,113 @@ Use `TableVirtualizer` for large collections. It uses the table layout exported 
 </TableContainer>
 ```
 
+## Anatomy
+
+A `Table` composes a `TableHeader` of `TableColumn`s with a `TableBody` of `TableRow`s and `TableCell`s, optionally a `TableFooter`, all inside a `TableContainer` scroll region. Mark one column `isRowHeader` so each row is labeled by that cell.
+
+```tsx
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableContainer,
+  TableFooter,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+;<TableContainer>
+  <Table>
+    <TableHeader>
+      <TableColumn isRowHeader>Name</TableColumn>
+      <TableColumn>Type</TableColumn>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Games</TableCell>
+        <TableCell>File folder</TableCell>
+      </TableRow>
+    </TableBody>
+    <TableFooter>
+      <TableRow>
+        <TableCell colSpan={2}>1 item</TableCell>
+      </TableRow>
+    </TableFooter>
+  </Table>
+</TableContainer>
+```
+
+## Content
+
+Pass static `TableRow`s as children, or drive the table from data by giving `TableHeader` and `TableBody` an `items` array with a render function. Give each `TableColumn` an `id` matching a data key, and pass the same `columns` to each `TableRow`.
+
+```tsx
+<Table aria-label="Files">
+  <TableHeader columns={columns}>
+    {(column) => (
+      <TableColumn isRowHeader={column.isRowHeader}>{column.name}</TableColumn>
+    )}
+  </TableHeader>
+  <TableBody items={data}>
+    {(item) => (
+      <TableRow columns={columns}>
+        {(column) => <TableCell>{item[column.id]}</TableCell>}
+      </TableRow>
+    )}
+  </TableBody>
+</Table>
+```
+
+## Selection
+
+Set `selectionMode` to `single` or `multiple` to enable row selection. Control it with `selectedKeys` and `onSelectionChange` (the value is `'all'` or a `Set` of keys), and pass `disallowEmptySelection` to keep at least one row selected.
+
+```tsx
+<Table
+  aria-label="Files"
+  selectionMode="multiple"
+  selectedKeys={selected}
+  onSelectionChange={setSelected}
+  disallowEmptySelection
+>
+  {/* ... */}
+</Table>
+```
+
+## Sorting
+
+Mark sortable columns with `allowsSorting`, then hold a `sortDescriptor` (`{ column, direction }`) and update it via `onSortChange` — you sort the data yourself.
+
+```tsx
+<Table
+  aria-label="Files"
+  sortDescriptor={sortDescriptor}
+  onSortChange={setSortDescriptor}
+>
+  <TableHeader>
+    <TableColumn id="name" isRowHeader allowsSorting>
+      Name
+    </TableColumn>
+  </TableHeader>
+  <TableBody items={sortedItems}>{/* ... */}</TableBody>
+</Table>
+```
+
+## Async loading
+
+Pair `useAsyncList` with `TableBody`'s `onLoadMore` and `isLoading` for infinite loading; `TableLoadMore` renders the loading row.
+
+```tsx
+const list = useAsyncList({ async load({ signal }) { /* ... */ } })
+
+<TableBody
+  onLoadMore={list.loadMore}
+  isLoading={list.loadingState === 'loadingMore'}
+>
+  {/* ... */}
+</TableBody>
+```
+
 ## Examples
 
 <Examples className="md:grid-cols-2">

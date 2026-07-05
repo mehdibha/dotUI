@@ -49,6 +49,63 @@ import { TimePicker, TimePickerColumns } from '@/components/ui/time-picker'
 </TimePicker>
 ```
 
+## Anatomy
+
+There is no React Aria `TimePicker`, so it's composed from field and overlay primitives: `TimePicker` wraps a labeled `InputGroup` (the editable `DateInput` plus a `Button` trigger in an `InputGroupAddon`) and a `Popover` whose `DialogContent` renders the scrollable `TimePickerColumns`. `Description` and `FieldError` are optional field slots.
+
+```tsx
+<TimePicker>
+  <Label />
+  <InputGroup>
+    <DateInput />
+    <InputGroupAddon>
+      <Button />
+    </InputGroupAddon>
+  </InputGroup>
+  <Description />
+  <FieldError />
+  <Popover>
+    <DialogContent>
+      <TimePickerColumns />
+    </DialogContent>
+  </Popover>
+</TimePicker>
+```
+
+## Value
+
+The value is an `@internationalized/date` `Time` object. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it. Bound the selectable range with `minValue` and `maxValue`.
+
+```tsx
+import { Time } from '@internationalized/date'
+
+const [value, setValue] = React.useState(new Time(9, 30))
+
+<TimePicker value={value} onChange={setValue}>
+  {/* ... */}
+</TimePicker>
+```
+
+## Granularity
+
+`granularity` (`"hour"`, `"minute"`, or `"second"`) controls both the editable segments and which scrollable columns render. `hourCycle` switches between 12- and 24-hour display.
+
+```tsx
+<TimePicker granularity="second" hourCycle={24}>
+  {/* ... */}
+</TimePicker>
+```
+
+## Open state
+
+The popover is uncontrolled by default. Open it initially with `defaultOpen`, or control it with `isOpen` and `onOpenChange`.
+
+```tsx
+<TimePicker isOpen={isOpen} onOpenChange={setIsOpen}>
+  {/* ... */}
+</TimePicker>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

@@ -27,7 +27,7 @@ import { Calendar } from '@/components/ui/calendar'
 import { DatePicker } from '@/components/ui/date-picker'
 import { DialogContent } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/field'
-import { DateInput, InputAddon, InputGroup } from '@/components/ui/input'
+import { DateInput, InputGroup, InputGroupAddon } from '@/components/ui/input'
 import { Popover } from '@/components/ui/popover'
 ```
 
@@ -36,11 +36,11 @@ import { Popover } from '@/components/ui/popover'
   <Label>Date</Label>
   <InputGroup>
     <DateInput />
-    <InputAddon>
+    <InputGroupAddon>
       <Button variant="default" size="sm" isIconOnly>
         <CalendarIcon />
       </Button>
-    </InputAddon>
+    </InputGroupAddon>
   </InputGroup>
   <Popover>
     <DialogContent>
@@ -48,6 +48,76 @@ import { Popover } from '@/components/ui/popover'
     </DialogContent>
   </Popover>
 </DatePicker>
+```
+
+## Anatomy
+
+A date picker assembles a date field and a calendar overlay. The `InputGroup` holds the `DateInput` and a trigger `Button`; the `Popover` reveals a `Calendar`. `Label`, `Description`, and `FieldError` are optional field parts.
+
+```tsx
+import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import { DatePicker } from '@/components/ui/date-picker'
+import { DialogContent } from '@/components/ui/dialog'
+import { Description, FieldError, Label } from '@/components/ui/field'
+import { DateInput, InputGroup, InputGroupAddon } from '@/components/ui/input'
+import { Popover } from '@/components/ui/popover'
+;<DatePicker>
+  <Label />
+  <InputGroup>
+    <DateInput />
+    <InputGroupAddon>
+      <Button />
+    </InputGroupAddon>
+  </InputGroup>
+  <Description />
+  <FieldError />
+  <Popover>
+    <DialogContent>
+      <Calendar />
+    </DialogContent>
+  </Popover>
+</DatePicker>
+```
+
+## Value
+
+The value is an [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/) object. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it. `granularity` (`"day"`, `"hour"`, `"minute"`, `"second"`) sets the smallest editable unit, and `minValue`/`maxValue` bound the selectable range.
+
+```tsx
+import { parseDate } from '@internationalized/date'
+;<DatePicker
+  defaultValue={parseDate('2020-02-03')}
+  minValue={parseDate('2020-01-01')}
+/>
+```
+
+## Date range
+
+`DateRangePicker` selects a start and end date as a `{ start, end }` value. Use two `DateInput`s with `slot="start"` and `slot="end"`, and a `RangeCalendar` in the popover.
+
+```tsx
+import { parseDate } from '@internationalized/date'
+
+import { RangeCalendar } from '@/components/ui/calendar'
+import { DateRangePicker } from '@/components/ui/date-picker'
+;<DateRangePicker
+  defaultValue={{
+    start: parseDate('2020-02-03'),
+    end: parseDate('2020-02-12'),
+  }}
+>
+  <InputGroup>
+    <DateInput slot="start" />
+    <span>–</span>
+    <DateInput slot="end" />
+  </InputGroup>
+  <Popover>
+    <DialogContent>
+      <RangeCalendar />
+    </DialogContent>
+  </Popover>
+</DateRangePicker>
 ```
 
 ## Examples

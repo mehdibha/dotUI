@@ -62,26 +62,96 @@ import {
 </Select>
 ```
 
-## Composition
-
-Select is built on top of primitive components that you can use directly for full customization:
-
-- `SelectTrigger` → wraps `Button`
-- `SelectContent` → wraps `Popover` + `ListBox`
-- `SelectItem` → re-exports `ListBoxItem`
-
-When you need more control, you can compose the primitives directly:
+## Anatomy
 
 ```tsx
-import { Select, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectSection,
+  SelectSectionHeader,
+} from '@/components/ui/select'
+```
+
+```tsx
+<Select>
+  <SelectTrigger />
+  <SelectContent>
+    <SelectSection>
+      <SelectSectionHeader />
+      <SelectItem />
+    </SelectSection>
+  </SelectContent>
+</Select>
+```
+
+`Select` holds the state, `SelectTrigger` opens the popover and shows the current value, `SelectContent` is the option list, and `SelectItem` is an option. `SelectSection` with `SelectSectionHeader` groups items.
+
+## Value
+
+`Select` selects by key: each `SelectItem` has an `id`, and the value is that id. Use `defaultSelectedKey` for uncontrolled state, or `value` with `onChange` to control it.
+
+```tsx
+<Select value={provider} onChange={setProvider}>
+  <SelectTrigger />
+  <SelectContent>
+    <SelectItem id="perplexity">Perplexity</SelectItem>
+    <SelectItem id="replicate">Replicate</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+## Selection
+
+Selection is single by default. Pass the `M` type param as `'multiple'` (`SelectProps<T, 'multiple'>`) and set `selectionMode="multiple"` on `SelectContent` to allow selecting several options.
+
+## Content
+
+Render items statically as children, or dynamically by passing `items` to `SelectContent` with a render function.
+
+```tsx
+<SelectContent items={providers}>
+  {(item) => <SelectItem id={item.id}>{item.name}</SelectItem>}
+</SelectContent>
+```
+
+## Async loading
+
+Feed a `useAsyncList` result into `SelectContent` via `items`, and wire `isLoading` and `onLoadMore` for infinite scrolling. See the [Async Loading](#examples) example.
+
+## Validation
+
+Add a `Label` and a `FieldError` inside `Select`, and set `isRequired` or `isInvalid` to surface validation.
+
+```tsx
+import { FieldError, Label } from '@/components/ui/field'
+;<Select isRequired>
+  <Label>Provider</Label>
+  <SelectTrigger />
+  <SelectContent>
+    <SelectItem>Perplexity</SelectItem>
+  </SelectContent>
+  <FieldError />
+</Select>
+```
+
+## Composition
+
+`SelectTrigger` wraps `Button`, `SelectContent` wraps `Popover` + `ListBox`, and `SelectItem` re-exports `ListBoxItem`. For full control, drop the wrappers and compose the primitives directly.
+
+```tsx
+import { ChevronDownIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Popover } from '@/components/ui/popover'
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
 } from '@/components/ui/list-box'
+import { Popover } from '@/components/ui/popover'
+import { Select, SelectValue } from '@/components/ui/select'
 ```
 
 ```tsx
@@ -90,7 +160,7 @@ import {
     <SelectValue placeholder="Select provider" />
     <ChevronDownIcon />
   </Button>
-  <Popover placement="bottom-start">
+  <Popover placement="bottom start">
     <ListBox>
       <ListBoxSection>
         <ListBoxSectionHeader>AI Providers</ListBoxSectionHeader>
@@ -101,13 +171,6 @@ import {
   </Popover>
 </Select>
 ```
-
-This approach lets you:
-
-- Use any `Button` variant or custom trigger
-- Control `Popover` placement and behavior
-- Add sections, headers, and custom `ListBoxItem` content
-- Reuse the same primitives across `Select`, `Combobox`, `Menu`, etc.
 
 ## Examples
 

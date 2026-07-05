@@ -80,6 +80,20 @@ const [frameworks, setFrameworks] = useState<string[]>(['nextjs'])
 </CheckboxGroup>
 ```
 
+## Validation
+
+Set `isRequired` to require a selection, or drive `isInvalid` yourself. Render errors with `FieldError` — with the default `validationBehavior="native"` it surfaces the browser's message on form submit; use `validationBehavior="aria"` to validate live without native form semantics.
+
+```tsx
+import { CheckboxGroup } from '@/components/ui/checkbox-group'
+import { FieldError, FieldGroup, Label } from '@/components/ui/field'
+;<CheckboxGroup isRequired>
+  <Label>React frameworks</Label>
+  <FieldGroup>{/* ... */}</FieldGroup>
+  <FieldError>Please select a framework.</FieldError>
+</CheckboxGroup>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

@@ -41,6 +41,19 @@ import {
 </Accordion>
 ```
 
+## Open state
+
+Expanded items are tracked by each `Disclosure`'s `id`. Give the group `defaultExpandedKeys` for uncontrolled state, or `expandedKeys` with `onExpandedChange` to control it — both are a `Set` of ids. Pass `allowsMultipleExpanded` to let the set hold more than one id at a time.
+
+```tsx
+<Accordion defaultExpandedKeys={['getting-started']}>
+  <Disclosure id="getting-started">
+    <DisclosureTrigger>How do I get started?</DisclosureTrigger>
+    <DisclosurePanel>…</DisclosurePanel>
+  </Disclosure>
+</Accordion>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2 lg:grid-cols-3">

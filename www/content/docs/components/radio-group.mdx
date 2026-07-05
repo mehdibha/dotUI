@@ -70,6 +70,68 @@ import { FieldGroup, Label } from '@/components/ui/field'
 </RadioGroup>
 ```
 
+## Anatomy
+
+A `RadioGroup` wraps a `Label` and a `FieldGroup` of `Radio` options. Each `Radio` holds a `RadioControl` (which renders the `RadioIndicator`) and its own `Label`.
+
+```tsx
+import {
+  Radio,
+  RadioControl,
+  RadioGroup,
+  RadioIndicator,
+} from '@/components/ui/radio-group'
+import {
+  Description,
+  FieldError,
+  FieldGroup,
+  Label,
+} from '@/components/ui/field'
+;<RadioGroup>
+  <Label />
+  <FieldGroup>
+    <Radio>
+      <RadioControl>
+        <RadioIndicator />
+      </RadioControl>
+      <Label />
+    </Radio>
+  </FieldGroup>
+  <Description />
+  <FieldError />
+</RadioGroup>
+```
+
+Pass a string as the `Radio` child to render its `RadioControl` and `Label` for you.
+
+```tsx
+<Radio value="nextjs">Next.js</Radio>
+```
+
+## Value
+
+The value is the selected `Radio`'s string `value`. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it.
+
+```tsx
+const [framework, setFramework] = React.useState('nextjs')
+
+<RadioGroup value={framework} onChange={setFramework}>
+  {/* ... */}
+</RadioGroup>
+```
+
+## Validation
+
+Mark the group `isRequired`, and render a `FieldError` to surface the message when `isInvalid`.
+
+```tsx
+<RadioGroup isRequired isInvalid>
+  <Label>React frameworks</Label>
+  <FieldGroup>{/* ... */}</FieldGroup>
+  <FieldError>Please select a framework.</FieldError>
+</RadioGroup>
+```
+
 ## Examples
 
 <Examples className="md:grid-cols-2">

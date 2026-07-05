@@ -48,6 +48,70 @@ import { Popover } from '@/components/ui/popover'
 </Menu>
 ```
 
+## Anatomy
+
+A `Menu` links a trigger (`Button`) to an overlay (`Popover`) that wraps the `MenuContent`. Each `MenuItem` auto-wraps string children in a `MenuItemLabel`; add a `MenuItemDescription` for secondary text, group items with `MenuSection` + `MenuSectionHeader`, and nest a submenu with `MenuSub`.
+
+```tsx
+import { Button } from '@/components/ui/button'
+import {
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuItemLabel,
+  MenuItemDescription,
+  MenuSection,
+  MenuSectionHeader,
+  MenuSub,
+} from '@/components/ui/menu'
+import { Popover } from '@/components/ui/popover'
+;<Menu>
+  <Button>Open Menu</Button>
+  <Popover>
+    <MenuContent>
+      <MenuItem>
+        <MenuItemLabel>Label</MenuItemLabel>
+        <MenuItemDescription>Description</MenuItemDescription>
+      </MenuItem>
+      <MenuSection>
+        <MenuSectionHeader>Section</MenuSectionHeader>
+        <MenuItem>Item</MenuItem>
+      </MenuSection>
+      <MenuSub>
+        <MenuItem>Submenu</MenuItem>
+        <Popover>
+          <MenuContent>
+            <MenuItem>Nested item</MenuItem>
+          </MenuContent>
+        </Popover>
+      </MenuSub>
+    </MenuContent>
+  </Popover>
+</Menu>
+```
+
+## Selection
+
+Set `selectionMode` to `single` or `multiple` on `MenuContent` to turn items into checkbox or radio items. Control the selection with `selectedKeys`/`onSelectionChange` (or `defaultSelectedKeys`), and disable specific items with `disabledKeys`.
+
+```tsx
+<MenuContent selectionMode="single" disabledKeys={['right']}>
+  <MenuItem id="top">Top</MenuItem>
+  <MenuItem id="bottom">Bottom</MenuItem>
+  <MenuItem id="right">Right</MenuItem>
+</MenuContent>
+```
+
+## Links
+
+Pass `href` to a `MenuItem` to render it as an `<a>`; add `target` for the link target. Client-side routing depends on your router setup.
+
+```tsx
+<MenuItem href="https://twitter.com/mehdibha" target="_blank">
+  X
+</MenuItem>
+```
+
 ## Examples
 
 <Examples className="md:grid-cols-2">

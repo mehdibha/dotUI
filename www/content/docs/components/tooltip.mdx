@@ -51,6 +51,40 @@ import { Tooltip, TooltipContent } from '@/components/ui/tooltip'
 </Tooltip>
 ```
 
+## Anatomy
+
+`Tooltip` wraps a focusable trigger (any element that takes focus, like a `Button` or `Link`) and a `TooltipContent`. The trigger opens the tooltip on hover or focus.
+
+```tsx
+import { Tooltip, TooltipContent } from '@/components/ui/tooltip'
+;<Tooltip>
+  <Button />
+  <TooltipContent />
+</Tooltip>
+```
+
+## Delay
+
+`Tooltip` opens after a `delay` (default `700`ms) on hover and closes after `closeDelay` (default `0`) when the pointer leaves.
+
+```tsx
+<Tooltip delay={0} closeDelay={200}>
+  <Button>Hover me</Button>
+  <TooltipContent>Opens instantly</TooltipContent>
+</Tooltip>
+```
+
+## Open state
+
+Use `defaultOpen` for uncontrolled open state, or `isOpen` with `onOpenChange` to control it.
+
+```tsx
+<Tooltip isOpen={isOpen} onOpenChange={setIsOpen}>
+  <Button>Hover me</Button>
+  <TooltipContent>Controlled</TooltipContent>
+</Tooltip>
+```
+
 ## Examples
 
 <Examples className="grid-cols-2 md:grid-cols-3">

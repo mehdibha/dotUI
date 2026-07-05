@@ -59,6 +59,38 @@ Filtering matches against each item's **`textValue`**. String children set it au
 
 Because the input and the list are ordinary primitives, anything they support works here too: put the `Command` inside a `Modal` for a `⌘K` palette, inside a `Popover` to filter a `Select`, or swap the `ListBox` for a `TagGroup`. See the [examples](#examples) below.
 
+## Anatomy
+
+`Command` re-exports the underlying primitives under `Command*` aliases so the whole palette imports from one place: `CommandInput` is a `SearchField`, `CommandContent` is a `ListBox`, and `CommandItem`, `CommandSection`, and `CommandSectionHeader` map to their `ListBox*` counterparts.
+
+```tsx
+import {
+  Command,
+  CommandContent,
+  CommandInput,
+  CommandItem,
+  CommandSection,
+  CommandSectionHeader,
+} from '@/components/ui/command'
+;<Command>
+  <CommandInput />
+  <CommandContent>
+    <CommandSection>
+      <CommandSectionHeader />
+      <CommandItem />
+    </CommandSection>
+  </CommandContent>
+</Command>
+```
+
+## Filtering
+
+Matching is case- and punctuation-insensitive by default (`sensitivity: 'base'`, `ignorePunctuation: true`). Pass `filter` with any [`Intl.CollatorOptions`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator#options) to tune it — for example make matching accent-sensitive.
+
+```tsx
+<Command filter={{ sensitivity: 'accent' }}>{/* … */}</Command>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

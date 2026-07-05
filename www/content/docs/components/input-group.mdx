@@ -24,24 +24,31 @@ import { Input, InputGroup, InputGroupAddon } from '@/components/ui/input'
 </InputGroup>
 ```
 
-## Orientation
+## Anatomy
 
-Use `orientation="vertical"` to stack addons above or below the input — useful with a `TextArea`.
+An `InputGroup` wraps an `Input` or `TextArea` together with one or more `InputGroupAddon` parts. Order the children to place an addon before or after the control.
 
 ```tsx
-<InputGroup orientation="vertical">
-  <TextArea placeholder="Write a comment..." />
-  <InputGroupAddon>
-    <Button size="sm" variant="primary">
-      Comment
-    </Button>
-  </InputGroupAddon>
+import {
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  TextArea,
+} from '@/components/ui/input'
+;<InputGroup>
+  <InputGroupAddon />
+  <Input />
+  <InputGroupAddon />
 </InputGroup>
 ```
 
+- `InputGroup` — the wrapper; clicking anywhere inside focuses the control.
+- `InputGroupAddon` — a slot for buttons, icons, labels, or `Kbd` alongside the control.
+- `Input` / `TextArea` — the wrapped control.
+
 ## Sizes
 
-The `size` prop is forwarded to the wrapped input. Available sizes are `sm`, `md` (default), and `lg`.
+Set `size` on the `InputGroup` to scale the group and its control. Available sizes are `sm`, `md` (default), and `lg`.
 
 ```tsx
 <InputGroup size="sm">…</InputGroup>

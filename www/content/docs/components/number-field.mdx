@@ -56,6 +56,74 @@ import { Label } from '@/components/ui/field'
 </NumberField>
 ```
 
+## Anatomy
+
+Wrap the `Input` in a `NumberFieldGroup` alongside `NumberFieldDecrement` and `NumberFieldIncrement` to expose the stepper buttons. Add `Label` and `FieldError` for labelling and validation.
+
+```tsx
+import {
+  NumberField,
+  NumberFieldGroup,
+  NumberFieldDecrement,
+  NumberFieldIncrement,
+} from '@/components/ui/number-field'
+import { Input } from '@/components/ui/input'
+import { Label, FieldError } from '@/components/ui/field'
+;<NumberField>
+  <Label />
+  <NumberFieldGroup>
+    <NumberFieldDecrement />
+    <Input />
+    <NumberFieldIncrement />
+  </NumberFieldGroup>
+  <FieldError />
+</NumberField>
+```
+
+## Value
+
+The value is a number. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it — `onChange` receives the new number.
+
+```tsx
+const [value, setValue] = React.useState(69)
+
+<NumberField value={value} onChange={setValue}>
+  <Input />
+</NumberField>
+```
+
+## Format options
+
+Pass `formatOptions` (an `Intl.NumberFormat` options object) to format the value as a decimal, percent, currency, or unit.
+
+```tsx
+<NumberField formatOptions={{ style: 'currency', currency: 'EUR' }}>
+  <Input />
+</NumberField>
+```
+
+## Min, max, and step
+
+Use `minValue` and `maxValue` to constrain the range, and `step` to set the increment applied by the stepper buttons.
+
+```tsx
+<NumberField minValue={0} maxValue={100} step={5}>
+  <Input />
+</NumberField>
+```
+
+## Validation
+
+Mark the field with `isRequired`, drive the invalid state with `isInvalid`, and render the message with `FieldError`.
+
+```tsx
+<NumberField isRequired isInvalid>
+  <Label>Width</Label>
+  <Input />
+  <FieldError>Please fill out this field.</FieldError>
+</NumberField>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

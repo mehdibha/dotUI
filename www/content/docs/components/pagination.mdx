@@ -51,6 +51,40 @@ import {
 </Pagination>
 ```
 
+## Anatomy
+
+```tsx
+<Pagination>
+  <PaginationList>
+    <PaginationItem>
+      <PaginationPrevious />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext />
+    </PaginationItem>
+  </PaginationList>
+</Pagination>
+```
+
+`Pagination` is the `nav` landmark and `PaginationList` the `ul` that wraps each `PaginationItem`. `PaginationLink` is a page cell, `PaginationPrevious` and `PaginationNext` are the directional links, and `PaginationEllipsis` marks a gap of skipped pages.
+
+## State
+
+Pagination holds no page state of its own — you own the current page. Wire `onPress` on each link to update it, pass `isActive` to the current page (which sets `aria-current="page"` and the active style), and `isDisabled` to cap the ends.
+
+```tsx
+<PaginationPrevious isDisabled={page === 1} onPress={() => setPage(page - 1)} />
+<PaginationLink isActive={page === n} onPress={() => setPage(n)}>
+  {n}
+</PaginationLink>
+```
+
 ## Framework Setup
 
 `PaginationLink`, `PaginationPrevious`, and `PaginationNext` are built on the Link button, so they pick up router integration from your `button.tsx` — there's nothing pagination-specific to wire up. See the [Button](/docs/components/button) docs to connect `LinkButton` to your framework's router, and pagination links with an `href` will route through it automatically.

@@ -46,6 +46,38 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 </Avatar>
 ```
 
+## Anatomy
+
+```tsx
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+  AvatarBadge,
+  AvatarGroup,
+  AvatarGroupCount,
+} from '@/components/ui/avatar'
+```
+
+```tsx
+<Avatar>
+  <AvatarImage />
+  <AvatarFallback />
+  <AvatarBadge />
+</Avatar>
+
+<AvatarGroup>
+  <Avatar>{/* ... */}</Avatar>
+  <AvatarGroupCount />
+</AvatarGroup>
+```
+
+`Avatar` is the container. `AvatarImage` renders the picture, `AvatarFallback` the initials or icon shown in its place, and `AvatarBadge` a status indicator overlaid on the corner. `AvatarGroup` stacks avatars with an overlapping layout, and `AvatarGroupCount` shows the remaining count.
+
+## Fallback
+
+`AvatarImage` and `AvatarFallback` share loading state, so you always render both. `AvatarImage` appears only once its `src` finishes loading; until then — and if loading fails — `AvatarFallback` is shown instead.
+
 ## Examples
 
 <Examples className="grid-cols-2 sm:grid-cols-3">

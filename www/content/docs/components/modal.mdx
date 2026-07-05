@@ -43,6 +43,37 @@ import { Modal } from '@/components/ui/modal'
 </Dialog>
 ```
 
+## Anatomy
+
+`Modal` composes the full overlay stack for you, so basic usage is just `<Modal>{children}</Modal>`. For full control, import the parts and assemble them yourself.
+
+```tsx
+import {
+  ModalOverlay,
+  ModalBackdrop,
+  ModalViewport,
+  ModalPanel,
+} from '@/components/ui/modal'
+;<ModalOverlay>
+  <ModalBackdrop />
+  <ModalViewport>
+    <ModalPanel>{children}</ModalPanel>
+  </ModalViewport>
+</ModalOverlay>
+```
+
+`ModalOverlay` renders the overlay and holds the open state, `ModalBackdrop` dims the page, `ModalViewport` centers the modal, and `ModalPanel` is the panel that wraps the dialog content.
+
+## Open state
+
+The trigger is `Dialog`: wrap a `Button` and the `Modal` in it and opening is handled for you. To control it, pass `isOpen`/`defaultOpen` and `onOpenChange` to the modal.
+
+```tsx
+<Modal isOpen={isOpen} onOpenChange={setIsOpen}>
+  <DialogContent>Modal content</DialogContent>
+</Modal>
+```
+
 ## Examples
 
 <Examples className="md:grid-cols-2">

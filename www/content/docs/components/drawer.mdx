@@ -44,6 +44,55 @@ import { Drawer } from '@/components/ui/drawer'
 </Dialog>
 ```
 
+## Anatomy
+
+A `Drawer` has no built-in trigger. Wrap it in a `Dialog` with a `Button` child as the trigger, and put your content inside `DialogContent`.
+
+```tsx
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
+import {
+  Drawer,
+  DrawerHandle,
+  DrawerSwipeArea,
+  DrawerProvider,
+  DrawerIndent,
+  DrawerIndentBackground,
+} from '@/components/ui/drawer'
+;<Dialog>
+  <Button />
+  <Drawer>
+    <DialogContent>
+      <DrawerHandle />
+    </DialogContent>
+  </Drawer>
+</Dialog>
+```
+
+`DrawerHandle` is a visible drag affordance. `DrawerSwipeArea` is an edge region that opens the drawer by swiping. `DrawerIndent` and `DrawerIndentBackground` wrap page content that scales and translates behind an open drawer, and `DrawerProvider` scopes visual state explicitly — most apps don't need it.
+
+## Open state
+
+Rendered under a `Dialog`, the drawer shares the dialog's open state, so the trigger `Button` opens it with no wiring. To drive it yourself, pass `isOpen` with `onOpenChange` (or `defaultOpen` for uncontrolled).
+
+```tsx
+const [isOpen, setIsOpen] = React.useState(false)
+
+<Drawer isOpen={isOpen} onOpenChange={setIsOpen}>
+  <DialogContent>...</DialogContent>
+</Drawer>
+```
+
+## Dismissal
+
+The drawer dismisses on swipe, outside interaction, and Escape. Disable each with `swipeToDismiss`, `isDismissable`, and `isKeyboardDismissDisabled` respectively.
+
+```tsx
+<Drawer swipeToDismiss={false} isDismissable={false} isKeyboardDismissDisabled>
+  <DialogContent>...</DialogContent>
+</Drawer>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

@@ -43,6 +43,35 @@ import {
 </ColorSwatchPicker>
 ```
 
+## Anatomy
+
+```tsx
+import {
+  ColorSwatchPicker,
+  ColorSwatchPickerItem,
+} from '@/components/ui/color-swatch-picker'
+;<ColorSwatchPicker>
+  <ColorSwatchPickerItem color="#ff0000" />
+</ColorSwatchPicker>
+```
+
+`ColorSwatchPicker` is the selectable list; each `ColorSwatchPickerItem` declares one swatch via its `color` prop and renders the color internally.
+
+## Value
+
+The value is the selected color. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it. Values are `Color` objects (via `parseColor`) or color strings, and `onChange` receives a `Color`.
+
+```tsx
+import { parseColor } from 'react-aria-components'
+
+const [color, setColor] = React.useState(parseColor('#f80'))
+
+<ColorSwatchPicker value={color} onChange={setColor}>
+  <ColorSwatchPickerItem color="#f80" />
+  <ColorSwatchPickerItem color="#08f" />
+</ColorSwatchPicker>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2 md:grid-cols-3">

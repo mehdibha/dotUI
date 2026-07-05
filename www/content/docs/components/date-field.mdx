@@ -56,6 +56,48 @@ import { Label } from '@/components/ui/field'
 </DateField>
 ```
 
+## Anatomy
+
+`DateField` wraps a `Label`, a `DateInput` that renders the individually editable segments, and optionally a `Description` and `FieldError`.
+
+```tsx
+import { DateField } from '@/components/ui/date-field'
+import { DateInput } from '@/components/ui/input'
+import { Description, FieldError, Label } from '@/components/ui/field'
+;<DateField>
+  <Label />
+  <DateInput />
+  <Description />
+  <FieldError />
+</DateField>
+```
+
+## Value
+
+Values are [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/index.html) objects. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it.
+
+```tsx
+import { parseDate } from '@internationalized/date'
+;<DateField defaultValue={parseDate('2020-02-03')}>
+  <Label>Date</Label>
+  <DateInput />
+</DateField>
+```
+
+Set `granularity` (`day`, `hour`, `minute`, or `second`) to control which segments render, and constrain the range with `minValue` and `maxValue`.
+
+## Validation
+
+Mark the field with `isRequired`, or drive it with `isInvalid` and a custom `validate`. Errors surface through `FieldError`.
+
+```tsx
+<DateField isInvalid>
+  <Label>Event date</Label>
+  <DateInput />
+  <FieldError>Please select a date.</FieldError>
+</DateField>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

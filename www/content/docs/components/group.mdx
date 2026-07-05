@@ -25,6 +25,20 @@ import { Group } from '@/components/ui/group'
 </Group>
 ```
 
+## Anatomy
+
+`Group` is the container; `GroupText` renders an inline text segment between controls (prefixes, suffixes, labels).
+
+```tsx
+import { Group, GroupText } from '@/components/ui/group'
+;<Group>
+  <GroupText>Label</GroupText>
+  <Button>Action</Button>
+</Group>
+```
+
+Set `orientation` to `"vertical"` to stack children instead of the default `"horizontal"` row.
+
 ## Examples
 
 <Examples className="sm:grid-cols-2 lg:grid-cols-3">

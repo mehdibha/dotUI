@@ -51,6 +51,51 @@ import { Tab, TabList, TabPanel, Tabs } from '@/components/ui/tabs'
 </Tabs>
 ```
 
+## Anatomy
+
+```tsx
+import { Tab, TabList, TabPanel, Tabs } from '@/components/ui/tabs'
+```
+
+```tsx
+<Tabs>
+  <TabList>
+    <Tab id="…" />
+  </TabList>
+  <TabPanel id="…" />
+</Tabs>
+```
+
+`Tabs` provides selection state, `TabList` groups the `Tab` titles, and each `TabPanel` renders the content for the `Tab` whose `id` matches.
+
+## Selection
+
+Each `Tab` and `TabPanel` is keyed by `id`. Use `defaultSelectedKey` for uncontrolled state, or `selectedKey` with `onSelectionChange` to control it.
+
+```tsx
+const [selectedKey, setSelectedKey] = React.useState('overview')
+
+<Tabs selectedKey={selectedKey} onSelectionChange={setSelectedKey}>
+  {/* … */}
+</Tabs>
+```
+
+## Keyboard activation
+
+By default, focusing a tab with the arrow keys selects it. Set `keyboardActivation="manual"` to require <kbd>Enter</kbd> or <kbd>Space</kbd> to switch panels.
+
+```tsx
+<Tabs keyboardActivation="manual">{/* … */}</Tabs>
+```
+
+## Links
+
+Pass `href` to a `Tab` to render an anchor for tab-based navigation. Use it with your client router's link integration for internal routes.
+
+```tsx
+<Tab href="/overview">Overview</Tab>
+```
+
 ## Examples
 
 <Examples className="md:grid-cols-2">

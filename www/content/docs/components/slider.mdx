@@ -49,6 +49,64 @@ import { Slider, SliderControl } from '@/components/ui/slider'
 </Slider>
 ```
 
+## Anatomy
+
+`SliderControl` renders the track, fill, and thumbs for you, so most sliders only need `Slider` + `SliderControl`. Compose the parts by hand for full control over layout.
+
+```tsx
+import {
+  Slider,
+  SliderControl,
+  SliderTrack,
+  SliderFill,
+  SliderThumb,
+  SliderOutput,
+} from '@/components/ui/slider'
+;<Slider>
+  <SliderOutput />
+  <SliderControl>
+    <SliderTrack>
+      <SliderFill />
+    </SliderTrack>
+    <SliderThumb />
+  </SliderControl>
+</Slider>
+```
+
+## Value
+
+A single number renders a standard slider; a `number[]` renders a multi-thumb range. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it.
+
+```tsx
+<Slider defaultValue={[200, 300]} minValue={100} maxValue={500}>
+  <SliderControl />
+</Slider>
+```
+
+## Range and step
+
+`minValue` and `maxValue` set the bounds (default `0`–`100`), and `step` snaps movement to fixed increments.
+
+```tsx
+<Slider minValue={0} maxValue={100} step={5} defaultValue={50}>
+  <SliderControl />
+</Slider>
+```
+
+## Format
+
+`formatOptions` accepts any `Intl.NumberFormat` options to format the `SliderOutput` label, such as currency or percent.
+
+```tsx
+<Slider
+  formatOptions={{ style: 'currency', currency: 'JPY' }}
+  defaultValue={60}
+>
+  <SliderOutput />
+  <SliderControl />
+</Slider>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2">

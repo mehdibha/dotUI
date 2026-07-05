@@ -40,6 +40,18 @@ import { ToggleButton } from '@/components/ui/toggle-button'
 </ToggleButton>
 ```
 
+## Selection
+
+Use `defaultSelected` for uncontrolled state, or `isSelected` with `onChange` to control it. The value is a boolean.
+
+```tsx
+<ToggleButton defaultSelected>Pin</ToggleButton>
+
+<ToggleButton isSelected={isSelected} onChange={setSelected}>
+  Pin
+</ToggleButton>
+```
+
 ## Examples
 
 <Examples className="sm:grid-cols-2 md:grid-cols-3">

@@ -23,6 +23,16 @@ import { Link } from '@/components/ui/link'
 <Link href="/docs">Documentation</Link>
 ```
 
+## As a link
+
+Passing `href` renders a real `<a>`; add `target="_blank"` (with `rel`) to open a new tab. To route internal `href`s through your app router, override `Link` in your project the same way [Breadcrumbs](/docs/components/breadcrumbs) does for `BreadcrumbLink`.
+
+```tsx
+<Link href="https://dotui.org" target="_blank" rel="noreferrer">
+  dotUI
+</Link>
+```
+
 ## Examples
 
 <Examples className="grid-cols-2 md:grid-cols-3">

@@ -33,6 +33,29 @@ import {
 </Empty>
 ```
 
+## Anatomy
+
+`EmptyHeader` groups the media, title, and description; `EmptyContent` holds the actions below. Pass `variant="icon"` to `EmptyMedia` to render its child inside a bordered icon container.
+
+```tsx
+import {
+  Empty,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+  EmptyDescription,
+  EmptyContent,
+} from '@/components/ui/empty'
+;<Empty>
+  <EmptyHeader>
+    <EmptyMedia variant="icon">{/* icon */}</EmptyMedia>
+    <EmptyTitle>{/* heading */}</EmptyTitle>
+    <EmptyDescription>{/* supporting text */}</EmptyDescription>
+  </EmptyHeader>
+  <EmptyContent>{/* actions */}</EmptyContent>
+</Empty>
+```
+
 ## Examples
 
 <Examples className="md:grid-cols-2">

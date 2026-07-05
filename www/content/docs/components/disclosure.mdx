@@ -20,19 +20,21 @@ npx shadcn@latest add @dotui/disclosure
 ```tsx
 import {
   Disclosure,
-  DisclosureHeading,
   DisclosurePanel,
+  DisclosureTrigger,
 } from '@/components/ui/disclosure'
 ```
 
+`DisclosureTrigger` renders the heading, button, and chevron; `DisclosurePanel` holds the collapsible content.
+
 ```tsx
 <Disclosure>
-  <DisclosureHeading>What is dotUI?</DisclosureHeading>
+  <DisclosureTrigger>What is dotUI?</DisclosureTrigger>
   <DisclosurePanel>dotUI is a design system platform.</DisclosurePanel>
 </Disclosure>
 ```
 
-for more advanced composition, you can use this structure
+For full control over the trigger, compose the header from `Heading` and `Button` yourself.
 
 ```tsx
 import { Disclosure, DisclosurePanel } from '@/components/ui/disclosure'
@@ -44,12 +46,25 @@ import { ChevronDownIcon } from 'your-icon-library'
 ```tsx
 <Disclosure>
   <Heading>
-    <Button>
+    <Button slot="trigger">
       What is dotUI?
       <ChevronDownIcon />
     </Button>
   </Heading>
   <DisclosurePanel>dotUI is a design system platform.</DisclosurePanel>
+</Disclosure>
+```
+
+## Open state
+
+Use `defaultExpanded` for uncontrolled state, or `isExpanded` with `onExpandedChange` to control it.
+
+```tsx
+const [isExpanded, setExpanded] = React.useState(false)
+
+<Disclosure isExpanded={isExpanded} onExpandedChange={setExpanded}>
+  <DisclosureTrigger>System requirements</DisclosureTrigger>
+  <DisclosurePanel>...</DisclosurePanel>
 </Disclosure>
 ```
 
