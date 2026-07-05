@@ -177,7 +177,7 @@ export const catalogAccessSchema = z.enum([
 
 const domainScore = z.number().int().min(0).max(10)
 
-/** Recon-level prioritization scores from docs/research/2026-07-03-ds-catalog — not published verdicts. */
+/** Recon-level prioritization scores — not published verdicts. */
 export const catalogScoresSchema = z.object({
   color: domainScore,
   typography: domainScore,

@@ -6,7 +6,7 @@
 
 dotUI is a design-system builder ([dotui.org/create](https://dotui.org/create)). For it to be able to recreate almost any design system, we need to know what the great ones actually do: how they generate color palettes, what they tokenize, how they guarantee contrast, how they build focus rings. This site is that research, published. Findings drive what the builder supports — never the other way around.
 
-V1 covers **color & token systems only**, across a scored catalog of 77 systems ([data/catalog.json](data/catalog.json), ranked in [docs/research/2026-07-03-ds-catalog](../docs/research/2026-07-03-ds-catalog/README.md)). Other dimensions (typography, density, focus rings, component variants) come later on the same machinery.
+V1 covers **color & token systems only**, across a scored catalog of 77 systems ([data/catalog.json](data/catalog.json)). Other dimensions (typography, density, focus rings, component variants) come later on the same machinery.
 
 ## How it works
 
@@ -34,4 +34,4 @@ pnpm --filter=ds check:data # validate data against the schema
 
 Deployed as its own Vercel project (`dotui-ds`) on ds.dotui.org.
 
-Planning history lives in `docs/plans/2026-07-03-ds-research-site/`; lessons from the scrapped first data model are in [data/RETRO.md](data/RETRO.md).
+Lessons from the scrapped first data model are in [data/RETRO.md](data/RETRO.md).

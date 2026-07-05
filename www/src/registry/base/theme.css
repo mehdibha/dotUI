@@ -127,7 +127,7 @@
  * default N=5). Interim defaults map to dotUI's semantic hues; each `--*-500`
  * flips with `.dark`, so a series keeps its hue across light/dark (never the
  * reverse-ramp trap). The /create builder turns this into a first-class,
- * accent-derived axis with a manual override (see docs/plans/2026-06-13-charts/001).
+ * accent-derived axis with a manual override.
  */
 :root {
   --chart-1: var(--accent-500);

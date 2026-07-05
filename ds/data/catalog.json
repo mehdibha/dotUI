@@ -1,5 +1,5 @@
 {
-  "$comment": "Full scored catalog of systems for the site — derived from docs/research/2026-07-03-ds-catalog/catalog.json. Scores are recon-level prioritization evidence (0-10 per domain, general 0-100), not published verdicts.",
+  "$comment": "Full scored catalog of systems for the site. Scores are recon-level prioritization evidence (0-10 per domain, general 0-100), not published verdicts.",
   "version": 2,
   "createdAt": "2026-07-03",
   "systems": [
