@@ -101,12 +101,17 @@ export function DemoPress({
   phase,
   pressing,
   hovering,
+  selected,
   target,
   children,
 }: {
   phase?: string
   pressing?: boolean
   hovering?: boolean
+  /** Mirror a selected/toggled state — needed when the pressable IS the styled
+   * element (e.g. ToggleButton), where the real `data-selected` would otherwise
+   * be stripped on re-apply. */
+  selected?: boolean
   target?: 'first' | 'last' | 'all'
   children: ReactNode
 }) {
@@ -114,7 +119,7 @@ export function DemoPress({
   const isHovered = isPressed || hovering || phase === 'hover'
   return (
     <DemoState
-      flags={{ hovered: isHovered, pressed: isPressed }}
+      flags={{ hovered: isHovered, pressed: isPressed, selected }}
       target={target}
     >
       {children}
