@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react'
 
-import type { RosterEntry, SystemWithColors } from '@/data/schema'
+import type { RosterEntry, SystemEntry } from '@/data/schema'
 
 import { ColorSection } from './sections/color'
 import { ComponentsSection } from './sections/components'
@@ -11,6 +11,9 @@ import { LayoutSection } from './sections/layout'
 import { LayoutPrimitivesSection } from './sections/layout-primitives'
 import { MotionSection } from './sections/motion'
 import { OverviewSection } from './sections/overview'
+import { ColorSystemSection } from './sections/shadcn/color-system'
+import { ColorsSection } from './sections/shadcn/colors'
+import { TokensSection } from './sections/shadcn/tokens'
 import { ShapeSection } from './sections/shape'
 import { SpacingSection } from './sections/spacing'
 import { StatesSection } from './sections/states'
@@ -26,7 +29,7 @@ import { TypographySection } from './sections/typography'
 import { ValidationSection } from './sections/validation'
 
 export type SectionComponent = ComponentType<{
-  system: SystemWithColors
+  system: SystemEntry
   rosterEntry?: RosterEntry
 }>
 
@@ -43,7 +46,10 @@ export interface SectionGroup {
   sections: SectionDef[]
 }
 
-export const SECTION_GROUPS: SectionGroup[] = [
+// Preserved Spectrum 2 explorer. Currently shelved (spectrum-2 is "planned"), so
+// it isn't resolved by any slug — its sections read system.colors and are cast to
+// the colors-optional SectionComponent, safe because they only ran with color data.
+const SPECTRUM_2_GROUPS = [
   {
     id: 'overview',
     label: 'Overview',
@@ -143,8 +149,37 @@ export const SECTION_GROUPS: SectionGroup[] = [
       },
     ],
   },
+] as unknown as SectionGroup[]
+
+const SHADCN_UI_GROUPS: SectionGroup[] = [
+  {
+    id: 'overview',
+    label: 'Sections',
+    blurb: '',
+    sections: [
+      {
+        id: 'color-system',
+        label: 'Color system',
+        Component: ColorSystemSection,
+      },
+      { id: 'colors', label: 'Colors', Component: ColorsSection },
+      { id: 'tokens', label: 'Tokens', Component: TokensSection },
+    ],
+  },
 ]
 
-export const ALL_SECTIONS: SectionDef[] = SECTION_GROUPS.flatMap(
-  (group) => group.sections,
-)
+const GROUPS_BY_SLUG: Record<string, SectionGroup[]> = {
+  'spectrum-2': SPECTRUM_2_GROUPS,
+  'shadcn-ui': SHADCN_UI_GROUPS,
+}
+
+export function getSectionGroups(slug: string): SectionGroup[] {
+  return GROUPS_BY_SLUG[slug] ?? []
+}
+
+/** Flat id + label list of a system's sections, for the TOC lines and dropdown. */
+export function getSectionList(slug: string): { id: string; label: string }[] {
+  return getSectionGroups(slug).flatMap((group) =>
+    group.sections.map(({ id, label }) => ({ id, label })),
+  )
+}

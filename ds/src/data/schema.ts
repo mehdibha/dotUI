@@ -229,8 +229,13 @@ export interface SystemWithColors extends System {
   colors: ColorsFile
 }
 
+/** A researched system; `colors` is present once its color data has been added. */
+export interface SystemEntry extends System {
+  colors?: ColorsFile
+}
+
 /** Shape of the generated `src/data/__generated__/index.json`. */
 export interface DataIndex {
   roster: RosterEntry[]
-  systems: SystemWithColors[]
+  systems: SystemEntry[]
 }

@@ -1,8 +1,8 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
 
-import { Spectrum2Explorer } from '@/components/system'
+import { SystemExplorer } from '@/components/system'
+import { SystemDesktopToc } from '@/components/system/toc'
 import { dataIndex } from '@/data'
-import { Badge } from '@/ui/badge'
 import { Link } from '@/ui/link'
 
 export const Route = createFileRoute('/systems/$slug')({
@@ -26,37 +26,33 @@ function SystemPage() {
   const site = system?.sources.site
 
   return (
-    <div>
-      <header className="mx-auto w-full max-w-6xl px-6 pt-10">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+    <div className="relative mx-auto w-full max-w-4xl">
+      {/* In-page TOC floating in the left gutter, aligned with the title's
+          vertical center — full list on wide gutters, collapsing to lines, then
+          to the header dropdown below lg. Never affects the centered content. */}
+      {system && (
+        <div className="absolute top-13 right-full bottom-0 hidden lg:block">
+          <SystemDesktopToc slug={system.slug} className="sticky top-24 mr-4" />
+        </div>
+      )}
+      <header className="px-6 pt-10">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
             {name}
           </h1>
-          {system && (
-            <p className="font-mono text-[11px] text-fg-muted">
-              added {system.createdAt} · updated {system.updatedAt} · reviewed{' '}
-              {system.reviewedAt}
-            </p>
-          )}
+          <span className="text-sm text-fg-muted">by {org}</span>
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
-          <span className="text-fg-muted">{org}</span>
           {docs && <Link href={docs}>Docs</Link>}
           {repo && <Link href={repo}>Source</Link>}
           {site && site !== docs && <Link href={site}>Site</Link>}
-          <Badge
-            appearance="subtle"
-            variant={system?.status === 'published' ? 'success' : 'neutral'}
-          >
-            {system?.status ?? 'planned'}
-          </Badge>
         </div>
       </header>
 
       {system ? (
-        <Spectrum2Explorer system={system} rosterEntry={rosterEntry} />
+        <SystemExplorer system={system} rosterEntry={rosterEntry} />
       ) : (
-        <div className="mx-auto w-full max-w-6xl px-6 pb-16">
+        <div className="px-6 pb-16">
           <p className="mt-10 max-w-2xl rounded-lg border p-6 text-fg-muted">
             Research planned. This system&apos;s full architecture — tokens,
             color, typography, motion, and components — will be explorable here,

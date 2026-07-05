@@ -9,7 +9,7 @@ import {
   rosterSchema,
   systemSchema,
 } from '../src/data/schema'
-import type { DataIndex, SystemWithColors } from '../src/data/schema'
+import type { DataIndex, SystemEntry } from '../src/data/schema'
 
 const root = path.resolve(import.meta.dirname, '..')
 const dataDir = path.join(root, 'data')
@@ -42,7 +42,7 @@ const systemDirs = fs.existsSync(systemsDir)
       .sort()
   : []
 
-const systems: SystemWithColors[] = []
+const systems: SystemEntry[] = []
 
 for (const dir of systemDirs) {
   const rel = `data/systems/${dir}`
@@ -59,9 +59,15 @@ for (const dir of systemDirs) {
     )
   }
 
-  const colorsResult = colorsFileSchema.safeParse(
-    readJson(path.join(systemsDir, dir, 'colors.json')),
-  )
+  // Color data is optional — a system can be explorable before its ramps and
+  // tokens have been researched.
+  const colorsPath = path.join(systemsDir, dir, 'colors.json')
+  if (!fs.existsSync(colorsPath)) {
+    systems.push(systemResult.data)
+    continue
+  }
+
+  const colorsResult = colorsFileSchema.safeParse(readJson(colorsPath))
   if (!colorsResult.success) {
     errors.push(`${rel}/colors.json: ${colorsResult.error.message}`)
     continue

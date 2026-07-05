@@ -208,8 +208,18 @@ function Directory() {
               {filtered.map((entry, index) => {
                 const isExplorable = systemsBySlug.has(entry.slug)
                 return (
-                  <TableRow key={entry.slug} id={entry.slug}>
-                    <TableCell className="font-mono text-xs text-fg-muted">
+                  <TableRow
+                    key={entry.slug}
+                    id={entry.slug}
+                    className={isExplorable ? undefined : 'border-disabled'}
+                  >
+                    <TableCell
+                      className={
+                        isExplorable
+                          ? 'font-mono text-xs text-fg-muted'
+                          : 'font-mono text-xs text-fg-disabled'
+                      }
+                    >
                       {index + 1}
                     </TableCell>
                     <TableCell>
@@ -223,10 +233,18 @@ function Directory() {
                             {entry.name}
                           </Link>
                         ) : (
-                          <span className="font-medium">{entry.name}</span>
+                          <span className="font-medium text-fg-disabled">
+                            {entry.name}
+                          </span>
                         )}
-                        <span className="text-xs text-fg-muted">
-                          {entry.org}
+                        <span
+                          className={
+                            isExplorable
+                              ? 'text-xs text-fg-muted'
+                              : 'text-xs text-fg-disabled'
+                          }
+                        >
+                          by {entry.org}
                         </span>
                         {!isExplorable && (
                           <Badge
@@ -238,7 +256,13 @@ function Directory() {
                         )}
                       </span>
                     </TableCell>
-                    <TableCell className="text-right font-mono text-xs">
+                    <TableCell
+                      className={
+                        isExplorable
+                          ? 'text-right font-mono text-xs'
+                          : 'text-right font-mono text-xs text-fg-disabled'
+                      }
+                    >
                       {entry.general}
                     </TableCell>
                   </TableRow>
