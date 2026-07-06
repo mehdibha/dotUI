@@ -1,5 +1,3 @@
-Important note: Much of the current code was written by AI agents and it's slop, when we're working on something don't hesitate to simplify code, remove unecessary comments, etc
-
 # dotUI
 
 This is the dotUI repository — a design-system builder. Users compose a complete design system at dotui.org/create — colors, typography, icons, density, radius, per-component styles — preview every change live on real components, and export it as code they own: into their codebase via the shadcn CLI, or straight into v0 — with Bolt, Lovable, Figma and more planned. It's built on React Aria Components with Tailwind CSS v4 and tailwind-variants, themed by an OKLCH color engine, and distributed as a shadcn-compatible registry served from a TanStack Start app.
@@ -27,6 +25,15 @@ What this means when writing code today:
 - New axes and styles must be switchable at runtime (CSS variables, variant props, data attributes), never decided at build time — the builder previews live.
 - Registry items import only from `@/registry/*`, relative paths, and published packages — plain React files, shadcn-schema compatible. www-side imports (router, fumadocs, `@/components`) must never leak in.
 - Author registry source in one canonical style (current files are the reference) — `codeOptions` will be mechanical publisher transforms over it, and inconsistent source breaks the transforms.
+
+## Current state of the project
+
+An honest snapshot (July 2026) to calibrate against. Task-level work is tracked in GitHub issues; this is the standing picture.
+
+- **Solid:** the docs (one last revision pass pending) and the components — they look and behave well individually. Cross-component composition is less proven: treat "these compose cleanly" as a claim to verify, not an assumption.
+- **Known-weak:** the components page (several demos misbehave); the presets page (very slow); the presets themselves on both landing and presets page — due to be replaced by fewer, high-fidelity presets of popular systems (Linear, Vercel, …); chart colors (need a full rewrite); site performance overall (never audited — a docs site must feel instant).
+- **Queued for rewrite — don't deepen:** the color system and the entire /create builder experience get complete rewrites — the goal is really good foundations, not incremental fixes. The color rewrite starts with a playground to verify generated colors visually (current output is average at best); the /create rewrite starts with an experience spec — what should building a design system feel like — before any code. The publisher is also queued (see below), and the registry gets a smaller refactor. In these areas, verify behavior by reading the code and keep changes shallow.
+- **AI slop:** much of the codebase was written by AI agents and hasn't all been walked through. When working in an area, leave it simpler than you found it — cut needless comments, indirection, and dead options rather than matching the existing style.
 
 ## Structure
 
@@ -84,6 +91,6 @@ After modifying `www/src/registry/`, run `pnpm build:registry` and commit the re
 - Issues and PRDs are tracked in GitHub Issues for `mehdibha/dotUI`.
 - PR titles become commit titles. Format `type(scope): summary` — describe the change, don't justify it (cut clauses like "with…", "to improve…"). Aim ~50–60 chars, but never drop information to hit it. Good: `docs: rewrite CLAUDE.md` · Bad: `docs: rewrite CLAUDE.md with real project context`.
 - Adding a tweak (new axis, variant, style param, semantic token) is a product decision: propose it and wait for approval before implementing — never slip one into a component PR.
-- Spot something worth a refactor or rewrite? Propose it — in a "Suggested refactors" note in the PR description, or a GitHub issue if bigger — never by expanding the current diff. Bar: recurring or task-impeding, and specific enough to act on; no "this could be cleaner". Skip areas with a planned rewrite (the publisher).
+- Spot something worth a refactor or rewrite? Propose it — in a "Suggested refactors" note in the PR description, or a GitHub issue if bigger — never by expanding the current diff. Bar: recurring or task-impeding, and specific enough to act on; no "this could be cleaner". Skip areas with a planned rewrite (see Current state).
 - `pnpm build:references` is deterministic and safe to run wholesale — after touching a `types.ts`, regenerate and commit `www/src/modules/references/generated/` (CI's references-drift job fails on stale output). Documented props come from `types.ts`, not `base.tsx`. Commit full-run output: scoped `-f` runs can flip union member order in a few complex types.
 - `www/src/routeTree.gen.ts` is TanStack-generated; never edit it.
