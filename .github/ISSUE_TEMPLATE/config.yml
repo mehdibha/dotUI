@@ -2,4 +2,4 @@ blank_issues_enabled: false
 contact_links:
   - name: Question
     url: https://github.com/mehdibha/dotUI/discussions/new?category=general
-    about: For usage questions, please usee GitHub Discussions instead of posting an issue.
+    about: For usage questions, please use GitHub Discussions instead of posting an issue.

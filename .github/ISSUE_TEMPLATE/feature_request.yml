@@ -1,7 +1,7 @@
 name: 'Feature request'
 description: Create a feature request for dotUI
 title: '[feat] '
-labels: ['area: request']
+labels: ['enhancement']
 body:
   - type: textarea
     id: feature-description
@@ -9,7 +9,6 @@ body:
       label: Feature description
       description: Tell us about your feature request
       placeholder: 'I think this feature would be great because...'
-      value: 'Describe your feature request...'
     validations:
       required: true
 
@@ -28,7 +27,6 @@ body:
       label: Additional Context
       description: Add any other context about the feature here.
       placeholder: ex. screenshots, Stack Overflow links, forum links, etc.
-      value: 'Additional details here...'
     validations:
       required: false
 

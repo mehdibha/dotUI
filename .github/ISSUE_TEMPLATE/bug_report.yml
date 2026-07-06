@@ -16,10 +16,10 @@ body:
     id: components-affected
     attributes:
       label: Affected component/components
-      description: Which dotUI components are affected?
+      description: Which dotUI components are affected? Leave empty if the bug is in the site or builder.
       placeholder: ex. Button, Checkbox...
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: reproduction
@@ -50,7 +50,7 @@ body:
       render: bash
       placeholder: System, Binaries, Browsers
     validations:
-      required: true
+      required: false
 
   - type: checkboxes
     id: terms
