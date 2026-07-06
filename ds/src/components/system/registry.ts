@@ -13,8 +13,6 @@ import { MotionSection } from './sections/motion'
 import { OverviewSection } from './sections/overview'
 import { ColorSystemSection } from './sections/shadcn/color-system'
 import { ColorsSection } from './sections/shadcn/colors'
-import { MappingSection } from './sections/shadcn/mapping'
-import { TokensSection } from './sections/shadcn/tokens'
 import { ShapeSection } from './sections/shape'
 import { SpacingSection } from './sections/spacing'
 import { StatesSection } from './sections/states'
@@ -163,13 +161,7 @@ const SHADCN_UI_GROUPS: SectionGroup[] = [
         label: 'Color system',
         Component: ColorSystemSection,
       },
-      {
-        id: 'tailwind-mapping',
-        label: 'Tailwind mapping',
-        Component: MappingSection,
-      },
       { id: 'colors', label: 'Colors', Component: ColorsSection },
-      { id: 'tokens', label: 'Tokens', Component: TokensSection },
     ],
   },
 ]

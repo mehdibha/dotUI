@@ -3,8 +3,16 @@
 import type { CSSProperties, ReactNode } from 'react'
 
 import { Choice } from '../../primitives'
-import type { BaseColor, Mode } from './data'
-import { BASE_COLORS, MODES, THEMES } from './data'
+import type { BaseColor, ColorTheme, Mode } from './data'
+import {
+  BASE_COLORS,
+  COLOR_THEME_STEPS,
+  COLOR_THEME_VALUES,
+  COLOR_THEMES,
+  MODES,
+  TAILWIND_MAP,
+  THEMES,
+} from './data'
 
 export const BASE_LABEL: Record<BaseColor, string> = {
   neutral: 'Neutral',
@@ -12,6 +20,17 @@ export const BASE_LABEL: Record<BaseColor, string> = {
   zinc: 'Zinc',
   gray: 'Gray',
   slate: 'Slate',
+}
+
+export const COLOR_THEME_LABEL: Record<ColorTheme, string> = {
+  default: 'Default',
+  red: 'Red',
+  rose: 'Rose',
+  orange: 'Orange',
+  green: 'Green',
+  blue: 'Blue',
+  yellow: 'Yellow',
+  violet: 'Violet',
 }
 
 const BASE_OPTIONS = BASE_COLORS.map((base) => ({
@@ -22,6 +41,11 @@ const BASE_OPTIONS = BASE_COLORS.map((base) => ({
 const MODE_OPTIONS = MODES.map((mode) => ({
   value: mode,
   label: mode === 'light' ? 'Light' : 'Dark',
+}))
+
+const THEME_OPTIONS = COLOR_THEMES.map((theme) => ({
+  value: theme,
+  label: COLOR_THEME_LABEL[theme],
 }))
 
 export function BaseChoice({
@@ -58,22 +82,123 @@ export function ModeChoice({
   )
 }
 
-/** Scope a base color's tokens as `--token` custom properties on a container. */
-export function themeVars(base: BaseColor, mode: Mode): CSSProperties {
-  const theme = THEMES[base][mode]
+export function ThemeChoice({
+  value,
+  onChange,
+}: {
+  value: ColorTheme
+  onChange: (value: ColorTheme) => void
+}) {
+  return (
+    <Choice
+      label="Color theme"
+      options={THEME_OPTIONS}
+      value={value}
+      onChange={onChange}
+    />
+  )
+}
+
+// ── Token resolution ────────────────────────────────────────────────────────
+
+/** The Tailwind family a step belongs to (`zinc-900` → `zinc`, `white / 10%` → `white`). */
+function family(step: string): string {
+  return step.split(/[-\s]/)[0]!
+}
+
+/** A step is "borrowed" when it's outside the chosen base's own gray family. */
+export function isBorrowed(step: string, base: BaseColor): boolean {
+  const f = family(step)
+  return f !== base && f !== 'white' && f !== 'black'
+}
+
+/** The tokens a color theme repaints; a foreground rides on its colored surface. */
+const PRIMARY_TOKENS = new Set(['primary', 'sidebar-primary'])
+const RING_TOKENS = new Set(['ring', 'sidebar-ring'])
+const ON_COLOR_TOKENS = new Set([
+  'primary-foreground',
+  'sidebar-primary-foreground',
+])
+
+export interface StepInfo {
+  /** The Tailwind step, or null for an on-color foreground tint. */
+  label: string | null
+  /** True for color-theme values — legacy presets, not exact v4 steps. */
+  approx: boolean
+  /** Highlight: reaches outside the base gray family. */
+  borrowed: boolean
+}
+
+export interface Resolved {
+  values: Record<string, string>
+  step: (token: string) => StepInfo
+}
+
+/** Compose the base gray with an optional color theme, plus each token's origin. */
+export function resolveTheme(
+  base: BaseColor,
+  mode: Mode,
+  theme: ColorTheme,
+): Resolved {
+  const baseValues = THEMES[base][mode]
+  const baseSteps = TAILWIND_MAP[base][mode]
+
+  if (theme === 'default') {
+    return {
+      values: baseValues,
+      step: (token) => ({
+        label: baseSteps[token] ?? null,
+        approx: false,
+        borrowed: isBorrowed(baseSteps[token] ?? '', base),
+      }),
+    }
+  }
+
+  const ov = COLOR_THEME_VALUES[theme][mode]
+  const ovSteps = COLOR_THEME_STEPS[theme][mode]
+  const values: Record<string, string> = {
+    ...baseValues,
+    primary: ov.primary,
+    'primary-foreground': ov['primary-foreground'],
+    ring: ov.ring,
+    'sidebar-primary': ov.primary,
+    'sidebar-primary-foreground': ov['primary-foreground'],
+    'sidebar-ring': ov.ring,
+  }
+
+  return {
+    values,
+    step: (token) => {
+      if (PRIMARY_TOKENS.has(token))
+        return { label: ovSteps.primary, approx: true, borrowed: true }
+      if (RING_TOKENS.has(token))
+        return { label: ovSteps.ring, approx: true, borrowed: true }
+      if (ON_COLOR_TOKENS.has(token))
+        return { label: null, approx: true, borrowed: true }
+      return {
+        label: baseSteps[token] ?? null,
+        approx: false,
+        borrowed: isBorrowed(baseSteps[token] ?? '', base),
+      }
+    },
+  }
+}
+
+/** Scope a resolved token map as `--token` custom properties on a container. */
+export function themeVars(values: Record<string, string>): CSSProperties {
   const vars: Record<string, string> = {}
-  for (const [name, value] of Object.entries(theme)) vars[`--${name}`] = value
+  for (const [name, value] of Object.entries(values)) vars[`--${name}`] = value
   return vars as CSSProperties
 }
 
 const v = (token: string) => `var(--${token})`
 
-/** A realistic mini-UI painted entirely from the selected base color + mode. */
-export function ThemedPreview({ base, mode }: { base: BaseColor; mode: Mode }) {
+/** A realistic mini-UI painted entirely from a resolved token map. */
+export function ThemedPreview({ values }: { values: Record<string, string> }) {
   return (
     <div
       style={{
-        ...themeVars(base, mode),
+        ...themeVars(values),
         background: v('background'),
         color: v('foreground'),
       }}

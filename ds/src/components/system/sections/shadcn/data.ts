@@ -833,3 +833,154 @@ export const TAILWIND_MAP: Record<
     },
   },
 }
+
+// ── Color themes (the Themes page) ──────────────────────────────────────────
+// shadcn's colored presets recolor primary + ring on top of a base gray. Unlike
+// the base grays (exact Tailwind v4 steps), these are legacy v3 presets: their
+// primaries trace to Tailwind hues but aren't v4-exact, so they're shown as "≈".
+// Values are converted to OKLCH from the HSL shadcn still ships.
+export const COLOR_THEMES = [
+  'default',
+  'red',
+  'rose',
+  'orange',
+  'green',
+  'blue',
+  'yellow',
+  'violet',
+] as const
+export type ColorTheme = (typeof COLOR_THEMES)[number]
+
+/** Tokens a color theme overrides; everything else stays the base gray. */
+export const THEME_OVERRIDE_TOKENS = [
+  'primary',
+  'primary-foreground',
+  'ring',
+  'sidebar-primary',
+  'sidebar-primary-foreground',
+  'sidebar-ring',
+] as const
+export const COLOR_THEME_VALUES: Record<
+  Exclude<ColorTheme, 'default'>,
+  Record<Mode, { primary: string; 'primary-foreground': string; ring: string }>
+> = {
+  red: {
+    light: {
+      primary: 'oklch(0.577 0.215 27.319)',
+      'primary-foreground': 'oklch(0.971 0.013 17.376)',
+      ring: 'oklch(0.577 0.215 27.319)',
+    },
+    dark: {
+      primary: 'oklch(0.577 0.215 27.319)',
+      'primary-foreground': 'oklch(0.971 0.013 17.376)',
+      ring: 'oklch(0.577 0.215 27.319)',
+    },
+  },
+  rose: {
+    light: {
+      primary: 'oklch(0.586 0.222 17.555)',
+      'primary-foreground': 'oklch(0.97 0.015 12.4)',
+      ring: 'oklch(0.586 0.222 17.555)',
+    },
+    dark: {
+      primary: 'oklch(0.586 0.222 17.555)',
+      'primary-foreground': 'oklch(0.97 0.015 12.4)',
+      ring: 'oklch(0.586 0.222 17.555)',
+    },
+  },
+  orange: {
+    light: {
+      primary: 'oklch(0.705 0.187 47.602)',
+      'primary-foreground': 'oklch(0.985 0.001 106.424)',
+      ring: 'oklch(0.705 0.187 47.602)',
+    },
+    dark: {
+      primary: 'oklch(0.645 0.194 41.078)',
+      'primary-foreground': 'oklch(0.985 0.001 106.424)',
+      ring: 'oklch(0.645 0.194 41.078)',
+    },
+  },
+  green: {
+    light: {
+      primary: 'oklch(0.627 0.17 149.2)',
+      'primary-foreground': 'oklch(0.97 0.015 12.4)',
+      ring: 'oklch(0.627 0.17 149.2)',
+    },
+    dark: {
+      primary: 'oklch(0.723 0.192 149.583)',
+      'primary-foreground': 'oklch(0.266 0.063 152.948)',
+      ring: 'oklch(0.527 0.137 150.055)',
+    },
+  },
+  blue: {
+    light: {
+      primary: 'oklch(0.546 0.215 262.872)',
+      'primary-foreground': 'oklch(0.984 0.003 247.858)',
+      ring: 'oklch(0.546 0.215 262.872)',
+    },
+    dark: {
+      primary: 'oklch(0.623 0.188 259.796)',
+      'primary-foreground': 'oklch(0.208 0.04 265.727)',
+      ring: 'oklch(0.488 0.217 264.388)',
+    },
+  },
+  yellow: {
+    light: {
+      primary: 'oklch(0.86 0.173 91.838)',
+      'primary-foreground': 'oklch(0.285 0.064 53.823)',
+      ring: 'oklch(0.147 0.004 49.314)',
+    },
+    dark: {
+      primary: 'oklch(0.86 0.173 91.838)',
+      'primary-foreground': 'oklch(0.285 0.064 53.823)',
+      ring: 'oklch(0.554 0.121 66.531)',
+    },
+  },
+  violet: {
+    light: {
+      primary: 'oklch(0.541 0.247 292.951)',
+      'primary-foreground': 'oklch(0.984 0.002 247.839)',
+      ring: 'oklch(0.541 0.247 292.951)',
+    },
+    dark: {
+      primary: 'oklch(0.491 0.241 292.588)',
+      'primary-foreground': 'oklch(0.984 0.002 247.839)',
+      ring: 'oklch(0.491 0.241 292.588)',
+    },
+  },
+}
+
+/** The Tailwind hue each colored primary/ring traces to (approx, not v4-exact). */
+export const COLOR_THEME_STEPS: Record<
+  Exclude<ColorTheme, 'default'>,
+  Record<Mode, { primary: string; ring: string }>
+> = {
+  red: {
+    light: { primary: 'red-600', ring: 'red-600' },
+    dark: { primary: 'red-600', ring: 'red-600' },
+  },
+  rose: {
+    light: { primary: 'rose-600', ring: 'rose-600' },
+    dark: { primary: 'rose-600', ring: 'rose-600' },
+  },
+  orange: {
+    light: { primary: 'orange-500', ring: 'orange-500' },
+    dark: { primary: 'orange-600', ring: 'orange-600' },
+  },
+  green: {
+    light: { primary: 'green-600', ring: 'green-600' },
+    dark: { primary: 'green-500', ring: 'green-700' },
+  },
+  blue: {
+    light: { primary: 'blue-600', ring: 'blue-600' },
+    dark: { primary: 'blue-500', ring: 'blue-700' },
+  },
+  yellow: {
+    light: { primary: 'amber-300', ring: 'stone-950' },
+    dark: { primary: 'amber-300', ring: 'yellow-700' },
+  },
+  violet: {
+    light: { primary: 'violet-600', ring: 'violet-600' },
+    dark: { primary: 'violet-700', ring: 'violet-700' },
+  },
+}
