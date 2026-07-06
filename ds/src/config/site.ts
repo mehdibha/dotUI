@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: 'ds.',
   url: 'https://ds.dotui.org',
-  title: 'ds. — how the best design systems actually work',
+  title: 'ds. — explore the best design systems',
   description:
-    'Citation-backed research on how the best design systems actually work, starting with color and token systems. Every fact is cited and dated.',
+    'A catalog for exploring the best design systems — their color ramps, tokens, and conventions, laid out so you can poke at them.',
 }

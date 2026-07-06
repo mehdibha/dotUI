@@ -21,9 +21,10 @@ function SystemPage() {
   const { catalogEntry, system } = Route.useLoaderData()
   const name = system?.name ?? catalogEntry?.name ?? ''
   const org = system?.org ?? catalogEntry?.org ?? ''
-  const docs = system?.sources.docs ?? catalogEntry?.homepage
-  const repo = system?.sources.repo ?? catalogEntry?.repo
-  const site = system?.sources.site
+  const homepage = catalogEntry?.homepage ?? system?.sources.site ?? undefined
+  const homepageLabel = homepage
+    ? homepage.replace(/^https?:\/\//, '').replace(/\/$/, '')
+    : undefined
 
   return (
     <div className="relative mx-auto w-full max-w-4xl">
@@ -42,11 +43,11 @@ function SystemPage() {
           </h1>
           <span className="text-sm text-fg-muted">by {org}</span>
         </div>
-        <div className="mt-2 flex flex-wrap items-center gap-3 text-sm">
-          {docs && <Link href={docs}>Docs</Link>}
-          {repo && <Link href={repo}>Source</Link>}
-          {site && site !== docs && <Link href={site}>Site</Link>}
-        </div>
+        {homepage && homepageLabel && (
+          <div className="mt-2 text-sm">
+            <Link href={homepage}>{homepageLabel} ↗</Link>
+          </div>
+        )}
       </header>
 
       {system ? (
@@ -54,9 +55,8 @@ function SystemPage() {
       ) : (
         <div className="px-6 pb-16">
           <p className="mt-10 max-w-2xl rounded-lg border p-6 text-fg-muted">
-            Research planned. This system&apos;s full architecture — tokens,
-            color, typography, motion, and components — will be explorable here,
-            rebuilt from scratch.
+            Not explorable yet. This system&apos;s color and tokens will show up
+            here once its pages are built.
           </p>
         </div>
       )}
