@@ -153,17 +153,19 @@ export function ColorsSection() {
           </li>
           <li>
             A <span className="font-medium text-fg">color theme</span> repaints{' '}
-            <span className="font-mono text-xs">primary</span> and{' '}
-            <span className="font-mono text-xs">ring</span> (and their sidebar
-            twins) with a colored step — everything else stays the base gray.
+            <span className="font-mono text-xs">primary</span>,{' '}
+            <span className="font-mono text-xs">ring</span>, and their sidebar
+            twins with a colored step — everything else stays the base gray.
+            (The ring is a lighter/darker shade than the primary, and shadcn's
+            “green” is built on lime.)
           </li>
         </ul>
       </Block>
 
       <Note>
-        The base grays are exact Tailwind v4 steps (every one verified against
-        the palette). Color themes are shadcn's legacy presets — their primaries
-        trace to Tailwind hues but aren't v4-exact, so they read as “≈”.
+        Every value is an exact Tailwind step — the base grays and the color
+        themes alike (shadcn annotates each in its own source). Highlighted
+        chips are the steps that reach outside the chosen base gray.
       </Note>
     </Section>
   )
@@ -193,15 +195,9 @@ function ValueCell({ value }: { value: string }) {
   )
 }
 
-/** The Tailwind step behind a token; borrowed steps get emphasis, color themes a “≈”. */
+/** The exact Tailwind step behind a token; steps outside the base gray get emphasis. */
 function StepChip({ info }: { info: StepInfo }) {
-  if (!info.label) {
-    return (
-      <span className="inline-flex items-center rounded-md border border-dashed px-1.5 py-0.5 font-mono text-[11px] whitespace-nowrap text-fg-muted">
-        on-color
-      </span>
-    )
-  }
+  if (!info.label) return <span className="text-fg-muted">—</span>
   return (
     <span
       className={cn(
@@ -211,7 +207,6 @@ function StepChip({ info }: { info: StepInfo }) {
           : 'text-fg-muted',
       )}
     >
-      {info.approx ? '≈ ' : ''}
       {info.label}
     </span>
   )

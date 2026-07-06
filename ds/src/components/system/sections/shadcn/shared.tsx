@@ -3,7 +3,7 @@
 import type { CSSProperties, ReactNode } from 'react'
 
 import { Choice } from '../../primitives'
-import type { BaseColor, ColorTheme, Mode } from './data'
+import type { BaseColor, ColorTheme, Mode, ThemeOverrideToken } from './data'
 import {
   BASE_COLORS,
   COLOR_THEME_STEPS,
@@ -11,6 +11,7 @@ import {
   COLOR_THEMES,
   MODES,
   TAILWIND_MAP,
+  THEME_OVERRIDE_TOKENS,
   THEMES,
 } from './data'
 
@@ -112,19 +113,11 @@ export function isBorrowed(step: string, base: BaseColor): boolean {
   return f !== base && f !== 'white' && f !== 'black'
 }
 
-/** The tokens a color theme repaints; a foreground rides on its colored surface. */
-const PRIMARY_TOKENS = new Set(['primary', 'sidebar-primary'])
-const RING_TOKENS = new Set(['ring', 'sidebar-ring'])
-const ON_COLOR_TOKENS = new Set([
-  'primary-foreground',
-  'sidebar-primary-foreground',
-])
+const OVERRIDE_TOKENS = new Set<string>(THEME_OVERRIDE_TOKENS)
 
 export interface StepInfo {
-  /** The Tailwind step, or null for an on-color foreground tint. */
+  /** The Tailwind step this value resolves to. */
   label: string | null
-  /** True for color-theme values — legacy presets, not exact v4 steps. */
-  approx: boolean
   /** Highlight: reaches outside the base gray family. */
   borrowed: boolean
 }
@@ -148,7 +141,6 @@ export function resolveTheme(
       values: baseValues,
       step: (token) => ({
         label: baseSteps[token] ?? null,
-        approx: false,
         borrowed: isBorrowed(baseSteps[token] ?? '', base),
       }),
     }
@@ -156,28 +148,17 @@ export function resolveTheme(
 
   const ov = COLOR_THEME_VALUES[theme][mode]
   const ovSteps = COLOR_THEME_STEPS[theme][mode]
-  const values: Record<string, string> = {
-    ...baseValues,
-    primary: ov.primary,
-    'primary-foreground': ov['primary-foreground'],
-    ring: ov.ring,
-    'sidebar-primary': ov.primary,
-    'sidebar-primary-foreground': ov['primary-foreground'],
-    'sidebar-ring': ov.ring,
-  }
+  const values: Record<string, string> = { ...baseValues, ...ov }
 
   return {
     values,
     step: (token) => {
-      if (PRIMARY_TOKENS.has(token))
-        return { label: ovSteps.primary, approx: true, borrowed: true }
-      if (RING_TOKENS.has(token))
-        return { label: ovSteps.ring, approx: true, borrowed: true }
-      if (ON_COLOR_TOKENS.has(token))
-        return { label: null, approx: true, borrowed: true }
+      if (OVERRIDE_TOKENS.has(token)) {
+        const step = ovSteps[token as ThemeOverrideToken]
+        return { label: step, borrowed: isBorrowed(step, base) }
+      }
       return {
         label: baseSteps[token] ?? null,
-        approx: false,
         borrowed: isBorrowed(baseSteps[token] ?? '', base),
       }
     },

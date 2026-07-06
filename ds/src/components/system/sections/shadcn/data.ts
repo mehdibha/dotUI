@@ -835,10 +835,12 @@ export const TAILWIND_MAP: Record<
 }
 
 // ── Color themes (the Themes page) ──────────────────────────────────────────
-// shadcn's colored presets recolor primary + ring on top of a base gray. Unlike
-// the base grays (exact Tailwind v4 steps), these are legacy v3 presets: their
-// primaries trace to Tailwind hues but aren't v4-exact, so they're shown as "≈".
-// Values are converted to OKLCH from the HSL shadcn still ships.
+// shadcn's Themes page recolors primary/ring (and their sidebar twins) on top of
+// a base gray. These come from shadcn's own OKLCH theme data (baseColorsOKLCH),
+// where every value is annotated with its exact Tailwind step — so, like the base
+// grays, they map to Tailwind v4 exactly. A few quirks are shadcn's, kept as-is:
+// the "green" theme is actually built on lime, the ring is a lighter/darker shade
+// than the primary (not the same step), and blue keeps a neutral ring.
 export const COLOR_THEMES = [
   'default',
   'red',
@@ -851,7 +853,7 @@ export const COLOR_THEMES = [
 ] as const
 export type ColorTheme = (typeof COLOR_THEMES)[number]
 
-/** Tokens a color theme overrides; everything else stays the base gray. */
+/** The tokens a color theme repaints; everything else stays the base gray. */
 export const THEME_OVERRIDE_TOKENS = [
   'primary',
   'primary-foreground',
@@ -860,127 +862,269 @@ export const THEME_OVERRIDE_TOKENS = [
   'sidebar-primary-foreground',
   'sidebar-ring',
 ] as const
+export type ThemeOverrideToken = (typeof THEME_OVERRIDE_TOKENS)[number]
+
 export const COLOR_THEME_VALUES: Record<
   Exclude<ColorTheme, 'default'>,
-  Record<Mode, { primary: string; 'primary-foreground': string; ring: string }>
+  Record<Mode, Record<ThemeOverrideToken, string>>
 > = {
   red: {
     light: {
-      primary: 'oklch(0.577 0.215 27.319)',
-      'primary-foreground': 'oklch(0.971 0.013 17.376)',
-      ring: 'oklch(0.577 0.215 27.319)',
+      primary: 'oklch(0.577 0.245 27.325)',
+      'primary-foreground': 'oklch(0.971 0.013 17.38)',
+      ring: 'oklch(0.704 0.191 22.216)',
+      'sidebar-primary': 'oklch(0.577 0.245 27.325)',
+      'sidebar-primary-foreground': 'oklch(0.971 0.013 17.38)',
+      'sidebar-ring': 'oklch(0.704 0.191 22.216)',
     },
     dark: {
-      primary: 'oklch(0.577 0.215 27.319)',
-      'primary-foreground': 'oklch(0.971 0.013 17.376)',
-      ring: 'oklch(0.577 0.215 27.319)',
+      primary: 'oklch(0.637 0.237 25.331)',
+      'primary-foreground': 'oklch(0.971 0.013 17.38)',
+      ring: 'oklch(0.396 0.141 25.723)',
+      'sidebar-primary': 'oklch(0.637 0.237 25.331)',
+      'sidebar-primary-foreground': 'oklch(0.971 0.013 17.38)',
+      'sidebar-ring': 'oklch(0.396 0.141 25.723)',
     },
   },
   rose: {
     light: {
-      primary: 'oklch(0.586 0.222 17.555)',
-      'primary-foreground': 'oklch(0.97 0.015 12.4)',
-      ring: 'oklch(0.586 0.222 17.555)',
+      primary: 'oklch(0.586 0.253 17.585)',
+      'primary-foreground': 'oklch(0.969 0.015 12.422)',
+      ring: 'oklch(0.712 0.194 13.428)',
+      'sidebar-primary': 'oklch(0.586 0.253 17.585)',
+      'sidebar-primary-foreground': 'oklch(0.969 0.015 12.422)',
+      'sidebar-ring': 'oklch(0.712 0.194 13.428)',
     },
     dark: {
-      primary: 'oklch(0.586 0.222 17.555)',
-      'primary-foreground': 'oklch(0.97 0.015 12.4)',
-      ring: 'oklch(0.586 0.222 17.555)',
+      primary: 'oklch(0.645 0.246 16.439)',
+      'primary-foreground': 'oklch(0.969 0.015 12.422)',
+      ring: 'oklch(0.41 0.159 10.272)',
+      'sidebar-primary': 'oklch(0.645 0.246 16.439)',
+      'sidebar-primary-foreground': 'oklch(0.969 0.015 12.422)',
+      'sidebar-ring': 'oklch(0.41 0.159 10.272)',
     },
   },
   orange: {
     light: {
-      primary: 'oklch(0.705 0.187 47.602)',
-      'primary-foreground': 'oklch(0.985 0.001 106.424)',
-      ring: 'oklch(0.705 0.187 47.602)',
+      primary: 'oklch(0.646 0.222 41.116)',
+      'primary-foreground': 'oklch(0.98 0.016 73.684)',
+      ring: 'oklch(0.75 0.183 55.934)',
+      'sidebar-primary': 'oklch(0.646 0.222 41.116)',
+      'sidebar-primary-foreground': 'oklch(0.98 0.016 73.684)',
+      'sidebar-ring': 'oklch(0.75 0.183 55.934)',
     },
     dark: {
-      primary: 'oklch(0.645 0.194 41.078)',
-      'primary-foreground': 'oklch(0.985 0.001 106.424)',
-      ring: 'oklch(0.645 0.194 41.078)',
+      primary: 'oklch(0.705 0.213 47.604)',
+      'primary-foreground': 'oklch(0.98 0.016 73.684)',
+      ring: 'oklch(0.408 0.123 38.172)',
+      'sidebar-primary': 'oklch(0.705 0.213 47.604)',
+      'sidebar-primary-foreground': 'oklch(0.98 0.016 73.684)',
+      'sidebar-ring': 'oklch(0.408 0.123 38.172)',
     },
   },
   green: {
     light: {
-      primary: 'oklch(0.627 0.17 149.2)',
-      'primary-foreground': 'oklch(0.97 0.015 12.4)',
-      ring: 'oklch(0.627 0.17 149.2)',
+      primary: 'oklch(0.648 0.2 131.684)',
+      'primary-foreground': 'oklch(0.986 0.031 120.757)',
+      ring: 'oklch(0.841 0.238 128.85)',
+      'sidebar-primary': 'oklch(0.648 0.2 131.684)',
+      'sidebar-primary-foreground': 'oklch(0.986 0.031 120.757)',
+      'sidebar-ring': 'oklch(0.841 0.238 128.85)',
     },
     dark: {
-      primary: 'oklch(0.723 0.192 149.583)',
-      'primary-foreground': 'oklch(0.266 0.063 152.948)',
-      ring: 'oklch(0.527 0.137 150.055)',
+      primary: 'oklch(0.648 0.2 131.684)',
+      'primary-foreground': 'oklch(0.986 0.031 120.757)',
+      ring: 'oklch(0.405 0.101 131.063)',
+      'sidebar-primary': 'oklch(0.768 0.233 130.85)',
+      'sidebar-primary-foreground': 'oklch(0.986 0.031 120.757)',
+      'sidebar-ring': 'oklch(0.405 0.101 131.063)',
     },
   },
   blue: {
     light: {
-      primary: 'oklch(0.546 0.215 262.872)',
-      'primary-foreground': 'oklch(0.984 0.003 247.858)',
-      ring: 'oklch(0.546 0.215 262.872)',
+      primary: 'oklch(0.488 0.243 264.376)',
+      'primary-foreground': 'oklch(0.97 0.014 254.604)',
+      ring: 'oklch(0.708 0 0)',
+      'sidebar-primary': 'oklch(0.546 0.245 262.881)',
+      'sidebar-primary-foreground': 'oklch(0.97 0.014 254.604)',
+      'sidebar-ring': 'oklch(0.708 0 0)',
     },
     dark: {
-      primary: 'oklch(0.623 0.188 259.796)',
-      'primary-foreground': 'oklch(0.208 0.04 265.727)',
-      ring: 'oklch(0.488 0.217 264.388)',
+      primary: 'oklch(0.488 0.243 264.376)',
+      'primary-foreground': 'oklch(0.97 0.014 254.604)',
+      ring: 'oklch(0.556 0 0)',
+      'sidebar-primary': 'oklch(0.623 0.214 259.815)',
+      'sidebar-primary-foreground': 'oklch(0.97 0.014 254.604)',
+      'sidebar-ring': 'oklch(0.439 0 0)',
     },
   },
   yellow: {
     light: {
-      primary: 'oklch(0.86 0.173 91.838)',
-      'primary-foreground': 'oklch(0.285 0.064 53.823)',
-      ring: 'oklch(0.147 0.004 49.314)',
+      primary: 'oklch(0.852 0.199 91.936)',
+      'primary-foreground': 'oklch(0.421 0.095 57.708)',
+      ring: 'oklch(0.852 0.199 91.936)',
+      'sidebar-primary': 'oklch(0.681 0.162 75.834)',
+      'sidebar-primary-foreground': 'oklch(0.987 0.026 102.212)',
+      'sidebar-ring': 'oklch(0.852 0.199 91.936)',
     },
     dark: {
-      primary: 'oklch(0.86 0.173 91.838)',
-      'primary-foreground': 'oklch(0.285 0.064 53.823)',
-      ring: 'oklch(0.554 0.121 66.531)',
+      primary: 'oklch(0.795 0.184 86.047)',
+      'primary-foreground': 'oklch(0.421 0.095 57.708)',
+      ring: 'oklch(0.421 0.095 57.708)',
+      'sidebar-primary': 'oklch(0.795 0.184 86.047)',
+      'sidebar-primary-foreground': 'oklch(0.987 0.026 102.212)',
+      'sidebar-ring': 'oklch(0.421 0.095 57.708)',
     },
   },
   violet: {
     light: {
-      primary: 'oklch(0.541 0.247 292.951)',
-      'primary-foreground': 'oklch(0.984 0.002 247.839)',
-      ring: 'oklch(0.541 0.247 292.951)',
+      primary: 'oklch(0.541 0.281 293.009)',
+      'primary-foreground': 'oklch(0.969 0.016 293.756)',
+      ring: 'oklch(0.702 0.183 293.541)',
+      'sidebar-primary': 'oklch(0.541 0.281 293.009)',
+      'sidebar-primary-foreground': 'oklch(0.969 0.016 293.756)',
+      'sidebar-ring': 'oklch(0.702 0.183 293.541)',
     },
     dark: {
-      primary: 'oklch(0.491 0.241 292.588)',
-      'primary-foreground': 'oklch(0.984 0.002 247.839)',
-      ring: 'oklch(0.491 0.241 292.588)',
+      primary: 'oklch(0.606 0.25 292.717)',
+      'primary-foreground': 'oklch(0.969 0.016 293.756)',
+      ring: 'oklch(0.38 0.189 293.745)',
+      'sidebar-primary': 'oklch(0.606 0.25 292.717)',
+      'sidebar-primary-foreground': 'oklch(0.969 0.016 293.756)',
+      'sidebar-ring': 'oklch(0.38 0.189 293.745)',
     },
   },
 }
 
-/** The Tailwind hue each colored primary/ring traces to (approx, not v4-exact). */
+/** The exact Tailwind step behind each override token (shadcn annotates these in-source). */
 export const COLOR_THEME_STEPS: Record<
   Exclude<ColorTheme, 'default'>,
-  Record<Mode, { primary: string; ring: string }>
+  Record<Mode, Record<ThemeOverrideToken, string>>
 > = {
   red: {
-    light: { primary: 'red-600', ring: 'red-600' },
-    dark: { primary: 'red-600', ring: 'red-600' },
+    light: {
+      primary: 'red-600',
+      'primary-foreground': 'red-50',
+      ring: 'red-400',
+      'sidebar-primary': 'red-600',
+      'sidebar-primary-foreground': 'red-50',
+      'sidebar-ring': 'red-400',
+    },
+    dark: {
+      primary: 'red-500',
+      'primary-foreground': 'red-50',
+      ring: 'red-900',
+      'sidebar-primary': 'red-500',
+      'sidebar-primary-foreground': 'red-50',
+      'sidebar-ring': 'red-900',
+    },
   },
   rose: {
-    light: { primary: 'rose-600', ring: 'rose-600' },
-    dark: { primary: 'rose-600', ring: 'rose-600' },
+    light: {
+      primary: 'rose-600',
+      'primary-foreground': 'rose-50',
+      ring: 'rose-400',
+      'sidebar-primary': 'rose-600',
+      'sidebar-primary-foreground': 'rose-50',
+      'sidebar-ring': 'rose-400',
+    },
+    dark: {
+      primary: 'rose-500',
+      'primary-foreground': 'rose-50',
+      ring: 'rose-900',
+      'sidebar-primary': 'rose-500',
+      'sidebar-primary-foreground': 'rose-50',
+      'sidebar-ring': 'rose-900',
+    },
   },
   orange: {
-    light: { primary: 'orange-500', ring: 'orange-500' },
-    dark: { primary: 'orange-600', ring: 'orange-600' },
+    light: {
+      primary: 'orange-600',
+      'primary-foreground': 'orange-50',
+      ring: 'orange-400',
+      'sidebar-primary': 'orange-600',
+      'sidebar-primary-foreground': 'orange-50',
+      'sidebar-ring': 'orange-400',
+    },
+    dark: {
+      primary: 'orange-500',
+      'primary-foreground': 'orange-50',
+      ring: 'orange-900',
+      'sidebar-primary': 'orange-500',
+      'sidebar-primary-foreground': 'orange-50',
+      'sidebar-ring': 'orange-900',
+    },
   },
   green: {
-    light: { primary: 'green-600', ring: 'green-600' },
-    dark: { primary: 'green-500', ring: 'green-700' },
+    light: {
+      primary: 'lime-600',
+      'primary-foreground': 'lime-50',
+      ring: 'lime-400',
+      'sidebar-primary': 'lime-600',
+      'sidebar-primary-foreground': 'lime-50',
+      'sidebar-ring': 'lime-400',
+    },
+    dark: {
+      primary: 'lime-600',
+      'primary-foreground': 'lime-50',
+      ring: 'lime-900',
+      'sidebar-primary': 'lime-500',
+      'sidebar-primary-foreground': 'lime-50',
+      'sidebar-ring': 'lime-900',
+    },
   },
   blue: {
-    light: { primary: 'blue-600', ring: 'blue-600' },
-    dark: { primary: 'blue-500', ring: 'blue-700' },
+    light: {
+      primary: 'blue-700',
+      'primary-foreground': 'blue-50',
+      ring: 'neutral-400',
+      'sidebar-primary': 'blue-600',
+      'sidebar-primary-foreground': 'blue-50',
+      'sidebar-ring': 'neutral-400',
+    },
+    dark: {
+      primary: 'blue-700',
+      'primary-foreground': 'blue-50',
+      ring: 'neutral-500',
+      'sidebar-primary': 'blue-500',
+      'sidebar-primary-foreground': 'blue-50',
+      'sidebar-ring': 'neutral-600',
+    },
   },
   yellow: {
-    light: { primary: 'amber-300', ring: 'stone-950' },
-    dark: { primary: 'amber-300', ring: 'yellow-700' },
+    light: {
+      primary: 'yellow-400',
+      'primary-foreground': 'yellow-900',
+      ring: 'yellow-400',
+      'sidebar-primary': 'yellow-600',
+      'sidebar-primary-foreground': 'yellow-50',
+      'sidebar-ring': 'yellow-400',
+    },
+    dark: {
+      primary: 'yellow-500',
+      'primary-foreground': 'yellow-900',
+      ring: 'yellow-900',
+      'sidebar-primary': 'yellow-500',
+      'sidebar-primary-foreground': 'yellow-50',
+      'sidebar-ring': 'yellow-900',
+    },
   },
   violet: {
-    light: { primary: 'violet-600', ring: 'violet-600' },
-    dark: { primary: 'violet-700', ring: 'violet-700' },
+    light: {
+      primary: 'violet-600',
+      'primary-foreground': 'violet-50',
+      ring: 'violet-400',
+      'sidebar-primary': 'violet-600',
+      'sidebar-primary-foreground': 'violet-50',
+      'sidebar-ring': 'violet-400',
+    },
+    dark: {
+      primary: 'violet-500',
+      'primary-foreground': 'violet-50',
+      ring: 'violet-900',
+      'sidebar-primary': 'violet-500',
+      'sidebar-primary-foreground': 'violet-50',
+      'sidebar-ring': 'violet-900',
+    },
   },
 }
