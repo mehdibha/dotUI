@@ -84,7 +84,7 @@ export function ColorsSection() {
       </div>
 
       <Block title="Live preview">
-        <ThemedPreview values={resolved.values} />
+        <ThemedPreview values={resolved.values} mode={mode} />
       </Block>
 
       <div className="overflow-x-auto">

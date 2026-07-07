@@ -2,6 +2,8 @@
 
 import type { CSSProperties, ReactNode } from 'react'
 
+import { cn } from '@/lib/utils'
+
 import { Choice } from '../../primitives'
 import type { BaseColor, ColorTheme, Mode, ThemeOverrideToken } from './data'
 import {
@@ -173,9 +175,19 @@ export function themeVars(values: Record<string, string>): CSSProperties {
 }
 
 const v = (token: string) => `var(--${token})`
+/** Tailwind's `/NN` opacity modifier — `bg-destructive/60` etc. */
+const alpha = (token: string, pct: number) =>
+  `color-mix(in oklab, var(--${token}) ${pct}%, transparent)`
 
 /** A realistic mini-UI painted entirely from a resolved token map. */
-export function ThemedPreview({ values }: { values: Record<string, string> }) {
+export function ThemedPreview({
+  values,
+  mode,
+}: {
+  values: Record<string, string>
+  mode: Mode
+}) {
+  const dark = mode === 'dark'
   return (
     <div
       style={{
@@ -211,27 +223,46 @@ export function ThemedPreview({ values }: { values: Record<string, string> }) {
           className="h-8 rounded-md border px-3 text-xs"
         />
 
-        <div className="flex flex-wrap gap-2">
-          <Btn bg="primary" fg="primary-foreground">
-            Deploy
-          </Btn>
-          <Btn bg="secondary" fg="secondary-foreground">
-            Cancel
-          </Btn>
-          <button
-            type="button"
-            style={{ background: v('destructive'), color: '#fff' }}
-            className="h-8 rounded-md px-3 text-xs font-medium"
+        {/* shadcn's real Button variants, dark-mode treatments included. */}
+        <div className="flex flex-wrap items-center gap-2">
+          <Btn
+            style={{ background: v('primary'), color: v('primary-foreground') }}
           >
-            Delete
-          </button>
-          <button
-            type="button"
-            style={{ borderColor: v('border'), color: v('foreground') }}
-            className="h-8 rounded-md border px-3 text-xs font-medium"
+            Default
+          </Btn>
+          <Btn
+            style={{
+              background: v('secondary'),
+              color: v('secondary-foreground'),
+            }}
+          >
+            Secondary
+          </Btn>
+          <Btn
+            className="border"
+            style={{
+              background: dark ? alpha('input', 30) : v('background'),
+              borderColor: dark ? v('input') : v('border'),
+              color: v('foreground'),
+            }}
           >
             Outline
-          </button>
+          </Btn>
+          <Btn style={{ color: v('foreground') }}>Ghost</Btn>
+          <Btn
+            style={{
+              background: dark ? alpha('destructive', 60) : v('destructive'),
+              color: '#fff',
+            }}
+          >
+            Destructive
+          </Btn>
+          <Btn
+            className="underline-offset-4 hover:underline"
+            style={{ color: v('primary') }}
+          >
+            Link
+          </Btn>
         </div>
 
         <div
@@ -265,19 +296,19 @@ export function ThemedPreview({ values }: { values: Record<string, string> }) {
 }
 
 function Btn({
-  bg,
-  fg,
+  style,
+  className,
   children,
 }: {
-  bg: string
-  fg: string
+  style?: CSSProperties
+  className?: string
   children: ReactNode
 }) {
   return (
     <button
       type="button"
-      style={{ background: v(bg), color: v(fg) }}
-      className="h-8 rounded-md px-3 text-xs font-medium"
+      style={style}
+      className={cn('h-8 rounded-md px-3 text-xs font-medium', className)}
     >
       {children}
     </button>
