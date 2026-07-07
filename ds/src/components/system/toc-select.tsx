@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { type ComponentProps, useEffect, useState } from 'react'
 import { useMatch } from '@tanstack/react-router'
 import { ChevronDownIcon } from 'lucide-react'
 import { Button } from 'react-aria-components/Button'
@@ -50,7 +50,9 @@ function TocSelect({
   className?: string
 }) {
   const activeId = useActiveSection(items)
-  const active = items.find((item) => item.id === activeId) ?? items[0]
+  const activeIndex = items.findIndex((item) => item.id === activeId)
+  const active = items[activeIndex] ?? items[0]
+  const progress = items.length > 0 ? (activeIndex + 1) / items.length : 0
 
   return (
     <Select
@@ -59,7 +61,8 @@ function TocSelect({
       onSelectionChange={(key) => scrollToSection(String(key))}
       className={cn('flex', className)}
     >
-      <Button className="flex cursor-pointer items-center gap-1 text-sm text-fg-muted transition-colors outline-none hover:text-fg data-pressed:text-fg">
+      <Button className="flex cursor-pointer items-center gap-1.5 text-sm text-fg-muted transition-colors outline-none hover:text-fg data-pressed:text-fg">
+        <ProgressCircle value={progress} className="shrink-0" />
         <span className="max-w-36 truncate">{active?.label ?? ''}</span>
         <ChevronDownIcon className="size-4 shrink-0" />
       </Button>
@@ -74,5 +77,48 @@ function TocSelect({
         ))}
       </SelectContent>
     </Select>
+  )
+}
+
+/**
+ * A ring that fills as you move down the page — one section's worth per step,
+ * smoothed by the dash-offset transition. Borrowed from fumadocs' mobile TOC.
+ */
+function ProgressCircle({
+  value,
+  className,
+  ...props
+}: ComponentProps<'svg'> & { value: number }) {
+  const size = 16
+  const strokeWidth = 2
+  const radius = size / 2 - strokeWidth
+  const circumference = 2 * Math.PI * radius
+  const progress = Math.min(1, Math.max(0, value)) * circumference
+  const circle = {
+    cx: size / 2,
+    cy: size / 2,
+    r: radius,
+    fill: 'none',
+    strokeWidth,
+  }
+
+  return (
+    <svg
+      viewBox={`0 0 ${size} ${size}`}
+      aria-hidden
+      className={cn('size-4', className)}
+      {...props}
+    >
+      <circle {...circle} className="stroke-current/20" />
+      <circle
+        {...circle}
+        stroke="currentColor"
+        strokeDasharray={circumference}
+        strokeDashoffset={circumference - progress}
+        strokeLinecap="round"
+        transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        className="transition-[stroke-dashoffset] duration-300 ease-out"
+      />
+    </svg>
   )
 }
