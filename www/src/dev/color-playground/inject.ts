@@ -1,6 +1,4 @@
-import { V2_STEPS, type V2Step } from '@dotui/colors/v2'
-
-import { readableFg, toElevenSteps } from './lib'
+import { readableFg, STEPS, type Step, toElevenSteps } from './lib'
 
 /**
  * CSS variable overrides that repaint the semantic accent + primary roles from
@@ -9,11 +7,11 @@ import { readableFg, toElevenSteps } from './lib'
  * injected ramp so the cluster actually reflects the palette under test.
  */
 export function accentVars(
-  steps: Record<V2Step, string>,
+  steps: Record<Step, string>,
   onSolid: string,
 ): React.CSSProperties {
   const vars: Record<string, string> = {}
-  for (const step of V2_STEPS) vars[`--accent-${step}`] = steps[step]
+  for (const step of STEPS) vars[`--accent-${step}`] = steps[step]
 
   vars['--color-accent'] = steps['500']
   vars['--color-accent-hover'] = steps['600']

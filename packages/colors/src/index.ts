@@ -8,7 +8,11 @@
 
 // Generation
 export { createTheme } from './theme'
-export { type CreateThemeOptions, createThemeOptionsSchema } from './schema'
+export {
+  type BaseThemeOptions,
+  type CreateThemeOptions,
+  createThemeOptionsSchema,
+} from './schema'
 
 // Verification
 export {

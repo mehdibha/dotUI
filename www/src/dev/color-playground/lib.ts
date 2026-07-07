@@ -1,26 +1,34 @@
 import { onBlackWhite, toOklch, wcag2 } from '@dotui/colors'
-import {
-  DARK_TARGETS,
-  DEFAULT_DARK_SURFACE,
-  LIGHT_TARGETS,
-  V2_STEPS,
-  type V2Step,
-} from '@dotui/colors/v2'
 
 import type { ReferenceScale, ReferenceSource } from './data'
 
 export type Mode = 'light' | 'dark'
 
-/** Page surface each mode's contrast is measured against. */
+/** The engine's default 11-step scale names. */
+export const STEPS = [
+  '50',
+  '100',
+  '200',
+  '300',
+  '400',
+  '500',
+  '600',
+  '700',
+  '800',
+  '900',
+  '950',
+] as const
+export type Step = (typeof STEPS)[number]
+
+/** Solid step — the mid anchor each ramp is marked at. */
+export const SOLID_STEP: Step = '500'
+
+/** Page surface each mode's contrast is measured against (matches the playground background). */
 export const LIGHT_SURFACE = '#ffffff'
-export const DARK_SURFACE = DEFAULT_DARK_SURFACE
+export const DARK_SURFACE = '#111111'
 
 export function surfaceFor(mode: Mode): string {
   return mode === 'light' ? LIGHT_SURFACE : DARK_SURFACE
-}
-
-export function targetsFor(mode: Mode): Record<V2Step, number> {
-  return mode === 'light' ? LIGHT_TARGETS : DARK_TARGETS
 }
 
 /** OKLab coords (a/b from chroma·hue) for perceptual distance. */
@@ -103,17 +111,17 @@ export function nearestScale(
 }
 
 /**
- * Resample an ordered color list to `V2_STEPS` (11) by fractional position,
+ * Resample an ordered color list to the 11 `STEPS` by fractional position,
  * interpolating in OKLab. Lets 12-step Radix / 10-step Geist map onto our ladder.
  */
-export function toElevenSteps(colors: string[]): Record<V2Step, string> {
-  const out = {} as Record<V2Step, string>
+export function toElevenSteps(colors: string[]): Record<Step, string> {
+  const out = {} as Record<Step, string>
   const n = colors.length
   if (n === 0) return out
   const at = (idx: number): string =>
     colors[Math.min(Math.max(idx, 0), n - 1)] ?? colors[0] ?? ''
-  V2_STEPS.forEach((step, i) => {
-    const pos = (i / (V2_STEPS.length - 1)) * (n - 1)
+  STEPS.forEach((step, i) => {
+    const pos = (i / (STEPS.length - 1)) * (n - 1)
     const lo = at(Math.floor(pos))
     const hi = at(Math.ceil(pos))
     out[step] =
@@ -122,19 +130,19 @@ export function toElevenSteps(colors: string[]): Record<V2Step, string> {
   return out
 }
 
-/** Mean + max ΔE of a v2 ramp against a reference ramp, aligned by fractional position. */
+/** Mean + max ΔE of a generated ramp against a reference ramp, aligned by fractional position. */
 export function rampDeltaE(
-  v2: Record<V2Step, string>,
+  ramp: Record<Step, string>,
   reference: string[],
 ): { mean: number; max: number } {
   const aligned = toElevenSteps(reference)
   let sum = 0
   let max = 0
   let count = 0
-  for (const step of V2_STEPS) {
+  for (const step of STEPS) {
     const ref = aligned[step]
     if (!ref) continue
-    const d = deltaE(v2[step], ref)
+    const d = deltaE(ramp[step], ref)
     sum += d
     max = Math.max(max, d)
     count++
@@ -143,9 +151,9 @@ export function rampDeltaE(
 }
 
 /**
- * Ladders run light→dark in light mode and dark→light in dark (the v2
- * convention); Primer numbers its dark scales light-first, so reverse
- * anti-oriented references (labels travel with their colors).
+ * Ladders run light→dark in light mode and dark→light in dark; Primer numbers
+ * its dark scales light-first, so reverse anti-oriented references (labels
+ * travel with their colors).
  */
 export function orientToMode(
   colors: string[],

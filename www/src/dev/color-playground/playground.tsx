@@ -1,15 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTheme } from 'starter-themes'
 
-import { SOLID_STEP, solveScale, V2_STEPS, type V2Step } from '@dotui/colors/v2'
-
-import { resolveColorConfig } from '@/registry/theme/primitives'
+import { type BaseThemeOptions, createTheme } from '@dotui/colors'
 
 import { ComponentCluster } from './cluster'
 import { REFERENCE_SOURCES } from './data'
 import { accentVars, accentVarsFromColors } from './inject'
 import {
   contrast,
+  deltaE,
   firstStepMeeting,
   lightnessOf,
   type Mode,
@@ -18,11 +17,62 @@ import {
   rampDeltaE,
   scaleColors,
   solidIndex,
+  SOLID_STEP,
+  STEPS,
+  type Step,
   surfaceFor,
-  targetsFor,
 } from './lib'
 
 const DEFAULT_SEED = '#635bff'
+/** Neutral seed for the derived background; a flat gray keeps surfaces honest. */
+const NEUTRAL_SEED = '#808080'
+
+interface Algorithm {
+  id: string
+  label: string
+}
+
+/** The shipping engine's generative algorithms (fixed is identity-only, so excluded). */
+const ALGORITHMS: Algorithm[] = [
+  { id: 'oklch', label: 'oklch · default' },
+  { id: 'tailwind', label: 'tailwind · hue-torsion' },
+  { id: 'contrast', label: 'contrast · bg-aware' },
+  { id: 'material', label: 'material · HCT' },
+]
+
+interface Ramp {
+  colors: string[]
+  steps: Record<Step, string>
+  onSolid: string
+}
+
+/** Generate one algorithm's primary ramp + on-solid for a mode, via the shipping engine. */
+function algorithmRamp(algorithm: string, seed: string, mode: Mode): Ramp {
+  const flat = (): Ramp => {
+    const steps = {} as Record<Step, string>
+    for (const s of STEPS) steps[s] = '#808080'
+    return { colors: STEPS.map(() => '#808080'), steps, onSolid: '#ffffff' }
+  }
+  try {
+    const options: BaseThemeOptions = {
+      algorithm,
+      palettes: { primary: seed, neutral: NEUTRAL_SEED },
+    }
+    const out = createTheme(options)[mode]
+    if (!out) return flat()
+    const scale = out.scales.primary ?? {}
+    const on = out.on.primary ?? {}
+    const steps = {} as Record<Step, string>
+    for (const s of STEPS) steps[s] = scale[s] ?? '#808080'
+    return {
+      colors: STEPS.map((s) => steps[s]),
+      steps,
+      onSolid: on[SOLID_STEP] ?? '#ffffff',
+    }
+  } catch {
+    return flat()
+  }
+}
 
 export function ColorPlayground() {
   const [seed, setSeed] = useState(DEFAULT_SEED)
@@ -73,10 +123,10 @@ function Controls({
   return (
     <header className="flex flex-wrap items-center gap-4">
       <div>
-        <h1 className="text-lg font-semibold">Color system v2 — playground</h1>
+        <h1 className="text-lg font-semibold">Color engine — playground</h1>
         <p className="text-xs opacity-60">
-          Dev-only. Judges the v2 solver against the current engine and industry
-          references.
+          Dev-only. Compares the shipping algorithms against each other and
+          industry references.
         </p>
       </div>
       <div className="ml-auto flex items-center gap-3">
@@ -156,8 +206,6 @@ interface RampRow {
   colors: string[]
   labels: string[]
   markStep?: string
-  targets?: Record<string, number>
-  achieved?: Record<string, number>
 }
 
 function RampGrid({ seed, mode }: { seed: string; mode: Mode }) {
@@ -166,26 +214,15 @@ function RampGrid({ seed, mode }: { seed: string; mode: Mode }) {
   const rows = useMemo<RampRow[]>(() => {
     const result: RampRow[] = []
 
-    const solved = solveScale({ seed, mode, surface })
-    result.push({
-      label: 'v2 solver',
-      colors: V2_STEPS.map((s) => solved.steps[s]),
-      labels: [...V2_STEPS],
-      markStep: SOLID_STEP,
-      targets: targetsFor(mode),
-      achieved: solved.achieved,
-    })
-
-    const currentColors = currentEngineRamp(seed, mode)
-    result.push({
-      label:
-        mode === 'dark'
-          ? 'current engine (dark = reversed light)'
-          : 'current engine',
-      colors: currentColors,
-      labels: [...V2_STEPS],
-      markStep: SOLID_STEP,
-    })
+    for (const algorithm of ALGORITHMS) {
+      const { colors } = algorithmRamp(algorithm.id, seed, mode)
+      result.push({
+        label: algorithm.label,
+        colors,
+        labels: [...STEPS],
+        markStep: SOLID_STEP,
+      })
+    }
 
     for (const source of REFERENCE_SOURCES) {
       const scales = mode === 'light' ? source.light : source.dark
@@ -216,21 +253,21 @@ function RampGrid({ seed, mode }: { seed: string; mode: Mode }) {
     }
 
     return result
-  }, [seed, mode, surface])
+  }, [seed, mode])
 
   return (
     <section className="flex flex-col gap-4">
       <SectionTitle>Ramp comparison ({mode})</SectionTitle>
       <div className="flex flex-col gap-4">
         {rows.map((row) => (
-          <Ramp key={row.label} row={row} surface={surface} />
+          <RampView key={row.label} row={row} surface={surface} />
         ))}
       </div>
     </section>
   )
 }
 
-function Ramp({ row, surface }: { row: RampRow; surface: string }) {
+function RampView({ row, surface }: { row: RampRow; surface: string }) {
   if (row.colors.length === 0) {
     return (
       <div className="text-xs">
@@ -253,8 +290,6 @@ function Ramp({ row, surface }: { row: RampRow; surface: string }) {
           const isMark = label === row.markStep
           const passes3 = i === first3
           const passes45 = i === first45
-          const target = row.targets?.[label]
-          const achieved = row.achieved?.[label]
           return (
             <div
               key={label}
@@ -288,17 +323,6 @@ function Ramp({ row, surface }: { row: RampRow; surface: string }) {
               >
                 {ratio.toFixed(1)}
               </span>
-              {target !== undefined && (
-                <span
-                  style={{ fontSize: 8, opacity: 0.5 }}
-                  title="target vs achieved"
-                >
-                  →{target.toFixed(1)}
-                  {achieved !== undefined && achieved !== 1
-                    ? ` (${achieved.toFixed(1)})`
-                    : ''}
-                </span>
-              )}
             </div>
           )
         })}
@@ -328,44 +352,62 @@ function RampLabel({ row }: { row: RampRow }) {
 
 // MARK: ΔE table
 
-function DeltaTable({ seed, mode }: { seed: string; mode: Mode }) {
-  const rows = useMemo(() => {
-    const surface = surfaceFor(mode)
-    const solved = solveScale({ seed, mode, surface })
-    const v2 = solved.steps
-
-    return REFERENCE_SOURCES.flatMap((source) => {
-      const scale = nearestScale(source, mode, seed)
-      if (!scale) return []
+/** Nearest reference ramp to the seed across all sources (by ΔE at the solid step). */
+function nearestReference(
+  seed: string,
+  mode: Mode,
+): { label: string; colors: string[] } | null {
+  let best: { label: string; colors: string[]; d: number } | null = null
+  for (const source of REFERENCE_SOURCES) {
+    const scale = nearestScale(source, mode, seed)
+    if (!scale) continue
+    const anchorLabel = source.stepLabels[solidIndex(source)]
+    const anchor = anchorLabel ? scale.steps[anchorLabel] : undefined
+    if (!anchor) continue
+    const d = deltaE(seed, anchor)
+    if (!best || d < best.d) {
       const { colors } = orientToMode(
         scaleColors(scale, source),
         source.stepLabels,
         mode,
       )
-      const { mean, max } = rampDeltaE(v2 as Record<V2Step, string>, colors)
-      return [{ source: source.label, scale: scale.name, mean, max }]
+      best = { label: `${source.label} · ${scale.name}`, colors, d }
+    }
+  }
+  return best ? { label: best.label, colors: best.colors } : null
+}
+
+function DeltaTable({ seed, mode }: { seed: string; mode: Mode }) {
+  const { reference, rows } = useMemo(() => {
+    const ref = nearestReference(seed, mode)
+    if (!ref) return { reference: null, rows: [] }
+    const data = ALGORITHMS.map((algorithm) => {
+      const { steps } = algorithmRamp(algorithm.id, seed, mode)
+      const { mean, max } = rampDeltaE(steps, ref.colors)
+      return { algorithm: algorithm.label, mean, max }
     })
+    return { reference: ref, rows: data }
   }, [seed, mode])
 
-  if (rows.length === 0) return null
+  if (!reference) return null
 
   return (
     <section className="flex flex-col gap-3">
-      <SectionTitle>v2 vs nearest reference — OKLab ΔE</SectionTitle>
+      <SectionTitle>
+        Each algorithm vs nearest reference ({reference.label}) — OKLab ΔE
+      </SectionTitle>
       <table className="w-fit text-xs" style={{ borderCollapse: 'collapse' }}>
         <thead>
           <tr style={{ opacity: 0.6 }}>
-            <Th>source</Th>
-            <Th>scale</Th>
+            <Th>algorithm</Th>
             <Th align="right">mean ΔE</Th>
             <Th align="right">max ΔE</Th>
           </tr>
         </thead>
         <tbody>
           {rows.map((r) => (
-            <tr key={r.source}>
-              <Td>{r.source}</Td>
-              <Td>{r.scale}</Td>
+            <tr key={r.algorithm}>
+              <Td>{r.algorithm}</Td>
               <Td align="right">{r.mean.toFixed(3)}</Td>
               <Td align="right">{r.max.toFixed(3)}</Td>
             </tr>
@@ -379,55 +421,35 @@ function DeltaTable({ seed, mode }: { seed: string; mode: Mode }) {
 // MARK: Injection panels
 
 function InjectionPanels({ seed, mode }: { seed: string; mode: Mode }) {
-  const surface = surfaceFor(mode)
-
   const panels = useMemo(() => {
-    const solved = solveScale({ seed, mode, surface })
-    const v2Style = accentVars(solved.steps, solved.contrast)
+    const algoPanels = ALGORITHMS.map((algorithm) => {
+      const { steps, onSolid } = algorithmRamp(algorithm.id, seed, mode)
+      return { title: algorithm.label, style: accentVars(steps, onSolid) }
+    })
 
-    const current = currentEngineRamp(seed, mode)
-    const currentStyle = accentVarsFromColors(current)
-
-    const refSource = REFERENCE_SOURCES.find(
-      (s) => nearestScale(s, mode, seed) !== null,
-    )
-    const refScale = refSource ? nearestScale(refSource, mode, seed) : null
-    const refStyle =
-      refSource && refScale
-        ? accentVarsFromColors(
-            orientToMode(scaleColors(refScale, refSource), [], mode).colors,
-          )
-        : null
-
-    return [
-      { title: 'v2', style: v2Style },
-      { title: 'current engine', style: currentStyle },
-      {
-        title: refScale
-          ? `reference · ${refSource?.label} ${refScale.name}`
-          : 'reference (none)',
-        style: refStyle,
-      },
-    ]
-  }, [seed, mode, surface])
+    const ref = nearestReference(seed, mode)
+    if (ref) {
+      algoPanels.push({
+        title: `reference · ${ref.label}`,
+        style: accentVarsFromColors(ref.colors),
+      })
+    }
+    return algoPanels
+  }, [seed, mode])
 
   return (
     <section className="flex flex-col gap-3">
       <SectionTitle>Real components under each palette</SectionTitle>
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {panels.map((panel) => (
           <div key={panel.title} className="flex flex-col gap-2">
             <div className="text-xs font-medium opacity-70">{panel.title}</div>
-            {panel.style ? (
-              <div
-                style={panel.style}
-                className="rounded-lg border border-border p-3"
-              >
-                <ComponentCluster />
-              </div>
-            ) : (
-              <p className="text-xs opacity-60">No reference for this mode.</p>
-            )}
+            <div
+              style={panel.style}
+              className="rounded-lg border border-border p-3"
+            >
+              <ComponentCluster />
+            </div>
           </div>
         ))}
       </div>
@@ -438,11 +460,10 @@ function InjectionPanels({ seed, mode }: { seed: string; mode: Mode }) {
 // MARK: Surface levels
 
 function SurfaceLevels({ seed, mode }: { seed: string; mode: Mode }) {
-  const surface = surfaceFor(mode)
   const style = useMemo(() => {
-    const solved = solveScale({ seed, mode, surface })
-    return accentVars(solved.steps, solved.contrast)
-  }, [seed, mode, surface])
+    const { steps, onSolid } = algorithmRamp('oklch', seed, mode)
+    return accentVars(steps, onSolid)
+  }, [seed, mode])
 
   const surfaces = [
     { label: 'page (bg-bg)', className: 'bg-bg' },
@@ -452,7 +473,7 @@ function SurfaceLevels({ seed, mode }: { seed: string; mode: Mode }) {
 
   return (
     <section className="flex flex-col gap-3" style={style}>
-      <SectionTitle>Surface levels (v2 palette)</SectionTitle>
+      <SectionTitle>Surface levels (oklch palette)</SectionTitle>
       <div className="grid gap-4 md:grid-cols-3">
         {surfaces.map((s) => (
           <div key={s.label} className="flex flex-col gap-2">
@@ -470,23 +491,6 @@ function SurfaceLevels({ seed, mode }: { seed: string; mode: Mode }) {
 }
 
 // MARK: helpers
-
-/** Current shipping engine's accent ramp for the mode (dark = reversed light). */
-function currentEngineRamp(seed: string, mode: Mode): string[] {
-  try {
-    const resolved = resolveColorConfig({
-      algorithm: 'oklch',
-      seeds: { neutral: '#808080', accent: seed },
-    })
-    const ramp = (mode === 'light' ? resolved.light : resolved.dark).accent
-    return resolved.steps
-      .map((step) => ramp?.[step])
-      .filter(Boolean) as string[]
-  } catch {
-    // Fallback: flat gray ramp so the row still renders on bad seed input.
-    return V2_STEPS.map(() => '#808080')
-  }
-}
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="text-sm font-semibold opacity-80">{children}</h2>
