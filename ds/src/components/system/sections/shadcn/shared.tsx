@@ -252,7 +252,7 @@ export function ThemedPreview({
           <Btn
             style={{
               background: dark ? alpha('destructive', 60) : v('destructive'),
-              color: '#fff',
+              color: v('destructive-foreground'),
             }}
           >
             Destructive
