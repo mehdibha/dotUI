@@ -34,11 +34,12 @@ const systemsBySlug = new Map(
   dataIndex.systems.map((system) => [system.slug, system]),
 )
 
+// Explorable systems first, then the rest alphabetically.
 const catalog = [...dataIndex.catalog].sort((a, b) => {
   const aExplorable = systemsBySlug.has(a.slug) ? 1 : 0
   const bExplorable = systemsBySlug.has(b.slug) ? 1 : 0
   if (aExplorable !== bExplorable) return bExplorable - aExplorable
-  return b.general - a.general
+  return a.name.localeCompare(b.name)
 })
 
 const explorable = catalog.filter((entry) => systemsBySlug.has(entry.slug))
@@ -59,31 +60,11 @@ const categoryLabels: Record<CatalogEntry['category'], string> = {
   'primitives-tokens': 'Primitives & tokens',
 }
 
-const accessBadges: Record<
-  CatalogEntry['status'],
-  { label: string; variant: 'success' | 'info' | 'warning' | 'neutral' }
-> = {
-  open: { label: 'open', variant: 'success' },
-  'docs-only': { label: 'docs only', variant: 'info' },
-  'shipped-css': { label: 'shipped CSS', variant: 'warning' },
-  closed: { label: 'closed', variant: 'neutral' },
-}
-
 const categoryOptions = [
   { id: 'all', label: 'All categories' },
   ...(
     Object.entries(categoryLabels) as [CatalogEntry['category'], string][]
   ).map(([id, label]) => ({ id, label })),
-]
-
-const accessOptions = [
-  { id: 'all', label: 'All access' },
-  ...(
-    Object.entries(accessBadges) as [
-      CatalogEntry['status'],
-      { label: string },
-    ][]
-  ).map(([id, { label }]) => ({ id, label })),
 ]
 
 function Home() {
@@ -94,12 +75,11 @@ function Home() {
           The design system directory.
         </h1>
         <p className="mt-4 max-w-xl text-base text-balance text-fg-muted">
-          Explore the systems worth learning from — every color ramp, token, and
-          contrast rule, measured from the source.
+          Explore the systems worth learning from — their color ramps, tokens,
+          and the conventions that hold them together.
         </p>
         <p className="mt-8 font-mono text-xs text-fg-muted">
-          {catalog.length} systems · {explorable.length} explorable · growing in
-          the open
+          {catalog.length} systems · {explorable.length} explorable
         </p>
       </section>
 
@@ -112,33 +92,27 @@ function Directory() {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState('all')
-  const [access, setAccess] = useState('all')
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
     return catalog.filter((entry) => {
       if (category !== 'all' && entry.category !== category) return false
-      if (access !== 'all' && entry.status !== access) return false
       if (q && !`${entry.name} ${entry.org}`.toLowerCase().includes(q)) {
         return false
       }
       return true
     })
-  }, [query, category, access])
+  }, [query, category])
 
-  const activeFilters =
-    (category !== 'all' ? 1 : 0) + (access !== 'all' ? 1 : 0)
+  const activeFilters = category !== 'all' ? 1 : 0
 
-  // Section-level single select over globally-unique `${prefix}:${value}` keys:
-  // keep the newly picked key, drop the previous.
-  const pickOne =
-    (prefix: string, current: string, setter: (value: string) => void) =>
-    (keys: Selection) => {
-      if (keys === 'all') return
-      const active = `${prefix}:${current}`
-      const next = [...keys].map(String).find((key) => key !== active)
-      if (next) setter(next.slice(prefix.length + 1))
-    }
+  // Single-select over `category:${value}` keys: keep the new pick, drop the old.
+  const pickCategory = (keys: Selection) => {
+    if (keys === 'all') return
+    const active = `category:${category}`
+    const next = [...keys].map(String).find((key) => key !== active)
+    if (next) setCategory(next.slice('category:'.length))
+  }
 
   return (
     <section className="pb-24">
@@ -163,24 +137,11 @@ function Directory() {
                 selectionMode="multiple"
                 disallowEmptySelection
                 selectedKeys={new Set([`category:${category}`])}
-                onSelectionChange={pickOne('category', category, setCategory)}
+                onSelectionChange={pickCategory}
               >
                 <MenuSectionHeader>Category</MenuSectionHeader>
                 {categoryOptions.map((option) => (
                   <MenuItem key={option.id} id={`category:${option.id}`}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </MenuSection>
-              <MenuSection
-                selectionMode="multiple"
-                disallowEmptySelection
-                selectedKeys={new Set([`access:${access}`])}
-                onSelectionChange={pickOne('access', access, setAccess)}
-              >
-                <MenuSectionHeader>Access</MenuSectionHeader>
-                {accessOptions.map((option) => (
-                  <MenuItem key={option.id} id={`access:${option.id}`}>
                     {option.label}
                   </MenuItem>
                 ))}
@@ -203,7 +164,7 @@ function Directory() {
             <TableHeader>
               <TableColumn className="w-10">#</TableColumn>
               <TableColumn isRowHeader>System</TableColumn>
-              <TableColumn className="text-right">Score</TableColumn>
+              <TableColumn className="text-right">Category</TableColumn>
             </TableHeader>
             <TableBody
               renderEmptyState={() => 'No systems match your filters.'}
@@ -262,11 +223,11 @@ function Directory() {
                     <TableCell
                       className={
                         isExplorable
-                          ? 'text-right font-mono text-xs'
-                          : 'text-right font-mono text-xs text-fg-disabled'
+                          ? 'text-right text-xs text-fg-muted'
+                          : 'text-right text-xs text-fg-disabled'
                       }
                     >
-                      {entry.general}
+                      {categoryLabels[entry.category]}
                     </TableCell>
                   </TableRow>
                 )

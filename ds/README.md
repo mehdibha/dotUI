@@ -1,37 +1,29 @@
-# ds. — design systems research
+# ds.
 
-**ds.dotui.org** studies the best design systems in the world — Radix, Material, Spectrum, Linear, Stripe, Geist… — to understand what actually makes them good.
+A catalog for exploring the best design systems — [ds.dotui.org](https://ds.dotui.org).
 
-## Why
+Browse the systems worth learning from and see how each one actually works: its
+color ramps, tokens, and the conventions that hold it together. No prose walls,
+no citations — just the system, laid out so you can poke at it.
 
-dotUI is a design-system builder ([dotui.org/create](https://dotui.org/create)). For it to be able to recreate almost any design system, we need to know what the great ones actually do: how they generate color palettes, what they tokenize, how they guarantee contrast, how they build focus rings. This site is that research, published. Findings drive what the builder supports — never the other way around.
+It backs [dotUI](https://dotui.org/create), a design-system builder: to recreate
+almost any system, we first need to understand what the great ones do.
 
-V1 covers **color & token systems only**, across a scored catalog of 77 systems ([data/catalog.json](data/catalog.json)). Other dimensions (typography, density, focus rings, component variants) come later on the same machinery.
+## How it grows
 
-## How it works
+One axis at a time, one system at a time. Rather than shallow coverage of
+everything, each pass goes deep on a single dimension for a few systems.
 
-- One folder per system in [systems/](systems/): `system.json` (identity, sources, dates) + `colors.json` (ramps, token groups, layers, focus, contrast). Zod-validated — `pnpm --filter=ds check:data`.
-- The site renders that data as **exploration pages**: swatch ramps, searchable token tables, playgrounds — not prose. Every fact carries source URLs and a date; reverse-engineered facts (e.g. Linear's shipped CSS) are labeled as observed, not official.
-- No database. Git is the source of truth; a build step compiles the data into a static index.
-- The site's UI is the full dotUI component kit, vendored into [src/ui/](src/ui/) as the resolved output of the registry publisher (default density, default styles) — the same code a consumer gets from `shadcn add`, minus the CLI.
+**Today:** the color system and tokens for shadcn/ui.
 
-## Order of work
-
-The full catalog is on the site from day 1 — every system shows as `planned` until it becomes explorable.
-
-1. **V1 = Radix only.** Design the site and build all of Radix's exploration pages, playgrounds, showcase, and interactive widgets. Going deep on one system decides what data we actually need — and what "done" looks like for every other system.
-2. Freeze that data shape.
-3. Research the rest of the catalog, one system per session/PR.
-4. Cross-system analysis and comparison pages.
+Every system in the catalog shows up from day one; it becomes explorable once
+its pages are built.
 
 ## Development
 
 ```sh
 pnpm i
-pnpm --filter=ds dev        # builds the data index, then vite dev
-pnpm --filter=ds check:data # validate data against the schema
+pnpm --filter=ds dev   # build the data index, then vite dev
 ```
 
-Deployed as its own Vercel project (`dotui-ds`) on ds.dotui.org.
-
-Lessons from the scrapped first data model are in [data/RETRO.md](data/RETRO.md).
+Deployed as its own Vercel project on ds.dotui.org.
