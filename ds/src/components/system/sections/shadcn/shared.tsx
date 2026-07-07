@@ -249,10 +249,13 @@ export function ThemedPreview({
             Outline
           </Btn>
           <Btn style={{ color: v('foreground') }}>Ghost</Btn>
+          {/* base-ui soft destructive: bg-destructive/10 (dark /20) + text-destructive. */}
           <Btn
             style={{
-              background: dark ? alpha('destructive', 60) : v('destructive'),
-              color: v('destructive-foreground'),
+              background: dark
+                ? alpha('destructive', 20)
+                : alpha('destructive', 10),
+              color: v('destructive'),
             }}
           >
             Destructive

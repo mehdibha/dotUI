@@ -7,7 +7,6 @@ import fs from 'node:fs'
 //   - base grays        → ui.shadcn.com/r/colors/<base>.json (cssVarsV4)
 //   - color themes       → shadcn-ui/ui _legacy-base-colors.ts (baseColorsOKLCH, step-annotated)
 //   - Tailwind steps     → the installed tailwindcss theme.css palette
-//   - destructive-fg     → shadcn-ui/ui apps/v4/app/globals.css
 // Exits non-zero on any discrepancy.
 import { createRequire } from 'node:module'
 import path from 'node:path'
@@ -110,25 +109,6 @@ async function main() {
     }
   }
 
-  // ══ B. destructive-foreground matches the site globals.css (constant) ══
-  const globals = await getText(`${RAW}/apps/v4/app/globals.css`)
-  const dfLight = globals
-    .match(/:root\s*\{[^}]*?--destructive-foreground:\s*([^;]+);/s)?.[1]
-    ?.trim()
-  const dfDark = globals
-    .match(/\.dark\s*\{[^}]*?--destructive-foreground:\s*([^;]+);/s)?.[1]
-    ?.trim()
-  for (const base of BASE_COLORS) {
-    if (dfLight && THEMES[base].light['destructive-foreground'] !== dfLight)
-      fail(
-        `[dfg] ${base}.light: mine="${THEMES[base].light['destructive-foreground']}" upstream="${dfLight}"`,
-      )
-    if (dfDark && THEMES[base].dark['destructive-foreground'] !== dfDark)
-      fail(
-        `[dfg] ${base}.dark: mine="${THEMES[base].dark['destructive-foreground']}" upstream="${dfDark}"`,
-      )
-  }
-
   // ══ C. every Tailwind-map chip resolves to its token's actual value ══
   for (const base of BASE_COLORS) {
     for (const mode of MODES) {
@@ -226,7 +206,7 @@ main()
       process.exit(1)
     }
     console.log(
-      '✓ shadcn color data verified: base grays, color themes, Tailwind steps, destructive-foreground, and coverage all match upstream.',
+      '✓ shadcn color data verified: base grays, color themes, Tailwind steps, and coverage all match upstream.',
     )
   })
   .catch((e) => {
