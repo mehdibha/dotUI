@@ -12,8 +12,9 @@ import githubLight from 'shiki/themes/github-light.mjs'
  * user moves a control.
  *
  * Everything is statically imported (grammar + themes ≈ 35KB gzipped) so
- * highlighting works during SSR and on the very first render — no async
- * highlighter load, no flash of unhighlighted code, ever.
+ * highlighting is synchronous once this module loads. Only import it from the
+ * lazy dynamic-pre-impl chunk — a static import from shared code would put
+ * shiki back in the entry bundle on every page.
  */
 const highlighter = createHighlighterCoreSync({
   langs: [tsx],

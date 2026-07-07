@@ -1,11 +1,10 @@
-import { useDeferredValue, useMemo } from 'react'
-import { Fragment, jsx, jsxs } from 'react/jsx-runtime'
-import { toJsxRuntime } from 'hast-util-to-jsx-runtime'
-
-import { cn } from '@/registry/lib/utils'
+import { lazy, Suspense } from 'react'
 
 import { Pre } from './code-block'
-import { highlightTsx } from './highlight'
+
+const DynamicPreImpl = lazy(() =>
+  import('./dynamic-pre-impl').then((m) => ({ default: m.DynamicPreImpl })),
+)
 
 export interface DynamicPreProps {
   lang: 'tsx'
@@ -14,25 +13,30 @@ export interface DynamicPreProps {
 }
 
 /**
- * Highlighted <pre> for code generated at runtime. Highlighting is fully
- * synchronous (see ./highlight), so SSR output and the first client render are
- * already highlighted — no fallback state. `useDeferredValue` keeps control
- * interactions responsive by letting React defer re-highlights under load.
+ * Highlighted <pre> for code generated at runtime (playground output). The
+ * highlighter lives in a lazy chunk (see ./dynamic-pre-impl): SSR resolves it
+ * and emits highlighted HTML, which Suspense keeps on screen while the client
+ * loads the chunk — the plain fallback only shows for client-only mounts.
  */
-export function DynamicPre({ children: code, className }: DynamicPreProps) {
-  const deferredCode = useDeferredValue(code)
-  return useMemo(
-    () =>
-      toJsxRuntime(highlightTsx(deferredCode), {
-        Fragment,
-        jsx,
-        jsxs,
-        components: {
-          pre: (props) => (
-            <Pre {...props} className={cn(props.className, className)} />
-          ),
-        },
-      }),
-    [deferredCode, className],
+export function DynamicPre(props: DynamicPreProps) {
+  return (
+    <Suspense fallback={<PlainPre {...props} />}>
+      <DynamicPreImpl {...props} />
+    </Suspense>
+  )
+}
+
+/** Same line structure as shiki's output so swapping in highlights doesn't shift layout. */
+function PlainPre({ children: code, className }: DynamicPreProps) {
+  return (
+    <Pre className={className}>
+      <code>
+        {code.split('\n').map((line, i) => (
+          <span key={i} className="line">
+            {line}
+          </span>
+        ))}
+      </code>
+    </Pre>
   )
 }
