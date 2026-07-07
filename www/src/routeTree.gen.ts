@@ -22,6 +22,7 @@ import { Route as RRegistryDotjsonRouteImport } from './routes/r/registry[.]json
 import { Route as RInitRouteImport } from './routes/r/init'
 import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
+import { Route as DevColorPlaygroundRouteImport } from './routes/dev.color-playground'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
 import { Route as AppPresetsRouteImport } from './routes/_app/presets'
@@ -97,6 +98,11 @@ const PreviewSlugRoute = PreviewSlugRouteImport.update({
   path: '/preview/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DevColorPlaygroundRoute = DevColorPlaygroundRouteImport.update({
+  id: '/dev/color-playground',
+  path: '/dev/color-playground',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemosSlugRoute = DemosSlugRouteImport.update({
   id: '/demos/$slug',
   path: '/demos/$slug',
@@ -165,6 +171,7 @@ export interface FileRoutesByFullPath {
   '/presets': typeof AppPresetsRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/dev/color-playground': typeof DevColorPlaygroundRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
@@ -188,6 +195,7 @@ export interface FileRoutesByTo {
   '/presets': typeof AppPresetsRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/dev/color-playground': typeof DevColorPlaygroundRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
@@ -214,6 +222,7 @@ export interface FileRoutesById {
   '/_app/presets': typeof AppPresetsRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/dev/color-playground': typeof DevColorPlaygroundRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
@@ -241,6 +250,7 @@ export interface FileRouteTypes {
     | '/presets'
     | '/api/search'
     | '/demos/$slug'
+    | '/dev/color-playground'
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
@@ -264,6 +274,7 @@ export interface FileRouteTypes {
     | '/presets'
     | '/api/search'
     | '/demos/$slug'
+    | '/dev/color-playground'
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
@@ -289,6 +300,7 @@ export interface FileRouteTypes {
     | '/_app/presets'
     | '/api/search'
     | '/demos/$slug'
+    | '/dev/color-playground'
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
@@ -310,6 +322,7 @@ export interface RootRouteChildren {
   DotwellKnownApiCatalogRoute: typeof DotwellKnownApiCatalogRoute
   ApiSearchRoute: typeof ApiSearchRoute
   DemosSlugRoute: typeof DemosSlugRoute
+  DevColorPlaygroundRoute: typeof DevColorPlaygroundRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   RNameRoute: typeof RNameRoute
   RInitRoute: typeof RInitRoute
@@ -408,6 +421,13 @@ declare module '@tanstack/react-router' {
       path: '/preview/$slug'
       fullPath: '/preview/$slug'
       preLoaderRoute: typeof PreviewSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev/color-playground': {
+      id: '/dev/color-playground'
+      path: '/dev/color-playground'
+      fullPath: '/dev/color-playground'
+      preLoaderRoute: typeof DevColorPlaygroundRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demos/$slug': {
@@ -530,6 +550,7 @@ const rootRouteChildren: RootRouteChildren = {
   DotwellKnownApiCatalogRoute: DotwellKnownApiCatalogRoute,
   ApiSearchRoute: ApiSearchRoute,
   DemosSlugRoute: DemosSlugRoute,
+  DevColorPlaygroundRoute: DevColorPlaygroundRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   RNameRoute: RNameRoute,
   RInitRoute: RInitRoute,
