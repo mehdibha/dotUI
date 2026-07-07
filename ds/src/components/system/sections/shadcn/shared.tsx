@@ -2,7 +2,13 @@
 
 import type { CSSProperties, ReactNode } from 'react'
 
-import { cn } from '@/lib/utils'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/ui/select'
 
 import { Choice } from '../../primitives'
 import type { BaseColor, ColorTheme, Mode, ThemeOverrideToken } from './data'
@@ -51,6 +57,39 @@ const THEME_OPTIONS = COLOR_THEMES.map((theme) => ({
   label: COLOR_THEME_LABEL[theme],
 }))
 
+/** A labeled dropdown for an axis with many options (base color, color theme). */
+function Dropdown<T extends string>({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string
+  value: T
+  onChange: (value: T) => void
+  options: readonly { value: T; label: string }[]
+}) {
+  return (
+    <Select
+      aria-label={label}
+      selectedKey={value}
+      onSelectionChange={(key) => onChange(String(key) as T)}
+    >
+      <SelectTrigger size="sm" className="min-w-36">
+        <span className="mr-1.5 text-fg-muted">{label}</span>
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {options.map((option) => (
+          <SelectItem key={option.value} id={option.value}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
+}
+
 export function BaseChoice({
   value,
   onChange,
@@ -59,11 +98,11 @@ export function BaseChoice({
   onChange: (value: BaseColor) => void
 }) {
   return (
-    <Choice
-      label="Base color"
-      options={BASE_OPTIONS}
+    <Dropdown
+      label="Base"
       value={value}
       onChange={onChange}
+      options={BASE_OPTIONS}
     />
   )
 }
@@ -93,11 +132,11 @@ export function ThemeChoice({
   onChange: (value: ColorTheme) => void
 }) {
   return (
-    <Choice
-      label="Color theme"
-      options={THEME_OPTIONS}
+    <Dropdown
+      label="Theme"
       value={value}
       onChange={onChange}
+      options={THEME_OPTIONS}
     />
   )
 }
@@ -175,9 +214,55 @@ export function themeVars(values: Record<string, string>): CSSProperties {
 }
 
 const v = (token: string) => `var(--${token})`
-/** Tailwind's `/NN` opacity modifier — `bg-destructive/60` etc. */
-const alpha = (token: string, pct: number) =>
-  `color-mix(in oklab, var(--${token}) ${pct}%, transparent)`
+
+/** Button + input styling reproduced from shadcn's style-nova.css (base-ui):
+    per-variant hover, and one shared focus ring — `ring-3` at --ring/50 with a
+    --ring-colored border and no offset. Mode-aware where shadcn's classes are
+    (outline, ghost, destructive differ in dark). */
+function previewCss(dark: boolean): string {
+  const mix = (t: string, p: number) =>
+    `color-mix(in oklab, var(--${t}) ${p}%, transparent)`
+  return `
+[data-sh] .sh-btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+  height:2rem; padding:0 .75rem; border-radius:.5rem; white-space:nowrap;
+  font-size:.75rem; font-weight:500; border:1px solid transparent;
+  background-clip:padding-box; cursor:pointer;
+  transition:background-color .15s, color .15s, border-color .15s, box-shadow .15s;
+}
+[data-sh] .sh-btn:active { transform:translateY(1px); }
+[data-sh] .sh-btn:focus-visible, [data-sh] .sh-input:focus-visible {
+  outline:none; border-color:var(--ring); box-shadow:0 0 0 3px ${mix('ring', 50)};
+}
+[data-sh] .sh-btn-default { background:var(--primary); color:var(--primary-foreground); }
+[data-sh] .sh-btn-default:hover { background:${mix('primary', 80)}; }
+[data-sh] .sh-btn-secondary { background:var(--secondary); color:var(--secondary-foreground); }
+[data-sh] .sh-btn-secondary:hover { background:color-mix(in oklch, var(--secondary), var(--foreground) 5%); }
+[data-sh] .sh-btn-outline { color:var(--foreground); ${dark ? `background:${mix('input', 30)}; border-color:var(--input);` : 'background:var(--background); border-color:var(--border);'} }
+[data-sh] .sh-btn-outline:hover { background:${dark ? mix('input', 50) : 'var(--muted)'}; }
+[data-sh] .sh-btn-ghost { background:transparent; color:var(--foreground); }
+[data-sh] .sh-btn-ghost:hover { background:${dark ? mix('muted', 50) : 'var(--muted)'}; }
+[data-sh] .sh-btn-destructive { background:${dark ? mix('destructive', 20) : mix('destructive', 10)}; color:var(--destructive); }
+[data-sh] .sh-btn-destructive:hover { background:${dark ? mix('destructive', 30) : mix('destructive', 20)}; }
+[data-sh] .sh-btn-destructive:focus-visible { border-color:${mix('destructive', 40)}; box-shadow:0 0 0 3px ${dark ? mix('destructive', 40) : mix('destructive', 20)}; }
+[data-sh] .sh-btn-link { background:transparent; color:var(--primary); text-underline-offset:4px; }
+[data-sh] .sh-btn-link:hover { text-decoration:underline; }
+[data-sh] .sh-input {
+  height:2rem; border-radius:.5rem; padding:0 .625rem; font-size:.75rem;
+  border:1px solid var(--input); color:var(--foreground);
+  background:${dark ? mix('input', 30) : 'transparent'};
+  transition:color .15s, border-color .15s, box-shadow .15s;
+}`
+}
+
+const BUTTON_VARIANTS = [
+  'default',
+  'secondary',
+  'outline',
+  'ghost',
+  'destructive',
+  'link',
+] as const
 
 /** A realistic mini-UI painted entirely from a resolved token map. */
 export function ThemedPreview({
@@ -187,9 +272,9 @@ export function ThemedPreview({
   values: Record<string, string>
   mode: Mode
 }) {
-  const dark = mode === 'dark'
   return (
     <div
+      data-sh=""
       style={{
         ...themeVars(values),
         background: v('background'),
@@ -197,6 +282,7 @@ export function ThemedPreview({
       }}
       className="rounded-lg border p-5"
     >
+      <style>{previewCss(mode === 'dark')}</style>
       <div
         style={{
           background: v('card'),
@@ -212,60 +298,19 @@ export function ThemedPreview({
           </div>
         </div>
 
-        <input
-          readOnly
-          value="acme-inc"
-          style={{
-            background: v('background'),
-            borderColor: v('input'),
-            color: v('foreground'),
-          }}
-          className="h-8 rounded-md border px-3 text-xs"
-        />
+        <input readOnly value="acme-inc" className="sh-input w-full" />
 
-        {/* shadcn's real Button variants, dark-mode treatments included. */}
+        {/* shadcn's base-ui Button variants — hover + focus per style-nova.css. */}
         <div className="flex flex-wrap items-center gap-2">
-          <Btn
-            style={{ background: v('primary'), color: v('primary-foreground') }}
-          >
-            Default
-          </Btn>
-          <Btn
-            style={{
-              background: v('secondary'),
-              color: v('secondary-foreground'),
-            }}
-          >
-            Secondary
-          </Btn>
-          <Btn
-            className="border"
-            style={{
-              background: dark ? alpha('input', 30) : v('background'),
-              borderColor: dark ? v('input') : v('border'),
-              color: v('foreground'),
-            }}
-          >
-            Outline
-          </Btn>
-          <Btn style={{ color: v('foreground') }}>Ghost</Btn>
-          {/* base-ui soft destructive: bg-destructive/10 (dark /20) + text-destructive. */}
-          <Btn
-            style={{
-              background: dark
-                ? alpha('destructive', 20)
-                : alpha('destructive', 10),
-              color: v('destructive'),
-            }}
-          >
-            Destructive
-          </Btn>
-          <Btn
-            className="underline-offset-4 hover:underline"
-            style={{ color: v('primary') }}
-          >
-            Link
-          </Btn>
+          {BUTTON_VARIANTS.map((variant) => (
+            <button
+              key={variant}
+              type="button"
+              className={`sh-btn sh-btn-${variant}`}
+            >
+              {variant[0]!.toUpperCase() + variant.slice(1)}
+            </button>
+          ))}
         </div>
 
         <div
@@ -282,39 +327,9 @@ export function ThemedPreview({
           <Pill bg="accent" fg="accent-foreground">
             Accent
           </Pill>
-          <span
-            style={{
-              outline: `2px solid ${v('ring')}`,
-              outlineOffset: 2,
-              borderColor: v('border'),
-            }}
-            className="rounded-md border px-2 py-0.5 text-[11px]"
-          >
-            Focus ring
-          </span>
         </div>
       </div>
     </div>
-  )
-}
-
-function Btn({
-  style,
-  className,
-  children,
-}: {
-  style?: CSSProperties
-  className?: string
-  children: ReactNode
-}) {
-  return (
-    <button
-      type="button"
-      style={style}
-      className={cn('h-8 rounded-md px-3 text-xs font-medium', className)}
-    >
-      {children}
-    </button>
   )
 }
 

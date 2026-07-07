@@ -66,21 +66,17 @@ export function ColorsSection() {
       kicker="Explore"
       intro="Every token resolved for the picks a shadcn user actually makes — base gray, color theme, and mode. Watch the same UI re-theme, and see the exact Tailwind step behind each value (borrowed steps highlighted)."
     >
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <BaseChoice value={base} onChange={setBase} />
-          <ModeChoice value={mode} onChange={setMode} />
-        </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <ThemeChoice value={theme} onChange={setTheme} />
-          <SearchField
-            aria-label="Search tokens"
-            placeholder="Search tokens…"
-            value={query}
-            onChange={setQuery}
-            className="flex-1 sm:max-w-56"
-          />
-        </div>
+      <div className="flex flex-wrap items-center gap-3">
+        <SearchField
+          aria-label="Search tokens"
+          placeholder="Search tokens…"
+          value={query}
+          onChange={setQuery}
+          className="flex-1 sm:max-w-56"
+        />
+        <BaseChoice value={base} onChange={setBase} />
+        <ThemeChoice value={theme} onChange={setTheme} />
+        <ModeChoice value={mode} onChange={setMode} />
       </div>
 
       <Block title="Live preview">
