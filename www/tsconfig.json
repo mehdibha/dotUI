@@ -17,5 +17,5 @@
       "@/.source/*": ["./.source/*"]
     }
   },
-  "exclude": ["node_modules", ".vinxi", ".output"]
+  "exclude": ["node_modules", ".vinxi", ".output", "scripts/api-docs-builder"]
 }
