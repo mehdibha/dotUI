@@ -17,7 +17,7 @@ export function UsageSection() {
     <Section
       title="Usage"
       kicker="Explore"
-      intro="Beyond the declared tokens, shadcn's component styles derive colours at the point of use — token opacity modifiers, color-mix blends, and relative-oklch tints. These are extracted from the eight per-style CSS files, so you can see exactly where each derivation is used."
+      intro="Beyond the declared tokens, shadcn's component styles derive colours at the point of use — token opacity modifiers, color-mix blends, and relative-oklch tints. These are extracted from style-nova, shadcn's default style, so you can see exactly where each derivation is used."
     >
       <Block>
         <DerivedColorsExplorer derived={derived} />

@@ -60,19 +60,14 @@ const NEUTRAL_FAMILIES = new Set([
 ])
 
 // ── Snapshot inventory ───────────────────────────────────────────────────────
+// Only style-nova is vendored: it's shadcn's default style, and the other
+// styles repeat the same colour derivations.
 const STYLE_FILES = [
-  'nova',
-  'mira',
-  'vega',
-  'luma',
-  'lyra',
-  'maia',
-  'rhea',
-  'sera',
-].map((name) => ({
-  upstreamPath: `apps/v4/registry/styles/style-${name}.css`,
-  as: `style-${name}.css`,
-}))
+  {
+    upstreamPath: 'apps/v4/registry/styles/style-nova.css',
+    as: 'style-nova.css',
+  },
+]
 
 const SOURCE: SystemConfig['source'] = {
   kind: 'repo',
@@ -468,7 +463,7 @@ function refsInArbitrary(body: string): string[] {
   return [...refs]
 }
 
-function parseStyleFile(css: string, styleName: string): RawUse[] {
+function parseStyleFile(css: string): RawUse[] {
   const uses: RawUse[] = []
   // Split by MARK comments so each utility gets its component name.
   const markRe = /\/\*\s*MARK:\s*([^*]+?)\s*\*\//g
@@ -483,7 +478,7 @@ function parseStyleFile(css: string, styleName: string): RawUse[] {
     const segment = css.slice(start, end)
     for (const apply of segment.matchAll(/@apply\s+([^;]+);/g)) {
       for (const rawClass of apply[1]!.split(/\s+/).filter(Boolean)) {
-        const use = classifyClass(rawClass, component, styleName)
+        const use = classifyClass(rawClass, component)
         if (use) uses.push(use)
       }
     }
@@ -491,13 +486,9 @@ function parseStyleFile(css: string, styleName: string): RawUse[] {
   return uses
 }
 
-function classifyClass(
-  rawClass: string,
-  component: string,
-  styleName: string,
-): RawUse | null {
+function classifyClass(rawClass: string, component: string): RawUse | null {
   const base = baseUtility(rawClass)
-  const usedBy = `${component} (style-${styleName})`
+  const usedBy = component
 
   const arb = ARBITRARY_RE.exec(base)
   if (arb) {
@@ -679,10 +670,7 @@ function extract(sourcesDir: string): ColorsFile {
 
   // ── derived colours ───────────────────────────────────────────────────────
   const rawUses: RawUse[] = []
-  for (const file of STYLE_FILES) {
-    const styleName = file.as.replace(/^style-|\.css$/g, '')
-    rawUses.push(...parseStyleFile(read(file.as), styleName))
-  }
+  for (const file of STYLE_FILES) rawUses.push(...parseStyleFile(read(file.as)))
   const derivedEntries = aggregateDerived(rawUses)
 
   // ── overview ──────────────────────────────────────────────────────────────
@@ -767,7 +755,7 @@ function extract(sourcesDir: string): ColorsFile {
     },
     {
       section: 'usage',
-      text: 'Point-of-use colours are extracted from the per-style component classes. Opacity modifiers resolve to the color-mix Tailwind emits; relative-oklch expressions are kept verbatim.',
+      text: 'Point-of-use colours are extracted from style-nova, shadcn’s default style — the other styles derive colours the same way. Opacity modifiers resolve to the color-mix Tailwind emits; relative-oklch expressions are kept verbatim.',
       sources: [],
     },
   ]
@@ -783,7 +771,7 @@ function extract(sourcesDir: string): ColorsFile {
     focusRing: null,
     contrast: [],
     derivedColors: {
-      note: 'Colours that exist only at point of use in component styles — opacity-modified tokens, color-mix, and relative-oklch tints. Extracted from the eight per-style CSS files.',
+      note: 'Colours that exist only at point of use in component styles — opacity-modified tokens, color-mix, and relative-oklch tints. Extracted from style-nova, shadcn’s default style.',
       sources: [],
       entries: derivedEntries,
     },
@@ -802,7 +790,7 @@ function extract(sourcesDir: string): ColorsFile {
         },
       ],
       notes:
-        'Ramps come from _legacy-colors.ts (the palette source; the generated public/r/colors/index.json is a stale subset that omits the four custom neutrals). Its nonstandard comma oklch syntax is normalized to space-separated CSS on emit. Derived colours are extracted from the eight per-style CSS files only. The bases/{base,radix} component tsx carry a small number of additional opacity-modified token uses (~15 each, no color-mix) that are not vendored, so a handful of point-of-use colours may be missing from the usage section.',
+        'Ramps come from _legacy-colors.ts (the palette source; the generated public/r/colors/index.json is a stale subset that omits the four custom neutrals). Its nonstandard comma oklch syntax is normalized to space-separated CSS on emit. Derived colours are extracted from style-nova only — shadcn’s default style; the other styles repeat the same derivations. The bases/{base,radix} component tsx carry a small number of additional opacity-modified token uses (~15 each, no color-mix) that are not vendored, so a handful of point-of-use colours may be missing from the usage section.',
     },
   }
 

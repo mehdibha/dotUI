@@ -17,52 +17,10 @@
       "sha256": "29306f9bc6640cbfe9b2b207317e0c873b3a46feb0d407be75cc57a975614de0"
     },
     {
-      "path": "style-luma.css",
-      "upstreamPath": "apps/v4/registry/styles/style-luma.css",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd6ce77cf1606eee2839368a97cc35417f763232/apps/v4/registry/styles/style-luma.css",
-      "sha256": "f5cdbd90c62c4234dd1466041656fd6c569fed602d4af905e252ad84cc70f0b2"
-    },
-    {
-      "path": "style-lyra.css",
-      "upstreamPath": "apps/v4/registry/styles/style-lyra.css",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd6ce77cf1606eee2839368a97cc35417f763232/apps/v4/registry/styles/style-lyra.css",
-      "sha256": "4a45a1cd18c0f4b850ffd5ccf6dea9d29ca29fde8523afd1ca07bb22869fb4a4"
-    },
-    {
-      "path": "style-maia.css",
-      "upstreamPath": "apps/v4/registry/styles/style-maia.css",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd6ce77cf1606eee2839368a97cc35417f763232/apps/v4/registry/styles/style-maia.css",
-      "sha256": "08723ff552fa8fed6908738bba41e07c9c8a6e82ce2cb35067f8ec704fab1b27"
-    },
-    {
-      "path": "style-mira.css",
-      "upstreamPath": "apps/v4/registry/styles/style-mira.css",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd6ce77cf1606eee2839368a97cc35417f763232/apps/v4/registry/styles/style-mira.css",
-      "sha256": "11af316a7309f42ab4a17b4b98f7eebc8eae1fca5099ab83d44bd686c82324c0"
-    },
-    {
       "path": "style-nova.css",
       "upstreamPath": "apps/v4/registry/styles/style-nova.css",
       "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd6ce77cf1606eee2839368a97cc35417f763232/apps/v4/registry/styles/style-nova.css",
       "sha256": "c4fb93ab46ea500d5dc1999b54830a69a84d730e4671e6509d2a8c37ada02ca7"
-    },
-    {
-      "path": "style-rhea.css",
-      "upstreamPath": "apps/v4/registry/styles/style-rhea.css",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd6ce77cf1606eee2839368a97cc35417f763232/apps/v4/registry/styles/style-rhea.css",
-      "sha256": "c715e75ea12ba50ae7d626bdb4a319525b7c6fd7395a7fdcfb230687cd8cbe7d"
-    },
-    {
-      "path": "style-sera.css",
-      "upstreamPath": "apps/v4/registry/styles/style-sera.css",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd6ce77cf1606eee2839368a97cc35417f763232/apps/v4/registry/styles/style-sera.css",
-      "sha256": "2fa7f5cbd74facbdc36d50a1ecb674357e08fbd4053a5bf2bf3caad48a41d67b"
-    },
-    {
-      "path": "style-vega.css",
-      "upstreamPath": "apps/v4/registry/styles/style-vega.css",
-      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/dd6ce77cf1606eee2839368a97cc35417f763232/apps/v4/registry/styles/style-vega.css",
-      "sha256": "46b3a3326e6147982837aa5451d7fadc5df27d79e379ca40342f86f164917e35"
     },
     {
       "path": "themes.ts",
