@@ -1,0 +1,10 @@
+{
+  "extends": "@dotui/ts-config/base.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["../../src/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
