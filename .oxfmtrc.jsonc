@@ -112,5 +112,11 @@
     // design-sync tooling: authored preview inputs + forked converter scripts.
     // The forks must stay byte-diffable against upstream lib/*.mjs — don't reformat.
     ".design-sync/**",
+    // Vendored data-pipeline snapshots: raw upstream files, hash-pinned in each
+    // manifest.json — reformatting them breaks snapshot verification.
+    "ds/sources/**",
+    // Extractor-owned data artifacts (byte-deterministic from the pipeline).
+    // Reformatting would fight the extractor, like __generated__ above.
+    "ds/systems/*/colors.json",
   ],
 }

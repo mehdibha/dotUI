@@ -13,6 +13,7 @@ import { MotionSection } from './sections/motion'
 import { OverviewSection } from './sections/overview'
 import { ColorSystemSection } from './sections/shadcn/color-system'
 import { ColorsSection } from './sections/shadcn/colors'
+import { UsageSection } from './sections/shadcn/usage'
 import { ShapeSection } from './sections/shape'
 import { SpacingSection } from './sections/spacing'
 import { StatesSection } from './sections/states'
@@ -162,6 +163,7 @@ const SHADCN_UI_GROUPS: SectionGroup[] = [
         Component: ColorSystemSection,
       },
       { id: 'colors', label: 'Colors', Component: ColorsSection },
+      { id: 'usage', label: 'Usage', Component: UsageSection },
     ],
   },
 ]
