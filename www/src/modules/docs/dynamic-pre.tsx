@@ -6,6 +6,11 @@ const DynamicPreImpl = lazy(() =>
   import('./dynamic-pre-impl').then((m) => ({ default: m.DynamicPreImpl })),
 )
 
+/** Warm the highlighter chunk before a DynamicPre mounts, e.g. on a modal trigger's hover. */
+export function preloadDynamicPre() {
+  void import('./dynamic-pre-impl')
+}
+
 export interface DynamicPreProps {
   lang: 'tsx'
   children: string

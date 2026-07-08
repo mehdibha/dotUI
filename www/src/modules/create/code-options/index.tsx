@@ -9,6 +9,7 @@ import { Code2Icon } from 'lucide-react'
 import { Button } from '@/registry/ui/button'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Modal } from '@/registry/ui/modal'
+import { preloadDynamicPre } from '@/modules/docs/dynamic-pre'
 
 import { CodeOptionsControls } from './controls'
 import { CodeOptionsPreview } from './preview'
@@ -16,7 +17,13 @@ import { CodeOptionsPreview } from './preview'
 export function CodeOptionsDialog() {
   return (
     <Dialog>
-      <Button variant="default" size="sm" className="w-full">
+      <Button
+        variant="default"
+        size="sm"
+        className="w-full"
+        onHoverStart={preloadDynamicPre}
+        onFocus={preloadDynamicPre}
+      >
         <Code2Icon data-icon-start="" />
         Code style
       </Button>

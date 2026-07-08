@@ -6,10 +6,17 @@ import { CodeIcon, LoaderCircleIcon, XIcon } from 'lucide-react'
 import { Button } from '@/registry/ui/button'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Modal } from '@/registry/ui/modal'
+import { preloadDynamicPre } from '@/modules/docs/dynamic-pre'
 
 // Code-split the body: it pulls in the syntax highlighter, which shouldn't ship
 // in the charts route until someone actually opens a modal.
 const ChartCodeModalContent = lazy(() => import('./chart-code-modal-content'))
+
+// Warm both lazy chunks on trigger intent so the modal opens fully rendered.
+function preloadContent() {
+  void import('./chart-code-modal-content')
+  preloadDynamicPre()
+}
 
 interface ChartCodeModalProps {
   /** Demo key, e.g. `chart-bar/demos/multiple`. */
@@ -26,7 +33,13 @@ interface ChartCodeModalProps {
 export function ChartCodeModal({ demoKey, label }: ChartCodeModalProps) {
   return (
     <Dialog>
-      <Button variant="quiet" size="sm" className="text-fg-muted hover:text-fg">
+      <Button
+        variant="quiet"
+        size="sm"
+        className="text-fg-muted hover:text-fg"
+        onHoverStart={preloadContent}
+        onFocus={preloadContent}
+      >
         <CodeIcon />
         Show code
       </Button>
