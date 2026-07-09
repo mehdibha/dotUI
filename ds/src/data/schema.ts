@@ -179,8 +179,17 @@ export const derivedColorSchema = z.object({
   kind: z.enum(['opacity', 'color-mix', 'literal']),
   /** Declared token(s) the expression derives from; empty for literals. */
   refs: z.array(z.string()).default([]),
-  /** Components (optionally "component (style)") that use it. */
-  usedBy: z.array(z.string().min(1)).min(1),
+  /** Components that use it, with the raw classes as authored there —
+      variant prefixes intact (e.g. "hover:bg-primary/10"), so the UI can say
+      how the colour is applied. */
+  usedBy: z
+    .array(
+      z.object({
+        component: z.string().min(1),
+        classes: z.array(z.string().min(1)).min(1),
+      }),
+    )
+    .min(1),
   note: z.string().nullable(),
 })
 

@@ -6213,7 +6213,12 @@
           "muted"
         ],
         "usedBy": [
-          "Bubble"
+          {
+            "component": "Bubble",
+            "classes": [
+              "[&>[data-slot=bubble-content]:is(button,a):hover]:bg-[color-mix(in_oklch,var(--muted),var(--foreground)_5%)]"
+            ]
+          }
         ],
         "note": null
       },
@@ -6226,8 +6231,18 @@
           "secondary"
         ],
         "usedBy": [
-          "Bubble",
-          "Button"
+          {
+            "component": "Bubble",
+            "classes": [
+              "[&>[data-slot=bubble-content]:is(button,a):hover]:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)]"
+            ]
+          },
+          {
+            "component": "Button",
+            "classes": [
+              "hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)]"
+            ]
+          }
         ],
         "note": null
       },
@@ -6239,7 +6254,12 @@
           "primary"
         ],
         "usedBy": [
-          "Bubble"
+          {
+            "component": "Bubble",
+            "classes": [
+              "dark:*:data-[slot=bubble-content]:bg-[oklch(from_var(--primary)_0.3_calc(c*0.4)_h)]"
+            ]
+          }
         ],
         "note": "Relative-oklch tint derived from --primary."
       },
@@ -6251,7 +6271,12 @@
           "primary"
         ],
         "usedBy": [
-          "Bubble"
+          {
+            "component": "Bubble",
+            "classes": [
+              "dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-[oklch(from_var(--primary)_0.35_calc(c*0.5)_h)]"
+            ]
+          }
         ],
         "note": "Relative-oklch tint derived from --primary."
       },
@@ -6263,7 +6288,12 @@
           "primary"
         ],
         "usedBy": [
-          "Bubble"
+          {
+            "component": "Bubble",
+            "classes": [
+              "[&>[data-slot=bubble-content]:is(button,a):hover]:bg-[oklch(from_var(--primary)_0.88_calc(c*0.5)_h)]"
+            ]
+          }
         ],
         "note": "Relative-oklch tint derived from --primary."
       },
@@ -6275,7 +6305,12 @@
           "primary"
         ],
         "usedBy": [
-          "Bubble"
+          {
+            "component": "Bubble",
+            "classes": [
+              "*:data-[slot=bubble-content]:bg-[oklch(from_var(--primary)_0.93_calc(c*0.4)_h)]"
+            ]
+          }
         ],
         "note": "Relative-oklch tint derived from --primary."
       },
@@ -6285,10 +6320,30 @@
         "kind": "literal",
         "refs": [],
         "usedBy": [
-          "Alert Dialog",
-          "Dialog",
-          "Drawer",
-          "Sheet"
+          {
+            "component": "Alert Dialog",
+            "classes": [
+              "bg-black/10"
+            ]
+          },
+          {
+            "component": "Dialog",
+            "classes": [
+              "bg-black/10"
+            ]
+          },
+          {
+            "component": "Drawer",
+            "classes": [
+              "bg-black/10"
+            ]
+          },
+          {
+            "component": "Sheet",
+            "classes": [
+              "bg-black/10"
+            ]
+          }
         ],
         "note": null
       },
@@ -6298,7 +6353,12 @@
         "kind": "literal",
         "refs": [],
         "usedBy": [
-          "Slider"
+          {
+            "component": "Slider",
+            "classes": [
+              "bg-white"
+            ]
+          }
         ],
         "note": null
       },
@@ -6310,7 +6370,12 @@
           "background"
         ],
         "usedBy": [
-          "Kbd"
+          {
+            "component": "Kbd",
+            "classes": [
+              "dark:in-data-[slot=tooltip-content]:bg-background/10"
+            ]
+          }
         ],
         "note": null
       },
@@ -6322,7 +6387,12 @@
           "background"
         ],
         "usedBy": [
-          "Kbd"
+          {
+            "component": "Kbd",
+            "classes": [
+              "in-data-[slot=tooltip-content]:bg-background/20"
+            ]
+          }
         ],
         "note": null
       },
@@ -6334,12 +6404,42 @@
           "destructive"
         ],
         "usedBy": [
-          "Badge",
-          "Bubble",
-          "Button",
-          "Context Menu",
-          "Dropdown Menu",
-          "Menubar"
+          {
+            "component": "Badge",
+            "classes": [
+              "bg-destructive/10"
+            ]
+          },
+          {
+            "component": "Bubble",
+            "classes": [
+              "*:data-[slot=bubble-content]:bg-destructive/10"
+            ]
+          },
+          {
+            "component": "Button",
+            "classes": [
+              "bg-destructive/10"
+            ]
+          },
+          {
+            "component": "Context Menu",
+            "classes": [
+              "data-[variant=destructive]:focus:bg-destructive/10"
+            ]
+          },
+          {
+            "component": "Dropdown Menu",
+            "classes": [
+              "data-[variant=destructive]:focus:bg-destructive/10"
+            ]
+          },
+          {
+            "component": "Menubar",
+            "classes": [
+              "data-[variant=destructive]:focus:bg-destructive/10"
+            ]
+          }
         ],
         "note": null
       },
@@ -6351,12 +6451,45 @@
           "destructive"
         ],
         "usedBy": [
-          "Badge",
-          "Bubble",
-          "Button",
-          "Context Menu",
-          "Dropdown Menu",
-          "Menubar"
+          {
+            "component": "Badge",
+            "classes": [
+              "[a]:hover:bg-destructive/20",
+              "dark:bg-destructive/20"
+            ]
+          },
+          {
+            "component": "Bubble",
+            "classes": [
+              "[&>[data-slot=bubble-content]:is(button,a):hover]:bg-destructive/20",
+              "dark:*:data-[slot=bubble-content]:bg-destructive/20"
+            ]
+          },
+          {
+            "component": "Button",
+            "classes": [
+              "dark:bg-destructive/20",
+              "hover:bg-destructive/20"
+            ]
+          },
+          {
+            "component": "Context Menu",
+            "classes": [
+              "dark:data-[variant=destructive]:focus:bg-destructive/20"
+            ]
+          },
+          {
+            "component": "Dropdown Menu",
+            "classes": [
+              "dark:data-[variant=destructive]:focus:bg-destructive/20"
+            ]
+          },
+          {
+            "component": "Menubar",
+            "classes": [
+              "dark:data-[variant=destructive]:focus:bg-destructive/20"
+            ]
+          }
         ],
         "note": null
       },
@@ -6368,8 +6501,18 @@
           "destructive"
         ],
         "usedBy": [
-          "Bubble",
-          "Button"
+          {
+            "component": "Bubble",
+            "classes": [
+              "dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-destructive/30"
+            ]
+          },
+          {
+            "component": "Button",
+            "classes": [
+              "dark:hover:bg-destructive/30"
+            ]
+          }
         ],
         "note": null
       },
@@ -6381,7 +6524,14 @@
           "foreground"
         ],
         "usedBy": [
-          "Menu Translucent"
+          {
+            "component": "Menu Translucent",
+            "classes": [
+              "**:data-[slot$=-item]:data-highlighted:bg-foreground/10",
+              "**:data-[slot$=-item]:focus:bg-foreground/10",
+              "**:data-[slot$=-trigger]:focus:bg-foreground/10"
+            ]
+          }
         ],
         "note": null
       },
@@ -6393,7 +6543,12 @@
           "foreground"
         ],
         "usedBy": [
-          "Menu Translucent"
+          {
+            "component": "Menu Translucent",
+            "classes": [
+              "**:data-[slot$=-separator]:bg-foreground/5"
+            ]
+          }
         ],
         "note": null
       },
@@ -6405,18 +6560,79 @@
           "input"
         ],
         "usedBy": [
-          "Bubble",
-          "Button",
-          "Checkbox",
-          "Combobox",
-          "Command",
-          "Input",
-          "Input Group",
-          "Input OTP",
-          "Native Select",
-          "Radio Group",
-          "Select",
-          "Textarea"
+          {
+            "component": "Bubble",
+            "classes": [
+              "dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-input/30"
+            ]
+          },
+          {
+            "component": "Button",
+            "classes": [
+              "dark:bg-input/30"
+            ]
+          },
+          {
+            "component": "Checkbox",
+            "classes": [
+              "dark:bg-input/30"
+            ]
+          },
+          {
+            "component": "Combobox",
+            "classes": [
+              "*:data-[slot=input-group]:bg-input/30",
+              "dark:bg-input/30"
+            ]
+          },
+          {
+            "component": "Command",
+            "classes": [
+              "bg-input/30"
+            ]
+          },
+          {
+            "component": "Input",
+            "classes": [
+              "dark:bg-input/30"
+            ]
+          },
+          {
+            "component": "Input Group",
+            "classes": [
+              "dark:bg-input/30"
+            ]
+          },
+          {
+            "component": "Input OTP",
+            "classes": [
+              "dark:bg-input/30"
+            ]
+          },
+          {
+            "component": "Native Select",
+            "classes": [
+              "dark:bg-input/30"
+            ]
+          },
+          {
+            "component": "Radio Group",
+            "classes": [
+              "dark:bg-input/30"
+            ]
+          },
+          {
+            "component": "Select",
+            "classes": [
+              "dark:bg-input/30"
+            ]
+          },
+          {
+            "component": "Textarea",
+            "classes": [
+              "dark:bg-input/30"
+            ]
+          }
         ],
         "note": null
       },
@@ -6428,12 +6644,42 @@
           "input"
         ],
         "usedBy": [
-          "Button",
-          "Input",
-          "Input Group",
-          "Native Select",
-          "Select",
-          "Textarea"
+          {
+            "component": "Button",
+            "classes": [
+              "dark:hover:bg-input/50"
+            ]
+          },
+          {
+            "component": "Input",
+            "classes": [
+              "disabled:bg-input/50"
+            ]
+          },
+          {
+            "component": "Input Group",
+            "classes": [
+              "has-disabled:bg-input/50"
+            ]
+          },
+          {
+            "component": "Native Select",
+            "classes": [
+              "dark:hover:bg-input/50"
+            ]
+          },
+          {
+            "component": "Select",
+            "classes": [
+              "dark:hover:bg-input/50"
+            ]
+          },
+          {
+            "component": "Textarea",
+            "classes": [
+              "disabled:bg-input/50"
+            ]
+          }
         ],
         "note": null
       },
@@ -6445,10 +6691,30 @@
           "input"
         ],
         "usedBy": [
-          "Input",
-          "Input Group",
-          "Switch",
-          "Textarea"
+          {
+            "component": "Input",
+            "classes": [
+              "dark:disabled:bg-input/80"
+            ]
+          },
+          {
+            "component": "Input Group",
+            "classes": [
+              "dark:has-disabled:bg-input/80"
+            ]
+          },
+          {
+            "component": "Switch",
+            "classes": [
+              "dark:data-unchecked:bg-input/80"
+            ]
+          },
+          {
+            "component": "Textarea",
+            "classes": [
+              "dark:disabled:bg-input/80"
+            ]
+          }
         ],
         "note": null
       },
@@ -6460,15 +6726,63 @@
           "muted"
         ],
         "usedBy": [
-          "Alert Dialog",
-          "Badge",
-          "Bubble",
-          "Button",
-          "Card",
-          "Dialog",
-          "Item",
-          "Navigation Menu",
-          "Table"
+          {
+            "component": "Alert Dialog",
+            "classes": [
+              "bg-muted/50"
+            ]
+          },
+          {
+            "component": "Badge",
+            "classes": [
+              "dark:hover:bg-muted/50"
+            ]
+          },
+          {
+            "component": "Bubble",
+            "classes": [
+              "dark:[&>[data-slot=bubble-content]:is(button,a):hover]:bg-muted/50"
+            ]
+          },
+          {
+            "component": "Button",
+            "classes": [
+              "dark:hover:bg-muted/50"
+            ]
+          },
+          {
+            "component": "Card",
+            "classes": [
+              "bg-muted/50"
+            ]
+          },
+          {
+            "component": "Dialog",
+            "classes": [
+              "bg-muted/50"
+            ]
+          },
+          {
+            "component": "Item",
+            "classes": [
+              "bg-muted/50"
+            ]
+          },
+          {
+            "component": "Navigation Menu",
+            "classes": [
+              "data-active:bg-muted/50",
+              "data-open:bg-muted/50",
+              "data-popup-open:bg-muted/50"
+            ]
+          },
+          {
+            "component": "Table",
+            "classes": [
+              "bg-muted/50",
+              "hover:bg-muted/50"
+            ]
+          }
         ],
         "note": null
       },
@@ -6480,7 +6794,12 @@
           "popover"
         ],
         "usedBy": [
-          "Menu Translucent"
+          {
+            "component": "Menu Translucent",
+            "classes": [
+              "bg-popover/70"
+            ]
+          }
         ],
         "note": null
       },
@@ -6492,7 +6811,12 @@
           "primary"
         ],
         "usedBy": [
-          "Field"
+          {
+            "component": "Field",
+            "classes": [
+              "dark:has-data-checked:bg-primary/10"
+            ]
+          }
         ],
         "note": null
       },
@@ -6504,7 +6828,12 @@
           "primary"
         ],
         "usedBy": [
-          "Field"
+          {
+            "component": "Field",
+            "classes": [
+              "has-data-checked:bg-primary/5"
+            ]
+          }
         ],
         "note": null
       },
@@ -6516,9 +6845,24 @@
           "primary"
         ],
         "usedBy": [
-          "Badge",
-          "Bubble",
-          "Button"
+          {
+            "component": "Badge",
+            "classes": [
+              "[a]:hover:bg-primary/80"
+            ]
+          },
+          {
+            "component": "Bubble",
+            "classes": [
+              "[&>[data-slot=bubble-content]:is(button,a):hover]:bg-primary/80"
+            ]
+          },
+          {
+            "component": "Button",
+            "classes": [
+              "hover:bg-primary/80"
+            ]
+          }
         ],
         "note": null
       },
@@ -6530,7 +6874,12 @@
           "secondary"
         ],
         "usedBy": [
-          "Badge"
+          {
+            "component": "Badge",
+            "classes": [
+              "[a]:hover:bg-secondary/80"
+            ]
+          }
         ],
         "note": null
       },
@@ -6542,7 +6891,12 @@
           "border"
         ],
         "usedBy": [
-          "Chart"
+          {
+            "component": "Chart",
+            "classes": [
+              "border-border/50"
+            ]
+          }
         ],
         "note": null
       },
@@ -6554,7 +6908,12 @@
           "destructive"
         ],
         "usedBy": [
-          "Button"
+          {
+            "component": "Button",
+            "classes": [
+              "focus-visible:border-destructive/40"
+            ]
+          }
         ],
         "note": null
       },
@@ -6566,15 +6925,60 @@
           "destructive"
         ],
         "usedBy": [
-          "Button",
-          "Checkbox",
-          "Combobox",
-          "Input",
-          "Native Select",
-          "Radio Group",
-          "Select",
-          "Switch",
-          "Textarea"
+          {
+            "component": "Button",
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
+          },
+          {
+            "component": "Checkbox",
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
+          },
+          {
+            "component": "Combobox",
+            "classes": [
+              "dark:has-aria-invalid:border-destructive/50"
+            ]
+          },
+          {
+            "component": "Input",
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
+          },
+          {
+            "component": "Native Select",
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
+          },
+          {
+            "component": "Radio Group",
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
+          },
+          {
+            "component": "Select",
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
+          },
+          {
+            "component": "Switch",
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
+          },
+          {
+            "component": "Textarea",
+            "classes": [
+              "dark:aria-invalid:border-destructive/50"
+            ]
+          }
         ],
         "note": null
       },
@@ -6586,8 +6990,18 @@
           "input"
         ],
         "usedBy": [
-          "Combobox",
-          "Command"
+          {
+            "component": "Combobox",
+            "classes": [
+              "*:data-[slot=input-group]:border-input/30"
+            ]
+          },
+          {
+            "component": "Command",
+            "classes": [
+              "border-input/30"
+            ]
+          }
         ],
         "note": null
       },
@@ -6599,7 +7013,12 @@
           "primary"
         ],
         "usedBy": [
-          "Field"
+          {
+            "component": "Field",
+            "classes": [
+              "dark:has-data-checked:border-primary/20"
+            ]
+          }
         ],
         "note": null
       },
@@ -6611,7 +7030,12 @@
           "primary"
         ],
         "usedBy": [
-          "Field"
+          {
+            "component": "Field",
+            "classes": [
+              "has-data-checked:border-primary/30"
+            ]
+          }
         ],
         "note": null
       },
@@ -6623,19 +7047,86 @@
           "destructive"
         ],
         "usedBy": [
-          "Badge",
-          "Button",
-          "Checkbox",
-          "Combobox",
-          "Input",
-          "Input Group",
-          "Input OTP",
-          "Native Select",
-          "Radio Group",
-          "Select",
-          "Switch",
-          "Textarea",
-          "Toggle"
+          {
+            "component": "Badge",
+            "classes": [
+              "focus-visible:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Button",
+            "classes": [
+              "aria-invalid:ring-destructive/20",
+              "focus-visible:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Checkbox",
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Combobox",
+            "classes": [
+              "has-aria-invalid:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Input",
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Input Group",
+            "classes": [
+              "has-[[data-slot][aria-invalid=true]]:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Input OTP",
+            "classes": [
+              "data-[active=true]:aria-invalid:ring-destructive/20",
+              "has-aria-invalid:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Native Select",
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Radio Group",
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Select",
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Switch",
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Textarea",
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
+          },
+          {
+            "component": "Toggle",
+            "classes": [
+              "aria-invalid:ring-destructive/20"
+            ]
+          }
         ],
         "note": null
       },
@@ -6647,19 +7138,86 @@
           "destructive"
         ],
         "usedBy": [
-          "Badge",
-          "Button",
-          "Checkbox",
-          "Combobox",
-          "Input",
-          "Input Group",
-          "Input OTP",
-          "Native Select",
-          "Radio Group",
-          "Select",
-          "Switch",
-          "Textarea",
-          "Toggle"
+          {
+            "component": "Badge",
+            "classes": [
+              "dark:focus-visible:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Button",
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40",
+              "dark:focus-visible:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Checkbox",
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Combobox",
+            "classes": [
+              "dark:has-aria-invalid:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Input",
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Input Group",
+            "classes": [
+              "dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Input OTP",
+            "classes": [
+              "dark:data-[active=true]:aria-invalid:ring-destructive/40",
+              "dark:has-aria-invalid:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Native Select",
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Radio Group",
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Select",
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Switch",
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Textarea",
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
+          },
+          {
+            "component": "Toggle",
+            "classes": [
+              "dark:aria-invalid:ring-destructive/40"
+            ]
+          }
         ],
         "note": null
       },
@@ -6671,17 +7229,73 @@
           "foreground"
         ],
         "usedBy": [
-          "Alert Dialog",
-          "Card",
-          "Combobox",
-          "Context Menu",
-          "Dialog",
-          "Dropdown Menu",
-          "Hover Card",
-          "Menubar",
-          "Navigation Menu",
-          "Popover",
-          "Select"
+          {
+            "component": "Alert Dialog",
+            "classes": [
+              "ring-foreground/10"
+            ]
+          },
+          {
+            "component": "Card",
+            "classes": [
+              "ring-foreground/10"
+            ]
+          },
+          {
+            "component": "Combobox",
+            "classes": [
+              "ring-foreground/10"
+            ]
+          },
+          {
+            "component": "Context Menu",
+            "classes": [
+              "ring-foreground/10"
+            ]
+          },
+          {
+            "component": "Dialog",
+            "classes": [
+              "ring-foreground/10"
+            ]
+          },
+          {
+            "component": "Dropdown Menu",
+            "classes": [
+              "ring-foreground/10"
+            ]
+          },
+          {
+            "component": "Hover Card",
+            "classes": [
+              "ring-foreground/10"
+            ]
+          },
+          {
+            "component": "Menubar",
+            "classes": [
+              "ring-foreground/10"
+            ]
+          },
+          {
+            "component": "Navigation Menu",
+            "classes": [
+              "group-data-[viewport=false]/navigation-menu:ring-foreground/10",
+              "ring-foreground/10"
+            ]
+          },
+          {
+            "component": "Popover",
+            "classes": [
+              "ring-foreground/10"
+            ]
+          },
+          {
+            "component": "Select",
+            "classes": [
+              "ring-foreground/10"
+            ]
+          }
         ],
         "note": null
       },
@@ -6693,24 +7307,114 @@
           "ring"
         ],
         "usedBy": [
-          "Accordion",
-          "Attachment",
-          "Bubble",
-          "Button",
-          "Calendar",
-          "Checkbox",
-          "Combobox",
-          "Input",
-          "Input Group",
-          "Input OTP",
-          "Native Select",
-          "Navigation Menu",
-          "Radio Group",
-          "Select",
-          "Slider",
-          "Switch",
-          "Textarea",
-          "Toggle"
+          {
+            "component": "Accordion",
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Attachment",
+            "classes": [
+              "focus-within:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Bubble",
+            "classes": [
+              "[button,a]:focus-visible:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Button",
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Calendar",
+            "classes": [
+              "has-focus:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Checkbox",
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Combobox",
+            "classes": [
+              "focus-within:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Input",
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Input Group",
+            "classes": [
+              "has-[[data-slot=input-group-control]:focus-visible]:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Input OTP",
+            "classes": [
+              "data-[active=true]:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Native Select",
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Navigation Menu",
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Radio Group",
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Select",
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Slider",
+            "classes": [
+              "ring-ring/50"
+            ]
+          },
+          {
+            "component": "Switch",
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Textarea",
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
+          },
+          {
+            "component": "Toggle",
+            "classes": [
+              "focus-visible:ring-ring/50"
+            ]
+          }
         ],
         "note": null
       },
@@ -6722,7 +7426,12 @@
           "destructive"
         ],
         "usedBy": [
-          "Alert"
+          {
+            "component": "Alert",
+            "classes": [
+              "*:data-[slot=alert-description]:text-destructive/90"
+            ]
+          }
         ],
         "note": null
       },
@@ -6734,7 +7443,12 @@
           "sidebar-foreground"
         ],
         "usedBy": [
-          "Sidebar"
+          {
+            "component": "Sidebar",
+            "classes": [
+              "text-sidebar-foreground/70"
+            ]
+          }
         ],
         "note": null
       }

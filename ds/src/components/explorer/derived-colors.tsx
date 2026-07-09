@@ -2,10 +2,12 @@
 
 import { useMemo, useState } from 'react'
 import { SearchIcon } from 'lucide-react'
+import * as ButtonPrimitives from 'react-aria-components/Button'
 
 import { cn } from '@/lib/utils'
 import type { DerivedColor, DerivedColors } from '@/data/schema'
 import { Badge } from '@/ui/badge'
+import { Tooltip, TooltipContent } from '@/ui/tooltip'
 
 import { SourceLinks } from './source-links'
 import { checkerboard } from './swatch'
@@ -28,6 +30,82 @@ function paintValue(entry: DerivedColor): string | null {
   return entry.resolved ?? null
 }
 
+// ── class humanizing ────────────────────────────────────────────────────────
+// Mirrors the extractor's baseUtility(): variants are the segments before the
+// last top-level ':' not inside brackets.
+function splitVariants(cls: string): { variants: string[]; base: string } {
+  const variants: string[] = []
+  let depth = 0
+  let start = 0
+  for (let i = 0; i < cls.length; i++) {
+    const ch = cls[i]
+    if (ch === '[') depth++
+    else if (ch === ']') depth--
+    else if (ch === ':' && depth === 0) {
+      variants.push(cls.slice(start, i))
+      start = i + 1
+    }
+  }
+  return { variants, base: cls.slice(start) }
+}
+
+const UTIL_LABEL: Record<string, string> = {
+  bg: 'background',
+  text: 'text colour',
+  border: 'border',
+  ring: 'ring',
+  outline: 'outline',
+  shadow: 'shadow',
+  fill: 'fill',
+  stroke: 'stroke',
+  from: 'gradient stop',
+  via: 'gradient stop',
+  to: 'gradient stop',
+  placeholder: 'placeholder',
+  caret: 'caret',
+  divide: 'divide',
+  decoration: 'decoration',
+  accent: 'accent',
+}
+
+function humanizeBase(base: string): string {
+  const util = /^([a-z]+)-/.exec(base)?.[1]
+  return (util && UTIL_LABEL[util]) || base
+}
+
+function humanizeVariant(variant: string): string {
+  switch (variant) {
+    case 'hover':
+      return 'on hover'
+    case 'focus-visible':
+      return 'when focus-visible'
+    case 'focus':
+      return 'when focused'
+    case 'active':
+      return 'when active'
+    case 'disabled':
+      return 'when disabled'
+    case 'dark':
+      return 'in dark mode'
+    case 'group-hover':
+      return 'on group hover'
+  }
+  const dataState = /^data-\[state=([^\]]+)\]$/.exec(variant)
+  if (dataState) return `when ${dataState[1]}`
+  const aria = /^aria-([\w-]+)$/.exec(variant)
+  if (aria) return `when ${aria[1]}`
+  return variant
+}
+
+/** "hover:bg-primary/10" → "background on hover"; "data-[state=checked]:text-destructive/80"
+    → "text colour when checked". No variants → just the utility phrase. */
+function humanizeClass(cls: string): string {
+  const { variants, base } = splitVariants(cls)
+  const phrase = humanizeBase(base)
+  if (variants.length === 0) return phrase
+  return `${phrase} ${variants.map(humanizeVariant).join(' ')}`
+}
+
 interface DerivedColorsProps {
   derived: DerivedColors
 }
@@ -48,8 +126,7 @@ export function DerivedColorsExplorer({ derived }: DerivedColorsProps) {
             entry.kind === kind &&
             (!q ||
               entry.expression.toLowerCase().includes(q) ||
-              entry.refs.some((ref) => ref.toLowerCase().includes(q)) ||
-              entry.usedBy.some((u) => u.toLowerCase().includes(q))),
+              entry.usedBy.some((u) => u.component.toLowerCase().includes(q))),
         ),
       }))
       .filter((group) => group.entries.length > 0)
@@ -103,7 +180,6 @@ export function DerivedColorsExplorer({ derived }: DerivedColorsProps) {
                   <tr className="border-b bg-muted/40 text-left text-xs text-fg-muted">
                     <th className="px-3 py-2 font-medium">Preview</th>
                     <th className="px-3 py-2 font-medium">Expression</th>
-                    <th className="px-3 py-2 font-medium">References</th>
                     <th className="px-3 py-2 font-medium">Used by</th>
                   </tr>
                 </thead>
@@ -148,21 +224,35 @@ function Row({ entry }: { entry: DerivedColor }) {
           <div className="mt-0.5 text-[11px] text-fg-muted">{entry.note}</div>
         )}
       </td>
-      <td className="px-3 py-2 font-mono text-xs text-fg-muted">
-        {entry.refs.length > 0 ? entry.refs.join(', ') : '—'}
-      </td>
       <td className="px-3 py-2 text-xs text-fg-muted">
         <div className="flex flex-wrap gap-1">
           {entry.usedBy.map((used) => (
-            <span
-              key={used}
-              className="rounded border px-1.5 py-0.5 whitespace-nowrap"
-            >
-              {used}
-            </span>
+            <UsedByChip key={used.component} used={used} />
           ))}
         </div>
       </td>
     </tr>
+  )
+}
+
+function UsedByChip({ used }: { used: DerivedColor['usedBy'][number] }) {
+  return (
+    <Tooltip delay={300}>
+      <ButtonPrimitives.Button className="rounded border px-1.5 py-0.5 whitespace-nowrap focus-reset focus-visible:focus-ring">
+        {used.component}
+      </ButtonPrimitives.Button>
+      <TooltipContent className="max-w-sm text-left">
+        <div className="flex flex-col gap-1.5">
+          {used.classes.map((cls) => (
+            <div key={cls}>
+              <div>{humanizeClass(cls)}</div>
+              <div className="mt-0.5 font-mono text-[10px] opacity-70">
+                {cls}
+              </div>
+            </div>
+          ))}
+        </div>
+      </TooltipContent>
+    </Tooltip>
   )
 }

@@ -431,7 +431,9 @@ interface RawUse {
   resolved: string | null
   kind: DerivedColor['kind']
   refs: string[]
-  usedBy: string
+  component: string
+  /** The class as authored, variant prefixes intact (e.g. "hover:bg-primary/10"). */
+  rawClass: string
   note: string | null
 }
 
@@ -488,7 +490,6 @@ function parseStyleFile(css: string): RawUse[] {
 
 function classifyClass(rawClass: string, component: string): RawUse | null {
   const base = baseUtility(rawClass)
-  const usedBy = component
 
   const arb = ARBITRARY_RE.exec(base)
   if (arb) {
@@ -501,7 +502,8 @@ function classifyClass(rawClass: string, component: string): RawUse | null {
         resolved: body,
         kind: 'color-mix',
         refs: refsInArbitrary(body),
-        usedBy,
+        component,
+        rawClass,
         note: null,
       }
     }
@@ -512,7 +514,8 @@ function classifyClass(rawClass: string, component: string): RawUse | null {
         resolved: body,
         kind: 'literal',
         refs: refsInArbitrary(body),
-        usedBy,
+        component,
+        rawClass,
         note: 'Relative-oklch tint derived from --primary.',
       }
     }
@@ -531,7 +534,8 @@ function classifyClass(rawClass: string, component: string): RawUse | null {
       resolved: pct ? resolved : null,
       kind: 'literal',
       refs: [],
-      usedBy,
+      component,
+      rawClass,
       note: null,
     }
   }
@@ -545,7 +549,8 @@ function classifyClass(rawClass: string, component: string): RawUse | null {
       resolved: opacityResolved(token, pct),
       kind: 'opacity',
       refs: [token],
-      usedBy,
+      component,
+      rawClass,
       note: null,
     }
   }
@@ -554,7 +559,8 @@ function classifyClass(rawClass: string, component: string): RawUse | null {
 }
 
 /** Aggregate raw uses by unique expression, keeping full deterministic
-    usedBy/refs lists (no truncation — the data must be complete). */
+    refs/usedBy lists (no truncation — the data must be complete). usedBy
+    groups by component with a sorted, deduped set of raw classes. */
 function aggregateDerived(uses: RawUse[]): DerivedColor[] {
   const byExpr = new Map<string, RawUse[]>()
   for (const use of uses) {
@@ -566,7 +572,18 @@ function aggregateDerived(uses: RawUse[]): DerivedColor[] {
   for (const [expression, group] of byExpr) {
     const first = group[0]!
     const refs = [...new Set(group.flatMap((u) => u.refs))].sort()
-    const usedBy = [...new Set(group.map((u) => u.usedBy))].sort()
+    const classesByComponent = new Map<string, Set<string>>()
+    for (const use of group) {
+      const classes = classesByComponent.get(use.component) ?? new Set()
+      classes.add(use.rawClass)
+      classesByComponent.set(use.component, classes)
+    }
+    const usedBy = [...classesByComponent.entries()]
+      .map(([component, classes]) => ({
+        component,
+        classes: [...classes].sort(),
+      }))
+      .sort((a, b) => a.component.localeCompare(b.component))
     const note = group.find((u) => u.note)?.note ?? null
     entries.push({
       expression,

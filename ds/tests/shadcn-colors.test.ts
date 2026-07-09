@@ -10,6 +10,20 @@ import { colorsFileSchema } from '@/data/schema'
 import { parseOklch } from '../scripts/lib/extract'
 import { verifySnapshot } from '../scripts/lib/snapshot'
 
+/** Mirrors the extractor's baseUtility(): strip variant prefixes down to the
+    base utility (everything after the last top-level ':' not inside []). */
+function baseUtility(cls: string): string {
+  let depth = 0
+  let lastColon = -1
+  for (let i = 0; i < cls.length; i++) {
+    const ch = cls[i]
+    if (ch === '[') depth++
+    else if (ch === ']') depth--
+    else if (ch === ':' && depth === 0) lastColon = i
+  }
+  return cls.slice(lastColon + 1)
+}
+
 const root = path.resolve(import.meta.dirname, '..')
 const colorsPath = path.join(root, 'systems', 'shadcn-ui', 'colors.json')
 const sourcesDir = path.join(root, 'sources', 'shadcn-ui')
@@ -160,12 +174,36 @@ describe('shadcn-ui colors.json', () => {
     expect(repo?.ref).toMatch(/^[0-9a-f]{40}$/)
   })
 
-  it('has non-empty derivedColors, each with ≥1 usedBy', () => {
+  it('has non-empty derivedColors, each with ≥1 usedBy and ≥1 class', () => {
     expect(colors.derivedColors).not.toBeNull()
     const entries = colors.derivedColors?.entries ?? []
     expect(entries.length).toBeGreaterThan(0)
     const emptyUsedBy = entries.filter((entry) => entry.usedBy.length === 0)
     expect(emptyUsedBy).toEqual([])
+    const emptyClasses = entries.flatMap((entry) =>
+      entry.usedBy
+        .filter((u) => u.classes.length === 0)
+        .map((u) => `${entry.expression} → ${u.component}`),
+    )
+    expect(emptyClasses).toEqual([])
+  })
+
+  it('every usedBy class resolves back to its entry expression', () => {
+    const entries = colors.derivedColors?.entries ?? []
+    // Tailwind escapes spaces inside arbitrary-value brackets as `_`; the
+    // extractor restores them for the expression, so normalize the same way.
+    const normalize = (cls: string) => {
+      const base = baseUtility(cls)
+      return base.includes('[') ? base.replace(/_/g, ' ') : base
+    }
+    const mismatches = entries.flatMap((entry) =>
+      entry.usedBy.flatMap((u) =>
+        u.classes
+          .filter((cls) => normalize(cls) !== entry.expression)
+          .map((cls) => `${entry.expression}: ${u.component} → ${cls}`),
+      ),
+    )
+    expect(mismatches).toEqual([])
   })
 })
 
