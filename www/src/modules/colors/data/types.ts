@@ -14,7 +14,7 @@ export interface ReferenceScale {
 }
 
 export interface ReferenceSource {
-  id: 'tailwind' | 'radix' | 'geist' | 'spectrum' | 'primer'
+  id: 'radix' | 'geist' | 'spectrum' | 'primer'
   label: string
   /** Where the values were taken from. */
   url: string

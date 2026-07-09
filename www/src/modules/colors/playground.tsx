@@ -1,7 +1,22 @@
 import { useEffect, useMemo, useState } from 'react'
+import type { Selection } from 'react-aria-components'
+import { type Color, parseColor } from 'react-aria-components/ColorField'
 import { useTheme } from 'starter-themes'
 
 import { type BaseThemeOptions, createTheme } from '@dotui/colors'
+
+import { Button } from '@/registry/ui/button'
+import { ColorEditor } from '@/registry/ui/color-editor'
+import { ColorField } from '@/registry/ui/color-field'
+import { ColorPicker } from '@/registry/ui/color-picker'
+import { ColorSwatch } from '@/registry/ui/color-swatch'
+import { DialogContent } from '@/registry/ui/dialog'
+import { Input } from '@/registry/ui/input'
+import { Popover } from '@/registry/ui/popover'
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from '@/registry/ui/segmented-control'
 
 import { ComponentCluster } from './cluster'
 import { REFERENCE_SOURCES } from './data'
@@ -15,6 +30,7 @@ import {
   nearestScale,
   orientToMode,
   rampDeltaE,
+  reverseRamp,
   scaleColors,
   solidIndex,
   SOLID_STEP,
@@ -74,6 +90,11 @@ function algorithmRamp(algorithm: string, seed: string, mode: Mode): Ramp {
   }
 }
 
+/** The shipped dark ramp: the algorithm's light output, reversed (see `resolveColorConfig`). */
+function shippedDarkColors(algorithm: string, seed: string): string[] {
+  return reverseRamp(algorithmRamp(algorithm, seed, 'light').colors)
+}
+
 export function ColorPlayground() {
   const [seed, setSeed] = useState(DEFAULT_SEED)
   const [mode, setMode] = useState<Mode>('light')
@@ -120,81 +141,66 @@ function Controls({
   mode: Mode
   setMode: (m: Mode) => void
 }) {
+  const seedColor = useMemo(() => parseSeed(seed), [seed])
+
+  const handleColorChange = (color: Color) => setSeed(color.toString('hex'))
+
+  const handleModeChange = (keys: Selection) => {
+    if (keys === 'all') return
+    const next = [...keys][0] as Mode | undefined
+    if (next) setMode(next)
+  }
+
   return (
     <header className="flex flex-wrap items-center gap-4">
       <div>
         <h1 className="text-lg font-semibold">Color engine — playground</h1>
         <p className="text-xs opacity-60">
-          Dev-only. Compares the shipping algorithms against each other and
-          industry references.
+          Compares the shipping algorithms against each other and industry
+          references.
         </p>
       </div>
       <div className="ml-auto flex items-center gap-3">
         <label className="flex items-center gap-2 text-sm">
           Seed
-          <input
-            type="color"
-            value={normalizeHex(seed)}
-            onChange={(e) => setSeed(e.target.value)}
-            style={{
-              width: 36,
-              height: 28,
-              padding: 0,
-              border: 'none',
-              background: 'none',
-            }}
-          />
-          <input
-            type="text"
-            value={seed}
-            onChange={(e) => setSeed(e.target.value)}
-            spellCheck={false}
-            style={{
-              width: 100,
-              padding: '4px 8px',
-              fontFamily: 'monospace',
-              fontSize: 12,
-              border: '1px solid currentColor',
-              borderRadius: 6,
-              background: 'transparent',
-              color: 'inherit',
-            }}
-          />
+          <ColorPicker value={seedColor} onChange={handleColorChange}>
+            <Button aria-label="Pick a color" isIconOnly size="sm">
+              <ColorSwatch />
+            </Button>
+            <Popover>
+              <DialogContent>
+                <ColorEditor showFormatSelector={false} />
+              </DialogContent>
+            </Popover>
+          </ColorPicker>
+          <ColorField
+            aria-label="Seed hex"
+            value={seedColor}
+            onChange={(color) => color && handleColorChange(color)}
+            className="w-[100px]"
+          >
+            <Input className="font-mono text-xs" />
+          </ColorField>
         </label>
-        <div
-          style={{
-            display: 'flex',
-            border: '1px solid currentColor',
-            borderRadius: 6,
-            overflow: 'hidden',
-          }}
+        <SegmentedControl
+          aria-label="Mode"
+          selectedKeys={[mode]}
+          onSelectionChange={handleModeChange}
         >
-          {(['light', 'dark'] as const).map((m) => (
-            <button
-              key={m}
-              type="button"
-              onClick={() => setMode(m)}
-              style={{
-                padding: '4px 12px',
-                fontSize: 12,
-                background: mode === m ? 'currentColor' : 'transparent',
-                color:
-                  mode === m ? (m === 'dark' ? '#111' : '#fff') : 'inherit',
-                mixBlendMode: mode === m ? 'difference' : undefined,
-                cursor: 'pointer',
-              }}
-            >
-              {m}
-            </button>
-          ))}
-        </div>
+          <SegmentedControlItem id="light">light</SegmentedControlItem>
+          <SegmentedControlItem id="dark">dark</SegmentedControlItem>
+        </SegmentedControl>
       </div>
     </header>
   )
 }
 
-function normalizeHex(value: string): string {
-  return /^#[0-9a-fA-F]{6}$/.test(value) ? value : '#635bff'
+function parseSeed(seed: string): Color {
+  try {
+    return parseColor(seed)
+  } catch {
+    return parseColor(DEFAULT_SEED)
+  }
 }
 
 // MARK: Ramp grid
@@ -222,6 +228,16 @@ function RampGrid({ seed, mode }: { seed: string; mode: Mode }) {
         labels: [...STEPS],
         markStep: SOLID_STEP,
       })
+      // Production never ships the kernel's raw dark output (see `shippedDarkColors`) —
+      // show what dark mode actually renders directly under the kernel row.
+      if (mode === 'dark') {
+        result.push({
+          label: `${algorithm.id} · shipped (reversed light)`,
+          colors: shippedDarkColors(algorithm.id, seed),
+          labels: [...STEPS],
+          markStep: SOLID_STEP,
+        })
+      }
     }
 
     for (const source of REFERENCE_SOURCES) {

@@ -23,6 +23,16 @@ export type Step = (typeof STEPS)[number]
 /** Solid step — the mid anchor each ramp is marked at. */
 export const SOLID_STEP: Step = '500'
 
+/**
+ * Reverse a ramp's value ladder: step `50` takes `950`'s value, etc. Production never ships
+ * the kernel's raw dark output — `resolveColorConfig` in `@/registry/theme/primitives.ts`
+ * generates light only and derives dark by reversing the light ramp (its own, unexported,
+ * `reverseRamp`). Mirrored here so the playground can show what dark mode actually ships.
+ */
+export function reverseRamp(colors: string[]): string[] {
+  return [...colors].reverse()
+}
+
 /** Page surface each mode's contrast is measured against (matches the playground background). */
 export const LIGHT_SURFACE = '#ffffff'
 export const DARK_SURFACE = '#111111'
