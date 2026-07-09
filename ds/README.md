@@ -1,1 +1,0 @@
-Explore how the best design systems out there are built.
