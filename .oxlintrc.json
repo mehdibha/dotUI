@@ -18,6 +18,7 @@
     "**/.source/**",
     "www/src/routeTree.gen.ts",
     "ds/src/routeTree.gen.ts",
+    "colors/src/routeTree.gen.ts",
     "ds/sources/**"
   ],
   "rules": {

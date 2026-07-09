@@ -14,6 +14,13 @@
       "runtimeArgs": ["--filter", "ds", "dev"],
       "port": 4445,
       "autoPort": true
+    },
+    {
+      "name": "colors",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "colors", "dev"],
+      "port": 4446,
+      "autoPort": true
     }
   ]
 }

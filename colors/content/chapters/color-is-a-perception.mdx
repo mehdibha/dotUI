@@ -1,0 +1,45 @@
+---
+title: Color is a perception, not a number
+description: Why the same hex value looks different in different places — and what that means for every color decision you'll make.
+part: 1
+question: Is the same color the same color?
+---
+
+import { SimultaneousContrast } from '@/components/playgrounds/simultaneous-contrast'
+
+You've hit this bug before. You pick a color, it looks great in the mockup, and then it lands in the real UI — on a card, next to a sidebar, in dark mode — and it looks _wrong_. Muddier, lighter, somehow a different color. You didn't change the value. Nothing in the code changed.
+
+Nothing in the code _needed_ to change, because a color value was never a color. `#5a8fd6` is an instruction to a screen: emit roughly this much red, green, and blue light from these pixels. The color happens later — in your eyes and brain, after that light lands on a retina that's busy comparing it against everything around it. The number is fixed. The perception is computed live, in context, every time.
+
+## Your eyes grade on a curve
+
+The visual system doesn't measure absolute light like an instrument. It measures _differences_ — this patch against its surround. That's a feature: it's how you can read a menu in dim candlelight and in noon sun, even though the actual light reaching your eyes differs by a factor of thousands. Your brain silently normalizes everything against local context.
+
+The cost of that feature is that the same physical color changes appearance when its surroundings change. Put one swatch on a dark surface and an identical one on a light surface, and they will not look the same — the dark surround makes its swatch look lighter and more vivid, the light surround makes its look darker and duller. This is **simultaneous contrast**, and it isn't a subtle lab curiosity. It's strong enough that you will refuse to believe two swatches are identical until something forces the point.
+
+<SimultaneousContrast />
+
+Drag the surrounds toward each other and watch the two swatches "become" the same color — or bridge them and watch your brain snap them together. The swatches never changed. Only the context did.
+
+## Why this matters for a design system
+
+Every color in your system will be judged by users' eyes in context, never in isolation. That single fact drives more of color-system design than any formula:
+
+- **A palette on a white artboard tells you nothing about dark mode.** The same accent that hums quietly on white can glow radioactive on near-black — same number, different perception. This is why dark mode is a second design problem, not a value swap (chapter 16 is about exactly this).
+- **Tokens are promises about perception, not values.** When a system says `border-muted` should read as "barely there," the value that delivers that perception depends on the surface it sits on. Context-dependence is why semantic tokens exist at all.
+- **You cannot judge colors from a table of swatches.** Every tool in this course — and every good palette tool, period — shows colors _on surfaces, next to neighbors_, because that's the only preview that doesn't lie.
+
+There's a deeper version of this lesson coming: it's not just surroundings that bend perception, but the raw math of light itself — doubling the light does not double the brightness. That non-linearity is chapter 3, and it's the reason half the "obvious" color math in your codebase is wrong.
+
+## Check yourself
+
+Before moving on, you should be able to answer these without scrolling up:
+
+1. Two elements use the same token but sit on different surfaces. A designer files a bug: "these don't match." What's actually going on, and is it a bug?
+2. Why does a palette previewed only on white mislead you about dark mode?
+3. In one sentence: what does a hex value actually specify, and what doesn't it specify?
+
+## Further reading
+
+- Josef Albers, _Interaction of Color_ — the classic on context-dependent color, built entirely from exercises like our playground.
+- Edward Adelson's [checker shadow illusion](https://en.wikipedia.org/wiki/Checker_shadow_illusion) — the most famous single demonstration that perceived lightness is computed, not measured.

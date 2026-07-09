@@ -2,6 +2,7 @@ packages:
   - www
   - www/scripts/api-docs-builder
   - ds
+  - colors
   - packages/*
 
 catalog:

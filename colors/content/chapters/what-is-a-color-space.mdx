@@ -1,0 +1,46 @@
+---
+title: What even is a color space?
+description: Hex, RGB, and HSL are not three kinds of color — they're three names for the same one. What a color space actually is, and why it matters.
+part: 1
+question: Different colors, or different names for one color?
+---
+
+import { OneColorFourNames } from '@/components/playgrounds/one-color-four-names'
+
+Ask a room of developers the difference between hex, RGB, and HSL and most will say something like "different color formats, HSL is the more designer-friendly one." That answer contains a misconception that quietly breaks people's mental model of everything that comes later — so let's kill it in chapter 2.
+
+**Hex, RGB, and HSL are not different colors, different palettes, or even different systems. They are three coordinate systems pointing at the same point.**
+
+## A color is a point; a space gives it an address
+
+Think of every color your screen can show as a point in a 3D volume. To _name_ a point you need a coordinate system — and like GPS coordinates versus a street address, different coordinate systems can name the same point in ways that look nothing alike.
+
+- `#5a8fd6` is base-16 shorthand for three numbers: `5a` → 90, `8f` → 143, `d6` → 214. **Hex _is_ RGB** — the same three numbers, written compactly. There is no "hex color" that isn't an RGB color.
+- `hsl(214 60% 60%)` is those same three RGB numbers run through a small formula that re-expresses the point as hue, saturation, lightness — friendlier knobs for humans, same point underneath. HSL adds no new colors and loses none; it's RGB with the furniture rearranged.
+
+<OneColorFourNames />
+
+Drag any slider. Every other panel updates, because there is only ever _one color_ here — four notations chasing the same point. If moving the RGB sliders feels like steering a boat while HSL feels like knobs that mean something, you've just discovered why coordinate systems matter even when the underlying colors are identical. (And if OKLCH's lightness slider feels _honest_ in a way HSL's doesn't — hold that thought until chapter 4.)
+
+## Notation vs. model vs. space
+
+Three words that get blurred together, now unblurred:
+
+- A **notation** is how you write it down: `#5a8fd6`, `rgb(90 143 214)`, `hsl(214 60% 60%)`. Pure syntax.
+- A **color model** is the coordinate scheme: RGB's three light channels, HSL's hue/saturation/lightness cylinder. Math, with no opinion about the real world.
+- A **color space** is a model _plus a precise physical meaning_: exactly which red, which white point, which brightness curve. sRGB is a color space: it pins down what `rgb(255 0 0)` means as actual light.
+
+Here's why the distinction stops being pedantic: **Display P3 uses the same model as sRGB — three channels, 0 to 1 — but points its coordinates at different physical colors.** `color(display-p3 1 0 0)` and `rgb(255 0 0)` are the _same numbers_ naming _visibly different reds_ (P3's is noticeably more intense). Same street address, different city. If you only remember one sentence from this chapter: **numbers mean nothing until a color space says what they mean.**
+
+That's also the answer to why your CSS now has `oklch()`, `color()`, and friends. They aren't redundant formats accumulating — they're different coordinate systems, each useful because it makes a different kind of statement easy: sRGB talks to screens, HSL talks to intuition (dishonestly — chapter 4), and OKLCH talks to perception. Choosing which space to _work_ in is one of the first real decisions of building a color system, and now you have the vocabulary for it.
+
+## Check yourself
+
+1. A teammate says "let's store colors as HSL instead of hex so we have access to more designer-friendly colors." What's right and what's wrong in that sentence?
+2. `rgb(255 0 0)` and `color(display-p3 1 0 0)` — same numbers. Same color? Why not?
+3. Define color space in one sentence without using the word "format."
+
+## Further reading
+
+- [CSS Color Module Level 4](https://www.w3.org/TR/css-color-4/) — the spec behind every notation on this page; skim §1–4 for the vocabulary used here.
+- MDN's [color space guide](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) — the practical catalog of what browsers accept today.
