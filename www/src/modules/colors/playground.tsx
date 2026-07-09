@@ -1,7 +1,23 @@
 import { useEffect, useMemo, useState } from 'react'
+import type { Selection } from 'react-aria-components'
+import { type Color, parseColor } from 'react-aria-components/ColorField'
 import { useTheme } from 'starter-themes'
 
 import { type BaseThemeOptions, createTheme } from '@dotui/colors'
+
+import { Button } from '@/registry/ui/button'
+import { ColorEditor } from '@/registry/ui/color-editor'
+import { ColorField } from '@/registry/ui/color-field'
+import { ColorPicker } from '@/registry/ui/color-picker'
+import { ColorSwatch } from '@/registry/ui/color-swatch'
+import { DialogContent } from '@/registry/ui/dialog'
+import { Input } from '@/registry/ui/input'
+import { Popover } from '@/registry/ui/popover'
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from '@/registry/ui/segmented-control'
+import { Switch } from '@/registry/ui/switch'
 
 import { ComponentCluster } from './cluster'
 import { REFERENCE_SOURCES } from './data'
@@ -15,6 +31,7 @@ import {
   nearestScale,
   orientToMode,
   rampDeltaE,
+  reverseRamp,
   scaleColors,
   solidIndex,
   SOLID_STEP,
@@ -34,10 +51,10 @@ interface Algorithm {
 
 /** The shipping engine's generative algorithms (fixed is identity-only, so excluded). */
 const ALGORITHMS: Algorithm[] = [
-  { id: 'oklch', label: 'oklch · default' },
-  { id: 'tailwind', label: 'tailwind · hue-torsion' },
-  { id: 'contrast', label: 'contrast · bg-aware' },
-  { id: 'material', label: 'material · HCT' },
+  { id: 'oklch', label: '@dotui/colors - oklch (default)' },
+  { id: 'tailwind', label: '@dotui/colors - hue torsion (tailwind-style)' },
+  { id: 'contrast', label: '@dotui/colors - contrast (background-aware)' },
+  { id: 'material', label: '@dotui/colors - material (HCT)' },
 ]
 
 interface Ramp {
@@ -72,6 +89,22 @@ function algorithmRamp(algorithm: string, seed: string, mode: Mode): Ramp {
   } catch {
     return flat()
   }
+}
+
+/**
+ * The canonical ramp production ships: light is the kernel's own output, dark is the
+ * light ramp reversed (see `resolveColorConfig`). `onSolid` is left as the light value —
+ * step `500` sits at the ladder's center, so reversal leaves it unchanged.
+ */
+function shippedRamp(algorithm: string, seed: string, mode: Mode): Ramp {
+  const light = algorithmRamp(algorithm, seed, 'light')
+  if (mode === 'light') return light
+  const colors = reverseRamp(light.colors)
+  const steps = {} as Record<Step, string>
+  STEPS.forEach((s, i) => {
+    steps[s] = colors[i] ?? '#808080'
+  })
+  return { colors, steps, onSolid: light.onSolid }
 }
 
 export function ColorPlayground() {
@@ -120,81 +153,66 @@ function Controls({
   mode: Mode
   setMode: (m: Mode) => void
 }) {
+  const seedColor = useMemo(() => parseSeed(seed), [seed])
+
+  const handleColorChange = (color: Color) => setSeed(color.toString('hex'))
+
+  const handleModeChange = (keys: Selection) => {
+    if (keys === 'all') return
+    const next = [...keys][0] as Mode | undefined
+    if (next) setMode(next)
+  }
+
   return (
     <header className="flex flex-wrap items-center gap-4">
       <div>
         <h1 className="text-lg font-semibold">Color engine — playground</h1>
         <p className="text-xs opacity-60">
-          Dev-only. Compares the shipping algorithms against each other and
-          industry references.
+          Compares the shipping algorithms against each other and industry
+          references.
         </p>
       </div>
       <div className="ml-auto flex items-center gap-3">
         <label className="flex items-center gap-2 text-sm">
           Seed
-          <input
-            type="color"
-            value={normalizeHex(seed)}
-            onChange={(e) => setSeed(e.target.value)}
-            style={{
-              width: 36,
-              height: 28,
-              padding: 0,
-              border: 'none',
-              background: 'none',
-            }}
-          />
-          <input
-            type="text"
-            value={seed}
-            onChange={(e) => setSeed(e.target.value)}
-            spellCheck={false}
-            style={{
-              width: 100,
-              padding: '4px 8px',
-              fontFamily: 'monospace',
-              fontSize: 12,
-              border: '1px solid currentColor',
-              borderRadius: 6,
-              background: 'transparent',
-              color: 'inherit',
-            }}
-          />
+          <ColorPicker value={seedColor} onChange={handleColorChange}>
+            <Button aria-label="Pick a color" isIconOnly size="sm">
+              <ColorSwatch />
+            </Button>
+            <Popover>
+              <DialogContent>
+                <ColorEditor showFormatSelector={false} />
+              </DialogContent>
+            </Popover>
+          </ColorPicker>
+          <ColorField
+            aria-label="Seed hex"
+            value={seedColor}
+            onChange={(color) => color && handleColorChange(color)}
+            className="w-[100px]"
+          >
+            <Input className="font-mono text-xs" />
+          </ColorField>
         </label>
-        <div
-          style={{
-            display: 'flex',
-            border: '1px solid currentColor',
-            borderRadius: 6,
-            overflow: 'hidden',
-          }}
+        <SegmentedControl
+          aria-label="Mode"
+          selectedKeys={[mode]}
+          onSelectionChange={handleModeChange}
         >
-          {(['light', 'dark'] as const).map((m) => (
-            <button
-              key={m}
-              type="button"
-              onClick={() => setMode(m)}
-              style={{
-                padding: '4px 12px',
-                fontSize: 12,
-                background: mode === m ? 'currentColor' : 'transparent',
-                color:
-                  mode === m ? (m === 'dark' ? '#111' : '#fff') : 'inherit',
-                mixBlendMode: mode === m ? 'difference' : undefined,
-                cursor: 'pointer',
-              }}
-            >
-              {m}
-            </button>
-          ))}
-        </div>
+          <SegmentedControlItem id="light">light</SegmentedControlItem>
+          <SegmentedControlItem id="dark">dark</SegmentedControlItem>
+        </SegmentedControl>
       </div>
     </header>
   )
 }
 
-function normalizeHex(value: string): string {
-  return /^#[0-9a-fA-F]{6}$/.test(value) ? value : '#635bff'
+function parseSeed(seed: string): Color {
+  try {
+    return parseColor(seed)
+  } catch {
+    return parseColor(DEFAULT_SEED)
+  }
 }
 
 // MARK: Ramp grid
@@ -210,18 +228,29 @@ interface RampRow {
 
 function RampGrid({ seed, mode }: { seed: string; mode: Mode }) {
   const surface = surfaceFor(mode)
+  const [showRawKernel, setShowRawKernel] = useState(false)
 
   const rows = useMemo<RampRow[]>(() => {
     const result: RampRow[] = []
 
     for (const algorithm of ALGORITHMS) {
-      const { colors } = algorithmRamp(algorithm.id, seed, mode)
+      const { colors } = shippedRamp(algorithm.id, seed, mode)
       result.push({
         label: algorithm.label,
         colors,
         labels: [...STEPS],
         markStep: SOLID_STEP,
       })
+      // Dark ships the reversed light ramp, never the kernel's own dark output —
+      // surface it only opt-in, since it doesn't represent what renders.
+      if (mode === 'dark' && showRawKernel) {
+        result.push({
+          label: `${algorithm.label} · engine dark output (never ships)`,
+          colors: algorithmRamp(algorithm.id, seed, 'dark').colors,
+          labels: [...STEPS],
+          markStep: SOLID_STEP,
+        })
+      }
     }
 
     for (const source of REFERENCE_SOURCES) {
@@ -253,11 +282,22 @@ function RampGrid({ seed, mode }: { seed: string; mode: Mode }) {
     }
 
     return result
-  }, [seed, mode])
+  }, [seed, mode, showRawKernel])
 
   return (
     <section className="flex flex-col gap-4">
-      <SectionTitle>Ramp comparison ({mode})</SectionTitle>
+      <div className="flex items-center gap-4">
+        <SectionTitle>Ramp comparison ({mode})</SectionTitle>
+        {mode === 'dark' && (
+          <Switch
+            size="sm"
+            isSelected={showRawKernel}
+            onChange={setShowRawKernel}
+          >
+            Show unused engine dark output (dark ships as flipped light)
+          </Switch>
+        )}
+      </div>
       <div className="flex flex-col gap-4">
         {rows.map((row) => (
           <RampView key={row.label} row={row} surface={surface} />
@@ -382,7 +422,7 @@ function DeltaTable({ seed, mode }: { seed: string; mode: Mode }) {
     const ref = nearestReference(seed, mode)
     if (!ref) return { reference: null, rows: [] }
     const data = ALGORITHMS.map((algorithm) => {
-      const { steps } = algorithmRamp(algorithm.id, seed, mode)
+      const { steps } = shippedRamp(algorithm.id, seed, mode)
       const { mean, max } = rampDeltaE(steps, ref.colors)
       return { algorithm: algorithm.label, mean, max }
     })
@@ -423,7 +463,7 @@ function DeltaTable({ seed, mode }: { seed: string; mode: Mode }) {
 function InjectionPanels({ seed, mode }: { seed: string; mode: Mode }) {
   const panels = useMemo(() => {
     const algoPanels = ALGORITHMS.map((algorithm) => {
-      const { steps, onSolid } = algorithmRamp(algorithm.id, seed, mode)
+      const { steps, onSolid } = shippedRamp(algorithm.id, seed, mode)
       return { title: algorithm.label, style: accentVars(steps, onSolid) }
     })
 
@@ -461,7 +501,7 @@ function InjectionPanels({ seed, mode }: { seed: string; mode: Mode }) {
 
 function SurfaceLevels({ seed, mode }: { seed: string; mode: Mode }) {
   const style = useMemo(() => {
-    const { steps, onSolid } = algorithmRamp('oklch', seed, mode)
+    const { steps, onSolid } = shippedRamp('oklch', seed, mode)
     return accentVars(steps, onSolid)
   }, [seed, mode])
 
