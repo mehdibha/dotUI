@@ -17,6 +17,7 @@ import {
   SegmentedControl,
   SegmentedControlItem,
 } from '@/registry/ui/segmented-control'
+import { Switch } from '@/registry/ui/switch'
 
 import { ComponentCluster } from './cluster'
 import { REFERENCE_SOURCES } from './data'
@@ -51,7 +52,7 @@ interface Algorithm {
 /** The shipping engine's generative algorithms (fixed is identity-only, so excluded). */
 const ALGORITHMS: Algorithm[] = [
   { id: 'oklch', label: 'oklch · default' },
-  { id: 'tailwind', label: 'tailwind · hue-torsion' },
+  { id: 'tailwind', label: 'hue-torsion (tailwind preset)' },
   { id: 'contrast', label: 'contrast · bg-aware' },
   { id: 'material', label: 'material · HCT' },
 ]
@@ -90,9 +91,20 @@ function algorithmRamp(algorithm: string, seed: string, mode: Mode): Ramp {
   }
 }
 
-/** The shipped dark ramp: the algorithm's light output, reversed (see `resolveColorConfig`). */
-function shippedDarkColors(algorithm: string, seed: string): string[] {
-  return reverseRamp(algorithmRamp(algorithm, seed, 'light').colors)
+/**
+ * The canonical ramp production ships: light is the kernel's own output, dark is the
+ * light ramp reversed (see `resolveColorConfig`). `onSolid` is left as the light value —
+ * step `500` sits at the ladder's center, so reversal leaves it unchanged.
+ */
+function shippedRamp(algorithm: string, seed: string, mode: Mode): Ramp {
+  const light = algorithmRamp(algorithm, seed, 'light')
+  if (mode === 'light') return light
+  const colors = reverseRamp(light.colors)
+  const steps = {} as Record<Step, string>
+  STEPS.forEach((s, i) => {
+    steps[s] = colors[i] ?? '#808080'
+  })
+  return { colors, steps, onSolid: light.onSolid }
 }
 
 export function ColorPlayground() {
@@ -216,24 +228,25 @@ interface RampRow {
 
 function RampGrid({ seed, mode }: { seed: string; mode: Mode }) {
   const surface = surfaceFor(mode)
+  const [showRawKernel, setShowRawKernel] = useState(false)
 
   const rows = useMemo<RampRow[]>(() => {
     const result: RampRow[] = []
 
     for (const algorithm of ALGORITHMS) {
-      const { colors } = algorithmRamp(algorithm.id, seed, mode)
+      const { colors } = shippedRamp(algorithm.id, seed, mode)
       result.push({
         label: algorithm.label,
         colors,
         labels: [...STEPS],
         markStep: SOLID_STEP,
       })
-      // Production never ships the kernel's raw dark output (see `shippedDarkColors`) —
-      // show what dark mode actually renders directly under the kernel row.
-      if (mode === 'dark') {
+      // Dark ships the reversed light ramp, never the kernel's own dark output —
+      // surface it only opt-in, since it doesn't represent what renders.
+      if (mode === 'dark' && showRawKernel) {
         result.push({
-          label: `${algorithm.id} · shipped (reversed light)`,
-          colors: shippedDarkColors(algorithm.id, seed),
+          label: `${algorithm.label} · kernel (not shipped)`,
+          colors: algorithmRamp(algorithm.id, seed, 'dark').colors,
           labels: [...STEPS],
           markStep: SOLID_STEP,
         })
@@ -269,11 +282,22 @@ function RampGrid({ seed, mode }: { seed: string; mode: Mode }) {
     }
 
     return result
-  }, [seed, mode])
+  }, [seed, mode, showRawKernel])
 
   return (
     <section className="flex flex-col gap-4">
-      <SectionTitle>Ramp comparison ({mode})</SectionTitle>
+      <div className="flex items-center gap-4">
+        <SectionTitle>Ramp comparison ({mode})</SectionTitle>
+        {mode === 'dark' && (
+          <Switch
+            size="sm"
+            isSelected={showRawKernel}
+            onChange={setShowRawKernel}
+          >
+            Raw kernel dark
+          </Switch>
+        )}
+      </div>
       <div className="flex flex-col gap-4">
         {rows.map((row) => (
           <RampView key={row.label} row={row} surface={surface} />
@@ -398,7 +422,7 @@ function DeltaTable({ seed, mode }: { seed: string; mode: Mode }) {
     const ref = nearestReference(seed, mode)
     if (!ref) return { reference: null, rows: [] }
     const data = ALGORITHMS.map((algorithm) => {
-      const { steps } = algorithmRamp(algorithm.id, seed, mode)
+      const { steps } = shippedRamp(algorithm.id, seed, mode)
       const { mean, max } = rampDeltaE(steps, ref.colors)
       return { algorithm: algorithm.label, mean, max }
     })
@@ -439,7 +463,7 @@ function DeltaTable({ seed, mode }: { seed: string; mode: Mode }) {
 function InjectionPanels({ seed, mode }: { seed: string; mode: Mode }) {
   const panels = useMemo(() => {
     const algoPanels = ALGORITHMS.map((algorithm) => {
-      const { steps, onSolid } = algorithmRamp(algorithm.id, seed, mode)
+      const { steps, onSolid } = shippedRamp(algorithm.id, seed, mode)
       return { title: algorithm.label, style: accentVars(steps, onSolid) }
     })
 
@@ -477,7 +501,7 @@ function InjectionPanels({ seed, mode }: { seed: string; mode: Mode }) {
 
 function SurfaceLevels({ seed, mode }: { seed: string; mode: Mode }) {
   const style = useMemo(() => {
-    const { steps, onSolid } = algorithmRamp('oklch', seed, mode)
+    const { steps, onSolid } = shippedRamp('oklch', seed, mode)
     return accentVars(steps, onSolid)
   }, [seed, mode])
 
