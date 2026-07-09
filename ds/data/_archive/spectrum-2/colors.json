@@ -6742,5 +6742,33 @@
         "https://adobe.design/stories/design-for-scale/introducing-spectrum-2"
       ]
     }
-  ]
+  ],
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "npm",
+        "url": "https://unpkg.com/@adobe/spectrum-tokens@14.13.2/dist/json/variables.json",
+        "ref": "14.13.2",
+        "retrievedAt": null,
+        "snapshot": null
+      },
+      {
+        "kind": "repo",
+        "url": "https://github.com/adobe/spectrum-design-data",
+        "ref": null,
+        "retrievedAt": "2026-07-03",
+        "snapshot": null
+      },
+      {
+        "kind": "docs",
+        "url": "https://react-spectrum.adobe.com",
+        "ref": null,
+        "retrievedAt": "2026-07-03",
+        "snapshot": null
+      }
+    ],
+    "notes": "AI-authored by reading the sources; predates the snapshot -> extract pipeline, so there is no committed snapshot and the values are not reproducible. The script-extractable part is ramps + tokenGroups, which mirror @adobe/spectrum-tokens variables.json (pinned 14.13.2) -- write an extractor for it before unarchiving this system. overview, layers, focus, notes and the measured contrast pairs are editorial or hand-measured and stay manual."
+  }
 }

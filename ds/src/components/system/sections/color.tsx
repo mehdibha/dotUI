@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import { ContrastLab } from '@/components/explorer/contrast-lab'
 import { ContrastTable } from '@/components/explorer/contrast-table'
+import { DerivedColorsExplorer } from '@/components/explorer/derived-colors'
 import { ModeSwitcher } from '@/components/explorer/mode-switcher'
 import { RampGrid } from '@/components/explorer/ramp-grid'
 import { SectionNotes } from '@/components/explorer/section-notes'
@@ -65,6 +66,18 @@ export function ColorSection({ system }: { system: SystemWithColors }) {
           description="How the keyboard-focus indicator is built and where its color comes from."
         >
           <SpecTable entries={colors.focus} />
+        </Block>
+      )}
+
+      {colors.derivedColors && (
+        <Block
+          title="Point-of-use colours"
+          description="Colours that live only in component styles — opacity modifiers, color-mix, and literal derivations — never declared as tokens."
+        >
+          <DerivedColorsExplorer derived={colors.derivedColors} />
+          <SectionNotes
+            notes={colors.notes.filter((note) => note.section === 'usage')}
+          />
         </Block>
       )}
 

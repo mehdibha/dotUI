@@ -87,6 +87,7 @@ export const sectionIdSchema = z.enum([
   'tokens',
   'focus',
   'contrast',
+  'usage',
 ])
 
 /** Editorial finding attached to a section — sourced, not derivable from the raw data. */
@@ -142,6 +143,62 @@ export const focusRingSchema = z.object({
   sources: z.array(z.url()).default([]),
 })
 
+/** One source a data file was produced from. Tiers, strongest first:
+    repo/npm (pinned ref) → live-site (committed snapshot + retrievedAt) →
+    docs (manual reading — flagged, weakest). Additive — 2026-07-08. */
+export const provenanceSourceSchema = z.object({
+  kind: z.enum(['repo', 'npm', 'live-site', 'docs']),
+  url: z.url(),
+  /** Pinned git SHA or package version; null for live-site/docs. */
+  ref: z.string().nullable(),
+  /** ISO day a live-site/docs source was captured; null when `ref` pins it. */
+  retrievedAt: isoDate.nullable(),
+  /** Snapshot dir under ds/sources/ whose manifest.json hashes the vendored files. */
+  snapshot: z.string().nullable(),
+})
+
+/** How a data file was produced. `script` files are build artifacts — fix the
+    extractor and re-run, never hand-edit. Required on colors files — 2026-07-08
+    (the archived spectrum-2 file was retrofitted). */
+export const provenanceSchema = z.object({
+  method: z.enum(['script', 'manual']),
+  /** Repo-relative extractor entry point; null when manual. */
+  extractor: z.string().nullable(),
+  sources: z.array(provenanceSourceSchema).min(1),
+  notes: z.string().nullable(),
+})
+
+/** A color that exists only at point of use — token math (opacity modifiers,
+    color-mix()) or literal values inside component classes, never a declared
+    token. Additive — 2026-07-08. */
+export const derivedColorSchema = z.object({
+  /** As authored in the component source, e.g. "bg-primary/10". */
+  expression: z.string().min(1),
+  /** Resolved CSS color expression, when the authored form doesn't show it. */
+  resolved: z.string().nullable(),
+  kind: z.enum(['opacity', 'color-mix', 'literal']),
+  /** Declared token(s) the expression derives from; empty for literals. */
+  refs: z.array(z.string()).default([]),
+  /** Components that use it, with the raw classes as authored there —
+      variant prefixes intact (e.g. "hover:bg-primary/10"), so the UI can say
+      how the colour is applied. */
+  usedBy: z
+    .array(
+      z.object({
+        component: z.string().min(1),
+        classes: z.array(z.string().min(1)).min(1),
+      }),
+    )
+    .min(1),
+  note: z.string().nullable(),
+})
+
+export const derivedColorsSchema = z.object({
+  note: z.string().nullable(),
+  sources: z.array(z.url()).default([]),
+  entries: z.array(derivedColorSchema).min(1),
+})
+
 export const colorsFileSchema = z.object({
   modes: z.array(z.string().min(1)).min(1),
   overview: z.array(specEntrySchema),
@@ -152,8 +209,10 @@ export const colorsFileSchema = z.object({
   focus: z.array(specEntrySchema),
   focusRing: focusRingSchema.nullable().default(null),
   contrast: z.array(contrastPairSchema),
+  derivedColors: derivedColorsSchema.nullable().default(null),
   notes: z.array(noteSchema).default([]),
   sources: z.array(z.url()).min(1),
+  provenance: provenanceSchema,
 })
 
 export const catalogCategorySchema = z.enum([
@@ -222,6 +281,10 @@ export type StepRole = z.infer<typeof stepRoleSchema>
 export type StepRoles = z.infer<typeof stepRolesSchema>
 export type FocusRing = z.infer<typeof focusRingSchema>
 export type ContrastPair = z.infer<typeof contrastPairSchema>
+export type ProvenanceSource = z.infer<typeof provenanceSourceSchema>
+export type Provenance = z.infer<typeof provenanceSchema>
+export type DerivedColor = z.infer<typeof derivedColorSchema>
+export type DerivedColors = z.infer<typeof derivedColorsSchema>
 export type ColorsFile = z.infer<typeof colorsFileSchema>
 export type CatalogEntry = z.infer<typeof catalogEntrySchema>
 
