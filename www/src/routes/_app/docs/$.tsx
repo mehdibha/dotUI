@@ -9,6 +9,7 @@ import { docsSource } from '@/lib/source'
 import { truncateOnWord } from '@/lib/text'
 import { DocsCopyPage } from '@/modules/docs/docs-copy-page'
 import { DocsPager } from '@/modules/docs/docs-pager'
+import { preloadDynamicPre } from '@/modules/docs/dynamic-pre'
 import { PageLastUpdate } from '@/modules/docs/last-update'
 import { mdxComponents } from '@/modules/docs/mdx-components'
 import {
@@ -18,6 +19,12 @@ import {
 } from '@/modules/docs/page-layout'
 import { MiniTOC, TOC, TOCProvider } from '@/modules/docs/toc'
 import browserCollections from '@/.source/browser'
+
+// Playgrounds highlight their code client-side from a lazy chunk. On an SPA
+// navigation there's no SSR HTML to lean on, so the code renders plain until
+// that chunk arrives — warm it as soon as the docs route loads (which the
+// router's intent preload triggers on link hover, before the click).
+if (typeof window !== 'undefined') preloadDynamicPre()
 
 export const Route = createFileRoute('/_app/docs/$')({
   component: DocsPage,
