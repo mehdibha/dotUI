@@ -7,13 +7,6 @@
       "runtimeArgs": ["--filter", "www", "dev"],
       "port": 4444,
       "autoPort": true
-    },
-    {
-      "name": "ds",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["--filter", "ds", "dev"],
-      "port": 4445,
-      "autoPort": true
     }
   ]
 }

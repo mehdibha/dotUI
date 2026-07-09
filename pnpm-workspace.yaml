@@ -1,7 +1,6 @@
 packages:
   - www
   - www/scripts/api-docs-builder
-  - ds
   - packages/*
 
 catalog:

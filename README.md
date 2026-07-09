@@ -36,6 +36,12 @@ Bolt, and Lovable.
 Visit the [dotUI documentation](https://dotui.org/docs) for guides, component
 APIs, and theming reference.
 
+Two companion sites live in their own repos:
+[ds.dotui.org](https://ds.dotui.org) in
+[ds-directory](https://github.com/mehdibha/ds-directory) and
+[colors.dotui.org](https://colors.dotui.org) in
+[colors](https://github.com/mehdibha/colors).
+
 ## Community
 
 - **Discord** — for community support, questions, and tips, join our
