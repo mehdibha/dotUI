@@ -51,10 +51,10 @@ interface Algorithm {
 
 /** The shipping engine's generative algorithms (fixed is identity-only, so excluded). */
 const ALGORITHMS: Algorithm[] = [
-  { id: 'oklch', label: 'oklch · default' },
-  { id: 'tailwind', label: 'hue-torsion (tailwind preset)' },
-  { id: 'contrast', label: 'contrast · bg-aware' },
-  { id: 'material', label: 'material · HCT' },
+  { id: 'oklch', label: '@dotui/colors - oklch (default)' },
+  { id: 'tailwind', label: '@dotui/colors - hue torsion (tailwind-style)' },
+  { id: 'contrast', label: '@dotui/colors - contrast (background-aware)' },
+  { id: 'material', label: '@dotui/colors - material (HCT)' },
 ]
 
 interface Ramp {
@@ -245,7 +245,7 @@ function RampGrid({ seed, mode }: { seed: string; mode: Mode }) {
       // surface it only opt-in, since it doesn't represent what renders.
       if (mode === 'dark' && showRawKernel) {
         result.push({
-          label: `${algorithm.label} · kernel (not shipped)`,
+          label: `${algorithm.label} · engine dark output (never ships)`,
           colors: algorithmRamp(algorithm.id, seed, 'dark').colors,
           labels: [...STEPS],
           markStep: SOLID_STEP,
@@ -294,7 +294,7 @@ function RampGrid({ seed, mode }: { seed: string; mode: Mode }) {
             isSelected={showRawKernel}
             onChange={setShowRawKernel}
           >
-            Raw kernel dark
+            Show unused engine dark output (dark ships as flipped light)
           </Switch>
         )}
       </div>
