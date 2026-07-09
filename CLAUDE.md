@@ -63,7 +63,7 @@ When working on a component's styles, compare against the shadcn equivalent to c
 
 ### Commands
 
-- `pnpm dev:www` — dev server. In a fresh clone or worktree, run `pnpm build:registry` first or it 500s (`build` and `typecheck` run it themselves; `dev` does not).
+- `pnpm dev:www` — dev server. Like `build` and `typecheck`, it builds the registry first (~2s), so fresh clones, worktrees, and branch switches always serve current output.
 - `pnpm check` — oxlint + `oxfmt --check`; `pnpm check:fix` to auto-fix.
 - `pnpm typecheck` · `pnpm test` — vitest, covers `packages/colors`.
 
@@ -92,5 +92,5 @@ After modifying `www/src/registry/`, run `pnpm build:registry` and commit the re
 - PR titles become commit titles. Format `type(scope): summary` — describe the change, don't justify it (cut clauses like "with…", "to improve…"). Aim ~50–60 chars, but never drop information to hit it. Good: `docs: rewrite CLAUDE.md` · Bad: `docs: rewrite CLAUDE.md with real project context`.
 - Adding a tweak (new axis, variant, style param, semantic token) is a product decision: propose it and wait for approval before implementing — never slip one into a component PR.
 - Spot something worth a refactor or rewrite? Propose it — in a "Suggested refactors" note in the PR description, or a GitHub issue if bigger — never by expanding the current diff. Bar: recurring or task-impeding, and specific enough to act on; no "this could be cleaner". Skip areas with a planned rewrite (see Current state).
-- `pnpm build:references` is deterministic and safe to run wholesale — after touching a `types.ts`, regenerate and commit `www/src/modules/references/generated/` (CI's references-drift job fails on stale output). Documented props come from `types.ts`, not `base.tsx`. Commit full-run output: scoped `-f` runs can flip union member order in a few complex types.
+- `pnpm build:references` is deterministic and safe to run wholesale — after touching a `types.ts`, regenerate and commit `www/src/modules/docs/references/generated/` (CI's references-drift job fails on stale output). Documented props come from `types.ts`, not `base.tsx`. Commit full-run output: scoped `-f` runs can flip union member order in a few complex types.
 - `www/src/routeTree.gen.ts` is TanStack-generated; never edit it.
