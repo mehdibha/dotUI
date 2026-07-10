@@ -509,16 +509,46 @@ export function useCompositionPlayer({
     setHoverPausedState(next)
   }, [])
 
+  // A view transition lifts every named element into a snapshot overlay that is
+  // anchored to the viewport, not the scrolling page — so scrolling mid-morph
+  // makes the frozen snapshots detach and float. Skip the morph while scrolling,
+  // and snap any in-flight one to its end so it can't drift.
+  const scrollingRef = useRef(false)
+  const activeTransitionRef = useRef<{ skipTransition: () => void } | null>(
+    null,
+  )
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>
+    const onScroll = () => {
+      scrollingRef.current = true
+      activeTransitionRef.current?.skipTransition()
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        scrollingRef.current = false
+      }, 150)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      clearTimeout(timer)
+    }
+  }, [])
+
   const stepRef = useRef(0)
   const goToStep = useCallback((next: number) => {
     stepRef.current = next
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduce || !document.startViewTransition) {
+    if (reduce || scrollingRef.current || !document.startViewTransition) {
       setStep(next)
       return
     }
-    document.startViewTransition(() => {
+    const transition = document.startViewTransition(() => {
       flushSync(() => setStep(next))
+    })
+    activeTransitionRef.current = transition
+    transition.finished.finally(() => {
+      if (activeTransitionRef.current === transition)
+        activeTransitionRef.current = null
     })
   }, [])
 
