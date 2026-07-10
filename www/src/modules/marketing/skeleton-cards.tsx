@@ -5,7 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/registry/ui/card'
 import { Skeleton } from '@/registry/ui/skeleton'
 
 /*
- * Decorative skeleton-card rails that flank the real showcase grid on large
+ * Decorative skeleton-card rails that flank the real showcase grid on md+
  * screens — the same idea as shadcn's homepage `CardsSkeletonRails`. They live
  * in the gutters beside the container-aligned real grid and are clipped by the parent's
  * `overflow-hidden`, so they peek in from both edges and reveal more as the
@@ -174,7 +174,7 @@ export const SkeletonRail = memo(function SkeletonRail({
       isLoading
       aria-hidden="true"
       className={cn(
-        'relative hidden shrink-0 basis-[calc(var(--gutter)_-_--spacing(4))] overflow-hidden opacity-70 lg:block',
+        'relative hidden shrink-0 basis-[calc(var(--gutter)_-_--spacing(4))] overflow-hidden opacity-70 max-lg:basis-10 md:block',
         '[--rail-col:18rem] [--rail-w:calc(var(--rail-col)*2+var(--rail-gap))]',
         side === 'left'
           ? '[mask-image:linear-gradient(to_left,black_92%,transparent)]'
