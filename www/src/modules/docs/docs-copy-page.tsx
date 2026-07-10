@@ -91,7 +91,7 @@ export function DocsCopyPage({
   const { copyToClipboard, isCopied } = useCopyToClipboard()
 
   return (
-    <Group>
+    <Group className="hidden sm:flex">
       <Button size="sm" onPress={() => copyToClipboard(content)}>
         {isCopied ? (
           <CheckIcon data-icon-start="" />

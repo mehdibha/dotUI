@@ -1,7 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 
 import { Button, LinkButton } from '@/registry/ui/button'
-import { Group } from '@/registry/ui/group'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 
 type Neighbour = { name: string; path: string }
@@ -42,9 +41,9 @@ export function DocsPager({ neighbours }: { neighbours: Neighbours }) {
     )
 
   return (
-    <Group>
+    <div className="flex gap-2">
       {renderNeighbour(previous, <ChevronLeftIcon />, 'Go to previous page')}
       {renderNeighbour(next, <ChevronRightIcon />, 'Go to next page')}
-    </Group>
+    </div>
   )
 }

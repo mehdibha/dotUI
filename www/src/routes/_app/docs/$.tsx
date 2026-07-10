@@ -142,21 +142,21 @@ const clientLoader = browserCollections.docs.createClientLoader({
     return (
       <TOCProvider toc={toc}>
         <PageLayout className="mt-4 flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
-          <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 lg:px-0 lg:py-8 dark:text-neutral-300">
+          <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 lg:px-0 dark:text-neutral-300">
             <div data-page-header="" className="relative mb-2 space-y-3 pb-4">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div className="flex min-w-0 flex-col gap-2">
-                  <PageHeaderHeading className="xl:leading-none">
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between gap-3">
+                  <PageHeaderHeading className="min-w-0 xl:leading-none">
                     {frontmatter.title}
                   </PageHeaderHeading>
-                  <PageHeaderDescription>
-                    {frontmatter.description}
-                  </PageHeaderDescription>
+                  <div className="flex shrink-0 items-center gap-3">
+                    <DocsCopyPage content={rawContent} url={url} />
+                    <DocsPager neighbours={neighbours} />
+                  </div>
                 </div>
-                <div className="flex shrink-0 items-center gap-2">
-                  <DocsPager neighbours={neighbours} />
-                  <DocsCopyPage content={rawContent} url={url} />
-                </div>
+                <PageHeaderDescription>
+                  {frontmatter.description}
+                </PageHeaderDescription>
               </div>
               <div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_40%,transparent)] via-[color-mix(in_oklab,var(--color-border)_90%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
             </div>
@@ -182,7 +182,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
               (which is inset ~8px inside its button), mirroring how the sidebar
               text lines up with the logo on the left. */}
           {hasToc && (
-            <div className="sticky top-(--header-height) z-30 -mt-4 hidden w-16 shrink-0 justify-end self-start px-6 pt-10 md:flex lg:pt-12 xl:hidden">
+            <div className="sticky top-(--header-height) z-30 -mt-4 hidden w-16 shrink-0 justify-end self-start px-6 pt-10 md:flex xl:hidden">
               <MiniTOC />
             </div>
           )}
