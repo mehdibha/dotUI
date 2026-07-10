@@ -3,17 +3,20 @@ import 'shiki-magic-move/style.css'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { parseDate } from '@internationalized/date'
+import { PauseIcon, PlayIcon } from 'lucide-react'
 import { ShikiMagicMove } from 'shiki-magic-move/react'
 import { useTheme } from 'starter-themes'
 
 import {
   CalendarIcon,
+  ChevronDownIcon,
   MailIcon,
   MoreHorizontalIcon,
 } from '@/registry/__generated__/icons'
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 import { Calendar, RangeCalendar } from '@/registry/ui/calendar'
+import { Combobox } from '@/registry/ui/combobox'
 import { DateField } from '@/registry/ui/date-field'
 import { DatePicker, DateRangePicker } from '@/registry/ui/date-picker'
 import {
@@ -31,22 +34,26 @@ import {
   InputGroup,
   InputGroupAddon,
 } from '@/registry/ui/input'
+import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
 import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Modal } from '@/registry/ui/modal'
 import { Popover } from '@/registry/ui/popover'
+import { Select, SelectTrigger } from '@/registry/ui/select'
 import { TextField } from '@/registry/ui/text-field'
 import { highlighter } from '@/modules/docs/highlight'
 
-const STEP_MS = 3200
-
 interface Step {
   title: string
+  // How long the step stays on screen — proportional to how much the diff
+  // asks the reader to take in, not to total snippet length.
+  durationMs: number
   code: string
   preview: React.ReactNode
 }
 
 const firstStep: Step = {
   title: 'Input',
+  durationMs: 2400,
   code: `<Input placeholder="hello@example.com" />`,
   preview: (
     <Input
@@ -61,6 +68,7 @@ const steps: Step[] = [
   firstStep,
   {
     title: 'TextField',
+    durationMs: 2600,
     code: `<TextField>
   <Input placeholder="hello@example.com" />
 </TextField>`,
@@ -75,6 +83,7 @@ const steps: Step[] = [
   },
   {
     title: 'Label & Description',
+    durationMs: 3200,
     code: `<TextField>
   <Label>Email</Label>
   <Input placeholder="hello@example.com" />
@@ -95,6 +104,7 @@ const steps: Step[] = [
   },
   {
     title: 'InputGroup',
+    durationMs: 4200,
     code: `<TextField>
   <Label>Email</Label>
   <InputGroup>
@@ -130,6 +140,7 @@ const steps: Step[] = [
   },
   {
     title: 'DateField',
+    durationMs: 3400,
     code: `<DateField>
   <Label>Meeting date</Label>
   <InputGroup>
@@ -153,6 +164,7 @@ const steps: Step[] = [
   },
   {
     title: 'DatePicker',
+    durationMs: 4200,
     code: `<DatePicker>
   <Label>Meeting date</Label>
   <InputGroup>
@@ -194,6 +206,7 @@ const steps: Step[] = [
   },
   {
     title: 'DateRangePicker',
+    durationMs: 3600,
     code: `<DateRangePicker>
   <Label>Trip dates</Label>
   <InputGroup>
@@ -244,7 +257,8 @@ const steps: Step[] = [
     ),
   },
   {
-    title: 'Same picker, drawer overlay',
+    title: 'Drawer overlay',
+    durationMs: 3000,
     code: `<DateRangePicker>
   <Label>Trip dates</Label>
   <InputGroup>
@@ -295,40 +309,36 @@ const steps: Step[] = [
     ),
   },
   {
-    title: 'Dialog',
-    code: `<Dialog>
-  <Button>Create issue</Button>
-  <Modal>
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Create a new issue</DialogTitle>
-        <DialogDescription>
-          Report a bug or request a feature.
-        </DialogDescription>
-      </DialogHeader>
-    </DialogContent>
-  </Modal>
-</Dialog>`,
+    title: 'Select',
+    durationMs: 3400,
+    code: `<Select>
+  <Label>Provider</Label>
+  <SelectTrigger />
+  <Popover>
+    <ListBox>
+      <ListBoxItem>Perplexity</ListBoxItem>
+      <ListBoxItem>Replicate</ListBoxItem>
+      <ListBoxItem>Together AI</ListBoxItem>
+    </ListBox>
+  </Popover>
+</Select>`,
     preview: (
-      <Dialog>
-        <Button className="[view-transition-name:cmp-trigger]">
-          Create issue
-        </Button>
-        <Modal>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create a new issue</DialogTitle>
-              <DialogDescription>
-                Report a bug or request a feature.
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Modal>
-      </Dialog>
+      <Select className="w-56" defaultSelectedKey="perplexity">
+        <Label className="[view-transition-name:cmp-label]">Provider</Label>
+        <SelectTrigger className="[view-transition-name:cmp-trigger]" />
+        <Popover>
+          <ListBox>
+            <ListBoxItem id="perplexity">Perplexity</ListBoxItem>
+            <ListBoxItem id="replicate">Replicate</ListBoxItem>
+            <ListBoxItem id="together-ai">Together AI</ListBoxItem>
+          </ListBox>
+        </Popover>
+      </Select>
     ),
   },
   {
     title: 'Menu',
+    durationMs: 3200,
     code: `<Menu>
   <Button size="sm" isIconOnly>
     <MoreHorizontalIcon />
@@ -361,21 +371,116 @@ const steps: Step[] = [
       </Menu>
     ),
   },
+  {
+    title: 'Dialog',
+    durationMs: 3400,
+    code: `<Dialog>
+  <Button>Create issue</Button>
+  <Modal>
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Create a new issue</DialogTitle>
+        <DialogDescription>
+          Report a bug or request a feature.
+        </DialogDescription>
+      </DialogHeader>
+    </DialogContent>
+  </Modal>
+</Dialog>`,
+    preview: (
+      <Dialog>
+        <Button className="[view-transition-name:cmp-trigger]">
+          Create issue
+        </Button>
+        <Modal>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Create a new issue</DialogTitle>
+              <DialogDescription>
+                Report a bug or request a feature.
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Modal>
+      </Dialog>
+    ),
+  },
+  {
+    // The finale: every part introduced above, recomposed into one component.
+    title: 'ComboBox',
+    durationMs: 4200,
+    code: `<Combobox>
+  <Label>Country</Label>
+  <InputGroup>
+    <Input placeholder="Search countries…" />
+    <InputGroupAddon>
+      <Button size="sm" isIconOnly>
+        <ChevronDownIcon />
+      </Button>
+    </InputGroupAddon>
+  </InputGroup>
+  <Popover>
+    <ListBox>
+      <ListBoxItem>France</ListBoxItem>
+      <ListBoxItem>Germany</ListBoxItem>
+      <ListBoxItem>Tunisia</ListBoxItem>
+    </ListBox>
+  </Popover>
+</Combobox>`,
+    preview: (
+      <Combobox className="w-64">
+        <Label className="[view-transition-name:cmp-label]">Country</Label>
+        <InputGroup className="[view-transition-name:cmp-field]">
+          <Input placeholder="Search countries…" />
+          <InputGroupAddon>
+            <Button
+              size="sm"
+              isIconOnly
+              className="[view-transition-name:cmp-trigger]"
+            >
+              <ChevronDownIcon />
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+        <Popover>
+          <ListBox>
+            <ListBoxItem>France</ListBoxItem>
+            <ListBoxItem>Germany</ListBoxItem>
+            <ListBoxItem>Tunisia</ListBoxItem>
+          </ListBox>
+        </Popover>
+      </Combobox>
+    ),
+  },
 ]
 
-// Shared player: auto-advance while visible, pause on hover/focus, and route
-// every step change through a view transition so the preview's named parts
-// (field shell, label, trigger…) morph instead of swapping.
-export function useCompositionPlayer() {
+export type CompositionPlayer = ReturnType<typeof useCompositionPlayer>
+
+// Shared player: auto-advance while visible, with a CSS animation as the step
+// clock (see StepTimer) so the visible progress and the advance tick can never
+// drift. Hovering or focusing the showcase pauses; the play/pause button is a
+// sticky override. Every step change routes through a view transition so the
+// preview's named parts (field shell, label, trigger…) morph instead of swap.
+export function useCompositionPlayer({
+  durationScale = 1,
+}: { durationScale?: number } = {}) {
   const [step, setStep] = useState(0)
-  const [paused, setPaused] = useState(false)
+  const [userPaused, setUserPaused] = useState(false)
+  const [hoverPaused, setHoverPausedState] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [inView, setInView] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => setMounted(true), [])
+  useEffect(() => {
+    setMounted(true)
+    // Auto-play is motion — reduced-motion users opt in via the play button.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setUserPaused(true)
+    }
+  }, [])
 
-  // Only animate while on screen — the loop parks itself otherwise.
+  // Only animate while on screen — the clock parks itself otherwise.
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
@@ -385,6 +490,23 @@ export function useCompositionPlayer() {
     )
     observer.observe(el)
     return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const onChange = () => setHidden(document.hidden)
+    document.addEventListener('visibilitychange', onChange)
+    return () => document.removeEventListener('visibilitychange', onChange)
+  }, [])
+
+  // Touch devices fire synthetic mouseenter with no matching leave — hover
+  // pause would stick forever, so it only applies to real pointers.
+  const setHoverPaused = useCallback((next: boolean) => {
+    if (
+      next &&
+      !window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    )
+      return
+    setHoverPausedState(next)
   }, [])
 
   const stepRef = useRef(0)
@@ -400,32 +522,172 @@ export function useCompositionPlayer() {
     })
   }, [])
 
-  useEffect(() => {
-    if (paused || !inView || !mounted) return
-    const id = setInterval(
-      () => goToStep((stepRef.current + 1) % steps.length),
-      STEP_MS,
-    )
-    return () => clearInterval(id)
-  }, [paused, inView, mounted, goToStep])
+  const advance = useCallback(
+    () => goToStep((stepRef.current + 1) % steps.length),
+    [goToStep],
+  )
 
+  const togglePlay = useCallback(() => {
+    setUserPaused((paused) => !paused)
+    // Resuming with the cursor still inside must actually resume.
+    setHoverPausedState(false)
+  }, [])
+
+  const playing = mounted && inView && !hidden && !userPaused && !hoverPaused
   const current = steps[step] ?? firstStep
+  const stepDurationMs = current.durationMs * durationScale
   const reducedMotion =
     mounted && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  // Under reduced motion the CSS clock is disabled (StepTimer renders nothing),
+  // so an explicit play falls back to a plain timeout with instant swaps.
+  useEffect(() => {
+    if (!playing || !reducedMotion) return
+    const id = setTimeout(advance, stepDurationMs)
+    return () => clearTimeout(id)
+  }, [playing, reducedMotion, step, stepDurationMs, advance])
 
   return {
     steps,
     step,
     goToStep,
-    setPaused,
+    advance,
+    playing,
+    userPaused,
+    togglePlay,
+    setHoverPaused,
     mounted,
     containerRef,
     current,
+    stepDurationMs,
     reducedMotion,
   }
 }
 
-export function CompositionTransitionStyles() {
+// The step clock: an invisible bar animating over the step's duration. Render
+// exactly one per player — onAnimationEnd is what advances the sequence, so
+// the decorative progress bars (same animation, same play state) stay in sync
+// with the actual tick by construction.
+export function StepTimer({ player }: { player: CompositionPlayer }) {
+  const { step, stepDurationMs, playing, advance, reducedMotion } = player
+  if (reducedMotion) return null
+  return (
+    <span
+      key={step}
+      aria-hidden
+      onAnimationEnd={advance}
+      className="pointer-events-none fixed size-px opacity-0"
+      style={progressStyle(stepDurationMs, playing, 'x')}
+    />
+  )
+}
+
+function progressStyle(
+  durationMs: number,
+  playing: boolean,
+  axis: 'x' | 'y',
+): React.CSSProperties {
+  return {
+    animationName: axis === 'x' ? 'cmp-progress-x' : 'cmp-progress-y',
+    animationDuration: `${durationMs}ms`,
+    animationTimingFunction: 'linear',
+    animationFillMode: 'both',
+    animationPlayState: playing ? 'running' : 'paused',
+    willChange: 'transform',
+  }
+}
+
+// A track clipping a full-size bar that slides in via translate — scaling a
+// hairline bar re-rasterizes it every frame and visibly steps at slow speeds.
+export function StepProgress({
+  player,
+  axis = 'x',
+  className,
+}: {
+  player: CompositionPlayer
+  axis?: 'x' | 'y'
+  className?: string
+}) {
+  const { step, stepDurationMs, playing, reducedMotion } = player
+  return (
+    <span key={step} aria-hidden className={cn('overflow-hidden', className)}>
+      <span
+        className="block size-full bg-fg"
+        style={
+          reducedMotion
+            ? undefined
+            : progressStyle(stepDurationMs, playing, axis)
+        }
+      />
+    </span>
+  )
+}
+
+export function StepDots({
+  player,
+  className,
+}: {
+  player: CompositionPlayer
+  className?: string
+}) {
+  const { steps, step, goToStep } = player
+  return (
+    <div className={cn('flex items-center', className)}>
+      {steps.map((s, i) => (
+        <button
+          key={s.title}
+          type="button"
+          aria-label={`Step ${i + 1}: ${s.title}`}
+          aria-current={i === step ? 'step' : undefined}
+          onClick={() => goToStep(i)}
+          className="group flex h-8 cursor-pointer items-center px-[3px]"
+        >
+          <span
+            className={cn(
+              'relative h-1 overflow-hidden rounded-full transition-all duration-300',
+              i === step
+                ? 'w-5 bg-border'
+                : 'w-1.5 bg-border group-hover:bg-fg-muted',
+            )}
+          >
+            {i === step && (
+              <StepProgress
+                player={player}
+                className="absolute inset-0 block rounded-full"
+              />
+            )}
+          </span>
+        </button>
+      ))}
+    </div>
+  )
+}
+
+export function PlayPauseButton({
+  player,
+  className,
+}: {
+  player: CompositionPlayer
+  className?: string
+}) {
+  const { userPaused, togglePlay } = player
+  return (
+    <Button
+      size="sm"
+      variant="quiet"
+      isIconOnly
+      aria-label={userPaused ? 'Play steps' : 'Pause steps'}
+      onPress={togglePlay}
+      className={cn('text-fg-muted', className)}
+    >
+      {userPaused ? <PlayIcon /> : <PauseIcon />}
+    </Button>
+  )
+}
+
+export function CompositionTransitionStyles({
+  morphMs = 450,
+}: { morphMs?: number } = {}) {
   return (
     <style>{`
       /* Keep the page interactive while a transition runs, and confine the
@@ -437,11 +699,13 @@ export function CompositionTransitionStyles() {
       ::view-transition-group(cmp-label),
       ::view-transition-group(cmp-desc),
       ::view-transition-group(cmp-trigger) {
-        animation-duration: 450ms;
+        animation-duration: ${morphMs}ms;
         animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
       }
       ::view-transition-old(cmp-code) { display: none; }
       ::view-transition-new(cmp-code) { animation: none; }
+      @keyframes cmp-progress-x { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+      @keyframes cmp-progress-y { from { transform: translateY(-100%); } to { transform: translateY(0); } }
       @media (prefers-reduced-motion: reduce) {
         ::view-transition-group(*),
         ::view-transition-old(*),
@@ -454,9 +718,13 @@ export function CompositionTransitionStyles() {
 export function CompositionCode({
   code,
   reducedMotion,
+  duration = 700,
+  stagger = 2,
 }: {
   code: string
   reducedMotion: boolean
+  duration?: number
+  stagger?: number
 }) {
   const { resolvedTheme } = useTheme()
   return (
@@ -466,8 +734,8 @@ export function CompositionCode({
       theme={resolvedTheme === 'light' ? 'github-light' : 'github-dark'}
       code={code}
       options={{
-        duration: reducedMotion ? 0 : 700,
-        stagger: 2,
+        duration: reducedMotion ? 0 : duration,
+        stagger,
         containerStyle: false,
       }}
     />
@@ -475,47 +743,28 @@ export function CompositionCode({
 }
 
 export function CompositionAnimation({ className }: { className?: string }) {
-  const {
-    step,
-    goToStep,
-    setPaused,
-    mounted,
-    containerRef,
-    current,
-    reducedMotion,
-  } = useCompositionPlayer()
+  const player = useCompositionPlayer()
+  const { mounted, containerRef, current, reducedMotion, setHoverPaused } =
+    player
 
   return (
     <div
       ref={containerRef}
       className={cn('overflow-hidden rounded-md border bg-card', className)}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
+      onMouseEnter={() => setHoverPaused(true)}
+      onMouseLeave={() => setHoverPaused(false)}
+      onFocus={() => setHoverPaused(true)}
+      onBlur={() => setHoverPaused(false)}
     >
       <CompositionTransitionStyles />
-      <div className="flex items-center justify-between gap-2 border-b py-1.5 pr-2.5 pl-2.5">
+      <StepTimer player={player} />
+      <div className="flex items-center justify-between gap-2 border-b py-1.5 pr-1.5 pl-2.5">
         <span className="truncate font-mono text-[0.8125rem] text-fg-muted">
           {current.title}
         </span>
-        <div className="flex items-center">
-          {steps.map((s, i) => (
-            <button
-              key={s.title}
-              type="button"
-              aria-label={`Step ${i + 1}: ${s.title}`}
-              onClick={() => goToStep(i)}
-              className="group flex size-5 cursor-pointer items-center justify-center"
-            >
-              <span
-                className={cn(
-                  'size-1.5 rounded-full transition-colors',
-                  i === step ? 'bg-fg' : 'bg-border group-hover:bg-fg-muted',
-                )}
-              />
-            </button>
-          ))}
+        <div className="flex items-center gap-1">
+          <StepDots player={player} />
+          <PlayPauseButton player={player} />
         </div>
       </div>
       <div className="grid sm:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
