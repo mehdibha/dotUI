@@ -2,6 +2,7 @@
 
 import { lazy, Suspense } from 'react'
 import {
+  ClientOnly,
   createRootRoute,
   HeadContent,
   Outlet,
@@ -119,10 +120,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="min-h-screen bg-bg font-sans text-fg antialiased">
         {children}
+        {/* ClientOnly: the devtools touch `window` at module scope, which
+            crashes build-time prerendering when previews include them. */}
         {RouterDevtools && (
-          <Suspense fallback={null}>
-            <RouterDevtools position="bottom-right" />
-          </Suspense>
+          <ClientOnly fallback={null}>
+            <Suspense fallback={null}>
+              <RouterDevtools position="bottom-right" />
+            </Suspense>
+          </ClientOnly>
         )}
         <Scripts />
       </body>
