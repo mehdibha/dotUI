@@ -82,7 +82,8 @@ Every config needs a `default` — and it **must match the current design** so n
 A small **trigger** is always docked to a screen edge (default: centre-right; a count badge shows how many controls are registered). Drag it to reposition — it follows the cursor and **snaps to the nearest edge** (left/right) when you let go, keeping the height you dropped it at.
 
 - **Click the trigger** → opens the panel as a popover beside it (the trigger stays put).
-- **Close** (×), click outside, or press **Escape** → closes the popover.
+- **Close** (×) or press **Escape** → closes the popover. Clicking the page does NOT close it — the page stays interactive while you tweak.
+- **Minimize** (⌄⌃) → collapses the panel to its header bar; expand the same way.
 - **⌘ .** (or **Ctrl .**) → toggles the popover from anywhere.
 - **Reset** (↺) → all controls back to their defaults.
 - **Copy for AI** (⧉) → copies a summary of the current selections to paste back to the agent.
