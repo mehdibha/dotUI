@@ -24,7 +24,7 @@ export function HomePage() {
     <div>
       {/* Hero section */}
       <section className="container flex flex-col pt-6 sm:pt-8 md:pt-12">
-        <div className="flex flex-col items-center gap-3 text-center md:gap-4">
+        <div className="flex flex-col items-start gap-3 md:gap-4">
           <Announcement />
           <h1
             aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your code, or anywhere."
@@ -38,7 +38,7 @@ export function HomePage() {
               />
             </span>
           </h1>
-          <p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
+          <p className="max-w-2xl text-base text-pretty text-fg-muted sm:text-lg">
             Beautiful components, accessibility out of the box, composition, and
             more.
             <br />
