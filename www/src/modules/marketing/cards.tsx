@@ -20,7 +20,7 @@ export function Cards() {
   return (
     <div className="flex flex-col [--container-max:1440px] [--container-pad:--spacing(4)] [--gutter:calc((100%_-_min(100%,var(--container-max)))/2_+_var(--container-pad))] [--rail-gap:--spacing(4)] sm:[--container-pad:--spacing(6)] lg:[--container-pad:--spacing(10)] 3xl:[--container-max:1536px]">
       <PresetSwitcher selected={selected} onSelect={handleSelect} />
-      <div className="relative flex gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] pl-(--gutter) [--mask-clear:45px] [--mask-solid:180px] md:pl-0">
+      <div className="relative flex gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] pl-(--gutter) [--mask-clear:45px] [--mask-solid:180px] lg:pl-0">
         <SkeletonRail side="left" />
         <div className="relative z-20 min-w-0 flex-1 max-lg:overflow-hidden max-lg:[mask-image:linear-gradient(to_right,black_calc(100%_-_2.5rem),transparent)]">
           <DesignSystemProvider
