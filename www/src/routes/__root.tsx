@@ -17,10 +17,16 @@ import { useTweak } from '@/dev/tweaker'
 
 import appCss from '@/styles.css?url'
 
-// Dev-only floating panel for live design/layout exploration (see src/dev/tweaker).
-const DevTweaker = import.meta.env.DEV
-  ? lazy(() => import('@/dev/tweaker').then((m) => ({ default: m.DevTweaker })))
-  : null
+// Floating panel for live design/layout exploration (see src/dev/tweaker).
+// Dev + Vercel previews; the !SSR guard keeps the chunk out of the server
+// bundle so build-time prerendering never evaluates it.
+const DevTweaker =
+  !import.meta.env.SSR &&
+  (import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview')
+    ? lazy(() =>
+        import('@/dev/tweaker').then((m) => ({ default: m.DevTweaker })),
+      )
+    : null
 
 // Tweaker A/B for the proposed button icon-text gap bump: default/sm,
 // comfortable/xs+sm go 4px → 6px (also catches compact md/lg — same h-7/h-8
