@@ -18,9 +18,9 @@ export function Cards() {
   }, [])
 
   return (
-    <div className="flex flex-col [--container-max:1440px] [--container-pad:--spacing(4)] [--grid-max:1500px] [--gutter:calc((100%_-_min(100%,var(--container-max)))/2_+_var(--container-pad))] [--rail-gap:--spacing(4)] [--rail-peek:7rem] sm:[--container-pad:--spacing(6)] lg:[--container-pad:--spacing(10)] 3xl:[--container-max:1536px]">
+    <div className="flex flex-col [--container-max:1440px] [--container-pad:--spacing(4)] [--gutter:calc((100%_-_min(100%,var(--container-max)))/2_+_var(--container-pad))] [--rail-gap:--spacing(4)] sm:[--container-pad:--spacing(6)] lg:[--container-pad:--spacing(10)] 3xl:[--container-max:1536px]">
       <PresetSwitcher selected={selected} onSelect={handleSelect} />
-      <div className="relative flex gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear))),linear-gradient(to_right,black_calc(100%_-_2.5rem),transparent)] [mask-composite:intersect] pl-(--gutter) [--mask-clear:45px] [--mask-solid:180px] lg:pl-0">
+      <div className="relative flex gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear))),linear-gradient(to_right,black_calc(100%_-_2.5rem),transparent)] [mask-composite:intersect] pl-(--gutter) [--mask-clear:45px] [--mask-solid:180px] lg:[mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] lg:pl-0">
         <SkeletonRail side="left" />
         <DesignSystemProvider
           scoped
@@ -29,7 +29,7 @@ export function Cards() {
           density={preset.density}
           color={preset.color}
         >
-          <CardsGrid className="relative z-20 w-[max(52rem,150vw)] max-w-none shrink-0 [zoom:0.8] lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink lg:[zoom:1]" />
+          <CardsGrid className="relative z-20 w-[max(52rem,150vw)] max-w-none shrink-0 [zoom:0.8] lg:w-full lg:min-w-0 lg:shrink lg:[zoom:1]" />
         </DesignSystemProvider>
         <SkeletonRail side="right" />
       </div>

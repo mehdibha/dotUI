@@ -174,11 +174,11 @@ export const SkeletonRail = memo(function SkeletonRail({
       isLoading
       aria-hidden="true"
       className={cn(
-        'relative hidden shrink-0 overflow-hidden opacity-70 lg:block',
+        'relative hidden shrink-0 basis-[calc(var(--gutter)_-_--spacing(4))] overflow-hidden opacity-70 lg:block',
         '[--rail-col:18rem] [--rail-w:calc(var(--rail-col)*2+var(--rail-gap))]',
         side === 'left'
-          ? 'basis-[calc(var(--gutter)_-_--spacing(4))] [mask-image:linear-gradient(to_left,black_92%,transparent)]'
-          : 'grow basis-(--rail-peek) [mask-image:linear-gradient(to_right,black_92%,transparent)]',
+          ? '[mask-image:linear-gradient(to_left,black_92%,transparent)]'
+          : '[mask-image:linear-gradient(to_right,black_92%,transparent)]',
       )}
     >
       <div
