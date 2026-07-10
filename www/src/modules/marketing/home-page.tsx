@@ -2,7 +2,6 @@ import { Link } from 'react-aria-components'
 
 import { LinkButton } from '@/registry/ui/button'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
-import { Announcement } from '@/components/announcement'
 import { BaseUiIcon } from '@/components/icons/base-ui'
 import { BoltIcon } from '@/components/icons/bolt'
 import { LovableIcon } from '@/components/icons/lovable'
@@ -14,6 +13,12 @@ import { TypeScriptIcon } from '@/components/icons/typescript'
 import { V0Icon } from '@/components/icons/v0'
 import { Footer } from '@/components/layout/footer'
 import {
+  PageActions,
+  PageDescription,
+  PageHeader,
+  PageTitle,
+} from '@/components/page-header'
+import {
   AnimatedHeadline,
   type RotatingTextItem,
 } from '@/components/rotating-text'
@@ -22,43 +27,36 @@ import Cards from '@/modules/marketing/cards'
 export function HomePage() {
   return (
     <div>
-      {/* Hero section */}
-      <section className="container flex flex-col pt-6 sm:pt-8 md:pt-12">
-        <div className="flex flex-col items-start gap-3 md:gap-4">
-          <Announcement />
-          <h1
-            aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your code, or anywhere."
-            className="text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl"
-          >
-            <span aria-hidden="true">
-              <AnimatedHeadline
-                lead="Build your design system. Ship it"
-                items={EXPORT_TARGETS}
-                trailing="."
-              />
-            </span>
-          </h1>
-          <p className="max-w-2xl text-base text-pretty text-fg-muted sm:text-lg">
-            Beautiful components, accessibility out of the box, composition, and
-            more.
-            <br />
-            Powered by{' '}
-            <ReactAriaIcon className="inline-flex h-[0.85em] w-auto translate-y-[-0.08em]" />{' '}
-            <span className="font-medium text-fg">React Aria</span> and{' '}
-            <BaseUiIcon className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" />{' '}
-            <span className="font-medium text-fg">Base&nbsp;UI</span>.
-            {/* Install with <ShadcnIcon  className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" /> Shadcn CLI */}
-          </p>
-          <div className="flex w-full flex-col gap-2 pt-1 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
-            <LinkButton href="/create" variant="primary" size="lg">
-              Launch the editor
-            </LinkButton>
-            <LinkButton href="/docs/components" variant="default" size="lg">
-              View components
-            </LinkButton>
-          </div>
-        </div>
-      </section>
+      <PageHeader>
+        <PageTitle aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your code, or anywhere.">
+          <span aria-hidden="true">
+            <AnimatedHeadline
+              lead="Build your design system. Ship it"
+              items={EXPORT_TARGETS}
+              trailing="."
+            />
+          </span>
+        </PageTitle>
+        <PageDescription>
+          Beautiful components, accessibility out of the box, composition, and
+          more.
+          <br />
+          Powered by{' '}
+          <ReactAriaIcon className="inline-flex h-[0.85em] w-auto translate-y-[-0.08em]" />{' '}
+          <span className="font-medium text-fg">React Aria</span> and{' '}
+          <BaseUiIcon className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" />{' '}
+          <span className="font-medium text-fg">Base&nbsp;UI</span>.
+          {/* Install with <ShadcnIcon  className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" /> Shadcn CLI */}
+        </PageDescription>
+        <PageActions>
+          <LinkButton href="/create" variant="primary" size="lg">
+            Launch the editor
+          </LinkButton>
+          <LinkButton href="/docs/components" variant="default" size="lg">
+            View components
+          </LinkButton>
+        </PageActions>
+      </PageHeader>
 
       <section className="mt-16">
         <Cards />
