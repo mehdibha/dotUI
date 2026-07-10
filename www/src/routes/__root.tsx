@@ -36,8 +36,11 @@ function ButtonGapTweak() {
 }
 
 // Router devtools: shown in dev and on Vercel previews, stripped from production.
+// The !SSR guard keeps the chunk out of the server bundle entirely — it touches
+// `window` at module scope, which crashes build-time prerendering.
 const RouterDevtools =
-  import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'
+  !import.meta.env.SSR &&
+  (import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview')
     ? lazy(() =>
         import('@tanstack/react-router-devtools').then((m) => ({
           default: m.TanStackRouterDevtoolsInProd,
