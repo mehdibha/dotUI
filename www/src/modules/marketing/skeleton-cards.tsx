@@ -5,12 +5,14 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/registry/ui/card'
 import { Skeleton } from '@/registry/ui/skeleton'
 
 /*
- * Decorative skeleton-card rails that flank the real showcase grid on large
- * screens — the same idea as shadcn's homepage `CardsSkeletonRails`. They live
- * in the gutters beside the centered real grid and are clipped by the parent's
- * `overflow-hidden`, so they peek in from both edges and reveal more as the
- * viewport widens. Purely decorative: wrapped in a single <Skeleton isLoading>
- * (which adds `inert` + shimmer) and `aria-hidden`.
+ * Decorative skeleton-card rails that flank the real showcase grid — the same
+ * idea as shadcn's homepage `CardsSkeletonRails`. From lg up both rails sit
+ * in-flow in the symmetric container gutters. Below lg only the left rail shows,
+ * as a thin absolute sliver inside the left gutter (the grid bleeds off the right
+ * edge there, so a right rail would overlap it). They're clipped by
+ * `overflow-hidden` and reveal more as the viewport widens. Purely decorative:
+ * wrapped in a single <Skeleton isLoading> (which adds `inert` + shimmer) and
+ * `aria-hidden`.
  */
 
 // A single shimmering block. `data-skeleton` is picked up by the parent
@@ -174,11 +176,11 @@ export const SkeletonRail = memo(function SkeletonRail({
       isLoading
       aria-hidden="true"
       className={cn(
-        'relative hidden shrink-0 grow basis-(--rail-peek) overflow-hidden opacity-70 lg:block',
+        'shrink-0 overflow-hidden opacity-70',
         '[--rail-col:18rem] [--rail-w:calc(var(--rail-col)*2+var(--rail-gap))]',
         side === 'left'
-          ? '[mask-image:linear-gradient(to_left,black_92%,transparent)]'
-          : '[mask-image:linear-gradient(to_right,black_92%,transparent)]',
+          ? 'absolute inset-y-0 left-0 hidden w-(--gutter) [mask-image:linear-gradient(to_right,black_45%,transparent)] md:block lg:relative lg:inset-y-auto lg:w-auto lg:basis-[calc(var(--gutter)_-_--spacing(4))] lg:[mask-image:linear-gradient(to_left,black_92%,transparent)]'
+          : 'relative hidden basis-[calc(var(--gutter)_-_--spacing(4))] [mask-image:linear-gradient(to_right,black_92%,transparent)] lg:block',
       )}
     >
       <div

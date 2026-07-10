@@ -4,7 +4,12 @@ import { useState } from 'react'
 
 import { LinkButton } from '@/registry/ui/button'
 import { Footer } from '@/components/layout/footer'
-import { PageHero } from '@/components/page-hero'
+import {
+  PageActions,
+  PageDescription,
+  PageHeader,
+  PageTitle,
+} from '@/components/page-header'
 
 import { PresetCard } from './preset-card'
 import { PresetModal } from './preset-modal'
@@ -19,23 +24,24 @@ export function PresetsPage() {
       {/* The <main> landmark lives in the shared _app layout; use a fragment here
           so we don't nest a second one. */}
       <>
-        <PageHero
-          eyebrow="Curated design systems"
-          title={
-            <>
-              Start from a{' '}
-              <span className="font-bold italic">beautiful preset</span>.
-            </>
-          }
-          description={`${PRESETS.length} ready-made design systems. Preview one live, then open it in the editor and make it yours.`}
-        >
-          <LinkButton href="/create" variant="primary" size="lg">
-            Launch the editor
-          </LinkButton>
-          <LinkButton href="/docs/components" variant="default" size="lg">
-            View components
-          </LinkButton>
-        </PageHero>
+        <PageHeader>
+          <PageTitle>
+            Start from a{' '}
+            <span className="font-bold italic">beautiful preset</span>.
+          </PageTitle>
+          <PageDescription>
+            {PRESETS.length} ready-made design systems. Preview one live, then
+            open it in the editor and make it yours.
+          </PageDescription>
+          <PageActions>
+            <LinkButton href="/create" variant="primary" size="lg">
+              Launch the editor
+            </LinkButton>
+            <LinkButton href="/docs/components" variant="default" size="lg">
+              View components
+            </LinkButton>
+          </PageActions>
+        </PageHeader>
 
         {/* Gallery — the same grid rhythm as the /charts showcase. */}
         <section className="container mt-12 sm:mt-16">
