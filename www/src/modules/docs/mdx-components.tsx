@@ -12,6 +12,7 @@ import {
   CodeBlockTabsTrigger,
 } from '@/modules/docs/code-block-tabs'
 import { ComponentsGrid } from '@/modules/docs/components-list/components-grid'
+import { CompositionAnimation } from '@/modules/docs/composition-animation'
 import {
   Demo,
   DemoCode,
@@ -209,4 +210,13 @@ export const mdxComponents: MDXComponents = {
     <Reference className={cn('mt-4', className)} {...props} />
   ),
   ComponentsGrid,
+  CompositionAnimation: ({
+    className,
+    ...props
+  }: React.ComponentProps<typeof CompositionAnimation>) => (
+    <CompositionAnimation
+      className={cn('not-first:mt-6', className)}
+      {...props}
+    />
+  ),
 }

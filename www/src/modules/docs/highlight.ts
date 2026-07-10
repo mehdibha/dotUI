@@ -21,6 +21,9 @@ const highlighter = createHighlighterCoreSync({
   engine: createJavaScriptRegexEngine({ forgiving: true }),
 })
 
+/** The raw highlighter, for consumers that need token-level access (magic-move). */
+export { highlighter }
+
 /** Highlight TSX to HAST with the same dual-theme CSS variables the build uses. */
 export function highlightTsx(code: string): Root {
   return highlighter.codeToHast(code, {
