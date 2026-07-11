@@ -10,6 +10,7 @@
     "build": "pnpm build:registry && NODE_OPTIONS='--max-old-space-size=8192' vite build && pnpm build:postprocess",
     "build:postprocess": "node scripts/patch-vercel-config.mjs",
     "preview": "vite preview",
+    "perf:budget": "node scripts/perf-budget.mjs",
     "typecheck": "pnpm build:registry && tsc --noEmit",
     "clean": "git clean -xdf .output .nitro .cache .turbo node_modules",
     "build:references": "tsx scripts/api-docs-builder/src/index.ts"

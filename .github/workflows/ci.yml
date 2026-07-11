@@ -86,3 +86,18 @@ jobs:
           git status --porcelain -- www/src/modules/docs/references/generated/ | grep -q . \
           && { git status --porcelain -- www/src/modules/docs/references/generated/; echo '::error::Committed API reference files are out of date. Run `pnpm build:references` and commit the result.'; exit 1; } \
           || true
+
+  perf-budget:
+    runs-on: ubuntu-latest
+    name: Check client bundle stays within perf budget
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+
+      - name: Build www (production)
+        run: pnpm build:www
+
+      - name: Assert client bundle within perf budget
+        run: node www/scripts/perf-budget.mjs

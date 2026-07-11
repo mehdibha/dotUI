@@ -1,0 +1,12 @@
+{
+  "comment": "Client-bundle perf budget for the production build. Thresholds sit just above the post-fix numbers (shiki off the entry chunk, zod deduped, search lazy-loaded, react-aria/base-ui grouped into vendor chunks). They exist to catch silent regressions of those wins — chiefly shiki returning to the entry chunk and the modulepreload storm coming back. Measured by scripts/perf-budget.mjs against www/.output/public. Raise a threshold only with a deliberate, reviewed reason.",
+  "entryChunkGzKB": 245,
+  "pages": {
+    "home": { "path": "index.html", "initialGzKB": 710, "preloads": 63 },
+    "create": {
+      "path": "create/index.html",
+      "initialGzKB": 720,
+      "preloads": 66
+    }
+  }
+}
