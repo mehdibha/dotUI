@@ -11,6 +11,31 @@ export default defineConfig({
   server: {
     port: 4444,
   },
+  environments: {
+    client: {
+      build: {
+        rollupOptions: {
+          output: {
+            // The react-aria / base-ui vendor graph is split into ~100 tiny
+            // per-hook chunks that all sit in the shared client graph, so every
+            // page modulepreloads the lot — a request storm for no byte benefit.
+            // Group them into a few stable chunks (client build only, so the
+            // nitro server build is untouched). advancedChunks' minShareCount
+            // keeps route-only modules out, avoiding cross-route duplication.
+            advancedChunks: {
+              groups: [
+                {
+                  name: 'react-aria',
+                  test: /[\\/](react-aria-components|react-aria|react-stately|@react-aria|@react-stately|@react-types|@internationalized)[\\/]/,
+                },
+                { name: 'base-ui', test: /[\\/]@base-ui[\\/]/ },
+              ],
+            },
+          },
+        },
+      },
+    },
+  },
   resolve: {
     alias: [
       {
