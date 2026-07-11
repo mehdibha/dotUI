@@ -42,6 +42,11 @@ supportedArchitectures:
 overrides:
   '@types/react': 19.2.2
   '@types/react-dom': 19.2.1
+  # Collapse the two zod v4 minors that ship to the client — @dotui/colors
+  # (4.2.1) and @hookform/resolvers + fumadocs-core (4.4.3) — onto one instance
+  # so zod isn't bundled twice. Scoped to ^4 so zod v3 (dev-only, via
+  # @modelcontextprotocol/sdk) is left alone.
+  'zod@^4': 4.4.3
 
 # @hookform/resolvers/zod imports zod/v4/core but doesn't declare zod as a
 # peer, so pnpm never links zod into its instance; the import only survives
