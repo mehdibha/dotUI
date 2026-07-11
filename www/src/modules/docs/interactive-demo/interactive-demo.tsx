@@ -6,6 +6,7 @@ import {
   type ComponentType,
 } from 'react'
 import { flushSync } from 'react-dom'
+import type { Root } from 'hast'
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -49,6 +50,8 @@ interface InteractiveDemoProps {
   controls: SerializableControl[]
   codeTemplate: CodeTemplate
   className?: string
+  /** Build-time highlighted HAST for the initial code (see DynamicPre). */
+  initialHast?: Root
 }
 
 export function InteractiveDemo({
@@ -56,6 +59,7 @@ export function InteractiveDemo({
   controls,
   codeTemplate,
   className,
+  initialHast,
 }: InteractiveDemoProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [controlsOpen, setControlsOpen] = useState(false)
@@ -231,7 +235,9 @@ export function InteractiveDemo({
           </Button>
         }
       >
-        <DynamicPre lang="tsx">{displayedCode}</DynamicPre>
+        <DynamicPre lang="tsx" initialHast={initialHast}>
+          {displayedCode}
+        </DynamicPre>
       </CodeBlock>
     </div>
   )

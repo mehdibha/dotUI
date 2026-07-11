@@ -10,7 +10,10 @@ import { createHighlighter, type HighlighterGeneric } from 'shiki'
 import type { Plugin } from 'unified'
 import { visit } from 'unist-util-visit'
 
+import { renderCode } from '../codegen/code-template'
 import { buildSourceOverlay } from '../codegen/source-overlay'
+import { highlightTsx } from '../highlight'
+import { defaultControlValues } from '../interactive-demo/control-defaults'
 import {
   buildControlsFromReference,
   enrichControlsForSerialization,
@@ -702,12 +705,23 @@ async function processInteractiveDemoNode(
       componentName: info.name,
     })
 
+    // 4. Highlight the initial code (default controls, collapsed) at build time so
+    //    the client's first paint is highlighted without shipping the runtime
+    //    highlighter. Uses the same highlightTsx the client would — identical HAST.
+    const initialCode = renderCode(
+      codeTemplate,
+      defaultControlValues(enrichedControls),
+      { expanded: false },
+    )
+    const initialHast = highlightTsx(initialCode)
+
     return {
       nodeInfo: info,
       importName: `${toPascalCase(info.name)}Playground`,
       importPath: `@/registry/ui/${info.name}/demos/${fileSlug}`,
       controls: enrichedControls,
       codeTemplate,
+      initialHast,
     }
   } catch (error) {
     console.error(
@@ -763,6 +777,11 @@ function transformInteractiveDemoNode(
   // codeTemplate={JSON.parse("…")}
   node.attributes.push(
     makeJsonParseAttr('codeTemplate', JSON.stringify(processed.codeTemplate)),
+  )
+
+  // initialHast={JSON.parse("…")} — build-time highlighted initial code
+  node.attributes.push(
+    makeJsonParseAttr('initialHast', JSON.stringify(processed.initialHast)),
   )
 }
 

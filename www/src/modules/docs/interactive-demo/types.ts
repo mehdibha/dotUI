@@ -3,6 +3,7 @@
  * Controls are enriched at build time and passed as props to the client component.
  */
 
+import type { Root } from 'hast'
 import type { MdxJsxFlowElementHast } from 'mdast-util-mdx-jsx'
 
 import type { CodeTemplate } from '../codegen/code-template'
@@ -159,4 +160,10 @@ export interface ProcessedInteractiveDemo {
   controls: SerializableControl[]
   /** Template-with-holes over the demo source; fills the displayed code. */
   codeTemplate: CodeTemplate
+  /**
+   * Build-time highlighted HAST for the demo's initial code (default controls,
+   * collapsed). Lets the client render a highlighted first paint without loading
+   * the runtime shiki highlighter — it loads lazily only after a control moves.
+   */
+  initialHast: Root
 }
