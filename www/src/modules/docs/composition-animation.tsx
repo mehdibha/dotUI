@@ -49,6 +49,10 @@ interface Step {
   durationMs: number
   code: string
   preview: React.ReactNode
+  // Short transitional beat that plays during auto-advance but isn't a
+  // clickable stop in the pagination (e.g. building an InputGroup addon by
+  // addon before landing on the headline step).
+  mid?: boolean
 }
 
 const firstStep: Step = {
@@ -103,6 +107,61 @@ const steps: Step[] = [
     ),
   },
   {
+    // Mid beat: wrap the input in an InputGroup — no addons yet.
+    title: 'InputGroup',
+    mid: true,
+    durationMs: 1500,
+    code: `<TextField>
+  <Label>Email</Label>
+  <InputGroup>
+    <Input placeholder="hello@example.com" />
+  </InputGroup>
+  <Description>No spam, unsubscribe anytime.</Description>
+</TextField>`,
+    preview: (
+      <TextField className="w-72">
+        <Label className="[view-transition-name:cmp-label]">Email</Label>
+        <InputGroup className="[view-transition-name:cmp-field]">
+          <Input placeholder="hello@example.com" />
+        </InputGroup>
+        <Description className="[view-transition-name:cmp-desc]">
+          No spam, unsubscribe anytime.
+        </Description>
+      </TextField>
+    ),
+  },
+  {
+    // Mid beat: add the leading addon.
+    title: 'InputGroup',
+    mid: true,
+    durationMs: 1500,
+    code: `<TextField>
+  <Label>Email</Label>
+  <InputGroup>
+    <InputGroupAddon>
+      <MailIcon />
+    </InputGroupAddon>
+    <Input placeholder="hello@example.com" />
+  </InputGroup>
+  <Description>No spam, unsubscribe anytime.</Description>
+</TextField>`,
+    preview: (
+      <TextField className="w-72">
+        <Label className="[view-transition-name:cmp-label]">Email</Label>
+        <InputGroup className="[view-transition-name:cmp-field]">
+          <InputGroupAddon>
+            <MailIcon />
+          </InputGroupAddon>
+          <Input placeholder="hello@example.com" />
+        </InputGroup>
+        <Description className="[view-transition-name:cmp-desc]">
+          No spam, unsubscribe anytime.
+        </Description>
+      </TextField>
+    ),
+  },
+  {
+    // Headline step: add the trailing addon — the full InputGroup.
     title: 'InputGroup',
     durationMs: 4200,
     code: `<TextField>
@@ -454,6 +513,13 @@ const steps: Step[] = [
   },
 ]
 
+// Pagination lists only the headline steps; mid steps play during auto-advance
+// but aren't clickable stops. Each entry keeps its index into `steps` so the
+// rail/dots can jump straight to it.
+const paginatedSteps = steps
+  .map((s, index) => ({ title: s.title, index, mid: s.mid }))
+  .filter((s) => !s.mid)
+
 export type CompositionPlayer = ReturnType<typeof useCompositionPlayer>
 
 // Shared player: auto-advance while visible, with a CSS animation as the step
@@ -463,7 +529,8 @@ export type CompositionPlayer = ReturnType<typeof useCompositionPlayer>
 // preview's named parts (field shell, label, trigger…) morph instead of swap.
 export function useCompositionPlayer({
   durationScale = 1,
-}: { durationScale?: number } = {}) {
+  midDurationMs,
+}: { durationScale?: number; midDurationMs?: number } = {}) {
   const [step, setStep] = useState(0)
   const [userPaused, setUserPaused] = useState(false)
   const [hoverPaused, setHoverPausedState] = useState(false)
@@ -565,7 +632,17 @@ export function useCompositionPlayer({
 
   const playing = mounted && inView && !hidden && !userPaused && !hoverPaused
   const current = steps[step] ?? firstStep
-  const stepDurationMs = current.durationMs * durationScale
+  // A mid step maps to the headline step it's building toward (the next
+  // paginated entry), so that entry stays lit while the beats play.
+  const activePaginated = Math.max(
+    0,
+    paginatedSteps.findIndex((p) => p.index >= step),
+  )
+  // Mid steps share one dwell time; the tweaker can override it (undefined in
+  // production, where each mid keeps its own durationMs).
+  const stepDurationMs =
+    (current.mid ? (midDurationMs ?? current.durationMs) : current.durationMs) *
+    durationScale
   const reducedMotion =
     mounted && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -591,6 +668,8 @@ export function useCompositionPlayer({
     current,
     stepDurationMs,
     reducedMotion,
+    paginated: paginatedSteps,
+    activePaginated,
   }
 }
 
@@ -660,27 +739,27 @@ export function StepDots({
   player: CompositionPlayer
   className?: string
 }) {
-  const { steps, step, goToStep } = player
+  const { paginated, activePaginated, goToStep } = player
   return (
     <div className={cn('flex items-center', className)}>
-      {steps.map((s, i) => (
+      {paginated.map((p, pos) => (
         <button
-          key={s.title}
+          key={p.title}
           type="button"
-          aria-label={`Step ${i + 1}: ${s.title}`}
-          aria-current={i === step ? 'step' : undefined}
-          onClick={() => goToStep(i)}
+          aria-label={`Step ${pos + 1}: ${p.title}`}
+          aria-current={pos === activePaginated ? 'step' : undefined}
+          onClick={() => goToStep(p.index)}
           className="group flex h-8 cursor-pointer items-center px-[3px]"
         >
           <span
             className={cn(
               'relative h-1 overflow-hidden rounded-full transition-all duration-300',
-              i === step
+              pos === activePaginated
                 ? 'w-5 bg-border'
                 : 'w-1.5 bg-border group-hover:bg-fg-muted',
             )}
           >
-            {i === step && (
+            {pos === activePaginated && (
               <StepProgress
                 player={player}
                 className="absolute inset-0 block rounded-full"

@@ -22,6 +22,14 @@ export function CompositionSection() {
     default: 1,
     group: 'Composition',
   })
+  const midDurationMs = useTweak('Mid step (ms)', {
+    type: 'number',
+    min: 400,
+    max: 3000,
+    step: 100,
+    default: 1500,
+    group: 'Composition',
+  })
   const codeMoveMs = useTweak('Code move (ms)', {
     type: 'number',
     min: 200,
@@ -68,10 +76,10 @@ export function CompositionSection() {
     group: 'Composition',
   })
 
-  const player = useCompositionPlayer({ durationScale })
+  const player = useCompositionPlayer({ durationScale, midDurationMs })
   const {
-    steps,
-    step,
+    paginated,
+    activePaginated,
     goToStep,
     setHoverPaused,
     mounted,
@@ -84,13 +92,15 @@ export function CompositionSection() {
   const railRef = useRef<HTMLOListElement>(null)
   useEffect(() => {
     const rail = railRef.current
-    const active = rail?.children[step] as HTMLElement | undefined
+    const active = rail?.querySelectorAll('li')[activePaginated] as
+      | HTMLElement
+      | undefined
     if (!rail || !active) return
     rail.scrollTo({
       top: active.offsetTop - rail.clientHeight / 2 + active.offsetHeight / 2,
       behavior: reducedMotion ? 'auto' : 'smooth',
     })
-  }, [step, reducedMotion])
+  }, [activePaginated, reducedMotion])
 
   // The code pane hugs its content. The target height is computed from the
   // step's line count (calibrated once against the first rendered snippet) so
@@ -134,13 +144,13 @@ export function CompositionSection() {
             Composition
           </h2>
           <p className="text-4xl font-semibold tracking-tighter text-balance sm:text-5xl">
-            Ten primitives.
+            Compose components.
             <br />
-            <span className="text-fg-muted">Every component.</span>
+            <span className="text-fg-muted">Create your own patterns.</span>
           </p>
           <p className="max-w-md text-base text-balance text-fg-muted">
-            Learn a primitive once — the same parts recompose into the whole
-            library.
+            One compositional API across the library — the same parts combine
+            into anything, from a simple field to a complex pattern.
           </p>
           <ol
             ref={railRef}
@@ -153,30 +163,34 @@ export function CompositionSection() {
               aria-hidden
               className="absolute top-5 left-0 z-10 h-8 w-px bg-fg transition-transform ease-[cubic-bezier(0.645,0.045,0.355,1)] motion-reduce:transition-none"
               style={{
-                transform: `translateY(${step * 2}rem)`,
+                transform: `translateY(${activePaginated * 2}rem)`,
                 transitionDuration: `${railMs}ms`,
               }}
             />
-            {steps.map((s, i) => (
-              <li key={s.title}>
+            {paginated.map((p, pos) => (
+              <li key={p.title}>
                 <button
                   type="button"
-                  aria-current={i === step ? 'step' : undefined}
-                  onClick={() => goToStep(i)}
+                  aria-current={pos === activePaginated ? 'step' : undefined}
+                  onClick={() => goToStep(p.index)}
                   className={cn(
                     'relative flex h-8 w-full cursor-pointer items-center gap-3 border-l pl-4 text-left text-sm transition-colors',
-                    i === step ? 'text-fg' : 'text-fg-muted hover:text-fg',
+                    pos === activePaginated
+                      ? 'text-fg'
+                      : 'text-fg-muted hover:text-fg',
                   )}
                 >
                   <span
                     className={cn(
                       'font-mono text-xs tabular-nums transition-colors',
-                      i === step ? 'text-fg-muted' : 'text-fg-muted/50',
+                      pos === activePaginated
+                        ? 'text-fg-muted'
+                        : 'text-fg-muted/50',
                     )}
                   >
-                    {String(i + 1).padStart(2, '0')}
+                    {String(pos + 1).padStart(2, '0')}
                   </span>
-                  {s.title}
+                  {p.title}
                 </button>
               </li>
             ))}
