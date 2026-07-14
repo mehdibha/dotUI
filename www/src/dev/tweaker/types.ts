@@ -84,6 +84,8 @@ export interface RegisteredControl {
 export interface TweakerUiState {
   /** Whether the popover panel is open (the docked trigger is always visible). */
   open: boolean
+  /** Collapsed to just the header bar (still open, controls hidden). */
+  minimized: boolean
   /** Which edge the trigger is docked to. */
   side: 'left' | 'right'
   /** Vertical position of the trigger as a fraction (0–1) of the viewport height. */

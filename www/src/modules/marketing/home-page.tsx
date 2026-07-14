@@ -18,6 +18,7 @@ import {
   type RotatingTextItem,
 } from '@/components/rotating-text'
 import Cards from '@/modules/marketing/cards'
+import { CompositionSection } from '@/modules/marketing/composition-section'
 
 export function HomePage() {
   return (
@@ -70,7 +71,7 @@ export function HomePage() {
           <h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
             Built on modern tools
           </h2>
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8">
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
             {tools.map(({ icon, label, href }) => (
               <Tooltip key={href}>
                 <Link
@@ -88,7 +89,12 @@ export function HomePage() {
           </div>
         </div>
       </section>
-      <Footer />
+
+      <CompositionSection />
+
+      <div className="mt-10 md:mt-14">
+        <Footer />
+      </div>
     </div>
   )
 }

@@ -2,12 +2,12 @@
 
 import { lazy, Suspense } from 'react'
 import {
+  ClientOnly,
   createRootRoute,
   HeadContent,
   Outlet,
   Scripts,
 } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { ThemeProvider } from 'starter-themes'
 
 import { siteConfig } from '@/config/site'
@@ -16,10 +16,29 @@ import { ToastProvider } from '@/registry/ui/toast'
 
 import appCss from '@/styles.css?url'
 
-// Dev-only floating panel for live design/layout exploration (see src/dev/tweaker).
-const DevTweaker = import.meta.env.DEV
-  ? lazy(() => import('@/dev/tweaker').then((m) => ({ default: m.DevTweaker })))
-  : null
+// Floating panel for live design/layout exploration (see src/dev/tweaker).
+// Dev + Vercel previews; the !SSR guard keeps the chunk out of the server
+// bundle so build-time prerendering never evaluates it.
+const DevTweaker =
+  !import.meta.env.SSR &&
+  (import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview')
+    ? lazy(() =>
+        import('@/dev/tweaker').then((m) => ({ default: m.DevTweaker })),
+      )
+    : null
+
+// Router devtools: shown in dev and on Vercel previews, stripped from production.
+// The !SSR guard keeps the chunk out of the server bundle entirely — it touches
+// `window` at module scope, which crashes build-time prerendering.
+const RouterDevtools =
+  !import.meta.env.SSR &&
+  (import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview')
+    ? lazy(() =>
+        import('@tanstack/react-router-devtools').then((m) => ({
+          default: m.TanStackRouterDevtoolsInProd,
+        })),
+      )
+    : null
 
 export const Route = createRootRoute({
   head: () => {
@@ -95,7 +114,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="min-h-screen bg-bg font-sans text-fg antialiased">
         {children}
-        <TanStackRouterDevtools position="bottom-right" />
+        {/* ClientOnly: the devtools touch `window` at module scope, which
+            crashes build-time prerendering when previews include them. */}
+        {RouterDevtools && (
+          <ClientOnly fallback={null}>
+            <Suspense fallback={null}>
+              <RouterDevtools position="bottom-right" />
+            </Suspense>
+          </ClientOnly>
+        )}
         <Scripts />
       </body>
     </html>

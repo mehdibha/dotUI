@@ -1,91 +1,64 @@
 ---
 title: Introduction
-description: A design system platform and component registry. Built for humans and AI.
+description: A design-system builder and component registry. You compose it, preview it live, and own the code.
 ---
 
-**dotUI** is a design system platform and component registry that lets you generate a UI library that looks like your product, not a preset.
+**dotUI is a design-system builder.** You compose your system at [dotui.org/create](https://dotui.org/create) — colors, typography, icons, density, radius, per-component styles — preview every change on live components, and export code you own: into your codebase via the shadcn CLI, or straight into [v0](https://v0.dev), with more targets planned.
 
-You know how traditional UI libraries force a default aesthetic? Even the "Open Code" approach still requires hours (or weeks) of refactoring tokens, tweaking styles, and rewriting components. dotUI removes that friction.
+Open code alone doesn't get you there: you own the files, but the decisions inside them are still someone else's. dotUI makes the decisions yours. The output is not our library with your colors — it is your design system.
 
-You build your design system with our editor in a few clicks, then install it via the shadcn CLI or export it to your favorite AI tool such as [v0](https://v0.dev).
-
-## The foundational layer
-
-I evaluated all major options for the foundational layer. Radix is effectively unmaintained, so the choice came down to [Base UI](https://base-ui.com) and [React Aria](https://react-spectrum.adobe.com/react-aria/index.html). While Base UI is very promising, it's still quite new and missing critical features that dotUI relies on.
-
-**React Aria** was the clear winner: battle-tested, comprehensive, and **incredibly flexible**. I've taken its powerful, unstyled primitives and given them a design system that looks like your product.
+<Demo name="table/demos/invoices" />
 
 ## API philosophy
 
 ### Composition
 
-The API is designed around composition, where each component generally has a 1:1 relationship with a single DOM element. This makes it easy to style every element, and control the layout and DOM order as needed to implement any pattern.
+The API is built on composition: each component maps to a single DOM element, so you can style every element and control DOM order to implement any pattern. Every component also ships default children, so you only write the composition when you need to change it.
 
-```tsx
-<Select defaultValue="light">
-  <Button>
-    <SelectValue />
-    <ArrowDownIcon />
-  </Button>
-  <Popover>
-    <ListBox>
-      <Item id="light">Light</Item>
-      <Item id="dark">Dark</Item>
-      <Item id="system">System</Item>
-    </ListBox>
-  </Popover>
-</Select>
-```
+<CompositionAnimation />
 
-### With default children
+The same primitives recompose into every component in the library: an `Input` becomes a `TextField`, a `DateField`, a `DatePicker`; the same overlay shell becomes a `Dialog` and a `Menu`. Around ten primitives cover a dozen components, with zero parallel APIs.
 
-I've been using shadcn/ui and radix in several projects now, and yes, composition gives you much more flexibility, but it also adds too much boilerplate code.
+### Reusable primitives
 
-### Reusable components
+Most libraries claim composability and then ship parallel APIs for the same pattern: `MenuPopover`, `ComboboxPopover`, `SelectPopover` for one popover; `MenuTrigger`, `DialogTrigger`, `PopoverTrigger` for one button. You end up memorizing four names for every concept.
 
-Most UI libraries claim to be "composable" but end up creating duplicate components for
-every use case. You end up memorizing parallel APIs for the exact same pattern:
+dotUI has one of each:
 
-You'll find MenuPopover, ComboboxPopover, DialogPopover, SelectPopover, when really they're just a **Popover** component.
+- **Popover** — one component for menus, dialogs, selects, and comboboxes.
+- **Button** — one component for every trigger.
+- **Input** — one component for text, search, and number fields.
+- **Label** — one component everywhere a label appears.
 
-You'll also find "MenuTrigger", "ComboboxTrigger", "DialogTrigger", "ModalTrigger", "AlertDialogTrigger", "PopoverTrigger", when a "Button" should work everywhere.
+Learn a primitive once; it works across the entire library.
 
-**dotUI gives you true reusable primitives across the entire library.** One `Popover`
-component that works with menus, dialogs, selects, and comboboxes. One `Button` component
-that works as any trigger. One `Input` component that works in text fields, search fields,
-and number fields. One `Label` component that works everywhere you need a label.
+## The foundational layer
 
-This isn't just about a few components—it's a fundamental architectural principle. Every
-component is a true primitive that composes naturally with others, eliminating duplication
-and giving you real reusability.
+dotUI is built on [React Aria Components](https://react-spectrum.adobe.com/react-aria/), styled with Tailwind CSS v4 and tailwind-variants, and themed by an OKLCH color engine.
+
+We evaluated the alternatives for the behavior layer. Radix is effectively unmaintained. [Base UI](https://base-ui.com) is promising but young, and missing features dotUI relies on. React Aria is battle-tested, comprehensive, and unstyled all the way down — a foundation that disappears behind whatever design system you build on it.
 
 ## Documentation
 
-### Showing rather than telling
+The docs show rather than tell. Every component page opens with an interactive playground: change a prop, and the code and preview update in real time. Play with the props; read the prose only when you need it.
 
-Each component in dotUI comes with an interactive playground where you can play with the props and see the changes in code/preview in real time.
+<Demo name="menu/demos/account" />
 
-<Demo name="button/demos/default" />
-
-### Real-world examples
-
-Each component page includes multiple real-world examples showing how to use the component in actual application scenarios. From simple use cases to complex compositions, you'll see exactly how components work together.
+Below the playground, examples show components composed into real product UI:
 
 <div className='grid grid-cols-2 gap-4 mt-6'>
 
-<Example name="button/demos/default" />
-<Example name="button/demos/variants" />
-<Example name="button/demos/sizes" />
-<Example name="button/demos/shapes" />
+<Example name="calendar/demos/with-presets" />
+<Example name="combobox/demos/multi-select" />
+<Example name="date-picker/demos/with-modal" />
+<Example name="switch/demos/notification-preferences" />
 
 </div>
 
 ## Built for AI
 
-dotUI is built for humans and AI. All components were written with a clear, consistent, and predictable API.
+dotUI is built for humans and AI. The API is consistent and predictable across the library: an agent that has seen one trigger, one field, or one overlay has seen them all. Fewer APIs to learn means fewer APIs to get wrong — an agent that has written one component can write the next.
 
 ## Get involved
 
-If you have any feedback, a bug report, or a feature request, you can open an issue on our [GitHub](https://github.com/mehdibha/dotUI/issues) or just DM me on X at [@mehdibha](https://x.com/mehdibha).
-
-Contributions are also welcome! I would be happy to see more people contributing to the project and making it better.
+Open an issue on [GitHub](https://github.com/mehdibha/dotUI/issues) for feedback, bugs, or feature requests, or DM [@mehdibha](https://x.com/mehdibha) on X. Contributions are welcome.

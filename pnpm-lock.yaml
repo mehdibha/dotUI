@@ -221,6 +221,9 @@ importers:
       shiki:
         specifier: ^4.0.2
         version: 4.0.2
+      shiki-magic-move:
+        specifier: ^1.4.0
+        version: 1.4.0(react@19.2.1)(shiki@4.0.2)(solid-js@1.9.10)
       starter-themes:
         specifier: ^0.0.2
         version: 0.0.2(@tanstack/react-router@1.170.1(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(@tanstack/react-start@1.168.2(crossws@0.4.5(srvx@0.11.15))(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(vite@8.1.0(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.21.0)))(react@19.2.1)
@@ -2159,6 +2162,27 @@ packages:
     resolution: {integrity: sha512-KaXby5dvoeuZzN0rYQiPMjFoUrz4hgwIE+D6Du9owcHcl6/g16/yT5BQxSW5cGt2MZBz6Hl0YuRqf12omRfUUg==}
     engines: {node: '>=20'}
 
+  '@shikijs/magic-move@4.3.1':
+    resolution: {integrity: sha512-MZ2Zvb8NuCJWYYJbjCeygeMh2qReF40beuWUTGuBpNZPKQA1j+rJaQ+dctZgt6arTB80pbIVsgjcadpALASvxA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0
+      shiki: ^4.0.0
+      solid-js: ^1.9.1
+      svelte: ^5.0.0-0
+      vue: ^3.4.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      shiki:
+        optional: true
+      solid-js:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+
   '@shikijs/primitive@4.0.2':
     resolution: {integrity: sha512-M6UMPrSa3fN5ayeJwFVl9qWofl273wtK1VG8ySDZ1mQBfhCpdd8nEx7nPZ/tk7k+TYcpqBZzj/AnwxT9lO+HJw==}
     engines: {node: '>=20'}
@@ -3446,6 +3470,9 @@ packages:
 
   devtools-protocol@0.0.1608973:
     resolution: {integrity: sha512-Tpm17fxYzt+J7VrGdc1k8YdRqS3YV7se/M6KeemEqvUbq/n7At1rWVuXMxQgpWkdwSdIEKYbU//Bve+Shm4YNQ==}
+
+  diff-match-patch-es@1.0.1:
+    resolution: {integrity: sha512-KhSofrZDERg/NE6Nd+TK53knp2qz0o2Ix8rhkXd3Chfm7Wlo58Eq/juNmkyS6bS+3xS26L3Pstz3BdY/q+e9UQ==}
 
   diff@8.0.4:
     resolution: {integrity: sha512-DPi0FmjiSU5EvQV0++GFDOJ9ASQUVFh5kD+OzOnYdi7n3Wpm9hWWGfB/O2blfHcMVTL5WkQXSnRiK9makhrcnw==}
@@ -5449,6 +5476,28 @@ packages:
   shell-quote@1.8.3:
     resolution: {integrity: sha512-ObmnIF4hXNg1BqhnHmgbDETF8dLPCggZWBjkQfhZpbszZnYur5DUljTcCHii5LC3J5E0yeO/1LIMyH+UvHQgyw==}
     engines: {node: '>= 0.4'}
+
+  shiki-magic-move@1.4.0:
+    resolution: {integrity: sha512-DDEv7khyBMAQghQEfQ6Ab3KZxT5ub6tVNe8+NcvglWauKVV9jxiRYC055DoiFLgvs6Hd9+LuBndeaSPNOSxgSg==}
+    engines: {node: '>=20'}
+    deprecated: shiki-magic-move is now @shikijs/magic-move, please migrate by renaming the package
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0
+      shiki: ^4.0.0
+      solid-js: ^1.9.1
+      svelte: ^5.0.0-0
+      vue: ^3.4.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      shiki:
+        optional: true
+      solid-js:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
 
   shiki@4.0.2:
     resolution: {integrity: sha512-eAVKTMedR5ckPo4xne/PjYQYrU3qx78gtJZ+sHlXEg5IHhhoQhMfZVzetTYuaJS0L2Ef3AcCRzCHV8T0WI6nIQ==}
@@ -7603,6 +7652,15 @@ snapshots:
     dependencies:
       '@shikijs/types': 4.0.2
 
+  '@shikijs/magic-move@4.3.1(react@19.2.1)(shiki@4.0.2)(solid-js@1.9.10)':
+    dependencies:
+      diff-match-patch-es: 1.0.1
+      ohash: 2.0.11
+    optionalDependencies:
+      react: 19.2.1
+      shiki: 4.0.2
+      solid-js: 1.9.10
+
   '@shikijs/primitive@4.0.2':
     dependencies:
       '@shikijs/types': 4.0.2
@@ -8873,6 +8931,8 @@ snapshots:
       dequal: 2.0.3
 
   devtools-protocol@0.0.1608973: {}
+
+  diff-match-patch-es@1.0.1: {}
 
   diff@8.0.4: {}
 
@@ -11406,6 +11466,14 @@ snapshots:
   shebang-regex@3.0.0: {}
 
   shell-quote@1.8.3: {}
+
+  shiki-magic-move@1.4.0(react@19.2.1)(shiki@4.0.2)(solid-js@1.9.10):
+    dependencies:
+      '@shikijs/magic-move': 4.3.1(react@19.2.1)(shiki@4.0.2)(solid-js@1.9.10)
+    optionalDependencies:
+      react: 19.2.1
+      shiki: 4.0.2
+      solid-js: 1.9.10
 
   shiki@4.0.2:
     dependencies:

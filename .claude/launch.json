@@ -8,5 +8,6 @@
       "port": 4444,
       "autoPort": true
     }
-  ]
+  ],
+  "autoVerify": false
 }

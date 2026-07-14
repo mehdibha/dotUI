@@ -34,6 +34,7 @@ const STORAGE_KEY = 'dotui:tweaker'
 
 const DEFAULT_UI: TweakerUiState = {
   open: false,
+  minimized: false,
   side: 'right',
   y: 0.5,
 }

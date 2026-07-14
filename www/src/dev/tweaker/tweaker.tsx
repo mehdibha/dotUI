@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import {
   CheckIcon,
+  ChevronsDownUpIcon,
+  ChevronsUpDownIcon,
   CopyIcon,
   RotateCcwIcon,
   SlidersHorizontalIcon,
@@ -80,8 +82,6 @@ export function DevTweaker() {
   const [drag, setDrag] = useState<{ x: number; y: number } | null>(null)
   const dragStart = useRef<{ x: number; y: number } | null>(null)
   const moved = useRef(false)
-  const triggerRef = useRef<HTMLButtonElement>(null)
-  const panelRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const onResize = () =>
@@ -104,22 +104,10 @@ export function DevTweaker() {
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
-  // Dismiss the popover on an outside click (it stays anchored to the trigger otherwise).
-  useEffect(() => {
-    if (!ui.open) return
-    const onDown = (e: PointerEvent) => {
-      const target = e.target as Node
-      if (
-        panelRef.current?.contains(target) ||
-        triggerRef.current?.contains(target)
-      ) {
-        return
-      }
-      setUiState({ open: false })
-    }
-    window.addEventListener('pointerdown', onDown)
-    return () => window.removeEventListener('pointerdown', onDown)
-  }, [ui.open])
+  // No outside-click dismissal: the panel is a tool palette, and the page must
+  // stay clickable while it's open (a near-miss click landing on page content
+  // used to both act on the page and close the panel). Close via ×, Escape,
+  // ⌘., or tapping the trigger.
 
   if (!mounted) return null
 
@@ -187,7 +175,6 @@ export function DevTweaker() {
       {/* Trigger — always visible, docked to a side, draggable (snaps to an edge). z-40 keeps
           it above page content but below the popover layer (z-50) and modals (z-100). */}
       <button
-        ref={triggerRef}
         type="button"
         aria-label="Open tweaker"
         aria-expanded={ui.open}
@@ -210,7 +197,6 @@ export function DevTweaker() {
       {/* Popover panel — anchored beside the trigger; the trigger stays visible. */}
       {ui.open && !drag && (
         <div
-          ref={panelRef}
           style={{ ...panelSideStyle, top: panelTop }}
           className="fixed z-40 flex max-h-[70vh] w-75 max-w-[calc(100vw-5rem)] -translate-y-1/2 flex-col overflow-hidden rounded-xl border border-border bg-bg shadow-2xl"
         >
@@ -245,6 +231,15 @@ export function DevTweaker() {
                 size="sm"
                 variant="quiet"
                 isIconOnly
+                aria-label={ui.minimized ? 'Expand' : 'Minimize'}
+                onPress={() => setUiState({ minimized: !ui.minimized })}
+              >
+                {ui.minimized ? <ChevronsUpDownIcon /> : <ChevronsDownUpIcon />}
+              </Button>
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
                 aria-label="Close"
                 onPress={() => setUiState({ open: false })}
               >
@@ -253,16 +248,20 @@ export function DevTweaker() {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-3">
-            <GroupedControls controls={controls} />
-          </div>
+          {!ui.minimized && (
+            <>
+              <div className="flex-1 overflow-y-auto p-3">
+                <GroupedControls controls={controls} />
+              </div>
 
-          <div className="flex items-center justify-between border-t border-border px-3 py-1.5 text-[10px] text-fg-muted">
-            <span>dev only · not shipped</span>
-            <span className="flex items-center gap-1">
-              <Kbd>⌘ .</Kbd> to toggle
-            </span>
-          </div>
+              <div className="flex items-center justify-between border-t border-border px-3 py-1.5 text-[10px] text-fg-muted">
+                <span>dev only · not shipped</span>
+                <span className="flex items-center gap-1">
+                  <Kbd>⌘ .</Kbd> to toggle
+                </span>
+              </div>
+            </>
+          )}
         </div>
       )}
     </>

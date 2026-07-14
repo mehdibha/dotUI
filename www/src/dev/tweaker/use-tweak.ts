@@ -54,10 +54,11 @@ function useTweakNoop<const C extends TweakConfig>(
 /**
  * Read a live, user-tweakable value while exploring a design in dev.
  *
- * Dev-only: an AI agent adds these to a feature component while you explore it, and
- * the floating Tweaker panel (mounted in `__root.tsx`) lets you flip the value live.
- * In production this compiles to a no-op that returns `config.default`, and the whole
- * tweaker (store + panel) tree-shakes away. See ./README.md for the full workflow.
+ * Dev + Vercel previews only: an AI agent adds these to a feature component while
+ * you explore it, and the floating Tweaker panel (mounted in `__root.tsx`) lets you
+ * flip the value live. In production this compiles to a no-op that returns
+ * `config.default`, and the whole tweaker (store + panel) tree-shakes away. See
+ * ./README.md for the full workflow.
  *
  * @example
  * const layout = useTweak('Layout', {
@@ -68,6 +69,7 @@ function useTweakNoop<const C extends TweakConfig>(
  * })
  * // → typed 'centered' | 'split' | 'fullbleed'
  */
-export const useTweak: UseTweak = import.meta.env.DEV
-  ? useTweakDev
-  : useTweakNoop
+export const useTweak: UseTweak =
+  import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'
+    ? useTweakDev
+    : useTweakNoop

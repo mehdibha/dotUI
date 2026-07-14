@@ -11,6 +11,10 @@ export default defineConfig({
   server: {
     port: 4444,
   },
+  // Build-time constant so client code can gate on Vercel previews.
+  define: {
+    'import.meta.env.VERCEL_ENV': JSON.stringify(process.env.VERCEL_ENV ?? ''),
+  },
   resolve: {
     alias: [
       {

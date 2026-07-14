@@ -1,6 +1,6 @@
 # Dev tweaker
 
-A **dev-only** floating panel for live design/layout exploration. While working a PR, an AI agent adds `useTweak()` calls to the feature being explored; the panel (docked bottom-center, Vercel-toolbar style) lets you flip between the options live and pick one. None of it ships — `useTweak` compiles to a no-op in production and the panel + store are dead-code-eliminated.
+A **dev-only** floating panel (also enabled on Vercel previews) for live design/layout exploration. While working a PR, an AI agent adds `useTweak()` calls to the feature being explored; the panel (docked bottom-center, Vercel-toolbar style) lets you flip between the options live and pick one. None of it ships — `useTweak` compiles to a no-op in production and the panel + store are dead-code-eliminated.
 
 It is **not** a product feature and **not** a `/create` design-system axis. It's throwaway scaffolding for one exploration. Adding a real axis/variant/token is still a product decision (propose-and-approve — see the root `CLAUDE.md`).
 
@@ -82,7 +82,8 @@ Every config needs a `default` — and it **must match the current design** so n
 A small **trigger** is always docked to a screen edge (default: centre-right; a count badge shows how many controls are registered). Drag it to reposition — it follows the cursor and **snaps to the nearest edge** (left/right) when you let go, keeping the height you dropped it at.
 
 - **Click the trigger** → opens the panel as a popover beside it (the trigger stays put).
-- **Close** (×), click outside, or press **Escape** → closes the popover.
+- **Close** (×) or press **Escape** → closes the popover. Clicking the page does NOT close it — the page stays interactive while you tweak.
+- **Minimize** (⌄⌃) → collapses the panel to its header bar; expand the same way.
 - **⌘ .** (or **Ctrl .**) → toggles the popover from anywhere.
 - **Reset** (↺) → all controls back to their defaults.
 - **Copy for AI** (⧉) → copies a summary of the current selections to paste back to the agent.
@@ -91,7 +92,7 @@ State (open, side, vertical position, control values + order) persists in `local
 
 ## How it stays out of production
 
-`useTweak` is `import.meta.env.DEV ? useTweakDev : useTweakNoop` (see `use-tweak.ts`). In a prod build `DEV` is the constant `false`, so the dev arm — and its import of the store — is dead-code-eliminated. The panel is `lazy()`-imported behind the same constant in `__root.tsx`, so its chunk never enters the prod graph. `store.ts` is side-effect-free at module scope so it tree-shakes cleanly.
+`useTweak` is gated on `import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'` (see `use-tweak.ts`) — both build-time constants (`VERCEL_ENV` is inlined via Vite `define`). In a real production build the condition is constant `false`, so the dev arm — and its import of the store — is dead-code-eliminated. The panel is `lazy()`-imported behind the same condition (plus a `!SSR` guard, so prerendering never evaluates the chunk) in `__root.tsx`. `store.ts` is side-effect-free at module scope so it tree-shakes cleanly.
 
 ## Files
 
