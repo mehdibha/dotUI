@@ -131,7 +131,8 @@ export function CompositionSection() {
   }
 
   return (
-    <section className="container mt-24 md:mt-32">
+    // Width mirrors the cards strip: 1500px grid + 8rem rail gutters.
+    <section className="mx-auto mt-24 w-full max-w-[calc(1500px+16rem)] px-4 sm:px-6 md:mt-32 lg:px-32">
       <CompositionTransitionStyles morphMs={morphMs} />
       <StepTimer player={player} />
       <div
@@ -139,16 +140,16 @@ export function CompositionSection() {
         className="grid items-start gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16"
       >
         {/* Copy + step rail */}
-        <div className="flex flex-col items-start gap-4 max-lg:items-center max-lg:text-center">
+        <div className="flex flex-col items-start gap-4">
           <h2 className="font-mono text-sm tracking-wide text-fg-muted">
             Composition
           </h2>
-          <p className="text-4xl font-semibold tracking-tighter text-balance sm:text-5xl">
+          <p className="text-3xl font-semibold tracking-tighter text-balance sm:text-4xl">
             Compose components.
             <br />
             <span className="text-fg-muted">Create your own patterns.</span>
           </p>
-          <p className="max-w-md text-base text-balance text-fg-muted">
+          <p className="text-base text-fg-muted lg:max-w-md">
             One compositional API across the library — the same parts combine
             into anything, from a simple field to a complex pattern.
           </p>
@@ -195,7 +196,7 @@ export function CompositionSection() {
               </li>
             ))}
           </ol>
-          <div className="flex flex-wrap gap-2 pt-2 max-lg:justify-center">
+          <div className="flex flex-wrap gap-2 pt-2">
             <LinkButton href="/docs/components" variant="primary">
               Explore components
             </LinkButton>
@@ -207,44 +208,39 @@ export function CompositionSection() {
 
         {/* Code with its rendered result below — one card, no window chrome */}
         <div {...pauseHandlers}>
-          {/* Reserved for the card at its tallest — preview (14rem + border) plus
-              the 18-line snippet (18 × 19.5px + p-6) — so the height animation
-              never shifts the layout around it. */}
-          <div className="h-[39.25rem] [contain:layout]">
-            <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
-              <div className="relative flex min-h-56 items-center justify-center p-6">
-                <div
-                  aria-hidden
-                  className="absolute inset-0 bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_70%_80%_at_50%_50%,black,transparent)] bg-[size:14px_14px]"
-                />
-                <div className="relative">{current.preview}</div>
-                <PlayPauseButton
-                  player={player}
-                  className="absolute right-2 bottom-2"
-                />
-              </div>
+          <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
+            <div className="relative flex min-h-56 items-center justify-center p-6">
               <div
-                className="overflow-hidden border-t [mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] transition-[height] ease-in-out [view-transition-name:cmp-code] motion-reduce:transition-none"
-                style={{
-                  height: codeHeight ?? 'auto',
-                  transitionDuration: `${heightMs}ms`,
-                }}
+                aria-hidden
+                className="absolute inset-0 bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_70%_80%_at_50%_50%,black,transparent)] bg-[size:14px_14px]"
+              />
+              <div className="relative">{current.preview}</div>
+              <PlayPauseButton
+                player={player}
+                className="absolute right-2 bottom-2"
+              />
+            </div>
+            <div
+              className="overflow-hidden border-t [mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] transition-[height] ease-in-out [view-transition-name:cmp-code] motion-reduce:transition-none"
+              style={{
+                height: codeHeight ?? 'auto',
+                transitionDuration: `${heightMs}ms`,
+              }}
+            >
+              <div
+                ref={codeInnerRef}
+                className="no-scrollbar overflow-x-auto p-6 font-mono text-[0.8125rem] leading-normal"
               >
-                <div
-                  ref={codeInnerRef}
-                  className="no-scrollbar overflow-x-auto p-6 font-mono text-[0.8125rem] leading-normal"
-                >
-                  {mounted ? (
-                    <CompositionCode
-                      code={current.code}
-                      reducedMotion={reducedMotion}
-                      duration={codeMoveMs}
-                      stagger={codeStaggerMs}
-                    />
-                  ) : (
-                    <pre className="whitespace-pre">{current.code}</pre>
-                  )}
-                </div>
+                {mounted ? (
+                  <CompositionCode
+                    code={current.code}
+                    reducedMotion={reducedMotion}
+                    duration={codeMoveMs}
+                    stagger={codeStaggerMs}
+                  />
+                ) : (
+                  <pre className="whitespace-pre">{current.code}</pre>
+                )}
               </div>
             </div>
           </div>

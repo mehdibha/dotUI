@@ -92,7 +92,7 @@ export function HomePage() {
 
       <CompositionSection />
 
-      <div className="mt-20 md:mt-28">
+      <div className="mt-10 md:mt-14">
         <Footer />
       </div>
     </div>
