@@ -10,73 +10,9 @@ import {
   StepTimer,
   useCompositionPlayer,
 } from '@/modules/docs/composition-animation'
-import { useTweak } from '@/dev/tweaker'
 
 export function CompositionSection() {
-  // Tweaker scaffolding — bake the picked values and remove before merging.
-  const durationScale = useTweak('Step duration ×', {
-    type: 'number',
-    min: 0.5,
-    max: 2.5,
-    step: 0.1,
-    default: 1,
-    group: 'Composition',
-  })
-  const midDurationMs = useTweak('Mid step (ms)', {
-    type: 'number',
-    min: 400,
-    max: 3000,
-    step: 100,
-    default: 1500,
-    group: 'Composition',
-  })
-  const codeMoveMs = useTweak('Code move (ms)', {
-    type: 'number',
-    min: 200,
-    max: 1500,
-    step: 50,
-    default: 700,
-    group: 'Composition',
-  })
-  const codeStaggerMs = useTweak('Code stagger (ms)', {
-    type: 'number',
-    min: 0,
-    max: 20,
-    step: 1,
-    default: 2,
-    group: 'Composition',
-  })
-  const heightMs = useTweak('Height tween (ms)', {
-    type: 'number',
-    min: 150,
-    max: 1200,
-    step: 50,
-    default: 500,
-    group: 'Composition',
-  })
-  const morphMs = useTweak('Preview morph (ms)', {
-    type: 'number',
-    min: 150,
-    max: 1000,
-    step: 25,
-    default: 450,
-    group: 'Composition',
-  })
-  const railMs = useTweak('Rail slide (ms)', {
-    type: 'number',
-    min: 150,
-    max: 1000,
-    step: 25,
-    default: 450,
-    group: 'Composition',
-  })
-  const hoverPause = useTweak('Pause on hover', {
-    type: 'boolean',
-    default: true,
-    group: 'Composition',
-  })
-
-  const player = useCompositionPlayer({ durationScale, midDurationMs })
+  const player = useCompositionPlayer()
   const {
     paginated,
     activePaginated,
@@ -124,16 +60,16 @@ export function CompositionSection() {
   }, [mounted, current.code])
 
   const pauseHandlers = {
-    onMouseEnter: () => hoverPause && setHoverPaused(true),
+    onMouseEnter: () => setHoverPaused(true),
     onMouseLeave: () => setHoverPaused(false),
-    onFocus: () => hoverPause && setHoverPaused(true),
+    onFocus: () => setHoverPaused(true),
     onBlur: () => setHoverPaused(false),
   }
 
   return (
     // Width mirrors the cards strip: 1500px grid + 8rem rail gutters.
     <section className="mx-auto mt-24 w-full max-w-[calc(1500px+16rem)] px-4 sm:px-6 md:mt-32 lg:px-32">
-      <CompositionTransitionStyles morphMs={morphMs} />
+      <CompositionTransitionStyles />
       <StepTimer player={player} />
       <div
         ref={containerRef}
@@ -165,7 +101,7 @@ export function CompositionSection() {
               className="absolute top-5 left-0 z-10 h-8 w-px bg-fg transition-transform ease-[cubic-bezier(0.645,0.045,0.355,1)] motion-reduce:transition-none"
               style={{
                 transform: `translateY(${activePaginated * 2}rem)`,
-                transitionDuration: `${railMs}ms`,
+                transitionDuration: '450ms',
               }}
             />
             {paginated.map((p, pos) => (
@@ -224,7 +160,7 @@ export function CompositionSection() {
               className="overflow-hidden border-t [mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] transition-[height] ease-in-out [view-transition-name:cmp-code] motion-reduce:transition-none"
               style={{
                 height: codeHeight ?? 'auto',
-                transitionDuration: `${heightMs}ms`,
+                transitionDuration: '500ms',
               }}
             >
               <div
@@ -235,8 +171,6 @@ export function CompositionSection() {
                   <CompositionCode
                     code={current.code}
                     reducedMotion={reducedMotion}
-                    duration={codeMoveMs}
-                    stagger={codeStaggerMs}
                   />
                 ) : (
                   <pre className="whitespace-pre">{current.code}</pre>

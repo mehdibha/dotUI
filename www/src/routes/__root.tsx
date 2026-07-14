@@ -13,7 +13,6 @@ import { ThemeProvider } from 'starter-themes'
 import { siteConfig } from '@/config/site'
 import { truncateOnWord } from '@/lib/text'
 import { ToastProvider } from '@/registry/ui/toast'
-import { useTweak } from '@/dev/tweaker'
 
 import appCss from '@/styles.css?url'
 
@@ -27,19 +26,6 @@ const DevTweaker =
         import('@/dev/tweaker').then((m) => ({ default: m.DevTweaker })),
       )
     : null
-
-// Tweaker A/B for the proposed button icon-text gap bump: default/sm,
-// comfortable/xs+sm go 4px → 6px (also catches compact md/lg — same h-7/h-8
-// gap-1 signature — but the site runs default density).
-function ButtonGapTweak() {
-  const suggested = useTweak('Icon gap 4px → 6px', {
-    type: 'boolean',
-    default: false,
-    group: 'Button',
-  })
-  if (!suggested) return null
-  return <style>{`[data-button].gap-1:is(.h-7,.h-8){gap:0.375rem}`}</style>
-}
 
 // Router devtools: shown in dev and on Vercel previews, stripped from production.
 // The !SSR guard keeps the chunk out of the server bundle entirely — it touches
@@ -112,7 +98,6 @@ function RootComponent() {
         {DevTweaker && (
           <Suspense fallback={null}>
             <DevTweaker />
-            <ButtonGapTweak />
           </Suspense>
         )}
       </RootDocument>
