@@ -54,16 +54,21 @@ function densityRootValue(density: Density): string | undefined {
   return density
 }
 
+/** Mirror of `resolveCssValue` in lib/styles.tsx (not importable here — React). */
+function resolveTokenValue(value: string): string {
+  return value.startsWith('--') ? `var(${value})` : value
+}
+
 function emitPresetLightVars(preset: PublishPreset): Record<string, string> {
   const vars: Record<string, string> = {}
   const density = densityRootValue(preset.density)
   if (density) vars['--dotui-density'] = preset.density
-  // Global tokens — `componentParams` are inlined into component classes at
-  // build, so we don't write them here. Only the registry's *global* tokens
-  // (radius factor, palette overrides, cursors) make it onto `:root`.
-  // Those live in `preset.tokens` once we wire it through; the publisher's
-  // PublishPreset shape doesn't expose them yet — left as a TODO for a
-  // follow-up that threads `tokens` from the customizer.
+  // Global tokens (radius factor, cursors, …) land on `:root`, same as the
+  // live provider. `componentParams` are inlined into component classes at
+  // build, so they're not written here.
+  for (const [key, value] of Object.entries(preset.tokens ?? {})) {
+    vars[key.startsWith('--') ? key : `--${key}`] = resolveTokenValue(value)
+  }
   return vars
 }
 

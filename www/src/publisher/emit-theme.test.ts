@@ -93,6 +93,27 @@ describe('emitInitItem', () => {
     expect(baseRegistryCss.css[':root']).not.toHaveProperty('--dotui-density')
   })
 
+  test('emits preset tokens as :root vars, wrapping token refs in var()', () => {
+    const item = emitInitItem({
+      baseRegistryCss,
+      preset: {
+        density: 'default',
+        componentParams: {},
+        tokens: {
+          '--radius-factor': '0.5',
+          '--btn-radius': '--radius-md',
+        },
+      },
+      registryRoot: 'https://dotui.com',
+    })
+
+    expect(item.css?.[':root']).toMatchObject({
+      '--radius-factor': '0.5',
+      '--btn-radius': 'var(--radius-md)',
+    })
+    expect(baseRegistryCss.css[':root']).not.toHaveProperty('--radius-factor')
+  })
+
   test('a custom color recipe regenerates the :root + .dark palette ramps', () => {
     const item = emitInitItem({
       baseRegistryCss,
