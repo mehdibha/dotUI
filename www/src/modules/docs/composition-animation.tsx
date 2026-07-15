@@ -72,7 +72,7 @@ const firstStep: Step = {
     <Input
       aria-label="Email"
       placeholder="hello@example.com"
-      className="w-56 [view-transition-name:cmp-field]"
+      className="w-full max-w-xs [view-transition-name:cmp-field]"
     />
   ),
 }
@@ -86,7 +86,7 @@ const steps: Step[] = [
   <Input placeholder="hello@example.com" />
 </TextField>`,
     preview: (
-      <TextField aria-label="Email" className="w-56">
+      <TextField aria-label="Email" className="w-full max-w-xs">
         <Input
           placeholder="hello@example.com"
           className="[view-transition-name:cmp-field]"
@@ -103,7 +103,7 @@ const steps: Step[] = [
   <Description>No spam, unsubscribe anytime.</Description>
 </TextField>`,
     preview: (
-      <TextField className="w-56">
+      <TextField className="w-full max-w-xs">
         <Label className="[view-transition-name:cmp-label]">Email</Label>
         <Input
           placeholder="hello@example.com"
@@ -128,7 +128,7 @@ const steps: Step[] = [
   <Description>No spam, unsubscribe anytime.</Description>
 </TextField>`,
     preview: (
-      <TextField className="w-72">
+      <TextField className="w-full max-w-xs">
         <Label className="[view-transition-name:cmp-label]">Email</Label>
         <InputGroup className="[view-transition-name:cmp-field]">
           <Input placeholder="hello@example.com" />
@@ -155,7 +155,7 @@ const steps: Step[] = [
   <Description>No spam, unsubscribe anytime.</Description>
 </TextField>`,
     preview: (
-      <TextField className="w-72">
+      <TextField className="w-full max-w-xs">
         <Label className="[view-transition-name:cmp-label]">Email</Label>
         <InputGroup className="[view-transition-name:cmp-field]">
           <InputGroupAddon>
@@ -187,7 +187,7 @@ const steps: Step[] = [
   <Description>No spam, unsubscribe anytime.</Description>
 </TextField>`,
     preview: (
-      <TextField className="w-72">
+      <TextField className="w-full max-w-xs">
         <Label className="[view-transition-name:cmp-label]">Email</Label>
         <InputGroup className="[view-transition-name:cmp-field]">
           <InputGroupAddon>
@@ -224,7 +224,7 @@ const steps: Step[] = [
   </InputGroup>
 </SearchField>`,
     preview: (
-      <SearchField className="w-72">
+      <SearchField className="w-full max-w-xs">
         <Label className="[view-transition-name:cmp-label]">Search</Label>
         <InputGroup className="[view-transition-name:cmp-field]">
           <InputGroupAddon>
@@ -251,7 +251,10 @@ const steps: Step[] = [
   </InputGroup>
 </DateField>`,
     preview: (
-      <DateField className="w-56" defaultValue={parseDate('2026-07-10')}>
+      <DateField
+        className="w-full max-w-xs"
+        defaultValue={parseDate('2026-07-10')}
+      >
         <Label className="[view-transition-name:cmp-label]">Meeting date</Label>
         <InputGroup className="[view-transition-name:cmp-field]">
           <InputGroupAddon>
@@ -280,7 +283,10 @@ const steps: Step[] = [
   </InputGroup>
 </DatePicker>`,
     preview: (
-      <DatePicker className="w-56" defaultValue={parseDate('2026-07-10')}>
+      <DatePicker
+        className="w-full max-w-xs"
+        defaultValue={parseDate('2026-07-10')}
+      >
         <Label className="[view-transition-name:cmp-label]">Meeting date</Label>
         <InputGroup className="[view-transition-name:cmp-field]">
           <DateInput />
@@ -318,7 +324,10 @@ const steps: Step[] = [
   </Popover>
 </DatePicker>`,
     preview: (
-      <DatePicker className="w-56" defaultValue={parseDate('2026-07-10')}>
+      <DatePicker
+        className="w-full max-w-xs"
+        defaultValue={parseDate('2026-07-10')}
+      >
         <Label className="[view-transition-name:cmp-label]">Meeting date</Label>
         <InputGroup className="[view-transition-name:cmp-field]">
           <DateInput />
@@ -363,7 +372,7 @@ const steps: Step[] = [
 </DateRangePicker>`,
     preview: (
       <DateRangePicker
-        className="w-64"
+        className="w-full max-w-xs"
         defaultValue={{
           start: parseDate('2026-07-10'),
           end: parseDate('2026-07-17'),
@@ -418,7 +427,7 @@ const steps: Step[] = [
 </DateRangePicker>`,
     preview: (
       <DateRangePicker
-        className="w-64"
+        className="w-full max-w-xs"
         defaultValue={{
           start: parseDate('2026-07-10'),
           end: parseDate('2026-07-17'),
@@ -470,7 +479,7 @@ const steps: Step[] = [
 </DateRangePicker>`,
     preview: (
       <DateRangePicker
-        className="w-64"
+        className="w-full max-w-xs"
         defaultValue={{
           start: parseDate('2026-07-10'),
           end: parseDate('2026-07-17'),
@@ -509,7 +518,7 @@ const steps: Step[] = [
   <SelectTrigger />
 </Select>`,
     preview: (
-      <Select className="w-56">
+      <Select className="w-full max-w-xs">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
         <SelectTrigger className="[view-transition-name:cmp-trigger]" />
       </Select>
@@ -531,7 +540,7 @@ const steps: Step[] = [
   </Popover>
 </Select>`,
     preview: (
-      <Select className="w-56" defaultSelectedKey="cara">
+      <Select className="w-full max-w-xs" defaultSelectedKey="cara">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
         <SelectTrigger className="[view-transition-name:cmp-trigger]" />
         <Popover>
@@ -564,7 +573,7 @@ const steps: Step[] = [
   </Popover>
 </Select>`,
     preview: (
-      <Select className="w-56" defaultSelectedKey="cara">
+      <Select className="w-full max-w-xs" defaultSelectedKey="cara">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
         <SelectTrigger className="[view-transition-name:cmp-trigger]" />
         <Popover>
@@ -603,7 +612,7 @@ const steps: Step[] = [
   </Popover>
 </Combobox>`,
     preview: (
-      <Combobox className="w-64">
+      <Combobox className="w-full max-w-xs">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
         <InputGroup className="[view-transition-name:cmp-field]">
           <Input placeholder="Search people…" />
@@ -651,7 +660,7 @@ const steps: Step[] = [
   </Popover>
 </Combobox>`,
     preview: (
-      <Combobox className="w-64">
+      <Combobox className="w-full max-w-xs">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
         <TagGroup aria-label="Invitees">
           <TagList>
@@ -829,7 +838,7 @@ const steps: Step[] = [
   </Popover>
 </ContextMenu>`,
     preview: (
-      <ContextMenu className="bg-bg-muted flex h-24 w-64 items-center justify-center rounded-md border border-dashed text-sm text-fg-muted">
+      <ContextMenu className="bg-bg-muted flex h-24 w-full max-w-xs items-center justify-center rounded-md border border-dashed text-sm text-fg-muted">
         Right click here
         <Popover>
           <MenuContent className="[view-transition-name:cmp-list]">
@@ -868,7 +877,7 @@ const steps: Step[] = [
   </Popover>
 </Mention>`,
     preview: (
-      <Mention className="w-64">
+      <Mention className="w-full max-w-xs">
         <TextField>
           <Label className="[view-transition-name:cmp-label]">Comment</Label>
           <TextArea placeholder="Type @ to mention…" />
@@ -906,7 +915,7 @@ const steps: Step[] = [
   </Popover>
 </Mention>`,
     preview: (
-      <Mention className="w-64">
+      <Mention className="w-full max-w-xs">
         <TextField>
           <Label className="[view-transition-name:cmp-label]">Comment</Label>
           <TextArea placeholder="Type @ to mention…" />
@@ -946,7 +955,7 @@ const steps: Step[] = [
   </SearchField>
 </Command>`,
     preview: (
-      <div className="w-72 overflow-hidden rounded-md border bg-bg">
+      <div className="w-full max-w-xs overflow-hidden rounded-md border bg-bg">
         <Command aria-label="Command menu">
           <SearchField aria-label="Search">
             <InputGroup className="[view-transition-name:cmp-field]">
@@ -981,7 +990,7 @@ const steps: Step[] = [
   </ListBox>
 </Command>`,
     preview: (
-      <div className="w-72 overflow-hidden rounded-md border bg-bg">
+      <div className="w-full max-w-xs overflow-hidden rounded-md border bg-bg">
         <Command aria-label="Command menu">
           <SearchField aria-label="Search">
             <InputGroup className="[view-transition-name:cmp-field]">
@@ -1027,7 +1036,7 @@ const steps: Step[] = [
   </ListBox>
 </Command>`,
     preview: (
-      <div className="w-72 overflow-hidden rounded-md border bg-bg">
+      <div className="w-full max-w-xs overflow-hidden rounded-md border bg-bg">
         <Command aria-label="Command menu">
           <SearchField aria-label="Search">
             <InputGroup className="[view-transition-name:cmp-field]">

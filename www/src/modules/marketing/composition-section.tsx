@@ -163,7 +163,9 @@ export function CompositionSection() {
                 aria-hidden
                 className="absolute inset-0 bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_70%_80%_at_50%_50%,black,transparent)] bg-[size:14px_14px]"
               />
-              <div className="relative">{current.preview}</div>
+              <div className="relative flex w-full justify-center">
+                {current.preview}
+              </div>
               <PlayPauseButton
                 player={player}
                 className="absolute right-2 bottom-2 max-lg:hidden"
