@@ -45,7 +45,7 @@ export function PresetSwitcher({
   } as React.CSSProperties
 
   return (
-    <div className="mb-3 no-scrollbar flex max-w-full scroll-fade-x overflow-x-auto px-4 sm:mb-4">
+    <div className="mb-5 no-scrollbar flex max-w-full scroll-fade-x overflow-x-auto px-4">
       <SegmentedControl
         aria-label="Preview design system"
         className="mx-auto bg-transparent p-0 [&_[data-segmented-control-indicator]]:rounded-(--indicator-radius) [&_[data-segmented-control-indicator]]:bg-(--indicator-bg) [&_[data-segmented-control-indicator]]:motion-safe:transition-[translate,width,height,border-radius,background-color]"

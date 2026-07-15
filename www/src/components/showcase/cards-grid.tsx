@@ -103,7 +103,7 @@ function CardColumn({
   className?: string
 }) {
   return (
-    <div className={cn('flex min-w-0 flex-1 flex-col gap-4', className)}>
+    <div className={cn('flex min-w-0 flex-1 flex-col gap-5', className)}>
       {cards.map((key) => (
         <div
           key={key}
@@ -128,14 +128,14 @@ export const CardsGrid = memo(function CardsGrid({
   return (
     <div
       className={cn(
-        'grid grid-cols-3 items-start gap-4 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4',
+        'grid grid-cols-3 items-start gap-5 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4',
         className,
       )}
     >
       <CardColumn cards={RAIL} />
-      <div className="col-span-2 flex min-w-0 flex-col gap-4">
+      <div className="col-span-2 flex min-w-0 flex-col gap-5">
         <AiPrompt />
-        <div className="flex gap-4">
+        <div className="flex gap-5">
           <CardColumn cards={MAIN_LEFT} />
           <CardColumn cards={MAIN_RIGHT} />
         </div>
