@@ -58,8 +58,10 @@ function densityRootValue(density: Density): string | undefined {
   return density
 }
 
-/** Mirror of `resolveCssValue` in lib/styles.tsx (not importable here — React). */
-function resolveTokenValue(value: string): string {
+/** Mirror of `resolveCssValue` in lib/styles.tsx (not importable here — React).
+ *  Distinct from the imported `resolveTokenValue`, which resolves a
+ *  `SemanticToken`; this takes a raw token string. */
+function resolveCssValue(value: string): string {
   return value.startsWith('--') ? `var(${value})` : value
 }
 
@@ -71,7 +73,7 @@ function emitPresetLightVars(preset: PublishPreset): Record<string, string> {
   // live provider. `componentParams` are inlined into component classes at
   // build, so they're not written here.
   for (const [key, value] of Object.entries(preset.tokens ?? {})) {
-    vars[key.startsWith('--') ? key : `--${key}`] = resolveTokenValue(value)
+    vars[key.startsWith('--') ? key : `--${key}`] = resolveCssValue(value)
   }
   return vars
 }
