@@ -1,0 +1,64 @@
+---
+title: QR Code
+description: A QR code encodes a value, such as a URL, as a scannable matrix barcode.
+---
+
+<InteractiveDemo
+  name="qr-code"
+  controls={[
+    {
+      type: 'string',
+      name: 'value',
+      defaultValue: 'https://dotui.org',
+    },
+    {
+      type: 'enum',
+      name: 'errorCorrection',
+      options: ['L', 'M', 'Q', 'H'],
+      defaultValue: 'M',
+    },
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/qr-code
+```
+
+## Usage
+
+```tsx
+import { QRCode } from '@/components/ui/qr-code'
+;<QRCode value="https://dotui.org" aria-label="dotUI website" />
+```
+
+Pass an `aria-label` describing the destination — to a screen reader, an unlabeled QR code is meaningless.
+
+## Logo
+
+Pass children to display a logo at the center of the code. The modules behind it are excavated so it sits in clean whitespace, and the default error correction level is raised to `H` to compensate for the covered area.
+
+```tsx
+<QRCode value="https://dotui.org" aria-label="dotUI website">
+  <Logo />
+</QRCode>
+```
+
+## Error correction
+
+QR codes embed redundancy so they scan even when partially obscured. The `errorCorrection` prop sets the level: `L` (7%), `M` (15%), `Q` (25%) or `H` (30%) — higher levels produce a denser code.
+
+The code renders with the theme's foreground on the theme's background. Scanners expect dark modules on a light background; in dark themes the code is inverted, which some scanners reject. Always test scanning with your real theme, colors and logo.
+
+## Examples
+
+<Examples className="sm:grid-cols-2">
+  <Example name="qr-code/demos/basic" title="Basic" />
+  <Example name="qr-code/demos/with-logo" title="With Logo" />
+  <Example name="qr-code/demos/sizes" title="Sizes" />
+</Examples>
+
+## API Reference
+
+<Reference name="qr-code" />

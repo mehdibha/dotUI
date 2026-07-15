@@ -423,6 +423,13 @@ export const componentsData: ComponentCategory[] = [
         scale: 0.55,
         status: 'done',
       },
+      {
+        name: 'QRCode',
+        slug: 'qr-code',
+        href: '/docs/components/qr-code',
+        scale: 0.7,
+        status: 'done',
+      },
     ],
   },
   {

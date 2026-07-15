@@ -2005,6 +2005,18 @@ export const DemosIndex: Record<
 		files: ["ui/progress-bar/demos/with-label.tsx"],
 		component: React.lazy(() => import("@/registry/ui/progress-bar/demos/with-label")),
 	},
+	"qr-code/demos/basic": {
+		files: ["ui/qr-code/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/qr-code/demos/basic")),
+	},
+	"qr-code/demos/sizes": {
+		files: ["ui/qr-code/demos/sizes.tsx"],
+		component: React.lazy(() => import("@/registry/ui/qr-code/demos/sizes")),
+	},
+	"qr-code/demos/with-logo": {
+		files: ["ui/qr-code/demos/with-logo.tsx"],
+		component: React.lazy(() => import("@/registry/ui/qr-code/demos/with-logo")),
+	},
 	"radio-group/demos/cards": {
 		files: ["ui/radio-group/demos/cards.tsx"],
 		component: React.lazy(() => import("@/registry/ui/radio-group/demos/cards")),

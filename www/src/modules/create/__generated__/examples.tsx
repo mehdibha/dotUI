@@ -52,6 +52,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	pagination: () => import("@/registry/ui/pagination/examples"),
 	popover: () => import("@/registry/ui/popover/examples"),
 	"progress-bar": () => import("@/registry/ui/progress-bar/examples"),
+	"qr-code": () => import("@/registry/ui/qr-code/examples"),
 	"radio-group": () => import("@/registry/ui/radio-group/examples"),
 	"react-hook-form": () => import("@/registry/ui/react-hook-form/examples"),
 	"search-field": () => import("@/registry/ui/search-field/examples"),

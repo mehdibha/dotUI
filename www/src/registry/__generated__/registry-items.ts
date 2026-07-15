@@ -56,6 +56,7 @@ import UiOtpField from "@/registry/ui/otp-field/meta";
 import UiPagination from "@/registry/ui/pagination/meta";
 import UiPopover from "@/registry/ui/popover/meta";
 import UiProgressBar from "@/registry/ui/progress-bar/meta";
+import UiQrCode from "@/registry/ui/qr-code/meta";
 import UiRadioGroup from "@/registry/ui/radio-group/meta";
 import UiSearchField from "@/registry/ui/search-field/meta";
 import UiSegmentedControl from "@/registry/ui/segmented-control/meta";
@@ -132,6 +133,7 @@ export const registryUi: RegistryItem[] = [
 	UiPagination,
 	UiPopover,
 	UiProgressBar,
+	UiQrCode,
 	UiRadioGroup,
 	UiSearchField,
 	UiSegmentedControl,
