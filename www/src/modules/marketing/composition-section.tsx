@@ -10,9 +10,18 @@ import {
   StepTimer,
   useCompositionPlayer,
 } from '@/modules/docs/composition-animation'
+import { useTweak } from '@/dev/tweaker'
 
 export function CompositionSection() {
-  const player = useCompositionPlayer()
+  const manualBeatMs = useTweak('Manual beat dwell (ms)', {
+    type: 'number',
+    min: 150,
+    max: 1500,
+    step: 50,
+    default: 500,
+    group: 'Composition',
+  })
+  const player = useCompositionPlayer({ manualBeatMs })
   const {
     paginated,
     activePaginated,
@@ -178,11 +187,11 @@ export function CompositionSection() {
               </div>
             </div>
           </div>
-          <div className="mt-3 flex items-center justify-between lg:hidden">
-            <span className="font-mono text-xs text-fg-muted">
+          <div className="mt-3 flex items-center justify-between gap-2 lg:hidden">
+            <span className="truncate font-mono text-xs text-fg-muted">
               {current.title}
             </span>
-            <StepDots player={player} />
+            <StepDots player={player} className="shrink-0" />
           </div>
         </div>
       </div>
