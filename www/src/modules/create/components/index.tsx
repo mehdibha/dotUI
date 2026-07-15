@@ -54,8 +54,13 @@ function toTitleCase(slug: string): string {
     .join(' ')
 }
 
+const COMPONENT_DISPLAY_NAMES: Record<string, string> = {
+  'otp-field': 'OTP Field',
+  'qr-code': 'QR Code',
+}
+
 export function getComponentDisplayName(slug: string): string {
-  return toTitleCase(slug)
+  return COMPONENT_DISPLAY_NAMES[slug] ?? toTitleCase(slug)
 }
 
 export function getGroupDisplayName(slug: string): string {
@@ -102,7 +107,7 @@ export function AllComponentsView({ onSelect }: AllComponentsViewProps) {
             className={cardClass}
           >
             <div className="flex items-center justify-between">
-              <span>{toTitleCase(comp.name)}</span>
+              <span>{getComponentDisplayName(comp.name)}</span>
               <ChevronRightIcon className="size-4 text-fg-muted" />
             </div>
             {count > 0 && (
@@ -455,7 +460,7 @@ export function GroupDetailView({
               className={cardClass}
             >
               <div className="flex items-center justify-between">
-                <span>{toTitleCase(comp.name)}</span>
+                <span>{getComponentDisplayName(comp.name)}</span>
                 <ChevronRightIcon className="size-4 text-fg-muted" />
               </div>
               {count > 0 && (
