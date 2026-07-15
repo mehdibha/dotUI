@@ -52,6 +52,8 @@ export interface EnumControl extends BaseControl {
 
 export interface IconControl extends BaseControl {
   type: 'icon'
+  /** Key of `availableIcons`; the picker's initial selection. */
+  defaultValue?: string
 }
 
 export type Control =
@@ -122,6 +124,7 @@ export interface SerializableEnumControl extends SerializableBaseControl {
 
 export interface SerializableIconControl extends SerializableBaseControl {
   type: 'icon'
+  defaultValue?: string
 }
 
 /**

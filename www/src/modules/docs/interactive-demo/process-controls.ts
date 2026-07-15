@@ -14,6 +14,7 @@ import type {
   Control,
   ControlInput,
   EnumControl,
+  IconControl,
   NumberControl,
   SerializableControl,
   StringControl,
@@ -386,6 +387,7 @@ function buildControlWithOverrides(
         type: 'icon',
         name,
         alwaysShow: overrides.alwaysShow,
+        defaultValue: (overrides as Partial<IconControl>).defaultValue,
       }
 
     default:

@@ -17,7 +17,7 @@ export function getDefaultControlValue(
     case 'enum':
       return control.defaultValue ?? control.options[0]
     case 'icon':
-      return null
+      return control.defaultValue ?? null
     default:
       return undefined
   }

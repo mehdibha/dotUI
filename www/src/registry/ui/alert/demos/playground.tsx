@@ -10,8 +10,8 @@ import {
 } from '@/registry/ui/alert'
 
 export default function Demo({
-  title = 'Alert Title',
-  description = 'This is an alert description.',
+  title = 'Update available',
+  description = 'A new version is ready to install. Restart the app to apply it.',
   variant = 'neutral',
   icon,
 }: {
