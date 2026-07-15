@@ -20,14 +20,12 @@ import { deriveRegistryDeps } from '../src/publisher/build-time/derive-registry-
 import { registryBase } from '../src/registry/base/registry'
 import { registryHooks } from '../src/registry/hooks/registry'
 import { iconLibraries, registryIcons } from '../src/registry/icons/icon-map'
-import { registryLib } from '../src/registry/lib/registry'
 import {
   DEFAULT_COLOR_CONFIG,
   emitPrimitivesCss,
   resolveColorConfig,
 } from '../src/registry/theme'
 import type { RegistryItem } from '../src/registry/types'
-import { registryUi } from '../src/registry/ui/registry'
 
 // Directories — relative to www/ (process.cwd())
 const REGISTRY_DIR = path.join(process.cwd(), 'src/registry')
@@ -320,9 +318,10 @@ function toItemIdent(scope: 'ui' | 'lib', slug: string): string {
 
 // Emits __generated__/registry-items.ts — the single source of truth for
 // registryUi/registryLib, globbed from on-disk {ui,lib}/*/meta.ts minus the
-// ORPHAN_ALLOWLIST. Committed (load-bearing: ui/registry.ts + lib/registry.ts
-// re-export it, and this script imports those at startup). Deleting it requires
-// rerunning build:registry from a clean checkout before the next build works.
+// ORPHAN_ALLOWLIST. Committed and load-bearing for the app: ui/registry.ts +
+// lib/registry.ts re-export it. This script derives its own fresh item lists
+// (loadRegisteredItems) rather than importing the manifest, so a stale manifest
+// never blocks regenerating it.
 async function buildRegistryItemsManifest() {
   const targetPath = path.join(GENERATED_DIR, 'registry-items.ts')
   const ui = await listRegistryFolders('ui')
@@ -400,7 +399,7 @@ const ORPHAN_ALLOWLIST = new Set<string>([
 /**
  * Directories under `src/registry/<scope>` that have a `meta.ts` on disk, minus
  * the ORPHAN_ALLOWLIST, sorted by slug. The ONE place the glob + exclusion lives
- * — both the manifest emitter and the drift guard call it, so they can never
+ * — both the manifest emitter and the item loader call it, so they can never
  * disagree about what is registered.
  */
 async function listRegistryFolders(scope: 'ui' | 'lib'): Promise<string[]> {
@@ -417,47 +416,25 @@ async function listRegistryFolders(scope: 'ui' | 'lib'): Promise<string[]> {
 }
 
 /**
- * Asserts the committed __generated__/registry-items.ts is in sync with the
- * on-disk folders: the imported runtime `registered` array must equal the freshly
- * globbed (non-allowlisted) folder set, by object identity, in both directions.
- * Catches a stale manifest (a component folder added/removed without rerunning
- * build:registry).
- *
- * Identity (===) is reliable: the dynamic `../src/registry/<scope>/<slug>/meta`
- * specifier and the manifest's `@/registry/<scope>/<slug>/meta` alias resolve to
- * the same module instance under tsx's ESM cache.
+ * Loads the registered items for a scope by globbing on-disk `meta.ts` folders
+ * — NOT from __generated__/registry-items.ts, which may still be stale on this
+ * run when an item was just added or removed. Every build-time check and the
+ * publishables build run against these fresh items, so a brand-new item folder
+ * is processed in the same `pnpm build:registry` invocation that regenerates
+ * the manifest. (A stale committed manifest is still caught in CI, where the
+ * registry-drift job diffs the regenerated file against the commit.)
  */
-async function checkScopeDrift(
+async function loadRegisteredItems(
   scope: 'ui' | 'lib',
-  registered: RegistryItem[],
-): Promise<string[]> {
-  const folders = await listRegistryFolders(scope)
-  const registeredSet = new Set<RegistryItem>(registered)
-  const globbed = new Set<RegistryItem>()
-  const errors: string[] = []
-  const arrayName = scope === 'ui' ? 'registryUi' : 'registryLib'
-
-  for (const slug of folders) {
+): Promise<RegistryItem[]> {
+  const items: RegistryItem[] = []
+  for (const slug of await listRegistryFolders(scope)) {
     const mod = (await import(`../src/registry/${scope}/${slug}/meta`)) as {
       default: RegistryItem
     }
-    globbed.add(mod.default)
-    if (!registeredSet.has(mod.default)) {
-      errors.push(
-        `Stale generated registry: \`${scope}/${slug}/meta.ts\` is on disk and not allowlisted, but ${arrayName} ` +
-          `(from __generated__/registry-items.ts) does not contain it. Run \`pnpm build:registry\`.`,
-      )
-    }
+    items.push(mod.default)
   }
-  for (const item of registered) {
-    if (!globbed.has(item)) {
-      errors.push(
-        `Stale generated registry: ${arrayName} contains "${item.name}" which is no longer a non-allowlisted ` +
-          `${scope}/* folder with a meta.ts. Run \`pnpm build:registry\`.`,
-      )
-    }
-  }
-  return errors
+  return items
 }
 
 /** Fails if an ORPHAN_ALLOWLIST entry no longer has a meta.ts on disk (rotted entry). */
@@ -516,7 +493,10 @@ const UNREGISTERED_DEP_ALLOWLIST = new Set([
  * closure (composition/CSS-only deps are legitimately hand-added and not flagged), so
  * this catches only UNDER-declaration: a base file imports @/registry/X but meta omits "X".
  */
-async function checkRegistryDepsDrift(): Promise<string[]> {
+async function checkRegistryDepsDrift(
+  registryUi: RegistryItem[],
+  registryLib: RegistryItem[],
+): Promise<string[]> {
   const registeredNames = new Set<string>(
     [...registryBase, ...registryUi, ...registryLib, ...registryHooks].map(
       (item) => item.name,
@@ -556,7 +536,10 @@ async function checkRegistryDepsDrift(): Promise<string[]> {
  * (base + ui + lib + hooks). Unregistered/allowlisted items are not
  * checked here, so the two unregistered name:"form" folders don't collide.
  */
-function checkUniqueRegisteredNames(): string[] {
+function checkUniqueRegisteredNames(
+  registryUi: RegistryItem[],
+  registryLib: RegistryItem[],
+): string[] {
   const seen = new Map<string, string>() // name -> scope it was first seen in
   const errors: string[] = []
   const groups: Array<[string, RegistryItem[]]> = [
@@ -583,14 +566,15 @@ function checkUniqueRegisteredNames(): string[] {
 }
 
 /** Runs all build-time integrity checks; throws (aborting the build) on any failure. */
-async function checkRegistryIntegrity() {
+async function checkRegistryIntegrity(
+  registryUi: RegistryItem[],
+  registryLib: RegistryItem[],
+) {
   checkAllowlistReadiness()
   const errors = [
-    ...(await checkScopeDrift('ui', registryUi)),
-    ...(await checkScopeDrift('lib', registryLib)),
     ...checkAllowlistStale(),
-    ...(await checkRegistryDepsDrift()),
-    ...checkUniqueRegisteredNames(),
+    ...(await checkRegistryDepsDrift(registryUi, registryLib)),
+    ...checkUniqueRegisteredNames(registryUi, registryLib),
   ]
 
   if (errors.length > 0) {
@@ -599,7 +583,7 @@ async function checkRegistryIntegrity() {
     )
   }
   console.log(
-    '  ✓ registry integrity (generated set in sync, allowlist fresh, names unique)',
+    '  ✓ registry integrity (allowlist fresh, deps declared, names unique)',
   )
 }
 
@@ -607,7 +591,7 @@ async function checkRegistryIntegrity() {
 // Main
 // ============================================================================
 
-async function buildShadcnPublishables() {
+async function buildShadcnPublishables(registryUi: RegistryItem[]) {
   const { written, skipped } = await buildPublishables({
     registryDir: REGISTRY_DIR,
     items: registryUi,
@@ -636,8 +620,13 @@ async function main() {
     console.log('Generating base color ramps')
     await generateBaseColorsCss()
 
+    // Fresh item lists globbed from disk — never the (possibly stale) committed
+    // manifest — so a just-added/removed item is handled in this same run.
+    const registryUi = await loadRegisteredItems('ui')
+    const registryLib = await loadRegisteredItems('lib')
+
     console.log('Checking registry integrity')
-    await checkRegistryIntegrity()
+    await checkRegistryIntegrity(registryUi, registryLib)
 
     console.log('\nGenerating internal files')
     await ensureDir(GENERATED_DIR)
@@ -648,7 +637,7 @@ async function main() {
     await buildInternalExamples()
 
     console.log('\nGenerating shadcn publishables')
-    await buildShadcnPublishables()
+    await buildShadcnPublishables(registryUi)
 
     console.log('\n✅ Registry built successfully!')
   } catch (error) {
