@@ -141,7 +141,7 @@ function PresetSelector() {
           <PresetSwatch color={swatchFor(selected)} />
           <SelectValue />
         </SelectTrigger>
-        <SelectContent placement="bottom">
+        <SelectContent placement="bottom start">
           <SelectItem id={YOURS} textValue={yoursName}>
             <span className="flex items-center gap-2">
               <PresetSwatch color={yoursSwatch} className="size-2.5" />
