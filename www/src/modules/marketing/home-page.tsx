@@ -4,19 +4,12 @@ import { LinkButton } from '@/registry/ui/button'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import { Announcement } from '@/components/announcement'
 import { BaseUiIcon } from '@/components/icons/base-ui'
-import { BoltIcon } from '@/components/icons/bolt'
-import { LovableIcon } from '@/components/icons/lovable'
 import { ReactAriaIcon } from '@/components/icons/react-aria'
 import { ReactJsIcon } from '@/components/icons/react-js'
 import { ShadcnIcon } from '@/components/icons/shadcn'
 import { TailwindWordmark } from '@/components/icons/tailwind-wordmark'
 import { TypeScriptIcon } from '@/components/icons/typescript'
-import { V0Icon } from '@/components/icons/v0'
 import { Footer } from '@/components/layout/footer'
-import {
-  AnimatedHeadline,
-  type RotatingTextItem,
-} from '@/components/rotating-text'
 import Cards from '@/modules/marketing/cards'
 import { CompositionSection } from '@/modules/marketing/composition-section'
 
@@ -25,32 +18,20 @@ export function HomePage() {
     <div>
       {/* Hero section */}
       <section className="container flex flex-col pt-7.5 sm:pt-10 md:pt-15">
-        <div className="flex flex-col items-center gap-3 text-center md:gap-4">
-          <Announcement />
-          <h1
-            aria-label="Build your design system. Ship it to v0, bolt.new, Lovable, your code, or anywhere."
-            className="text-3xl leading-tight tracking-tighter text-balance max-lg:font-medium md:text-4xl lg:text-5xl"
-          >
-            <span aria-hidden="true">
-              <AnimatedHeadline
-                lead="Build your design system. Ship it"
-                items={EXPORT_TARGETS}
-                trailing="."
-              />
-            </span>
+        <div className="flex flex-col items-center text-center">
+          <div className="mb-6 sm:mb-8">
+            <Announcement />
+          </div>
+          <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-none">
+            Build your design system,
+            <br />
+            not someone else&rsquo;s.
           </h1>
-          <p className="max-w-2xl text-base text-balance text-fg-muted sm:text-lg">
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
             Beautiful components, accessibility out of the box, composition, and
             more.
-            <br />
-            Powered by{' '}
-            <ReactAriaIcon className="inline-flex h-[0.85em] w-auto translate-y-[-0.08em]" />{' '}
-            <span className="font-medium text-fg">React Aria</span> and{' '}
-            <BaseUiIcon className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" />{' '}
-            <span className="font-medium text-fg">Base&nbsp;UI</span>.
-            {/* Install with <ShadcnIcon  className="inline-flex h-[calc(0.85em+1px)] w-auto translate-y-[-0.08em]" /> Shadcn CLI */}
           </p>
-          <div className="flex w-full flex-col gap-2 pt-1 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
+          <div className="mt-9 flex items-center gap-3">
             <LinkButton href="/create" variant="primary" size="lg">
               Launch the editor
             </LinkButton>
@@ -129,41 +110,5 @@ const tools = [
     label: 'Tailwind CSS v4',
     icon: <TailwindWordmark className="h-5 sm:h-7" />,
     href: 'https://tailwindcss.com',
-  },
-]
-
-const TO = 'to\u00A0'
-
-const EXPORT_TARGETS: RotatingTextItem[] = [
-  {
-    id: 'anywhere',
-    text: 'anywhere',
-    segments: [{ text: 'anywhere', className: 'font-bold italic' }],
-  },
-  {
-    id: 'v0',
-    text: 'to v0',
-    connector: TO,
-    segments: [{ icon: <V0Icon className="h-[0.58em] w-auto" /> }],
-  },
-  {
-    id: 'bolt',
-    text: 'to bolt.new',
-    connector: TO,
-    segments: [
-      { icon: <BoltIcon className="h-[0.72em] w-auto translate-y-[0.09em]" /> },
-    ],
-  },
-  {
-    id: 'lovable',
-    text: 'to Lovable',
-    connector: TO,
-    segments: [{ icon: <LovableIcon className="h-[0.66em] w-auto" /> }],
-  },
-  {
-    id: 'codebase',
-    text: 'to your code',
-    connector: TO,
-    segments: [{ text: 'your code', className: 'font-bold italic' }],
   },
 ]
