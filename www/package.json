@@ -36,6 +36,7 @@
     "@tanstack/router-plugin": "catalog:",
     "@vercel/og": "^0.11.1",
     "cnfast": "^0.0.8",
+    "diff-match-patch-es": "^1.0.1",
     "fumadocs-core": "^16.8.11",
     "fumadocs-mdx": "^15.0.5",
     "globals-docs": "^2.4.1",

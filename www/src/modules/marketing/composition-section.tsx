@@ -144,6 +144,16 @@ export function CompositionSection() {
 
         {/* Code with its rendered result below — one card, no window chrome */}
         <div {...pauseHandlers}>
+          {/* Stands in for the step rail, which is desktop-only. */}
+          <div className="mb-3 flex items-center justify-between gap-2 lg:hidden">
+            <span className="truncate font-mono text-xs text-fg-muted">
+              {current.title}
+            </span>
+            <div className="flex shrink-0 items-center gap-1">
+              <StepDots player={player} />
+              <PlayPauseButton player={player} />
+            </div>
+          </div>
           <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
             <div className="relative flex min-h-56 items-center justify-center p-6">
               <div
@@ -153,7 +163,7 @@ export function CompositionSection() {
               <div className="relative">{current.preview}</div>
               <PlayPauseButton
                 player={player}
-                className="absolute right-2 bottom-2"
+                className="absolute right-2 bottom-2 max-lg:hidden"
               />
             </div>
             <div
@@ -177,12 +187,6 @@ export function CompositionSection() {
                 )}
               </div>
             </div>
-          </div>
-          <div className="mt-3 flex items-center justify-between lg:hidden">
-            <span className="font-mono text-xs text-fg-muted">
-              {current.title}
-            </span>
-            <StepDots player={player} />
           </div>
         </div>
       </div>
