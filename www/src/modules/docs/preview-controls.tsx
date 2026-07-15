@@ -187,12 +187,14 @@ function PreviewModeToggle({ className }: { className?: string }) {
 /**
  * The toolbar over each docs preview: preset selector left, mode toggle right.
  * Absolutely positioned so it overlays the canvas instead of taking its own row.
+ * Click-transparent outside its controls, so it never blocks the canvas or
+ * siblings layered under the strip (e.g. the playground's controls trigger).
  */
 export function PreviewControls({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'absolute inset-x-0 top-0 z-10 flex items-center justify-between gap-2 px-2 pt-2',
+        'pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between gap-2 px-2 pt-2 *:pointer-events-auto',
         className,
       )}
     >
