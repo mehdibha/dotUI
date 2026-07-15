@@ -1073,16 +1073,10 @@ export type CompositionPlayer = ReturnType<typeof useCompositionPlayer>
 // drift. Hovering or focusing the showcase pauses; the play/pause button is a
 // sticky override. Every step change routes through a view transition so the
 // preview's named parts (field shell, label, trigger…) morph instead of swap.
-export function useCompositionPlayer({
-  durationScale = 1,
-  midDurationMs,
-  manualBeatMs = 500,
-}: {
-  durationScale?: number
-  midDurationMs?: number
-  // Dwell per mid beat when a manual navigation walks through them.
-  manualBeatMs?: number
-} = {}) {
+// Dwell per mid beat when a manual navigation walks through them.
+const MANUAL_BEAT_MS = 500
+
+export function useCompositionPlayer() {
   const [step, setStep] = useState(0)
   const [userPaused, setUserPaused] = useState(false)
   const [hoverPaused, setHoverPausedState] = useState(false)
@@ -1204,12 +1198,12 @@ export function useCompositionPlayer({
       const walk = () => {
         applyStep(stepRef.current + 1)
         if (stepRef.current < next) {
-          walkTimerRef.current = setTimeout(walk, manualBeatMs)
+          walkTimerRef.current = setTimeout(walk, MANUAL_BEAT_MS)
         }
       }
       walk()
     },
-    [applyStep, cancelWalk, manualBeatMs],
+    [applyStep, cancelWalk],
   )
 
   const advance = useCallback(
@@ -1217,13 +1211,17 @@ export function useCompositionPlayer({
     [applyStep],
   )
 
+  // Hovering is a real pause to the reader, so the button reads and toggles
+  // this rather than the explicit override alone. Excludes off-screen and
+  // background-tab parking, which pause the clock but aren't the reader's doing.
+  const paused = userPaused || hoverPaused
   const togglePlay = useCallback(() => {
-    setUserPaused((paused) => !paused)
+    setUserPaused(!paused)
     // Resuming with the cursor still inside must actually resume.
     setHoverPausedState(false)
-  }, [])
+  }, [paused])
 
-  const playing = mounted && inView && !hidden && !userPaused && !hoverPaused
+  const playing = mounted && inView && !hidden && !paused
   const current = steps[step] ?? firstStep
   // A mid step maps to the headline step it's building toward (the next
   // paginated entry), so that entry stays lit while the beats play.
@@ -1231,11 +1229,7 @@ export function useCompositionPlayer({
     0,
     paginatedSteps.findIndex((p) => p.index >= step),
   )
-  // Mid steps share one dwell time; the tweaker can override it (undefined in
-  // production, where each mid keeps its own durationMs).
-  const stepDurationMs =
-    (current.mid ? (midDurationMs ?? current.durationMs) : current.durationMs) *
-    durationScale
+  const stepDurationMs = current.durationMs
   const reducedMotion =
     mounted && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -1253,7 +1247,7 @@ export function useCompositionPlayer({
     goToStep,
     advance,
     playing,
-    userPaused,
+    paused,
     togglePlay,
     setHoverPaused,
     mounted,
@@ -1372,17 +1366,17 @@ export function PlayPauseButton({
   player: CompositionPlayer
   className?: string
 }) {
-  const { userPaused, togglePlay } = player
+  const { paused, togglePlay } = player
   return (
     <Button
       size="sm"
       variant="quiet"
       isIconOnly
-      aria-label={userPaused ? 'Play steps' : 'Pause steps'}
+      aria-label={paused ? 'Play steps' : 'Pause steps'}
       onPress={togglePlay}
       className={cn('text-fg-muted', className)}
     >
-      {userPaused ? <PlayIcon /> : <PauseIcon />}
+      {paused ? <PlayIcon /> : <PauseIcon />}
     </Button>
   )
 }
