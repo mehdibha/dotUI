@@ -22,6 +22,7 @@ export function CompositionSection() {
     containerRef,
     current,
     reducedMotion,
+    codeStaggerMs,
   } = player
 
   // Keep the active step centered in the fixed-height rail as the loop runs.
@@ -143,7 +144,9 @@ export function CompositionSection() {
         </div>
 
         {/* Code with its rendered result below — one card, no window chrome */}
-        <div {...pauseHandlers}>
+        {/* min-w-0: grid items floor at min-content, so the code would widen the
+            column past the viewport instead of scrolling inside the card. */}
+        <div className="min-w-0" {...pauseHandlers}>
           {/* Stands in for the step rail, which is desktop-only. */}
           <div className="mb-3 flex items-center justify-between gap-2 lg:hidden">
             <span className="truncate font-mono text-xs text-fg-muted">
@@ -175,12 +178,13 @@ export function CompositionSection() {
             >
               <div
                 ref={codeInnerRef}
-                className="no-scrollbar overflow-x-auto p-6 font-mono text-[0.8125rem] leading-normal"
+                className="no-scrollbar scroll-fade-x overflow-x-auto p-6 font-mono text-[0.8125rem] leading-normal"
               >
                 {mounted ? (
                   <CompositionCode
                     code={current.code}
                     reducedMotion={reducedMotion}
+                    stagger={codeStaggerMs}
                   />
                 ) : (
                   <pre className="whitespace-pre">{current.code}</pre>
