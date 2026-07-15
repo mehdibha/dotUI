@@ -23,7 +23,11 @@ import {
   PALETTE_ORDER,
   resolveColorConfig,
 } from '@/registry/theme'
-import type { AlgorithmId, PaletteSeeds } from '@/registry/theme'
+import type {
+  AlgorithmId,
+  PaletteSeeds,
+  PrimaryColorSource,
+} from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
 import { ColorArea } from '@/registry/ui/color-area'
 import { ColorField } from '@/registry/ui/color-field'
@@ -242,6 +246,22 @@ function GrayStrategyWidget() {
       options={[
         { value: 'pure', label: 'Pure' },
         { value: 'tinted', label: 'Brand-tinted' },
+      ]}
+    />
+  )
+}
+
+function PrimarySourceWidget() {
+  const { designSystem, setColorPrimary } = useDesignSystem()
+  const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
+  return (
+    <Segmented
+      ariaLabel="Primary color"
+      value={config.primary ?? 'neutral'}
+      onChange={(v) => setColorPrimary(v as PrimaryColorSource)}
+      options={[
+        { value: 'neutral', label: 'Neutral' },
+        { value: 'accent', label: 'Accent' },
       ]}
     />
   )
@@ -608,6 +628,17 @@ export const SECTIONS: Section[] = [
         tempo: 'macro',
         binding: 'live',
         Widget: GrayStrategyWidget,
+      }),
+      c({
+        id: 'primary-color',
+        label: 'Primary color',
+        description: 'Black & white actions, or the brand accent.',
+        domain: 'color',
+        tier: 'semantic',
+        tempo: 'macro',
+        binding: 'live',
+        keywords: ['primary', 'button', 'brand'],
+        Widget: PrimarySourceWidget,
       }),
       c({
         id: 'color-algorithm',

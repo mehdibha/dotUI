@@ -8,7 +8,11 @@ import {
   PALETTE_ORDER,
   resolveColorConfig,
 } from '@/registry/theme'
-import type { AlgorithmId, PaletteSeeds } from '@/registry/theme'
+import type {
+  AlgorithmId,
+  PaletteSeeds,
+  PrimaryColorSource,
+} from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
 import { ColorEditor } from '@/registry/ui/color-editor'
 import { ColorPicker } from '@/registry/ui/color-picker'
@@ -28,6 +32,14 @@ const ALGORITHMS: ReadonlyArray<{ id: AlgorithmId; label: string }> = [
   { id: 'tailwind', label: 'Tailwind-style' },
   { id: 'material', label: 'Material' },
   { id: 'contrast', label: 'Contrast-locked' },
+]
+
+const PRIMARY_SOURCES: ReadonlyArray<{
+  id: PrimaryColorSource
+  label: string
+}> = [
+  { id: 'neutral', label: 'Neutral (black & white)' },
+  { id: 'accent', label: 'Accent (brand color)' },
 ]
 
 const SEED_FIELDS: ReadonlyArray<{ label: string; key: keyof PaletteSeeds }> = [
@@ -71,13 +83,26 @@ export function ColorsSummary() {
         </span>
         <p className="font-medium">{algorithmLabel}</p>
       </div>
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] tracking-widest text-fg-muted uppercase">
+          Primary
+        </span>
+        <p className="font-medium">
+          {config.primary === 'accent' ? 'Accent' : 'Neutral'}
+        </p>
+      </div>
     </div>
   )
 }
 
 export function ColorsConfig() {
-  const { designSystem, setColorSeed, setColorAlgorithm, setColorKnob } =
-    useDesignSystem()
+  const {
+    designSystem,
+    setColorSeed,
+    setColorAlgorithm,
+    setColorPrimary,
+    setColorKnob,
+  } = useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
   const seeds = config.seeds
   const resolved = useMemo(() => resolveColorConfig(config), [config])
@@ -135,6 +160,27 @@ export function ColorsConfig() {
           </ColorPicker>
         ))}
       </div>
+
+      <Select
+        className="w-full"
+        selectedKey={config.primary ?? 'neutral'}
+        onSelectionChange={(key) => setColorPrimary(key as PrimaryColorSource)}
+      >
+        <Label>Primary color</Label>
+        <Button size="sm" className="w-full justify-between">
+          <SelectValue className="truncate" />
+          <ChevronDownIcon data-icon-end="" />
+        </Button>
+        <Popover>
+          <ListBox>
+            {PRIMARY_SOURCES.map((source) => (
+              <ListBoxItem key={source.id} id={source.id}>
+                {source.label}
+              </ListBoxItem>
+            ))}
+          </ListBox>
+        </Popover>
+      </Select>
 
       <ColorKnobsControls
         algorithm={config.algorithm}

@@ -9,7 +9,11 @@
  * Pure JS — no `ts-morph`, no React. Safe to import in route handlers.
  */
 
-import { resolveColorConfig } from '@/registry/theme'
+import {
+  ACCENT_PRIMARY_SEMANTICS,
+  resolveColorConfig,
+  resolveTokenValue,
+} from '@/registry/theme'
 import type { Density, RegistryItem } from '@/registry/types'
 
 import type { PublishPreset } from './types'
@@ -168,6 +172,16 @@ export function mergePresetCssFields(
     css['.dark'] = {
       ...(isPlainCssObject(css['.dark']) ? css['.dark'] : {}),
       ...rampsToVars(resolved.dark),
+    }
+  }
+
+  // An accent-sourced primary re-points the primary token cluster inside the
+  // shipped `@theme` block itself, so the exported theme reads as authored
+  // (`--color-primary: var(--accent-500)`) rather than patched at `:root`.
+  if (preset.color?.primary === 'accent') {
+    const theme = (cssVars.theme ??= {})
+    for (const [name, token] of Object.entries(ACCENT_PRIMARY_SEMANTICS)) {
+      theme[`--${name}`] = resolveTokenValue(token)
     }
   }
 

@@ -8,14 +8,24 @@
 
 export type {
   ModeName,
+  PrimaryColorSource,
   SemanticCategory,
   SemanticTarget,
   SemanticToken,
   SemanticVocabulary,
 } from './types'
-export { DEFAULT_SEMANTICS } from './semantics'
+export {
+  ACCENT_PRIMARY_SEMANTICS,
+  DEFAULT_SEMANTICS,
+  semanticsWithPrimary,
+} from './semantics'
 export { colorTokenNames } from './params'
-export { emitCss, type EmitCssOptions, resolveTarget } from './emit-css'
+export {
+  emitCss,
+  type EmitCssOptions,
+  resolveTarget,
+  resolveTokenValue,
+} from './emit-css'
 export {
   type AlgorithmId,
   type ColorConfig,

@@ -430,8 +430,15 @@ function themeStub(): string {
 //   - The generative ramp path stays inert — colors ship as resolved CSS vars
 //     in globals.css — so emitPrimitivesCss / resolveColorConfig are no-ops and
 //     a scoped accent change keeps the baked palette.
-export { DEFAULT_SEMANTICS } from "./semantics";
-export { emitCss } from "./emit-css";
+import type { PrimaryColorSource } from "./types";
+
+export {
+\tACCENT_PRIMARY_SEMANTICS,
+\tDEFAULT_SEMANTICS,
+\tsemanticsWithPrimary,
+} from "./semantics";
+export { emitCss, resolveTokenValue } from "./emit-css";
+export type { PrimaryColorSource } from "./types";
 
 export const GENERATIVE_ALGORITHMS = ${JSON.stringify(GENERATIVE_ALGORITHMS)} as const;
 export type AlgorithmId = (typeof GENERATIVE_ALGORITHMS)[number];
@@ -461,6 +468,7 @@ export interface ColorConfig {
 \talgorithm: AlgorithmId;
 \tsteps?: string[];
 \tseeds: PaletteSeeds;
+\tprimary?: PrimaryColorSource;
 \tknobs?: ColorKnobs;
 }
 

@@ -4,7 +4,12 @@ import { useCallback, useMemo } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
 
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import type { AlgorithmId, ColorKnobs, PaletteSeeds } from '@/registry/theme'
+import type {
+  AlgorithmId,
+  ColorKnobs,
+  PaletteSeeds,
+  PrimaryColorSource,
+} from '@/registry/theme'
 import { DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
 import type { CodeOptions } from '@/publisher/code-options'
 
@@ -94,6 +99,24 @@ export function useDesignSystem() {
     [setDesignSystem],
   )
 
+  /**
+   * Pick the ramp primary-action tokens draw from. `neutral` (the default)
+   * deletes the field so an untouched recipe still encodes as the default.
+   */
+  const setColorPrimary = useCallback(
+    (source: PrimaryColorSource) => {
+      setDesignSystem((prev) => {
+        const base = prev.color ?? DEFAULT_COLOR_CONFIG
+        const { primary: _drop, ...rest } = base
+        return {
+          ...prev,
+          color: source === 'accent' ? { ...rest, primary: 'accent' } : rest,
+        }
+      })
+    },
+    [setDesignSystem],
+  )
+
   /** Set one per-producer tuning knob of the color recipe. */
   const setColorKnob = useCallback(
     <K extends keyof ColorKnobs>(key: K, value: ColorKnobs[K]) => {
@@ -127,6 +150,7 @@ export function useDesignSystem() {
     setDensity,
     setColorSeed,
     setColorAlgorithm,
+    setColorPrimary,
     setColorKnob,
     setCodeOption,
   }

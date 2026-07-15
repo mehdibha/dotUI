@@ -10,6 +10,13 @@
 /** A named display mode (`"light"`, `"dark"`, or any custom mode). */
 export type ModeName = string
 
+/**
+ * Which ramp the primary-action tokens (`color-primary*`, `color-fg-on-primary`)
+ * draw from: the neutral backbone (black/white buttons — Vercel-style) or the
+ * brand accent ramp (colored buttons — Material/Linear-style).
+ */
+export type PrimaryColorSource = 'neutral' | 'accent'
+
 /** How a semantic token resolves to a CSS value. */
 export type SemanticTarget =
   | { ref: string } // → var(--<ref>): a primitive ramp step or another token

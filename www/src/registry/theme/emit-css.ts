@@ -41,6 +41,11 @@ function baseTarget(target: SemanticToken['target']): SemanticTarget {
   return target.light ?? (Object.values(target)[0] as SemanticTarget)
 }
 
+/** Resolve a token's base (mode-agnostic, else `light`) target to its CSS value. */
+export function resolveTokenValue(token: SemanticToken): string {
+  return resolveTarget(baseTarget(token.target))
+}
+
 export interface EmitCssOptions {
   /** Indentation unit (default one tab, matching the repo). */
   indent?: string

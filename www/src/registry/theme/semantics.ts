@@ -8,7 +8,11 @@
  * token is contrast-derived (`onOf`) and carries no `scales` pool.
  */
 
-import type { SemanticToken, SemanticVocabulary } from './types'
+import type {
+  PrimaryColorSource,
+  SemanticToken,
+  SemanticVocabulary,
+} from './types'
 
 /** Picker pools: the neutral backbone + any custom palette. */
 const NEUTRAL = ['neutral', '..'] as const
@@ -129,3 +133,26 @@ export const DEFAULT_SEMANTICS = {
   'color-sidebar': bg('neutral-100', NEUTRAL),
   'color-border-sidebar': bd('neutral-300', NEUTRAL),
 } satisfies SemanticVocabulary
+
+/**
+ * The primary-action cluster remapped onto the accent ramp — solid at 500 with
+ * 600/700 interaction steps (mirroring the `color-accent*` tokens), a light
+ * tinted wash for muted. `neutral` is the {@link DEFAULT_SEMANTICS} baseline
+ * (solid at 950). Every emitter (live preview, scoped previews, publisher)
+ * derives from this one table.
+ */
+export const ACCENT_PRIMARY_SEMANTICS = {
+  'color-primary': bg('accent-500', PRIMARY),
+  'color-primary-hover': bg('accent-600', PRIMARY),
+  'color-primary-active': bg('accent-700', PRIMARY),
+  'color-primary-muted': bg('accent-100', PRIMARY),
+  'color-fg-on-primary': on('accent-500'),
+} satisfies SemanticVocabulary
+
+/** The semantic vocabulary with the primary cluster drawing from `source`. */
+export function semanticsWithPrimary(
+  source: PrimaryColorSource | undefined,
+): SemanticVocabulary {
+  if (source !== 'accent') return DEFAULT_SEMANTICS
+  return { ...DEFAULT_SEMANTICS, ...ACCENT_PRIMARY_SEMANTICS }
+}

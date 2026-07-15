@@ -29,6 +29,8 @@ function makeDesignSystem(opts: {
   density?: DesignSystem['density']
   /** Multiplier on every radius token (1 = builder default). */
   radiusFactor?: string
+  /** Ramp the primary-action tokens draw from (default neutral black/white). */
+  primary?: ColorConfig['primary']
   /** Per-producer tuning (e.g. force a gray accent to stay gray). */
   knobs?: ColorConfig['knobs']
 }): DesignSystem {
@@ -40,6 +42,7 @@ function makeDesignSystem(opts: {
     color: {
       algorithm,
       seeds: { ...DEFAULT_COLOR_CONFIG.seeds, neutral, accent },
+      ...(opts.primary ? { primary: opts.primary } : {}),
       ...(opts.knobs ? { knobs: opts.knobs } : {}),
     },
   }
@@ -76,6 +79,7 @@ export const PRESETS: Preset[] = [
     designSystem: makeDesignSystem({
       neutral: '#6b7280',
       accent: '#3ecf8e',
+      primary: 'accent',
       density: 'default',
     }),
   },
@@ -88,6 +92,7 @@ export const PRESETS: Preset[] = [
       algorithm: 'material',
       neutral: '#79747e',
       accent: '#6750a4',
+      primary: 'accent',
       radiusFactor: '1.75',
       density: 'comfortable',
     }),
@@ -100,6 +105,7 @@ export const PRESETS: Preset[] = [
     designSystem: makeDesignSystem({
       neutral: '#8a8f98',
       accent: '#5e6ad2',
+      primary: 'accent',
       density: 'compact',
     }),
   },
@@ -111,6 +117,7 @@ export const PRESETS: Preset[] = [
     designSystem: makeDesignSystem({
       neutral: '#8a8278',
       accent: '#d97757',
+      primary: 'accent',
       radiusFactor: '1.5',
       density: 'default',
     }),
@@ -123,6 +130,7 @@ export const PRESETS: Preset[] = [
     designSystem: makeDesignSystem({
       neutral: '#7d7d7d',
       accent: '#e11d48',
+      primary: 'accent',
       radiusFactor: '2',
       density: 'comfortable',
     }),
@@ -136,6 +144,7 @@ export const PRESETS: Preset[] = [
       algorithm: 'contrast',
       neutral: '#71717a',
       accent: '#059669',
+      primary: 'accent',
       radiusFactor: '0.75',
       density: 'default',
     }),
