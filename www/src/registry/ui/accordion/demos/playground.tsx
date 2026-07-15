@@ -36,7 +36,7 @@ export default function Demo({
     <Accordion
       allowsMultipleExpanded={allowsMultipleExpanded}
       isDisabled={isDisabled}
-      className="max-w-2xl"
+      className="max-w-sm"
     >
       {items.map((item) => (
         <Disclosure id={item.id} key={item.id}>
