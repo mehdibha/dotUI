@@ -3,7 +3,7 @@ export const siteConfig = {
   name: 'dotUI',
   title: 'dotUI',
   description:
-    'Build your design system in seconds, so your app looks like your brand, not a preset.',
+    "Build your design system, not someone else's. Compose beautiful, accessible React components and export them as code you own.",
   keywords: [
     'dotUI',
     'React',
@@ -26,7 +26,7 @@ export const siteConfig = {
   og: {
     title: 'Ship unique.',
     description:
-      'Build your design system in seconds, so your app looks like your brand, not a preset.',
+      "Build your design system, not someone else's. Compose beautiful, accessible React components and export them as code you own.",
   },
   links: {
     github: 'https://github.com/mehdibha/dotUI',

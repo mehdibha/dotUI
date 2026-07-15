@@ -12,8 +12,7 @@ export function Announcement() {
       <Eyebrow className="transition-colors group-hover:text-fg">
         <span className="size-1.5 rounded-full bg-accent" />
         <span>
-          Open in v0, bolt.new <span className="text-fg-muted/70">&</span>{' '}
-          Lovable
+          Export to v0 <span className="text-fg-muted/70">&</span> your codebase
         </span>
         <ArrowRightIcon className="size-3 shrink-0" />
       </Eyebrow>

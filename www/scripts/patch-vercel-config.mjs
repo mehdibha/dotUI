@@ -34,7 +34,7 @@ if (!existsSync(CONFIG)) {
 // route's BODY.
 const HOME_MD = `# dotUI
 
-> Build your design system in seconds, so your app looks like your brand, not a preset.
+> Build your design system, not someone else's. Compose beautiful, accessible React components and export them as code you own.
 
 dotUI is a design system platform and component registry built on React Aria Components, Tailwind CSS 4, and TypeScript 5. Generate a UI library that looks like your product — not a preset — with the style editor, then consume it through the shadcn CLI, the registry endpoint, or AI tooling like v0.
 
