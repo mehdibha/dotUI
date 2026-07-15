@@ -4,7 +4,11 @@ import { baseRegistryCss } from '@/registry/__generated__/base-css'
 import { cssToRegistryFields } from '@/publisher/build-time/css-to-registry-fields'
 
 import { emitCss, resolveTarget } from './emit-css'
-import { DEFAULT_SEMANTICS } from './semantics'
+import {
+  ACCENT_PRIMARY_SEMANTICS,
+  DEFAULT_SEMANTICS,
+  semanticsWithPrimary,
+} from './semantics'
 import type { SemanticVocabulary } from './types'
 
 /** The `--color-*` subset of a cssVars.theme map (the part DEFAULT_SEMANTICS owns). */
@@ -33,6 +37,31 @@ describe('DEFAULT_SEMANTICS ↔ base/theme.css parity', () => {
     ).sort()
 
     expect(gotKeys).toEqual(wantKeys)
+  })
+})
+
+describe('semanticsWithPrimary', () => {
+  it('returns the baseline vocabulary for neutral / undefined', () => {
+    expect(semanticsWithPrimary(undefined)).toBe(DEFAULT_SEMANTICS)
+    expect(semanticsWithPrimary('neutral')).toBe(DEFAULT_SEMANTICS)
+  })
+
+  it('remaps exactly the primary cluster onto the accent ramp', () => {
+    const vocab = semanticsWithPrimary('accent')
+    const emitted = cssToRegistryFields(emitCss(vocab)).cssVars?.theme ?? {}
+    expect(emitted['--color-primary']).toBe('var(--accent-500)')
+    expect(emitted['--color-primary-hover']).toBe('var(--accent-600)')
+    expect(emitted['--color-primary-active']).toBe('var(--accent-700)')
+    expect(emitted['--color-primary-muted']).toBe('var(--accent-100)')
+    expect(emitted['--color-fg-on-primary']).toBe('var(--on-accent-500)')
+    // Everything outside the cluster is untouched, and no tokens are added or lost.
+    const base =
+      cssToRegistryFields(emitCss(DEFAULT_SEMANTICS)).cssVars?.theme ?? {}
+    expect(Object.keys(emitted)).toEqual(Object.keys(base))
+    for (const key of Object.keys(base)) {
+      if (key.replace(/^--/, '') in ACCENT_PRIMARY_SEMANTICS) continue
+      expect(emitted[key]).toBe(base[key])
+    }
   })
 })
 

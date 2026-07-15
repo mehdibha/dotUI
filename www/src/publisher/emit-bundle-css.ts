@@ -12,7 +12,9 @@
  */
 
 import {
+  ACCENT_PRIMARY_SEMANTICS,
   DEFAULT_COLOR_CONFIG,
+  emitCss,
   emitPrimitivesCss,
   resolveColorConfig,
 } from '@/registry/theme'
@@ -32,7 +34,12 @@ import type { PublishPreset } from './types'
  */
 export function emitColorsCss(preset: PublishPreset): string {
   const config = preset.color ?? DEFAULT_COLOR_CONFIG
-  return emitPrimitivesCss(resolveColorConfig(config), { onColors: true })
+  const css = emitPrimitivesCss(resolveColorConfig(config), { onColors: true })
+  // The bundle's theme.css ships static (`--color-primary: var(--neutral-950)`
+  // inside `@theme`); an accent-sourced primary re-points the cluster on plain
+  // `:root`, which beats the layered `@theme` declarations at compile.
+  if (config.primary !== 'accent') return css
+  return `${css}\n${emitCss(ACCENT_PRIMARY_SEMANTICS, { selector: ':root' })}`
 }
 
 /**

@@ -122,14 +122,20 @@ export function encodePreset(ds: DesignSystem): string | undefined {
 /**
  * Drop a decoded color recipe whose algorithm isn't seed-generative (e.g. a stale or
  * crafted `fixed` preset that would otherwise throw inside `resolveColorConfig`).
+ * Also normalizes `primary`: only `'accent'` is stored (absent = neutral default),
+ * so a crafted or stale value decodes back to the default.
  */
 function sanitizeColor(
   color: ColorConfig | undefined,
 ): ColorConfig | undefined {
   if (!color) return undefined
-  return (GENERATIVE_ALGORITHMS as readonly string[]).includes(color.algorithm)
-    ? color
-    : undefined
+  if (!(GENERATIVE_ALGORITHMS as readonly string[]).includes(color.algorithm))
+    return undefined
+  if (color.primary !== undefined && color.primary !== 'accent') {
+    const { primary: _drop, ...rest } = color
+    return rest
+  }
+  return color
 }
 
 /**

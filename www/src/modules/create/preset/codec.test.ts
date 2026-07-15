@@ -38,6 +38,25 @@ describe('preset codec — color recipe', () => {
     expect(decodePreset(encoded ?? '').color).toBeUndefined()
   })
 
+  it('round-trips an accent-sourced primary', () => {
+    const custom: ColorConfig = { ...DEFAULT_COLOR_CONFIG, primary: 'accent' }
+    const encoded = encodePreset({ ...DEFAULTS, color: custom })
+    expect(encoded).toBeTypeOf('string')
+    expect(decodePreset(encoded ?? '').color).toEqual(custom)
+  })
+
+  it('drops a crafted primary value but keeps the rest of the recipe', () => {
+    const bad = {
+      ...DEFAULT_COLOR_CONFIG,
+      seeds: { ...DEFAULT_COLOR_CONFIG.seeds, accent: '#ef4444' },
+      primary: 'red; } :root { --x: injected',
+    } as unknown as ColorConfig
+    const encoded = encodePreset({ ...DEFAULTS, color: bad })
+    const decoded = decodePreset(encoded ?? '').color
+    expect(decoded?.primary).toBeUndefined()
+    expect(decoded?.seeds.accent).toBe('#ef4444')
+  })
+
   it('round-trips a config with per-producer knobs', () => {
     const custom = {
       ...DEFAULT_COLOR_CONFIG,

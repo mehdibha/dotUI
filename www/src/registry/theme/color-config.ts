@@ -8,6 +8,8 @@
 
 import { SEMANTIC_COLORS } from '@dotui/colors'
 
+import type { PrimaryColorSource } from './types'
+
 /**
  * Seed-generative producers offered by the `@dotui/colors` kernel. `oklch` is the
  * default. The kernel also has a `fixed` producer (hand-authored literal ramps), but
@@ -65,6 +67,11 @@ export interface ColorConfig {
   /** Scale step names; defaults to the kernel's `50`..`950`. */
   steps?: string[]
   seeds: PaletteSeeds
+  /**
+   * Ramp the primary-action tokens draw from. Stored only as `'accent'`
+   * (brand-colored primary); absent means the default neutral (black/white).
+   */
+  primary?: PrimaryColorSource
   /** Optional per-producer tuning; absent for the default palette. */
   knobs?: ColorKnobs
 }

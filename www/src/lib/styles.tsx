@@ -7,10 +7,12 @@ import { tv } from 'tailwind-variants'
 import type { ClassValue, TVReturnType, VariantProps } from 'tailwind-variants'
 
 import {
+  ACCENT_PRIMARY_SEMANTICS,
   DEFAULT_SEMANTICS,
   emitCss,
   emitPrimitivesCss,
   resolveColorConfig,
+  semanticsWithPrimary,
 } from '@/registry/theme'
 import type { ColorConfig } from '@/registry/theme'
 import type {
@@ -235,7 +237,7 @@ function buildScopedThemeCss(
     `${selector} {\n${base}\n\tcolor: var(--color-fg);\n}`,
     `.dark ${selector} {\n${darkOverrides}\n}`,
     // Mode-agnostic `--color-*` (they reference primitives that flip via the blocks above).
-    emitCss(DEFAULT_SEMANTICS, { selector }),
+    emitCss(semanticsWithPrimary(color?.primary), { selector }),
   ]
   if (color) {
     let resolved = resolveColorConfigCached(color)
@@ -464,9 +466,14 @@ function DesignSystemProvider({
   // global selectors and `<style>` carries the UA `display: none`, so layout is untouched.
   const themeCss = React.useMemo(() => {
     if (scoped || !color) return null
-    return emitPrimitivesCss(resolveColorConfigCached(color), {
+    const primitives = emitPrimitivesCss(resolveColorConfigCached(color), {
       onColors: true,
     })
+    // An accent-sourced primary re-points the primary cluster on plain `:root`,
+    // which beats the layered `@theme` declarations. Mode-agnostic — the accent
+    // primitives it references flip with `.dark`.
+    if (color.primary !== 'accent') return primitives
+    return primitives + emitCss(ACCENT_PRIMARY_SEMANTICS, { selector: ':root' })
   }, [scoped, color])
   const themeStyle = themeCss ? (
     <style data-dotui-color>{themeCss}</style>

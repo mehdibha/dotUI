@@ -126,4 +126,43 @@ describe('emitInitItem', () => {
     expect(dark['--accent-50']).toMatch(/^oklch\(/)
     expect(dark['--neutral-950']).toMatch(/^oklch\(/)
   })
+
+  test('an accent-sourced primary re-points the primary cluster in the theme vars', () => {
+    const baseWithPrimary = {
+      ...baseRegistryCss,
+      cssVars: {
+        theme: {
+          '--color-bg': 'var(--neutral-50)',
+          '--color-primary': 'var(--neutral-950)',
+          '--color-fg-on-primary': 'var(--on-neutral-950)',
+        },
+      },
+    }
+    const item = emitInitItem({
+      baseRegistryCss: baseWithPrimary,
+      preset: {
+        density: 'default',
+        componentParams: {},
+        color: {
+          algorithm: 'oklch',
+          seeds: { neutral: '#808080', accent: '#3ecf8e' },
+          primary: 'accent',
+        },
+      },
+      registryRoot: 'https://dotui.com',
+    })
+
+    expect(item.cssVars?.theme).toMatchObject({
+      '--color-bg': 'var(--neutral-50)',
+      '--color-primary': 'var(--accent-500)',
+      '--color-primary-hover': 'var(--accent-600)',
+      '--color-primary-active': 'var(--accent-700)',
+      '--color-primary-muted': 'var(--accent-100)',
+      '--color-fg-on-primary': 'var(--on-accent-500)',
+    })
+    // The default (neutral) primary stays untouched.
+    expect(baseWithPrimary.cssVars.theme['--color-primary']).toBe(
+      'var(--neutral-950)',
+    )
+  })
 })
