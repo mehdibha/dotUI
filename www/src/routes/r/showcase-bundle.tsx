@@ -119,6 +119,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 function buildPageTsx(preset: PublishPreset): string {
   const density = JSON.stringify(preset.density ?? 'default')
   const params = JSON.stringify(preset.componentParams ?? {})
+  const tokens = JSON.stringify(preset.tokens ?? {})
   // Import the theme from the page too (not just the layout): if v0 keeps its
   // own root layout, the page still pulls in globals.css so the theme loads.
   return `"use client";
@@ -130,7 +131,7 @@ import { DesignSystemProvider } from "../lib/styles";
 
 export default function Page() {
 \treturn (
-\t\t<DesignSystemProvider density={${density}} params={${params}}>
+\t\t<DesignSystemProvider density={${density}} params={${params}} tokens={${tokens}}>
 \t\t\t<main className="min-h-screen bg-bg px-4 py-10 sm:px-8">
 \t\t\t\t<div className="mx-auto max-w-7xl">
 \t\t\t\t\t<Cards />

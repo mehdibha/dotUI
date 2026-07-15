@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import {
   ClientOnly,
   createRootRoute,
@@ -89,6 +89,12 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      void import('react-grab')
+    }
+  }, [])
+
   return (
     <ThemeProvider>
       <RootDocument>
