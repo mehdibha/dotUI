@@ -62,6 +62,10 @@ interface Step {
   // clickable stop in the pagination (e.g. building an InputGroup addon by
   // addon before landing on the headline step).
   mid?: boolean
+  // Part of the compact loop played when the home section stacks vertically —
+  // only steps within a few code lines of each other, so the pane height
+  // barely moves (see compactSteps).
+  compact?: boolean
 }
 
 const firstStep: Step = {
@@ -172,6 +176,7 @@ const steps: Step[] = [
   {
     // Headline step: add the trailing addon — the full InputGroup.
     title: 'InputGroup',
+    compact: true,
     durationMs: 3600,
     code: `<TextField>
   <Label>Email</Label>
@@ -210,6 +215,7 @@ const steps: Step[] = [
     // Same anatomy, different field: swap in SearchField, a search icon, and a
     // ⌘K hint that reappears in the command palette finale.
     title: 'SearchField',
+    compact: true,
     durationMs: 2800,
     code: `<SearchField>
   <Label>Search</Label>
@@ -240,6 +246,7 @@ const steps: Step[] = [
   },
   {
     title: 'DateField',
+    compact: true,
     durationMs: 3000,
     code: `<DateField>
   <Label>Meeting date</Label>
@@ -527,6 +534,7 @@ const steps: Step[] = [
   {
     // Headline: attach the options list.
     title: 'Select',
+    compact: true,
     durationMs: 3200,
     code: `<Select>
   <Label>Assignee</Label>
@@ -721,6 +729,7 @@ const steps: Step[] = [
   {
     // Headline: the items gain keyboard shortcuts.
     title: 'Menu',
+    compact: true,
     durationMs: 2800,
     code: `<Menu>
   <Button size="sm" isIconOnly>
@@ -826,6 +835,7 @@ const steps: Step[] = [
     // Headline: the same menu, now opened by right-click — the trigger becomes
     // the target surface.
     title: 'ContextMenu',
+    compact: true,
     durationMs: 3000,
     code: `<ContextMenu>
   Right click here
@@ -1069,12 +1079,22 @@ const steps: Step[] = [
   },
 ]
 
+const maxLines = (list: Step[]) =>
+  Math.max(...list.map((s) => s.code.split('\n').length))
+
+const compactSteps = steps.filter((s) => s.compact)
+export const maxCodeLines = maxLines(steps)
+export const compactMaxCodeLines = maxLines(compactSteps)
+
 // Pagination lists only the headline steps; mid steps play during auto-advance
-// but aren't clickable stops. Each entry keeps its index into `steps` so the
+// but aren't clickable stops. Each entry keeps its index into its list so the
 // rail/dots can jump straight to it.
-const paginatedSteps = steps
-  .map((s, index) => ({ title: s.title, index, mid: s.mid }))
-  .filter((s) => !s.mid)
+const paginate = (list: Step[]) =>
+  list
+    .map((s, index) => ({ title: s.title, index, mid: s.mid }))
+    .filter((s) => !s.mid)
+const paginatedSteps = paginate(steps)
+const compactPaginatedSteps = paginate(compactSteps)
 
 export type CompositionPlayer = ReturnType<typeof useCompositionPlayer>
 
@@ -1100,8 +1120,12 @@ const MANUAL_BEAT_MS = Math.ceil(
 // drift. Hovering or focusing the showcase pauses; the play/pause button is a
 // sticky override. Every step change routes through a view transition so the
 // preview's named parts (field shell, label, trigger…) morph instead of swap.
-export function useCompositionPlayer() {
+// `compactBelowLg` swaps in the compact loop when the viewport is under the
+// lg breakpoint. It flips after mount only, so server and hydration markup
+// always show the full list's first step.
+export function useCompositionPlayer({ compactBelowLg = false } = {}) {
   const [step, setStep] = useState(0)
+  const [compact, setCompact] = useState(false)
   const [userPaused, setUserPaused] = useState(false)
   const [hoverPaused, setHoverPausedState] = useState(false)
   const [hidden, setHidden] = useState(false)
@@ -1116,6 +1140,16 @@ export function useCompositionPlayer() {
       setUserPaused(true)
     }
   }, [])
+
+  useEffect(() => {
+    if (!compactBelowLg) return
+    const mq = window.matchMedia('(min-width: 64rem)')
+    const update = () => setCompact(!mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [compactBelowLg])
+  const activeSteps = compact ? compactSteps : steps
 
   // Only animate while on screen — the clock parks itself otherwise.
   useEffect(() => {
@@ -1202,12 +1236,20 @@ export function useCompositionPlayer() {
   }, [])
   useEffect(() => cancelWalk, [cancelWalk])
 
+  // Restart from the top when the step list swaps (breakpoint cross) — the
+  // current index points into the other list.
+  useEffect(() => {
+    cancelWalk()
+    stepRef.current = 0
+    setStep(0)
+  }, [compact, cancelWalk])
+
   const [walking, setWalking] = useState(false)
   const goToStep = useCallback(
     (next: number) => {
       cancelWalk()
       const from = stepRef.current
-      const between = steps.slice(from + 1, next)
+      const between = activeSteps.slice(from + 1, next)
       const reduce = window.matchMedia(
         '(prefers-reduced-motion: reduce)',
       ).matches
@@ -1234,12 +1276,12 @@ export function useCompositionPlayer() {
       }
       walk()
     },
-    [applyStep, cancelWalk],
+    [applyStep, cancelWalk, activeSteps],
   )
 
   const advance = useCallback(
-    () => applyStep((stepRef.current + 1) % steps.length),
-    [applyStep],
+    () => applyStep((stepRef.current + 1) % activeSteps.length),
+    [applyStep, activeSteps],
   )
 
   // Hovering is a real pause to the reader, so the button reads and toggles
@@ -1253,12 +1295,16 @@ export function useCompositionPlayer() {
   }, [paused])
 
   const playing = mounted && inView && !hidden && !paused
-  const current = steps[step] ?? firstStep
+  const paginated = compact ? compactPaginatedSteps : paginatedSteps
+  // The index may briefly outlive a list swap — the reset effect above hasn't
+  // run yet on that render.
+  const current =
+    activeSteps[Math.min(step, activeSteps.length - 1)] ?? firstStep
   // A mid step maps to the headline step it's building toward (the next
   // paginated entry), so that entry stays lit while the beats play.
   const activePaginated = Math.max(
     0,
-    paginatedSteps.findIndex((p) => p.index >= step),
+    paginated.findIndex((p) => p.index >= step),
   )
   const stepDurationMs = current.durationMs
   const reducedMotion =
@@ -1273,7 +1319,7 @@ export function useCompositionPlayer() {
   }, [playing, reducedMotion, step, stepDurationMs, advance])
 
   return {
-    steps,
+    steps: activeSteps,
     step,
     goToStep,
     advance,
@@ -1286,7 +1332,7 @@ export function useCompositionPlayer() {
     current,
     stepDurationMs,
     reducedMotion,
-    paginated: paginatedSteps,
+    paginated,
     activePaginated,
     codeStaggerMs: walking ? WALK_CODE_STAGGER_MS : CODE_STAGGER_MS,
   }
