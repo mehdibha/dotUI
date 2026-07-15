@@ -3,6 +3,23 @@ title: QR Code
 description: A QR code encodes a value, such as a URL, as a scannable matrix barcode.
 ---
 
+<InteractiveDemo
+  name="qr-code"
+  controls={[
+    {
+      type: 'string',
+      name: 'value',
+      defaultValue: 'https://dotui.org',
+    },
+    {
+      type: 'enum',
+      name: 'errorCorrection',
+      options: ['L', 'M', 'Q', 'H'],
+      defaultValue: 'M',
+    },
+  ]}
+/>
+
 ## Installation
 
 ```npm
