@@ -3,6 +3,7 @@ import 'shiki-magic-move/style.css'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { parseDate } from '@internationalized/date'
+import { diffCleanupSemanticLossless } from 'diff-match-patch-es'
 import { PauseIcon, PlayIcon } from 'lucide-react'
 import { ShikiMagicMove } from 'shiki-magic-move/react'
 import { useTheme } from 'starter-themes'
@@ -1440,6 +1441,9 @@ export function CompositionCode({
         duration: reducedMotion ? 0 : duration,
         stagger,
         containerStyle: false,
+        // Snap edit boundaries to line breaks, else the raw char diff strands
+        // `<` and `/>` on the old line and moves only the tag name.
+        diffCleanup: diffCleanupSemanticLossless,
       }}
     />
   )
