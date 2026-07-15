@@ -45,6 +45,7 @@ import { OTPFieldDemo } from './otp-field'
 import { PaginationDemo } from './pagination'
 import { PopoverDemo } from './popover'
 import { ProgressBarDemo } from './progress-bar'
+import { QRCodeDemo } from './qr-code'
 import { RadioGroupDemo } from './radio-group'
 import { SearchFieldDemo } from './search-field'
 import { SelectDemo } from './select'
@@ -111,6 +112,7 @@ export const componentDemos: Record<string, ComponentType> = {
   pagination: PaginationDemo,
   popover: PopoverDemo,
   'progress-bar': ProgressBarDemo,
+  'qr-code': QRCodeDemo,
   'radio-group': RadioGroupDemo,
   'search-field': SearchFieldDemo,
   select: SelectDemo,
