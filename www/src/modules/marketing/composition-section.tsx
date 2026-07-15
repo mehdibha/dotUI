@@ -3,16 +3,32 @@ import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/registry/lib/utils'
 import { LinkButton } from '@/registry/ui/button'
 import {
+  compactMaxCodeLines,
   CompositionCode,
   CompositionTransitionStyles,
+  maxCodeLines,
   PlayPauseButton,
   StepDots,
   StepTimer,
   useCompositionPlayer,
 } from '@/modules/docs/composition-animation'
 
+// The code pane's height at a given line count: p-6 padding plus lines at
+// text-[0.8125rem]/leading-normal.
+const codePaneHeight = (lines: number) =>
+  `calc(3rem + ${lines} * 0.8125rem * 1.5)`
+
+// Pinning the pane below lg (where the section stacks) keeps the page from
+// moving between compact-loop steps.
+const compactCodeMinHeight = codePaneHeight(compactMaxCodeLines)
+
+// The right panel at its tallest step: preview area (min-h-56) + code pane +
+// the card's own y-borders. Reserving it on the panel's container keeps the
+// animating card from ever moving the page.
+const panelMaxHeight = `calc(14rem + 2px + ${codePaneHeight(maxCodeLines)})`
+
 export function CompositionSection() {
-  const player = useCompositionPlayer()
+  const player = useCompositionPlayer({ compactBelowLg: true })
   const {
     paginated,
     activePaginated,
@@ -54,7 +70,10 @@ export function CompositionSection() {
     if (!codeMetrics.current) {
       const style = getComputedStyle(el)
       const pad = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
-      codeMetrics.current = { line: (el.offsetHeight - pad) / lines, pad }
+      // Rect, not offsetHeight — the integer rounding inflates the per-line
+      // metric (67.5 → 68 reads as 20px/line instead of 19.5).
+      const height = el.getBoundingClientRect().height
+      codeMetrics.current = { line: (height - pad) / lines, pad }
     }
     const { line, pad } = codeMetrics.current
     setCodeHeight(lines * line + pad)
@@ -143,10 +162,16 @@ export function CompositionSection() {
           </div>
         </div>
 
-        {/* Code with its rendered result below — one card, no window chrome */}
+        {/* Code with its rendered result below — one card, no window chrome.
+            On lg the container reserves the tallest step's height so the
+            animating card resizes inside it without moving the page. */}
         {/* min-w-0: grid items floor at min-content, so the code would widen the
             column past the viewport instead of scrolling inside the card. */}
-        <div className="min-w-0" {...pauseHandlers}>
+        <div
+          className="min-w-0 lg:min-h-(--panel-max)"
+          style={{ '--panel-max': panelMaxHeight } as React.CSSProperties}
+          {...pauseHandlers}
+        >
           {/* Stands in for the step rail, which is desktop-only. */}
           <div className="mb-3 flex items-center justify-between gap-2 lg:hidden">
             <span className="truncate font-mono text-xs text-fg-muted">
@@ -163,18 +188,23 @@ export function CompositionSection() {
                 aria-hidden
                 className="absolute inset-0 bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_70%_80%_at_50%_50%,black,transparent)] bg-[size:14px_14px]"
               />
-              <div className="relative">{current.preview}</div>
+              <div className="relative flex w-full justify-center">
+                {current.preview}
+              </div>
               <PlayPauseButton
                 player={player}
                 className="absolute right-2 bottom-2 max-lg:hidden"
               />
             </div>
             <div
-              className="overflow-hidden border-t [mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] transition-[height] ease-in-out [view-transition-name:cmp-code] motion-reduce:transition-none"
-              style={{
-                height: codeHeight ?? 'auto',
-                transitionDuration: '500ms',
-              }}
+              className="overflow-hidden border-t [mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] transition-[height] ease-in-out [view-transition-name:cmp-code] motion-reduce:transition-none max-lg:min-h-(--code-min)"
+              style={
+                {
+                  height: codeHeight ?? 'auto',
+                  transitionDuration: '500ms',
+                  '--code-min': compactCodeMinHeight,
+                } as React.CSSProperties
+              }
             >
               <div
                 ref={codeInnerRef}
