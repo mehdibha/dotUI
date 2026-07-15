@@ -24,7 +24,7 @@ export function HomePage() {
   return (
     <div>
       {/* Hero section */}
-      <section className="container flex flex-col pt-6 sm:pt-8 md:pt-12">
+      <section className="container flex flex-col pt-7.5 sm:pt-10 md:pt-15">
         <div className="flex flex-col items-center gap-3 text-center md:gap-4">
           <Announcement />
           <h1
@@ -61,7 +61,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="mt-16">
+      <section className="mt-23">
         <Cards />
       </section>
 
