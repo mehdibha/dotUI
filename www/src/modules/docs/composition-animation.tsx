@@ -396,7 +396,8 @@ const steps: Step[] = [
     // Mid beat: swap the overlay primitive — one word, Popover → Modal.
     title: 'Modal',
     mid: true,
-    durationMs: 1300,
+    // 110 tokens: the transition needs ~1410ms to land (see CODE_SPAN).
+    durationMs: 1500,
     code: `<DateRangePicker>
   <Label>Trip dates</Label>
   <InputGroup>
@@ -1068,14 +1069,28 @@ const paginatedSteps = steps
 
 export type CompositionPlayer = ReturnType<typeof useCompositionPlayer>
 
+// shiki-magic-move delays each phase by a *fraction of* `duration` and then runs
+// it for a further 1×duration. Enter is last, so a transition ends at
+// (1 + delayEnter)×duration + the stagger tail — not at `duration`. Every dwell
+// above has to clear that, or the next step cuts the animation off mid-flight.
+const CODE_ENTER_DELAY = 0.7
+const CODE_SPAN = 1 + CODE_ENTER_DELAY
+const CODE_DURATION_MS = 700
+const CODE_STAGGER_MS = 2
+
+// A manual walk plays the exact same code transition as auto-play, only with a
+// smaller stagger — so each beat must clear the full span plus the stagger tail
+// of the longest (~120-token) snippet.
+const WALK_CODE_STAGGER_MS = 0.5
+const MANUAL_BEAT_MS = Math.ceil(
+  CODE_SPAN * CODE_DURATION_MS + 120 * WALK_CODE_STAGGER_MS,
+)
+
 // Shared player: auto-advance while visible, with a CSS animation as the step
 // clock (see StepTimer) so the visible progress and the advance tick can never
 // drift. Hovering or focusing the showcase pauses; the play/pause button is a
 // sticky override. Every step change routes through a view transition so the
 // preview's named parts (field shell, label, trigger…) morph instead of swap.
-// Dwell per mid beat when a manual navigation walks through them.
-const MANUAL_BEAT_MS = 500
-
 export function useCompositionPlayer() {
   const [step, setStep] = useState(0)
   const [userPaused, setUserPaused] = useState(false)
@@ -1178,6 +1193,7 @@ export function useCompositionPlayer() {
   }, [])
   useEffect(() => cancelWalk, [cancelWalk])
 
+  const [walking, setWalking] = useState(false)
   const goToStep = useCallback(
     (next: number) => {
       cancelWalk()
@@ -1192,13 +1208,19 @@ export function useCompositionPlayer() {
         between.length === 0 ||
         !between.every((s) => s.mid)
       ) {
+        setWalking(false)
         applyStep(next)
         return
       }
+      setWalking(true)
       const walk = () => {
         applyStep(stepRef.current + 1)
         if (stepRef.current < next) {
           walkTimerRef.current = setTimeout(walk, MANUAL_BEAT_MS)
+        } else {
+          // Clears in the same commit as the final step, so the arrival plays at
+          // full duration — nothing follows it to cut it off.
+          setWalking(false)
         }
       }
       walk()
@@ -1257,6 +1279,7 @@ export function useCompositionPlayer() {
     reducedMotion,
     paginated: paginatedSteps,
     activePaginated,
+    codeStaggerMs: walking ? WALK_CODE_STAGGER_MS : CODE_STAGGER_MS,
   }
 }
 
@@ -1416,8 +1439,8 @@ export function CompositionTransitionStyles({
 export function CompositionCode({
   code,
   reducedMotion,
-  duration = 700,
-  stagger = 2,
+  duration = CODE_DURATION_MS,
+  stagger = CODE_STAGGER_MS,
 }: {
   code: string
   reducedMotion: boolean
@@ -1434,6 +1457,8 @@ export function CompositionCode({
       options={{
         duration: reducedMotion ? 0 : duration,
         stagger,
+        // Pinned: CODE_SPAN is only correct if this is what the renderer uses.
+        delayEnter: CODE_ENTER_DELAY,
         containerStyle: false,
         // Snap edit boundaries to line breaks, else the raw char diff strands
         // `<` and `/>` on the old line and moves only the tag name.
@@ -1445,8 +1470,14 @@ export function CompositionCode({
 
 export function CompositionAnimation({ className }: { className?: string }) {
   const player = useCompositionPlayer()
-  const { mounted, containerRef, current, reducedMotion, setHoverPaused } =
-    player
+  const {
+    mounted,
+    containerRef,
+    current,
+    reducedMotion,
+    setHoverPaused,
+    codeStaggerMs,
+  } = player
 
   return (
     <div
@@ -1474,6 +1505,7 @@ export function CompositionAnimation({ className }: { className?: string }) {
             <CompositionCode
               code={current.code}
               reducedMotion={reducedMotion}
+              stagger={codeStaggerMs}
             />
           ) : (
             <pre className="whitespace-pre">{current.code}</pre>
