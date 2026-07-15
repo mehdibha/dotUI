@@ -5,16 +5,22 @@ description: Alerts display a short, important message in a way that attracts th
 
 <InteractiveDemo
   name="alert"
-  fallback={`<Alert className="max-w-md">
-<AlertTitle>Alert Title</AlertTitle>
-<AlertDescription>This is an alert description.</AlertDescription>
-
-</Alert>`}
   controls={[
-    { name: "title", type: "string", defaultValue: "Alert Title", alwaysShow: true },
-    { name: "description", type: "string", defaultValue: "This is an alert description.", alwaysShow: true },
-    "variant",
-    { name: "icon", type: "icon" },
+    {
+      name: 'title',
+      type: 'string',
+      defaultValue: 'Update available',
+      alwaysShow: true,
+    },
+    {
+      name: 'description',
+      type: 'string',
+      defaultValue:
+        'A new version is ready to install. Restart the app to apply it.',
+      alwaysShow: true,
+    },
+    'variant',
+    { name: 'icon', type: 'icon', defaultValue: 'InfoIcon' },
   ]}
 />
 
@@ -51,7 +57,10 @@ import {
   AlertAction,
 } from '@/components/ui/alert'
 import { CircleAlert } from 'lucide-react'
-;<Alert>
+```
+
+```tsx
+<Alert>
   <CircleAlert />
   <AlertTitle>Title</AlertTitle>
   <AlertDescription>Description</AlertDescription>
@@ -63,7 +72,7 @@ import { CircleAlert } from 'lucide-react'
 
 ## Examples
 
-<Examples className="sm:grid-cols-2">
+<Examples>
   <Example name="alert/demos/default" title="Default" />
   <Example name="alert/demos/action" title="With Action" />
   <Example name="alert/demos/dismissible" title="Dismissible" />

@@ -34,7 +34,10 @@ const categories = [
 
 export default function Demo() {
   return (
-    <Accordion className="w-full max-w-sm">
+    <Accordion
+      className="w-full max-w-xs"
+      defaultExpandedKeys={['Collaboration']}
+    >
       {categories.map((category) => (
         <Disclosure key={category.name} id={category.name}>
           <DisclosureTrigger>{category.name}</DisclosureTrigger>

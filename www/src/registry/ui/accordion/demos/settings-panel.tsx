@@ -42,7 +42,10 @@ const sections = [
 
 export default function Demo() {
   return (
-    <Accordion className="w-full max-w-sm">
+    <Accordion
+      className="w-full max-w-xs"
+      defaultExpandedKeys={['Notifications']}
+    >
       {sections.map((section) => (
         <Disclosure key={section.name} id={section.name}>
           <DisclosureTrigger>{section.name}</DisclosureTrigger>

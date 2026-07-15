@@ -7,7 +7,7 @@ import {
 
 export default function Demo() {
   return (
-    <Accordion defaultExpandedKeys={['getting-started']}>
+    <Accordion className="max-w-xs" defaultExpandedKeys={['getting-started']}>
       <Disclosure id="getting-started">
         <DisclosureTrigger>How do I get started with DotUI?</DisclosureTrigger>
         <DisclosurePanel>
