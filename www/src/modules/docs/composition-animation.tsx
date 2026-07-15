@@ -520,7 +520,7 @@ const steps: Step[] = [
     preview: (
       <Select className="w-full max-w-xs">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
-        <SelectTrigger className="[view-transition-name:cmp-trigger]" />
+        <SelectTrigger className="[view-transition-name:cmp-field]" />
       </Select>
     ),
   },
@@ -542,7 +542,7 @@ const steps: Step[] = [
     preview: (
       <Select className="w-full max-w-xs" defaultSelectedKey="cara">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
-        <SelectTrigger className="[view-transition-name:cmp-trigger]" />
+        <SelectTrigger className="[view-transition-name:cmp-field]" />
         <Popover>
           <ListBox className="[view-transition-name:cmp-list]">
             <ListBoxItem id="cara">Cara</ListBoxItem>
@@ -575,7 +575,7 @@ const steps: Step[] = [
     preview: (
       <Select className="w-full max-w-xs" defaultSelectedKey="cara">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
-        <SelectTrigger className="[view-transition-name:cmp-trigger]" />
+        <SelectTrigger className="[view-transition-name:cmp-field]" />
         <Popover>
           <ListBox className="[view-transition-name:cmp-list]">
             <ListBoxSection>
