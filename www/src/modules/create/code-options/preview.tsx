@@ -68,7 +68,14 @@ export function CodeOptionsPreview() {
           {isCopied ? <CheckIcon /> : <CopyIcon />}
         </Button>
       </div>
-      <div className="relative min-h-0 flex-1 overflow-auto">
+      {/* This view has its own chrome instead of CodeBlock, so it opts the
+          line-number gutter in itself: the attribute activates it, the counter
+          reset scopes it. */}
+      <div
+        className="relative min-h-0 flex-1 overflow-auto"
+        data-line-numbers
+        style={{ counterReset: 'line' }}
+      >
         {code ? (
           <DynamicPre lang="tsx">{code}</DynamicPre>
         ) : (

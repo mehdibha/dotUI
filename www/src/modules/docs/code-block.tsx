@@ -14,6 +14,8 @@ export interface CodeBlockProps extends React.ComponentProps<'figure'> {
   icon?: string | React.ReactNode
   /** Extra classes for the scrollable code container, e.g. to make it a modal's scroller. */
   contentClassName?: string
+  /** Line-number gutter, on by default. Only renders on shiki `.line` spans, so
+   *  plain-text blocks (CLI commands) show nothing regardless. */
   'data-line-numbers'?: boolean
 }
 
@@ -24,6 +26,7 @@ export function CodeBlock({
   children,
   className,
   contentClassName,
+  'data-line-numbers': lineNumbers = true,
   ...props
 }: CodeBlockProps) {
   const containerRef = useRef<HTMLElement>(null)
@@ -41,6 +44,8 @@ export function CodeBlock({
       <figure
         ref={containerRef}
         className={cn('rounded-md border bg-card', className)}
+        // Presence, not value, drives the CSS — so opt out by omitting it.
+        {...(lineNumbers ? { 'data-line-numbers': true } : {})}
         {...props}
       >
         {title && (
