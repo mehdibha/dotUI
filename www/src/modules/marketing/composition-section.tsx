@@ -197,7 +197,7 @@ export function CompositionSection() {
               />
             </div>
             <div
-              className="overflow-hidden border-t [mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] transition-[height] ease-in-out [view-transition-name:cmp-code] motion-reduce:transition-none max-lg:min-h-(--code-min)"
+              className="overflow-hidden border-t [mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] transition-[height] ease-in-out motion-reduce:transition-none max-lg:min-h-(--code-min)"
               style={
                 {
                   height: codeHeight ?? 'auto',

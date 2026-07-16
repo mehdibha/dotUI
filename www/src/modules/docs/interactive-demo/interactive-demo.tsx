@@ -5,13 +5,13 @@ import {
   useState,
   type ComponentType,
 } from 'react'
-import { flushSync } from 'react-dom'
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   SlidersHorizontalIcon,
   XIcon,
 } from 'lucide-react'
+import type { PressEvent } from 'react-aria-components'
 
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
@@ -22,6 +22,7 @@ import type { CodeTemplate } from '@/modules/docs/codegen/code-template'
 import { DemoPreset } from '@/modules/docs/demo-preset'
 import { DynamicPre } from '@/modules/docs/dynamic-pre'
 import { PreviewControls, PreviewPanel } from '@/modules/docs/preview-controls'
+import { toggleCodeBlock } from '@/modules/docs/toggle-code-block'
 
 import { defaultControlValues } from './control-defaults'
 import { availableIcons, Controls } from './controls'
@@ -101,16 +102,8 @@ export function InteractiveDemo({
     [codeTemplate, values, isExpanded],
   )
 
-  const handleToggle = () => {
-    if (document.startViewTransition) {
-      document.startViewTransition(() => {
-        flushSync(() => {
-          setIsExpanded((prev) => !prev)
-        })
-      })
-    } else {
-      setIsExpanded((prev) => !prev)
-    }
+  const handleToggle = (e: PressEvent) => {
+    toggleCodeBlock(e.target, () => setIsExpanded((prev) => !prev))
   }
 
   return (

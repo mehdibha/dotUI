@@ -1464,11 +1464,9 @@ export function CompositionTransitionStyles({
 }: { morphMs?: number } = {}) {
   return (
     <style>{`
-      /* Keep the page interactive while a transition runs, and confine the
-         animation to the named preview parts — everything else swaps instantly. */
-      ::view-transition { pointer-events: none; }
-      ::view-transition-old(root) { display: none; }
-      ::view-transition-new(root) { animation: none; }
+      /* Only the named preview parts animate — everything else is live DOM
+         and swaps instantly (:root is opted out of transitions globally, see
+         styles.css, which also keeps the page interactive during morphs). */
       ::view-transition-group(cmp-field),
       ::view-transition-group(cmp-label),
       ::view-transition-group(cmp-desc),
@@ -1478,15 +1476,8 @@ export function CompositionTransitionStyles({
         animation-duration: ${morphMs}ms;
         animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
       }
-      ::view-transition-old(cmp-code) { display: none; }
-      ::view-transition-new(cmp-code) { animation: none; }
       @keyframes cmp-progress-x { from { transform: translateX(-100%); } to { transform: translateX(0); } }
       @keyframes cmp-progress-y { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-      @media (prefers-reduced-motion: reduce) {
-        ::view-transition-group(*),
-        ::view-transition-old(*),
-        ::view-transition-new(*) { animation: none; }
-      }
     `}</style>
   )
 }
@@ -1555,7 +1546,7 @@ export function CompositionAnimation({ className }: { className?: string }) {
         </div>
       </div>
       <div className="grid sm:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <div className="no-scrollbar h-88 overflow-auto p-4 font-mono text-[0.8125rem] leading-relaxed [view-transition-name:cmp-code]">
+        <div className="no-scrollbar h-88 overflow-auto p-4 font-mono text-[0.8125rem] leading-relaxed">
           {mounted ? (
             <CompositionCode
               code={current.code}
