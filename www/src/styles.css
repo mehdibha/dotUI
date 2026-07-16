@@ -23,6 +23,26 @@
   --radius-full: calc(infinity * 1px);
 }
 
+/* View transitions must never freeze the page. Two defaults conspire to: the
+   snapshot overlay eats pointer events, and any participating element skips
+   hit-testing while a transition runs (its pixels render in the overlay, not
+   at its DOM position) — and :root participates by default, taking the whole
+   page with it. Pass clicks through the overlay and keep the root out of
+   transitions; call sites name exactly the elements they morph. */
+::view-transition {
+  pointer-events: none;
+}
+:root {
+  view-transition-name: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none;
+  }
+}
+
 @utility container {
   @apply mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10 3xl:max-w-screen-2xl;
 }
