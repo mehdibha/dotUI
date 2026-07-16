@@ -1,11 +1,23 @@
 import 'shiki-magic-move/style.css'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { parseDate } from '@internationalized/date'
-import { diffCleanupSemanticLossless } from 'diff-match-patch-es'
+import {
+  DIFF_DELETE,
+  DIFF_EQUAL,
+  DIFF_INSERT,
+  diffCleanupSemanticLossless,
+  type Diff,
+} from 'diff-match-patch-es'
 import { PauseIcon, PlayIcon } from 'lucide-react'
-import { ShikiMagicMove } from 'shiki-magic-move/react'
+import {
+  codeToKeyedTokens,
+  syncTokenKeys,
+  toKeyedTokens,
+} from 'shiki-magic-move/core'
+import { ShikiMagicMoveRenderer } from 'shiki-magic-move/react'
+import type { KeyedToken, KeyedTokensInfo } from 'shiki-magic-move/types'
 import { useTheme } from 'starter-themes'
 
 import {
@@ -1491,6 +1503,145 @@ export function CompositionTransitionStyles({
   )
 }
 
+// The char diff happily matches stray punctuation across unrelated tags, so a
+// lone `<` or `/>` slides across the pane while the tag it belonged to fades.
+// After snapping boundaries to line breaks, demote every matched run that
+// lands on a different line but holds no whole word — it fades with its tag
+// instead of flying. Runs that keep words slide as blocks, and same-line runs
+// stay matched, so anchored brackets (the Popover → Modal one-word swap) hold
+// still. A word *fragment* at a run's edge (`Field>` shared by `</TextField>`
+// and `</SearchField>`) doesn't count: it can never match a whole token, so
+// only its punctuation would fly.
+const WORD = /[A-Za-z0-9]/
+
+function cleanupCodeDiff(diffs: Diff[]): Diff[] {
+  diffCleanupSemanticLossless(diffs)
+  let from = ''
+  let to = ''
+  for (const [op, text] of diffs) {
+    if (op !== DIFF_INSERT) from += text
+    if (op !== DIFF_DELETE) to += text
+  }
+  const out: Diff[] = []
+  let offFrom = 0
+  let offTo = 0
+  let lineFrom = 0
+  let lineTo = 0
+  for (const [op, text] of diffs) {
+    let demote = false
+    if (op === DIFF_EQUAL && lineFrom !== lineTo) {
+      let core = text
+      const end = text.length
+      if (
+        WORD.test(core[0] ?? '') &&
+        (WORD.test(from[offFrom - 1] ?? '') || WORD.test(to[offTo - 1] ?? ''))
+      ) {
+        core = core.replace(/^[A-Za-z0-9]+/, '')
+      }
+      if (
+        WORD.test(core[core.length - 1] ?? '') &&
+        (WORD.test(from[offFrom + end] ?? '') ||
+          WORD.test(to[offTo + end] ?? ''))
+      ) {
+        core = core.replace(/[A-Za-z0-9]+$/, '')
+      }
+      demote = !WORD.test(core)
+    }
+    if (demote) {
+      out.push([DIFF_DELETE, text], [DIFF_INSERT, text])
+    } else {
+      out.push([op, text])
+    }
+    const lines = text.split('\n').length - 1
+    if (op !== DIFF_INSERT) {
+      offFrom += text.length
+      lineFrom += lines
+    }
+    if (op !== DIFF_DELETE) {
+      offTo += text.length
+      lineTo += lines
+    }
+  }
+  return out
+}
+
+// A bracket belongs to its tag name — `<`/`</` to the name after it, the
+// closing `>`/`/>` to the name before it. The char diff doesn't know that:
+// wrapping `<Input />` in `<TextField>` matches old `<Input`'s bracket to new
+// `<TextField`'s, so the `<` stays behind while `Input` slides away. After the
+// library syncs keys, rebind every surviving tag name's brackets to its own —
+// stealing the key back when the diff gave it to another tag — and unmatch any
+// leftover punctuation pair that still jumps lines. Same-line leftovers stay:
+// a swapped-in-place tag (Popover → Modal) keeps its brackets still.
+const TAG_NAME = /^[A-Za-z][\w.]*$/
+
+function lockTagPunctuation(from: KeyedTokensInfo, to: KeyedTokensInfo) {
+  const fromByKey = new Map(from.tokens.map((t) => [t.key, t]))
+  const toByKey = new Map(to.tokens.map((t) => [t.key, t]))
+  const bound = new Set<KeyedToken>()
+  let freed = 0
+
+  const bind = (target: KeyedToken, key: string) => {
+    bound.add(target)
+    if (target.key === key) return
+    const holder = toByKey.get(key)
+    if (holder) {
+      holder.key = `${to.hash}-freed-${freed++}`
+      toByKey.set(holder.key, holder)
+    }
+    toByKey.delete(target.key)
+    target.key = key
+    toByKey.set(key, target)
+  }
+
+  // The tag's closing bracket: first `>`-bearing token after the name, as
+  // long as no other tag opens first (tags in the snippets are single-line).
+  const closeOf = (tokens: KeyedToken[], nameIdx: number) => {
+    for (const token of tokens.slice(nameIdx + 1)) {
+      const c = token.content
+      if (c === '\n' || c.includes('<')) return undefined
+      if (c.includes('>')) return token
+    }
+    return undefined
+  }
+
+  for (let i = 1; i < to.tokens.length; i++) {
+    const name = to.tokens[i]
+    const bracket = to.tokens[i - 1]
+    if (!name || !bracket) continue
+    if (bracket.content !== '<' && bracket.content !== '</') continue
+    if (!TAG_NAME.test(name.content)) continue
+    const fromName = fromByKey.get(name.key)
+    if (!fromName) continue
+    const fromIdx = from.tokens.indexOf(fromName)
+    const fromBracket = fromIdx > 0 ? from.tokens[fromIdx - 1] : undefined
+    if (fromBracket?.content !== bracket.content) continue
+    bind(bracket, fromBracket.key)
+    const toClose = closeOf(to.tokens, i)
+    const fromClose = closeOf(from.tokens, fromIdx)
+    if (toClose && fromClose && toClose.content === fromClose.content) {
+      bind(toClose, fromClose.key)
+    }
+  }
+
+  const lineOf = (source: string, offset: number) =>
+    source.slice(0, offset).split('\n').length
+  for (const token of to.tokens) {
+    if (bound.has(token)) continue
+    const partner = fromByKey.get(token.key)
+    if (!partner) continue
+    const c = token.content
+    if (c.trim() === '' || WORD.test(c)) continue
+    if (lineOf(from.code, partner.offset) !== lineOf(to.code, token.offset)) {
+      toByKey.delete(token.key)
+      token.key = `${to.hash}-freed-${freed++}`
+      toByKey.set(token.key, token)
+    }
+  }
+}
+
+const EMPTY_TOKENS = toKeyedTokens('', [])
+
 export function CompositionCode({
   code,
   reducedMotion,
@@ -1503,21 +1654,37 @@ export function CompositionCode({
   stagger?: number
 }) {
   const { resolvedTheme } = useTheme()
+  const theme = resolvedTheme === 'light' ? 'github-light' : 'github-dark'
+  // Inlined ShikiMagicMove machine so lockTagPunctuation can rewrite the
+  // synced keys before they reach the renderer. The code/theme guard keeps a
+  // strict-mode double render from committing the same step twice (which
+  // would make from === to and swallow the transition).
+  const cache = useRef<{ from: KeyedTokensInfo; to: KeyedTokensInfo } | null>(
+    null,
+  )
+  const step = useMemo(() => {
+    const previous = cache.current?.to ?? EMPTY_TOKENS
+    if (previous.code === code && previous.themeName === theme) {
+      return cache.current!
+    }
+    const next = codeToKeyedTokens(highlighter, code, { lang: 'tsx', theme })
+    const { from, to } = syncTokenKeys(previous, next, {
+      diffCleanup: cleanupCodeDiff,
+    })
+    lockTagPunctuation(from, to)
+    cache.current = { from, to }
+    return cache.current
+  }, [code, theme])
   return (
-    <ShikiMagicMove
-      highlighter={highlighter}
-      lang="tsx"
-      theme={resolvedTheme === 'light' ? 'github-light' : 'github-dark'}
-      code={code}
+    <ShikiMagicMoveRenderer
+      tokens={step.to}
+      previous={step.from}
       options={{
         duration: reducedMotion ? 0 : duration,
         stagger,
         // Pinned: CODE_SPAN is only correct if this is what the renderer uses.
         delayEnter: CODE_ENTER_DELAY,
         containerStyle: false,
-        // Snap edit boundaries to line breaks, else the raw char diff strands
-        // `<` and `/>` on the old line and moves only the tag name.
-        diffCleanup: diffCleanupSemanticLossless,
       }}
     />
   )
