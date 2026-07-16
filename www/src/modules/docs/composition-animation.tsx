@@ -3,7 +3,13 @@ import 'shiki-magic-move/style.css'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { parseDate } from '@internationalized/date'
-import { diffCleanupSemanticLossless } from 'diff-match-patch-es'
+import {
+  DIFF_DELETE,
+  DIFF_EQUAL,
+  DIFF_INSERT,
+  diffCleanupSemanticLossless,
+  type Diff,
+} from 'diff-match-patch-es'
 import { PauseIcon, PlayIcon } from 'lucide-react'
 import { ShikiMagicMove } from 'shiki-magic-move/react'
 import { useTheme } from 'starter-themes'
@@ -1491,6 +1497,68 @@ export function CompositionTransitionStyles({
   )
 }
 
+// The char diff happily matches stray punctuation across unrelated tags, so a
+// lone `<` or `/>` slides across the pane while the tag it belonged to fades.
+// After snapping boundaries to line breaks, demote every matched run that
+// lands on a different line but holds no whole word — it fades with its tag
+// instead of flying. Runs that keep words slide as blocks, and same-line runs
+// stay matched, so anchored brackets (the Popover → Modal one-word swap) hold
+// still. A word *fragment* at a run's edge (`Field>` shared by `</TextField>`
+// and `</SearchField>`) doesn't count: it can never match a whole token, so
+// only its punctuation would fly.
+const WORD = /[A-Za-z0-9]/
+
+function cleanupCodeDiff(diffs: Diff[]): Diff[] {
+  diffCleanupSemanticLossless(diffs)
+  let from = ''
+  let to = ''
+  for (const [op, text] of diffs) {
+    if (op !== DIFF_INSERT) from += text
+    if (op !== DIFF_DELETE) to += text
+  }
+  const out: Diff[] = []
+  let offFrom = 0
+  let offTo = 0
+  let lineFrom = 0
+  let lineTo = 0
+  for (const [op, text] of diffs) {
+    let demote = false
+    if (op === DIFF_EQUAL && lineFrom !== lineTo) {
+      let core = text
+      const end = text.length
+      if (
+        WORD.test(core[0] ?? '') &&
+        (WORD.test(from[offFrom - 1] ?? '') || WORD.test(to[offTo - 1] ?? ''))
+      ) {
+        core = core.replace(/^[A-Za-z0-9]+/, '')
+      }
+      if (
+        WORD.test(core[core.length - 1] ?? '') &&
+        (WORD.test(from[offFrom + end] ?? '') ||
+          WORD.test(to[offTo + end] ?? ''))
+      ) {
+        core = core.replace(/[A-Za-z0-9]+$/, '')
+      }
+      demote = !WORD.test(core)
+    }
+    if (demote) {
+      out.push([DIFF_DELETE, text], [DIFF_INSERT, text])
+    } else {
+      out.push([op, text])
+    }
+    const lines = text.split('\n').length - 1
+    if (op !== DIFF_INSERT) {
+      offFrom += text.length
+      lineFrom += lines
+    }
+    if (op !== DIFF_DELETE) {
+      offTo += text.length
+      lineTo += lines
+    }
+  }
+  return out
+}
+
 export function CompositionCode({
   code,
   reducedMotion,
@@ -1515,9 +1583,7 @@ export function CompositionCode({
         // Pinned: CODE_SPAN is only correct if this is what the renderer uses.
         delayEnter: CODE_ENTER_DELAY,
         containerStyle: false,
-        // Snap edit boundaries to line breaks, else the raw char diff strands
-        // `<` and `/>` on the old line and moves only the tag name.
-        diffCleanup: diffCleanupSemanticLossless,
+        diffCleanup: cleanupCodeDiff,
       }}
     />
   )
