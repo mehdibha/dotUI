@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { cn } from '@/registry/lib/utils'
 import { LinkButton } from '@/registry/ui/button'
@@ -13,25 +13,19 @@ import {
   useCompositionPlayer,
 } from '@/modules/docs/composition-animation'
 
-// The code pane's border-box height at a given line count: p-6 padding plus
-// lines at text-[0.8125rem]/leading-normal. Its border-t takes its 1px out of
-// the bottom padding, which is why the pane isn't a line taller than the gutter.
+// The code pane's height at a given line count: p-6 padding plus lines at
+// text-[0.8125rem]/leading-normal.
 const codePaneHeight = (lines: number) =>
   `calc(3rem + ${lines} * 0.8125rem * 1.5)`
 
-// The pane is pinned to the longest snippet in the loop, so only the code
-// inside it ever moves — the card holds still from the first step to the last.
-// Below lg the section stacks and plays the shorter compact loop; that one is a
-// floor, not a fixed height, because the breakpoint flips in CSS while the loop
-// swaps in an effect — a full-loop step caught at that width must overflow the
-// pane rather than be clipped by it.
-const codeHeight = codePaneHeight(maxCodeLines)
+// Pinning the pane below lg (where the section stacks) keeps the page from
+// moving between compact-loop steps.
 const compactCodeMinHeight = codePaneHeight(compactMaxCodeLines)
 
 // The right panel at its tallest step: preview area (min-h-56) + code pane +
-// the card's own y-borders. Reserving it on the panel's container keeps a
-// taller preview from moving the page.
-const panelMaxHeight = `calc(14rem + 2px + ${codeHeight})`
+// the card's own y-borders. Reserving it on the panel's container keeps the
+// animating card from ever moving the page.
+const panelMaxHeight = `calc(14rem + 2px + ${codePaneHeight(maxCodeLines)})`
 
 function LineNumbers({
   lines,
@@ -82,6 +76,32 @@ export function CompositionSection() {
       behavior: reducedMotion ? 'auto' : 'smooth',
     })
   }, [activePaginated, reducedMotion])
+
+  // The code pane hugs its content. The target height is computed from the
+  // step's line count (calibrated once against the first rendered snippet) so
+  // the tween starts in the same commit as the token animation — observing the
+  // DOM instead would only fire after departing tokens are removed, i.e. late.
+  // Until calibration the height stays auto (auto→px doesn't tween). The gutter
+  // shares the row's line count and line-height, so measuring the padded row
+  // stays valid.
+  const codeInnerRef = useRef<HTMLDivElement>(null)
+  const codeMetrics = useRef<{ line: number; pad: number } | null>(null)
+  const [codeHeight, setCodeHeight] = useState<number | null>(null)
+  const lineCount = current.code.split('\n').length
+  useEffect(() => {
+    const el = codeInnerRef.current
+    if (!el || !mounted) return
+    if (!codeMetrics.current) {
+      const style = getComputedStyle(el)
+      const pad = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
+      // Rect, not offsetHeight — the integer rounding inflates the per-line
+      // metric (67.5 → 68 reads as 20px/line instead of 19.5).
+      const height = el.getBoundingClientRect().height
+      codeMetrics.current = { line: (height - pad) / lineCount, pad }
+    }
+    const { line, pad } = codeMetrics.current
+    setCodeHeight(lineCount * line + pad)
+  }, [mounted, lineCount])
 
   const pauseHandlers = {
     onMouseEnter: () => setHoverPaused(true),
@@ -201,24 +221,22 @@ export function CompositionSection() {
               />
             </div>
             <div
-              className="min-h-(--code-min) overflow-hidden border-t lg:h-(--code-full)"
+              className="overflow-hidden border-t [mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] transition-[height] ease-in-out motion-reduce:transition-none max-lg:min-h-(--code-min)"
               style={
                 {
-                  '--code-full': codeHeight,
+                  height: codeHeight ?? 'auto',
+                  transitionDuration: '500ms',
                   '--code-min': compactCodeMinHeight,
                 } as React.CSSProperties
               }
             >
-              <div className="flex gap-4 p-6 font-mono text-[0.8125rem] leading-normal">
-                {/* The gutter numbers the whole pane, not the current snippet —
-                    it's the ruled page the code is written on, so it holds still
-                    while steps come and go. One per loop, picked by the same
-                    breakpoint that sets the pane height. */}
-                <LineNumbers
-                  lines={compactMaxCodeLines}
-                  className="lg:hidden"
-                />
-                <LineNumbers lines={maxCodeLines} className="max-lg:hidden" />
+              <div
+                ref={codeInnerRef}
+                className="flex gap-4 p-6 font-mono text-[0.8125rem] leading-normal"
+              >
+                {/* The gutter tracks the current step — it grows and shrinks with
+                    the pane rather than reserving the tallest step's rows. */}
+                <LineNumbers lines={lineCount} />
                 <div className="no-scrollbar min-w-0 flex-1 scroll-fade-x overflow-x-auto">
                   {mounted ? (
                     <CompositionCode
