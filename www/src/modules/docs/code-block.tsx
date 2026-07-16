@@ -108,7 +108,7 @@ export function Pre({
         "**:[.diff.add]:bg-success/15 **:[.diff.add]:before:text-success **:[.diff.add]:before:content-['+']",
         "**:[.diff.remove]:bg-danger/20 **:[.diff.remove]:before:text-danger **:[.diff.remove]:before:content-['-']",
         // line numbers
-        '**:[.line]:[counter-increment:line] **:[.line]:after:absolute **:[.line]:after:left-2 **:[.line]:after:text-fg-muted in-data-line-numbers:**:[.line]:pl-9! in-data-line-numbers:**:[.line]:after:content-[counter(line)]',
+        '**:[.line]:[counter-increment:line] **:[.line]:after:absolute **:[.line]:after:left-2 **:[.line]:after:text-fg-muted/50 in-data-line-numbers:**:[.line]:pl-9! in-data-line-numbers:**:[.line]:after:content-[counter(line)]',
         className,
       )}
       {...props}
