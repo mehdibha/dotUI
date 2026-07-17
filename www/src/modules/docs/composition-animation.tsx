@@ -36,7 +36,7 @@ import { Command } from '@/registry/ui/command'
 import { ContextMenu } from '@/registry/ui/context-menu'
 import { DateField } from '@/registry/ui/date-field'
 import { DatePicker, DateRangePicker } from '@/registry/ui/date-picker'
-import { DialogContent } from '@/registry/ui/dialog'
+import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Drawer } from '@/registry/ui/drawer'
 import { Description, Label } from '@/registry/ui/field'
 import {
@@ -1081,7 +1081,7 @@ const steps: Step[] = [
     ),
   },
   {
-    // The finale: every part recomposed into a live command palette — sectioned,
+    // Every part recomposed into a live command palette — sectioned,
     // shortcut-hinted, and typing filters it in place.
     title: 'Command palette',
     durationMs: 4200,
@@ -1133,6 +1133,120 @@ const steps: Step[] = [
           </ListBox>
         </Command>
       </div>
+    ),
+  },
+  {
+    // The palette moves behind a trigger: Dialog and Modal wrap the same
+    // Command — the preview's button really opens it.
+    title: 'Command dialog',
+    durationMs: 3600,
+    code: `<Dialog>
+  <Button>Search… <Kbd>⌘K</Kbd></Button>
+  <Modal>
+    <DialogContent>
+      <Command>
+        <SearchField>
+          <InputGroup>
+            <InputGroupAddon>
+              <SearchIcon />
+            </InputGroupAddon>
+            <Input placeholder="Type a command…" />
+          </InputGroup>
+        </SearchField>
+        <ListBox>
+          <ListBoxItem>New issue</ListBoxItem>
+          <ListBoxItem>Assign to…</ListBoxItem>
+          <ListBoxItem>Search docs</ListBoxItem>
+        </ListBox>
+      </Command>
+    </DialogContent>
+  </Modal>
+</Dialog>`,
+    preview: (
+      <Dialog>
+        <Button className="[view-transition-name:cmp-field]">
+          Search…
+          <Kbd className="[view-transition-name:cmp-kbd]">⌘K</Kbd>
+        </Button>
+        <Modal>
+          <DialogContent>
+            <Command aria-label="Command menu">
+              <SearchField aria-label="Search" autoFocus>
+                <InputGroup>
+                  <InputGroupAddon>
+                    <SearchIcon />
+                  </InputGroupAddon>
+                  <Input placeholder="Type a command…" />
+                </InputGroup>
+              </SearchField>
+              <ListBox aria-label="Commands">
+                <ListBoxItem id="new-issue">New issue</ListBoxItem>
+                <ListBoxItem id="assign">Assign to…</ListBoxItem>
+                <ListBoxItem id="search-docs">Search docs</ListBoxItem>
+              </ListBox>
+            </Command>
+          </DialogContent>
+        </Modal>
+      </Dialog>
+    ),
+  },
+  {
+    // The same searchable list drops into a Select — Command is React Aria's
+    // Autocomplete, so the popover filters in place.
+    title: 'Searchable select',
+    durationMs: 3600,
+    code: `<Select>
+  <Label>Assignee</Label>
+  <Button>
+    <SelectValue />
+    <ChevronDownIcon />
+  </Button>
+  <Popover>
+    <Command>
+      <SearchField>
+        <InputGroup>
+          <InputGroupAddon>
+            <SearchIcon />
+          </InputGroupAddon>
+          <Input placeholder="Search people…" />
+        </InputGroup>
+      </SearchField>
+      <ListBox>
+        <ListBoxItem>Cara</ListBoxItem>
+        <ListBoxItem>Dan</ListBoxItem>
+        <ListBoxItem>Eve</ListBoxItem>
+      </ListBox>
+    </Command>
+  </Popover>
+</Select>`,
+    preview: (
+      <Select className="w-full max-w-xs" defaultSelectedKey="cara">
+        <Label className="[view-transition-name:cmp-label]">Assignee</Label>
+        <Button className="[view-transition-name:cmp-field]">
+          <SelectValue />
+          <ChevronDownIcon />
+        </Button>
+        <Popover className="outline-hidden">
+          <Command aria-label="People">
+            <SearchField aria-label="Search" autoFocus>
+              <InputGroup>
+                <InputGroupAddon>
+                  <SearchIcon />
+                </InputGroupAddon>
+                <Input placeholder="Search people…" />
+              </InputGroup>
+            </SearchField>
+            <ListBox
+              aria-label="People"
+              className="[view-transition-name:cmp-list]"
+            >
+              <ListBoxItem id="cara">Cara</ListBoxItem>
+              <ListBoxItem id="dan">Dan</ListBoxItem>
+              <ListBoxItem id="eve">Eve</ListBoxItem>
+            </ListBox>
+          </Command>
+        </Popover>
+      </Select>
     ),
   },
 ]
