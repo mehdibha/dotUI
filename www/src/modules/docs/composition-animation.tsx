@@ -58,7 +58,7 @@ import { Menu, MenuContent, MenuItem, MenuSub } from '@/registry/ui/menu'
 import { Modal } from '@/registry/ui/modal'
 import { Popover } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
-import { Select, SelectTrigger } from '@/registry/ui/select'
+import { Select, SelectValue } from '@/registry/ui/select'
 import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
 import { TextField } from '@/registry/ui/text-field'
 import { highlighter } from '@/modules/docs/highlight'
@@ -369,6 +369,59 @@ const steps: Step[] = [
     ),
   },
   {
+    // Mid beat: promote to a range — Calendar → RangeCalendar, one input still.
+    // The snippet defers the slots to the headline beat; the preview needs
+    // slot="start" at runtime.
+    title: 'DateRangePicker',
+    mid: true,
+    durationMs: 1400,
+    code: `<DateRangePicker>
+  <Label>Trip dates</Label>
+  <InputGroup>
+    <DateInput />
+    <InputGroupAddon>
+      <Button size="sm" isIconOnly>
+        <CalendarIcon />
+      </Button>
+    </InputGroupAddon>
+  </InputGroup>
+  <Popover>
+    <DialogContent>
+      <RangeCalendar />
+    </DialogContent>
+  </Popover>
+</DateRangePicker>`,
+    preview: (
+      <DateRangePicker
+        className="w-full max-w-xs"
+        defaultValue={{
+          start: parseDate('2026-07-10'),
+          end: parseDate('2026-07-17'),
+        }}
+      >
+        <Label className="[view-transition-name:cmp-label]">Trip dates</Label>
+        <InputGroup className="[view-transition-name:cmp-field]">
+          <DateInput slot="start" />
+          <InputGroupAddon>
+            <Button
+              size="sm"
+              isIconOnly
+              className="[view-transition-name:cmp-trigger]"
+            >
+              <CalendarIcon />
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+        <Popover>
+          <DialogContent>
+            <RangeCalendar />
+          </DialogContent>
+        </Popover>
+      </DateRangePicker>
+    ),
+  },
+  {
+    // Headline: the field gains its end date.
     title: 'DateRangePicker',
     durationMs: 3400,
     code: `<DateRangePicker>
@@ -490,7 +543,7 @@ const steps: Step[] = [
       </Button>
     </InputGroupAddon>
   </InputGroup>
-  <Drawer placement="bottom">
+  <Drawer>
     <DialogContent>
       <RangeCalendar />
     </DialogContent>
@@ -519,7 +572,7 @@ const steps: Step[] = [
             </Button>
           </InputGroupAddon>
         </InputGroup>
-        <Drawer placement="bottom">
+        <Drawer>
           <DialogContent>
             <RangeCalendar />
           </DialogContent>
@@ -534,12 +587,21 @@ const steps: Step[] = [
     durationMs: 1300,
     code: `<Select>
   <Label>Assignee</Label>
-  <SelectTrigger />
+  <Button>
+    <SelectValue />
+    <ChevronDownIcon />
+  </Button>
 </Select>`,
     preview: (
-      <Select className="w-full max-w-xs">
+      // defaultSelectedKey is mount-only, and the headline's Select updates
+      // this same instance in place — so the selection must start here, even
+      // though there are no items to resolve it against yet.
+      <Select className="w-full max-w-xs" defaultSelectedKey="cara">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
-        <SelectTrigger className="[view-transition-name:cmp-field]" />
+        <Button className="[view-transition-name:cmp-field]">
+          <SelectValue />
+          <ChevronDownIcon />
+        </Button>
       </Select>
     ),
   },
@@ -550,7 +612,10 @@ const steps: Step[] = [
     durationMs: 3200,
     code: `<Select>
   <Label>Assignee</Label>
-  <SelectTrigger />
+  <Button>
+    <SelectValue />
+    <ChevronDownIcon />
+  </Button>
   <Popover>
     <ListBox>
       <ListBoxItem>Cara</ListBoxItem>
@@ -562,48 +627,15 @@ const steps: Step[] = [
     preview: (
       <Select className="w-full max-w-xs" defaultSelectedKey="cara">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
-        <SelectTrigger className="[view-transition-name:cmp-field]" />
+        <Button className="[view-transition-name:cmp-field]">
+          <SelectValue />
+          <ChevronDownIcon />
+        </Button>
         <Popover>
           <ListBox className="[view-transition-name:cmp-list]">
             <ListBoxItem id="cara">Cara</ListBoxItem>
             <ListBoxItem id="dan">Dan</ListBoxItem>
             <ListBoxItem id="eve">Eve</ListBoxItem>
-          </ListBox>
-        </Popover>
-      </Select>
-    ),
-  },
-  {
-    // Mid beat: the same list gains a section header.
-    title: 'Sections',
-    mid: true,
-    durationMs: 1400,
-    code: `<Select>
-  <Label>Assignee</Label>
-  <SelectTrigger />
-  <Popover>
-    <ListBox>
-      <ListBoxSection>
-        <ListBoxSectionHeader>Team</ListBoxSectionHeader>
-        <ListBoxItem>Cara</ListBoxItem>
-        <ListBoxItem>Dan</ListBoxItem>
-        <ListBoxItem>Eve</ListBoxItem>
-      </ListBoxSection>
-    </ListBox>
-  </Popover>
-</Select>`,
-    preview: (
-      <Select className="w-full max-w-xs" defaultSelectedKey="cara">
-        <Label className="[view-transition-name:cmp-label]">Assignee</Label>
-        <SelectTrigger className="[view-transition-name:cmp-field]" />
-        <Popover>
-          <ListBox className="[view-transition-name:cmp-list]">
-            <ListBoxSection>
-              <ListBoxSectionHeader>Team</ListBoxSectionHeader>
-              <ListBoxItem id="cara">Cara</ListBoxItem>
-              <ListBoxItem id="dan">Dan</ListBoxItem>
-              <ListBoxItem id="eve">Eve</ListBoxItem>
-            </ListBoxSection>
           </ListBox>
         </Popover>
       </Select>
@@ -670,6 +702,11 @@ const steps: Step[] = [
   </TagGroup>
   <InputGroup>
     <Input placeholder="Add people…" />
+    <InputGroupAddon>
+      <Button size="sm" isIconOnly>
+        <ChevronDownIcon />
+      </Button>
+    </InputGroupAddon>
   </InputGroup>
   <Popover>
     <ListBox>
@@ -690,6 +727,15 @@ const steps: Step[] = [
         </TagGroup>
         <InputGroup className="[view-transition-name:cmp-field]">
           <Input placeholder="Add people…" />
+          <InputGroupAddon>
+            <Button
+              size="sm"
+              isIconOnly
+              className="[view-transition-name:cmp-trigger]"
+            >
+              <ChevronDownIcon />
+            </Button>
+          </InputGroupAddon>
         </InputGroup>
         <Popover>
           <ListBox className="[view-transition-name:cmp-list]">
