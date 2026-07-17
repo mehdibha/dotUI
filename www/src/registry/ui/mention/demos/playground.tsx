@@ -2,11 +2,9 @@
 
 import { Avatar, AvatarFallback } from '@/registry/ui/avatar'
 import { Label } from '@/registry/ui/field'
-import { TextArea } from '@/registry/ui/input'
-import { Mention } from '@/registry/ui/mention'
+import { Mention, MentionInput } from '@/registry/ui/mention'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
-import { TextField } from '@/registry/ui/text-field'
 
 const people = [
   { id: 'alexmiller', name: 'Alex Miller' },
@@ -24,11 +22,9 @@ export default function Demo({
   placeholder = 'Type @ to mention someone...',
 } = {}) {
   return (
-    <Mention className="w-[320px]">
-      <TextField>
-        {label && <Label>{label}</Label>}
-        <TextArea data-control-target placeholder={placeholder} />
-      </TextField>
+    <Mention allowsNewlines className="w-[320px]">
+      {label && <Label>{label}</Label>}
+      <MentionInput data-control-target placeholder={placeholder} />
       <Popover>
         <MenuContent items={people} renderEmptyState={() => 'No people found.'}>
           {(person) => (

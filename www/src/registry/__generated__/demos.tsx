@@ -1665,9 +1665,9 @@ export const DemosIndex: Record<
 		files: ["ui/mention/demos/custom-trigger.tsx"],
 		component: React.lazy(() => import("@/registry/ui/mention/demos/custom-trigger")),
 	},
-	"mention/demos/highlighted": {
-		files: ["ui/mention/demos/highlighted.tsx"],
-		component: React.lazy(() => import("@/registry/ui/mention/demos/highlighted")),
+	"mention/demos/multiple-triggers": {
+		files: ["ui/mention/demos/multiple-triggers.tsx"],
+		component: React.lazy(() => import("@/registry/ui/mention/demos/multiple-triggers")),
 	},
 	"mention/demos/with-avatars": {
 		files: ["ui/mention/demos/with-avatars.tsx"],

@@ -4,6 +4,7 @@
 import LibFocusStyles from "@/registry/lib/focus-styles/meta";
 import LibResponsive from "@/registry/lib/responsive/meta";
 import LibTextareaCaret from "@/registry/lib/textarea-caret/meta";
+import LibTokenField from "@/registry/lib/token-field/meta";
 import LibUtils from "@/registry/lib/utils/meta";
 import UiAccordion from "@/registry/ui/accordion/meta";
 import UiAlert from "@/registry/ui/alert/meta";
@@ -157,4 +158,4 @@ export const registryUi: RegistryItem[] = [
 	UiTree,
 ];
 
-export const registryLib: RegistryItem[] = [LibFocusStyles, LibResponsive, LibTextareaCaret, LibUtils];
+export const registryLib: RegistryItem[] = [LibFocusStyles, LibResponsive, LibTextareaCaret, LibTokenField, LibUtils];
