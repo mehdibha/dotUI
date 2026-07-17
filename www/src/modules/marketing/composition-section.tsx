@@ -111,7 +111,7 @@ export function CompositionSection() {
           </p>
           <ol
             ref={railRef}
-            className="relative mt-2 no-scrollbar h-56 self-stretch overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_3rem,black_calc(100%-3rem),transparent)] py-5 max-lg:hidden"
+            className="relative mt-2 no-scrollbar h-88 self-stretch overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_3rem,black_calc(100%-3rem),transparent)] py-5 max-lg:hidden"
             {...pauseHandlers}
           >
             {/* One indicator for the whole rail — it travels to the active
