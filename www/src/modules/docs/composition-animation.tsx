@@ -642,48 +642,6 @@ const steps: Step[] = [
     ),
   },
   {
-    // Mid beat: the same list gains a section header.
-    title: 'Sections',
-    mid: true,
-    durationMs: 1400,
-    code: `<Select>
-  <Label>Assignee</Label>
-  <Button>
-    <SelectValue />
-    <ChevronDownIcon />
-  </Button>
-  <Popover>
-    <ListBox>
-      <ListBoxSection>
-        <ListBoxSectionHeader>Team</ListBoxSectionHeader>
-        <ListBoxItem>Cara</ListBoxItem>
-        <ListBoxItem>Dan</ListBoxItem>
-        <ListBoxItem>Eve</ListBoxItem>
-      </ListBoxSection>
-    </ListBox>
-  </Popover>
-</Select>`,
-    preview: (
-      <Select className="w-full max-w-xs" defaultSelectedKey="cara">
-        <Label className="[view-transition-name:cmp-label]">Assignee</Label>
-        <Button className="[view-transition-name:cmp-field]">
-          <SelectValue />
-          <ChevronDownIcon />
-        </Button>
-        <Popover>
-          <ListBox className="[view-transition-name:cmp-list]">
-            <ListBoxSection>
-              <ListBoxSectionHeader>Team</ListBoxSectionHeader>
-              <ListBoxItem id="cara">Cara</ListBoxItem>
-              <ListBoxItem id="dan">Dan</ListBoxItem>
-              <ListBoxItem id="eve">Eve</ListBoxItem>
-            </ListBoxSection>
-          </ListBox>
-        </Popover>
-      </Select>
-    ),
-  },
-  {
     // Headline: same list, now a typeahead — swap the trigger for an input.
     title: 'Combobox',
     durationMs: 3200,
