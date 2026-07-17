@@ -369,6 +369,59 @@ const steps: Step[] = [
     ),
   },
   {
+    // Mid beat: promote to a range — Calendar → RangeCalendar, one input still.
+    // The snippet defers the slots to the headline beat; the preview needs
+    // slot="start" at runtime.
+    title: 'DateRangePicker',
+    mid: true,
+    durationMs: 1400,
+    code: `<DateRangePicker>
+  <Label>Trip dates</Label>
+  <InputGroup>
+    <DateInput />
+    <InputGroupAddon>
+      <Button size="sm" isIconOnly>
+        <CalendarIcon />
+      </Button>
+    </InputGroupAddon>
+  </InputGroup>
+  <Popover>
+    <DialogContent>
+      <RangeCalendar />
+    </DialogContent>
+  </Popover>
+</DateRangePicker>`,
+    preview: (
+      <DateRangePicker
+        className="w-full max-w-xs"
+        defaultValue={{
+          start: parseDate('2026-07-10'),
+          end: parseDate('2026-07-17'),
+        }}
+      >
+        <Label className="[view-transition-name:cmp-label]">Trip dates</Label>
+        <InputGroup className="[view-transition-name:cmp-field]">
+          <DateInput slot="start" />
+          <InputGroupAddon>
+            <Button
+              size="sm"
+              isIconOnly
+              className="[view-transition-name:cmp-trigger]"
+            >
+              <CalendarIcon />
+            </Button>
+          </InputGroupAddon>
+        </InputGroup>
+        <Popover>
+          <DialogContent>
+            <RangeCalendar />
+          </DialogContent>
+        </Popover>
+      </DateRangePicker>
+    ),
+  },
+  {
+    // Headline: the field gains its end date.
     title: 'DateRangePicker',
     durationMs: 3400,
     code: `<DateRangePicker>
