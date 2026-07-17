@@ -3,9 +3,10 @@
 import * as React from 'react'
 
 import { Label } from '@/registry/ui/field'
-import { Mention, MentionInput, TokenSegmentList } from '@/registry/ui/mention'
+import { Mention } from '@/registry/ui/mention'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
+import { TokenInput, TokenSegmentList } from '@/registry/ui/token-field'
 
 const people = [
   { id: 'alexmiller' },
@@ -24,7 +25,7 @@ export default function Demo() {
     <div className="flex w-[320px] flex-col gap-2">
       <Mention allowsNewlines value={value} onChange={setValue}>
         <Label>Comment</Label>
-        <MentionInput placeholder="Type @ to mention someone..." />
+        <TokenInput placeholder="Type @ to mention someone..." />
         <Popover>
           <MenuContent items={people}>
             {(person) => (

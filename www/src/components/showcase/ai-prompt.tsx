@@ -30,7 +30,7 @@ import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Label } from '@/registry/ui/field'
 import { Kbd } from '@/registry/ui/kbd'
 import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Mention, MentionInput, TokenSegmentList } from '@/registry/ui/mention'
+import { Mention } from '@/registry/ui/mention'
 import {
   Menu,
   MenuContent,
@@ -42,6 +42,7 @@ import {
 import { Popover } from '@/registry/ui/popover'
 import { Separator } from '@/registry/ui/separator'
 import { Switch, SwitchControl } from '@/registry/ui/switch'
+import { TokenInput, TokenSegmentList } from '@/registry/ui/token-field'
 
 // Models offered by the model picker. The first four fill the menu; `legacy`
 // ones live behind the "More models" submenu. `name` is what the toolbar shows.
@@ -162,7 +163,7 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
       <Mention allowsNewlines trigger={/[@/]/} defaultValue={DEFAULT_PROMPT}>
         {({ trigger }) => (
           <>
-            <MentionInput
+            <TokenInput
               aria-label="Prompt"
               placeholder="How can I help you today?"
               className="min-h-14 rounded-none border-0 bg-transparent px-2 pt-2 text-base focus:ring-0"

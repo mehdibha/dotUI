@@ -11,17 +11,11 @@ import { useControlledState } from 'react-stately/useControlledState'
 import {
   Direction,
   positionToDOMRange,
-  Token,
-  TokenField,
-  TokenInput,
   TokenSegmentList,
-} from '@/registry/lib/token-field'
-import type {
-  TokenFieldProps,
-  TokenInputProps,
-  TokenProps,
-} from '@/registry/lib/token-field'
+} from '@/registry/lib/react-aria-token-field'
 import type { PopoverProps } from '@/registry/ui/popover'
+import { TokenField } from '@/registry/ui/token-field'
+import type { TokenFieldProps } from '@/registry/ui/token-field'
 
 import { useStyles } from './styles'
 
@@ -38,7 +32,7 @@ interface MentionState {
 
 interface MentionProps extends Omit<
   TokenFieldProps,
-  'children' | 'className' | 'style' | 'role' | 'slot'
+  'children' | 'role' | 'slot'
 > {
   /**
    * The character(s) that open the suggestions list: a string for a single
@@ -53,7 +47,6 @@ interface MentionProps extends Omit<
   getItemText?: (key: Key) => string
   /** Where the suggestions popover is placed relative to the caret. @default "bottom start" */
   placement?: PopoverProps['placement']
-  className?: string
   /**
    * The composed input and suggestions. A function receives the active trigger
    * and query, so the suggestions can depend on which trigger the user typed.
@@ -65,10 +58,10 @@ const escapeRegExp = (text: string) =>
   text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
 /**
- * Wires a mention experience onto the `TokenField` primitive: typing a trigger
+ * Wires a mention experience onto the `TokenField` component: typing a trigger
  * character opens a `Menu` of suggestions (filtered via React Aria's
  * `Autocomplete`) in a caret-anchored `Popover`, and selecting an item inserts
- * it as an inline token. Consumers compose a `MentionInput` plus a `Popover` +
+ * it as an inline token. Consumers compose a `TokenInput` plus a `Popover` +
  * `Menu`/`MenuItem`; the value is a `TokenSegmentList` of text and tokens.
  */
 function Mention({
@@ -147,7 +140,7 @@ function Mention({
 
   const getInput = React.useCallback(
     () =>
-      rootRef.current?.querySelector<HTMLDivElement>('[data-mention-input]') ??
+      rootRef.current?.querySelector<HTMLDivElement>('[data-token-input]') ??
       null,
     [],
   )
@@ -233,58 +226,7 @@ function Mention({
 
 const emptyValue = new TokenSegmentList([])
 
-// MARK: MentionInput
-
-interface MentionInputProps extends Omit<
-  TokenInputProps,
-  'children' | 'className' | 'style'
-> {
-  /** Text shown while the field is empty. */
-  placeholder?: string
-  className?: string
-  /**
-   * Renders each inline token. @default a `MentionToken` with the token's text
-   */
-  children?: TokenInputProps['children']
-}
-
-/**
- * The editable area of a `Mention`: a content-editable surface that renders the
- * value's text and inline tokens. Tokens render as `MentionToken`s unless a
- * render function is provided.
- */
-function MentionInput({
-  placeholder,
-  className,
-  children,
-  ...props
-}: MentionInputProps) {
-  const { input } = useStyles()()
-  return (
-    <TokenInput
-      data-mention-input=""
-      data-placeholder={placeholder}
-      className={input({ className })}
-      {...props}
-    >
-      {children ?? ((segment) => <MentionToken>{segment.text}</MentionToken>)}
-    </TokenInput>
-  )
-}
-
-// MARK: MentionToken
-
-interface MentionTokenProps extends Omit<TokenProps, 'className' | 'style'> {
-  className?: string
-}
-
-/** An inline token within a `MentionInput`. */
-function MentionToken({ className, ...props }: MentionTokenProps) {
-  const { token } = useStyles()()
-  return <Token {...props} className={token({ className })} />
-}
-
 // MARK: exports
 
-export type { MentionProps, MentionInputProps, MentionTokenProps, MentionState }
-export { Mention, MentionInput, MentionToken, TokenSegmentList }
+export type { MentionProps, MentionState }
+export { Mention, TokenSegmentList }

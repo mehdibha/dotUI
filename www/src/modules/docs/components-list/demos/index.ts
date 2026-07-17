@@ -63,6 +63,7 @@ import { TimeFieldDemo } from './time-field'
 import { ToastDemo } from './toast'
 import { ToggleButtonDemo } from './toggle-button'
 import { ToggleButtonGroupDemo } from './toggle-button-group'
+import { TokenFieldDemo } from './token-field'
 import { TooltipDemo } from './tooltip'
 import { TreeDemo } from './tree'
 
@@ -127,6 +128,7 @@ export const componentDemos: Record<string, ComponentType> = {
   'text-area': TextAreaDemo,
   'text-field': TextFieldDemo,
   'time-field': TimeFieldDemo,
+  'token-field': TokenFieldDemo,
   toast: ToastDemo,
   'toggle-button': ToggleButtonDemo,
   'toggle-button-group': ToggleButtonGroupDemo,

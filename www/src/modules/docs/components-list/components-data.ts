@@ -103,6 +103,13 @@ export const componentsData: ComponentCategory[] = [
         status: 'in review',
       },
       {
+        name: 'TokenField',
+        slug: 'token-field',
+        href: '/docs/components/token-field',
+        stretch: true,
+        status: 'in review',
+      },
+      {
         name: 'SearchField',
         slug: 'search-field',
         href: '/docs/components/search-field',

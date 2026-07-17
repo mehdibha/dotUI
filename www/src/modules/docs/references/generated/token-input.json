@@ -1,22 +1,7 @@
 {
-  "name": "MentionInputProps",
-  "description": "The editable area of a `Mention`: a content-editable surface that renders\nthe value's text and inline tokens.",
+  "name": "TokenInputProps",
+  "description": "The editable area of a `TokenField`: a content-editable surface that renders\nthe value's text and inline tokens.",
   "props": {
-    "placeholder": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Text shown while the field is empty."
-    },
-    "className": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
-    },
     "children": {
       "type": "((segment: TokenSegment<any>) => ReactElement<unknown, string | JSXElementConstructor<any>>)",
       "detailedType": "| ((\n    segment: TokenSegment<any>,\n  ) => ReactElement<\n    unknown,\n    string | JSXElementConstructor<any>\n  >)\n| undefined",
@@ -34,7 +19,7 @@
                 "name": "segment",
                 "value": {
                   "type": "link",
-                  "id": "src/registry/lib/token-field/segment-list.ts:TokenSegment",
+                  "id": "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegment",
                   "name": "TokenSegment"
                 },
                 "optional": false,
@@ -50,7 +35,15 @@
         ]
       },
       "description": "Renders each inline token.",
-      "default": "a `MentionToken` with the token's text"
+      "default": "a `Token` with the segment's text"
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the hover events should be disabled."
     },
     "onHoverStart": {
       "type": "((e: HoverEvent) => void)",
@@ -127,13 +120,73 @@
       },
       "description": "Handler that is called when the hover state changes."
     },
-    "isDisabled": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "className": {
+      "type": "string | (values: TokenInputRenderProps) => string",
+      "detailedType": "string | (values: TokenInputRenderProps) => string | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "TokenInputRenderProps",
+                  "name": "TokenInputRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
       },
-      "description": "Whether the hover events should be disabled."
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "CSSProperties | (values: TokenInputRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: TokenInputRenderProps) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "TokenInputRenderProps",
+                  "name": "TokenInputRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
     },
     "render": {
       "type": "DOMRenderFunction<\"div\", TokenInputRenderProps>",
@@ -157,7 +210,7 @@
               },
               {
                 "type": "link",
-                "id": "src/registry/lib/token-field/token-field.tsx:TokenInputRenderProps",
+                "id": "src/registry/lib/react-aria-token-field/token-field.tsx:TokenInputRenderProps",
                 "name": "TokenInputRenderProps"
               }
             ]
@@ -184,6 +237,36 @@
         ]
       },
       "description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
+    },
+    "placeholder": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Text shown while the field is empty."
+    }
+  },
+  "renderProps": {
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the token input is disabled."
+    },
+    "isFocused": {
+      "selector": "[data-focused]",
+      "description": "Whether the token input is focused, either via a mouse or keyboard."
+    },
+    "isFocusVisible": {
+      "selector": "[data-focus-visible]",
+      "description": "Whether the token input is keyboard focused."
+    },
+    "isHovered": {
+      "selector": "[data-hovered]",
+      "description": "Whether the token input is currently hovered with a mouse."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "description": "Whether the token input is read only."
     }
   },
   "typeLinks": {
@@ -226,9 +309,65 @@
         }
       }
     },
-    "src/registry/lib/token-field/segment-list.ts:TokenSegment": {
+    "TokenInputRenderProps": {
       "type": "interface",
-      "id": "src/registry/lib/token-field/segment-list.ts:TokenSegment",
+      "name": "TokenInputRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token input is disabled."
+        },
+        "isFocused": {
+          "type": "property",
+          "name": "isFocused",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token input is focused, either via a mouse or keyboard."
+        },
+        "isFocusVisible": {
+          "type": "property",
+          "name": "isFocusVisible",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token input is keyboard focused."
+        },
+        "isHovered": {
+          "type": "property",
+          "name": "isHovered",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token input is currently hovered with a mouse."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token input is read only."
+        }
+      }
+    },
+    "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegment": {
+      "type": "interface",
+      "id": "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegment",
       "name": "TokenSegment",
       "extends": [],
       "properties": {
@@ -257,7 +396,16 @@
           "type": "property",
           "name": "value",
           "value": {
-            "type": "any"
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "identifier",
+                "name": "T extends TokenSegmentList<infer V> ? V : never"
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -267,9 +415,9 @@
       "typeParameters": [],
       "description": ""
     },
-    "src/registry/lib/token-field/token-field.tsx:TokenInputRenderProps": {
+    "src/registry/lib/react-aria-token-field/token-field.tsx:TokenInputRenderProps": {
       "type": "interface",
-      "id": "src/registry/lib/token-field/token-field.tsx:TokenInputRenderProps",
+      "id": "src/registry/lib/react-aria-token-field/token-field.tsx:TokenInputRenderProps",
       "name": "TokenInputRenderProps",
       "extends": [],
       "properties": {

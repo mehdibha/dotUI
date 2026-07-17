@@ -2,9 +2,10 @@
 
 import { FileIcon, TerminalIcon } from 'lucide-react'
 
-import { Mention, MentionInput, TokenSegmentList } from '@/registry/ui/mention'
+import { Mention } from '@/registry/ui/mention'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
+import { TokenInput, TokenSegmentList } from '@/registry/ui/token-field'
 
 interface Suggestion {
   id: string
@@ -45,7 +46,7 @@ export default function Demo() {
     >
       {({ trigger }) => (
         <>
-          <MentionInput
+          <TokenInput
             aria-label="Prompt"
             placeholder="Type @ for files or / for commands..."
           />

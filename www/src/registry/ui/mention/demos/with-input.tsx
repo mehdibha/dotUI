@@ -1,8 +1,9 @@
 'use client'
 
-import { Mention, MentionInput } from '@/registry/ui/mention'
+import { Mention } from '@/registry/ui/mention'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
+import { TokenInput } from '@/registry/ui/token-field'
 
 const people = [
   { id: 'alexmiller' },
@@ -18,7 +19,7 @@ const people = [
 export default function Demo() {
   return (
     <Mention className="w-[320px]">
-      <MentionInput
+      <TokenInput
         aria-label="To"
         placeholder="Type @ to add someone..."
         className="min-h-0"
