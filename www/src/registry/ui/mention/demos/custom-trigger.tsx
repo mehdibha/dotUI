@@ -1,9 +1,10 @@
 'use client'
 
 import { Label } from '@/registry/ui/field'
-import { Mention, MentionInput } from '@/registry/ui/mention'
+import { Mention } from '@/registry/ui/mention'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
+import { TokenInput } from '@/registry/ui/token-field'
 
 const channels = [
   { id: 'general' },
@@ -18,7 +19,7 @@ export default function Demo() {
   return (
     <Mention allowsNewlines trigger="#" className="w-[320px]">
       <Label>Message</Label>
-      <MentionInput placeholder="Type # to link a channel..." />
+      <TokenInput placeholder="Type # to link a channel..." />
       <Popover>
         <MenuContent
           items={channels}

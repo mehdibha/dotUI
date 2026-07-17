@@ -2,9 +2,9 @@
 // Run "tsx scripts/registry-build.ts" to regenerate
 
 import LibFocusStyles from "@/registry/lib/focus-styles/meta";
+import LibReactAriaTokenField from "@/registry/lib/react-aria-token-field/meta";
 import LibResponsive from "@/registry/lib/responsive/meta";
 import LibTextareaCaret from "@/registry/lib/textarea-caret/meta";
-import LibTokenField from "@/registry/lib/token-field/meta";
 import LibUtils from "@/registry/lib/utils/meta";
 import UiAccordion from "@/registry/ui/accordion/meta";
 import UiAlert from "@/registry/ui/alert/meta";
@@ -77,6 +77,7 @@ import UiTimePicker from "@/registry/ui/time-picker/meta";
 import UiToast from "@/registry/ui/toast/meta";
 import UiToggleButtonGroup from "@/registry/ui/toggle-button-group/meta";
 import UiToggleButton from "@/registry/ui/toggle-button/meta";
+import UiTokenField from "@/registry/ui/token-field/meta";
 import UiTooltip from "@/registry/ui/tooltip/meta";
 import UiTree from "@/registry/ui/tree/meta";
 
@@ -154,8 +155,15 @@ export const registryUi: RegistryItem[] = [
 	UiToast,
 	UiToggleButton,
 	UiToggleButtonGroup,
+	UiTokenField,
 	UiTooltip,
 	UiTree,
 ];
 
-export const registryLib: RegistryItem[] = [LibFocusStyles, LibResponsive, LibTextareaCaret, LibTokenField, LibUtils];
+export const registryLib: RegistryItem[] = [
+	LibFocusStyles,
+	LibReactAriaTokenField,
+	LibResponsive,
+	LibTextareaCaret,
+	LibUtils,
+];

@@ -73,6 +73,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	toast: () => import("@/registry/ui/toast/examples"),
 	"toggle-button": () => import("@/registry/ui/toggle-button/examples"),
 	"toggle-button-group": () => import("@/registry/ui/toggle-button-group/examples"),
+	"token-field": () => import("@/registry/ui/token-field/examples"),
 	tooltip: () => import("@/registry/ui/tooltip/examples"),
 	tree: () => import("@/registry/ui/tree/examples"),
 };

@@ -31,17 +31,18 @@ npx shadcn@latest add @dotui/mention
 
 ## Usage
 
-`Mention` wires a mention experience onto the `TokenField` primitive (vendored from React Aria's upcoming release): compose a `MentionInput` for the editable area plus a `Popover` + `Menu` for the suggestions, and `Mention` injects the wiring (value, caret-anchored popover, filtering, keyboard navigation, insertion) through context. Typing the trigger character (`@` by default) opens the list at the caret and filters as you type; selecting an item inserts it as an inline token.
+`Mention` wires a mention experience onto the [TokenField](/docs/components/token-field) component: compose a `TokenInput` for the editable area plus a `Popover` + `Menu` for the suggestions, and `Mention` injects the wiring (value, caret-anchored popover, filtering, keyboard navigation, insertion) through context. Typing the trigger character (`@` by default) opens the list at the caret and filters as you type; selecting an item inserts it as an inline token.
 
 ```tsx
-import { Mention, MentionInput } from '@/components/ui/mention'
+import { Mention } from '@/components/ui/mention'
 import { MenuContent, MenuItem } from '@/components/ui/menu'
 import { Popover } from '@/components/ui/popover'
+import { TokenInput } from '@/components/ui/token-field'
 ```
 
 ```tsx
 <Mention allowsNewlines>
-  <MentionInput aria-label="Comment" />
+  <TokenInput aria-label="Comment" />
   <Popover>
     <MenuContent items={people}>
       {(person) => <MenuItem id={person.id}>{person.name}</MenuItem>}
@@ -55,7 +56,7 @@ Add a `Label` before the input when you want a visible label; otherwise give the
 ```tsx
 <Mention allowsNewlines>
   <Label>Comment</Label>
-  <MentionInput />
+  <TokenInput />
   <Popover>{/* ...suggestions */}</Popover>
 </Mention>
 ```
@@ -63,14 +64,15 @@ Add a `Label` before the input when you want a visible label; otherwise give the
 ## Anatomy
 
 ```tsx
-import { Mention, MentionInput, MentionToken } from '@/components/ui/mention'
+import { Mention } from '@/components/ui/mention'
 import { MenuContent, MenuItem } from '@/components/ui/menu'
 import { Popover } from '@/components/ui/popover'
+import { TokenInput } from '@/components/ui/token-field'
 ```
 
 ```tsx
 <Mention>
-  <MentionInput />
+  <TokenInput />
   <Popover>
     <MenuContent>
       <MenuItem />
@@ -79,13 +81,7 @@ import { Popover } from '@/components/ui/popover'
 </Mention>
 ```
 
-`Mention` owns the value and caret-anchored popover, `MentionInput` renders the text and inline tokens, and the `Popover` + `MenuContent` render the suggestions. Tokens render as `MentionToken`s by default; pass a render function as `MentionInput`'s children to customize them.
-
-```tsx
-<MentionInput>
-  {(token) => <MentionToken>{token.text}</MentionToken>}
-</MentionInput>
-```
+`Mention` owns the value and caret-anchored popover, the [TokenField](/docs/components/token-field)'s `TokenInput` renders the text and inline tokens, and the `Popover` + `MenuContent` render the suggestions. These are children, not props — there are no bespoke sub-components.
 
 ## Value
 
@@ -121,7 +117,7 @@ Pass a regular expression to support several triggers at once. Children may be a
 <Mention trigger={/[@/]/}>
   {({ trigger }) => (
     <>
-      <MentionInput aria-label="Prompt" />
+      <TokenInput aria-label="Prompt" />
       <Popover>
         <MenuContent items={trigger === '/' ? commands : files}>
           {(item) => <MenuItem id={item.id}>{item.id}</MenuItem>}
@@ -149,7 +145,7 @@ Set `placement` to move the suggestions popover relative to the caret (default `
 
 ## API Reference
 
-`Mention` composes the suggestion list from the [Popover](/docs/components/popover) and [Menu](/docs/components/menu) primitives; the editable area is a `MentionInput` built on the vendored `TokenField` primitive.
+`Mention` composes the [TokenField](/docs/components/token-field)'s `TokenInput` for the editable area, and the [Popover](/docs/components/popover) and [Menu](/docs/components/menu) primitives for the suggestion list.
 
 ### Mention
 

@@ -1,0 +1,124 @@
+---
+title: Token Field
+description: Token field lets users enter text with inline tokens such as mentions, tags, or object references.
+links:
+  - label: Docs
+    href: https://github.com/adobe/react-spectrum/pull/10318
+wip: true
+---
+
+<InteractiveDemo
+  name="token-field"
+  controls={[
+    {
+      type: 'string',
+      name: 'label',
+      defaultValue: 'Message',
+    },
+    {
+      type: 'string',
+      name: 'placeholder',
+      defaultValue: 'Write something...',
+    },
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/token-field
+```
+
+## About
+
+`TokenField` is built on the TokenField primitive from React Aria's upcoming release ([adobe/react-spectrum#10318](https://github.com/adobe/react-spectrum/pull/10318)), vendored until it ships in `react-aria-components`. The primitive handles content-editable editing, IME composition, undo/redo, token-aware clipboard and drag behaviour, and screen-reader announcements.
+
+## Usage
+
+Compose a `TokenField` with a `TokenInput` for the editable area, and a `Label` before it when you want a visible label (otherwise give the input an `aria-label`). Without `allowsNewlines` the field stays single-line.
+
+```tsx
+import { Label } from '@/components/ui/field'
+import { TokenField, TokenInput } from '@/components/ui/token-field'
+```
+
+```tsx
+<TokenField allowsNewlines>
+  <Label>Message</Label>
+  <TokenInput />
+</TokenField>
+```
+
+## Anatomy
+
+```tsx
+<TokenField>
+  <Label />
+  <TokenInput>
+    <Token />
+  </TokenInput>
+</TokenField>
+```
+
+`TokenField` owns the value and provides the label and description slots, `TokenInput` renders the text and inline tokens, and `Token` renders a single inline token. Tokens render as `Token`s by default; pass a render function as `TokenInput`'s children to customize them.
+
+```tsx
+<TokenInput>{(token) => <Token>{token.text}</Token>}</TokenInput>
+```
+
+## Value
+
+The value is a `TokenSegmentList` — a list of plain-text and token segments. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it; `toString()` joins the segments back into plain text.
+
+```tsx
+const [value, setValue] = React.useState(
+  () =>
+    new TokenSegmentList([
+      { type: 'text', text: 'Hello ' },
+      { type: 'token', text: '@sarahjones' },
+    ]),
+)
+
+<TokenField value={value} onChange={setValue}>
+  {/* ... */}
+</TokenField>
+```
+
+## Tokenization
+
+Subclass `TokenSegmentList` and override `tokenize` to convert typed text into tokens automatically — for hashtags, tag inputs, or structured search filters. `tokenize` receives the text of an edited region and returns the segments it should become.
+
+```tsx
+class TagSegmentList extends TokenSegmentList {
+  protected tokenize(text: string): TokenFieldSegment[] {
+    // split on commas/spaces and return text + token segments
+  }
+}
+```
+
+## Autocomplete
+
+For trigger-based suggestions (`@`-mentions, `/`-commands) use the [Mention](/docs/components/mention) component, which wires a caret-anchored suggestions menu onto the token field.
+
+## Examples
+
+<Examples className="md:grid-cols-2">
+  <Example name="token-field/demos/basic" title="Basic" />
+  <Example name="token-field/demos/hashtags" title="Automatic tokenization" />
+  <Example name="token-field/demos/tags" title="Tag input" />
+  <Example name="token-field/demos/controlled" title="Controlled" />
+</Examples>
+
+## API Reference
+
+### TokenField
+
+<Reference name="token-field" />
+
+### TokenInput
+
+<Reference name="token-input" />
+
+### Token
+
+<Reference name="token" />

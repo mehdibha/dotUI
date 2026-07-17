@@ -1,8 +1,9 @@
 'use client'
 
-import { Mention, MentionInput } from '@/registry/ui/mention'
+import { Mention } from '@/registry/ui/mention'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
+import { TokenInput } from '@/registry/ui/token-field'
 
 const usernames = [
   'alexmiller',
@@ -17,12 +18,12 @@ const usernames = [
   'nataliasmith',
 ].map((id) => ({ id }))
 
-// A bare MentionInput — no visible label. Use `aria-label` for the accessible
+// A bare TokenInput — no visible label. Use `aria-label` for the accessible
 // name, or add a <Label> when you want a visible one.
 export default function Demo() {
   return (
     <Mention allowsNewlines className="w-[320px]">
-      <MentionInput
+      <TokenInput
         aria-label="Comment"
         placeholder="Type @ to mention someone..."
       />

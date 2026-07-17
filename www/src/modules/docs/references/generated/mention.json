@@ -1,6 +1,6 @@
 {
   "name": "MentionProps",
-  "description": "A mention input lets users type a trigger character (like `@` or `/`) to\nopen an inline list of suggestions and insert one as an inline token.\n\n`Mention` wires the behaviour onto the `TokenField` primitive — a\n`MentionInput` for the editable area, a `Popover` + `Menu`/`MenuItem` for\nthe suggestions — by injecting their props through context. The value is a\n`TokenSegmentList` of text and token segments.",
+  "description": "A mention input lets users type a trigger character (like `@` or `/`) to\nopen an inline list of suggestions and insert one as an inline token.\n\n`Mention` wires the behaviour onto the [TokenField](/docs/components/token-field)\ncomponent — a `TokenInput` for the editable area, a `Popover` +\n`Menu`/`MenuItem` for the suggestions — by injecting their props through\ncontext. The value is a `TokenSegmentList` of text and token segments.",
   "props": {
     "trigger": {
       "type": "RegExp | string",
@@ -58,13 +58,6 @@
       },
       "description": "Where the suggestions popover is placed relative to the caret.",
       "default": "\"bottom start\""
-    },
-    "className": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
     "children": {
       "type": "ReactNode | ((state: Mention.State) => ReactNode)",
@@ -336,6 +329,13 @@
       },
       "description": "Whether the element should receive focus on render."
     },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    },
     "defaultValue": {
       "type": "TokenSegmentList<any>",
       "detailedType": "TokenSegmentList<any> | undefined",
@@ -347,7 +347,7 @@
           },
           {
             "type": "link",
-            "id": "src/registry/lib/token-field/segment-list.ts:TokenSegmentList",
+            "id": "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegmentList",
             "name": "TokenSegmentList"
           }
         ]
@@ -387,7 +387,7 @@
                 "name": "value",
                 "value": {
                   "type": "link",
-                  "id": "src/registry/lib/token-field/segment-list.ts:TokenSegmentList",
+                  "id": "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegmentList",
                   "name": "TokenSegmentList"
                 },
                 "optional": false,
@@ -473,7 +473,7 @@
               },
               {
                 "type": "link",
-                "id": "src/registry/lib/token-field/token-field.tsx:TokenFieldRenderProps",
+                "id": "src/registry/lib/react-aria-token-field/token-field.tsx:TokenFieldRenderProps",
                 "name": "TokenFieldRenderProps"
               }
             ]
@@ -493,7 +493,7 @@
           },
           {
             "type": "link",
-            "id": "src/registry/lib/token-field/segment-list.ts:TokenSegmentList",
+            "id": "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegmentList",
             "name": "TokenSegmentList"
           }
         ]
@@ -643,9 +643,9 @@
       "typeParameters": [],
       "description": ""
     },
-    "src/registry/lib/token-field/token-field.tsx:TokenFieldRenderProps": {
+    "src/registry/lib/react-aria-token-field/token-field.tsx:TokenFieldRenderProps": {
       "type": "interface",
-      "id": "src/registry/lib/token-field/token-field.tsx:TokenFieldRenderProps",
+      "id": "src/registry/lib/react-aria-token-field/token-field.tsx:TokenFieldRenderProps",
       "name": "TokenFieldRenderProps",
       "extends": [],
       "properties": {
