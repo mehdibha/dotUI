@@ -543,7 +543,7 @@ const steps: Step[] = [
       </Button>
     </InputGroupAddon>
   </InputGroup>
-  <Drawer placement="bottom">
+  <Drawer>
     <DialogContent>
       <RangeCalendar />
     </DialogContent>
@@ -572,7 +572,7 @@ const steps: Step[] = [
             </Button>
           </InputGroupAddon>
         </InputGroup>
-        <Drawer placement="bottom">
+        <Drawer>
           <DialogContent>
             <RangeCalendar />
           </DialogContent>
