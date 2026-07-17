@@ -702,6 +702,11 @@ const steps: Step[] = [
   </TagGroup>
   <InputGroup>
     <Input placeholder="Add people…" />
+    <InputGroupAddon>
+      <Button size="sm" isIconOnly>
+        <ChevronDownIcon />
+      </Button>
+    </InputGroupAddon>
   </InputGroup>
   <Popover>
     <ListBox>
@@ -722,6 +727,15 @@ const steps: Step[] = [
         </TagGroup>
         <InputGroup className="[view-transition-name:cmp-field]">
           <Input placeholder="Add people…" />
+          <InputGroupAddon>
+            <Button
+              size="sm"
+              isIconOnly
+              className="[view-transition-name:cmp-trigger]"
+            >
+              <ChevronDownIcon />
+            </Button>
+          </InputGroupAddon>
         </InputGroup>
         <Popover>
           <ListBox className="[view-transition-name:cmp-list]">
