@@ -58,7 +58,7 @@ import { Menu, MenuContent, MenuItem, MenuSub } from '@/registry/ui/menu'
 import { Modal } from '@/registry/ui/modal'
 import { Popover } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
-import { Select, SelectTrigger } from '@/registry/ui/select'
+import { Select, SelectValue } from '@/registry/ui/select'
 import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
 import { TextField } from '@/registry/ui/text-field'
 import { highlighter } from '@/modules/docs/highlight'
@@ -587,12 +587,21 @@ const steps: Step[] = [
     durationMs: 1300,
     code: `<Select>
   <Label>Assignee</Label>
-  <SelectTrigger />
+  <Button>
+    <SelectValue />
+    <ChevronDownIcon />
+  </Button>
 </Select>`,
     preview: (
-      <Select className="w-full max-w-xs">
+      // defaultSelectedKey is mount-only, and the headline's Select updates
+      // this same instance in place — so the selection must start here, even
+      // though there are no items to resolve it against yet.
+      <Select className="w-full max-w-xs" defaultSelectedKey="cara">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
-        <SelectTrigger className="[view-transition-name:cmp-field]" />
+        <Button className="[view-transition-name:cmp-field]">
+          <SelectValue />
+          <ChevronDownIcon />
+        </Button>
       </Select>
     ),
   },
@@ -603,7 +612,10 @@ const steps: Step[] = [
     durationMs: 3200,
     code: `<Select>
   <Label>Assignee</Label>
-  <SelectTrigger />
+  <Button>
+    <SelectValue />
+    <ChevronDownIcon />
+  </Button>
   <Popover>
     <ListBox>
       <ListBoxItem>Cara</ListBoxItem>
@@ -615,7 +627,10 @@ const steps: Step[] = [
     preview: (
       <Select className="w-full max-w-xs" defaultSelectedKey="cara">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
-        <SelectTrigger className="[view-transition-name:cmp-field]" />
+        <Button className="[view-transition-name:cmp-field]">
+          <SelectValue />
+          <ChevronDownIcon />
+        </Button>
         <Popover>
           <ListBox className="[view-transition-name:cmp-list]">
             <ListBoxItem id="cara">Cara</ListBoxItem>
@@ -633,7 +648,10 @@ const steps: Step[] = [
     durationMs: 1400,
     code: `<Select>
   <Label>Assignee</Label>
-  <SelectTrigger />
+  <Button>
+    <SelectValue />
+    <ChevronDownIcon />
+  </Button>
   <Popover>
     <ListBox>
       <ListBoxSection>
@@ -648,7 +666,10 @@ const steps: Step[] = [
     preview: (
       <Select className="w-full max-w-xs" defaultSelectedKey="cara">
         <Label className="[view-transition-name:cmp-label]">Assignee</Label>
-        <SelectTrigger className="[view-transition-name:cmp-field]" />
+        <Button className="[view-transition-name:cmp-field]">
+          <SelectValue />
+          <ChevronDownIcon />
+        </Button>
         <Popover>
           <ListBox className="[view-transition-name:cmp-list]">
             <ListBoxSection>
