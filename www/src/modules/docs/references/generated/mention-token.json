@@ -1,0 +1,136 @@
+{
+  "name": "MentionTokenProps",
+  "description": "An inline token within a `MentionInput`.",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    },
+    "children": {
+      "type": "ReactNode | (values: TokenRenderProps) => ReactNode",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "TokenRenderProps",
+                  "name": "TokenRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
+    },
+    "render": {
+      "type": "DOMRenderFunction<\"div\", TokenRenderProps>",
+      "detailedType": "| DOMRenderFunction<'div', TokenRenderProps>\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "DOMRenderFunction"
+            },
+            "typeParameters": [
+              {
+                "type": "stringLiteral",
+                "value": "div"
+              },
+              {
+                "type": "link",
+                "id": "src/registry/lib/token-field/token-field.tsx:TokenRenderProps",
+                "name": "TokenRenderProps"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
+    }
+  },
+  "typeLinks": {
+    "TokenRenderProps": {
+      "type": "interface",
+      "name": "TokenRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token is disabled."
+        },
+        "isSelected": {
+          "type": "property",
+          "name": "isSelected",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token is selected."
+        }
+      }
+    },
+    "src/registry/lib/token-field/token-field.tsx:TokenRenderProps": {
+      "type": "interface",
+      "id": "src/registry/lib/token-field/token-field.tsx:TokenRenderProps",
+      "name": "TokenRenderProps",
+      "extends": [],
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token is disabled."
+        },
+        "isSelected": {
+          "type": "property",
+          "name": "isSelected",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token is selected."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    }
+  }
+}

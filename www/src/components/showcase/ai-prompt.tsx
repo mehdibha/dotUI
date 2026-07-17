@@ -8,6 +8,7 @@ import {
   CameraIcon,
   CheckIcon,
   ChevronDownIcon,
+  FileIcon,
   FolderIcon,
   GitBranchIcon,
   GlobeIcon,
@@ -17,6 +18,7 @@ import {
   PaperclipIcon,
   PlugIcon,
   PlusIcon,
+  SlashSquareIcon,
   TelescopeIcon,
   TriangleAlertIcon,
 } from 'lucide-react'
@@ -26,9 +28,9 @@ import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Label } from '@/registry/ui/field'
-import { TextArea } from '@/registry/ui/input'
 import { Kbd } from '@/registry/ui/kbd'
 import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
+import { Mention, MentionInput, TokenSegmentList } from '@/registry/ui/mention'
 import {
   Menu,
   MenuContent,
@@ -40,7 +42,6 @@ import {
 import { Popover } from '@/registry/ui/popover'
 import { Separator } from '@/registry/ui/separator'
 import { Switch, SwitchControl } from '@/registry/ui/switch'
-import { TextField } from '@/registry/ui/text-field'
 
 // Models offered by the model picker. The first four fill the menu; `legacy`
 // ones live behind the "More models" submenu. `name` is what the toolbar shows.
@@ -93,6 +94,41 @@ const DEVICES = [
   { id: 'airpods', name: 'AirPods' },
 ] as const
 
+// `@` browses project files, `/` lists commands — both open the Mention
+// suggestions inline at the caret.
+interface Suggestion {
+  id: string
+  description?: string
+}
+
+const FILES: Suggestion[] = [
+  { id: 'theme.css' },
+  { id: 'button.tsx' },
+  { id: 'menu.tsx' },
+  { id: 'popover.tsx' },
+  { id: 'tokens.ts' },
+  { id: 'chart.tsx' },
+]
+
+const COMMANDS: Suggestion[] = [
+  { id: 'goal', description: 'Set a goal for the session' },
+  { id: 'plan', description: 'Draft a plan before coding' },
+  { id: 'review', description: 'Review the current diff' },
+  { id: 'test', description: 'Run the test suite' },
+  { id: 'ship', description: 'Open a pull request' },
+]
+
+// The prompt the card starts with: a `/goal` command plus `@`-mentioned files,
+// all rendered as inline tokens.
+const DEFAULT_PROMPT = new TokenSegmentList([
+  { type: 'token', text: '/goal' },
+  { type: 'text', text: ' Ship dark mode — generate the neutral scale in ' },
+  { type: 'token', text: '@theme.css' },
+  { type: 'text', text: ' and swap the hardcoded colors in ' },
+  { type: 'token', text: '@button.tsx' },
+  { type: 'text', text: ' ' },
+])
+
 // The showcase's lead card: an AI prompt composer — a text input with a toolbar
 // for attachment, a model + effort picker (Opus 4.8 / High), dictation and voice.
 // Unlike the other showcase cards it isn't wrapped in <Card>; the bordered
@@ -121,13 +157,41 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
       )}
       {...props}
     >
-      <TextField aria-label="Prompt" className="flex w-full flex-col">
-        <TextArea
-          placeholder="How can I help you today?"
-          rows={2}
-          className="min-h-14 resize-none border-0 bg-transparent px-2 pt-2 text-base shadow-none focus:border-0 focus:ring-0"
-        />
-      </TextField>
+      {/* The prompt itself is a Mention on the TokenField primitive: `@` browses
+          files, `/` lists commands, and picked items become inline tokens. */}
+      <Mention allowsNewlines trigger={/[@/]/} defaultValue={DEFAULT_PROMPT}>
+        {({ trigger }) => (
+          <>
+            <MentionInput
+              aria-label="Prompt"
+              placeholder="How can I help you today?"
+              className="min-h-14 rounded-none border-0 bg-transparent px-2 pt-2 text-base focus:ring-0"
+            />
+            <Popover className="min-w-56">
+              <MenuContent
+                items={trigger === '/' ? COMMANDS : FILES}
+                renderEmptyState={() => 'No results found.'}
+              >
+                {(item) => (
+                  <MenuItem id={item.id} textValue={item.id}>
+                    {trigger === '/' ? <SlashSquareIcon /> : <FileIcon />}
+                    {item.description ? (
+                      <div className="flex flex-col">
+                        <span>/{item.id}</span>
+                        <span className="text-xs text-fg-muted">
+                          {item.description}
+                        </span>
+                      </div>
+                    ) : (
+                      item.id
+                    )}
+                  </MenuItem>
+                )}
+              </MenuContent>
+            </Popover>
+          </>
+        )}
+      </Mention>
       <div className="flex items-center justify-between gap-2 pt-1">
         {/* "+" — files, screenshots, projects, skills, connectors, web search. */}
         <Menu>

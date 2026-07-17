@@ -1,7 +1,6 @@
 'use client'
 
-import { Input, InputGroup } from '@/registry/ui/input'
-import { Mention } from '@/registry/ui/mention'
+import { Mention, MentionInput } from '@/registry/ui/mention'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
 
@@ -14,14 +13,16 @@ const people = [
   { id: 'ellagreen' },
 ]
 
-// A single-line Input instead of a TextArea — the trigger still anchors the
-// popover at the caret.
+// Without `allowsNewlines` the field stays single-line: Enter is ignored and
+// pasted line breaks collapse to spaces.
 export default function Demo() {
   return (
     <Mention className="w-[320px]">
-      <InputGroup>
-        <Input aria-label="To" placeholder="Type @ to add someone..." />
-      </InputGroup>
+      <MentionInput
+        aria-label="To"
+        placeholder="Type @ to add someone..."
+        className="min-h-0"
+      />
       <Popover>
         <MenuContent items={people} renderEmptyState={() => 'No people found.'}>
           {(person) => (
