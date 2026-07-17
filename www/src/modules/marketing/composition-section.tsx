@@ -38,7 +38,10 @@ function LineNumbers({
     <div
       aria-hidden
       className={cn(
-        'shrink-0 text-right text-fg-muted/50 tabular-nums select-none',
+        // 2ch: the widest step reaches line 19, so pinning the gutter to two
+        // digits keeps its right edge — and the code beside it — from shifting
+        // between single- and double-digit steps.
+        'w-[2ch] shrink-0 text-right text-fg-muted/50 tabular-nums select-none',
         className,
       )}
     >
