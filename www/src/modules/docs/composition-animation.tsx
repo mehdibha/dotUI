@@ -807,10 +807,10 @@ const steps: Step[] = [
     ),
   },
   {
-    // Headline: the items gain keyboard shortcuts.
+    // Mid beat: the items gain keyboard shortcuts.
     title: 'Menu',
-    compact: true,
-    durationMs: 2800,
+    mid: true,
+    durationMs: 1400,
     code: `<Menu>
   <Button size="sm" isIconOnly>
     <MoreHorizontalIcon />
@@ -853,10 +853,10 @@ const steps: Step[] = [
     ),
   },
   {
-    // Mid beat: one item nests a submenu.
-    title: 'Submenu',
-    mid: true,
-    durationMs: 1500,
+    // Headline: one item nests a submenu.
+    title: 'Menu',
+    compact: true,
+    durationMs: 3000,
     code: `<Menu>
   <Button size="sm" isIconOnly>
     <MoreHorizontalIcon />
@@ -912,8 +912,8 @@ const steps: Step[] = [
     ),
   },
   {
-    // Headline: the same menu, now opened by right-click — the trigger becomes
-    // the target surface.
+    // Headline: the same menu, now opened by right-click — only the root and
+    // trigger change.
     title: 'ContextMenu',
     compact: true,
     durationMs: 3000,
@@ -922,7 +922,15 @@ const steps: Step[] = [
   <Popover>
     <MenuContent>
       <MenuItem>Edit <Kbd>⌘E</Kbd></MenuItem>
-      <MenuItem>Duplicate <Kbd>⌘D</Kbd></MenuItem>
+      <MenuSub>
+        <MenuItem>Move to</MenuItem>
+        <Popover>
+          <MenuContent>
+            <MenuItem>Project</MenuItem>
+            <MenuItem>Team</MenuItem>
+          </MenuContent>
+        </Popover>
+      </MenuSub>
       <MenuItem>Delete <Kbd>⌘⌫</Kbd></MenuItem>
     </MenuContent>
   </Popover>
@@ -936,10 +944,15 @@ const steps: Step[] = [
               Edit
               <Kbd>⌘E</Kbd>
             </MenuItem>
-            <MenuItem textValue="Duplicate">
-              Duplicate
-              <Kbd>⌘D</Kbd>
-            </MenuItem>
+            <MenuSub>
+              <MenuItem>Move to</MenuItem>
+              <Popover>
+                <MenuContent>
+                  <MenuItem>Project</MenuItem>
+                  <MenuItem>Team</MenuItem>
+                </MenuContent>
+              </Popover>
+            </MenuSub>
             <MenuItem textValue="Delete">
               Delete
               <Kbd>⌘⌫</Kbd>
