@@ -13,7 +13,6 @@ import {
   GitBranchIcon,
   GlobeIcon,
   HandIcon,
-  InfoIcon,
   MicIcon,
   PaperclipIcon,
   PlugIcon,
@@ -50,7 +49,6 @@ type ModelOption = {
   id: string
   name: string
   description: string
-  disabled?: boolean
   legacy?: boolean
 }
 
@@ -59,7 +57,6 @@ const MODELS: ModelOption[] = [
     id: 'fable',
     name: 'Fable 5',
     description: 'For your toughest challenges',
-    disabled: true,
   },
   { id: 'opus', name: 'Opus 4.8', description: 'For complex tasks' },
   {
@@ -131,7 +128,7 @@ const DEFAULT_PROMPT = new TokenSegmentList([
 ])
 
 // The showcase's lead card: an AI prompt composer — a text input with a toolbar
-// for attachment, a model + effort picker (Opus 4.8 / High), dictation and voice.
+// for attachment, a model + effort picker (Fable 5 / High), dictation and voice.
 // Unlike the other showcase cards it isn't wrapped in <Card>; the bordered
 // composer *is* the surface — a short, wide banner across the top of the grid's
 // main region. Every visual goes through design-system tokens (--card-radius,
@@ -140,14 +137,14 @@ const DEFAULT_PROMPT = new TokenSegmentList([
 // and effort pickers, and the microphone popover — so the card doubles as a
 // playground for the menu, popover, list-box and switch primitives.
 export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
-  const [model, setModel] = React.useState('opus')
+  const [model, setModel] = React.useState('fable')
   const [effort, setEffort] = React.useState<string>('high')
   const [webSearch, setWebSearch] = React.useState(true)
   const [device, setDevice] = React.useState('macbook')
   const [holdToRecord, setHoldToRecord] = React.useState(true)
   const [voiceMode, setVoiceMode] = React.useState(false)
 
-  const modelName = MODELS.find((m) => m.id === model)?.name ?? 'Opus 4.8'
+  const modelName = MODELS.find((m) => m.id === model)?.name ?? 'Fable 5'
   const effortName = EFFORTS.find((e) => e.id === effort)?.name ?? 'High'
 
   return (
@@ -318,19 +315,10 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
                       <MenuItem
                         key={m.id}
                         textValue={m.name}
-                        isDisabled={m.disabled}
                         onAction={() => setModel(m.id)}
                       >
                         <div className="flex flex-1 flex-col">
-                          <span className="flex items-center gap-1.5">
-                            {m.name}
-                            {m.disabled && (
-                              <span className="flex items-center gap-1 text-xs text-fg-muted">
-                                <InfoIcon className="size-3" />
-                                Currently unavailable
-                              </span>
-                            )}
-                          </span>
+                          <span>{m.name}</span>
                           <span className="text-xs text-fg-muted">
                             {m.description}
                           </span>
