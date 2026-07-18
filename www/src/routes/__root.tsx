@@ -13,6 +13,7 @@ import { ThemeProvider } from 'starter-themes'
 import { siteConfig } from '@/config/site'
 import { truncateOnWord } from '@/lib/text'
 import { ToastProvider } from '@/registry/ui/toast'
+import { usePreviewForcedTheme } from '@/modules/create/preset'
 
 import appCss from '@/styles.css?url'
 
@@ -95,8 +96,12 @@ function RootComponent() {
     }
   }, [])
 
+  // In the /create preview iframe, the customizer owns the displayed mode — force it so
+  // the provider's own system / storage listeners can't revert it. `undefined` elsewhere.
+  const forcedTheme = usePreviewForcedTheme()
+
   return (
-    <ThemeProvider>
+    <ThemeProvider forcedTheme={forcedTheme}>
       <RootDocument>
         <ToastProvider>
           <Outlet />
