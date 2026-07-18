@@ -18,119 +18,91 @@
 
 /* AUTO-GENERATED: semantic colors — do not edit. Run `pnpm build:registry`. */
 @theme {
-  --color-bg: var(--neutral-25);
-  --color-muted: var(--neutral-100);
-  --color-inverse: var(--neutral-950);
-  --color-disabled: var(--neutral-100);
-  --color-field: var(--neutral-100);
-  --color-highlight: var(--neutral-200);
-  --color-fg-on-highlight: var(--neutral-950);
-  --color-selected: var(--neutral-300);
-  --color-selected-hover: var(--neutral-400);
-  --color-selected-active: var(--neutral-500);
-  --color-fg-on-selected: var(--neutral-950);
-  --color-neutral: var(--neutral-100);
-  --color-neutral-hover: var(--neutral-200);
-  --color-neutral-active: var(--neutral-300);
-  --color-primary: var(--neutral-950);
-  --color-primary-hover: color-mix(
-    in oklab,
-    var(--neutral-950) 90%,
-    var(--neutral-25)
-  );
-  --color-primary-active: color-mix(
-    in oklab,
-    var(--neutral-950) 80%,
-    var(--neutral-25)
-  );
-  --color-primary-muted: var(--neutral-200);
-  --color-fg-on-primary: var(--neutral-25);
-  --color-fg-primary-disabled: var(--neutral-500);
-  --color-success: var(--success-700);
-  --color-success-hover: var(--success-800);
-  --color-success-active: color-mix(
-    in oklab,
-    var(--success-800) 88%,
-    var(--neutral-950)
-  );
-  --color-success-muted: var(--success-100);
-  --color-success-muted-hover: var(--success-200);
-  --color-fg-success: var(--success-900);
-  --color-fg-on-success: var(--on-success-700);
-  --color-border-success: var(--success-400);
-  --color-border-success-hover: var(--success-500);
-  --color-danger: var(--danger-700);
-  --color-danger-hover: var(--danger-800);
-  --color-danger-active: color-mix(
-    in oklab,
-    var(--danger-800) 88%,
-    var(--neutral-950)
-  );
-  --color-danger-muted: var(--danger-100);
-  --color-danger-muted-hover: var(--danger-200);
-  --color-fg-danger: var(--danger-900);
-  --color-fg-on-danger: var(--on-danger-700);
-  --color-border-danger: var(--danger-400);
-  --color-border-danger-hover: var(--danger-500);
-  --color-warning: var(--warning-700);
-  --color-warning-hover: var(--warning-800);
-  --color-warning-active: color-mix(
-    in oklab,
-    var(--warning-800) 88%,
-    var(--neutral-950)
-  );
-  --color-warning-muted: var(--warning-100);
-  --color-warning-muted-hover: var(--warning-200);
-  --color-fg-warning: var(--warning-900);
-  --color-fg-on-warning: var(--on-warning-700);
-  --color-border-warning: var(--warning-400);
-  --color-border-warning-hover: var(--warning-500);
-  --color-info: var(--info-700);
-  --color-info-hover: var(--info-800);
-  --color-info-active: color-mix(
-    in oklab,
-    var(--info-800) 88%,
-    var(--neutral-950)
-  );
-  --color-info-muted: var(--info-100);
-  --color-info-muted-hover: var(--info-200);
-  --color-fg-info: var(--info-900);
-  --color-fg-on-info: var(--on-info-700);
-  --color-border-info: var(--info-400);
-  --color-border-info-hover: var(--info-500);
-  --color-accent: var(--accent-700);
-  --color-accent-hover: var(--accent-800);
-  --color-accent-active: color-mix(
-    in oklab,
-    var(--accent-800) 88%,
-    var(--neutral-950)
-  );
-  --color-accent-muted: var(--accent-100);
-  --color-accent-muted-hover: var(--accent-200);
-  --color-fg-accent: var(--accent-900);
-  --color-fg-on-accent: var(--on-accent-700);
-  --color-border-accent: var(--accent-400);
-  --color-border-accent-hover: var(--accent-500);
-  --color-fg: var(--neutral-950);
-  --color-fg-muted: var(--neutral-900);
-  --color-fg-inverse: var(--neutral-25);
-  --color-fg-disabled: var(--neutral-600);
-  --color-fg-on-neutral: var(--neutral-950);
-  --color-border: var(--neutral-400);
-  --color-border-hover: var(--neutral-500);
-  --color-border-active: var(--neutral-600);
-  --color-border-field: var(--neutral-500);
-  --color-border-control: var(--neutral-600);
-  --color-border-disabled: var(--neutral-400);
-  --color-border-focus: var(--accent-700);
-  --color-border-focus-muted: var(--accent-300);
-  --color-tooltip: var(--neutral-950);
-  --color-fg-on-tooltip: var(--neutral-25);
-  --color-card: var(--neutral-50);
-  --color-popover: var(--neutral-50);
-  --color-sidebar: var(--neutral-50);
-  --color-border-sidebar: var(--neutral-400);
-  --color-overlay: oklch(0 0 0);
-  --color-thumb: oklch(1 0 0);
+	--color-bg: var(--neutral-25);
+	--color-muted: var(--neutral-100);
+	--color-inverse: var(--neutral-950);
+	--color-disabled: var(--neutral-100);
+	--color-field: var(--neutral-100);
+	--color-highlight: var(--neutral-200);
+	--color-fg-on-highlight: var(--neutral-950);
+	--color-selected: var(--neutral-300);
+	--color-selected-hover: var(--neutral-400);
+	--color-selected-active: var(--neutral-500);
+	--color-fg-on-selected: var(--neutral-950);
+	--color-neutral: var(--neutral-100);
+	--color-neutral-hover: var(--neutral-200);
+	--color-neutral-active: var(--neutral-300);
+	--color-primary: var(--neutral-950);
+	--color-primary-hover: color-mix(in oklab, var(--neutral-950) 90%, var(--neutral-25));
+	--color-primary-active: color-mix(in oklab, var(--neutral-950) 80%, var(--neutral-25));
+	--color-primary-muted: var(--neutral-200);
+	--color-fg-on-primary: var(--neutral-25);
+	--color-fg-primary-disabled: var(--neutral-500);
+	--color-success: var(--success-700);
+	--color-success-hover: var(--success-800);
+	--color-success-active: color-mix(in oklab, var(--success-800) 88%, var(--neutral-950));
+	--color-success-muted: var(--success-100);
+	--color-success-muted-hover: var(--success-200);
+	--color-fg-success: var(--success-900);
+	--color-fg-on-success: var(--on-success-700);
+	--color-border-success: var(--success-400);
+	--color-border-success-hover: var(--success-500);
+	--color-danger: var(--danger-700);
+	--color-danger-hover: var(--danger-800);
+	--color-danger-active: color-mix(in oklab, var(--danger-800) 88%, var(--neutral-950));
+	--color-danger-muted: var(--danger-100);
+	--color-danger-muted-hover: var(--danger-200);
+	--color-fg-danger: var(--danger-900);
+	--color-fg-on-danger: var(--on-danger-700);
+	--color-border-danger: var(--danger-400);
+	--color-border-danger-hover: var(--danger-500);
+	--color-warning: var(--warning-700);
+	--color-warning-hover: var(--warning-800);
+	--color-warning-active: color-mix(in oklab, var(--warning-800) 88%, var(--neutral-950));
+	--color-warning-muted: var(--warning-100);
+	--color-warning-muted-hover: var(--warning-200);
+	--color-fg-warning: var(--warning-900);
+	--color-fg-on-warning: var(--on-warning-700);
+	--color-border-warning: var(--warning-400);
+	--color-border-warning-hover: var(--warning-500);
+	--color-info: var(--info-700);
+	--color-info-hover: var(--info-800);
+	--color-info-active: color-mix(in oklab, var(--info-800) 88%, var(--neutral-950));
+	--color-info-muted: var(--info-100);
+	--color-info-muted-hover: var(--info-200);
+	--color-fg-info: var(--info-900);
+	--color-fg-on-info: var(--on-info-700);
+	--color-border-info: var(--info-400);
+	--color-border-info-hover: var(--info-500);
+	--color-accent: var(--accent-700);
+	--color-accent-hover: var(--accent-800);
+	--color-accent-active: color-mix(in oklab, var(--accent-800) 88%, var(--neutral-950));
+	--color-accent-muted: var(--accent-100);
+	--color-accent-muted-hover: var(--accent-200);
+	--color-fg-accent: var(--accent-900);
+	--color-fg-on-accent: var(--on-accent-700);
+	--color-border-accent: var(--accent-400);
+	--color-border-accent-hover: var(--accent-500);
+	--color-fg: var(--neutral-950);
+	--color-fg-muted: var(--neutral-900);
+	--color-fg-inverse: var(--neutral-25);
+	--color-fg-disabled: var(--neutral-600);
+	--color-fg-on-neutral: var(--neutral-950);
+	--color-border: var(--neutral-400);
+	--color-border-hover: var(--neutral-500);
+	--color-border-active: var(--neutral-600);
+	--color-border-field: var(--neutral-500);
+	--color-border-control: var(--neutral-600);
+	--color-border-disabled: var(--neutral-400);
+	--color-border-focus: var(--accent-700);
+	--color-border-focus-muted: var(--accent-300);
+	--color-tooltip: var(--neutral-950);
+	--color-fg-on-tooltip: var(--neutral-25);
+	--color-card: var(--neutral-50);
+	--color-popover: var(--neutral-50);
+	--color-sidebar: var(--neutral-50);
+	--color-border-sidebar: var(--neutral-400);
+	--color-overlay: oklch(0 0 0);
+	--color-thumb: oklch(1 0 0);
 }
 /* END AUTO-GENERATED */
