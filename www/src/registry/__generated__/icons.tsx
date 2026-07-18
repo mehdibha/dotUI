@@ -31,6 +31,7 @@ import {
 	CalendarPlusIcon as LucideCalendarPlusIcon,
 	CameraIcon as LucideCameraIcon,
 	CaptionsIcon as LucideCaptionsIcon,
+	CastIcon as LucideCastIcon,
 	ChartBarIcon as LucideChartBarIcon,
 	ChartLineIcon as LucideChartLineIcon,
 	ChartPieIcon as LucideChartPieIcon,
@@ -110,6 +111,7 @@ import {
 	PencilIcon as LucidePencilIcon,
 	PenSquareIcon as LucidePenSquareIcon,
 	PenToolIcon as LucidePenToolIcon,
+	PictureInPictureIcon as LucidePictureInPictureIcon,
 	PieChartIcon as LucidePieChartIcon,
 	PinIcon as LucidePinIcon,
 	PlusIcon as LucidePlusIcon,
@@ -1261,4 +1263,18 @@ export const PinIcon = createIcon(LucidePinIcon, {
 	remix: "RiPushpinLine",
 	tabler: "IconPinned",
 	hugeicons: "PinIcon",
+});
+
+export const CastIcon = createIcon(LucideCastIcon, {
+	lucide: "CastIcon",
+	remix: "RiCastLine",
+	tabler: "IconCast",
+	hugeicons: "MirroringScreenIcon",
+});
+
+export const PictureInPictureIcon = createIcon(LucidePictureInPictureIcon, {
+	lucide: "PictureInPictureIcon",
+	remix: "RiPictureInPictureLine",
+	tabler: "IconPictureInPicture",
+	hugeicons: "PictureInPictureOnIcon",
 });

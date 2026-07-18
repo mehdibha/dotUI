@@ -2897,6 +2897,14 @@ export const DemosIndex: Record<
 		files: ["ui/tree/demos/with-icons.tsx"],
 		component: React.lazy(() => import("@/registry/ui/tree/demos/with-icons")),
 	},
+	"video-player/demos/captions": {
+		files: ["ui/video-player/demos/captions.tsx"],
+		component: React.lazy(() => import("@/registry/ui/video-player/demos/captions")),
+	},
+	"video-player/demos/cast": {
+		files: ["ui/video-player/demos/cast.tsx"],
+		component: React.lazy(() => import("@/registry/ui/video-player/demos/cast")),
+	},
 	"video-player/demos/composition": {
 		files: ["ui/video-player/demos/composition.tsx"],
 		component: React.lazy(() => import("@/registry/ui/video-player/demos/composition")),
@@ -2905,9 +2913,17 @@ export const DemosIndex: Record<
 		files: ["ui/video-player/demos/default.tsx"],
 		component: React.lazy(() => import("@/registry/ui/video-player/demos/default")),
 	},
+	"video-player/demos/hls": {
+		files: ["ui/video-player/demos/hls.tsx"],
+		component: React.lazy(() => import("@/registry/ui/video-player/demos/hls")),
+	},
 	"video-player/demos/minimal": {
 		files: ["ui/video-player/demos/minimal.tsx"],
 		component: React.lazy(() => import("@/registry/ui/video-player/demos/minimal")),
+	},
+	"video-player/demos/picture-in-picture": {
+		files: ["ui/video-player/demos/picture-in-picture.tsx"],
+		component: React.lazy(() => import("@/registry/ui/video-player/demos/picture-in-picture")),
 	},
 	"video-player/demos/playback-rate": {
 		files: ["ui/video-player/demos/playback-rate.tsx"],

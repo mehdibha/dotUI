@@ -980,4 +980,16 @@ export const registryIcons: Record<
     tabler: 'IconPinned',
     hugeicons: 'PinIcon',
   },
+  CastIcon: {
+    lucide: 'CastIcon',
+    remix: 'RiCastLine',
+    tabler: 'IconCast',
+    hugeicons: 'MirroringScreenIcon',
+  },
+  PictureInPictureIcon: {
+    lucide: 'PictureInPictureIcon',
+    remix: 'RiPictureInPictureLine',
+    tabler: 'IconPictureInPicture',
+    hugeicons: 'PictureInPictureOnIcon',
+  },
 }

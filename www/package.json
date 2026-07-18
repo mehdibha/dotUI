@@ -41,6 +41,7 @@
     "fumadocs-mdx": "^15.0.5",
     "globals-docs": "^2.4.1",
     "hast-util-to-jsx-runtime": "^2.3.6",
+    "hls.js": "^1.6.16",
     "lucide-react": "^1.16.0",
     "motion": "^12.23.25",
     "pako": "^2.1.0",

@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 144 icons we actually use (not the entire library)
+// Only exports the 146 icons we actually use (not the entire library)
 export {
 	RiAddBoxLine,
 	RiAddLine,
@@ -29,6 +29,7 @@ export {
 	RiCalendarEventLine,
 	RiCalendarLine,
 	RiCameraLine,
+	RiCastLine,
 	RiChat1Line,
 	RiCheckboxCircleLine,
 	RiCheckLine,
@@ -102,6 +103,7 @@ export {
 	RiPaletteLine,
 	RiPencilLine,
 	RiPenNibLine,
+	RiPictureInPictureLine,
 	RiPieChartLine,
 	RiPriceTag3Line,
 	RiPulseLine,

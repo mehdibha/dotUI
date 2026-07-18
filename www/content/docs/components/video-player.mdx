@@ -104,7 +104,30 @@ import {
 
 The seek and volume bars are the design system's own `Slider`, and every button is a `Button`, so the player follows your slider and button styles automatically. While the video plays, overlay controls fade out after a short idle period and come back on pointer movement or keyboard focus.
 
-Since the parts are regular components, anything can sit next to them in the control bar — a playback-rate `Menu`, a captions toggle, a share button.
+Since the parts are regular components, anything can sit next to them in the control bar — a playback-rate `Menu`, a captions `ToggleButton`, a cast button. The examples below show the common ones.
+
+## Streaming
+
+Real-world video is usually served as HLS or DASH, not a plain file. `VideoPlayerVideo` is a plain `video` element, which is exactly the surface streaming engines attach to — wire up [hls.js](https://github.com/video-dev/hls.js) (free, Apache-2.0) through the `ref`, with Safari falling back to its native HLS support:
+
+```tsx
+const videoRef = useRef<HTMLVideoElement>(null)
+
+useEffect(() => {
+  const video = videoRef.current
+  if (!video) return
+  if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = src
+    return
+  }
+  const hls = new Hls()
+  hls.loadSource(src)
+  hls.attachMedia(video)
+  return () => hls.destroy()
+}, [])
+```
+
+The same pattern works for [dash.js](https://github.com/Dash-Industry-Forum/dash.js) and [shaka-player](https://github.com/shaka-project/shaka-player) (which also covers DRM).
 
 ## Examples
 
@@ -113,7 +136,18 @@ Since the parts are regular components, anything can sit next to them in the con
   <Example name="video-player/demos/composition" title="Full Composition" />
   <Example name="video-player/demos/minimal" title="Minimal" />
   <Example name="video-player/demos/playback-rate" title="Playback Rate Menu" />
+  <Example name="video-player/demos/hls" title="HLS Streaming" />
+  <Example name="video-player/demos/captions" title="Captions" />
+  <Example
+    name="video-player/demos/picture-in-picture"
+    title="Picture in Picture"
+  />
+  <Example name="video-player/demos/cast" title="Cast" />
 </Examples>
+
+## Beyond this component
+
+This player covers styled controls over your own video: files, HLS/DASH streams, captions, PiP, casting. If you need ads, analytics, DRM license management, or storyboard thumbnails, reach for a full player framework like [Vidstack](https://vidstack.io) or [media-chrome](https://www.media-chrome.org) (both MIT) — they replace this component rather than compose with it.
 
 ## API Reference
 

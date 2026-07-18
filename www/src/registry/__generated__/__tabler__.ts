@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 142 icons we actually use (not the entire library)
+// Only exports the 144 icons we actually use (not the entire library)
 export {
 	IconActivity,
 	IconAlarm,
@@ -26,6 +26,7 @@ export {
 	IconCalendar,
 	IconCalendarPlus,
 	IconCamera,
+	IconCast,
 	IconChartBar,
 	IconChartLine,
 	IconChartPie,
@@ -103,6 +104,7 @@ export {
 	IconPaperclip,
 	IconPencil,
 	IconPhoto,
+	IconPictureInPicture,
 	IconPinned,
 	IconPlayerRecordFilled,
 	IconPlus,
