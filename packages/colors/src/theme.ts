@@ -1,167 +1,321 @@
 /**
- * The one generalized, registry-driven, background-independent orchestrator.
- *
- * Resolves palettes (primary required; neutral explicit-or-derived; status via
- * SEMANTIC_COLORS; custom catchall) and modes once, derives each mode's
- * background from the neutral seed, then loops modes × palettes calling the
- * registered producer. No per-algorithm branching.
+ * `createTheme` (D12): one seed in, a complete correct system out — both
+ * modes × {accent, neutral, status} × 12 steps + on-* + alpha twins + chart
+ * palettes, all guarantees enforced in-loop and audited in the report.
  */
 
-import { type ModeCtx, produceValidated } from './producer'
-import { registerBuiltins } from './producers'
+import { z } from 'zod'
+
+import { alphaTwin } from './alpha'
 import {
-  type BaseThemeOptions,
-  type CreateThemeOptions,
-  createThemeOptionsSchema,
-} from './schema'
-import { gamutMap, oklchCss, toOklch } from './shared/color'
-import { DEFAULT_MODES, SCALE_STEPS, SEMANTIC_COLORS } from './shared/constants'
-import type { ColorScale, Theme } from './shared/types'
+  categoricalGateReport,
+  categoricalPalette,
+  divergingPalette,
+  sequentialPalette,
+} from './charts'
+import {
+  CVD_GATE,
+  DARK_BG_LSTAR,
+  DARK_SKELETON,
+  LIGHT_BG_LSTAR,
+  LIGHT_SKELETON,
+  LIGHT_SKELETON_NEUTRAL,
+  NEUTRAL_TINT_PEAK,
+  NEUTRAL_WHISPER_CEILING,
+  STATUS_SEEDS,
+  STEPS,
+  type StatusName,
+  type StepName,
+  WHISPER_LINE,
+} from './data'
+import { deltaEok, minPairwiseDeltaEok } from './meters'
+import {
+  buildScale,
+  type Mode,
+  type ScaleColors,
+  transposeSkeleton,
+} from './scale'
+import { type Oklch, oklchCss, toOklch } from './space'
+import { type GuaranteeResult, verifyLadder, verifyScale } from './verify'
 
-interface ResolvedMode {
-  isDark: boolean
-  bgLightness: number
-  palettes: Record<
-    string,
-    { seed?: string; ratios?: number[]; tones?: number[] }
-  >
-}
-
-/** Resolve the per-palette base inputs: name → seed string (generative) or scale map (fixed). */
-function resolvePalettes(
-  palettes: Record<string, string | ColorScale | boolean>,
-  isFixed: boolean,
-): Map<string, string | ColorScale> {
-  const out = new Map<string, string | ColorScale>()
-  if (isFixed) {
-    for (const [name, scale] of Object.entries(palettes)) {
-      if (typeof scale === 'object') out.set(name, scale)
+const colorString = z.string().refine(
+  (value) => {
+    try {
+      toOklch(value)
+      return true
+    } catch {
+      return false
     }
-    return out
+  },
+  { message: 'not a parsable CSS color' },
+)
+
+export const themeOptionsSchema = z.object({
+  seeds: z
+    .object({
+      accent: colorString,
+      neutral: colorString.optional(),
+      success: colorString.optional(),
+      warning: colorString.optional(),
+      danger: colorString.optional(),
+      info: colorString.optional(),
+    })
+    .catchall(colorString),
+  /** D7 — pin the accent verbatim at the solid step; the report prices it. */
+  preserveSeed: z.boolean().optional(),
+  /** D5 — scales the fitted chroma curve (1 ≈ Radix, ~1.33 ≈ Tailwind). */
+  vividness: z.number().min(0).max(2).optional(),
+  /** D6 — scalar on the hue-band bend table (1.6 ≈ Tailwind warm bends). */
+  hueShift: z.number().min(0).max(3).optional(),
+  /** D8 — scales the whisper tint peak (0 = pure gray). */
+  neutralTint: z.number().min(0).max(4).optional(),
+  /** D8 — override the derived neutral hue (degrees). */
+  neutralHue: z.number().optional(),
+  /** D9/D12 — app-background lightness per mode (L*), or OLED black. */
+  background: z
+    .object({
+      light: z.number().min(90).max(100).optional(),
+      dark: z.union([z.number().min(0).max(20), z.literal('oled')]).optional(),
+    })
+    .optional(),
+  /** D2 — solve solids to the full WCAG 4.5 on-label bar. */
+  strictOnSolid: z.boolean().optional(),
+})
+
+export type ThemeOptions = z.infer<typeof themeOptionsSchema>
+
+export interface ModeOutput {
+  /** The app background (= neutral step 25). */
+  background: string
+  scales: Record<string, Record<StepName, string>>
+  /** Alpha twins compositing to the solids over this mode's background. */
+  alphas: Record<string, Record<StepName, string>>
+  /** Solved solid-label foregrounds. */
+  on: Record<string, { '700': string; '800': string }>
+}
+
+export interface ThemeReport {
+  ok: boolean
+  guarantees: GuaranteeResult[]
+  warnings: string[]
+  /** ΔEok between each seed and its emitted solid (the snap price, D7). */
+  seedDelta: Record<string, number>
+}
+
+export interface Theme {
+  light: ModeOutput
+  dark: ModeOutput
+  charts: {
+    categorical: string[]
+    sequential: string[]
+    diverging: string[]
   }
-  const primary = palettes.primary
-  // `neutral` is explicit-or-derived: a string seed wins, otherwise derive from the primary seed
-  // (a non-string neutral — e.g. the catchall `true` — is not a usable seed, so fall back).
-  const neutral =
-    typeof palettes.neutral === 'string' ? palettes.neutral : primary
-  if (typeof primary === 'string') out.set('primary', primary)
-  if (typeof neutral === 'string') out.set('neutral', neutral)
-  for (const [name, value] of Object.entries(palettes)) {
-    if (name === 'primary' || name === 'neutral') continue
-    if (value === true) {
-      const def = SEMANTIC_COLORS[name]
-      if (def) out.set(name, def)
-    } else if (typeof value === 'string') {
-      out.set(name, value)
+  report: ThemeReport
+}
+
+const CORE_ORDER = ['neutral', 'accent', 'success', 'warning', 'danger', 'info']
+
+export function createTheme(input: string | ThemeOptions): Theme {
+  const options =
+    typeof input === 'string'
+      ? themeOptionsSchema.parse({ seeds: { accent: input } })
+      : themeOptionsSchema.parse(input)
+
+  const vividness = options.vividness ?? 1
+  const hueShift = options.hueShift ?? 1
+  const neutralTint = options.neutralTint ?? 1
+  const strictOnSolid = options.strictOnSolid ?? false
+  const preserveSeed = options.preserveSeed ?? false
+
+  const accentSeed = toOklch(options.seeds.accent)
+
+  // D8 — the neutral: explicit seed sets hue + tint; otherwise identity rule.
+  const neutralSeedInput = options.seeds.neutral
+  const neutralExplicit = neutralSeedInput ? toOklch(neutralSeedInput) : null
+  const neutralHue =
+    options.neutralHue ??
+    (neutralExplicit && neutralExplicit.c >= 0.002
+      ? neutralExplicit.h
+      : accentSeed.h)
+  const tintPeak = Math.min(
+    neutralExplicit && neutralExplicit.c >= 0.002
+      ? neutralExplicit.c
+      : NEUTRAL_TINT_PEAK * neutralTint,
+    NEUTRAL_WHISPER_CEILING * Math.max(1, neutralTint),
+  )
+  const neutralSeed: Oklch = { l: 0.6, c: tintPeak, h: neutralHue }
+
+  // Seed table: core palettes + any custom extras.
+  const seeds: Record<string, { seed: Oklch; neutral: boolean }> = {
+    neutral: { seed: neutralSeed, neutral: true },
+    accent: { seed: accentSeed, neutral: false },
+  }
+  for (const status of Object.keys(STATUS_SEEDS) as StatusName[]) {
+    seeds[status] = {
+      seed: toOklch(options.seeds[status] ?? STATUS_SEEDS[status]),
+      neutral: false,
     }
   }
-  return out
-}
+  for (const [name, value] of Object.entries(options.seeds)) {
+    if (name in seeds) continue
+    const seed = toOklch(value)
+    seeds[name] = { seed, neutral: seed.c < WHISPER_LINE }
+  }
 
-function resolveMode(name: string, config: unknown): ResolvedMode {
-  const isDarkByName = name.toLowerCase().includes('dark')
-  if (config === true || config == null) {
-    return {
-      isDark: isDarkByName,
-      bgLightness: isDarkByName ? 0.16 : 0.98,
-      palettes: {},
+  // Backgrounds (D9/D12): transpose skeletons when the user moves the floor.
+  const lightBg = options.background?.light ?? LIGHT_BG_LSTAR
+  const darkBgOption = options.background?.dark
+  const darkBg = darkBgOption === 'oled' ? 0 : (darkBgOption ?? DARK_BG_LSTAR)
+  const skeletons = {
+    light: {
+      chromatic:
+        lightBg === LIGHT_BG_LSTAR
+          ? LIGHT_SKELETON
+          : transposeSkeleton(LIGHT_SKELETON, lightBg),
+      neutral:
+        lightBg === LIGHT_BG_LSTAR
+          ? LIGHT_SKELETON_NEUTRAL
+          : transposeSkeleton(LIGHT_SKELETON_NEUTRAL, lightBg),
+    },
+    dark: {
+      chromatic:
+        darkBg === DARK_BG_LSTAR
+          ? DARK_SKELETON
+          : transposeSkeleton(DARK_SKELETON, darkBg),
+      neutral:
+        darkBg === DARK_BG_LSTAR
+          ? DARK_SKELETON
+          : transposeSkeleton(DARK_SKELETON, darkBg),
+    },
+  }
+
+  const warnings: string[] = []
+  const guarantees: GuaranteeResult[] = []
+  const seedDelta: Record<string, number> = {}
+
+  const built: Record<Mode, Record<string, ScaleColors>> = {
+    light: {},
+    dark: {},
+  }
+
+  for (const [name, { seed, neutral }] of Object.entries(seeds)) {
+    const shared = {
+      seed,
+      neutral,
+      vividness,
+      hueShift,
+      tintPeak,
+      strictOnSolid,
+      preserveSeed: preserveSeed && name === 'accent',
     }
-  }
-  const c = config as {
-    isDark?: boolean
-    lightness?: number
-    palettes?: ResolvedMode['palettes']
-  }
-  const isDark = c.isDark ?? isDarkByName
-  return {
-    isDark,
-    bgLightness: c.lightness ?? (isDark ? 0.16 : 0.98),
-    palettes: c.palettes ?? {},
-  }
-}
+    const light = buildScale({
+      ...shared,
+      mode: 'light',
+      skeleton: neutral ? skeletons.light.neutral : skeletons.light.chromatic,
+    })
+    // Step 700 is mode-invariant (verified on Radix) — share the light solve.
+    const dark = buildScale({
+      ...shared,
+      mode: 'dark',
+      skeleton: neutral ? skeletons.dark.neutral : skeletons.dark.chromatic,
+      sharedSolid: { solid: light.steps['700'], on: light.on['700'] },
+    })
+    built.light[name] = light
+    built.dark[name] = dark
 
-/** Mode background from the neutral seed at the mode's lightness anchor (lightly tinted). */
-function deriveBackground(
-  neutralSeed: string | undefined,
-  bgLightness: number,
-): string {
-  if (!neutralSeed) return oklchCss({ l: bgLightness, c: 0, h: 0 })
-  const { c, h } = toOklch(neutralSeed)
-  return oklchCss(gamutMap({ l: bgLightness, c: Math.min(c, 0.01), h }))
-}
+    seedDelta[name] = deltaEok(seed, light.steps['700'])
 
-/** Build the per-palette opts; each producer's zod schema strips the knobs it ignores. */
-function buildPaletteOpts(
-  name: string,
-  input: string | ColorScale,
-  opts: BaseThemeOptions,
-  override: ResolvedMode['palettes'][string] | undefined,
-): Record<string, unknown> {
-  const seed = override?.seed ?? (typeof input === 'string' ? input : undefined)
-  return {
-    // Forward every validated knob; each producer's schema keeps only its own, so adding a
-    // producer knob needs no edit here. Per-palette specifics + mode overrides win below.
-    ...opts,
-    seed,
-    neutral: name === 'neutral',
-    scale: typeof input === 'object' ? input : undefined,
-    // the kernel maps contrast `saturation` (0–100) onto the producer's `chroma`
-    chroma: opts.saturation != null ? opts.saturation / 100 : undefined,
-    ratios: override?.ratios ?? opts.ratios,
-    tones: override?.tones ?? opts.tones,
-  }
-}
-
-/**
- * Create a theme. `algorithm` selects the producer (oklch is the recommended default).
- * Output: `Theme` — primitive ramps + paired on-* per palette, per mode.
- */
-export function createTheme(
-  options: CreateThemeOptions | BaseThemeOptions,
-): Theme {
-  registerBuiltins()
-  const opts: BaseThemeOptions = createThemeOptionsSchema.parse(options)
-  const { algorithm } = opts
-  const steps = opts.steps ?? [...SCALE_STEPS]
-  const modes = opts.modes ?? DEFAULT_MODES
-  const isFixed = algorithm === 'fixed'
-
-  const baseInputs = resolvePalettes(opts.palettes, isFixed)
-  const neutralRaw = baseInputs.get('neutral')
-  const neutralBase =
-    !isFixed && typeof neutralRaw === 'string' ? neutralRaw : undefined
-
-  const theme: Theme = {}
-  for (const [modeName, modeConfig] of Object.entries(modes)) {
-    const resolved = resolveMode(modeName, modeConfig)
-    for (const key of Object.keys(resolved.palettes)) {
-      if (!baseInputs.has(key)) {
-        throw new Error(
-          `mode "${modeName}": palette override "${key}" is not a declared palette (have: ${[...baseInputs.keys()].join(', ')}).`,
-        )
+    for (const mode of ['light', 'dark'] as const) {
+      const scale = built[mode][name]!
+      const results = verifyScale(name, mode, scale, strictOnSolid)
+      guarantees.push(...results)
+      warnings.push(...verifyLadder(name, mode, scale))
+      if (preserveSeed && name === 'accent') {
+        for (const miss of results.filter((r) => !r.passes && r.name === 'on-solid'))
+          warnings.push(
+            `accent/${mode}: preserveSeed pins the solid; ${miss.fg} lands at WCAG ${miss.wcag.toFixed(2)} / Lc ${miss.lc.toFixed(1)} (bars ${miss.wcagTarget}/${miss.lcTarget})`,
+          )
       }
     }
-    const neutralSeed = resolved.palettes.neutral?.seed ?? neutralBase
-    const ctx: ModeCtx = {
-      name: modeName,
-      isDark: resolved.isDark,
-      steps,
-      background: deriveBackground(neutralSeed, resolved.bgLightness),
-    }
-    const scales: Record<string, ColorScale> = {}
-    const on: Record<string, ColorScale> = {}
-    for (const [name, input] of baseInputs) {
-      const paletteOpts = buildPaletteOpts(
-        name,
-        input,
-        opts,
-        resolved.palettes[name],
-      )
-      const out = produceValidated(algorithm, paletteOpts, ctx)
-      scales[name] = out.scale
-      on[name] = out.on
-    }
-    theme[modeName] = { scales, on }
   }
-  return theme
+
+  // D10 — CVD gate on the emitted status solids, reported not thrown.
+  const statusSolids = (['success', 'warning', 'danger', 'info'] as const).map(
+    (name) => built.light[name]!.steps['700'],
+  )
+  const cvd = minPairwiseDeltaEok(statusSolids)
+  if (cvd.normal < CVD_GATE.normal)
+    warnings.push(
+      `status solids fall below the distinguishability gate (min ΔEok ${cvd.normal.toFixed(3)} < ${CVD_GATE.normal})`,
+    )
+  const worstCvd = Math.min(cvd.protan, cvd.deutan, cvd.tritan)
+  if (worstCvd < CVD_GATE.cvd)
+    warnings.push(
+      `status solids fall below the color-vision-deficiency gate (min ΔEok ${worstCvd.toFixed(3)} < ${CVD_GATE.cvd})`,
+    )
+  const accentSolid = built.light.accent!.steps['700']
+  for (const [i, name] of (['success', 'warning', 'danger', 'info'] as const).entries()) {
+    const d = deltaEok(accentSolid, statusSolids[i]!)
+    if (d < CVD_GATE.accentProximity)
+      warnings.push(
+        `accent solid is nearly indistinguishable from ${name} (ΔEok ${d.toFixed(3)})`,
+      )
+  }
+
+  // D11 — chart palettes from the theme's seeds (mode-shared v1).
+  const categorical = categoricalPalette(accentSeed.h, 8)
+  const chartGate = categoricalGateReport(categorical)
+  if (!chartGate.passes)
+    warnings.push(
+      `categorical chart palette misses a gate (normal ${chartGate.normal.toFixed(3)}, worst CVD ${Math.min(chartGate.protan, chartGate.deutan, chartGate.tritan).toFixed(3)}, L* range ${chartGate.lstarRange.toFixed(1)})`,
+    )
+  const charts = {
+    categorical: categorical.map(oklchCss),
+    sequential: sequentialPalette(accentSeed.h, 7).map(oklchCss),
+    diverging: divergingPalette(
+      accentSeed.h,
+      built.light.neutral!.steps['100'],
+      3,
+    ).map(oklchCss),
+  }
+
+  const modeOutput = (mode: Mode): ModeOutput => {
+    const background = built[mode].neutral!.steps['25']!
+    const scales: ModeOutput['scales'] = {}
+    const alphas: ModeOutput['alphas'] = {}
+    const on: ModeOutput['on'] = {}
+    const names = [
+      ...CORE_ORDER.filter((n) => n in built[mode]),
+      ...Object.keys(built[mode]).filter((n) => !CORE_ORDER.includes(n)).sort(),
+    ]
+    for (const name of names) {
+      const scale = built[mode][name]!
+      scales[name] = Object.fromEntries(
+        STEPS.map((s) => [s, oklchCss(scale.steps[s]!)]),
+      ) as Record<StepName, string>
+      alphas[name] = Object.fromEntries(
+        STEPS.map((s) => [s, alphaTwin(scale.steps[s]!, background)]),
+      ) as Record<StepName, string>
+      on[name] = {
+        '700': oklchCss(scale.on['700']),
+        '800': oklchCss(scale.on['800']),
+      }
+    }
+    return { background: oklchCss(background), scales, alphas, on }
+  }
+
+  const failed = guarantees.filter(
+    (g) => !g.passes && !(preserveSeed && g.scale === 'accent' && g.name === 'on-solid'),
+  )
+  for (const f of failed)
+    warnings.push(
+      `${f.scale}/${f.mode} ${f.name} (${f.fg} on ${f.bg}): WCAG ${f.wcag.toFixed(2)}/${f.wcagTarget} Lc ${f.lc.toFixed(1)}/${f.lcTarget}`,
+    )
+
+  return {
+    light: modeOutput('light'),
+    dark: modeOutput('dark'),
+    charts,
+    report: { ok: failed.length === 0, guarantees, warnings, seedDelta },
+  }
 }

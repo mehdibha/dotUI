@@ -78,8 +78,14 @@ Locked guarantees (all solved in-loop, per hue per mode):
 - step 950 text on 25/50 backgrounds: WCAG ≥ 7.0 **and** APCA ≥ Lc 90; on
   100: WCAG ≥ 7.0. (Radix dark misses Lc 90 in 19/31 scales, min 84.23; the
   fix costs ~+3 L\* on the worst reds — we enforce it.)
-- `on-700` / `on-800` (solid labels): WCAG ≥ 4.5 **and** APCA ≥ Lc 60, solved
-  per hue per mode — never a global black/white rule. Pole rule: white text
+- `on-700` / `on-800` (solid labels): APCA ≥ Lc 60 **and** WCAG ≥ 3.0, solved
+  per hue per mode — never a global black/white rule. 🟡 The WCAG bar is the
+  3.0 UI floor, not 4.5 AA, by explicit tradeoff: white-on-solid at 4.5 forces
+  every solid to L\* ≲ 50 (Radix ships white-on-blue-9 at 3.26; Material gets
+  4.5 only by pinning primary at tone 40) — a builder that darkens every
+  brand color to pass a meter the industry deliberately overrides fails its
+  own product bar. A `strictOnSolid` option solves the solid darker to reach
+  the full 4.5 for compliance-bound users. Pole rule: white text
   unless |Lc(white on step 700)| < 40, then dark text
   `oklch(0.25, max(0.08·C₇₀₀, 0.04), H₇₀₀)` (sRGB-clamped). Verified perfect
   precision/recall on all 62 Radix scale-modes, with an empty Lc dead zone of
