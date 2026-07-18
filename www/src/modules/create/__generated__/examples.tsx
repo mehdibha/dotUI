@@ -18,6 +18,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"chart-radial": () => import("@/registry/ui/chart-radial/examples"),
 	checkbox: () => import("@/registry/ui/checkbox/examples"),
 	"checkbox-group": () => import("@/registry/ui/checkbox-group/examples"),
+	"code-block": () => import("@/registry/ui/code-block/examples"),
 	"color-area": () => import("@/registry/ui/color-area/examples"),
 	"color-editor": () => import("@/registry/ui/color-editor/examples"),
 	"color-field": () => import("@/registry/ui/color-field/examples"),

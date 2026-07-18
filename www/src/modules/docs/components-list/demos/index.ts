@@ -16,6 +16,7 @@ import { ChartRadarDemo } from './chart-radar'
 import { ChartRadialDemo } from './chart-radial'
 import { CheckboxDemo } from './checkbox'
 import { CheckboxGroupDemo } from './checkbox-group'
+import { CodeBlockDemo } from './code-block'
 import { ColorAreaDemo } from './color-area'
 import { ColorFieldDemo } from './color-field'
 import { ColorPickerDemo } from './color-picker'
@@ -83,6 +84,7 @@ export const componentDemos: Record<string, ComponentType> = {
   'chart-radial': ChartRadialDemo,
   checkbox: CheckboxDemo,
   'checkbox-group': CheckboxGroupDemo,
+  'code-block': CodeBlockDemo,
   'color-area': ColorAreaDemo,
   'color-field': ColorFieldDemo,
   'color-picker': ColorPickerDemo,

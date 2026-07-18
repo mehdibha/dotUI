@@ -1,0 +1,54 @@
+{
+  "name": "CodeBlockContentProps",
+  "description": "The scrollable body of the code block. Renders pre-highlighted HTML, plain\ncode, or custom children.",
+  "extendsElement": "div",
+  "props": {
+    "code": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Raw code, rendered as plain (unhighlighted) text when no `html` is given."
+    },
+    "html": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Pre-highlighted HTML from `highlightCode` — takes precedence over `code`."
+    },
+    "showLineNumbers": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show line numbers in the gutter."
+    },
+    "wrap": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Wrap long lines instead of scrolling horizontally."
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Custom-rendered code (e.g. a server-rendered HAST tree) — takes precedence over `html`."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

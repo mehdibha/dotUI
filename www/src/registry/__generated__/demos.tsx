@@ -633,6 +633,26 @@ export const DemosIndex: Record<
 		files: ["ui/checkbox-group/demos/uncontrolled.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox-group/demos/uncontrolled")),
 	},
+	"code-block/demos/basic": {
+		files: ["ui/code-block/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/code-block/demos/basic")),
+	},
+	"code-block/demos/line-numbers": {
+		files: ["ui/code-block/demos/line-numbers.tsx"],
+		component: React.lazy(() => import("@/registry/ui/code-block/demos/line-numbers")),
+	},
+	"code-block/demos/no-header": {
+		files: ["ui/code-block/demos/no-header.tsx"],
+		component: React.lazy(() => import("@/registry/ui/code-block/demos/no-header")),
+	},
+	"code-block/demos/plain": {
+		files: ["ui/code-block/demos/plain.tsx"],
+		component: React.lazy(() => import("@/registry/ui/code-block/demos/plain")),
+	},
+	"code-block/demos/wrap": {
+		files: ["ui/code-block/demos/wrap.tsx"],
+		component: React.lazy(() => import("@/registry/ui/code-block/demos/wrap")),
+	},
 	"color-area/demos/brand-color": {
 		files: ["ui/color-area/demos/brand-color.tsx"],
 		component: React.lazy(() => import("@/registry/ui/color-area/demos/brand-color")),

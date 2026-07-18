@@ -1,0 +1,14 @@
+{
+  "name": "CodeBlockProps",
+  "description": "A code block displays code with optional syntax highlighting, a title bar,\nand a copy action.",
+  "extendsElement": "figure",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -1,0 +1,156 @@
+---
+title: Code Block
+description: A code block displays code with syntax highlighting and a copy action.
+---
+
+<Demo name="code-block/demos/basic" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/code-block
+```
+
+## Usage
+
+```tsx
+import {
+  CodeBlock,
+  CodeBlockContent,
+  CodeBlockCopyButton,
+  CodeBlockHeader,
+  CodeBlockTitle,
+} from '@/components/ui/code-block'
+```
+
+```tsx
+<CodeBlock>
+  <CodeBlockHeader>
+    <CodeBlockTitle>button.tsx</CodeBlockTitle>
+    <CodeBlockCopyButton />
+  </CodeBlockHeader>
+  <CodeBlockContent code={code} />
+</CodeBlock>
+```
+
+## Anatomy
+
+```tsx
+<CodeBlock>
+  <CodeBlockHeader>
+    <CodeBlockTitle />
+    <CodeBlockCopyButton />
+  </CodeBlockHeader>
+  <CodeBlockContent />
+</CodeBlock>
+```
+
+`CodeBlockHeader` holds the `CodeBlockTitle` (typically a file name) and actions such as the `CodeBlockCopyButton`. `CodeBlockContent` is the scrollable body that renders the code. Every part is optional — omit the header and place the copy button directly inside the block for a minimal look.
+
+## Syntax highlighting
+
+`CodeBlockContent` renders whatever you give it: plain `code`, pre-highlighted `html`, or custom `children`. Highlighting is handled by the `highlightCode` helper (installed alongside the component), which wraps [shiki](https://shiki.style) with dual-theme output — colors adapt to light and dark mode automatically. Because highlighting is decoupled from rendering, you choose where it runs.
+
+### On the server
+
+In a React Server Component (or any server code — a loader, a build step), await `highlightCode` and pass the result as `html`. No highlighting code ships to the client.
+
+```tsx
+import { highlightCode } from '@/lib/highlight'
+
+export async function ServerCodeBlock({ code }: { code: string }) {
+  const html = await highlightCode(code, { lang: 'tsx' })
+  return (
+    <CodeBlock>
+      <CodeBlockContent html={html} />
+    </CodeBlock>
+  )
+}
+```
+
+### On the client
+
+In a client component, use the `useHighlightedCode` hook. It lazy-loads shiki, so it adds nothing to your initial bundle; pass `code` as well so plain text renders while highlighting loads.
+
+```tsx
+'use client'
+
+import { useHighlightedCode } from '@/components/ui/code-block'
+
+export function ClientCodeBlock({ code }: { code: string }) {
+  const html = useHighlightedCode(code, 'tsx')
+  return (
+    <CodeBlock>
+      <CodeBlockContent code={code} html={html ?? undefined} />
+    </CodeBlock>
+  )
+}
+```
+
+### Without highlighting
+
+Pass only `code` to render plain monospace text — no shiki involved at all.
+
+```tsx
+<CodeBlockContent code={code} />
+```
+
+### Languages and themes
+
+`highlightCode` and `useHighlightedCode` default to `tsx` with the GitHub light/dark theme pair. Pass any [bundled language](https://shiki.style/languages) and theme pair to override:
+
+```tsx
+const html = await highlightCode(code, {
+  lang: 'rust',
+  themes: { light: 'vitesse-light', dark: 'vitesse-dark' },
+})
+```
+
+Shiki [transformers](https://shiki.style/guide/transformers) are supported too — the block ships styles for line highlighting and diff notation.
+
+## Line numbers
+
+Pass `showLineNumbers` to `CodeBlockContent` to show a line-number gutter.
+
+```tsx
+<CodeBlockContent code={code} showLineNumbers />
+```
+
+## Word wrap
+
+Long lines scroll horizontally by default. Pass `wrap` to wrap them instead.
+
+```tsx
+<CodeBlockContent code={code} wrap />
+```
+
+## Examples
+
+<Examples className="lg:grid-cols-2">
+  <Example name="code-block/demos/basic" title="Basic" />
+  <Example name="code-block/demos/line-numbers" title="Line Numbers" />
+  <Example name="code-block/demos/no-header" title="Without Header" />
+  <Example name="code-block/demos/wrap" title="Word Wrap" />
+</Examples>
+
+## API Reference
+
+### CodeBlock
+
+<Reference name="code-block" />
+
+### CodeBlockHeader
+
+<Reference name="code-block-header" />
+
+### CodeBlockTitle
+
+<Reference name="code-block-title" />
+
+### CodeBlockContent
+
+<Reference name="code-block-content" />
+
+### CodeBlockCopyButton
+
+<Reference name="code-block-copy-button" />

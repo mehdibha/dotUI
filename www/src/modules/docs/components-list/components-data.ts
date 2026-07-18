@@ -410,6 +410,13 @@ export const componentsData: ComponentCategory[] = [
         status: 'done',
       },
       {
+        name: 'Code Block',
+        slug: 'code-block',
+        href: '/docs/components/code-block',
+        scale: 0.8,
+        status: 'done',
+      },
+      {
         name: 'Separator',
         slug: 'separator',
         href: '/docs/components/separator',

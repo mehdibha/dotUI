@@ -476,7 +476,8 @@ const BUNDLED_INTO_INIT = new Set(['utils', 'focus-styles', 'theme'])
 
 /**
  * Derived dep names whose target is NOT a registered item yet — a known packaging gap
- * (lib/context + the use-image-loading-status hook are unregistered). Skipped so the
+ * (lib/context, lib/highlight + the use-image-loading-status hook are unregistered;
+ * context and highlight ship as extra files on tabs and code-block). Skipped so the
  * drift check doesn't demand a dep `shadcn add` couldn't resolve. Keyed by DEP-NAME and
  * covers the hooks scope, so it is deliberately DISTINCT from ORPHAN_ALLOWLIST (folder-
  * path keyed, ui|lib only) — do not unify them. Drop an entry once its target is a
@@ -484,6 +485,7 @@ const BUNDLED_INTO_INIT = new Set(['utils', 'focus-styles', 'theme'])
  */
 const UNREGISTERED_DEP_ALLOWLIST = new Set([
   'context',
+  'highlight',
   'use-image-loading-status',
 ])
 
