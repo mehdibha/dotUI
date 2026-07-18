@@ -5,7 +5,16 @@
  * relative luminance, which is what WCAG meters — that is the whole point).
  */
 
-import { converter, formatHex, type Oklch as CuloriOklch, parse } from 'culori'
+import {
+  converter,
+  filterDeficiencyDeuter,
+  filterDeficiencyProt,
+  filterDeficiencyTrit,
+  formatHex,
+  type Oklch as CuloriOklch,
+  parse,
+  type Rgb,
+} from 'culori'
 
 export interface Oklch {
   l: number
@@ -15,6 +24,7 @@ export interface Oklch {
 
 const toOklchConv = converter('oklch')
 const toRgbConv = converter('rgb')
+const toOklabConv = converter('oklab')
 
 /** Parse any CSS color into OKLCH (throws on unparsable input). */
 export function toOklch(color: string): Oklch {
@@ -37,6 +47,27 @@ export function toSrgb8(color: Oklch): [number, number, number] {
 
 export function toHex(color: Oklch): string {
   return formatHex(asCulori(color))
+}
+
+/** OKLab coordinates (the ΔEok distance space). */
+export function toOklab(color: Oklch): { l: number; a: number; b: number } {
+  const { l = 0, a = 0, b = 0 } = toOklabConv(asCulori(color))
+  return { l, a, b }
+}
+
+export type CvdKind = 'protan' | 'deutan' | 'tritan'
+
+const CVD_FILTERS: Record<CvdKind, (color: Rgb) => Rgb> = {
+  protan: filterDeficiencyProt(1) as (color: Rgb) => Rgb,
+  deutan: filterDeficiencyDeuter(1) as (color: Rgb) => Rgb,
+  tritan: filterDeficiencyTrit(1) as (color: Rgb) => Rgb,
+}
+
+/** Simulate a color under a color-vision deficiency (Machado, severity 1). */
+export function simulateCvd(color: Oklch, kind: CvdKind): Oklch {
+  const filtered = CVD_FILTERS[kind](toRgbConv(asCulori(color)))
+  const { l = 0, c = 0, h = 0 } = toOklchConv(filtered)
+  return { l, c, h }
 }
 
 /** Serialize as a CSS `oklch()` literal (the emission format, D12). */

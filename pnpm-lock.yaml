@@ -86,6 +86,9 @@ importers:
 
   packages/colors:
     dependencies:
+      culori:
+        specifier: ^4.0.2
+        version: 4.0.2
       zod:
         specifier: ^4.2.1
         version: 4.2.1
@@ -108,9 +111,6 @@ importers:
       bezier-easing:
         specifier: ^3.0.1
         version: 3.0.1
-      culori:
-        specifier: ^4.0.2
-        version: 4.0.2
       typescript:
         specifier: 'catalog:'
         version: 7.0.2

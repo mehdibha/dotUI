@@ -19,6 +19,6 @@ test('a blue-9 seed regenerates the Radix blue scale within the bar', () => {
     ),
   )
   const mean = deltas.reduce((sum, d) => sum + d, 0) / deltas.length
-  expect(mean).toBeLessThan(0.09)
-  expect(Math.max(...deltas)).toBeLessThan(0.2)
+  expect(mean).toBeLessThan(0.02)
+  expect(Math.max(...deltas)).toBeLessThan(0.06)
 })

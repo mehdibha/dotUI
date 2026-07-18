@@ -63,6 +63,26 @@ export const DEFAULT_COLOR_CONFIG: ColorConfig = {
 export const DEFAULT_STATUS_SEEDS = STATUS_SEEDS
 
 /**
+ * Persisted configs (old links, hand-edited URLs) may carry out-of-range
+ * background lightness values — clamp them into the engine's bounds instead
+ * of dropping the whole recipe.
+ */
+function clampBackground(input: unknown): unknown {
+  if (typeof input !== 'object' || input === null) return input
+  const config = input as {
+    background?: { light?: unknown; dark?: unknown }
+  }
+  const bg = config.background
+  if (typeof bg !== 'object' || bg === null) return input
+  const clamped = { ...bg }
+  if (typeof bg.light === 'number')
+    clamped.light = Math.min(100, Math.max(90, bg.light))
+  if (typeof bg.dark === 'number')
+    clamped.dark = Math.min(20, Math.max(0, bg.dark))
+  return { ...config, background: clamped }
+}
+
+/**
  * Migrate any decoded color slice — v2 passes through validation; the v1
  * shape (`{algorithm, seeds: {neutral, accent, …}, knobs?, primary?}`) maps
  * onto the nearest v2 axes (algorithm + per-producer knobs are gone; the one
@@ -70,7 +90,7 @@ export const DEFAULT_STATUS_SEEDS = STATUS_SEEDS
  * never a decode explosion.
  */
 export function migrateColorConfig(input: unknown): ColorConfig {
-  const parsed = colorConfigSchema.safeParse(input)
+  const parsed = colorConfigSchema.safeParse(clampBackground(input))
   if (parsed.success) return parsed.data
   if (typeof input !== 'object' || input === null) return DEFAULT_COLOR_CONFIG
 

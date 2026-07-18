@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "culori": "^4.0.2",
     "zod": "^4.2.1"
   },
   "devDependencies": {
@@ -22,7 +23,6 @@
     "@types/culori": "^4.0.1",
     "apca-w3": "^0.1.9",
     "bezier-easing": "^3.0.1",
-    "culori": "^4.0.2",
     "typescript": "catalog:"
   }
 }

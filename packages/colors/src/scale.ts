@@ -16,6 +16,7 @@ import {
   LIGHT_SKELETON,
   LIGHT_SKELETON_NEUTRAL,
   NEUTRAL_TINT_SHAPE,
+  SOLID_LSTAR_WINDOW,
   STEPS,
   type StepName,
   TEXT_TARGETS,
@@ -38,6 +39,8 @@ export interface ScaleColors {
   steps: Record<StepName, Oklch>
   /** Solved solid-label foregrounds (D2). */
   on: { '700': Oklch; '800': Oklch }
+  /** D7 — the seed anchored outside the solid job window and was clamped. */
+  solidClamped: boolean
 }
 
 export interface ScaleOptions {
@@ -139,10 +142,11 @@ function onMeetsBars(on: Oklch, solid: Oklch, strict: boolean): boolean {
 }
 
 /**
- * D2 — place the solid at the seed's own lightness. When neither label pole
- * clears its bars there (deep mid-tone solids: white short of Lc 60, dark
- * pole short too), darken the solid minimally (in L*) until white clears —
- * the only case where the seed's lightness moves, and the report prices it.
+ * D2/D7 — place the solid at the seed's own lightness, clamped into the
+ * solid job window (a near-white or near-black anchor cannot do the solid
+ * job in both modes). When neither label pole clears its bars there (deep
+ * mid-tone solids: white short of Lc 60, dark pole short too), darken the
+ * solid minimally (in L*) until white clears — the report prices every move.
  */
 function solveSolid(
   seed: Oklch,
@@ -150,25 +154,34 @@ function solveSolid(
   hueAt: (l: number) => number,
   preserveSeed: boolean,
   strict: boolean,
-): { solid: Oklch; on: Oklch } {
+): { solid: Oklch; on: Oklch; clamped: boolean } {
   let solid = fitSrgb({
     l: seed.l,
     c: preserveSeed ? seed.c : chroma.at(seed.l, 8),
     h: preserveSeed ? seed.h : hueAt(seed.l),
   })
-  if (preserveSeed) return { solid, on: solveOnColor(solid, strict) }
+  if (preserveSeed)
+    return { solid, on: solveOnColor(solid, strict), clamped: false }
 
-  if (onMeetsBars(WHITE, solid, strict)) return { solid, on: WHITE }
+  const anchor = lstarOf(solid)
+  const slotted = Math.min(
+    SOLID_LSTAR_WINDOW.max,
+    Math.max(SOLID_LSTAR_WINDOW.min, anchor),
+  )
+  const clamped = slotted !== anchor
+  if (clamped) solid = solveLstar(slotted, (l) => chroma.at(l, 8), hueAt)
+
+  if (onMeetsBars(WHITE, solid, strict)) return { solid, on: WHITE, clamped }
   const dark = darkPole(solid)
-  if (onMeetsBars(dark, solid, strict)) return { solid, on: dark }
+  if (onMeetsBars(dark, solid, strict)) return { solid, on: dark, clamped }
 
   let targetLstar = lstarOf(solid)
   for (let i = 0; i < 40 && targetLstar > 5; i++) {
     targetLstar -= 1
     solid = solveLstar(targetLstar, (l) => chroma.at(l, 8), hueAt)
-    if (onMeetsBars(WHITE, solid, strict)) return { solid, on: WHITE }
+    if (onMeetsBars(WHITE, solid, strict)) return { solid, on: WHITE, clamped }
   }
-  return { solid, on: solveOnColor(solid, strict) }
+  return { solid, on: solveOnColor(solid, strict), clamped }
 }
 
 /**
@@ -275,15 +288,15 @@ export function buildScale(options: ScaleOptions): ScaleColors {
 
   // Solids (jobs 9–10). Step 700 is mode-invariant (verified: Radix shares
   // the identical step-9 across modes) — the dark pass reuses the light solve.
-  const { solid, on } =
-    options.sharedSolid ??
-    solveSolid(
-      seed,
-      chroma,
-      hueAt,
-      options.preserveSeed && mode === 'light',
-      strictOnSolid,
-    )
+  const { solid, on, clamped } = options.sharedSolid
+    ? { ...options.sharedSolid, clamped: false }
+    : solveSolid(
+        seed,
+        chroma,
+        hueAt,
+        options.preserveSeed && mode === 'light',
+        strictOnSolid,
+      )
   steps['700'] = solid
   steps['800'] = hoverSolid(solid, on, mode, chroma, strictOnSolid)
   const on800 = on
@@ -313,7 +326,7 @@ export function buildScale(options: ScaleOptions): ScaleColors {
     TEXT_TARGETS[mode]['950'][kind],
   )
 
-  return { steps, on: { '700': on, '800': on800 } }
+  return { steps, on: { '700': on, '800': on800 }, solidClamped: clamped }
 }
 
 /**
@@ -322,17 +335,22 @@ export function buildScale(options: ScaleOptions): ScaleColors {
  * the new background and the (fixed) border anchor at job 8. Unlike an eased
  * offset, this keeps the ladder monotonic for any background on the correct
  * side of the anchor — a light bg of L* 90 squeezes the surface steps, it
- * never dives under them.
+ * never dives under them. `minFirstGap` keeps the two darkest surfaces from
+ * merging (D9's Δ(25→50) floor) by lifting step 2 off the new background.
  */
 export function transposeSkeleton(
   skeleton: number[],
   targetLstar: number,
+  minFirstGap = 0,
 ): number[] {
   const first = skeleton[0]!
   if (targetLstar === first) return skeleton
   const anchor = skeleton[skeleton.length - 1]!
   const factor = (targetLstar - anchor) / (first - anchor)
-  return skeleton.map((lstar) => anchor + (lstar - anchor) * factor)
+  const out = skeleton.map((lstar) => anchor + (lstar - anchor) * factor)
+  if (minFirstGap > 0 && out[1]! - out[0]! < minFirstGap)
+    out[1] = out[0]! + minFirstGap
+  return out
 }
 
 /** Convenience for guarantees relying on the Y bridge. */

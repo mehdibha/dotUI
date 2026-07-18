@@ -16,12 +16,14 @@ import {
 import {
   CVD_GATE,
   DARK_BG_LSTAR,
+  DARK_MIN_BG_SEPARATION,
   DARK_SKELETON,
   LIGHT_BG_LSTAR,
   LIGHT_SKELETON,
   LIGHT_SKELETON_NEUTRAL,
   NEUTRAL_TINT_PEAK,
   NEUTRAL_WHISPER_CEILING,
+  SEED_SNAP_BOUND,
   STATUS_SEEDS,
   STEPS,
   type StatusName,
@@ -35,7 +37,7 @@ import {
   type ScaleColors,
   transposeSkeleton,
 } from './scale'
-import { type Oklch, oklchCss, toOklch } from './space'
+import { lstarOf, type Oklch, oklchCss, toOklch } from './space'
 import { type GuaranteeResult, verifyLadder, verifyScale } from './verify'
 
 const colorString = z.string().refine(
@@ -143,26 +145,31 @@ export function createTheme(input: string | ThemeOptions): Theme {
   const tintPeak = Math.min(
     neutralExplicit && neutralExplicit.c >= 0.002
       ? neutralExplicit.c
-      : NEUTRAL_TINT_PEAK * neutralTint,
+      : options.neutralHue === undefined && accentSeed.c < WHISPER_LINE
+        ? 0 // achromatic brand: its hue is meaningless, nothing to tint from
+        : NEUTRAL_TINT_PEAK * neutralTint,
     NEUTRAL_WHISPER_CEILING * Math.max(1, neutralTint),
   )
   const neutralSeed: Oklch = { l: 0.6, c: tintPeak, h: neutralHue }
 
-  // Seed table: core palettes + any custom extras.
+  // Seed table: core palettes + any custom extras. Every seed classifies at
+  // the whisper line (D7) — an achromatic brand rides the neutral model.
+  const classify = (seed: Oklch) => ({
+    seed,
+    neutral: seed.c < WHISPER_LINE,
+  })
   const seeds: Record<string, { seed: Oklch; neutral: boolean }> = {
     neutral: { seed: neutralSeed, neutral: true },
-    accent: { seed: accentSeed, neutral: false },
+    accent: classify(accentSeed),
   }
   for (const status of Object.keys(STATUS_SEEDS) as StatusName[]) {
-    seeds[status] = {
-      seed: toOklch(options.seeds[status] ?? STATUS_SEEDS[status]),
-      neutral: false,
-    }
+    seeds[status] = classify(
+      toOklch(options.seeds[status] ?? STATUS_SEEDS[status]),
+    )
   }
   for (const [name, value] of Object.entries(options.seeds)) {
     if (name in seeds) continue
-    const seed = toOklch(value)
-    seeds[name] = { seed, neutral: seed.c < WHISPER_LINE }
+    seeds[name] = classify(toOklch(value))
   }
 
   // Backgrounds (D9/D12): transpose skeletons when the user moves the floor.
@@ -184,11 +191,11 @@ export function createTheme(input: string | ThemeOptions): Theme {
       chromatic:
         darkBg === DARK_BG_LSTAR
           ? DARK_SKELETON
-          : transposeSkeleton(DARK_SKELETON, darkBg),
+          : transposeSkeleton(DARK_SKELETON, darkBg, DARK_MIN_BG_SEPARATION),
       neutral:
         darkBg === DARK_BG_LSTAR
           ? DARK_SKELETON
-          : transposeSkeleton(DARK_SKELETON, darkBg),
+          : transposeSkeleton(DARK_SKELETON, darkBg, DARK_MIN_BG_SEPARATION),
     },
   }
 
@@ -207,7 +214,11 @@ export function createTheme(input: string | ThemeOptions): Theme {
       neutral,
       vividness,
       hueShift,
-      tintPeak,
+      // Seed-classified neutrals tint from their own chroma (D8 explicit rule).
+      tintPeak:
+        name === 'neutral'
+          ? tintPeak
+          : Math.min(seed.c, NEUTRAL_WHISPER_CEILING),
       strictOnSolid,
       preserveSeed: preserveSeed && name === 'accent',
     }
@@ -227,6 +238,22 @@ export function createTheme(input: string | ThemeOptions): Theme {
     built.dark[name] = dark
 
     seedDelta[name] = deltaEok(seed, light.steps['700'])
+
+    // D7 — price every seed move: the window clamp, and (for user-supplied
+    // seeds; the synthetic neutral only contributes hue+tint) the snap bound.
+    if (light.solidClamped)
+      warnings.push(
+        `${name}: seed lightness sits outside the solid job window; solid clamped to L* ${lstarOf(light.steps['700']).toFixed(1)}`,
+      )
+    if (
+      name !== 'neutral' &&
+      name in options.seeds &&
+      !(preserveSeed && name === 'accent') &&
+      seedDelta[name] > SEED_SNAP_BOUND
+    )
+      warnings.push(
+        `${name}: emitted solid deviates from the seed (ΔEok ${seedDelta[name].toFixed(3)} > ${SEED_SNAP_BOUND} snap bound)`,
+      )
 
     for (const mode of ['light', 'dark'] as const) {
       const scale = built[mode][name]!

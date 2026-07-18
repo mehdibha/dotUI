@@ -130,6 +130,19 @@ export const NEUTRAL_WHISPER_CEILING = 0.02
 /** D7 — accent-vs-neutral classification line. */
 export const WHISPER_LINE = 0.02
 
+/**
+ * D7 — solid-job L* window: the dark border-interactive anchor up to the
+ * light hover-bg anchor. A seed anchored outside it cannot do the solid job
+ * in both modes; the solve clamps and the report prices the move.
+ */
+export const SOLID_LSTAR_WINDOW = {
+  min: DARK_SKELETON[6]!,
+  max: LIGHT_SKELETON[3]!,
+}
+
+/** D7 — snap bound: ΔEok(seed, emitted solid) beyond this is a reported warning. */
+export const SEED_SNAP_BOUND = 0.03
+
 /** D2 — guarantee bars. */
 export const BARS = {
   /** step 900 on worst of 25/50/100. */

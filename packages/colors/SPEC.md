@@ -157,7 +157,10 @@ wrong). No chroma floor (intake classifies instead, D7).
 C(step) = min( vividness · Cpeak · g(step),  Cmax_sRGB(L(step), H(step)) )
 g(1..12) = [0.0204, 0.0619, 0.1684, 0.2736, 0.3664, 0.4414,
             0.5202, 0.6644, 0.9844, 0.9824, 0.8897, 0.4697]
-Cpeak    = 0.75 · C_cusp(H)        // measured Radix mean 0.7496
+Cpeak    = C_seed                  // the brand is authoritative; muted seeds
+                                   // yield muted ramps by design
+         = 0.75 · C_cusp(H)        // fallback when the seed carries no usable
+                                   // chroma (C_seed ≤ 0.005; Radix mean 0.7496)
 vividness default 1.0              // ~1.33 ≈ Tailwind (rides the sRGB ceiling)
 ```
 
@@ -214,13 +217,16 @@ accent-vs-neutral at the whisper line **C 0.02** (validated by D8: every
 Radix tinted gray peaks ≤ 0.0193; note Tailwind slate/gray at C 0.034–0.046
 are "cool grays" beyond whisper — classification uses the seed, and a
 slate-strength neutral is expressed via `neutralTint` above default, not by
-reclassification). Slot nearest-by-L\* with named override. **Snap by
+reclassification). The seed anchors the solid job at its own L\*, clamped
+into the solid window — the dark border-interactive anchor up to the light
+hover-bg anchor (L\* 35–92); a clamp is a reported warning. **Snap by
 default; `preserveSeed: true` as an explicit switch that prints its ΔEok
 price.**
 
 Params: `preserveSeed`, explicit `slot` override.
 CI check: round-trip — with `preserveSeed` the seed appears verbatim at its
-slot; without it, reported ΔEok(seed, nearest step) is under the snap bound.
+slot; without it, reported ΔEok(seed, emitted solid) is under the snap bound
+🟡 0.03 (a user-supplied seed exceeding it is a reported warning).
 
 ## D8. Neutrals ✅
 
@@ -274,7 +280,9 @@ Not a transform of light. Measured from all 31 Radix dark scales:
   9–10 × 1.0.
 - Text steps 11–12 get **no global multiplier** — the dark/light chroma ratio
   flips sign by hue band (yellow→cyan gains ×1.1–1.9, red→blue loses
-  ×0.65–0.92); dark text chroma is re-solved per hue with the D6 band table.
+  ×0.65–0.92); dark text chroma applies a 3-band step multiplier on the light
+  curve (×1.35 for hues [80°, 220°), ×0.85 for [40°, 80°), ×0.72 elsewhere),
+  clamped to the peak chroma.
 - State shifts are signed per mode (verified: solid hover lightens in dark
   L\* 54.3→58.8, darkens in light 58.4→54.5); solid lightness itself is
   roughly mode-invariant (~54–58).

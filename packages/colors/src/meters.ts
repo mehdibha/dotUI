@@ -5,14 +5,15 @@
  */
 
 import {
-  converter,
-  filterDeficiencyDeuter,
-  filterDeficiencyProt,
-  filterDeficiencyTrit,
-  type Rgb,
-} from 'culori'
+  type CvdKind,
+  type Oklch,
+  relativeLuminance,
+  simulateCvd,
+  toOklab,
+  toSrgb8,
+} from './space'
 
-import { type Oklch, relativeLuminance, toSrgb8 } from './space'
+export { type CvdKind, simulateCvd } from './space'
 
 /** WCAG 2 contrast ratio (order-independent). */
 export function wcag2(a: Oklch, b: Oklch): number {
@@ -87,37 +88,14 @@ export function cappedLcBar(bar: number, background: Oklch): number {
   return Math.min(bar, ceiling - 0.25)
 }
 
-const toOklab = converter('oklab')
-
 /** ΔEok — Euclidean distance in OKLab (raw 0–1 scale; JND ≈ 0.02). */
 export function deltaEok(a: Oklch, b: Oklch): number {
-  const la = toOklab({ mode: 'oklch', ...a })
-  const lb = toOklab({ mode: 'oklch', ...b })
-  return Math.hypot(
-    la.l - lb.l,
-    (la.a ?? 0) - (lb.a ?? 0),
-    (la.b ?? 0) - (lb.b ?? 0),
-  )
+  const la = toOklab(a)
+  const lb = toOklab(b)
+  return Math.hypot(la.l - lb.l, la.a - lb.a, la.b - lb.b)
 }
 
-export type CvdKind = 'protan' | 'deutan' | 'tritan'
 export const CVD_KINDS: CvdKind[] = ['protan', 'deutan', 'tritan']
-
-const CVD_FILTERS: Record<CvdKind, (color: Rgb) => Rgb> = {
-  protan: filterDeficiencyProt(1) as (color: Rgb) => Rgb,
-  deutan: filterDeficiencyDeuter(1) as (color: Rgb) => Rgb,
-  tritan: filterDeficiencyTrit(1) as (color: Rgb) => Rgb,
-}
-
-const toRgb = converter('rgb')
-const toOklchConv = converter('oklch')
-
-/** Simulate a color under a color-vision deficiency (Machado, severity 1). */
-export function simulateCvd(color: Oklch, kind: CvdKind): Oklch {
-  const filtered = CVD_FILTERS[kind](toRgb({ mode: 'oklch', ...color }))
-  const { l = 0, c = 0, h = 0 } = toOklchConv(filtered)
-  return { l, c, h }
-}
 
 /**
  * Min pairwise ΔEok of a palette under normal vision and each CVD condition.
