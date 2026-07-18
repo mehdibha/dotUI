@@ -13,13 +13,10 @@ import {
 
 import { STEPS, type Theme } from '@dotui/colors'
 
+import { resolveColorConfigCached } from '@/lib/resolve-color'
 import * as icons from '@/registry/__generated__/icons'
 import { cn } from '@/registry/lib/utils'
-import {
-  DEFAULT_COLOR_CONFIG,
-  PALETTE_ORDER,
-  resolveColorConfig,
-} from '@/registry/theme'
+import { DEFAULT_COLOR_CONFIG, PALETTE_ORDER } from '@/registry/theme'
 // Live component atoms — reuse the real demos so the gallery always mirrors the
 // shipped components (and their live params / density / radius), never a stale copy.
 import AvatarDemo from '@/registry/ui/avatar/demos/group'
@@ -822,9 +819,9 @@ export function PresetOverview({
   // Fall back defensively so a bad decoded preset can't blank the overview.
   const resolved = useMemo(() => {
     try {
-      return resolveColorConfig(config)
+      return resolveColorConfigCached(config)
     } catch {
-      return resolveColorConfig(DEFAULT_COLOR_CONFIG)
+      return resolveColorConfigCached(DEFAULT_COLOR_CONFIG)
     }
   }, [config])
 

@@ -2,11 +2,8 @@ import { useMemo } from 'react'
 
 import { STEPS, type Theme } from '@dotui/colors'
 
-import {
-  DEFAULT_COLOR_CONFIG,
-  PALETTE_ORDER,
-  resolveColorConfig,
-} from '@/registry/theme'
+import { resolveColorConfigCached } from '@/lib/resolve-color'
+import { DEFAULT_COLOR_CONFIG, PALETTE_ORDER } from '@/registry/theme'
 
 /**
  * Thin ramp viewer for the default theme. The real acceptance playground
@@ -14,7 +11,10 @@ import {
  * later phase.
  */
 export function ColorPlayground() {
-  const theme = useMemo(() => resolveColorConfig(DEFAULT_COLOR_CONFIG), [])
+  const theme = useMemo(
+    () => resolveColorConfigCached(DEFAULT_COLOR_CONFIG),
+    [],
+  )
 
   return (
     <div className="mx-auto flex max-w-5xl flex-col gap-10 px-6 py-10">

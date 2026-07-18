@@ -20,11 +20,11 @@ import {
 
 import { STEPS } from '@dotui/colors'
 
+import { resolveColorConfigCached } from '@/lib/resolve-color'
 import {
   DEFAULT_COLOR_CONFIG,
   DEFAULT_STATUS_SEEDS,
   PALETTE_ORDER,
-  resolveColorConfig,
 } from '@/registry/theme'
 import type { PaletteSeeds } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
@@ -160,7 +160,7 @@ function StatusColorsWidget() {
 function ColorEngineWidget() {
   const { designSystem } = useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
-  const theme = useMemo(() => resolveColorConfig(config), [config])
+  const theme = useMemo(() => resolveColorConfigCached(config), [config])
   return (
     <div className="flex flex-col gap-4">
       <ColorFineTuneControls seedDelta={theme.report.seedDelta.accent} />

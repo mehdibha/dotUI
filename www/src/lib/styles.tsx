@@ -6,13 +6,13 @@ import { UNSAFE_PortalProvider } from 'react-aria/PortalProvider'
 import { tv } from 'tailwind-variants'
 import type { ClassValue, TVReturnType, VariantProps } from 'tailwind-variants'
 
+import { resolveColorConfigCached } from '@/lib/resolve-color'
 import {
   ACCENT_PRIMARY_SEMANTICS,
   DEFAULT_SEMANTICS,
   emitCss,
   emitDarkOverridesCss,
   emitPrimitivesCss,
-  resolveColorConfig,
   semanticsWithPrimary,
 } from '@/registry/theme'
 import type { ColorConfig } from '@/registry/theme'
@@ -185,22 +185,6 @@ function harvestRootClosure(): RootClosure {
   // theming would stay off for the whole session.
   if (closure.light || closure.dark) rootClosureCache = closure
   return closure
-}
-
-// resolveColorConfig runs the full color kernel (schema parse + ramp generation).
-// Configs are stable references (module constants, cached store snapshots) and
-// every demo on a docs page shares one, so memoize by reference.
-const resolvedColorCache = new WeakMap<
-  ColorConfig,
-  ReturnType<typeof resolveColorConfig>
->()
-function resolveColorConfigCached(color: ColorConfig) {
-  let resolved = resolvedColorCache.get(color)
-  if (!resolved) {
-    resolved = resolveColorConfig(color)
-    resolvedColorCache.set(color, resolved)
-  }
-  return resolved
 }
 
 /**

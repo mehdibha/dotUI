@@ -5,11 +5,11 @@ import { ChevronDownIcon } from 'lucide-react'
 
 import { STEPS } from '@dotui/colors'
 
+import { resolveColorConfigCached } from '@/lib/resolve-color'
 import {
   DEFAULT_COLOR_CONFIG,
   DEFAULT_STATUS_SEEDS,
   PALETTE_ORDER,
-  resolveColorConfig,
 } from '@/registry/theme'
 import type { PrimaryColorSource } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
@@ -145,7 +145,7 @@ export function ColorsConfig() {
   const { designSystem, setDesignSystem, setColorSeed, setColorPrimary } =
     useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
-  const theme = useMemo(() => resolveColorConfig(config), [config])
+  const theme = useMemo(() => resolveColorConfigCached(config), [config])
   const grayMode = grayModeOf(config)
 
   // Gray-mode transitions touch two fields (neutral seed + neutralTint), so
