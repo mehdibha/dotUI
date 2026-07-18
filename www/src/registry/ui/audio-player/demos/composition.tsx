@@ -10,10 +10,7 @@ import {
 
 export default function Demo() {
   return (
-    <AudioPlayer
-      src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-      className="max-w-xl"
-    >
+    <AudioPlayer src="/audio/audio-sample.mp3" className="max-w-xl">
       <AudioPlayerSeekButton seconds={-10} />
       <AudioPlayerPlayButton />
       <AudioPlayerSeekButton seconds={10} />

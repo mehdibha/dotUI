@@ -36,10 +36,7 @@ function SpeedSelect() {
 
 export default function Demo() {
   return (
-    <AudioPlayer
-      src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
-      className="max-w-lg"
-    >
+    <AudioPlayer src="/audio/audio-sample.mp3" className="max-w-lg">
       <AudioPlayerPlayButton />
       <AudioPlayerTime />
       <AudioPlayerSeekSlider />
