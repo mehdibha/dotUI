@@ -6,7 +6,14 @@
 
 import { CHART_GATES } from './data'
 import { minPairwiseDeltaEok } from './meters'
-import { cusp, fitSrgb, lstarOf, maxChroma, type Oklch, solveLstar } from './space'
+import {
+  cusp,
+  fitSrgb,
+  lstarOf,
+  maxChroma,
+  type Oklch,
+  solveLstar,
+} from './space'
 
 export interface ChartPalettes {
   categorical: Oklch[]
@@ -32,9 +39,12 @@ function categoricalCandidate(hue: number, lstar: number): Oklch {
  * and CVD vision. Deterministic.
  */
 export function categoricalPalette(accentHue: number, n = 8): Oklch[] {
-  const chosen: Oklch[] = [categoricalCandidate(accentHue, CATEGORICAL_LSTAR[0]!)]
+  const chosen: Oklch[] = [
+    categoricalCandidate(accentHue, CATEGORICAL_LSTAR[0]!),
+  ]
   const pool: number[] = []
-  for (let offset = 15; offset < 360; offset += 15) pool.push((accentHue + offset) % 360)
+  for (let offset = 15; offset < 360; offset += 15)
+    pool.push((accentHue + offset) % 360)
 
   while (chosen.length < n) {
     const lstar = CATEGORICAL_LSTAR[chosen.length % CATEGORICAL_LSTAR.length]!
@@ -75,7 +85,11 @@ export function sequentialPalette(accentHue: number, n = 7): Oklch[] {
     // Chroma rises toward the deep end, bounded by the gamut.
     const c = peak.c * (0.15 + 0.75 * t)
     out.push(
-      solveLstar(lstar, (l) => Math.min(c, maxChroma(l, accentHue)), () => accentHue),
+      solveLstar(
+        lstar,
+        (l) => Math.min(c, maxChroma(l, accentHue)),
+        () => accentHue,
+      ),
     )
   }
   return out
@@ -92,8 +106,9 @@ export function divergingPalette(
     sequentialPalette(hue, armLength + 1)
       .slice(1) // drop the near-surface stop; the midpoint takes its place
       .reverse()
-  const left = arm(opposite).reverse()
-  const right = arm(accentHue)
+  // Each arm connects to the midpoint at its light end and deepens outward.
+  const left = arm(opposite)
+  const right = arm(accentHue).reverse()
   return [...left, fitSrgb(neutralMidpoint), ...right]
 }
 

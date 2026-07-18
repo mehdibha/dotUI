@@ -135,9 +135,7 @@ function solveOnColor(solid: Oklch, strict: boolean): Oklch {
 
 function onMeetsBars(on: Oklch, solid: Oklch, strict: boolean): boolean {
   const bars = strict ? BARS.onSolidStrict : BARS.onSolid
-  return (
-    Math.abs(apca(on, solid)) >= bars.lc && wcag2(on, solid) >= bars.wcag
-  )
+  return Math.abs(apca(on, solid)) >= bars.lc && wcag2(on, solid) >= bars.wcag
 }
 
 /**
@@ -255,11 +253,35 @@ export function buildScale(options: ScaleOptions): ScaleColors {
     steps[STEPS[i]!] = solveLstar(lstar, (l) => chroma.at(l, i), hueAt)
   })
 
+  // D2 — border floors are guarantees, not skeleton suggestions: 8-bit
+  // quantization can land a skeleton step a hair under its bar, so nudge
+  // borders away from the backgrounds until their WCAG floors hold.
+  const borderFloors = [
+    ['400', 5, BARS.border400],
+    ['500', 6, BARS.border500],
+    ['600', 7, BARS.border600],
+  ] as const
+  for (const [name, i, bar] of borderFloors) {
+    const meets = () =>
+      [steps['25']!, steps['50']!].every((bg) => wcag2(steps[name]!, bg) >= bar)
+    let lstar = skeleton[i]!
+    for (let k = 0; k < 20 && !meets(); k++) {
+      lstar += mode === 'light' ? -0.25 : 0.25
+      steps[name] = solveLstar(lstar, (l) => chroma.at(l, i), hueAt)
+    }
+  }
+
   // Solids (jobs 9–10). Step 700 is mode-invariant (verified: Radix shares
   // the identical step-9 across modes) — the dark pass reuses the light solve.
   const { solid, on } =
     options.sharedSolid ??
-    solveSolid(seed, chroma, hueAt, options.preserveSeed && mode === 'light', strictOnSolid)
+    solveSolid(
+      seed,
+      chroma,
+      hueAt,
+      options.preserveSeed && mode === 'light',
+      strictOnSolid,
+    )
   steps['700'] = solid
   steps['800'] = hoverSolid(solid, on, mode, chroma, strictOnSolid)
   const on800 = on
