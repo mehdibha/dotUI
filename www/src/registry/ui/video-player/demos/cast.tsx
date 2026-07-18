@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { CastIcon } from '@/registry/__generated__/icons'
 import { Button } from '@/registry/ui/button'
@@ -15,22 +15,47 @@ import {
   VideoPlayerVolume,
 } from '@/registry/ui/video-player'
 
+type WebKitVideo = HTMLVideoElement & {
+  webkitShowPlaybackTargetPicker?: () => void
+}
+
 export default function Demo() {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const cast = () => {
-    const video = videoRef.current
+  const [castAvailable, setCastAvailable] = useState(false)
+
+  // The button only enables when the browser reports a castable device.
+  useEffect(() => {
+    const video = videoRef.current as WebKitVideo | null
     if (!video) return
-    // Remote Playback API, with Safari's AirPlay picker as the fallback.
+    const remote = video.remote
+    if (!remote?.watchAvailability) {
+      setCastAvailable(!!video.webkitShowPlaybackTargetPicker)
+      return
+    }
+    let watchId: number | undefined
+    remote
+      .watchAvailability((available) => setCastAvailable(available))
+      .then((id) => {
+        watchId = id
+      })
+      .catch(() => setCastAvailable(false))
+    return () => {
+      if (watchId !== undefined) {
+        remote.cancelWatchAvailability(watchId).catch(() => {})
+      }
+    }
+  }, [])
+
+  const cast = () => {
+    const video = videoRef.current as WebKitVideo | null
+    if (!video) return
     if (video.remote) {
-      void video.remote.prompt()
-    } else if ('webkitShowPlaybackTargetPicker' in video) {
-      ;(
-        video as HTMLVideoElement & {
-          webkitShowPlaybackTargetPicker: () => void
-        }
-      ).webkitShowPlaybackTargetPicker()
+      video.remote.prompt().catch(() => {})
+    } else {
+      video.webkitShowPlaybackTargetPicker?.()
     }
   }
+
   return (
     <VideoPlayer className="max-w-xl">
       <VideoPlayerVideo
@@ -51,6 +76,7 @@ export default function Demo() {
               variant="quiet"
               size="sm"
               isIconOnly
+              isDisabled={!castAvailable}
               onPress={cast}
             >
               <CastIcon />
