@@ -329,9 +329,16 @@ set; solid labels per D2.
 Generated, not aliased (measured: the current status-500 aliasing fails 4 of
 5 gates — normal ΔEok 0.059, deutan 0.009, tritan 0.012, L\* range 5.6).
 
+- **Palettes are generated per mode**: dark series ride a lighter L\* ladder
+  (floor 50 vs 44) so they read against a near-black surface; sequential
+  runs away from the mode's surface end.
 - **Categorical** (size 5–8): min pairwise ΔEok ≥ 0.09 normal AND ≥ 0.045
   under each of protan/deutan/tritan at severity 1.0; palette L\* range ≥ 25.
-  Generation rule (not CI): order series so adjacent-in-order |ΔL\*| ≥ 8.
+  Generation rules (not CI): order series so adjacent-in-order |ΔL\*| ≥ 8;
+  slot 1 takes the ladder rung nearest the accent's own lightness (a yellow
+  brand stays yellow, never mustard); warm-yellow hues (H 75–135) never land
+  below L\* 58 (dark yellow = olive); achieved chroma ≥ 0.4 of the hue's
+  cusp (no washed picks); chosen hues ≥ 30° apart (no blue-cluster).
   (Calibration: Okabe-Ito passes everything; tab10 fails exactly its known
   protan collapse at 0.0146.)
 - **Sequential**: L\* strictly monotonic; every adjacent ΔL\* ≥ 0.5 × (range

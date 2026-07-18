@@ -85,11 +85,23 @@ export function maxChroma(l: number, h: number): number {
   return fitSrgb({ l, c: 0.5, h }).c
 }
 
+const cuspCache = new Map<number, { l: number; c: number }>()
+
 /**
  * The sRGB gamut cusp for a hue: the (l, c) maximizing chroma. Coarse scan +
- * ternary refinement (chroma-vs-L at fixed hue is unimodal).
+ * ternary refinement (chroma-vs-L at fixed hue is unimodal). Memoized — the
+ * chart generator probes the same hues repeatedly.
  */
 export function cusp(h: number): { l: number; c: number } {
+  const key = Math.round((((h % 360) + 360) % 360) * 100)
+  const cached = cuspCache.get(key)
+  if (cached) return cached
+  const result = cuspUncached(h)
+  cuspCache.set(key, result)
+  return result
+}
+
+function cuspUncached(h: number): { l: number; c: number } {
   let bestL = 0.5
   let bestC = 0
   for (let l = 0.05; l <= 0.95; l += 0.05) {

@@ -476,10 +476,10 @@ interface ThemeMode {
 \ton: Record<string, { "700": string; "800": string }>;
 }
 
-export interface Theme {
+export interface ChartSet {\n\tcategorical: string[];\n\tsequential: string[];\n\tdiverging: string[];\n}\n\nexport interface Theme {
 \tlight: ThemeMode;
 \tdark: ThemeMode;
-\tcharts: { categorical: string[]; sequential: string[]; diverging: string[] };
+\tcharts: { light: ChartSet; dark: ChartSet };
 \treport: { ok: boolean; warnings: string[] };
 }
 
@@ -491,7 +491,7 @@ export function resolveColorConfig(_config: ColorConfig): Theme {
 \treturn {
 \t\tlight: mode(),
 \t\tdark: mode(),
-\t\tcharts: { categorical: [], sequential: [], diverging: [] },
+\t\tcharts: {\n\t\t\tlight: { categorical: [], sequential: [], diverging: [] },\n\t\t\tdark: { categorical: [], sequential: [], diverging: [] },\n\t\t},
 \t\treport: { ok: true, warnings: [] },
 \t};
 }

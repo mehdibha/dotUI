@@ -166,9 +166,11 @@ function modeToVars(mode: EngineTheme['light']): Record<string, string> {
   return vars
 }
 
-function chartVars(theme: EngineTheme): Record<string, string> {
+function chartVars(
+  set: EngineTheme['charts']['light'],
+): Record<string, string> {
   const vars: Record<string, string> = {}
-  theme.charts.categorical.forEach((color, i) => {
+  set.categorical.forEach((color, i) => {
     vars[`--chart-${i + 1}`] = color
   })
   return vars
@@ -192,11 +194,12 @@ export function mergePresetCssFields(
     css[':root'] = {
       ...(isPlainCssObject(css[':root']) ? css[':root'] : {}),
       ...modeToVars(theme.light),
-      ...chartVars(theme),
+      ...chartVars(theme.charts.light),
     }
     css['.dark'] = {
       ...(isPlainCssObject(css['.dark']) ? css['.dark'] : {}),
       ...modeToVars(theme.dark),
+      ...chartVars(theme.charts.dark),
     }
   }
 

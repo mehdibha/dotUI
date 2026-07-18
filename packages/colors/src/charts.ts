@@ -1,11 +1,19 @@
 /**
- * Chart palettes (D11): generated from the theme's seeds, never aliased.
- * Categorical is hue-spread + L*-staggered and CVD-gated; sequential is
- * strictly L*-monotonic; diverging pins its midpoint to the surface neutral.
+ * Chart palettes (D11): generated per mode from the theme's seeds, never
+ * aliased. Categorical is hue-spread + L*-staggered and CVD-gated; sequential
+ * is strictly L*-monotonic away from the mode's surface; diverging pins its
+ * midpoint to the surface neutral.
  */
 
 import { CHART_GATES } from './data'
-import { minPairwiseDeltaEok } from './meters'
+import {
+  CVD_KINDS,
+  type CvdKind,
+  deltaEok,
+  minPairwiseDeltaEok,
+  simulateCvd,
+} from './meters'
+import type { Mode } from './scale'
 import {
   cusp,
   fitSrgb,
@@ -21,8 +29,27 @@ export interface ChartPalettes {
   diverging: Oklch[]
 }
 
-/** L* ladder for categorical series: adjacent gaps ≥ 8, range ≥ 25 (D11). */
-const CATEGORICAL_LSTAR = [58, 70, 48, 62, 76, 44, 66, 54]
+/**
+ * L* ladders for categorical series: adjacent gaps ≥ 8 by construction,
+ * range ≥ 25 (D11). Dark mode rides a lighter ladder — series must read
+ * against a near-black surface.
+ */
+const CATEGORICAL_LSTAR: Record<Mode, number[]> = {
+  light: [58, 70, 48, 62, 76, 44, 66, 54],
+  dark: [64, 76, 54, 68, 82, 50, 72, 60],
+}
+
+/** Reject washed-out picks: achieved chroma below this fraction of the hue's cusp. */
+const MIN_CUSP_FRACTION = 0.4
+/** Warm-yellow hues (gold→lime) turn olive below this L* — keep them on light slots. */
+const YELLOW_BAND = { from: 75, to: 135, minLstar: 58 }
+/** Minimum circular hue distance between chosen series. */
+const MIN_HUE_GAP = 30
+
+function hueGap(a: number, b: number): number {
+  const d = Math.abs(((a - b + 540) % 360) - 180)
+  return d
+}
 
 function categoricalCandidate(hue: number, lstar: number): Oklch {
   const { c } = cusp(hue)
@@ -33,56 +60,133 @@ function categoricalCandidate(hue: number, lstar: number): Oklch {
   )
 }
 
+function isMuddy(candidate: Oklch, lstar: number): boolean {
+  const h = ((candidate.h % 360) + 360) % 360
+  if (
+    h >= YELLOW_BAND.from &&
+    h < YELLOW_BAND.to &&
+    lstar < YELLOW_BAND.minLstar
+  )
+    return true
+  return candidate.c < MIN_CUSP_FRACTION * cusp(candidate.h).c
+}
+
 /**
- * Build a categorical palette of `n` series anchored on the accent hue,
- * greedily choosing hues that maximize the min pairwise ΔEok under normal
- * and CVD vision. Deterministic.
+ * Build a categorical palette of `n` series anchored on the accent. Slot 1
+ * takes the ladder rung nearest the accent's own lightness (a yellow brand
+ * stays yellow, never mustard); later slots greedily maximize the min
+ * pairwise ΔEok under normal and CVD vision, constrained away from muddy
+ * hue-lightness pairings and near-duplicate hues. Deterministic.
  */
-export function categoricalPalette(accentHue: number, n = 8): Oklch[] {
-  const chosen: Oklch[] = [
-    categoricalCandidate(accentHue, CATEGORICAL_LSTAR[0]!),
-  ]
+export function categoricalPalette(
+  accent: Oklch,
+  n = 8,
+  mode: Mode = 'light',
+): Oklch[] {
+  const baseLadder = CATEGORICAL_LSTAR[mode]
+  // Give the brand series the rung closest to its natural lightness.
+  const accentLstar = lstarOf(fitSrgb(accent))
+  let nearest = 0
+  baseLadder.forEach((lstar, i) => {
+    if (
+      Math.abs(lstar - accentLstar) <
+      Math.abs(baseLadder[nearest]! - accentLstar)
+    )
+      nearest = i
+  })
+  const ladder = [...baseLadder]
+  ;[ladder[0], ladder[nearest]] = [ladder[nearest]!, ladder[0]!]
+
+  // Incremental gate scoring: keep every chosen color's CVD simulations and
+  // the chosen-set's running per-condition minimum, so scoring a candidate is
+  // O(chosen) instead of re-measuring all pairs under all conditions.
+  type Simulated = Record<'normal' | CvdKind, Oklch>
+  const simulate = (color: Oklch): Simulated => {
+    const out = { normal: color } as Simulated
+    for (const kind of CVD_KINDS) out[kind] = simulateCvd(color, kind)
+    return out
+  }
+  const CONDITIONS = ['normal', ...CVD_KINDS] as const
+  const gateFor = (condition: (typeof CONDITIONS)[number]) =>
+    condition === 'normal'
+      ? CHART_GATES.categoricalNormal
+      : CHART_GATES.categoricalCvd
+
+  const chosen: Oklch[] = [categoricalCandidate(accent.h, ladder[0]!)]
+  const chosenSim: Simulated[] = [simulate(chosen[0]!)]
+  const setMin: Record<(typeof CONDITIONS)[number], number> = {
+    normal: Infinity,
+    protan: Infinity,
+    deutan: Infinity,
+    tritan: Infinity,
+  }
+
   const pool: number[] = []
   for (let offset = 15; offset < 360; offset += 15)
-    pool.push((accentHue + offset) % 360)
+    pool.push((accent.h + offset) % 360)
 
   while (chosen.length < n) {
-    const lstar = CATEGORICAL_LSTAR[chosen.length % CATEGORICAL_LSTAR.length]!
-    let best: Oklch | null = null
+    const lstar = ladder[chosen.length % ladder.length]!
+    let best: { color: Oklch; sim: Simulated } | null = null
     let bestScore = -Infinity
+    let bestRelaxed: { color: Oklch; sim: Simulated } | null = null
+    let bestRelaxedScore = -Infinity
     for (const hue of pool) {
       const candidate = categoricalCandidate(hue, lstar)
-      const gate = minPairwiseDeltaEok([...chosen, candidate])
-      const score = Math.min(
-        gate.normal / CHART_GATES.categoricalNormal,
-        gate.protan / CHART_GATES.categoricalCvd,
-        gate.deutan / CHART_GATES.categoricalCvd,
-        gate.tritan / CHART_GATES.categoricalCvd,
-      )
+      const sim = simulate(candidate)
+      let score = Infinity
+      for (const condition of CONDITIONS) {
+        let min = setMin[condition]
+        for (const existing of chosenSim)
+          min = Math.min(min, deltaEok(existing[condition], sim[condition]))
+        score = Math.min(score, min / gateFor(condition))
+      }
+      // Track an unconstrained fallback so exhausted pools still fill slots.
+      if (score > bestRelaxedScore) {
+        bestRelaxedScore = score
+        bestRelaxed = { color: candidate, sim }
+      }
+      if (isMuddy(candidate, lstar)) continue
+      if (chosen.some((c) => hueGap(c.h, hue) < MIN_HUE_GAP)) continue
       if (score > bestScore) {
         bestScore = score
-        best = candidate
+        best = { color: candidate, sim }
       }
     }
-    if (!best) break
-    chosen.push(best)
-    const bestHue = best.h
-    const index = pool.findIndex((h) => Math.abs(h - bestHue) < 1e-6)
+    const pick = best ?? bestRelaxed
+    if (!pick) break
+    for (const condition of CONDITIONS) {
+      for (const existing of chosenSim)
+        setMin[condition] = Math.min(
+          setMin[condition],
+          deltaEok(existing[condition], pick.sim[condition]),
+        )
+    }
+    chosen.push(pick.color)
+    chosenSim.push(pick.sim)
+    const pickHue = pick.color.h
+    const index = pool.findIndex((h) => Math.abs(h - pickHue) < 1e-6)
     if (index >= 0) pool.splice(index, 1)
   }
   return chosen
 }
 
-/** Sequential: `n` stops, strictly L*-monotonic from near-surface to deep accent. */
-export function sequentialPalette(accentHue: number, n = 7): Oklch[] {
+/**
+ * Sequential: `n` stops, strictly L*-monotonic from the mode's surface end
+ * toward the deep accent (light: near-white → deep; dark: near-black → bright).
+ */
+export function sequentialPalette(
+  accentHue: number,
+  n = 7,
+  mode: Mode = 'light',
+): Oklch[] {
   const peak = cusp(accentHue)
-  const from = 95
-  const to = 25
+  const [from, to] = mode === 'light' ? [95, 25] : [12, 82]
   const out: Oklch[] = []
   for (let i = 0; i < n; i++) {
     const t = i / (n - 1)
     const lstar = from + (to - from) * t
-    // Chroma rises toward the deep end, bounded by the gamut.
+    // Chroma rises away from the surface end, bounded by the gamut.
     const c = peak.c * (0.15 + 0.75 * t)
     out.push(
       solveLstar(
@@ -100,10 +204,11 @@ export function divergingPalette(
   accentHue: number,
   neutralMidpoint: Oklch,
   armLength = 3,
+  mode: Mode = 'light',
 ): Oklch[] {
   const opposite = (accentHue + 180) % 360
   const arm = (hue: number) =>
-    sequentialPalette(hue, armLength + 1)
+    sequentialPalette(hue, armLength + 1, mode)
       .slice(1) // drop the near-surface stop; the midpoint takes its place
       .reverse()
   // Each arm connects to the midpoint at its light end and deepens outward.

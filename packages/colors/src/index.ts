@@ -9,6 +9,7 @@
  */
 
 export {
+  type ChartSet,
   createTheme,
   type ModeOutput,
   type Theme,

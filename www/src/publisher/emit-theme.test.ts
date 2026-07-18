@@ -147,7 +147,11 @@ describe('emitInitItem', () => {
     expect(root['--chart-1']).toBeDefined()
     expect(dark['--accent-25']).toMatch(/^oklch\(/)
     expect(dark['--neutral-950']).toMatch(/^oklch\(/)
-    expect(dark['--chart-1']).toBeUndefined()
+    expect(dark['--chart-1']).toBeDefined()
+    // Per-mode palettes: at least one slot differs (slot 1 may legitimately
+    // match when the accent's lightness snaps to the same rung in both).
+    const chartSlots = Array.from({ length: 8 }, (_, i) => `--chart-${i + 1}`)
+    expect(chartSlots.some((slot) => dark[slot] !== root[slot])).toBe(true)
   })
 
   test('an accent-sourced primary re-points the primary cluster in the theme vars', () => {

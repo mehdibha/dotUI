@@ -29,7 +29,7 @@ export function ColorPlayground() {
       <section className="flex flex-col gap-2">
         <h2 className="text-sm font-semibold">Charts — categorical</h2>
         <div className="flex overflow-hidden rounded-md">
-          {theme.charts.categorical.map((color) => (
+          {theme.charts.light.categorical.map((color) => (
             <div
               key={color}
               className="h-10 flex-1"

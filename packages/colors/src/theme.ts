@@ -102,14 +102,17 @@ export interface ThemeReport {
   seedDelta: Record<string, number>
 }
 
+export interface ChartSet {
+  categorical: string[]
+  sequential: string[]
+  diverging: string[]
+}
+
 export interface Theme {
   light: ModeOutput
   dark: ModeOutput
-  charts: {
-    categorical: string[]
-    sequential: string[]
-    diverging: string[]
-  }
+  /** Per-mode chart palettes — dark series ride a lighter L* ladder. */
+  charts: { light: ChartSet; dark: ChartSet }
   report: ThemeReport
 }
 
@@ -266,22 +269,26 @@ export function createTheme(input: string | ThemeOptions): Theme {
       )
   }
 
-  // D11 — chart palettes from the theme's seeds (mode-shared v1).
-  const categorical = categoricalPalette(accentSeed.h, 8)
-  const chartGate = categoricalGateReport(categorical)
-  if (!chartGate.passes)
-    warnings.push(
-      `categorical chart palette misses a gate (normal ${chartGate.normal.toFixed(3)}, worst CVD ${Math.min(chartGate.protan, chartGate.deutan, chartGate.tritan).toFixed(3)}, L* range ${chartGate.lstarRange.toFixed(1)})`,
-    )
-  const charts = {
-    categorical: categorical.map(oklchCss),
-    sequential: sequentialPalette(accentSeed.h, 7).map(oklchCss),
-    diverging: divergingPalette(
-      accentSeed.h,
-      built.light.neutral!.steps['100'],
-      3,
-    ).map(oklchCss),
+  // D11 — chart palettes from the theme's seeds, one set per mode.
+  const chartSet = (mode: Mode) => {
+    const categorical = categoricalPalette(accentSeed, 8, mode)
+    const gate = categoricalGateReport(categorical)
+    if (!gate.passes)
+      warnings.push(
+        `${mode} categorical chart palette misses a gate (normal ${gate.normal.toFixed(3)}, worst CVD ${Math.min(gate.protan, gate.deutan, gate.tritan).toFixed(3)}, L* range ${gate.lstarRange.toFixed(1)})`,
+      )
+    return {
+      categorical: categorical.map(oklchCss),
+      sequential: sequentialPalette(accentSeed.h, 7, mode).map(oklchCss),
+      diverging: divergingPalette(
+        accentSeed.h,
+        built[mode].neutral!.steps['100'],
+        3,
+        mode,
+      ).map(oklchCss),
+    }
   }
+  const charts = { light: chartSet('light'), dark: chartSet('dark') }
 
   const modeOutput = (mode: Mode): ModeOutput => {
     const background = built[mode].neutral!.steps['25']!

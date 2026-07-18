@@ -27,6 +27,7 @@ import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
 import { Popover } from '@/registry/ui/popover'
 import { Select, SelectValue } from '@/registry/ui/select'
 
+import { ChartColorsSection, ChartSwatchStrip } from '../chart-colors'
 import { useDesignSystem } from '../preset'
 import { ContrastReadout } from './contrast'
 import { ColorBackgroundControls, ColorFineTuneControls } from './knobs'
@@ -129,6 +130,12 @@ export function ColorsSummary() {
         <p className="font-medium">
           {config.primary === 'accent' ? 'Accent' : 'Neutral'}
         </p>
+      </div>
+      <div className="flex flex-col gap-1">
+        <span className="text-[10px] tracking-widest text-fg-muted uppercase">
+          Charts
+        </span>
+        <ChartSwatchStrip />
       </div>
     </div>
   )
@@ -243,6 +250,13 @@ export function ColorsConfig() {
         <DisclosureTrigger>Fine-tune</DisclosureTrigger>
         <DisclosurePanel>
           <ColorFineTuneControls seedDelta={theme.report.seedDelta.accent} />
+        </DisclosurePanel>
+      </Disclosure>
+
+      <Disclosure>
+        <DisclosureTrigger>Chart colors</DisclosureTrigger>
+        <DisclosurePanel>
+          <ChartColorsSection theme={theme} />
         </DisclosurePanel>
       </Disclosure>
 

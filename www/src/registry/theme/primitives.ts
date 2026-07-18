@@ -65,7 +65,7 @@ export interface EmitPrimitivesOptions {
   darkSelector?: string
   /** Emit `--<palette>-a<step>` alpha twins (default true). */
   alphas?: boolean
-  /** Emit `--chart-N` categorical tokens (default true; mode-shared). */
+  /** Emit `--chart-N` categorical tokens per mode (default true). */
   charts?: boolean
 }
 
@@ -123,17 +123,19 @@ export function emitPrimitivesCss(
       '',
     )
   }
-  out.push(`${lightSelector} {`)
-  if (isRoot) out.push('\t--radius-factor: 1;', '')
-  emitModeBlock(out, theme.light, names, alphas)
-  if (charts) {
+  const emitCharts = (set: { categorical: string[] }) => {
     out.push('')
-    theme.charts.categorical.forEach((color, i) => {
+    set.categorical.forEach((color, i) => {
       out.push(`\t--chart-${i + 1}: ${color};`)
     })
   }
+  out.push(`${lightSelector} {`)
+  if (isRoot) out.push('\t--radius-factor: 1;', '')
+  emitModeBlock(out, theme.light, names, alphas)
+  if (charts) emitCharts(theme.charts.light)
   out.push('}', '', `${darkSelector} {`)
   emitModeBlock(out, theme.dark, names, alphas)
+  if (charts) emitCharts(theme.charts.dark)
   out.push('}')
   return `${out.join('\n')}\n`
 }
