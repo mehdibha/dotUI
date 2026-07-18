@@ -23,7 +23,13 @@ export type Ramp = Record<string, string>
 /** Convert the persisted config into engine options. */
 export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
   const options: ThemeOptions = { seeds: { accent: config.seeds.accent } }
-  for (const name of ['neutral', 'success', 'warning', 'danger', 'info'] as const) {
+  for (const name of [
+    'neutral',
+    'success',
+    'warning',
+    'danger',
+    'info',
+  ] as const) {
     const seed = config.seeds[name]
     if (seed) options.seeds[name] = seed
   }
@@ -31,7 +37,8 @@ export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
   if (config.vividness !== undefined) options.vividness = config.vividness
   if (config.hueShift !== undefined) options.hueShift = config.hueShift
   if (config.neutralTint !== undefined) options.neutralTint = config.neutralTint
-  if (config.preserveSeed !== undefined) options.preserveSeed = config.preserveSeed
+  if (config.preserveSeed !== undefined)
+    options.preserveSeed = config.preserveSeed
   return options
 }
 

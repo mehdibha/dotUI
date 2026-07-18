@@ -1,15 +1,8 @@
 {
   "meta": {
     "source": "@radix-ui/colors 3.0.0 (light scales)",
-    "textSteps": [
-      11,
-      12
-    ],
-    "bgSteps": [
-      1,
-      2,
-      3
-    ],
+    "textSteps": [11, 12],
+    "bgSteps": [1, 2, 3],
     "scales": 31,
     "claims": {
       "worst light step-11 Lc on step-2 >= 60": true,

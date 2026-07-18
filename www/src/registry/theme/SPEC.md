@@ -86,15 +86,18 @@ interface ColorConfig2 {
   v: 2
   seeds: {
     accent: string
-    neutral?: string          // absent → auto-tinted from accent (engine D8)
-    success?: string; warning?: string; danger?: string; info?: string
-  }                           // absent status seeds → engine defaults (CVD-gated)
-  background?: { light?: number; dark?: number }  // bg lightness, engine D9/D12
-  vividness?: number          // scales the fitted chroma curve (engine D5)
-  hueShift?: number           // scalar on the family bend table (engine D6)
-  neutralTint?: number        // whisper-tint amount (engine D8)
-  preserveSeed?: boolean      // exact-seed pin, prints its ΔEok price (engine D7)
-  primary?: 'accent'          // role mapping; absent = neutral
+    neutral?: string // absent → auto-tinted from accent (engine D8)
+    success?: string
+    warning?: string
+    danger?: string
+    info?: string
+  } // absent status seeds → engine defaults (CVD-gated)
+  background?: { light?: number; dark?: number } // bg lightness, engine D9/D12
+  vividness?: number // scales the fitted chroma curve (engine D5)
+  hueShift?: number // scalar on the family bend table (engine D6)
+  neutralTint?: number // whisper-tint amount (engine D8)
+  preserveSeed?: boolean // exact-seed pin, prints its ΔEok price (engine D7)
+  primary?: 'accent' // role mapping; absent = neutral
   overrides?: Record<string, { palette: string; job: string }> // per-token remap (advanced)
 }
 ```
@@ -126,6 +129,7 @@ Two tiers (the panel/schema.tsx lab prototype had the right instinct; it and
 the current flat section are both replaced):
 
 **Simple** — the Radix-proven minimal input set:
+
 - Brand color (accent seed; "your hex appears in the output" guaranteed)
 - Gray: auto (tinted from accent) / pure / custom, one control
 - Background: light + dark lightness choice (incl. OLED black)

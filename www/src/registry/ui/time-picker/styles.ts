@@ -13,7 +13,7 @@ const { useStyles, styles } = createStyles(timePickerMeta, {
       item: [
         'flex h-8 w-full shrink-0 items-center justify-center rounded-md text-sm tabular-nums no-highlight',
         'cursor-interactive outline-hidden transition-colors',
-        'hover:bg-[color-mix(in_srgb,var(--color-accent)_20%,var(--color-bg))]',
+        'hover:bg-accent-muted',
         'focus-visible:focus-ring',
         'selected:bg-accent selected:text-fg-on-accent',
         'disabled:pointer-events-none disabled:text-fg-disabled',

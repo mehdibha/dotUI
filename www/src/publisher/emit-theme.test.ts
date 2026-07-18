@@ -41,7 +41,13 @@ describe('emitInitItem', () => {
 
     expect(item.type).toBe('registry:base')
     expect(item.css).toEqual(baseRegistryCss.css)
-    expect(item.cssVars).toEqual(baseRegistryCss.cssVars)
+    // The semantic block ships resolved from the vocabulary (neutral primary).
+    expect(item.cssVars?.theme).toMatchObject({
+      '--color-bg': 'var(--neutral-25)',
+      '--color-primary': 'var(--neutral-950)',
+      '--color-fg-on-primary': 'var(--neutral-25)',
+    })
+    expect(item.dependencies).not.toContain('tailwindcss-autocontrast')
     expect((item as InitItemConfig).config?.tailwind?.cssVariables).toBe(true)
     expect((item as InitItemConfig).config?.registries?.['@dotui']).toBe(
       'https://dotui.com/r/{name}?preset=',
@@ -66,7 +72,7 @@ describe('emitInitItem', () => {
       ':root': { '--neutral-50': 'hsl(0, 0%, 98%)' },
       '.dark': { '--neutral-50': 'hsl(0, 6%, 4%)' },
     })
-    expect(item.cssVars).toBeUndefined()
+    expect(item.cssVars?.theme?.['--color-bg']).toBe('var(--neutral-25)')
   })
 
   test('writes the preset into the @dotui registry URL string', () => {
@@ -114,76 +120,59 @@ describe('emitInitItem', () => {
     expect(baseRegistryCss.css[':root']).not.toHaveProperty('--radius-factor')
   })
 
-  test('a custom color recipe regenerates the :root + .dark palette ramps', () => {
+  test('a custom color recipe regenerates the :root + .dark primitive layer', () => {
     const item = emitInitItem({
       baseRegistryCss,
       preset: {
         density: 'compact',
         componentParams: {},
-        color: {
-          algorithm: 'oklch',
-          seeds: {
-            neutral: '#808080',
-            accent: '#ef4444',
-            success: '#22c55e',
-            warning: '#eab308',
-            danger: '#ef4444',
-          },
-        },
+        color: { v: 2, seeds: { accent: '#ef4444' } },
       },
       registryRoot: 'https://dotui.com',
     })
 
     const root = (item.css?.[':root'] ?? {}) as Record<string, string>
     const dark = (item.css?.['.dark'] ?? {}) as Record<string, string>
-    expect(root['--accent-500']).toMatch(/^oklch\(/)
+    expect(root['--accent-700']).toMatch(/^oklch\(/)
     expect(root['--neutral-50']).not.toBe('hsl(0, 0%, 98%)')
     // #ef4444 is red — hue far from the default blue (~250).
     const hue = Number(
-      root['--accent-500']?.match(/oklch\([\d.]+ [\d.]+ ([\d.]+)\)/)?.[1],
+      root['--accent-700']?.match(/oklch\([\d.]+ [\d.]+ ([\d.]+)\)/)?.[1],
     )
     expect(hue).toBeGreaterThan(0)
     expect(hue).toBeLessThan(60)
-    expect(dark['--accent-50']).toMatch(/^oklch\(/)
+    // Alpha twins, solved on-* labels, and charts ship alongside the ramps.
+    expect(root['--accent-a700']).toBeDefined()
+    expect(root['--on-accent-700']).toBeDefined()
+    expect(root['--chart-1']).toBeDefined()
+    expect(dark['--accent-25']).toMatch(/^oklch\(/)
     expect(dark['--neutral-950']).toMatch(/^oklch\(/)
+    expect(dark['--chart-1']).toBeUndefined()
   })
 
   test('an accent-sourced primary re-points the primary cluster in the theme vars', () => {
-    const baseWithPrimary = {
-      ...baseRegistryCss,
-      cssVars: {
-        theme: {
-          '--color-bg': 'var(--neutral-50)',
-          '--color-primary': 'var(--neutral-950)',
-          '--color-fg-on-primary': 'var(--on-neutral-950)',
-        },
-      },
-    }
     const item = emitInitItem({
-      baseRegistryCss: baseWithPrimary,
+      baseRegistryCss,
       preset: {
         density: 'default',
         componentParams: {},
-        color: {
-          algorithm: 'oklch',
-          seeds: { neutral: '#808080', accent: '#3ecf8e' },
-          primary: 'accent',
-        },
+        color: { v: 2, seeds: { accent: '#3ecf8e' }, primary: 'accent' },
       },
       registryRoot: 'https://dotui.com',
     })
 
     expect(item.cssVars?.theme).toMatchObject({
-      '--color-bg': 'var(--neutral-50)',
-      '--color-primary': 'var(--accent-500)',
-      '--color-primary-hover': 'var(--accent-600)',
-      '--color-primary-active': 'var(--accent-700)',
+      '--color-bg': 'var(--neutral-25)',
+      '--color-primary': 'var(--accent-700)',
+      '--color-primary-hover': 'var(--accent-800)',
+      '--color-primary-active':
+        'color-mix(in oklab, var(--accent-800) 88%, var(--neutral-950))',
       '--color-primary-muted': 'var(--accent-100)',
-      '--color-fg-on-primary': 'var(--on-accent-500)',
+      '--color-fg-on-primary': 'var(--on-accent-700)',
     })
-    // The default (neutral) primary stays untouched.
-    expect(baseWithPrimary.cssVars.theme['--color-primary']).toBe(
-      'var(--neutral-950)',
+    // The base fixture stays untouched.
+    expect(baseRegistryCss.cssVars.theme['--color-bg']).toBe(
+      'var(--neutral-50)',
     )
   })
 })

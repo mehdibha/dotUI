@@ -43,8 +43,4 @@ export {
   resolveColorConfig,
   themeOptionsFromConfig,
 } from './primitives'
-export {
-  PALETTE_ORDER,
-  type PaletteName,
-  STATUS_PALETTES,
-} from './palettes'
+export { PALETTE_ORDER, type PaletteName, STATUS_PALETTES } from './palettes'

@@ -2934,11 +2934,7 @@
     }
   },
   "radixCollapseVividOnly": {
-    "excluded": [
-      "bronze",
-      "gold",
-      "brown"
-    ],
+    "excluded": ["bronze", "gold", "brown"],
     "perStep": [
       {
         "step": 1,

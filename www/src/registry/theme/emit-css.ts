@@ -7,11 +7,7 @@
  * nothing in the color section of `base/theme.css` is hand-authored.
  */
 
-import type {
-  SemanticTarget,
-  SemanticToken,
-  SemanticVocabulary,
-} from './types'
+import type { SemanticTarget, SemanticToken, SemanticVocabulary } from './types'
 
 /** Resolve a single {@link SemanticTarget} to its CSS value string. */
 export function resolveTarget(target: SemanticTarget): string {

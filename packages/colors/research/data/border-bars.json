@@ -1,15 +1,8 @@
 {
   "meta": {
     "source": "@radix-ui/colors 3.0.0; Geist values scraped 2026-07-18",
-    "borderSteps": [
-      6,
-      7,
-      8
-    ],
-    "bgSteps": [
-      1,
-      2
-    ],
+    "borderSteps": [6, 7, 8],
+    "bgSteps": [1, 2],
     "scales": 31,
     "note": "apcaLc is |Lc| (border as APCA foreground); wcag is the WCAG 2 ratio"
   },

@@ -33,17 +33,26 @@ const mix = (
   b: SemanticTarget,
 ): SemanticTarget => ({ mix: { space: 'oklab', stops: [a, weight, b] } })
 
-const bg = (target: SemanticToken['target'], scales?: readonly string[]): SemanticToken => ({
+const bg = (
+  target: SemanticToken['target'],
+  scales?: readonly string[],
+): SemanticToken => ({
   target,
   category: 'background',
   scales,
 })
-const fg = (target: SemanticToken['target'], scales?: readonly string[]): SemanticToken => ({
+const fg = (
+  target: SemanticToken['target'],
+  scales?: readonly string[],
+): SemanticToken => ({
   target,
   category: 'foreground',
   scales,
 })
-const bd = (target: SemanticToken['target'], scales?: readonly string[]): SemanticToken => ({
+const bd = (
+  target: SemanticToken['target'],
+  scales?: readonly string[],
+): SemanticToken => ({
   target,
   category: 'border',
   scales,
@@ -61,7 +70,10 @@ function statusCluster(palette: string): SemanticVocabulary {
     [`color-${palette}-muted`]: bg(ref(palette, '100'), [palette]),
     [`color-${palette}-muted-hover`]: bg(ref(palette, '200'), [palette]),
     [`color-fg-${palette}`]: fg(ref(palette, '900'), [palette]),
-    [`color-fg-on-${palette}`]: { target: on(palette, '700'), category: 'foreground' },
+    [`color-fg-on-${palette}`]: {
+      target: on(palette, '700'),
+      category: 'foreground',
+    },
     [`color-border-${palette}`]: bd(ref(palette, '400'), [palette]),
     [`color-border-${palette}-hover`]: bd(ref(palette, '500'), [palette]),
   }

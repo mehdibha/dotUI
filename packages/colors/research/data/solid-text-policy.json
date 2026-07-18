@@ -1,13 +1,7 @@
 {
   "meta": {
     "source": "@radix-ui/colors 3.0.0",
-    "officialDarkText": [
-      "sky",
-      "mint",
-      "lime",
-      "yellow",
-      "amber"
-    ],
+    "officialDarkText": ["sky", "mint", "lime", "yellow", "amber"],
     "threshold": "predict dark text iff |Lc(white on step9)| < 40",
     "darkTextFormula": "oklch(0.25, max(0.08*C9, 0.04), H9), chroma-clamped to sRGB",
     "note": "lcWhiteRaw is signed APCA (white text on step9 is negative-polarity)"
@@ -785,14 +779,8 @@
       "precision": 1,
       "recall": 1,
       "misclassified": [],
-      "darkTextScalesLcRange": [
-        14.96,
-        29.51
-      ],
-      "whiteTextScalesLcRange": [
-        60.75,
-        81.84
-      ],
+      "darkTextScalesLcRange": [14.96, 29.51],
+      "whiteTextScalesLcRange": [60.75, 81.84],
       "gap": 31.24
     },
     "dark": {
@@ -803,14 +791,8 @@
       "precision": 1,
       "recall": 1,
       "misclassified": [],
-      "darkTextScalesLcRange": [
-        14.96,
-        29.51
-      ],
-      "whiteTextScalesLcRange": [
-        60.75,
-        81.84
-      ],
+      "darkTextScalesLcRange": [14.96, 29.51],
+      "whiteTextScalesLcRange": [60.75, 81.84],
       "gap": 31.24
     },
     "combined": {
@@ -821,14 +803,8 @@
       "precision": 1,
       "recall": 1,
       "misclassified": [],
-      "darkTextScalesLcRange": [
-        14.96,
-        29.51
-      ],
-      "whiteTextScalesLcRange": [
-        60.75,
-        81.84
-      ],
+      "darkTextScalesLcRange": [14.96, 29.51],
+      "whiteTextScalesLcRange": [60.75, 81.84],
       "gap": 31.24
     }
   }

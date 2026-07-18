@@ -5,12 +5,7 @@
  * relative luminance, which is what WCAG meters — that is the whole point).
  */
 
-import {
-  converter,
-  formatHex,
-  type Oklch as CuloriOklch,
-  parse,
-} from 'culori'
+import { converter, formatHex, type Oklch as CuloriOklch, parse } from 'culori'
 
 export interface Oklch {
   l: number

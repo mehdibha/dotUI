@@ -10,9 +10,9 @@
  */
 
 import {
-  ACCENT_PRIMARY_SEMANTICS,
   resolveColorConfig,
   resolveTokenValue,
+  semanticVocabulary,
 } from '@/registry/theme'
 import type { Density, RegistryItem } from '@/registry/types'
 
@@ -40,7 +40,6 @@ const DEFAULT_DEPENDENCIES = [
   'react-aria-components',
   'tailwindcss-react-aria-components',
   'tw-animate-css',
-  'tailwindcss-autocontrast',
   // The init css emits `@plugin 'tailwindcss-with'` — without the package the
   // consumer's first Tailwind build fails.
   'tailwindcss-with',
@@ -144,16 +143,34 @@ function registryConfigUrl(
   return `${registryRoot}/r/{name}?preset=${encodedPreset ?? ''}`
 }
 
-/** Flatten resolved per-palette ramps into `--<palette>-<step>` CSS var entries. */
-function rampsToVars(
-  palettes: Record<string, Record<string, string>>,
-): Record<string, string> {
+type EngineTheme = ReturnType<typeof resolveColorConfig>
+
+/** Flatten one engine mode into primitive var entries, mirroring
+ *  `emitPrimitivesCss` naming: ramp steps, alpha twins, solved on-* labels. */
+function modeToVars(mode: EngineTheme['light']): Record<string, string> {
   const vars: Record<string, string> = {}
-  for (const [palette, scale] of Object.entries(palettes)) {
+  for (const [palette, scale] of Object.entries(mode.scales)) {
     for (const [step, value] of Object.entries(scale)) {
       vars[`--${palette}-${step}`] = value
     }
   }
+  for (const [palette, twin] of Object.entries(mode.alphas)) {
+    for (const [step, value] of Object.entries(twin)) {
+      vars[`--${palette}-a${step}`] = value
+    }
+  }
+  for (const [palette, on] of Object.entries(mode.on)) {
+    vars[`--on-${palette}-700`] = on['700']
+    vars[`--on-${palette}-800`] = on['800']
+  }
+  return vars
+}
+
+function chartVars(theme: EngineTheme): Record<string, string> {
+  const vars: Record<string, string> = {}
+  theme.charts.categorical.forEach((color, i) => {
+    vars[`--chart-${i + 1}`] = color
+  })
   return vars
 }
 
@@ -167,29 +184,30 @@ export function mergePresetCssFields(
 
   const cssVars = cloneThemeCssVars(base.cssVars)
 
-  // A custom color recipe regenerates the primitive ramps, overriding the static
-  // base palette in :root (light) and .dark (reversed). The consumer's
-  // tailwindcss-autocontrast plugin re-derives --on-* from these shipped ramps.
+  // A custom color recipe regenerates the full primitive layer — ramps, alpha
+  // twins, solved on-* labels, and chart colors — overriding the static base
+  // palette in :root (light) and .dark (an independent engine pass).
   if (preset.color) {
-    const resolved = resolveColorConfig(preset.color)
+    const theme = resolveColorConfig(preset.color)
     css[':root'] = {
       ...(isPlainCssObject(css[':root']) ? css[':root'] : {}),
-      ...rampsToVars(resolved.light),
+      ...modeToVars(theme.light),
+      ...chartVars(theme),
     }
     css['.dark'] = {
       ...(isPlainCssObject(css['.dark']) ? css['.dark'] : {}),
-      ...rampsToVars(resolved.dark),
+      ...modeToVars(theme.dark),
     }
   }
 
-  // An accent-sourced primary re-points the primary token cluster inside the
-  // shipped `@theme` block itself, so the exported theme reads as authored
-  // (`--color-primary: var(--accent-500)`) rather than patched at `:root`.
-  if (preset.color?.primary === 'accent') {
-    const theme = (cssVars.theme ??= {})
-    for (const [name, token] of Object.entries(ACCENT_PRIMARY_SEMANTICS)) {
-      theme[`--${name}`] = resolveTokenValue(token)
-    }
+  // The shipped `@theme` block is resolved from the typed vocabulary, honoring
+  // the preset's primary source (`--color-primary: var(--accent-700)` when the
+  // primary draws from the accent ramp).
+  const themeVars = (cssVars.theme ??= {})
+  for (const [name, token] of Object.entries(
+    semanticVocabulary(preset.color?.primary ?? 'neutral'),
+  )) {
+    themeVars[`--${name}`] = resolveTokenValue(token)
   }
 
   const lightVars = emitPresetLightVars(preset)

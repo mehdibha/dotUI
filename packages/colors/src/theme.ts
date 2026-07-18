@@ -231,7 +231,9 @@ export function createTheme(input: string | ThemeOptions): Theme {
       guarantees.push(...results)
       warnings.push(...verifyLadder(name, mode, scale))
       if (preserveSeed && name === 'accent') {
-        for (const miss of results.filter((r) => !r.passes && r.name === 'on-solid'))
+        for (const miss of results.filter(
+          (r) => !r.passes && r.name === 'on-solid',
+        ))
           warnings.push(
             `accent/${mode}: preserveSeed pins the solid; ${miss.fg} lands at WCAG ${miss.wcag.toFixed(2)} / Lc ${miss.lc.toFixed(1)} (bars ${miss.wcagTarget}/${miss.lcTarget})`,
           )
@@ -254,7 +256,9 @@ export function createTheme(input: string | ThemeOptions): Theme {
       `status solids fall below the color-vision-deficiency gate (min ΔEok ${worstCvd.toFixed(3)} < ${CVD_GATE.cvd})`,
     )
   const accentSolid = built.light.accent!.steps['700']
-  for (const [i, name] of (['success', 'warning', 'danger', 'info'] as const).entries()) {
+  for (const [i, name] of (
+    ['success', 'warning', 'danger', 'info'] as const
+  ).entries()) {
     const d = deltaEok(accentSolid, statusSolids[i]!)
     if (d < CVD_GATE.accentProximity)
       warnings.push(
@@ -286,7 +290,9 @@ export function createTheme(input: string | ThemeOptions): Theme {
     const on: ModeOutput['on'] = {}
     const names = [
       ...CORE_ORDER.filter((n) => n in built[mode]),
-      ...Object.keys(built[mode]).filter((n) => !CORE_ORDER.includes(n)).sort(),
+      ...Object.keys(built[mode])
+        .filter((n) => !CORE_ORDER.includes(n))
+        .sort(),
     ]
     for (const name of names) {
       const scale = built[mode][name]!
@@ -305,7 +311,9 @@ export function createTheme(input: string | ThemeOptions): Theme {
   }
 
   const failed = guarantees.filter(
-    (g) => !g.passes && !(preserveSeed && g.scale === 'accent' && g.name === 'on-solid'),
+    (g) =>
+      !g.passes &&
+      !(preserveSeed && g.scale === 'accent' && g.name === 'on-solid'),
   )
   for (const f of failed)
     warnings.push(

@@ -5,7 +5,7 @@ import { Link as RouterLink } from '@tanstack/react-router'
 import { ExternalLinkIcon, MoonIcon, SunIcon, XIcon } from 'lucide-react'
 import { useTheme } from 'starter-themes'
 
-import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
+import { DEFAULT_COLOR_CONFIG, DEFAULT_STATUS_SEEDS } from '@/registry/theme'
 import { Button, buttonStyles } from '@/registry/ui/button'
 import {
   DialogContent,
@@ -23,13 +23,6 @@ const DENSITY_LABEL: Record<Density, string> = {
   compact: 'Compact',
   default: 'Default',
   comfortable: 'Comfortable',
-}
-
-const ALGORITHM_LABEL: Record<string, string> = {
-  oklch: 'OKLCH',
-  tailwind: 'Tailwind',
-  contrast: 'Contrast',
-  material: 'Material',
 }
 
 /** A descriptive word for a `--radius-factor` multiplier (1 = builder default). */
@@ -137,14 +130,16 @@ function PresetModalBody({ preset }: { preset: Preset }) {
     }
   }, [previewMode])
 
+  // Status seeds fall back to the engine defaults; an absent neutral means
+  // auto-tinted from the accent, so it has no hex to show.
   const seeds = preset.designSystem.color?.seeds ?? DEFAULT_COLOR_CONFIG.seeds
   const palette = [
     { label: 'Accent', color: seeds.accent },
     { label: 'Neutral', color: seeds.neutral },
-    { label: 'Success', color: seeds.success },
-    { label: 'Warning', color: seeds.warning },
-    { label: 'Danger', color: seeds.danger },
-    { label: 'Info', color: seeds.info },
+    { label: 'Success', color: seeds.success ?? DEFAULT_STATUS_SEEDS.success },
+    { label: 'Warning', color: seeds.warning ?? DEFAULT_STATUS_SEEDS.warning },
+    { label: 'Danger', color: seeds.danger ?? DEFAULT_STATUS_SEEDS.danger },
+    { label: 'Info', color: seeds.info ?? DEFAULT_STATUS_SEEDS.info },
   ].filter((s): s is { label: string; color: string } => Boolean(s.color))
 
   const specs = [
@@ -154,8 +149,9 @@ function PresetModalBody({ preset }: { preset: Preset }) {
       value: radiusLabel(preset.designSystem.tokens['--radius-factor']),
     },
     {
-      label: 'Color model',
-      value: ALGORITHM_LABEL[preset.designSystem.color?.algorithm ?? 'oklch'],
+      label: 'Primary',
+      value:
+        preset.designSystem.color?.primary === 'accent' ? 'Accent' : 'Neutral',
     },
   ]
 

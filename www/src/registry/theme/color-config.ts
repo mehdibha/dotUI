@@ -6,8 +6,9 @@
  * no algorithm menu — the v1 `{algorithm, knobs}` shape migrates below.
  */
 
-import { STATUS_SEEDS } from '@dotui/colors'
 import { z } from 'zod'
+
+import { STATUS_SEEDS } from '@dotui/colors'
 
 import type { PrimaryColorSource } from './types'
 
@@ -82,7 +83,13 @@ export function migrateColorConfig(input: unknown): ColorConfig {
   if (typeof v1.seeds?.accent !== 'string') return DEFAULT_COLOR_CONFIG
 
   const seeds: ColorConfig['seeds'] = { accent: v1.seeds.accent }
-  for (const name of ['neutral', 'success', 'warning', 'danger', 'info'] as const) {
+  for (const name of [
+    'neutral',
+    'success',
+    'warning',
+    'danger',
+    'info',
+  ] as const) {
     const value = v1.seeds?.[name]
     if (typeof value === 'string') seeds[name] = value
   }

@@ -31,8 +31,8 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
           content: ['relative bg-tooltip/70 backdrop-blur-[2px]'],
         },
         vars: {
-          '--color-tooltip': 'var(--neutral-300)',
-          '--color-fg-on-tooltip': 'var(--on-neutral-300)',
+          '--color-tooltip': 'var(--neutral-200)',
+          '--color-fg-on-tooltip': 'var(--neutral-950)',
         },
       },
     },

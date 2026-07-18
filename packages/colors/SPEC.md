@@ -188,13 +188,13 @@ slope for warm bands (+140°/L above seed for amber) and −59°/L for blue
 Dark-side defaults (band boundaries on seed hue, degrees; negative = toward
 gold/orange, positive = toward violet):
 
-| Band          | Hue range  | slope (°/L) | endpoint     |
-| ------------- | ---------- | ----------- | ------------ |
-| orange-brown  | [40, 75)   | −13         | −4°          |
-| gold-amber    | [75, 95)   | −63         | −30° @ L .35 |
-| yellow-lime   | [95, 135)  | −41         | −12°         |
-| blue          | [225, 262) | +20         | +7°          |
-| all others    | —          | 0           | \|ΔH\| < 8°  |
+| Band         | Hue range  | slope (°/L) | endpoint     |
+| ------------ | ---------- | ----------- | ------------ |
+| orange-brown | [40, 75)   | −13         | −4°          |
+| gold-amber   | [75, 95)   | −63         | −30° @ L .35 |
+| yellow-lime  | [95, 135)  | −41         | −12°         |
+| blue         | [225, 262) | +20         | +7°          |
+| all others   | —          | 0           | \|ΔH\| < 8°  |
 
 Radix bends warm ramps 14–30° seed→text; Tailwind bends the same ramps
 −37…−50° full-ramp — Tailwind-strength is `hueShift ≈ 1.6`, one scalar away.
@@ -237,8 +237,9 @@ shape.light = [0.13, 0.19, 0.26, 0.32, 0.43, 0.46, 0.57, 0.74, 0.97, 0.93, 0.81,
 shape.dark  = [0.23, 0.22, 0.26, 0.37, 0.43, 0.51, 0.60, 0.80, 1.00, 0.93, 0.71, 0.18]
 ```
 
-  Dark step-12 detints to 18% (near-white text ships almost pure); dark
-  backgrounds carry ~1.8× the relative tint of light backgrounds.
+Dark step-12 detints to 18% (near-white text ships almost pure); dark
+backgrounds carry ~1.8× the relative tint of light backgrounds.
+
 - `tintPeak` default 0.016 (median of the 10 Radix family-mode maxima);
   **hard whisper ceiling C ≤ 0.020 at every step** (measured Radix max
   0.0193, mauve light step 9). `neutralTint: 0` = pure gray (legitimate:
@@ -289,7 +290,7 @@ surface steps render identical sRGB).
   (verified digit-for-digit: 144/144 published Radix alpha steps reproduced
   hex-exact): overlay toward white if any target channel is lighter than the
   background channel, else toward black; `A = ceil(max_c (t−b)/(desired−b) ·
-  255)/255`; channels solved as `ceil(clamp(−(b(1−A)−t)/A))` with ±1
+255)/255`; channels solved as `ceil(clamp(−(b(1−A)−t)/A))` with ±1
   correction against the browser compositing model
   `round(bg·(1−a)) + round(fg·a)` at 0–255; pure-gray shortcut. Light twins
   solve over the mode's app background; dark twins over our step-25 (Radix's

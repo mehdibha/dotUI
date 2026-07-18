@@ -10,8 +10,8 @@
 //
 // Run: node research/alpha-parity.mjs   (from packages/colors)
 
-import { createRequire } from 'node:module'
 import { writeFileSync } from 'node:fs'
+import { createRequire } from 'node:module'
 
 const require = createRequire(import.meta.url)
 const radix = require('@radix-ui/colors')
@@ -37,7 +37,8 @@ const formatRgba = ([r, g, b, a]) => {
 }
 
 // Browser compositing model (source-over, 8-bit, per Radix's correction step).
-const blendChannel = (fg, a, bg) => Math.round(bg * (1 - a)) + Math.round(fg * a)
+const blendChannel = (fg, a, bg) =>
+  Math.round(bg * (1 - a)) + Math.round(fg * a)
 const composite = ([r, g, b, a], bg) => [
   blendChannel(r, a, bg[0]),
   blendChannel(g, a, bg[1]),
@@ -76,8 +77,10 @@ function getAlphaColor(targetRgb, backgroundRgb) {
   // +/-1 correction against the 8-bit compositing model.
   const fix = (fg, t, b) => {
     const blended = blendChannel(fg, A, b)
-    if (desired === 0 && t <= b && t !== blended) return t > blended ? fg + 1 : fg - 1
-    if (desired === P && t >= b && t !== blended) return t > blended ? fg + 1 : fg - 1
+    if (desired === 0 && t <= b && t !== blended)
+      return t > blended ? fg + 1 : fg - 1
+    if (desired === P && t >= b && t !== blended)
+      return t > blended ? fg + 1 : fg - 1
     return fg
   }
   R = fix(R, tr, br)
@@ -100,12 +103,21 @@ function measureScale(name, solidHexes, publishedAlphaHexes, bg) {
     const publishedHex = publishedAlphaHexes[i]
 
     const compComputed = composite(
-      [computed[0], computed[1], computed[2], Math.round(computed[3] * 255) / 255],
+      [
+        computed[0],
+        computed[1],
+        computed[2],
+        Math.round(computed[3] * 255) / 255,
+      ],
       bg,
     )
     const compPublished = composite(hexToRgba(publishedHex), bg)
-    const errComputed = Math.max(...compComputed.map((v, c) => Math.abs(v - target[c])))
-    const errPublished = Math.max(...compPublished.map((v, c) => Math.abs(v - target[c])))
+    const errComputed = Math.max(
+      ...compComputed.map((v, c) => Math.abs(v - target[c])),
+    )
+    const errPublished = Math.max(
+      ...compPublished.map((v, c) => Math.abs(v - target[c])),
+    )
 
     return {
       step: i + 1,
@@ -122,8 +134,12 @@ function measureScale(name, solidHexes, publishedAlphaHexes, bg) {
     scale: name,
     background: '#' + bg.map(byte).join(''),
     exactHexMatches: steps.filter((s) => s.hexMatch).length,
-    maxCompositeErrComputed: Math.max(...steps.map((s) => s.compositeErrComputed)),
-    maxCompositeErrPublished: Math.max(...steps.map((s) => s.compositeErrPublished)),
+    maxCompositeErrComputed: Math.max(
+      ...steps.map((s) => s.compositeErrComputed),
+    ),
+    maxCompositeErrPublished: Math.max(
+      ...steps.map((s) => s.compositeErrPublished),
+    ),
     steps,
   }
 }
@@ -141,7 +157,10 @@ const darkSolveResults = darkCandidates.map((bg) => {
     const alphas = values(radix[`${name}DarkA`])
     solids.forEach((hex, i) => {
       total++
-      if (formatRgba(getAlphaColor(hexToRgb(hex), bg)).toLowerCase() === alphas[i].toLowerCase())
+      if (
+        formatRgba(getAlphaColor(hexToRgb(hex), bg)).toLowerCase() ===
+        alphas[i].toLowerCase()
+      )
         matches++
     })
   }
@@ -155,7 +174,12 @@ const light = SCALES.map((name) =>
   measureScale(name, values(radix[name]), values(radix[`${name}A`]), WHITE),
 )
 const dark = SCALES.map((name) =>
-  measureScale(name, values(radix[`${name}Dark`]), values(radix[`${name}DarkA`]), darkBg),
+  measureScale(
+    name,
+    values(radix[`${name}Dark`]),
+    values(radix[`${name}DarkA`]),
+    darkBg,
+  ),
 )
 
 const summary = {
@@ -175,16 +199,24 @@ const summary = {
     background: '#ffffff',
     totalSteps: light.length * 12,
     exactHexMatches: light.reduce((n, s) => n + s.exactHexMatches, 0),
-    maxCompositeErrComputed: Math.max(...light.map((s) => s.maxCompositeErrComputed)),
-    maxCompositeErrPublished: Math.max(...light.map((s) => s.maxCompositeErrPublished)),
+    maxCompositeErrComputed: Math.max(
+      ...light.map((s) => s.maxCompositeErrComputed),
+    ),
+    maxCompositeErrPublished: Math.max(
+      ...light.map((s) => s.maxCompositeErrPublished),
+    ),
     perScale: light,
   },
   dark: {
     background: darkSolveResults[0].bg,
     totalSteps: dark.length * 12,
     exactHexMatches: dark.reduce((n, s) => n + s.exactHexMatches, 0),
-    maxCompositeErrComputed: Math.max(...dark.map((s) => s.maxCompositeErrComputed)),
-    maxCompositeErrPublished: Math.max(...dark.map((s) => s.maxCompositeErrPublished)),
+    maxCompositeErrComputed: Math.max(
+      ...dark.map((s) => s.maxCompositeErrComputed),
+    ),
+    maxCompositeErrPublished: Math.max(
+      ...dark.map((s) => s.maxCompositeErrPublished),
+    ),
     perScale: dark,
   },
 }

@@ -55,14 +55,8 @@
   "bands": [
     {
       "band": "pink-magenta",
-      "hRange": [
-        330,
-        5
-      ],
-      "families": [
-        "crimson",
-        "pink"
-      ],
+      "hRange": [330, 5],
+      "families": ["crimson", "pink"],
       "mutedFamiliesExcluded": [],
       "bendClass": {
         "light": "flat",
@@ -155,15 +149,8 @@
     },
     {
       "band": "red",
-      "hRange": [
-        5,
-        40
-      ],
-      "families": [
-        "red",
-        "ruby",
-        "tomato"
-      ],
+      "hRange": [5, 40],
+      "families": ["red", "ruby", "tomato"],
       "mutedFamiliesExcluded": [],
       "bendClass": {
         "light": "flat",
@@ -253,9 +240,7 @@
           "meanEndpointDH": -12.03,
           "medianEndpointDH": -16.58,
           "meanEndpointL": 0.902,
-          "outliers": [
-            "tomato"
-          ],
+          "outliers": ["tomato"],
           "perFamily": {
             "red": {
               "slopePerL": -46.41,
@@ -278,17 +263,9 @@
     },
     {
       "band": "orange-brown",
-      "hRange": [
-        40,
-        75
-      ],
-      "families": [
-        "orange"
-      ],
-      "mutedFamiliesExcluded": [
-        "bronze",
-        "brown"
-      ],
+      "hRange": [40, 75],
+      "families": ["orange"],
+      "mutedFamiliesExcluded": ["bronze", "brown"],
       "bendClass": {
         "light": "flat",
         "dark": "moderate"
@@ -360,16 +337,9 @@
     },
     {
       "band": "gold-amber",
-      "hRange": [
-        75,
-        95
-      ],
-      "families": [
-        "amber"
-      ],
-      "mutedFamiliesExcluded": [
-        "gold"
-      ],
+      "hRange": [75, 95],
+      "families": ["amber"],
+      "mutedFamiliesExcluded": ["gold"],
       "bendClass": {
         "light": "strong",
         "dark": "moderate"
@@ -441,14 +411,8 @@
     },
     {
       "band": "yellow-lime",
-      "hRange": [
-        95,
-        135
-      ],
-      "families": [
-        "lime",
-        "yellow"
-      ],
+      "hRange": [95, 135],
+      "families": ["lime", "yellow"],
       "mutedFamiliesExcluded": [],
       "bendClass": {
         "light": "moderate",
@@ -541,14 +505,8 @@
     },
     {
       "band": "green",
-      "hRange": [
-        135,
-        168
-      ],
-      "families": [
-        "grass",
-        "green"
-      ],
+      "hRange": [135, 168],
+      "families": ["grass", "green"],
       "mutedFamiliesExcluded": [],
       "bendClass": {
         "light": "flat",
@@ -641,17 +599,8 @@
     },
     {
       "band": "teal-cyan",
-      "hRange": [
-        168,
-        225
-      ],
-      "families": [
-        "cyan",
-        "jade",
-        "mint",
-        "sky",
-        "teal"
-      ],
+      "hRange": [168, 225],
+      "families": ["cyan", "jade", "mint", "sky", "teal"],
       "mutedFamiliesExcluded": [],
       "bendClass": {
         "light": "flat",
@@ -664,9 +613,7 @@
           "meanEndpointDH": 5.47,
           "medianEndpointDH": 3.03,
           "meanEndpointL": 0.337,
-          "outliers": [
-            "sky"
-          ],
+          "outliers": ["sky"],
           "perFamily": {
             "cyan": {
               "slopePerL": -8.83,
@@ -701,9 +648,7 @@
           "meanEndpointDH": -4.62,
           "medianEndpointDH": -2.16,
           "meanEndpointL": 0.939,
-          "outliers": [
-            "cyan"
-          ],
+          "outliers": ["cyan"],
           "perFamily": {
             "cyan": {
               "slopePerL": -66.47,
@@ -740,10 +685,7 @@
           "meanEndpointDH": 9.15,
           "medianEndpointDH": 4.8,
           "meanEndpointL": 0.272,
-          "outliers": [
-            "jade",
-            "sky"
-          ],
+          "outliers": ["jade", "sky"],
           "perFamily": {
             "cyan": {
               "slopePerL": 1.3,
@@ -811,13 +753,8 @@
     },
     {
       "band": "blue",
-      "hRange": [
-        225,
-        262
-      ],
-      "families": [
-        "blue"
-      ],
+      "hRange": [225, 262],
+      "families": ["blue"],
       "mutedFamiliesExcluded": [],
       "bendClass": {
         "light": "flat",
@@ -890,15 +827,8 @@
     },
     {
       "band": "indigo-violet",
-      "hRange": [
-        262,
-        300
-      ],
-      "families": [
-        "indigo",
-        "iris",
-        "violet"
-      ],
+      "hRange": [262, 300],
+      "families": ["indigo", "iris", "violet"],
       "mutedFamiliesExcluded": [],
       "bendClass": {
         "light": "flat",
@@ -1011,14 +941,8 @@
     },
     {
       "band": "purple-plum",
-      "hRange": [
-        300,
-        330
-      ],
-      "families": [
-        "plum",
-        "purple"
-      ],
+      "hRange": [300, 330],
+      "families": ["plum", "purple"],
       "mutedFamiliesExcluded": [],
       "bendClass": {
         "light": "flat",

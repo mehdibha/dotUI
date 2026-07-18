@@ -1,68 +1,121 @@
 'use client'
 
-import { onBlackWhite, type PairingResult, verify } from '@dotui/colors'
+import type { GuaranteeResult, ThemeReport } from '@dotui/colors'
 
-import { PALETTE_ORDER, type ResolvedPalettes } from '@/registry/theme'
+import { PALETTE_ORDER } from '@/registry/theme'
 
-/** The solid surface every palette's filled components sit on (buttons, badges, …). */
-const SOLID_STEP = '500'
+const MODES = ['light', 'dark'] as const
 
-/**
- * WCAG report for the auto-foreground text on each palette's solid (500) surface — the
- * pairing dotUI actually ships (`onBlackWhite` mirrors the autocontrast plugin). Surfaces the
- * kernel's `verify/` layer so a custom palette's accessibility is visible, not blind.
- */
-export function solidContrastReport(
-  resolved: ResolvedPalettes,
-): PairingResult[] {
-  const pairings = PALETTE_ORDER.flatMap((name) => {
-    const bg = resolved.light[name]?.[SOLID_STEP]
-    return bg ? [{ name, fg: onBlackWhite(bg), bg }] : []
-  })
-  return verify(pairings, { suggestFix: false }).results
+const GROUPS = [
+  {
+    id: 'text',
+    label: 'Text',
+    match: (name: string) => name.startsWith('text'),
+  },
+  {
+    id: 'on-solid',
+    label: 'On solid',
+    match: (name: string) => name === 'on-solid',
+  },
+  {
+    id: 'border',
+    label: 'Border',
+    match: (name: string) => name.startsWith('border'),
+  },
+] as const
+
+/** Scales in display order: known palettes first, custom extras after. */
+function orderedScales(guarantees: GuaranteeResult[]): string[] {
+  const present = new Set(guarantees.map((g) => g.scale))
+  const ordered = PALETTE_ORDER.filter((name) => present.has(name))
+  const extra = [...present]
+    .filter((name) => !(PALETTE_ORDER as readonly string[]).includes(name))
+    .sort()
+  return [...ordered, ...extra]
 }
 
-function LevelBadge({ level }: { level: PairingResult['level'] }) {
-  if (level === 'fail') {
-    return (
-      <span className="rounded bg-danger px-1.5 py-0.5 text-[10px] font-medium text-fg-on-danger">
-        Fail
-      </span>
+function failureTitle(failures: GuaranteeResult[]): string | undefined {
+  if (failures.length === 0) return undefined
+  return failures
+    .map(
+      (f) =>
+        `${f.name} (${f.fg} on ${f.bg}): WCAG ${f.wcag.toFixed(2)}/${f.wcagTarget} · Lc ${f.lc.toFixed(1)}/${f.lcTarget}`,
     )
-  }
+    .join('\n')
+}
+
+function GroupChip({
+  label,
+  results,
+}: {
+  label: string
+  results: GuaranteeResult[]
+}) {
+  const failures = results.filter((r) => !r.passes)
+  const passes = failures.length === 0
   return (
-    <span className="rounded bg-neutral-100 px-1.5 py-0.5 text-[10px] font-medium text-fg-muted">
-      {level}
+    <span
+      title={failureTitle(failures)}
+      className={
+        passes
+          ? 'rounded bg-neutral px-1.5 py-0.5 text-[10px] font-medium text-fg-muted'
+          : 'rounded bg-danger px-1.5 py-0.5 text-[10px] font-medium text-fg-on-danger'
+      }
+    >
+      {label} {passes ? '✓' : '✕'}
     </span>
   )
 }
 
-/** Per-palette readout: text-on-solid contrast ratio + WCAG level (AA / AAA / Fail). */
-export function ContrastReadout({ resolved }: { resolved: ResolvedPalettes }) {
-  const results = solidContrastReport(resolved)
-  if (results.length === 0) return null
+/**
+ * The engine's guarantee audit (`theme.report`): pass/fail per scale for the
+ * actually-shipped pairings in both modes, plus the report's warnings (CVD
+ * gate, accent proximity, preserve-seed prices).
+ */
+export function ContrastReadout({ report }: { report: ThemeReport }) {
+  const scales = orderedScales(report.guarantees)
+  if (scales.length === 0) return null
 
   return (
     <div className="flex flex-col gap-1.5">
       <span className="pl-1 text-xs font-medium text-fg-muted">
-        Contrast — text on solid surface
+        Contrast guarantees
       </span>
+
+      {report.warnings.length > 0 && (
+        <ul className="flex flex-col gap-1 rounded-md bg-warning-muted p-2 text-[11px] text-fg-warning">
+          {report.warnings.map((warning) => (
+            <li key={warning}>{warning}</li>
+          ))}
+        </ul>
+      )}
+
       <div className="flex flex-col gap-1">
-        {results.map((r) => (
-          <div key={r.name} className="flex items-center gap-2 text-xs">
-            <span
-              className="flex size-5 shrink-0 items-center justify-center rounded text-[10px] font-semibold"
-              style={{ backgroundColor: r.bg, color: r.fg }}
-            >
-              Aa
-            </span>
-            <span className="flex-1 capitalize">{r.name}</span>
-            <span className="text-fg-muted tabular-nums">
-              {r.ratio.toFixed(1)}:1
-            </span>
-            <LevelBadge level={r.level} />
-          </div>
-        ))}
+        {scales.map((scale) => {
+          const forScale = report.guarantees.filter((g) => g.scale === scale)
+          return (
+            <div key={scale} className="flex items-center gap-2 text-xs">
+              <span className="w-16 shrink-0 capitalize">{scale}</span>
+              {MODES.map((mode) => {
+                const forMode = forScale.filter((g) => g.mode === mode)
+                return (
+                  <div key={mode} className="flex flex-1 items-center gap-1">
+                    <span className="text-[10px] text-fg-muted">
+                      {mode === 'light' ? 'L' : 'D'}
+                    </span>
+                    {GROUPS.map((group) => (
+                      <GroupChip
+                        key={group.id}
+                        label={group.label}
+                        results={forMode.filter((g) => group.match(g.name))}
+                      />
+                    ))}
+                  </div>
+                )
+              })}
+            </div>
+          )
+        })}
       </div>
     </div>
   )

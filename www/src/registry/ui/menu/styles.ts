@@ -57,14 +57,14 @@ const { useStyles, styles } = createStyles(menuMeta, {
           item: 'overflow-hidden focus-visible:before:absolute focus-visible:before:inset-y-0 focus-visible:before:left-0 focus-visible:before:w-0.5 focus-visible:before:rounded-[inherit] focus-visible:before:bg-accent',
         },
         vars: {
-          '--color-highlight': 'var(--neutral-300)',
-          '--color-fg-on-highlight': 'var(--on-neutral-300)',
+          '--color-highlight': 'var(--neutral-200)',
+          '--color-fg-on-highlight': 'var(--neutral-950)',
         },
       },
       accent: {
         vars: {
-          '--color-highlight': 'var(--accent-500)',
-          '--color-fg-on-highlight': 'var(--on-accent-500)',
+          '--color-highlight': 'var(--accent-700)',
+          '--color-fg-on-highlight': 'var(--on-accent-700)',
         },
       },
     },

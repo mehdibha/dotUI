@@ -23,7 +23,6 @@ export function solveAlphaRgb8(
   t: [number, number, number],
   b: [number, number, number],
 ): string {
-
   if (t[0] === b[0] && t[1] === b[1] && t[2] === b[2])
     return `rgb(${t[0]} ${t[1]} ${t[2]} / 0)`
 
@@ -52,7 +51,9 @@ export function solveAlphaRgb8(
 
   const channels = [0, 0, 0] as [number, number, number]
   for (let i = 0; i < 3; i++) {
-    let c = Math.ceil(Math.max(0, Math.min(255, -(b[i]! * (1 - a) - t[i]!) / a)))
+    let c = Math.ceil(
+      Math.max(0, Math.min(255, -(b[i]! * (1 - a) - t[i]!) / a)),
+    )
     // ±1 correction against the browser's per-term rounding.
     for (const candidate of [c, c - 1, c + 1]) {
       if (candidate < 0 || candidate > 255) continue

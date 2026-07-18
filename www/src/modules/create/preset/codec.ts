@@ -2,7 +2,7 @@ import { deflateRaw, inflateRaw } from 'pako'
 
 import {
   DEFAULT_COLOR_CONFIG,
-  GENERATIVE_ALGORITHMS,
+  migrateColorConfig,
   type ColorConfig,
 } from '@/registry/theme'
 import {
@@ -120,22 +120,18 @@ export function encodePreset(ds: DesignSystem): string | undefined {
 /* --------------------------------- decode --------------------------------- */
 
 /**
- * Drop a decoded color recipe whose algorithm isn't seed-generative (e.g. a stale or
- * crafted `fixed` preset that would otherwise throw inside `resolveColorConfig`).
- * Also normalizes `primary`: only `'accent'` is stored (absent = neutral default),
- * so a crafted or stale value decodes back to the default.
+ * Migrate a decoded color recipe to `ColorConfig` v2 — v1 shapes map onto the
+ * nearest v2 axes, garbage falls back to the default (never throws). A result
+ * equal to the default decodes as `undefined` so it re-encodes to nothing.
  */
 function sanitizeColor(
   color: ColorConfig | undefined,
 ): ColorConfig | undefined {
   if (!color) return undefined
-  if (!(GENERATIVE_ALGORITHMS as readonly string[]).includes(color.algorithm))
-    return undefined
-  if (color.primary !== undefined && color.primary !== 'accent') {
-    const { primary: _drop, ...rest } = color
-    return rest
-  }
-  return color
+  const migrated = migrateColorConfig(color)
+  return JSON.stringify(migrated) === JSON.stringify(DEFAULT_COLOR_CONFIG)
+    ? undefined
+    : migrated
 }
 
 /**

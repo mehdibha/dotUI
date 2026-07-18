@@ -10,6 +10,7 @@ import {
   ACCENT_PRIMARY_SEMANTICS,
   DEFAULT_SEMANTICS,
   emitCss,
+  emitDarkOverridesCss,
   emitPrimitivesCss,
   resolveColorConfig,
   semanticsWithPrimary,
@@ -247,7 +248,6 @@ function buildScopedThemeCss(
     }
     blocks.push(
       emitPrimitivesCss(resolved, {
-        onColors: true,
         lightSelector: selector,
         darkSelector: `.dark ${selector}`,
       }),
@@ -466,14 +466,16 @@ function DesignSystemProvider({
   // global selectors and `<style>` carries the UA `display: none`, so layout is untouched.
   const themeCss = React.useMemo(() => {
     if (scoped || !color) return null
-    const primitives = emitPrimitivesCss(resolveColorConfigCached(color), {
-      onColors: true,
-    })
-    // An accent-sourced primary re-points the primary cluster on plain `:root`,
-    // which beats the layered `@theme` declarations. Mode-agnostic — the accent
-    // primitives it references flip with `.dark`.
+    const primitives = emitPrimitivesCss(resolveColorConfigCached(color))
+    // An accent-sourced primary re-points the primary cluster on plain `:root`
+    // (beats the layered `@theme` declarations), plus any per-mode re-points
+    // on `.dark` (none today — the accent primitives flip with `.dark`).
     if (color.primary !== 'accent') return primitives
-    return primitives + emitCss(ACCENT_PRIMARY_SEMANTICS, { selector: ':root' })
+    return (
+      primitives +
+      emitCss(ACCENT_PRIMARY_SEMANTICS, { selector: ':root' }) +
+      emitDarkOverridesCss(ACCENT_PRIMARY_SEMANTICS, { selector: '.dark' })
+    )
   }, [scoped, color])
   const themeStyle = themeCss ? (
     <style data-dotui-color>{themeCss}</style>

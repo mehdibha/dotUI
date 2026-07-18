@@ -57,7 +57,8 @@ function apcaY(color: Oklch): number {
  */
 export function apca(text: Oklch, background: Oklch): number {
   const S = SA98G
-  const soft = (y: number) => (y > S.blkThrs ? y : y + (S.blkThrs - y) ** S.blkClmp)
+  const soft = (y: number) =>
+    y > S.blkThrs ? y : y + (S.blkThrs - y) ** S.blkClmp
   const txtY = soft(apcaY(text))
   const bgY = soft(apcaY(background))
   if (Math.abs(bgY - txtY) < S.deltaYmin) return 0
@@ -75,7 +76,11 @@ const toOklab = converter('oklab')
 export function deltaEok(a: Oklch, b: Oklch): number {
   const la = toOklab({ mode: 'oklch', ...a })
   const lb = toOklab({ mode: 'oklch', ...b })
-  return Math.hypot(la.l - lb.l, (la.a ?? 0) - (lb.a ?? 0), (la.b ?? 0) - (lb.b ?? 0))
+  return Math.hypot(
+    la.l - lb.l,
+    (la.a ?? 0) - (lb.a ?? 0),
+    (la.b ?? 0) - (lb.b ?? 0),
+  )
 }
 
 export type CvdKind = 'protan' | 'deutan' | 'tritan'
@@ -113,7 +118,9 @@ export function minPairwiseDeltaEok(colors: Oklch[]): {
         min = Math.min(min, deltaEok(set[i]!, set[j]!))
     return min
   }
-  const out = { normal: minOf(colors) } as ReturnType<typeof minPairwiseDeltaEok>
+  const out = { normal: minOf(colors) } as ReturnType<
+    typeof minPairwiseDeltaEok
+  >
   for (const kind of CVD_KINDS)
     out[kind] = minOf(colors.map((c) => simulateCvd(c, kind)))
   return out

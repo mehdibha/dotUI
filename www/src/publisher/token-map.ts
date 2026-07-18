@@ -67,7 +67,6 @@ export const SHADOW_OPTIONS: readonly TokenOption[] = [
   { label: 'Large', value: '--shadow-lg', suffix: 'lg' },
   { label: 'Extra Large', value: '--shadow-xl', suffix: 'xl' },
   { label: '2XL', value: '--shadow-2xl', suffix: '2xl' },
-  { label: 'Shine', value: '--shadow-shine', suffix: 'shine' },
 ]
 
 export const CURSOR_OPTIONS: readonly TokenOption[] = [

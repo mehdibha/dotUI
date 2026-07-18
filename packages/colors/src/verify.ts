@@ -7,8 +7,8 @@
 
 import { BARS, STEPS, type StepName } from './data'
 import { apca, wcag2 } from './meters'
-import type { Oklch } from './space'
 import type { Mode, ScaleColors } from './scale'
+import type { Oklch } from './space'
 
 export interface GuaranteeResult {
   scale: string
@@ -58,9 +58,23 @@ export function verifyScale(
   }
 
   for (const bg of ['25', '50', '100'] as const)
-    check('text-900', '900', step('900'), bg, BARS.text900.wcag, BARS.text900.lc)
+    check(
+      'text-900',
+      '900',
+      step('900'),
+      bg,
+      BARS.text900.wcag,
+      BARS.text900.lc,
+    )
   for (const bg of ['25', '50'] as const)
-    check('text-950', '950', step('950'), bg, BARS.text950.wcag, BARS.text950.lc)
+    check(
+      'text-950',
+      '950',
+      step('950'),
+      bg,
+      BARS.text950.wcag,
+      BARS.text950.lc,
+    )
   check('text-950', '950', step('950'), '100', BARS.text950.wcag, 0)
 
   const onBars = strictOnSolid ? BARS.onSolidStrict : BARS.onSolid

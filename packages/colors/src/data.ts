@@ -78,18 +78,48 @@ export interface HueBand {
 
 export const HUE_BANDS: HueBand[] = [
   // orange-brown: Radix-flat; Tailwind-strength (−37°) is hueShift ≈ 1.6 away
-  { from: 40, to: 75, slope: -13, endpoint: -4, lightSlope: -26, lightEndpoint: -8 },
+  {
+    from: 40,
+    to: 75,
+    slope: -13,
+    endpoint: -4,
+    lightSlope: -26,
+    lightEndpoint: -8,
+  },
   // gold-amber: strong gold bend
-  { from: 75, to: 95, slope: -63, endpoint: -30, lightSlope: 140, lightEndpoint: 16 },
+  {
+    from: 75,
+    to: 95,
+    slope: -63,
+    endpoint: -30,
+    lightSlope: 140,
+    lightEndpoint: 16,
+  },
   // yellow-lime
-  { from: 95, to: 135, slope: -41, endpoint: -12, lightSlope: 80, lightEndpoint: 12 },
+  {
+    from: 95,
+    to: 135,
+    slope: -41,
+    endpoint: -12,
+    lightSlope: 80,
+    lightEndpoint: 12,
+  },
   // blue: toward violet dark, toward cyan pale
-  { from: 225, to: 262, slope: 20, endpoint: 7, lightSlope: -59, lightEndpoint: -17 },
+  {
+    from: 225,
+    to: 262,
+    slope: 20,
+    endpoint: 7,
+    lightSlope: -59,
+    lightEndpoint: -17,
+  },
 ]
 
 /** D8 — neutral tint chroma shape per mode (fraction of tintPeak; peak at solid). */
 export const NEUTRAL_TINT_SHAPE = {
-  light: [0.13, 0.19, 0.26, 0.32, 0.43, 0.46, 0.57, 0.74, 0.97, 0.93, 0.81, 0.79],
+  light: [
+    0.13, 0.19, 0.26, 0.32, 0.43, 0.46, 0.57, 0.74, 0.97, 0.93, 0.81, 0.79,
+  ],
   dark: [0.23, 0.22, 0.26, 0.37, 0.43, 0.51, 0.6, 0.8, 1.0, 0.93, 0.71, 0.18],
 }
 

@@ -7,8 +7,8 @@
 //
 // Run: node research/status-cvd.mjs   (from packages/colors)
 
-import { createRequire } from 'node:module'
 import { writeFileSync } from 'node:fs'
+import { createRequire } from 'node:module'
 
 const require = createRequire(import.meta.url)
 const {
@@ -76,7 +76,12 @@ function evaluateSet(named) {
       globalMinPair = `${cond}:${minPair}`
     }
   }
-  return { colors: named, globalMin: round4(globalMin), globalMinPair, perCondition }
+  return {
+    colors: named,
+    globalMin: round4(globalMin),
+    globalMinPair,
+    perCondition,
+  }
 }
 
 // objective for the search: min pairwise dEok over {4 seeds + accent},
@@ -120,7 +125,8 @@ function candidates(family) {
         if (clamped.c < 0.12 - 1e-6) continue // out-of-gamut below the chroma floor
         const hex = formatHex(rgb(clamped))
         // dedupe identical hexes produced by chroma clamping
-        if (!out.some((o) => o.hex === hex)) out.push({ hex, l, c: round4(clamped.c), h })
+        if (!out.some((o) => o.hex === hex))
+          out.push({ hex, l, c: round4(clamped.c), h })
       }
   return out
 }
@@ -175,7 +181,10 @@ const withOklch = (seeds) =>
   Object.fromEntries(
     Object.entries(seeds).map(([k, hex]) => {
       const o = oklch(rgb(hex))
-      return [k, { hex, oklch: { l: round4(o.l), c: round4(o.c), h: round4(o.h ?? 0) } }]
+      return [
+        k,
+        { hex, oklch: { l: round4(o.l), c: round4(o.c), h: round4(o.h ?? 0) } },
+      ]
     }),
   )
 
@@ -225,5 +234,10 @@ brief('radix9+accent  ', result.radixReference)
 console.log('winner seeds:', winner.seeds, 'score', round4(winner.score))
 brief('winner+accent  ', result.search.winner.evaluation)
 brief('winner alone   ', result.search.winner.withoutAccent)
-console.log('identity seeds:', identityWinner.seeds, 'score', round4(identityWinner.score))
+console.log(
+  'identity seeds:',
+  identityWinner.seeds,
+  'score',
+  round4(identityWinner.score),
+)
 brief('identity+accent', result.search.identityPreserving.evaluation)

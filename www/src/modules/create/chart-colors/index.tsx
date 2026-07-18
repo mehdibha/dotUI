@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 
-import { toHex } from '@dotui/colors'
+import { toHex, toOklch } from '@dotui/colors'
 
 import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
@@ -19,24 +19,18 @@ import { Popover } from '@/registry/ui/popover'
 import { useDesignSystem } from '../preset'
 
 /**
- * The categorical chart palette. Each slot derives from a theme hue by default
- * (emitted as `var(--chart-N)` in the registry theme) so charts track the brand;
- * picking a color here writes an explicit `--chart-N` token override, and "Match
- * theme" restores the derived default.
- *
- * The picker can't parse the OKLCH ramps, so we resolve each slot's current
- * theme hue to hex (`toHex`) to seed the picker accurately; the live swatch
- * always reflects the real `var(--chart-N)`.
+ * The categorical chart palette. The engine generates `--chart-1..8` from the
+ * theme's seeds (CVD-gated); picking a color here writes an explicit
+ * `--chart-N` token override, and "Match theme" deletes the overrides so the
+ * generated palette shows through again.
  */
-const CHART_SLOTS = [
-  { token: '--chart-1', label: 'Chart 1', palette: 'accent' },
-  { token: '--chart-2', label: 'Chart 2', palette: 'success' },
-  { token: '--chart-3', label: 'Chart 3', palette: 'warning' },
-  { token: '--chart-4', label: 'Chart 4', palette: 'danger' },
-  { token: '--chart-5', label: 'Chart 5', palette: 'info' },
-] as const
+const CHART_SLOTS = Array.from({ length: 8 }, (_, i) => ({
+  token: `--chart-${i + 1}`,
+  label: `Chart ${i + 1}`,
+  index: i,
+}))
 
-/** Collapsed-card summary: the five live chart colors as swatches. */
+/** Collapsed-card summary: the eight live chart colors as swatches. */
 export function ChartColorsSummary() {
   return (
     <div className="flex flex-col gap-2">
@@ -58,38 +52,50 @@ export function ChartColorsSummary() {
 }
 
 export function ChartColorsConfig() {
-  const { designSystem, setToken } = useDesignSystem()
+  const { designSystem, setDesignSystem, setToken } = useDesignSystem()
   const tokens = designSystem.tokens ?? {}
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
 
-  // Resolve each slot's theme hue (its palette's mid step) to hex so the picker
-  // seeds from the color the chart actually shows by default.
-  const derived = useMemo(() => {
-    const resolved = resolveColorConfig(config)
-    const out: Record<string, string> = {}
-    for (const slot of CHART_SLOTS) {
-      const ramp = resolved.light[slot.palette] as
-        | Record<string, string>
-        | undefined
-      const value = ramp?.['500']
-      out[slot.token] = value ? toHex(value) : '#808080'
-    }
-    return out
-  }, [config])
+  // The engine emits oklch(); resolve to hex so the picker can parse it.
+  const generated = useMemo(
+    () =>
+      resolveColorConfig(config).charts.categorical.map((color) =>
+        toHex(toOklch(color)),
+      ),
+    [config],
+  )
+
+  const hasOverrides = CHART_SLOTS.some((slot) => tokens[slot.token])
 
   return (
     <div className="-mt-6 flex flex-col gap-4">
       <p className="text-xs text-fg-muted">
-        Charts read this palette via <code>var(--chart-N)</code>. Each color
-        follows a theme hue by default; pick a color to override it.
+        Charts read this palette via <code>var(--chart-N)</code>. The engine
+        generates it from your theme; pick a color to override a slot.
       </p>
+
+      <div className="flex flex-col gap-1.5">
+        <span className="pl-1 text-xs font-medium text-fg-muted">
+          Generated palette
+        </span>
+        <div className="flex overflow-hidden rounded-md">
+          {generated.map((color, i) => (
+            <div
+              key={CHART_SLOTS[i]?.token ?? i}
+              className="h-5 flex-1"
+              style={{ backgroundColor: color }}
+              title={color}
+            />
+          ))}
+        </div>
+      </div>
 
       <div className="grid grid-cols-2 gap-4">
         {CHART_SLOTS.map((slot) => {
           const override = tokens[slot.token]
           const pickerValue = override?.startsWith('#')
             ? override
-            : derived[slot.token]
+            : (generated[slot.index] ?? '#808080')
           return (
             <ColorPicker
               key={slot.token}
@@ -140,10 +146,13 @@ export function ChartColorsConfig() {
         variant="quiet"
         size="sm"
         className="self-start"
+        isDisabled={!hasOverrides}
         onPress={() => {
-          for (const slot of CHART_SLOTS) {
-            setToken(slot.token, `var(--${slot.palette}-500)`)
-          }
+          setDesignSystem((prev) => {
+            const next = { ...prev.tokens }
+            for (const slot of CHART_SLOTS) delete next[slot.token]
+            return { ...prev, tokens: next }
+          })
         }}
       >
         Match theme colors

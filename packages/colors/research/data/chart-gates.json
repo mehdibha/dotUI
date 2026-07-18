@@ -55,37 +55,25 @@
         "normalDeltaEok": {
           "measured": 0.1558,
           "required": 0.09,
-          "worstPair": [
-            "orange",
-            "vermillion"
-          ],
+          "worstPair": ["orange", "vermillion"],
           "pass": true
         },
         "protanDeltaEok": {
           "measured": 0.0862,
           "required": 0.045,
-          "worstPair": [
-            "bluishGreen",
-            "reddishPurple"
-          ],
+          "worstPair": ["bluishGreen", "reddishPurple"],
           "pass": true
         },
         "deutanDeltaEok": {
           "measured": 0.0978,
           "required": 0.045,
-          "worstPair": [
-            "skyBlue",
-            "reddishPurple"
-          ],
+          "worstPair": ["skyBlue", "reddishPurple"],
           "pass": true
         },
         "tritanDeltaEok": {
           "measured": 0.0961,
           "required": 0.045,
-          "worstPair": [
-            "bluishGreen",
-            "blue"
-          ],
+          "worstPair": ["bluishGreen", "blue"],
           "pass": true
         },
         "lStarRange": {
@@ -101,9 +89,7 @@
         }
       },
       "failures": [],
-      "advisoryMisses": [
-        "lStarAdjacentStagger"
-      ],
+      "advisoryMisses": ["lStarAdjacentStagger"],
       "pass": true
     },
     "tab10": {
@@ -111,37 +97,25 @@
         "normalDeltaEok": {
           "measured": 0.1133,
           "required": 0.09,
-          "worstPair": [
-            "brown",
-            "gray"
-          ],
+          "worstPair": ["brown", "gray"],
           "pass": true
         },
         "protanDeltaEok": {
           "measured": 0.0146,
           "required": 0.045,
-          "worstPair": [
-            "orange",
-            "green"
-          ],
+          "worstPair": ["orange", "green"],
           "pass": false
         },
         "deutanDeltaEok": {
           "measured": 0.0474,
           "required": 0.045,
-          "worstPair": [
-            "pink",
-            "cyan"
-          ],
+          "worstPair": ["pink", "cyan"],
           "pass": true
         },
         "tritanDeltaEok": {
           "measured": 0.049,
           "required": 0.045,
-          "worstPair": [
-            "purple",
-            "gray"
-          ],
+          "worstPair": ["purple", "gray"],
           "pass": true
         },
         "lStarRange": {
@@ -156,12 +130,8 @@
           "pass": false
         }
       },
-      "failures": [
-        "protanDeltaEok"
-      ],
-      "advisoryMisses": [
-        "lStarAdjacentStagger"
-      ],
+      "failures": ["protanDeltaEok"],
+      "advisoryMisses": ["lStarAdjacentStagger"],
       "pass": false
     }
   },
@@ -228,56 +198,28 @@
       "minPairwiseDeltaEok": {
         "normal": {
           "min": 0.0594,
-          "pair": [
-            "accent-500",
-            "info-500"
-          ]
+          "pair": ["accent-500", "info-500"]
         },
         "protan": {
           "min": 0.0488,
-          "pair": [
-            "success-500",
-            "warning-500"
-          ]
+          "pair": ["success-500", "warning-500"]
         },
         "deutan": {
           "min": 0.009,
-          "pair": [
-            "success-500",
-            "danger-500"
-          ]
+          "pair": ["success-500", "danger-500"]
         },
         "tritan": {
           "min": 0.0121,
-          "pair": [
-            "accent-500",
-            "info-500"
-          ]
+          "pair": ["accent-500", "info-500"]
         }
       },
       "lStar": {
-        "values": [
-          59.22,
-          61.82,
-          58.96,
-          56.25,
-          58.54
-        ],
+        "values": [59.22, 61.82, 58.96, 56.25, 58.54],
         "range": 5.57,
         "minSortedGap": 0.26,
-        "sortedGaps": [
-          2.29,
-          0.42,
-          0.26,
-          2.6
-        ],
+        "sortedGaps": [2.29, 0.42, 0.26, 2.6],
         "minAdjacentInOrderGap": 2.29,
-        "adjacentInOrderGaps": [
-          2.6,
-          2.86,
-          2.71,
-          2.29
-        ]
+        "adjacentInOrderGaps": [2.6, 2.86, 2.71, 2.29]
       }
     },
     "againstGates": {
@@ -285,37 +227,25 @@
         "normalDeltaEok": {
           "measured": 0.0594,
           "required": 0.09,
-          "worstPair": [
-            "accent-500",
-            "info-500"
-          ],
+          "worstPair": ["accent-500", "info-500"],
           "pass": false
         },
         "protanDeltaEok": {
           "measured": 0.0488,
           "required": 0.045,
-          "worstPair": [
-            "success-500",
-            "warning-500"
-          ],
+          "worstPair": ["success-500", "warning-500"],
           "pass": true
         },
         "deutanDeltaEok": {
           "measured": 0.009,
           "required": 0.045,
-          "worstPair": [
-            "success-500",
-            "danger-500"
-          ],
+          "worstPair": ["success-500", "danger-500"],
           "pass": false
         },
         "tritanDeltaEok": {
           "measured": 0.0121,
           "required": 0.045,
-          "worstPair": [
-            "accent-500",
-            "info-500"
-          ],
+          "worstPair": ["accent-500", "info-500"],
           "pass": false
         },
         "lStarRange": {
@@ -336,9 +266,7 @@
         "tritanDeltaEok",
         "lStarRange"
       ],
-      "advisoryMisses": [
-        "lStarAdjacentStagger"
-      ],
+      "advisoryMisses": ["lStarAdjacentStagger"],
       "pass": false
     }
   }
