@@ -2,24 +2,26 @@ import { useState, type ReactNode } from 'react'
 
 import type { CvdType } from '../color'
 import {
-  referenceSystems,
   resolveRoles,
   scaleByRole,
   UI_ROLES,
+  type ColorSystem,
   type ScaleRole,
   type Step,
 } from '../data'
 import type { Mode } from '../page'
 import { ScaleStrip, stepHex } from '../primitives'
 
-/** Side-by-side ramps. Two projections of the same data: equal-width chips
-    (how the scale is used) and true-lightness positioning (how the scale is
-    actually spaced — chips sit at their measured OKLCH lightness). */
+/** Side-by-side ramps. Three projections of the same data: equal-width chips
+    (how the scale is used), true-lightness positioning (how the scale is
+    actually spaced), and the shared 12-role frame. */
 export function RampsSection({
+  systems,
   mode,
   cvd,
   family,
 }: {
+  systems: ColorSystem[]
   mode: Mode
   cvd: CvdType | null
   family: ScaleRole
@@ -27,7 +29,7 @@ export function RampsSection({
   const [spacing, setSpacing] = useState<'equal' | 'true' | 'roles'>('equal')
   const [hoverFrac, setHoverFrac] = useState<number | null>(null)
 
-  const rows = referenceSystems.map((system) => {
+  const rows = systems.map((system) => {
     const scale = scaleByRole(system, family)
     const steps = scale
       ? mode === 'dark' && scale.dark
@@ -90,23 +92,31 @@ export function RampsSection({
       )}
 
       <div className="space-y-3">
-        <RampRow label="dotUI Engine" sub="awaiting rewrite" engine>
-          {spacing === 'roles' ? (
-            <div className="flex h-10 gap-px">
-              {UI_ROLES.map((role) => (
-                <div
-                  key={role}
-                  className="min-w-0 flex-1 rounded-sm border border-dashed border-neutral-300 dark:border-neutral-700"
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="flex h-10 w-full items-center justify-center rounded-md border border-dashed border-neutral-300 text-[11px] text-neutral-400 dark:border-neutral-700 dark:text-neutral-500">
-              engine output renders here
-            </div>
-          )}
-        </RampRow>
         {rows.map(({ system, scale, steps }) => {
+          if (system.empty)
+            return (
+              <RampRow
+                key={system.id}
+                label={system.name}
+                sub="awaiting engine"
+                engine
+              >
+                {spacing === 'roles' ? (
+                  <div className="flex h-10 gap-px">
+                    {UI_ROLES.map((role) => (
+                      <div
+                        key={role}
+                        className="min-w-0 flex-1 rounded-sm border border-dashed border-neutral-300 dark:border-neutral-700"
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex h-10 w-full items-center justify-center rounded-md border border-dashed border-neutral-300 text-[11px] text-neutral-400 dark:border-neutral-700 dark:text-neutral-500">
+                    engine output renders here
+                  </div>
+                )}
+              </RampRow>
+            )
           const active =
             hoverFrac === null || steps.length === 0
               ? null
@@ -201,7 +211,7 @@ function RoleRail({
   mode,
   cvd,
 }: {
-  system: (typeof referenceSystems)[number]
+  system: ColorSystem
   scale: NonNullable<ReturnType<typeof scaleByRole>>
   mode: Mode
   cvd: CvdType | null

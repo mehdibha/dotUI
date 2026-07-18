@@ -1,13 +1,21 @@
-/* Color Lab — the benchmark bench for the engine rewrite. The comparison
-   machinery is self-contained on purpose (no @dotui/colors, no existing color
-   module — both are queued for rewrite); the toolbar chrome uses dotUI's own
-   registry components. Registry theme ramps flip on the html `.dark` class, so
-   the lab's mode toggle drives that class directly while mounted (this route is
-   standalone — no site chrome to fight) and restores it on unmount. */
+/* Color Lab — the benchmark bench for the color engine. The dotUI seat is
+   live: createTheme() output flows through the exact same views as the
+   reference systems (engine.ts adapts jobs → roles 1:1). The measurement
+   machinery (color math, metrics) stays engine-independent so the meters
+   can't inherit the engine's assumptions. Registry theme ramps flip on the
+   html `.dark` class, so the lab's mode toggle drives that class directly
+   while mounted (this route is standalone) and restores it on unmount. */
 
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import type { Key } from 'react-aria-components'
 
+import { Button } from '@/registry/ui/button'
+import { ColorArea } from '@/registry/ui/color-area'
+import { ColorPicker } from '@/registry/ui/color-picker'
+import { ColorSlider } from '@/registry/ui/color-slider'
+import { ColorSwatch } from '@/registry/ui/color-swatch'
+import { DialogContent } from '@/registry/ui/dialog'
+import { Popover } from '@/registry/ui/popover'
 import {
   Select,
   SelectContent,
@@ -18,7 +26,8 @@ import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 
 import type { CvdType } from './color'
-import { referenceSystems, type ScaleRole } from './data'
+import { ENGINE_SLOT, referenceSystems, type ScaleRole } from './data'
+import { buildEngineSystem, DEFAULT_SEED, type EngineResult } from './engine'
 import { ContextSection } from './sections/context'
 import { ContrastSection } from './sections/contrast'
 import { CurvesSection } from './sections/curves'
@@ -57,7 +66,22 @@ export function ColorLab() {
   const [cvdRaw, setCvd] = useState<CvdType | 'none'>('none')
   const [family, setFamily] = useState<ScaleRole>('neutral')
   const [squint, setSquint] = useState(false)
+  const [seed, setSeed] = useState(DEFAULT_SEED)
   const cvd = cvdRaw === 'none' ? null : cvdRaw
+
+  // The engine seat: live createTheme() output when the seed is valid,
+  // the empty placeholder when it isn't.
+  const engine = useMemo<EngineResult | null>(() => {
+    try {
+      return buildEngineSystem(seed)
+    } catch {
+      return null
+    }
+  }, [seed])
+  const systems = useMemo(
+    () => [engine?.system ?? ENGINE_SLOT, ...referenceSystems],
+    [engine],
+  )
 
   // Registry ramps and dark: utilities both key off html.dark — sync it to the
   // lab's mode while mounted, restore whatever the site had on the way out.
@@ -85,7 +109,8 @@ export function ColorLab() {
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
             The bench for the engine rewrite. Eight reference systems, extracted
             from their canonical sources, compared on the axes that make a scale
-            good — with an empty seat waiting for the dotUI engine.
+            good — with the dotUI engine generating live from the seed and
+            judged by the exact same views.
           </p>
         </header>
 
@@ -103,6 +128,27 @@ export function ColorLab() {
               ))}
             </div>
             <div className="ml-auto flex items-center gap-3">
+              <ColorPicker
+                value={seed}
+                onChange={(color) => setSeed(color.toString('hex'))}
+              >
+                <Button size="sm" aria-label="Engine seed color">
+                  <ColorSwatch className="size-4 rounded-full" />
+                  <span className="font-mono text-[11px]">{seed}</span>
+                </Button>
+                <Popover>
+                  <DialogContent className="space-y-2">
+                    <ColorArea
+                      aria-label="Seed color"
+                      colorSpace="hsb"
+                      xChannel="saturation"
+                      yChannel="brightness"
+                      className="w-full"
+                    />
+                    <ColorSlider colorSpace="hsb" channel="hue" />
+                  </DialogContent>
+                </Popover>
+              </ColorPicker>
               <ToggleButtonGroup
                 aria-label="Scale family"
                 size="sm"
@@ -175,7 +221,12 @@ export function ColorLab() {
           ) : (
             <>
               <Section id="lineup" index={1} title="The lineup">
-                <LineupSection mode={mode} cvd={cvd} />
+                <LineupSection
+                  systems={systems}
+                  engineReport={engine?.report ?? null}
+                  mode={mode}
+                  cvd={cvd}
+                />
               </Section>
               <Section
                 id="ramps"
@@ -183,7 +234,12 @@ export function ColorLab() {
                 title="Side by side"
                 hint="Hover a step to line it up across systems. True-spacing mode positions every chip at its actual lightness — even spacing is craft, gaps are drift."
               >
-                <RampsSection mode={mode} cvd={cvd} family={family} />
+                <RampsSection
+                  systems={systems}
+                  mode={mode}
+                  cvd={cvd}
+                  family={family}
+                />
               </Section>
               <Section
                 id="curves"
@@ -191,7 +247,7 @@ export function ColorLab() {
                 title="Anatomy"
                 hint="The three OKLCH components of every scale. A good scale is a smooth lightness ramp, a deliberate chroma arc, and a hue that barely moves."
               >
-                <CurvesSection mode={mode} family={family} />
+                <CurvesSection systems={systems} mode={mode} family={family} />
               </Section>
               <Section
                 id="contrast"
@@ -199,7 +255,11 @@ export function ColorLab() {
                 title="Contrast"
                 hint="Does each system keep its own promises? Text roles against background roles, solids against their foregrounds — WCAG 2 and APCA."
               >
-                <ContrastSection mode={mode} family={family} />
+                <ContrastSection
+                  systems={systems}
+                  mode={mode}
+                  family={family}
+                />
               </Section>
               <Section
                 id="context"
@@ -207,7 +267,7 @@ export function ColorLab() {
                 title="In context"
                 hint="The same product UI rendered through every system's documented role mapping. Colors are judged where they'll live — on components."
               >
-                <ContextSection mode={mode} cvd={cvd} />
+                <ContextSection systems={systems} mode={mode} cvd={cvd} />
               </Section>
               <Section
                 id="scorecard"
@@ -215,7 +275,7 @@ export function ColorLab() {
                 title="Scorecard"
                 hint="Everything measurable, measured. When the engine plugs in, this table is the finish line."
               >
-                <ScorecardSection mode={mode} />
+                <ScorecardSection systems={systems} mode={mode} />
               </Section>
             </>
           )}

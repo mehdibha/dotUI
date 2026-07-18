@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { referenceSystems } from '../data'
+import type { ColorSystem } from '../data'
 import { computeSystemMetrics, type ScaleMetrics } from '../metrics'
 import type { Mode } from '../page'
 
@@ -18,39 +18,48 @@ interface Row {
 
 /** Everything measurable, measured — aggregated across each system's five
     scales for the current mode. The engine row is the finish line. */
-export function ScorecardSection({ mode }: { mode: Mode }) {
+export function ScorecardSection({
+  systems,
+  mode,
+}: {
+  systems: ColorSystem[]
+  mode: Mode
+}) {
+  const empty = systems.filter((s) => s.empty)
   const rows = useMemo<Row[]>(
     () =>
-      referenceSystems.map((system) => {
-        const metrics = computeSystemMetrics(system)
-        const perScale = Object.values(
-          mode === 'dark' && Object.keys(metrics.dark).length
-            ? metrics.dark
-            : metrics.light,
-        ).filter((m): m is ScaleMetrics => Boolean(m))
-        const mean = (pick: (m: ScaleMetrics) => number | null) => {
-          const values = perScale
-            .map(pick)
-            .filter((v): v is number => v !== null)
-          return values.length
-            ? values.reduce((a, b) => a + b, 0) / values.length
-            : null
-        }
-        return {
-          id: system.id,
-          name: system.name,
-          monotonic: perScale.every((m) => m.monotonic),
-          spacingStd: mean((m) => m.spacingStd),
-          hueDrift: perScale.length
-            ? Math.max(...perScale.map((m) => m.hueDrift))
-            : null,
-          textContrast: mean((m) => m.textContrast),
-          solidFgContrast: mean((m) => m.solidFgContrast),
-          darkSymmetry: metrics.darkSymmetry,
-          statusCvdSeparation: metrics.statusCvdSeparation,
-        }
-      }),
-    [mode],
+      systems
+        .filter((s) => !s.empty)
+        .map((system) => {
+          const metrics = computeSystemMetrics(system)
+          const perScale = Object.values(
+            mode === 'dark' && Object.keys(metrics.dark).length
+              ? metrics.dark
+              : metrics.light,
+          ).filter((m): m is ScaleMetrics => Boolean(m))
+          const mean = (pick: (m: ScaleMetrics) => number | null) => {
+            const values = perScale
+              .map(pick)
+              .filter((v): v is number => v !== null)
+            return values.length
+              ? values.reduce((a, b) => a + b, 0) / values.length
+              : null
+          }
+          return {
+            id: system.id,
+            name: system.name,
+            monotonic: perScale.every((m) => m.monotonic),
+            spacingStd: mean((m) => m.spacingStd),
+            hueDrift: perScale.length
+              ? Math.max(...perScale.map((m) => m.hueDrift))
+              : null,
+            textContrast: mean((m) => m.textContrast),
+            solidFgContrast: mean((m) => m.solidFgContrast),
+            darkSymmetry: metrics.darkSymmetry,
+            statusCvdSeparation: metrics.statusCvdSeparation,
+          }
+        }),
+    [systems, mode],
   )
 
   const best = {
@@ -84,14 +93,19 @@ export function ScorecardSection({ mode }: { mode: Mode }) {
           </tr>
         </thead>
         <tbody className="tabular-nums">
-          <tr className="border-b border-neutral-100 text-neutral-400 dark:border-neutral-900 dark:text-neutral-500">
-            <td className="py-2.5 pr-4 font-medium">dotUI Engine</td>
-            {Array.from({ length: 7 }, (_, index) => (
-              <td key={index} className="py-2.5 pr-4">
-                —
-              </td>
-            ))}
-          </tr>
+          {empty.map((system) => (
+            <tr
+              key={system.id}
+              className="border-b border-neutral-100 text-neutral-400 dark:border-neutral-900 dark:text-neutral-500"
+            >
+              <td className="py-2.5 pr-4 font-medium">{system.name}</td>
+              {Array.from({ length: 7 }, (_, index) => (
+                <td key={index} className="py-2.5 pr-4">
+                  —
+                </td>
+              ))}
+            </tr>
+          ))}
           {rows.map((row) => (
             <tr
               key={row.id}

@@ -5,7 +5,7 @@
 
 import type { CSSProperties } from 'react'
 
-import { rgbToHex, simulateCvd, type CvdType } from './color'
+import { parseColor, rgbToHex, simulateCvd, type CvdType } from './color'
 import {
   resolveRoles,
   scaleByRole,
@@ -65,17 +65,26 @@ export function systemPreviewVars(
     vars[`${p}-solid-hover`] = c('solidHover', 'solid')
     vars[`${p}-text-subtle`] = c('textSubtle', 'text')
     vars[`${p}-text`] = c('text')
+    // A system that declares its own solid foreground (the engine solves
+    // them per hue per mode) is rendered with it; otherwise pick by APCA.
+    const declared = scale.on?.[mode]
     const solidStep = roles.solid ?? roles.solidHover
-    vars[`${p}-solid-fg`] = solidStep
-      ? solidFg(solidStep, system)
-      : 'transparent'
+    vars[`${p}-solid-fg`] = declared
+      ? cvdHex(declared, cvd)
+      : solidStep
+        ? solidFg(solidStep)
+        : 'transparent'
   }
   return vars
 }
 
-function solidFg(step: Step, system: ColorSystem): string {
-  if (/dark|black/i.test(system.solidForeground) && step.asBg.fg === 'black')
-    return '#111111'
+function cvdHex(raw: string, cvd: CvdType | null): string {
+  if (!cvd) return raw
+  const rgb = parseColor(raw)
+  return rgb ? rgbToHex(simulateCvd(rgb, cvd)) : raw
+}
+
+function solidFg(step: Step): string {
   return step.asBg.fg === 'black' ? '#111111' : '#ffffff'
 }
 

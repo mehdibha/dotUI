@@ -48,6 +48,9 @@ export interface SystemFile {
     /** Overrides the system mapping — for systems whose scales differ in
         length or semantics (e.g. Ant's 13-step neutral vs 10-step hues). */
     roleMapping?: Partial<Record<UiRole, number | null>>
+    /** The system's own declared solid foreground, when it publishes one
+        (the engine solves these per hue per mode). */
+    on?: { light: string; dark: string }
   }[]
   roleMapping: Partial<Record<UiRole, number | null>>
   solidForeground: string
@@ -74,6 +77,7 @@ export interface Scale {
   light: Step[]
   dark: Step[] | null
   roleMapping?: Partial<Record<UiRole, number | null>>
+  on?: { light: string; dark: string }
 }
 
 /** The role mapping that applies to a given scale. */
@@ -138,7 +142,7 @@ function buildSteps(
   return steps.map((s) => buildStep(s.name, s.value, bg))
 }
 
-function buildSystem(file: SystemFile): ColorSystem {
+export function buildColorSystem(file: SystemFile): ColorSystem {
   return {
     ...file,
     empty: false,
@@ -147,6 +151,7 @@ function buildSystem(file: SystemFile): ColorSystem {
       name: scale.name,
       role: scale.role,
       roleMapping: scale.roleMapping,
+      on: scale.on,
       light: buildSteps(
         scale.steps.map((s) => ({ name: s.name, value: s.light })),
         'light',
@@ -212,7 +217,7 @@ const files = import.meta.glob<SystemFile>('./data/*.json', {
 })
 
 export const referenceSystems: ColorSystem[] = Object.values(files)
-  .map(buildSystem)
+  .map(buildColorSystem)
   .sort((a, b) => a.name.localeCompare(b.name))
 
 export const systems: ColorSystem[] = [ENGINE_SLOT, ...referenceSystems]

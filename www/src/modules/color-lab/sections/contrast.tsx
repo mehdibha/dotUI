@@ -3,7 +3,6 @@ import { Fragment, useState } from 'react'
 import { apcaContrast, wcagContrast } from '../color'
 import {
   mappingFor,
-  referenceSystems,
   scaleByRole,
   type ColorSystem,
   type ScaleRole,
@@ -21,14 +20,18 @@ function stepsFor(system: ColorSystem, family: ScaleRole, mode: Mode): Step[] {
     roles, measured) and the Aa matrix (every text-on-bg pair, rendered — you
     read the contrast instead of inferring it). */
 export function ContrastSection({
+  systems,
   mode,
   family,
 }: {
+  systems: ColorSystem[]
   mode: Mode
   family: ScaleRole
 }) {
-  const [selected, setSelected] = useState(referenceSystems[0]?.id ?? '')
-  const selectedSystem = referenceSystems.find((s) => s.id === selected)
+  const selectable = systems.filter((s) => !s.empty)
+  const [selected, setSelected] = useState(selectable[0]?.id ?? '')
+  const selectedSystem =
+    selectable.find((s) => s.id === selected) ?? selectable[0]
 
   return (
     <div className="space-y-10">
@@ -52,20 +55,26 @@ export function ContrastSection({
             </tr>
           </thead>
           <tbody>
-            <tr className="border-b border-neutral-100 text-neutral-400 dark:border-neutral-900 dark:text-neutral-500">
-              <td className="py-2.5 pr-4 font-medium">dotUI Engine</td>
-              <td className="py-2.5 pr-4">—</td>
-              <td className="py-2.5 pr-4">—</td>
-              <td className="py-2.5 pr-4">—</td>
-            </tr>
-            {referenceSystems.map((system) => (
-              <PromiseRow
-                key={system.id}
-                system={system}
-                family={family}
-                mode={mode}
-              />
-            ))}
+            {systems.map((system) =>
+              system.empty ? (
+                <tr
+                  key={system.id}
+                  className="border-b border-neutral-100 text-neutral-400 dark:border-neutral-900 dark:text-neutral-500"
+                >
+                  <td className="py-2.5 pr-4 font-medium">{system.name}</td>
+                  <td className="py-2.5 pr-4">—</td>
+                  <td className="py-2.5 pr-4">—</td>
+                  <td className="py-2.5 pr-4">—</td>
+                </tr>
+              ) : (
+                <PromiseRow
+                  key={system.id}
+                  system={system}
+                  family={family}
+                  mode={mode}
+                />
+              ),
+            )}
           </tbody>
         </table>
       </div>
@@ -75,7 +84,7 @@ export function ContrastSection({
           <span className="mr-1 text-neutral-400 dark:text-neutral-500">
             Aa matrix — every step as text on every step as background:
           </span>
-          {referenceSystems.map((system) => (
+          {selectable.map((system) => (
             <button
               key={system.id}
               type="button"

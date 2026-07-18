@@ -1,8 +1,8 @@
 import { useMemo, useState, type ReactNode } from 'react'
 
 import {
-  referenceSystems,
   scaleByRole,
+  type ColorSystem,
   type ScaleRole,
   type Step,
 } from '../data'
@@ -13,9 +13,11 @@ import { CurvePlot, type CurveSeries } from '../primitives'
     scale for the selected family, overlaid on shared axes. Hovering a system
     in the legend solos its curve. */
 export function CurvesSection({
+  systems,
   mode,
   family,
 }: {
+  systems: ColorSystem[]
   mode: Mode
   family: ScaleRole
 }) {
@@ -25,22 +27,18 @@ export function CurvesSection({
 
   const rows = useMemo(
     () =>
-      referenceSystems
+      systems
+        .filter((system) => !system.empty)
         .map((system) => {
           const scale = scaleByRole(system, family)
           if (!scale) return null
           const steps = mode === 'dark' && scale.dark ? scale.dark : scale.light
           return { system, steps }
         })
-        .filter(
-          (
-            r,
-          ): r is {
-            system: (typeof referenceSystems)[number]
-            steps: Step[]
-          } => Boolean(r && r.steps.length > 1),
+        .filter((r): r is { system: ColorSystem; steps: Step[] } =>
+          Boolean(r && r.steps.length > 1),
         ),
-    [mode, family],
+    [systems, mode, family],
   )
 
   const toSeries = (
@@ -107,9 +105,11 @@ export function CurvesSection({
             {system.name}
           </button>
         ))}
-        <span className="ml-2 rounded-md border border-dashed border-neutral-300 px-2 py-1 text-neutral-400 dark:border-neutral-700 dark:text-neutral-500">
-          dotUI Engine — pending
-        </span>
+        {systems.some((s) => s.empty) && (
+          <span className="ml-2 rounded-md border border-dashed border-neutral-300 px-2 py-1 text-neutral-400 dark:border-neutral-700 dark:text-neutral-500">
+            dotUI Engine — pending
+          </span>
+        )}
       </div>
       <div className="grid gap-8 lg:grid-cols-3">
         <Plot title="Lightness" note="smooth, monotonic, full range">
@@ -146,32 +146,34 @@ export function CurvesSection({
           swapping hues shifts the whole UI
         </p>
         <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
-          {referenceSystems.map((system) => (
-            <div key={system.id}>
-              <p className="mb-1 text-xs font-medium text-neutral-500 dark:text-neutral-400">
-                {system.name}
-              </p>
-              <CurvePlot
-                height={130}
-                series={system.scales.map((scale) => {
-                  const steps =
-                    mode === 'dark' && scale.dark ? scale.dark : scale.light
-                  return {
-                    id: scale.id,
-                    label: scale.name,
-                    points: steps.map((step, index) => ({
-                      x: index / Math.max(1, steps.length - 1),
-                      y: step.oklch.l,
-                      color: step.hex,
-                    })),
-                  }
-                })}
-                yDomain={[0, 1]}
-                formatY={(v) => v.toFixed(1)}
-                yTicks={2}
-              />
-            </div>
-          ))}
+          {systems
+            .filter((system) => !system.empty)
+            .map((system) => (
+              <div key={system.id}>
+                <p className="mb-1 text-xs font-medium text-neutral-500 dark:text-neutral-400">
+                  {system.name}
+                </p>
+                <CurvePlot
+                  height={130}
+                  series={system.scales.map((scale) => {
+                    const steps =
+                      mode === 'dark' && scale.dark ? scale.dark : scale.light
+                    return {
+                      id: scale.id,
+                      label: scale.name,
+                      points: steps.map((step, index) => ({
+                        x: index / Math.max(1, steps.length - 1),
+                        y: step.oklch.l,
+                        color: step.hex,
+                      })),
+                    }
+                  })}
+                  yDomain={[0, 1]}
+                  formatY={(v) => v.toFixed(1)}
+                  yTicks={2}
+                />
+              </div>
+            ))}
         </div>
       </div>
     </div>
