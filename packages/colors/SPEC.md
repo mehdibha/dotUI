@@ -338,9 +338,17 @@ Generated, not aliased (measured: the current status-500 aliasing fails 4 of
 5 gates — normal ΔEok 0.059, deutan 0.009, tritan 0.012, L\* range 5.6).
 
 - **Palettes are generated per mode**: dark series ride a lighter L\* ladder
-  (floor 50 vs 44) so they read against a near-black surface; sequential
-  runs away from the mode's surface end.
-- **Categorical** (size 5–8): min pairwise ΔEok ≥ 0.09 normal AND ≥ 0.045
+  so they read against a near-black surface; sequential runs away from the
+  mode's surface end.
+- **The categorical default is brand-tonal** (verified shadcn behavior:
+  `--chart-1..5` = blue-300/500/600/700/800 — tonal steps of one hue,
+  lightest first): shades of the accent carrying the ramp's hue bend and the
+  seed's own chroma, L\* ladder light `76…25` / dark `79…32`. Lightness is
+  the series encoding — CVD-safe by construction (lightness survives every
+  deficiency). Gate: strictly descending, adjacent ΔL\* ≥ 6.
+- **Hue-spread categorical** (the maximal-separation generator, kept
+  exported for a future chart-style axis) (size 5–8): min pairwise ΔEok ≥
+  0.09 normal AND ≥ 0.045
   under each of protan/deutan/tritan at severity 1.0; palette L\* range ≥ 25.
   Generation rules (not CI): order series so adjacent-in-order |ΔL\*| ≥ 8;
   slot 1 takes the ladder rung nearest the accent's own lightness (a yellow

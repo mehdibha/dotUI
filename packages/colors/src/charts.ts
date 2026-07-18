@@ -13,7 +13,7 @@ import {
   minPairwiseDeltaEok,
   simulateCvd,
 } from './meters'
-import type { Mode } from './scale'
+import { bentHue, type Mode } from './scale'
 import {
   cusp,
   fitSrgb,
@@ -37,6 +37,61 @@ export interface ChartPalettes {
 const CATEGORICAL_LSTAR: Record<Mode, number[]> = {
   light: [58, 70, 48, 62, 76, 44, 66, 54],
   dark: [64, 76, 54, 68, 82, 50, 72, 60],
+}
+
+/**
+ * L* ladders for the brand-tonal palette (the default — shadcn parity:
+ * `--chart-1..5` are blue-300/500/600/700/800, tonal steps of one hue,
+ * lightest first). Dark mode rides a lighter ladder so the deep series
+ * still read on a near-black surface.
+ */
+const TONAL_LSTAR: Record<Mode, number[]> = {
+  light: [76, 68, 60, 52, 45, 38, 31, 25],
+  dark: [79, 72, 65, 58, 51, 44, 38, 32],
+}
+
+/** Minimum adjacent L* separation for a tonal palette (its only encoding). */
+export const TONAL_MIN_ADJACENT_LSTAR = 6
+
+/**
+ * The default categorical palette: tonal shades of the brand accent
+ * (verified shadcn behavior), carrying the ramp's hue-bend character and the
+ * seed's own chroma. Lightness is the series encoding — CVD-safe by
+ * construction, since lightness survives every deficiency.
+ */
+export function tonalCategoricalPalette(
+  accent: Oklch,
+  n = 8,
+  mode: Mode = 'light',
+): Oklch[] {
+  const ladder = TONAL_LSTAR[mode]
+  const cpeak = accent.c > 0.005 ? accent.c : 0.75 * cusp(accent.h).c
+  return ladder.slice(0, n).map((lstar) =>
+    solveLstar(
+      lstar,
+      (l) => Math.min(cpeak, maxChroma(l, bentHue(accent, l, 1))),
+      (l) => bentHue(accent, l, 1),
+    ),
+  )
+}
+
+/** Gate for tonal palettes: strictly descending with readable L* steps. */
+export function tonalGateReport(palette: Oklch[]) {
+  const lstars = palette.map(lstarOf)
+  let minAdjacent = Infinity
+  let monotonic = true
+  for (let i = 1; i < lstars.length; i++) {
+    const delta = lstars[i - 1]! - lstars[i]!
+    minAdjacent = Math.min(minAdjacent, delta)
+    if (delta <= 0) monotonic = false
+  }
+  return {
+    minAdjacent,
+    monotonic,
+    range: lstars[0]! - lstars[lstars.length - 1]!,
+    // 0.25 L* slack absorbs the solver's 8-bit quantization wobble.
+    passes: monotonic && minAdjacent >= TONAL_MIN_ADJACENT_LSTAR - 0.25,
+  }
 }
 
 /** Reject washed-out picks: achieved chroma below this fraction of the hue's cusp. */

@@ -48,4 +48,6 @@ export {
   categoricalPalette,
   divergingPalette,
   sequentialPalette,
+  tonalCategoricalPalette,
+  tonalGateReport,
 } from './charts'

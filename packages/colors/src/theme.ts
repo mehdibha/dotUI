@@ -8,10 +8,10 @@ import { z } from 'zod'
 
 import { alphaTwin } from './alpha'
 import {
-  categoricalGateReport,
-  categoricalPalette,
   divergingPalette,
   sequentialPalette,
+  tonalCategoricalPalette,
+  tonalGateReport,
 } from './charts'
 import {
   CVD_GATE,
@@ -296,13 +296,16 @@ export function createTheme(input: string | ThemeOptions): Theme {
       )
   }
 
-  // D11 — chart palettes from the theme's seeds, one set per mode.
+  // D11 — chart palettes from the brand accent, one set per mode. The
+  // categorical default is tonal (shadcn parity: shades of one brand hue,
+  // lightness-encoded); the hue-spread generator stays exported for callers
+  // that need maximal series separation.
   const chartSet = (mode: Mode) => {
-    const categorical = categoricalPalette(accentSeed, 8, mode)
-    const gate = categoricalGateReport(categorical)
+    const categorical = tonalCategoricalPalette(accentSeed, 8, mode)
+    const gate = tonalGateReport(categorical)
     if (!gate.passes)
       warnings.push(
-        `${mode} categorical chart palette misses a gate (normal ${gate.normal.toFixed(3)}, worst CVD ${Math.min(gate.protan, gate.deutan, gate.tritan).toFixed(3)}, L* range ${gate.lstarRange.toFixed(1)})`,
+        `${mode} tonal chart palette misses its gate (min adjacent ΔL* ${gate.minAdjacent.toFixed(1)}, monotonic ${gate.monotonic})`,
       )
     return {
       categorical: categorical.map(oklchCss),

@@ -77,8 +77,9 @@ export function ChartColorsSection({ theme }: { theme: Theme }) {
   return (
     <div className="flex flex-col gap-4">
       <p className="text-xs text-fg-muted">
-        Charts read this palette via <code>var(--chart-N)</code> — generated per
-        mode from your theme. Pick a color to override a slot in both modes.
+        Charts read this palette via <code>var(--chart-N)</code> — tonal shades
+        of your brand color, generated per mode. Pick a color to override a slot
+        in both modes.
       </p>
 
       <div className="flex flex-col gap-1.5">

@@ -19,6 +19,8 @@ import {
   type Oklch,
   sequentialPalette,
   toHex,
+  tonalCategoricalPalette,
+  tonalGateReport,
   toOklch,
 } from './index'
 
@@ -110,4 +112,35 @@ test('per-mode palettes differ and the dark set rides a lighter ladder', () => {
   expect(min(theme.charts.dark.categorical)).toBeGreaterThan(
     min(theme.charts.light.categorical),
   )
+})
+
+describe('brand-tonal categorical (the default — shadcn parity)', () => {
+  test.each(['light', 'dark'] as const)(
+    'shades of the accent, lightest first, readable steps (%s)',
+    (mode) => {
+      const accent = toOklch('#438cd6')
+      const palette = tonalCategoricalPalette(accent, 8, mode)
+      expect(tonalGateReport(palette)).toMatchObject({ passes: true })
+      // Every series stays in the accent's hue family (ramp bend allowed).
+      for (const color of palette) {
+        const gap = Math.abs(((color.h - accent.h + 540) % 360) - 180)
+        expect(gap, `L* ${lstarOf(color).toFixed(0)}`).toBeLessThan(35)
+      }
+    },
+  )
+
+  test('the theme ships the tonal palette', () => {
+    const theme = createTheme('#438cd6')
+    const accent = toOklch('#438cd6')
+    for (const css of theme.charts.light.categorical) {
+      const gap = Math.abs(((toOklch(css).h - accent.h + 540) % 360) - 180)
+      expect(gap).toBeLessThan(35)
+    }
+  })
+
+  test('a muted brand yields muted charts (seed chroma is authoritative)', () => {
+    const muted = { l: 0.6, c: 0.05, h: 251 }
+    for (const color of tonalCategoricalPalette(muted, 8, 'light'))
+      expect(color.c).toBeLessThanOrEqual(0.05 + 1e-6)
+  })
 })
