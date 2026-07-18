@@ -18,6 +18,7 @@ import {
   NEUTRAL_TINT_SHAPE,
   STEPS,
   type StepName,
+  TEXT_TARGETS,
 } from './data'
 import { apca, wcag2 } from './meters'
 import {
@@ -263,11 +264,12 @@ export function buildScale(options: ScaleOptions): ScaleColors {
   steps['800'] = hoverSolid(solid, on, mode, chroma, strictOnSolid)
   const on800 = on
 
-  // Text (jobs 11–12), solved against this scale's own backgrounds.
+  // Text (jobs 11–12), solved against this scale's own backgrounds from the
+  // job's Radix-measured depth target (retreating only if a bar forces it).
   const bg25 = steps['25']!
   const bg50 = steps['50']!
   const bg100 = steps['100']!
-  const textStart = mode === 'light' ? 45 : 60
+  const kind = neutral ? 'neutral' : 'chromatic'
   steps['900'] = solveText(
     BARS.text900,
     [bg25, bg50, bg100],
@@ -275,7 +277,7 @@ export function buildScale(options: ScaleOptions): ScaleColors {
     (l) => chroma.at(l, 10),
     hueAt,
     mode,
-    textStart,
+    TEXT_TARGETS[mode]['900'][kind],
   )
   steps['950'] = solveText(
     BARS.text950,
@@ -284,7 +286,7 @@ export function buildScale(options: ScaleOptions): ScaleColors {
     (l) => chroma.at(l, 11),
     hueAt,
     mode,
-    mode === 'light' ? 25 : 85,
+    TEXT_TARGETS[mode]['950'][kind],
   )
 
   return { steps, on: { '700': on, '800': on800 } }

@@ -149,3 +149,20 @@ export const CHART_GATES = {
 /** D9 — default dark app-background L* (never pure black; 'oled' opts into 0). */
 export const DARK_BG_LSTAR = 6.0
 export const LIGHT_BG_LSTAR = 99.0
+
+/**
+ * D2 — text-step L* targets (where the solve starts; it only retreats from
+ * these if a bar forces it). Radix-measured: chromatic step-12 sits ~L*
+ * 20–25, gray step-12 near 12 (main app text is deeper than the minimal
+ * bar); dark-mode text ~62–72 (900) and 86–94 (950).
+ */
+export const TEXT_TARGETS = {
+  light: {
+    '900': { chromatic: 44, neutral: 42 },
+    '950': { chromatic: 24, neutral: 12 },
+  },
+  dark: {
+    '900': { chromatic: 64, neutral: 72 },
+    '950': { chromatic: 88, neutral: 95 },
+  },
+} as const
