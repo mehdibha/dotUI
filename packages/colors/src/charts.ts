@@ -64,8 +64,10 @@ export function tonalCategoricalPalette(
   n = 8,
   mode: Mode = 'light',
 ): Oklch[] {
+  // The seed's chroma is authoritative: a muted brand gives muted charts, an
+  // achromatic brand gives grays (lightness stays the series encoding).
   const ladder = TONAL_LSTAR[mode]
-  const cpeak = accent.c > 0.005 ? accent.c : 0.75 * cusp(accent.h).c
+  const cpeak = accent.c
   return ladder.slice(0, n).map((lstar) =>
     solveLstar(
       lstar,
