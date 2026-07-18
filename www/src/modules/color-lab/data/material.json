@@ -1,0 +1,149 @@
+{
+  "id": "material",
+  "name": "Material Design 3",
+  "website": "https://m3.material.io/styles/color/roles",
+  "sources": [
+    "https://raw.githubusercontent.com/material-components/material-web/main/tokens/versions/v0_192/_md-ref-palette.scss",
+    "https://raw.githubusercontent.com/material-components/material-web/main/tokens/versions/v0_192/_md-sys-color.scss",
+    "https://unpkg.com/@material/material-color-utilities/package.json",
+    "https://raw.githubusercontent.com/flutter/flutter/master/packages/flutter/lib/src/material/colors.dart",
+    "https://m3.material.io/styles/color/roles",
+    "https://m2.material.io/design/color/the-color-system.html"
+  ],
+  "description": "Google's Material Design 3 tonal-palette system: every key color becomes a 13-tone ramp in HCT space, and the whole scheme is regenerated algorithmically from a single seed color (#6750A4 for the baseline) by @material/material-color-utilities.",
+  "philosophy": "Each key color is a tonal palette: constant CAM16 hue and chroma, sampled at 13 canonical tones of CIE L* lightness (0 = black, 100 = white) in the HCT color space. There is one palette per color for both appearances — dark mode is tone re-selection, not a second palette: light scheme picks tone 40 for solid/primary, 90 for containers, 98 for surface, 10 for text; dark scheme picks tone 80 for primary, 30 for containers, 6 for surface, 90 for text. Hover and pressed states are opacity state layers over the resolved role color, not separate tones.",
+  "stepCount": 13,
+  "stepNames": [
+    "100",
+    "99",
+    "95",
+    "90",
+    "80",
+    "70",
+    "60",
+    "50",
+    "40",
+    "30",
+    "20",
+    "10",
+    "0"
+  ],
+  "scales": [
+    {
+      "id": "neutral",
+      "name": "Neutral",
+      "role": "neutral",
+      "steps": [
+        { "name": "100", "light": "#fff", "dark": null },
+        { "name": "99", "light": "#fffbff", "dark": null },
+        { "name": "95", "light": "#f5eff7", "dark": null },
+        { "name": "90", "light": "#e6e0e9", "dark": null },
+        { "name": "80", "light": "#cac5cd", "dark": null },
+        { "name": "70", "light": "#aea9b1", "dark": null },
+        { "name": "60", "light": "#938f96", "dark": null },
+        { "name": "50", "light": "#79767d", "dark": null },
+        { "name": "40", "light": "#605d64", "dark": null },
+        { "name": "30", "light": "#48464c", "dark": null },
+        { "name": "20", "light": "#322f35", "dark": null },
+        { "name": "10", "light": "#1d1b20", "dark": null },
+        { "name": "0", "light": "#000", "dark": null }
+      ]
+    },
+    {
+      "id": "primary",
+      "name": "Primary",
+      "role": "accent",
+      "steps": [
+        { "name": "100", "light": "#fff", "dark": null },
+        { "name": "99", "light": "#fffbfe", "dark": null },
+        { "name": "95", "light": "#f6edff", "dark": null },
+        { "name": "90", "light": "#eaddff", "dark": null },
+        { "name": "80", "light": "#d0bcff", "dark": null },
+        { "name": "70", "light": "#b69df8", "dark": null },
+        { "name": "60", "light": "#9a82db", "dark": null },
+        { "name": "50", "light": "#7f67be", "dark": null },
+        { "name": "40", "light": "#6750a4", "dark": null },
+        { "name": "30", "light": "#4f378b", "dark": null },
+        { "name": "20", "light": "#381e72", "dark": null },
+        { "name": "10", "light": "#21005d", "dark": null },
+        { "name": "0", "light": "#000", "dark": null }
+      ]
+    },
+    {
+      "id": "error",
+      "name": "Error",
+      "role": "danger",
+      "steps": [
+        { "name": "100", "light": "#fff", "dark": null },
+        { "name": "99", "light": "#fffbf9", "dark": null },
+        { "name": "95", "light": "#fceeee", "dark": null },
+        { "name": "90", "light": "#f9dedc", "dark": null },
+        { "name": "80", "light": "#f2b8b5", "dark": null },
+        { "name": "70", "light": "#ec928e", "dark": null },
+        { "name": "60", "light": "#e46962", "dark": null },
+        { "name": "50", "light": "#dc362e", "dark": null },
+        { "name": "40", "light": "#b3261e", "dark": null },
+        { "name": "30", "light": "#8c1d18", "dark": null },
+        { "name": "20", "light": "#601410", "dark": null },
+        { "name": "10", "light": "#410e0b", "dark": null },
+        { "name": "0", "light": "#000", "dark": null }
+      ]
+    },
+    {
+      "id": "green",
+      "name": "Green",
+      "role": "success",
+      "steps": [
+        { "name": "100", "light": "#ffffff", "dark": null },
+        { "name": "99", "light": "#f6fff0", "dark": null },
+        { "name": "95", "light": "#c8ffc0", "dark": null },
+        { "name": "90", "light": "#94f990", "dark": null },
+        { "name": "80", "light": "#78dc77", "dark": null },
+        { "name": "70", "light": "#5dc05e", "dark": null },
+        { "name": "60", "light": "#41a447", "dark": null },
+        { "name": "50", "light": "#22892f", "dark": null },
+        { "name": "40", "light": "#006e1c", "dark": null },
+        { "name": "30", "light": "#005313", "dark": null },
+        { "name": "20", "light": "#00390a", "dark": null },
+        { "name": "10", "light": "#002204", "dark": null },
+        { "name": "0", "light": "#000000", "dark": null }
+      ]
+    },
+    {
+      "id": "amber",
+      "name": "Amber",
+      "role": "warning",
+      "steps": [
+        { "name": "100", "light": "#ffffff", "dark": null },
+        { "name": "99", "light": "#fffbff", "dark": null },
+        { "name": "95", "light": "#ffefd4", "dark": null },
+        { "name": "90", "light": "#ffdf9e", "dark": null },
+        { "name": "80", "light": "#fabd00", "dark": null },
+        { "name": "70", "light": "#d8a300", "dark": null },
+        { "name": "60", "light": "#b78a00", "dark": null },
+        { "name": "50", "light": "#977100", "dark": null },
+        { "name": "40", "light": "#785900", "dark": null },
+        { "name": "30", "light": "#5b4300", "dark": null },
+        { "name": "20", "light": "#3f2e00", "dark": null },
+        { "name": "10", "light": "#261a00", "dark": null },
+        { "name": "0", "light": "#000", "dark": null }
+      ]
+    }
+  ],
+  "roleMapping": {
+    "appBg": 1,
+    "subtleBg": 2,
+    "uiBg": 3,
+    "uiBgHover": null,
+    "uiBgActive": null,
+    "borderSubtle": 4,
+    "border": 7,
+    "borderStrong": null,
+    "solid": 8,
+    "solidHover": null,
+    "textSubtle": 9,
+    "text": 11
+  },
+  "solidForeground": "white in light scheme (on-primary = tone 100); dark scheme inverts: solid becomes tone 80 with a tone-20 dark foreground",
+  "notes": "Steps are listed light-to-dark (tone 100 first, tone 0 last) to match the other systems in this playground; Material's own tone numbers run the opposite way (0 = black, 100 = white). M3 is single-palette by design: light and dark schemes select different tones from the same 13-tone palettes (e.g. surface N98 light vs N6 dark, primary 40 vs 80, on-surface N10 vs N90), so dark is null on every step; the roleMapping reflects the light scheme. Role-mapping basis (material-web v0.192 _md-sys-color.scss light scheme): surface=N98 (nearest canonical tone 99), surface-container-low=N96 (nearest 95), primary-container/error-container=tone 90, outline-variant=NV80, outline=NV50, primary/error=tone 40, on-surface-variant=NV30, on-surface=N10; hover/pressed and a third border weight have no tone — M3 uses opacity state layers — so those roles are null. The baseline SCSS additionally defines non-canonical surface tones on Neutral only (4, 6, 12, 17, 22, 24, 87, 92, 94, 96, 98) used by the surface-container roles; they are omitted here to keep steps uniform across scales. Values come verbatim from material-web v0.192 tokens except Green and Amber: the M3 baseline defines no success/warning palettes, so those two were generated by running the official @material/material-color-utilities@0.4.0 (TonalPalette.fromInt, no harmonization) on the classic 2014 Material palette seeds Green 500 #4CAF50 and Amber 500 #FFC107 (seeds fetched from Flutter's material/colors.dart) — exactly M3's documented custom-color workflow. Caveat: MCU 0.4.0 regenerated from seed #6750A4 drifts slightly from the shipped v0.192 baseline (e.g. primary10 #22005d vs #21005d; error40 #ba1a1a vs #b3261e), so the static tokens were preferred where they exist. Hover/active states are alpha state layers (8%/12% overlays), not palette steps. The m3.material.io and m2.material.io pages were fetched but are JS-rendered shells; machine-readable equivalents (material-web token SCSS, Flutter colors.dart) were used instead."
+}

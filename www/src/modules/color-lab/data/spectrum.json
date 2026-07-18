@@ -1,0 +1,328 @@
+{
+  "id": "spectrum",
+  "name": "Adobe Spectrum",
+  "website": "https://spectrum.adobe.com",
+  "sources": [
+    "https://unpkg.com/@adobe/spectrum-tokens@14.15.0/dist/json/variables.json",
+    "https://spectrum.adobe.com/page/color-fundamentals/",
+    "https://spectrum.adobe.com/page/color-system/"
+  ],
+  "description": "Adobe's design system, whose color themes are generated from target contrast ratios (the approach pioneered by Adobe's Leonardo tool). Every token ships independently designed light and dark values in @adobe/spectrum-tokens.",
+  "philosophy": "Scales are not hand-picked swatches but contrast-generated: each step's lightness is converted into a target WCAG contrast ratio against the theme background, following a perceptually curved distribution (evaluated in the CIECAM02-UCS uniform color space, curved to counter Stevens' power law). As the index increases (blue-700 -> 900) contrast with the background increases, so colors get darker in light theme and lighter in dark theme; dark-theme targets are higher to stay perceptually consistent. Grays are fully desaturated to avoid chromatic adaptation and simultaneous-contrast illusions; every value is authored per scheme, not derived by inversion.",
+  "stepCount": 10,
+  "stepNames": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900",
+    "1000"
+  ],
+  "scales": [
+    {
+      "id": "gray",
+      "name": "Gray",
+      "role": "neutral",
+      "steps": [
+        {
+          "name": "100",
+          "light": "rgb(233, 233, 233)",
+          "dark": "rgb(44, 44, 44)"
+        },
+        {
+          "name": "200",
+          "light": "rgb(225, 225, 225)",
+          "dark": "rgb(50, 50, 50)"
+        },
+        {
+          "name": "300",
+          "light": "rgb(218, 218, 218)",
+          "dark": "rgb(57, 57, 57)"
+        },
+        {
+          "name": "400",
+          "light": "rgb(198, 198, 198)",
+          "dark": "rgb(68, 68, 68)"
+        },
+        {
+          "name": "500",
+          "light": "rgb(143, 143, 143)",
+          "dark": "rgb(109, 109, 109)"
+        },
+        {
+          "name": "600",
+          "light": "rgb(113, 113, 113)",
+          "dark": "rgb(138, 138, 138)"
+        },
+        {
+          "name": "700",
+          "light": "rgb(80, 80, 80)",
+          "dark": "rgb(175, 175, 175)"
+        },
+        {
+          "name": "800",
+          "light": "rgb(41, 41, 41)",
+          "dark": "rgb(219, 219, 219)"
+        },
+        {
+          "name": "900",
+          "light": "rgb(19, 19, 19)",
+          "dark": "rgb(242, 242, 242)"
+        },
+        {
+          "name": "1000",
+          "light": "rgb(0, 0, 0)",
+          "dark": "rgb(255, 255, 255)"
+        }
+      ]
+    },
+    {
+      "id": "blue",
+      "name": "Blue",
+      "role": "accent",
+      "steps": [
+        {
+          "name": "100",
+          "light": "rgb(245, 249, 255)",
+          "dark": "rgb(14, 23, 63)"
+        },
+        {
+          "name": "200",
+          "light": "rgb(229, 240, 254)",
+          "dark": "rgb(15, 28, 82)"
+        },
+        {
+          "name": "300",
+          "light": "rgb(203, 226, 254)",
+          "dark": "rgb(12, 33, 117)"
+        },
+        {
+          "name": "400",
+          "light": "rgb(172, 207, 253)",
+          "dark": "rgb(18, 45, 154)"
+        },
+        {
+          "name": "500",
+          "light": "rgb(142, 185, 252)",
+          "dark": "rgb(26, 58, 195)"
+        },
+        {
+          "name": "600",
+          "light": "rgb(114, 158, 253)",
+          "dark": "rgb(37, 73, 229)"
+        },
+        {
+          "name": "700",
+          "light": "rgb(93, 137, 255)",
+          "dark": "rgb(52, 91, 248)"
+        },
+        {
+          "name": "800",
+          "light": "rgb(75, 117, 255)",
+          "dark": "rgb(64, 105, 253)"
+        },
+        {
+          "name": "900",
+          "light": "rgb(59, 99, 251)",
+          "dark": "rgb(86, 129, 255)"
+        },
+        {
+          "name": "1000",
+          "light": "rgb(39, 77, 234)",
+          "dark": "rgb(105, 149, 254)"
+        }
+      ]
+    },
+    {
+      "id": "red",
+      "name": "Red",
+      "role": "danger",
+      "steps": [
+        {
+          "name": "100",
+          "light": "rgb(255, 246, 245)",
+          "dark": "rgb(54, 10, 3)"
+        },
+        {
+          "name": "200",
+          "light": "rgb(255, 235, 232)",
+          "dark": "rgb(68, 13, 5)"
+        },
+        {
+          "name": "300",
+          "light": "rgb(255, 214, 209)",
+          "dark": "rgb(87, 17, 7)"
+        },
+        {
+          "name": "400",
+          "light": "rgb(255, 188, 180)",
+          "dark": "rgb(115, 24, 11)"
+        },
+        {
+          "name": "500",
+          "light": "rgb(255, 157, 145)",
+          "dark": "rgb(147, 31, 17)"
+        },
+        {
+          "name": "600",
+          "light": "rgb(255, 118, 101)",
+          "dark": "rgb(177, 38, 23)"
+        },
+        {
+          "name": "700",
+          "light": "rgb(255, 81, 61)",
+          "dark": "rgb(205, 46, 29)"
+        },
+        {
+          "name": "800",
+          "light": "rgb(240, 56, 35)",
+          "dark": "rgb(223, 52, 34)"
+        },
+        {
+          "name": "900",
+          "light": "rgb(215, 50, 32)",
+          "dark": "rgb(252, 67, 46)"
+        },
+        {
+          "name": "1000",
+          "light": "rgb(183, 40, 24)",
+          "dark": "rgb(255, 103, 86)"
+        }
+      ]
+    },
+    {
+      "id": "green",
+      "name": "Green",
+      "role": "success",
+      "steps": [
+        {
+          "name": "100",
+          "light": "rgb(237, 252, 241)",
+          "dark": "rgb(0, 30, 23)"
+        },
+        {
+          "name": "200",
+          "light": "rgb(215, 247, 225)",
+          "dark": "rgb(0, 38, 29)"
+        },
+        {
+          "name": "300",
+          "light": "rgb(173, 238, 197)",
+          "dark": "rgb(0, 51, 38)"
+        },
+        {
+          "name": "400",
+          "light": "rgb(107, 227, 162)",
+          "dark": "rgb(0, 68, 48)"
+        },
+        {
+          "name": "500",
+          "light": "rgb(43, 209, 125)",
+          "dark": "rgb(2, 87, 58)"
+        },
+        {
+          "name": "600",
+          "light": "rgb(18, 184, 103)",
+          "dark": "rgb(3, 106, 67)"
+        },
+        {
+          "name": "700",
+          "light": "rgb(11, 164, 93)",
+          "dark": "rgb(4, 124, 75)"
+        },
+        {
+          "name": "800",
+          "light": "rgb(7, 147, 85)",
+          "dark": "rgb(6, 136, 80)"
+        },
+        {
+          "name": "900",
+          "light": "rgb(5, 131, 78)",
+          "dark": "rgb(9, 157, 89)"
+        },
+        {
+          "name": "1000",
+          "light": "rgb(3, 110, 69)",
+          "dark": "rgb(14, 175, 98)"
+        }
+      ]
+    },
+    {
+      "id": "orange",
+      "name": "Orange",
+      "role": "warning",
+      "steps": [
+        {
+          "name": "100",
+          "light": "rgb(255, 246, 231)",
+          "dark": "rgb(49, 16, 0)"
+        },
+        {
+          "name": "200",
+          "light": "rgb(255, 236, 207)",
+          "dark": "rgb(61, 21, 0)"
+        },
+        {
+          "name": "300",
+          "light": "rgb(255, 218, 158)",
+          "dark": "rgb(80, 27, 0)"
+        },
+        {
+          "name": "400",
+          "light": "rgb(255, 193, 94)",
+          "dark": "rgb(106, 36, 0)"
+        },
+        {
+          "name": "500",
+          "light": "rgb(255, 162, 19)",
+          "dark": "rgb(135, 47, 0)"
+        },
+        {
+          "name": "600",
+          "light": "rgb(252, 125, 0)",
+          "dark": "rgb(162, 59, 0)"
+        },
+        {
+          "name": "700",
+          "light": "rgb(232, 106, 0)",
+          "dark": "rgb(185, 73, 0)"
+        },
+        {
+          "name": "800",
+          "light": "rgb(212, 91, 0)",
+          "dark": "rgb(199, 82, 0)"
+        },
+        {
+          "name": "900",
+          "light": "rgb(194, 78, 0)",
+          "dark": "rgb(224, 100, 0)"
+        },
+        {
+          "name": "1000",
+          "light": "rgb(167, 62, 0)",
+          "dark": "rgb(243, 117, 0)"
+        }
+      ]
+    }
+  ],
+  "roleMapping": {
+    "appBg": null,
+    "subtleBg": null,
+    "uiBg": 0,
+    "uiBgHover": 1,
+    "uiBgActive": 2,
+    "borderSubtle": 1,
+    "border": 3,
+    "borderStrong": 5,
+    "solid": 8,
+    "solidHover": 9,
+    "textSubtle": 6,
+    "text": 7
+  },
+  "solidForeground": "white",
+  "notes": "Spectrum 2's full ramps are asymmetric: chromatic hues run 100-1600 (16 steps) while gray runs 25-1000 (13 steps). This file shows the shared 100-1000 window where every scale defines a token under the same name, so indexing is uniform; the omitted steps are gray-25/50/75 (near-background tints) and the chromatic deep shades 1100-1600. appBg and subtleBg are null because Spectrum's app backgrounds live on the omitted light end of gray: background-base-color = gray-25 (rgb(255, 255, 255) light / rgb(17, 17, 17) dark) and background-layer-1-color = gray-50. roleMapping grounding, from the semantic aliases in the same token file and spectrum.adobe.com usage guidance: uiBg = gray-100 (neutral-subtle-background-color-default, menu-item default background) with hover/active following the documented +1-index interactive-state progression (e.g. stack-item selected background 100 -> 200 -> 300); borderSubtle = gray-200 (decorative borders per docs, with gray-300), border = gray-400 (field borders: text field, action button), borderStrong = gray-600 (control borders: switch, checkbox, radio); textSubtle = gray-700 (neutral-subdued-content-color-default), text = gray-800 (body-color, neutral-content-color-default; headings use gray-900); solid = index 8 (accent-background-color-default = accent-color-900, white text) and solidHover = index 9 (accent-background-color-hover = accent-color-1000). Semantic aliases: accent/informative = blue, negative = red, positive = green, and 'warning' is Spectrum's 'notice' semantic which aliases orange (notice-color-* -> orange-*), not yellow. Tokens also define a 'wireframe' scheme (omitted) and transparent-white/black alpha ramps for use over images. spectrum.adobe.com docs still describe the Spectrum 1 grid (11 grays 50-900, 13 colors with 14 steps, gray-100 default background); values here are Spectrum 2 from @adobe/spectrum-tokens v14.15.0, where the light/dark sets correspond to the light and dark themes."
+}

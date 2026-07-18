@@ -1,0 +1,347 @@
+{
+  "id": "ant",
+  "name": "Ant Design",
+  "website": "https://ant.design",
+  "sources": [
+    "https://unpkg.com/@ant-design/colors/lib/presets.js",
+    "https://ant.design/docs/spec/colors",
+    "https://ant.design/docs/react/customize-theme",
+    "https://raw.githubusercontent.com/ant-design/ant-design/master/.dumi/theme/common/Color/ColorStyle.tsx"
+  ],
+  "description": "Ant Design is Alibaba's enterprise design language; its color system is fully algorithmic — 13 base hues each expanded into a 10-step palette by a documented generation tool, shipped precomputed in @ant-design/colors.",
+  "philosophy": "Each palette is generated from a single seed color (step 6) by an HSV-based algorithm that rotates hue and adjusts saturation/value outward: steps 1-5 get lighter, steps 7-10 get darker. The 10 steps carry fixed semantics via map tokens: 1 = light background, 2 = background hover, 3 = border, 4 = border hover, 5 = hover, 6 = the primary/solid color, 7 = active/pressed, with text tokens drawn from steps 5-7. Dark mode is not a palette flip: @ant-design/colors ships genuinely separate precomputed dark palettes (presetDarkPalettes) regenerated for dark backgrounds, so dark step N is a different color, not light step (11-N). Actual UI neutrals (text, separators) additionally use alpha-based blacks/whites for blending.",
+  "stepCount": 10,
+  "stepNames": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+  "scales": [
+    {
+      "id": "neutral",
+      "name": "Gray (neutral palette)",
+      "role": "neutral",
+      "steps": [
+        {
+          "name": "1",
+          "light": "#ffffff",
+          "dark": null
+        },
+        {
+          "name": "2",
+          "light": "#fafafa",
+          "dark": null
+        },
+        {
+          "name": "3",
+          "light": "#f5f5f5",
+          "dark": null
+        },
+        {
+          "name": "4",
+          "light": "#f0f0f0",
+          "dark": null
+        },
+        {
+          "name": "5",
+          "light": "#d9d9d9",
+          "dark": null
+        },
+        {
+          "name": "6",
+          "light": "#bfbfbf",
+          "dark": null
+        },
+        {
+          "name": "7",
+          "light": "#8c8c8c",
+          "dark": null
+        },
+        {
+          "name": "8",
+          "light": "#595959",
+          "dark": null
+        },
+        {
+          "name": "9",
+          "light": "#434343",
+          "dark": null
+        },
+        {
+          "name": "10",
+          "light": "#262626",
+          "dark": null
+        },
+        {
+          "name": "11",
+          "light": "#1f1f1f",
+          "dark": null
+        },
+        {
+          "name": "12",
+          "light": "#141414",
+          "dark": null
+        },
+        {
+          "name": "13",
+          "light": "#000000",
+          "dark": null
+        }
+      ],
+      "roleMapping": {
+        "appBg": 0,
+        "subtleBg": 1,
+        "uiBg": 2,
+        "uiBgHover": 3,
+        "uiBgActive": 4,
+        "borderSubtle": 3,
+        "border": 4,
+        "borderStrong": 5,
+        "solid": null,
+        "solidHover": null,
+        "textSubtle": 7,
+        "text": 10
+      }
+    },
+    {
+      "id": "blue",
+      "name": "Blue",
+      "role": "accent",
+      "steps": [
+        {
+          "name": "1",
+          "light": "#e6f4ff",
+          "dark": "#111a2c"
+        },
+        {
+          "name": "2",
+          "light": "#bae0ff",
+          "dark": "#112545"
+        },
+        {
+          "name": "3",
+          "light": "#91caff",
+          "dark": "#15325b"
+        },
+        {
+          "name": "4",
+          "light": "#69b1ff",
+          "dark": "#15417e"
+        },
+        {
+          "name": "5",
+          "light": "#4096ff",
+          "dark": "#1554ad"
+        },
+        {
+          "name": "6",
+          "light": "#1677ff",
+          "dark": "#1668dc"
+        },
+        {
+          "name": "7",
+          "light": "#0958d9",
+          "dark": "#3c89e8"
+        },
+        {
+          "name": "8",
+          "light": "#003eb3",
+          "dark": "#65a9f3"
+        },
+        {
+          "name": "9",
+          "light": "#002c8c",
+          "dark": "#8dc5f8"
+        },
+        {
+          "name": "10",
+          "light": "#001d66",
+          "dark": "#b7dcfa"
+        }
+      ]
+    },
+    {
+      "id": "red",
+      "name": "Red",
+      "role": "danger",
+      "steps": [
+        {
+          "name": "1",
+          "light": "#fff1f0",
+          "dark": "#2a1215"
+        },
+        {
+          "name": "2",
+          "light": "#ffccc7",
+          "dark": "#431418"
+        },
+        {
+          "name": "3",
+          "light": "#ffa39e",
+          "dark": "#58181c"
+        },
+        {
+          "name": "4",
+          "light": "#ff7875",
+          "dark": "#791a1f"
+        },
+        {
+          "name": "5",
+          "light": "#ff4d4f",
+          "dark": "#a61d24"
+        },
+        {
+          "name": "6",
+          "light": "#f5222d",
+          "dark": "#d32029"
+        },
+        {
+          "name": "7",
+          "light": "#cf1322",
+          "dark": "#e84749"
+        },
+        {
+          "name": "8",
+          "light": "#a8071a",
+          "dark": "#f37370"
+        },
+        {
+          "name": "9",
+          "light": "#820014",
+          "dark": "#f89f9a"
+        },
+        {
+          "name": "10",
+          "light": "#5c0011",
+          "dark": "#fac8c3"
+        }
+      ]
+    },
+    {
+      "id": "green",
+      "name": "Green",
+      "role": "success",
+      "steps": [
+        {
+          "name": "1",
+          "light": "#f6ffed",
+          "dark": "#162312"
+        },
+        {
+          "name": "2",
+          "light": "#d9f7be",
+          "dark": "#1d3712"
+        },
+        {
+          "name": "3",
+          "light": "#b7eb8f",
+          "dark": "#274916"
+        },
+        {
+          "name": "4",
+          "light": "#95de64",
+          "dark": "#306317"
+        },
+        {
+          "name": "5",
+          "light": "#73d13d",
+          "dark": "#3c8618"
+        },
+        {
+          "name": "6",
+          "light": "#52c41a",
+          "dark": "#49aa19"
+        },
+        {
+          "name": "7",
+          "light": "#389e0d",
+          "dark": "#6abe39"
+        },
+        {
+          "name": "8",
+          "light": "#237804",
+          "dark": "#8fd460"
+        },
+        {
+          "name": "9",
+          "light": "#135200",
+          "dark": "#b2e58b"
+        },
+        {
+          "name": "10",
+          "light": "#092b00",
+          "dark": "#d5f2bb"
+        }
+      ]
+    },
+    {
+      "id": "gold",
+      "name": "Gold",
+      "role": "warning",
+      "steps": [
+        {
+          "name": "1",
+          "light": "#fffbe6",
+          "dark": "#2b2111"
+        },
+        {
+          "name": "2",
+          "light": "#fff1b8",
+          "dark": "#443111"
+        },
+        {
+          "name": "3",
+          "light": "#ffe58f",
+          "dark": "#594214"
+        },
+        {
+          "name": "4",
+          "light": "#ffd666",
+          "dark": "#7c5914"
+        },
+        {
+          "name": "5",
+          "light": "#ffc53d",
+          "dark": "#aa7714"
+        },
+        {
+          "name": "6",
+          "light": "#faad14",
+          "dark": "#d89614"
+        },
+        {
+          "name": "7",
+          "light": "#d48806",
+          "dark": "#e8b339"
+        },
+        {
+          "name": "8",
+          "light": "#ad6800",
+          "dark": "#f3cc62"
+        },
+        {
+          "name": "9",
+          "light": "#874d00",
+          "dark": "#f8df8b"
+        },
+        {
+          "name": "10",
+          "light": "#613400",
+          "dark": "#faedb5"
+        }
+      ]
+    }
+  ],
+  "roleMapping": {
+    "appBg": null,
+    "subtleBg": 0,
+    "uiBg": 0,
+    "uiBgHover": 1,
+    "uiBgActive": null,
+    "borderSubtle": null,
+    "border": 2,
+    "borderStrong": 3,
+    "solid": 5,
+    "solidHover": 4,
+    "textSubtle": null,
+    "text": 5
+  },
+  "solidForeground": "white",
+  "notes": "roleMapping follows Ant's documented map-token derivation (colorBg=1, colorBgHover=2, colorBorder=3, colorBorderHover=4, colorHover=5, primary=6, colorActive=7, colorText=6, in 1-based steps); note solidHover (step 5) is LIGHTER than solid and active (step 7) is darker — that is genuinely Ant's convention. appBg, uiBgActive, borderSubtle and textSubtle are null because Ant fills those roles with dedicated non-palette tokens: layout background #f5f5f5/#000000, alpha fills, separator #0505050F/#FDFDFD1F, and alpha text colors #000000E0/#000000A6 (dark #FFFFFFD9/#FFFFFFA6). Gotchas: the grey preset is unusual — it starts at #a6a6a6 (no light background steps) and its last two light steps are both #000000; the docs also show a 13-step alpha-friendly neutral gray not representable in this 10-step format. The colorError seed token is #ff4d4f (red step 5, index 4), not the red preset primary #f5222d (step 6). colorWarning is the gold palette (#faad14), not yellow. colorInfo shares blue with colorPrimary. Neutral scale is the documented 13-step Neutral Color Palette (gray-1..13) from ant.design/docs/spec/colors, not the generated grey preset; Ant ships no mirrored dark neutral ramp (dark UI uses alpha text over #141414), so its dark values are null. Neutral role mapping follows the v5 tokens (colorBgLayout #f5f5f5, colorBorderSecondary #f0f0f0, colorBorder #d9d9d9, secondary text ~#595959, primary text rgba(0,0,0,.88) ~ #1f1f1f)."
+}

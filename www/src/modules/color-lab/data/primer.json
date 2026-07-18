@@ -1,0 +1,319 @@
+{
+  "id": "primer",
+  "name": "GitHub Primer",
+  "website": "https://primer.style",
+  "sources": [
+    "https://unpkg.com/@primer/primitives@11.9.0/dist/css/functional/themes/light.css",
+    "https://unpkg.com/@primer/primitives@11.9.0/dist/css/functional/themes/dark.css",
+    "https://unpkg.com/@primer/primitives@11.9.0/src/tokens/base/color/light/light.json5",
+    "https://unpkg.com/@primer/primitives@11.9.0/src/tokens/base/color/dark/dark.json5",
+    "https://primer.style/foundations/color/overview"
+  ],
+  "description": "GitHub's design-system primitives: base color scales plus a functional token layer (bgColor/fgColor/borderColor) that powers github.com across nine themes. One of the most battle-tested dark modes in existence, running at massive scale.",
+  "philosophy": "Base scales are hand-tuned per theme rather than algorithmically generated or inverted: light and dark each get their own re-tuned 0-9 chromatic ramps, and the neutral additionally extends to 13 in the source. The dark neutral runs in the opposite direction (black-first) so light and dark themes can share most functional tokens without overrides. Steps are contrast-anchored: neutral 0-5 are backgrounds (rest/hover/active for controls), 7-8 borders (8 is the minimum contrast for interactive control borders against bgColor-muted), 9-10 text/icons (9 is minimum text contrast against backgrounds 0-4). Raw steps are never used directly in product code; everything goes through functional tokens, and every chromatic scale places its 'emphasis' color at step 5 in both themes.",
+  "stepCount": 10,
+  "stepNames": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+  "scales": [
+    {
+      "id": "neutral",
+      "name": "Neutral",
+      "role": "neutral",
+      "steps": [
+        {
+          "name": "0",
+          "light": "#ffffff",
+          "dark": "#010409"
+        },
+        {
+          "name": "1",
+          "light": "#F6F8FA",
+          "dark": "#0D1117"
+        },
+        {
+          "name": "2",
+          "light": "#EFF2F5",
+          "dark": "#151B23"
+        },
+        {
+          "name": "3",
+          "light": "#E6EAEF",
+          "dark": "#212830"
+        },
+        {
+          "name": "4",
+          "light": "#E0E6EB",
+          "dark": "#262C36"
+        },
+        {
+          "name": "5",
+          "light": "#DAE0E7",
+          "dark": "#2A313C"
+        },
+        {
+          "name": "6",
+          "light": "#D1D9E0",
+          "dark": "#2F3742"
+        },
+        {
+          "name": "7",
+          "light": "#C8D1DA",
+          "dark": "#3D444D"
+        },
+        {
+          "name": "8",
+          "light": "#818B98",
+          "dark": "#656C76"
+        },
+        {
+          "name": "9",
+          "light": "#59636E",
+          "dark": "#9198A1"
+        }
+      ]
+    },
+    {
+      "id": "blue",
+      "name": "Blue",
+      "role": "accent",
+      "steps": [
+        {
+          "name": "0",
+          "light": "#ddf4ff",
+          "dark": "#cae8ff"
+        },
+        {
+          "name": "1",
+          "light": "#b6e3ff",
+          "dark": "#a5d6ff"
+        },
+        {
+          "name": "2",
+          "light": "#80ccff",
+          "dark": "#79c0ff"
+        },
+        {
+          "name": "3",
+          "light": "#54aeff",
+          "dark": "#58a6ff"
+        },
+        {
+          "name": "4",
+          "light": "#218bff",
+          "dark": "#388bfd"
+        },
+        {
+          "name": "5",
+          "light": "#0969da",
+          "dark": "#1f6feb"
+        },
+        {
+          "name": "6",
+          "light": "#0550ae",
+          "dark": "#1158c7"
+        },
+        {
+          "name": "7",
+          "light": "#033d8b",
+          "dark": "#0d419d"
+        },
+        {
+          "name": "8",
+          "light": "#0a3069",
+          "dark": "#0c2d6b"
+        },
+        {
+          "name": "9",
+          "light": "#002155",
+          "dark": "#051d4d"
+        }
+      ]
+    },
+    {
+      "id": "red",
+      "name": "Red",
+      "role": "danger",
+      "steps": [
+        {
+          "name": "0",
+          "light": "#ffebe9",
+          "dark": "#ffdcd7"
+        },
+        {
+          "name": "1",
+          "light": "#ffcecb",
+          "dark": "#ffc1ba"
+        },
+        {
+          "name": "2",
+          "light": "#ffaba8",
+          "dark": "#ffa198"
+        },
+        {
+          "name": "3",
+          "light": "#ff8182",
+          "dark": "#ff7b72"
+        },
+        {
+          "name": "4",
+          "light": "#fa4549",
+          "dark": "#f85149"
+        },
+        {
+          "name": "5",
+          "light": "#cf222e",
+          "dark": "#da3633"
+        },
+        {
+          "name": "6",
+          "light": "#a40e26",
+          "dark": "#b62324"
+        },
+        {
+          "name": "7",
+          "light": "#82071e",
+          "dark": "#8e1519"
+        },
+        {
+          "name": "8",
+          "light": "#660018",
+          "dark": "#67060c"
+        },
+        {
+          "name": "9",
+          "light": "#4c0014",
+          "dark": "#490202"
+        }
+      ]
+    },
+    {
+      "id": "green",
+      "name": "Green",
+      "role": "success",
+      "steps": [
+        {
+          "name": "0",
+          "light": "#dafbe1",
+          "dark": "#aff5b4"
+        },
+        {
+          "name": "1",
+          "light": "#aceebb",
+          "dark": "#7ee787"
+        },
+        {
+          "name": "2",
+          "light": "#6fdd8b",
+          "dark": "#56d364"
+        },
+        {
+          "name": "3",
+          "light": "#4ac26b",
+          "dark": "#3fb950"
+        },
+        {
+          "name": "4",
+          "light": "#2da44e",
+          "dark": "#2ea043"
+        },
+        {
+          "name": "5",
+          "light": "#1a7f37",
+          "dark": "#238636"
+        },
+        {
+          "name": "6",
+          "light": "#116329",
+          "dark": "#196c2e"
+        },
+        {
+          "name": "7",
+          "light": "#044f1e",
+          "dark": "#0f5323"
+        },
+        {
+          "name": "8",
+          "light": "#003d16",
+          "dark": "#033a16"
+        },
+        {
+          "name": "9",
+          "light": "#002d11",
+          "dark": "#04260f"
+        }
+      ]
+    },
+    {
+      "id": "yellow",
+      "name": "Yellow",
+      "role": "warning",
+      "steps": [
+        {
+          "name": "0",
+          "light": "#fff8c5",
+          "dark": "#f8e3a1"
+        },
+        {
+          "name": "1",
+          "light": "#fae17d",
+          "dark": "#f2cc60"
+        },
+        {
+          "name": "2",
+          "light": "#eac54f",
+          "dark": "#e3b341"
+        },
+        {
+          "name": "3",
+          "light": "#d4a72c",
+          "dark": "#d29922"
+        },
+        {
+          "name": "4",
+          "light": "#bf8700",
+          "dark": "#bb8009"
+        },
+        {
+          "name": "5",
+          "light": "#9a6700",
+          "dark": "#9e6a03"
+        },
+        {
+          "name": "6",
+          "light": "#7d4e00",
+          "dark": "#845306"
+        },
+        {
+          "name": "7",
+          "light": "#633c01",
+          "dark": "#693e00"
+        },
+        {
+          "name": "8",
+          "light": "#4d2d00",
+          "dark": "#4b2900"
+        },
+        {
+          "name": "9",
+          "light": "#3b2300",
+          "dark": "#341a00"
+        }
+      ]
+    }
+  ],
+  "roleMapping": {
+    "appBg": 0,
+    "subtleBg": 1,
+    "uiBg": 1,
+    "uiBgHover": 2,
+    "uiBgActive": 3,
+    "borderSubtle": 6,
+    "border": 7,
+    "borderStrong": 8,
+    "solid": 5,
+    "solidHover": 6,
+    "textSubtle": 9,
+    "text": 9
+  },
+  "solidForeground": "white",
+  "notes": "Primer is intentionally non-uniform in its source: chromatic scales have 10 steps (0-9) but the neutral extends to 14 (0-13). To keep the uniform format, the neutral is truncated here to its verbatim steps 0-9; the omitted dark end (light: 10 #454C54, 11 #393F46, 12 #25292E, 13 #1f2328 / dark: 10 #B7BDC8, 11 #D1D7E0, 12 #F0F6FC, 13 #ffffff) carries Primer's real default text color \u2014 fgColor-default is neutral 13 (#1f2328) in light and 12 (#f0f6fc) in dark \u2014 so roleMapping.text falls back to 9, the docs' minimum-contrast text step and exactly fgColor-muted (#59636e light / #9198a1 dark); text and textSubtle therefore share an index. Other roles are grounded in the light theme's functional tokens (bgColor-default=neutral 0, bgColor-muted/control-rest=1, hover=2, active=3, borderColor-default=6-7, borderColor-emphasis=8) plus the docs' step guidance; the dark theme shifts some by a step (appBg=1 since dark neutral 0 #010409 is bgColor-inset, borders 7-8). solid=5 / solidHover=6 hold for chromatic scales in both themes (bgColor-accent/danger/attention-emphasis = step 5); the neutral solid (bgColor-neutral-emphasis) uses step 9 light / 8 dark. Exceptions off the base scales: bgColor-success-emphasis (primary button green) is a custom #1f883d (light) / #238636-adjacent ramp value, and muted borders/backgrounds use alpha variants (e.g. borderColor-muted #d1d9e0b3, borderColor-accent-muted #54aeff66) that are not separate scale steps. fgColor-onEmphasis is #ffffff in both themes. The functional CSS also ships separate 10-step per-theme 'display' scales for data visualization, and there are 9 themes total (light/dark plus dimmed, high-contrast, colorblind, tritanopia variants), each re-tuning the same scale structure."
+}

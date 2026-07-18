@@ -1,0 +1,128 @@
+{
+  "id": "geist",
+  "name": "Vercel Geist",
+  "website": "https://vercel.com/geist/colors",
+  "sources": [
+    "https://vercel.com/design.md",
+    "https://vercel.com/design.dark.md",
+    "https://vercel.com/geist/colors"
+  ],
+  "description": "Geist is Vercel's design system for developer-focused interfaces: minimal, high-contrast, dark-first, with restrained color used to signal state rather than decoration. Its 10-step scales with strict per-step semantics are a reference for modern developer-tool palettes.",
+  "philosophy": "Every non-background scale runs 10 steps (100-1000) where the step encodes intent, not just lightness: 100-300 are component backgrounds (default/hover/active), 400-600 are borders (default/hover/active), 700-800 are high-contrast solid fills (default/hover), 900-1000 are text and icons (secondary/primary). Page surfaces live outside the scales in dedicated background-100/200 tokens. Dark mode is a full hand-tuned second palette that redefines the same token names (design.dark.md), not an algorithmic inversion. Values are sRGB hex with separate oklch() wide-gamut P3 equivalents per accent step.",
+  "stepCount": 10,
+  "stepNames": [
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900",
+    "1000"
+  ],
+  "scales": [
+    {
+      "id": "gray",
+      "name": "Gray",
+      "role": "neutral",
+      "steps": [
+        { "name": "100", "light": "#f2f2f2", "dark": "#1a1a1a" },
+        { "name": "200", "light": "#ebebeb", "dark": "#1f1f1f" },
+        { "name": "300", "light": "#e6e6e6", "dark": "#292929" },
+        { "name": "400", "light": "#eaeaea", "dark": "#2e2e2e" },
+        { "name": "500", "light": "#c9c9c9", "dark": "#454545" },
+        { "name": "600", "light": "#a8a8a8", "dark": "#878787" },
+        { "name": "700", "light": "#8f8f8f", "dark": "#8f8f8f" },
+        { "name": "800", "light": "#7d7d7d", "dark": "#7d7d7d" },
+        { "name": "900", "light": "#4d4d4d", "dark": "#a0a0a0" },
+        { "name": "1000", "light": "#171717", "dark": "#ededed" }
+      ]
+    },
+    {
+      "id": "blue",
+      "name": "Blue",
+      "role": "accent",
+      "steps": [
+        { "name": "100", "light": "#f0f7ff", "dark": "#06193a" },
+        { "name": "200", "light": "#e9f4ff", "dark": "#022248" },
+        { "name": "300", "light": "#dfefff", "dark": "#002f62" },
+        { "name": "400", "light": "#cae7ff", "dark": "#003674" },
+        { "name": "500", "light": "#94ccff", "dark": "#00418b" },
+        { "name": "600", "light": "#48aeff", "dark": "#0090ff" },
+        { "name": "700", "light": "#006bff", "dark": "#006efe" },
+        { "name": "800", "light": "#0059ec", "dark": "#005be7" },
+        { "name": "900", "light": "#005ff2", "dark": "#47a8ff" },
+        { "name": "1000", "light": "#002359", "dark": "#eaf6ff" }
+      ]
+    },
+    {
+      "id": "red",
+      "name": "Red",
+      "role": "danger",
+      "steps": [
+        { "name": "100", "light": "#ffeeef", "dark": "#330a11" },
+        { "name": "200", "light": "#ffe8ea", "dark": "#440d13" },
+        { "name": "300", "light": "#ffe3e4", "dark": "#5d0e17" },
+        { "name": "400", "light": "#ffd7d6", "dark": "#6f101b" },
+        { "name": "500", "light": "#ffb1b3", "dark": "#88151f" },
+        { "name": "600", "light": "#ff676d", "dark": "#f32e40" },
+        { "name": "700", "light": "#fc0035", "dark": "#f13242" },
+        { "name": "800", "light": "#ea001d", "dark": "#e2162a" },
+        { "name": "900", "light": "#d8001b", "dark": "#ff565f" },
+        { "name": "1000", "light": "#47000c", "dark": "#ffe9ed" }
+      ]
+    },
+    {
+      "id": "green",
+      "name": "Green",
+      "role": "success",
+      "steps": [
+        { "name": "100", "light": "#ecfdec", "dark": "#002608" },
+        { "name": "200", "light": "#e5fce7", "dark": "#00320b" },
+        { "name": "300", "light": "#d3fad1", "dark": "#003a0e" },
+        { "name": "400", "light": "#b9f5bc", "dark": "#004615" },
+        { "name": "500", "light": "#82eb8d", "dark": "#006717" },
+        { "name": "600", "light": "#4ce15e", "dark": "#00952d" },
+        { "name": "700", "light": "#28a948", "dark": "#00ac3a" },
+        { "name": "800", "light": "#279141", "dark": "#009432" },
+        { "name": "900", "light": "#107d32", "dark": "#00ca50" },
+        { "name": "1000", "light": "#003a00", "dark": "#d8ffe4" }
+      ]
+    },
+    {
+      "id": "amber",
+      "name": "Amber",
+      "role": "warning",
+      "steps": [
+        { "name": "100", "light": "#fff6de", "dark": "#2a1700" },
+        { "name": "200", "light": "#fff4cf", "dark": "#361900" },
+        { "name": "300", "light": "#fff1c1", "dark": "#502800" },
+        { "name": "400", "light": "#ffdc73", "dark": "#5b3000" },
+        { "name": "500", "light": "#ffc543", "dark": "#703e00" },
+        { "name": "600", "light": "#ffa600", "dark": "#ed9a00" },
+        { "name": "700", "light": "#ffae00", "dark": "#ffae00" },
+        { "name": "800", "light": "#ff9300", "dark": "#ff9300" },
+        { "name": "900", "light": "#aa4d00", "dark": "#ff9300" },
+        { "name": "1000", "light": "#561900", "dark": "#fff3d5" }
+      ]
+    }
+  ],
+  "roleMapping": {
+    "appBg": null,
+    "subtleBg": null,
+    "uiBg": 0,
+    "uiBgHover": 1,
+    "uiBgActive": 2,
+    "borderSubtle": null,
+    "border": 3,
+    "borderStrong": 5,
+    "solid": 6,
+    "solidHover": 7,
+    "textSubtle": 8,
+    "text": 9
+  },
+  "solidForeground": "white",
+  "notes": "Page/app backgrounds live OUTSIDE the scales in dedicated tokens: light background-100 #ffffff / background-200 #fafafa, dark background-100 #000000 / background-200 #000000 — hence appBg/subtleBg are null. Border steps are interaction states (400 default, 500 hover, 600 active), not weights, so borderSubtle is null and borderStrong maps to the active border. Solid accent fills (700/800) take white text (documented error button: red-800 + #ffffff); the neutral primary button instead inverts (gray-1000 fill with background-100 label). Geist also ships translucent gray-alpha-100..1000 tokens for borders/overlays, oklch() Display P3 equivalents for every accent step, and extra accent scales (teal, purple, pink) not extracted here. design.md's own guidance assigns blue to 'success, links, and focus', red to errors, amber to warnings; green is unassigned in prose but is the conventional success ramp. Light gray-400 (#eaeaea) is lighter than gray-300 (#e6e6e6) in the source — kept verbatim. Dark values are a separately hand-tuned palette from design.dark.md, not derived."
+}
