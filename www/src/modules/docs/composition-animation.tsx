@@ -36,7 +36,7 @@ import { Command } from '@/registry/ui/command'
 import { ContextMenu } from '@/registry/ui/context-menu'
 import { DateField } from '@/registry/ui/date-field'
 import { DatePicker, DateRangePicker } from '@/registry/ui/date-picker'
-import { DialogContent } from '@/registry/ui/dialog'
+import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Drawer } from '@/registry/ui/drawer'
 import { Description, Label } from '@/registry/ui/field'
 import {
@@ -96,8 +96,10 @@ const firstStep: Step = {
 const steps: Step[] = [
   firstStep,
   {
+    // Mid beat: wrap the bare input in a TextField — no field parts yet.
     title: 'TextField',
-    durationMs: 2600,
+    mid: true,
+    durationMs: 1400,
     code: `<TextField>
   <Input placeholder="hello@example.com" />
 </TextField>`,
@@ -111,7 +113,27 @@ const steps: Step[] = [
     ),
   },
   {
-    title: 'Label & Description',
+    // Mid beat: the field gains its label.
+    title: 'TextField',
+    mid: true,
+    durationMs: 1400,
+    code: `<TextField>
+  <Label>Email</Label>
+  <Input placeholder="hello@example.com" />
+</TextField>`,
+    preview: (
+      <TextField className="w-full max-w-xs">
+        <Label className="[view-transition-name:cmp-label]">Email</Label>
+        <Input
+          placeholder="hello@example.com"
+          className="[view-transition-name:cmp-field]"
+        />
+      </TextField>
+    ),
+  },
+  {
+    // Headline: the full field — label, input, and description.
+    title: 'TextField',
     durationMs: 3000,
     code: `<TextField>
   <Label>Email</Label>
@@ -785,10 +807,10 @@ const steps: Step[] = [
     ),
   },
   {
-    // Headline: the items gain keyboard shortcuts.
+    // Mid beat: the items gain keyboard shortcuts.
     title: 'Menu',
-    compact: true,
-    durationMs: 2800,
+    mid: true,
+    durationMs: 1400,
     code: `<Menu>
   <Button size="sm" isIconOnly>
     <MoreHorizontalIcon />
@@ -831,10 +853,10 @@ const steps: Step[] = [
     ),
   },
   {
-    // Mid beat: one item nests a submenu.
-    title: 'Submenu',
-    mid: true,
-    durationMs: 1500,
+    // Headline: one item nests a submenu.
+    title: 'Menu',
+    compact: true,
+    durationMs: 3000,
     code: `<Menu>
   <Button size="sm" isIconOnly>
     <MoreHorizontalIcon />
@@ -890,8 +912,8 @@ const steps: Step[] = [
     ),
   },
   {
-    // Headline: the same menu, now opened by right-click — the trigger becomes
-    // the target surface.
+    // Headline: the same menu, now opened by right-click — only the root and
+    // trigger change.
     title: 'ContextMenu',
     compact: true,
     durationMs: 3000,
@@ -900,7 +922,15 @@ const steps: Step[] = [
   <Popover>
     <MenuContent>
       <MenuItem>Edit <Kbd>⌘E</Kbd></MenuItem>
-      <MenuItem>Duplicate <Kbd>⌘D</Kbd></MenuItem>
+      <MenuSub>
+        <MenuItem>Move to</MenuItem>
+        <Popover>
+          <MenuContent>
+            <MenuItem>Project</MenuItem>
+            <MenuItem>Team</MenuItem>
+          </MenuContent>
+        </Popover>
+      </MenuSub>
       <MenuItem>Delete <Kbd>⌘⌫</Kbd></MenuItem>
     </MenuContent>
   </Popover>
@@ -914,10 +944,15 @@ const steps: Step[] = [
               Edit
               <Kbd>⌘E</Kbd>
             </MenuItem>
-            <MenuItem textValue="Duplicate">
-              Duplicate
-              <Kbd>⌘D</Kbd>
-            </MenuItem>
+            <MenuSub>
+              <MenuItem>Move to</MenuItem>
+              <Popover>
+                <MenuContent>
+                  <MenuItem>Project</MenuItem>
+                  <MenuItem>Team</MenuItem>
+                </MenuContent>
+              </Popover>
+            </MenuSub>
             <MenuItem textValue="Delete">
               Delete
               <Kbd>⌘⌫</Kbd>
@@ -1081,7 +1116,7 @@ const steps: Step[] = [
     ),
   },
   {
-    // The finale: every part recomposed into a live command palette — sectioned,
+    // Every part recomposed into a live command palette — sectioned,
     // shortcut-hinted, and typing filters it in place.
     title: 'Command palette',
     durationMs: 4200,
@@ -1133,6 +1168,120 @@ const steps: Step[] = [
           </ListBox>
         </Command>
       </div>
+    ),
+  },
+  {
+    // The palette moves behind a trigger: Dialog and Modal wrap the same
+    // Command — the preview's button really opens it.
+    title: 'Command dialog',
+    durationMs: 3600,
+    code: `<Dialog>
+  <Button>Search… <Kbd>⌘K</Kbd></Button>
+  <Modal>
+    <DialogContent>
+      <Command>
+        <SearchField>
+          <InputGroup>
+            <InputGroupAddon>
+              <SearchIcon />
+            </InputGroupAddon>
+            <Input placeholder="Type a command…" />
+          </InputGroup>
+        </SearchField>
+        <ListBox>
+          <ListBoxItem>New issue</ListBoxItem>
+          <ListBoxItem>Assign to…</ListBoxItem>
+          <ListBoxItem>Search docs</ListBoxItem>
+        </ListBox>
+      </Command>
+    </DialogContent>
+  </Modal>
+</Dialog>`,
+    preview: (
+      <Dialog>
+        <Button className="[view-transition-name:cmp-field]">
+          Search…
+          <Kbd className="[view-transition-name:cmp-kbd]">⌘K</Kbd>
+        </Button>
+        <Modal>
+          <DialogContent>
+            <Command aria-label="Command menu">
+              <SearchField aria-label="Search" autoFocus>
+                <InputGroup>
+                  <InputGroupAddon>
+                    <SearchIcon />
+                  </InputGroupAddon>
+                  <Input placeholder="Type a command…" />
+                </InputGroup>
+              </SearchField>
+              <ListBox aria-label="Commands">
+                <ListBoxItem id="new-issue">New issue</ListBoxItem>
+                <ListBoxItem id="assign">Assign to…</ListBoxItem>
+                <ListBoxItem id="search-docs">Search docs</ListBoxItem>
+              </ListBox>
+            </Command>
+          </DialogContent>
+        </Modal>
+      </Dialog>
+    ),
+  },
+  {
+    // The same searchable list drops into a Select — Command is React Aria's
+    // Autocomplete, so the popover filters in place.
+    title: 'Searchable select',
+    durationMs: 3600,
+    code: `<Select>
+  <Label>Assignee</Label>
+  <Button>
+    <SelectValue />
+    <ChevronDownIcon />
+  </Button>
+  <Popover>
+    <Command>
+      <SearchField>
+        <InputGroup>
+          <InputGroupAddon>
+            <SearchIcon />
+          </InputGroupAddon>
+          <Input placeholder="Search people…" />
+        </InputGroup>
+      </SearchField>
+      <ListBox>
+        <ListBoxItem>Cara</ListBoxItem>
+        <ListBoxItem>Dan</ListBoxItem>
+        <ListBoxItem>Eve</ListBoxItem>
+      </ListBox>
+    </Command>
+  </Popover>
+</Select>`,
+    preview: (
+      <Select className="w-full max-w-xs" defaultSelectedKey="cara">
+        <Label className="[view-transition-name:cmp-label]">Assignee</Label>
+        <Button className="[view-transition-name:cmp-field]">
+          <SelectValue />
+          <ChevronDownIcon />
+        </Button>
+        <Popover className="outline-hidden">
+          <Command aria-label="People">
+            <SearchField aria-label="Search" autoFocus>
+              <InputGroup>
+                <InputGroupAddon>
+                  <SearchIcon />
+                </InputGroupAddon>
+                <Input placeholder="Search people…" />
+              </InputGroup>
+            </SearchField>
+            <ListBox
+              aria-label="People"
+              className="[view-transition-name:cmp-list]"
+            >
+              <ListBoxItem id="cara">Cara</ListBoxItem>
+              <ListBoxItem id="dan">Dan</ListBoxItem>
+              <ListBoxItem id="eve">Eve</ListBoxItem>
+            </ListBox>
+          </Command>
+        </Popover>
+      </Select>
     ),
   },
 ]
