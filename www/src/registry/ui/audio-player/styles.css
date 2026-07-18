@@ -1,0 +1,4 @@
+:root {
+  --audio-player-radius: var(--radius-lg);
+  --audio-player-shadow: none;
+}

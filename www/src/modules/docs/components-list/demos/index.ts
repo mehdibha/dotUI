@@ -2,6 +2,7 @@ import type { ComponentType } from 'react'
 
 import { AccordionDemo } from './accordion'
 import { AlertDemo } from './alert'
+import { AudioPlayerDemo } from './audio-player'
 import { AvatarDemo } from './avatar'
 import { BadgeDemo } from './badge'
 import { BreadcrumbsDemo } from './breadcrumbs'
@@ -69,6 +70,7 @@ import { TreeDemo } from './tree'
 export const componentDemos: Record<string, ComponentType> = {
   accordion: AccordionDemo,
   alert: AlertDemo,
+  'audio-player': AudioPlayerDemo,
   avatar: AvatarDemo,
   badge: BadgeDemo,
   breadcrumbs: BreadcrumbsDemo,

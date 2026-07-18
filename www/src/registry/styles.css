@@ -3,6 +3,7 @@
 @import './base/theme.css';
 @import './base/fonts.css';
 
+@import './ui/audio-player/styles.css';
 @import './ui/avatar/styles.css';
 @import './ui/alert/styles.css';
 @import './ui/badge/styles.css';

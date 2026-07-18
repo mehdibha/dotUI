@@ -1,0 +1,91 @@
+{
+  "name": "AudioPlayerProps",
+  "description": "An audio player plays a sound source and renders controls for it. It manages\nthe underlying `audio` element and shares playback state with its parts.\nWithout children it renders a default composition: play button, elapsed\ntime, seek slider, duration, and mute button.",
+  "extendsElement": "div",
+  "props": {
+    "src": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The URL of the audio to play."
+    },
+    "autoPlay": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether playback starts as soon as the audio can play."
+    },
+    "loop": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether playback restarts from the beginning when the audio ends."
+    },
+    "preload": {
+      "type": "\"auto\" | \"metadata\" | \"none\"",
+      "detailedType": "'auto' | 'metadata' | 'none' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "auto"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "metadata"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          }
+        ]
+      },
+      "description": "How much of the audio to load before playback.",
+      "default": "\"metadata\""
+    },
+    "crossOrigin": {
+      "type": "\"\" | \"anonymous\" | \"use-credentials\"",
+      "detailedType": "'' | 'anonymous' | 'use-credentials' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": ""
+          },
+          {
+            "type": "stringLiteral",
+            "value": "anonymous"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "use-credentials"
+          }
+        ]
+      },
+      "description": "The CORS mode used to fetch the audio."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the player and all of its controls are disabled."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

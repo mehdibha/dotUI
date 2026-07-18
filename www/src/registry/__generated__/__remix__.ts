@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 144 icons we actually use (not the entire library)
+// Only exports the 147 icons we actually use (not the entire library)
 export {
 	RiAddBoxLine,
 	RiAddLine,
@@ -7,6 +7,7 @@ export {
 	RiArchiveLine,
 	RiArrowDownLine,
 	RiArrowDownSLine,
+	RiArrowGoBackLine,
 	RiArrowLeftCircleLine,
 	RiArrowLeftLine,
 	RiArrowLeftSLine,
@@ -100,9 +101,11 @@ export {
 	RiMoreLine,
 	RiNotification3Line,
 	RiPaletteLine,
+	RiPauseLine,
 	RiPencilLine,
 	RiPenNibLine,
 	RiPieChartLine,
+	RiPlayLine,
 	RiPriceTag3Line,
 	RiPulseLine,
 	RiPushpinLine,

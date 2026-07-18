@@ -27,6 +27,7 @@ export type ComponentGroup =
   | 'disclosure'
   | 'containers'
   | 'sliders'
+  | 'media'
   | 'color-swatches'
   | 'calendar'
   | 'drop-zone'

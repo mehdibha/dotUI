@@ -433,6 +433,19 @@ export const componentsData: ComponentCategory[] = [
     ],
   },
   {
+    title: 'Media',
+    slug: 'media',
+    components: [
+      {
+        name: 'AudioPlayer',
+        slug: 'audio-player',
+        href: '/docs/components/audio-player',
+        stretch: true,
+        status: 'in review',
+      },
+    ],
+  },
+  {
     title: 'Colors',
     slug: 'colors',
     components: [

@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 138 icons we actually use (not the entire library)
+// Only exports the 141 icons we actually use (not the entire library)
 export {
 	AiCloud01Icon,
 	Alert01Icon,
@@ -95,8 +95,10 @@ export {
 	MultiplicationSignCircleIcon,
 	Notification01Icon,
 	PaintBoardIcon,
+	PauseIcon,
 	PieChartIcon,
 	PinIcon,
+	PlayIcon,
 	PlusSignIcon,
 	PlusSignSquareIcon,
 	QuillWrite01Icon,
@@ -104,6 +106,7 @@ export {
 	RefreshIcon,
 	RoboticIcon,
 	Rotate01Icon,
+	Rotate02Icon,
 	ScissorIcon,
 	Search01Icon,
 	SecurityIcon,

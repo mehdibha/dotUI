@@ -73,6 +73,26 @@ export const DemosIndex: Record<
 		files: ["ui/alert/demos/warning.tsx"],
 		component: React.lazy(() => import("@/registry/ui/alert/demos/warning")),
 	},
+	"audio-player/demos/composition": {
+		files: ["ui/audio-player/demos/composition.tsx"],
+		component: React.lazy(() => import("@/registry/ui/audio-player/demos/composition")),
+	},
+	"audio-player/demos/default": {
+		files: ["ui/audio-player/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/audio-player/demos/default")),
+	},
+	"audio-player/demos/disabled": {
+		files: ["ui/audio-player/demos/disabled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/audio-player/demos/disabled")),
+	},
+	"audio-player/demos/playback-speed": {
+		files: ["ui/audio-player/demos/playback-speed.tsx"],
+		component: React.lazy(() => import("@/registry/ui/audio-player/demos/playback-speed")),
+	},
+	"audio-player/demos/voice-message": {
+		files: ["ui/audio-player/demos/voice-message.tsx"],
+		component: React.lazy(() => import("@/registry/ui/audio-player/demos/voice-message")),
+	},
 	"avatar/demos/avatar-group-count": {
 		files: ["ui/avatar/demos/avatar-group-count.tsx"],
 		component: React.lazy(() => import("@/registry/ui/avatar/demos/avatar-group-count")),

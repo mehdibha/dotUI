@@ -1,0 +1,37 @@
+{
+  "name": "AudioPlayerTimeProps",
+  "description": "A text label displaying the elapsed time, the total duration, or the\nremaining time of the audio.",
+  "extendsElement": "span",
+  "props": {
+    "variant": {
+      "type": "\"duration\" | \"elapsed\" | \"remaining\"",
+      "detailedType": "'duration' | 'elapsed' | 'remaining' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "duration"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "elapsed"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "remaining"
+          }
+        ]
+      },
+      "description": "Which time to display.",
+      "default": "\"elapsed\""
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

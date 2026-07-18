@@ -1,0 +1,93 @@
+{
+  "name": "AudioPlayerMuteButtonProps",
+  "description": "A button that toggles the audio's muted state. Its icon reflects the current\nvolume. Built on top of the Button, so it shares its `variant` and `size`.",
+  "extendsElement": "button",
+  "props": {
+    "variant": {
+      "type": "\"danger\" | \"default\" | \"link\" | \"primary\" | \"quiet\" | \"warning\"",
+      "detailedType": "| 'danger'\n| 'default'\n| 'link'\n| 'primary'\n| 'quiet'\n| 'warning'\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "danger"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "default"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "link"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "primary"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "quiet"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "warning"
+          }
+        ]
+      },
+      "description": "The visual style of the button.",
+      "default": "\"quiet\""
+    },
+    "size": {
+      "type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",
+      "detailedType": "'lg' | 'md' | 'sm' | 'xs' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "lg"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "md"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "sm"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "xs"
+          }
+        ]
+      },
+      "description": "The size of the button.",
+      "default": "\"md\""
+    },
+    "isIconOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Render the button as a square icon cell.",
+      "default": "true"
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the button is disabled. Defaults to the player's `isDisabled`."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

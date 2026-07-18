@@ -107,15 +107,18 @@ import {
 	PaletteIcon as LucidePaletteIcon,
 	PanelLeftIcon as LucidePanelLeftIcon,
 	PaperclipIcon as LucidePaperclipIcon,
+	PauseIcon as LucidePauseIcon,
 	PencilIcon as LucidePencilIcon,
 	PenSquareIcon as LucidePenSquareIcon,
 	PenToolIcon as LucidePenToolIcon,
 	PieChartIcon as LucidePieChartIcon,
 	PinIcon as LucidePinIcon,
+	PlayIcon as LucidePlayIcon,
 	PlusIcon as LucidePlusIcon,
 	PlusSquareIcon as LucidePlusSquareIcon,
 	RadioIcon as LucideRadioIcon,
 	RefreshCwIcon as LucideRefreshCwIcon,
+	RotateCcwIcon as LucideRotateCcwIcon,
 	RotateCwIcon as LucideRotateCwIcon,
 	SaveIcon as LucideSaveIcon,
 	ScissorsIcon as LucideScissorsIcon,
@@ -757,6 +760,27 @@ export const RotateCwIcon = createIcon(LucideRotateCwIcon, {
 	remix: "RiRestartLine",
 	tabler: "IconRotateClockwise2",
 	hugeicons: "Rotate01Icon",
+});
+
+export const RotateCcwIcon = createIcon(LucideRotateCcwIcon, {
+	lucide: "RotateCcwIcon",
+	remix: "RiArrowGoBackLine",
+	tabler: "IconRotate2",
+	hugeicons: "Rotate02Icon",
+});
+
+export const PlayIcon = createIcon(LucidePlayIcon, {
+	lucide: "PlayIcon",
+	remix: "RiPlayLine",
+	tabler: "IconPlayerPlay",
+	hugeicons: "PlayIcon",
+});
+
+export const PauseIcon = createIcon(LucidePauseIcon, {
+	lucide: "PauseIcon",
+	remix: "RiPauseLine",
+	tabler: "IconPlayerPause",
+	hugeicons: "PauseIcon",
 });
 
 export const Clock2Icon = createIcon(LucideClock2Icon, {

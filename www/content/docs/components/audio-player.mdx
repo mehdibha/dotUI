@@ -1,0 +1,165 @@
+---
+title: AudioPlayer
+description: An audio player plays a sound source and renders composable controls for it.
+---
+
+<InteractiveDemo
+  name="audio-player"
+  controls={[
+    {
+      type: 'boolean',
+      name: 'isDisabled',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'loop',
+      defaultValue: false,
+    },
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/audio-player
+```
+
+## Usage
+
+Pass a `src` to `AudioPlayer`. Without children it renders a default composition: play button, elapsed time, seek slider, duration, and mute button.
+
+```tsx
+import { AudioPlayer } from '@/components/ui/audio-player'
+```
+
+```tsx
+<AudioPlayer src="/podcast-episode.mp3" />
+```
+
+## Anatomy
+
+`AudioPlayer` manages the underlying `audio` element and shares playback state with its parts, so they compose in any order and layout. All buttons and sliders are built on [Button](/docs/components/button) and [Slider](/docs/components/slider), and inherit their styles.
+
+```tsx
+import {
+  AudioPlayer,
+  AudioPlayerMuteButton,
+  AudioPlayerPlayButton,
+  AudioPlayerSeekButton,
+  AudioPlayerSeekSlider,
+  AudioPlayerTime,
+  AudioPlayerVolumeSlider,
+} from '@/components/ui/audio-player'
+;<AudioPlayer src="/podcast-episode.mp3">
+  <AudioPlayerSeekButton seconds={-10} />
+  <AudioPlayerPlayButton />
+  <AudioPlayerSeekButton seconds={10} />
+  <AudioPlayerTime />
+  <AudioPlayerSeekSlider />
+  <AudioPlayerTime variant="duration" />
+  <AudioPlayerMuteButton />
+  <AudioPlayerVolumeSlider />
+</AudioPlayer>
+```
+
+## Seeking
+
+`AudioPlayerSeekSlider` previews the target position while dragging and seeks when released. `AudioPlayerSeekButton` skips by a fixed number of `seconds` — negative values skip backward.
+
+```tsx
+<AudioPlayer src="/podcast-episode.mp3">
+  <AudioPlayerSeekButton seconds={-10} />
+  <AudioPlayerPlayButton />
+  <AudioPlayerSeekButton seconds={30} />
+  <AudioPlayerSeekSlider />
+</AudioPlayer>
+```
+
+## Time
+
+`AudioPlayerTime` displays the `elapsed` time by default; switch `variant` to `duration` or `remaining`, or pass children to render your own label.
+
+```tsx
+<AudioPlayer src="/podcast-episode.mp3">
+  <AudioPlayerPlayButton />
+  <AudioPlayerSeekSlider />
+  <AudioPlayerTime variant="remaining" />
+</AudioPlayer>
+```
+
+## Volume
+
+`AudioPlayerMuteButton` toggles the muted state and reflects the current volume in its icon. `AudioPlayerVolumeSlider` adjusts the volume, and unmutes when changed while muted.
+
+```tsx
+<AudioPlayer src="/podcast-episode.mp3">
+  <AudioPlayerPlayButton />
+  <AudioPlayerSeekSlider />
+  <AudioPlayerMuteButton />
+  <AudioPlayerVolumeSlider />
+</AudioPlayer>
+```
+
+## Custom controls
+
+`useAudioPlayer` exposes the player's state and actions (`play`, `pause`, `seek`, `setPlaybackRate`, …) to build controls that don't ship as parts, like a playback-speed select.
+
+```tsx
+function SpeedSelect() {
+  const player = useAudioPlayer()
+  return (
+    <Select
+      aria-label="Playback speed"
+      selectedKey={String(player.playbackRate)}
+      onSelectionChange={(key) => player.setPlaybackRate(Number(key))}
+    >
+      <SelectTrigger size="sm" variant="quiet" />
+      <SelectContent>
+        <SelectItem id="1">1×</SelectItem>
+        <SelectItem id="1.5">1.5×</SelectItem>
+        <SelectItem id="2">2×</SelectItem>
+      </SelectContent>
+    </Select>
+  )
+}
+```
+
+## Examples
+
+<Examples className="sm:grid-cols-2">
+  <Example name="audio-player/demos/default" title="Default" />
+  <Example name="audio-player/demos/composition" title="Full Composition" />
+  <Example name="audio-player/demos/playback-speed" title="Playback Speed" />
+  <Example name="audio-player/demos/voice-message" title="Voice Message" />
+</Examples>
+
+## API Reference
+
+### AudioPlayer
+
+<Reference name="audio-player" />
+
+### AudioPlayerPlayButton
+
+<Reference name="audio-player-play-button" />
+
+### AudioPlayerSeekButton
+
+<Reference name="audio-player-seek-button" />
+
+### AudioPlayerSeekSlider
+
+<Reference name="audio-player-seek-slider" />
+
+### AudioPlayerTime
+
+<Reference name="audio-player-time" />
+
+### AudioPlayerMuteButton
+
+<Reference name="audio-player-mute-button" />
+
+### AudioPlayerVolumeSlider
+
+<Reference name="audio-player-volume-slider" />

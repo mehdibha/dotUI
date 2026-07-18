@@ -548,6 +548,24 @@ export const registryIcons: Record<
     tabler: 'IconRotateClockwise2',
     hugeicons: 'Rotate01Icon',
   },
+  RotateCcwIcon: {
+    lucide: 'RotateCcwIcon',
+    remix: 'RiArrowGoBackLine',
+    tabler: 'IconRotate2',
+    hugeicons: 'Rotate02Icon',
+  },
+  PlayIcon: {
+    lucide: 'PlayIcon',
+    remix: 'RiPlayLine',
+    tabler: 'IconPlayerPlay',
+    hugeicons: 'PlayIcon',
+  },
+  PauseIcon: {
+    lucide: 'PauseIcon',
+    remix: 'RiPauseLine',
+    tabler: 'IconPlayerPause',
+    hugeicons: 'PauseIcon',
+  },
   Clock2Icon: {
     lucide: 'Clock2Icon',
     remix: 'RiTimeLine',
