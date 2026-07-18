@@ -1,0 +1,14 @@
+{
+  "name": "VideoPlayerProps",
+  "description": "A video player pairs a video element with composable playback controls. It\nholds the shared playback state every part reads from.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

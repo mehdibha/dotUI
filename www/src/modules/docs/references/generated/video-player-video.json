@@ -1,0 +1,14 @@
+{
+  "name": "VideoPlayerVideoProps",
+  "description": "The video element. Clicking it toggles playback, and its media events keep\nthe player state in sync.",
+  "extendsElement": "video",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

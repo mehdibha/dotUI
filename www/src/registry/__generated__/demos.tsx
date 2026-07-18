@@ -2897,4 +2897,20 @@ export const DemosIndex: Record<
 		files: ["ui/tree/demos/with-icons.tsx"],
 		component: React.lazy(() => import("@/registry/ui/tree/demos/with-icons")),
 	},
+	"video-player/demos/composition": {
+		files: ["ui/video-player/demos/composition.tsx"],
+		component: React.lazy(() => import("@/registry/ui/video-player/demos/composition")),
+	},
+	"video-player/demos/default": {
+		files: ["ui/video-player/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/video-player/demos/default")),
+	},
+	"video-player/demos/minimal": {
+		files: ["ui/video-player/demos/minimal.tsx"],
+		component: React.lazy(() => import("@/registry/ui/video-player/demos/minimal")),
+	},
+	"video-player/demos/playback-rate": {
+		files: ["ui/video-player/demos/playback-rate.tsx"],
+		component: React.lazy(() => import("@/registry/ui/video-player/demos/playback-rate")),
+	},
 };

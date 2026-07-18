@@ -1,0 +1,14 @@
+{
+  "name": "VideoPlayerTimeProps",
+  "description": "Displays the elapsed and total time, like `1:04 / 3:36`.",
+  "extendsElement": "span",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

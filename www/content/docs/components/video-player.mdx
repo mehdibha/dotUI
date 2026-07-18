@@ -1,0 +1,162 @@
+---
+title: VideoPlayer
+description: A composable video player with controls built from the design system's own buttons and sliders.
+links:
+  - label: MDN
+    href: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video
+wip: true
+---
+
+<InteractiveDemo
+  name="video-player"
+  controls={[
+    {
+      type: 'boolean',
+      name: 'muted',
+      defaultValue: false,
+    },
+    {
+      type: 'boolean',
+      name: 'loop',
+      defaultValue: false,
+    },
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/video-player
+```
+
+## Usage
+
+Use a video player to embed video with controls that match your design system.
+
+```tsx
+import {
+  VideoPlayer,
+  VideoPlayerControls,
+  VideoPlayerVideo,
+} from '@/components/ui/video-player'
+```
+
+```tsx
+<VideoPlayer>
+  <VideoPlayerVideo src="/videos/trailer.mp4" />
+  <VideoPlayerControls />
+</VideoPlayer>
+```
+
+## Anatomy
+
+`VideoPlayerControls` renders the default layout for you — a seek bar above a row with play, volume, time, and fullscreen controls — so most players only need `VideoPlayer`, `VideoPlayerVideo`, and `VideoPlayerControls`. Compose the parts by hand for full control over the layout.
+
+```tsx
+import {
+  VideoPlayer,
+  VideoPlayerControls,
+  VideoPlayerFullscreenButton,
+  VideoPlayerMuteButton,
+  VideoPlayerPlayButton,
+  VideoPlayerSeekSlider,
+  VideoPlayerSkipButton,
+  VideoPlayerTime,
+  VideoPlayerVideo,
+  VideoPlayerVolume,
+  VideoPlayerVolumeSlider,
+} from '@/components/ui/video-player'
+;<VideoPlayer>
+  <VideoPlayerVideo src="/videos/trailer.mp4" />
+  <VideoPlayerControls>
+    <VideoPlayerSeekSlider />
+    <div className="flex items-center gap-1">
+      <VideoPlayerSkipButton seconds={-10} />
+      <VideoPlayerPlayButton />
+      <VideoPlayerSkipButton seconds={10} />
+      <VideoPlayerVolume>
+        <VideoPlayerMuteButton />
+        <VideoPlayerVolumeSlider />
+      </VideoPlayerVolume>
+      <VideoPlayerTime />
+      <VideoPlayerFullscreenButton className="ml-auto" />
+    </div>
+  </VideoPlayerControls>
+</VideoPlayer>
+```
+
+## Video
+
+`VideoPlayerVideo` is a plain `video` element wired to the player state, so it accepts every native prop — `poster`, `preload`, `loop`, `muted`, `autoPlay`. Clicking the video toggles playback.
+
+```tsx
+<VideoPlayer>
+  <VideoPlayerVideo
+    src="/videos/trailer.mp4"
+    poster="/videos/trailer-poster.jpg"
+    preload="metadata"
+  />
+  <VideoPlayerControls />
+</VideoPlayer>
+```
+
+## Controls
+
+The seek and volume bars are the design system's own `Slider`, and every button is a `Button`, so the player follows your slider and button styles automatically. While the video plays, overlay controls fade out after a short idle period and come back on pointer movement or keyboard focus.
+
+Since the parts are regular components, anything can sit next to them in the control bar — a playback-rate `Menu`, a captions toggle, a share button.
+
+## Examples
+
+<Examples>
+  <Example name="video-player/demos/default" title="Default" />
+  <Example name="video-player/demos/composition" title="Full Composition" />
+  <Example name="video-player/demos/minimal" title="Minimal" />
+  <Example name="video-player/demos/playback-rate" title="Playback Rate Menu" />
+</Examples>
+
+## API Reference
+
+### VideoPlayer
+
+<Reference name="video-player" />
+
+### VideoPlayerVideo
+
+<Reference name="video-player-video" />
+
+### VideoPlayerControls
+
+<Reference name="video-player-controls" />
+
+### VideoPlayerPlayButton
+
+<Reference name="video-player-play-button" />
+
+### VideoPlayerSkipButton
+
+<Reference name="video-player-skip-button" />
+
+### VideoPlayerMuteButton
+
+<Reference name="video-player-mute-button" />
+
+### VideoPlayerVolume
+
+<Reference name="video-player-volume" />
+
+### VideoPlayerVolumeSlider
+
+<Reference name="video-player-volume-slider" />
+
+### VideoPlayerSeekSlider
+
+<Reference name="video-player-seek-slider" />
+
+### VideoPlayerTime
+
+<Reference name="video-player-time" />
+
+### VideoPlayerFullscreenButton
+
+<Reference name="video-player-fullscreen-button" />

@@ -1,0 +1,14 @@
+{
+  "name": "VideoPlayerControlsProps",
+  "description": "The control bar. Without children it renders the default layout: a seek bar\nabove a row with play, volume, time, and fullscreen controls. Overlay styles\nfade it out while the video plays and the pointer is idle.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

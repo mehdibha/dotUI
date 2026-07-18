@@ -1,0 +1,14 @@
+{
+  "name": "VideoPlayerVolumeProps",
+  "description": "Groups the mute button and volume slider. Without children it renders both.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

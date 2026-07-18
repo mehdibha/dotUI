@@ -430,6 +430,14 @@ export const componentsData: ComponentCategory[] = [
         scale: 0.7,
         status: 'done',
       },
+      {
+        name: 'VideoPlayer',
+        slug: 'video-player',
+        href: '/docs/components/video-player',
+        scale: 0.55,
+        cursor: true,
+        status: 'in review',
+      },
     ],
   },
   {

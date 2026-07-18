@@ -135,7 +135,10 @@ const cursorOptions = CURSOR_OPTIONS
 
 const SPACING_REM_PER_UNIT = 0.25
 
-const colorOptions = colorTokenNames('background').map((name) => ({
+const colorOptions = [
+  ...colorTokenNames('background'),
+  ...colorTokenNames('foreground'),
+].map((name) => ({
   label: toTitleCase(name.replace(/^color-/, '')),
   value: `--${name}`,
 }))

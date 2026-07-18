@@ -1,0 +1,8 @@
+:root {
+  /* --video-player-accent is intentionally not declared here: its default,
+     var(--color-fg), must resolve inside the controls (where overlay styles
+     pin light-on-dark tokens), so it lives as a var() fallback in styles.ts.
+     Declaring it on :root would freeze it to the page foreground. */
+  --video-player-radius: var(--radius-lg);
+  --video-player-seek-size: calc(var(--spacing) * 1);
+}

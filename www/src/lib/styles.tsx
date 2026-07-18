@@ -49,13 +49,16 @@ const DesignSystemContext = React.createContext<DesignSystemContextValue>({
  * provider reads it to resolve the user's per-component selections into CSS
  * vars on `:root`. Two kinds:
  *   - enum vars: `{ [component]: { [paramName]: { [valueName]: vars } } }`
- *   - scalar bindings: `{ [component]: { [paramName]: cssVar } }`
+ *   - scalar bindings: `{ [component]: { [paramName]: { cssVar, default } } }`
  */
 const enumVarsRegistry = new Map<
   string,
   Record<string, Record<string, Record<string, string>>>
 >()
-const scalarVarsRegistry = new Map<string, Record<string, string>>()
+const scalarVarsRegistry = new Map<
+  string,
+  Record<string, { cssVar: string; default: string }>
+>()
 const emptyParamSelections: Record<string, string> = {}
 
 /* -------------------------------- Provider ------------------------------- */
@@ -409,9 +412,12 @@ function DesignSystemProvider({
           }
           continue
         }
-        const scalarCssVar = scalarBindings?.[paramName]
-        if (scalarCssVar) {
-          vars[scalarCssVar] = resolveCssValue(paramValue)
+        const scalarBinding = scalarBindings?.[paramName]
+        // A selection equal to the declared default is a no-op: the stylesheet
+        // default owns it, so context-sensitive defaults (var() fallbacks that
+        // must resolve inside a component subtree) keep working.
+        if (scalarBinding && paramValue !== scalarBinding.default) {
+          vars[scalarBinding.cssVar] = resolveCssValue(paramValue)
         }
       }
     }
@@ -733,7 +739,10 @@ function createStyles<const M extends RegistryItem, const Base>(
     string,
     Record<string, Record<string, string>>
   > = {}
-  const scalarBindingsForComponent: Record<string, string> = {}
+  const scalarBindingsForComponent: Record<
+    string,
+    { cssVar: string; default: string }
+  > = {}
 
   for (const [paramName, def] of Object.entries(metaParams)) {
     paramDefaults[paramName] = def.default
@@ -753,7 +762,10 @@ function createStyles<const M extends RegistryItem, const Base>(
       }
       if (hasAny) enumVarsForComponent[paramName] = valueVarsByValue
     } else if (def.kind === 'scalar') {
-      scalarBindingsForComponent[paramName] = def.cssVar
+      scalarBindingsForComponent[paramName] = {
+        cssVar: def.cssVar,
+        default: def.default,
+      }
     }
   }
 
