@@ -1,0 +1,554 @@
+{
+  "meta": {
+    "generated": "d5-chroma-fit.mjs",
+    "families": {
+      "radixVivid": [
+        "amber",
+        "blue",
+        "crimson",
+        "cyan",
+        "grass",
+        "green",
+        "indigo",
+        "iris",
+        "jade",
+        "lime",
+        "mint",
+        "orange",
+        "pink",
+        "plum",
+        "purple",
+        "red",
+        "ruby",
+        "sky",
+        "teal",
+        "tomato",
+        "violet",
+        "yellow"
+      ],
+      "excludedMuted": [
+        "bronze",
+        "gold",
+        "brown"
+      ]
+    },
+    "residualUnits": "absolute OKLCH chroma; at fixed L,H this equals OKLab deltaE of the chroma error"
+  },
+  "sharedTables": {
+    "steps": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "absC_A": [
+      0.0037,
+      0.0109,
+      0.0295,
+      0.0477,
+      0.0637,
+      0.0767,
+      0.0907,
+      0.1162,
+      0.1663,
+      0.1656,
+      0.1498,
+      0.0785
+    ],
+    "peakNorm_g": [
+      0.0204,
+      0.0619,
+      0.1684,
+      0.2736,
+      0.3664,
+      0.4414,
+      0.5202,
+      0.6644,
+      0.9844,
+      0.9824,
+      0.8897,
+      0.4697
+    ],
+    "cuspRel_k": [
+      0.3157,
+      0.4629,
+      0.5581,
+      0.547,
+      0.5276,
+      0.5326,
+      0.6111,
+      0.7037,
+      0.7882,
+      0.7917,
+      0.786,
+      0.6488
+    ]
+  },
+  "models": {
+    "M_abs_sharedAbsoluteC": {
+      "rmse": 0.0243,
+      "maxAbsResidual": 0.0773,
+      "perStep": [
+        {
+          "step": 1,
+          "rmse": 0.001,
+          "maxAbs": 0.0024
+        },
+        {
+          "step": 2,
+          "rmse": 0.0045,
+          "maxAbs": 0.014
+        },
+        {
+          "step": 3,
+          "rmse": 0.016,
+          "maxAbs": 0.0543
+        },
+        {
+          "step": 4,
+          "rmse": 0.0217,
+          "maxAbs": 0.0692
+        },
+        {
+          "step": 5,
+          "rmse": 0.0255,
+          "maxAbs": 0.0773
+        },
+        {
+          "step": 6,
+          "rmse": 0.0198,
+          "maxAbs": 0.0573
+        },
+        {
+          "step": 7,
+          "rmse": 0.0137,
+          "maxAbs": 0.0317
+        },
+        {
+          "step": 8,
+          "rmse": 0.0128,
+          "maxAbs": 0.0241
+        },
+        {
+          "step": 9,
+          "rmse": 0.0351,
+          "maxAbs": 0.0664
+        },
+        {
+          "step": 10,
+          "rmse": 0.0367,
+          "maxAbs": 0.0668
+        },
+        {
+          "step": 11,
+          "rmse": 0.0392,
+          "maxAbs": 0.0575
+        },
+        {
+          "step": 12,
+          "rmse": 0.0287,
+          "maxAbs": 0.0504
+        }
+      ]
+    },
+    "M_norm_peakScaledShape": {
+      "rmse": 0.0175,
+      "maxAbsResidual": 0.0732,
+      "perStep": [
+        {
+          "step": 1,
+          "rmse": 0.0015,
+          "maxAbs": 0.0033
+        },
+        {
+          "step": 2,
+          "rmse": 0.0049,
+          "maxAbs": 0.0134
+        },
+        {
+          "step": 3,
+          "rmse": 0.0168,
+          "maxAbs": 0.0526
+        },
+        {
+          "step": 4,
+          "rmse": 0.0227,
+          "maxAbs": 0.0663
+        },
+        {
+          "step": 5,
+          "rmse": 0.0265,
+          "maxAbs": 0.0732
+        },
+        {
+          "step": 6,
+          "rmse": 0.0217,
+          "maxAbs": 0.0523
+        },
+        {
+          "step": 7,
+          "rmse": 0.0186,
+          "maxAbs": 0.0351
+        },
+        {
+          "step": 8,
+          "rmse": 0.0226,
+          "maxAbs": 0.0413
+        },
+        {
+          "step": 9,
+          "rmse": 0.0036,
+          "maxAbs": 0.0103
+        },
+        {
+          "step": 10,
+          "rmse": 0.0034,
+          "maxAbs": 0.0065
+        },
+        {
+          "step": 11,
+          "rmse": 0.0196,
+          "maxAbs": 0.0558
+        },
+        {
+          "step": 12,
+          "rmse": 0.0202,
+          "maxAbs": 0.0408
+        }
+      ]
+    },
+    "M_rel_cuspRelative": {
+      "rmse": 0.0226,
+      "maxAbsResidual": 0.0689,
+      "perStep": [
+        {
+          "step": 1,
+          "rmse": 0.0023,
+          "maxAbs": 0.0049
+        },
+        {
+          "step": 2,
+          "rmse": 0.006,
+          "maxAbs": 0.0155
+        },
+        {
+          "step": 3,
+          "rmse": 0.0157,
+          "maxAbs": 0.037
+        },
+        {
+          "step": 4,
+          "rmse": 0.0245,
+          "maxAbs": 0.053
+        },
+        {
+          "step": 5,
+          "rmse": 0.0314,
+          "maxAbs": 0.0666
+        },
+        {
+          "step": 6,
+          "rmse": 0.0305,
+          "maxAbs": 0.0654
+        },
+        {
+          "step": 7,
+          "rmse": 0.0211,
+          "maxAbs": 0.0496
+        },
+        {
+          "step": 8,
+          "rmse": 0.0178,
+          "maxAbs": 0.0423
+        },
+        {
+          "step": 9,
+          "rmse": 0.0243,
+          "maxAbs": 0.0435
+        },
+        {
+          "step": 10,
+          "rmse": 0.0266,
+          "maxAbs": 0.0544
+        },
+        {
+          "step": 11,
+          "rmse": 0.0303,
+          "maxAbs": 0.0689
+        },
+        {
+          "step": 12,
+          "rmse": 0.0182,
+          "maxAbs": 0.0488
+        }
+      ]
+    },
+    "M_hybrid_minOfNormAndRel": {
+      "rmse": 0.02,
+      "maxAbsResidual": 0.0732,
+      "perStep": [
+        {
+          "step": 1,
+          "rmse": 0.0021,
+          "maxAbs": 0.0038
+        },
+        {
+          "step": 2,
+          "rmse": 0.0056,
+          "maxAbs": 0.0134
+        },
+        {
+          "step": 3,
+          "rmse": 0.0164,
+          "maxAbs": 0.0526
+        },
+        {
+          "step": 4,
+          "rmse": 0.0236,
+          "maxAbs": 0.0663
+        },
+        {
+          "step": 5,
+          "rmse": 0.0292,
+          "maxAbs": 0.0732
+        },
+        {
+          "step": 6,
+          "rmse": 0.0277,
+          "maxAbs": 0.0523
+        },
+        {
+          "step": 7,
+          "rmse": 0.0208,
+          "maxAbs": 0.0351
+        },
+        {
+          "step": 8,
+          "rmse": 0.0211,
+          "maxAbs": 0.0357
+        },
+        {
+          "step": 9,
+          "rmse": 0.0189,
+          "maxAbs": 0.0409
+        },
+        {
+          "step": 10,
+          "rmse": 0.0193,
+          "maxAbs": 0.0405
+        },
+        {
+          "step": 11,
+          "rmse": 0.0212,
+          "maxAbs": 0.0373
+        },
+        {
+          "step": 12,
+          "rmse": 0.0161,
+          "maxAbs": 0.0369
+        }
+      ]
+    }
+  },
+  "parametric": {
+    "gSkewGaussian": {
+      "form": "g(s) = amp * exp(-0.5*((s-mu)/sigma)^2), sigma = sigmaL if s<mu else sigmaR",
+      "params": {
+        "amp": 0.979,
+        "mu": 10.6,
+        "sigmaL": 3.8,
+        "sigmaR": 1.15
+      },
+      "fit": {
+        "rmse": 0.0201,
+        "maxAbsResidual": 0.0798
+      }
+    },
+    "kCubic": {
+      "form": "k(t) = c0 + c1*t + c2*t^2 + c3*t^3, t=(step-1)/11",
+      "params": [
+        0.7325,
+        -0.2687,
+        0.9015,
+        -0.5981
+      ],
+      "table": [
+        0.7325,
+        0.715,
+        0.7098,
+        0.7141,
+        0.7252,
+        0.7404,
+        0.757,
+        0.7724,
+        0.7838,
+        0.7885,
+        0.7838,
+        0.7671
+      ],
+      "fit": {
+        "rmse": 0.0267,
+        "maxAbsResidual": 0.1186
+      }
+    },
+    "tailwindKQuadratic": {
+      "form": "k(t) = c0 + c1*t + c2*t^2, t=(idx-1)/10, idx over 50..950",
+      "params": [
+        0.8559,
+        0.7305,
+        -0.7077
+      ],
+      "table": [
+        0.8559,
+        0.9218,
+        0.9737,
+        1.0113,
+        1.0348,
+        1.0442,
+        1.0394,
+        1.0205,
+        0.9874,
+        0.9401,
+        0.8787
+      ],
+      "fit": {
+        "rmse": 0.0186,
+        "maxAbsResidual": 0.0974
+      },
+      "note": "Tailwind v4 literals exceed sRGB (P3-target); k is measured against the sRGB ceiling"
+    }
+  },
+  "winnerDiagnostics": {
+    "worstResiduals": [
+      {
+        "family": "yellow",
+        "step": 5,
+        "residual": -0.0732
+      },
+      {
+        "family": "amber",
+        "step": 5,
+        "residual": -0.0711
+      },
+      {
+        "family": "yellow",
+        "step": 4,
+        "residual": -0.0663
+      },
+      {
+        "family": "amber",
+        "step": 4,
+        "residual": -0.0575
+      },
+      {
+        "family": "lime",
+        "step": 11,
+        "residual": 0.0558
+      },
+      {
+        "family": "yellow",
+        "step": 3,
+        "residual": -0.0526
+      },
+      {
+        "family": "yellow",
+        "step": 6,
+        "residual": -0.0523
+      },
+      {
+        "family": "amber",
+        "step": 6,
+        "residual": -0.0492
+      }
+    ],
+    "peakStepHistogram": {
+      "8": 1,
+      "9": 11,
+      "10": 6,
+      "11": 4
+    },
+    "peakCOverCuspC": {
+      "mean": 0.7496,
+      "min": 0.5728,
+      "max": 1
+    }
+  },
+  "solids": {
+    "radixStep9": {
+      "dLfromCusp": {
+        "mean": -0.0463,
+        "min": -0.2481,
+        "max": 0.1096
+      },
+      "cOverCuspC": {
+        "mean": 0.7366,
+        "min": 0.5728,
+        "max": 1
+      },
+      "cRelAtOwnL": {
+        "mean": 0.8334,
+        "min": 0.6242,
+        "max": 1
+      }
+    },
+    "radixStep10": {
+      "dLfromCusp": {
+        "mean": -0.0743,
+        "min": -0.2779,
+        "max": 0.0863
+      },
+      "cOverCuspC": {
+        "mean": 0.7328,
+        "min": 0.5548,
+        "max": 1
+      },
+      "cRelAtOwnL": {
+        "mean": 0.837,
+        "min": 0.6058,
+        "max": 1
+      }
+    },
+    "tailwind500": {
+      "dLfromCusp": {
+        "mean": -0.0351,
+        "min": -0.1932,
+        "max": 0.1036
+      },
+      "cOverCuspC": {
+        "mean": 0.9352,
+        "min": 0.7821,
+        "max": 1.0892
+      },
+      "cRelAtOwnL": {
+        "mean": 1.0628,
+        "min": 0.904,
+        "max": 1.1308
+      }
+    },
+    "tailwind600": {
+      "dLfromCusp": {
+        "mean": -0.12,
+        "min": -0.2972,
+        "max": 0.0296
+      },
+      "cOverCuspC": {
+        "mean": 0.915,
+        "min": 0.7338,
+        "max": 1.0546
+      },
+      "cRelAtOwnL": {
+        "mean": 1.0702,
+        "min": 0.9428,
+        "max": 1.133
+      }
+    }
+  }
+}

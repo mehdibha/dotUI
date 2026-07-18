@@ -1,0 +1,607 @@
+{
+  "meta": {
+    "decision": "D4",
+    "labSpace": "CIELAB D65 (culori 'lab65')",
+    "fitSource": "median L* of the 25 @radix-ui/colors light chromatic scales, steps 1-8, rounded to 0.5 L*"
+  },
+  "jobs": [
+    {
+      "job": "app-bg",
+      "step": 1,
+      "tailwindName": "25",
+      "proposedLstar": 99,
+      "radixChromaticMedian": 99.21,
+      "radixChromaticSpread": 0.37,
+      "radixGrayMedian": 99.1,
+      "residualVsMedian": -0.21
+    },
+    {
+      "job": "subtle-bg",
+      "step": 2,
+      "tailwindName": "50",
+      "proposedLstar": 98,
+      "radixChromaticMedian": 97.9,
+      "radixChromaticSpread": 1.07,
+      "radixGrayMedian": 97.96,
+      "residualVsMedian": 0.1
+    },
+    {
+      "job": "ui-rest",
+      "step": 3,
+      "tailwindName": "100",
+      "proposedLstar": 95.5,
+      "radixChromaticMedian": 95.44,
+      "radixChromaticSpread": 3.03,
+      "radixGrayMedian": 94.86,
+      "residualVsMedian": 0.06
+    },
+    {
+      "job": "ui-hover",
+      "step": 4,
+      "tailwindName": "200",
+      "proposedLstar": 92,
+      "radixChromaticMedian": 92.22,
+      "radixChromaticSpread": 4.59,
+      "radixGrayMedian": 92.06,
+      "residualVsMedian": -0.22
+    },
+    {
+      "job": "ui-active",
+      "step": 5,
+      "tailwindName": "300",
+      "proposedLstar": 88.5,
+      "radixChromaticMedian": 88.53,
+      "radixChromaticSpread": 5.09,
+      "radixGrayMedian": 89.56,
+      "residualVsMedian": -0.03
+    },
+    {
+      "job": "border-subtle",
+      "step": 6,
+      "tailwindName": "400",
+      "proposedLstar": 84,
+      "radixChromaticMedian": 83.75,
+      "radixChromaticSpread": 4.29,
+      "radixGrayMedian": 86.77,
+      "residualVsMedian": 0.25
+    },
+    {
+      "job": "border-interactive",
+      "step": 7,
+      "tailwindName": "500",
+      "proposedLstar": 77.5,
+      "radixChromaticMedian": 77.48,
+      "radixChromaticSpread": 5.04,
+      "radixGrayMedian": 82.79,
+      "residualVsMedian": 0.02
+    },
+    {
+      "job": "border-emphasized",
+      "step": 8,
+      "tailwindName": "600",
+      "proposedLstar": 69,
+      "radixChromaticMedian": 69.23,
+      "radixChromaticSpread": 5.14,
+      "radixGrayMedian": 75.9,
+      "residualVsMedian": -0.23
+    }
+  ],
+  "fitResiduals": {
+    "proposalVsMedianMaxAbs": 0.25,
+    "perScaleRmsVsProposal": {
+      "amber": 1.78,
+      "blue": 0.59,
+      "bronze": 0.66,
+      "brown": 0.68,
+      "crimson": 1.14,
+      "cyan": 0.49,
+      "gold": 0.55,
+      "grass": 0.45,
+      "green": 0.4,
+      "indigo": 0.31,
+      "iris": 0.47,
+      "jade": 0.53,
+      "lime": 0.32,
+      "mint": 0.51,
+      "orange": 1.1,
+      "pink": 1.12,
+      "plum": 0.78,
+      "purple": 0.84,
+      "red": 1.17,
+      "ruby": 0.97,
+      "sky": 0.52,
+      "teal": 0.44,
+      "tomato": 1.37,
+      "violet": 0.59,
+      "yellow": 2.55
+    },
+    "overallRms": 0.96
+  },
+  "lstarBridge": {
+    "method": "White-text WCAG2 ratio across 36 hues (every 10deg), C=0.15 gamut-mapped by constant-L/H chroma reduction (culori clampChroma oklch). Fixed OKLCH L chosen so neutral gray hits L*=50; fixed-L* pass solves OKLCH L per hue for CIELAB-D65 L*=50.",
+    "fixedOklchL": {
+      "value": 0.569,
+      "min": 4.215,
+      "max": 4.885,
+      "driftPct": 15.9,
+      "samples": [
+        {
+          "hue": 0,
+          "hex": "#ba4a73",
+          "Lstar": 47.74,
+          "wcagWhite": 4.867
+        },
+        {
+          "hue": 10,
+          "hex": "#be4a63",
+          "Lstar": 47.79,
+          "wcagWhite": 4.829
+        },
+        {
+          "hue": 20,
+          "hex": "#bf4b51",
+          "Lstar": 47.88,
+          "wcagWhite": 4.838
+        },
+        {
+          "hue": 30,
+          "hex": "#bf4d3e",
+          "Lstar": 48.01,
+          "wcagWhite": 4.832
+        },
+        {
+          "hue": 40,
+          "hex": "#be5128",
+          "Lstar": 48.19,
+          "wcagWhite": 4.776
+        },
+        {
+          "hue": 50,
+          "hex": "#ba5601",
+          "Lstar": 48.42,
+          "wcagWhite": 4.752
+        },
+        {
+          "hue": 60,
+          "hex": "#ae6000",
+          "Lstar": 48.87,
+          "wcagWhite": 4.695
+        },
+        {
+          "hue": 70,
+          "hex": "#a46800",
+          "Lstar": 49.25,
+          "wcagWhite": 4.607
+        },
+        {
+          "hue": 80,
+          "hex": "#9b6e00",
+          "Lstar": 49.57,
+          "wcagWhite": 4.541
+        },
+        {
+          "hue": 90,
+          "hex": "#927300",
+          "Lstar": 49.88,
+          "wcagWhite": 4.492
+        },
+        {
+          "hue": 100,
+          "hex": "#887800",
+          "Lstar": 50.18,
+          "wcagWhite": 4.437
+        },
+        {
+          "hue": 110,
+          "hex": "#7c7d00",
+          "Lstar": 50.51,
+          "wcagWhite": 4.384
+        },
+        {
+          "hue": 120,
+          "hex": "#6d8200",
+          "Lstar": 50.88,
+          "wcagWhite": 4.336
+        },
+        {
+          "hue": 130,
+          "hex": "#598709",
+          "Lstar": 51.3,
+          "wcagWhite": 4.291
+        },
+        {
+          "hue": 140,
+          "hex": "#3f8b2d",
+          "Lstar": 51.62,
+          "wcagWhite": 4.249
+        },
+        {
+          "hue": 150,
+          "hex": "#158e43",
+          "Lstar": 51.88,
+          "wcagWhite": 4.215
+        },
+        {
+          "hue": 160,
+          "hex": "#008d5c",
+          "Lstar": 51.78,
+          "wcagWhite": 4.23
+        },
+        {
+          "hue": 170,
+          "hex": "#008c6d",
+          "Lstar": 51.63,
+          "wcagWhite": 4.224
+        },
+        {
+          "hue": 180,
+          "hex": "#008a79",
+          "Lstar": 51.5,
+          "wcagWhite": 4.276
+        },
+        {
+          "hue": 190,
+          "hex": "#008984",
+          "Lstar": 51.37,
+          "wcagWhite": 4.276
+        },
+        {
+          "hue": 200,
+          "hex": "#00888d",
+          "Lstar": 51.24,
+          "wcagWhite": 4.28
+        },
+        {
+          "hue": 210,
+          "hex": "#008697",
+          "Lstar": 51.1,
+          "wcagWhite": 4.324
+        },
+        {
+          "hue": 220,
+          "hex": "#0085a1",
+          "Lstar": 50.94,
+          "wcagWhite": 4.312
+        },
+        {
+          "hue": 230,
+          "hex": "#0082ad",
+          "Lstar": 50.74,
+          "wcagWhite": 4.378
+        },
+        {
+          "hue": 240,
+          "hex": "#007fbb",
+          "Lstar": 50.45,
+          "wcagWhite": 4.418
+        },
+        {
+          "hue": 250,
+          "hex": "#1a7acb",
+          "Lstar": 50.01,
+          "wcagWhite": 4.478
+        },
+        {
+          "hue": 260,
+          "hex": "#3e74ce",
+          "Lstar": 49.57,
+          "wcagWhite": 4.571
+        },
+        {
+          "hue": 270,
+          "hex": "#556fcf",
+          "Lstar": 49.17,
+          "wcagWhite": 4.604
+        },
+        {
+          "hue": 280,
+          "hex": "#6869cc",
+          "Lstar": 48.8,
+          "wcagWhite": 4.686
+        },
+        {
+          "hue": 290,
+          "hex": "#7864c8",
+          "Lstar": 48.49,
+          "wcagWhite": 4.713
+        },
+        {
+          "hue": 300,
+          "hex": "#865ec1",
+          "Lstar": 48.24,
+          "wcagWhite": 4.789
+        },
+        {
+          "hue": 310,
+          "hex": "#925ab8",
+          "Lstar": 48.04,
+          "wcagWhite": 4.798
+        },
+        {
+          "hue": 320,
+          "hex": "#9d55ad",
+          "Lstar": 47.9,
+          "wcagWhite": 4.843
+        },
+        {
+          "hue": 330,
+          "hex": "#a651a0",
+          "Lstar": 47.8,
+          "wcagWhite": 4.877
+        },
+        {
+          "hue": 340,
+          "hex": "#ae4e92",
+          "Lstar": 47.74,
+          "wcagWhite": 4.879
+        },
+        {
+          "hue": 350,
+          "hex": "#b54b83",
+          "Lstar": 47.72,
+          "wcagWhite": 4.885
+        }
+      ]
+    },
+    "fixedCielabLstar": {
+      "value": 50,
+      "min": 4.464,
+      "max": 4.509,
+      "driftPct": 1.01,
+      "samples": [
+        {
+          "hue": 0,
+          "oklchL": 0.5885,
+          "hex": "#c15079",
+          "Lstar": 50,
+          "wcagWhite": 4.477
+        },
+        {
+          "hue": 10,
+          "oklchL": 0.588,
+          "hex": "#c45068",
+          "Lstar": 50,
+          "wcagWhite": 4.473
+        },
+        {
+          "hue": 20,
+          "oklchL": 0.5872,
+          "hex": "#c65056",
+          "Lstar": 50,
+          "wcagWhite": 4.484
+        },
+        {
+          "hue": 30,
+          "oklchL": 0.586,
+          "hex": "#c55343",
+          "Lstar": 50,
+          "wcagWhite": 4.475
+        },
+        {
+          "hue": 40,
+          "oklchL": 0.5845,
+          "hex": "#c3562d",
+          "Lstar": 50,
+          "wcagWhite": 4.478
+        },
+        {
+          "hue": 50,
+          "oklchL": 0.5825,
+          "hex": "#be5a0c",
+          "Lstar": 50,
+          "wcagWhite": 4.509
+        },
+        {
+          "hue": 60,
+          "oklchL": 0.5788,
+          "hex": "#b36300",
+          "Lstar": 50,
+          "wcagWhite": 4.467
+        },
+        {
+          "hue": 70,
+          "oklchL": 0.5755,
+          "hex": "#a76a00",
+          "Lstar": 50,
+          "wcagWhite": 4.464
+        },
+        {
+          "hue": 80,
+          "oklchL": 0.5727,
+          "hex": "#9c6f00",
+          "Lstar": 50,
+          "wcagWhite": 4.48
+        },
+        {
+          "hue": 90,
+          "oklchL": 0.57,
+          "hex": "#927300",
+          "Lstar": 50,
+          "wcagWhite": 4.492
+        },
+        {
+          "hue": 100,
+          "oklchL": 0.5674,
+          "hex": "#877700",
+          "Lstar": 50,
+          "wcagWhite": 4.498
+        },
+        {
+          "hue": 110,
+          "oklchL": 0.5646,
+          "hex": "#7b7b00",
+          "Lstar": 50,
+          "wcagWhite": 4.492
+        },
+        {
+          "hue": 120,
+          "oklchL": 0.5615,
+          "hex": "#6b7f00",
+          "Lstar": 50,
+          "wcagWhite": 4.506
+        },
+        {
+          "hue": 130,
+          "oklchL": 0.5578,
+          "hex": "#558400",
+          "Lstar": 50,
+          "wcagWhite": 4.481
+        },
+        {
+          "hue": 140,
+          "oklchL": 0.555,
+          "hex": "#3b8728",
+          "Lstar": 50,
+          "wcagWhite": 4.485
+        },
+        {
+          "hue": 150,
+          "oklchL": 0.5528,
+          "hex": "#08893f",
+          "Lstar": 50,
+          "wcagWhite": 4.506
+        },
+        {
+          "hue": 160,
+          "oklchL": 0.554,
+          "hex": "#008859",
+          "Lstar": 50,
+          "wcagWhite": 4.501
+        },
+        {
+          "hue": 170,
+          "oklchL": 0.5552,
+          "hex": "#008769",
+          "Lstar": 50,
+          "wcagWhite": 4.497
+        },
+        {
+          "hue": 180,
+          "oklchL": 0.5563,
+          "hex": "#008676",
+          "Lstar": 50,
+          "wcagWhite": 4.495
+        },
+        {
+          "hue": 190,
+          "oklchL": 0.5574,
+          "hex": "#008580",
+          "Lstar": 50,
+          "wcagWhite": 4.5
+        },
+        {
+          "hue": 200,
+          "oklchL": 0.5584,
+          "hex": "#00848a",
+          "Lstar": 50,
+          "wcagWhite": 4.499
+        },
+        {
+          "hue": 210,
+          "oklchL": 0.5596,
+          "hex": "#008394",
+          "Lstar": 50,
+          "wcagWhite": 4.493
+        },
+        {
+          "hue": 220,
+          "oklchL": 0.561,
+          "hex": "#00829e",
+          "Lstar": 50,
+          "wcagWhite": 4.481
+        },
+        {
+          "hue": 230,
+          "oklchL": 0.5627,
+          "hex": "#0080aa",
+          "Lstar": 50,
+          "wcagWhite": 4.499
+        },
+        {
+          "hue": 240,
+          "oklchL": 0.5651,
+          "hex": "#007eba",
+          "Lstar": 50,
+          "wcagWhite": 4.474
+        },
+        {
+          "hue": 250,
+          "oklchL": 0.5689,
+          "hex": "#1a7acb",
+          "Lstar": 50,
+          "wcagWhite": 4.478
+        },
+        {
+          "hue": 260,
+          "oklchL": 0.5726,
+          "hex": "#4075cf",
+          "Lstar": 50,
+          "wcagWhite": 4.503
+        },
+        {
+          "hue": 270,
+          "oklchL": 0.5761,
+          "hex": "#5771d1",
+          "Lstar": 50,
+          "wcagWhite": 4.48
+        },
+        {
+          "hue": 280,
+          "oklchL": 0.5792,
+          "hex": "#6b6cd0",
+          "Lstar": 50,
+          "wcagWhite": 4.486
+        },
+        {
+          "hue": 290,
+          "oklchL": 0.5818,
+          "hex": "#7b68cc",
+          "Lstar": 50,
+          "wcagWhite": 4.474
+        },
+        {
+          "hue": 300,
+          "oklchL": 0.584,
+          "hex": "#8a63c6",
+          "Lstar": 50,
+          "wcagWhite": 4.486
+        },
+        {
+          "hue": 310,
+          "oklchL": 0.5857,
+          "hex": "#975fbe",
+          "Lstar": 50,
+          "wcagWhite": 4.472
+        },
+        {
+          "hue": 320,
+          "oklchL": 0.587,
+          "hex": "#a35bb3",
+          "Lstar": 50,
+          "wcagWhite": 4.464
+        },
+        {
+          "hue": 330,
+          "oklchL": 0.5879,
+          "hex": "#ad57a6",
+          "Lstar": 50,
+          "wcagWhite": 4.477
+        },
+        {
+          "hue": 340,
+          "oklchL": 0.5884,
+          "hex": "#b55498",
+          "Lstar": 50,
+          "wcagWhite": 4.481
+        },
+        {
+          "hue": 350,
+          "oklchL": 0.5886,
+          "hex": "#bc5189",
+          "Lstar": 50,
+          "wcagWhite": 4.491
+        }
+      ]
+    }
+  }
+}

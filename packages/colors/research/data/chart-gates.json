@@ -1,0 +1,345 @@
+{
+  "meta": {
+    "decision": "D11",
+    "generatedBy": "research/chart-gates.mjs",
+    "deltaEok": "Euclidean distance in OKLab (raw scale, not ×100)",
+    "lStar": "CIELAB L* with D65 white point (culori lab65)",
+    "cvd": "culori Machado filters, severity 1.0",
+    "viridisSource": "d3-scale-chromatic@3.1.0 ramp (256 entries, from matplotlib's table)"
+  },
+  "gates": {
+    "categorical": {
+      "appliesTo": "palette sizes 5–8",
+      "minPairwiseDeltaEokNormal": 0.09,
+      "minPairwiseDeltaEokCvd": 0.045,
+      "cvdConditions": "each of protan, deutan, tritan at severity 1.0",
+      "lStar": {
+        "ciGate": {
+          "minLstarRange": 25
+        },
+        "generationRule": {
+          "advisory": true,
+          "minAdjacentInOrderDeltaLstar": 8,
+          "note": "target when ordering generated series; references violate it, so not a CI failure"
+        }
+      },
+      "derivedFrom": {
+        "normalVisionReferenceMin": 0.1133,
+        "okabeItoWorstCvdMin": 0.0862,
+        "tab10ProtanMin": 0.0146,
+        "referenceLstarRanges": {
+          "tab10": 31.95,
+          "okabeIto7noBlack": 43.14
+        },
+        "referenceWorstAdjacentInOrderLstarGap": 0.78
+      }
+    },
+    "sequential": {
+      "rule": "L* strictly monotonic; every adjacent ΔL* ≥ 0.5 × ideal equal spacing",
+      "lStarStrictlyMonotonic": true,
+      "minStepToIdealRatio": 0.5,
+      "minAdjacentDeltaEok": 0.02,
+      "derivedFrom": {
+        "viridis5minToIdealRatio": 0.949,
+        "viridis8minToIdealRatio": 0.937,
+        "viridis8minAdjacentDeltaEok": 0.1052
+      }
+    },
+    "diverging": {
+      "rule": "each arm passes the sequential gate; midpoint pinned to surface neutral (D11 spec)"
+    }
+  },
+  "referencePalettesAgainstGates": {
+    "okabeIto8": {
+      "checks": {
+        "normalDeltaEok": {
+          "measured": 0.1558,
+          "required": 0.09,
+          "worstPair": [
+            "orange",
+            "vermillion"
+          ],
+          "pass": true
+        },
+        "protanDeltaEok": {
+          "measured": 0.0862,
+          "required": 0.045,
+          "worstPair": [
+            "bluishGreen",
+            "reddishPurple"
+          ],
+          "pass": true
+        },
+        "deutanDeltaEok": {
+          "measured": 0.0978,
+          "required": 0.045,
+          "worstPair": [
+            "skyBlue",
+            "reddishPurple"
+          ],
+          "pass": true
+        },
+        "tritanDeltaEok": {
+          "measured": 0.0961,
+          "required": 0.045,
+          "worstPair": [
+            "bluishGreen",
+            "blue"
+          ],
+          "pass": true
+        },
+        "lStarRange": {
+          "measured": 89.11,
+          "required": 25,
+          "pass": true
+        },
+        "lStarAdjacentStagger": {
+          "advisory": true,
+          "measured": 0.78,
+          "target": 8,
+          "pass": false
+        }
+      },
+      "failures": [],
+      "advisoryMisses": [
+        "lStarAdjacentStagger"
+      ],
+      "pass": true
+    },
+    "tab10": {
+      "checks": {
+        "normalDeltaEok": {
+          "measured": 0.1133,
+          "required": 0.09,
+          "worstPair": [
+            "brown",
+            "gray"
+          ],
+          "pass": true
+        },
+        "protanDeltaEok": {
+          "measured": 0.0146,
+          "required": 0.045,
+          "worstPair": [
+            "orange",
+            "green"
+          ],
+          "pass": false
+        },
+        "deutanDeltaEok": {
+          "measured": 0.0474,
+          "required": 0.045,
+          "worstPair": [
+            "pink",
+            "cyan"
+          ],
+          "pass": true
+        },
+        "tritanDeltaEok": {
+          "measured": 0.049,
+          "required": 0.045,
+          "worstPair": [
+            "purple",
+            "gray"
+          ],
+          "pass": true
+        },
+        "lStarRange": {
+          "measured": 31.95,
+          "required": 25,
+          "pass": true
+        },
+        "lStarAdjacentStagger": {
+          "advisory": true,
+          "measured": 3.79,
+          "target": 8,
+          "pass": false
+        }
+      },
+      "failures": [
+        "protanDeltaEok"
+      ],
+      "advisoryMisses": [
+        "lStarAdjacentStagger"
+      ],
+      "pass": false
+    }
+  },
+  "dotuiCurrentStatus500s": {
+    "source": "www/src/registry/base/colors.css (accent/success/warning/danger/info 500)",
+    "measurements": {
+      "colors": [
+        {
+          "name": "accent-500",
+          "css": "oklch(0.6478 0.1337 251.06)",
+          "hex": "#4992dd",
+          "lStar": 59.22,
+          "oklab": {
+            "l": 0.6478,
+            "a": -0.0434,
+            "b": -0.1265
+          }
+        },
+        {
+          "name": "success-500",
+          "css": "oklch(0.6512 0.1869 148.33)",
+          "hex": "#00ad47",
+          "lStar": 61.82,
+          "oklab": {
+            "l": 0.6512,
+            "a": -0.1591,
+            "b": 0.0981
+          }
+        },
+        {
+          "name": "warning-500",
+          "css": "oklch(0.6497 0.1338 82.26)",
+          "hex": "#b78600",
+          "lStar": 58.96,
+          "oklab": {
+            "l": 0.6497,
+            "a": 0.018,
+            "b": 0.1326
+          }
+        },
+        {
+          "name": "danger-500",
+          "css": "oklch(0.6478 0.2078 25.33)",
+          "hex": "#f34847",
+          "lStar": 56.25,
+          "oklab": {
+            "l": 0.6478,
+            "a": 0.1878,
+            "b": 0.0889
+          }
+        },
+        {
+          "name": "info-500",
+          "css": "oklch(0.6478 0.188 259.81)",
+          "hex": "#438aff",
+          "lStar": 58.54,
+          "oklab": {
+            "l": 0.6478,
+            "a": -0.0333,
+            "b": -0.185
+          }
+        }
+      ],
+      "minPairwiseDeltaEok": {
+        "normal": {
+          "min": 0.0594,
+          "pair": [
+            "accent-500",
+            "info-500"
+          ]
+        },
+        "protan": {
+          "min": 0.0488,
+          "pair": [
+            "success-500",
+            "warning-500"
+          ]
+        },
+        "deutan": {
+          "min": 0.009,
+          "pair": [
+            "success-500",
+            "danger-500"
+          ]
+        },
+        "tritan": {
+          "min": 0.0121,
+          "pair": [
+            "accent-500",
+            "info-500"
+          ]
+        }
+      },
+      "lStar": {
+        "values": [
+          59.22,
+          61.82,
+          58.96,
+          56.25,
+          58.54
+        ],
+        "range": 5.57,
+        "minSortedGap": 0.26,
+        "sortedGaps": [
+          2.29,
+          0.42,
+          0.26,
+          2.6
+        ],
+        "minAdjacentInOrderGap": 2.29,
+        "adjacentInOrderGaps": [
+          2.6,
+          2.86,
+          2.71,
+          2.29
+        ]
+      }
+    },
+    "againstGates": {
+      "checks": {
+        "normalDeltaEok": {
+          "measured": 0.0594,
+          "required": 0.09,
+          "worstPair": [
+            "accent-500",
+            "info-500"
+          ],
+          "pass": false
+        },
+        "protanDeltaEok": {
+          "measured": 0.0488,
+          "required": 0.045,
+          "worstPair": [
+            "success-500",
+            "warning-500"
+          ],
+          "pass": true
+        },
+        "deutanDeltaEok": {
+          "measured": 0.009,
+          "required": 0.045,
+          "worstPair": [
+            "success-500",
+            "danger-500"
+          ],
+          "pass": false
+        },
+        "tritanDeltaEok": {
+          "measured": 0.0121,
+          "required": 0.045,
+          "worstPair": [
+            "accent-500",
+            "info-500"
+          ],
+          "pass": false
+        },
+        "lStarRange": {
+          "measured": 5.57,
+          "required": 25,
+          "pass": false
+        },
+        "lStarAdjacentStagger": {
+          "advisory": true,
+          "measured": 2.29,
+          "target": 8,
+          "pass": false
+        }
+      },
+      "failures": [
+        "normalDeltaEok",
+        "deutanDeltaEok",
+        "tritanDeltaEok",
+        "lStarRange"
+      ],
+      "advisoryMisses": [
+        "lStarAdjacentStagger"
+      ],
+      "pass": false
+    }
+  }
+}

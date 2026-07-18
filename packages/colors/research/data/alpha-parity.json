@@ -1,0 +1,1447 @@
+{
+  "decision": "D10-A alpha twins",
+  "algorithm": "Radix getAlphaColor: desired = white if any target channel > bg channel else black; A = ceil(max_c (t_c-b_c)/(desired-b_c) * 255)/255; channel = ceil(clamp(-(b(1-A)-t)/A)) with +/-1 correction against round(bg*(1-a))+round(fg*a); pure-gray shortcut returns (desired, desired, desired, exact alpha).",
+  "darkBackgroundSolve": {
+    "method": "brute-force neutral bg #000000..#202020, count exact hex matches of generated vs published *DarkA across 6 scales x 12 steps",
+    "top3": [
+      {
+        "bg": "#111111",
+        "matches": 72,
+        "total": 72
+      },
+      {
+        "bg": "#101010",
+        "matches": 21,
+        "total": 72
+      },
+      {
+        "bg": "#0f0f0f",
+        "matches": 17,
+        "total": 72
+      }
+    ],
+    "conclusion": "#111111"
+  },
+  "light": {
+    "background": "#ffffff",
+    "totalSteps": 72,
+    "exactHexMatches": 72,
+    "maxCompositeErrComputed": 0,
+    "maxCompositeErrPublished": 0,
+    "perScale": [
+      {
+        "scale": "blue",
+        "background": "#ffffff",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 0,
+        "maxCompositeErrPublished": 0,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#fbfdff",
+            "published": "#0080ff04",
+            "computed": "#0080ff04",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 2,
+            "solid": "#f4faff",
+            "published": "#008cff0b",
+            "computed": "#008cff0b",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 3,
+            "solid": "#e6f4fe",
+            "published": "#008ff519",
+            "computed": "#008ff519",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 4,
+            "solid": "#d5efff",
+            "published": "#009eff2a",
+            "computed": "#009eff2a",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 5,
+            "solid": "#c2e5ff",
+            "published": "#0093ff3d",
+            "computed": "#0093ff3d",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 6,
+            "solid": "#acd8fc",
+            "published": "#0088f653",
+            "computed": "#0088f653",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 7,
+            "solid": "#8ec8f6",
+            "published": "#0083eb71",
+            "computed": "#0083eb71",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#5eb1ef",
+            "published": "#0084e6a1",
+            "computed": "#0084e6a1",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#0090ff",
+            "published": "#0090ff",
+            "computed": "#0090ff",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#0588f0",
+            "published": "#0086f0fa",
+            "computed": "#0086f0fa",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#0d74ce",
+            "published": "#006dcbf2",
+            "computed": "#006dcbf2",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#113264",
+            "published": "#002359ee",
+            "computed": "#002359ee",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      },
+      {
+        "scale": "red",
+        "background": "#ffffff",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 0,
+        "maxCompositeErrPublished": 0,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#fffcfc",
+            "published": "#ff000003",
+            "computed": "#ff000003",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 2,
+            "solid": "#fff7f7",
+            "published": "#ff000008",
+            "computed": "#ff000008",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 3,
+            "solid": "#feebec",
+            "published": "#f3000d14",
+            "computed": "#f3000d14",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 4,
+            "solid": "#ffdbdc",
+            "published": "#ff000824",
+            "computed": "#ff000824",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 5,
+            "solid": "#ffcdce",
+            "published": "#ff000632",
+            "computed": "#ff000632",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 6,
+            "solid": "#fdbdbe",
+            "published": "#f8000442",
+            "computed": "#f8000442",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 7,
+            "solid": "#f4a9aa",
+            "published": "#df000356",
+            "computed": "#df000356",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#eb8e90",
+            "published": "#d2000571",
+            "computed": "#d2000571",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#e5484d",
+            "published": "#db0007b7",
+            "computed": "#db0007b7",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#dc3e42",
+            "published": "#d10005c1",
+            "computed": "#d10005c1",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#ce2c31",
+            "published": "#c40006d3",
+            "computed": "#c40006d3",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#641723",
+            "published": "#55000de8",
+            "computed": "#55000de8",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      },
+      {
+        "scale": "green",
+        "background": "#ffffff",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 0,
+        "maxCompositeErrPublished": 0,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#fbfefc",
+            "published": "#00c04004",
+            "computed": "#00c04004",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 2,
+            "solid": "#f4fbf6",
+            "published": "#00a32f0b",
+            "computed": "#00a32f0b",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 3,
+            "solid": "#e6f6eb",
+            "published": "#00a43319",
+            "computed": "#00a43319",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 4,
+            "solid": "#d6f1df",
+            "published": "#00a83829",
+            "computed": "#00a83829",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 5,
+            "solid": "#c4e8d1",
+            "published": "#019c393b",
+            "computed": "#019c393b",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 6,
+            "solid": "#adddc0",
+            "published": "#00963c52",
+            "computed": "#00963c52",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 7,
+            "solid": "#8eceaa",
+            "published": "#00914071",
+            "computed": "#00914071",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#5bb98b",
+            "published": "#00924ba4",
+            "computed": "#00924ba4",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#30a46c",
+            "published": "#008f4acf",
+            "computed": "#008f4acf",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#2b9a66",
+            "published": "#008647d4",
+            "computed": "#008647d4",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#218358",
+            "published": "#00713fde",
+            "computed": "#00713fde",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#193b2d",
+            "published": "#002616e6",
+            "computed": "#002616e6",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      },
+      {
+        "scale": "amber",
+        "background": "#ffffff",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 0,
+        "maxCompositeErrPublished": 0,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#fefdfb",
+            "published": "#c0800004",
+            "computed": "#c0800004",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 2,
+            "solid": "#fefbe9",
+            "published": "#f4d10016",
+            "computed": "#f4d10016",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 3,
+            "solid": "#fff7c2",
+            "published": "#ffde003d",
+            "computed": "#ffde003d",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 4,
+            "solid": "#ffee9c",
+            "published": "#ffd40063",
+            "computed": "#ffd40063",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 5,
+            "solid": "#fbe577",
+            "published": "#f8cf0088",
+            "computed": "#f8cf0088",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 6,
+            "solid": "#f3d673",
+            "published": "#eab5008c",
+            "computed": "#eab5008c",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 7,
+            "solid": "#e9c162",
+            "published": "#dc9b009d",
+            "computed": "#dc9b009d",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#e2a336",
+            "published": "#da8a00c9",
+            "computed": "#da8a00c9",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#ffc53d",
+            "published": "#ffb300c2",
+            "computed": "#ffb300c2",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#ffba18",
+            "published": "#ffb300e7",
+            "computed": "#ffb300e7",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#ab6400",
+            "published": "#ab6400",
+            "computed": "#ab6400",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#4f3422",
+            "published": "#341500dd",
+            "computed": "#341500dd",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      },
+      {
+        "scale": "purple",
+        "background": "#ffffff",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 0,
+        "maxCompositeErrPublished": 0,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#fefcfe",
+            "published": "#aa00aa03",
+            "computed": "#aa00aa03",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 2,
+            "solid": "#fbf7fe",
+            "published": "#8000e008",
+            "computed": "#8000e008",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 3,
+            "solid": "#f7edfe",
+            "published": "#8e00f112",
+            "computed": "#8e00f112",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 4,
+            "solid": "#f2e2fc",
+            "published": "#8d00e51d",
+            "computed": "#8d00e51d",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 5,
+            "solid": "#ead5f9",
+            "published": "#8000db2a",
+            "computed": "#8000db2a",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 6,
+            "solid": "#e0c4f4",
+            "published": "#7a01d03b",
+            "computed": "#7a01d03b",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 7,
+            "solid": "#d1afec",
+            "published": "#6d00c350",
+            "computed": "#6d00c350",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#be93e4",
+            "published": "#6600c06c",
+            "computed": "#6600c06c",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#8e4ec6",
+            "published": "#5c00adb1",
+            "computed": "#5c00adb1",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#8347b9",
+            "published": "#53009eb8",
+            "computed": "#53009eb8",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#8145b5",
+            "published": "#52009aba",
+            "computed": "#52009aba",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#402060",
+            "published": "#250049df",
+            "computed": "#250049df",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      },
+      {
+        "scale": "gray",
+        "background": "#ffffff",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 0,
+        "maxCompositeErrPublished": 0,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#fcfcfc",
+            "published": "#00000003",
+            "computed": "#00000003",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 2,
+            "solid": "#f9f9f9",
+            "published": "#00000006",
+            "computed": "#00000006",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 3,
+            "solid": "#f0f0f0",
+            "published": "#0000000f",
+            "computed": "#0000000f",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 4,
+            "solid": "#e8e8e8",
+            "published": "#00000017",
+            "computed": "#00000017",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 5,
+            "solid": "#e0e0e0",
+            "published": "#0000001f",
+            "computed": "#0000001f",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 6,
+            "solid": "#d9d9d9",
+            "published": "#00000026",
+            "computed": "#00000026",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 7,
+            "solid": "#cecece",
+            "published": "#00000031",
+            "computed": "#00000031",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#bbbbbb",
+            "published": "#00000044",
+            "computed": "#00000044",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#8d8d8d",
+            "published": "#00000072",
+            "computed": "#00000072",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#838383",
+            "published": "#0000007c",
+            "computed": "#0000007c",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#646464",
+            "published": "#0000009b",
+            "computed": "#0000009b",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#202020",
+            "published": "#000000df",
+            "computed": "#000000df",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      }
+    ]
+  },
+  "dark": {
+    "background": "#111111",
+    "totalSteps": 72,
+    "exactHexMatches": 72,
+    "maxCompositeErrComputed": 14,
+    "maxCompositeErrPublished": 14,
+    "perScale": [
+      {
+        "scale": "blue",
+        "background": "#111111",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 11,
+        "maxCompositeErrPublished": 11,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#0d1520",
+            "published": "#004df211",
+            "computed": "#004df211",
+            "hexMatch": true,
+            "compositeErrComputed": 3,
+            "compositeErrPublished": 3
+          },
+          {
+            "step": 2,
+            "solid": "#111927",
+            "published": "#1166fb18",
+            "computed": "#1166fb18",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 3,
+            "solid": "#0d2847",
+            "published": "#0077ff3a",
+            "computed": "#0077ff3a",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 4,
+            "solid": "#003362",
+            "published": "#0075ff57",
+            "computed": "#0075ff57",
+            "hexMatch": true,
+            "compositeErrComputed": 11,
+            "compositeErrPublished": 11
+          },
+          {
+            "step": 5,
+            "solid": "#004074",
+            "published": "#0081fd6b",
+            "computed": "#0081fd6b",
+            "hexMatch": true,
+            "compositeErrComputed": 10,
+            "compositeErrPublished": 10
+          },
+          {
+            "step": 6,
+            "solid": "#104d87",
+            "published": "#0f89fd7f",
+            "computed": "#0f89fd7f",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 7,
+            "solid": "#205d9e",
+            "published": "#2a91fe98",
+            "computed": "#2a91fe98",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#2870bd",
+            "published": "#3094feb9",
+            "computed": "#3094feb9",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#0090ff",
+            "published": "#0090ff",
+            "computed": "#0090ff",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#3b9eff",
+            "published": "#3b9eff",
+            "computed": "#3b9eff",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#70b8ff",
+            "published": "#70b8ff",
+            "computed": "#70b8ff",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#c2e6ff",
+            "published": "#c2e6ff",
+            "computed": "#c2e6ff",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      },
+      {
+        "scale": "red",
+        "background": "#111111",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 0,
+        "maxCompositeErrPublished": 0,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#191111",
+            "published": "#f4121209",
+            "computed": "#f4121209",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 2,
+            "solid": "#201314",
+            "published": "#f22f3e11",
+            "computed": "#f22f3e11",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 3,
+            "solid": "#3b1219",
+            "published": "#ff173f2d",
+            "computed": "#ff173f2d",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 4,
+            "solid": "#500f1c",
+            "published": "#fe0a3b44",
+            "computed": "#fe0a3b44",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 5,
+            "solid": "#611623",
+            "published": "#ff204756",
+            "computed": "#ff204756",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 6,
+            "solid": "#72232d",
+            "published": "#ff3e5668",
+            "computed": "#ff3e5668",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 7,
+            "solid": "#8c333a",
+            "published": "#ff536184",
+            "computed": "#ff536184",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#b54548",
+            "published": "#ff5d61b0",
+            "computed": "#ff5d61b0",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#e5484d",
+            "published": "#fe4e54e4",
+            "computed": "#fe4e54e4",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#ec5d5e",
+            "published": "#ff6465eb",
+            "computed": "#ff6465eb",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#ff9592",
+            "published": "#ff9592",
+            "computed": "#ff9592",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#ffd1d9",
+            "published": "#ffd1d9",
+            "computed": "#ffd1d9",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      },
+      {
+        "scale": "green",
+        "background": "#111111",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 3,
+        "maxCompositeErrPublished": 3,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#0e1512",
+            "published": "#00de4505",
+            "computed": "#00de4505",
+            "hexMatch": true,
+            "compositeErrComputed": 3,
+            "compositeErrPublished": 3
+          },
+          {
+            "step": 2,
+            "solid": "#121b17",
+            "published": "#29f99d0b",
+            "computed": "#29f99d0b",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 3,
+            "solid": "#132d21",
+            "published": "#22ff991e",
+            "computed": "#22ff991e",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 4,
+            "solid": "#113b29",
+            "published": "#11ff992d",
+            "computed": "#11ff992d",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 5,
+            "solid": "#174933",
+            "published": "#2bffa23c",
+            "computed": "#2bffa23c",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 6,
+            "solid": "#20573e",
+            "published": "#44ffaa4b",
+            "computed": "#44ffaa4b",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 7,
+            "solid": "#28684a",
+            "published": "#50fdac5e",
+            "computed": "#50fdac5e",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#2f7c57",
+            "published": "#54ffad73",
+            "computed": "#54ffad73",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#30a46c",
+            "published": "#44ffa49e",
+            "computed": "#44ffa49e",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#33b074",
+            "published": "#43fea4ab",
+            "computed": "#43fea4ab",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#3dd68c",
+            "published": "#46fea5d4",
+            "computed": "#46fea5d4",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#b1f1cb",
+            "published": "#bbffd7f0",
+            "computed": "#bbffd7f0",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      },
+      {
+        "scale": "amber",
+        "background": "#111111",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 14,
+        "maxCompositeErrPublished": 14,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#16120c",
+            "published": "#e63c0006",
+            "computed": "#e63c0006",
+            "hexMatch": true,
+            "compositeErrComputed": 5,
+            "compositeErrPublished": 5
+          },
+          {
+            "step": 2,
+            "solid": "#1d180f",
+            "published": "#fd9b000d",
+            "computed": "#fd9b000d",
+            "hexMatch": true,
+            "compositeErrComputed": 1,
+            "compositeErrPublished": 1
+          },
+          {
+            "step": 3,
+            "solid": "#302008",
+            "published": "#fa820022",
+            "computed": "#fa820022",
+            "hexMatch": true,
+            "compositeErrComputed": 7,
+            "compositeErrPublished": 7
+          },
+          {
+            "step": 4,
+            "solid": "#3f2700",
+            "published": "#fc820032",
+            "computed": "#fc820032",
+            "hexMatch": true,
+            "compositeErrComputed": 14,
+            "compositeErrPublished": 14
+          },
+          {
+            "step": 5,
+            "solid": "#4d3000",
+            "published": "#fd8b0041",
+            "computed": "#fd8b0041",
+            "hexMatch": true,
+            "compositeErrComputed": 13,
+            "compositeErrPublished": 13
+          },
+          {
+            "step": 6,
+            "solid": "#5c3d05",
+            "published": "#fd9b0051",
+            "computed": "#fd9b0051",
+            "hexMatch": true,
+            "compositeErrComputed": 7,
+            "compositeErrPublished": 7
+          },
+          {
+            "step": 7,
+            "solid": "#714f19",
+            "published": "#ffab2567",
+            "computed": "#ffab2567",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#8f6424",
+            "published": "#ffae3587",
+            "computed": "#ffae3587",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#ffc53d",
+            "published": "#ffc53d",
+            "computed": "#ffc53d",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#ffd60a",
+            "published": "#ffd60a",
+            "computed": "#ffd60a",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#ffca16",
+            "published": "#ffca16",
+            "computed": "#ffca16",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#ffe7b3",
+            "published": "#ffe7b3",
+            "computed": "#ffe7b3",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      },
+      {
+        "scale": "purple",
+        "background": "#111111",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 0,
+        "maxCompositeErrPublished": 0,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#18111b",
+            "published": "#b412f90b",
+            "computed": "#b412f90b",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 2,
+            "solid": "#1e1523",
+            "published": "#b744f714",
+            "computed": "#b744f714",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 3,
+            "solid": "#301c3b",
+            "published": "#c150ff2d",
+            "computed": "#c150ff2d",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 4,
+            "solid": "#3d224e",
+            "published": "#bb53fd42",
+            "computed": "#bb53fd42",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 5,
+            "solid": "#48295c",
+            "published": "#be5cfd51",
+            "computed": "#be5cfd51",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 6,
+            "solid": "#54346b",
+            "published": "#c16dfd61",
+            "computed": "#c16dfd61",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 7,
+            "solid": "#664282",
+            "published": "#c378fd7a",
+            "computed": "#c378fd7a",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#8457aa",
+            "published": "#c47effa4",
+            "computed": "#c47effa4",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#8e4ec6",
+            "published": "#b661ffc2",
+            "computed": "#b661ffc2",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#9a5cd0",
+            "published": "#bc6fffcd",
+            "computed": "#bc6fffcd",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#d19dff",
+            "published": "#d19dff",
+            "computed": "#d19dff",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#ecd9fa",
+            "published": "#f1ddfffa",
+            "computed": "#f1ddfffa",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      },
+      {
+        "scale": "gray",
+        "background": "#111111",
+        "exactHexMatches": 12,
+        "maxCompositeErrComputed": 0,
+        "maxCompositeErrPublished": 0,
+        "steps": [
+          {
+            "step": 1,
+            "solid": "#111111",
+            "published": "#00000000",
+            "computed": "#00000000",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 2,
+            "solid": "#191919",
+            "published": "#ffffff09",
+            "computed": "#ffffff09",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 3,
+            "solid": "#222222",
+            "published": "#ffffff12",
+            "computed": "#ffffff12",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 4,
+            "solid": "#2a2a2a",
+            "published": "#ffffff1b",
+            "computed": "#ffffff1b",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 5,
+            "solid": "#313131",
+            "published": "#ffffff22",
+            "computed": "#ffffff22",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 6,
+            "solid": "#3a3a3a",
+            "published": "#ffffff2c",
+            "computed": "#ffffff2c",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 7,
+            "solid": "#484848",
+            "published": "#ffffff3b",
+            "computed": "#ffffff3b",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 8,
+            "solid": "#606060",
+            "published": "#ffffff55",
+            "computed": "#ffffff55",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 9,
+            "solid": "#6e6e6e",
+            "published": "#ffffff64",
+            "computed": "#ffffff64",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 10,
+            "solid": "#7b7b7b",
+            "published": "#ffffff72",
+            "computed": "#ffffff72",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 11,
+            "solid": "#b4b4b4",
+            "published": "#ffffffaf",
+            "computed": "#ffffffaf",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          },
+          {
+            "step": 12,
+            "solid": "#eeeeee",
+            "published": "#ffffffed",
+            "computed": "#ffffffed",
+            "hexMatch": true,
+            "compositeErrComputed": 0,
+            "compositeErrPublished": 0
+          }
+        ]
+      }
+    ]
+  }
+}

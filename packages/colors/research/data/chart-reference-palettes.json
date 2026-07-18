@@ -1,0 +1,668 @@
+{
+  "meta": {
+    "decision": "D11",
+    "generatedBy": "research/chart-gates.mjs",
+    "deltaEok": "Euclidean distance in OKLab (raw scale, not ×100)",
+    "lStar": "CIELAB L* with D65 white point (culori lab65)",
+    "cvd": "culori Machado filters, severity 1.0",
+    "viridisSource": "d3-scale-chromatic@3.1.0 ramp (256 entries, from matplotlib's table)"
+  },
+  "okabeIto8": {
+    "colors": [
+      {
+        "name": "black",
+        "css": "#000000",
+        "hex": "#000000",
+        "lStar": 0,
+        "oklab": {
+          "l": 0,
+          "a": 0,
+          "b": 0
+        }
+      },
+      {
+        "name": "orange",
+        "css": "#e69f00",
+        "hex": "#e69f00",
+        "lStar": 70.61,
+        "oklab": {
+          "l": 0.7527,
+          "a": 0.0361,
+          "b": 0.1534
+        }
+      },
+      {
+        "name": "skyBlue",
+        "css": "#56b4e9",
+        "hex": "#56b4e9",
+        "lStar": 69.83,
+        "oklab": {
+          "l": 0.7345,
+          "a": -0.0653,
+          "b": -0.0975
+        }
+      },
+      {
+        "name": "bluishGreen",
+        "css": "#009e73",
+        "hex": "#009e73",
+        "lStar": 57.74,
+        "oklab": {
+          "l": 0.6198,
+          "a": -0.1254,
+          "b": 0.0325
+        }
+      },
+      {
+        "name": "yellow",
+        "css": "#f0e442",
+        "hex": "#f0e442",
+        "lStar": 89.11,
+        "oklab": {
+          "l": 0.9016,
+          "a": -0.0447,
+          "b": 0.1662
+        }
+      },
+      {
+        "name": "blue",
+        "css": "#0072b2",
+        "hex": "#0072b2",
+        "lStar": 45.97,
+        "oklab": {
+          "l": 0.5319,
+          "a": -0.0575,
+          "b": -0.1181
+        }
+      },
+      {
+        "name": "vermillion",
+        "css": "#d55e00",
+        "hex": "#d55e00",
+        "lStar": 54.19,
+        "oklab": {
+          "l": 0.6213,
+          "a": 0.1151,
+          "b": 0.1257
+        }
+      },
+      {
+        "name": "reddishPurple",
+        "css": "#cc79a7",
+        "hex": "#cc79a7",
+        "lStar": 61.05,
+        "oklab": {
+          "l": 0.6794,
+          "a": 0.1144,
+          "b": -0.0278
+        }
+      }
+    ],
+    "minPairwiseDeltaEok": {
+      "normal": {
+        "min": 0.1558,
+        "pair": [
+          "orange",
+          "vermillion"
+        ]
+      },
+      "protan": {
+        "min": 0.0862,
+        "pair": [
+          "bluishGreen",
+          "reddishPurple"
+        ]
+      },
+      "deutan": {
+        "min": 0.0978,
+        "pair": [
+          "skyBlue",
+          "reddishPurple"
+        ]
+      },
+      "tritan": {
+        "min": 0.0961,
+        "pair": [
+          "bluishGreen",
+          "blue"
+        ]
+      }
+    },
+    "lStar": {
+      "values": [
+        0,
+        70.61,
+        69.83,
+        57.74,
+        89.11,
+        45.97,
+        54.19,
+        61.05
+      ],
+      "range": 89.11,
+      "minSortedGap": 0.78,
+      "sortedGaps": [
+        45.97,
+        8.22,
+        3.55,
+        3.31,
+        8.78,
+        0.78,
+        18.5
+      ],
+      "minAdjacentInOrderGap": 0.78,
+      "adjacentInOrderGaps": [
+        70.61,
+        0.78,
+        12.09,
+        31.37,
+        43.14,
+        8.22,
+        6.86
+      ]
+    }
+  },
+  "okabeIto7noBlack": {
+    "colors": [
+      {
+        "name": "orange",
+        "css": "#e69f00",
+        "hex": "#e69f00",
+        "lStar": 70.61,
+        "oklab": {
+          "l": 0.7527,
+          "a": 0.0361,
+          "b": 0.1534
+        }
+      },
+      {
+        "name": "skyBlue",
+        "css": "#56b4e9",
+        "hex": "#56b4e9",
+        "lStar": 69.83,
+        "oklab": {
+          "l": 0.7345,
+          "a": -0.0653,
+          "b": -0.0975
+        }
+      },
+      {
+        "name": "bluishGreen",
+        "css": "#009e73",
+        "hex": "#009e73",
+        "lStar": 57.74,
+        "oklab": {
+          "l": 0.6198,
+          "a": -0.1254,
+          "b": 0.0325
+        }
+      },
+      {
+        "name": "yellow",
+        "css": "#f0e442",
+        "hex": "#f0e442",
+        "lStar": 89.11,
+        "oklab": {
+          "l": 0.9016,
+          "a": -0.0447,
+          "b": 0.1662
+        }
+      },
+      {
+        "name": "blue",
+        "css": "#0072b2",
+        "hex": "#0072b2",
+        "lStar": 45.97,
+        "oklab": {
+          "l": 0.5319,
+          "a": -0.0575,
+          "b": -0.1181
+        }
+      },
+      {
+        "name": "vermillion",
+        "css": "#d55e00",
+        "hex": "#d55e00",
+        "lStar": 54.19,
+        "oklab": {
+          "l": 0.6213,
+          "a": 0.1151,
+          "b": 0.1257
+        }
+      },
+      {
+        "name": "reddishPurple",
+        "css": "#cc79a7",
+        "hex": "#cc79a7",
+        "lStar": 61.05,
+        "oklab": {
+          "l": 0.6794,
+          "a": 0.1144,
+          "b": -0.0278
+        }
+      }
+    ],
+    "minPairwiseDeltaEok": {
+      "normal": {
+        "min": 0.1558,
+        "pair": [
+          "orange",
+          "vermillion"
+        ]
+      },
+      "protan": {
+        "min": 0.0862,
+        "pair": [
+          "bluishGreen",
+          "reddishPurple"
+        ]
+      },
+      "deutan": {
+        "min": 0.0978,
+        "pair": [
+          "skyBlue",
+          "reddishPurple"
+        ]
+      },
+      "tritan": {
+        "min": 0.0961,
+        "pair": [
+          "bluishGreen",
+          "blue"
+        ]
+      }
+    },
+    "lStar": {
+      "values": [
+        70.61,
+        69.83,
+        57.74,
+        89.11,
+        45.97,
+        54.19,
+        61.05
+      ],
+      "range": 43.14,
+      "minSortedGap": 0.78,
+      "sortedGaps": [
+        8.22,
+        3.55,
+        3.31,
+        8.78,
+        0.78,
+        18.5
+      ],
+      "minAdjacentInOrderGap": 0.78,
+      "adjacentInOrderGaps": [
+        0.78,
+        12.09,
+        31.37,
+        43.14,
+        8.22,
+        6.86
+      ]
+    }
+  },
+  "tab10": {
+    "colors": [
+      {
+        "name": "blue",
+        "css": "#1f77b4",
+        "hex": "#1f77b4",
+        "lStar": 47.98,
+        "oklab": {
+          "l": 0.5492,
+          "a": -0.0531,
+          "b": -0.1118
+        }
+      },
+      {
+        "name": "orange",
+        "css": "#ff7f0e",
+        "hex": "#ff7f0e",
+        "lStar": 66.88,
+        "oklab": {
+          "l": 0.7307,
+          "a": 0.1143,
+          "b": 0.1456
+        }
+      },
+      {
+        "name": "green",
+        "css": "#2ca02c",
+        "hex": "#2ca02c",
+        "lStar": 57.9,
+        "oklab": {
+          "l": 0.6193,
+          "a": -0.1468,
+          "b": 0.1108
+        }
+      },
+      {
+        "name": "red",
+        "css": "#d62728",
+        "hex": "#d62728",
+        "lStar": 46.85,
+        "oklab": {
+          "l": 0.567,
+          "a": 0.1864,
+          "b": 0.0946
+        }
+      },
+      {
+        "name": "purple",
+        "css": "#9467bd",
+        "hex": "#9467bd",
+        "lStar": 51.46,
+        "oklab": {
+          "l": 0.5958,
+          "a": 0.0807,
+          "b": -0.1075
+        }
+      },
+      {
+        "name": "brown",
+        "css": "#8c564b",
+        "hex": "#8c564b",
+        "lStar": 42.37,
+        "oklab": {
+          "l": 0.5112,
+          "a": 0.0631,
+          "b": 0.0397
+        }
+      },
+      {
+        "name": "pink",
+        "css": "#e377c2",
+        "hex": "#e377c2",
+        "lStar": 64.5,
+        "oklab": {
+          "l": 0.7146,
+          "a": 0.1506,
+          "b": -0.0547
+        }
+      },
+      {
+        "name": "gray",
+        "css": "#7f7f7f",
+        "hex": "#7f7f7f",
+        "lStar": 53.19,
+        "oklab": {
+          "l": 0.5965,
+          "a": 0,
+          "b": 0
+        }
+      },
+      {
+        "name": "olive",
+        "css": "#bcbd22",
+        "hex": "#bcbd22",
+        "lStar": 74.32,
+        "oklab": {
+          "l": 0.7728,
+          "a": -0.0551,
+          "b": 0.151
+        }
+      },
+      {
+        "name": "cyan",
+        "css": "#17becf",
+        "hex": "#17becf",
+        "lStar": 70.53,
+        "oklab": {
+          "l": 0.7334,
+          "a": -0.1098,
+          "b": -0.0546
+        }
+      }
+    ],
+    "minPairwiseDeltaEok": {
+      "normal": {
+        "min": 0.1133,
+        "pair": [
+          "brown",
+          "gray"
+        ]
+      },
+      "protan": {
+        "min": 0.0146,
+        "pair": [
+          "orange",
+          "green"
+        ]
+      },
+      "deutan": {
+        "min": 0.0474,
+        "pair": [
+          "pink",
+          "cyan"
+        ]
+      },
+      "tritan": {
+        "min": 0.049,
+        "pair": [
+          "purple",
+          "gray"
+        ]
+      }
+    },
+    "lStar": {
+      "values": [
+        47.98,
+        66.88,
+        57.9,
+        46.85,
+        51.46,
+        42.37,
+        64.5,
+        53.19,
+        74.32,
+        70.53
+      ],
+      "range": 31.95,
+      "minSortedGap": 1.13,
+      "sortedGaps": [
+        4.48,
+        1.13,
+        3.48,
+        1.73,
+        4.71,
+        6.6,
+        2.38,
+        3.65,
+        3.79
+      ],
+      "minAdjacentInOrderGap": 3.79,
+      "adjacentInOrderGaps": [
+        18.9,
+        8.98,
+        11.05,
+        4.61,
+        9.09,
+        22.13,
+        11.31,
+        21.13,
+        3.79
+      ]
+    }
+  },
+  "viridis": {
+    "fullTable": {
+      "entries": 256,
+      "lStarNonMonotonicSteps": 4,
+      "worstNegativeDeltaLstar": -0.0317,
+      "lStarStart": 14.9,
+      "lStarEnd": 90.86
+    },
+    "sampled5": {
+      "n": 5,
+      "stops": [
+        {
+          "t": 0,
+          "index": 0,
+          "hex": "#440154",
+          "lStar": 14.9
+        },
+        {
+          "t": 0.25,
+          "index": 64,
+          "hex": "#3b528b",
+          "lStar": 35.65
+        },
+        {
+          "t": 0.5,
+          "index": 128,
+          "hex": "#21918c",
+          "lStar": 54.52
+        },
+        {
+          "t": 0.75,
+          "index": 191,
+          "hex": "#5cc863",
+          "lStar": 72.55
+        },
+        {
+          "t": 1,
+          "index": 255,
+          "hex": "#fde725",
+          "lStar": 90.86
+        }
+      ],
+      "adjacent": [
+        {
+          "from": "#440154",
+          "to": "#3b528b",
+          "deltaLstar": 20.75,
+          "deltaEok": 0.1963
+        },
+        {
+          "from": "#3b528b",
+          "to": "#21918c",
+          "deltaLstar": 18.87,
+          "deltaEok": 0.1896
+        },
+        {
+          "from": "#21918c",
+          "to": "#5cc863",
+          "deltaLstar": 18.03,
+          "deltaEok": 0.1948
+        },
+        {
+          "from": "#5cc863",
+          "to": "#fde725",
+          "deltaLstar": 18.31,
+          "deltaEok": 0.216
+        }
+      ],
+      "lStarStrictlyMonotonic": true,
+      "minDeltaLstar": 18.03,
+      "maxDeltaLstar": 20.75,
+      "idealEqualDeltaLstar": 18.99,
+      "minToIdealRatio": 0.949,
+      "minAdjacentDeltaEok": 0.1896
+    },
+    "sampled8": {
+      "n": 8,
+      "stops": [
+        {
+          "t": 0,
+          "index": 0,
+          "hex": "#440154",
+          "lStar": 14.9
+        },
+        {
+          "t": 0.1429,
+          "index": 36,
+          "hex": "#46327e",
+          "lStar": 26.99
+        },
+        {
+          "t": 0.2857,
+          "index": 73,
+          "hex": "#365c8d",
+          "lStar": 38.48
+        },
+        {
+          "t": 0.4286,
+          "index": 109,
+          "hex": "#277f8e",
+          "lStar": 48.96
+        },
+        {
+          "t": 0.5714,
+          "index": 146,
+          "hex": "#1fa187",
+          "lStar": 59.46
+        },
+        {
+          "t": 0.7143,
+          "index": 182,
+          "hex": "#4ac16d",
+          "lStar": 69.96
+        },
+        {
+          "t": 0.8571,
+          "index": 219,
+          "hex": "#a0da39",
+          "lStar": 80.69
+        },
+        {
+          "t": 1,
+          "index": 255,
+          "hex": "#fde725",
+          "lStar": 90.86
+        }
+      ],
+      "adjacent": [
+        {
+          "from": "#440154",
+          "to": "#46327e",
+          "deltaLstar": 12.09,
+          "deltaEok": 0.115
+        },
+        {
+          "from": "#46327e",
+          "to": "#365c8d",
+          "deltaLstar": 11.49,
+          "deltaEok": 0.1141
+        },
+        {
+          "from": "#365c8d",
+          "to": "#277f8e",
+          "deltaLstar": 10.48,
+          "deltaEok": 0.1052
+        },
+        {
+          "from": "#277f8e",
+          "to": "#1fa187",
+          "deltaLstar": 10.5,
+          "deltaEok": 0.108
+        },
+        {
+          "from": "#1fa187",
+          "to": "#4ac16d",
+          "deltaLstar": 10.5,
+          "deltaEok": 0.1152
+        },
+        {
+          "from": "#4ac16d",
+          "to": "#a0da39",
+          "deltaLstar": 10.73,
+          "deltaEok": 0.122
+        },
+        {
+          "from": "#a0da39",
+          "to": "#fde725",
+          "deltaLstar": 10.17,
+          "deltaEok": 0.1293
+        }
+      ],
+      "lStarStrictlyMonotonic": true,
+      "minDeltaLstar": 10.17,
+      "maxDeltaLstar": 12.09,
+      "idealEqualDeltaLstar": 10.85,
+      "minToIdealRatio": 0.937,
+      "minAdjacentDeltaEok": 0.1052
+    }
+  }
+}

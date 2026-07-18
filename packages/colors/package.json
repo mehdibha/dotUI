@@ -18,7 +18,12 @@
     "zod": "^4.2.1"
   },
   "devDependencies": {
+    "@adobe/leonardo-contrast-colors": "^1.1.0",
     "@dotui/ts-config": "workspace:*",
+    "@radix-ui/colors": "^3.0.0",
+    "apca-w3": "^0.1.9",
+    "bezier-easing": "^3.0.1",
+    "culori": "^4.0.2",
     "typescript": "catalog:"
   }
 }

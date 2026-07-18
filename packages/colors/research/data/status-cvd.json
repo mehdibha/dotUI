@@ -1,0 +1,1285 @@
+{
+  "decision": "D10-B status seeds CVD gate",
+  "method": "culori Machado filterDeficiency{Prot,Deuter,Trit}(1.0) on sRGB; dEok = Euclidean in OKLab. Sets evaluated as 4 status seeds + fixed accent #438cd6 (10 pairs) under 4 conditions. Search: deterministic coordinate ascent over OKLCH grid (L 0.55-0.80 step 0.025, C 0.12-0.30 step 0.02 gamut-clamped, H step 5deg in family windows: green 135-165, amber 55-95, red 15-40, blue 230-270), objective = min pairwise dEok across normal+protan+deutan+tritan, two starts (current seeds, Radix 9s).",
+  "accent": "#438cd6",
+  "jndNote": "dEok ~0.02 is roughly one just-noticeable difference",
+  "current": {
+    "colors": {
+      "success": "#22c55e",
+      "warning": "#eab308",
+      "danger": "#ef4444",
+      "info": "#3b82f6",
+      "accent": "#438cd6"
+    },
+    "globalMin": 0.0151,
+    "globalMinPair": "tritan:info-accent",
+    "perCondition": {
+      "normal": {
+        "min": 0.0596,
+        "minPair": "info-accent",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.2015
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.3638
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.3273
+          },
+          {
+            "pair": "success-accent",
+            "dEok": 0.272
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.2481
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.3893
+          },
+          {
+            "pair": "warning-accent",
+            "dEok": 0.3374
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.3523
+          },
+          {
+            "pair": "danger-accent",
+            "dEok": 0.3162
+          },
+          {
+            "pair": "info-accent",
+            "dEok": 0.0596
+          }
+        ]
+      },
+      "protan": {
+        "min": 0.0595,
+        "minPair": "info-accent",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.0603
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.2872
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.2977
+          },
+          {
+            "pair": "success-accent",
+            "dEok": 0.2411
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.3274
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.3559
+          },
+          {
+            "pair": "warning-accent",
+            "dEok": 0.2994
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.2862
+          },
+          {
+            "pair": "danger-accent",
+            "dEok": 0.2465
+          },
+          {
+            "pair": "info-accent",
+            "dEok": 0.0595
+          }
+        ]
+      },
+      "deutan": {
+        "min": 0.0569,
+        "minPair": "info-accent",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.1806
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.1017
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.2699
+          },
+          {
+            "pair": "success-accent",
+            "dEok": 0.2142
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.27
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.4194
+          },
+          {
+            "pair": "warning-accent",
+            "dEok": 0.3692
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.2697
+          },
+          {
+            "pair": "danger-accent",
+            "dEok": 0.2151
+          },
+          {
+            "pair": "info-accent",
+            "dEok": 0.0569
+          }
+        ]
+      },
+      "tritan": {
+        "min": 0.0151,
+        "minPair": "info-accent",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.2905
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.3824
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.1252
+          },
+          {
+            "pair": "success-accent",
+            "dEok": 0.1113
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.1465
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.3192
+          },
+          {
+            "pair": "warning-accent",
+            "dEok": 0.3098
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.3685
+          },
+          {
+            "pair": "danger-accent",
+            "dEok": 0.3632
+          },
+          {
+            "pair": "info-accent",
+            "dEok": 0.0151
+          }
+        ]
+      }
+    }
+  },
+  "currentWithoutAccent": {
+    "colors": {
+      "success": "#22c55e",
+      "warning": "#eab308",
+      "danger": "#ef4444",
+      "info": "#3b82f6"
+    },
+    "globalMin": 0.0603,
+    "globalMinPair": "protan:success-warning",
+    "perCondition": {
+      "normal": {
+        "min": 0.2015,
+        "minPair": "success-warning",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.2015
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.3638
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.3273
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.2481
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.3893
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.3523
+          }
+        ]
+      },
+      "protan": {
+        "min": 0.0603,
+        "minPair": "success-warning",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.0603
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.2872
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.2977
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.3274
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.3559
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.2862
+          }
+        ]
+      },
+      "deutan": {
+        "min": 0.1017,
+        "minPair": "success-danger",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.1806
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.1017
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.2699
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.27
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.4194
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.2697
+          }
+        ]
+      },
+      "tritan": {
+        "min": 0.1252,
+        "minPair": "success-info",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.2905
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.3824
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.1252
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.1465
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.3192
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.3685
+          }
+        ]
+      }
+    }
+  },
+  "radixReference": {
+    "colors": {
+      "success": "#46a758",
+      "warning": "#ffc53d",
+      "danger": "#e5484b",
+      "info": "#0090ff",
+      "accent": "#438cd6"
+    },
+    "globalMin": 0.0413,
+    "globalMinPair": "tritan:success-accent",
+    "perCondition": {
+      "normal": {
+        "min": 0.0631,
+        "minPair": "info-accent",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.2578
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.302
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.27
+          },
+          {
+            "pair": "success-accent",
+            "dEok": 0.222
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.2904
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.4038
+          },
+          {
+            "pair": "warning-accent",
+            "dEok": 0.3669
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.3539
+          },
+          {
+            "pair": "danger-accent",
+            "dEok": 0.3007
+          },
+          {
+            "pair": "info-accent",
+            "dEok": 0.0631
+          }
+        ]
+      },
+      "protan": {
+        "min": 0.0661,
+        "minPair": "info-accent",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.1614
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.2113
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.2729
+          },
+          {
+            "pair": "success-accent",
+            "dEok": 0.2099
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.3721
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.3702
+          },
+          {
+            "pair": "warning-accent",
+            "dEok": 0.321
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.2902
+          },
+          {
+            "pair": "danger-accent",
+            "dEok": 0.2347
+          },
+          {
+            "pair": "info-accent",
+            "dEok": 0.0661
+          }
+        ]
+      },
+      "deutan": {
+        "min": 0.0673,
+        "minPair": "success-danger",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.2573
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.0673
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.2859
+          },
+          {
+            "pair": "success-accent",
+            "dEok": 0.2044
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.3211
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.4689
+          },
+          {
+            "pair": "warning-accent",
+            "dEok": 0.3969
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.2838
+          },
+          {
+            "pair": "danger-accent",
+            "dEok": 0.2068
+          },
+          {
+            "pair": "info-accent",
+            "dEok": 0.0823
+          }
+        ]
+      },
+      "tritan": {
+        "min": 0.0413,
+        "minPair": "success-accent",
+        "pairs": [
+          {
+            "pair": "success-warning",
+            "dEok": 0.3209
+          },
+          {
+            "pair": "success-danger",
+            "dEok": 0.3348
+          },
+          {
+            "pair": "success-info",
+            "dEok": 0.0535
+          },
+          {
+            "pair": "success-accent",
+            "dEok": 0.0413
+          },
+          {
+            "pair": "warning-danger",
+            "dEok": 0.2093
+          },
+          {
+            "pair": "warning-info",
+            "dEok": 0.3394
+          },
+          {
+            "pair": "warning-accent",
+            "dEok": 0.3374
+          },
+          {
+            "pair": "danger-info",
+            "dEok": 0.3709
+          },
+          {
+            "pair": "danger-accent",
+            "dEok": 0.3441
+          },
+          {
+            "pair": "info-accent",
+            "dEok": 0.0441
+          }
+        ]
+      }
+    }
+  },
+  "search": {
+    "fromCurrentStart": {
+      "seeds": {
+        "success": "#9ccf7f",
+        "warning": "#a98d00",
+        "danger": "#ef4444",
+        "info": "#4056ff"
+      },
+      "score": 0.1252076488641039
+    },
+    "fromRadixStart": {
+      "seeds": {
+        "success": "#2bdda4",
+        "warning": "#ff994b",
+        "danger": "#e5484b",
+        "info": "#4056ff"
+      },
+      "score": 0.1252076488641039
+    },
+    "winner": {
+      "seeds": {
+        "success": {
+          "hex": "#9ccf7f",
+          "oklch": {
+            "l": 0.7996,
+            "c": 0.1202,
+            "h": 134.8483
+          }
+        },
+        "warning": {
+          "hex": "#a98d00",
+          "oklch": {
+            "l": 0.6499,
+            "c": 0.1334,
+            "h": 94.829
+          }
+        },
+        "danger": {
+          "hex": "#ef4444",
+          "oklch": {
+            "l": 0.6368,
+            "c": 0.2078,
+            "h": 25.3313
+          }
+        },
+        "info": {
+          "hex": "#4056ff",
+          "oklch": {
+            "l": 0.5504,
+            "c": 0.2482,
+            "h": 269.8825
+          }
+        }
+      },
+      "minPairwiseDEok": 0.1252,
+      "evaluation": {
+        "colors": {
+          "success": "#9ccf7f",
+          "warning": "#a98d00",
+          "danger": "#ef4444",
+          "info": "#4056ff",
+          "accent": "#438cd6"
+        },
+        "globalMin": 0.1252,
+        "globalMinPair": "deutan:info-accent",
+        "perCondition": {
+          "normal": {
+            "min": 0.1504,
+            "minPair": "info-accent",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.1734
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.3175
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.4247
+              },
+              {
+                "pair": "success-accent",
+                "dEok": 0.2758
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.2043
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.3941
+              },
+              {
+                "pair": "warning-accent",
+                "dEok": 0.2624
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3957
+              },
+              {
+                "pair": "danger-accent",
+                "dEok": 0.3162
+              },
+              {
+                "pair": "info-accent",
+                "dEok": 0.1504
+              }
+            ]
+          },
+          "protan": {
+            "min": 0.1466,
+            "minPair": "info-accent",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.1866
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.3609
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.4153
+              },
+              {
+                "pair": "success-accent",
+                "dEok": 0.2702
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.2001
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.3828
+              },
+              {
+                "pair": "warning-accent",
+                "dEok": 0.2539
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3028
+              },
+              {
+                "pair": "danger-accent",
+                "dEok": 0.2465
+              },
+              {
+                "pair": "info-accent",
+                "dEok": 0.1466
+              }
+            ]
+          },
+          "deutan": {
+            "min": 0.1252,
+            "minPair": "info-accent",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.1433
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.2385
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.4155
+              },
+              {
+                "pair": "success-accent",
+                "dEok": 0.2928
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.1253
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.4024
+              },
+              {
+                "pair": "warning-accent",
+                "dEok": 0.2824
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3171
+              },
+              {
+                "pair": "danger-accent",
+                "dEok": 0.2151
+              },
+              {
+                "pair": "info-accent",
+                "dEok": 0.1252
+              }
+            ]
+          },
+          "tritan": {
+            "min": 0.1305,
+            "minPair": "info-accent",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.2066
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.3139
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.2931
+              },
+              {
+                "pair": "success-accent",
+                "dEok": 0.1723
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.158
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.2407
+              },
+              {
+                "pair": "warning-accent",
+                "dEok": 0.2088
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3893
+              },
+              {
+                "pair": "danger-accent",
+                "dEok": 0.3632
+              },
+              {
+                "pair": "info-accent",
+                "dEok": 0.1305
+              }
+            ]
+          }
+        }
+      },
+      "withoutAccent": {
+        "colors": {
+          "success": "#9ccf7f",
+          "warning": "#a98d00",
+          "danger": "#ef4444",
+          "info": "#4056ff"
+        },
+        "globalMin": 0.1253,
+        "globalMinPair": "deutan:warning-danger",
+        "perCondition": {
+          "normal": {
+            "min": 0.1734,
+            "minPair": "success-warning",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.1734
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.3175
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.4247
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.2043
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.3941
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3957
+              }
+            ]
+          },
+          "protan": {
+            "min": 0.1866,
+            "minPair": "success-warning",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.1866
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.3609
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.4153
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.2001
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.3828
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3028
+              }
+            ]
+          },
+          "deutan": {
+            "min": 0.1253,
+            "minPair": "warning-danger",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.1433
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.2385
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.4155
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.1253
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.4024
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3171
+              }
+            ]
+          },
+          "tritan": {
+            "min": 0.158,
+            "minPair": "warning-danger",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.2066
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.3139
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.2931
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.158
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.2407
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3893
+              }
+            ]
+          }
+        }
+      }
+    },
+    "identityPreserving": {
+      "note": "same search with each seed L held within +/-0.05 of the current Tailwind seed L",
+      "seeds": {
+        "success": {
+          "hex": "#6ac48c",
+          "oklch": {
+            "l": 0.7492,
+            "c": 0.1195,
+            "h": 154.9123
+          }
+        },
+        "warning": {
+          "hex": "#eab308",
+          "oklch": {
+            "l": 0.7952,
+            "c": 0.1617,
+            "h": 86.0468
+          }
+        },
+        "danger": {
+          "hex": "#ef4444",
+          "oklch": {
+            "l": 0.6368,
+            "c": 0.2078,
+            "h": 25.3313
+          }
+        },
+        "info": {
+          "hex": "#4862ff",
+          "oklch": {
+            "l": 0.574,
+            "c": 0.2331,
+            "h": 269.9967
+          }
+        }
+      },
+      "minPairwiseDEok": 0.0977,
+      "evaluation": {
+        "colors": {
+          "success": "#6ac48c",
+          "warning": "#eab308",
+          "danger": "#ef4444",
+          "info": "#4862ff",
+          "accent": "#438cd6"
+        },
+        "globalMin": 0.0977,
+        "globalMinPair": "tritan:info-accent",
+        "perCondition": {
+          "normal": {
+            "min": 0.127,
+            "minPair": "info-accent",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.1691
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.319
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.3506
+              },
+              {
+                "pair": "success-accent",
+                "dEok": 0.2244
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.2481
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.4523
+              },
+              {
+                "pair": "warning-accent",
+                "dEok": 0.3374
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3781
+              },
+              {
+                "pair": "danger-accent",
+                "dEok": 0.3162
+              },
+              {
+                "pair": "info-accent",
+                "dEok": 0.127
+              }
+            ]
+          },
+          "protan": {
+            "min": 0.0979,
+            "minPair": "success-warning",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.0979
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.3131
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.3381
+              },
+              {
+                "pair": "success-accent",
+                "dEok": 0.2175
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.3274
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.4208
+              },
+              {
+                "pair": "warning-accent",
+                "dEok": 0.2994
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.2985
+              },
+              {
+                "pair": "danger-accent",
+                "dEok": 0.2465
+              },
+              {
+                "pair": "info-accent",
+                "dEok": 0.1219
+              }
+            ]
+          },
+          "deutan": {
+            "min": 0.1022,
+            "minPair": "info-accent",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.1526
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.1743
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.317
+              },
+              {
+                "pair": "success-accent",
+                "dEok": 0.2168
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.27
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.4696
+              },
+              {
+                "pair": "warning-accent",
+                "dEok": 0.3692
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3028
+              },
+              {
+                "pair": "danger-accent",
+                "dEok": 0.2151
+              },
+              {
+                "pair": "info-accent",
+                "dEok": 0.1022
+              }
+            ]
+          },
+          "tritan": {
+            "min": 0.0977,
+            "minPair": "info-accent",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.2552
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.3535
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.2163
+              },
+              {
+                "pair": "success-accent",
+                "dEok": 0.1203
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.1465
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.359
+              },
+              {
+                "pair": "warning-accent",
+                "dEok": 0.3098
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3755
+              },
+              {
+                "pair": "danger-accent",
+                "dEok": 0.3632
+              },
+              {
+                "pair": "info-accent",
+                "dEok": 0.0977
+              }
+            ]
+          }
+        }
+      },
+      "withoutAccent": {
+        "colors": {
+          "success": "#6ac48c",
+          "warning": "#eab308",
+          "danger": "#ef4444",
+          "info": "#4862ff"
+        },
+        "globalMin": 0.0979,
+        "globalMinPair": "protan:success-warning",
+        "perCondition": {
+          "normal": {
+            "min": 0.1691,
+            "minPair": "success-warning",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.1691
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.319
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.3506
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.2481
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.4523
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3781
+              }
+            ]
+          },
+          "protan": {
+            "min": 0.0979,
+            "minPair": "success-warning",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.0979
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.3131
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.3381
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.3274
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.4208
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.2985
+              }
+            ]
+          },
+          "deutan": {
+            "min": 0.1526,
+            "minPair": "success-warning",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.1526
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.1743
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.317
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.27
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.4696
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3028
+              }
+            ]
+          },
+          "tritan": {
+            "min": 0.1465,
+            "minPair": "warning-danger",
+            "pairs": [
+              {
+                "pair": "success-warning",
+                "dEok": 0.2552
+              },
+              {
+                "pair": "success-danger",
+                "dEok": 0.3535
+              },
+              {
+                "pair": "success-info",
+                "dEok": 0.2163
+              },
+              {
+                "pair": "warning-danger",
+                "dEok": 0.1465
+              },
+              {
+                "pair": "warning-info",
+                "dEok": 0.359
+              },
+              {
+                "pair": "danger-info",
+                "dEok": 0.3755
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

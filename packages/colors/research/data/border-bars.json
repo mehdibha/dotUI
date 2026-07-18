@@ -1,0 +1,2548 @@
+{
+  "meta": {
+    "source": "@radix-ui/colors 3.0.0; Geist values scraped 2026-07-18",
+    "borderSteps": [
+      6,
+      7,
+      8
+    ],
+    "bgSteps": [
+      1,
+      2
+    ],
+    "scales": 31,
+    "note": "apcaLc is |Lc| (border as APCA foreground); wcag is the WCAG 2 ratio"
+  },
+  "radix": {
+    "light": {
+      "perScale": {
+        "gray": {
+          "6v1": {
+            "border": "#d9d9d9",
+            "bg": "#fcfcfc",
+            "wcag": 1.376,
+            "apcaLc": 18.08
+          },
+          "6v2": {
+            "border": "#d9d9d9",
+            "bg": "#f9f9f9",
+            "wcag": 1.341,
+            "apcaLc": 16.29
+          },
+          "7v1": {
+            "border": "#cecece",
+            "bg": "#fcfcfc",
+            "wcag": 1.534,
+            "apcaLc": 24.36
+          },
+          "7v2": {
+            "border": "#cecece",
+            "bg": "#f9f9f9",
+            "wcag": 1.495,
+            "apcaLc": 22.57
+          },
+          "8v1": {
+            "border": "#bbbbbb",
+            "bg": "#fcfcfc",
+            "wcag": 1.871,
+            "apcaLc": 34.92
+          },
+          "8v2": {
+            "border": "#bbbbbb",
+            "bg": "#f9f9f9",
+            "wcag": 1.823,
+            "apcaLc": 33.13
+          }
+        },
+        "mauve": {
+          "6v1": {
+            "border": "#dbd8e0",
+            "bg": "#fdfcfd",
+            "wcag": 1.376,
+            "apcaLc": 18.12
+          },
+          "6v2": {
+            "border": "#dbd8e0",
+            "bg": "#faf9fb",
+            "wcag": 1.342,
+            "apcaLc": 16.37
+          },
+          "7v1": {
+            "border": "#d0cdd7",
+            "bg": "#fdfcfd",
+            "wcag": 1.532,
+            "apcaLc": 24.32
+          },
+          "7v2": {
+            "border": "#d0cdd7",
+            "bg": "#faf9fb",
+            "wcag": 1.494,
+            "apcaLc": 22.57
+          },
+          "8v1": {
+            "border": "#bcbac7",
+            "bg": "#fdfcfd",
+            "wcag": 1.868,
+            "apcaLc": 34.87
+          },
+          "8v2": {
+            "border": "#bcbac7",
+            "bg": "#faf9fb",
+            "wcag": 1.821,
+            "apcaLc": 33.12
+          }
+        },
+        "slate": {
+          "6v1": {
+            "border": "#d9d9e0",
+            "bg": "#fcfcfd",
+            "wcag": 1.37,
+            "apcaLc": 17.83
+          },
+          "6v2": {
+            "border": "#d9d9e0",
+            "bg": "#f9f9fb",
+            "wcag": 1.336,
+            "apcaLc": 16.08
+          },
+          "7v1": {
+            "border": "#cdced6",
+            "bg": "#fcfcfd",
+            "wcag": 1.529,
+            "apcaLc": 24.19
+          },
+          "7v2": {
+            "border": "#cdced6",
+            "bg": "#f9f9fb",
+            "wcag": 1.491,
+            "apcaLc": 22.44
+          },
+          "8v1": {
+            "border": "#b9bbc6",
+            "bg": "#fcfcfd",
+            "wcag": 1.864,
+            "apcaLc": 34.74
+          },
+          "8v2": {
+            "border": "#b9bbc6",
+            "bg": "#f9f9fb",
+            "wcag": 1.818,
+            "apcaLc": 32.99
+          }
+        },
+        "sage": {
+          "6v1": {
+            "border": "#d7dad9",
+            "bg": "#fbfdfc",
+            "wcag": 1.378,
+            "apcaLc": 18.21
+          },
+          "6v2": {
+            "border": "#d7dad9",
+            "bg": "#f7f9f8",
+            "wcag": 1.331,
+            "apcaLc": 15.83
+          },
+          "7v1": {
+            "border": "#cbcfcd",
+            "bg": "#fbfdfc",
+            "wcag": 1.54,
+            "apcaLc": 24.66
+          },
+          "7v2": {
+            "border": "#cbcfcd",
+            "bg": "#f7f9f8",
+            "wcag": 1.488,
+            "apcaLc": 22.27
+          },
+          "8v1": {
+            "border": "#b8bcba",
+            "bg": "#fbfdfc",
+            "wcag": 1.879,
+            "apcaLc": 35.21
+          },
+          "8v2": {
+            "border": "#b8bcba",
+            "bg": "#f7f9f8",
+            "wcag": 1.815,
+            "apcaLc": 32.82
+          }
+        },
+        "olive": {
+          "6v1": {
+            "border": "#d7dad7",
+            "bg": "#fcfdfc",
+            "wcag": 1.382,
+            "apcaLc": 18.42
+          },
+          "6v2": {
+            "border": "#d7dad7",
+            "bg": "#f8faf8",
+            "wcag": 1.344,
+            "apcaLc": 16.46
+          },
+          "7v1": {
+            "border": "#cccfcc",
+            "bg": "#fcfdfc",
+            "wcag": 1.541,
+            "apcaLc": 24.7
+          },
+          "7v2": {
+            "border": "#cccfcc",
+            "bg": "#f8faf8",
+            "wcag": 1.498,
+            "apcaLc": 22.74
+          },
+          "8v1": {
+            "border": "#b9bcb8",
+            "bg": "#fcfdfc",
+            "wcag": 1.881,
+            "apcaLc": 35.3
+          },
+          "8v2": {
+            "border": "#b9bcb8",
+            "bg": "#f8faf8",
+            "wcag": 1.829,
+            "apcaLc": 33.34
+          }
+        },
+        "sand": {
+          "6v1": {
+            "border": "#dad9d6",
+            "bg": "#fdfdfc",
+            "wcag": 1.387,
+            "apcaLc": 18.64
+          },
+          "6v2": {
+            "border": "#dad9d6",
+            "bg": "#f9f9f8",
+            "wcag": 1.34,
+            "apcaLc": 16.25
+          },
+          "7v1": {
+            "border": "#cfceca",
+            "bg": "#fdfdfc",
+            "wcag": 1.547,
+            "apcaLc": 24.96
+          },
+          "7v2": {
+            "border": "#cfceca",
+            "bg": "#f9f9f8",
+            "wcag": 1.495,
+            "apcaLc": 22.57
+          },
+          "8v1": {
+            "border": "#bcbbb5",
+            "bg": "#fdfdfc",
+            "wcag": 1.891,
+            "apcaLc": 35.59
+          },
+          "8v2": {
+            "border": "#bcbbb5",
+            "bg": "#f9f9f8",
+            "wcag": 1.826,
+            "apcaLc": 33.2
+          }
+        },
+        "tomato": {
+          "6v1": {
+            "border": "#fdbdaf",
+            "bg": "#fffcfc",
+            "wcag": 1.574,
+            "apcaLc": 25.79
+          },
+          "6v2": {
+            "border": "#fdbdaf",
+            "bg": "#fff8f7",
+            "wcag": 1.531,
+            "apcaLc": 23.87
+          },
+          "7v1": {
+            "border": "#f5a898",
+            "bg": "#fffcfc",
+            "wcag": 1.882,
+            "apcaLc": 35.15
+          },
+          "7v2": {
+            "border": "#f5a898",
+            "bg": "#fff8f7",
+            "wcag": 1.831,
+            "apcaLc": 33.24
+          },
+          "8v1": {
+            "border": "#ec8e7b",
+            "bg": "#fffcfc",
+            "wcag": 2.36,
+            "apcaLc": 45.74
+          },
+          "8v2": {
+            "border": "#ec8e7b",
+            "bg": "#fff8f7",
+            "wcag": 2.296,
+            "apcaLc": 43.83
+          }
+        },
+        "red": {
+          "6v1": {
+            "border": "#fdbdbe",
+            "bg": "#fffcfc",
+            "wcag": 1.559,
+            "apcaLc": 25.27
+          },
+          "6v2": {
+            "border": "#fdbdbe",
+            "bg": "#fff7f7",
+            "wcag": 1.508,
+            "apcaLc": 22.93
+          },
+          "7v1": {
+            "border": "#f4a9aa",
+            "bg": "#fffcfc",
+            "wcag": 1.854,
+            "apcaLc": 34.41
+          },
+          "7v2": {
+            "border": "#f4a9aa",
+            "bg": "#fff7f7",
+            "wcag": 1.792,
+            "apcaLc": 32.07
+          },
+          "8v1": {
+            "border": "#eb8e90",
+            "bg": "#fffcfc",
+            "wcag": 2.338,
+            "apcaLc": 45.34
+          },
+          "8v2": {
+            "border": "#eb8e90",
+            "bg": "#fff7f7",
+            "wcag": 2.26,
+            "apcaLc": 43.01
+          }
+        },
+        "ruby": {
+          "6v1": {
+            "border": "#f8bfc8",
+            "bg": "#fffcfd",
+            "wcag": 1.551,
+            "apcaLc": 25
+          },
+          "6v2": {
+            "border": "#f8bfc8",
+            "bg": "#fff7f8",
+            "wcag": 1.5,
+            "apcaLc": 22.66
+          },
+          "7v1": {
+            "border": "#efacb8",
+            "bg": "#fffcfd",
+            "wcag": 1.828,
+            "apcaLc": 33.75
+          },
+          "7v2": {
+            "border": "#efacb8",
+            "bg": "#fff7f8",
+            "wcag": 1.768,
+            "apcaLc": 31.42
+          },
+          "8v1": {
+            "border": "#e592a3",
+            "bg": "#fffcfd",
+            "wcag": 2.295,
+            "apcaLc": 44.6
+          },
+          "8v2": {
+            "border": "#e592a3",
+            "bg": "#fff7f8",
+            "wcag": 2.219,
+            "apcaLc": 42.26
+          }
+        },
+        "crimson": {
+          "6v1": {
+            "border": "#f3bed1",
+            "bg": "#fffcfd",
+            "wcag": 1.572,
+            "apcaLc": 25.77
+          },
+          "6v2": {
+            "border": "#f3bed1",
+            "bg": "#fef7f9",
+            "wcag": 1.518,
+            "apcaLc": 23.35
+          },
+          "7v1": {
+            "border": "#eaacc3",
+            "bg": "#fffcfd",
+            "wcag": 1.841,
+            "apcaLc": 34.11
+          },
+          "7v2": {
+            "border": "#eaacc3",
+            "bg": "#fef7f9",
+            "wcag": 1.778,
+            "apcaLc": 31.69
+          },
+          "8v1": {
+            "border": "#e093b2",
+            "bg": "#fffcfd",
+            "wcag": 2.292,
+            "apcaLc": 44.56
+          },
+          "8v2": {
+            "border": "#e093b2",
+            "bg": "#fef7f9",
+            "wcag": 2.213,
+            "apcaLc": 42.13
+          }
+        },
+        "pink": {
+          "6v1": {
+            "border": "#efbfdd",
+            "bg": "#fffcfe",
+            "wcag": 1.565,
+            "apcaLc": 25.53
+          },
+          "6v2": {
+            "border": "#efbfdd",
+            "bg": "#fef7fb",
+            "wcag": 1.512,
+            "apcaLc": 23.15
+          },
+          "7v1": {
+            "border": "#e7acd0",
+            "bg": "#fffcfe",
+            "wcag": 1.838,
+            "apcaLc": 34.06
+          },
+          "7v2": {
+            "border": "#e7acd0",
+            "bg": "#fef7fb",
+            "wcag": 1.776,
+            "apcaLc": 31.68
+          },
+          "8v1": {
+            "border": "#dd93c2",
+            "bg": "#fffcfe",
+            "wcag": 2.283,
+            "apcaLc": 44.4
+          },
+          "8v2": {
+            "border": "#dd93c2",
+            "bg": "#fef7fb",
+            "wcag": 2.206,
+            "apcaLc": 42.02
+          }
+        },
+        "plum": {
+          "6v1": {
+            "border": "#e9c2ec",
+            "bg": "#fefcff",
+            "wcag": 1.537,
+            "apcaLc": 24.5
+          },
+          "6v2": {
+            "border": "#e9c2ec",
+            "bg": "#fdf7fd",
+            "wcag": 1.486,
+            "apcaLc": 22.16
+          },
+          "7v1": {
+            "border": "#deade3",
+            "bg": "#fefcff",
+            "wcag": 1.839,
+            "apcaLc": 34.07
+          },
+          "7v2": {
+            "border": "#deade3",
+            "bg": "#fdf7fd",
+            "wcag": 1.778,
+            "apcaLc": 31.73
+          },
+          "8v1": {
+            "border": "#cf91d8",
+            "bg": "#fefcff",
+            "wcag": 2.367,
+            "apcaLc": 46.02
+          },
+          "8v2": {
+            "border": "#cf91d8",
+            "bg": "#fdf7fd",
+            "wcag": 2.289,
+            "apcaLc": 43.68
+          }
+        },
+        "purple": {
+          "6v1": {
+            "border": "#e0c4f4",
+            "bg": "#fefcfe",
+            "wcag": 1.538,
+            "apcaLc": 24.56
+          },
+          "6v2": {
+            "border": "#e0c4f4",
+            "bg": "#fbf7fe",
+            "wcag": 1.484,
+            "apcaLc": 22.05
+          },
+          "7v1": {
+            "border": "#d1afec",
+            "bg": "#fefcfe",
+            "wcag": 1.861,
+            "apcaLc": 34.67
+          },
+          "7v2": {
+            "border": "#d1afec",
+            "bg": "#fbf7fe",
+            "wcag": 1.795,
+            "apcaLc": 32.17
+          },
+          "8v1": {
+            "border": "#be93e4",
+            "bg": "#fefcfe",
+            "wcag": 2.425,
+            "apcaLc": 47.1
+          },
+          "8v2": {
+            "border": "#be93e4",
+            "bg": "#fbf7fe",
+            "wcag": 2.338,
+            "apcaLc": 44.59
+          }
+        },
+        "violet": {
+          "6v1": {
+            "border": "#d4cafe",
+            "bg": "#fdfcfe",
+            "wcag": 1.501,
+            "apcaLc": 23.16
+          },
+          "6v2": {
+            "border": "#d4cafe",
+            "bg": "#faf8ff",
+            "wcag": 1.457,
+            "apcaLc": 21.12
+          },
+          "7v1": {
+            "border": "#c2b5f5",
+            "bg": "#fdfcfe",
+            "wcag": 1.83,
+            "apcaLc": 33.8
+          },
+          "7v2": {
+            "border": "#c2b5f5",
+            "bg": "#faf8ff",
+            "wcag": 1.776,
+            "apcaLc": 31.76
+          },
+          "8v1": {
+            "border": "#aa99ec",
+            "bg": "#fdfcfe",
+            "wcag": 2.422,
+            "apcaLc": 47.03
+          },
+          "8v2": {
+            "border": "#aa99ec",
+            "bg": "#faf8ff",
+            "wcag": 2.352,
+            "apcaLc": 44.99
+          }
+        },
+        "iris": {
+          "6v1": {
+            "border": "#cbcdff",
+            "bg": "#fdfdff",
+            "wcag": 1.507,
+            "apcaLc": 23.48
+          },
+          "6v2": {
+            "border": "#cbcdff",
+            "bg": "#f8f8ff",
+            "wcag": 1.448,
+            "apcaLc": 20.71
+          },
+          "7v1": {
+            "border": "#b8baf8",
+            "bg": "#fdfdff",
+            "wcag": 1.81,
+            "apcaLc": 33.39
+          },
+          "7v2": {
+            "border": "#b8baf8",
+            "bg": "#f8f8ff",
+            "wcag": 1.74,
+            "apcaLc": 30.62
+          },
+          "8v1": {
+            "border": "#9b9ef0",
+            "bg": "#fdfdff",
+            "wcag": 2.42,
+            "apcaLc": 47.17
+          },
+          "8v2": {
+            "border": "#9b9ef0",
+            "bg": "#f8f8ff",
+            "wcag": 2.325,
+            "apcaLc": 44.4
+          }
+        },
+        "indigo": {
+          "6v1": {
+            "border": "#c1d0ff",
+            "bg": "#fdfdfe",
+            "wcag": 1.504,
+            "apcaLc": 23.35
+          },
+          "6v2": {
+            "border": "#c1d0ff",
+            "bg": "#f7f9ff",
+            "wcag": 1.453,
+            "apcaLc": 20.93
+          },
+          "7v1": {
+            "border": "#abbdf9",
+            "bg": "#fdfdfe",
+            "wcag": 1.816,
+            "apcaLc": 33.51
+          },
+          "7v2": {
+            "border": "#abbdf9",
+            "bg": "#f7f9ff",
+            "wcag": 1.753,
+            "apcaLc": 31.09
+          },
+          "8v1": {
+            "border": "#8da4ef",
+            "bg": "#fdfdfe",
+            "wcag": 2.377,
+            "apcaLc": 46.36
+          },
+          "8v2": {
+            "border": "#8da4ef",
+            "bg": "#f7f9ff",
+            "wcag": 2.296,
+            "apcaLc": 43.94
+          }
+        },
+        "blue": {
+          "6v1": {
+            "border": "#acd8fc",
+            "bg": "#fbfdff",
+            "wcag": 1.473,
+            "apcaLc": 22.09
+          },
+          "6v2": {
+            "border": "#acd8fc",
+            "bg": "#f4faff",
+            "wcag": 1.428,
+            "apcaLc": 19.93
+          },
+          "7v1": {
+            "border": "#8ec8f6",
+            "bg": "#fbfdff",
+            "wcag": 1.754,
+            "apcaLc": 31.61
+          },
+          "7v2": {
+            "border": "#8ec8f6",
+            "bg": "#f4faff",
+            "wcag": 1.7,
+            "apcaLc": 29.45
+          },
+          "8v1": {
+            "border": "#5eb1ef",
+            "bg": "#fbfdff",
+            "wcag": 2.286,
+            "apcaLc": 44.37
+          },
+          "8v2": {
+            "border": "#5eb1ef",
+            "bg": "#f4faff",
+            "wcag": 2.216,
+            "apcaLc": 42.21
+          }
+        },
+        "cyan": {
+          "6v1": {
+            "border": "#9ddde7",
+            "bg": "#fafdfe",
+            "wcag": 1.475,
+            "apcaLc": 22.11
+          },
+          "6v2": {
+            "border": "#9ddde7",
+            "bg": "#f2fafb",
+            "wcag": 1.424,
+            "apcaLc": 19.7
+          },
+          "7v1": {
+            "border": "#7dcedc",
+            "bg": "#fafdfe",
+            "wcag": 1.751,
+            "apcaLc": 31.44
+          },
+          "7v2": {
+            "border": "#7dcedc",
+            "bg": "#f2fafb",
+            "wcag": 1.691,
+            "apcaLc": 29.03
+          },
+          "8v1": {
+            "border": "#3db9cf",
+            "bg": "#fafdfe",
+            "wcag": 2.273,
+            "apcaLc": 43.93
+          },
+          "8v2": {
+            "border": "#3db9cf",
+            "bg": "#f2fafb",
+            "wcag": 2.195,
+            "apcaLc": 41.51
+          }
+        },
+        "teal": {
+          "6v1": {
+            "border": "#a1ded2",
+            "bg": "#fafefd",
+            "wcag": 1.487,
+            "apcaLc": 22.65
+          },
+          "6v2": {
+            "border": "#a1ded2",
+            "bg": "#f3fbf9",
+            "wcag": 1.438,
+            "apcaLc": 20.32
+          },
+          "7v1": {
+            "border": "#83cdc1",
+            "bg": "#fafefd",
+            "wcag": 1.802,
+            "apcaLc": 33.05
+          },
+          "7v2": {
+            "border": "#83cdc1",
+            "bg": "#f3fbf9",
+            "wcag": 1.742,
+            "apcaLc": 30.72
+          },
+          "8v1": {
+            "border": "#53b9ab",
+            "bg": "#fafefd",
+            "wcag": 2.323,
+            "apcaLc": 45.16
+          },
+          "8v2": {
+            "border": "#53b9ab",
+            "bg": "#f3fbf9",
+            "wcag": 2.246,
+            "apcaLc": 42.83
+          }
+        },
+        "jade": {
+          "6v1": {
+            "border": "#acdec8",
+            "bg": "#fbfefd",
+            "wcag": 1.474,
+            "apcaLc": 22.22
+          },
+          "6v2": {
+            "border": "#acdec8",
+            "bg": "#f4fbf7",
+            "wcag": 1.424,
+            "apcaLc": 19.8
+          },
+          "7v1": {
+            "border": "#8bceb6",
+            "bg": "#fbfefd",
+            "wcag": 1.784,
+            "apcaLc": 32.59
+          },
+          "7v2": {
+            "border": "#8bceb6",
+            "bg": "#f4fbf7",
+            "wcag": 1.723,
+            "apcaLc": 30.17
+          },
+          "8v1": {
+            "border": "#56ba9f",
+            "bg": "#fbfefd",
+            "wcag": 2.32,
+            "apcaLc": 45.17
+          },
+          "8v2": {
+            "border": "#56ba9f",
+            "bg": "#f4fbf7",
+            "wcag": 2.241,
+            "apcaLc": 42.75
+          }
+        },
+        "green": {
+          "6v1": {
+            "border": "#adddc0",
+            "bg": "#fbfefc",
+            "wcag": 1.49,
+            "apcaLc": 22.82
+          },
+          "6v2": {
+            "border": "#adddc0",
+            "bg": "#f4fbf6",
+            "wcag": 1.439,
+            "apcaLc": 20.4
+          },
+          "7v1": {
+            "border": "#8eceaa",
+            "bg": "#fbfefc",
+            "wcag": 1.789,
+            "apcaLc": 32.74
+          },
+          "7v2": {
+            "border": "#8eceaa",
+            "bg": "#f4fbf6",
+            "wcag": 1.728,
+            "apcaLc": 30.32
+          },
+          "8v1": {
+            "border": "#5bb98b",
+            "bg": "#fbfefc",
+            "wcag": 2.362,
+            "apcaLc": 45.97
+          },
+          "8v2": {
+            "border": "#5bb98b",
+            "bg": "#f4fbf6",
+            "wcag": 2.281,
+            "apcaLc": 43.55
+          }
+        },
+        "grass": {
+          "6v1": {
+            "border": "#b2ddb5",
+            "bg": "#fbfefb",
+            "wcag": 1.487,
+            "apcaLc": 22.69
+          },
+          "6v2": {
+            "border": "#b2ddb5",
+            "bg": "#f5fbf5",
+            "wcag": 1.439,
+            "apcaLc": 20.39
+          },
+          "7v1": {
+            "border": "#94ce9a",
+            "bg": "#fbfefb",
+            "wcag": 1.789,
+            "apcaLc": 32.73
+          },
+          "7v2": {
+            "border": "#94ce9a",
+            "bg": "#f5fbf5",
+            "wcag": 1.731,
+            "apcaLc": 30.43
+          },
+          "8v1": {
+            "border": "#65ba74",
+            "bg": "#fbfefb",
+            "wcag": 2.341,
+            "apcaLc": 45.58
+          },
+          "8v2": {
+            "border": "#65ba74",
+            "bg": "#f5fbf5",
+            "wcag": 2.265,
+            "apcaLc": 43.28
+          }
+        },
+        "bronze": {
+          "6v1": {
+            "border": "#dfcdc5",
+            "bg": "#fdfcfc",
+            "wcag": 1.499,
+            "apcaLc": 23.09
+          },
+          "6v2": {
+            "border": "#dfcdc5",
+            "bg": "#fdf7f5",
+            "wcag": 1.448,
+            "apcaLc": 20.67
+          },
+          "7v1": {
+            "border": "#d3bcb3",
+            "bg": "#fdfcfc",
+            "wcag": 1.766,
+            "apcaLc": 31.97
+          },
+          "7v2": {
+            "border": "#d3bcb3",
+            "bg": "#fdf7f5",
+            "wcag": 1.705,
+            "apcaLc": 29.54
+          },
+          "8v1": {
+            "border": "#c2a499",
+            "bg": "#fdfcfc",
+            "wcag": 2.262,
+            "apcaLc": 44.01
+          },
+          "8v2": {
+            "border": "#c2a499",
+            "bg": "#fdf7f5",
+            "wcag": 2.184,
+            "apcaLc": 41.59
+          }
+        },
+        "gold": {
+          "6v1": {
+            "border": "#d8d0bf",
+            "bg": "#fdfdfc",
+            "wcag": 1.507,
+            "apcaLc": 23.45
+          },
+          "6v2": {
+            "border": "#d8d0bf",
+            "bg": "#faf9f2",
+            "wcag": 1.453,
+            "apcaLc": 20.94
+          },
+          "7v1": {
+            "border": "#cbc0aa",
+            "bg": "#fdfdfc",
+            "wcag": 1.77,
+            "apcaLc": 32.2
+          },
+          "7v2": {
+            "border": "#cbc0aa",
+            "bg": "#faf9f2",
+            "wcag": 1.707,
+            "apcaLc": 29.68
+          },
+          "8v1": {
+            "border": "#b9a88d",
+            "bg": "#fdfdfc",
+            "wcag": 2.28,
+            "apcaLc": 44.53
+          },
+          "8v2": {
+            "border": "#b9a88d",
+            "bg": "#faf9f2",
+            "wcag": 2.199,
+            "apcaLc": 42.01
+          }
+        },
+        "brown": {
+          "6v1": {
+            "border": "#e4cdb7",
+            "bg": "#fefdfc",
+            "wcag": 1.507,
+            "apcaLc": 23.48
+          },
+          "6v2": {
+            "border": "#e4cdb7",
+            "bg": "#fcf9f6",
+            "wcag": 1.46,
+            "apcaLc": 21.26
+          },
+          "7v1": {
+            "border": "#dcbc9f",
+            "bg": "#fefdfc",
+            "wcag": 1.761,
+            "apcaLc": 31.95
+          },
+          "7v2": {
+            "border": "#dcbc9f",
+            "bg": "#fcf9f6",
+            "wcag": 1.706,
+            "apcaLc": 29.73
+          },
+          "8v1": {
+            "border": "#cea37e",
+            "bg": "#fefdfc",
+            "wcag": 2.255,
+            "apcaLc": 44.02
+          },
+          "8v2": {
+            "border": "#cea37e",
+            "bg": "#fcf9f6",
+            "wcag": 2.185,
+            "apcaLc": 41.8
+          }
+        },
+        "orange": {
+          "6v1": {
+            "border": "#ffc182",
+            "bg": "#fefcfb",
+            "wcag": 1.555,
+            "apcaLc": 25.04
+          },
+          "6v2": {
+            "border": "#ffc182",
+            "bg": "#fff7ed",
+            "wcag": 1.498,
+            "apcaLc": 22.46
+          },
+          "7v1": {
+            "border": "#f5ae73",
+            "bg": "#fefcfb",
+            "wcag": 1.836,
+            "apcaLc": 33.83
+          },
+          "7v2": {
+            "border": "#f5ae73",
+            "bg": "#fff7ed",
+            "wcag": 1.768,
+            "apcaLc": 31.25
+          },
+          "8v1": {
+            "border": "#ec9455",
+            "bg": "#fefcfb",
+            "wcag": 2.298,
+            "apcaLc": 44.48
+          },
+          "8v2": {
+            "border": "#ec9455",
+            "bg": "#fff7ed",
+            "wcag": 2.214,
+            "apcaLc": 41.9
+          }
+        },
+        "amber": {
+          "6v1": {
+            "border": "#f3d673",
+            "bg": "#fefdfb",
+            "wcag": 1.407,
+            "apcaLc": 19.43
+          },
+          "6v2": {
+            "border": "#f3d673",
+            "bg": "#fefbe9",
+            "wcag": 1.376,
+            "apcaLc": 17.84
+          },
+          "7v1": {
+            "border": "#e9c162",
+            "bg": "#fefdfb",
+            "wcag": 1.684,
+            "apcaLc": 29.48
+          },
+          "7v2": {
+            "border": "#e9c162",
+            "bg": "#fefbe9",
+            "wcag": 1.646,
+            "apcaLc": 27.89
+          },
+          "8v1": {
+            "border": "#e2a336",
+            "bg": "#fefdfb",
+            "wcag": 2.169,
+            "apcaLc": 42.02
+          },
+          "8v2": {
+            "border": "#e2a336",
+            "bg": "#fefbe9",
+            "wcag": 2.119,
+            "apcaLc": 40.43
+          }
+        },
+        "yellow": {
+          "6v1": {
+            "border": "#f3d768",
+            "bg": "#fdfdf9",
+            "wcag": 1.398,
+            "apcaLc": 18.99
+          },
+          "6v2": {
+            "border": "#f3d768",
+            "bg": "#fefce9",
+            "wcag": 1.379,
+            "apcaLc": 18.04
+          },
+          "7v1": {
+            "border": "#e4c767",
+            "bg": "#fdfdf9",
+            "wcag": 1.626,
+            "apcaLc": 27.58
+          },
+          "7v2": {
+            "border": "#e4c767",
+            "bg": "#fefce9",
+            "wcag": 1.604,
+            "apcaLc": 26.63
+          },
+          "8v1": {
+            "border": "#d5ae39",
+            "bg": "#fdfdf9",
+            "wcag": 2.071,
+            "apcaLc": 39.85
+          },
+          "8v2": {
+            "border": "#d5ae39",
+            "bg": "#fefce9",
+            "wcag": 2.043,
+            "apcaLc": 38.9
+          }
+        },
+        "lime": {
+          "6v1": {
+            "border": "#c2da91",
+            "bg": "#fcfdfa",
+            "wcag": 1.498,
+            "apcaLc": 23.04
+          },
+          "6v2": {
+            "border": "#c2da91",
+            "bg": "#f8faf3",
+            "wcag": 1.454,
+            "apcaLc": 20.96
+          },
+          "7v1": {
+            "border": "#abc978",
+            "bg": "#fcfdfa",
+            "wcag": 1.811,
+            "apcaLc": 33.29
+          },
+          "7v2": {
+            "border": "#abc978",
+            "bg": "#f8faf3",
+            "wcag": 1.757,
+            "apcaLc": 31.2
+          },
+          "8v1": {
+            "border": "#8db654",
+            "bg": "#fcfdfa",
+            "wcag": 2.298,
+            "apcaLc": 44.7
+          },
+          "8v2": {
+            "border": "#8db654",
+            "bg": "#f8faf3",
+            "wcag": 2.23,
+            "apcaLc": 42.61
+          }
+        },
+        "mint": {
+          "6v1": {
+            "border": "#9ce0d0",
+            "bg": "#f9fefd",
+            "wcag": 1.474,
+            "apcaLc": 22.13
+          },
+          "6v2": {
+            "border": "#9ce0d0",
+            "bg": "#f2fbf9",
+            "wcag": 1.426,
+            "apcaLc": 19.81
+          },
+          "7v1": {
+            "border": "#7ecfbd",
+            "bg": "#f9fefd",
+            "wcag": 1.786,
+            "apcaLc": 32.55
+          },
+          "7v2": {
+            "border": "#7ecfbd",
+            "bg": "#f2fbf9",
+            "wcag": 1.727,
+            "apcaLc": 30.22
+          },
+          "8v1": {
+            "border": "#4cbba5",
+            "bg": "#f9fefd",
+            "wcag": 2.302,
+            "apcaLc": 44.67
+          },
+          "8v2": {
+            "border": "#4cbba5",
+            "bg": "#f2fbf9",
+            "wcag": 2.226,
+            "apcaLc": 42.35
+          }
+        },
+        "sky": {
+          "6v1": {
+            "border": "#a9daed",
+            "bg": "#f9feff",
+            "wcag": 1.481,
+            "apcaLc": 22.45
+          },
+          "6v2": {
+            "border": "#a9daed",
+            "bg": "#f1fafd",
+            "wcag": 1.423,
+            "apcaLc": 19.66
+          },
+          "7v1": {
+            "border": "#8dcae3",
+            "bg": "#f9feff",
+            "wcag": 1.766,
+            "apcaLc": 32.04
+          },
+          "7v2": {
+            "border": "#8dcae3",
+            "bg": "#f1fafd",
+            "wcag": 1.697,
+            "apcaLc": 29.25
+          },
+          "8v1": {
+            "border": "#60b3d7",
+            "bg": "#f9feff",
+            "wcag": 2.313,
+            "apcaLc": 45.01
+          },
+          "8v2": {
+            "border": "#60b3d7",
+            "bg": "#f1fafd",
+            "wcag": 2.222,
+            "apcaLc": 42.22
+          }
+        }
+      },
+      "summary": {
+        "6v1": {
+          "wcagMin": 1.37,
+          "wcagMedian": 1.49,
+          "apcaLcMin": 17.83,
+          "apcaLcMedian": 22.82,
+          "minScale": "slate"
+        },
+        "6v2": {
+          "wcagMin": 1.331,
+          "wcagMedian": 1.439,
+          "apcaLcMin": 15.83,
+          "apcaLcMedian": 20.4,
+          "minScale": "sage"
+        },
+        "7v1": {
+          "wcagMin": 1.529,
+          "wcagMedian": 1.786,
+          "apcaLcMin": 24.19,
+          "apcaLcMedian": 32.59,
+          "minScale": "slate"
+        },
+        "7v2": {
+          "wcagMin": 1.488,
+          "wcagMedian": 1.727,
+          "apcaLcMin": 22.27,
+          "apcaLcMedian": 30.22,
+          "minScale": "sage"
+        },
+        "8v1": {
+          "wcagMin": 1.864,
+          "wcagMedian": 2.295,
+          "apcaLcMin": 34.74,
+          "apcaLcMedian": 44.56,
+          "minScale": "slate"
+        },
+        "8v2": {
+          "wcagMin": 1.815,
+          "wcagMedian": 2.216,
+          "apcaLcMin": 32.82,
+          "apcaLcMedian": 42.21,
+          "minScale": "sage"
+        }
+      }
+    },
+    "dark": {
+      "perScale": {
+        "gray": {
+          "6v1": {
+            "border": "#3a3a3a",
+            "bg": "#111111",
+            "wcag": 1.66,
+            "apcaLc": 0
+          },
+          "6v2": {
+            "border": "#3a3a3a",
+            "bg": "#191919",
+            "wcag": 1.546,
+            "apcaLc": 0
+          },
+          "7v1": {
+            "border": "#484848",
+            "bg": "#111111",
+            "wcag": 2.065,
+            "apcaLc": 10.74
+          },
+          "7v2": {
+            "border": "#484848",
+            "bg": "#191919",
+            "wcag": 1.922,
+            "apcaLc": 10.02
+          },
+          "8v1": {
+            "border": "#606060",
+            "bg": "#111111",
+            "wcag": 3.003,
+            "apcaLc": 20.02
+          },
+          "8v2": {
+            "border": "#606060",
+            "bg": "#191919",
+            "wcag": 2.796,
+            "apcaLc": 19.3
+          }
+        },
+        "mauve": {
+          "6v1": {
+            "border": "#3c393f",
+            "bg": "#121113",
+            "wcag": 1.658,
+            "apcaLc": 0
+          },
+          "6v2": {
+            "border": "#3c393f",
+            "bg": "#1a191b",
+            "wcag": 1.543,
+            "apcaLc": 0
+          },
+          "7v1": {
+            "border": "#49474e",
+            "bg": "#121113",
+            "wcag": 2.057,
+            "apcaLc": 10.71
+          },
+          "7v2": {
+            "border": "#49474e",
+            "bg": "#1a191b",
+            "wcag": 1.914,
+            "apcaLc": 9.97
+          },
+          "8v1": {
+            "border": "#625f69",
+            "bg": "#121113",
+            "wcag": 3.013,
+            "apcaLc": 20.17
+          },
+          "8v2": {
+            "border": "#625f69",
+            "bg": "#1a191b",
+            "wcag": 2.803,
+            "apcaLc": 19.43
+          }
+        },
+        "slate": {
+          "6v1": {
+            "border": "#363a3f",
+            "bg": "#111113",
+            "wcag": 1.647,
+            "apcaLc": 0
+          },
+          "6v2": {
+            "border": "#363a3f",
+            "bg": "#18191b",
+            "wcag": 1.536,
+            "apcaLc": 0
+          },
+          "7v1": {
+            "border": "#43484e",
+            "bg": "#111113",
+            "wcag": 2.044,
+            "apcaLc": 10.53
+          },
+          "7v2": {
+            "border": "#43484e",
+            "bg": "#18191b",
+            "wcag": 1.906,
+            "apcaLc": 9.83
+          },
+          "8v1": {
+            "border": "#5a6169",
+            "bg": "#111113",
+            "wcag": 3.007,
+            "apcaLc": 20.09
+          },
+          "8v2": {
+            "border": "#5a6169",
+            "bg": "#18191b",
+            "wcag": 2.805,
+            "apcaLc": 19.39
+          }
+        },
+        "sage": {
+          "6v1": {
+            "border": "#373b39",
+            "bg": "#101211",
+            "wcag": 1.654,
+            "apcaLc": 0
+          },
+          "6v2": {
+            "border": "#373b39",
+            "bg": "#171918",
+            "wcag": 1.554,
+            "apcaLc": 0
+          },
+          "7v1": {
+            "border": "#444947",
+            "bg": "#101211",
+            "wcag": 2.051,
+            "apcaLc": 10.65
+          },
+          "7v2": {
+            "border": "#444947",
+            "bg": "#171918",
+            "wcag": 1.926,
+            "apcaLc": 10.02
+          },
+          "8v1": {
+            "border": "#5b625f",
+            "bg": "#101211",
+            "wcag": 3.006,
+            "apcaLc": 20.13
+          },
+          "8v2": {
+            "border": "#5b625f",
+            "bg": "#171918",
+            "wcag": 2.824,
+            "apcaLc": 19.5
+          }
+        },
+        "olive": {
+          "6v1": {
+            "border": "#383a36",
+            "bg": "#111210",
+            "wcag": 1.634,
+            "apcaLc": 0
+          },
+          "6v2": {
+            "border": "#383a36",
+            "bg": "#181917",
+            "wcag": 1.535,
+            "apcaLc": 0
+          },
+          "7v1": {
+            "border": "#454843",
+            "bg": "#111210",
+            "wcag": 2.023,
+            "apcaLc": 10.35
+          },
+          "7v2": {
+            "border": "#454843",
+            "bg": "#181917",
+            "wcag": 1.9,
+            "apcaLc": 9.71
+          },
+          "8v1": {
+            "border": "#5c625b",
+            "bg": "#111210",
+            "wcag": 3,
+            "apcaLc": 20.09
+          },
+          "8v2": {
+            "border": "#5c625b",
+            "bg": "#181917",
+            "wcag": 2.817,
+            "apcaLc": 19.45
+          }
+        },
+        "sand": {
+          "6v1": {
+            "border": "#3b3a37",
+            "bg": "#111110",
+            "wcag": 1.661,
+            "apcaLc": 0
+          },
+          "6v2": {
+            "border": "#3b3a37",
+            "bg": "#191918",
+            "wcag": 1.547,
+            "apcaLc": 0
+          },
+          "7v1": {
+            "border": "#494844",
+            "bg": "#111110",
+            "wcag": 2.064,
+            "apcaLc": 10.73
+          },
+          "7v2": {
+            "border": "#494844",
+            "bg": "#191918",
+            "wcag": 1.922,
+            "apcaLc": 10.01
+          },
+          "8v1": {
+            "border": "#62605b",
+            "bg": "#111110",
+            "wcag": 3.008,
+            "apcaLc": 20.06
+          },
+          "8v2": {
+            "border": "#62605b",
+            "bg": "#191918",
+            "wcag": 2.801,
+            "apcaLc": 19.34
+          }
+        },
+        "tomato": {
+          "6v1": {
+            "border": "#6e2920",
+            "bg": "#181111",
+            "wcag": 1.775,
+            "apcaLc": 8.17
+          },
+          "6v2": {
+            "border": "#6e2920",
+            "bg": "#1f1513",
+            "wcag": 1.703,
+            "apcaLc": 7.74
+          },
+          "7v1": {
+            "border": "#853a2d",
+            "bg": "#181111",
+            "wcag": 2.343,
+            "apcaLc": 14.42
+          },
+          "7v2": {
+            "border": "#853a2d",
+            "bg": "#1f1513",
+            "wcag": 2.247,
+            "apcaLc": 13.99
+          },
+          "8v1": {
+            "border": "#ac4d39",
+            "bg": "#181111",
+            "wcag": 3.438,
+            "apcaLc": 24.65
+          },
+          "8v2": {
+            "border": "#ac4d39",
+            "bg": "#1f1513",
+            "wcag": 3.298,
+            "apcaLc": 24.23
+          }
+        },
+        "red": {
+          "6v1": {
+            "border": "#72232d",
+            "bg": "#191111",
+            "wcag": 1.765,
+            "apcaLc": 8.23
+          },
+          "6v2": {
+            "border": "#72232d",
+            "bg": "#201314",
+            "wcag": 1.712,
+            "apcaLc": 7.91
+          },
+          "7v1": {
+            "border": "#8c333a",
+            "bg": "#191111",
+            "wcag": 2.346,
+            "apcaLc": 14.66
+          },
+          "7v2": {
+            "border": "#8c333a",
+            "bg": "#201314",
+            "wcag": 2.275,
+            "apcaLc": 14.33
+          },
+          "8v1": {
+            "border": "#b54548",
+            "bg": "#191111",
+            "wcag": 3.461,
+            "apcaLc": 25.08
+          },
+          "8v2": {
+            "border": "#b54548",
+            "bg": "#201314",
+            "wcag": 3.357,
+            "apcaLc": 24.75
+          }
+        },
+        "ruby": {
+          "6v1": {
+            "border": "#6f2539",
+            "bg": "#191113",
+            "wcag": 1.768,
+            "apcaLc": 8.18
+          },
+          "6v2": {
+            "border": "#6f2539",
+            "bg": "#1e1517",
+            "wcag": 1.702,
+            "apcaLc": 7.79
+          },
+          "7v1": {
+            "border": "#883447",
+            "bg": "#191113",
+            "wcag": 2.325,
+            "apcaLc": 14.38
+          },
+          "7v2": {
+            "border": "#883447",
+            "bg": "#1e1517",
+            "wcag": 2.238,
+            "apcaLc": 13.99
+          },
+          "8v1": {
+            "border": "#b3445a",
+            "bg": "#191113",
+            "wcag": 3.441,
+            "apcaLc": 24.9
+          },
+          "8v2": {
+            "border": "#b3445a",
+            "bg": "#1e1517",
+            "wcag": 3.312,
+            "apcaLc": 24.52
+          }
+        },
+        "crimson": {
+          "6v1": {
+            "border": "#6d2545",
+            "bg": "#191114",
+            "wcag": 1.768,
+            "apcaLc": 8.15
+          },
+          "6v2": {
+            "border": "#6d2545",
+            "bg": "#201318",
+            "wcag": 1.713,
+            "apcaLc": 7.82
+          },
+          "7v1": {
+            "border": "#873356",
+            "bg": "#191114",
+            "wcag": 2.331,
+            "apcaLc": 14.45
+          },
+          "7v2": {
+            "border": "#873356",
+            "bg": "#201318",
+            "wcag": 2.259,
+            "apcaLc": 14.12
+          },
+          "8v1": {
+            "border": "#b0436e",
+            "bg": "#191114",
+            "wcag": 3.423,
+            "apcaLc": 24.74
+          },
+          "8v2": {
+            "border": "#b0436e",
+            "bg": "#201318",
+            "wcag": 3.318,
+            "apcaLc": 24.41
+          }
+        },
+        "pink": {
+          "6v1": {
+            "border": "#692955",
+            "bg": "#191117",
+            "wcag": 1.807,
+            "apcaLc": 8.52
+          },
+          "6v2": {
+            "border": "#692955",
+            "bg": "#21121d",
+            "wcag": 1.753,
+            "apcaLc": 8.18
+          },
+          "7v1": {
+            "border": "#833869",
+            "bg": "#191117",
+            "wcag": 2.412,
+            "apcaLc": 15.18
+          },
+          "7v2": {
+            "border": "#833869",
+            "bg": "#21121d",
+            "wcag": 2.339,
+            "apcaLc": 14.84
+          },
+          "8v1": {
+            "border": "#a84885",
+            "bg": "#191117",
+            "wcag": 3.466,
+            "apcaLc": 25
+          },
+          "8v2": {
+            "border": "#a84885",
+            "bg": "#21121d",
+            "wcag": 3.363,
+            "apcaLc": 24.65
+          }
+        },
+        "plum": {
+          "6v1": {
+            "border": "#5e3061",
+            "bg": "#181118",
+            "wcag": 1.829,
+            "apcaLc": 8.57
+          },
+          "6v2": {
+            "border": "#5e3061",
+            "bg": "#201320",
+            "wcag": 1.762,
+            "apcaLc": 8.16
+          },
+          "7v1": {
+            "border": "#734079",
+            "bg": "#181118",
+            "wcag": 2.419,
+            "apcaLc": 15.01
+          },
+          "7v2": {
+            "border": "#734079",
+            "bg": "#201320",
+            "wcag": 2.33,
+            "apcaLc": 14.6
+          },
+          "8v1": {
+            "border": "#92549c",
+            "bg": "#181118",
+            "wcag": 3.507,
+            "apcaLc": 25.03
+          },
+          "8v2": {
+            "border": "#92549c",
+            "bg": "#201320",
+            "wcag": 3.378,
+            "apcaLc": 24.62
+          }
+        },
+        "purple": {
+          "6v1": {
+            "border": "#54346b",
+            "bg": "#18111b",
+            "wcag": 1.833,
+            "apcaLc": 8.55
+          },
+          "6v2": {
+            "border": "#54346b",
+            "bg": "#1e1523",
+            "wcag": 1.753,
+            "apcaLc": 8.08
+          },
+          "7v1": {
+            "border": "#664282",
+            "bg": "#18111b",
+            "wcag": 2.35,
+            "apcaLc": 14.27
+          },
+          "7v2": {
+            "border": "#664282",
+            "bg": "#1e1523",
+            "wcag": 2.247,
+            "apcaLc": 13.8
+          },
+          "8v1": {
+            "border": "#8457aa",
+            "bg": "#18111b",
+            "wcag": 3.458,
+            "apcaLc": 24.61
+          },
+          "8v2": {
+            "border": "#8457aa",
+            "bg": "#1e1523",
+            "wcag": 3.307,
+            "apcaLc": 24.14
+          }
+        },
+        "violet": {
+          "6v1": {
+            "border": "#473876",
+            "bg": "#14121f",
+            "wcag": 1.844,
+            "apcaLc": 8.67
+          },
+          "6v2": {
+            "border": "#473876",
+            "bg": "#1b1525",
+            "wcag": 1.775,
+            "apcaLc": 8.27
+          },
+          "7v1": {
+            "border": "#56468b",
+            "bg": "#14121f",
+            "wcag": 2.328,
+            "apcaLc": 14.03
+          },
+          "7v2": {
+            "border": "#56468b",
+            "bg": "#1b1525",
+            "wcag": 2.24,
+            "apcaLc": 13.62
+          },
+          "8v1": {
+            "border": "#6958ad",
+            "bg": "#14121f",
+            "wcag": 3.169,
+            "apcaLc": 22.08
+          },
+          "8v2": {
+            "border": "#6958ad",
+            "bg": "#1b1525",
+            "wcag": 3.049,
+            "apcaLc": 21.67
+          }
+        },
+        "iris": {
+          "6v1": {
+            "border": "#3d3e82",
+            "bg": "#13131e",
+            "wcag": 1.939,
+            "apcaLc": 9.86
+          },
+          "6v2": {
+            "border": "#3d3e82",
+            "bg": "#171625",
+            "wcag": 1.876,
+            "apcaLc": 9.51
+          },
+          "7v1": {
+            "border": "#4a4a95",
+            "bg": "#13131e",
+            "wcag": 2.373,
+            "apcaLc": 14.57
+          },
+          "7v2": {
+            "border": "#4a4a95",
+            "bg": "#171625",
+            "wcag": 2.296,
+            "apcaLc": 14.23
+          },
+          "8v1": {
+            "border": "#5958b1",
+            "bg": "#13131e",
+            "wcag": 3.032,
+            "apcaLc": 20.94
+          },
+          "8v2": {
+            "border": "#5958b1",
+            "bg": "#171625",
+            "wcag": 2.934,
+            "apcaLc": 20.59
+          }
+        },
+        "indigo": {
+          "6v1": {
+            "border": "#304384",
+            "bg": "#11131f",
+            "wcag": 1.99,
+            "apcaLc": 10.43
+          },
+          "6v2": {
+            "border": "#304384",
+            "bg": "#141726",
+            "wcag": 1.916,
+            "apcaLc": 10.04
+          },
+          "7v1": {
+            "border": "#3a4f97",
+            "bg": "#11131f",
+            "wcag": 2.415,
+            "apcaLc": 15
+          },
+          "7v2": {
+            "border": "#3a4f97",
+            "bg": "#141726",
+            "wcag": 2.326,
+            "apcaLc": 14.6
+          },
+          "8v1": {
+            "border": "#435db1",
+            "bg": "#11131f",
+            "wcag": 3.025,
+            "apcaLc": 20.88
+          },
+          "8v2": {
+            "border": "#435db1",
+            "bg": "#141726",
+            "wcag": 2.914,
+            "apcaLc": 20.48
+          }
+        },
+        "blue": {
+          "6v1": {
+            "border": "#104d87",
+            "bg": "#0d1520",
+            "wcag": 2.125,
+            "apcaLc": 12.24
+          },
+          "6v2": {
+            "border": "#104d87",
+            "bg": "#111927",
+            "wcag": 2.041,
+            "apcaLc": 11.81
+          },
+          "7v1": {
+            "border": "#205d9e",
+            "bg": "#0d1520",
+            "wcag": 2.725,
+            "apcaLc": 18.32
+          },
+          "7v2": {
+            "border": "#205d9e",
+            "bg": "#111927",
+            "wcag": 2.618,
+            "apcaLc": 17.89
+          },
+          "8v1": {
+            "border": "#2870bd",
+            "bg": "#0d1520",
+            "wcag": 3.617,
+            "apcaLc": 26.31
+          },
+          "8v2": {
+            "border": "#2870bd",
+            "bg": "#111927",
+            "wcag": 3.475,
+            "apcaLc": 25.88
+          }
+        },
+        "cyan": {
+          "6v1": {
+            "border": "#045468",
+            "bg": "#0b161a",
+            "wcag": 2.162,
+            "apcaLc": 12.63
+          },
+          "6v2": {
+            "border": "#045468",
+            "bg": "#101b20",
+            "wcag": 2.062,
+            "apcaLc": 12.13
+          },
+          "7v1": {
+            "border": "#12677e",
+            "bg": "#0b161a",
+            "wcag": 2.856,
+            "apcaLc": 19.55
+          },
+          "7v2": {
+            "border": "#12677e",
+            "bg": "#101b20",
+            "wcag": 2.723,
+            "apcaLc": 19.05
+          },
+          "8v1": {
+            "border": "#11809c",
+            "bg": "#0b161a",
+            "wcag": 4.014,
+            "apcaLc": 29.58
+          },
+          "8v2": {
+            "border": "#11809c",
+            "bg": "#101b20",
+            "wcag": 3.827,
+            "apcaLc": 29.08
+          }
+        },
+        "teal": {
+          "6v1": {
+            "border": "#145750",
+            "bg": "#0d1514",
+            "wcag": 2.211,
+            "apcaLc": 12.92
+          },
+          "6v2": {
+            "border": "#145750",
+            "bg": "#111c1b",
+            "wcag": 2.081,
+            "apcaLc": 12.27
+          },
+          "7v1": {
+            "border": "#1c6961",
+            "bg": "#0d1514",
+            "wcag": 2.858,
+            "apcaLc": 19.36
+          },
+          "7v2": {
+            "border": "#1c6961",
+            "bg": "#111c1b",
+            "wcag": 2.689,
+            "apcaLc": 18.71
+          },
+          "8v1": {
+            "border": "#207e73",
+            "bg": "#0d1514",
+            "wcag": 3.784,
+            "apcaLc": 27.44
+          },
+          "8v2": {
+            "border": "#207e73",
+            "bg": "#111c1b",
+            "wcag": 3.561,
+            "apcaLc": 26.79
+          }
+        },
+        "jade": {
+          "6v1": {
+            "border": "#1b5745",
+            "bg": "#0d1512",
+            "wcag": 2.203,
+            "apcaLc": 12.75
+          },
+          "6v2": {
+            "border": "#1b5745",
+            "bg": "#121c18",
+            "wcag": 2.071,
+            "apcaLc": 12.1
+          },
+          "7v1": {
+            "border": "#246854",
+            "bg": "#0d1512",
+            "wcag": 2.809,
+            "apcaLc": 18.82
+          },
+          "7v2": {
+            "border": "#246854",
+            "bg": "#121c18",
+            "wcag": 2.642,
+            "apcaLc": 18.17
+          },
+          "8v1": {
+            "border": "#2a7e68",
+            "bg": "#0d1512",
+            "wcag": 3.78,
+            "apcaLc": 27.31
+          },
+          "8v2": {
+            "border": "#2a7e68",
+            "bg": "#121c18",
+            "wcag": 3.554,
+            "apcaLc": 26.66
+          }
+        },
+        "green": {
+          "6v1": {
+            "border": "#20573e",
+            "bg": "#0e1512",
+            "wcag": 2.198,
+            "apcaLc": 12.7
+          },
+          "6v2": {
+            "border": "#20573e",
+            "bg": "#121b17",
+            "wcag": 2.087,
+            "apcaLc": 12.16
+          },
+          "7v1": {
+            "border": "#28684a",
+            "bg": "#0e1512",
+            "wcag": 2.793,
+            "apcaLc": 18.68
+          },
+          "7v2": {
+            "border": "#28684a",
+            "bg": "#121b17",
+            "wcag": 2.652,
+            "apcaLc": 18.13
+          },
+          "8v1": {
+            "border": "#2f7c57",
+            "bg": "#0e1512",
+            "wcag": 3.65,
+            "apcaLc": 26.25
+          },
+          "8v2": {
+            "border": "#2f7c57",
+            "bg": "#121b17",
+            "wcag": 3.466,
+            "apcaLc": 25.71
+          }
+        },
+        "grass": {
+          "6v1": {
+            "border": "#2d5736",
+            "bg": "#0e1511",
+            "wcag": 2.229,
+            "apcaLc": 12.94
+          },
+          "6v2": {
+            "border": "#2d5736",
+            "bg": "#141a15",
+            "wcag": 2.127,
+            "apcaLc": 12.46
+          },
+          "7v1": {
+            "border": "#366740",
+            "bg": "#0e1511",
+            "wcag": 2.796,
+            "apcaLc": 18.62
+          },
+          "7v2": {
+            "border": "#366740",
+            "bg": "#141a15",
+            "wcag": 2.668,
+            "apcaLc": 18.14
+          },
+          "8v1": {
+            "border": "#3e7949",
+            "bg": "#0e1511",
+            "wcag": 3.559,
+            "apcaLc": 25.4
+          },
+          "8v2": {
+            "border": "#3e7949",
+            "bg": "#141a15",
+            "wcag": 3.396,
+            "apcaLc": 24.92
+          }
+        },
+        "bronze": {
+          "6v1": {
+            "border": "#493e3a",
+            "bg": "#141110",
+            "wcag": 1.82,
+            "apcaLc": 8.01
+          },
+          "6v2": {
+            "border": "#493e3a",
+            "bg": "#1c1917",
+            "wcag": 1.693,
+            "apcaLc": 0
+          },
+          "7v1": {
+            "border": "#5a4c47",
+            "bg": "#141110",
+            "wcag": 2.291,
+            "apcaLc": 13.25
+          },
+          "7v2": {
+            "border": "#5a4c47",
+            "bg": "#1c1917",
+            "wcag": 2.131,
+            "apcaLc": 12.51
+          },
+          "8v1": {
+            "border": "#6f5f58",
+            "bg": "#141110",
+            "wcag": 3.091,
+            "apcaLc": 20.91
+          },
+          "8v2": {
+            "border": "#6f5f58",
+            "bg": "#1c1917",
+            "wcag": 2.876,
+            "apcaLc": 20.18
+          }
+        },
+        "gold": {
+          "6v1": {
+            "border": "#444039",
+            "bg": "#121211",
+            "wcag": 1.819,
+            "apcaLc": 8.03
+          },
+          "6v2": {
+            "border": "#444039",
+            "bg": "#1b1a17",
+            "wcag": 1.689,
+            "apcaLc": 0
+          },
+          "7v1": {
+            "border": "#544f46",
+            "bg": "#121211",
+            "wcag": 2.306,
+            "apcaLc": 13.44
+          },
+          "7v2": {
+            "border": "#544f46",
+            "bg": "#1b1a17",
+            "wcag": 2.141,
+            "apcaLc": 12.67
+          },
+          "8v1": {
+            "border": "#696256",
+            "bg": "#121211",
+            "wcag": 3.108,
+            "apcaLc": 21.11
+          },
+          "8v2": {
+            "border": "#696256",
+            "bg": "#1b1a17",
+            "wcag": 2.886,
+            "apcaLc": 20.34
+          }
+        },
+        "brown": {
+          "6v1": {
+            "border": "#4d3c2f",
+            "bg": "#12110f",
+            "wcag": 1.8,
+            "apcaLc": 7.75
+          },
+          "6v2": {
+            "border": "#4d3c2f",
+            "bg": "#1c1816",
+            "wcag": 1.681,
+            "apcaLc": 0
+          },
+          "7v1": {
+            "border": "#614a39",
+            "bg": "#12110f",
+            "wcag": 2.289,
+            "apcaLc": 13.21
+          },
+          "7v2": {
+            "border": "#614a39",
+            "bg": "#1c1816",
+            "wcag": 2.137,
+            "apcaLc": 12.52
+          },
+          "8v1": {
+            "border": "#7c5f46",
+            "bg": "#12110f",
+            "wcag": 3.219,
+            "apcaLc": 22.02
+          },
+          "8v2": {
+            "border": "#7c5f46",
+            "bg": "#1c1816",
+            "wcag": 3.006,
+            "apcaLc": 21.33
+          }
+        },
+        "orange": {
+          "6v1": {
+            "border": "#66350c",
+            "bg": "#17120e",
+            "wcag": 1.841,
+            "apcaLc": 8.75
+          },
+          "6v2": {
+            "border": "#66350c",
+            "bg": "#1e160f",
+            "wcag": 1.767,
+            "apcaLc": 8.32
+          },
+          "7v1": {
+            "border": "#7e451d",
+            "bg": "#17120e",
+            "wcag": 2.441,
+            "apcaLc": 15.27
+          },
+          "7v2": {
+            "border": "#7e451d",
+            "bg": "#1e160f",
+            "wcag": 2.342,
+            "apcaLc": 14.84
+          },
+          "8v1": {
+            "border": "#a35829",
+            "bg": "#17120e",
+            "wcag": 3.529,
+            "apcaLc": 25.29
+          },
+          "8v2": {
+            "border": "#a35829",
+            "bg": "#1e160f",
+            "wcag": 3.386,
+            "apcaLc": 24.86
+          }
+        },
+        "amber": {
+          "6v1": {
+            "border": "#5c3d05",
+            "bg": "#16120c",
+            "wcag": 1.887,
+            "apcaLc": 9.11
+          },
+          "6v2": {
+            "border": "#5c3d05",
+            "bg": "#1d180f",
+            "wcag": 1.786,
+            "apcaLc": 8.54
+          },
+          "7v1": {
+            "border": "#714f19",
+            "bg": "#16120c",
+            "wcag": 2.518,
+            "apcaLc": 15.83
+          },
+          "7v2": {
+            "border": "#714f19",
+            "bg": "#1d180f",
+            "wcag": 2.382,
+            "apcaLc": 15.26
+          },
+          "8v1": {
+            "border": "#8f6424",
+            "bg": "#16120c",
+            "wcag": 3.567,
+            "apcaLc": 25.34
+          },
+          "8v2": {
+            "border": "#8f6424",
+            "bg": "#1d180f",
+            "wcag": 3.376,
+            "apcaLc": 24.77
+          }
+        },
+        "yellow": {
+          "6v1": {
+            "border": "#524202",
+            "bg": "#14120b",
+            "wcag": 1.908,
+            "apcaLc": 9.24
+          },
+          "6v2": {
+            "border": "#524202",
+            "bg": "#1b180f",
+            "wcag": 1.806,
+            "apcaLc": 8.69
+          },
+          "7v1": {
+            "border": "#665417",
+            "bg": "#14120b",
+            "wcag": 2.538,
+            "apcaLc": 15.91
+          },
+          "7v2": {
+            "border": "#665417",
+            "bg": "#1b180f",
+            "wcag": 2.403,
+            "apcaLc": 15.36
+          },
+          "8v1": {
+            "border": "#836a21",
+            "bg": "#14120b",
+            "wcag": 3.611,
+            "apcaLc": 25.56
+          },
+          "8v2": {
+            "border": "#836a21",
+            "bg": "#1b180f",
+            "wcag": 3.419,
+            "apcaLc": 25
+          }
+        },
+        "lime": {
+          "6v1": {
+            "border": "#3d522a",
+            "bg": "#11130c",
+            "wcag": 2.173,
+            "apcaLc": 12.12
+          },
+          "6v2": {
+            "border": "#3d522a",
+            "bg": "#151a10",
+            "wcag": 2.054,
+            "apcaLc": 11.55
+          },
+          "7v1": {
+            "border": "#496231",
+            "bg": "#11130c",
+            "wcag": 2.74,
+            "apcaLc": 17.84
+          },
+          "7v2": {
+            "border": "#496231",
+            "bg": "#151a10",
+            "wcag": 2.59,
+            "apcaLc": 17.26
+          },
+          "8v1": {
+            "border": "#577538",
+            "bg": "#11130c",
+            "wcag": 3.57,
+            "apcaLc": 25.2
+          },
+          "8v2": {
+            "border": "#577538",
+            "bg": "#151a10",
+            "wcag": 3.375,
+            "apcaLc": 24.62
+          }
+        },
+        "mint": {
+          "6v1": {
+            "border": "#105650",
+            "bg": "#0e1515",
+            "wcag": 2.172,
+            "apcaLc": 12.55
+          },
+          "6v2": {
+            "border": "#105650",
+            "bg": "#0f1b1b",
+            "wcag": 2.07,
+            "apcaLc": 12.03
+          },
+          "7v1": {
+            "border": "#1e685f",
+            "bg": "#0e1515",
+            "wcag": 2.816,
+            "apcaLc": 18.98
+          },
+          "7v2": {
+            "border": "#1e685f",
+            "bg": "#0f1b1b",
+            "wcag": 2.683,
+            "apcaLc": 18.46
+          },
+          "8v1": {
+            "border": "#277f70",
+            "bg": "#0e1515",
+            "wcag": 3.832,
+            "apcaLc": 27.83
+          },
+          "8v2": {
+            "border": "#277f70",
+            "bg": "#0f1b1b",
+            "wcag": 3.652,
+            "apcaLc": 27.31
+          }
+        },
+        "sky": {
+          "6v1": {
+            "border": "#1b537b",
+            "bg": "#0d141f",
+            "wcag": 2.26,
+            "apcaLc": 13.46
+          },
+          "6v2": {
+            "border": "#1b537b",
+            "bg": "#111a27",
+            "wcag": 2.14,
+            "apcaLc": 12.87
+          },
+          "7v1": {
+            "border": "#1f6692",
+            "bg": "#0d141f",
+            "wcag": 2.967,
+            "apcaLc": 20.43
+          },
+          "7v2": {
+            "border": "#1f6692",
+            "bg": "#111a27",
+            "wcag": 2.809,
+            "apcaLc": 19.85
+          },
+          "8v1": {
+            "border": "#197cae",
+            "bg": "#0d141f",
+            "wcag": 3.989,
+            "apcaLc": 29.23
+          },
+          "8v2": {
+            "border": "#197cae",
+            "bg": "#111a27",
+            "wcag": 3.777,
+            "apcaLc": 28.65
+          }
+        }
+      },
+      "summary": {
+        "6v1": {
+          "wcagMin": 1.634,
+          "wcagMedian": 1.833,
+          "apcaLcMin": 0,
+          "apcaLcMedian": 8.57,
+          "minScale": "olive"
+        },
+        "6v2": {
+          "wcagMin": 1.535,
+          "wcagMedian": 1.762,
+          "apcaLcMin": 0,
+          "apcaLcMedian": 8.18,
+          "minScale": "olive"
+        },
+        "7v1": {
+          "wcagMin": 2.023,
+          "wcagMedian": 2.373,
+          "apcaLcMin": 10.35,
+          "apcaLcMedian": 14.66,
+          "minScale": "olive"
+        },
+        "7v2": {
+          "wcagMin": 1.9,
+          "wcagMedian": 2.296,
+          "apcaLcMin": 9.71,
+          "apcaLcMedian": 14.33,
+          "minScale": "olive"
+        },
+        "8v1": {
+          "wcagMin": 3,
+          "wcagMedian": 3.458,
+          "apcaLcMin": 20.02,
+          "apcaLcMedian": 24.9,
+          "minScale": "olive"
+        },
+        "8v2": {
+          "wcagMin": 2.796,
+          "wcagMedian": 3.318,
+          "apcaLcMin": 19.3,
+          "apcaLcMedian": 24.52,
+          "minScale": "gray"
+        }
+      }
+    }
+  },
+  "geist": {
+    "light": {
+      "gray-400 on background-100": {
+        "border": "#eaeaea",
+        "bg": "#ffffff",
+        "wcag": 1.203,
+        "apcaLc": 9.95
+      },
+      "gray-400 on background-200": {
+        "border": "#eaeaea",
+        "bg": "#fafafa",
+        "wcag": 1.153,
+        "apcaLc": 0
+      },
+      "gray-500 on background-100": {
+        "border": "#c9c9c9",
+        "bg": "#ffffff",
+        "wcag": 1.656,
+        "apcaLc": 28.98
+      },
+      "gray-500 on background-200": {
+        "border": "#c9c9c9",
+        "bg": "#fafafa",
+        "wcag": 1.587,
+        "apcaLc": 25.98
+      },
+      "gray-600 on background-100": {
+        "border": "#a8a8a8",
+        "bg": "#ffffff",
+        "wcag": 2.378,
+        "apcaLc": 46.89
+      },
+      "gray-600 on background-200": {
+        "border": "#a8a8a8",
+        "bg": "#fafafa",
+        "wcag": 2.278,
+        "apcaLc": 43.89
+      }
+    },
+    "dark": {
+      "gray-400 on background-100": {
+        "border": "#2e2e2e",
+        "bg": "#0a0a0a",
+        "wcag": 1.458,
+        "apcaLc": 0
+      },
+      "gray-400 on background-200": {
+        "border": "#2e2e2e",
+        "bg": "#000000",
+        "wcag": 1.546,
+        "apcaLc": 0
+      },
+      "gray-500 on background-100": {
+        "border": "#454545",
+        "bg": "#0a0a0a",
+        "wcag": 2.065,
+        "apcaLc": 10.04
+      },
+      "gray-500 on background-200": {
+        "border": "#454545",
+        "bg": "#000000",
+        "wcag": 2.19,
+        "apcaLc": 10.18
+      },
+      "gray-600 on background-100": {
+        "border": "#878787",
+        "bg": "#0a0a0a",
+        "wcag": 5.511,
+        "apcaLc": 37.99
+      },
+      "gray-600 on background-200": {
+        "border": "#878787",
+        "bg": "#000000",
+        "wcag": 5.846,
+        "apcaLc": 38.13
+      }
+    }
+  }
+}

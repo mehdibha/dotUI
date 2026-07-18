@@ -1,0 +1,639 @@
+{
+  "note": "Aggregated D8 outputs: whisper ceiling, normalized C(step) tint curve, gray-hue-from-accent-hue rule, plus Tailwind v4 neutrals.",
+  "whisperCeiling": {
+    "maxC": 0.0193,
+    "at": {
+      "family": "mauve",
+      "mode": "light",
+      "step": 9
+    }
+  },
+  "perFamilyMaxC": {
+    "mauve": {
+      "light": 0.0193,
+      "dark": 0.0171
+    },
+    "slate": {
+      "light": 0.0165,
+      "dark": 0.0155
+    },
+    "sage": {
+      "light": 0.0117,
+      "dark": 0.0175
+    },
+    "olive": {
+      "light": 0.0119,
+      "dark": 0.0181
+    },
+    "sand": {
+      "light": 0.0102,
+      "dark": 0.011
+    }
+  },
+  "pureGrayMaxC": {
+    "light": 0,
+    "dark": 0
+  },
+  "normalizedTintCurve": {
+    "light": [
+      0.13,
+      0.186,
+      0.263,
+      0.316,
+      0.431,
+      0.462,
+      0.567,
+      0.742,
+      0.974,
+      0.928,
+      0.808,
+      0.79
+    ],
+    "dark": [
+      0.231,
+      0.224,
+      0.26,
+      0.367,
+      0.428,
+      0.512,
+      0.601,
+      0.799,
+      0.997,
+      0.929,
+      0.707,
+      0.184
+    ]
+  },
+  "peakSteps": {
+    "mauve": {
+      "light": 9,
+      "dark": 9
+    },
+    "slate": {
+      "light": 9,
+      "dark": 8
+    },
+    "sage": {
+      "light": 12,
+      "dark": 9
+    },
+    "olive": {
+      "light": 10,
+      "dark": 9
+    },
+    "sand": {
+      "light": 9,
+      "dark": 9
+    }
+  },
+  "hueConstancy": {
+    "mauve": {
+      "light": {
+        "mean": 299.18,
+        "maxDev": 18.57,
+        "n": 11
+      },
+      "dark": {
+        "mean": 300.03,
+        "maxDev": 13.68,
+        "n": 12
+      }
+    },
+    "slate": {
+      "light": {
+        "mean": 274.75,
+        "maxDev": 26.52,
+        "n": 11
+      },
+      "dark": {
+        "mean": 259.26,
+        "maxDev": 26.72,
+        "n": 12
+      }
+    },
+    "sage": {
+      "light": {
+        "mean": 169.35,
+        "maxDev": 12.18,
+        "n": 12
+      },
+      "dark": {
+        "mean": 170.04,
+        "maxDev": 5.46,
+        "n": 12
+      }
+    },
+    "olive": {
+      "light": {
+        "mean": 140.6,
+        "maxDev": 4.95,
+        "n": 11
+      },
+      "dark": {
+        "mean": 136.4,
+        "maxDev": 9.15,
+        "n": 12
+      }
+    },
+    "sand": {
+      "light": {
+        "mean": 99.86,
+        "maxDev": 15.3,
+        "n": 9
+      },
+      "dark": {
+        "mean": 96.52,
+        "maxDev": 10.18,
+        "n": 10
+      }
+    }
+  },
+  "tailwind": {
+    "neutrals": {
+      "slate": {
+        "steps": [
+          {
+            "step": 50,
+            "L": 0.984,
+            "C": 0.003,
+            "H": 247.858
+          },
+          {
+            "step": 100,
+            "L": 0.968,
+            "C": 0.007,
+            "H": 247.896
+          },
+          {
+            "step": 200,
+            "L": 0.929,
+            "C": 0.013,
+            "H": 255.508
+          },
+          {
+            "step": 300,
+            "L": 0.869,
+            "C": 0.022,
+            "H": 252.894
+          },
+          {
+            "step": 400,
+            "L": 0.704,
+            "C": 0.04,
+            "H": 256.788
+          },
+          {
+            "step": 500,
+            "L": 0.554,
+            "C": 0.046,
+            "H": 257.417
+          },
+          {
+            "step": 600,
+            "L": 0.446,
+            "C": 0.043,
+            "H": 257.281
+          },
+          {
+            "step": 700,
+            "L": 0.372,
+            "C": 0.044,
+            "H": 257.287
+          },
+          {
+            "step": 800,
+            "L": 0.279,
+            "C": 0.041,
+            "H": 260.031
+          },
+          {
+            "step": 900,
+            "L": 0.208,
+            "C": 0.042,
+            "H": 265.755
+          },
+          {
+            "step": 950,
+            "L": 0.129,
+            "C": 0.042,
+            "H": 264.695
+          }
+        ],
+        "maxC": 0.046,
+        "peakStepName": 500,
+        "hue": {
+          "mean": 258.89,
+          "maxDev": 11.04,
+          "n": 11
+        }
+      },
+      "gray": {
+        "steps": [
+          {
+            "step": 50,
+            "L": 0.985,
+            "C": 0.002,
+            "H": 247.839
+          },
+          {
+            "step": 100,
+            "L": 0.967,
+            "C": 0.003,
+            "H": 264.542
+          },
+          {
+            "step": 200,
+            "L": 0.928,
+            "C": 0.006,
+            "H": 264.531
+          },
+          {
+            "step": 300,
+            "L": 0.872,
+            "C": 0.01,
+            "H": 258.338
+          },
+          {
+            "step": 400,
+            "L": 0.707,
+            "C": 0.022,
+            "H": 261.325
+          },
+          {
+            "step": 500,
+            "L": 0.551,
+            "C": 0.027,
+            "H": 264.364
+          },
+          {
+            "step": 600,
+            "L": 0.446,
+            "C": 0.03,
+            "H": 256.802
+          },
+          {
+            "step": 700,
+            "L": 0.373,
+            "C": 0.034,
+            "H": 259.733
+          },
+          {
+            "step": 800,
+            "L": 0.278,
+            "C": 0.033,
+            "H": 256.848
+          },
+          {
+            "step": 900,
+            "L": 0.21,
+            "C": 0.034,
+            "H": 264.665
+          },
+          {
+            "step": 950,
+            "L": 0.13,
+            "C": 0.028,
+            "H": 261.692
+          }
+        ],
+        "maxC": 0.034,
+        "peakStepName": 700,
+        "hue": {
+          "mean": 260.63,
+          "maxDev": 12.79,
+          "n": 11
+        }
+      },
+      "zinc": {
+        "steps": [
+          {
+            "step": 50,
+            "L": 0.985,
+            "C": 0,
+            "H": null
+          },
+          {
+            "step": 100,
+            "L": 0.967,
+            "C": 0.001,
+            "H": 286.375
+          },
+          {
+            "step": 200,
+            "L": 0.92,
+            "C": 0.004,
+            "H": 286.32
+          },
+          {
+            "step": 300,
+            "L": 0.871,
+            "C": 0.006,
+            "H": 286.286
+          },
+          {
+            "step": 400,
+            "L": 0.705,
+            "C": 0.015,
+            "H": 286.067
+          },
+          {
+            "step": 500,
+            "L": 0.552,
+            "C": 0.016,
+            "H": 285.938
+          },
+          {
+            "step": 600,
+            "L": 0.442,
+            "C": 0.017,
+            "H": 285.786
+          },
+          {
+            "step": 700,
+            "L": 0.37,
+            "C": 0.013,
+            "H": 285.805
+          },
+          {
+            "step": 800,
+            "L": 0.274,
+            "C": 0.006,
+            "H": 286.033
+          },
+          {
+            "step": 900,
+            "L": 0.21,
+            "C": 0.006,
+            "H": 285.885
+          },
+          {
+            "step": 950,
+            "L": 0.141,
+            "C": 0.005,
+            "H": 285.823
+          }
+        ],
+        "maxC": 0.017,
+        "peakStepName": 600,
+        "hue": {
+          "mean": 285.95,
+          "maxDev": 0.37,
+          "n": 9
+        }
+      },
+      "neutral": {
+        "steps": [
+          {
+            "step": 50,
+            "L": 0.985,
+            "C": 0,
+            "H": null
+          },
+          {
+            "step": 100,
+            "L": 0.97,
+            "C": 0,
+            "H": null
+          },
+          {
+            "step": 200,
+            "L": 0.922,
+            "C": 0,
+            "H": null
+          },
+          {
+            "step": 300,
+            "L": 0.87,
+            "C": 0,
+            "H": null
+          },
+          {
+            "step": 400,
+            "L": 0.708,
+            "C": 0,
+            "H": null
+          },
+          {
+            "step": 500,
+            "L": 0.556,
+            "C": 0,
+            "H": null
+          },
+          {
+            "step": 600,
+            "L": 0.439,
+            "C": 0,
+            "H": null
+          },
+          {
+            "step": 700,
+            "L": 0.371,
+            "C": 0,
+            "H": null
+          },
+          {
+            "step": 800,
+            "L": 0.269,
+            "C": 0,
+            "H": null
+          },
+          {
+            "step": 900,
+            "L": 0.205,
+            "C": 0,
+            "H": null
+          },
+          {
+            "step": 950,
+            "L": 0.145,
+            "C": 0,
+            "H": null
+          }
+        ],
+        "maxC": 0,
+        "peakStepName": 50,
+        "hue": {
+          "mean": null,
+          "spread": null,
+          "n": 0
+        }
+      },
+      "stone": {
+        "steps": [
+          {
+            "step": 50,
+            "L": 0.985,
+            "C": 0.001,
+            "H": 106.423
+          },
+          {
+            "step": 100,
+            "L": 0.97,
+            "C": 0.001,
+            "H": 106.424
+          },
+          {
+            "step": 200,
+            "L": 0.923,
+            "C": 0.003,
+            "H": 48.717
+          },
+          {
+            "step": 300,
+            "L": 0.869,
+            "C": 0.005,
+            "H": 56.366
+          },
+          {
+            "step": 400,
+            "L": 0.709,
+            "C": 0.01,
+            "H": 56.259
+          },
+          {
+            "step": 500,
+            "L": 0.553,
+            "C": 0.013,
+            "H": 58.071
+          },
+          {
+            "step": 600,
+            "L": 0.444,
+            "C": 0.011,
+            "H": 73.639
+          },
+          {
+            "step": 700,
+            "L": 0.374,
+            "C": 0.01,
+            "H": 67.558
+          },
+          {
+            "step": 800,
+            "L": 0.268,
+            "C": 0.007,
+            "H": 34.298
+          },
+          {
+            "step": 900,
+            "L": 0.216,
+            "C": 0.006,
+            "H": 56.043
+          },
+          {
+            "step": 950,
+            "L": 0.147,
+            "C": 0.004,
+            "H": 49.25
+          }
+        ],
+        "maxC": 0.013,
+        "peakStepName": 500,
+        "hue": {
+          "mean": 58.07,
+          "maxDev": 23.77,
+          "n": 9
+        }
+      }
+    },
+    "pairingAnalysis": {
+      "slate": {
+        "grayHue": 258.89,
+        "accents": [
+          {
+            "accent": "blue",
+            "accentH600": 262.88,
+            "accentHMean": 261.37,
+            "offsetFromH600": -3.99,
+            "offsetFromMean": -2.48
+          },
+          {
+            "accent": "indigo",
+            "accentH600": 276.97,
+            "accentHMean": 277.02,
+            "offsetFromH600": -18.08,
+            "offsetFromMean": -18.13
+          },
+          {
+            "accent": "sky",
+            "accentH600": 241.97,
+            "accentHMean": 237.9,
+            "offsetFromH600": 16.92,
+            "offsetFromMean": 20.99
+          }
+        ]
+      },
+      "gray": {
+        "grayHue": 260.63,
+        "accents": [
+          {
+            "accent": "blue",
+            "accentH600": 262.88,
+            "accentHMean": 261.37,
+            "offsetFromH600": -2.25,
+            "offsetFromMean": -0.74
+          },
+          {
+            "accent": "indigo",
+            "accentH600": 276.97,
+            "accentHMean": 277.02,
+            "offsetFromH600": -16.34,
+            "offsetFromMean": -16.39
+          }
+        ]
+      },
+      "zinc": {
+        "grayHue": 285.95,
+        "accents": [
+          {
+            "accent": "violet",
+            "accentH600": 293.01,
+            "accentHMean": 292.93,
+            "offsetFromH600": -7.06,
+            "offsetFromMean": -6.98
+          },
+          {
+            "accent": "purple",
+            "accentH600": 302.32,
+            "accentHMean": 303.88,
+            "offsetFromH600": -16.37,
+            "offsetFromMean": -17.93
+          }
+        ]
+      },
+      "stone": {
+        "grayHue": 58.07,
+        "accents": [
+          {
+            "accent": "orange",
+            "accentH600": 41.12,
+            "accentHMean": 47.68,
+            "offsetFromH600": 16.95,
+            "offsetFromMean": 10.39
+          },
+          {
+            "accent": "amber",
+            "accentH600": 58.32,
+            "accentHMean": 68.68,
+            "offsetFromH600": -0.25,
+            "offsetFromMean": -10.61
+          },
+          {
+            "accent": "yellow",
+            "accentH600": 75.83,
+            "accentHMean": 82.55,
+            "offsetFromH600": -17.76,
+            "offsetFromMean": -24.48
+          },
+          {
+            "accent": "red",
+            "accentH600": 27.32,
+            "accentHMean": 24.88,
+            "offsetFromH600": 30.75,
+            "offsetFromMean": 33.19
+          }
+        ]
+      }
+    }
+  }
+}
