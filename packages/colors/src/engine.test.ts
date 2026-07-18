@@ -182,6 +182,26 @@ describe('backgrounds (D9/D12)', () => {
     const lstar = lstarOf(toOklch(theme.light.scales.neutral!['25']))
     expect(Math.abs(lstar - 97)).toBeLessThanOrEqual(0.7)
   })
+
+  test('slider extremes compress the ladder without inverting it', () => {
+    // Light floor (90) and a dim dark (18): the transposition must keep every
+    // guarantee and the surface ordering (an eased offset inverts light ≲93).
+    for (const background of [
+      { light: 90 },
+      { dark: 18 },
+      { light: 90, dark: 18 },
+    ] as const) {
+      const theme = createTheme({ seeds: { accent: '#438cd6' }, background })
+      expect(theme.report.ok).toBe(true)
+      expect(theme.report.warnings).toEqual([])
+    }
+    const dim = createTheme({
+      seeds: { accent: '#438cd6' },
+      background: { light: 90 },
+    })
+    const bg = lstarOf(toOklch(dim.light.scales.neutral!['25']))
+    expect(Math.abs(bg - 90)).toBeLessThanOrEqual(0.7)
+  })
 })
 
 describe('yellow policy (D2)', () => {

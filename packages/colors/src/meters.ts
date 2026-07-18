@@ -70,6 +70,23 @@ export function apca(text: Oklch, background: Oklch): number {
   return (sapc > -S.loClip ? 0 : sapc + S.loWoBoffset) * 100
 }
 
+const BLACK: Oklch = { l: 0, c: 0, h: 0 }
+const WHITE_POLE: Oklch = { l: 1, c: 0, h: 0 }
+
+/**
+ * The physically achievable APCA ceiling on a background: no foreground can
+ * exceed the better of the pure black/white poles. Lc bars are capped by it
+ * (− 0.25 slack) — a dim canvas (L* 90) tops out near Lc 89, and demanding
+ * 90 there would fail every possible text color.
+ */
+export function cappedLcBar(bar: number, background: Oklch): number {
+  const ceiling = Math.max(
+    Math.abs(apca(BLACK, background)),
+    Math.abs(apca(WHITE_POLE, background)),
+  )
+  return Math.min(bar, ceiling - 0.25)
+}
+
 const toOklab = converter('oklab')
 
 /** ΔEok — Euclidean distance in OKLab (raw 0–1 scale; JND ≈ 0.02). */

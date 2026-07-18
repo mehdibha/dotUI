@@ -29,7 +29,7 @@ import { Select, SelectValue } from '@/registry/ui/select'
 
 import { useDesignSystem } from '../preset'
 import { ContrastReadout } from './contrast'
-import { ColorFineTuneControls } from './knobs'
+import { ColorBackgroundControls, ColorFineTuneControls } from './knobs'
 
 type GrayMode = 'auto' | 'pure' | 'custom'
 
@@ -233,6 +233,11 @@ export function ColorsConfig() {
           />
         ))}
       </div>
+
+      <ColorBackgroundControls
+        lightSwatch={theme.light.background}
+        darkSwatch={theme.dark.background}
+      />
 
       <Disclosure>
         <DisclosureTrigger>Fine-tune</DisclosureTrigger>

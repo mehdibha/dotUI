@@ -261,6 +261,13 @@ Not a transform of light. Measured from all 31 Radix dark scales:
 - Background floor is **not pure black**: default step-25 at L\* 6.0
   (≈ #111113; measured range 5.04–6.56). `darkBackground: 'oled'` opts into
   L\* 0. Assert Δ(25→50) ≥ 2.5 L\* (measured median 2.69).
+- A chosen background L\* (either mode; light 90–100, dark 0–20) re-anchors
+  the skeleton by **compression**: surface jobs scale proportionally between
+  the new background and the fixed border anchor at job 8, so the ladder
+  stays monotonic across the whole range (an eased offset inverts it below
+  ~L\* 93 light). Background _color_ (tint — cream/sepia paper themes) is a
+  planned superset: pin job 1 to the color, decay its chroma over the
+  surface jobs, re-solve guarantees (tracked as a follow-up issue).
 - Chroma budgets, jobs 1–8, multipliers on the D5 light curve:
   `[4.2, 2.2, 2.0, 1.7, 1.4, 1.15, 1.0, 0.9]` (backgrounds carry 2–4× the
   tiny absolute chroma — light step-1 C ≈ 0.005, so 4.2× ≈ C 0.02); solids

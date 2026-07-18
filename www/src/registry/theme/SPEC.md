@@ -132,7 +132,10 @@ the current flat section are both replaced):
 
 - Brand color (accent seed; "your hex appears in the output" guaranteed)
 - Gray: auto (tinted from accent) / pure / custom, one control
-- Background: light + dark lightness choice (incl. OLED black)
+- Background: a per-mode lightness slider with a live swatch (light 90–100
+  L\* — pure white → soft gray canvas; dark 0–20 — OLED black at 0 → dim).
+  Background _color_ (cream/sepia tints) is the planned superset (engine
+  SPEC D9); the sliders then become an L\*-only shortcut on that color.
 - Primary actions: neutral (black/white) vs brand
 - Status: auto (CVD-gated defaults) with per-status override
 - Randomize-within-quality-rules + per-seed locks (lock-and-reroll)

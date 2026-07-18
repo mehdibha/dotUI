@@ -1,19 +1,14 @@
 'use client'
 
-import { ChevronDownIcon } from 'lucide-react'
-
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
 import { Label } from '@/registry/ui/field'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { Select, SelectValue } from '@/registry/ui/select'
 import { Slider, SliderControl, SliderOutput } from '@/registry/ui/slider'
 import { Switch } from '@/registry/ui/switch'
 
 import { useDesignSystem } from '../preset'
 
 const DEFAULT_LIGHT_BG = 99
+const DEFAULT_DARK_BG = 6
 
 function AxisSlider({
   label,
@@ -22,6 +17,7 @@ function AxisSlider({
   minValue,
   maxValue,
   step,
+  swatch,
   onChange,
 }: {
   label: string
@@ -31,6 +27,8 @@ function AxisSlider({
   minValue: number
   maxValue: number
   step: number
+  /** Live color rendered next to the output (backgrounds). */
+  swatch?: string
   onChange: (value: number | undefined) => void
 }) {
   return (
@@ -47,7 +45,15 @@ function AxisSlider({
     >
       <div className="flex items-center justify-between text-xs">
         <Label>{label}</Label>
-        <SliderOutput className="text-fg-muted" />
+        <div className="flex items-center gap-1.5">
+          {swatch && (
+            <span
+              className="size-3.5 rounded-xs border"
+              style={{ backgroundColor: swatch }}
+            />
+          )}
+          <SliderOutput className="text-fg-muted" />
+        </div>
       </div>
       <SliderControl />
     </Slider>
@@ -55,17 +61,53 @@ function AxisSlider({
 }
 
 /**
- * The engine's advanced axes — vividness, hue shift, background lightness,
- * exact-seed pinning. Every control stores `undefined` at its default so an
- * untouched recipe keeps encoding as the default.
+ * App-background lightness per mode. First-order decision, so it lives in the
+ * main tier (not Fine-tune): light spans pure white → soft gray canvas, dark
+ * spans OLED black (0) → dim. Both store `undefined` at their default.
+ */
+export function ColorBackgroundControls({
+  lightSwatch,
+  darkSwatch,
+}: {
+  lightSwatch: string
+  darkSwatch: string
+}) {
+  const { designSystem, setColorBackground } = useDesignSystem()
+  const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
+  const dark = config.background?.dark
+  return (
+    <div className="flex flex-col gap-3">
+      <AxisSlider
+        label="Light background"
+        value={config.background?.light ?? DEFAULT_LIGHT_BG}
+        defaultValue={DEFAULT_LIGHT_BG}
+        minValue={90}
+        maxValue={100}
+        step={0.5}
+        swatch={lightSwatch}
+        onChange={(v) => setColorBackground('light', v)}
+      />
+      <AxisSlider
+        label="Dark background"
+        value={dark === 'oled' ? 0 : (dark ?? DEFAULT_DARK_BG)}
+        defaultValue={DEFAULT_DARK_BG}
+        minValue={0}
+        maxValue={20}
+        step={0.5}
+        swatch={darkSwatch}
+        onChange={(v) => setColorBackground('dark', v)}
+      />
+    </div>
+  )
+}
+
+/**
+ * The engine's advanced axes — vividness, hue shift, exact-seed pinning.
+ * Every control stores `undefined` at its default so an untouched recipe
+ * keeps encoding as the default.
  */
 export function ColorFineTuneControls({ seedDelta }: { seedDelta?: number }) {
-  const {
-    designSystem,
-    setColorAxis,
-    setColorBackground,
-    setColorPreserveSeed,
-  } = useDesignSystem()
+  const { designSystem, setColorAxis, setColorPreserveSeed } = useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
 
   const preserveSeed = config.preserveSeed ?? false
@@ -90,34 +132,6 @@ export function ColorFineTuneControls({ seedDelta }: { seedDelta?: number }) {
         step={0.1}
         onChange={(v) => setColorAxis('hueShift', v)}
       />
-      <AxisSlider
-        label="Light background"
-        value={config.background?.light ?? DEFAULT_LIGHT_BG}
-        defaultValue={DEFAULT_LIGHT_BG}
-        minValue={96}
-        maxValue={100}
-        step={0.5}
-        onChange={(v) => setColorBackground('light', v)}
-      />
-      <Select
-        className="w-full"
-        selectedKey={config.background?.dark === 'oled' ? 'oled' : 'default'}
-        onSelectionChange={(key) =>
-          setColorBackground('dark', key === 'oled' ? 'oled' : undefined)
-        }
-      >
-        <Label className="text-xs">Dark background</Label>
-        <Button size="sm" className="w-full justify-between">
-          <SelectValue className="truncate" />
-          <ChevronDownIcon data-icon-end="" />
-        </Button>
-        <Popover>
-          <ListBox>
-            <ListBoxItem id="default">Near-black (default)</ListBoxItem>
-            <ListBoxItem id="oled">OLED black</ListBoxItem>
-          </ListBox>
-        </Popover>
-      </Select>
       <div className="flex flex-col gap-1">
         <Switch
           size="sm"

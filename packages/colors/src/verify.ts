@@ -6,7 +6,7 @@
  */
 
 import { BARS, STEPS, type StepName } from './data'
-import { apca, wcag2 } from './meters'
+import { apca, cappedLcBar, wcag2 } from './meters'
 import type { Mode, ScaleColors } from './scale'
 import type { Oklch } from './space'
 
@@ -43,6 +43,9 @@ export function verifyScale(
     const bgColor = step(bg)
     const wcag = wcag2(fgColor, bgColor)
     const lc = Math.abs(apca(fgColor, bgColor))
+    // Lc bars are capped by the black/white-pole ceiling of the actual
+    // background (mirrors the solver): dim canvases top out below Lc 90.
+    const effectiveLc = cappedLcBar(lcTarget, bgColor)
     results.push({
       scale: name,
       mode,
@@ -52,8 +55,8 @@ export function verifyScale(
       wcag,
       wcagTarget,
       lc,
-      lcTarget,
-      passes: wcag >= wcagTarget - 1e-9 && lc >= lcTarget - 1e-9,
+      lcTarget: effectiveLc,
+      passes: wcag >= wcagTarget - 1e-9 && lc >= effectiveLc - 1e-9,
     })
   }
 

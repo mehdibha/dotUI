@@ -20,7 +20,7 @@ import {
   type StepName,
   TEXT_TARGETS,
 } from './data'
-import { apca, wcag2 } from './meters'
+import { apca, cappedLcBar, wcag2 } from './meters'
 import {
   cusp,
   fitSrgb,
@@ -218,7 +218,9 @@ function solveText(
 ): Oklch {
   const meets = (color: Oklch) =>
     backgrounds.every((bg) => wcag2(color, bg) >= bars.wcag) &&
-    lcBackgrounds.every((bg) => Math.abs(apca(color, bg)) >= bars.lc)
+    lcBackgrounds.every(
+      (bg) => Math.abs(apca(color, bg)) >= cappedLcBar(bars.lc, bg),
+    )
   let lstar = startLstar
   let color = solveLstar(lstar, chromaAt, hueAt)
   for (let i = 0; i < 90; i++) {
@@ -265,7 +267,7 @@ export function buildScale(options: ScaleOptions): ScaleColors {
     const meets = () =>
       [steps['25']!, steps['50']!].every((bg) => wcag2(steps[name]!, bg) >= bar)
     let lstar = skeleton[i]!
-    for (let k = 0; k < 20 && !meets(); k++) {
+    for (let k = 0; k < 80 && !meets(); k++) {
       lstar += mode === 'light' ? -0.25 : 0.25
       steps[name] = solveLstar(lstar, (l) => chroma.at(l, i), hueAt)
     }
@@ -314,19 +316,23 @@ export function buildScale(options: ScaleOptions): ScaleColors {
   return { steps, on: { '700': on, '800': on800 } }
 }
 
-/** Background transposition (D9/D12): shift the skeleton to a chosen app-bg L*. */
+/**
+ * Background transposition (D9/D12): re-anchor the skeleton to a chosen
+ * app-bg L* by compressing the whole surface region proportionally between
+ * the new background and the (fixed) border anchor at job 8. Unlike an eased
+ * offset, this keeps the ladder monotonic for any background on the correct
+ * side of the anchor — a light bg of L* 90 squeezes the surface steps, it
+ * never dives under them.
+ */
 export function transposeSkeleton(
   skeleton: number[],
   targetLstar: number,
 ): number[] {
-  const delta = targetLstar - skeleton[0]!
-  if (delta === 0) return skeleton
-  const n = skeleton.length
-  // Eased decay: full shift at job 1, none by job 8; quadratic ease-out.
-  return skeleton.map((lstar, i) => {
-    const t = i / (n - 1)
-    return lstar + delta * (1 - t) ** 2
-  })
+  const first = skeleton[0]!
+  if (targetLstar === first) return skeleton
+  const anchor = skeleton[skeleton.length - 1]!
+  const factor = (targetLstar - anchor) / (first - anchor)
+  return skeleton.map((lstar) => anchor + (lstar - anchor) * factor)
 }
 
 /** Convenience for guarantees relying on the Y bridge. */
