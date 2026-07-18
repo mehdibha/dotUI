@@ -96,8 +96,10 @@ const firstStep: Step = {
 const steps: Step[] = [
   firstStep,
   {
+    // Mid beat: wrap the bare input in a TextField — no field parts yet.
     title: 'TextField',
-    durationMs: 2600,
+    mid: true,
+    durationMs: 1400,
     code: `<TextField>
   <Input placeholder="hello@example.com" />
 </TextField>`,
@@ -111,7 +113,27 @@ const steps: Step[] = [
     ),
   },
   {
-    title: 'Label & Description',
+    // Mid beat: the field gains its label.
+    title: 'TextField',
+    mid: true,
+    durationMs: 1400,
+    code: `<TextField>
+  <Label>Email</Label>
+  <Input placeholder="hello@example.com" />
+</TextField>`,
+    preview: (
+      <TextField className="w-full max-w-xs">
+        <Label className="[view-transition-name:cmp-label]">Email</Label>
+        <Input
+          placeholder="hello@example.com"
+          className="[view-transition-name:cmp-field]"
+        />
+      </TextField>
+    ),
+  },
+  {
+    // Headline: the full field — label, input, and description.
+    title: 'TextField',
     durationMs: 3000,
     code: `<TextField>
   <Label>Email</Label>
