@@ -22,6 +22,9 @@ import { registryHooks } from '../src/registry/hooks/registry'
 import { iconLibraries, registryIcons } from '../src/registry/icons/icon-map'
 import {
   DEFAULT_COLOR_CONFIG,
+  DEFAULT_SEMANTICS,
+  emitCss,
+  emitDarkOverridesCss,
   emitPrimitivesCss,
   resolveColorConfig,
 } from '../src/registry/theme'
@@ -607,18 +610,40 @@ async function buildShadcnPublishables(registryUi: RegistryItem[]) {
   }
 }
 
-/** Generate base/colors.css from the default ColorConfig (perceptual OKLCH ramps, dark = reversed). */
+/** Generate base/colors.css from the default ColorConfig (both modes solved independently by the engine). */
 async function generateBaseColorsCss() {
   const css = emitPrimitivesCss(resolveColorConfig(DEFAULT_COLOR_CONFIG))
   await fs.writeFile(path.join(REGISTRY_DIR, 'base', 'colors.css'), css, 'utf8')
+}
+
+const THEME_CSS_MARKER_START =
+  '/* AUTO-GENERATED: semantic colors — do not edit. Run `pnpm build:registry`. */'
+const THEME_CSS_MARKER_END = '/* END AUTO-GENERATED */'
+
+/** Regenerate the semantic-color section of base/theme.css between its markers. */
+async function generateThemeCssSemantics() {
+  const themePath = path.join(REGISTRY_DIR, 'base', 'theme.css')
+  const source = await fs.readFile(themePath, 'utf8')
+  const start = source.indexOf(THEME_CSS_MARKER_START)
+  const end = source.indexOf(THEME_CSS_MARKER_END)
+  if (start === -1 || end === -1 || end < start) {
+    throw new Error(
+      'base/theme.css is missing its AUTO-GENERATED semantic-colors markers',
+    )
+  }
+  const dark = emitDarkOverridesCss(DEFAULT_SEMANTICS)
+  const generated = emitCss(DEFAULT_SEMANTICS) + (dark ? `\n${dark}` : '')
+  const next = `${source.slice(0, start + THEME_CSS_MARKER_START.length)}\n${generated}${source.slice(end)}`
+  await fs.writeFile(themePath, next, 'utf8')
 }
 
 async function main() {
   console.log('🔨 Building registry...\n')
 
   try {
-    console.log('Generating base color ramps')
+    console.log('Generating base color css')
     await generateBaseColorsCss()
+    await generateThemeCssSemantics()
 
     // Fresh item lists globbed from disk — never the (possibly stale) committed
     // manifest — so a just-added/removed item is handled in this same run.

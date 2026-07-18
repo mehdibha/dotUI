@@ -11,13 +11,14 @@ import {
   TypeIcon,
 } from 'lucide-react'
 
+import { STEPS, type Theme } from '@dotui/colors'
+
 import * as icons from '@/registry/__generated__/icons'
 import { cn } from '@/registry/lib/utils'
 import {
   DEFAULT_COLOR_CONFIG,
   PALETTE_ORDER,
   resolveColorConfig,
-  type ResolvedPalettes,
 } from '@/registry/theme'
 // Live component atoms — reuse the real demos so the gallery always mirrors the
 // shipped components (and their live params / density / radius), never a stale copy.
@@ -56,13 +57,6 @@ import type { DesignSystem } from '@/modules/create/preset'
  * every swatch, ramp and component below is the live, edited system — themed by
  * CSS variables that flip with light / dark and update on every edit.
  * ------------------------------------------------------------------------- */
-
-const ALGORITHM_LABEL: Record<string, string> = {
-  oklch: 'OKLCH',
-  tailwind: 'Tailwind',
-  material: 'Material',
-  contrast: 'APCA contrast',
-}
 
 const DENSITY_LABEL: Record<string, string> = {
   compact: 'Compact',
@@ -174,7 +168,7 @@ function Cover({
   specs,
 }: {
   name: string
-  seeds: { accent: string; neutral: string }
+  seeds: { accent: string; neutral?: string }
   specs: { label: string; value: string }[]
 }) {
   return (
@@ -210,8 +204,8 @@ function Cover({
         <div
           className="flex aspect-[16/10] flex-col justify-between p-5"
           style={{
-            background: 'var(--accent-500)',
-            color: 'var(--color-fg-on-accent)',
+            background: 'var(--accent-700)',
+            color: 'var(--on-accent-700)',
           }}
         >
           <span className="text-xs font-medium tracking-widest uppercase opacity-80">
@@ -239,7 +233,7 @@ function Cover({
             <span className="text-sm text-fg-muted">Neutral base</span>
           </div>
           <span className="font-mono text-xs text-fg-muted uppercase">
-            {seeds.neutral}
+            {seeds.neutral ?? 'Auto'}
           </span>
         </div>
       </div>
@@ -325,18 +319,19 @@ function TokenSwatch({ token, label }: { token: string; label: string }) {
   )
 }
 
-function ColorSection({ resolved }: { resolved: ResolvedPalettes }) {
+function ColorSection({ resolved }: { resolved: Theme }) {
+  const steps = [...STEPS]
   const bigRamps = ['neutral', 'accent']
   const statusRamps = PALETTE_ORDER.filter(
-    (p) => !bigRamps.includes(p) && resolved.light[p],
+    (p) => !bigRamps.includes(p) && resolved.light.scales[p],
   )
   return (
     <div className="flex flex-col gap-10">
       {/* Foundational ramps */}
       <div className="grid gap-6 lg:grid-cols-2">
         {bigRamps.map((p) =>
-          resolved.light[p] ? (
-            <RampRow key={p} palette={p} steps={resolved.steps} />
+          resolved.light.scales[p] ? (
+            <RampRow key={p} palette={p} steps={steps} />
           ) : null,
         )}
       </div>
@@ -345,7 +340,7 @@ function ColorSection({ resolved }: { resolved: ResolvedPalettes }) {
         <Label>Status palettes</Label>
         <div className="grid gap-x-6 gap-y-5 sm:grid-cols-2">
           {statusRamps.map((p) => (
-            <RampRow key={p} palette={p} steps={resolved.steps} />
+            <RampRow key={p} palette={p} steps={steps} />
           ))}
         </div>
       </div>
@@ -366,7 +361,7 @@ function ColorSection({ resolved }: { resolved: ResolvedPalettes }) {
           </div>
         </div>
         <div className="rounded-xl border bg-card p-4">
-          <ContrastReadout resolved={resolved} />
+          <ContrastReadout report={resolved.report} />
         </div>
       </div>
     </div>
@@ -824,9 +819,7 @@ export function PresetOverview({
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
   const seeds = config.seeds
 
-  // resolveColorConfig throws on a non-generative algorithm; the live editor
-  // only ever produces generative recipes, but fall back defensively so a bad
-  // decoded preset can't blank the whole overview.
+  // Fall back defensively so a bad decoded preset can't blank the overview.
   const resolved = useMemo(() => {
     try {
       return resolveColorConfig(config)
@@ -848,7 +841,10 @@ export function PresetOverview({
   const name = describeAccent(seeds.accent)
 
   const specs = [
-    { label: 'Color', value: ALGORITHM_LABEL[config.algorithm] ?? 'OKLCH' },
+    {
+      label: 'Primary',
+      value: config.primary === 'accent' ? 'Accent' : 'Neutral',
+    },
     {
       label: 'Density',
       value: DENSITY_LABEL[designSystem.density] ?? 'Default',

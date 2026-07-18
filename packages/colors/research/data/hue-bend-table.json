@@ -1,0 +1,1037 @@
+{
+  "meta": {
+    "generatedBy": "research/d6-hue-drift.mjs",
+    "decision": "D6",
+    "space": "OKLCH via culori v4 (D65)",
+    "chromaFloor": 0.03,
+    "driftSign": "dH = signed shortest H(step)-H(ref); negative = hue angle decreases",
+    "radixRefStep": 9,
+    "tailwindRefStep": 600,
+    "tailwindVersion": "4.3.0",
+    "radixVersion": "3.0.0"
+  },
+  "hypothesisCheck": {
+    "yellow/amber/orange bend 35-50deg toward gold at dark end": {
+      "radixLightDarkEnd": {
+        "yellow": -14.06,
+        "amber": -29.96,
+        "orange": -4.19
+      },
+      "tailwindSpan50to950": {
+        "yellow": -48.4,
+        "amber": -49.65,
+        "orange": -37.42
+      },
+      "verdict": "direction confirmed (negative = toward gold/orange); magnitude family-dependent: Tailwind -37..-50deg over full ramp, Radix -14..-30deg from step 9 to 12"
+    },
+    "blue bends ~13deg toward violet": {
+      "radixLightDarkEnd": {
+        "blue": 7.04
+      },
+      "radixDarkBgEnd": {
+        "blue": 9.47
+      },
+      "tailwindSpan50to950": {
+        "blue": 13.34
+      },
+      "verdict": "confirmed for Tailwind (+13.3deg full ramp); Radix bends less (+7deg light, +9.5deg dark bg side); positive = toward violet"
+    },
+    "red/green ~flat": {
+      "radixLightDarkEnd": {
+        "red": -6.43,
+        "green": 6.85
+      },
+      "radixDarkBgEnd": {
+        "red": -10.34,
+        "green": 4.49
+      },
+      "tailwindSpan50to950": {
+        "red": 8.66,
+        "green": -2.9
+      },
+      "verdict": "roughly confirmed: |drift| < 8deg in light mode; red dark-mode backgrounds drift ~-10deg toward crimson"
+    }
+  },
+  "bands": [
+    {
+      "band": "pink-magenta",
+      "hRange": [330, 5],
+      "families": ["crimson", "pink"],
+      "mutedFamiliesExcluded": [],
+      "bendClass": {
+        "light": "flat",
+        "dark": "moderate"
+      },
+      "light": {
+        "towardDark": {
+          "meanSlopePerL": -5.79,
+          "medianSlopePerL": -5.79,
+          "meanEndpointDH": -2.49,
+          "medianEndpointDH": -2.49,
+          "meanEndpointL": 0.345,
+          "outliers": [],
+          "perFamily": {
+            "crimson": {
+              "slopePerL": -10.54,
+              "endpointDH": -4.34,
+              "endpointL": 0.3409
+            },
+            "pink": {
+              "slopePerL": -1.04,
+              "endpointDH": -0.64,
+              "endpointL": 0.3498
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": -22.88,
+          "medianSlopePerL": -22.88,
+          "meanEndpointDH": -5.13,
+          "medianEndpointDH": -5.13,
+          "meanEndpointL": 0.926,
+          "outliers": [],
+          "perFamily": {
+            "crimson": {
+              "slopePerL": -25.11,
+              "endpointDH": -4.87,
+              "endpointL": 0.9258
+            },
+            "pink": {
+              "slopePerL": -20.66,
+              "endpointDH": -5.38,
+              "endpointL": 0.9255
+            }
+          }
+        }
+      },
+      "dark": {
+        "towardDark": {
+          "meanSlopePerL": -21.27,
+          "medianSlopePerL": -21.27,
+          "meanEndpointDH": -8.38,
+          "medianEndpointDH": -8.38,
+          "meanEndpointL": 0.231,
+          "outliers": [],
+          "perFamily": {
+            "crimson": {
+              "slopePerL": -21.3,
+              "endpointDH": -7.77,
+              "endpointL": 0.255
+            },
+            "pink": {
+              "slopePerL": -21.25,
+              "endpointDH": -9,
+              "endpointL": 0.2076
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": -20.63,
+          "medianSlopePerL": -20.63,
+          "meanEndpointDH": -8.71,
+          "medianEndpointDH": -8.71,
+          "meanEndpointL": 0.907,
+          "outliers": [],
+          "perFamily": {
+            "crimson": {
+              "slopePerL": -35.55,
+              "endpointDH": -14.65,
+              "endpointL": 0.9085
+            },
+            "pink": {
+              "slopePerL": -5.7,
+              "endpointDH": -2.78,
+              "endpointL": 0.9055
+            }
+          }
+        }
+      }
+    },
+    {
+      "band": "red",
+      "hRange": [5, 40],
+      "families": ["red", "ruby", "tomato"],
+      "mutedFamiliesExcluded": [],
+      "bendClass": {
+        "light": "flat",
+        "dark": "flat"
+      },
+      "light": {
+        "towardDark": {
+          "meanSlopePerL": -12.94,
+          "medianSlopePerL": -10.44,
+          "meanEndpointDH": -4.18,
+          "medianEndpointDH": -3.15,
+          "meanEndpointL": 0.342,
+          "outliers": [],
+          "perFamily": {
+            "red": {
+              "slopePerL": -19.06,
+              "endpointDH": -6.43,
+              "endpointL": 0.339
+            },
+            "ruby": {
+              "slopePerL": -9.32,
+              "endpointDH": -3.15,
+              "endpointL": 0.341
+            },
+            "tomato": {
+              "slopePerL": -10.44,
+              "endpointDH": -2.95,
+              "endpointL": 0.3459
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": -16.34,
+          "medianSlopePerL": -23.59,
+          "meanEndpointDH": -3.54,
+          "medianEndpointDH": -5.01,
+          "meanEndpointL": 0.923,
+          "outliers": [],
+          "perFamily": {
+            "red": {
+              "slopePerL": -24.34,
+              "endpointDH": -7.03,
+              "endpointL": 0.9217
+            },
+            "ruby": {
+              "slopePerL": -23.59,
+              "endpointDH": -5.01,
+              "endpointL": 0.925
+            },
+            "tomato": {
+              "slopePerL": -1.09,
+              "endpointDH": 1.42,
+              "endpointL": 0.9212
+            }
+          }
+        }
+      },
+      "dark": {
+        "towardDark": {
+          "meanSlopePerL": -20.99,
+          "medianSlopePerL": -21.33,
+          "meanEndpointDH": -8.01,
+          "medianEndpointDH": -7.1,
+          "meanEndpointL": 0.253,
+          "outliers": [],
+          "perFamily": {
+            "red": {
+              "slopePerL": -26.04,
+              "endpointDH": -10.34,
+              "endpointL": 0.251
+            },
+            "ruby": {
+              "slopePerL": -21.33,
+              "endpointDH": -7.1,
+              "endpointL": 0.2541
+            },
+            "tomato": {
+              "slopePerL": -15.59,
+              "endpointDH": -6.58,
+              "endpointL": 0.2547
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": -31.31,
+          "medianSlopePerL": -44.42,
+          "meanEndpointDH": -12.03,
+          "medianEndpointDH": -16.58,
+          "meanEndpointL": 0.902,
+          "outliers": ["tomato"],
+          "perFamily": {
+            "red": {
+              "slopePerL": -46.41,
+              "endpointDH": -16.58,
+              "endpointL": 0.9024
+            },
+            "ruby": {
+              "slopePerL": -44.42,
+              "endpointDH": -17.4,
+              "endpointL": 0.9055
+            },
+            "tomato": {
+              "slopePerL": -3.11,
+              "endpointDH": -2.11,
+              "endpointL": 0.8987
+            }
+          }
+        }
+      }
+    },
+    {
+      "band": "orange-brown",
+      "hRange": [40, 75],
+      "families": ["orange"],
+      "mutedFamiliesExcluded": ["bronze", "brown"],
+      "bendClass": {
+        "light": "flat",
+        "dark": "moderate"
+      },
+      "light": {
+        "towardDark": {
+          "meanSlopePerL": -13.37,
+          "medianSlopePerL": -13.37,
+          "meanEndpointDH": -4.19,
+          "medianEndpointDH": -4.19,
+          "meanEndpointL": 0.35,
+          "outliers": [],
+          "perFamily": {
+            "orange": {
+              "slopePerL": -13.37,
+              "endpointDH": -4.19,
+              "endpointL": 0.3499
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": 129.79,
+          "medianSlopePerL": 129.79,
+          "meanEndpointDH": 34.09,
+          "medianEndpointDH": 34.09,
+          "meanEndpointL": 0.958,
+          "outliers": [],
+          "perFamily": {
+            "orange": {
+              "slopePerL": 129.79,
+              "endpointDH": 34.09,
+              "endpointL": 0.9583
+            }
+          }
+        }
+      },
+      "dark": {
+        "towardDark": {
+          "meanSlopePerL": 31.65,
+          "medianSlopePerL": 31.65,
+          "meanEndpointDH": 15.77,
+          "medianEndpointDH": 15.77,
+          "meanEndpointL": 0.258,
+          "outliers": [],
+          "perFamily": {
+            "orange": {
+              "slopePerL": 31.65,
+              "endpointDH": 15.77,
+              "endpointL": 0.2579
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": 95.18,
+          "medianSlopePerL": 95.18,
+          "meanEndpointDH": 21.15,
+          "medianEndpointDH": 21.15,
+          "meanEndpointL": 0.925,
+          "outliers": [],
+          "perFamily": {
+            "orange": {
+              "slopePerL": 95.18,
+              "endpointDH": 21.15,
+              "endpointL": 0.9247
+            }
+          }
+        }
+      }
+    },
+    {
+      "band": "gold-amber",
+      "hRange": [75, 95],
+      "families": ["amber"],
+      "mutedFamiliesExcluded": ["gold"],
+      "bendClass": {
+        "light": "strong",
+        "dark": "moderate"
+      },
+      "light": {
+        "towardDark": {
+          "meanSlopePerL": -62.73,
+          "medianSlopePerL": -62.73,
+          "meanEndpointDH": -29.96,
+          "medianEndpointDH": -29.96,
+          "meanEndpointL": 0.352,
+          "outliers": [],
+          "perFamily": {
+            "amber": {
+              "slopePerL": -62.73,
+              "endpointDH": -29.96,
+              "endpointL": 0.3522
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": 161.68,
+          "medianSlopePerL": 161.68,
+          "meanEndpointDH": 16.26,
+          "medianEndpointDH": 16.26,
+          "meanEndpointL": 0.97,
+          "outliers": [],
+          "perFamily": {
+            "amber": {
+              "slopePerL": 161.68,
+              "endpointDH": 16.26,
+              "endpointL": 0.9695
+            }
+          }
+        }
+      },
+      "dark": {
+        "towardDark": {
+          "meanSlopePerL": -20.16,
+          "medianSlopePerL": -20.16,
+          "meanEndpointDH": -9.65,
+          "medianEndpointDH": -9.65,
+          "meanEndpointL": 0.258,
+          "outliers": [],
+          "perFamily": {
+            "amber": {
+              "slopePerL": -20.16,
+              "endpointDH": -9.65,
+              "endpointL": 0.2578
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": 69.07,
+          "medianSlopePerL": 69.07,
+          "meanEndpointDH": 1.94,
+          "medianEndpointDH": 1.94,
+          "meanEndpointL": 0.935,
+          "outliers": [],
+          "perFamily": {
+            "amber": {
+              "slopePerL": 69.07,
+              "endpointDH": 1.94,
+              "endpointL": 0.9351
+            }
+          }
+        }
+      }
+    },
+    {
+      "band": "yellow-lime",
+      "hRange": [95, 135],
+      "families": ["lime", "yellow"],
+      "mutedFamiliesExcluded": [],
+      "bendClass": {
+        "light": "moderate",
+        "dark": "flat"
+      },
+      "light": {
+        "towardDark": {
+          "meanSlopePerL": -22.17,
+          "medianSlopePerL": -22.17,
+          "meanEndpointDH": -9.59,
+          "medianEndpointDH": -9.59,
+          "meanEndpointL": 0.356,
+          "outliers": [],
+          "perFamily": {
+            "lime": {
+              "slopePerL": -3.77,
+              "endpointDH": -5.11,
+              "endpointL": 0.3537
+            },
+            "yellow": {
+              "slopePerL": -40.57,
+              "endpointDH": -14.06,
+              "endpointL": 0.3578
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": -35.55,
+          "medianSlopePerL": -35.55,
+          "meanEndpointDH": -2.1,
+          "medianEndpointDH": -2.1,
+          "meanEndpointL": 0.966,
+          "outliers": [],
+          "perFamily": {
+            "lime": {
+              "slopePerL": -116.41,
+              "endpointDH": -7.47,
+              "endpointL": 0.9588
+            },
+            "yellow": {
+              "slopePerL": 45.31,
+              "endpointDH": 3.26,
+              "endpointL": 0.9735
+            }
+          }
+        }
+      },
+      "dark": {
+        "towardDark": {
+          "meanSlopePerL": -2.94,
+          "medianSlopePerL": -2.94,
+          "meanEndpointDH": -2.38,
+          "medianEndpointDH": -2.38,
+          "meanEndpointL": 0.263,
+          "outliers": [],
+          "perFamily": {
+            "lime": {
+              "slopePerL": 10.32,
+              "endpointDH": 5.92,
+              "endpointL": 0.2656
+            },
+            "yellow": {
+              "slopePerL": -16.19,
+              "endpointDH": -10.68,
+              "endpointL": 0.2609
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": 40.81,
+          "medianSlopePerL": 40.81,
+          "meanEndpointDH": 2.51,
+          "medianEndpointDH": 2.51,
+          "meanEndpointL": 0.959,
+          "outliers": [],
+          "perFamily": {
+            "lime": {
+              "slopePerL": -50.75,
+              "endpointDH": -3.39,
+              "endpointL": 0.9465
+            },
+            "yellow": {
+              "slopePerL": 132.38,
+              "endpointDH": 8.42,
+              "endpointL": 0.9711
+            }
+          }
+        }
+      }
+    },
+    {
+      "band": "green",
+      "hRange": [135, 168],
+      "families": ["grass", "green"],
+      "mutedFamiliesExcluded": [],
+      "bendClass": {
+        "light": "flat",
+        "dark": "flat"
+      },
+      "light": {
+        "towardDark": {
+          "meanSlopePerL": 12.09,
+          "medianSlopePerL": 12.09,
+          "meanEndpointDH": 4.02,
+          "medianEndpointDH": 4.02,
+          "meanEndpointL": 0.324,
+          "outliers": [],
+          "perFamily": {
+            "grass": {
+              "slopePerL": 2.93,
+              "endpointDH": 1.2,
+              "endpointL": 0.3266
+            },
+            "green": {
+              "slopePerL": 21.25,
+              "endpointDH": 6.85,
+              "endpointL": 0.322
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": -1.54,
+          "medianSlopePerL": -1.54,
+          "meanEndpointDH": -1.08,
+          "medianEndpointDH": -1.08,
+          "meanEndpointL": 0.934,
+          "outliers": [],
+          "perFamily": {
+            "grass": {
+              "slopePerL": -3.35,
+              "endpointDH": -0.92,
+              "endpointL": 0.9353
+            },
+            "green": {
+              "slopePerL": 0.27,
+              "endpointDH": -1.25,
+              "endpointL": 0.9335
+            }
+          }
+        }
+      },
+      "dark": {
+        "towardDark": {
+          "meanSlopePerL": 10.57,
+          "medianSlopePerL": 10.57,
+          "meanEndpointDH": 3.63,
+          "medianEndpointDH": 3.63,
+          "meanEndpointL": 0.27,
+          "outliers": [],
+          "perFamily": {
+            "grass": {
+              "slopePerL": 8.1,
+              "endpointDH": 2.77,
+              "endpointL": 0.2673
+            },
+            "green": {
+              "slopePerL": 13.04,
+              "endpointDH": 4.49,
+              "endpointL": 0.2721
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": -2.44,
+          "medianSlopePerL": -2.44,
+          "meanEndpointDH": -1,
+          "medianEndpointDH": -1,
+          "meanEndpointL": 0.908,
+          "outliers": [],
+          "perFamily": {
+            "grass": {
+              "slopePerL": -5.75,
+              "endpointDH": -2.49,
+              "endpointL": 0.9109
+            },
+            "green": {
+              "slopePerL": 0.87,
+              "endpointDH": 0.5,
+              "endpointL": 0.9048
+            }
+          }
+        }
+      }
+    },
+    {
+      "band": "teal-cyan",
+      "hRange": [168, 225],
+      "families": ["cyan", "jade", "mint", "sky", "teal"],
+      "mutedFamiliesExcluded": [],
+      "bendClass": {
+        "light": "flat",
+        "dark": "flat"
+      },
+      "light": {
+        "towardDark": {
+          "meanSlopePerL": 9.13,
+          "medianSlopePerL": 2.09,
+          "meanEndpointDH": 5.47,
+          "medianEndpointDH": 3.03,
+          "meanEndpointL": 0.337,
+          "outliers": ["sky"],
+          "perFamily": {
+            "cyan": {
+              "slopePerL": -8.83,
+              "endpointDH": -2.91,
+              "endpointL": 0.3314
+            },
+            "jade": {
+              "slopePerL": -2.42,
+              "endpointDH": -0.65,
+              "endpointL": 0.3254
+            },
+            "mint": {
+              "slopePerL": 2.09,
+              "endpointDH": 3.33,
+              "endpointL": 0.3496
+            },
+            "sky": {
+              "slopePerL": 49.11,
+              "endpointDH": 24.57,
+              "endpointL": 0.3507
+            },
+            "teal": {
+              "slopePerL": 5.69,
+              "endpointDH": 3.03,
+              "endpointL": 0.3272
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": -10.21,
+          "medianSlopePerL": -3.08,
+          "meanEndpointDH": -4.62,
+          "medianEndpointDH": -2.16,
+          "meanEndpointL": 0.939,
+          "outliers": ["cyan"],
+          "perFamily": {
+            "cyan": {
+              "slopePerL": -66.47,
+              "endpointDH": -15.76,
+              "endpointL": 0.9321
+            },
+            "jade": {
+              "slopePerL": -19.85,
+              "endpointDH": -7.51,
+              "endpointL": 0.9346
+            },
+            "mint": {
+              "slopePerL": 8.41,
+              "endpointDH": 0.95,
+              "endpointL": 0.9599
+            },
+            "sky": {
+              "slopePerL": 29.93,
+              "endpointDH": 1.39,
+              "endpointL": 0.9358
+            },
+            "teal": {
+              "slopePerL": -3.08,
+              "endpointDH": -2.16,
+              "endpointL": 0.934
+            }
+          }
+        }
+      },
+      "dark": {
+        "towardDark": {
+          "meanSlopePerL": 17,
+          "medianSlopePerL": 14.49,
+          "meanEndpointDH": 9.15,
+          "medianEndpointDH": 4.8,
+          "meanEndpointL": 0.272,
+          "outliers": ["jade", "sky"],
+          "perFamily": {
+            "cyan": {
+              "slopePerL": 1.3,
+              "endpointDH": -1.36,
+              "endpointL": 0.2733
+            },
+            "jade": {
+              "slopePerL": -9.55,
+              "endpointDH": -5.54,
+              "endpointL": 0.2736
+            },
+            "mint": {
+              "slopePerL": 20,
+              "endpointDH": 14.38,
+              "endpointL": 0.2683
+            },
+            "sky": {
+              "slopePerL": 58.76,
+              "endpointDH": 33.49,
+              "endpointL": 0.2714
+            },
+            "teal": {
+              "slopePerL": 14.49,
+              "endpointDH": 4.8,
+              "endpointL": 0.2725
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": -46.83,
+          "medianSlopePerL": -46.08,
+          "meanEndpointDH": -6.82,
+          "medianEndpointDH": -6.83,
+          "meanEndpointL": 0.916,
+          "outliers": [],
+          "perFamily": {
+            "cyan": {
+              "slopePerL": -46.08,
+              "endpointDH": -10.24,
+              "endpointL": 0.9095
+            },
+            "jade": {
+              "slopePerL": -17.44,
+              "endpointDH": -3.85,
+              "endpointL": 0.9027
+            },
+            "mint": {
+              "slopePerL": -85.45,
+              "endpointDH": -9.7,
+              "endpointL": 0.9306
+            },
+            "sky": {
+              "slopePerL": -54.18,
+              "endpointDH": -3.48,
+              "endpointL": 0.934
+            },
+            "teal": {
+              "slopePerL": -31,
+              "endpointDH": -6.83,
+              "endpointL": 0.9051
+            }
+          }
+        }
+      }
+    },
+    {
+      "band": "blue",
+      "hRange": [225, 262],
+      "families": ["blue"],
+      "mutedFamiliesExcluded": [],
+      "bendClass": {
+        "light": "flat",
+        "dark": "moderate"
+      },
+      "light": {
+        "towardDark": {
+          "meanSlopePerL": 20.18,
+          "medianSlopePerL": 20.18,
+          "meanEndpointDH": 7.04,
+          "medianEndpointDH": 7.04,
+          "meanEndpointL": 0.324,
+          "outliers": [],
+          "perFamily": {
+            "blue": {
+              "slopePerL": 20.18,
+              "endpointDH": 7.04,
+              "endpointL": 0.324
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": -51.79,
+          "medianSlopePerL": -51.79,
+          "meanEndpointDH": -16.98,
+          "medianEndpointDH": -16.98,
+          "meanEndpointL": 0.938,
+          "outliers": [],
+          "perFamily": {
+            "blue": {
+              "slopePerL": -51.79,
+              "endpointDH": -16.98,
+              "endpointL": 0.9381
+            }
+          }
+        }
+      },
+      "dark": {
+        "towardDark": {
+          "meanSlopePerL": 8.53,
+          "medianSlopePerL": 8.53,
+          "meanEndpointDH": 9.47,
+          "medianEndpointDH": 9.47,
+          "meanEndpointL": 0.213,
+          "outliers": [],
+          "perFamily": {
+            "blue": {
+              "slopePerL": 8.53,
+              "endpointDH": 9.47,
+              "endpointL": 0.2129
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": -45.79,
+          "medianSlopePerL": -45.79,
+          "meanEndpointDH": -13.33,
+          "medianEndpointDH": -13.33,
+          "meanEndpointL": 0.907,
+          "outliers": [],
+          "perFamily": {
+            "blue": {
+              "slopePerL": -45.79,
+              "endpointDH": -13.33,
+              "endpointL": 0.9071
+            }
+          }
+        }
+      }
+    },
+    {
+      "band": "indigo-violet",
+      "hRange": [262, 300],
+      "families": ["indigo", "iris", "violet"],
+      "mutedFamiliesExcluded": [],
+      "bendClass": {
+        "light": "flat",
+        "dark": "flat"
+      },
+      "light": {
+        "towardDark": {
+          "meanSlopePerL": -0.74,
+          "medianSlopePerL": -2.71,
+          "meanEndpointDH": -0.2,
+          "medianEndpointDH": -0.72,
+          "meanEndpointL": 0.313,
+          "outliers": [],
+          "perFamily": {
+            "indigo": {
+              "slopePerL": 6.44,
+              "endpointDH": 1.59,
+              "endpointL": 0.3126
+            },
+            "iris": {
+              "slopePerL": -2.71,
+              "endpointDH": -0.72,
+              "endpointL": 0.3143
+            },
+            "violet": {
+              "slopePerL": -5.95,
+              "endpointDH": -1.46,
+              "endpointL": 0.3128
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": 15.33,
+          "medianSlopePerL": 14.41,
+          "meanEndpointDH": 5.96,
+          "medianEndpointDH": 5.57,
+          "meanEndpointL": 0.934,
+          "outliers": [],
+          "perFamily": {
+            "indigo": {
+              "slopePerL": 10.54,
+              "endpointDH": 2.81,
+              "endpointL": 0.9346
+            },
+            "iris": {
+              "slopePerL": 14.41,
+              "endpointDH": 5.57,
+              "endpointL": 0.9344
+            },
+            "violet": {
+              "slopePerL": 21.05,
+              "endpointDH": 9.51,
+              "endpointL": 0.9325
+            }
+          }
+        }
+      },
+      "dark": {
+        "towardDark": {
+          "meanSlopePerL": 12.84,
+          "medianSlopePerL": 11.4,
+          "meanEndpointDH": 6.97,
+          "medianEndpointDH": 7.83,
+          "meanEndpointL": 0.231,
+          "outliers": [],
+          "perFamily": {
+            "indigo": {
+              "slopePerL": 11.4,
+              "endpointDH": 7.83,
+              "endpointL": 0.2094
+            },
+            "iris": {
+              "slopePerL": -1.05,
+              "endpointDH": 0.18,
+              "endpointL": 0.2722
+            },
+            "violet": {
+              "slopePerL": 28.18,
+              "endpointDH": 12.9,
+              "endpointL": 0.2111
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": 18.65,
+          "medianSlopePerL": 14.94,
+          "meanEndpointDH": 5.23,
+          "medianEndpointDH": 4.41,
+          "meanEndpointL": 0.912,
+          "outliers": [],
+          "perFamily": {
+            "indigo": {
+              "slopePerL": 12.75,
+              "endpointDH": 2.54,
+              "endpointL": 0.9108
+            },
+            "iris": {
+              "slopePerL": 28.25,
+              "endpointDH": 8.74,
+              "endpointL": 0.914
+            },
+            "violet": {
+              "slopePerL": 14.94,
+              "endpointDH": 4.41,
+              "endpointL": 0.9117
+            }
+          }
+        }
+      }
+    },
+    {
+      "band": "purple-plum",
+      "hRange": [300, 330],
+      "families": ["plum", "purple"],
+      "mutedFamiliesExcluded": [],
+      "bendClass": {
+        "light": "flat",
+        "dark": "flat"
+      },
+      "light": {
+        "towardDark": {
+          "meanSlopePerL": -5.67,
+          "medianSlopePerL": -5.67,
+          "meanEndpointDH": -1.35,
+          "medianEndpointDH": -1.35,
+          "meanEndpointL": 0.33,
+          "outliers": [],
+          "perFamily": {
+            "plum": {
+              "slopePerL": -2.83,
+              "endpointDH": -0.69,
+              "endpointL": 0.3377
+            },
+            "purple": {
+              "slopePerL": -8.52,
+              "endpointDH": -2.02,
+              "endpointL": 0.3222
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": 11.7,
+          "medianSlopePerL": 11.7,
+          "meanEndpointDH": 4.72,
+          "medianEndpointDH": 4.72,
+          "meanEndpointL": 0.931,
+          "outliers": [],
+          "perFamily": {
+            "plum": {
+              "slopePerL": 7.02,
+              "endpointDH": 2.65,
+              "endpointL": 0.9286
+            },
+            "purple": {
+              "slopePerL": 16.38,
+              "endpointDH": 6.79,
+              "endpointL": 0.9333
+            }
+          }
+        }
+      },
+      "dark": {
+        "towardDark": {
+          "meanSlopePerL": 17.79,
+          "medianSlopePerL": 17.79,
+          "meanEndpointDH": 5.64,
+          "medianEndpointDH": 5.64,
+          "meanEndpointL": 0.239,
+          "outliers": [],
+          "perFamily": {
+            "plum": {
+              "slopePerL": 13.36,
+              "endpointDH": 4.53,
+              "endpointL": 0.21
+            },
+            "purple": {
+              "slopePerL": 22.21,
+              "endpointDH": 6.75,
+              "endpointL": 0.2677
+            }
+          }
+        },
+        "towardLight": {
+          "meanSlopePerL": 10.68,
+          "medianSlopePerL": 10.68,
+          "meanEndpointDH": 4.52,
+          "medianEndpointDH": 4.52,
+          "meanEndpointL": 0.908,
+          "outliers": [],
+          "perFamily": {
+            "plum": {
+              "slopePerL": 8.64,
+              "endpointDH": 3.91,
+              "endpointL": 0.9061
+            },
+            "purple": {
+              "slopePerL": 12.72,
+              "endpointDH": 5.13,
+              "endpointL": 0.9107
+            }
+          }
+        }
+      }
+    }
+  ]
+}

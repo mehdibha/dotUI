@@ -105,6 +105,7 @@
     // formatting them would fight the codegen drift guard.
     "**/__generated__/**",
     "www/src/registry/base/colors.css",
+    "www/src/registry/base/theme.css",
     ".agents/**",
     "skills-lock.json",
     "docs/**",

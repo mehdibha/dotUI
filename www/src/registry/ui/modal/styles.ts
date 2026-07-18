@@ -9,7 +9,7 @@ const { useStyles, styles } = createStyles(modalMeta, {
         'group/modal absolute top-0 left-0 isolate z-100 h-(--page-height) w-full',
       ],
       backdrop: [
-        'absolute inset-0 bg-black/(--modal-backdrop-opacity) backdrop-blur-(--modal-backdrop-blur) duration-200 group-exiting/modal:duration-150',
+        'absolute inset-0 bg-overlay/(--modal-backdrop-opacity) backdrop-blur-(--modal-backdrop-blur) duration-200 group-exiting/modal:duration-150',
         'transition-opacity group-entering/modal:opacity-0 group-exiting/modal:opacity-0',
       ],
       viewport:

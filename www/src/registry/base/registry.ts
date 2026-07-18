@@ -13,11 +13,9 @@ export const registryBase = [
       'react-aria-components',
       'tailwindcss-react-aria-components',
       'tw-animate-css',
-      'tailwindcss-autocontrast',
     ],
     css: {
       '@plugin tailwindcss-react-aria-components': {},
-      '@plugin tailwindcss-autocontrast': {},
     },
 
     registryDependencies: ['utils', 'focus-styles', 'theme'],

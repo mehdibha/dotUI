@@ -134,11 +134,9 @@ async function main() {
     await writeFile(f.target, f.content)
   }
 
-  // Default-preset theme: ramps + baked `--on-*` foregrounds (matches the route).
-  const colorsCss = emitPrimitivesCss(
-    resolveColorConfig(DEFAULT_COLOR_CONFIG),
-    { onColors: true },
-  )
+  // Default-preset theme: ramps + alpha twins + solved `--on-*` labels
+  // (matches the route).
+  const colorsCss = emitPrimitivesCss(resolveColorConfig(DEFAULT_COLOR_CONFIG))
   await writeFile('registry/base/colors.css', colorsCss)
 
   // App shell + Vite scaffold.

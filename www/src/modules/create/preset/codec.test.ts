@@ -1,9 +1,18 @@
+import { deflateRaw } from 'pako'
 import { describe, expect, it } from 'vitest'
 
 import { DEFAULT_COLOR_CONFIG, type ColorConfig } from '@/registry/theme'
 
 import { decodePreset, encodePreset } from './codec'
 import { DEFAULTS } from './defaults'
+
+/** Encode an arbitrary compact state with the same deflate+base64url pipeline
+ *  as `encodePreset`, bypassing its typing — for crafting stale/v1 presets. */
+function encodeRawState(state: unknown): string {
+  const compressed = deflateRaw(JSON.stringify(state), { level: 9 })
+  const binary = String.fromCharCode(...compressed)
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
 
 describe('preset codec — color recipe', () => {
   it('omits the color recipe when it matches the default palette', () => {
@@ -13,7 +22,7 @@ describe('preset codec — color recipe', () => {
   })
 
   it('round-trips a custom color recipe through encode → decode', () => {
-    const custom = {
+    const custom: ColorConfig = {
       ...DEFAULT_COLOR_CONFIG,
       seeds: { ...DEFAULT_COLOR_CONFIG.seeds, accent: '#ef4444' },
     }
@@ -27,17 +36,6 @@ describe('preset codec — color recipe', () => {
     expect(decodePreset(encoded ?? '').color).toBeUndefined()
   })
 
-  it('drops a color recipe whose algorithm is not seed-generative (stale `fixed` preset)', () => {
-    const bad = {
-      ...DEFAULT_COLOR_CONFIG,
-      algorithm: 'fixed',
-    } as unknown as ColorConfig
-    const encoded = encodePreset({ ...DEFAULTS, color: bad })
-    expect(encoded).toBeTypeOf('string')
-    expect(() => decodePreset(encoded ?? '')).not.toThrow()
-    expect(decodePreset(encoded ?? '').color).toBeUndefined()
-  })
-
   it('round-trips an accent-sourced primary', () => {
     const custom: ColorConfig = { ...DEFAULT_COLOR_CONFIG, primary: 'accent' }
     const encoded = encodePreset({ ...DEFAULTS, color: custom })
@@ -45,25 +43,67 @@ describe('preset codec — color recipe', () => {
     expect(decodePreset(encoded ?? '').color).toEqual(custom)
   })
 
-  it('drops a crafted primary value but keeps the rest of the recipe', () => {
-    const bad = {
+  it('round-trips the engine axes (background, vividness, preserveSeed)', () => {
+    const custom: ColorConfig = {
       ...DEFAULT_COLOR_CONFIG,
-      seeds: { ...DEFAULT_COLOR_CONFIG.seeds, accent: '#ef4444' },
-      primary: 'red; } :root { --x: injected',
-    } as unknown as ColorConfig
-    const encoded = encodePreset({ ...DEFAULTS, color: bad })
-    const decoded = decodePreset(encoded ?? '').color
-    expect(decoded?.primary).toBeUndefined()
-    expect(decoded?.seeds.accent).toBe('#ef4444')
-  })
-
-  it('round-trips a config with per-producer knobs', () => {
-    const custom = {
-      ...DEFAULT_COLOR_CONFIG,
-      knobs: { hueTorsion: 30, chromaMode: 'max' as const },
+      background: { light: 98, dark: 'oled' },
+      vividness: 1.33,
+      hueShift: 1.6,
+      neutralTint: 2,
+      preserveSeed: true,
     }
     const encoded = encodePreset({ ...DEFAULTS, color: custom })
     expect(encoded).toBeTypeOf('string')
     expect(decodePreset(encoded ?? '').color).toEqual(custom)
+  })
+
+  it('migrates a stale v1-shaped preset onto the v2 axes', () => {
+    const encoded = encodeRawState({
+      c: {
+        algorithm: 'contrast',
+        seeds: { neutral: '#8a8f98', accent: '#5e6ad2', success: '#22c55e' },
+        knobs: { chromaMult: 1.2, hueTorsion: 30 },
+        primary: 'accent',
+      },
+    })
+    expect(decodePreset(encoded).color).toEqual({
+      v: 2,
+      seeds: { accent: '#5e6ad2', neutral: '#8a8f98', success: '#22c55e' },
+      vividness: 1.2,
+      hueShift: 2,
+      primary: 'accent',
+    })
+  })
+
+  it('migrates the v1 default gray neutral to the auto-tinted default', () => {
+    const encoded = encodeRawState({
+      c: {
+        algorithm: 'oklch',
+        seeds: { neutral: '#808080', accent: '#ef4444' },
+      },
+    })
+    expect(decodePreset(encoded).color).toEqual({
+      v: 2,
+      seeds: { accent: '#ef4444' },
+    })
+  })
+
+  it('decodes an unrecognizable color slice to the default palette', () => {
+    const encoded = encodeRawState({ c: { algorithm: 'fixed', ramps: {} } })
+    expect(() => decodePreset(encoded)).not.toThrow()
+    expect(decodePreset(encoded).color).toBeUndefined()
+  })
+
+  it('drops a crafted primary value but keeps the rest of the recipe', () => {
+    const encoded = encodeRawState({
+      c: {
+        v: 2,
+        seeds: { accent: '#ef4444' },
+        primary: 'red; } :root { --x: injected',
+      },
+    })
+    const decoded = decodePreset(encoded).color
+    expect(decoded?.primary).toBeUndefined()
+    expect(decoded?.seeds.accent).toBe('#ef4444')
   })
 })

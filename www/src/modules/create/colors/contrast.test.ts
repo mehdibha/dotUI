@@ -2,12 +2,12 @@ import { describe, expect, it } from 'vitest'
 
 import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from '@/registry/theme'
 
-import { solidContrastReport } from './contrast'
+describe('default theme guarantees', () => {
+  const { report } = resolveColorConfig(DEFAULT_COLOR_CONFIG)
 
-describe('solidContrastReport', () => {
-  it('reports text-on-solid contrast for every palette', () => {
-    const report = solidContrastReport(resolveColorConfig(DEFAULT_COLOR_CONFIG))
-    expect(report.map((r) => r.name).sort()).toEqual([
+  it('audits every palette in both modes', () => {
+    const scales = new Set(report.guarantees.map((g) => g.scale))
+    expect([...scales].sort()).toEqual([
       'accent',
       'danger',
       'info',
@@ -15,12 +15,13 @@ describe('solidContrastReport', () => {
       'success',
       'warning',
     ])
+    for (const mode of ['light', 'dark'] as const) {
+      expect(report.guarantees.some((g) => g.mode === mode)).toBe(true)
+    }
   })
 
-  it("the default palette's solid surfaces all clear WCAG AA (auto-foreground picks the readable pole)", () => {
-    const report = solidContrastReport(resolveColorConfig(DEFAULT_COLOR_CONFIG))
-    expect(report.every((r) => r.meets)).toBe(true)
-    expect(report.every((r) => r.ratio >= 4.5)).toBe(true)
-    expect(report.every((r) => r.level !== 'fail')).toBe(true)
+  it('passes every guarantee pairing', () => {
+    expect(report.guarantees.every((g) => g.passes)).toBe(true)
+    expect(report.ok).toBe(true)
   })
 })

@@ -75,7 +75,7 @@ const { useStyles, styles } = createStyles(cardMeta, {
           description: '',
           action: '',
           content: '',
-          footer: 'border-t bg-neutral-900/50',
+          footer: 'border-t bg-inverse/5',
         },
       },
     },

@@ -1,9 +1,6 @@
 @import 'tw-animate-css';
 
 @plugin 'tailwindcss-react-aria-components';
-@plugin 'tailwindcss-autocontrast' {
-  cssfile: './src/styles.css';
-}
 @plugin 'tailwindcss-with';
 
 /* Page mode comes from the `.dark` class; a subtree can pin its own mode with
@@ -39,9 +36,11 @@
   }
 }
 
+/* Both vars flip per mode: a light-accent tint with dark text in light mode,
+   a dark-accent tint with light text in dark. */
 ::selection {
-  background-color: var(--accent-800);
-  color: var(--on-accent-800);
+  background-color: var(--accent-300);
+  color: var(--neutral-950);
 }
 
 @theme {

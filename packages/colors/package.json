@@ -13,12 +13,16 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@material/material-color-utilities": "^0.3.0",
-    "colorjs.io": "^0.6.1",
     "zod": "^4.2.1"
   },
   "devDependencies": {
+    "@adobe/leonardo-contrast-colors": "^1.1.0",
     "@dotui/ts-config": "workspace:*",
+    "@radix-ui/colors": "^3.0.0",
+    "@types/culori": "^4.0.1",
+    "apca-w3": "^0.1.9",
+    "bezier-easing": "^3.0.1",
+    "culori": "^4.0.2",
     "typescript": "catalog:"
   }
 }
