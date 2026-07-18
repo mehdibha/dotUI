@@ -1,9 +1,21 @@
-/* Color Lab — the benchmark bench for the engine rewrite. Self-contained on
-   purpose: no registry components, no @dotui/colors, plain Tailwind palette.
-   The page carries its own light/dark mode via data-mode so the comparison is
-   independent of the site theme. */
+/* Color Lab — the benchmark bench for the engine rewrite. The comparison
+   machinery is self-contained on purpose (no @dotui/colors, no existing color
+   module — both are queued for rewrite); the toolbar chrome uses dotUI's own
+   registry components. Registry theme ramps flip on the html `.dark` class, so
+   the lab's mode toggle drives that class directly while mounted (this route is
+   standalone — no site chrome to fight) and restores it on unmount. */
 
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
+import type { Key } from 'react-aria-components'
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from '@/registry/ui/select'
+import { ToggleButton } from '@/registry/ui/toggle-button'
+import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 
 import type { CvdType } from './color'
 import { referenceSystems, type ScaleRole } from './data'
@@ -47,11 +59,21 @@ export function ColorLab() {
   const [squint, setSquint] = useState(false)
   const cvd = cvdRaw === 'none' ? null : cvdRaw
 
+  // Registry ramps and dark: utilities both key off html.dark — sync it to the
+  // lab's mode while mounted, restore whatever the site had on the way out.
+  useEffect(() => {
+    const root = document.documentElement
+    const had = root.classList.contains('dark')
+    return () => {
+      root.classList.toggle('dark', had)
+    }
+  }, [])
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', mode === 'dark')
+  }, [mode])
+
   return (
-    // Outer node only carries data-mode: the dark variant matches descendants
-    // of [data-mode], so visual classes must live one level below to follow
-    // the lab's own toggle instead of the site theme.
-    <div data-mode={mode}>
+    <div>
       <div className="min-h-screen bg-white font-sans text-neutral-900 antialiased transition-colors duration-300 dark:bg-neutral-950 dark:text-neutral-100">
         <header className="mx-auto max-w-6xl px-6 pt-16 pb-10">
           <p className="font-mono text-[11px] tracking-widest text-neutral-400 uppercase dark:text-neutral-500">
@@ -81,43 +103,61 @@ export function ColorLab() {
               ))}
             </div>
             <div className="ml-auto flex items-center gap-3">
-              <Segmented
-                value={family}
-                onChange={setFamily}
-                options={FAMILIES.map((f) => ({ id: f.id, label: f.label }))}
-              />
-              <select
-                value={cvdRaw}
-                onChange={(e) => setCvd(e.target.value as CvdType | 'none')}
-                aria-label="Color vision simulation"
-                className="h-7 rounded-md border border-neutral-200 bg-transparent px-1.5 text-xs text-neutral-600 dark:border-neutral-800 dark:text-neutral-300"
+              <ToggleButtonGroup
+                aria-label="Scale family"
+                size="sm"
+                selectionMode="single"
+                disallowEmptySelection
+                selectedKeys={[family]}
+                onSelectionChange={(keys) => {
+                  const key = [...keys][0]
+                  if (key) setFamily(key as ScaleRole)
+                }}
               >
-                {CVD_OPTIONS.map((o) => (
-                  <option key={o.id} value={o.id}>
-                    {o.label}
-                  </option>
+                {FAMILIES.map((f) => (
+                  <ToggleButton key={f.id} id={f.id}>
+                    {f.label}
+                  </ToggleButton>
                 ))}
-              </select>
-              <Segmented
-                value={mode}
-                onChange={setMode}
-                options={[
-                  { id: 'light' as const, label: 'Light' },
-                  { id: 'dark' as const, label: 'Dark' },
-                ]}
-              />
-              <button
-                type="button"
-                onClick={() => setSquint((s) => !s)}
-                title="The squint test: blur everything so only value structure survives."
-                className={`h-7 rounded-md border px-2 text-xs ${
-                  squint
-                    ? 'border-neutral-900 bg-neutral-900 font-medium text-white dark:border-neutral-100 dark:bg-neutral-100 dark:text-neutral-900'
-                    : 'border-neutral-200 text-neutral-500 dark:border-neutral-800 dark:text-neutral-400'
-                }`}
+              </ToggleButtonGroup>
+              <Select
+                aria-label="Color vision simulation"
+                value={cvdRaw}
+                onChange={(key: Key | null) => {
+                  if (key) setCvd(key as CvdType | 'none')
+                }}
+              >
+                <SelectTrigger size="sm" className="w-36" />
+                <SelectContent>
+                  {CVD_OPTIONS.map((o) => (
+                    <SelectItem key={o.id} id={o.id}>
+                      {o.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <ToggleButtonGroup
+                aria-label="Palette mode"
+                size="sm"
+                selectionMode="single"
+                disallowEmptySelection
+                selectedKeys={[mode]}
+                onSelectionChange={(keys) => {
+                  const key = [...keys][0]
+                  if (key) setMode(key as Mode)
+                }}
+              >
+                <ToggleButton id="light">Light</ToggleButton>
+                <ToggleButton id="dark">Dark</ToggleButton>
+              </ToggleButtonGroup>
+              <ToggleButton
+                size="sm"
+                isSelected={squint}
+                onChange={setSquint}
+                aria-label="Squint test"
               >
                 Squint
-              </button>
+              </ToggleButton>
             </div>
           </div>
         </nav>
@@ -218,34 +258,5 @@ function Section({
       )}
       {children}
     </section>
-  )
-}
-
-function Segmented<T extends string>({
-  value,
-  onChange,
-  options,
-}: {
-  value: T
-  onChange: (value: T) => void
-  options: { id: T; label: string }[]
-}) {
-  return (
-    <div className="flex h-7 items-center rounded-md border border-neutral-200 p-0.5 dark:border-neutral-800">
-      {options.map((o) => (
-        <button
-          key={o.id}
-          type="button"
-          onClick={() => onChange(o.id)}
-          className={`h-full rounded-[5px] px-2 text-xs transition-colors ${
-            value === o.id
-              ? 'bg-neutral-900 font-medium text-white dark:bg-neutral-100 dark:text-neutral-900'
-              : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
-          }`}
-        >
-          {o.label}
-        </button>
-      ))}
-    </div>
   )
 }
