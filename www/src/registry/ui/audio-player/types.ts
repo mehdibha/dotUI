@@ -36,7 +36,7 @@ export interface AudioPlayerProps extends React.ComponentProps<'div'> {
 export interface AudioPlayerPlayButtonProps extends React.ComponentProps<'button'> {
   /**
    * The visual style of the button.
-   * @default "primary"
+   * @default "quiet"
    */
   variant?: 'default' | 'primary' | 'quiet' | 'link' | 'warning' | 'danger'
 

@@ -222,7 +222,7 @@ const AudioPlayerPlayButton = ({
     <Button
       aria-label={player.isPlaying ? 'Pause' : 'Play'}
       data-audio-player-play-button=""
-      variant={variant ?? 'primary'}
+      variant={variant ?? 'quiet'}
       isIconOnly={isIconOnly}
       isDisabled={isDisabled ?? player.isDisabled}
       onPress={(e) => {

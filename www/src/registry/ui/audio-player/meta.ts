@@ -15,8 +15,8 @@ const audioPlayerMeta = {
   params: {
     style: {
       kind: 'enum',
-      default: 'card',
-      values: ['card', 'soft', 'plain'] as const,
+      default: 'plain',
+      values: ['plain', 'soft', 'card'] as const,
       description: 'How the player surface is rendered.',
     },
     'seek-thumb': {

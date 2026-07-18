@@ -36,7 +36,7 @@
         ]
       },
       "description": "The visual style of the button.",
-      "default": "\"primary\""
+      "default": "\"quiet\""
     },
     "size": {
       "type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",

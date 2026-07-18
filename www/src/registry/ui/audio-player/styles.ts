@@ -33,9 +33,9 @@ const { useStyles, styles } = createStyles(audioPlayerMeta, {
   },
   params: {
     style: {
-      card: {
+      plain: {
         slots: {
-          root: 'border bg-card',
+          root: 'p-0 shadow-none',
         },
       },
       soft: {
@@ -43,9 +43,9 @@ const { useStyles, styles } = createStyles(audioPlayerMeta, {
           root: 'bg-muted',
         },
       },
-      plain: {
+      card: {
         slots: {
-          root: 'p-0 shadow-none',
+          root: 'border bg-card',
         },
       },
     },
