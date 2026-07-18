@@ -1,0 +1,83 @@
+{
+  "name": "EmojiPickerProps",
+  "description": "An emoji picker lets users browse, search and select an emoji, with support\nfor skin tones and keyboard navigation.",
+  "extendsElement": "div",
+  "props": {
+    "onEmojiSelect": {
+      "type": "((emoji: Emoji) => void)",
+      "detailedType": "((emoji: Emoji) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "emoji",
+            "value": {
+              "type": "link",
+              "id": "Emoji",
+              "name": "Emoji"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler called when the user picks an emoji."
+    },
+    "skinTone": {
+      "type": "EmojiSkinTone",
+      "detailedType": "EmojiSkinTone | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "EmojiSkinTone"
+      },
+      "description": "The active skin tone (controlled)."
+    },
+    "defaultSkinTone": {
+      "type": "EmojiSkinTone",
+      "detailedType": "EmojiSkinTone | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "EmojiSkinTone"
+      },
+      "description": "The initial skin tone (uncontrolled).",
+      "default": "'none'"
+    },
+    "onSkinToneChange": {
+      "type": "((skinTone: EmojiSkinTone) => void)",
+      "detailedType": "((skinTone: EmojiSkinTone) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "skinTone",
+            "value": {
+              "type": "link",
+              "id": "EmojiSkinTone",
+              "name": "EmojiSkinTone"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler called when the active skin tone changes."
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

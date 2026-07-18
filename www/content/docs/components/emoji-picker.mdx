@@ -1,0 +1,133 @@
+---
+title: EmojiPicker
+description: An emoji picker lets users browse, search and select an emoji, with support for skin tones and keyboard navigation.
+links:
+  - label: Emojibase
+    href: https://emojibase.dev
+wip: true
+---
+
+<InteractiveDemo name="emoji-picker" controls={[]} />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/emoji-picker
+```
+
+## Usage
+
+An emoji picker is a composition: a search field filters a grid of emojis, and
+a footer previews the hovered or focused emoji. Handle the pick with
+`onEmojiSelect`.
+
+```tsx
+import {
+  EmojiPicker,
+  EmojiPickerContent,
+  EmojiPickerFooter,
+  EmojiPickerSearch,
+} from '@/components/ui/emoji-picker'
+```
+
+```tsx
+<EmojiPicker onEmojiSelect={(emoji) => console.log(emoji.emoji)}>
+  <EmojiPickerSearch />
+  <EmojiPickerContent />
+  <EmojiPickerFooter />
+</EmojiPicker>
+```
+
+Typing in the search filters emojis by name and keywords, arrow keys move
+through the grid, and <kbd>Enter</kbd> selects the focused emoji.
+
+## Anatomy
+
+Every part is optional — compose only what you need. The emoji data is loaded
+by `EmojiPickerContent` on first render, from the
+[Emojibase](https://emojibase.dev) CDN, and cached for the session.
+
+```tsx
+<EmojiPicker>
+  <EmojiPickerSearch />
+  <EmojiPickerSkinToneSelector />
+  <EmojiPickerContent />
+  <EmojiPickerFooter />
+</EmojiPicker>
+```
+
+## In a popover
+
+Emoji pickers usually live in a popover behind an icon button. Close the
+popover once an emoji is picked.
+
+```tsx
+<Dialog>
+  <Button isIconOnly aria-label="Add reaction">
+    <SmilePlusIcon />
+  </Button>
+  <Popover>
+    <DialogContent className="p-0">
+      {({ close }) => (
+        <EmojiPicker
+          onEmojiSelect={(emoji) => {
+            insert(emoji.emoji)
+            close()
+          }}
+        >
+          <EmojiPickerSearch autoFocus />
+          <EmojiPickerContent />
+          <EmojiPickerFooter />
+        </EmojiPicker>
+      )}
+    </DialogContent>
+  </Popover>
+</Dialog>
+```
+
+## Skin tone
+
+Add an `EmojiPickerSkinToneSelector` to let users pick the skin tone applied
+across the grid. The tone is uncontrolled by default (`defaultSkinTone`); pass
+`skinTone` and `onSkinToneChange` to control it — e.g. to persist the
+preference.
+
+```tsx
+<EmojiPicker skinTone={skinTone} onSkinToneChange={setSkinTone}>
+  <div className="m-2 mb-0 flex gap-2">
+    <EmojiPickerSearch className="m-0 flex-1" />
+    <EmojiPickerSkinToneSelector />
+  </div>
+  <EmojiPickerContent />
+</EmojiPicker>
+```
+
+## Examples
+
+<Examples className="sm:grid-cols-2">
+  <Example name="emoji-picker/demos/basic" title="Basic" />
+  <Example name="emoji-picker/demos/skin-tone" title="Skin tone" />
+  <Example name="emoji-picker/demos/in-popover" title="In a popover" />
+</Examples>
+
+## API Reference
+
+### EmojiPicker
+
+<Reference name="emoji-picker" />
+
+### EmojiPickerSearch
+
+<Reference name="emoji-picker-search" />
+
+### EmojiPickerContent
+
+<Reference name="emoji-picker-content" />
+
+### EmojiPickerSkinToneSelector
+
+<Reference name="emoji-picker-skin-tone-selector" />
+
+### EmojiPickerFooter
+
+<Reference name="emoji-picker-footer" />

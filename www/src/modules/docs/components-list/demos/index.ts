@@ -27,9 +27,11 @@ import { DateFieldDemo } from './date-field'
 import { DatePickerDemo } from './date-picker'
 import { DialogDemo } from './dialog'
 import { DrawerDemo } from './drawer'
+import { EmojiPickerDemo } from './emoji-picker'
 import { EmptyDemo } from './empty'
 import { FieldDemo } from './field'
 import { FileTriggerDemo } from './file-trigger'
+import { GridListDemo } from './grid-list'
 import { GroupDemo } from './group'
 import { InputDemo } from './input'
 import { InputGroupDemo } from './input-group'
@@ -94,9 +96,11 @@ export const componentDemos: Record<string, ComponentType> = {
   'date-picker': DatePickerDemo,
   dialog: DialogDemo,
   drawer: DrawerDemo,
+  'emoji-picker': EmojiPickerDemo,
   empty: EmptyDemo,
   field: FieldDemo,
   'file-trigger': FileTriggerDemo,
+  'grid-list': GridListDemo,
   group: GroupDemo,
   input: InputDemo,
   'input-group': InputGroupDemo,

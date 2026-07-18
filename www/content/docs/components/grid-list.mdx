@@ -1,0 +1,146 @@
+---
+title: GridList
+description: A grid list displays a list of interactive items, with support for keyboard navigation, single or multiple selection, and row actions.
+links:
+  - label: Docs
+    href: https://react-spectrum.adobe.com/react-aria/GridList.html
+wip: true
+---
+
+<InteractiveDemo
+  name="grid-list"
+  controls={[
+    {
+      type: 'enum',
+      name: 'selectionMode',
+      options: ['none', 'single', 'multiple'],
+      defaultValue: 'multiple',
+    },
+    {
+      type: 'enum',
+      name: 'layout',
+      options: ['stack', 'grid'],
+      defaultValue: 'stack',
+    },
+  ]}
+/>
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/grid-list
+```
+
+## Usage
+
+Use a grid list where a list box isn't enough — when items hold extra
+interactive elements (buttons, checkboxes), or when items should support drag
+and drop. String children render as the item's label; pass `textValue` when an
+item renders richer content.
+
+```tsx
+import { GridList, GridListItem } from '@/components/ui/grid-list'
+```
+
+```tsx
+<GridList aria-label="Projects" selectionMode="multiple">
+  <GridListItem id="design-system">Design system</GridListItem>
+  <GridListItem id="marketing-site">Marketing site</GridListItem>
+</GridList>
+```
+
+When rendering data dynamically, pass `items` to the `GridList` and render an
+item per entry.
+
+```tsx
+<GridList aria-label="Projects" items={projects}>
+  {(project) => <GridListItem>{project.name}</GridListItem>}
+</GridList>
+```
+
+## Anatomy
+
+A `GridList` wraps `GridListItem`s, optionally grouped into `GridListSection`s.
+An item holds its label — a plain string, or a `GridListItemLabel` next to an
+icon and an optional `GridListItemDescription`.
+
+```tsx
+<GridList>
+  <GridListSection>
+    <GridListSectionHeader />
+    <GridListItem>
+      <GridListItemLabel />
+      <GridListItemDescription />
+    </GridListItem>
+  </GridListSection>
+</GridList>
+```
+
+## Selection
+
+Set `selectionMode` to `single` or `multiple` to make rows selectable. With the
+default `toggle` selection behavior, rows render a checkbox; with `replace`,
+the row itself is the selection target. Control the selection with
+`selectedKeys` and `onSelectionChange`, and disable rows with `disabledKeys`.
+
+```tsx
+<GridList
+  selectionMode="multiple"
+  defaultSelectedKeys={['mushroom']}
+  disabledKeys={['bacon']}
+>
+  {items}
+</GridList>
+```
+
+## Layout
+
+By default items stack vertically. Set `layout="grid"` to lay items out in a
+grid — keyboard navigation becomes two-dimensional. Override the columns with
+utility classes on the `GridList`.
+
+```tsx
+<GridList aria-label="Frameworks" layout="grid" className="grid-cols-2">
+  {items}
+</GridList>
+```
+
+## Examples
+
+<Examples className="sm:grid-cols-2">
+  <Example name="grid-list/demos/basic" title="Basic" />
+  <Example
+    name="grid-list/demos/multiple-selection"
+    title="Multiple selection"
+  />
+  <Example name="grid-list/demos/with-description" title="With description" />
+  <Example name="grid-list/demos/grid" title="Grid layout" />
+  <Example name="grid-list/demos/disabled" title="Disabled items" />
+  <Example name="grid-list/demos/drag-and-drop" title="Drag and drop" />
+</Examples>
+
+## API Reference
+
+### GridList
+
+<Reference name="grid-list" />
+
+### GridListItem
+
+<Reference name="grid-list-item" />
+
+### GridListItemLabel
+
+<Reference name="grid-list-item-label" />
+
+### GridListItemDescription
+
+<Reference name="grid-list-item-description" />
+
+### GridListSection
+
+<Reference name="grid-list-section" />
+
+### GridListSectionHeader
+
+<Reference name="grid-list-section-header" />

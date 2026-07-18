@@ -206,6 +206,14 @@ export const componentsData: ComponentCategory[] = [
         fill: true,
         status: 'done',
       },
+      {
+        name: 'EmojiPicker',
+        slug: 'emoji-picker',
+        href: '/docs/components/emoji-picker',
+        scale: 0.8,
+        fill: true,
+        status: 'in review',
+      },
     ],
   },
   {
@@ -300,6 +308,13 @@ export const componentsData: ComponentCategory[] = [
         name: 'Tree',
         slug: 'tree',
         href: '/docs/components/tree',
+        scale: 0.8,
+        status: 'in review',
+      },
+      {
+        name: 'GridList',
+        slug: 'grid-list',
+        href: '/docs/components/grid-list',
         scale: 0.8,
         status: 'in review',
       },

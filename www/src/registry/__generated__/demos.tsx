@@ -1301,6 +1301,18 @@ export const DemosIndex: Record<
 		files: ["ui/drop-zone/demos/visual-feedback.tsx"],
 		component: React.lazy(() => import("@/registry/ui/drop-zone/demos/visual-feedback")),
 	},
+	"emoji-picker/demos/basic": {
+		files: ["ui/emoji-picker/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/emoji-picker/demos/basic")),
+	},
+	"emoji-picker/demos/in-popover": {
+		files: ["ui/emoji-picker/demos/in-popover.tsx"],
+		component: React.lazy(() => import("@/registry/ui/emoji-picker/demos/in-popover")),
+	},
+	"emoji-picker/demos/skin-tone": {
+		files: ["ui/emoji-picker/demos/skin-tone.tsx"],
+		component: React.lazy(() => import("@/registry/ui/emoji-picker/demos/skin-tone")),
+	},
 	"empty/demos/basic": {
 		files: ["ui/empty/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/empty/demos/basic")),
@@ -1380,6 +1392,30 @@ export const DemosIndex: Record<
 	"form/demos/react-aria": {
 		files: ["ui/form/demos/react-aria.tsx"],
 		component: React.lazy(() => import("@/registry/ui/form/demos/react-aria")),
+	},
+	"grid-list/demos/basic": {
+		files: ["ui/grid-list/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/grid-list/demos/basic")),
+	},
+	"grid-list/demos/disabled": {
+		files: ["ui/grid-list/demos/disabled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/grid-list/demos/disabled")),
+	},
+	"grid-list/demos/drag-and-drop": {
+		files: ["ui/grid-list/demos/drag-and-drop.tsx"],
+		component: React.lazy(() => import("@/registry/ui/grid-list/demos/drag-and-drop")),
+	},
+	"grid-list/demos/grid": {
+		files: ["ui/grid-list/demos/grid.tsx"],
+		component: React.lazy(() => import("@/registry/ui/grid-list/demos/grid")),
+	},
+	"grid-list/demos/multiple-selection": {
+		files: ["ui/grid-list/demos/multiple-selection.tsx"],
+		component: React.lazy(() => import("@/registry/ui/grid-list/demos/multiple-selection")),
+	},
+	"grid-list/demos/with-description": {
+		files: ["ui/grid-list/demos/with-description.tsx"],
+		component: React.lazy(() => import("@/registry/ui/grid-list/demos/with-description")),
 	},
 	"group/demos/basic": {
 		files: ["ui/group/demos/basic.tsx"],

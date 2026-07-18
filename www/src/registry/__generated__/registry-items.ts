@@ -39,9 +39,11 @@ import UiDialog from "@/registry/ui/dialog/meta";
 import UiDisclosure from "@/registry/ui/disclosure/meta";
 import UiDrawer from "@/registry/ui/drawer/meta";
 import UiDropZone from "@/registry/ui/drop-zone/meta";
+import UiEmojiPicker from "@/registry/ui/emoji-picker/meta";
 import UiEmpty from "@/registry/ui/empty/meta";
 import UiField from "@/registry/ui/field/meta";
 import UiFileTrigger from "@/registry/ui/file-trigger/meta";
+import UiGridList from "@/registry/ui/grid-list/meta";
 import UiGroup from "@/registry/ui/group/meta";
 import UiInput from "@/registry/ui/input/meta";
 import UiKbd from "@/registry/ui/kbd/meta";
@@ -116,9 +118,11 @@ export const registryUi: RegistryItem[] = [
 	UiDisclosure,
 	UiDrawer,
 	UiDropZone,
+	UiEmojiPicker,
 	UiEmpty,
 	UiField,
 	UiFileTrigger,
+	UiGridList,
 	UiGroup,
 	UiInput,
 	UiKbd,
