@@ -17,7 +17,7 @@ import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
 import { Route as HomeDotmdRouteImport } from './routes/home[.]md'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
-import { Route as RShowcaseBundleRouteImport } from './routes/r/showcase-bundle'
+import { Route as RV0RouteImport } from './routes/r/v0'
 import { Route as RRegistryDotjsonRouteImport } from './routes/r/registry[.]json'
 import { Route as RInitRouteImport } from './routes/r/init'
 import { Route as RNameRouteImport } from './routes/r/$name'
@@ -74,9 +74,9 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const RShowcaseBundleRoute = RShowcaseBundleRouteImport.update({
-  id: '/r/showcase-bundle',
-  path: '/r/showcase-bundle',
+const RV0Route = RV0RouteImport.update({
+  id: '/r/v0',
+  path: '/r/v0',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RRegistryDotjsonRoute = RRegistryDotjsonRouteImport.update({
@@ -183,7 +183,7 @@ export interface FileRoutesByFullPath {
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
   '/r/registry.json': typeof RRegistryDotjsonRoute
-  '/r/showcase-bundle': typeof RShowcaseBundleRoute
+  '/r/v0': typeof RV0Route
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
 }
@@ -208,7 +208,7 @@ export interface FileRoutesByTo {
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
   '/r/registry.json': typeof RRegistryDotjsonRoute
-  '/r/showcase-bundle': typeof RShowcaseBundleRoute
+  '/r/v0': typeof RV0Route
   '/': typeof AppIndexRoute
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
@@ -236,7 +236,7 @@ export interface FileRoutesById {
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
   '/r/registry.json': typeof RRegistryDotjsonRoute
-  '/r/showcase-bundle': typeof RShowcaseBundleRoute
+  '/r/v0': typeof RV0Route
   '/_app/': typeof AppIndexRoute
   '/_app/docs/$': typeof AppDocsSplatRoute
   '/_app/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
@@ -265,7 +265,7 @@ export interface FileRouteTypes {
     | '/r/$name'
     | '/r/init'
     | '/r/registry.json'
-    | '/r/showcase-bundle'
+    | '/r/v0'
     | '/docs/$'
     | '/docs/{$}.md'
   fileRoutesByTo: FileRoutesByTo
@@ -290,7 +290,7 @@ export interface FileRouteTypes {
     | '/r/$name'
     | '/r/init'
     | '/r/registry.json'
-    | '/r/showcase-bundle'
+    | '/r/v0'
     | '/'
     | '/docs/$'
     | '/docs/{$}.md'
@@ -317,7 +317,7 @@ export interface FileRouteTypes {
     | '/r/$name'
     | '/r/init'
     | '/r/registry.json'
-    | '/r/showcase-bundle'
+    | '/r/v0'
     | '/_app/'
     | '/_app/docs/$'
     | '/_app/docs/{$}.md'
@@ -340,7 +340,7 @@ export interface RootRouteChildren {
   RNameRoute: typeof RNameRoute
   RInitRoute: typeof RInitRoute
   RRegistryDotjsonRoute: typeof RRegistryDotjsonRoute
-  RShowcaseBundleRoute: typeof RShowcaseBundleRoute
+  RV0Route: typeof RV0Route
 }
 
 declare module '@tanstack/react-router' {
@@ -401,11 +401,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/r/showcase-bundle': {
-      id: '/r/showcase-bundle'
-      path: '/r/showcase-bundle'
-      fullPath: '/r/showcase-bundle'
-      preLoaderRoute: typeof RShowcaseBundleRouteImport
+    '/r/v0': {
+      id: '/r/v0'
+      path: '/r/v0'
+      fullPath: '/r/v0'
+      preLoaderRoute: typeof RV0RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/r/registry.json': {
@@ -576,7 +576,7 @@ const rootRouteChildren: RootRouteChildren = {
   RNameRoute: RNameRoute,
   RInitRoute: RInitRoute,
   RRegistryDotjsonRoute: RRegistryDotjsonRoute,
-  RShowcaseBundleRoute: RShowcaseBundleRoute,
+  RV0Route: RV0Route,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

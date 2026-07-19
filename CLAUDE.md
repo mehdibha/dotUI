@@ -69,7 +69,7 @@ When working on a component's styles, compare against the shadcn equivalent to c
 
 ### Registry changes
 
-After modifying `www/src/registry/`, run `pnpm build:registry` and commit the regenerated `__generated__/*` + `base/colors.css` — CI's registry-drift job diffs exactly these files. If bundled code changes its `@/registry/theme` imports, also update `themeStub()` in `www/scripts/build-showcase-bundle.ts`: the drift guard can't catch missing named exports there (once broke "Open in v0").
+After modifying `www/src/registry/`, run `pnpm build:registry` and commit the regenerated `__generated__/*` + `base/colors.css` — CI's registry-drift job diffs exactly these files.
 
 ### Before committing
 

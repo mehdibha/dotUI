@@ -132,6 +132,36 @@ function depsFromFileImports(
   return found
 }
 
+export interface PublishableModule {
+  publishable: Publishable
+  publishableByPath?: Record<string, Publishable>
+}
+
+/**
+ * Pick the publishable variant the preset selects. Components with an
+ * enum-with-files param (e.g. loader.style = "ring" → ship `base.ring.tsx`)
+ * generate one publishable per file; the user's choice points at one of them.
+ */
+export function selectPublishable(
+  mod: PublishableModule,
+  preset: PublishPreset,
+): Publishable {
+  if (!mod.publishableByPath) return mod.publishable
+  const meta = mod.publishable.meta
+  const selections = preset.componentParams[meta.name] ?? {}
+
+  for (const [paramName, def] of Object.entries(meta.params ?? {})) {
+    if (def.kind !== 'enum' || !def.files) continue
+    const value = selections[paramName] ?? def.default
+    const filesForValue = def.files[value]
+    const targetFile = filesForValue?.[0]
+    if (!targetFile) continue
+    const hit = mod.publishableByPath[targetFile.path]
+    if (hit) return hit
+  }
+  return mod.publishable
+}
+
 export interface PublishedItem {
   /** Shadcn-shaped registry item ready to JSON.stringify. */
   item: RegistryItem

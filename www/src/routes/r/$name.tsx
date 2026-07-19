@@ -20,6 +20,7 @@ import {
 } from '@/registry/__generated__/publishables'
 import {
   publish,
+  selectPublishable,
   setDotuiDepResolver,
   setKnownDotuiNames,
 } from '@/publisher/publish'
@@ -29,7 +30,6 @@ import {
 setKnownDotuiNames(PUBLISHABLE_NAMES)
 
 import { resolveRequestPreset } from '@/lib/registry-preset'
-import type { Publishable, PublishPreset } from '@/publisher/types'
 
 const JSON_HEADERS = {
   'Content-Type': 'application/json; charset=utf-8',
@@ -97,31 +97,3 @@ export const Route = createFileRoute('/r/$name')({
     },
   },
 })
-
-interface PublishableModule {
-  publishable: Publishable
-  publishableByPath?: Record<string, Publishable>
-}
-
-function selectPublishable(
-  mod: PublishableModule,
-  preset: PublishPreset,
-): Publishable {
-  if (!mod.publishableByPath) return mod.publishable
-  const meta = mod.publishable.meta
-  const selections = preset.componentParams[meta.name] ?? {}
-
-  // Walk meta.params looking for the enum param whose `files` block drives
-  // the file swap. The user's selected value points at one of the entries
-  // in `publishableByPath`.
-  for (const [paramName, def] of Object.entries(meta.params ?? {})) {
-    if (def.kind !== 'enum' || !def.files) continue
-    const value = selections[paramName] ?? def.default
-    const filesForValue = def.files[value]
-    const targetFile = filesForValue?.[0]
-    if (!targetFile) continue
-    const hit = mod.publishableByPath[targetFile.path]
-    if (hit) return hit
-  }
-  return mod.publishable
-}
