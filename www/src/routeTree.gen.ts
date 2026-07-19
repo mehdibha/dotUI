@@ -23,6 +23,7 @@ import { Route as RInitRouteImport } from './routes/r/init'
 import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as InternalColorsRouteImport } from './routes/internal.colors'
+import { Route as InternalColorLabRouteImport } from './routes/internal.color-lab'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
 import { Route as AppPresetsRouteImport } from './routes/_app/presets'
@@ -103,6 +104,11 @@ const InternalColorsRoute = InternalColorsRouteImport.update({
   path: '/internal/colors',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InternalColorLabRoute = InternalColorLabRouteImport.update({
+  id: '/internal/color-lab',
+  path: '/internal/color-lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemosSlugRoute = DemosSlugRouteImport.update({
   id: '/demos/$slug',
   path: '/demos/$slug',
@@ -171,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/presets': typeof AppPresetsRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/colors': typeof InternalColorsRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -195,6 +202,7 @@ export interface FileRoutesByTo {
   '/presets': typeof AppPresetsRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/colors': typeof InternalColorsRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -222,6 +230,7 @@ export interface FileRoutesById {
   '/_app/presets': typeof AppPresetsRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/colors': typeof InternalColorsRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -250,6 +259,7 @@ export interface FileRouteTypes {
     | '/presets'
     | '/api/search'
     | '/demos/$slug'
+    | '/internal/color-lab'
     | '/internal/colors'
     | '/preview/$slug'
     | '/r/$name'
@@ -274,6 +284,7 @@ export interface FileRouteTypes {
     | '/presets'
     | '/api/search'
     | '/demos/$slug'
+    | '/internal/color-lab'
     | '/internal/colors'
     | '/preview/$slug'
     | '/r/$name'
@@ -300,6 +311,7 @@ export interface FileRouteTypes {
     | '/_app/presets'
     | '/api/search'
     | '/demos/$slug'
+    | '/internal/color-lab'
     | '/internal/colors'
     | '/preview/$slug'
     | '/r/$name'
@@ -322,6 +334,7 @@ export interface RootRouteChildren {
   DotwellKnownApiCatalogRoute: typeof DotwellKnownApiCatalogRoute
   ApiSearchRoute: typeof ApiSearchRoute
   DemosSlugRoute: typeof DemosSlugRoute
+  InternalColorLabRoute: typeof InternalColorLabRoute
   InternalColorsRoute: typeof InternalColorsRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   RNameRoute: typeof RNameRoute
@@ -428,6 +441,13 @@ declare module '@tanstack/react-router' {
       path: '/internal/colors'
       fullPath: '/internal/colors'
       preLoaderRoute: typeof InternalColorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internal/color-lab': {
+      id: '/internal/color-lab'
+      path: '/internal/color-lab'
+      fullPath: '/internal/color-lab'
+      preLoaderRoute: typeof InternalColorLabRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demos/$slug': {
@@ -550,6 +570,7 @@ const rootRouteChildren: RootRouteChildren = {
   DotwellKnownApiCatalogRoute: DotwellKnownApiCatalogRoute,
   ApiSearchRoute: ApiSearchRoute,
   DemosSlugRoute: DemosSlugRoute,
+  InternalColorLabRoute: InternalColorLabRoute,
   InternalColorsRoute: InternalColorsRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   RNameRoute: RNameRoute,

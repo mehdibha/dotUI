@@ -1,0 +1,136 @@
+{
+  "id": "tailwind",
+  "name": "Tailwind CSS v4",
+  "website": "https://tailwindcss.com",
+  "sources": [
+    "https://unpkg.com/tailwindcss/theme.css",
+    "https://tailwindcss.com/docs/colors",
+    "https://tailwindcss.com/docs/background-color",
+    "https://tailwindcss.com/docs/border-color",
+    "https://tailwindcss.com/docs/hover-focus-and-other-states"
+  ],
+  "description": "The default color palette of Tailwind CSS v4 — the most-used palette in the industry, hand-rebuilt in OKLCH for v4 (22 hues x 11 steps published as oklch CSS variables). The de facto baseline any generated scale must at least match.",
+  "philosophy": "A classic 50-950 lightness ramp per hue, hand-tuned rather than formula-generated, republished in OKLCH for v4 so chroma and hue drift smoothly across steps (hue rotates within a scale, e.g. amber walks from ~95 to ~46 degrees as it darkens). Steps carry no documented semantics — designers pick steps by eye, with conventions emerging from the docs' own examples (500 solids, hover one step darker). There is no dark-mode palette: the same single scale is used in both modes via the dark: variant, typically by inverting which end you read from.",
+  "stepCount": 11,
+  "stepNames": [
+    "50",
+    "100",
+    "200",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "900",
+    "950"
+  ],
+  "scales": [
+    {
+      "id": "gray",
+      "name": "Gray",
+      "role": "neutral",
+      "steps": [
+        { "name": "50", "light": "oklch(98.5% 0.002 247.839)", "dark": null },
+        { "name": "100", "light": "oklch(96.7% 0.003 264.542)", "dark": null },
+        { "name": "200", "light": "oklch(92.8% 0.006 264.531)", "dark": null },
+        { "name": "300", "light": "oklch(87.2% 0.01 258.338)", "dark": null },
+        { "name": "400", "light": "oklch(70.7% 0.022 261.325)", "dark": null },
+        { "name": "500", "light": "oklch(55.1% 0.027 264.364)", "dark": null },
+        { "name": "600", "light": "oklch(44.6% 0.03 256.802)", "dark": null },
+        { "name": "700", "light": "oklch(37.3% 0.034 259.733)", "dark": null },
+        { "name": "800", "light": "oklch(27.8% 0.033 256.848)", "dark": null },
+        { "name": "900", "light": "oklch(21% 0.034 264.665)", "dark": null },
+        { "name": "950", "light": "oklch(13% 0.028 261.692)", "dark": null }
+      ]
+    },
+    {
+      "id": "blue",
+      "name": "Blue",
+      "role": "accent",
+      "steps": [
+        { "name": "50", "light": "oklch(97% 0.014 254.604)", "dark": null },
+        { "name": "100", "light": "oklch(93.2% 0.032 255.585)", "dark": null },
+        { "name": "200", "light": "oklch(88.2% 0.059 254.128)", "dark": null },
+        { "name": "300", "light": "oklch(80.9% 0.105 251.813)", "dark": null },
+        { "name": "400", "light": "oklch(70.7% 0.165 254.624)", "dark": null },
+        { "name": "500", "light": "oklch(62.3% 0.214 259.815)", "dark": null },
+        { "name": "600", "light": "oklch(54.6% 0.245 262.881)", "dark": null },
+        { "name": "700", "light": "oklch(48.8% 0.243 264.376)", "dark": null },
+        { "name": "800", "light": "oklch(42.4% 0.199 265.638)", "dark": null },
+        { "name": "900", "light": "oklch(37.9% 0.146 265.522)", "dark": null },
+        { "name": "950", "light": "oklch(28.2% 0.091 267.935)", "dark": null }
+      ]
+    },
+    {
+      "id": "red",
+      "name": "Red",
+      "role": "danger",
+      "steps": [
+        { "name": "50", "light": "oklch(97.1% 0.013 17.38)", "dark": null },
+        { "name": "100", "light": "oklch(93.6% 0.032 17.717)", "dark": null },
+        { "name": "200", "light": "oklch(88.5% 0.062 18.334)", "dark": null },
+        { "name": "300", "light": "oklch(80.8% 0.114 19.571)", "dark": null },
+        { "name": "400", "light": "oklch(70.4% 0.191 22.216)", "dark": null },
+        { "name": "500", "light": "oklch(63.7% 0.237 25.331)", "dark": null },
+        { "name": "600", "light": "oklch(57.7% 0.245 27.325)", "dark": null },
+        { "name": "700", "light": "oklch(50.5% 0.213 27.518)", "dark": null },
+        { "name": "800", "light": "oklch(44.4% 0.177 26.899)", "dark": null },
+        { "name": "900", "light": "oklch(39.6% 0.141 25.723)", "dark": null },
+        { "name": "950", "light": "oklch(25.8% 0.092 26.042)", "dark": null }
+      ]
+    },
+    {
+      "id": "green",
+      "name": "Green",
+      "role": "success",
+      "steps": [
+        { "name": "50", "light": "oklch(98.2% 0.018 155.826)", "dark": null },
+        { "name": "100", "light": "oklch(96.2% 0.044 156.743)", "dark": null },
+        { "name": "200", "light": "oklch(92.5% 0.084 155.995)", "dark": null },
+        { "name": "300", "light": "oklch(87.1% 0.15 154.449)", "dark": null },
+        { "name": "400", "light": "oklch(79.2% 0.209 151.711)", "dark": null },
+        { "name": "500", "light": "oklch(72.3% 0.219 149.579)", "dark": null },
+        { "name": "600", "light": "oklch(62.7% 0.194 149.214)", "dark": null },
+        { "name": "700", "light": "oklch(52.7% 0.154 150.069)", "dark": null },
+        { "name": "800", "light": "oklch(44.8% 0.119 151.328)", "dark": null },
+        { "name": "900", "light": "oklch(39.3% 0.095 152.535)", "dark": null },
+        { "name": "950", "light": "oklch(26.6% 0.065 152.934)", "dark": null }
+      ]
+    },
+    {
+      "id": "amber",
+      "name": "Amber",
+      "role": "warning",
+      "steps": [
+        { "name": "50", "light": "oklch(98.7% 0.022 95.277)", "dark": null },
+        { "name": "100", "light": "oklch(96.2% 0.059 95.617)", "dark": null },
+        { "name": "200", "light": "oklch(92.4% 0.12 95.746)", "dark": null },
+        { "name": "300", "light": "oklch(87.9% 0.169 91.605)", "dark": null },
+        { "name": "400", "light": "oklch(82.8% 0.189 84.429)", "dark": null },
+        { "name": "500", "light": "oklch(76.9% 0.188 70.08)", "dark": null },
+        { "name": "600", "light": "oklch(66.6% 0.179 58.318)", "dark": null },
+        { "name": "700", "light": "oklch(55.5% 0.163 48.998)", "dark": null },
+        { "name": "800", "light": "oklch(47.3% 0.137 46.201)", "dark": null },
+        { "name": "900", "light": "oklch(41.4% 0.112 45.904)", "dark": null },
+        { "name": "950", "light": "oklch(27.9% 0.077 45.635)", "dark": null }
+      ]
+    }
+  ],
+  "roleMapping": {
+    "appBg": null,
+    "subtleBg": null,
+    "uiBg": null,
+    "uiBgHover": null,
+    "uiBgActive": null,
+    "borderSubtle": null,
+    "border": null,
+    "borderStrong": null,
+    "solid": 5,
+    "solidHover": 6,
+    "textSubtle": 5,
+    "text": 10
+  },
+  "solidForeground": "white",
+  "notes": "Single palette: Tailwind ships no dark-mode variants, so dark is null on every step — the dark: variant just re-reads the same scale (docs example: bg-white dark:bg-gray-800). Tailwind documents NO step semantics; the roleMapping above is limited to what its own docs examples ground: solid buttons at 500 (bg-sky-500, bg-violet-500, bg-indigo-500), hover one step darker (hover:bg-violet-600, active:bg-violet-700), timestamps/muted text at text-gray-500, and primary text at gray-950 (the docs' notification-card example and tailwindcss.com itself). Background/border roles are null because the docs prescribe nothing (app surfaces use plain white, outside the scale). Buttons pair 500 fills with text-white. Five interchangeable neutral families exist (slate, gray, zinc, neutral, stone); gray is extracted here. Values are the v4 hand-rebuilt OKLCH palette from theme.css, verbatim; --color-white: #fff and --color-black: #000 also exist outside the scales. No alpha or P3 variants are published — opacity is applied via utility modifiers (bg-blue-500/50) at use time."
+}

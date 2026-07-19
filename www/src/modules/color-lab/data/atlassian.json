@@ -1,0 +1,382 @@
+{
+  "id": "atlassian",
+  "name": "Atlassian Design System",
+  "website": "https://atlassian.design",
+  "sources": [
+    "https://unpkg.com/@atlaskit/tokens/dist/esm/artifacts/tokens-raw/atlassian-light.js",
+    "https://unpkg.com/@atlaskit/tokens/dist/esm/artifacts/tokens-raw/atlassian-dark.js",
+    "https://unpkg.com/@atlaskit/tokens/dist/esm/artifacts/palettes-raw/palette.js",
+    "https://atlassian.design/foundations/color-new",
+    "https://atlassian.design/foundations/color"
+  ],
+  "description": "Atlassian Design System is the token-driven color system behind Jira, Confluence and Trello. It is a reference for step-for-purpose at enterprise scale: a base 100-1000 palette plus a large semantic token layer where every token ships with its own usage description.",
+  "philosophy": "Base ramps run 100-1000 with extra 250 and 850 steps inserted purely for pressed states (subtlest chain 100/200/250, bold chain 700/800/850). The chromatic ramps are theme-invariant; dark mode is achieved by remapping which step a semantic token uses, roughly mirroring around the middle (brand bold is Blue700 in light, Blue400 in dark; subtlest backgrounds swap 100 for 1000). Only the neutral axis gets a second hand-tuned ramp: light Neutral 0-1200 pairs with a separate DarkNeutral ramp (never an inversion), and both come with alpha variants (Neutral100A-500A) so layered UI adapts to elevation. Color reaches products only through role.emphasis.state tokens (e.g. color.background.danger.bold.hovered) tuned to WCAG AA: border.bold guarantees 3:1, text steps 700/800/1000 give subtlest/subtle/default text.",
+  "stepCount": 12,
+  "stepNames": [
+    "100",
+    "200",
+    "250",
+    "300",
+    "400",
+    "500",
+    "600",
+    "700",
+    "800",
+    "850",
+    "900",
+    "1000"
+  ],
+  "scales": [
+    {
+      "id": "neutral",
+      "name": "Neutral",
+      "role": "neutral",
+      "steps": [
+        {
+          "name": "0",
+          "light": "#FFFFFF",
+          "dark": "#18191A"
+        },
+        {
+          "name": "100",
+          "light": "#F8F8F8",
+          "dark": "#1F1F21"
+        },
+        {
+          "name": "200",
+          "light": "#F0F1F2",
+          "dark": "#242528"
+        },
+        {
+          "name": "300",
+          "light": "#DDDEE1",
+          "dark": "#303134"
+        },
+        {
+          "name": "400",
+          "light": "#B7B9BE",
+          "dark": "#4B4D51"
+        },
+        {
+          "name": "500",
+          "light": "#8C8F97",
+          "dark": "#63666B"
+        },
+        {
+          "name": "600",
+          "light": "#7D818A",
+          "dark": "#7E8188"
+        },
+        {
+          "name": "700",
+          "light": "#6B6E76",
+          "dark": "#96999E"
+        },
+        {
+          "name": "800",
+          "light": "#505258",
+          "dark": "#A9ABAF"
+        },
+        {
+          "name": "900",
+          "light": "#3B3D42",
+          "dark": "#BFC1C4"
+        },
+        {
+          "name": "1000",
+          "light": "#292A2E",
+          "dark": "#CECFD2"
+        },
+        {
+          "name": "1100",
+          "light": "#1E1F21",
+          "dark": "#E2E3E4"
+        }
+      ]
+    },
+    {
+      "id": "blue",
+      "name": "Blue",
+      "role": "accent",
+      "steps": [
+        {
+          "name": "100",
+          "light": "#E9F2FE",
+          "dark": "#E9F2FE"
+        },
+        {
+          "name": "200",
+          "light": "#CFE1FD",
+          "dark": "#CFE1FD"
+        },
+        {
+          "name": "250",
+          "light": "#ADCBFB",
+          "dark": "#ADCBFB"
+        },
+        {
+          "name": "300",
+          "light": "#8FB8F6",
+          "dark": "#8FB8F6"
+        },
+        {
+          "name": "400",
+          "light": "#669DF1",
+          "dark": "#669DF1"
+        },
+        {
+          "name": "500",
+          "light": "#4688EC",
+          "dark": "#4688EC"
+        },
+        {
+          "name": "600",
+          "light": "#357DE8",
+          "dark": "#357DE8"
+        },
+        {
+          "name": "700",
+          "light": "#1868DB",
+          "dark": "#1868DB"
+        },
+        {
+          "name": "800",
+          "light": "#1558BC",
+          "dark": "#1558BC"
+        },
+        {
+          "name": "850",
+          "light": "#144794",
+          "dark": "#144794"
+        },
+        {
+          "name": "900",
+          "light": "#123263",
+          "dark": "#123263"
+        },
+        {
+          "name": "1000",
+          "light": "#1C2B42",
+          "dark": "#1C2B42"
+        }
+      ]
+    },
+    {
+      "id": "red",
+      "name": "Red",
+      "role": "danger",
+      "steps": [
+        {
+          "name": "100",
+          "light": "#FFECEB",
+          "dark": "#FFECEB"
+        },
+        {
+          "name": "200",
+          "light": "#FFD5D2",
+          "dark": "#FFD5D2"
+        },
+        {
+          "name": "250",
+          "light": "#FFB8B2",
+          "dark": "#FFB8B2"
+        },
+        {
+          "name": "300",
+          "light": "#FD9891",
+          "dark": "#FD9891"
+        },
+        {
+          "name": "400",
+          "light": "#F87168",
+          "dark": "#F87168"
+        },
+        {
+          "name": "500",
+          "light": "#F15B50",
+          "dark": "#F15B50"
+        },
+        {
+          "name": "600",
+          "light": "#E2483D",
+          "dark": "#E2483D"
+        },
+        {
+          "name": "700",
+          "light": "#C9372C",
+          "dark": "#C9372C"
+        },
+        {
+          "name": "800",
+          "light": "#AE2E24",
+          "dark": "#AE2E24"
+        },
+        {
+          "name": "850",
+          "light": "#872821",
+          "dark": "#872821"
+        },
+        {
+          "name": "900",
+          "light": "#5D1F1A",
+          "dark": "#5D1F1A"
+        },
+        {
+          "name": "1000",
+          "light": "#42221F",
+          "dark": "#42221F"
+        }
+      ]
+    },
+    {
+      "id": "lime",
+      "name": "Lime",
+      "role": "success",
+      "steps": [
+        {
+          "name": "100",
+          "light": "#EFFFD6",
+          "dark": "#EFFFD6"
+        },
+        {
+          "name": "200",
+          "light": "#D3F1A7",
+          "dark": "#D3F1A7"
+        },
+        {
+          "name": "250",
+          "light": "#BDE97C",
+          "dark": "#BDE97C"
+        },
+        {
+          "name": "300",
+          "light": "#B3DF72",
+          "dark": "#B3DF72"
+        },
+        {
+          "name": "400",
+          "light": "#94C748",
+          "dark": "#94C748"
+        },
+        {
+          "name": "500",
+          "light": "#82B536",
+          "dark": "#82B536"
+        },
+        {
+          "name": "600",
+          "light": "#6A9A23",
+          "dark": "#6A9A23"
+        },
+        {
+          "name": "700",
+          "light": "#5B7F24",
+          "dark": "#5B7F24"
+        },
+        {
+          "name": "800",
+          "light": "#4C6B1F",
+          "dark": "#4C6B1F"
+        },
+        {
+          "name": "850",
+          "light": "#3F5224",
+          "dark": "#3F5224"
+        },
+        {
+          "name": "900",
+          "light": "#37471F",
+          "dark": "#37471F"
+        },
+        {
+          "name": "1000",
+          "light": "#28311B",
+          "dark": "#28311B"
+        }
+      ]
+    },
+    {
+      "id": "orange",
+      "name": "Orange",
+      "role": "warning",
+      "steps": [
+        {
+          "name": "100",
+          "light": "#FFF5DB",
+          "dark": "#FFF5DB"
+        },
+        {
+          "name": "200",
+          "light": "#FCE4A6",
+          "dark": "#FCE4A6"
+        },
+        {
+          "name": "250",
+          "light": "#FBD779",
+          "dark": "#FBD779"
+        },
+        {
+          "name": "300",
+          "light": "#FBC828",
+          "dark": "#FBC828"
+        },
+        {
+          "name": "400",
+          "light": "#FCA700",
+          "dark": "#FCA700"
+        },
+        {
+          "name": "500",
+          "light": "#F68909",
+          "dark": "#F68909"
+        },
+        {
+          "name": "600",
+          "light": "#E06C00",
+          "dark": "#E06C00"
+        },
+        {
+          "name": "700",
+          "light": "#BD5B00",
+          "dark": "#BD5B00"
+        },
+        {
+          "name": "800",
+          "light": "#9E4C00",
+          "dark": "#9E4C00"
+        },
+        {
+          "name": "850",
+          "light": "#7A3B00",
+          "dark": "#7A3B00"
+        },
+        {
+          "name": "900",
+          "light": "#693200",
+          "dark": "#693200"
+        },
+        {
+          "name": "1000",
+          "light": "#3A2C1F",
+          "dark": "#3A2C1F"
+        }
+      ]
+    }
+  ],
+  "roleMapping": {
+    "appBg": 0,
+    "subtleBg": 1,
+    "uiBg": 2,
+    "uiBgHover": 3,
+    "uiBgActive": 4,
+    "borderSubtle": null,
+    "border": 3,
+    "borderStrong": 6,
+    "solid": 7,
+    "solidHover": 8,
+    "textSubtle": 8,
+    "text": 10
+  },
+  "solidForeground": "white in both themes for brand/danger/success bold (color.text.inverse = Neutral0 light / DarkNeutral100 dark); warning.bold is Orange300 and uses dark text via color.text.warning.inverse (Neutral1000)",
+  "notes": "Semantic roles per the tokens themselves: success is the Lime ramp and warning the Orange ramp (Green and Yellow still exist but only as meaning-free accent colors since the brand refresh). Chromatic ramps are shared by both themes, so dark equals light for them; dark mode instead remaps steps (bold 700->400, subtle 100->1000, borders 600->500) - only the neutral scale has a real dark ramp (DarkNeutral). Neutral steps are paired by number (Neutral X / DarkNeutral X), which matches mid-ramp token pairs (text.subtle 800/800, border.bold 600/600) but shifts at the extremes: elevation.surface is Neutral0 light yet DarkNeutral100 dark. Omitted here: Neutral1200 (#000000) / DarkNeutral1200 (#FFFFFF) and DarkNeutral -100/250/350 (extra dark-only surface steps), plus the alpha variants Neutral100A-500A / DarkNeutral-100A-500A used for color.background.neutral (Neutral200A), color.border (Neutral300A) and disabled states - so uiBg/uiBgHover/uiBgActive/border in roleMapping point at the solid analogs of those alpha steps. The neutral scale keeps its own step names (0-1100), one step offset from the chromatic 100-1000 names in stepNames. solid=7 (X700) holds for brand/danger/success; warning.bold is the documented exception at Orange300/400. Neutral solid (background.neutral.bold) is Neutral1000, index 10."
+}
