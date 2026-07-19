@@ -59,7 +59,6 @@
     "tailwind-merge": "^3.0.2",
     "tailwind-variants": "^3.1.1",
     "tailwindcss": "catalog:",
-    "tailwindcss-autocontrast": "^0.0.4",
     "tailwindcss-react-aria-components": "^2.2.0",
     "tailwindcss-with": "^0.0.2",
     "ts-morph": "^28.0.0",

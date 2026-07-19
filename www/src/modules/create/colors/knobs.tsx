@@ -18,6 +18,7 @@ function AxisSlider({
   maxValue,
   step,
   swatch,
+  formatValue,
   onChange,
 }: {
   label: string
@@ -29,6 +30,7 @@ function AxisSlider({
   step: number
   /** Live color rendered next to the output (backgrounds). */
   swatch?: string
+  formatValue?: (value: number) => string
   onChange: (value: number | undefined) => void
 }) {
   return (
@@ -52,7 +54,14 @@ function AxisSlider({
               style={{ backgroundColor: swatch }}
             />
           )}
-          <SliderOutput className="text-fg-muted" />
+          <SliderOutput
+            className="text-fg-muted"
+            children={
+              formatValue
+                ? ({ state }) => formatValue(state.values[0] ?? defaultValue)
+                : undefined
+            }
+          />
         </div>
       </div>
       <SliderControl />
@@ -85,6 +94,7 @@ export function ColorBackgroundControls({
         maxValue={100}
         step={0.5}
         swatch={lightSwatch}
+        formatValue={(v) => `L* ${v}`}
         onChange={(v) => setColorBackground('light', v)}
       />
       <AxisSlider
@@ -95,6 +105,7 @@ export function ColorBackgroundControls({
         maxValue={20}
         step={0.5}
         swatch={darkSwatch}
+        formatValue={(v) => (v === 0 ? 'OLED black' : `L* ${v}`)}
         onChange={(v) => setColorBackground('dark', v)}
       />
     </div>
@@ -121,6 +132,7 @@ export function ColorFineTuneControls({ seedDelta }: { seedDelta?: number }) {
         minValue={0}
         maxValue={2}
         step={0.05}
+        formatValue={(v) => `${v.toFixed(2)}×`}
         onChange={(v) => setColorAxis('vividness', v)}
       />
       <AxisSlider
@@ -130,6 +142,7 @@ export function ColorFineTuneControls({ seedDelta }: { seedDelta?: number }) {
         minValue={0}
         maxValue={3}
         step={0.1}
+        formatValue={(v) => `${v.toFixed(1)}×`}
         onChange={(v) => setColorAxis('hueShift', v)}
       />
       <div className="flex flex-col gap-1">

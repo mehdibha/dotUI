@@ -94,6 +94,42 @@ describe('preset codec — color recipe', () => {
     expect(decodePreset(encoded).color).toBeUndefined()
   })
 
+  it('salvages valid axes when a sibling field is corrupt', () => {
+    const encoded = encodeRawState({
+      c: {
+        v: 2,
+        seeds: { accent: '#ef4444' },
+        vividness: 5, // out of range — clamps, must not nuke siblings
+        hueShift: 'loud', // wrong type — dropped
+        background: { light: Number.NaN, dark: 3 },
+        preserveSeed: true,
+        primary: 'garbage',
+      },
+    })
+    expect(decodePreset(encoded).color).toEqual({
+      v: 2,
+      seeds: { accent: '#ef4444' },
+      vividness: 2,
+      background: { dark: 3 },
+      preserveSeed: true,
+    })
+  })
+
+  it('replaces an unparseable seed instead of crashing the resolver', () => {
+    const encoded = encodeRawState({
+      c: {
+        v: 2,
+        seeds: { accent: 'garbage', success: '#zzz', info: '#4862ff' },
+        vividness: 1.5,
+      },
+    })
+    expect(decodePreset(encoded).color).toEqual({
+      v: 2,
+      seeds: { accent: DEFAULT_COLOR_CONFIG.seeds.accent, info: '#4862ff' },
+      vividness: 1.5,
+    })
+  })
+
   it('drops a crafted primary value but keeps the rest of the recipe', () => {
     const encoded = encodeRawState({
       c: {

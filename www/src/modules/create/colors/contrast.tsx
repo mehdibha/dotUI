@@ -51,6 +51,8 @@ function GroupChip({
   label: string
   results: GuaranteeResult[]
 }) {
+  // No audited pairings of this kind for the scale/mode — don't claim a pass.
+  if (results.length === 0) return null
   const failures = results.filter((r) => !r.passes)
   const passes = failures.length === 0
   return (

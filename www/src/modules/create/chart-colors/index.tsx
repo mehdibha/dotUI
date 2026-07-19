@@ -74,6 +74,13 @@ export function ChartColorsSection({ theme }: { theme: Theme }) {
   )
   const hasOverrides = CHART_SLOTS.some((slot) => tokens[slot.token])
 
+  // Strips show what actually ships: a slot override replaces both modes.
+  const effective = (generated: string[]) =>
+    generated.map((color, i) => {
+      const token = CHART_SLOTS.find((slot) => slot.index === i)?.token
+      return (token && tokens[token]) || color
+    })
+
   return (
     <div className="flex flex-col gap-4">
       <p className="text-xs text-fg-muted">
@@ -83,8 +90,14 @@ export function ChartColorsSection({ theme }: { theme: Theme }) {
       </p>
 
       <div className="flex flex-col gap-1.5">
-        <ModeStrip label="Light" colors={theme.charts.light.categorical} />
-        <ModeStrip label="Dark" colors={theme.charts.dark.categorical} />
+        <ModeStrip
+          label="Light"
+          colors={effective(theme.charts.light.categorical)}
+        />
+        <ModeStrip
+          label="Dark"
+          colors={effective(theme.charts.dark.categorical)}
+        />
       </div>
 
       <div className="grid grid-cols-2 gap-4">

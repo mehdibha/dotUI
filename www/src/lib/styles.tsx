@@ -223,12 +223,23 @@ function buildScopedThemeCss(
     `.dark ${selector} {\n${darkOverrides}\n}`,
     // Mode-agnostic `--color-*` (they reference primitives that flip via the blocks above).
     emitCss(semanticsWithPrimary(color?.primary), { selector }),
+    // Empty today (no semantic token declares per-mode targets), kept so a
+    // future per-mode token re-points inside scopes like it does globally.
+    emitDarkOverridesCss(semanticsWithPrimary(color?.primary), {
+      selector: `.dark ${selector}`,
+    }),
   ]
   if (color) {
     let resolved = resolveColorConfigCached(color)
     if (forcedMode) {
       const ramp = forcedMode === 'dark' ? resolved.dark : resolved.light
-      resolved = { ...resolved, light: ramp, dark: ramp }
+      const chartSet = resolved.charts[forcedMode]
+      resolved = {
+        ...resolved,
+        light: ramp,
+        dark: ramp,
+        charts: { light: chartSet, dark: chartSet },
+      }
     }
     blocks.push(
       emitPrimitivesCss(resolved, {
@@ -237,7 +248,7 @@ function buildScopedThemeCss(
       }),
     )
   }
-  return blocks.join('\n')
+  return blocks.filter(Boolean).join('\n')
 }
 
 /* ----------------------- Shared scoped theme styles ----------------------- */

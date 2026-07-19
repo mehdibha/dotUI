@@ -251,9 +251,6 @@ importers:
       tailwindcss:
         specifier: 'catalog:'
         version: 4.3.0
-      tailwindcss-autocontrast:
-        specifier: ^0.0.4
-        version: 0.0.4(@tailwindcss/postcss@4.3.0)(postcss@8.5.15)(tailwindcss@4.3.0)
       tailwindcss-react-aria-components:
         specifier: ^2.2.0
         version: 2.2.0(tailwindcss@4.3.0)
@@ -374,10 +371,6 @@ packages:
 
   '@adobe/leonardo-contrast-colors@1.1.0':
     resolution: {integrity: sha512-URFR8vNgNsE/rnXqljVrx6OyZV3nQXTfbDDWZwTUYfOkmBr9hRB7ENK8f7pT7gHDjSuCf2bjJ227u4PUHUXHHg==}
-
-  '@alloc/quick-lru@5.2.0':
-    resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
-    engines: {node: '>=10'}
 
   '@asamuzakjp/css-color@4.1.2':
     resolution: {integrity: sha512-NfBUvBaYgKIuq6E/RBLY1m0IohzNHAYyaJGuTK79Z23uNwmz2jl1mPsC5ZxCCxylinKhT1Amn5oNTlx1wN8cQg==}
@@ -2376,9 +2369,6 @@ packages:
   '@tailwindcss/oxide@4.3.0':
     resolution: {integrity: sha512-F7HZGBeN9I0/AuuJS5PwcD8xayx5ri5GhjYUDBEVYUkexyA/giwbDNjRVrxSezE3T250OU2K/wp/ltWx3UOefg==}
     engines: {node: '>= 20'}
-
-  '@tailwindcss/postcss@4.3.0':
-    resolution: {integrity: sha512-Jm05Tjx+9yCLGv5qw1c+84Psds8MnyrEQYCB+FFk2lgGiUjlRqdxke4mVTuYrj2xnVZqKim2Apr5ySuQRYAw/w==}
 
   '@tailwindcss/vite@4.3.0':
     resolution: {integrity: sha512-t6J3OrB5Fc0ExuhohouH0fWUGMYL6PTLhW+E7zIk/pdbnJARZDCwjBznFnkh5ynRnIRSI4YjtTH0t6USjJISrw==}
@@ -5782,13 +5772,6 @@ packages:
       tailwind-merge:
         optional: true
 
-  tailwindcss-autocontrast@0.0.4:
-    resolution: {integrity: sha512-hEnQFwa29exk+/lFRIqxH4tbfGHkB4rAuhHZCt8IFZS9miRWmijRRTJsew98i6INxEfvrO3wl/g9g9qOi3PnEA==}
-    peerDependencies:
-      '@tailwindcss/postcss': ^4.0.0
-      postcss: ^8.0.0
-      tailwindcss: ^4.0.0
-
   tailwindcss-react-aria-components@2.2.0:
     resolution: {integrity: sha512-iNVDSQd6haXWiu4RakjaYnCUnLw/nOEFSFHEelFeIkT/0f8HSrJ23fwt59F93yNw4FrjjHDXIGHgEtqProNcmQ==}
     peerDependencies:
@@ -6460,8 +6443,6 @@ snapshots:
       ciebase: 0.1.1
       ciecam02: 0.4.6
       hsluv: 1.0.2
-
-  '@alloc/quick-lru@5.2.0': {}
 
   '@asamuzakjp/css-color@4.1.2':
     dependencies:
@@ -7931,14 +7912,6 @@ snapshots:
       '@tailwindcss/oxide-wasm32-wasi': 4.3.0
       '@tailwindcss/oxide-win32-arm64-msvc': 4.3.0
       '@tailwindcss/oxide-win32-x64-msvc': 4.3.0
-
-  '@tailwindcss/postcss@4.3.0':
-    dependencies:
-      '@alloc/quick-lru': 5.2.0
-      '@tailwindcss/node': 4.3.0
-      '@tailwindcss/oxide': 4.3.0
-      postcss: 8.5.15
-      tailwindcss: 4.3.0
 
   '@tailwindcss/vite@4.3.0(vite@8.1.0(@types/node@24.12.4)(esbuild@0.28.0)(jiti@2.7.0)(tsx@4.21.0)(yaml@2.9.0))':
     dependencies:
@@ -11857,14 +11830,6 @@ snapshots:
       tailwindcss: 4.3.0
     optionalDependencies:
       tailwind-merge: 3.4.0
-
-  tailwindcss-autocontrast@0.0.4(@tailwindcss/postcss@4.3.0)(postcss@8.5.15)(tailwindcss@4.3.0):
-    dependencies:
-      '@tailwindcss/postcss': 4.3.0
-      culori: 4.0.2
-      fast-glob: 3.3.3
-      postcss: 8.5.15
-      tailwindcss: 4.3.0
 
   tailwindcss-react-aria-components@2.2.0(tailwindcss@4.3.0):
     dependencies:
