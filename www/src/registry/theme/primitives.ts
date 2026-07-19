@@ -39,6 +39,9 @@ export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
   if (config.neutralTint !== undefined) options.neutralTint = config.neutralTint
   if (config.preserveSeed !== undefined)
     options.preserveSeed = config.preserveSeed
+  if (config.guaranteePolicy !== undefined)
+    options.guaranteePolicy = config.guaranteePolicy
+  if (config.borders !== undefined) options.borders = config.borders
   return options
 }
 

@@ -143,6 +143,39 @@ export function useDesignSystem() {
     [setColor],
   )
 
+  /** Set the guarantee policy; `undefined` deletes it (→ default policy). */
+  const setColorGuaranteePolicy = useCallback(
+    (policy: 'relaxed' | 'strict' | undefined) => {
+      setColor((base) => {
+        const { guaranteePolicy: _drop, ...rest } = base
+        return policy === undefined
+          ? rest
+          : { ...rest, guaranteePolicy: policy }
+      })
+    },
+    [setColor],
+  )
+
+  /**
+   * Set one all-palette border target (the `'*'` key; per-palette entries
+   * stay preset-level); `undefined` deletes it (→ skeleton placement).
+   */
+  const setColorBorderTarget = useCallback(
+    (job: '400' | '500' | '600', value: number | undefined) => {
+      setColor((base) => {
+        const shared = { ...base.borders?.['*'] }
+        if (value === undefined) delete shared[job]
+        else shared[job] = value
+        const borders = { ...base.borders }
+        if (Object.keys(shared).length > 0) borders['*'] = shared
+        else delete borders['*']
+        const { borders: _drop, ...rest } = base
+        return Object.keys(borders).length > 0 ? { ...rest, borders } : rest
+      })
+    },
+    [setColor],
+  )
+
   /** Pin (or unpin) the accent seed verbatim at the solid step. */
   const setColorPreserveSeed = useCallback(
     (value: boolean) => {
@@ -190,6 +223,8 @@ export function useDesignSystem() {
     setColorAxis,
     setColorBackground,
     setColorTokenOverride,
+    setColorGuaranteePolicy,
+    setColorBorderTarget,
     setColorPreserveSeed,
     setColorPrimary,
     setCodeOption,

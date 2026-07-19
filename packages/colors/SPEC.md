@@ -101,6 +101,24 @@ Locked guarantees (all solved in-loop, per hue per mode):
   this bar: a Geist-fidelity preset needs a per-palette floor override, not a
   lower default.)
 
+Flexibility axes (defaults are the locked values above; absent = identical
+output):
+
+- `borders` — per-palette border **placement targets** (WCAG vs the app
+  background, per border job, one value or per-mode values; key `'*'` = all
+  palettes). A target replaces the skeleton anchor for that job: solved by
+  bisection to the closest lightness clearing the ratio. Measured need
+  (Geist, vercel.com CSS 2026-07): default hairline 1.20 light / 1.55 dark,
+  emphasized 2.38 light / 5.85 dark — deviations in _both_ directions from
+  our anchors, unreachable by floors or a uniform scalar. A target below the
+  default floor is honored and priced as a report warning; targeted borders
+  verify against their own target (app background only), and the D1
+  monotonicity assert splits into surfaces (1–5) and borders (6–8) — Geist's
+  default border is measurably lighter than its active surface.
+- `guaranteePolicy` — `relaxed` demotes border-floor misses to report
+  warnings (text guarantees never relax); `default` = the floors above;
+  `strict` implies `strictOnSolid`.
+
 CI check: `verify()` runs in-loop at generation time; a scale that cannot meet
 its guarantee moves its solid/text lightness until it does (the engine owns
 the ramp). Emission of a failing scale is a build error, not a warning.

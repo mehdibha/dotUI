@@ -43,6 +43,9 @@ export interface ScaleColors {
   solidClamped: boolean
 }
 
+/** D2 — border placement targets: WCAG vs the app background, per border job. */
+export type BorderTargets = Partial<Record<'400' | '500' | '600', number>>
+
 export interface ScaleOptions {
   seed: Oklch
   mode: Mode
@@ -55,6 +58,10 @@ export interface ScaleOptions {
   tintPeak: number
   /** D2 — solve solids to the full WCAG 4.5 on-label bar. */
   strictOnSolid: boolean
+  /** D2 — place border jobs at these WCAG ratios instead of the skeleton. */
+  borderTargets?: BorderTargets
+  /** D2 — relaxed policy: border floors report instead of nudging. */
+  relaxedBorders?: boolean
   /** D7 — pin the seed verbatim at the solid step (light mode). */
   preserveSeed: boolean
   /** Skeleton override for background transposition (L*, jobs 1–8). */
@@ -185,6 +192,30 @@ function solveSolid(
 }
 
 /**
+ * D2 — place a border at a WCAG target vs the app background: the closest
+ * lightness to the background whose ratio clears the target. Ratio is
+ * monotone in L* away from the background, so a bisection converges; an
+ * unreachable target lands at the gamut pole and verify reports the miss.
+ */
+function solveBorderTarget(
+  target: number,
+  bg: Oklch,
+  chromaAt: (l: number) => number,
+  hueAt: (l: number) => number,
+  mode: Mode,
+): Oklch {
+  let pass = mode === 'light' ? 0 : 100 // the away-from-bg pole clears any bar
+  let fail = lstarOf(bg)
+  for (let k = 0; k < 40; k++) {
+    const mid = (pass + fail) / 2
+    const ratio = wcag2(solveLstar(mid, chromaAt, hueAt), bg)
+    if (ratio >= target) pass = mid
+    else fail = mid
+  }
+  return solveLstar(pass, chromaAt, hueAt)
+}
+
+/**
  * D10 — signed hover shift (Radix closed form; sign flips per mode). The
  * shift shrinks toward zero if it would break the on-label bars (dark-mode
  * lightening can push white text under Lc 60): at zero shift the bars pass
@@ -207,12 +238,14 @@ function hoverSolid(
         ? solid.l + delta
         : solid.l - delta
   const targetC = solid.l > 0.4 ? solid.c * 0.93 : solid.c
-  for (const t of [1, 0.75, 0.5, 0.25, 0]) {
+  for (const t of [1, 0.75, 0.5, 0.25]) {
     const l = solid.l + (targetL - solid.l) * t
     const c = solid.c + (targetC - solid.c) * t
     const hover = fitSrgb({ l, c: Math.min(c, chroma.at(l, 9)), h: solid.h })
-    if (onMeetsBars(on, hover, strict) || t === 0) return hover
+    if (onMeetsBars(on, hover, strict)) return hover
   }
+  // Zero shift really is the solid — a re-fit through the chroma clamp can
+  // land a hair under a strict bar the solid itself already cleared.
   return solid
 }
 
@@ -270,13 +303,28 @@ export function buildScale(options: ScaleOptions): ScaleColors {
 
   // D2 — border floors are guarantees, not skeleton suggestions: 8-bit
   // quantization can land a skeleton step a hair under its bar, so nudge
-  // borders away from the backgrounds until their WCAG floors hold.
+  // borders away from the backgrounds until their WCAG floors hold. A
+  // placement target replaces the skeleton anchor outright (solved vs the
+  // app background); relaxed policy keeps anchors as-is and lets verify
+  // report any floor miss.
   const borderFloors = [
     ['400', 5, BARS.border400],
     ['500', 6, BARS.border500],
     ['600', 7, BARS.border600],
   ] as const
   for (const [name, i, bar] of borderFloors) {
+    const target = options.borderTargets?.[name]
+    if (target !== undefined) {
+      steps[name] = solveBorderTarget(
+        target,
+        steps['25']!,
+        (l) => chroma.at(l, i),
+        hueAt,
+        mode,
+      )
+      continue
+    }
+    if (options.relaxedBorders) continue
     const meets = () =>
       [steps['25']!, steps['50']!].every((bg) => wcag2(steps[name]!, bg) >= bar)
     let lstar = skeleton[i]!
@@ -348,6 +396,9 @@ export function transposeSkeleton(
   const anchor = skeleton[skeleton.length - 1]!
   const factor = (targetLstar - anchor) / (first - anchor)
   const out = skeleton.map((lstar) => anchor + (lstar - anchor) * factor)
+  // Pin the background stop exactly: float residue here turns OLED black
+  // (L* 0) into #010101 and skews every ratio solved against it.
+  out[0] = targetLstar
   if (minFirstGap > 0 && out[1]! - out[0]! < minFirstGap)
     out[1] = out[0]! + minFirstGap
   return out

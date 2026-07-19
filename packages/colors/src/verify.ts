@@ -7,7 +7,7 @@
 
 import { BARS, STEPS, type StepName } from './data'
 import { apca, cappedLcBar, wcag2 } from './meters'
-import type { Mode, ScaleColors } from './scale'
+import type { BorderTargets, Mode, ScaleColors } from './scale'
 import type { Oklch } from './space'
 
 export interface GuaranteeResult {
@@ -23,11 +23,17 @@ export interface GuaranteeResult {
   passes: boolean
 }
 
+export interface VerifyOptions {
+  strictOnSolid: boolean
+  /** D2 — placed borders verify against their own target, app bg only. */
+  borderTargets?: BorderTargets
+}
+
 export function verifyScale(
   name: string,
   mode: Mode,
   scale: ScaleColors,
-  strictOnSolid: boolean,
+  { strictOnSolid, borderTargets }: VerifyOptions,
 ): GuaranteeResult[] {
   const results: GuaranteeResult[] = []
   const step = (s: StepName) => scale.steps[s]
@@ -84,26 +90,39 @@ export function verifyScale(
   check('on-solid', 'on-700', scale.on['700'], '700', onBars.wcag, onBars.lc)
   check('on-solid', 'on-800', scale.on['800'], '800', onBars.wcag, onBars.lc)
 
-  for (const [border, bar] of [
+  for (const [border, floor] of [
     ['400', BARS.border400],
     ['500', BARS.border500],
     ['600', BARS.border600],
-  ] as const)
-    for (const bg of ['25', '50'] as const)
-      check(`border-${border}`, border, step(border), bg, bar, 0)
+  ] as const) {
+    const target = borderTargets?.[border]
+    // A placed border's promise is its own target vs the app background; the
+    // default promise is the floor vs both backgrounds.
+    const backgrounds =
+      target === undefined ? (['25', '50'] as const) : ['25' as const]
+    for (const bg of backgrounds)
+      check(`border-${border}`, border, step(border), bg, target ?? floor, 0)
+  }
 
   return results
 }
 
-/** Job-order monotonicity for jobs 1–8 (D1) — L strictly ordered per mode. */
+/**
+ * Job-order monotonicity for jobs 1–8 (D1) — L strictly ordered per mode.
+ * Placed borders may legitimately sit above the surface ladder (measured:
+ * Geist's default border is lighter than its active surface), so border
+ * targets split the assert into surfaces (1–5) and borders (6–8).
+ */
 export function verifyLadder(
   name: string,
   mode: Mode,
   scale: ScaleColors,
+  splitAtBorders = false,
 ): string[] {
   const problems: string[] = []
   const skeletonSteps = STEPS.slice(0, 8)
   for (let i = 1; i < skeletonSteps.length; i++) {
+    if (splitAtBorders && i === 5) continue
     const prev = scale.steps[skeletonSteps[i - 1]!]!
     const curr = scale.steps[skeletonSteps[i]!]!
     const ordered = mode === 'light' ? curr.l < prev.l : curr.l > prev.l

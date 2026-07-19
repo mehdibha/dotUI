@@ -14,6 +14,7 @@ import {
   tonalGateReport,
 } from './charts'
 import {
+  BARS,
   CVD_GATE,
   DARK_BG_LSTAR,
   DARK_MIN_BG_SEPARATION,
@@ -32,6 +33,7 @@ import {
 } from './data'
 import { deltaEok, minPairwiseDeltaEok } from './meters'
 import {
+  type BorderTargets,
   buildScale,
   type Mode,
   type ScaleColors,
@@ -51,6 +53,15 @@ const colorString = z.string().refine(
   },
   { message: 'not a parsable CSS color' },
 )
+
+const borderTargetRatio = z.number().min(1.05).max(21)
+const borderTargetValue = z.union([
+  borderTargetRatio,
+  z.object({
+    light: borderTargetRatio.optional(),
+    dark: borderTargetRatio.optional(),
+  }),
+])
 
 export const themeOptionsSchema = z.object({
   seeds: z
@@ -82,6 +93,28 @@ export const themeOptionsSchema = z.object({
     .optional(),
   /** D2 — solve solids to the full WCAG 4.5 on-label bar. */
   strictOnSolid: z.boolean().optional(),
+  /**
+   * D2 — guarantee policy: `relaxed` reports border-floor misses as warnings
+   * instead of failing the build (text guarantees never relax); `strict`
+   * implies `strictOnSolid`. Absent = `default`.
+   */
+  guaranteePolicy: z.enum(['relaxed', 'default', 'strict']).optional(),
+  /**
+   * D2 — per-palette border placement targets: WCAG vs the app background,
+   * per border job, one value or per-mode values. Key `'*'` applies to every
+   * palette without its own entry. A target below the default floor is
+   * honored and priced as a report warning.
+   */
+  borders: z
+    .record(
+      z.string(),
+      z.object({
+        '400': borderTargetValue.optional(),
+        '500': borderTargetValue.optional(),
+        '600': borderTargetValue.optional(),
+      }),
+    )
+    .optional(),
 })
 
 export type ThemeOptions = z.infer<typeof themeOptionsSchema>
@@ -129,8 +162,29 @@ export function createTheme(input: string | ThemeOptions): Theme {
   const vividness = options.vividness ?? 1
   const hueShift = options.hueShift ?? 1
   const neutralTint = options.neutralTint ?? 1
-  const strictOnSolid = options.strictOnSolid ?? false
+  const guaranteePolicy = options.guaranteePolicy ?? 'default'
+  const strictOnSolid =
+    (options.strictOnSolid ?? false) || guaranteePolicy === 'strict'
+  const relaxedBorders = guaranteePolicy === 'relaxed'
   const preserveSeed = options.preserveSeed ?? false
+
+  // D2 — border placement targets, resolved per palette per mode (a palette's
+  // own entry wins over the `'*'` wildcard; a plain number serves both modes).
+  const borderTargetsFor = (
+    name: string,
+    mode: Mode,
+  ): BorderTargets | undefined => {
+    const spec = options.borders?.[name] ?? options.borders?.['*']
+    if (!spec) return undefined
+    const targets: BorderTargets = {}
+    for (const job of ['400', '500', '600'] as const) {
+      const value = spec[job]
+      if (value === undefined) continue
+      const ratio = typeof value === 'number' ? value : value[mode]
+      if (ratio !== undefined) targets[job] = ratio
+    }
+    return Object.keys(targets).length > 0 ? targets : undefined
+  }
 
   const accentSeed = toOklch(options.seeds.accent)
 
@@ -220,12 +274,14 @@ export function createTheme(input: string | ThemeOptions): Theme {
           ? tintPeak
           : Math.min(seed.c, NEUTRAL_WHISPER_CEILING),
       strictOnSolid,
+      relaxedBorders,
       preserveSeed: preserveSeed && name === 'accent',
     }
     const light = buildScale({
       ...shared,
       mode: 'light',
       skeleton: neutral ? skeletons.light.neutral : skeletons.light.chromatic,
+      borderTargets: borderTargetsFor(name, 'light'),
     })
     // Step 700 is mode-invariant (verified on Radix) — share the light solve.
     const dark = buildScale({
@@ -233,6 +289,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
       mode: 'dark',
       skeleton: neutral ? skeletons.dark.neutral : skeletons.dark.chromatic,
       sharedSolid: { solid: light.steps['700'], on: light.on['700'] },
+      borderTargets: borderTargetsFor(name, 'dark'),
     })
     built.light[name] = light
     built.dark[name] = dark
@@ -257,9 +314,27 @@ export function createTheme(input: string | ThemeOptions): Theme {
 
     for (const mode of ['light', 'dark'] as const) {
       const scale = built[mode][name]!
-      const results = verifyScale(name, mode, scale, strictOnSolid)
+      const borderTargets = borderTargetsFor(name, mode)
+      const results = verifyScale(name, mode, scale, {
+        strictOnSolid,
+        borderTargets,
+      })
       guarantees.push(...results)
-      warnings.push(...verifyLadder(name, mode, scale))
+      warnings.push(
+        ...verifyLadder(name, mode, scale, borderTargets !== undefined),
+      )
+      // D2 — price every target bought under the default floor.
+      for (const [job, floor] of [
+        ['400', BARS.border400],
+        ['500', BARS.border500],
+        ['600', BARS.border600],
+      ] as const) {
+        const target = borderTargets?.[job]
+        if (target !== undefined && target < floor)
+          warnings.push(
+            `${name}/${mode}: border-${job} target ${target} sits below the ${floor} default floor`,
+          )
+      }
       if (preserveSeed && name === 'accent') {
         for (const miss of results.filter(
           (r) => !r.passes && r.name === 'on-solid',
@@ -347,12 +422,17 @@ export function createTheme(input: string | ThemeOptions): Theme {
     return { background: oklchCss(background), scales, alphas, on }
   }
 
-  const failed = guarantees.filter(
+  // preserveSeed on-solid misses already carry their own warning; relaxed
+  // policy excuses border misses from `ok` but still surfaces them.
+  const misses = guarantees.filter(
     (g) =>
       !g.passes &&
       !(preserveSeed && g.scale === 'accent' && g.name === 'on-solid'),
   )
-  for (const f of failed)
+  const failed = misses.filter(
+    (g) => !(relaxedBorders && g.name.startsWith('border')),
+  )
+  for (const f of misses)
     warnings.push(
       `${f.scale}/${f.mode} ${f.name} (${f.fg} on ${f.bg}): WCAG ${f.wcag.toFixed(2)}/${f.wcagTarget} Lc ${f.lc.toFixed(1)}/${f.lcTarget}`,
     )

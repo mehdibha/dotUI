@@ -30,7 +30,11 @@ import { Select, SelectValue } from '@/registry/ui/select'
 import { ChartColorsSection, ChartSwatchStrip } from '../chart-colors'
 import { useDesignSystem } from '../preset'
 import { ContrastReadout } from './contrast'
-import { ColorBackgroundControls, ColorFineTuneControls } from './knobs'
+import {
+  ColorBackgroundControls,
+  ColorFineTuneControls,
+  useBorderSeeds,
+} from './knobs'
 import { TokenOverridesSection } from './overrides'
 
 type GrayMode = 'auto' | 'pure' | 'custom'
@@ -148,6 +152,7 @@ export function ColorsConfig() {
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
   const theme = useMemo(() => resolveColorConfigCached(config), [config])
   const grayMode = grayModeOf(config)
+  const borderSeeds = useBorderSeeds(config, theme)
 
   // Gray-mode transitions touch two fields (neutral seed + neutralTint), so
   // apply them as one atomic update.
@@ -250,7 +255,10 @@ export function ColorsConfig() {
       <Disclosure>
         <DisclosureTrigger>Fine-tune</DisclosureTrigger>
         <DisclosurePanel>
-          <ColorFineTuneControls seedDelta={theme.report.seedDelta.accent} />
+          <ColorFineTuneControls
+            seedDelta={theme.report.seedDelta.accent}
+            borderSeeds={borderSeeds}
+          />
         </DisclosurePanel>
       </Disclosure>
 
