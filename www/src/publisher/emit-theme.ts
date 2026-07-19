@@ -11,8 +11,9 @@
 
 import {
   resolveColorConfig,
+  resolveTarget,
   resolveTokenValue,
-  semanticVocabulary,
+  semanticsFor,
 } from '@/registry/theme'
 import type { Density, RegistryItem } from '@/registry/types'
 
@@ -205,12 +206,20 @@ export function mergePresetCssFields(
 
   // The shipped `@theme` block is resolved from the typed vocabulary, honoring
   // the preset's primary source (`--color-primary: var(--accent-700)` when the
-  // primary draws from the accent ramp).
+  // primary draws from the accent ramp) and any per-token overrides. Per-mode
+  // targets take their light value in `@theme` and re-point on `.dark`.
   const themeVars = (cssVars.theme ??= {})
-  for (const [name, token] of Object.entries(
-    semanticVocabulary(preset.color?.primary ?? 'neutral'),
-  )) {
+  const darkRepoints: Record<string, string> = {}
+  for (const [name, token] of Object.entries(semanticsFor(preset.color))) {
     themeVars[`--${name}`] = resolveTokenValue(token)
+    if ('light' in token.target)
+      darkRepoints[`--${name}`] = resolveTarget(token.target.dark)
+  }
+  if (Object.keys(darkRepoints).length > 0) {
+    css['.dark'] = {
+      ...(isPlainCssObject(css['.dark']) ? css['.dark'] : {}),
+      ...darkRepoints,
+    }
   }
 
   const lightVars = emitPresetLightVars(preset)

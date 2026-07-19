@@ -31,6 +31,7 @@ import { ChartColorsSection, ChartSwatchStrip } from '../chart-colors'
 import { useDesignSystem } from '../preset'
 import { ContrastReadout } from './contrast'
 import { ColorBackgroundControls, ColorFineTuneControls } from './knobs'
+import { TokenOverridesSection } from './overrides'
 
 type GrayMode = 'auto' | 'pure' | 'custom'
 
@@ -250,6 +251,13 @@ export function ColorsConfig() {
         <DisclosureTrigger>Fine-tune</DisclosureTrigger>
         <DisclosurePanel>
           <ColorFineTuneControls seedDelta={theme.report.seedDelta.accent} />
+        </DisclosurePanel>
+      </Disclosure>
+
+      <Disclosure>
+        <DisclosureTrigger>Token overrides</DisclosureTrigger>
+        <DisclosurePanel>
+          <TokenOverridesSection />
         </DisclosurePanel>
       </Disclosure>
 

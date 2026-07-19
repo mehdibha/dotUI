@@ -8,12 +8,12 @@ import type { ClassValue, TVReturnType, VariantProps } from 'tailwind-variants'
 
 import { resolveColorConfigCached } from '@/lib/resolve-color'
 import {
-  ACCENT_PRIMARY_SEMANTICS,
   DEFAULT_SEMANTICS,
   emitCss,
   emitDarkOverridesCss,
   emitPrimitivesCss,
-  semanticsWithPrimary,
+  semanticDelta,
+  semanticsFor,
 } from '@/registry/theme'
 import type { ColorConfig } from '@/registry/theme'
 import type {
@@ -222,10 +222,9 @@ function buildScopedThemeCss(
     `${selector} {\n${base}\n\tcolor: var(--color-fg);\n}`,
     `.dark ${selector} {\n${darkOverrides}\n}`,
     // Mode-agnostic `--color-*` (they reference primitives that flip via the blocks above).
-    emitCss(semanticsWithPrimary(color?.primary), { selector }),
-    // Empty today (no semantic token declares per-mode targets), kept so a
-    // future per-mode token re-points inside scopes like it does globally.
-    emitDarkOverridesCss(semanticsWithPrimary(color?.primary), {
+    emitCss(semanticsFor(color), { selector }),
+    // `.dark` re-points for per-mode targets (per-mode token overrides).
+    emitDarkOverridesCss(semanticsFor(color), {
       selector: `.dark ${selector}`,
     }),
   ]
@@ -462,14 +461,15 @@ function DesignSystemProvider({
   const themeCss = React.useMemo(() => {
     if (scoped || !color) return null
     const primitives = emitPrimitivesCss(resolveColorConfigCached(color))
-    // An accent-sourced primary re-points the primary cluster on plain `:root`
-    // (beats the layered `@theme` declarations), plus any per-mode re-points
-    // on `.dark` (none today — the accent primitives flip with `.dark`).
-    if (color.primary !== 'accent') return primitives
+    // Tokens the config re-points (primary source, per-token overrides)
+    // re-declare on plain `:root` (beats the layered `@theme` declarations),
+    // plus their per-mode re-points on `.dark`.
+    const delta = semanticDelta(color)
+    if (Object.keys(delta).length === 0) return primitives
     return (
       primitives +
-      emitCss(ACCENT_PRIMARY_SEMANTICS, { selector: ':root' }) +
-      emitDarkOverridesCss(ACCENT_PRIMARY_SEMANTICS, { selector: '.dark' })
+      emitCss(delta, { selector: ':root' }) +
+      emitDarkOverridesCss(delta, { selector: '.dark' })
     )
   }, [scoped, color])
   const themeStyle = themeCss ? (

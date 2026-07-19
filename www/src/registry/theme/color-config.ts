@@ -10,7 +10,26 @@ import { z } from 'zod'
 
 import { STATUS_SEEDS, toOklch } from '@dotui/colors'
 
-import type { PrimaryColorSource } from './types'
+import type {
+  PrimaryColorSource,
+  TokenOverride,
+  TokenOverrides,
+  TokenTargetSpec,
+} from './types'
+import { JOB_STEPS, type JobName } from './types'
+
+const JOB_NAMES = Object.keys(JOB_STEPS) as [JobName, ...JobName[]]
+const tokenTargetSpec = z.object({
+  palette: z.string().min(1),
+  job: z.enum(JOB_NAMES),
+})
+const tokenOverride = z.union([
+  tokenTargetSpec,
+  z.object({
+    light: tokenTargetSpec.optional(),
+    dark: tokenTargetSpec.optional(),
+  }),
+])
 
 export const colorConfigSchema = z.object({
   v: z.literal(2),
@@ -44,6 +63,11 @@ export const colorConfigSchema = z.object({
    * (brand-colored primary); absent means the default neutral (black/white).
    */
   primary: z.literal('accent').optional(),
+  /**
+   * Per-token remaps (T5): token name → (palette, job), one destination or a
+   * per-mode pair. Applied by the semantic resolver; unknown names are inert.
+   */
+  overrides: z.record(z.string(), tokenOverride).optional(),
 })
 
 export type ColorConfig = z.infer<typeof colorConfigSchema>
@@ -99,6 +123,38 @@ const clamp = (value: number, min: number, max: number) =>
 const finite = (value: unknown): value is number =>
   typeof value === 'number' && Number.isFinite(value)
 
+/** Salvage one remap destination: a non-empty palette + a known job name. */
+function salvageTargetSpec(raw: unknown): TokenTargetSpec | undefined {
+  if (typeof raw !== 'object' || raw === null) return undefined
+  const spec = raw as { palette?: unknown; job?: unknown }
+  if (typeof spec.palette !== 'string' || spec.palette.length === 0)
+    return undefined
+  if (typeof spec.job !== 'string' || !(spec.job in JOB_STEPS)) return undefined
+  return { palette: spec.palette, job: spec.job as JobName }
+}
+
+/** Salvage the per-token remap table: keep only valid entries, drop empties. */
+function salvageOverrides(raw: unknown): TokenOverrides | undefined {
+  if (typeof raw !== 'object' || raw === null) return undefined
+  const overrides: TokenOverrides = {}
+  for (const [token, value] of Object.entries(raw)) {
+    const both = salvageTargetSpec(value)
+    if (both) {
+      overrides[token] = both
+      continue
+    }
+    if (typeof value !== 'object' || value === null) continue
+    const pair = value as { light?: unknown; dark?: unknown }
+    const override: Exclude<TokenOverride, TokenTargetSpec> = {}
+    const light = salvageTargetSpec(pair.light)
+    const dark = salvageTargetSpec(pair.dark)
+    if (light) override.light = light
+    if (dark) override.dark = dark
+    if (light || dark) overrides[token] = override
+  }
+  return Object.keys(overrides).length > 0 ? overrides : undefined
+}
+
 /**
  * Migrate any decoded color slice — v2 salvages field by field (a corrupt or
  * out-of-range axis is clamped or dropped, never taking valid siblings with
@@ -118,6 +174,7 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     hueShift?: unknown
     neutralTint?: unknown
     preserveSeed?: unknown
+    overrides?: unknown
     algorithm?: string
     knobs?: Record<string, unknown>
     primary?: unknown
@@ -141,6 +198,8 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     if (typeof raw.preserveSeed === 'boolean')
       config.preserveSeed = raw.preserveSeed
     if (raw.primary === 'accent') config.primary = 'accent'
+    const overrides = salvageOverrides(raw.overrides)
+    if (overrides) config.overrides = overrides
     return config
   }
 

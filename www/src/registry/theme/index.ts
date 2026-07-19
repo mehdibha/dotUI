@@ -7,16 +7,23 @@
  */
 
 export type {
+  JobName,
   ModeName,
   PrimaryColorSource,
   SemanticCategory,
   SemanticTarget,
   SemanticToken,
   SemanticVocabulary,
+  TokenOverride,
+  TokenOverrides,
+  TokenTargetSpec,
 } from './types'
+export { JOB_STEPS } from './types'
 export {
-  ACCENT_PRIMARY_SEMANTICS,
+  applyTokenOverrides,
   DEFAULT_SEMANTICS,
+  semanticDelta,
+  semanticsFor,
   semanticsWithPrimary,
   semanticVocabulary,
 } from './semantics'

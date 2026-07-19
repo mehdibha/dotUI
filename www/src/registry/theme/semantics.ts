@@ -15,7 +15,11 @@ import type {
   SemanticTarget,
   SemanticToken,
   SemanticVocabulary,
+  TokenOverride,
+  TokenOverrides,
+  TokenTargetSpec,
 } from './types'
+import { JOB_STEPS } from './types'
 
 /** Picker pools: the neutral backbone + any custom palette. */
 const NEUTRAL = ['neutral', '..'] as const
@@ -183,12 +187,74 @@ export function semanticsWithPrimary(
   return semanticVocabulary(source ?? 'neutral')
 }
 
-/** The primary-cluster overrides alone (accent source) — for scoped re-emits. */
-export const ACCENT_PRIMARY_SEMANTICS: SemanticVocabulary = Object.fromEntries(
-  Object.entries(semanticVocabulary('accent')).filter(
-    ([name]) =>
-      name.startsWith('color-primary') ||
-      name === 'color-fg-on-primary' ||
-      name === 'color-fg-primary-disabled',
-  ),
-)
+const specTarget = (spec: TokenTargetSpec): SemanticTarget => ({
+  ref: { palette: spec.palette, step: JOB_STEPS[spec.job] },
+})
+
+const modeTarget = (
+  target: SemanticToken['target'],
+  mode: 'light' | 'dark',
+): SemanticTarget => ('light' in target ? target[mode] : target)
+
+function overriddenTarget(
+  base: SemanticToken['target'],
+  override: TokenOverride,
+): SemanticToken['target'] {
+  if ('palette' in override) return specTarget(override)
+  return {
+    light: override.light
+      ? specTarget(override.light)
+      : modeTarget(base, 'light'),
+    dark: override.dark ? specTarget(override.dark) : modeTarget(base, 'dark'),
+  }
+}
+
+/**
+ * Apply per-token remaps (T5 `overrides`) to a vocabulary. Unknown token
+ * names are ignored (a stale preset must never break emission); category,
+ * picker pools, and descriptions survive the remap.
+ */
+export function applyTokenOverrides(
+  vocabulary: SemanticVocabulary,
+  overrides: TokenOverrides | undefined,
+): SemanticVocabulary {
+  if (!overrides || Object.keys(overrides).length === 0) return vocabulary
+  const out = { ...vocabulary }
+  for (const [name, override] of Object.entries(overrides)) {
+    const base = out[name]
+    if (!base) continue
+    out[name] = { ...base, target: overriddenTarget(base.target, override) }
+  }
+  return out
+}
+
+/** The one resolver every emitter goes through (T4): primary + overrides. */
+export function semanticsFor(
+  color:
+    | { primary?: PrimaryColorSource; overrides?: TokenOverrides }
+    | undefined,
+): SemanticVocabulary {
+  return applyTokenOverrides(
+    semanticVocabulary(color?.primary ?? 'neutral'),
+    color?.overrides,
+  )
+}
+
+/**
+ * The tokens whose target differs from the default vocabulary — for delta
+ * re-emits on plain `:root`/`.dark` (the v0 bundle, scoped previews), where
+ * the full `@theme` layer ships static and only divergences re-point.
+ */
+export function semanticDelta(
+  color:
+    | { primary?: PrimaryColorSource; overrides?: TokenOverrides }
+    | undefined,
+): SemanticVocabulary {
+  return Object.fromEntries(
+    Object.entries(semanticsFor(color)).filter(
+      ([name, token]) =>
+        JSON.stringify(token.target) !==
+        JSON.stringify(DEFAULT_SEMANTICS[name]?.target),
+    ),
+  )
+}
