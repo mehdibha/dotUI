@@ -4,7 +4,7 @@ import { useCallback, useMemo } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
 
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import type { ColorConfig, PaletteSeeds } from '@/registry/theme'
+import type { ColorConfig, PaletteSeeds, TokenOverride } from '@/registry/theme'
 import { DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
 import type { CodeOptions } from '@/publisher/code-options'
 
@@ -129,6 +129,20 @@ export function useDesignSystem() {
     [setColor],
   )
 
+  /** Remap one semantic token; `undefined` deletes it (→ default target). */
+  const setColorTokenOverride = useCallback(
+    (token: string, value: TokenOverride | undefined) => {
+      setColor((base) => {
+        const overrides = { ...base.overrides }
+        if (value === undefined) delete overrides[token]
+        else overrides[token] = value
+        const { overrides: _drop, ...rest } = base
+        return Object.keys(overrides).length > 0 ? { ...rest, overrides } : rest
+      })
+    },
+    [setColor],
+  )
+
   /** Pin (or unpin) the accent seed verbatim at the solid step. */
   const setColorPreserveSeed = useCallback(
     (value: boolean) => {
@@ -175,6 +189,7 @@ export function useDesignSystem() {
     setColorSeed,
     setColorAxis,
     setColorBackground,
+    setColorTokenOverride,
     setColorPreserveSeed,
     setColorPrimary,
     setCodeOption,

@@ -51,3 +51,38 @@ export interface SemanticToken {
 
 /** The semantic vocabulary, keyed by token name WITHOUT the leading `--` (e.g. `"color-bg"`). */
 export type SemanticVocabulary = Record<string, SemanticToken>
+
+/** The engine's 12-job ladder by job name (T2) — the remap-facing vocabulary. */
+export const JOB_STEPS = {
+  'app-bg': '25',
+  'subtle-bg': '50',
+  'ui-rest': '100',
+  'ui-hover': '200',
+  'ui-active': '300',
+  'border-subtle': '400',
+  'border-interactive': '500',
+  'border-emphasized': '600',
+  solid: '700',
+  'solid-hover': '800',
+  'text-muted': '900',
+  text: '950',
+} as const satisfies Record<string, StepName>
+
+export type JobName = keyof typeof JOB_STEPS
+
+/** A remap destination: a palette + job, resolved to `ref(palette, step)`. */
+export interface TokenTargetSpec {
+  palette: string
+  job: JobName
+}
+
+/**
+ * A per-token remap (T5 `overrides`): one destination for both modes, or a
+ * per-mode pair — a missing mode keeps the token's default target there.
+ */
+export type TokenOverride =
+  | TokenTargetSpec
+  | { light?: TokenTargetSpec; dark?: TokenTargetSpec }
+
+/** Per-token remaps, keyed by token name (e.g. `"color-card"`). */
+export type TokenOverrides = Record<string, TokenOverride>

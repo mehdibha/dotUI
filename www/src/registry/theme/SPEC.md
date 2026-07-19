@@ -141,8 +141,9 @@ the current flat section are both replaced):
 - Randomize-within-quality-rules + per-seed locks (lock-and-reroll)
 
 **Advanced** — the engine's real axes: `vividness`, `hueShift`,
-`neutralTint`, `preserveSeed`, per-token remapping (the `scales` picker
-pools finally get their UI), chart palette controls.
+`neutralTint`, `preserveSeed`, per-token remapping ✅ (the `scales` picker
+pools as a UI — mode-agnostic `{palette, job}` rows; per-mode pairs stay
+config/preset-level), chart palette controls.
 
 **Verification in the panel**: the contrast readout covers the actually-
 shipped guarantee pairings (engine D2) in both modes — not just fg-on-500 in
