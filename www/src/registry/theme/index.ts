@@ -1,9 +1,9 @@
 /**
- * `@/registry/theme` — the semantic color layer.
+ * `@/registry/theme` — the semantic color layer (token system v2, SPEC.md).
  *
- * Owns the semantic token vocabulary (`DEFAULT_SEMANTICS`) and its CSS emission
- * (`emitCss`). The pure ramp kernel lives in `@dotui/colors`; this layer maps a
- * generated (or fixed) set of primitive ramps onto dotUI's `--color-*` tokens.
+ * Owns the semantic token vocabulary and its CSS emission. The pure engine
+ * lives in `@dotui/colors`; this layer maps engine output onto dotUI's
+ * `--color-*` tokens and persists the user's `ColorConfig`.
  */
 
 export type {
@@ -18,33 +18,29 @@ export {
   ACCENT_PRIMARY_SEMANTICS,
   DEFAULT_SEMANTICS,
   semanticsWithPrimary,
+  semanticVocabulary,
 } from './semantics'
 export { colorTokenNames } from './params'
 export {
   emitCss,
   type EmitCssOptions,
+  emitDarkOverridesCss,
   resolveTarget,
   resolveTokenValue,
 } from './emit-css'
 export {
-  type AlgorithmId,
   type ColorConfig,
-  type ColorKnobs,
+  colorConfigSchema,
   DEFAULT_COLOR_CONFIG,
-  GENERATIVE_ALGORITHMS,
+  DEFAULT_STATUS_SEEDS,
+  migrateColorConfig,
   type PaletteSeeds,
 } from './color-config'
 export {
   emitPrimitivesCss,
+  type EmitPrimitivesOptions,
   type Ramp,
   resolveColorConfig,
-  type ResolvedPalettes,
+  themeOptionsFromConfig,
 } from './primitives'
-export {
-  ACCENT_KERNEL_NAME,
-  fromKernelPaletteName,
-  PALETTE_ORDER,
-  type PaletteName,
-  STATUS_PALETTES,
-  toKernelPaletteName,
-} from './palettes'
+export { PALETTE_ORDER, type PaletteName, STATUS_PALETTES } from './palettes'

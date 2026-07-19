@@ -1,6 +1,6 @@
 'use client'
 
-import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
+import { DEFAULT_COLOR_CONFIG, DEFAULT_STATUS_SEEDS } from '@/registry/theme'
 import { ShowcaseCard } from '@/components/showcase-card'
 
 import { PresetThumbnail } from './preset-thumbnail'
@@ -9,7 +9,13 @@ import type { Preset } from './presets-data'
 /** The seed swatches shown at the right of the card header, in a fixed order. */
 function PaletteSwatches({ preset }: { preset: Preset }) {
   const seeds = preset.designSystem.color?.seeds ?? DEFAULT_COLOR_CONFIG.seeds
-  const swatches = [seeds.accent, seeds.neutral, seeds.success, seeds.danger]
+  // The neutral seed is optional (absent = auto-tinted); skip it when unset.
+  const swatches = [
+    seeds.accent,
+    seeds.neutral,
+    seeds.success ?? DEFAULT_STATUS_SEEDS.success,
+    seeds.danger ?? DEFAULT_STATUS_SEEDS.danger,
+  ].filter((color): color is string => Boolean(color))
   return (
     <div className="flex shrink-0 items-center -space-x-1">
       {swatches.map((color, i) => (

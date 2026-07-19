@@ -22,19 +22,13 @@ import {
 import type { PublishPreset } from './types'
 
 /**
- * The preset-resolved primitive ramps as a standalone `colors.css` — `:root`
- * (light) + `.dark` (reversed), with `--on-<palette>-<step>` foregrounds baked
- * in (`onColors: true`).
- *
- * dotUI's own `base/colors.css` omits the `--on-*` vars because the
- * `tailwindcss-autocontrast` plugin derives them at Tailwind-compile from the
- * `cssfile`. The bundle can't rely on that: the plugin's `cssfile` path is
- * brittle across project layouts, and a wrong path silently yields black-on-black
- * text. Baking the foregrounds in makes the bundle portable and plugin-free.
+ * The preset-resolved primitive layer as a standalone `colors.css` — `:root`
+ * (light) + `.dark`, each an independent engine pass carrying the ramps,
+ * alpha twins, solved `--on-*` labels, and chart colors.
  */
 export function emitColorsCss(preset: PublishPreset): string {
   const config = preset.color ?? DEFAULT_COLOR_CONFIG
-  const css = emitPrimitivesCss(resolveColorConfig(config), { onColors: true })
+  const css = emitPrimitivesCss(resolveColorConfig(config))
   // The bundle's theme.css ships static (`--color-primary: var(--neutral-950)`
   // inside `@theme`); an accent-sourced primary re-points the cluster on plain
   // `:root`, which beats the layered `@theme` declarations at compile.
@@ -47,10 +41,7 @@ export function emitColorsCss(preset: PublishPreset): string {
  * pulls in Tailwind, the fonts, and the mirrored registry stylesheet (which in
  * turn imports `base.css`, the preset `colors.css`, `theme.css`, and every
  * component's `styles.css`). `@source` globs make Tailwind scan the shipped
- * component + showcase sources.
- *
- * Lives at `src/app/globals.css`; the autocontrast plugin's `cssfile` option in
- * the mirrored `base.css` is repointed here at bundle-build time.
+ * component + showcase sources. Lives at `src/app/globals.css`.
  */
 export const BUNDLE_GLOBALS_CSS = `@import "tailwindcss";
 

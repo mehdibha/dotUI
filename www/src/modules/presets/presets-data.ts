@@ -1,4 +1,4 @@
-import { DEFAULT_COLOR_CONFIG, type ColorConfig } from '@/registry/theme'
+import type { ColorConfig } from '@/registry/theme'
 import { DEFAULTS, type DesignSystem } from '@/modules/create/preset'
 
 /**
@@ -6,7 +6,7 @@ import { DEFAULTS, type DesignSystem } from '@/modules/create/preset'
  *
  * EXPERIMENT: this hand-authored list stands in for a real preset source so we
  * can validate the gallery UI. Each entry varies only the high-impact, low-risk
- * axes (palette seeds, algorithm, density, radius) off the builder defaults —
+ * axes (palette seeds, engine axes, density, radius) off the builder defaults —
  * enough to read as a distinct design system in the scaled-down preview.
  */
 export type Preset = {
@@ -23,7 +23,6 @@ export type Preset = {
 }
 
 function makeDesignSystem(opts: {
-  algorithm?: ColorConfig['algorithm']
   neutral: string
   accent: string
   density?: DesignSystem['density']
@@ -31,19 +30,19 @@ function makeDesignSystem(opts: {
   radiusFactor?: string
   /** Ramp the primary-action tokens draw from (default neutral black/white). */
   primary?: ColorConfig['primary']
-  /** Per-producer tuning (e.g. force a gray accent to stay gray). */
-  knobs?: ColorConfig['knobs']
+  /** Chroma-curve scale (1 = engine default). */
+  vividness?: ColorConfig['vividness']
 }): DesignSystem {
-  const { algorithm = 'oklch', neutral, accent, density = 'default' } = opts
+  const { neutral, accent, density = 'default' } = opts
   return {
     ...DEFAULTS,
     density,
     tokens: opts.radiusFactor ? { '--radius-factor': opts.radiusFactor } : {},
     color: {
-      algorithm,
-      seeds: { ...DEFAULT_COLOR_CONFIG.seeds, neutral, accent },
+      v: 2,
+      seeds: { accent, neutral },
       ...(opts.primary ? { primary: opts.primary } : {}),
-      ...(opts.knobs ? { knobs: opts.knobs } : {}),
+      ...(opts.vividness !== undefined ? { vividness: opts.vividness } : {}),
     },
   }
 }
@@ -66,9 +65,9 @@ export const PRESETS: Preset[] = [
       accent: '#171717',
       radiusFactor: '0.5',
       density: 'compact',
-      // A pure-gray accent: kill chroma so the producer doesn't floor it back
-      // up to a tinted ramp (Geist-style neutral primary).
-      knobs: { chromaMult: 0, minChroma: 0 },
+      // A pure-gray accent: zero vividness keeps the ramp from tinting back up
+      // (Geist-style neutral primary).
+      vividness: 0,
     }),
   },
   {
@@ -89,7 +88,6 @@ export const PRESETS: Preset[] = [
     description: 'Soft purple, generous round.',
     swatch: '#a78bfa',
     designSystem: makeDesignSystem({
-      algorithm: 'material',
       neutral: '#79747e',
       accent: '#6750a4',
       primary: 'accent',
@@ -138,13 +136,13 @@ export const PRESETS: Preset[] = [
   {
     id: 'contrast',
     name: 'Contrast',
-    description: 'APCA-tuned emerald.',
+    description: 'Vivid emerald, sharp corners.',
     swatch: '#34d399',
     designSystem: makeDesignSystem({
-      algorithm: 'contrast',
       neutral: '#71717a',
       accent: '#059669',
       primary: 'accent',
+      vividness: 1.33,
       radiusFactor: '0.75',
       density: 'default',
     }),

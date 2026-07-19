@@ -39,10 +39,7 @@ import { existsSync, promises as fs, statSync } from 'node:fs'
 import path from 'node:path'
 import { format } from 'oxfmt'
 
-import {
-  DEFAULT_COLOR_CONFIG,
-  GENERATIVE_ALGORITHMS,
-} from '../src/registry/theme/color-config'
+import { DEFAULT_COLOR_CONFIG } from '../src/registry/theme/color-config'
 
 // `process.cwd()` is `www/` (the script is run from there via pnpm).
 const SRC = path.join(process.cwd(), 'src')
@@ -63,6 +60,20 @@ const OVERRIDES: Record<string, string> = {
 
 /** Per-file content rewrites applied after read, before emit and import scan. */
 function transformContent(srcRel: string, content: string): string {
+  if (srcRel === 'registry/theme/types.ts') {
+    // Type-only dependency on the unpublished @dotui/colors — inline it so the
+    // package never enters the bundle's dependency list.
+    const rewritten = content.replace(
+      /import\s+type\s*\{\s*StepName\s*\}\s*from\s*["']@dotui\/colors["'];?/,
+      'type StepName = string;',
+    )
+    if (rewritten === content) {
+      throw new Error(
+        '[showcase-bundle] expected to rewrite the StepName import in registry/theme/types.ts but found no match',
+      )
+    }
+    return rewritten
+  }
   if (srcRel === 'components/showcase/invite-members.tsx') {
     const rewritten = content.replace(
       /import\s*\{\s*ExternalLinkIcon\s*\}\s*from\s*["']@\/registry\/__generated__\/icons["'];?/,
@@ -123,7 +134,6 @@ const DEP_VERSIONS: Record<string, string> = {
   'react-stately': '^3.48.0',
   'tailwind-merge': '^3.0.2',
   'tailwind-variants': '^3.1.1',
-  'tailwindcss-autocontrast': '^0.0.4',
   'tailwindcss-react-aria-components': '^2.2.0',
   'tailwindcss-with': '^0.0.2',
   'tw-animate-css': '^1.3.5',
@@ -329,25 +339,10 @@ async function buildShowcaseBundle(): Promise<void> {
 
   /* ----- base CSS (theme scaffolding). colors.css is injected per-request. ----- */
   for (const base of ['base.css', 'theme.css', 'fonts.css']) {
-    let content = await fs.readFile(
+    const content = await fs.readFile(
       path.join(SRC, `registry/base/${base}`),
       'utf8',
     )
-    if (base === 'base.css') {
-      // Drop the autocontrast plugin: the bundle bakes `--on-*` foregrounds
-      // into colors.css (emit-bundle-css.ts), so the plugin — and its brittle
-      // `cssfile` path — isn't needed.
-      const before = content
-      content = content.replace(
-        /@plugin\s+['"]tailwindcss-autocontrast['"]\s*\{[\s\S]*?\}\s*/,
-        '',
-      )
-      if (content === before) {
-        throw new Error(
-          '[showcase-bundle] expected to strip the tailwindcss-autocontrast @plugin from base.css',
-        )
-      }
-    }
     cssFiles.unshift({ target: `registry/base/${base}`, content })
   }
 
@@ -422,66 +417,83 @@ function themeStub(): string {
   return `// Stub of @/registry/theme for the standalone "Open in v0" bundle.
 // The real barrel depends on the unpublished @dotui/colors workspace package.
 // What ships real vs inert:
-//   - DEFAULT_SEMANTICS + emitCss are re-exported for REAL (./semantics and
-//     ./emit-css are self-contained): the design-system provider's scoped mode
-//     calls them at runtime to clone the semantic layer onto the preview scope.
-//   - DEFAULT_COLOR_CONFIG is the real recipe, serialized at bundle build time
-//     with its @dotui/colors status seeds resolved to literals.
+//   - The semantic layer (./semantics + ./emit-css) is re-exported for REAL —
+//     the design-system provider's scoped mode calls it at runtime to clone
+//     the semantic tokens onto the preview scope.
+//   - DEFAULT_COLOR_CONFIG is the real recipe, serialized at bundle build time.
 //   - The generative ramp path stays inert — colors ship as resolved CSS vars
 //     in globals.css — so emitPrimitivesCss / resolveColorConfig are no-ops and
 //     a scoped accent change keeps the baked palette.
-import type { PrimaryColorSource } from "./types";
 
 export {
 \tACCENT_PRIMARY_SEMANTICS,
 \tDEFAULT_SEMANTICS,
 \tsemanticsWithPrimary,
+\tsemanticVocabulary,
 } from "./semantics";
-export { emitCss, resolveTokenValue } from "./emit-css";
+export { emitCss, emitDarkOverridesCss, resolveTokenValue } from "./emit-css";
 export type { PrimaryColorSource } from "./types";
 
-export const GENERATIVE_ALGORITHMS = ${JSON.stringify(GENERATIVE_ALGORITHMS)} as const;
-export type AlgorithmId = (typeof GENERATIVE_ALGORITHMS)[number];
-
 export interface PaletteSeeds {
-\tneutral: string;
 \taccent: string;
+\tneutral?: string;
 \tsuccess?: string;
 \twarning?: string;
 \tdanger?: string;
 \tinfo?: string;
 }
 
-export interface ColorKnobs {
-\tchromaMult?: number;
-\tminChroma?: number;
-\thueTorsion?: number;
-\tchromaMode?: "consistent" | "max";
-\tpreserveSeedAt?: string;
-\tformula?: "wcag2" | "apca";
-\tsaturation?: number;
-\tratios?: number[];
-\ttones?: number[];
-}
-
 export interface ColorConfig {
-\talgorithm: AlgorithmId;
-\tsteps?: string[];
+\tv: 2;
 \tseeds: PaletteSeeds;
-\tprimary?: PrimaryColorSource;
-\tknobs?: ColorKnobs;
+\tbackground?: { light?: number; dark?: number | "oled" };
+\tvividness?: number;
+\thueShift?: number;
+\tneutralTint?: number;
+\tpreserveSeed?: boolean;
+\tprimary?: "accent";
 }
 
 export const DEFAULT_COLOR_CONFIG: ColorConfig = ${JSON.stringify(DEFAULT_COLOR_CONFIG, null, '\t')};
 
+/** Schema-free shim: a valid v2 config passes through, anything else falls back. */
+export function migrateColorConfig(input: unknown): ColorConfig {
+\tconst config = input as ColorConfig | null;
+\tif (
+\t\tconfig &&
+\t\ttypeof config === "object" &&
+\t\tconfig.v === 2 &&
+\t\ttypeof config.seeds?.accent === "string"
+\t)
+\t\treturn config;
+\treturn DEFAULT_COLOR_CONFIG;
+}
+
+interface ThemeMode {
+\tbackground: string;
+\tscales: Record<string, Record<string, string>>;
+\talphas: Record<string, Record<string, string>>;
+\ton: Record<string, { "700": string; "800": string }>;
+}
+
+export interface ChartSet {\n\tcategorical: string[];\n\tsequential: string[];\n\tdiverging: string[];\n}\n\nexport interface Theme {
+\tlight: ThemeMode;
+\tdark: ThemeMode;
+\tcharts: { light: ChartSet; dark: ChartSet };
+\treport: { ok: boolean; warnings: string[] };
+}
+
 export function emitPrimitivesCss(..._args: unknown[]): string {
 \treturn "";
 }
-export function resolveColorConfig(..._args: unknown[]): {
-\tlight: Record<string, Record<string, string>>;
-\tdark: Record<string, Record<string, string>>;
-} {
-\treturn { light: {}, dark: {} };
+export function resolveColorConfig(_config: ColorConfig): Theme {
+\tconst mode = (): ThemeMode => ({ background: "", scales: {}, alphas: {}, on: {} });
+\treturn {
+\t\tlight: mode(),
+\t\tdark: mode(),
+\t\tcharts: {\n\t\t\tlight: { categorical: [], sequential: [], diverging: [] },\n\t\t\tdark: { categorical: [], sequential: [], diverging: [] },\n\t\t},
+\t\treport: { ok: true, warnings: [] },
+\t};
 }
 `
 }

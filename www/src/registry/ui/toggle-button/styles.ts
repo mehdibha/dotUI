@@ -16,7 +16,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
         default:
           'border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:border-border-active pressed:bg-neutral-active selected:not-data-disabled:border-border-active',
         primary:
-          'bg-primary text-fg-on-primary hover:bg-primary-hover disabled:border-0 pressed:bg-primary-active',
+          'bg-primary text-fg-on-primary [--color-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0 pressed:bg-primary-active',
         quiet:
           'bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20',
       },

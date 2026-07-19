@@ -4,12 +4,7 @@ import { useCallback, useMemo } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
 
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import type {
-  AlgorithmId,
-  ColorKnobs,
-  PaletteSeeds,
-  PrimaryColorSource,
-} from '@/registry/theme'
+import type { ColorConfig, PaletteSeeds } from '@/registry/theme'
 import { DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
 import type { CodeOptions } from '@/publisher/code-options'
 
@@ -74,61 +69,90 @@ export function useDesignSystem() {
     [setDesignSystem],
   )
 
-  /** Update one palette seed of the color recipe (starting from the default palette). */
-  const setColorSeed = useCallback(
-    (seed: keyof PaletteSeeds, value: string) => {
-      setDesignSystem((prev) => {
-        const base = prev.color ?? DEFAULT_COLOR_CONFIG
-        return {
-          ...prev,
-          color: { ...base, seeds: { ...base.seeds, [seed]: value } },
-        }
-      })
+  /** Update the color recipe (starting from the default palette). */
+  const setColor = useCallback(
+    (update: (base: ColorConfig) => ColorConfig) => {
+      setDesignSystem((prev) => ({
+        ...prev,
+        color: update(prev.color ?? DEFAULT_COLOR_CONFIG),
+      }))
     },
     [setDesignSystem],
   )
 
-  /** Switch the generation algorithm of the color recipe. */
-  const setColorAlgorithm = useCallback(
-    (algorithm: AlgorithmId) => {
-      setDesignSystem((prev) => {
-        const base = prev.color ?? DEFAULT_COLOR_CONFIG
-        return { ...prev, color: { ...base, algorithm } }
+  /** Set one palette seed; `undefined` deletes it (→ engine auto/default). */
+  const setColorSeed = useCallback(
+    (seed: keyof PaletteSeeds, value: string | undefined) => {
+      setColor((base) => {
+        if (value === undefined && seed === 'accent') return base
+        const seeds = { ...base.seeds }
+        if (value === undefined) delete seeds[seed]
+        else seeds[seed] = value
+        return { ...base, seeds }
       })
     },
-    [setDesignSystem],
+    [setColor],
+  )
+
+  /** Set one engine axis; `undefined` deletes it (→ engine default). */
+  const setColorAxis = useCallback(
+    (
+      axis: 'vividness' | 'hueShift' | 'neutralTint',
+      value: number | undefined,
+    ) => {
+      setColor((base) => {
+        const next = { ...base }
+        if (value === undefined) delete next[axis]
+        else next[axis] = value
+        return next
+      })
+    },
+    [setColor],
+  )
+
+  /** Set one mode's app-background; `undefined` deletes it (→ engine default). */
+  const setColorBackground = useCallback(
+    <M extends 'light' | 'dark'>(
+      mode: M,
+      value: NonNullable<ColorConfig['background']>[M] | undefined,
+    ) => {
+      setColor((base) => {
+        const background = { ...base.background }
+        if (value === undefined) delete background[mode]
+        else background[mode] = value
+        const { background: _drop, ...rest } = base
+        return Object.keys(background).length > 0
+          ? { ...rest, background }
+          : rest
+      })
+    },
+    [setColor],
+  )
+
+  /** Pin (or unpin) the accent seed verbatim at the solid step. */
+  const setColorPreserveSeed = useCallback(
+    (value: boolean) => {
+      setColor((base) => {
+        const { preserveSeed: _drop, ...rest } = base
+        return value ? { ...rest, preserveSeed: true } : rest
+      })
+    },
+    [setColor],
   )
 
   /**
-   * Pick the ramp primary-action tokens draw from. `neutral` (the default)
-   * deletes the field so an untouched recipe still encodes as the default.
+   * Pick the ramp primary-action tokens draw from. `undefined` (the neutral
+   * default) deletes the field so an untouched recipe still encodes as the
+   * default.
    */
   const setColorPrimary = useCallback(
-    (source: PrimaryColorSource) => {
-      setDesignSystem((prev) => {
-        const base = prev.color ?? DEFAULT_COLOR_CONFIG
+    (source: 'accent' | undefined) => {
+      setColor((base) => {
         const { primary: _drop, ...rest } = base
-        return {
-          ...prev,
-          color: source === 'accent' ? { ...rest, primary: 'accent' } : rest,
-        }
+        return source === 'accent' ? { ...rest, primary: 'accent' } : rest
       })
     },
-    [setDesignSystem],
-  )
-
-  /** Set one per-producer tuning knob of the color recipe. */
-  const setColorKnob = useCallback(
-    <K extends keyof ColorKnobs>(key: K, value: ColorKnobs[K]) => {
-      setDesignSystem((prev) => {
-        const base = prev.color ?? DEFAULT_COLOR_CONFIG
-        return {
-          ...prev,
-          color: { ...base, knobs: { ...base.knobs, [key]: value } },
-        }
-      })
-    },
-    [setDesignSystem],
+    [setColor],
   )
 
   /** Set one exported-code style option (starting from the default code style). */
@@ -149,9 +173,10 @@ export function useDesignSystem() {
     setToken,
     setDensity,
     setColorSeed,
-    setColorAlgorithm,
+    setColorAxis,
+    setColorBackground,
+    setColorPreserveSeed,
     setColorPrimary,
-    setColorKnob,
     setCodeOption,
   }
 }

@@ -1,0 +1,613 @@
+{
+  "meta": {
+    "source": "@radix-ui/colors dark scales",
+    "meters": "apca-w3 APCAcontrast+sRGBtoY (abs Lc); WCAG2 relative-luminance ratio",
+    "background": "step 2 (subtle background) unless suffixed on1",
+    "generatedBy": "research/d9-dark-mode.mjs"
+  },
+  "summary": {
+    "scales": 31,
+    "lc12on2": {
+      "min": 84.234,
+      "median": 88.387,
+      "max": 96.33
+    },
+    "lc11on2": {
+      "min": 60.001,
+      "median": 60.559,
+      "max": 86.23
+    },
+    "wcag12on2": {
+      "min": 13.007,
+      "median": 13.653,
+      "max": 15.398
+    },
+    "wcag11on2": {
+      "min": 8.379,
+      "median": 8.557,
+      "max": 13.295
+    },
+    "below_Lc90_step12": [
+      "blue",
+      "bronze",
+      "brown",
+      "crimson",
+      "cyan",
+      "gold",
+      "grass",
+      "green",
+      "indigo",
+      "iris",
+      "jade",
+      "pink",
+      "plum",
+      "purple",
+      "red",
+      "ruby",
+      "teal",
+      "tomato",
+      "violet"
+    ],
+    "below_Lc60_step11": [],
+    "below_wcag7_step12": [],
+    "below_wcag45_step11": [],
+    "counts": {
+      "below_Lc90_step12": 19,
+      "below_Lc60_step11": 0,
+      "below_wcag7_step12": 0,
+      "below_wcag45_step11": 0
+    }
+  },
+  "lightSummary": {
+    "lc12on2": {
+      "min": 91.731,
+      "median": 94.105
+    },
+    "lc11on2": {
+      "min": 66.154,
+      "median": 71.622
+    },
+    "below_Lc90_step12": [],
+    "below_Lc60_step11": [],
+    "below_wcag45_step11": [
+      "amber",
+      "green",
+      "jade",
+      "orange",
+      "teal",
+      "yellow"
+    ],
+    "below_wcag7_step12": []
+  },
+  "perFamilyDark": [
+    {
+      "family": "amber",
+      "isGray": false,
+      "lc12on2": 92.549,
+      "lc11on2": 77.594,
+      "lc12on1": 93.118,
+      "lc11on1": 78.163,
+      "wcag12on2": 14.568,
+      "wcag11on2": 11.525
+    },
+    {
+      "family": "blue",
+      "isGray": false,
+      "lc12on2": 87.297,
+      "lc11on2": 60.055,
+      "lc12on1": 87.725,
+      "lc11on1": 60.482,
+      "wcag12on2": 13.468,
+      "wcag11on2": 8.379
+    },
+    {
+      "family": "bronze",
+      "isGray": false,
+      "lc12on2": 88.082,
+      "lc11on2": 63.775,
+      "lc12on1": 88.818,
+      "lc11on1": 64.511,
+      "wcag12on2": 13.545,
+      "wcag11on2": 8.986
+    },
+    {
+      "family": "brown",
+      "isGray": false,
+      "lc12on2": 88.721,
+      "lc11on2": 65.125,
+      "lc12on1": 89.412,
+      "lc11on1": 65.817,
+      "wcag12on2": 13.761,
+      "wcag11on2": 9.272
+    },
+    {
+      "family": "crimson",
+      "isGray": false,
+      "lc12on2": 85.872,
+      "lc11on2": 60.294,
+      "lc12on1": 86.209,
+      "lc11on1": 60.631,
+      "wcag12on2": 13.41,
+      "wcag11on2": 8.535
+    },
+    {
+      "family": "cyan",
+      "isGray": false,
+      "lc12on2": 88.387,
+      "lc11on2": 65.523,
+      "lc12on1": 88.889,
+      "lc11on1": 66.025,
+      "wcag12on2": 13.612,
+      "wcag11on2": 9.242
+    },
+    {
+      "family": "gold",
+      "isGray": false,
+      "lc12on2": 88.217,
+      "lc11on2": 64.616,
+      "lc12on1": 88.985,
+      "lc11on1": 65.385,
+      "wcag12on2": 13.517,
+      "wcag11on2": 9.099
+    },
+    {
+      "family": "grass",
+      "isGray": false,
+      "lc12on2": 89.349,
+      "lc11on2": 65.342,
+      "lc12on1": 89.829,
+      "lc11on1": 65.822,
+      "wcag12on2": 13.916,
+      "wcag11on2": 9.301
+    },
+    {
+      "family": "gray",
+      "isGray": true,
+      "lc12on2": 95.536,
+      "lc11on2": 60.551,
+      "lc12on1": 96.256,
+      "lc11on1": 61.271,
+      "wcag12on2": 15.154,
+      "wcag11on2": 8.48
+    },
+    {
+      "family": "green",
+      "isGray": false,
+      "lc12on2": 88.396,
+      "lc11on2": 66.222,
+      "lc12on1": 88.938,
+      "lc11on1": 66.764,
+      "wcag12on2": 13.653,
+      "wcag11on2": 9.37
+    },
+    {
+      "family": "indigo",
+      "isGray": false,
+      "lc12on2": 87.464,
+      "lc11on2": 61.033,
+      "lc12on1": 87.858,
+      "lc11on1": 61.427,
+      "wcag12on2": 13.618,
+      "wcag11on2": 8.631
+    },
+    {
+      "family": "iris",
+      "isGray": false,
+      "lc12on2": 87.828,
+      "lc11on2": 60.071,
+      "lc12on1": 88.175,
+      "lc11on1": 60.419,
+      "wcag12on2": 13.716,
+      "wcag11on2": 8.48
+    },
+    {
+      "family": "jade",
+      "isGray": false,
+      "lc12on2": 87.799,
+      "lc11on2": 67.32,
+      "lc12on1": 88.449,
+      "lc11on1": 67.97,
+      "wcag12on2": 13.437,
+      "wcag11on2": 9.474
+    },
+    {
+      "family": "lime",
+      "isGray": false,
+      "lc12on2": 96.33,
+      "lc11on2": 81.263,
+      "lc12on1": 96.905,
+      "lc11on1": 81.838,
+      "wcag12on2": 15.398,
+      "wcag11on2": 12.289
+    },
+    {
+      "family": "mauve",
+      "isGray": true,
+      "lc12on2": 95.589,
+      "lc11on2": 60.167,
+      "lc12on1": 96.323,
+      "lc11on1": 60.902,
+      "wcag12on2": 15.118,
+      "wcag11on2": 8.391
+    },
+    {
+      "family": "mint",
+      "isGray": false,
+      "lc12on2": 93.162,
+      "lc11on2": 68.17,
+      "lc12on1": 93.679,
+      "lc11on1": 68.687,
+      "wcag12on2": 14.666,
+      "wcag11on2": 9.759
+    },
+    {
+      "family": "olive",
+      "isGray": true,
+      "lc12on2": 95.21,
+      "lc11on2": 60.13,
+      "lc12on1": 95.845,
+      "lc11on1": 60.765,
+      "wcag12on2": 15.129,
+      "wcag11on2": 8.432
+    },
+    {
+      "family": "orange",
+      "isGray": false,
+      "lc12on2": 90.066,
+      "lc11on2": 62.46,
+      "lc12on1": 90.494,
+      "lc11on1": 62.889,
+      "wcag12on2": 14.185,
+      "wcag11on2": 8.852
+    },
+    {
+      "family": "pink",
+      "isGray": false,
+      "lc12on2": 85.119,
+      "lc11on2": 60.147,
+      "lc12on1": 85.461,
+      "lc11on1": 60.489,
+      "wcag12on2": 13.247,
+      "wcag11on2": 8.498
+    },
+    {
+      "family": "plum",
+      "isGray": false,
+      "lc12on2": 85.412,
+      "lc11on2": 60.559,
+      "lc12on1": 85.821,
+      "lc11on1": 60.968,
+      "wcag12on2": 13.247,
+      "wcag11on2": 8.554
+    },
+    {
+      "family": "purple",
+      "isGray": false,
+      "lc12on2": 86.57,
+      "lc11on2": 60.004,
+      "lc12on1": 87.042,
+      "lc11on1": 60.476,
+      "wcag12on2": 13.375,
+      "wcag11on2": 8.408
+    },
+    {
+      "family": "red",
+      "isGray": false,
+      "lc12on2": 84.71,
+      "lc11on2": 60.309,
+      "lc12on1": 85.036,
+      "lc11on1": 60.635,
+      "wcag12on2": 13.2,
+      "wcag11on2": 8.557
+    },
+    {
+      "family": "ruby",
+      "isGray": false,
+      "lc12on2": 85.246,
+      "lc11on2": 60.279,
+      "lc12on1": 85.634,
+      "lc11on1": 60.668,
+      "wcag12on2": 13.21,
+      "wcag11on2": 8.49
+    },
+    {
+      "family": "sage",
+      "isGray": true,
+      "lc12on2": 95.27,
+      "lc11on2": 60.112,
+      "lc12on1": 95.9,
+      "lc11on1": 60.742,
+      "wcag12on2": 15.159,
+      "wcag11on2": 8.437
+    },
+    {
+      "family": "sand",
+      "isGray": true,
+      "lc12on2": 95.452,
+      "lc11on2": 60.001,
+      "lc12on1": 96.169,
+      "lc11on1": 60.718,
+      "wcag12on2": 15.145,
+      "wcag11on2": 8.392
+    },
+    {
+      "family": "sky",
+      "isGray": false,
+      "lc12on2": 93.335,
+      "lc11on2": 65.783,
+      "lc12on1": 93.917,
+      "lc11on1": 66.365,
+      "wcag12on2": 14.621,
+      "wcag11on2": 9.313
+    },
+    {
+      "family": "slate",
+      "isGray": true,
+      "lc12on2": 95.499,
+      "lc11on2": 60.335,
+      "lc12on1": 96.202,
+      "lc11on1": 61.039,
+      "wcag12on2": 15.153,
+      "wcag11on2": 8.447
+    },
+    {
+      "family": "teal",
+      "isGray": false,
+      "lc12on2": 88.172,
+      "lc11on2": 67.845,
+      "lc12on1": 88.821,
+      "lc11on1": 68.494,
+      "wcag12on2": 13.506,
+      "wcag11on2": 9.548
+    },
+    {
+      "family": "tomato",
+      "isGray": false,
+      "lc12on2": 84.234,
+      "lc11on2": 60.28,
+      "lc12on1": 84.663,
+      "lc11on1": 60.709,
+      "wcag12on2": 13.007,
+      "wcag11on2": 8.49
+    },
+    {
+      "family": "violet",
+      "isGray": false,
+      "lc12on2": 87.185,
+      "lc11on2": 60.4,
+      "lc12on1": 87.589,
+      "lc11on1": 60.804,
+      "wcag12on2": 13.559,
+      "wcag11on2": 8.521
+    },
+    {
+      "family": "yellow",
+      "isGray": false,
+      "lc12on2": 94.49,
+      "lc11on2": 86.23,
+      "lc12on1": 95.046,
+      "lc11on1": 86.786,
+      "wcag12on2": 15.038,
+      "wcag11on2": 13.295
+    }
+  ],
+  "perFamilyLight": [
+    {
+      "family": "amber",
+      "lc12on2": 93.37,
+      "lc11on2": 68.85,
+      "wcag12on2": 10.933,
+      "wcag11on2": 4.433
+    },
+    {
+      "family": "blue",
+      "lc12on2": 94.736,
+      "lc11on2": 68.906,
+      "wcag12on2": 11.997,
+      "wcag11on2": 4.531
+    },
+    {
+      "family": "bronze",
+      "lc12on2": 94.059,
+      "lc11on2": 75.036,
+      "wcag12on2": 11.672,
+      "wcag11on2": 5.498
+    },
+    {
+      "family": "brown",
+      "lc12on2": 94.573,
+      "lc11on2": 75.589,
+      "wcag12on2": 11.654,
+      "wcag11on2": 5.526
+    },
+    {
+      "family": "crimson",
+      "lc12on2": 93.453,
+      "lc11on2": 71.196,
+      "wcag12on2": 11.745,
+      "wcag11on2": 5.105
+    },
+    {
+      "family": "cyan",
+      "lc12on2": 93.168,
+      "lc11on2": 68.643,
+      "wcag12on2": 11.293,
+      "wcag11on2": 4.501
+    },
+    {
+      "family": "gold",
+      "lc12on2": 93.995,
+      "lc11on2": 75.815,
+      "wcag12on2": 11.501,
+      "wcag11on2": 5.604
+    },
+    {
+      "family": "grass",
+      "lc12on2": 94.177,
+      "lc11on2": 71.233,
+      "wcag12on2": 11.531,
+      "wcag11on2": 4.824
+    },
+    {
+      "family": "gray",
+      "lc12on2": 99.672,
+      "lc11on2": 76.032,
+      "wcag12on2": 15.476,
+      "wcag11on2": 5.621
+    },
+    {
+      "family": "green",
+      "lc12on2": 94.456,
+      "lc11on2": 68.891,
+      "wcag12on2": 11.718,
+      "wcag11on2": 4.487
+    },
+    {
+      "family": "indigo",
+      "lc12on2": 95.801,
+      "lc11on2": 75.966,
+      "wcag12on2": 12.561,
+      "wcag11on2": 5.698
+    },
+    {
+      "family": "iris",
+      "lc12on2": 95.566,
+      "lc11on2": 76.08,
+      "wcag12on2": 12.573,
+      "wcag11on2": 5.744
+    },
+    {
+      "family": "jade",
+      "lc12on2": 94.303,
+      "lc11on2": 68.547,
+      "wcag12on2": 11.607,
+      "wcag11on2": 4.434
+    },
+    {
+      "family": "lime",
+      "lc12on2": 91.836,
+      "lc11on2": 69.627,
+      "wcag12on2": 10.436,
+      "wcag11on2": 4.558
+    },
+    {
+      "family": "mauve",
+      "lc12on2": 99.884,
+      "lc11on2": 76.161,
+      "wcag12on2": 15.526,
+      "wcag11on2": 5.622
+    },
+    {
+      "family": "mint",
+      "lc12on2": 91.739,
+      "lc11on2": 72.886,
+      "wcag12on2": 10.484,
+      "wcag11on2": 5.149
+    },
+    {
+      "family": "olive",
+      "lc12on2": 99.954,
+      "lc11on2": 76.487,
+      "wcag12on2": 15.562,
+      "wcag11on2": 5.681
+    },
+    {
+      "family": "orange",
+      "lc12on2": 92.263,
+      "lc11on2": 66.154,
+      "wcag12on2": 10.94,
+      "wcag11on2": 4.247
+    },
+    {
+      "family": "pink",
+      "lc12on2": 92.783,
+      "lc11on2": 71.064,
+      "wcag12on2": 11.469,
+      "wcag11on2": 5.005
+    },
+    {
+      "family": "plum",
+      "lc12on2": 94.105,
+      "lc11on2": 75.618,
+      "wcag12on2": 11.952,
+      "wcag11on2": 5.692
+    },
+    {
+      "family": "purple",
+      "lc12on2": 95.165,
+      "lc11on2": 75.925,
+      "wcag12on2": 12.449,
+      "wcag11on2": 5.747
+    },
+    {
+      "family": "red",
+      "lc12on2": 93.523,
+      "lc11on2": 70.476,
+      "wcag12on2": 11.784,
+      "wcag11on2": 4.939
+    },
+    {
+      "family": "ruby",
+      "lc12on2": 93.442,
+      "lc11on2": 71.622,
+      "wcag12on2": 11.718,
+      "wcag11on2": 5.144
+    },
+    {
+      "family": "sage",
+      "lc12on2": 99.474,
+      "lc11on2": 75.9,
+      "wcag12on2": 15.513,
+      "wcag11on2": 5.629
+    },
+    {
+      "family": "sand",
+      "lc12on2": 99.638,
+      "lc11on2": 76.572,
+      "wcag12on2": 15.476,
+      "wcag11on2": 5.733
+    },
+    {
+      "family": "sky",
+      "lc12on2": 91.731,
+      "lc11on2": 71.55,
+      "wcag12on2": 10.574,
+      "wcag11on2": 4.968
+    },
+    {
+      "family": "slate",
+      "lc12on2": 99.845,
+      "lc11on2": 76.212,
+      "wcag12on2": 15.585,
+      "wcag11on2": 5.647
+    },
+    {
+      "family": "teal",
+      "lc12on2": 93.845,
+      "lc11on2": 67.62,
+      "wcag12on2": 11.47,
+      "wcag11on2": 4.341
+    },
+    {
+      "family": "tomato",
+      "lc12on2": 93.497,
+      "lc11on2": 69.626,
+      "wcag12on2": 11.344,
+      "wcag11on2": 4.752
+    },
+    {
+      "family": "violet",
+      "lc12on2": 96.031,
+      "lc11on2": 76.865,
+      "wcag12on2": 12.752,
+      "wcag11on2": 5.861
+    },
+    {
+      "family": "yellow",
+      "lc12on2": 93.048,
+      "lc11on2": 69.098,
+      "wcag12on2": 10.618,
+      "wcag11on2": 4.417
+    }
+  ]
+}

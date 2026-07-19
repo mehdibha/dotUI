@@ -6,12 +6,13 @@ import { UNSAFE_PortalProvider } from 'react-aria/PortalProvider'
 import { tv } from 'tailwind-variants'
 import type { ClassValue, TVReturnType, VariantProps } from 'tailwind-variants'
 
+import { resolveColorConfigCached } from '@/lib/resolve-color'
 import {
   ACCENT_PRIMARY_SEMANTICS,
   DEFAULT_SEMANTICS,
   emitCss,
+  emitDarkOverridesCss,
   emitPrimitivesCss,
-  resolveColorConfig,
   semanticsWithPrimary,
 } from '@/registry/theme'
 import type { ColorConfig } from '@/registry/theme'
@@ -186,22 +187,6 @@ function harvestRootClosure(): RootClosure {
   return closure
 }
 
-// resolveColorConfig runs the full color kernel (schema parse + ramp generation).
-// Configs are stable references (module constants, cached store snapshots) and
-// every demo on a docs page shares one, so memoize by reference.
-const resolvedColorCache = new WeakMap<
-  ColorConfig,
-  ReturnType<typeof resolveColorConfig>
->()
-function resolveColorConfigCached(color: ColorConfig) {
-  let resolved = resolvedColorCache.get(color)
-  if (!resolved) {
-    resolved = resolveColorConfig(color)
-    resolvedColorCache.set(color, resolved)
-  }
-  return resolved
-}
-
 /**
  * Build the `<style>` text that themes only `selector`'s subtree: clone `:root`'s token closure
  * onto the scope (primitives + component vars, so they recompute there), add the semantic
@@ -238,22 +223,32 @@ function buildScopedThemeCss(
     `.dark ${selector} {\n${darkOverrides}\n}`,
     // Mode-agnostic `--color-*` (they reference primitives that flip via the blocks above).
     emitCss(semanticsWithPrimary(color?.primary), { selector }),
+    // Empty today (no semantic token declares per-mode targets), kept so a
+    // future per-mode token re-points inside scopes like it does globally.
+    emitDarkOverridesCss(semanticsWithPrimary(color?.primary), {
+      selector: `.dark ${selector}`,
+    }),
   ]
   if (color) {
     let resolved = resolveColorConfigCached(color)
     if (forcedMode) {
       const ramp = forcedMode === 'dark' ? resolved.dark : resolved.light
-      resolved = { ...resolved, light: ramp, dark: ramp }
+      const chartSet = resolved.charts[forcedMode]
+      resolved = {
+        ...resolved,
+        light: ramp,
+        dark: ramp,
+        charts: { light: chartSet, dark: chartSet },
+      }
     }
     blocks.push(
       emitPrimitivesCss(resolved, {
-        onColors: true,
         lightSelector: selector,
         darkSelector: `.dark ${selector}`,
       }),
     )
   }
-  return blocks.join('\n')
+  return blocks.filter(Boolean).join('\n')
 }
 
 /* ----------------------- Shared scoped theme styles ----------------------- */
@@ -466,14 +461,16 @@ function DesignSystemProvider({
   // global selectors and `<style>` carries the UA `display: none`, so layout is untouched.
   const themeCss = React.useMemo(() => {
     if (scoped || !color) return null
-    const primitives = emitPrimitivesCss(resolveColorConfigCached(color), {
-      onColors: true,
-    })
-    // An accent-sourced primary re-points the primary cluster on plain `:root`,
-    // which beats the layered `@theme` declarations. Mode-agnostic — the accent
-    // primitives it references flip with `.dark`.
+    const primitives = emitPrimitivesCss(resolveColorConfigCached(color))
+    // An accent-sourced primary re-points the primary cluster on plain `:root`
+    // (beats the layered `@theme` declarations), plus any per-mode re-points
+    // on `.dark` (none today — the accent primitives flip with `.dark`).
     if (color.primary !== 'accent') return primitives
-    return primitives + emitCss(ACCENT_PRIMARY_SEMANTICS, { selector: ':root' })
+    return (
+      primitives +
+      emitCss(ACCENT_PRIMARY_SEMANTICS, { selector: ':root' }) +
+      emitDarkOverridesCss(ACCENT_PRIMARY_SEMANTICS, { selector: '.dark' })
+    )
   }, [scoped, color])
   const themeStyle = themeCss ? (
     <style data-dotui-color>{themeCss}</style>

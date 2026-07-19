@@ -18,16 +18,15 @@ import {
   ZapIcon,
 } from 'lucide-react'
 
+import { STEPS } from '@dotui/colors'
+
+import { resolveColorConfigCached } from '@/lib/resolve-color'
 import {
   DEFAULT_COLOR_CONFIG,
+  DEFAULT_STATUS_SEEDS,
   PALETTE_ORDER,
-  resolveColorConfig,
 } from '@/registry/theme'
-import type {
-  AlgorithmId,
-  PaletteSeeds,
-  PrimaryColorSource,
-} from '@/registry/theme'
+import type { PaletteSeeds } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
 import { ColorArea } from '@/registry/ui/color-area'
 import { ColorField } from '@/registry/ui/color-field'
@@ -42,7 +41,7 @@ import { Select, SelectValue } from '@/registry/ui/select'
 import { Switch } from '@/registry/ui/switch'
 
 import { ContrastReadout } from '../colors/contrast'
-import { ColorKnobsControls } from '../colors/knobs'
+import { ColorFineTuneControls } from '../colors/knobs'
 import { ComponentDetailView } from '../components'
 import {
   CURSOR_DISABLED_VAR,
@@ -85,18 +84,18 @@ const SPACING_SCALE_VAR = '--ds-spacing-scale'
 
 /* ------------------------------- Color ---------------------------------- */
 
-const ALGORITHMS: ReadonlyArray<{ id: AlgorithmId; label: string }> = [
-  { id: 'oklch', label: 'OKLCH Perceptual' },
-  { id: 'tailwind', label: 'Tailwind-style' },
-  { id: 'material', label: 'Material' },
-  { id: 'contrast', label: 'Contrast-locked' },
-]
+/** Picker fallbacks for seeds the default config leaves absent (engine-derived). */
+const SEED_FALLBACKS: Record<keyof PaletteSeeds, string> = {
+  accent: DEFAULT_COLOR_CONFIG.seeds.accent,
+  neutral: '#808080',
+  ...DEFAULT_STATUS_SEEDS,
+}
 
 /** A color seed swatch+picker bound to one palette seed of the live recipe. */
 export function SeedField({ seed }: { seed: keyof PaletteSeeds }) {
   const { designSystem, setColorSeed } = useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
-  const value = config.seeds[seed] ?? DEFAULT_COLOR_CONFIG.seeds[seed]
+  const value = config.seeds[seed] ?? SEED_FALLBACKS[seed]
   return (
     <ColorPicker
       value={value}
@@ -136,33 +135,6 @@ export function SeedField({ seed }: { seed: keyof PaletteSeeds }) {
   )
 }
 
-function AlgorithmWidget() {
-  const { designSystem, setColorAlgorithm } = useDesignSystem()
-  const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
-  return (
-    <Select
-      className="w-full"
-      selectedKey={config.algorithm}
-      onSelectionChange={(key) => setColorAlgorithm(key as AlgorithmId)}
-      aria-label="Color algorithm"
-    >
-      <Button size="sm" className="w-full justify-between">
-        <SelectValue className="truncate" />
-        <ChevronDownIcon data-icon-end="" />
-      </Button>
-      <Popover>
-        <ListBox>
-          {ALGORITHMS.map((a) => (
-            <ListBoxItem key={a.id} id={a.id}>
-              {a.label}
-            </ListBoxItem>
-          ))}
-        </ListBox>
-      </Popover>
-    </Select>
-  )
-}
-
 function StatusColorsWidget() {
   const status: Array<{ seed: keyof PaletteSeeds; label: string }> = [
     { seed: 'success', label: 'Success' },
@@ -184,35 +156,30 @@ function StatusColorsWidget() {
   )
 }
 
-/** Knobs + contrast readout + generated ramps — the deep color engine. */
+/** Fine-tune axes + contrast readout + generated ramps — the deep color engine. */
 function ColorEngineWidget() {
-  const { designSystem, setColorKnob } = useDesignSystem()
+  const { designSystem } = useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
-  const resolved = useMemo(() => resolveColorConfig(config), [config])
+  const theme = useMemo(() => resolveColorConfigCached(config), [config])
   return (
     <div className="flex flex-col gap-4">
-      <ColorKnobsControls
-        algorithm={config.algorithm}
-        knobs={config.knobs ?? {}}
-        steps={resolved.steps}
-        onChange={setColorKnob}
-      />
-      <ContrastReadout resolved={resolved} />
+      <ColorFineTuneControls seedDelta={theme.report.seedDelta.accent} />
+      <ContrastReadout report={theme.report} />
       <div className="flex flex-col gap-1">
         {PALETTE_ORDER.map((palette) => {
-          const ramp = resolved.light[palette]
-          if (!ramp) return null
+          const scale = theme.light.scales[palette]
+          if (!scale) return null
           return (
             <div
               key={palette}
               className="flex overflow-hidden rounded"
               title={palette}
             >
-              {Object.entries(ramp).map(([step, val]) => (
+              {STEPS.map((step) => (
                 <div
                   key={step}
                   className="h-4 flex-1"
-                  style={{ backgroundColor: val }}
+                  style={{ backgroundColor: scale[step] }}
                   title={`--${palette}-${step}`}
                 />
               ))}
@@ -225,23 +192,16 @@ function ColorEngineWidget() {
 }
 
 function GrayStrategyWidget() {
-  // Maps to the neutral seed: a near-#808080 reads as "pure"; nudging the seed
-  // toward the accent reads as "tinted". A genuine lever on the live recipe.
-  const { designSystem, setColorSeed } = useDesignSystem()
+  // Maps to the engine's neutralTint axis: 0 is pure gray, default whisper-tints
+  // the neutral toward the brand hue.
+  const { designSystem, setColorAxis } = useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
-  const isTinted =
-    (config.seeds.neutral ?? '#808080').toLowerCase() !== '#808080'
   return (
     <Segmented
       ariaLabel="Gray strategy"
-      value={isTinted ? 'tinted' : 'pure'}
+      value={config.neutralTint === 0 ? 'pure' : 'tinted'}
       onChange={(v) =>
-        setColorSeed(
-          'neutral',
-          v === 'pure'
-            ? '#808080'
-            : (config.seeds.accent ?? DEFAULT_COLOR_CONFIG.seeds.accent),
-        )
+        setColorAxis('neutralTint', v === 'pure' ? 0 : undefined)
       }
       options={[
         { value: 'pure', label: 'Pure' },
@@ -258,7 +218,7 @@ function PrimarySourceWidget() {
     <Segmented
       ariaLabel="Primary color"
       value={config.primary ?? 'neutral'}
-      onChange={(v) => setColorPrimary(v as PrimaryColorSource)}
+      onChange={(v) => setColorPrimary(v === 'accent' ? 'accent' : undefined)}
       options={[
         { value: 'neutral', label: 'Neutral' },
         { value: 'accent', label: 'Accent' },
@@ -641,17 +601,6 @@ export const SECTIONS: Section[] = [
         Widget: PrimarySourceWidget,
       }),
       c({
-        id: 'color-algorithm',
-        label: 'Generation algorithm',
-        description: 'How seeds expand into tonal ramps.',
-        domain: 'color',
-        tier: 'primitive',
-        tempo: 'micro',
-        binding: 'live',
-        keywords: ['oklch', 'tailwind', 'material'],
-        Widget: AlgorithmWidget,
-      }),
-      c({
         id: 'status-colors',
         label: 'Status families',
         description: 'Success, warning, danger, info seeds.',
@@ -665,7 +614,7 @@ export const SECTIONS: Section[] = [
       c({
         id: 'color-engine',
         label: 'Ramps & contrast',
-        description: 'Per-algorithm knobs, WCAG readout, generated scales.',
+        description: 'Engine axes, contrast readout, generated scales.',
         domain: 'color',
         tier: 'primitive',
         tempo: 'micro',

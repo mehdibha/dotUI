@@ -1,0 +1,375 @@
+{
+  "id": "radix",
+  "name": "Radix Colors",
+  "website": "https://www.radix-ui.com/colors",
+  "sources": [
+    "https://unpkg.com/@radix-ui/colors@3.0.0/gray.css",
+    "https://unpkg.com/@radix-ui/colors@3.0.0/gray-dark.css",
+    "https://unpkg.com/@radix-ui/colors@3.0.0/blue.css",
+    "https://unpkg.com/@radix-ui/colors@3.0.0/blue-dark.css",
+    "https://unpkg.com/@radix-ui/colors@3.0.0/red.css",
+    "https://unpkg.com/@radix-ui/colors@3.0.0/red-dark.css",
+    "https://unpkg.com/@radix-ui/colors@3.0.0/green.css",
+    "https://unpkg.com/@radix-ui/colors@3.0.0/green-dark.css",
+    "https://unpkg.com/@radix-ui/colors@3.0.0/amber.css",
+    "https://unpkg.com/@radix-ui/colors@3.0.0/amber-dark.css",
+    "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale"
+  ],
+  "description": "An open-source color system of ~30 hand-tuned 12-step scales designed for building accessible UIs, from the Radix UI team. It is the industry reference for semantic step-based scales: every step has a documented use case.",
+  "philosophy": "Each scale has 12 steps, each designed for at least one specific use case: 1-2 app/subtle backgrounds, 3-5 component backgrounds (normal/hover/active), 6-8 borders (subtle/interactive/strong+focus), 9-10 solid backgrounds (step 9 is the purest, highest-chroma step), 11-12 text (low/high contrast). Steps 11 and 12 are guaranteed Lc 60 and Lc 90 APCA contrast on a step-2 background of the same scale. Dark mode is not derived: every scale has a dedicated hand-tuned dark counterpart, and alpha plus wide-gamut display-p3 variants exist for every scale.",
+  "stepCount": 12,
+  "stepNames": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+  "scales": [
+    {
+      "id": "gray",
+      "name": "Gray",
+      "role": "neutral",
+      "steps": [
+        {
+          "name": "1",
+          "light": "#fcfcfc",
+          "dark": "#111111"
+        },
+        {
+          "name": "2",
+          "light": "#f9f9f9",
+          "dark": "#191919"
+        },
+        {
+          "name": "3",
+          "light": "#f0f0f0",
+          "dark": "#222222"
+        },
+        {
+          "name": "4",
+          "light": "#e8e8e8",
+          "dark": "#2a2a2a"
+        },
+        {
+          "name": "5",
+          "light": "#e0e0e0",
+          "dark": "#313131"
+        },
+        {
+          "name": "6",
+          "light": "#d9d9d9",
+          "dark": "#3a3a3a"
+        },
+        {
+          "name": "7",
+          "light": "#cecece",
+          "dark": "#484848"
+        },
+        {
+          "name": "8",
+          "light": "#bbbbbb",
+          "dark": "#606060"
+        },
+        {
+          "name": "9",
+          "light": "#8d8d8d",
+          "dark": "#6e6e6e"
+        },
+        {
+          "name": "10",
+          "light": "#838383",
+          "dark": "#7b7b7b"
+        },
+        {
+          "name": "11",
+          "light": "#646464",
+          "dark": "#b4b4b4"
+        },
+        {
+          "name": "12",
+          "light": "#202020",
+          "dark": "#eeeeee"
+        }
+      ]
+    },
+    {
+      "id": "blue",
+      "name": "Blue",
+      "role": "accent",
+      "steps": [
+        {
+          "name": "1",
+          "light": "#fbfdff",
+          "dark": "#0d1520"
+        },
+        {
+          "name": "2",
+          "light": "#f4faff",
+          "dark": "#111927"
+        },
+        {
+          "name": "3",
+          "light": "#e6f4fe",
+          "dark": "#0d2847"
+        },
+        {
+          "name": "4",
+          "light": "#d5efff",
+          "dark": "#003362"
+        },
+        {
+          "name": "5",
+          "light": "#c2e5ff",
+          "dark": "#004074"
+        },
+        {
+          "name": "6",
+          "light": "#acd8fc",
+          "dark": "#104d87"
+        },
+        {
+          "name": "7",
+          "light": "#8ec8f6",
+          "dark": "#205d9e"
+        },
+        {
+          "name": "8",
+          "light": "#5eb1ef",
+          "dark": "#2870bd"
+        },
+        {
+          "name": "9",
+          "light": "#0090ff",
+          "dark": "#0090ff"
+        },
+        {
+          "name": "10",
+          "light": "#0588f0",
+          "dark": "#3b9eff"
+        },
+        {
+          "name": "11",
+          "light": "#0d74ce",
+          "dark": "#70b8ff"
+        },
+        {
+          "name": "12",
+          "light": "#113264",
+          "dark": "#c2e6ff"
+        }
+      ]
+    },
+    {
+      "id": "red",
+      "name": "Red",
+      "role": "danger",
+      "steps": [
+        {
+          "name": "1",
+          "light": "#fffcfc",
+          "dark": "#191111"
+        },
+        {
+          "name": "2",
+          "light": "#fff7f7",
+          "dark": "#201314"
+        },
+        {
+          "name": "3",
+          "light": "#feebec",
+          "dark": "#3b1219"
+        },
+        {
+          "name": "4",
+          "light": "#ffdbdc",
+          "dark": "#500f1c"
+        },
+        {
+          "name": "5",
+          "light": "#ffcdce",
+          "dark": "#611623"
+        },
+        {
+          "name": "6",
+          "light": "#fdbdbe",
+          "dark": "#72232d"
+        },
+        {
+          "name": "7",
+          "light": "#f4a9aa",
+          "dark": "#8c333a"
+        },
+        {
+          "name": "8",
+          "light": "#eb8e90",
+          "dark": "#b54548"
+        },
+        {
+          "name": "9",
+          "light": "#e5484d",
+          "dark": "#e5484d"
+        },
+        {
+          "name": "10",
+          "light": "#dc3e42",
+          "dark": "#ec5d5e"
+        },
+        {
+          "name": "11",
+          "light": "#ce2c31",
+          "dark": "#ff9592"
+        },
+        {
+          "name": "12",
+          "light": "#641723",
+          "dark": "#ffd1d9"
+        }
+      ]
+    },
+    {
+      "id": "green",
+      "name": "Green",
+      "role": "success",
+      "steps": [
+        {
+          "name": "1",
+          "light": "#fbfefc",
+          "dark": "#0e1512"
+        },
+        {
+          "name": "2",
+          "light": "#f4fbf6",
+          "dark": "#121b17"
+        },
+        {
+          "name": "3",
+          "light": "#e6f6eb",
+          "dark": "#132d21"
+        },
+        {
+          "name": "4",
+          "light": "#d6f1df",
+          "dark": "#113b29"
+        },
+        {
+          "name": "5",
+          "light": "#c4e8d1",
+          "dark": "#174933"
+        },
+        {
+          "name": "6",
+          "light": "#adddc0",
+          "dark": "#20573e"
+        },
+        {
+          "name": "7",
+          "light": "#8eceaa",
+          "dark": "#28684a"
+        },
+        {
+          "name": "8",
+          "light": "#5bb98b",
+          "dark": "#2f7c57"
+        },
+        {
+          "name": "9",
+          "light": "#30a46c",
+          "dark": "#30a46c"
+        },
+        {
+          "name": "10",
+          "light": "#2b9a66",
+          "dark": "#33b074"
+        },
+        {
+          "name": "11",
+          "light": "#218358",
+          "dark": "#3dd68c"
+        },
+        {
+          "name": "12",
+          "light": "#193b2d",
+          "dark": "#b1f1cb"
+        }
+      ]
+    },
+    {
+      "id": "amber",
+      "name": "Amber",
+      "role": "warning",
+      "steps": [
+        {
+          "name": "1",
+          "light": "#fefdfb",
+          "dark": "#16120c"
+        },
+        {
+          "name": "2",
+          "light": "#fefbe9",
+          "dark": "#1d180f"
+        },
+        {
+          "name": "3",
+          "light": "#fff7c2",
+          "dark": "#302008"
+        },
+        {
+          "name": "4",
+          "light": "#ffee9c",
+          "dark": "#3f2700"
+        },
+        {
+          "name": "5",
+          "light": "#fbe577",
+          "dark": "#4d3000"
+        },
+        {
+          "name": "6",
+          "light": "#f3d673",
+          "dark": "#5c3d05"
+        },
+        {
+          "name": "7",
+          "light": "#e9c162",
+          "dark": "#714f19"
+        },
+        {
+          "name": "8",
+          "light": "#e2a336",
+          "dark": "#8f6424"
+        },
+        {
+          "name": "9",
+          "light": "#ffc53d",
+          "dark": "#ffc53d"
+        },
+        {
+          "name": "10",
+          "light": "#ffba18",
+          "dark": "#ffd60a"
+        },
+        {
+          "name": "11",
+          "light": "#ab6400",
+          "dark": "#ffca16"
+        },
+        {
+          "name": "12",
+          "light": "#4f3422",
+          "dark": "#ffe7b3"
+        }
+      ]
+    }
+  ],
+  "roleMapping": {
+    "appBg": 0,
+    "subtleBg": 1,
+    "uiBg": 2,
+    "uiBgHover": 3,
+    "uiBgActive": 4,
+    "borderSubtle": 5,
+    "border": 6,
+    "borderStrong": 7,
+    "solid": 8,
+    "solidHover": 9,
+    "textSubtle": 10,
+    "text": 11
+  },
+  "solidForeground": "white for most scales (Blue, Red, Green, Gray); Amber step 9-10 solids are designed for dark foreground text (per docs, Sky/Mint/Lime/Yellow/Amber are the bright exceptions)",
+  "notes": "Values are the sRGB hex fallbacks from @radix-ui/colors@3.0.0. Each scale also ships alpha variants (grayA, blueDarkA, ...) and wide-gamut display-p3 variants (including P3 alpha) behind @supports/@media guards; those are not included here. Dark values come from the dedicated hand-tuned *-dark scales, not from inverting the light scale. Step 9 is identical in light and dark for blue (#0090ff), red (#e5484d), green (#30a46c) and amber (#ffc53d) - the solid brand color is stable across modes."
+}

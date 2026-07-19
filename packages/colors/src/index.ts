@@ -1,55 +1,53 @@
 /**
- * @dotui/colors — the color kernel.
+ * @dotui/colors — the color engine.
  *
- * Generates primitive ramps (+ paired on-* foregrounds) from seeds via pluggable
- * producers, and verifies contrast on resolved pairings. Pure: no CSS, no DOM, no
- * semantic-token vocabulary (that lives in the semantic layer).
+ * One engine, no algorithm menu (SPEC.md). `createTheme` turns seeds into a
+ * complete two-mode system: 12-job scales, solved on-* foregrounds, alpha
+ * twins, chart palettes — every guarantee enforced in-loop and audited in
+ * the returned report. Pure: no CSS-variable names, no semantic vocabulary
+ * (that lives in the www semantic layer).
  */
 
-// Generation
-export { createTheme } from './theme'
 export {
-  type BaseThemeOptions,
-  type CreateThemeOptions,
-  createThemeOptionsSchema,
-} from './schema'
+  type ChartSet,
+  createTheme,
+  type ModeOutput,
+  type Theme,
+  themeOptionsSchema,
+  type ThemeOptions,
+  type ThemeReport,
+} from './theme'
 
-// Verification
-export {
-  nudgeForTarget,
-  pairingsFromTheme,
-  verify,
-  verifyTheme,
-  type PairingResult,
-  type SemanticPairing,
-  type SizeClass,
-  type VerifyReport,
-} from './verify'
+export { STATUS_SEEDS, STEPS, type StatusName, type StepName } from './data'
 
-// Registry (for presets / advanced consumers)
-export {
-  type AlgorithmId,
-  type BuiltinAlgorithmId,
-  type ColorProducer,
-  getProducer,
-  hasProducer,
-  type ModeCtx,
-  type PaletteOutput,
-  registerProducer,
-} from './producer'
-export { registerBuiltins } from './producers'
+export { type GuaranteeResult } from './verify'
+export { type Mode } from './scale'
 
-// Shared kernel ops + types
+// Color ops for the semantic layer, the builder UI, and the playground.
 export {
-  apca,
-  type ContrastFormula,
-  gamutMap,
+  cusp,
+  fitSrgb,
+  lstarOf,
+  maxChroma,
   type Oklch,
   oklchCss,
   toHex,
   toOklch,
+} from './space'
+export {
+  apca,
+  type CvdKind,
+  deltaEok,
+  minPairwiseDeltaEok,
+  simulateCvd,
   wcag2,
-} from './shared/color'
-export { onBlackWhite, onColor } from './shared/on-color'
-export { SEMANTIC_COLORS } from './shared/constants'
-export type { ColorScale, Theme, ThemeMode } from './shared/types'
+} from './meters'
+export { alphaTwin, solveAlphaRgb8 } from './alpha'
+export {
+  categoricalGateReport,
+  categoricalPalette,
+  divergingPalette,
+  sequentialPalette,
+  tonalCategoricalPalette,
+  tonalGateReport,
+} from './charts'

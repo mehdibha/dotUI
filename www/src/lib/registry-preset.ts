@@ -6,6 +6,7 @@
  * lazily so it stays out of the route handlers' eager server graph.
  */
 
+import { migrateColorConfig } from '@/registry/theme'
 import type { PublishPreset } from '@/publisher/types'
 
 export function defaultPreset(): PublishPreset {
@@ -24,7 +25,9 @@ export async function resolveRequestPreset(
     const { decodePreset } = await import('@/modules/create/preset/codec')
     const ds = decodePreset(encoded)
     return {
-      color: ds.color,
+      // Old `?preset=` URLs and components.json replays can carry v1 color
+      // shapes — migrate (idempotent for v2) so they keep resolving.
+      color: ds.color ? migrateColorConfig(ds.color) : undefined,
       density: ds.density,
       componentParams: ds.componentParams,
       tokens: ds.tokens,
