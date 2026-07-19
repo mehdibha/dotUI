@@ -6,7 +6,7 @@
     "postinstall": "fumadocs-mdx",
     "dev": "pnpm build:registry && vite dev",
     "dev:clean": "rm -rf node_modules/.vite .cache && pnpm build:registry && vite dev",
-    "build:registry": "tsx scripts/registry-build.ts && tsx scripts/build-showcase-bundle.ts",
+    "build:registry": "tsx scripts/registry-build.ts",
     "build": "pnpm build:registry && NODE_OPTIONS='--max-old-space-size=8192' vite build && pnpm build:postprocess",
     "build:postprocess": "node scripts/patch-vercel-config.mjs",
     "preview": "vite preview",

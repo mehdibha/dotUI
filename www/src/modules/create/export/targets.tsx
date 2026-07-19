@@ -28,10 +28,10 @@ export const EXPORT_TARGETS: ExportTarget[] = [
     // optically larger than the padded legacy lockup it replaced.
     icon: <V0Icon className="h-3 w-auto" />,
     // Deeplink shape: `https://v0.dev/chat/api/open?url=<url-encoded item URL>`.
-    // v0 fetches the `/r/showcase-bundle` item and boots a whole project
-    // rendering the dotUI showcase, themed to the preset. Only reachable on the
-    // deployed origin (v0 can't fetch back to localhost).
+    // v0 fetches the `/r/v0` item and boots a whole project with every
+    // published component and a demo card, themed to the preset. Only
+    // reachable on the deployed origin (v0 can't fetch back to localhost).
     href: (presetUrl) =>
-      `https://v0.dev/chat/api/open?url=${encodeURIComponent(presetUrl('/r/showcase-bundle'))}`,
+      `https://v0.dev/chat/api/open?url=${encodeURIComponent(presetUrl('/r/v0'))}`,
   },
 ]

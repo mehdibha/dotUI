@@ -31,7 +31,7 @@ export interface EmitThemeInput {
   registryRoot: string
 }
 
-const DEFAULT_DEPENDENCIES = [
+export const DEFAULT_DEPENDENCIES = [
   'tailwind-variants',
   // Peer dependency of `tailwind-variants` (its internal `twMerge`). `cn` itself
   // no longer depends on it directly — that's `cnfast` now.

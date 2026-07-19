@@ -60,6 +60,53 @@ export function rewriteImportPath(specifier: string): string | undefined {
   return undefined
 }
 
+/**
+ * Cross-component styles imports — `import { useStyles as x } from
+ * '@/registry/ui/field/styles'` — can't path-rewrite: `styles.ts` isn't a
+ * published file. The published component re-exports its styles function
+ * under the source public name (`fieldStyles`, see the export-from rewrite in
+ * `applyTransform`), so repoint the named import at that, keeping the local
+ * binding. Returns the local bindings so the caller can resolve `local()`
+ * hook calls to the bare function (same shape as the own-styles `useStyles()`
+ * replacement), or null if the import isn't a styles subpath.
+ */
+function rewriteStylesSubpathImport(imp: ImportDeclaration): string[] | null {
+  const match = imp
+    .getModuleSpecifierValue()
+    .match(/^@\/registry\/ui\/([a-z0-9-]+)\/styles$/)
+  if (!match) return null
+  const publicIdent = `${toCamelCase(match[1]!)}Styles`
+  const locals: string[] = []
+  for (const named of imp.getNamedImports()) {
+    const local = named.getAliasNode()?.getText() ?? named.getName()
+    named.setName(publicIdent)
+    if (local !== publicIdent) named.setAlias(local)
+    locals.push(local)
+  }
+  imp.setModuleSpecifier(`@/components/ui/${match[1]}`)
+  return locals
+}
+
+/** `const s = useFieldStyles()` → `const s = useFieldStyles` — the imported
+ *  binding IS the styles function; the source hook call resolved to it. */
+function resolveStylesHookCalls(
+  sourceFile: SourceFile,
+  locals: ReadonlySet<string>,
+): void {
+  if (locals.size === 0) return
+  for (const call of sourceFile.getDescendantsOfKind(
+    SyntaxKind.CallExpression,
+  )) {
+    if (call.wasForgotten()) continue
+    const callee = call.getExpression()
+    if (!callee.isKind(SyntaxKind.Identifier)) continue
+    const name = callee.getText()
+    if (!locals.has(name)) continue
+    if (call.getArguments().length !== 0) continue
+    call.replaceWithText(name)
+  }
+}
+
 /* ----------------------- main transform ----------------------- */
 
 export interface TransformBaseInput {
@@ -154,10 +201,17 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
   if (!hasStylesConfig) {
     // No `styles.ts` → just rewrite registry-internal import paths and bail.
     // Don't insert a `tv` variant; the component renders without one.
+    const stylesLocals = new Set<string>()
     for (const imp of sourceFile.getImportDeclarations()) {
+      const locals = rewriteStylesSubpathImport(imp)
+      if (locals) {
+        for (const local of locals) stylesLocals.add(local)
+        continue
+      }
       const next = rewriteImportPath(imp.getModuleSpecifierValue())
       if (next) imp.setModuleSpecifier(next)
     }
+    resolveStylesHookCalls(sourceFile, stylesLocals)
     return
   }
 
@@ -192,13 +246,34 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
     call.replaceWithText(variantIdent)
   }
 
+  // 2b. Resolve `export { fieldStyles } from './styles'`: the styles module
+  //     doesn't ship, so re-export the injected variant const under the same
+  //     public name — cross-component imports rely on it staying stable.
+  for (const exp of [...sourceFile.getExportDeclarations()]) {
+    if (exp.getModuleSpecifierValue() !== './styles') continue
+    const specs = exp
+      .getNamedExports()
+      .map(
+        (s) =>
+          `${variantIdent} as ${s.getAliasNode()?.getText() ?? s.getName()}`,
+      )
+    exp.replaceWithText(`export { ${specs.join(', ')} };`)
+  }
+
   // 3. Replace value-position references to `<oldStylesIdent>` (e.g. `buttonStyles`)
   //    in re-exports or local usages with the new variant ident. Skip identifiers
-  //    inside import declarations (those imports get removed below anyway).
+  //    inside import declarations (those imports get removed below anyway) and
+  //    export aliases (the public name step 2b just pinned).
   for (const id of sourceFile.getDescendantsOfKind(SyntaxKind.Identifier)) {
     if (id.wasForgotten()) continue
     if (id.getText() !== oldStylesIdent) continue
     if (id.getFirstAncestorByKind(SyntaxKind.ImportDeclaration)) continue
+    const parent = id.getParent()
+    if (
+      parent?.isKind(SyntaxKind.ExportSpecifier) &&
+      parent.getAliasNode() === id
+    )
+      continue
     id.replaceWithText(variantIdent)
   }
 
@@ -207,11 +282,19 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
     if (imp.getModuleSpecifierValue() === './styles') imp.remove()
   }
 
-  // 5. Rewrite registry-internal import paths to consumer aliases.
+  // 5. Rewrite registry-internal import paths to consumer aliases, and
+  //    resolve cross-component styles-hook calls to the imported function.
+  const stylesLocals = new Set<string>()
   for (const imp of sourceFile.getImportDeclarations()) {
+    const locals = rewriteStylesSubpathImport(imp)
+    if (locals) {
+      for (const local of locals) stylesLocals.add(local)
+      continue
+    }
     const next = rewriteImportPath(imp.getModuleSpecifierValue())
     if (next) imp.setModuleSpecifier(next)
   }
+  resolveStylesHookCalls(sourceFile, stylesLocals)
 
   // 6. Ensure `tailwind-variants` import provides both `tv` and `VariantProps`.
   ensureTailwindVariantsImport(sourceFile)
