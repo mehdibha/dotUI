@@ -13,7 +13,15 @@ import {
   LIGHT_SKELETON_NEUTRAL,
   SOLID_LSTAR_WINDOW,
 } from './data'
-import { createTheme, fitSrgb, lstarOf, STEPS, toHex, toOklch } from './index'
+import {
+  createTheme,
+  fitSrgb,
+  lstarOf,
+  STEPS,
+  toHex,
+  toOklch,
+  wcag2,
+} from './index'
 
 const CORE_SCALES = [
   'neutral',
@@ -335,5 +343,121 @@ describe('yellow policy (D2)', () => {
     const seedLstar = lstarOf(toOklch('#eab308'))
     const solidLstar = lstarOf(toOklch(theme.light.scales.accent!['700']))
     expect(Math.abs(solidLstar - seedLstar)).toBeLessThan(3)
+  })
+})
+
+describe('guarantee policy & border targets (D2)', () => {
+  const geistBorders = {
+    '400': { light: 1.2, dark: 1.55 },
+    '500': { light: 1.66, dark: 2.19 },
+    '600': { light: 2.38, dark: 5.85 },
+  }
+
+  test('policy `default` is byte-identical to absent', () => {
+    expect(
+      createTheme({ seeds: { accent: '#438cd6' }, guaranteePolicy: 'default' }),
+    ).toEqual(defaultTheme)
+  })
+
+  test('policy `strict` solves solid labels to WCAG 4.5', () => {
+    const theme = createTheme({
+      seeds: { accent: '#438cd6' },
+      guaranteePolicy: 'strict',
+    })
+    expect(theme.report.ok).toBe(true)
+    for (const g of theme.report.guarantees.filter(
+      (r) => r.name === 'on-solid',
+    )) {
+      expect(g.wcagTarget).toBe(4.5)
+      expect(g.passes, `${g.scale}/${g.mode} ${g.fg}`).toBe(true)
+    }
+  })
+
+  test('policy `relaxed` never relaxes text guarantees', () => {
+    const theme = createTheme({
+      seeds: { accent: '#438cd6' },
+      guaranteePolicy: 'relaxed',
+    })
+    expect(theme.report.ok).toBe(true)
+    for (const g of theme.report.guarantees.filter((r) =>
+      r.name.startsWith('text'),
+    ))
+      expect(g.passes, `${g.scale}/${g.mode} ${g.name}`).toBe(true)
+  })
+
+  test('border targets land within ±0.05 WCAG of the ask, both modes', () => {
+    const theme = createTheme({
+      seeds: { accent: '#0070f7' },
+      neutralTint: 0,
+      background: { light: 100, dark: 'oled' },
+      borders: { neutral: geistBorders },
+    })
+    for (const mode of ['light', 'dark'] as const) {
+      const bg = toOklch(theme[mode].background)
+      // 8-bit sRGB quantizes ratios near black into ~0.07-wide plateaus, so
+      // dark placements can only land on the nearest plateau at or above the
+      // target — the tolerance is one plateau, not solver slack.
+      const overshoot = mode === 'light' ? 0.05 : 0.15
+      for (const job of ['400', '500', '600'] as const) {
+        const ratio = wcag2(toOklch(theme[mode].scales.neutral![job]), bg)
+        const target = geistBorders[job][mode]
+        const label = `${mode} border-${job}: ${ratio} vs ${target}`
+        expect(ratio, label).toBeGreaterThanOrEqual(target - 0.05)
+        expect(ratio, label).toBeLessThanOrEqual(target + overshoot)
+      }
+    }
+    expect(theme.report.ok).toBe(true)
+  })
+
+  test('a sub-floor target is honored and priced as a warning', () => {
+    const theme = createTheme({
+      seeds: { accent: '#0070f7' },
+      borders: { neutral: { '400': 1.2 } },
+    })
+    expect(theme.report.ok).toBe(true)
+    expect(
+      theme.report.warnings.some((w) =>
+        w.includes('border-400 target 1.2 sits below the 1.3 default floor'),
+      ),
+    ).toBe(true)
+    expect(
+      theme.report.warnings.filter((w) => w.includes('not monotonic')),
+    ).toEqual([])
+  })
+
+  test('targeted borders may sit above the surface ladder (Geist shape)', () => {
+    // Geist light: border-subtle (L* 92.7) is lighter than ui-active (91.3).
+    const theme = createTheme({
+      seeds: { accent: '#0070f7' },
+      neutralTint: 0,
+      background: { light: 100 },
+      borders: { neutral: { '400': 1.2 } },
+    })
+    const border = lstarOf(toOklch(theme.light.scales.neutral!['400']))
+    const active = lstarOf(toOklch(theme.light.scales.neutral!['300']))
+    expect(border).toBeGreaterThan(active)
+    expect(theme.report.ok).toBe(true)
+  })
+
+  test('the `*` wildcard reaches every palette; a named entry wins', () => {
+    const theme = createTheme({
+      seeds: { accent: '#0070f7' },
+      borders: { '*': { '400': 2.0 }, neutral: { '400': 3.0 } },
+    })
+    const bg = toOklch(theme.light.background)
+    const accent = wcag2(toOklch(theme.light.scales.accent!['400']), bg)
+    const neutral = wcag2(toOklch(theme.light.scales.neutral!['400']), bg)
+    expect(Math.abs(accent - 2.0)).toBeLessThanOrEqual(0.05)
+    expect(Math.abs(neutral - 3.0)).toBeLessThanOrEqual(0.05)
+  })
+
+  test("untargeted palettes are untouched by another palette's targets", () => {
+    const plain = createTheme({ seeds: { accent: '#438cd6' } })
+    const targeted = createTheme({
+      seeds: { accent: '#438cd6' },
+      borders: { neutral: { '400': 1.2 } },
+    })
+    expect(targeted.light.scales.accent).toEqual(plain.light.scales.accent)
+    expect(targeted.dark.scales.accent).toEqual(plain.dark.scales.accent)
   })
 })

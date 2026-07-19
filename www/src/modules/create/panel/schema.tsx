@@ -41,7 +41,7 @@ import { Select, SelectValue } from '@/registry/ui/select'
 import { Switch } from '@/registry/ui/switch'
 
 import { ContrastReadout } from '../colors/contrast'
-import { ColorFineTuneControls } from '../colors/knobs'
+import { ColorFineTuneControls, useBorderSeeds } from '../colors/knobs'
 import { ComponentDetailView } from '../components'
 import {
   CURSOR_DISABLED_VAR,
@@ -161,9 +161,13 @@ function ColorEngineWidget() {
   const { designSystem } = useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
   const theme = useMemo(() => resolveColorConfigCached(config), [config])
+  const borderSeeds = useBorderSeeds(config, theme)
   return (
     <div className="flex flex-col gap-4">
-      <ColorFineTuneControls seedDelta={theme.report.seedDelta.accent} />
+      <ColorFineTuneControls
+        seedDelta={theme.report.seedDelta.accent}
+        borderSeeds={borderSeeds}
+      />
       <ContrastReadout report={theme.report} />
       <div className="flex flex-col gap-1">
         {PALETTE_ORDER.map((palette) => {

@@ -97,6 +97,8 @@ interface ColorConfig2 {
   hueShift?: number // scalar on the family bend table (engine D6)
   neutralTint?: number // whisper-tint amount (engine D8)
   preserveSeed?: boolean // exact-seed pin, prints its ΔEok price (engine D7)
+  guaranteePolicy?: 'relaxed' | 'strict' // border misses → warnings / AA on solids (engine D2)
+  borders?: Record<string, BorderTargets> // per-palette border placement targets (engine D2)
   primary?: 'accent' // role mapping; absent = neutral
   overrides?: Record<string, { palette: string; job: string }> // per-token remap (advanced)
 }
@@ -141,9 +143,11 @@ the current flat section are both replaced):
 - Randomize-within-quality-rules + per-seed locks (lock-and-reroll)
 
 **Advanced** — the engine's real axes: `vividness`, `hueShift`,
-`neutralTint`, `preserveSeed`, per-token remapping ✅ (the `scales` picker
-pools as a UI — mode-agnostic `{palette, job}` rows; per-mode pairs stay
-config/preset-level), chart palette controls.
+`neutralTint`, `preserveSeed`, guarantee policy + border-contrast targets
+(the `'*'` tier of `borders`; per-palette entries stay preset-level),
+per-token remapping ✅ (the `scales` picker pools as a UI — mode-agnostic
+`{palette, job}` rows; per-mode pairs stay config/preset-level), chart
+palette controls.
 
 **Verification in the panel**: the contrast readout covers the actually-
 shipped guarantee pairings (engine D2) in both modes — not just fg-on-500 in
