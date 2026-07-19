@@ -3,11 +3,10 @@
 import * as React from 'react'
 
 import { Label } from '@/registry/ui/field'
-import { TextArea } from '@/registry/ui/input'
 import { Mention } from '@/registry/ui/mention'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
-import { TextField } from '@/registry/ui/text-field'
+import { TokenInput, TokenSegmentList } from '@/registry/ui/token-field'
 
 const people = [
   { id: 'alexmiller' },
@@ -16,15 +15,17 @@ const people = [
   { id: 'emmawatson' },
 ]
 
+// The value is a TokenSegmentList of text and token segments; toString() joins
+// the segments back into plain text.
 export default function Demo() {
-  const [value, setValue] = React.useState('Hey ')
+  const [value, setValue] = React.useState(
+    () => new TokenSegmentList([{ type: 'text', text: 'Hey ' }]),
+  )
   return (
     <div className="flex w-[320px] flex-col gap-2">
-      <Mention value={value} onChange={setValue}>
-        <TextField>
-          <Label>Comment</Label>
-          <TextArea placeholder="Type @ to mention someone..." />
-        </TextField>
+      <Mention allowsNewlines value={value} onChange={setValue}>
+        <Label>Comment</Label>
+        <TokenInput placeholder="Type @ to mention someone..." />
         <Popover>
           <MenuContent items={people}>
             {(person) => (
@@ -35,7 +36,7 @@ export default function Demo() {
           </MenuContent>
         </Popover>
       </Mention>
-      <p className="text-sm text-fg-muted">Value: {value}</p>
+      <p className="text-sm text-fg-muted">Value: {value.toString()}</p>
     </div>
   )
 }

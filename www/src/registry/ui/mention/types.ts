@@ -2,25 +2,27 @@ import type { ReactNode } from 'react'
 import type { Key } from 'react-aria-components/Menu'
 
 import type { PopoverProps } from '@/registry/ui/popover'
+import type { TokenFieldProps } from '@/registry/ui/token-field'
 
 /**
- * A mention input lets users type a trigger character (like `@`) to open an
- * inline list of suggestions and insert one as a token in the text.
+ * A mention input lets users type a trigger character (like `@` or `/`) to
+ * open an inline list of suggestions and insert one as an inline token.
  *
- * `Mention` wires the behaviour onto composed primitives — a `TextField` +
- * `TextArea` for the input, a `Popover` + `Menu`/`MenuItem` for the
- * suggestions — by injecting their props through context, so no bespoke
- * sub-components are needed.
+ * `Mention` wires the behaviour onto the [TokenField](/docs/components/token-field)
+ * component — a `TokenInput` for the editable area, a `Popover` +
+ * `Menu`/`MenuItem` for the suggestions — by injecting their props through
+ * context. The value is a `TokenSegmentList` of text and token segments.
  */
-export interface MentionProps {
-  /** The character that opens the suggestions list. @default "@" */
-  trigger?: string
-  /** The text value (controlled). */
-  value?: string
-  /** The default text value (uncontrolled). */
-  defaultValue?: string
-  /** Handler called when the text value changes. */
-  onChange?: (value: string) => void
+export interface MentionProps extends Omit<
+  TokenFieldProps,
+  'children' | 'role' | 'slot'
+> {
+  /**
+   * The character(s) that open the suggestions list: a string for a single
+   * trigger, or a regular expression matching several (e.g. `/[@/]/` for
+   * `@`-mentions and `/`-commands). @default "@"
+   */
+  trigger?: string | RegExp
   /**
    * Maps the key of a selected item to the text inserted after the trigger
    * character. @default String(key)
@@ -28,6 +30,17 @@ export interface MentionProps {
   getItemText?: (key: Key) => string
   /** Where the suggestions popover is placed relative to the caret. @default "bottom start" */
   placement?: PopoverProps['placement']
-  className?: string
-  children?: ReactNode
+  /**
+   * The composed input and suggestions. A function receives the active trigger
+   * and query, so the suggestions can depend on which trigger the user typed.
+   */
+  children?: ReactNode | ((state: MentionState) => ReactNode)
+}
+
+/** The active mention passed to a `Mention`'s render-function children. */
+export interface MentionState {
+  /** The trigger text that opened the suggestions (e.g. `"@"` or `"/"`), or null while closed. */
+  trigger: string | null
+  /** The text typed after the trigger. */
+  query: string
 }

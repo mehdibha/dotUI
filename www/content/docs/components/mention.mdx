@@ -1,6 +1,6 @@
 ---
 title: Mention
-description: Mention lets users type a trigger character to insert people, channels, or other tokens inline as they write.
+description: Mention lets users type a trigger character to insert people, commands, or other tokens inline as they write.
 links:
   - label: Docs
     href: https://react-aria.adobe.com/Autocomplete#inline-completions
@@ -31,18 +31,18 @@ npx shadcn@latest add @dotui/mention
 
 ## Usage
 
-`Mention` wires an `@`-mention experience onto your existing primitives: compose an input — a bare `TextArea` (or `Input`) — plus a `Popover` + `Menu` for the suggestions, and `Mention` injects the wiring (value, caret-anchored popover, filtering, keyboard navigation, insertion) through context. Typing the trigger character (`@` by default) opens the list at the caret and filters as you type; selecting an item inserts it inline.
+`Mention` wires a mention experience onto the [TokenField](/docs/components/token-field) component: compose a `TokenInput` for the editable area plus a `Popover` + `Menu` for the suggestions, and `Mention` injects the wiring (value, caret-anchored popover, filtering, keyboard navigation, insertion) through context. Typing the trigger character (`@` by default) opens the list at the caret and filters as you type; selecting an item inserts it as an inline token.
 
 ```tsx
-import { TextArea } from '@/components/ui/input'
-import { MenuContent, MenuItem } from '@/components/ui/menu'
 import { Mention } from '@/components/ui/mention'
+import { MenuContent, MenuItem } from '@/components/ui/menu'
 import { Popover } from '@/components/ui/popover'
+import { TokenInput } from '@/components/ui/token-field'
 ```
 
 ```tsx
-<Mention>
-  <TextArea aria-label="Comment" />
+<Mention allowsNewlines>
+  <TokenInput aria-label="Comment" />
   <Popover>
     <MenuContent items={people}>
       {(person) => <MenuItem id={person.id}>{person.name}</MenuItem>}
@@ -51,17 +51,57 @@ import { Popover } from '@/components/ui/popover'
 </Mention>
 ```
 
-The input is optional to wrap: drop in a bare `TextArea`/`Input` with an `aria-label`, or wrap it in a `TextField` when you want a visible `Label` (and its description/validation). Either way the suggestions stay keyboard-accessible.
+Add a `Label` before the input when you want a visible label; otherwise give the input an `aria-label`. Without `allowsNewlines` the field stays single-line.
 
 ```tsx
-<Mention>
-  <TextField>
-    <Label>Comment</Label>
-    <TextArea />
-  </TextField>
+<Mention allowsNewlines>
+  <Label>Comment</Label>
+  <TokenInput />
   <Popover>{/* ...suggestions */}</Popover>
 </Mention>
 ```
+
+## Anatomy
+
+```tsx
+import { Mention } from '@/components/ui/mention'
+import { MenuContent, MenuItem } from '@/components/ui/menu'
+import { Popover } from '@/components/ui/popover'
+import { TokenInput } from '@/components/ui/token-field'
+```
+
+```tsx
+<Mention>
+  <TokenInput />
+  <Popover>
+    <MenuContent>
+      <MenuItem />
+    </MenuContent>
+  </Popover>
+</Mention>
+```
+
+`Mention` owns the value and caret-anchored popover, the [TokenField](/docs/components/token-field)'s `TokenInput` renders the text and inline tokens, and the `Popover` + `MenuContent` render the suggestions. These are children, not props — there are no bespoke sub-components.
+
+## Value
+
+The value is a `TokenSegmentList` — a list of plain-text and token segments. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it; `toString()` joins the segments back into plain text, and each token segment carries the inserted item's key as its `value`.
+
+```tsx
+const [value, setValue] = React.useState(
+  () =>
+    new TokenSegmentList([
+      { type: 'text', text: 'Hey ' },
+      { type: 'token', text: '@alexmiller' },
+    ]),
+)
+
+<Mention value={value} onChange={setValue}>
+  {/* ... */}
+</Mention>
+```
+
+## Triggers
 
 The `trigger` prop changes the character that opens the list, and `getItemText` maps a selected item's key to the text inserted after the trigger.
 
@@ -71,35 +111,20 @@ The `trigger` prop changes the character that opens the list, and `getItemText` 
 </Mention>
 ```
 
-## Anatomy
+Pass a regular expression to support several triggers at once. Children may be a function receiving the active trigger and query, so the suggestions can depend on which trigger the user typed.
 
 ```tsx
-import { TextArea } from '@/components/ui/input'
-import { MenuContent, MenuItem } from '@/components/ui/menu'
-import { Mention } from '@/components/ui/mention'
-import { Popover } from '@/components/ui/popover'
-```
-
-```tsx
-<Mention>
-  <TextArea />
-  <Popover>
-    <MenuContent>
-      <MenuItem />
-    </MenuContent>
-  </Popover>
-</Mention>
-```
-
-`Mention` owns the value and caret-anchored popover, the input renders the text, and the `Popover` + `MenuContent` render the suggestions. These are children, not props — there are no bespoke sub-components.
-
-## Value
-
-The value is a plain `string`. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it — controlling the value is what powers highlight-overlay patterns that re-render the text with styled mention tokens.
-
-```tsx
-<Mention value={value} onChange={setValue}>
-  {/* ... */}
+<Mention trigger={/[@/]/}>
+  {({ trigger }) => (
+    <>
+      <TokenInput aria-label="Prompt" />
+      <Popover>
+        <MenuContent items={trigger === '/' ? commands : files}>
+          {(item) => <MenuItem id={item.id}>{item.id}</MenuItem>}
+        </MenuContent>
+      </Popover>
+    </>
+  )}
 </Mention>
 ```
 
@@ -111,16 +136,16 @@ Set `placement` to move the suggestions popover relative to the caret (default `
 
 <Examples className="md:grid-cols-2">
   <Example name="mention/demos/basic" title="Basic" />
-  <Example name="mention/demos/highlighted" title="Highlighted" />
+  <Example name="mention/demos/multiple-triggers" title="Multiple triggers" />
   <Example name="mention/demos/with-avatars" title="With avatars" />
-  <Example name="mention/demos/with-input" title="Single-line input" />
+  <Example name="mention/demos/with-input" title="Single-line" />
   <Example name="mention/demos/custom-trigger" title="Custom trigger" />
   <Example name="mention/demos/controlled" title="Controlled" />
 </Examples>
 
 ## API Reference
 
-`Mention` is the only component; the input and suggestion list are composed from the [TextArea](/docs/components/text-area) / [Input](/docs/components/input) (optionally wrapped in a [TextField](/docs/components/text-field)), [Popover](/docs/components/popover), and [Menu](/docs/components/menu) primitives.
+`Mention` composes the [TokenField](/docs/components/token-field)'s `TokenInput` for the editable area, and the [Popover](/docs/components/popover) and [Menu](/docs/components/menu) primitives for the suggestion list.
 
 ### Mention
 

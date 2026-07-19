@@ -1665,9 +1665,9 @@ export const DemosIndex: Record<
 		files: ["ui/mention/demos/custom-trigger.tsx"],
 		component: React.lazy(() => import("@/registry/ui/mention/demos/custom-trigger")),
 	},
-	"mention/demos/highlighted": {
-		files: ["ui/mention/demos/highlighted.tsx"],
-		component: React.lazy(() => import("@/registry/ui/mention/demos/highlighted")),
+	"mention/demos/multiple-triggers": {
+		files: ["ui/mention/demos/multiple-triggers.tsx"],
+		component: React.lazy(() => import("@/registry/ui/mention/demos/multiple-triggers")),
 	},
 	"mention/demos/with-avatars": {
 		files: ["ui/mention/demos/with-avatars.tsx"],
@@ -2836,6 +2836,22 @@ export const DemosIndex: Record<
 	"toggle-button-group/demos/with-text": {
 		files: ["ui/toggle-button-group/demos/with-text.tsx"],
 		component: React.lazy(() => import("@/registry/ui/toggle-button-group/demos/with-text")),
+	},
+	"token-field/demos/basic": {
+		files: ["ui/token-field/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/token-field/demos/basic")),
+	},
+	"token-field/demos/controlled": {
+		files: ["ui/token-field/demos/controlled.tsx"],
+		component: React.lazy(() => import("@/registry/ui/token-field/demos/controlled")),
+	},
+	"token-field/demos/hashtags": {
+		files: ["ui/token-field/demos/hashtags.tsx"],
+		component: React.lazy(() => import("@/registry/ui/token-field/demos/hashtags")),
+	},
+	"token-field/demos/tags": {
+		files: ["ui/token-field/demos/tags.tsx"],
+		component: React.lazy(() => import("@/registry/ui/token-field/demos/tags")),
 	},
 	"tooltip/demos/basic": {
 		files: ["ui/tooltip/demos/basic.tsx"],

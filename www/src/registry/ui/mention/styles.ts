@@ -5,7 +5,7 @@ import mentionMeta from './meta'
 const { useStyles, styles } = createStyles(mentionMeta, {
   base: {
     slots: {
-      root: ['group/mention flex w-full flex-col gap-1.5'],
+      root: ['group/mention'],
     },
   },
   density: {

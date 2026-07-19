@@ -1,9 +1,9 @@
 'use client'
 
-import { TextArea } from '@/registry/ui/input'
 import { Mention } from '@/registry/ui/mention'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
+import { TokenInput } from '@/registry/ui/token-field'
 
 const usernames = [
   'alexmiller',
@@ -18,12 +18,12 @@ const usernames = [
   'nataliasmith',
 ].map((id) => ({ id }))
 
-// A bare TextArea — no TextField wrapper. Use `aria-label` for the
-// accessible name, or wrap it in a TextField when you want a visible label.
+// A bare TokenInput — no visible label. Use `aria-label` for the accessible
+// name, or add a <Label> when you want a visible one.
 export default function Demo() {
   return (
-    <Mention className="w-[320px]">
-      <TextArea
+    <Mention allowsNewlines className="w-[320px]">
+      <TokenInput
         aria-label="Comment"
         placeholder="Type @ to mention someone..."
       />

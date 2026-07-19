@@ -1,0 +1,569 @@
+{
+  "name": "TokenFieldProps",
+  "description": "A token field lets users enter text with inline tokens — mentions, tags, or\nobject references. Use it to build AI prompt fields, tag inputs, structured\nsearch fields, and mention inputs.\n\nThe value is a `TokenSegmentList` of text and token segments; subclass it\nand override `tokenize` to convert typed text into tokens automatically.\nBuilt on the `TokenField` primitive vendored from React Aria's upcoming\nrelease (adobe/react-spectrum#10318).",
+  "props": {
+    "role": {
+      "type": "\"combobox\" | \"searchbox\" | \"textbox\"",
+      "detailedType": "'combobox' | 'searchbox' | 'textbox' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "combobox"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "searchbox"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "textbox"
+          }
+        ]
+      },
+      "description": "The accessibility role of the token field.",
+      "default": "'textbox'"
+    },
+    "allowsNewlines": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the token field allows newlines."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the token field is read only."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the token field is disabled."
+    },
+    "onSubmit": {
+      "type": "(() => void)",
+      "detailedType": "(() => void) | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "A function that is called when the user presses the Enter key."
+    },
+    "onCopy": {
+      "type": "ClipboardEventHandler",
+      "detailedType": "ClipboardEventHandler | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ClipboardEventHandler"
+      },
+      "description": "Handler that is called when the user copies text."
+    },
+    "onCut": {
+      "type": "ClipboardEventHandler",
+      "detailedType": "ClipboardEventHandler | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ClipboardEventHandler"
+      },
+      "description": "Handler that is called when the user cuts text."
+    },
+    "onPaste": {
+      "type": "ClipboardEventHandler",
+      "detailedType": "ClipboardEventHandler | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ClipboardEventHandler"
+      },
+      "description": "Handler that is called when the user pastes text."
+    },
+    "autoFocus": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the element should receive focus on render."
+    },
+    "onFocus": {
+      "type": "((e: FocusEvent<Element, Element>) => void)",
+      "detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "identifier",
+                  "name": "FocusEvent"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the element receives focus."
+    },
+    "onBlur": {
+      "type": "((e: FocusEvent<Element, Element>) => void)",
+      "detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "identifier",
+                  "name": "FocusEvent"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the element loses focus."
+    },
+    "onFocusChange": {
+      "type": "((isFocused: boolean) => void)",
+      "detailedType": "((isFocused: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocused",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the element's focus status changes."
+    },
+    "value": {
+      "type": "TokenSegmentList<any>",
+      "detailedType": "TokenSegmentList<any> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "link",
+            "id": "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegmentList",
+            "name": "TokenSegmentList"
+          }
+        ]
+      },
+      "description": "The current value (controlled)."
+    },
+    "defaultValue": {
+      "type": "TokenSegmentList<any>",
+      "detailedType": "TokenSegmentList<any> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "link",
+            "id": "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegmentList",
+            "name": "TokenSegmentList"
+          }
+        ]
+      },
+      "description": "The default value (uncontrolled)."
+    },
+    "onChange": {
+      "type": "((value: TokenSegmentList<any>) => void)",
+      "detailedType": "| ((value: TokenSegmentList<any>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "value",
+                "value": {
+                  "type": "link",
+                  "id": "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegmentList",
+                  "name": "TokenSegmentList"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the value changes."
+    },
+    "onKeyDown": {
+      "type": "((e: KeyboardEvent) => void)",
+      "detailedType": "((e: KeyboardEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "KeyboardEvent",
+              "name": "KeyboardEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a key is pressed."
+    },
+    "onKeyUp": {
+      "type": "((e: KeyboardEvent) => void)",
+      "detailedType": "((e: KeyboardEvent) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "e",
+            "value": {
+              "type": "link",
+              "id": "KeyboardEvent",
+              "name": "KeyboardEvent"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when a key is released."
+    },
+    "children": {
+      "type": "ReactNode | (values: TokenFieldRenderProps) => ReactNode",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "ReactNode"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "TokenFieldRenderProps",
+                  "name": "TokenFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "ReactNode"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The children of the component. A function may be provided to alter the children based on\ncomponent state."
+    },
+    "className": {
+      "type": "string | (values: TokenFieldRenderProps) => string",
+      "detailedType": "string | (values: TokenFieldRenderProps) => string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "TokenFieldRenderProps",
+                  "name": "TokenFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "string"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
+    },
+    "style": {
+      "type": "CSSProperties | (values: TokenFieldRenderProps) => CSSProperties",
+      "detailedType": "CSSProperties | (values: TokenFieldRenderProps) => CSSProperties | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "identifier",
+            "name": "CSSProperties"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "values",
+                "value": {
+                  "type": "link",
+                  "id": "TokenFieldRenderProps",
+                  "name": "TokenFieldRenderProps"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "identifier",
+              "name": "CSSProperties"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "The inline [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) for the\nelement. A function may be provided to compute the style based on component state."
+    },
+    "render": {
+      "type": "DOMRenderFunction<\"div\", TokenFieldRenderProps>",
+      "detailedType": "| DOMRenderFunction<'div', TokenFieldRenderProps>\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "DOMRenderFunction"
+            },
+            "typeParameters": [
+              {
+                "type": "stringLiteral",
+                "value": "div"
+              },
+              {
+                "type": "link",
+                "id": "src/registry/lib/react-aria-token-field/token-field.tsx:TokenFieldRenderProps",
+                "name": "TokenFieldRenderProps"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
+    },
+    "slot": {
+      "type": "null | string",
+      "detailedType": "null | string | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "description": "A slot name for the component. Slots allow the component to receive props from a parent\ncomponent. An explicit `null` value indicates that the local props completely override all\nprops received from a parent."
+    },
+    "aria-describedby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that describes the object."
+    },
+    "aria-details": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+    },
+    "aria-label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Defines a string value that labels the current element."
+    },
+    "aria-labelledby": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Identifies the element (or elements) that labels the current element."
+    }
+  },
+  "renderProps": {
+    "isDisabled": {
+      "selector": "[data-disabled]",
+      "description": "Whether the token field is disabled."
+    },
+    "isReadOnly": {
+      "selector": "[data-readonly]",
+      "description": "Whether the token field is read only."
+    }
+  },
+  "typeLinks": {
+    "TokenFieldRenderProps": {
+      "type": "interface",
+      "name": "TokenFieldRenderProps",
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token field is disabled."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token field is read only."
+        }
+      }
+    },
+    "src/registry/lib/react-aria-token-field/token-field.tsx:TokenFieldRenderProps": {
+      "type": "interface",
+      "id": "src/registry/lib/react-aria-token-field/token-field.tsx:TokenFieldRenderProps",
+      "name": "TokenFieldRenderProps",
+      "extends": [],
+      "properties": {
+        "isDisabled": {
+          "type": "property",
+          "name": "isDisabled",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token field is disabled."
+        },
+        "isReadOnly": {
+          "type": "property",
+          "name": "isReadOnly",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "Whether the token field is read only."
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    }
+  }
+}

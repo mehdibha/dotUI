@@ -12,12 +12,10 @@ const mentionMeta = {
     },
   ],
   registryDependencies: [
-    'field',
-    'input',
     'menu',
     'popover',
-    'text-field',
-    'textarea-caret',
+    'react-aria-token-field',
+    'token-field',
   ],
 } satisfies RegistryItem
 
