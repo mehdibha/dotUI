@@ -49,13 +49,6 @@ function makeDesignSystem(opts: {
 
 export const PRESETS: Preset[] = [
   {
-    id: 'default',
-    name: 'Default',
-    description: 'dotUI out of the box.',
-    swatch: '#a1a1aa',
-    designSystem: { ...DEFAULTS },
-  },
-  {
     id: 'vercel',
     name: 'Vercel',
     description: 'Monochrome, tight radii.',
@@ -155,6 +148,19 @@ export const PRESETS: Preset[] = [
       accent: '#2383e2',
       radiusFactor: '0.75',
       density: 'compact',
+    }),
+  },
+  {
+    id: 'spotify',
+    name: 'Spotify',
+    description: 'Vivid green, pill-shaped.',
+    swatch: '#1ed760',
+    designSystem: makeDesignSystem({
+      neutral: '#6a6a6a',
+      accent: '#1db954',
+      primary: 'accent',
+      radiusFactor: '2',
+      density: 'default',
     }),
   },
 ]
