@@ -97,14 +97,14 @@ export function CompositionSection() {
       >
         {/* Copy + step rail */}
         <div className="flex flex-col items-start gap-4">
-          <h2 className="font-mono text-sm tracking-wide text-fg-muted">
+          <p className="font-mono text-sm tracking-wide text-fg-muted">
             Composition
-          </h2>
-          <p className="text-3xl font-semibold tracking-tighter text-balance sm:text-4xl">
+          </p>
+          <h2 className="text-3xl font-semibold tracking-tighter text-balance sm:text-4xl">
             Compose components.
             <br />
             <span className="text-fg-muted">Create your own patterns.</span>
-          </p>
+          </h2>
           <p className="text-base text-fg-muted lg:max-w-md">
             One compositional API across the library — the same parts combine
             into anything, from a simple field to a complex pattern.

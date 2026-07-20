@@ -1,9 +1,11 @@
 import { Link } from 'react-aria-components'
 
+import { siteConfig } from '@/config/site'
 import { LinkButton } from '@/registry/ui/button'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import { Announcement } from '@/components/announcement'
 import { BaseUiIcon } from '@/components/icons/base-ui'
+import { GitHubIcon } from '@/components/icons/github'
 import { ReactAriaIcon } from '@/components/icons/react-aria'
 import { ReactJsIcon } from '@/components/icons/react-js'
 import { ShadcnIcon } from '@/components/icons/shadcn'
@@ -12,6 +14,7 @@ import { TypeScriptIcon } from '@/components/icons/typescript'
 import { Footer } from '@/components/layout/footer'
 import Cards from '@/modules/marketing/cards'
 import { CompositionSection } from '@/modules/marketing/composition-section'
+import { ExportSection } from '@/modules/marketing/export-section'
 
 export function HomePage() {
   return (
@@ -28,8 +31,9 @@ export function HomePage() {
             not someone else&rsquo;s.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
-            Beautiful components, accessibility out of the box, composition, and
-            more.
+            Tune colors, typography, density, and component styles. Preview
+            every choice live on accessible React components. Export it as code
+            you own.
           </p>
           <div className="mt-9 flex items-center gap-3">
             <LinkButton href="/create" variant="primary" size="lg">
@@ -59,7 +63,7 @@ export function HomePage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="flex items-center justify-center opacity-60 grayscale-100 transition-opacity hover:opacity-100 hover:grayscale-0"
+                  className="flex items-center justify-center rounded-md opacity-60 focus-reset grayscale-100 transition-[opacity,filter] hover:opacity-100 hover:grayscale-0 focus-visible:focus-ring"
                   href={href}
                 >
                   {icon}
@@ -68,14 +72,43 @@ export function HomePage() {
               </Tooltip>
             ))}
           </div>
+          <p className="max-w-xl text-center text-sm text-balance text-fg-muted">
+            Keyboard, focus, and screen-reader behavior come from React Aria and
+            Base UI — accessible by default, on every component.
+          </p>
         </div>
       </section>
 
       <CompositionSection />
 
-      <div className="mt-10 md:mt-14">
-        <Footer />
-      </div>
+      <ExportSection />
+
+      {/* Closing CTA */}
+      <section className="container flex flex-col items-center py-24 text-center md:py-32">
+        <h2 className="text-3xl font-semibold tracking-tighter text-balance sm:text-4xl">
+          Start building your design system.
+        </h2>
+        <p className="mt-3 text-base text-balance text-fg-muted">
+          Free and open source. Yours from the first component.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <LinkButton href="/create" variant="primary" size="lg">
+            Launch the editor
+          </LinkButton>
+          <LinkButton
+            href={siteConfig.links.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="default"
+            size="lg"
+          >
+            <GitHubIcon className="size-4.5" />
+            Star on GitHub
+          </LinkButton>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   )
 }
