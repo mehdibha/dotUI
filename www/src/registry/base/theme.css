@@ -1,9 +1,3 @@
-/* -------------- Fonts -------------- */
-@theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 /* -------------- Radius -------------- */
 @theme inline {
   --radius-xs: calc(0.125rem * var(--radius-factor));

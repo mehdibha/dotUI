@@ -52,12 +52,15 @@ export function useDesignSystem() {
     [setDesignSystem],
   )
 
+  /** Set one global token; `undefined` deletes it (→ theme default). */
   const setToken = useCallback(
-    (tokenName: string, value: string) => {
-      setDesignSystem((prev) => ({
-        ...prev,
-        tokens: { ...prev.tokens, [tokenName]: value },
-      }))
+    (tokenName: string, value: string | undefined) => {
+      setDesignSystem((prev) => {
+        const tokens = { ...prev.tokens }
+        if (value === undefined) delete tokens[tokenName]
+        else tokens[tokenName] = value
+        return { ...prev, tokens }
+      })
     },
     [setDesignSystem],
   )

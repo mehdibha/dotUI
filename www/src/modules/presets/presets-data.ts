@@ -1,3 +1,9 @@
+import {
+  FONT_HEADING_VAR,
+  FONT_MONO_VAR,
+  FONT_SANS_VAR,
+  fontStack,
+} from '@/lib/fonts'
 import type { ColorConfig } from '@/registry/theme'
 import { DEFAULTS, type DesignSystem } from '@/modules/create/preset'
 
@@ -32,12 +38,20 @@ function makeDesignSystem(opts: {
   primary?: ColorConfig['primary']
   /** Chroma-curve scale (1 = engine default). */
   vividness?: ColorConfig['vividness']
+  /** Google font families for the typography tokens (default Geist / match body). */
+  fonts?: { heading?: string; body?: string; mono?: string }
 }): DesignSystem {
   const { neutral, accent, density = 'default' } = opts
+  const tokens: Record<string, string> = {}
+  if (opts.radiusFactor) tokens['--radius-factor'] = opts.radiusFactor
+  if (opts.fonts?.heading)
+    tokens[FONT_HEADING_VAR] = fontStack(opts.fonts.heading)
+  if (opts.fonts?.body) tokens[FONT_SANS_VAR] = fontStack(opts.fonts.body)
+  if (opts.fonts?.mono) tokens[FONT_MONO_VAR] = fontStack(opts.fonts.mono)
   return {
     ...DEFAULTS,
     density,
-    tokens: opts.radiusFactor ? { '--radius-factor': opts.radiusFactor } : {},
+    tokens,
     color: {
       v: 2,
       seeds: { accent, neutral },
@@ -73,6 +87,8 @@ export const PRESETS: Preset[] = [
       accent: '#3ecf8e',
       primary: 'accent',
       density: 'default',
+      // Verified against live production CSS: Supabase ships Inter.
+      fonts: { body: 'Inter' },
     }),
   },
   {
@@ -86,6 +102,8 @@ export const PRESETS: Preset[] = [
       primary: 'accent',
       radiusFactor: '0.75',
       density: 'default',
+      // Stripe's UI font is Söhne (proprietary); Inter is the closest free grotesque.
+      fonts: { body: 'Inter' },
     }),
   },
   {
@@ -98,6 +116,8 @@ export const PRESETS: Preset[] = [
       accent: '#5e6ad2',
       primary: 'accent',
       density: 'compact',
+      // Linear ships Inter (verified against live production CSS).
+      fonts: { body: 'Inter' },
     }),
   },
   {
@@ -111,6 +131,9 @@ export const PRESETS: Preset[] = [
       primary: 'accent',
       radiusFactor: '1.5',
       density: 'default',
+      // Anthropic Sans is proprietary; Space Grotesk stands in, with a warm
+      // Fraunces heading to show the heading axis on an editorial system.
+      fonts: { heading: 'Fraunces', body: 'Space Grotesk' },
     }),
   },
   {
@@ -124,6 +147,8 @@ export const PRESETS: Preset[] = [
       primary: 'accent',
       radiusFactor: '2',
       density: 'comfortable',
+      // Airbnb Cereal is proprietary; Plus Jakarta Sans is the closest free match.
+      fonts: { body: 'Plus Jakarta Sans' },
     }),
   },
   {
@@ -136,6 +161,8 @@ export const PRESETS: Preset[] = [
       accent: '#0969da',
       primary: 'accent',
       density: 'default',
+      // GitHub's brand font, open-sourced and on Google Fonts.
+      fonts: { body: 'Mona Sans' },
     }),
   },
   {
@@ -161,6 +188,8 @@ export const PRESETS: Preset[] = [
       primary: 'accent',
       radiusFactor: '2',
       density: 'default',
+      // Spotify Circular is proprietary; Figtree is the closest free geometric.
+      fonts: { body: 'Figtree' },
     }),
   },
 ]
