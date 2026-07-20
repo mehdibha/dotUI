@@ -419,7 +419,11 @@ function TypographySection({
   mono: string
 }) {
   const families = [
-    { label: 'Heading — display & titles', name: heading, sample: 'font-heading' },
+    {
+      label: 'Heading — display & titles',
+      name: heading,
+      sample: 'font-heading',
+    },
     { label: 'Body — interface text', name: body, sample: 'font-sans' },
     { label: 'Mono — code & numerics', name: mono, sample: 'font-mono' },
   ]

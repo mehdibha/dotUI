@@ -8,7 +8,7 @@ const { useStyles, styles } = createStyles(dialogMeta, {
       content:
         'relative flex max-h-[inherit] min-h-0 flex-col gap-4 outline-none has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto',
       header: 'flex flex-col',
-      title: '',
+      title: 'font-heading',
       description: 'text-fg-muted',
       body: 'flex min-h-0 flex-1 flex-col gap-2 in-data-modal:[@container_(height<31.25rem)]:mx-0 in-data-modal:[@container_(height<31.25rem)]:shrink-0 in-data-modal:[@container_(height<31.25rem)]:overflow-y-visible in-data-modal:[@container_(height<31.25rem)]:px-0',
       footer: 'flex flex-col-reverse gap-2 sm:flex-row sm:justify-end',

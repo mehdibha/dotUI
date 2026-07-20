@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import {
   DEFAULT_BODY_FAMILY,
   DEFAULT_MONO_FAMILY,
+  ensureFontPreviewStylesheet,
   ensureFontStylesheets,
   familyFromStack,
   FONT_CATALOG,
@@ -20,6 +21,7 @@ import {
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
+  ListBoxVirtualizer,
 } from '@/registry/ui/list-box'
 import { Popover } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
@@ -88,6 +90,12 @@ export function TypographyConfig() {
     setHeading,
     setMono,
   } = useTypography()
+
+  // Opening the section signals intent to browse fonts: load the subsetted
+  // preview faces so every picker item can render its name in itself.
+  useEffect(() => {
+    ensureFontPreviewStylesheet(document)
+  }, [])
 
   return (
     <div className="flex flex-col gap-3">
@@ -178,25 +186,37 @@ const FontPicker = ({
           >
             <Input className="w-full" />
           </SearchField>
-          <ListBox className="max-h-72">
-            {matchBodyOption && (
-              <ListBoxItem id={MATCH_BODY}>Match body font</ListBoxItem>
-            )}
-            {categories.map((category) => (
-              <ListBoxSection key={category}>
-                <ListBoxSectionHeader>
-                  {CATEGORY_LABELS[category]}
-                </ListBoxSectionHeader>
-                {FONT_CATALOG.filter((font) => font.category === category).map(
-                  (font) => (
-                    <ListBoxItem key={font.family} id={font.family}>
-                      {font.family}
+          <ListBoxVirtualizer
+            layoutOptions={{ rowHeight: 32, headingHeight: 24, padding: 4 }}
+          >
+            <ListBox className="max-h-72 overflow-auto overscroll-contain">
+              {matchBodyOption && (
+                <ListBoxItem id={MATCH_BODY} textValue="Match body font">
+                  Match body font
+                </ListBoxItem>
+              )}
+              {categories.map((category) => (
+                <ListBoxSection key={category}>
+                  <ListBoxSectionHeader>
+                    {CATEGORY_LABELS[category]}
+                  </ListBoxSectionHeader>
+                  {FONT_CATALOG.filter(
+                    (font) => font.category === category,
+                  ).map((font) => (
+                    <ListBoxItem
+                      key={font.family}
+                      id={font.family}
+                      textValue={font.family}
+                    >
+                      <span style={{ fontFamily: fontStack(font.family) }}>
+                        {font.family}
+                      </span>
                     </ListBoxItem>
-                  ),
-                )}
-              </ListBoxSection>
-            ))}
-          </ListBox>
+                  ))}
+                </ListBoxSection>
+              ))}
+            </ListBox>
+          </ListBoxVirtualizer>
         </Command>
       </Popover>
     </Select>

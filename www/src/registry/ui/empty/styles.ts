@@ -10,7 +10,7 @@ const { useStyles, styles } = createStyles(emptyMeta, {
         'border-dashed',
       ],
       header: 'flex max-w-sm flex-col items-center',
-      title: 'text-lg font-medium tracking-tight',
+      title: 'font-heading text-lg font-medium tracking-tight',
       description:
         'text-sm/relaxed text-fg-muted [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary',
       content:

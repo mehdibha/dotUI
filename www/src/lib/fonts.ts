@@ -172,15 +172,34 @@ export function fontFamiliesFromTokens(
  */
 export function googleFontsUrl(
   families: string[],
-  opts: { text?: string } = {},
+  opts: { text?: string; weights?: string } = {},
 ): string {
+  const weights = opts.weights ?? '400;500;600;700'
   const params = families
-    .map(
-      (family) => `family=${family.replaceAll(' ', '+')}:wght@400;500;600;700`,
-    )
+    .map((family) => `family=${family.replaceAll(' ', '+')}:wght@${weights}`)
     .join('&')
   const text = opts.text ? `&text=${encodeURIComponent(opts.text)}` : ''
   return `https://fonts.googleapis.com/css2?${params}&display=swap${text}`
+}
+
+/**
+ * One stylesheet covering EVERY catalog family, subset (`text=`) to the glyphs
+ * of the family names — so picker items can render each name in its own font.
+ * The CSS is one request; the browser downloads a face only when a visible
+ * item actually renders in it, which the virtualized list keeps to a handful.
+ */
+export function ensureFontPreviewStylesheet(doc: Document): void {
+  const id = 'dotui-font-previews'
+  if (doc.getElementById(id)) return
+  const text = [...new Set(FONT_CATALOG.flatMap((f) => [...f.family]))].join('')
+  const link = doc.createElement('link')
+  link.id = id
+  link.rel = 'stylesheet'
+  link.href = googleFontsUrl(
+    FONT_CATALOG.map((f) => f.family),
+    { text, weights: '400' },
+  )
+  doc.head.append(link)
 }
 
 /**
