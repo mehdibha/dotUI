@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { MonitorIcon, MoonIcon, SunIcon } from 'lucide-react'
 
+import { MonitorIcon, MoonIcon, SunIcon } from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import {
   Card,

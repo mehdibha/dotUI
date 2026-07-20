@@ -1,8 +1,7 @@
 'use client'
 
-import { PlusCircleIcon } from 'lucide-react'
-
 import { ExternalLinkIcon } from '@/registry/__generated__/icons'
+import { PlusCircleIcon } from '@/registry/icons'
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
 import { Button } from '@/registry/ui/button'
 import {

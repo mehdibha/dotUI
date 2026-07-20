@@ -1,9 +1,9 @@
 'use client'
 
-import { ChevronDownIcon } from 'lucide-react'
 import { composeRenderProps } from 'react-aria-components/composeRenderProps'
 import * as SelectPrimitives from 'react-aria-components/Select'
 
+import { ChevronDownIcon } from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 import type { ButtonProps } from '@/registry/ui/button'

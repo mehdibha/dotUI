@@ -21,6 +21,7 @@ export function DemoPreset({ children }: { children: ReactNode }) {
       tokens={ds.tokens}
       density={ds.density}
       color={ds.color}
+      icons={ds.icons}
       forcedMode={useForcedPreviewMode()}
       scoped
     >

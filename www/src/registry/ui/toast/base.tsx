@@ -1,13 +1,14 @@
 'use client'
 
 import { Toast as ToastPrimitive } from '@base-ui/react/toast'
+
 import {
   CircleAlertIcon,
   CircleCheckIcon,
   InfoIcon,
   LoaderCircleIcon,
   TriangleAlertIcon,
-} from 'lucide-react'
+} from '@/registry/icons'
 
 import { useStyles } from './styles'
 import type { ToastData, ToastPosition, ToastVariant } from './types'

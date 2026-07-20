@@ -1,11 +1,11 @@
 'use client'
 
 import type React from 'react'
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import * as CalendarPrimitive from 'react-aria-components/Calendar'
 import { composeRenderProps } from 'react-aria-components/composeRenderProps'
 import * as RangeCalendarPrimitive from 'react-aria-components/RangeCalendar'
 
+import { ChevronLeftIcon, ChevronRightIcon } from '@/registry/icons'
 import { Button } from '@/registry/ui/button'
 
 import { useStyles } from './styles'

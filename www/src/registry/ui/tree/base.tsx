@@ -1,10 +1,10 @@
 'use client'
 
-import { ChevronRightIcon, GripVerticalIcon } from 'lucide-react'
 import * as ButtonPrimitive from 'react-aria-components/Button'
 import { composeRenderProps } from 'react-aria-components/composeRenderProps'
 import * as TreePrimitive from 'react-aria-components/Tree'
 
+import { ChevronRightIcon, GripVerticalIcon } from '@/registry/icons'
 import { Checkbox } from '@/registry/ui/checkbox'
 
 import { useStyles } from './styles'

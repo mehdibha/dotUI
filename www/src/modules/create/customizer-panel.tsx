@@ -10,6 +10,8 @@ import { AnimatePresence, motion, type Transition } from 'motion/react'
 import * as ButtonPrimitives from 'react-aria-components/Button'
 
 import * as icons from '@/registry/__generated__/icons'
+import { IconLibraryContext } from '@/registry/icons/create-icon'
+import { iconLibraries } from '@/registry/icons/icon-map'
 import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
@@ -99,19 +101,7 @@ const menu: MenuItem[] = [
   {
     id: 'iconography',
     title: 'Icon Library',
-    preview: (
-      <div className="-mt-1 flex flex-col items-start gap-1">
-        <p className="font-medium">Lucide icons</p>
-        <div className="mt-2 flex w-full items-center gap-2 overflow-hidden text-fg-muted [&_svg]:size-4 [&_svg]:shrink-0">
-          {Object.entries(icons)
-            .sort(([a], [b]) => a.localeCompare(b))
-            .slice(0, 20)
-            .map(([name, IconComponent]) => (
-              <IconComponent key={name} />
-            ))}
-        </div>
-      </div>
-    ),
+    preview: 'dynamic',
     config: <IconographyConfig />,
   },
   {
@@ -259,6 +249,25 @@ export function CustomizerPanel({ className }: { className?: string }) {
     designSystem.tokens[CURSOR_DISABLED_VAR] ?? DEFAULT_CURSOR_DISABLED
 
   function renderDynamicPreview(id: string): ReactNode {
+    if (id === 'iconography') {
+      const selected = designSystem.icons ?? 'lucide'
+      const library = iconLibraries.find((lib) => lib.name === selected)
+      return (
+        <div className="-mt-1 flex flex-col items-start gap-1">
+          <p className="font-medium">{library?.label ?? 'Lucide icons'}</p>
+          <div className="mt-2 flex w-full items-center gap-2 overflow-hidden text-fg-muted [&_svg]:size-4 [&_svg]:shrink-0">
+            <IconLibraryContext.Provider value={selected}>
+              {Object.entries(icons)
+                .sort(([a], [b]) => a.localeCompare(b))
+                .slice(0, 20)
+                .map(([name, IconComponent]) => (
+                  <IconComponent key={name} />
+                ))}
+            </IconLibraryContext.Provider>
+          </div>
+        </div>
+      )
+    }
     if (id === 'radius') {
       const parsed = Number.parseFloat(radiusFactor)
       const numeric = Number.isFinite(parsed) ? parsed : 1

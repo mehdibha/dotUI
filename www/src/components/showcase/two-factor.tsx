@@ -1,7 +1,6 @@
 'use client'
 
-import { ShieldCheckIcon } from 'lucide-react'
-
+import { ShieldCheckIcon } from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 import {

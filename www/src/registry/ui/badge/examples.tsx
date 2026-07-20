@@ -1,5 +1,4 @@
-import { ArrowRightIcon, BadgeCheckIcon } from 'lucide-react'
-
+import { ArrowRightIcon, BadgeCheckIcon } from '@/registry/icons'
 import { Badge } from '@/registry/ui/badge'
 import { Loader } from '@/registry/ui/loader'
 import { Example } from '@/modules/create/preview/example'

@@ -1,8 +1,8 @@
 'use client'
 
-import { TrendingUpIcon } from 'lucide-react'
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts'
 
+import { TrendingUpIcon } from '@/registry/icons'
 import {
   Card,
   CardContent,

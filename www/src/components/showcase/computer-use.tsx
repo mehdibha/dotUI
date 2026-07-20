@@ -1,7 +1,6 @@
 'use client'
 
-import { ChevronDownIcon } from 'lucide-react'
-
+import { ChevronDownIcon } from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import { Badge } from '@/registry/ui/badge'
 import { Button } from '@/registry/ui/button'

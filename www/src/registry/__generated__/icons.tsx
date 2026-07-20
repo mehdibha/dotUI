@@ -19,12 +19,17 @@ import {
 	BadgeCheck as LucideBadgeCheck,
 	BadgeCheckIcon as LucideBadgeCheckIcon,
 	BellIcon as LucideBellIcon,
+	BitcoinIcon as LucideBitcoinIcon,
+	BlocksIcon as LucideBlocksIcon,
 	BluetoothIcon as LucideBluetoothIcon,
 	BoldIcon as LucideBoldIcon,
+	BookIcon as LucideBookIcon,
 	BookmarkIcon as LucideBookmarkIcon,
 	BookOpen as LucideBookOpen,
 	BookOpenIcon as LucideBookOpenIcon,
 	BotIcon as LucideBotIcon,
+	BoxesIcon as LucideBoxesIcon,
+	BoxIcon as LucideBoxIcon,
 	Building2Icon as LucideBuilding2Icon,
 	CalculatorIcon as LucideCalculatorIcon,
 	CalendarIcon as LucideCalendarIcon,
@@ -45,6 +50,7 @@ import {
 	CircleCheckIcon as LucideCircleCheckIcon,
 	CircleDashedIcon as LucideCircleDashedIcon,
 	CircleDollarSignIcon as LucideCircleDollarSignIcon,
+	CircleDotIcon as LucideCircleDotIcon,
 	CircleIcon as LucideCircleIcon,
 	ClipboardPasteIcon as LucideClipboardPasteIcon,
 	Clock2Icon as LucideClock2Icon,
@@ -52,6 +58,7 @@ import {
 	CloudCogIcon as LucideCloudCogIcon,
 	CodeIcon as LucideCodeIcon,
 	ContainerIcon as LucideContainerIcon,
+	ContrastIcon as LucideContrastIcon,
 	CopyIcon as LucideCopyIcon,
 	CreditCardIcon as LucideCreditCardIcon,
 	DownloadIcon as LucideDownloadIcon,
@@ -70,15 +77,19 @@ import {
 	FrameIcon as LucideFrameIcon,
 	GitBranchIcon as LucideGitBranchIcon,
 	GlobeIcon as LucideGlobeIcon,
+	GripVerticalIcon as LucideGripVerticalIcon,
+	HandIcon as LucideHandIcon,
 	HeartIcon as LucideHeartIcon,
 	HelpCircleIcon as LucideHelpCircleIcon,
 	HomeIcon as LucideHomeIcon,
 	ImageIcon as LucideImageIcon,
+	ImageUpIcon as LucideImageUpIcon,
 	InboxIcon as LucideInboxIcon,
 	InfoIcon as LucideInfoIcon,
 	ItalicIcon as LucideItalicIcon,
 	KeyboardIcon as LucideKeyboardIcon,
 	LanguagesIcon as LucideLanguagesIcon,
+	LayersIcon as LucideLayersIcon,
 	LayoutGridIcon as LucideLayoutGridIcon,
 	LayoutIcon as LucideLayoutIcon,
 	LifeBuoy as LucideLifeBuoy,
@@ -87,6 +98,7 @@ import {
 	ListFilterIcon as LucideListFilterIcon,
 	ListIcon as LucideListIcon,
 	Loader2Icon as LucideLoader2Icon,
+	LoaderCircleIcon as LucideLoaderCircleIcon,
 	LogInIcon as LucideLogInIcon,
 	LogOutIcon as LucideLogOutIcon,
 	MailCheckIcon as LucideMailCheckIcon,
@@ -100,8 +112,10 @@ import {
 	MinusIcon as LucideMinusIcon,
 	MonitorIcon as LucideMonitorIcon,
 	MoonIcon as LucideMoonIcon,
+	MoonStarIcon as LucideMoonStarIcon,
 	MoreHorizontalIcon as LucideMoreHorizontalIcon,
 	MoreVerticalIcon as LucideMoreVerticalIcon,
+	MousePointer2Icon as LucideMousePointer2Icon,
 	MousePointerIcon as LucideMousePointerIcon,
 	OctagonXIcon as LucideOctagonXIcon,
 	PaletteIcon as LucidePaletteIcon,
@@ -112,11 +126,14 @@ import {
 	PenToolIcon as LucidePenToolIcon,
 	PieChartIcon as LucidePieChartIcon,
 	PinIcon as LucidePinIcon,
+	PlugIcon as LucidePlugIcon,
+	PlusCircleIcon as LucidePlusCircleIcon,
 	PlusIcon as LucidePlusIcon,
 	PlusSquareIcon as LucidePlusSquareIcon,
 	RadioIcon as LucideRadioIcon,
 	RefreshCwIcon as LucideRefreshCwIcon,
 	RotateCwIcon as LucideRotateCwIcon,
+	RulerIcon as LucideRulerIcon,
 	SaveIcon as LucideSaveIcon,
 	ScissorsIcon as LucideScissorsIcon,
 	Search as LucideSearch,
@@ -126,10 +143,14 @@ import {
 	ServerIcon as LucideServerIcon,
 	Settings2Icon as LucideSettings2Icon,
 	SettingsIcon as LucideSettingsIcon,
+	ShapesIcon as LucideShapesIcon,
 	ShareIcon as LucideShareIcon,
+	ShieldCheckIcon as LucideShieldCheckIcon,
 	ShieldIcon as LucideShieldIcon,
 	ShoppingBagIcon as LucideShoppingBagIcon,
 	ShoppingCartIcon as LucideShoppingCartIcon,
+	SignalHighIcon as LucideSignalHighIcon,
+	SlashSquareIcon as LucideSlashSquareIcon,
 	SmileIcon as LucideSmileIcon,
 	SparklesIcon as LucideSparklesIcon,
 	SquarePenIcon as LucideSquarePenIcon,
@@ -137,18 +158,22 @@ import {
 	SunIcon as LucideSunIcon,
 	TableIcon as LucideTableIcon,
 	TagIcon as LucideTagIcon,
+	TelescopeIcon as LucideTelescopeIcon,
 	TerminalIcon as LucideTerminalIcon,
 	TerminalSquareIcon as LucideTerminalSquareIcon,
 	TimerIcon as LucideTimerIcon,
 	Trash2Icon as LucideTrash2Icon,
 	TrashIcon as LucideTrashIcon,
+	TrendingDownIcon as LucideTrendingDownIcon,
 	TrendingUpIcon as LucideTrendingUpIcon,
 	TriangleAlertIcon as LucideTriangleAlertIcon,
+	TypeIcon as LucideTypeIcon,
 	UnderlineIcon as LucideUnderlineIcon,
 	UploadIcon as LucideUploadIcon,
 	User2Icon as LucideUser2Icon,
 	UserIcon as LucideUserIcon,
 	UserRoundXIcon as LucideUserRoundXIcon,
+	Users2Icon as LucideUsers2Icon,
 	Volume1Icon as LucideVolume1Icon,
 	Volume2Icon as LucideVolume2Icon,
 	VolumeOffIcon as LucideVolumeOffIcon,
@@ -1261,4 +1286,179 @@ export const PinIcon = createIcon(LucidePinIcon, {
 	remix: "RiPushpinLine",
 	tabler: "IconPinned",
 	hugeicons: "PinIcon",
+});
+
+export const GripVerticalIcon = createIcon(LucideGripVerticalIcon, {
+	lucide: "GripVerticalIcon",
+	remix: "RiDraggable",
+	tabler: "IconGripVertical",
+	hugeicons: "DragDropVerticalIcon",
+});
+
+export const LoaderCircleIcon = createIcon(LucideLoaderCircleIcon, {
+	lucide: "LoaderCircleIcon",
+	remix: "RiLoader4Line",
+	tabler: "IconLoader2",
+	hugeicons: "Loading03Icon",
+});
+
+export const ShieldCheckIcon = createIcon(LucideShieldCheckIcon, {
+	lucide: "ShieldCheckIcon",
+	remix: "RiShieldCheckLine",
+	tabler: "IconShieldCheck",
+	hugeicons: "SecurityCheckIcon",
+});
+
+export const BlocksIcon = createIcon(LucideBlocksIcon, {
+	lucide: "BlocksIcon",
+	remix: "RiApps2Line",
+	tabler: "IconBlocks",
+	hugeicons: "DashboardSquare01Icon",
+});
+
+export const BoxesIcon = createIcon(LucideBoxesIcon, {
+	lucide: "BoxesIcon",
+	remix: "RiStackLine",
+	tabler: "IconBoxMultiple",
+	hugeicons: "DeliveryBox01Icon",
+});
+
+export const HandIcon = createIcon(LucideHandIcon, {
+	lucide: "HandIcon",
+	remix: "RiHand",
+	tabler: "IconHandStop",
+	hugeicons: "WavingHand01Icon",
+});
+
+export const PlugIcon = createIcon(LucidePlugIcon, {
+	lucide: "PlugIcon",
+	remix: "RiPlugLine",
+	tabler: "IconPlug",
+	hugeicons: "Plug01Icon",
+});
+
+export const SlashSquareIcon = createIcon(LucideSlashSquareIcon, {
+	lucide: "SlashSquareIcon",
+	remix: "RiSlashCommands2",
+	tabler: "IconSlashes",
+	hugeicons: "CommandIcon",
+});
+
+export const TelescopeIcon = createIcon(LucideTelescopeIcon, {
+	lucide: "TelescopeIcon",
+	remix: "RiSearchEyeLine",
+	tabler: "IconTelescope",
+	hugeicons: "Telescope01Icon",
+});
+
+export const ImageUpIcon = createIcon(LucideImageUpIcon, {
+	lucide: "ImageUpIcon",
+	remix: "RiImageAddLine",
+	tabler: "IconPhotoUp",
+	hugeicons: "ImageUpload01Icon",
+});
+
+export const BitcoinIcon = createIcon(LucideBitcoinIcon, {
+	lucide: "BitcoinIcon",
+	remix: "RiBitCoinLine",
+	tabler: "IconCurrencyBitcoin",
+	hugeicons: "Bitcoin01Icon",
+});
+
+export const MoonStarIcon = createIcon(LucideMoonStarIcon, {
+	lucide: "MoonStarIcon",
+	remix: "RiMoonClearLine",
+	tabler: "IconMoonStars",
+	hugeicons: "Moon02Icon",
+});
+
+export const TrendingDownIcon = createIcon(LucideTrendingDownIcon, {
+	lucide: "TrendingDownIcon",
+	remix: "RiArrowRightDownLine",
+	tabler: "IconTrendingDown",
+	hugeicons: "TradeDownIcon",
+});
+
+export const PlusCircleIcon = createIcon(LucidePlusCircleIcon, {
+	lucide: "PlusCircleIcon",
+	remix: "RiAddCircleLine",
+	tabler: "IconCirclePlus",
+	hugeicons: "PlusSignCircleIcon",
+});
+
+export const BoxIcon = createIcon(LucideBoxIcon, {
+	lucide: "BoxIcon",
+	remix: "RiBox3Line",
+	tabler: "IconBox",
+	hugeicons: "CubeIcon",
+});
+
+export const CircleDotIcon = createIcon(LucideCircleDotIcon, {
+	lucide: "CircleDotIcon",
+	remix: "RiRecordCircleLine",
+	tabler: "IconCircleDot",
+	hugeicons: "RecordIcon",
+});
+
+export const SignalHighIcon = createIcon(LucideSignalHighIcon, {
+	lucide: "SignalHighIcon",
+	remix: "RiSignalTowerLine",
+	tabler: "IconAntennaBars4",
+	hugeicons: "SignalFull01Icon",
+});
+
+export const BookIcon = createIcon(LucideBookIcon, {
+	lucide: "BookIcon",
+	remix: "RiBookLine",
+	tabler: "IconBook2",
+	hugeicons: "Book02Icon",
+});
+
+export const ContrastIcon = createIcon(LucideContrastIcon, {
+	lucide: "ContrastIcon",
+	remix: "RiContrastLine",
+	tabler: "IconContrast",
+	hugeicons: "BlendIcon",
+});
+
+export const Users2Icon = createIcon(LucideUsers2Icon, {
+	lucide: "Users2Icon",
+	remix: "RiGroupLine",
+	tabler: "IconUsers",
+	hugeicons: "UserGroupIcon",
+});
+
+export const LayersIcon = createIcon(LucideLayersIcon, {
+	lucide: "LayersIcon",
+	remix: "RiStackLine",
+	tabler: "IconStack2",
+	hugeicons: "Layers01Icon",
+});
+
+export const MousePointer2Icon = createIcon(LucideMousePointer2Icon, {
+	lucide: "MousePointer2Icon",
+	remix: "RiCursorLine",
+	tabler: "IconPointer",
+	hugeicons: "Cursor01Icon",
+});
+
+export const RulerIcon = createIcon(LucideRulerIcon, {
+	lucide: "RulerIcon",
+	remix: "RiRulerLine",
+	tabler: "IconRuler",
+	hugeicons: "RulerIcon",
+});
+
+export const ShapesIcon = createIcon(LucideShapesIcon, {
+	lucide: "ShapesIcon",
+	remix: "RiShapesLine",
+	tabler: "IconTriangleSquareCircle",
+	hugeicons: "ShapesIcon",
+});
+
+export const TypeIcon = createIcon(LucideTypeIcon, {
+	lucide: "TypeIcon",
+	remix: "RiFontSize",
+	tabler: "IconTypography",
+	hugeicons: "TextIcon",
 });

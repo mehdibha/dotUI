@@ -7,6 +7,7 @@
  * a flat `tv` config, then serialized.
  */
 
+import type { IconLibraryName } from '@/registry/icons/icon-map'
 import type { ColorConfig } from '@/registry/theme'
 import type { Density, RegistryItem, RegistryItemFile } from '@/registry/types'
 
@@ -86,6 +87,8 @@ export interface PublishPreset {
   color?: ColorConfig
   /** Exported-code style. When omitted, the publisher applies `DEFAULT_CODE_OPTIONS`. */
   codeOptions?: CodeOptions
+  /** Icon library shipped files import from. When omitted, lucide. */
+  icons?: IconLibraryName
 }
 
 /** Subset of `RegistryItemFile` we emit. */

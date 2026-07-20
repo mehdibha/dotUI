@@ -28,6 +28,7 @@ export function Cards() {
           tokens={preset.tokens}
           density={preset.density}
           color={preset.color}
+          icons={preset.icons}
         >
           <CardsGrid className="relative z-20 w-[max(52rem,150vw)] max-w-none shrink-0 [zoom:0.8] [mask-image:linear-gradient(to_right,transparent_calc(50%-62.5vw),black_calc(50%-62.5vw+var(--edge-fade)),black_calc(50%+62.5vw-var(--edge-fade)),transparent_calc(50%+62.5vw))] [--edge-fade:2.5rem] lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink lg:[zoom:1] lg:[mask-image:none]" />
         </DesignSystemProvider>

@@ -10,7 +10,7 @@ import type { CodeOptions } from '@/publisher/code-options'
 
 import { decodePreset, encodePreset } from './codec'
 import { DEFAULTS } from './defaults'
-import type { Density, DesignSystem } from './types'
+import type { Density, DesignSystem, IconLibraryName } from './types'
 
 const routeApi = getRouteApi('/_app/create')
 
@@ -65,6 +65,17 @@ export function useDesignSystem() {
   const setDensity = useCallback(
     (density: Density) => {
       setDesignSystem((prev) => ({ ...prev, density }))
+    },
+    [setDesignSystem],
+  )
+
+  /** Set the icon library; `lucide` (the default) encodes as nothing. */
+  const setIconLibrary = useCallback(
+    (icons: IconLibraryName) => {
+      setDesignSystem((prev) => ({
+        ...prev,
+        icons: icons === 'lucide' ? undefined : icons,
+      }))
     },
     [setDesignSystem],
   )
@@ -219,6 +230,7 @@ export function useDesignSystem() {
     setComponentParam,
     setToken,
     setDensity,
+    setIconLibrary,
     setColorSeed,
     setColorAxis,
     setColorBackground,

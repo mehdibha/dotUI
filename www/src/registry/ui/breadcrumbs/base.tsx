@@ -1,8 +1,9 @@
 'use client'
 
-import { ChevronRightIcon } from 'lucide-react'
 import * as BreadcrumbsPrimitive from 'react-aria-components/Breadcrumbs'
 import { composeRenderProps } from 'react-aria-components/composeRenderProps'
+
+import { ChevronRightIcon } from '@/registry/icons'
 
 import { useStyles } from './styles'
 

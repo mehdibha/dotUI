@@ -1,3 +1,4 @@
+import type { IconLibraryName } from '@/registry/icons/icon-map'
 import { FieldGroup, Label } from '@/registry/ui/field'
 import {
   Radio,
@@ -6,7 +7,13 @@ import {
   RadioIndicator,
 } from '@/registry/ui/radio-group'
 
-const iconLibraries = [
+import { useDesignSystem } from '../preset'
+
+const iconLibraries: Array<{
+  name: string
+  value: IconLibraryName
+  description: string
+}> = [
   { name: 'Lucide', value: 'lucide', description: 'Clean & consistent' },
   { name: 'Remix Icons', value: 'remix', description: 'Neutral & versatile' },
   { name: 'Tabler Icons', value: 'tabler', description: 'Over 5000 icons' },
@@ -14,9 +21,15 @@ const iconLibraries = [
 ]
 
 export function IconographyConfig() {
+  const { designSystem, setIconLibrary } = useDesignSystem()
+
   return (
     <div>
-      <RadioGroup aria-label="icon library" defaultValue="lucide">
+      <RadioGroup
+        aria-label="Icon library"
+        value={designSystem.icons ?? 'lucide'}
+        onChange={(value) => setIconLibrary(value as IconLibraryName)}
+      >
         <FieldGroup className="gap-1">
           {iconLibraries.map((lib) => (
             <Radio key={lib.value} value={lib.value}>

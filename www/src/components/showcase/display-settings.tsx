@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { MoonStarIcon, SunIcon, Volume2Icon } from 'lucide-react'
 
+import { MoonStarIcon, SunIcon, Volume2Icon } from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import {
   Card,

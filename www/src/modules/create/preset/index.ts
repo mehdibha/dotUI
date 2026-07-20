@@ -13,4 +13,5 @@ export type {
   Density,
   DesignSystem,
   DesignSystemState,
+  IconLibraryName,
 } from './types'

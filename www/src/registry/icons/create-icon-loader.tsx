@@ -1,67 +1,38 @@
 'use client'
 
 import { use } from 'react'
-import { HugeiconsIcon, type IconSvgElement } from '@hugeicons/react'
+import type * as React from 'react'
+
+import type { CommonIconProps } from './create-icon'
 
 type IconModule = Record<string, unknown>
-type LibraryImporter = () => Promise<IconModule>
 
-const libraryImporters: Record<string, LibraryImporter> = {
+// Each generated module exports plain icon components for the icons the
+// registry uses (hugeicons data is wrapped into components at generation).
+const libraryImporters = {
   hugeicons: () => import('../__generated__/__hugeicons__'),
   tabler: () => import('../__generated__/__tabler__'),
   remix: () => import('../__generated__/__remix__'),
-}
+} satisfies Record<string, () => Promise<IconModule>>
 
-const iconPromiseCaches = new Map<string, Map<string, Promise<unknown>>>()
+export type LoadableLibrary = keyof typeof libraryImporters
 
-function getCache(libraryName: string) {
-  let cache = iconPromiseCaches.get(libraryName)
-  if (!cache) {
-    cache = new Map()
-    iconPromiseCaches.set(libraryName, cache)
-  }
-  return cache
-}
-
-function isIconData(data: unknown): data is IconSvgElement {
-  return Array.isArray(data)
-}
-
-export function createIconLoader(libraryName: string) {
-  const cache = getCache(libraryName)
-  const importFn = libraryImporters[libraryName]
-
-  if (!importFn) {
-    throw new Error(`Unknown icon library: ${libraryName}`)
-  }
+export function createIconLoader(libraryName: LoadableLibrary) {
+  // The module promise must be stable across renders for `use()` to resolve.
+  let modulePromise: Promise<IconModule> | undefined
 
   return function IconLoader({
     name,
+    fallback: Fallback,
     ...props
   }: {
     name: string
-  } & Record<string, unknown>) {
-    let promise = cache.get(name)
-    if (!promise) {
-      promise = importFn().then((mod) => {
-        return mod[name] || null
-      })
-      cache.set(name, promise)
-    }
-
-    const iconData = use(promise)
-
-    if (!iconData) {
-      return null
-    }
-
-    if (isIconData(iconData)) {
-      return <HugeiconsIcon icon={iconData} {...props} />
-    }
-
-    const IconComponent = iconData as React.ComponentType<
-      Record<string, unknown>
-    >
-    return <IconComponent {...props} />
+    fallback: React.ComponentType<CommonIconProps>
+  } & CommonIconProps) {
+    modulePromise ??= libraryImporters[libraryName]()
+    const mod = use(modulePromise)
+    const Icon = mod[name] as React.ComponentType<CommonIconProps> | undefined
+    if (!Icon) return <Fallback {...props} />
+    return <Icon {...props} />
   }
 }

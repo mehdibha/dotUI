@@ -2,13 +2,13 @@
 
 import { use } from 'react'
 import type React from 'react'
-import { CheckIcon } from 'lucide-react'
 import { composeRenderProps } from 'react-aria-components/composeRenderProps'
 import * as ListBoxPrimitive from 'react-aria-components/ListBox'
 import type * as TextPrimitive from 'react-aria-components/Text'
 import * as VirtualizerPrimitive from 'react-aria-components/Virtualizer'
 import type { VariantProps } from 'tailwind-variants'
 
+import { CheckIcon } from '@/registry/icons'
 import { Loader } from '@/registry/ui/loader'
 
 import { useStyles } from './styles'

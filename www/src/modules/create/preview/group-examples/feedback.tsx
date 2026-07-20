@@ -1,5 +1,4 @@
-import { CircleAlertIcon } from 'lucide-react'
-
+import { CircleAlertIcon } from '@/registry/icons'
 import { Alert, AlertDescription, AlertTitle } from '@/registry/ui/alert'
 import { Button } from '@/registry/ui/button'
 import {

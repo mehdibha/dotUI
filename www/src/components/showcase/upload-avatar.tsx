@@ -1,7 +1,6 @@
 'use client'
 
-import { ImageUpIcon } from 'lucide-react'
-
+import { ImageUpIcon } from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
 import { Button } from '@/registry/ui/button'

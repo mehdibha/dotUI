@@ -1,5 +1,7 @@
 import { deflateRaw, inflateRaw } from 'pako'
 
+import { iconLibraries } from '@/registry/icons/icon-map'
+import type { IconLibraryName } from '@/registry/icons/icon-map'
 import {
   DEFAULT_COLOR_CONFIG,
   migrateColorConfig,
@@ -109,7 +111,16 @@ export function encodePreset(ds: DesignSystem): string | undefined {
   )
     compact.o = ds.codeOptions
 
-  if (!compact.p && !compact.t && !compact.d && !compact.c && !compact.o)
+  if (ds.icons && ds.icons !== 'lucide') compact.i = ds.icons
+
+  if (
+    !compact.p &&
+    !compact.t &&
+    !compact.d &&
+    !compact.c &&
+    !compact.o &&
+    !compact.i
+  )
     return undefined
 
   const json = JSON.stringify(compact)
@@ -134,6 +145,14 @@ function sanitizeColor(
     : migrated
 }
 
+/** Unknown/garbage library names decode as the default (lucide → `undefined`). */
+function sanitizeIcons(
+  icons: IconLibraryName | undefined,
+): IconLibraryName | undefined {
+  if (!icons || icons === 'lucide') return undefined
+  return iconLibraries.some((lib) => lib.name === icons) ? icons : undefined
+}
+
 /**
  * Decode a preset string back into a full DesignSystem.
  * Falls back to defaults on any error.
@@ -155,6 +174,7 @@ export function decodePreset(encoded: string): DesignSystem {
       codeOptions: ds.codeOptions
         ? sanitizeCodeOptions(ds.codeOptions)
         : undefined,
+      icons: sanitizeIcons(ds.icons),
     }
   } catch {
     return DEFAULTS

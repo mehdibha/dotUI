@@ -25,6 +25,7 @@ import {
 } from './code-options'
 import { flatten } from './flatten'
 import { buildScalarVarMap, resolveClasses } from './resolve-classes'
+import { resolveIconImports } from './resolve-icons'
 import { serializeTvConfig } from './serialize'
 import type { Publishable, PublishPreset } from './types'
 
@@ -113,7 +114,15 @@ function rewriteDeps(deps: readonly string[] | undefined): string[] {
  * Detected from the emitted content so `shadcn add` installs them — metas
  * historically omit them (icons especially), which breaks fresh consumers.
  */
-const FILE_IMPORT_NPM_DEPS = ['lucide-react', 'react-aria', 'react-stately']
+const FILE_IMPORT_NPM_DEPS = [
+  'lucide-react',
+  'react-aria',
+  'react-stately',
+  '@remixicon/react',
+  '@tabler/icons-react',
+  '@hugeicons/react',
+  '@hugeicons/core-free-icons',
+]
 
 function depsFromFileImports(
   files: ReadonlyArray<{ content?: string }>,
@@ -206,16 +215,23 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
   // user wants them, or drop them too.
   content = applySectionComments(content, codeOptions.sectionComments)
 
+  // 4c. Resolve the `@/components/icons` marker import to the preset's icon
+  // library. Always runs — consumers have no such module.
+  content = resolveIconImports(content, preset.icons)
+
   // 5. Assemble shadcn item — drop dotui-only fields (params, group).
   // Shadcn's RegistryItem is a discriminated union on `type`. We can't carry the
   // discriminant through generic plumbing, so we build a structurally-correct
   // object and cast at the boundary.
   // Secondary files (e.g. a `use-x.ts` hook) carry their own pre-transformed
   // content; only the base file gets the preset-resolved template.
-  const files = (meta.files ?? []).map((file) => ({
-    ...file,
-    content: extraFiles?.[file.path] ?? content,
-  }))
+  const files = (meta.files ?? []).map((file) => {
+    const extra = extraFiles?.[file.path]
+    return {
+      ...file,
+      content: extra ? resolveIconImports(extra, preset.icons) : content,
+    }
+  })
 
   const registryDependencies = rewriteDeps(meta.registryDependencies)
   const dependencies = [

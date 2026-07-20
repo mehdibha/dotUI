@@ -1,5 +1,4 @@
-import { UploadIcon } from 'lucide-react'
-
+import { UploadIcon } from '@/registry/icons'
 import { Button } from '@/registry/ui/button'
 import { FileTrigger } from '@/registry/ui/file-trigger'
 import { Link } from '@/registry/ui/link'
