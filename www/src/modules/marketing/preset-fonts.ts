@@ -14,18 +14,17 @@ export const PRESET_LABEL_FONTS: Record<
   string,
   { stack: string; google?: { family: string; weight: string } }
 > = {
-  // dotUI + Vercel both use Geist — already self-hosted via fontsource.
-  default: { stack: "'Geist Variable', sans-serif" },
+  // Vercel uses Geist — already self-hosted via fontsource.
   vercel: { stack: "'Geist Variable', sans-serif" },
-  // Verified against live production CSS: Supabase and Linear ship Inter,
-  // Material 3's default typeface is Roboto.
+  // Verified against live production CSS: Supabase and Linear ship Inter.
   supabase: {
     stack: "'Inter', sans-serif",
     google: { family: 'Inter', weight: '500' },
   },
-  material: {
-    stack: "'Roboto', sans-serif",
-    google: { family: 'Roboto', weight: '500' },
+  // Stripe's UI font is Söhne — proprietary; Inter is the closest free grotesque.
+  stripe: {
+    stack: "'Inter', sans-serif",
+    google: { family: 'Inter', weight: '500' },
   },
   linear: {
     stack: "'Inter', sans-serif",
@@ -37,14 +36,22 @@ export const PRESET_LABEL_FONTS: Record<
     stack: "'Space Grotesk', sans-serif",
     google: { family: 'Space Grotesk', weight: '500' },
   },
-  // Fictional presets: fonts picked to match their descriptions.
-  rose: {
-    stack: "'Nunito', sans-serif",
-    google: { family: 'Nunito', weight: '500' },
+  // Airbnb Cereal is proprietary; Plus Jakarta Sans is the closest free match.
+  airbnb: {
+    stack: "'Plus Jakarta Sans', sans-serif",
+    google: { family: 'Plus Jakarta Sans', weight: '500' },
   },
-  contrast: {
-    stack: "'Atkinson Hyperlegible Next', sans-serif",
-    google: { family: 'Atkinson Hyperlegible Next', weight: '500' },
+  // GitHub's brand font, open-sourced and on Google Fonts.
+  github: {
+    stack: "'Mona Sans', sans-serif",
+    google: { family: 'Mona Sans', weight: '500' },
+  },
+  // Notion renders in the platform system font.
+  notion: { stack: 'ui-sans-serif, system-ui, sans-serif' },
+  // Spotify Circular is proprietary; Figtree is the closest free geometric.
+  spotify: {
+    stack: "'Figtree', sans-serif",
+    google: { family: 'Figtree', weight: '500' },
   },
 }
 
