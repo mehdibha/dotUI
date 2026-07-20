@@ -18,9 +18,9 @@ export function Cards() {
   }, [])
 
   return (
-    <div className="flex flex-col [--grid-max:1500px] [--rail-gap:--spacing(4)] [--rail-peek:2.5rem] sm:[--rail-peek:3.5rem] md:[--rail-peek:5rem] lg:[--rail-peek:7rem]">
+    <div className="flex flex-col [--grid-max:1500px] [--rail-gap:--spacing(5)] [--rail-peek:2.5rem] sm:[--rail-peek:3.5rem] md:[--rail-peek:5rem] lg:[--rail-peek:7rem]">
       <PresetSwitcher selected={selected} onSelect={handleSelect} />
-      <div className="relative flex justify-center gap-4 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] [--mask-clear:45px] [--mask-solid:180px]">
+      <div className="relative flex justify-center gap-5 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] [--mask-clear:45px] [--mask-solid:180px]">
         <SkeletonRail side="left" />
         <DesignSystemProvider
           scoped
