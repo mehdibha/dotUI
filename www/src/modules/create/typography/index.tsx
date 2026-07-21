@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { SearchIcon, XIcon } from 'lucide-react'
 
 import {
   DEFAULT_BODY_FAMILY,
@@ -13,9 +14,10 @@ import {
   fontStack,
 } from '@/lib/fonts'
 import type { FontCategory } from '@/lib/fonts'
+import { Button } from '@/registry/ui/button'
 import { Command } from '@/registry/ui/command'
 import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
+import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 import {
   ListBox,
   ListBoxItem,
@@ -28,9 +30,6 @@ import { SearchField } from '@/registry/ui/search-field'
 import { Select, SelectTrigger } from '@/registry/ui/select'
 
 import { useDesignSystem } from '../preset'
-
-/** Sentinel key for "heading follows the body font" (no heading token). */
-const MATCH_BODY = 'match-body'
 
 const CATEGORY_LABELS: Record<FontCategory, string> = {
   'sans-serif': 'Sans serif',
@@ -67,10 +66,12 @@ function useTypography() {
       FONT_SANS_VAR,
       family === DEFAULT_BODY_FAMILY ? undefined : fontStack(family),
     )
+  // With no heading token the heading follows the body font, so picking the
+  // body family here clears the token rather than pinning a redundant value.
   const setHeading = (family: string) =>
     setToken(
       FONT_HEADING_VAR,
-      family === MATCH_BODY ? undefined : fontStack(family),
+      family === bodyFamily ? undefined : fontStack(family),
     )
   const setMono = (family: string) =>
     setToken(
@@ -102,9 +103,8 @@ export function TypographyConfig() {
       <FontPicker
         label="Heading font"
         categories={['sans-serif', 'serif', 'display']}
-        selectedKey={headingFamily ?? MATCH_BODY}
+        selectedKey={headingFamily ?? bodyFamily}
         onChange={setHeading}
-        matchBodyOption
       />
       <FontPicker
         label="Body font"
@@ -161,13 +161,11 @@ const FontPicker = ({
   categories,
   selectedKey,
   onChange,
-  matchBodyOption = false,
 }: {
   label: string
   categories: FontCategory[]
   selectedKey: string
   onChange: (family: string) => void
-  matchBodyOption?: boolean
 }) => {
   return (
     <Select
@@ -177,24 +175,25 @@ const FontPicker = ({
     >
       <Label>{label}</Label>
       <SelectTrigger className="w-full" />
-      <Popover>
+      <Popover className="w-(--trigger-width) outline-hidden">
         <Command>
-          <SearchField
-            aria-label="Search fonts"
-            autoFocus
-            className="w-full p-2"
-          >
-            <Input className="w-full" />
+          <SearchField autoFocus aria-label="Search fonts">
+            <InputGroup>
+              <InputGroupAddon>
+                <SearchIcon />
+              </InputGroupAddon>
+              <Input placeholder="Search fonts..." />
+              <InputGroupAddon className="[--addon-button-inset:--spacing(1.5)]">
+                <Button variant="quiet" isIconOnly>
+                  <XIcon aria-hidden="true" />
+                </Button>
+              </InputGroupAddon>
+            </InputGroup>
           </SearchField>
           <ListBoxVirtualizer
             layoutOptions={{ rowHeight: 32, headingHeight: 24, padding: 4 }}
           >
-            <ListBox className="max-h-72 overflow-auto overscroll-contain">
-              {matchBodyOption && (
-                <ListBoxItem id={MATCH_BODY} textValue="Match body font">
-                  Match body font
-                </ListBoxItem>
-              )}
+            <ListBox className="max-h-64 overflow-auto overscroll-contain">
               {categories.map((category) => (
                 <ListBoxSection key={category}>
                   <ListBoxSectionHeader>
