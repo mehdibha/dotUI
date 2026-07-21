@@ -12,6 +12,10 @@ type ParentToIframeMessage =
   | { type: 'design-system'; data: DesignSystem }
   | { type: 'preview-mode'; mode: PreviewMode }
 
+type IframeToParentMessage =
+  | { type: 'preview-ready' }
+  | { type: 'preview-scrolled'; scrolled: boolean }
+
 /* ------------------------------ Send (parent) ------------------------------ */
 
 export function sendToIframe(
@@ -91,9 +95,37 @@ export function usePreviewForcedTheme(): PreviewMode | undefined {
     window.addEventListener('message', handleMessage)
     // Signal readiness so the parent (re)sends the current mode — its load-event send can
     // race ahead of this listener mounting.
-    window.parent.postMessage({ type: 'preview-ready' }, '*')
+    window.parent.postMessage(
+      { type: 'preview-ready' } satisfies IframeToParentMessage,
+      '*',
+    )
     return () => window.removeEventListener('message', handleMessage)
   }, [])
 
   return mode
+}
+
+/**
+ * Inside the preview iframe: report whether the document is scrolled past the top, so
+ * the embedding toolbar can reveal its bottom border. Sends only on threshold crossings,
+ * plus once on mount — which also resets the parent after an iframe reload.
+ */
+export function useReportPreviewScrolled() {
+  React.useEffect(() => {
+    if (!isInIframe()) return
+
+    let last: boolean | undefined
+    const report = () => {
+      const scrolled = window.scrollY > 0
+      if (scrolled === last) return
+      last = scrolled
+      window.parent.postMessage(
+        { type: 'preview-scrolled', scrolled } satisfies IframeToParentMessage,
+        '*',
+      )
+    }
+    report()
+    window.addEventListener('scroll', report, { passive: true })
+    return () => window.removeEventListener('scroll', report)
+  }, [])
 }

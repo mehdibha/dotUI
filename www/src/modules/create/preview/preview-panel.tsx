@@ -31,7 +31,6 @@ import { Select, SelectValue } from '@/registry/ui/select'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
-import { ProgressiveBlur } from '@/components/progressive-blur'
 import {
   sendPreviewMode,
   sendToIframe,
@@ -77,6 +76,7 @@ export function PreviewPanel({ className }: { className?: string }) {
   const [size, setSize] = useState<DeviceSize>('desktop')
   const [zoom, setZoom] = useState(1)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   const effectivePreview = preview
   const constrained = size !== 'desktop'
@@ -139,6 +139,19 @@ export function PreviewPanel({ className }: { className?: string }) {
     }
   }, [previewMode])
 
+  // The iframe reports whether its document is scrolled past the top (threshold
+  // crossings only); the toolbar reveals its bottom border while it is. A reloaded
+  // iframe re-reports on mount, which also resets the state.
+  useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-scrolled') {
+        setScrolled(Boolean(event.data.scrolled))
+      }
+    }
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+  }, [])
+
   // Keep the fullscreen toggle's icon in sync with the actual state — exiting via Esc
   // (not just the button) still flips it back.
   useEffect(() => {
@@ -165,7 +178,7 @@ export function PreviewPanel({ className }: { className?: string }) {
       )}
     >
       {/* Stage — holds the iframe at full height for every device size; the toolbar's
-          progressive blur overlays its top edge. Smaller sizes narrow the iframe and center
+          frosted bar overlays its top edge. Smaller sizes narrow the iframe and center
           it on a muted backdrop. Scrolls when zoomed past fit. */}
       <div
         className={cn(
@@ -191,11 +204,11 @@ export function PreviewPanel({ className }: { className?: string }) {
         </div>
       </div>
 
-      {/* Toolbar — overlays the top of the stage with the app header's progressive
-          blur, so the preview dissolves into a blurred tint beneath the controls.
-          Pinned always-on ([--blur-progress:1] — no scroll reveal here), and scoped
-          to the previewed design system's palette + mode so the tint's --color-bg
-          matches the iframe's background, not the site's. The wrapper is
+      {/* Toolbar — a frosted bar overlaying the top of the stage: uniform blur + a
+          translucent background, with a bottom border that fades in once the preview
+          is scrolled (reported by the iframe — see useReportPreviewScrolled). Scoped
+          to the previewed design system's palette + mode so the tint and border
+          resolve the preset's tokens, not the site's. The wrapper is
           pointer-events-none so empty areas click through to the preview; each
           control cluster re-enables pointer events. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-20">
@@ -206,10 +219,11 @@ export function PreviewPanel({ className }: { className?: string }) {
         >
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] [--blur-progress:1]"
-          >
-            <ProgressiveBlur />
-          </div>
+            className={cn(
+              'pointer-events-none absolute inset-x-0 top-0 -z-10 h-(--header-height) border-b bg-bg/75 backdrop-blur-md transition-colors duration-300',
+              scrolled ? 'border-border' : 'border-transparent',
+            )}
+          />
         </DesignSystemProvider>
 
         <div className="relative flex h-(--header-height) items-center gap-2 px-3">

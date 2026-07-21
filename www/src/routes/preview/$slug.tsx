@@ -11,6 +11,7 @@ import {
   DEFAULTS,
   decodePreset,
   useIframeMessageListener,
+  useReportPreviewScrolled,
 } from '@/modules/create/preset'
 import type { DesignSystem } from '@/modules/create/preset'
 import { PresetOverview } from '@/modules/create/preview/overview'
@@ -34,6 +35,31 @@ function getExamplesPromise(slug: string) {
   return promise
 }
 
+// Embedded, the /create toolbar overlays the top 3.5rem of the viewport; the native
+// viewport scrollbar would run beneath it and get caught in its blur. Styling the
+// scrollbar (WebKit classic mode) lets the track start below the toolbar via a
+// margin, so the thumb only ever travels in the visible area. Firefox has no track
+// margin — it falls back to a thin full-height scrollbar.
+const EMBEDDED_SCROLLBAR_CSS = `
+html::-webkit-scrollbar { width: 10px; }
+html::-webkit-scrollbar-track { margin-block-start: 3.5rem; }
+html::-webkit-scrollbar-thumb {
+  background-color: color-mix(in oklab, var(--color-fg) 28%, transparent);
+  background-clip: padding-box;
+  border: 3px solid transparent;
+  border-radius: 999px;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in oklab, var(--color-fg) 45%, transparent);
+}
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--color-fg) 35%, transparent) transparent;
+  }
+}
+`
+
 export const Route = createFileRoute('/preview/$slug')({
   validateSearch: z.object({ preset: z.string().optional().catch(undefined) }),
   ssr: false,
@@ -53,6 +79,7 @@ function PreviewPage() {
   useIframeMessageListener(
     useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
   )
+  useReportPreviewScrolled()
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
@@ -88,6 +115,7 @@ function PreviewPage() {
       color={designSystem.color}
       icons={designSystem.icons}
     >
+      {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
       <div className={embedded ? 'pt-11' : undefined}>{content}</div>
     </DesignSystemProvider>
   )
