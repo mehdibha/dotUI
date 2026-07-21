@@ -1,4 +1,4 @@
-import { type ReactNode, use, useCallback, useState } from 'react'
+import { type ReactNode, use, useCallback, useEffect, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
@@ -60,6 +60,73 @@ html::-webkit-scrollbar-thumb:hover {
 }
 `
 
+/* ---- dev-tweak scaffolding (remove once picked) ----
+   Scrollbar mode driven from the create page's tweaker via localStorage (key
+   duplicated from preview-panel.tsx); cross-document storage events make it live. */
+const DEV_SCROLLBAR_TWEAK_KEY = 'dotui:dev-preview-scrollbar'
+type DevScrollbarMode = 'custom' | 'auto-hide' | 'none' | 'native'
+const DEV_TWEAKS_ENABLED =
+  import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'
+
+const DEV_SCROLLBAR_CSS: Record<DevScrollbarMode, string> = {
+  custom: EMBEDDED_SCROLLBAR_CSS,
+  // Custom below-toolbar track, but invisible at rest — the thumb shows only while
+  // scrolling (data attr set below) or hovered, mimicking macOS overlay behavior.
+  'auto-hide': `${EMBEDDED_SCROLLBAR_CSS}
+html:not([data-dev-scrolling])::-webkit-scrollbar-thumb { background-color: transparent; }
+html:not([data-dev-scrolling])::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in oklab, var(--color-fg) 45%, transparent);
+}
+`,
+  none: `
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+`,
+  native: '',
+}
+
+function useDevScrollbarMode(): DevScrollbarMode {
+  const [mode, setMode] = useState<DevScrollbarMode>('custom')
+
+  useEffect(() => {
+    if (!DEV_TWEAKS_ENABLED) return
+    const read = () => {
+      const stored = localStorage.getItem(DEV_SCROLLBAR_TWEAK_KEY)
+      setMode(
+        stored && stored in DEV_SCROLLBAR_CSS
+          ? (stored as DevScrollbarMode)
+          : 'custom',
+      )
+    }
+    read()
+    window.addEventListener('storage', read)
+    return () => window.removeEventListener('storage', read)
+  }, [])
+
+  // auto-hide: flag the root while scrolling so the thumb shows only then.
+  useEffect(() => {
+    if (mode !== 'auto-hide') return
+    let timer: ReturnType<typeof setTimeout>
+    const onScroll = () => {
+      document.documentElement.setAttribute('data-dev-scrolling', '')
+      clearTimeout(timer)
+      timer = setTimeout(
+        () => document.documentElement.removeAttribute('data-dev-scrolling'),
+        800,
+      )
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('scroll', onScroll)
+      document.documentElement.removeAttribute('data-dev-scrolling')
+    }
+  }, [mode])
+
+  return mode
+}
+/* ---- end dev-tweak scaffolding ---- */
+
 export const Route = createFileRoute('/preview/$slug')({
   validateSearch: z.object({ preset: z.string().optional().catch(undefined) }),
   ssr: false,
@@ -80,6 +147,7 @@ function PreviewPage() {
     useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
   )
   useReportPreviewScrolled()
+  const devScrollbarMode = useDevScrollbarMode()
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
@@ -115,7 +183,9 @@ function PreviewPage() {
       color={designSystem.color}
       icons={designSystem.icons}
     >
-      {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
+      {embedded && DEV_SCROLLBAR_CSS[devScrollbarMode] && (
+        <style>{DEV_SCROLLBAR_CSS[devScrollbarMode]}</style>
+      )}
       <div className={embedded ? 'pt-11' : undefined}>{content}</div>
     </DesignSystemProvider>
   )

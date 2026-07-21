@@ -31,6 +31,7 @@ import { Select, SelectValue } from '@/registry/ui/select'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { ProgressiveBlur } from '@/components/progressive-blur'
 import {
   sendPreviewMode,
   sendToIframe,
@@ -38,6 +39,7 @@ import {
 } from '@/modules/create/preset'
 import type { PreviewMode } from '@/modules/create/preset'
 import { componentsData } from '@/modules/docs/components-list/components-data'
+import { useTweak } from '@/dev/tweaker'
 
 type DeviceSize = 'mobile' | 'tablet' | 'desktop'
 
@@ -64,6 +66,11 @@ const ZOOM_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2]
 
 const routeApi = getRouteApi('/_app/create')
 
+// dev-tweak scaffolding: the create page's tweaker drives the iframe's scrollbar
+// mode through localStorage — cross-document `storage` events make it live without
+// touching the postMessage protocol. Key duplicated in routes/preview/$slug.tsx.
+const DEV_SCROLLBAR_TWEAK_KEY = 'dotui:dev-preview-scrollbar'
+
 export function PreviewPanel({ className }: { className?: string }) {
   const { preview, preset } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
@@ -77,6 +84,25 @@ export function PreviewPanel({ className }: { className?: string }) {
   const [zoom, setZoom] = useState(1)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+
+  // dev-tweak scaffolding (remove once picked)
+  const blurTweak = useTweak('Blur', {
+    type: 'select',
+    options: ['frosted', 'progressive'],
+    default: 'frosted',
+    group: 'Preview toolbar',
+  })
+  const scrollbarTweak = useTweak('Scrollbar', {
+    type: 'select',
+    options: ['custom', 'auto-hide', 'none', 'native'],
+    default: 'custom',
+    group: 'Preview toolbar',
+  })
+  useEffect(() => {
+    if (import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview') {
+      localStorage.setItem(DEV_SCROLLBAR_TWEAK_KEY, scrollbarTweak)
+    }
+  }, [scrollbarTweak])
 
   const effectivePreview = preview
   const constrained = size !== 'desktop'
@@ -217,13 +243,22 @@ export function PreviewPanel({ className }: { className?: string }) {
           color={designSystem.color}
           forcedMode={previewMode}
         >
-          <div
-            aria-hidden
-            className={cn(
-              'pointer-events-none absolute inset-x-0 top-0 -z-10 h-(--header-height) border-b bg-bg/75 backdrop-blur-md transition-colors duration-300',
-              scrolled ? 'border-border' : 'border-transparent',
-            )}
-          />
+          {blurTweak === 'progressive' ? (
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] [--blur-progress:1]"
+            >
+              <ProgressiveBlur />
+            </div>
+          ) : (
+            <div
+              aria-hidden
+              className={cn(
+                'pointer-events-none absolute inset-x-0 top-0 -z-10 h-(--header-height) border-b bg-bg/75 backdrop-blur-md transition-colors duration-300',
+                scrolled ? 'border-border' : 'border-transparent',
+              )}
+            />
+          )}
         </DesignSystemProvider>
 
         <div className="relative flex h-(--header-height) items-center gap-2 px-3">
