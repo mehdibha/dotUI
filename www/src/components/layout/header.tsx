@@ -7,6 +7,7 @@ import { cn } from '@/registry/lib/utils'
 import { Button, buttonStyles } from '@/registry/ui/button'
 import { Separator } from '@/registry/ui/separator'
 import { GitHubIcon } from '@/components/icons/github'
+import { HeaderActionsSlot } from '@/components/layout/header-slot'
 import { Logo } from '@/components/layout/logo'
 import { MobileNav } from '@/components/layout/mobile-nav'
 import { SearchCommand } from '@/components/search-command'
@@ -159,6 +160,7 @@ export function Header({ className, items = [] }: HeaderProps) {
           <GitHubIcon />
         </a>
         <ThemeToggle variant="quiet" isIconOnly />
+        <HeaderActionsSlot />
         <Separator orientation="vertical" className="mx-1.5 h-4 lg:hidden" />
         <MobileNav items={items} />
       </div>

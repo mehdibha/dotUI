@@ -28,7 +28,6 @@ import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
 
 import { ExamplesIndex } from './__generated__/examples'
-import { CodeOptionsDialog } from './code-options'
 import { ColorsConfig, ColorsSummary } from './colors'
 import {
   AllComponentsView,
@@ -45,7 +44,7 @@ import {
   DEFAULT_CURSOR_DISABLED,
   DEFAULT_CURSOR_INTERACTIVE,
 } from './cursor'
-import { ExportFooter } from './export'
+import { ExportDialog } from './export'
 import { IconographyConfig } from './iconography'
 import {
   DEFAULT_RADIUS_FACTOR,
@@ -510,9 +509,12 @@ export function CustomizerPanel({ className }: { className?: string }) {
       </div>
 
       {/* Footer */}
-      <div className="flex flex-col gap-2 border-t p-3">
-        <CodeOptionsDialog />
-        <ExportFooter />
+      <div className="border-t p-3">
+        <ExportDialog>
+          <Button variant="primary" size="sm" className="w-full">
+            Export
+          </Button>
+        </ExportDialog>
       </div>
     </div>
   )
