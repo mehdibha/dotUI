@@ -20,6 +20,14 @@ import {
 
 import { STEPS } from '@dotui/colors'
 
+import {
+  DEFAULT_BODY_FAMILY,
+  familyFromStack,
+  FONT_CATALOG,
+  FONT_HEADING_VAR,
+  FONT_SANS_VAR,
+  fontStack,
+} from '@/lib/fonts'
 import { resolveColorConfigCached } from '@/lib/resolve-color'
 import {
   DEFAULT_COLOR_CONFIG,
@@ -299,15 +307,13 @@ function SpacingScaleWidget() {
 
 /* ----------------------------- Typography ------------------------------- */
 
-const FONTS = ['Geist', 'Inter', 'Satoshi', 'Söhne', 'IBM Plex Sans', 'Mono']
-
 function FontWidget({ varName }: { varName: string }) {
-  const [value, set] = useToken(varName, 'Geist')
+  const [value, set] = useToken(varName, fontStack(DEFAULT_BODY_FAMILY))
   return (
     <Select
       className="w-full"
-      selectedKey={value}
-      onSelectionChange={(k) => set(k as string)}
+      selectedKey={familyFromStack(value)}
+      onSelectionChange={(k) => set(fontStack(k as string))}
       aria-label="Font"
     >
       <Button size="sm" className="w-full justify-between">
@@ -315,10 +321,10 @@ function FontWidget({ varName }: { varName: string }) {
         <ChevronDownIcon data-icon-end="" />
       </Button>
       <Popover>
-        <ListBox>
-          {FONTS.map((f) => (
-            <ListBoxItem key={f} id={f}>
-              {f}
+        <ListBox className="max-h-72">
+          {FONT_CATALOG.filter((f) => f.category !== 'mono').map((f) => (
+            <ListBoxItem key={f.family} id={f.family}>
+              {f.family}
             </ListBoxItem>
           ))}
         </ListBox>
@@ -641,8 +647,8 @@ export const SECTIONS: Section[] = [
         domain: 'typography',
         tier: 'primitive',
         tempo: 'macro',
-        binding: 'stub',
-        Widget: () => <FontWidget varName="--ds-font-heading" />,
+        binding: 'live',
+        Widget: () => <FontWidget varName={FONT_HEADING_VAR} />,
       }),
       c({
         id: 'body-font',
@@ -650,8 +656,8 @@ export const SECTIONS: Section[] = [
         domain: 'typography',
         tier: 'primitive',
         tempo: 'macro',
-        binding: 'stub',
-        Widget: () => <FontWidget varName="--ds-font-body" />,
+        binding: 'live',
+        Widget: () => <FontWidget varName={FONT_SANS_VAR} />,
       }),
       c({
         id: 'type-scale',

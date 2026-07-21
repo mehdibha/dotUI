@@ -54,7 +54,7 @@ import {
   RadiusConfig,
 } from './layout'
 import { useDesignSystem } from './preset'
-import { TypographyConfig } from './typography'
+import { TypographyConfig, TypographySummary } from './typography'
 
 /* -------------------------------- Types -------------------------------- */
 
@@ -83,30 +83,7 @@ const menu: MenuItem[] = [
   {
     id: 'typography',
     title: 'Typography',
-    preview: (
-      <div className="flex flex-col gap-1.5">
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col items-start gap-1">
-            <span className="text-[10px] tracking-widest text-fg-muted uppercase">
-              Heading
-            </span>
-            <p className="font-medium">Geist</p>
-          </div>
-          <p className="font-heading text-2xl leading-none tracking-tight">
-            Ag
-          </p>
-        </div>
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col items-start gap-1">
-            <span className="text-[10px] tracking-widest text-fg-muted uppercase">
-              Body
-            </span>
-            <p className="font-medium">Geist</p>
-          </div>
-          <p className="font-body text-base leading-none">Ag</p>
-        </div>
-      </div>
-    ),
+    preview: <TypographySummary />,
     config: <TypographyConfig />,
   },
   {
@@ -403,8 +380,9 @@ export function CustomizerPanel({ className }: { className?: string }) {
     const id = navStack[index]
     if (!id) return null
 
-    // Group detail view (group id anywhere in the stack)
-    if (isGroupId(id)) {
+    // Group detail view (group id anywhere in the stack). Menu ids win the
+    // collision — the registry has a component group also named "typography".
+    if (isGroupId(id) && !MENU_IDS.has(id)) {
       return (
         <>
           <ViewHeader title={getGroupDisplayName(id)} onBack={pop} />

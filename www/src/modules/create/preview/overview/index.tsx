@@ -2,6 +2,14 @@ import { type ReactNode, use, useMemo } from 'react'
 
 import { STEPS, type Theme } from '@dotui/colors'
 
+import {
+  DEFAULT_BODY_FAMILY,
+  DEFAULT_MONO_FAMILY,
+  familyFromStack,
+  FONT_HEADING_VAR,
+  FONT_MONO_VAR,
+  FONT_SANS_VAR,
+} from '@/lib/fonts'
 import { resolveColorConfigCached } from '@/lib/resolve-color'
 import * as icons from '@/registry/__generated__/icons'
 import {
@@ -176,7 +184,7 @@ function Cover({
         <span className="font-mono text-xs tracking-[0.3em] text-fg-muted uppercase">
           Design system
         </span>
-        <h1 className="text-5xl font-semibold tracking-tight text-balance sm:text-6xl">
+        <h1 className="font-heading text-5xl font-semibold tracking-tight text-balance sm:text-6xl">
           {name}
         </h1>
         <p className="max-w-md text-pretty text-fg-muted">
@@ -372,15 +380,19 @@ function ColorSection({ resolved }: { resolved: Theme }) {
 const TYPE_SCALE: { label: string; className: string; size: string }[] = [
   {
     label: 'Display',
-    className: 'text-5xl font-semibold tracking-tight',
+    className: 'font-heading text-5xl font-semibold tracking-tight',
     size: '48',
   },
   {
     label: 'Title',
-    className: 'text-3xl font-semibold tracking-tight',
+    className: 'font-heading text-3xl font-semibold tracking-tight',
     size: '30',
   },
-  { label: 'Heading', className: 'text-xl font-semibold', size: '20' },
+  {
+    label: 'Heading',
+    className: 'font-heading text-xl font-semibold',
+    size: '20',
+  },
   { label: 'Body', className: 'text-base', size: '16' },
   { label: 'Small', className: 'text-sm text-fg-muted', size: '14' },
   {
@@ -397,26 +409,43 @@ const WEIGHTS: { label: string; className: string }[] = [
   { label: 'Bold', className: 'font-bold' },
 ]
 
-function TypographySection() {
+function TypographySection({
+  heading,
+  body,
+  mono,
+}: {
+  heading: string
+  body: string
+  mono: string
+}) {
+  const families = [
+    {
+      label: 'Heading — display & titles',
+      name: heading,
+      sample: 'font-heading',
+    },
+    { label: 'Body — interface text', name: body, sample: 'font-sans' },
+    { label: 'Mono — code & numerics', name: mono, sample: 'font-mono' },
+  ]
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div className="flex items-end justify-between rounded-xl border bg-card p-5">
-          <div className="flex flex-col gap-1">
-            <Label>Sans — interface & display</Label>
-            <span className="text-xl font-medium">Geist</span>
+      <div className="grid gap-4 sm:grid-cols-3">
+        {families.map((f) => (
+          <div
+            key={f.label}
+            className="flex items-end justify-between gap-2 rounded-xl border bg-card p-5"
+          >
+            <div className="flex min-w-0 flex-col gap-1">
+              <Label>{f.label}</Label>
+              <span className="truncate text-xl font-medium">{f.name}</span>
+            </div>
+            <span
+              className={`${f.sample} text-5xl leading-none tracking-tight`}
+            >
+              Ag
+            </span>
           </div>
-          <span className="font-sans text-5xl leading-none tracking-tight">
-            Ag
-          </span>
-        </div>
-        <div className="flex items-end justify-between rounded-xl border bg-card p-5">
-          <div className="flex flex-col gap-1">
-            <Label>Mono — code & numerics</Label>
-            <span className="text-xl font-medium">Geist Mono</span>
-          </div>
-          <span className="font-mono text-5xl leading-none">Ag</span>
-        </div>
+        ))}
       </div>
 
       <div className="flex flex-col divide-y rounded-xl border">
@@ -842,6 +871,16 @@ export function PresetOverview({
 
   const name = describeAccent(seeds.accent)
 
+  const bodyFamily = designSystem.tokens[FONT_SANS_VAR]
+    ? familyFromStack(designSystem.tokens[FONT_SANS_VAR])
+    : DEFAULT_BODY_FAMILY
+  const headingFamily = designSystem.tokens[FONT_HEADING_VAR]
+    ? familyFromStack(designSystem.tokens[FONT_HEADING_VAR])
+    : bodyFamily
+  const monoFamily = designSystem.tokens[FONT_MONO_VAR]
+    ? familyFromStack(designSystem.tokens[FONT_MONO_VAR])
+    : DEFAULT_MONO_FAMILY
+
   const specs = [
     {
       label: 'Primary',
@@ -852,7 +891,13 @@ export function PresetOverview({
       value: DENSITY_LABEL[designSystem.density] ?? 'Default',
     },
     { label: 'Radius', value: radiusLabel(numericRadius) },
-    { label: 'Type', value: 'Geist' },
+    {
+      label: 'Type',
+      value:
+        headingFamily === bodyFamily
+          ? bodyFamily
+          : `${headingFamily} · ${bodyFamily}`,
+    },
     { label: 'Icons', value: 'Lucide' },
   ]
 
@@ -874,9 +919,13 @@ export function PresetOverview({
           index="02"
           icon={TypeIcon}
           title="Typography"
-          description="One versatile sans for interface and display, a matched monospace for code and numerics, on a tight modular scale."
+          description="A heading voice for display and titles, a body face for interface text, and a matched monospace for code and numerics."
         >
-          <TypographySection />
+          <TypographySection
+            heading={headingFamily}
+            body={bodyFamily}
+            mono={monoFamily}
+          />
         </Section>
 
         <Section

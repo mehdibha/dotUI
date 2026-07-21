@@ -6,6 +6,7 @@ import { UNSAFE_PortalProvider } from 'react-aria/PortalProvider'
 import { tv } from 'tailwind-variants'
 import type { ClassValue, TVReturnType, VariantProps } from 'tailwind-variants'
 
+import { ensureFontStylesheets, fontFamiliesFromTokens } from '@/lib/fonts'
 import { resolveColorConfigCached } from '@/lib/resolve-color'
 import {
   IconLibraryContext,
@@ -444,6 +445,16 @@ function DesignSystemProvider({
     }
   }, [cssVars, scoped])
 
+  // Load the faces the font tokens reference (Google-hosted; the untouched
+  // defaults are self-hosted and never pass through here). Works in both modes:
+  // this effect runs in whichever document hosts the provider — the preview
+  // iframe in global mode, the main page for scoped thumbnails/demos.
+  const fontFamilies = fontFamiliesFromTokens(tokens).join('\n')
+  React.useEffect(() => {
+    if (!fontFamilies) return
+    ensureFontStylesheets(document, fontFamilies.split('\n'))
+  }, [fontFamilies])
+
   // Warm the closure cache off the critical path: built lazily, the first divergence would pay
   // the full-document CSSOM walk synchronously inside the render of the user's first drag tick.
   React.useEffect(() => {
@@ -509,7 +520,15 @@ function DesignSystemProvider({
       </>
     )
 
-  const scopeStyle = { ...cssVars } as React.CSSProperties
+  // A body-font token only re-themes text that re-reads `--font-sans` INSIDE
+  // the scope — inherited text keeps the font already resolved on `<body>`,
+  // outside it. Declaring font-family on the wrapper (inheritance flows through
+  // `display: contents`) makes the subtree re-resolve; absent a token, nothing
+  // is declared and the markup stays byte-identical to the untouched provider.
+  const scopeStyle = {
+    ...cssVars,
+    ...(cssVars['--font-sans'] ? { fontFamily: 'var(--font-sans)' } : {}),
+  } as React.CSSProperties
   // `useId` ids contain ':' etc.; strip to a valid, stable DOM id for the portal target.
   const portalDomId = `dotui-portal-${scopeId.replace(/[^a-zA-Z0-9]/g, '')}`
 

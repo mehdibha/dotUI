@@ -381,8 +381,6 @@ export const baseRegistryCss = {
 			"--ease-fluid-out": "cubic-bezier(0.32, 0.72, 0, 1)",
 			"--cursor-interactive": "pointer",
 			"--cursor-disabled": "not-allowed",
-			"--font-sans": "var(--font-geist-sans)",
-			"--font-mono": "var(--font-geist-mono)",
 			"--radius-xs": "calc(0.125rem * var(--radius-factor))",
 			"--radius-sm": "calc(0.25rem * var(--radius-factor))",
 			"--radius-md": "calc(0.375rem * var(--radius-factor))",
@@ -477,6 +475,9 @@ export const baseRegistryCss = {
 			"--color-border-sidebar": "var(--neutral-400)",
 			"--color-overlay": "oklch(0 0 0)",
 			"--color-thumb": "oklch(1 0 0)",
+			"--font-sans": "var(--font-geist-sans)",
+			"--font-heading": "var(--font-sans)",
+			"--font-mono": "var(--font-geist-mono)",
 		},
 	},
 } as const satisfies Pick<RegistryItem, "css" | "cssVars">;

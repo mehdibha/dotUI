@@ -10,6 +10,11 @@
  */
 
 import {
+  FONT_TOKEN_VARS,
+  fontFamiliesFromTokens,
+  googleFontsUrl,
+} from '@/lib/fonts'
+import {
   resolveColorConfig,
   resolveTarget,
   resolveTokenValue,
@@ -71,8 +76,13 @@ function emitPresetLightVars(preset: PublishPreset): Record<string, string> {
   if (density) vars['--dotui-density'] = preset.density
   // Global tokens (radius factor, cursors, …) land on `:root`, same as the
   // live provider. `componentParams` are inlined into component classes at
-  // build, so they're not written here.
+  // build, so they're not written here. Font tokens are excluded: the shipped
+  // theme renders `@theme inline`, which bakes values into utilities, so a
+  // `:root` override would be ignored — they re-point the `@theme` vocabulary
+  // instead (see mergePresetCssFields).
+  const fontVars = new Set<string>(FONT_TOKEN_VARS)
   for (const [key, value] of Object.entries(preset.tokens ?? {})) {
+    if (fontVars.has(key)) continue
     vars[key.startsWith('--') ? key : `--${key}`] = resolveCssValue(value)
   }
   return vars
@@ -228,6 +238,20 @@ export function mergePresetCssFields(
       ...(isPlainCssObject(css[':root']) ? css[':root'] : {}),
       ...lightVars,
     }
+  }
+
+  // Typography: re-point the `@theme` vocabulary at the preset's stacks (the
+  // block renders `@theme inline`, so utilities bake these values in — a
+  // `:root` override wouldn't reach them), and ship the Google-hosted faces
+  // with a plain CSS import (the v0 globals renderer hoists `@import` keys,
+  // shadcn's CSS updater passes at-rule keys through).
+  for (const varName of FONT_TOKEN_VARS) {
+    const stack = preset.tokens?.[varName]
+    if (stack) themeVars[varName] = stack
+  }
+  const fontFamilies = fontFamiliesFromTokens(preset.tokens ?? {})
+  if (fontFamilies.length > 0) {
+    css[`@import url('${googleFontsUrl(fontFamilies)}')`] = {}
   }
 
   return {

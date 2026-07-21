@@ -6,7 +6,7 @@ import {
   SegmentedControlItem,
 } from '@/registry/ui/segmented-control'
 import {
-  PRESET_LABEL_FONTS,
+  presetLabelStack,
   usePresetLabelFonts,
 } from '@/modules/marketing/preset-fonts'
 import { PRESETS } from '@/modules/presets/presets-data'
@@ -57,7 +57,7 @@ export function PresetSwitcher({
           <SegmentedControlItem
             key={preset.id}
             id={preset.id}
-            style={{ fontFamily: PRESET_LABEL_FONTS[preset.id]?.stack }}
+            style={{ fontFamily: presetLabelStack(preset.id) }}
           >
             <span
               aria-hidden="true"
