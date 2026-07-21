@@ -184,14 +184,17 @@ export function googleFontsUrl(
 
 /**
  * One stylesheet covering EVERY catalog family, subset (`text=`) to the glyphs
- * of the family names — so picker items can render each name in its own font.
- * The CSS is one request; the browser downloads a face only when a visible
- * item actually renders in it, which the virtualized list keeps to a handful.
+ * of the family names plus an "Ag" specimen — so picker items can render each
+ * name (or an Ag sample) in its own font. The CSS is one request; the browser
+ * downloads a face only when a visible item actually renders in it, which the
+ * virtualized list keeps to a handful.
  */
 export function ensureFontPreviewStylesheet(doc: Document): void {
   const id = 'dotui-font-previews'
   if (doc.getElementById(id)) return
-  const text = [...new Set(FONT_CATALOG.flatMap((f) => [...f.family]))].join('')
+  const text = [
+    ...new Set([...FONT_CATALOG.flatMap((f) => [...f.family]), 'A', 'g']),
+  ].join('')
   const link = doc.createElement('link')
   link.id = id
   link.rel = 'stylesheet'

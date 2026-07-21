@@ -23,13 +23,17 @@ import {
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-  ListBoxVirtualizer,
 } from '@/registry/ui/list-box'
 import { Popover } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
 import { Select, SelectTrigger } from '@/registry/ui/select'
+import { useTweak } from '@/dev/tweaker'
 
 import { useDesignSystem } from '../preset'
+
+/** How each font shows in the picker list — its name set in itself, or the
+ *  name in the UI font with a separate "Ag" specimen set in the font. */
+type OptionDisplay = 'name' | 'ag'
 
 const CATEGORY_LABELS: Record<FontCategory, string> = {
   'sans-serif': 'Sans serif',
@@ -98,6 +102,14 @@ export function TypographyConfig() {
     ensureFontPreviewStylesheet(document)
   }, [])
 
+  // TWEAK: comparing two ways to preview a font in the option row.
+  const optionDisplay = useTweak('Font option preview', {
+    type: 'select',
+    options: ['name', 'ag'],
+    default: 'name',
+    group: 'Font picker',
+  }) as OptionDisplay
+
   return (
     <div className="flex flex-col gap-3">
       <FontPicker
@@ -105,18 +117,21 @@ export function TypographyConfig() {
         categories={['sans-serif', 'serif', 'display']}
         selectedKey={headingFamily ?? bodyFamily}
         onChange={setHeading}
+        optionDisplay={optionDisplay}
       />
       <FontPicker
         label="Body font"
         categories={['sans-serif', 'serif']}
         selectedKey={bodyFamily}
         onChange={setBody}
+        optionDisplay={optionDisplay}
       />
       <FontPicker
         label="Mono font"
         categories={['mono']}
         selectedKey={monoFamily}
         onChange={setMono}
+        optionDisplay={optionDisplay}
       />
     </div>
   )
@@ -156,16 +171,42 @@ export function TypographySummary() {
   )
 }
 
+const FontPreview = ({
+  family,
+  display,
+}: {
+  family: string
+  display: OptionDisplay
+}) => {
+  const stack = fontStack(family)
+  if (display === 'ag') {
+    return (
+      <span className="flex w-full items-center gap-3">
+        <span className="flex-1 truncate">{family}</span>
+        <span
+          style={{ fontFamily: stack }}
+          className="shrink-0 text-lg leading-none text-fg-muted"
+        >
+          Ag
+        </span>
+      </span>
+    )
+  }
+  return <span style={{ fontFamily: stack }}>{family}</span>
+}
+
 const FontPicker = ({
   label,
   categories,
   selectedKey,
   onChange,
+  optionDisplay,
 }: {
   label: string
   categories: FontCategory[]
   selectedKey: string
   onChange: (family: string) => void
+  optionDisplay: OptionDisplay
 }) => {
   return (
     <Select
@@ -190,32 +231,34 @@ const FontPicker = ({
               </InputGroupAddon>
             </InputGroup>
           </SearchField>
-          <ListBoxVirtualizer
-            layoutOptions={{ rowHeight: 32, headingHeight: 24, padding: 4 }}
-          >
-            <ListBox className="max-h-64 overflow-auto overscroll-contain">
-              {categories.map((category) => (
-                <ListBoxSection key={category}>
-                  <ListBoxSectionHeader>
-                    {CATEGORY_LABELS[category]}
-                  </ListBoxSectionHeader>
-                  {FONT_CATALOG.filter(
-                    (font) => font.category === category,
-                  ).map((font) => (
+          {/* `overflow-y-auto!` beats the Command's `**:data-listbox:overflow-visible`
+              rule so the ListBox itself is the scroll container. Rows use
+              `content-visibility:auto` so the browser skips layout/paint — and the
+              font download — for off-screen items, keeping ~77 previews cheap. */}
+          <ListBox className="max-h-64 overflow-y-auto! overscroll-contain">
+            {categories.map((category) => (
+              <ListBoxSection key={category}>
+                <ListBoxSectionHeader>
+                  {CATEGORY_LABELS[category]}
+                </ListBoxSectionHeader>
+                {FONT_CATALOG.filter((font) => font.category === category).map(
+                  (font) => (
                     <ListBoxItem
                       key={font.family}
                       id={font.family}
                       textValue={font.family}
+                      className="[contain-intrinsic-size:auto_2rem] [content-visibility:auto]"
                     >
-                      <span style={{ fontFamily: fontStack(font.family) }}>
-                        {font.family}
-                      </span>
+                      <FontPreview
+                        family={font.family}
+                        display={optionDisplay}
+                      />
                     </ListBoxItem>
-                  ))}
-                </ListBoxSection>
-              ))}
-            </ListBox>
-          </ListBoxVirtualizer>
+                  ),
+                )}
+              </ListBoxSection>
+            ))}
+          </ListBox>
         </Command>
       </Popover>
     </Select>
