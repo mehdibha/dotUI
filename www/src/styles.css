@@ -57,15 +57,28 @@
   }
 }
 
-/* header-blur-reveal — reveals the nav's progressive blur on scroll with the same
-   technique as shadcn's scroll-fade utilities (scroll-driven animation of a
-   registered @property), retargeted from a mask to backdrop-filter. The scroll timeline ramps
-   --blur-progress 0 → 1 across the first header-height of scroll; the blur layers
-   scale their radius by it and the tint scales its opacity (see ProgressiveBlur in
-   components/progressive-blur.tsx), so the container never carries a fractional
-   opacity — which would make it an opacity group and break backdrop sampling. Where
-   scroll timelines are unsupported the blur stays at 0 and the header falls back to
-   a solid background (see header-blur-fallback). */
+/* blur-reveal — scroll-driven reveal for a ProgressiveBlur stack (see
+   components/progressive-blur.tsx): the same technique as shadcn's scroll-fade
+   utilities (a scroll timeline animating a registered @property), retargeted
+   from a mask to backdrop-filter. The timeline ramps --blur-progress 0 → 1
+   across the first --blur-reveal-range of scroll (default one header height);
+   the blur layers scale their radius by it and the tint scales its own opacity,
+   so these utilities add only an animation — the wrapper they land on must stay
+   mask-free and fully opaque (either would establish a backdrop root / opacity
+   group and kill cross-layer blur compounding). Two drivers:
+   - blur-reveal          — document scroll (the app header)
+   - blur-reveal-nearest  — nearest ancestor scroll container (a sticky bar
+                            inside an overflow-auto card). Beware: overflow-
+                            hidden ancestors count as scroll containers and
+                            capture the timeline; use blur-reveal when the
+                            document is the scroller.
+   Call sites that pin progress manually (create preview panel's inline
+   --blur-progress writes) must NOT carry these utilities — an animated custom
+   property outranks inline style. Shared gotcha: a timeline that turns inactive
+   (its scroller loses overflow) HOLDS the animation's last progress — remount
+   the wrapper to reset (see layout/header.tsx). Where scroll timelines are
+   unsupported the blur stays at 0 and the bar falls back to a solid background
+   (blur-reveal-fallback). */
 @property --blur-progress {
   syntax: '<number>';
   inherits: true;
@@ -81,20 +94,31 @@
   }
 }
 
-@utility header-blur-reveal {
+@utility blur-reveal {
   @supports (animation-timeline: scroll()) {
     animation: blur-reveal 1ms linear;
     animation-timeline: scroll(root y);
-    animation-range: 0 var(--header-height, calc(var(--spacing) * 14));
+    animation-range: 0
+      var(--blur-reveal-range, var(--header-height, calc(var(--spacing) * 14)));
     animation-fill-mode: both;
   }
 }
 
-/* header-blur-fallback — where scroll-driven animations are unsupported the blur
-   above can't track scroll; rather than pin the full blur on over the hero, give the
-   header a solid background. Lives on the header (not the taller blur wrapper) so it
-   covers exactly the bar. */
-@utility header-blur-fallback {
+@utility blur-reveal-nearest {
+  @supports (animation-timeline: scroll()) {
+    animation: blur-reveal 1ms linear;
+    animation-timeline: scroll(nearest y);
+    animation-range: 0
+      var(--blur-reveal-range, var(--header-height, calc(var(--spacing) * 14)));
+    animation-fill-mode: both;
+  }
+}
+
+/* blur-reveal-fallback — where scroll-driven animations are unsupported the
+   blur can't track scroll; rather than pin the full blur over the content
+   below, give the bar a solid background. Lives on the bar element (not the
+   taller blur wrapper) so it covers exactly the bar. */
+@utility blur-reveal-fallback {
   @supports not (animation-timeline: scroll()) {
     background-color: var(--color-bg);
   }

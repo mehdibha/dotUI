@@ -33,8 +33,10 @@ const BLUR_LAYERS = [
  * The layered blur + `--color-bg` tint stack behind the app header and the
  * create preview toolbar. Fills its positioned parent; strongest at the top,
  * dissolving to sharp at the bottom. Intensity rides `--blur-progress`
- * (registered in styles.css, initial 0): the header animates it with a scroll
- * timeline, always-on overlays pin `[--blur-progress:1]` on their wrapper.
+ * (registered in styles.css, initial 0): drive it with the `blur-reveal` /
+ * `blur-reveal-nearest` utilities (scroll timelines) or pin it manually
+ * (inline style / JS writes) — never both on one wrapper, since an animated
+ * custom property outranks inline style.
  */
 export function ProgressiveBlur() {
   return (

@@ -33,7 +33,7 @@ export function Header({ className, items = [] }: HeaderProps) {
   return (
     <header
       className={cn(
-        'sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between header-blur-fallback pr-3 pl-4 md:pr-4 md:pl-6',
+        'sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between blur-reveal-fallback pr-3 pl-4 md:pr-4 md:pl-6',
         className,
       )}
     >
@@ -46,7 +46,7 @@ export function Header({ className, items = [] }: HeaderProps) {
       <div
         key={pathname}
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] header-blur-reveal"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] blur-reveal"
       >
         <ProgressiveBlur />
       </div>
