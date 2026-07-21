@@ -2,6 +2,14 @@ import { type ReactNode, use, useMemo } from 'react'
 
 import { STEPS, type Theme } from '@dotui/colors'
 
+import {
+  DEFAULT_BODY_FAMILY,
+  DEFAULT_MONO_FAMILY,
+  familyFromStack,
+  FONT_HEADING_VAR,
+  FONT_MONO_VAR,
+  FONT_SANS_VAR,
+} from '@/lib/fonts'
 import { resolveColorConfigCached } from '@/lib/resolve-color'
 import * as icons from '@/registry/__generated__/icons'
 import {
@@ -15,14 +23,6 @@ import {
   SparklesIcon,
   TypeIcon,
 } from '@/registry/icons'
-import {
-  DEFAULT_BODY_FAMILY,
-  DEFAULT_MONO_FAMILY,
-  familyFromStack,
-  FONT_HEADING_VAR,
-  FONT_MONO_VAR,
-  FONT_SANS_VAR,
-} from '@/lib/fonts'
 import { IconLibraryContext } from '@/registry/icons/create-icon'
 import { iconLibraries } from '@/registry/icons/icon-map'
 import { cn } from '@/registry/lib/utils'
