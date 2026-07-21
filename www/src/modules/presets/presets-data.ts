@@ -40,6 +40,8 @@ function makeDesignSystem(opts: {
   vividness?: ColorConfig['vividness']
   /** Google font families for the typography tokens (default Geist / match body). */
   fonts?: { heading?: string; body?: string; mono?: string }
+  /** Per-component param overrides on top of the builder defaults. */
+  components?: Record<string, Record<string, string>>
 }): DesignSystem {
   const { neutral, accent, density = 'default' } = opts
   const tokens: Record<string, string> = {}
@@ -48,8 +50,13 @@ function makeDesignSystem(opts: {
     tokens[FONT_HEADING_VAR] = fontStack(opts.fonts.heading)
   if (opts.fonts?.body) tokens[FONT_SANS_VAR] = fontStack(opts.fonts.body)
   if (opts.fonts?.mono) tokens[FONT_MONO_VAR] = fontStack(opts.fonts.mono)
+  const componentParams = { ...DEFAULTS.componentParams }
+  for (const [component, overrides] of Object.entries(opts.components ?? {})) {
+    componentParams[component] = { ...componentParams[component], ...overrides }
+  }
   return {
     ...DEFAULTS,
+    componentParams,
     density,
     tokens,
     color: {
@@ -75,6 +82,7 @@ export const PRESETS: Preset[] = [
       // A pure-gray accent: zero vividness keeps the ramp from tinting back up
       // (Geist-style neutral primary).
       vividness: 0,
+      components: { command: { style: '3' } },
     }),
   },
   {

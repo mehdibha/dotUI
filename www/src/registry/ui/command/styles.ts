@@ -31,7 +31,15 @@ const { useStyles, styles } = createStyles(commandMeta, {
           'in-data-modal:**:data-search-field:p-0.5',
         ],
       },
-      3: {},
+      3: {
+        base: [
+          // Vercel ⌘K: padded shell, frameless input on an inset hairline, flush list.
+          'gap-2 p-2 **:data-listbox:p-0',
+          '**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0',
+          '**:data-search-field:border-b **:data-search-field:pb-1.5',
+          '**:data-listbox:**:data-separator:mx-0 **:data-listbox:**:data-separator:my-1.5',
+        ],
+      },
     },
   },
 })
