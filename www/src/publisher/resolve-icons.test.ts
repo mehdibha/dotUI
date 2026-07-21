@@ -59,11 +59,9 @@ describe('resolveIconImports', () => {
       'import { ArrowDown01Icon as ChevronDownIconData } from "@hugeicons/core-free-icons";',
     )
     expect(out).toContain(
-      'function ChevronDownIcon(props: Omit<HugeiconsIconProps, "icon">) {',
+      'function ChevronDownIcon({ className, ...props }: Omit<HugeiconsIconProps, "icon">) {',
     )
-    expect(out).toContain(
-      '<HugeiconsIcon icon={ChevronDownIconData} {...props} />',
-    )
+    expect(out).toContain('icon={ChevronDownIconData}')
   })
 
   it('emits hugeicons wrappers after the whole import block', () => {
@@ -85,5 +83,42 @@ describe('resolveIconImports', () => {
   it('leaves files without the marker untouched', () => {
     const src = `import { XIcon } from "lucide-react";\nexport {};`
     expect(resolveIconImports(src, 'remix')).toBe(src)
+  })
+
+  it('adds the hugeicon marker class to hugeicons wrappers', () => {
+    const out = resolveIconImports(SINGLE, 'hugeicons')
+    expect(out).toContain('className ? `hugeicon ${className}` : "hugeicon"')
+  })
+
+  it('aliases phosphor names, skipping the alias when names match', () => {
+    const src = `import { ChevronDownIcon, XIcon } from "@/components/icons";`
+    const out = resolveIconImports(src, 'phosphor')
+    expect(out).toContain(
+      'import { CaretDownIcon as ChevronDownIcon, XIcon } from "@phosphor-icons/react";',
+    )
+  })
+
+  it('wraps phosphor icons when a weight is set', () => {
+    const out = resolveIconImports(SINGLE, 'phosphor', { weight: 'bold' })
+    expect(out).toContain(
+      'import type { IconProps } from "@phosphor-icons/react";',
+    )
+    expect(out).toContain(
+      'import { CaretDownIcon as PhosphorChevronDownIcon } from "@phosphor-icons/react";',
+    )
+    expect(out).toContain('function ChevronDownIcon(props: IconProps) {')
+    expect(out).toContain(
+      '<PhosphorChevronDownIcon weight="bold" {...props} />',
+    )
+  })
+
+  it('treats regular and invalid weights as the phosphor default', () => {
+    for (const weight of ['regular', 'chunky; alert(1)', undefined]) {
+      const out = resolveIconImports(SINGLE, 'phosphor', { weight })
+      expect(out).toContain(
+        'import { CaretDownIcon as ChevronDownIcon } from "@phosphor-icons/react";',
+      )
+      expect(out).not.toContain('function ChevronDownIcon')
+    }
   })
 })

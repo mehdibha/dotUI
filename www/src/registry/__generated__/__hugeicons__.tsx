@@ -166,9 +166,11 @@ import {
 	ZoomOutAreaIcon as ZoomOutAreaIconData,
 } from "@hugeicons/core-free-icons";
 
+// The `hugeicon` marker class lets the stroke-width axis target the paths
+// (see base.css) — hugeicons paths carry their own stroke-width attribute.
 function wrap(icon: HugeiconsIconProps["icon"]) {
-	return function HugeIcon(props: Omit<HugeiconsIconProps, "icon">) {
-		return <HugeiconsIcon icon={icon} {...props} />;
+	return function HugeIcon({ className, ...props }: Omit<HugeiconsIconProps, "icon">) {
+		return <HugeiconsIcon icon={icon} className={className ? `hugeicon ${className}` : "hugeicon"} {...props} />;
 	};
 }
 

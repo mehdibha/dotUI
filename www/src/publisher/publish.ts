@@ -122,6 +122,7 @@ const FILE_IMPORT_NPM_DEPS = [
   '@tabler/icons-react',
   '@hugeicons/react',
   '@hugeicons/core-free-icons',
+  '@phosphor-icons/react',
 ]
 
 function depsFromFileImports(
@@ -217,7 +218,8 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
 
   // 4c. Resolve the `@/components/icons` marker import to the preset's icon
   // library. Always runs — consumers have no such module.
-  content = resolveIconImports(content, preset.icons)
+  const iconOptions = { weight: preset.tokens?.['--icon-weight'] }
+  content = resolveIconImports(content, preset.icons, iconOptions)
 
   // 5. Assemble shadcn item — drop dotui-only fields (params, group).
   // Shadcn's RegistryItem is a discriminated union on `type`. We can't carry the
@@ -229,7 +231,9 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
     const extra = extraFiles?.[file.path]
     return {
       ...file,
-      content: extra ? resolveIconImports(extra, preset.icons) : content,
+      content: extra
+        ? resolveIconImports(extra, preset.icons, iconOptions)
+        : content,
     }
   })
 

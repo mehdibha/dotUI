@@ -20,8 +20,11 @@
 // Relative import: this module is reachable from `vite.config.ts` (via
 // source-overlay → transform-base → publish), which node loads without the
 // `@/` alias — a value import through the alias would break config loading.
-import { registryIcons } from '../registry/icons/icon-map'
-import type { IconLibraryName } from '../registry/icons/icon-map'
+import { phosphorWeights, registryIcons } from '../registry/icons/icon-map'
+import type {
+  IconLibraryName,
+  PhosphorWeight,
+} from '../registry/icons/icon-map'
 
 const ICONS_IMPORT_RE =
   /import\s*\{([^}]*)\}\s*from\s*(['"])@\/components\/icons\2;?/g
@@ -32,7 +35,13 @@ const IMPORT_STATEMENT_RE = /^import[^'"]*(['"])[^'"]+\1;?/gm
 const LIBRARY_PACKAGES = {
   remix: '@remixicon/react',
   tabler: '@tabler/icons-react',
+  phosphor: '@phosphor-icons/react',
 } as const
+
+export interface ResolveIconOptions {
+  /** Phosphor weight; anything not in `phosphorWeights` (or 'regular') is the default. */
+  weight?: string
+}
 
 /** One `{ … }` entry: `ChevronDownIcon` or `ChevronDownIcon as Chevron`. */
 interface ImportedIcon {
@@ -63,13 +72,14 @@ function lucideImport(icons: ImportedIcon[]): string {
 
 function componentLibraryImport(
   icons: ImportedIcon[],
-  library: 'remix' | 'tabler',
+  library: 'remix' | 'tabler' | 'phosphor',
 ): string {
   const mapped: string[] = []
   const unmapped: ImportedIcon[] = []
   for (const icon of icons) {
     const target = registryIcons[icon.name]?.[library]
-    if (target) mapped.push(`${target} as ${icon.local}`)
+    if (target)
+      mapped.push(target === icon.local ? target : `${target} as ${icon.local}`)
     else unmapped.push(icon)
   }
   const lines: string[] = []
@@ -125,10 +135,61 @@ function resolveHugeicons(content: string): string {
   })
 
   if (wrapped.length > 0) {
+    // The `hugeicon` marker class hooks the stroke-width axis rule in base.css
+    // (hugeicons paths carry their own stroke-width attribute).
     const wrappers = wrapped
       .map(
         ({ local }) =>
-          `function ${local}(props: Omit<HugeiconsIconProps, "icon">) {\n\treturn <HugeiconsIcon icon={${local}Data} {...props} />;\n}`,
+          `function ${local}({ className, ...props }: Omit<HugeiconsIconProps, "icon">) {\n\treturn <HugeiconsIcon icon={${local}Data} className={className ? \`hugeicon \${className}\` : "hugeicon"} {...props} />;\n}`,
+      )
+      .join('\n\n')
+    out = insertAfterImports(out, wrappers)
+  }
+  return out
+}
+
+/**
+ * Phosphor with a non-default weight: import under an alias and wrap each icon
+ * in a component that pins the weight, so JSX usages stay untouched.
+ */
+function resolvePhosphorWeighted(
+  content: string,
+  weight: PhosphorWeight,
+): string {
+  const wrapped: Array<ImportedIcon & { target: string }> = []
+  let first = true
+
+  let out = content.replace(ICONS_IMPORT_RE, (_match, inner: string) => {
+    const icons = parseNamedImports(inner)
+    const mapped: Array<ImportedIcon & { target: string }> = []
+    const unmapped: ImportedIcon[] = []
+    for (const icon of icons) {
+      const target = registryIcons[icon.name]?.phosphor
+      if (target) mapped.push({ ...icon, target })
+      else unmapped.push(icon)
+    }
+    wrapped.push(...mapped)
+    const lines: string[] = []
+    if (mapped.length > 0) {
+      if (first) {
+        first = false
+        lines.push('import type { IconProps } from "@phosphor-icons/react";')
+      }
+      lines.push(
+        `import { ${mapped
+          .map(({ target, local }) => `${target} as Phosphor${local}`)
+          .join(', ')} } from "@phosphor-icons/react";`,
+      )
+    }
+    if (unmapped.length > 0) lines.push(lucideImport(unmapped))
+    return lines.join('\n')
+  })
+
+  if (wrapped.length > 0) {
+    const wrappers = wrapped
+      .map(
+        ({ local }) =>
+          `function ${local}(props: IconProps) {\n\treturn <Phosphor${local} weight="${weight}" {...props} />;\n}`,
       )
       .join('\n\n')
     out = insertAfterImports(out, wrappers)
@@ -144,12 +205,20 @@ function resolveHugeicons(content: string): string {
 export function resolveIconImports(
   content: string,
   library: IconLibraryName = 'lucide',
+  options: ResolveIconOptions = {},
 ): string {
   if (library === 'hugeicons') return resolveHugeicons(content)
+  if (library === 'phosphor') {
+    // The weight token comes from the URL — validate before splicing into code.
+    const weight = phosphorWeights.find(
+      (w) => w === options.weight && w !== 'regular',
+    )
+    if (weight) return resolvePhosphorWeighted(content, weight)
+  }
   return content.replace(ICONS_IMPORT_RE, (_match, inner: string) => {
     const icons = parseNamedImports(inner)
     if (icons.length === 0) return ''
-    if (library === 'remix' || library === 'tabler')
+    if (library === 'remix' || library === 'tabler' || library === 'phosphor')
       return componentLibraryImport(icons, library)
     return lucideImport(icons)
   })

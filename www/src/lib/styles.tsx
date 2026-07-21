@@ -7,8 +7,12 @@ import { tv } from 'tailwind-variants'
 import type { ClassValue, TVReturnType, VariantProps } from 'tailwind-variants'
 
 import { resolveColorConfigCached } from '@/lib/resolve-color'
-import { IconLibraryContext } from '@/registry/icons/create-icon'
-import type { IconLibraryName } from '@/registry/icons/icon-map'
+import {
+  IconLibraryContext,
+  IconWeightContext,
+} from '@/registry/icons/create-icon'
+import { phosphorWeights } from '@/registry/icons/icon-map'
+import type { IconLibraryName, PhosphorWeight } from '@/registry/icons/icon-map'
 import {
   DEFAULT_SEMANTICS,
   emitCss,
@@ -481,10 +485,18 @@ function DesignSystemProvider({
     <style data-dotui-color>{themeCss}</style>
   ) : null
 
+  // The weight axis rides in tokens (so it round-trips the preset URL like any
+  // global token) but reaches icons as a component prop, hence the context.
+  const iconWeight = phosphorWeights.find(
+    (w): w is PhosphorWeight => w === tokens['--icon-weight'],
+  )
+
   const tree = (
     <DesignSystemContext.Provider value={value}>
       <IconLibraryContext.Provider value={icons}>
-        {children}
+        <IconWeightContext.Provider value={iconWeight}>
+          {children}
+        </IconWeightContext.Provider>
       </IconLibraryContext.Provider>
     </DesignSystemContext.Provider>
   )

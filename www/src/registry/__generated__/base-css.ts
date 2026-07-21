@@ -36,6 +36,12 @@ export const baseRegistryCss = {
 			"background-color": "var(--accent-300)",
 			color: "var(--neutral-950)",
 		},
+		".lucide,\n.tabler-icon": {
+			"stroke-width": "var(--icon-stroke-width, 2)",
+		},
+		".hugeicon,\n.hugeicon *": {
+			"stroke-width": "var(--icon-stroke-width, 1.5)",
+		},
 		":root": {
 			"--radius-factor": "1",
 			"--neutral-25": "oklch(0.9921 0.0021 251.06)",

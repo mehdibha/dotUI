@@ -194,6 +194,7 @@ export const PlusIcon = createIcon(LucidePlusIcon, {
 	remix: "RiAddLine",
 	tabler: "IconPlus",
 	hugeicons: "PlusSignIcon",
+	phosphor: "PlusIcon",
 });
 
 export const PaperclipIcon = createIcon(LucidePaperclipIcon, {
@@ -201,6 +202,7 @@ export const PaperclipIcon = createIcon(LucidePaperclipIcon, {
 	remix: "RiAttachmentLine",
 	tabler: "IconPaperclip",
 	hugeicons: "AttachmentIcon",
+	phosphor: "PaperclipIcon",
 });
 
 export const SparklesIcon = createIcon(LucideSparklesIcon, {
@@ -208,6 +210,7 @@ export const SparklesIcon = createIcon(LucideSparklesIcon, {
 	remix: "RiSparklingLine",
 	tabler: "IconSparkles",
 	hugeicons: "SparklesIcon",
+	phosphor: "SparkleIcon",
 });
 
 export const ShoppingBagIcon = createIcon(LucideShoppingBagIcon, {
@@ -215,6 +218,7 @@ export const ShoppingBagIcon = createIcon(LucideShoppingBagIcon, {
 	remix: "RiShoppingBagLine",
 	tabler: "IconShoppingBag",
 	hugeicons: "ShoppingBag01Icon",
+	phosphor: "ShoppingBagIcon",
 });
 
 export const WandIcon = createIcon(LucideWandIcon, {
@@ -222,6 +226,7 @@ export const WandIcon = createIcon(LucideWandIcon, {
 	remix: "RiMagicLine",
 	tabler: "IconWand",
 	hugeicons: "MagicWand01Icon",
+	phosphor: "MagicWandIcon",
 });
 
 export const MousePointerIcon = createIcon(LucideMousePointerIcon, {
@@ -229,6 +234,7 @@ export const MousePointerIcon = createIcon(LucideMousePointerIcon, {
 	remix: "RiCursorLine",
 	tabler: "IconPointer",
 	hugeicons: "Cursor01Icon",
+	phosphor: "CursorIcon",
 });
 
 export const MoreHorizontalIcon = createIcon(LucideMoreHorizontalIcon, {
@@ -236,6 +242,7 @@ export const MoreHorizontalIcon = createIcon(LucideMoreHorizontalIcon, {
 	remix: "RiMoreLine",
 	tabler: "IconDots",
 	hugeicons: "MoreHorizontalCircle01Icon",
+	phosphor: "DotsThreeIcon",
 });
 
 export const ShareIcon = createIcon(LucideShareIcon, {
@@ -243,6 +250,7 @@ export const ShareIcon = createIcon(LucideShareIcon, {
 	remix: "RiShareLine",
 	tabler: "IconShare",
 	hugeicons: "Share03Icon",
+	phosphor: "ShareIcon",
 });
 
 export const BookOpenIcon = createIcon(LucideBookOpenIcon, {
@@ -250,6 +258,7 @@ export const BookOpenIcon = createIcon(LucideBookOpenIcon, {
 	remix: "RiBookOpenLine",
 	tabler: "IconBook",
 	hugeicons: "BookOpen01Icon",
+	phosphor: "BookOpenIcon",
 });
 
 export const GlobeIcon = createIcon(LucideGlobeIcon, {
@@ -257,6 +266,7 @@ export const GlobeIcon = createIcon(LucideGlobeIcon, {
 	remix: "RiGlobalLine",
 	tabler: "IconWorld",
 	hugeicons: "GlobalIcon",
+	phosphor: "GlobeIcon",
 });
 
 export const PenToolIcon = createIcon(LucidePenToolIcon, {
@@ -264,6 +274,7 @@ export const PenToolIcon = createIcon(LucidePenToolIcon, {
 	remix: "RiPenNibLine",
 	tabler: "IconPencil",
 	hugeicons: "QuillWrite01Icon",
+	phosphor: "PenNibIcon",
 });
 
 export const AudioLinesIcon = createIcon(LucideAudioLinesIcon, {
@@ -271,6 +282,7 @@ export const AudioLinesIcon = createIcon(LucideAudioLinesIcon, {
 	remix: "RiSoundModuleLine",
 	tabler: "IconMicrophone",
 	hugeicons: "Mic01Icon",
+	phosphor: "WaveformIcon",
 });
 
 export const ArrowUpIcon = createIcon(LucideArrowUpIcon, {
@@ -278,6 +290,7 @@ export const ArrowUpIcon = createIcon(LucideArrowUpIcon, {
 	remix: "RiArrowUpLine",
 	tabler: "IconArrowUp",
 	hugeicons: "ArrowUp01Icon",
+	phosphor: "ArrowUpIcon",
 });
 
 export const ChevronDownIcon = createIcon(LucideChevronDownIcon, {
@@ -285,6 +298,7 @@ export const ChevronDownIcon = createIcon(LucideChevronDownIcon, {
 	remix: "RiArrowDownSLine",
 	tabler: "IconChevronDown",
 	hugeicons: "ArrowDown01Icon",
+	phosphor: "CaretDownIcon",
 });
 
 export const SettingsIcon = createIcon(LucideSettingsIcon, {
@@ -292,6 +306,7 @@ export const SettingsIcon = createIcon(LucideSettingsIcon, {
 	remix: "RiSettings3Line",
 	tabler: "IconSettings",
 	hugeicons: "Settings01Icon",
+	phosphor: "GearIcon",
 });
 
 export const FolderIcon = createIcon(LucideFolderIcon, {
@@ -299,6 +314,7 @@ export const FolderIcon = createIcon(LucideFolderIcon, {
 	remix: "RiFolderLine",
 	tabler: "IconFolder",
 	hugeicons: "Folder01Icon",
+	phosphor: "FolderIcon",
 });
 
 export const CircleCheckIcon = createIcon(LucideCircleCheckIcon, {
@@ -306,6 +322,7 @@ export const CircleCheckIcon = createIcon(LucideCircleCheckIcon, {
 	remix: "RiCheckboxCircleLine",
 	tabler: "IconCircleCheck",
 	hugeicons: "CheckmarkCircle02Icon",
+	phosphor: "CheckCircleIcon",
 });
 
 export const LightbulbIcon = createIcon(LucideLightbulbIcon, {
@@ -313,6 +330,7 @@ export const LightbulbIcon = createIcon(LucideLightbulbIcon, {
 	remix: "RiLightbulbLine",
 	tabler: "IconBulb",
 	hugeicons: "BulbIcon",
+	phosphor: "LightbulbIcon",
 });
 
 export const ContainerIcon = createIcon(LucideContainerIcon, {
@@ -320,6 +338,7 @@ export const ContainerIcon = createIcon(LucideContainerIcon, {
 	remix: "RiBox3Line",
 	tabler: "IconBox",
 	hugeicons: "CubeIcon",
+	phosphor: "CubeIcon",
 });
 
 export const ZapIcon = createIcon(LucideZapIcon, {
@@ -327,6 +346,7 @@ export const ZapIcon = createIcon(LucideZapIcon, {
 	remix: "RiFlashlightLine",
 	tabler: "IconBolt",
 	hugeicons: "ZapIcon",
+	phosphor: "LightningIcon",
 });
 
 export const ServerIcon = createIcon(LucideServerIcon, {
@@ -334,6 +354,7 @@ export const ServerIcon = createIcon(LucideServerIcon, {
 	remix: "RiServerLine",
 	tabler: "IconServer",
 	hugeicons: "DatabaseIcon",
+	phosphor: "HardDrivesIcon",
 });
 
 export const InfoIcon = createIcon(LucideInfoIcon, {
@@ -341,6 +362,7 @@ export const InfoIcon = createIcon(LucideInfoIcon, {
 	remix: "RiInformationLine",
 	tabler: "IconInfoCircle",
 	hugeicons: "InformationCircleIcon",
+	phosphor: "InfoIcon",
 });
 
 export const TerminalIcon = createIcon(LucideTerminalIcon, {
@@ -348,6 +370,7 @@ export const TerminalIcon = createIcon(LucideTerminalIcon, {
 	remix: "RiTerminalBoxLine",
 	tabler: "IconTerminal",
 	hugeicons: "SourceCodeIcon",
+	phosphor: "TerminalIcon",
 });
 
 export const CopyIcon = createIcon(LucideCopyIcon, {
@@ -355,6 +378,7 @@ export const CopyIcon = createIcon(LucideCopyIcon, {
 	remix: "RiFileCopyLine",
 	tabler: "IconCopy",
 	hugeicons: "Copy01Icon",
+	phosphor: "CopyIcon",
 });
 
 export const MonitorIcon = createIcon(LucideMonitorIcon, {
@@ -362,6 +386,7 @@ export const MonitorIcon = createIcon(LucideMonitorIcon, {
 	remix: "RiComputerLine",
 	tabler: "IconDeviceDesktop",
 	hugeicons: "ComputerIcon",
+	phosphor: "MonitorIcon",
 });
 
 export const DownloadIcon = createIcon(LucideDownloadIcon, {
@@ -369,6 +394,7 @@ export const DownloadIcon = createIcon(LucideDownloadIcon, {
 	remix: "RiDownloadLine",
 	tabler: "IconDownload",
 	hugeicons: "Download01Icon",
+	phosphor: "DownloadSimpleIcon",
 });
 
 export const SearchIcon = createIcon(LucideSearchIcon, {
@@ -376,6 +402,7 @@ export const SearchIcon = createIcon(LucideSearchIcon, {
 	remix: "RiSearchLine",
 	tabler: "IconSearch",
 	hugeicons: "Search01Icon",
+	phosphor: "MagnifyingGlassIcon",
 });
 
 export const UploadIcon = createIcon(LucideUploadIcon, {
@@ -383,6 +410,7 @@ export const UploadIcon = createIcon(LucideUploadIcon, {
 	remix: "RiUpload2Line",
 	tabler: "IconUpload",
 	hugeicons: "Upload01Icon",
+	phosphor: "UploadSimpleIcon",
 });
 
 export const CloudCogIcon = createIcon(LucideCloudCogIcon, {
@@ -390,6 +418,7 @@ export const CloudCogIcon = createIcon(LucideCloudCogIcon, {
 	remix: "RiCloudLine",
 	tabler: "IconCloudCog",
 	hugeicons: "AiCloud01Icon",
+	phosphor: "CloudIcon",
 });
 
 export const GitBranchIcon = createIcon(LucideGitBranchIcon, {
@@ -397,6 +426,7 @@ export const GitBranchIcon = createIcon(LucideGitBranchIcon, {
 	remix: "RiGitBranchLine",
 	tabler: "IconGitBranch",
 	hugeicons: "GitBranchIcon",
+	phosphor: "GitBranchIcon",
 });
 
 export const BotIcon = createIcon(LucideBotIcon, {
@@ -404,6 +434,7 @@ export const BotIcon = createIcon(LucideBotIcon, {
 	remix: "RiRobotLine",
 	tabler: "IconRobot",
 	hugeicons: "RoboticIcon",
+	phosphor: "RobotIcon",
 });
 
 export const SendIcon = createIcon(LucideSendIcon, {
@@ -411,6 +442,7 @@ export const SendIcon = createIcon(LucideSendIcon, {
 	remix: "RiSendPlaneLine",
 	tabler: "IconSend",
 	hugeicons: "SentIcon",
+	phosphor: "PaperPlaneRightIcon",
 });
 
 export const MenuIcon = createIcon(LucideMenuIcon, {
@@ -418,6 +450,7 @@ export const MenuIcon = createIcon(LucideMenuIcon, {
 	remix: "RiMenuLine",
 	tabler: "IconMenu",
 	hugeicons: "Menu09Icon",
+	phosphor: "ListIcon",
 });
 
 export const XIcon = createIcon(LucideXIcon, {
@@ -425,6 +458,7 @@ export const XIcon = createIcon(LucideXIcon, {
 	remix: "RiCloseLine",
 	tabler: "IconX",
 	hugeicons: "Cancel01Icon",
+	phosphor: "XIcon",
 });
 
 export const HomeIcon = createIcon(LucideHomeIcon, {
@@ -432,6 +466,7 @@ export const HomeIcon = createIcon(LucideHomeIcon, {
 	remix: "RiHomeLine",
 	tabler: "IconHome",
 	hugeicons: "Home01Icon",
+	phosphor: "HouseIcon",
 });
 
 export const CircleIcon = createIcon(LucideCircleIcon, {
@@ -439,6 +474,7 @@ export const CircleIcon = createIcon(LucideCircleIcon, {
 	remix: "RiCircleLine",
 	tabler: "IconCircle",
 	hugeicons: "CircleIcon",
+	phosphor: "CircleIcon",
 });
 
 export const LayoutGridIcon = createIcon(LucideLayoutGridIcon, {
@@ -446,6 +482,7 @@ export const LayoutGridIcon = createIcon(LucideLayoutGridIcon, {
 	remix: "RiLayoutGridLine",
 	tabler: "IconLayoutGrid",
 	hugeicons: "GridIcon",
+	phosphor: "SquaresFourIcon",
 });
 
 export const MailIcon = createIcon(LucideMailIcon, {
@@ -453,6 +490,7 @@ export const MailIcon = createIcon(LucideMailIcon, {
 	remix: "RiMailLine",
 	tabler: "IconMail",
 	hugeicons: "Mail01Icon",
+	phosphor: "EnvelopeIcon",
 });
 
 export const LinkIcon = createIcon(LucideLinkIcon, {
@@ -460,6 +498,7 @@ export const LinkIcon = createIcon(LucideLinkIcon, {
 	remix: "RiLinkM",
 	tabler: "IconLink",
 	hugeicons: "Link01Icon",
+	phosphor: "LinkIcon",
 });
 
 export const SmileIcon = createIcon(LucideSmileIcon, {
@@ -467,6 +506,7 @@ export const SmileIcon = createIcon(LucideSmileIcon, {
 	remix: "RiEmotionLine",
 	tabler: "IconMoodSmile",
 	hugeicons: "SmileIcon",
+	phosphor: "SmileyIcon",
 });
 
 export const CircleAlertIcon = createIcon(LucideCircleAlertIcon, {
@@ -474,6 +514,7 @@ export const CircleAlertIcon = createIcon(LucideCircleAlertIcon, {
 	remix: "RiErrorWarningLine",
 	tabler: "IconExclamationCircle",
 	hugeicons: "Alert01Icon",
+	phosphor: "WarningCircleIcon",
 });
 
 export const UserIcon = createIcon(LucideUserIcon, {
@@ -481,6 +522,7 @@ export const UserIcon = createIcon(LucideUserIcon, {
 	remix: "RiUserLine",
 	tabler: "IconUser",
 	hugeicons: "UserIcon",
+	phosphor: "UserIcon",
 });
 
 export const StarIcon = createIcon(LucideStarIcon, {
@@ -488,6 +530,7 @@ export const StarIcon = createIcon(LucideStarIcon, {
 	remix: "RiStarLine",
 	tabler: "IconStar",
 	hugeicons: "StarIcon",
+	phosphor: "StarIcon",
 });
 
 export const CodeIcon = createIcon(LucideCodeIcon, {
@@ -495,6 +538,7 @@ export const CodeIcon = createIcon(LucideCodeIcon, {
 	remix: "RiCodeLine",
 	tabler: "IconCode",
 	hugeicons: "CodeIcon",
+	phosphor: "CodeIcon",
 });
 
 export const HeartIcon = createIcon(LucideHeartIcon, {
@@ -502,6 +546,7 @@ export const HeartIcon = createIcon(LucideHeartIcon, {
 	remix: "RiHeartLine",
 	tabler: "IconHeart",
 	hugeicons: "FavouriteIcon",
+	phosphor: "HeartIcon",
 });
 
 export const LogOutIcon = createIcon(LucideLogOutIcon, {
@@ -509,6 +554,7 @@ export const LogOutIcon = createIcon(LucideLogOutIcon, {
 	remix: "RiLogoutBoxLine",
 	tabler: "IconLogout",
 	hugeicons: "Logout01Icon",
+	phosphor: "SignOutIcon",
 });
 
 export const MinusIcon = createIcon(LucideMinusIcon, {
@@ -516,6 +562,7 @@ export const MinusIcon = createIcon(LucideMinusIcon, {
 	remix: "RiSubtractLine",
 	tabler: "IconMinus",
 	hugeicons: "MinusSignIcon",
+	phosphor: "MinusIcon",
 });
 
 export const ArrowLeftIcon = createIcon(LucideArrowLeftIcon, {
@@ -523,6 +570,7 @@ export const ArrowLeftIcon = createIcon(LucideArrowLeftIcon, {
 	remix: "RiArrowLeftLine",
 	tabler: "IconArrowLeft",
 	hugeicons: "ArrowLeft01Icon",
+	phosphor: "ArrowLeftIcon",
 });
 
 export const MailCheckIcon = createIcon(LucideMailCheckIcon, {
@@ -530,6 +578,7 @@ export const MailCheckIcon = createIcon(LucideMailCheckIcon, {
 	remix: "RiMailCheckLine",
 	tabler: "IconMailCheck",
 	hugeicons: "MailValidation01Icon",
+	phosphor: "EnvelopeOpenIcon",
 });
 
 export const ArchiveIcon = createIcon(LucideArchiveIcon, {
@@ -537,6 +586,7 @@ export const ArchiveIcon = createIcon(LucideArchiveIcon, {
 	remix: "RiArchiveLine",
 	tabler: "IconArchive",
 	hugeicons: "Archive02Icon",
+	phosphor: "ArchiveIcon",
 });
 
 export const ClockIcon = createIcon(LucideClockIcon, {
@@ -544,6 +594,7 @@ export const ClockIcon = createIcon(LucideClockIcon, {
 	remix: "RiTimeLine",
 	tabler: "IconClock",
 	hugeicons: "Clock01Icon",
+	phosphor: "ClockIcon",
 });
 
 export const CalendarPlusIcon = createIcon(LucideCalendarPlusIcon, {
@@ -551,6 +602,7 @@ export const CalendarPlusIcon = createIcon(LucideCalendarPlusIcon, {
 	remix: "RiCalendarEventLine",
 	tabler: "IconCalendarPlus",
 	hugeicons: "CalendarAdd01Icon",
+	phosphor: "CalendarPlusIcon",
 });
 
 export const ListFilterIcon = createIcon(LucideListFilterIcon, {
@@ -558,6 +610,7 @@ export const ListFilterIcon = createIcon(LucideListFilterIcon, {
 	remix: "RiFilterLine",
 	tabler: "IconFilterPlus",
 	hugeicons: "FilterIcon",
+	phosphor: "FunnelIcon",
 });
 
 export const TagIcon = createIcon(LucideTagIcon, {
@@ -565,6 +618,7 @@ export const TagIcon = createIcon(LucideTagIcon, {
 	remix: "RiPriceTag3Line",
 	tabler: "IconTag",
 	hugeicons: "Tag01Icon",
+	phosphor: "TagIcon",
 });
 
 export const Trash2Icon = createIcon(LucideTrash2Icon, {
@@ -572,6 +626,7 @@ export const Trash2Icon = createIcon(LucideTrash2Icon, {
 	remix: "RiDeleteBin6Line",
 	tabler: "IconTrash",
 	hugeicons: "Delete02Icon",
+	phosphor: "TrashSimpleIcon",
 });
 
 export const ArrowRightIcon = createIcon(LucideArrowRightIcon, {
@@ -579,6 +634,7 @@ export const ArrowRightIcon = createIcon(LucideArrowRightIcon, {
 	remix: "RiArrowRightLine",
 	tabler: "IconArrowRight",
 	hugeicons: "ArrowRight02Icon",
+	phosphor: "ArrowRightIcon",
 });
 
 export const VolumeX = createIcon(LucideVolumeX, {
@@ -586,6 +642,7 @@ export const VolumeX = createIcon(LucideVolumeX, {
 	remix: "RiVolumeMuteLine",
 	tabler: "IconVolume",
 	hugeicons: "VolumeOffIcon",
+	phosphor: "SpeakerXIcon",
 });
 
 export const CheckIcon = createIcon(LucideCheckIcon, {
@@ -593,6 +650,7 @@ export const CheckIcon = createIcon(LucideCheckIcon, {
 	remix: "RiCheckLine",
 	tabler: "IconCheck",
 	hugeicons: "Tick02Icon",
+	phosphor: "CheckIcon",
 });
 
 export const UserRoundXIcon = createIcon(LucideUserRoundXIcon, {
@@ -600,6 +658,7 @@ export const UserRoundXIcon = createIcon(LucideUserRoundXIcon, {
 	remix: "RiUserUnfollowLine",
 	tabler: "IconUserX",
 	hugeicons: "UserRemove01Icon",
+	phosphor: "UserMinusIcon",
 });
 
 export const AlertTriangleIcon = createIcon(LucideAlertTriangleIcon, {
@@ -607,6 +666,7 @@ export const AlertTriangleIcon = createIcon(LucideAlertTriangleIcon, {
 	remix: "RiAlertLine",
 	tabler: "IconAlertTriangle",
 	hugeicons: "Alert02Icon",
+	phosphor: "WarningIcon",
 });
 
 export const TrashIcon = createIcon(LucideTrashIcon, {
@@ -614,6 +674,7 @@ export const TrashIcon = createIcon(LucideTrashIcon, {
 	remix: "RiDeleteBinLine",
 	tabler: "IconTrash",
 	hugeicons: "Delete01Icon",
+	phosphor: "TrashIcon",
 });
 
 export const BluetoothIcon = createIcon(LucideBluetoothIcon, {
@@ -621,6 +682,7 @@ export const BluetoothIcon = createIcon(LucideBluetoothIcon, {
 	remix: "RiBluetoothLine",
 	tabler: "IconBluetooth",
 	hugeicons: "BluetoothIcon",
+	phosphor: "BluetoothIcon",
 });
 
 export const MoreVerticalIcon = createIcon(LucideMoreVerticalIcon, {
@@ -628,6 +690,7 @@ export const MoreVerticalIcon = createIcon(LucideMoreVerticalIcon, {
 	remix: "RiMore2Line",
 	tabler: "IconDotsVertical",
 	hugeicons: "MoreVerticalCircle01Icon",
+	phosphor: "DotsThreeVerticalIcon",
 });
 
 export const FileIcon = createIcon(LucideFileIcon, {
@@ -635,6 +698,7 @@ export const FileIcon = createIcon(LucideFileIcon, {
 	remix: "RiFileLine",
 	tabler: "IconFile",
 	hugeicons: "File01Icon",
+	phosphor: "FileIcon",
 });
 
 export const FolderOpenIcon = createIcon(LucideFolderOpenIcon, {
@@ -642,6 +706,7 @@ export const FolderOpenIcon = createIcon(LucideFolderOpenIcon, {
 	remix: "RiFolderOpenLine",
 	tabler: "IconFolderOpen",
 	hugeicons: "FolderOpenIcon",
+	phosphor: "FolderOpenIcon",
 });
 
 export const FileCodeIcon = createIcon(LucideFileCodeIcon, {
@@ -649,6 +714,7 @@ export const FileCodeIcon = createIcon(LucideFileCodeIcon, {
 	remix: "RiFileCodeLine",
 	tabler: "IconFileCode",
 	hugeicons: "CodeIcon",
+	phosphor: "FileCodeIcon",
 });
 
 export const FolderSearchIcon = createIcon(LucideFolderSearchIcon, {
@@ -656,6 +722,7 @@ export const FolderSearchIcon = createIcon(LucideFolderSearchIcon, {
 	remix: "RiFileSearchLine",
 	tabler: "IconFolderSearch",
 	hugeicons: "Search01Icon",
+	phosphor: "FolderOpenIcon",
 });
 
 export const SaveIcon = createIcon(LucideSaveIcon, {
@@ -663,6 +730,7 @@ export const SaveIcon = createIcon(LucideSaveIcon, {
 	remix: "RiSaveLine",
 	tabler: "IconDeviceFloppy",
 	hugeicons: "FloppyDiskIcon",
+	phosphor: "FloppyDiskIcon",
 });
 
 export const EyeIcon = createIcon(LucideEyeIcon, {
@@ -670,6 +738,7 @@ export const EyeIcon = createIcon(LucideEyeIcon, {
 	remix: "RiEyeLine",
 	tabler: "IconEye",
 	hugeicons: "EyeIcon",
+	phosphor: "EyeIcon",
 });
 
 export const LayoutIcon = createIcon(LucideLayoutIcon, {
@@ -677,6 +746,7 @@ export const LayoutIcon = createIcon(LucideLayoutIcon, {
 	remix: "RiLayoutLine",
 	tabler: "IconLayout",
 	hugeicons: "Layout01Icon",
+	phosphor: "LayoutIcon",
 });
 
 export const PaletteIcon = createIcon(LucidePaletteIcon, {
@@ -684,6 +754,7 @@ export const PaletteIcon = createIcon(LucidePaletteIcon, {
 	remix: "RiPaletteLine",
 	tabler: "IconPalette",
 	hugeicons: "PaintBoardIcon",
+	phosphor: "PaletteIcon",
 });
 
 export const SunIcon = createIcon(LucideSunIcon, {
@@ -691,6 +762,7 @@ export const SunIcon = createIcon(LucideSunIcon, {
 	remix: "RiSunLine",
 	tabler: "IconSun",
 	hugeicons: "Sun01Icon",
+	phosphor: "SunIcon",
 });
 
 export const MoonIcon = createIcon(LucideMoonIcon, {
@@ -698,6 +770,7 @@ export const MoonIcon = createIcon(LucideMoonIcon, {
 	remix: "RiMoonLine",
 	tabler: "IconMoon",
 	hugeicons: "MoonIcon",
+	phosphor: "MoonIcon",
 });
 
 export const HelpCircleIcon = createIcon(LucideHelpCircleIcon, {
@@ -705,6 +778,7 @@ export const HelpCircleIcon = createIcon(LucideHelpCircleIcon, {
 	remix: "RiQuestionLine",
 	tabler: "IconHelpCircle",
 	hugeicons: "HelpCircleIcon",
+	phosphor: "QuestionIcon",
 });
 
 export const FileTextIcon = createIcon(LucideFileTextIcon, {
@@ -712,6 +786,7 @@ export const FileTextIcon = createIcon(LucideFileTextIcon, {
 	remix: "RiFileTextLine",
 	tabler: "IconFileText",
 	hugeicons: "File01Icon",
+	phosphor: "FileTextIcon",
 });
 
 export const CalendarIcon = createIcon(LucideCalendarIcon, {
@@ -719,6 +794,7 @@ export const CalendarIcon = createIcon(LucideCalendarIcon, {
 	remix: "RiCalendarLine",
 	tabler: "IconCalendar",
 	hugeicons: "Calendar01Icon",
+	phosphor: "CalendarIcon",
 });
 
 export const Search = createIcon(LucideSearch, {
@@ -726,6 +802,7 @@ export const Search = createIcon(LucideSearch, {
 	remix: "RiSearchLine",
 	tabler: "IconSearch",
 	hugeicons: "Search01Icon",
+	phosphor: "MagnifyingGlassIcon",
 });
 
 export const CheckCircle2Icon = createIcon(LucideCheckCircle2Icon, {
@@ -733,6 +810,7 @@ export const CheckCircle2Icon = createIcon(LucideCheckCircle2Icon, {
 	remix: "RiCheckboxCircleLine",
 	tabler: "IconCircleCheckFilled",
 	hugeicons: "CheckmarkCircle02Icon",
+	phosphor: "CheckCircleIcon",
 });
 
 export const CircleDollarSignIcon = createIcon(LucideCircleDollarSignIcon, {
@@ -740,6 +818,7 @@ export const CircleDollarSignIcon = createIcon(LucideCircleDollarSignIcon, {
 	remix: "RiMoneyDollarCircleLine",
 	tabler: "IconCoin",
 	hugeicons: "DollarCircleIcon",
+	phosphor: "CurrencyCircleDollarIcon",
 });
 
 export const ArrowUpRightIcon = createIcon(LucideArrowUpRightIcon, {
@@ -747,6 +826,7 @@ export const ArrowUpRightIcon = createIcon(LucideArrowUpRightIcon, {
 	remix: "RiArrowRightUpLine",
 	tabler: "IconArrowUpRight",
 	hugeicons: "ArrowUpRight01Icon",
+	phosphor: "ArrowUpRightIcon",
 });
 
 export const BadgeCheck = createIcon(LucideBadgeCheck, {
@@ -754,6 +834,7 @@ export const BadgeCheck = createIcon(LucideBadgeCheck, {
 	remix: "RiVerifiedBadgeLine",
 	tabler: "IconRosetteDiscountCheck",
 	hugeicons: "CheckmarkBadge02Icon",
+	phosphor: "SealCheckIcon",
 });
 
 export const ArrowLeftCircleIcon = createIcon(LucideArrowLeftCircleIcon, {
@@ -761,6 +842,7 @@ export const ArrowLeftCircleIcon = createIcon(LucideArrowLeftCircleIcon, {
 	remix: "RiArrowLeftCircleLine",
 	tabler: "IconCircleArrowLeft",
 	hugeicons: "CircleArrowLeft02Icon",
+	phosphor: "ArrowCircleLeftIcon",
 });
 
 export const FlipHorizontalIcon = createIcon(LucideFlipHorizontalIcon, {
@@ -768,6 +850,7 @@ export const FlipHorizontalIcon = createIcon(LucideFlipHorizontalIcon, {
 	remix: "RiFlipHorizontalLine",
 	tabler: "IconFlipHorizontal",
 	hugeicons: "FlipHorizontalIcon",
+	phosphor: "FlipHorizontalIcon",
 });
 
 export const FlipVerticalIcon = createIcon(LucideFlipVerticalIcon, {
@@ -775,6 +858,7 @@ export const FlipVerticalIcon = createIcon(LucideFlipVerticalIcon, {
 	remix: "RiFlipVerticalLine",
 	tabler: "IconFlipVertical",
 	hugeicons: "FlipVerticalIcon",
+	phosphor: "FlipVerticalIcon",
 });
 
 export const RotateCwIcon = createIcon(LucideRotateCwIcon, {
@@ -782,6 +866,7 @@ export const RotateCwIcon = createIcon(LucideRotateCwIcon, {
 	remix: "RiRestartLine",
 	tabler: "IconRotateClockwise2",
 	hugeicons: "Rotate01Icon",
+	phosphor: "ArrowClockwiseIcon",
 });
 
 export const Clock2Icon = createIcon(LucideClock2Icon, {
@@ -789,6 +874,7 @@ export const Clock2Icon = createIcon(LucideClock2Icon, {
 	remix: "RiTimeLine",
 	tabler: "IconClockHour2",
 	hugeicons: "Clock03Icon",
+	phosphor: "ClockIcon",
 });
 
 export const CaptionsIcon = createIcon(LucideCaptionsIcon, {
@@ -796,6 +882,7 @@ export const CaptionsIcon = createIcon(LucideCaptionsIcon, {
 	remix: "RiClosedCaptioningLine",
 	tabler: "IconTextCaption",
 	hugeicons: "ClosedCaptionIcon",
+	phosphor: "ClosedCaptioningIcon",
 });
 
 export const TrendingUpIcon = createIcon(LucideTrendingUpIcon, {
@@ -803,6 +890,7 @@ export const TrendingUpIcon = createIcon(LucideTrendingUpIcon, {
 	remix: "RiArrowRightUpLine",
 	tabler: "IconTrendingUp",
 	hugeicons: "Analytics01Icon",
+	phosphor: "TrendUpIcon",
 });
 
 export const ChevronRightIcon = createIcon(LucideChevronRightIcon, {
@@ -810,6 +898,7 @@ export const ChevronRightIcon = createIcon(LucideChevronRightIcon, {
 	remix: "RiArrowRightSLine",
 	tabler: "IconChevronRight",
 	hugeicons: "ArrowRight01Icon",
+	phosphor: "CaretRightIcon",
 });
 
 export const MinimizeIcon = createIcon(LucideMinimizeIcon, {
@@ -817,6 +906,7 @@ export const MinimizeIcon = createIcon(LucideMinimizeIcon, {
 	remix: "RiContractLeftRightLine",
 	tabler: "IconMinimize",
 	hugeicons: "MinusSignIcon",
+	phosphor: "ArrowsInSimpleIcon",
 });
 
 export const MaximizeIcon = createIcon(LucideMaximizeIcon, {
@@ -824,6 +914,7 @@ export const MaximizeIcon = createIcon(LucideMaximizeIcon, {
 	remix: "RiExpandLeftRightLine",
 	tabler: "IconMaximize",
 	hugeicons: "PlusSignIcon",
+	phosphor: "ArrowsOutSimpleIcon",
 });
 
 export const CreditCardIcon = createIcon(LucideCreditCardIcon, {
@@ -831,6 +922,7 @@ export const CreditCardIcon = createIcon(LucideCreditCardIcon, {
 	remix: "RiBankCardLine",
 	tabler: "IconCreditCard",
 	hugeicons: "CreditCardIcon",
+	phosphor: "CreditCardIcon",
 });
 
 export const CalculatorIcon = createIcon(LucideCalculatorIcon, {
@@ -838,6 +930,7 @@ export const CalculatorIcon = createIcon(LucideCalculatorIcon, {
 	remix: "RiCalculatorLine",
 	tabler: "IconCalculator",
 	hugeicons: "CalculatorIcon",
+	phosphor: "CalculatorIcon",
 });
 
 export const InboxIcon = createIcon(LucideInboxIcon, {
@@ -845,6 +938,7 @@ export const InboxIcon = createIcon(LucideInboxIcon, {
 	remix: "RiInboxLine",
 	tabler: "IconArchive",
 	hugeicons: "Archive02Icon",
+	phosphor: "TrayIcon",
 });
 
 export const FolderPlusIcon = createIcon(LucideFolderPlusIcon, {
@@ -852,6 +946,7 @@ export const FolderPlusIcon = createIcon(LucideFolderPlusIcon, {
 	remix: "RiFolderAddLine",
 	tabler: "IconFolderPlus",
 	hugeicons: "FolderAddIcon",
+	phosphor: "FolderPlusIcon",
 });
 
 export const ScissorsIcon = createIcon(LucideScissorsIcon, {
@@ -859,6 +954,7 @@ export const ScissorsIcon = createIcon(LucideScissorsIcon, {
 	remix: "RiScissorsLine",
 	tabler: "IconCut",
 	hugeicons: "ScissorIcon",
+	phosphor: "ScissorsIcon",
 });
 
 export const ClipboardPasteIcon = createIcon(LucideClipboardPasteIcon, {
@@ -866,6 +962,7 @@ export const ClipboardPasteIcon = createIcon(LucideClipboardPasteIcon, {
 	remix: "RiClipboardLine",
 	tabler: "IconClipboard",
 	hugeicons: "ClipboardIcon",
+	phosphor: "ClipboardIcon",
 });
 
 export const ListIcon = createIcon(LucideListIcon, {
@@ -873,6 +970,7 @@ export const ListIcon = createIcon(LucideListIcon, {
 	remix: "RiListUnordered",
 	tabler: "IconList",
 	hugeicons: "Menu05Icon",
+	phosphor: "ListIcon",
 });
 
 export const ZoomInIcon = createIcon(LucideZoomInIcon, {
@@ -880,6 +978,7 @@ export const ZoomInIcon = createIcon(LucideZoomInIcon, {
 	remix: "RiZoomInLine",
 	tabler: "IconZoomIn",
 	hugeicons: "ZoomInAreaIcon",
+	phosphor: "MagnifyingGlassPlusIcon",
 });
 
 export const ZoomOutIcon = createIcon(LucideZoomOutIcon, {
@@ -887,6 +986,7 @@ export const ZoomOutIcon = createIcon(LucideZoomOutIcon, {
 	remix: "RiZoomOutLine",
 	tabler: "IconZoomOut",
 	hugeicons: "ZoomOutAreaIcon",
+	phosphor: "MagnifyingGlassMinusIcon",
 });
 
 export const BellIcon = createIcon(LucideBellIcon, {
@@ -894,6 +994,7 @@ export const BellIcon = createIcon(LucideBellIcon, {
 	remix: "RiNotification3Line",
 	tabler: "IconBell",
 	hugeicons: "Notification01Icon",
+	phosphor: "BellIcon",
 });
 
 export const ImageIcon = createIcon(LucideImageIcon, {
@@ -901,6 +1002,7 @@ export const ImageIcon = createIcon(LucideImageIcon, {
 	remix: "RiImageLine",
 	tabler: "IconPhoto",
 	hugeicons: "Image01Icon",
+	phosphor: "ImageIcon",
 });
 
 export const KeyboardIcon = createIcon(LucideKeyboardIcon, {
@@ -908,6 +1010,7 @@ export const KeyboardIcon = createIcon(LucideKeyboardIcon, {
 	remix: "RiKeyboardLine",
 	tabler: "IconKeyboard",
 	hugeicons: "KeyboardIcon",
+	phosphor: "KeyboardIcon",
 });
 
 export const LanguagesIcon = createIcon(LucideLanguagesIcon, {
@@ -915,6 +1018,7 @@ export const LanguagesIcon = createIcon(LucideLanguagesIcon, {
 	remix: "RiTranslate",
 	tabler: "IconLanguage",
 	hugeicons: "LanguageCircleIcon",
+	phosphor: "TranslateIcon",
 });
 
 export const ShieldIcon = createIcon(LucideShieldIcon, {
@@ -922,6 +1026,7 @@ export const ShieldIcon = createIcon(LucideShieldIcon, {
 	remix: "RiShieldLine",
 	tabler: "IconShield",
 	hugeicons: "SecurityIcon",
+	phosphor: "ShieldIcon",
 });
 
 export const PencilIcon = createIcon(LucidePencilIcon, {
@@ -929,6 +1034,7 @@ export const PencilIcon = createIcon(LucidePencilIcon, {
 	remix: "RiPencilLine",
 	tabler: "IconPencil",
 	hugeicons: "Edit01Icon",
+	phosphor: "PencilSimpleIcon",
 });
 
 export const ActivityIcon = createIcon(LucideActivityIcon, {
@@ -936,6 +1042,7 @@ export const ActivityIcon = createIcon(LucideActivityIcon, {
 	remix: "RiPulseLine",
 	tabler: "IconActivity",
 	hugeicons: "Cardiogram01Icon",
+	phosphor: "PulseIcon",
 });
 
 export const PanelLeftIcon = createIcon(LucidePanelLeftIcon, {
@@ -943,6 +1050,7 @@ export const PanelLeftIcon = createIcon(LucidePanelLeftIcon, {
 	remix: "RiLayoutLeftLine",
 	tabler: "IconLayoutSidebar",
 	hugeicons: "LayoutLeftIcon",
+	phosphor: "SidebarSimpleIcon",
 });
 
 export const ArrowDownIcon = createIcon(LucideArrowDownIcon, {
@@ -950,6 +1058,7 @@ export const ArrowDownIcon = createIcon(LucideArrowDownIcon, {
 	remix: "RiArrowDownLine",
 	tabler: "IconArrowDown",
 	hugeicons: "ArrowDown01Icon",
+	phosphor: "ArrowDownIcon",
 });
 
 export const MessageSquareIcon = createIcon(LucideMessageSquareIcon, {
@@ -957,6 +1066,7 @@ export const MessageSquareIcon = createIcon(LucideMessageSquareIcon, {
 	remix: "RiChat1Line",
 	tabler: "IconMessage",
 	hugeicons: "Message01Icon",
+	phosphor: "ChatIcon",
 });
 
 export const WalletIcon = createIcon(LucideWalletIcon, {
@@ -964,6 +1074,7 @@ export const WalletIcon = createIcon(LucideWalletIcon, {
 	remix: "RiWalletLine",
 	tabler: "IconWallet",
 	hugeicons: "Wallet01Icon",
+	phosphor: "WalletIcon",
 });
 
 export const Building2Icon = createIcon(LucideBuilding2Icon, {
@@ -971,6 +1082,7 @@ export const Building2Icon = createIcon(LucideBuilding2Icon, {
 	remix: "RiBankLine",
 	tabler: "IconBuildingBank",
 	hugeicons: "BankIcon",
+	phosphor: "BuildingsIcon",
 });
 
 export const BadgeCheckIcon = createIcon(LucideBadgeCheckIcon, {
@@ -978,6 +1090,7 @@ export const BadgeCheckIcon = createIcon(LucideBadgeCheckIcon, {
 	remix: "RiVerifiedBadgeLine",
 	tabler: "IconRosetteDiscountCheck",
 	hugeicons: "CheckmarkBadge01Icon",
+	phosphor: "SealCheckIcon",
 });
 
 export const ChevronsUpDownIcon = createIcon(LucideChevronsUpDownIcon, {
@@ -985,6 +1098,7 @@ export const ChevronsUpDownIcon = createIcon(LucideChevronsUpDownIcon, {
 	remix: "RiExpandUpDownLine",
 	tabler: "IconSelector",
 	hugeicons: "UnfoldMoreIcon",
+	phosphor: "CaretUpDownIcon",
 });
 
 export const CircleDashedIcon = createIcon(LucideCircleDashedIcon, {
@@ -992,6 +1106,7 @@ export const CircleDashedIcon = createIcon(LucideCircleDashedIcon, {
 	remix: "RiLoader3Line",
 	tabler: "IconCircleDashed",
 	hugeicons: "Loading01Icon",
+	phosphor: "CircleDashedIcon",
 });
 
 export const EyeOffIcon = createIcon(LucideEyeOffIcon, {
@@ -999,6 +1114,7 @@ export const EyeOffIcon = createIcon(LucideEyeOffIcon, {
 	remix: "RiEyeOffLine",
 	tabler: "IconEyeClosed",
 	hugeicons: "ViewOffIcon",
+	phosphor: "EyeSlashIcon",
 });
 
 export const MicIcon = createIcon(LucideMicIcon, {
@@ -1006,6 +1122,7 @@ export const MicIcon = createIcon(LucideMicIcon, {
 	remix: "RiMicLine",
 	tabler: "IconMicrophone",
 	hugeicons: "VoiceIcon",
+	phosphor: "MicrophoneIcon",
 });
 
 export const RadioIcon = createIcon(LucideRadioIcon, {
@@ -1013,6 +1130,7 @@ export const RadioIcon = createIcon(LucideRadioIcon, {
 	remix: "RiRadioButtonLine",
 	tabler: "IconPlayerRecordFilled",
 	hugeicons: "RecordIcon",
+	phosphor: "RadioIcon",
 });
 
 export const ExternalLinkIcon = createIcon(LucideExternalLinkIcon, {
@@ -1020,6 +1138,7 @@ export const ExternalLinkIcon = createIcon(LucideExternalLinkIcon, {
 	remix: "RiExternalLinkLine",
 	tabler: "IconExternalLink",
 	hugeicons: "LinkSquare02Icon",
+	phosphor: "ArrowSquareOutIcon",
 });
 
 export const RefreshCwIcon = createIcon(LucideRefreshCwIcon, {
@@ -1027,6 +1146,7 @@ export const RefreshCwIcon = createIcon(LucideRefreshCwIcon, {
 	remix: "RiRefreshLine",
 	tabler: "IconRefresh",
 	hugeicons: "RefreshIcon",
+	phosphor: "ArrowsClockwiseIcon",
 });
 
 export const BoldIcon = createIcon(LucideBoldIcon, {
@@ -1034,6 +1154,7 @@ export const BoldIcon = createIcon(LucideBoldIcon, {
 	remix: "RiBold",
 	tabler: "IconBold",
 	hugeicons: "TextBoldIcon",
+	phosphor: "TextBIcon",
 });
 
 export const ItalicIcon = createIcon(LucideItalicIcon, {
@@ -1041,6 +1162,7 @@ export const ItalicIcon = createIcon(LucideItalicIcon, {
 	remix: "RiItalic",
 	tabler: "IconItalic",
 	hugeicons: "TextItalicIcon",
+	phosphor: "TextItalicIcon",
 });
 
 export const UnderlineIcon = createIcon(LucideUnderlineIcon, {
@@ -1048,6 +1170,7 @@ export const UnderlineIcon = createIcon(LucideUnderlineIcon, {
 	remix: "RiUnderline",
 	tabler: "IconUnderline",
 	hugeicons: "TextUnderlineIcon",
+	phosphor: "TextUnderlineIcon",
 });
 
 export const TableIcon = createIcon(LucideTableIcon, {
@@ -1055,6 +1178,7 @@ export const TableIcon = createIcon(LucideTableIcon, {
 	remix: "RiTable2",
 	tabler: "IconTable",
 	hugeicons: "Table01Icon",
+	phosphor: "TableIcon",
 });
 
 export const ChartLineIcon = createIcon(LucideChartLineIcon, {
@@ -1062,6 +1186,7 @@ export const ChartLineIcon = createIcon(LucideChartLineIcon, {
 	remix: "RiLineChartLine",
 	tabler: "IconChartLine",
 	hugeicons: "ChartLineData01Icon",
+	phosphor: "ChartLineIcon",
 });
 
 export const ChartBarIcon = createIcon(LucideChartBarIcon, {
@@ -1069,6 +1194,7 @@ export const ChartBarIcon = createIcon(LucideChartBarIcon, {
 	remix: "RiBarChartLine",
 	tabler: "IconChartBar",
 	hugeicons: "ChartColumnIcon",
+	phosphor: "ChartBarIcon",
 });
 
 export const ChartPieIcon = createIcon(LucideChartPieIcon, {
@@ -1076,6 +1202,7 @@ export const ChartPieIcon = createIcon(LucideChartPieIcon, {
 	remix: "RiPieChartLine",
 	tabler: "IconChartPie",
 	hugeicons: "PieChartIcon",
+	phosphor: "ChartPieIcon",
 });
 
 export const TerminalSquareIcon = createIcon(LucideTerminalSquareIcon, {
@@ -1083,6 +1210,7 @@ export const TerminalSquareIcon = createIcon(LucideTerminalSquareIcon, {
 	remix: "RiTerminalLine",
 	tabler: "IconTerminal2",
 	hugeicons: "SourceCodeSquareIcon",
+	phosphor: "TerminalWindowIcon",
 });
 
 export const BookOpen = createIcon(LucideBookOpen, {
@@ -1090,6 +1218,7 @@ export const BookOpen = createIcon(LucideBookOpen, {
 	remix: "RiBookOpenLine",
 	tabler: "IconBook",
 	hugeicons: "BookOpen02Icon",
+	phosphor: "BookOpenIcon",
 });
 
 export const Settings2Icon = createIcon(LucideSettings2Icon, {
@@ -1097,6 +1226,7 @@ export const Settings2Icon = createIcon(LucideSettings2Icon, {
 	remix: "RiSettings4Line",
 	tabler: "IconSettings",
 	hugeicons: "Settings05Icon",
+	phosphor: "SlidersHorizontalIcon",
 });
 
 export const FrameIcon = createIcon(LucideFrameIcon, {
@@ -1104,6 +1234,7 @@ export const FrameIcon = createIcon(LucideFrameIcon, {
 	remix: "RiCropLine",
 	tabler: "IconFrame",
 	hugeicons: "CropIcon",
+	phosphor: "FrameCornersIcon",
 });
 
 export const PieChartIcon = createIcon(LucidePieChartIcon, {
@@ -1111,6 +1242,7 @@ export const PieChartIcon = createIcon(LucidePieChartIcon, {
 	remix: "RiPieChartLine",
 	tabler: "IconChartPie",
 	hugeicons: "PieChartIcon",
+	phosphor: "ChartPieSliceIcon",
 });
 
 export const MapIcon = createIcon(LucideMapIcon, {
@@ -1118,6 +1250,7 @@ export const MapIcon = createIcon(LucideMapIcon, {
 	remix: "RiMapLine",
 	tabler: "IconMap",
 	hugeicons: "MapsIcon",
+	phosphor: "MapTrifoldIcon",
 });
 
 export const ShoppingCartIcon = createIcon(LucideShoppingCartIcon, {
@@ -1125,6 +1258,7 @@ export const ShoppingCartIcon = createIcon(LucideShoppingCartIcon, {
 	remix: "RiShoppingCartLine",
 	tabler: "IconShoppingCart",
 	hugeicons: "ShoppingCart01Icon",
+	phosphor: "ShoppingCartIcon",
 });
 
 export const LifeBuoy = createIcon(LucideLifeBuoy, {
@@ -1132,6 +1266,7 @@ export const LifeBuoy = createIcon(LucideLifeBuoy, {
 	remix: "RiLifebuoyLine",
 	tabler: "IconLifebuoy",
 	hugeicons: "ChartRingIcon",
+	phosphor: "LifebuoyIcon",
 });
 
 export const Send = createIcon(LucideSend, {
@@ -1139,6 +1274,7 @@ export const Send = createIcon(LucideSend, {
 	remix: "RiSendPlaneLine",
 	tabler: "IconSend",
 	hugeicons: "SentIcon",
+	phosphor: "PaperPlaneTiltIcon",
 });
 
 export const AppWindowIcon = createIcon(LucideAppWindowIcon, {
@@ -1146,6 +1282,7 @@ export const AppWindowIcon = createIcon(LucideAppWindowIcon, {
 	remix: "RiWindowLine",
 	tabler: "IconAppWindow",
 	hugeicons: "CursorInWindowIcon",
+	phosphor: "AppWindowIcon",
 });
 
 export const BookmarkIcon = createIcon(LucideBookmarkIcon, {
@@ -1153,6 +1290,7 @@ export const BookmarkIcon = createIcon(LucideBookmarkIcon, {
 	remix: "RiBookmarkLine",
 	tabler: "IconBookmark",
 	hugeicons: "Bookmark01Icon",
+	phosphor: "BookmarkIcon",
 });
 
 export const ChevronUpIcon = createIcon(LucideChevronUpIcon, {
@@ -1160,6 +1298,7 @@ export const ChevronUpIcon = createIcon(LucideChevronUpIcon, {
 	remix: "RiArrowUpSLine",
 	tabler: "IconChevronUp",
 	hugeicons: "ArrowUp01Icon",
+	phosphor: "CaretUpIcon",
 });
 
 export const ChevronLeftIcon = createIcon(LucideChevronLeftIcon, {
@@ -1167,6 +1306,7 @@ export const ChevronLeftIcon = createIcon(LucideChevronLeftIcon, {
 	remix: "RiArrowLeftSLine",
 	tabler: "IconChevronLeft",
 	hugeicons: "ArrowLeft01Icon",
+	phosphor: "CaretLeftIcon",
 });
 
 export const TriangleAlertIcon = createIcon(LucideTriangleAlertIcon, {
@@ -1174,6 +1314,7 @@ export const TriangleAlertIcon = createIcon(LucideTriangleAlertIcon, {
 	remix: "RiAlertLine",
 	tabler: "IconAlertTriangle",
 	hugeicons: "Alert02Icon",
+	phosphor: "WarningIcon",
 });
 
 export const OctagonXIcon = createIcon(LucideOctagonXIcon, {
@@ -1181,6 +1322,7 @@ export const OctagonXIcon = createIcon(LucideOctagonXIcon, {
 	remix: "RiCloseCircleLine",
 	tabler: "IconAlertOctagon",
 	hugeicons: "MultiplicationSignCircleIcon",
+	phosphor: "WarningOctagonIcon",
 });
 
 export const Loader2Icon = createIcon(LucideLoader2Icon, {
@@ -1188,6 +1330,7 @@ export const Loader2Icon = createIcon(LucideLoader2Icon, {
 	remix: "RiLoader4Line",
 	tabler: "IconLoader",
 	hugeicons: "Loading03Icon",
+	phosphor: "CircleNotchIcon",
 });
 
 export const VolumeOffIcon = createIcon(LucideVolumeOffIcon, {
@@ -1195,6 +1338,7 @@ export const VolumeOffIcon = createIcon(LucideVolumeOffIcon, {
 	remix: "RiVolumeMuteLine",
 	tabler: "IconVolume",
 	hugeicons: "VolumeOffIcon",
+	phosphor: "SpeakerXIcon",
 });
 
 export const AlertCircleIcon = createIcon(LucideAlertCircleIcon, {
@@ -1202,6 +1346,7 @@ export const AlertCircleIcon = createIcon(LucideAlertCircleIcon, {
 	remix: "RiAlertLine",
 	tabler: "IconAlertCircle",
 	hugeicons: "Alert01Icon",
+	phosphor: "WarningCircleIcon",
 });
 
 export const User2Icon = createIcon(LucideUser2Icon, {
@@ -1209,6 +1354,7 @@ export const User2Icon = createIcon(LucideUser2Icon, {
 	remix: "RiUserLine",
 	tabler: "IconUser",
 	hugeicons: "UserIcon",
+	phosphor: "UserIcon",
 });
 
 export const ArrowRightCircleIcon = createIcon(LucideArrowRightCircleIcon, {
@@ -1216,6 +1362,7 @@ export const ArrowRightCircleIcon = createIcon(LucideArrowRightCircleIcon, {
 	remix: "RiArrowRightCircleLine",
 	tabler: "IconCircleArrowRight",
 	hugeicons: "CircleArrowRight02Icon",
+	phosphor: "ArrowCircleRightIcon",
 });
 
 export const LogInIcon = createIcon(LucideLogInIcon, {
@@ -1223,6 +1370,7 @@ export const LogInIcon = createIcon(LucideLogInIcon, {
 	remix: "RiLoginBoxLine",
 	tabler: "IconLogin",
 	hugeicons: "Login01Icon",
+	phosphor: "SignInIcon",
 });
 
 export const PenSquareIcon = createIcon(LucidePenSquareIcon, {
@@ -1230,6 +1378,7 @@ export const PenSquareIcon = createIcon(LucidePenSquareIcon, {
 	remix: "RiEditLine",
 	tabler: "IconEdit",
 	hugeicons: "Edit02Icon",
+	phosphor: "NotePencilIcon",
 });
 
 export const CameraIcon = createIcon(LucideCameraIcon, {
@@ -1237,6 +1386,7 @@ export const CameraIcon = createIcon(LucideCameraIcon, {
 	remix: "RiCameraLine",
 	tabler: "IconCamera",
 	hugeicons: "Camera01Icon",
+	phosphor: "CameraIcon",
 });
 
 export const PlusSquareIcon = createIcon(LucidePlusSquareIcon, {
@@ -1244,6 +1394,7 @@ export const PlusSquareIcon = createIcon(LucidePlusSquareIcon, {
 	remix: "RiAddBoxLine",
 	tabler: "IconSquarePlus",
 	hugeicons: "PlusSignSquareIcon",
+	phosphor: "PlusSquareIcon",
 });
 
 export const SquarePenIcon = createIcon(LucideSquarePenIcon, {
@@ -1251,6 +1402,7 @@ export const SquarePenIcon = createIcon(LucideSquarePenIcon, {
 	remix: "RiEdit2Line",
 	tabler: "IconEdit",
 	hugeicons: "Edit02Icon",
+	phosphor: "NotePencilIcon",
 });
 
 export const Volume1Icon = createIcon(LucideVolume1Icon, {
@@ -1258,6 +1410,7 @@ export const Volume1Icon = createIcon(LucideVolume1Icon, {
 	remix: "RiVolumeDownLine",
 	tabler: "IconVolume2",
 	hugeicons: "VolumeLowIcon",
+	phosphor: "SpeakerLowIcon",
 });
 
 export const Volume2Icon = createIcon(LucideVolume2Icon, {
@@ -1265,6 +1418,7 @@ export const Volume2Icon = createIcon(LucideVolume2Icon, {
 	remix: "RiVolumeUpLine",
 	tabler: "IconVolume",
 	hugeicons: "VolumeHighIcon",
+	phosphor: "SpeakerHighIcon",
 });
 
 export const XCircleIcon = createIcon(LucideXCircleIcon, {
@@ -1272,6 +1426,7 @@ export const XCircleIcon = createIcon(LucideXCircleIcon, {
 	remix: "RiCloseCircleLine",
 	tabler: "IconCircleX",
 	hugeicons: "Cancel01Icon",
+	phosphor: "XCircleIcon",
 });
 
 export const TimerIcon = createIcon(LucideTimerIcon, {
@@ -1279,6 +1434,7 @@ export const TimerIcon = createIcon(LucideTimerIcon, {
 	remix: "RiTimerLine",
 	tabler: "IconAlarm",
 	hugeicons: "Time01Icon",
+	phosphor: "TimerIcon",
 });
 
 export const PinIcon = createIcon(LucidePinIcon, {
@@ -1286,6 +1442,7 @@ export const PinIcon = createIcon(LucidePinIcon, {
 	remix: "RiPushpinLine",
 	tabler: "IconPinned",
 	hugeicons: "PinIcon",
+	phosphor: "PushPinIcon",
 });
 
 export const GripVerticalIcon = createIcon(LucideGripVerticalIcon, {
@@ -1293,6 +1450,7 @@ export const GripVerticalIcon = createIcon(LucideGripVerticalIcon, {
 	remix: "RiDraggable",
 	tabler: "IconGripVertical",
 	hugeicons: "DragDropVerticalIcon",
+	phosphor: "DotsSixVerticalIcon",
 });
 
 export const LoaderCircleIcon = createIcon(LucideLoaderCircleIcon, {
@@ -1300,6 +1458,7 @@ export const LoaderCircleIcon = createIcon(LucideLoaderCircleIcon, {
 	remix: "RiLoader4Line",
 	tabler: "IconLoader2",
 	hugeicons: "Loading03Icon",
+	phosphor: "CircleNotchIcon",
 });
 
 export const ShieldCheckIcon = createIcon(LucideShieldCheckIcon, {
@@ -1307,6 +1466,7 @@ export const ShieldCheckIcon = createIcon(LucideShieldCheckIcon, {
 	remix: "RiShieldCheckLine",
 	tabler: "IconShieldCheck",
 	hugeicons: "SecurityCheckIcon",
+	phosphor: "ShieldCheckIcon",
 });
 
 export const BlocksIcon = createIcon(LucideBlocksIcon, {
@@ -1314,6 +1474,7 @@ export const BlocksIcon = createIcon(LucideBlocksIcon, {
 	remix: "RiApps2Line",
 	tabler: "IconBlocks",
 	hugeicons: "DashboardSquare01Icon",
+	phosphor: "SquaresFourIcon",
 });
 
 export const BoxesIcon = createIcon(LucideBoxesIcon, {
@@ -1321,6 +1482,7 @@ export const BoxesIcon = createIcon(LucideBoxesIcon, {
 	remix: "RiStackLine",
 	tabler: "IconBoxMultiple",
 	hugeicons: "DeliveryBox01Icon",
+	phosphor: "PackageIcon",
 });
 
 export const HandIcon = createIcon(LucideHandIcon, {
@@ -1328,6 +1490,7 @@ export const HandIcon = createIcon(LucideHandIcon, {
 	remix: "RiHand",
 	tabler: "IconHandStop",
 	hugeicons: "WavingHand01Icon",
+	phosphor: "HandIcon",
 });
 
 export const PlugIcon = createIcon(LucidePlugIcon, {
@@ -1335,6 +1498,7 @@ export const PlugIcon = createIcon(LucidePlugIcon, {
 	remix: "RiPlugLine",
 	tabler: "IconPlug",
 	hugeicons: "Plug01Icon",
+	phosphor: "PlugIcon",
 });
 
 export const SlashSquareIcon = createIcon(LucideSlashSquareIcon, {
@@ -1342,6 +1506,7 @@ export const SlashSquareIcon = createIcon(LucideSlashSquareIcon, {
 	remix: "RiSlashCommands2",
 	tabler: "IconSlashes",
 	hugeicons: "CommandIcon",
+	phosphor: "CommandIcon",
 });
 
 export const TelescopeIcon = createIcon(LucideTelescopeIcon, {
@@ -1349,6 +1514,7 @@ export const TelescopeIcon = createIcon(LucideTelescopeIcon, {
 	remix: "RiSearchEyeLine",
 	tabler: "IconTelescope",
 	hugeicons: "Telescope01Icon",
+	phosphor: "BinocularsIcon",
 });
 
 export const ImageUpIcon = createIcon(LucideImageUpIcon, {
@@ -1356,6 +1522,7 @@ export const ImageUpIcon = createIcon(LucideImageUpIcon, {
 	remix: "RiImageAddLine",
 	tabler: "IconPhotoUp",
 	hugeicons: "ImageUpload01Icon",
+	phosphor: "ImageIcon",
 });
 
 export const BitcoinIcon = createIcon(LucideBitcoinIcon, {
@@ -1363,6 +1530,7 @@ export const BitcoinIcon = createIcon(LucideBitcoinIcon, {
 	remix: "RiBitCoinLine",
 	tabler: "IconCurrencyBitcoin",
 	hugeicons: "Bitcoin01Icon",
+	phosphor: "CurrencyBtcIcon",
 });
 
 export const MoonStarIcon = createIcon(LucideMoonStarIcon, {
@@ -1370,6 +1538,7 @@ export const MoonStarIcon = createIcon(LucideMoonStarIcon, {
 	remix: "RiMoonClearLine",
 	tabler: "IconMoonStars",
 	hugeicons: "Moon02Icon",
+	phosphor: "MoonStarsIcon",
 });
 
 export const TrendingDownIcon = createIcon(LucideTrendingDownIcon, {
@@ -1377,6 +1546,7 @@ export const TrendingDownIcon = createIcon(LucideTrendingDownIcon, {
 	remix: "RiArrowRightDownLine",
 	tabler: "IconTrendingDown",
 	hugeicons: "TradeDownIcon",
+	phosphor: "TrendDownIcon",
 });
 
 export const PlusCircleIcon = createIcon(LucidePlusCircleIcon, {
@@ -1384,6 +1554,7 @@ export const PlusCircleIcon = createIcon(LucidePlusCircleIcon, {
 	remix: "RiAddCircleLine",
 	tabler: "IconCirclePlus",
 	hugeicons: "PlusSignCircleIcon",
+	phosphor: "PlusCircleIcon",
 });
 
 export const BoxIcon = createIcon(LucideBoxIcon, {
@@ -1391,6 +1562,7 @@ export const BoxIcon = createIcon(LucideBoxIcon, {
 	remix: "RiBox3Line",
 	tabler: "IconBox",
 	hugeicons: "CubeIcon",
+	phosphor: "CubeIcon",
 });
 
 export const CircleDotIcon = createIcon(LucideCircleDotIcon, {
@@ -1398,6 +1570,7 @@ export const CircleDotIcon = createIcon(LucideCircleDotIcon, {
 	remix: "RiRecordCircleLine",
 	tabler: "IconCircleDot",
 	hugeicons: "RecordIcon",
+	phosphor: "RadioButtonIcon",
 });
 
 export const SignalHighIcon = createIcon(LucideSignalHighIcon, {
@@ -1405,6 +1578,7 @@ export const SignalHighIcon = createIcon(LucideSignalHighIcon, {
 	remix: "RiSignalTowerLine",
 	tabler: "IconAntennaBars4",
 	hugeicons: "SignalFull01Icon",
+	phosphor: "CellSignalHighIcon",
 });
 
 export const BookIcon = createIcon(LucideBookIcon, {
@@ -1412,6 +1586,7 @@ export const BookIcon = createIcon(LucideBookIcon, {
 	remix: "RiBookLine",
 	tabler: "IconBook2",
 	hugeicons: "Book02Icon",
+	phosphor: "BookIcon",
 });
 
 export const ContrastIcon = createIcon(LucideContrastIcon, {
@@ -1419,6 +1594,7 @@ export const ContrastIcon = createIcon(LucideContrastIcon, {
 	remix: "RiContrastLine",
 	tabler: "IconContrast",
 	hugeicons: "BlendIcon",
+	phosphor: "CircleHalfIcon",
 });
 
 export const Users2Icon = createIcon(LucideUsers2Icon, {
@@ -1426,6 +1602,7 @@ export const Users2Icon = createIcon(LucideUsers2Icon, {
 	remix: "RiGroupLine",
 	tabler: "IconUsers",
 	hugeicons: "UserGroupIcon",
+	phosphor: "UsersIcon",
 });
 
 export const LayersIcon = createIcon(LucideLayersIcon, {
@@ -1433,6 +1610,7 @@ export const LayersIcon = createIcon(LucideLayersIcon, {
 	remix: "RiStackLine",
 	tabler: "IconStack2",
 	hugeicons: "Layers01Icon",
+	phosphor: "StackIcon",
 });
 
 export const MousePointer2Icon = createIcon(LucideMousePointer2Icon, {
@@ -1440,6 +1618,7 @@ export const MousePointer2Icon = createIcon(LucideMousePointer2Icon, {
 	remix: "RiCursorLine",
 	tabler: "IconPointer",
 	hugeicons: "Cursor01Icon",
+	phosphor: "CursorIcon",
 });
 
 export const RulerIcon = createIcon(LucideRulerIcon, {
@@ -1447,6 +1626,7 @@ export const RulerIcon = createIcon(LucideRulerIcon, {
 	remix: "RiRulerLine",
 	tabler: "IconRuler",
 	hugeicons: "RulerIcon",
+	phosphor: "RulerIcon",
 });
 
 export const ShapesIcon = createIcon(LucideShapesIcon, {
@@ -1454,6 +1634,7 @@ export const ShapesIcon = createIcon(LucideShapesIcon, {
 	remix: "RiShapesLine",
 	tabler: "IconTriangleSquareCircle",
 	hugeicons: "ShapesIcon",
+	phosphor: "ShapesIcon",
 });
 
 export const TypeIcon = createIcon(LucideTypeIcon, {
@@ -1461,4 +1642,5 @@ export const TypeIcon = createIcon(LucideTypeIcon, {
 	remix: "RiFontSize",
 	tabler: "IconTypography",
 	hugeicons: "TextIcon",
+	phosphor: "TextTIcon",
 });

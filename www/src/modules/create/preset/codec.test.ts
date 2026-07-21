@@ -138,7 +138,7 @@ describe('preset codec — color recipe', () => {
   })
 
   it('decodes an unknown icon library to the default', () => {
-    const encoded = encodeRawState({ i: 'phosphor' })
+    const encoded = encodeRawState({ i: 'heroicons' })
     expect(decodePreset(encoded).icons).toBeUndefined()
   })
 

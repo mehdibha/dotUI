@@ -134,6 +134,8 @@ function getLibraryPackage(library: string): string {
       return '@hugeicons/core-free-icons'
     case 'remix':
       return '@remixicon/react'
+    case 'phosphor':
+      return '@phosphor-icons/react'
     default:
       return ''
   }
@@ -148,6 +150,7 @@ async function buildIconLibraryExports() {
     tabler: new Set(),
     hugeicons: new Set(),
     remix: new Set(),
+    phosphor: new Set(),
   }
 
   for (const iconMapping of Object.values(registryIcons)) {
@@ -155,6 +158,7 @@ async function buildIconLibraryExports() {
     if (iconMapping.hugeicons)
       libraryIcons.hugeicons?.add(iconMapping.hugeicons)
     if (iconMapping.remix) libraryIcons.remix?.add(iconMapping.remix)
+    if (iconMapping.phosphor) libraryIcons.phosphor?.add(iconMapping.phosphor)
   }
 
   // Generate a file for each library. Remix/tabler export plain components;
@@ -178,9 +182,11 @@ import {
 ${sortedIcons.map((name) => `\t${name} as ${name}Data,`).join('\n')}
 } from "${packageName}";
 
+// The \`hugeicon\` marker class lets the stroke-width axis target the paths
+// (see base.css) — hugeicons paths carry their own stroke-width attribute.
 function wrap(icon: HugeiconsIconProps["icon"]) {
-\treturn function HugeIcon(props: Omit<HugeiconsIconProps, "icon">) {
-\t\treturn <HugeiconsIcon icon={icon} {...props} />;
+\treturn function HugeIcon({ className, ...props }: Omit<HugeiconsIconProps, "icon">) {
+\t\treturn <HugeiconsIcon icon={icon} className={className ? \`hugeicon \${className}\` : "hugeicon"} {...props} />;
 \t};
 }
 
