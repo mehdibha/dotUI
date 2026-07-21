@@ -6,7 +6,6 @@ export {
   sendToIframe,
   useIframeMessageListener,
   usePreviewForcedTheme,
-  useReportPreviewScrolled,
 } from './iframe-sync'
 export { useDesignSystem } from './use-design-system'
 export type {

@@ -39,7 +39,6 @@ import {
 } from '@/modules/create/preset'
 import type { PreviewMode } from '@/modules/create/preset'
 import { componentsData } from '@/modules/docs/components-list/components-data'
-import { useTweak } from '@/dev/tweaker'
 
 type DeviceSize = 'mobile' | 'tablet' | 'desktop'
 
@@ -66,11 +65,6 @@ const ZOOM_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2]
 
 const routeApi = getRouteApi('/_app/create')
 
-// dev-tweak scaffolding: the create page's tweaker drives the iframe's scrollbar
-// mode through localStorage — cross-document `storage` events make it live without
-// touching the postMessage protocol. Key duplicated in routes/preview/$slug.tsx.
-const DEV_SCROLLBAR_TWEAK_KEY = 'dotui:dev-preview-scrollbar'
-
 export function PreviewPanel({ className }: { className?: string }) {
   const { preview, preset } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
@@ -83,26 +77,6 @@ export function PreviewPanel({ className }: { className?: string }) {
   const [size, setSize] = useState<DeviceSize>('desktop')
   const [zoom, setZoom] = useState(1)
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  // dev-tweak scaffolding (remove once picked)
-  const blurTweak = useTweak('Blur', {
-    type: 'select',
-    options: ['frosted', 'progressive'],
-    default: 'frosted',
-    group: 'Preview toolbar',
-  })
-  const scrollbarTweak = useTweak('Scrollbar', {
-    type: 'select',
-    options: ['custom', 'auto-hide', 'none', 'native'],
-    default: 'custom',
-    group: 'Preview toolbar',
-  })
-  useEffect(() => {
-    if (import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview') {
-      localStorage.setItem(DEV_SCROLLBAR_TWEAK_KEY, scrollbarTweak)
-    }
-  }, [scrollbarTweak])
 
   const effectivePreview = preview
   const constrained = size !== 'desktop'
@@ -165,19 +139,6 @@ export function PreviewPanel({ className }: { className?: string }) {
     }
   }, [previewMode])
 
-  // The iframe reports whether its document is scrolled past the top (threshold
-  // crossings only); the toolbar reveals its bottom border while it is. A reloaded
-  // iframe re-reports on mount, which also resets the state.
-  useEffect(() => {
-    const onMessage = (event: MessageEvent) => {
-      if (event.data?.type === 'preview-scrolled') {
-        setScrolled(Boolean(event.data.scrolled))
-      }
-    }
-    window.addEventListener('message', onMessage)
-    return () => window.removeEventListener('message', onMessage)
-  }, [])
-
   // Keep the fullscreen toggle's icon in sync with the actual state — exiting via Esc
   // (not just the button) still flips it back.
   useEffect(() => {
@@ -204,7 +165,7 @@ export function PreviewPanel({ className }: { className?: string }) {
       )}
     >
       {/* Stage — holds the iframe at full height for every device size; the toolbar's
-          frosted bar overlays its top edge. Smaller sizes narrow the iframe and center
+          progressive blur overlays its top edge. Smaller sizes narrow the iframe and center
           it on a muted backdrop. Scrolls when zoomed past fit. */}
       <div
         className={cn(
@@ -230,11 +191,11 @@ export function PreviewPanel({ className }: { className?: string }) {
         </div>
       </div>
 
-      {/* Toolbar — a frosted bar overlaying the top of the stage: uniform blur + a
-          translucent background, with a bottom border that fades in once the preview
-          is scrolled (reported by the iframe — see useReportPreviewScrolled). Scoped
-          to the previewed design system's palette + mode so the tint and border
-          resolve the preset's tokens, not the site's. The wrapper is
+      {/* Toolbar — overlays the top of the stage with the app header's progressive
+          blur (pinned always-on via [--blur-progress:1] — no scroll reveal here), so
+          the preview dissolves into a blurred tint beneath the controls. Scoped to
+          the previewed design system's palette + mode so the tint's --color-bg
+          matches the iframe's background, not the site's. The wrapper is
           pointer-events-none so empty areas click through to the preview; each
           control cluster re-enables pointer events. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-20">
@@ -243,22 +204,12 @@ export function PreviewPanel({ className }: { className?: string }) {
           color={designSystem.color}
           forcedMode={previewMode}
         >
-          {blurTweak === 'progressive' ? (
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] [--blur-progress:1]"
-            >
-              <ProgressiveBlur />
-            </div>
-          ) : (
-            <div
-              aria-hidden
-              className={cn(
-                'pointer-events-none absolute inset-x-0 top-0 -z-10 h-(--header-height) border-b bg-bg/75 backdrop-blur-md transition-colors duration-300',
-                scrolled ? 'border-border' : 'border-transparent',
-              )}
-            />
-          )}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] [--blur-progress:1]"
+          >
+            <ProgressiveBlur />
+          </div>
         </DesignSystemProvider>
 
         <div className="relative flex h-(--header-height) items-center gap-2 px-3">

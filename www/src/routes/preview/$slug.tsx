@@ -1,4 +1,4 @@
-import { type ReactNode, use, useCallback, useEffect, useState } from 'react'
+import { type ReactNode, use, useCallback, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
@@ -11,7 +11,6 @@ import {
   DEFAULTS,
   decodePreset,
   useIframeMessageListener,
-  useReportPreviewScrolled,
 } from '@/modules/create/preset'
 import type { DesignSystem } from '@/modules/create/preset'
 import { PresetOverview } from '@/modules/create/preview/overview'
@@ -36,96 +35,14 @@ function getExamplesPromise(slug: string) {
 }
 
 // Embedded, the /create toolbar overlays the top 3.5rem of the viewport; the native
-// viewport scrollbar would run beneath it and get caught in its blur. Styling the
-// scrollbar (WebKit classic mode) lets the track start below the toolbar via a
-// margin, so the thumb only ever travels in the visible area. Firefox has no track
-// margin — it falls back to a thin full-height scrollbar.
+// viewport scrollbar would run beneath it and get caught in its blur, and a styled
+// (classic-mode) scrollbar can't match the native overlay look. Hide it instead —
+// wheel/trackpad scrolling is unaffected. Standalone (open-in-new-tab) previews
+// keep the native scrollbar.
 const EMBEDDED_SCROLLBAR_CSS = `
-html::-webkit-scrollbar { width: 10px; }
-html::-webkit-scrollbar-track { margin-block-start: 3.5rem; }
-html::-webkit-scrollbar-thumb {
-  background-color: color-mix(in oklab, var(--color-fg) 28%, transparent);
-  background-clip: padding-box;
-  border: 3px solid transparent;
-  border-radius: 999px;
-}
-html::-webkit-scrollbar-thumb:hover {
-  background-color: color-mix(in oklab, var(--color-fg) 45%, transparent);
-}
-@supports not selector(::-webkit-scrollbar) {
-  html {
-    scrollbar-width: thin;
-    scrollbar-color: color-mix(in oklab, var(--color-fg) 35%, transparent) transparent;
-  }
-}
-`
-
-/* ---- dev-tweak scaffolding (remove once picked) ----
-   Scrollbar mode driven from the create page's tweaker via localStorage (key
-   duplicated from preview-panel.tsx); cross-document storage events make it live. */
-const DEV_SCROLLBAR_TWEAK_KEY = 'dotui:dev-preview-scrollbar'
-type DevScrollbarMode = 'custom' | 'auto-hide' | 'none' | 'native'
-const DEV_TWEAKS_ENABLED =
-  import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'
-
-const DEV_SCROLLBAR_CSS: Record<DevScrollbarMode, string> = {
-  custom: EMBEDDED_SCROLLBAR_CSS,
-  // Custom below-toolbar track, but invisible at rest — the thumb shows only while
-  // scrolling (data attr set below) or hovered, mimicking macOS overlay behavior.
-  'auto-hide': `${EMBEDDED_SCROLLBAR_CSS}
-html:not([data-dev-scrolling])::-webkit-scrollbar-thumb { background-color: transparent; }
-html:not([data-dev-scrolling])::-webkit-scrollbar-thumb:hover {
-  background-color: color-mix(in oklab, var(--color-fg) 45%, transparent);
-}
-`,
-  none: `
 html { scrollbar-width: none; }
 html::-webkit-scrollbar { display: none; }
-`,
-  native: '',
-}
-
-function useDevScrollbarMode(): DevScrollbarMode {
-  const [mode, setMode] = useState<DevScrollbarMode>('custom')
-
-  useEffect(() => {
-    if (!DEV_TWEAKS_ENABLED) return
-    const read = () => {
-      const stored = localStorage.getItem(DEV_SCROLLBAR_TWEAK_KEY)
-      setMode(
-        stored && stored in DEV_SCROLLBAR_CSS
-          ? (stored as DevScrollbarMode)
-          : 'custom',
-      )
-    }
-    read()
-    window.addEventListener('storage', read)
-    return () => window.removeEventListener('storage', read)
-  }, [])
-
-  // auto-hide: flag the root while scrolling so the thumb shows only then.
-  useEffect(() => {
-    if (mode !== 'auto-hide') return
-    let timer: ReturnType<typeof setTimeout>
-    const onScroll = () => {
-      document.documentElement.setAttribute('data-dev-scrolling', '')
-      clearTimeout(timer)
-      timer = setTimeout(
-        () => document.documentElement.removeAttribute('data-dev-scrolling'),
-        800,
-      )
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => {
-      clearTimeout(timer)
-      window.removeEventListener('scroll', onScroll)
-      document.documentElement.removeAttribute('data-dev-scrolling')
-    }
-  }, [mode])
-
-  return mode
-}
-/* ---- end dev-tweak scaffolding ---- */
+`
 
 export const Route = createFileRoute('/preview/$slug')({
   validateSearch: z.object({ preset: z.string().optional().catch(undefined) }),
@@ -146,8 +63,6 @@ function PreviewPage() {
   useIframeMessageListener(
     useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
   )
-  useReportPreviewScrolled()
-  const devScrollbarMode = useDevScrollbarMode()
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
@@ -183,9 +98,7 @@ function PreviewPage() {
       color={designSystem.color}
       icons={designSystem.icons}
     >
-      {embedded && DEV_SCROLLBAR_CSS[devScrollbarMode] && (
-        <style>{DEV_SCROLLBAR_CSS[devScrollbarMode]}</style>
-      )}
+      {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
       <div className={embedded ? 'pt-11' : undefined}>{content}</div>
     </DesignSystemProvider>
   )
