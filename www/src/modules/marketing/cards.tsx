@@ -22,20 +22,16 @@ export function Cards() {
       {/* Preset wash: the whole section sits on the selected preset's own
           background — the resolved --color-bg from the shared scoped
           stylesheet, per light/dark mode — spanning the full viewport width.
-          The outer div carves the curved top edge: an elliptical dome (apex
-          5rem above the switcher, 4rem of rise fading over 7rem — 11rem
-          radius, solid to 4/11 ≈ 36.4%) union'd (default mask compositing)
-          with a linear fade so everything below the dome's center stays
-          solid, including where the ellipse has run out sideways. The inner
-          div fades the bottom; nested masks instead of mask-composite for
-          browser compatibility. --preset-wash-bg is registered as a <color>
-          in styles.css so it tweens on preset switch. */}
+          The outer div fades the top edge, the inner div fades the bottom;
+          nested masks instead of mask-composite for browser compatibility.
+          --preset-wash-bg is registered as a <color> in styles.css so it
+          tweens on preset switch. */}
       <DesignSystemProvider scoped color={preset.color}>
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 -top-20 bottom-0 -z-20 [mask-image:radial-gradient(80%_11rem_at_50%_11rem,black_36.4%,transparent_100%),linear-gradient(to_bottom,transparent_4rem,black_11rem)]"
+          className="pointer-events-none absolute inset-x-0 -top-56 bottom-0 -z-20 [mask-image:linear-gradient(to_bottom,transparent,black_24rem)]"
         >
-          <div className="size-full bg-(--preset-wash-bg) [mask-image:linear-gradient(to_bottom,black_calc(100%-11rem),transparent)] [--preset-wash-bg:var(--color-bg)] motion-safe:transition-[--preset-wash-bg] motion-safe:duration-700" />
+          <div className="size-full bg-(--preset-wash-bg) [mask-image:linear-gradient(to_bottom,black_calc(100%-24rem),transparent)] [--preset-wash-bg:var(--color-bg)] motion-safe:transition-[--preset-wash-bg] motion-safe:duration-700" />
         </div>
       </DesignSystemProvider>
       <PresetSwitcher selected={selected} onSelect={handleSelect} />
