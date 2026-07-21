@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import { useTheme } from 'starter-themes'
 
+import { DesignSystemProvider } from '@/lib/styles'
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 import { Command } from '@/registry/ui/command'
@@ -30,6 +31,7 @@ import { Select, SelectValue } from '@/registry/ui/select'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { ProgressiveBlur } from '@/components/progressive-blur'
 import {
   sendPreviewMode,
   sendToIframe,
@@ -163,7 +165,7 @@ export function PreviewPanel({ className }: { className?: string }) {
       )}
     >
       {/* Stage — holds the iframe at full height for every device size; the toolbar's
-          background fade overlays its top edge. Smaller sizes narrow the iframe and center
+          progressive blur overlays its top edge. Smaller sizes narrow the iframe and center
           it on a muted backdrop. Scrolls when zoomed past fit. */}
       <div
         className={cn(
@@ -189,19 +191,26 @@ export function PreviewPanel({ className }: { className?: string }) {
         </div>
       </div>
 
-      {/* Toolbar — overlays the top of the stage. A background-to-transparent fade (no
-          blur), the height of the app header, lets the preview dissolve into the page
-          color beneath the controls. The wrapper is pointer-events-none so empty areas
-          click through to the preview; each control cluster re-enables pointer events. */}
+      {/* Toolbar — overlays the top of the stage with the app header's progressive
+          blur, so the preview dissolves into a blurred tint beneath the controls.
+          Pinned always-on ([--blur-progress:1] — no scroll reveal here), and scoped
+          to the previewed design system's palette + mode so the tint's --color-bg
+          matches the iframe's background, not the site's. The wrapper is
+          pointer-events-none so empty areas click through to the preview; each
+          control cluster re-enables pointer events. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-20">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-(--header-height)"
-          style={{
-            background:
-              'linear-gradient(to bottom, var(--color-bg) 0%, var(--color-bg) 25%, transparent 100%)',
-          }}
-        />
+        <DesignSystemProvider
+          scoped
+          color={designSystem.color}
+          forcedMode={previewMode}
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] [--blur-progress:1]"
+          >
+            <ProgressiveBlur />
+          </div>
+        </DesignSystemProvider>
 
         <div className="relative flex h-(--header-height) items-center gap-2 px-3">
           {/* Preview selector */}
