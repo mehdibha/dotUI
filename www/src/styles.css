@@ -123,3 +123,12 @@
     opacity: 0;
   }
 }
+
+/* preset-wash-bg — registered as a real <color> so the home cards-section
+   background wash can tween the preset's --color-bg when the selected preset
+   switches; browsers without @property just swap instantly. */
+@property --preset-wash-bg {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}

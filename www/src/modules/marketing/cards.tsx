@@ -18,9 +18,31 @@ export function Cards() {
   }, [])
 
   return (
-    <div className="flex flex-col [--grid-max:1500px] [--rail-gap:--spacing(5)] [--rail-peek:2.5rem] sm:[--rail-peek:3.5rem] md:[--rail-peek:5rem] lg:[--rail-peek:7rem]">
+    <div className="relative flex flex-col [--grid-max:1500px] [--rail-gap:--spacing(5)] [--rail-peek:2.5rem] sm:[--rail-peek:3.5rem] md:[--rail-peek:5rem] lg:[--rail-peek:7rem]">
+      {/* Preset wash: the whole section sits on the selected preset's own
+          background — the resolved --color-bg from the shared scoped
+          stylesheet, per light/dark mode — spanning the full viewport width.
+          The outer div carves the curved top edge: an elliptical dome (apex
+          5rem above the switcher, 4rem of rise fading over 7rem — 11rem
+          radius, solid to 4/11 ≈ 36.4%) union'd (default mask compositing)
+          with a linear fade so everything below the dome's center stays
+          solid, including where the ellipse has run out sideways. The inner
+          div fades the bottom; nested masks instead of mask-composite for
+          browser compatibility. --preset-wash-bg is registered as a <color>
+          in styles.css so it tweens on preset switch. */}
+      <DesignSystemProvider scoped color={preset.color}>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-20 bottom-0 -z-20 [mask-image:radial-gradient(80%_11rem_at_50%_11rem,black_36.4%,transparent_100%),linear-gradient(to_bottom,transparent_4rem,black_11rem)]"
+        >
+          <div className="size-full bg-(--preset-wash-bg) [mask-image:linear-gradient(to_bottom,black_calc(100%-11rem),transparent)] [--preset-wash-bg:var(--color-bg)] motion-safe:transition-[--preset-wash-bg] motion-safe:duration-700" />
+        </div>
+      </DesignSystemProvider>
       <PresetSwitcher selected={selected} onSelect={handleSelect} />
-      <div className="relative flex justify-center gap-5 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] [--mask-clear:45px] [--mask-solid:180px]">
+      {/* Below lg (no rails) the grid left-aligns to the header logo's padding
+          (--crop-pl mirrors the header's pl-4 md:pl-6) and crops only on the
+          right; lg+ recenters between the rails. */}
+      <div className="relative flex justify-start gap-5 overflow-hidden [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))] pl-(--crop-pl) [--crop-pl:--spacing(4)] [--mask-clear:45px] [--mask-solid:180px] md:[--crop-pl:--spacing(6)] lg:justify-center lg:pl-0">
         <SkeletonRail side="left" />
         <DesignSystemProvider
           scoped
@@ -29,7 +51,7 @@ export function Cards() {
           density={preset.density}
           color={preset.color}
         >
-          <CardsGrid className="relative z-20 w-[max(52rem,150vw)] max-w-none shrink-0 [zoom:0.8] [mask-image:linear-gradient(to_right,transparent_calc(50%-62.5vw),black_calc(50%-62.5vw+var(--edge-fade)),black_calc(50%+62.5vw-var(--edge-fade)),transparent_calc(50%+62.5vw))] [--edge-fade:2.5rem] lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink lg:[zoom:1] lg:[mask-image:none]" />
+          <CardsGrid className="relative z-20 w-[max(52rem,150vw)] max-w-none shrink-0 [zoom:0.8] [mask-image:linear-gradient(to_right,black_calc(125vw_-_1.25*var(--crop-pl)_-_1.25*var(--edge-fade)),transparent_calc(125vw_-_1.25*var(--crop-pl)))] [--edge-fade:2.5rem] lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink lg:[zoom:1] lg:[mask-image:none]" />
         </DesignSystemProvider>
         <SkeletonRail side="right" />
       </div>
