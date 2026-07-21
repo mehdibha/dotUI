@@ -6,70 +6,10 @@ import { DEFAULTS } from '@/modules/create/preset'
 import { PresetSwitcher } from '@/modules/marketing/preset-switcher'
 import { SkeletonRail } from '@/modules/marketing/skeleton-cards'
 import { PRESETS } from '@/modules/presets/presets-data'
-import { useTweak } from '@/dev/tweaker'
 
 export function Cards() {
   const [selected, setSelected] = useState(0)
   const preset = PRESETS[selected]?.designSystem ?? DEFAULTS
-
-  const washOpacity = useTweak('Opacity (%)', {
-    type: 'number',
-    min: 20,
-    max: 100,
-    step: 5,
-    default: 100,
-    group: 'Preset wash',
-  })
-  const washTop = useTweak('Top offset (rem)', {
-    type: 'number',
-    min: -16,
-    max: 24,
-    step: 1,
-    default: 5,
-    group: 'Preset wash',
-  })
-  const washCurve = useTweak('Top curve (rem)', {
-    type: 'number',
-    min: 0,
-    max: 24,
-    step: 1,
-    default: 4,
-    group: 'Preset wash',
-  })
-  const washCurveWidth = useTweak('Curve width (%)', {
-    type: 'number',
-    min: 50,
-    max: 150,
-    step: 5,
-    default: 80,
-    group: 'Preset wash',
-  })
-  const washFadeTop = useTweak('Top fade (rem)', {
-    type: 'number',
-    min: 0,
-    max: 24,
-    step: 1,
-    default: 7,
-    group: 'Preset wash',
-  })
-  const washFadeBottom = useTweak('Bottom fade (rem)', {
-    type: 'number',
-    min: 0,
-    max: 24,
-    step: 1,
-    default: 11,
-    group: 'Preset wash',
-  })
-
-  // Curved top edge: an elliptical dome (apex at the wash top, sides dropping
-  // away) whose outer band is the top fade; the linear layer unions with it
-  // (default mask compositing) so everything below the dome's center stays
-  // solid, with the same fade where the ellipse has run out sideways.
-  const domeRadius = washCurve + washFadeTop
-  const topMask =
-    washCurve > 0
-      ? `radial-gradient(${washCurveWidth}% ${domeRadius}rem at 50% ${domeRadius}rem, black ${((washCurve / domeRadius) * 100).toFixed(1)}%, transparent 100%), linear-gradient(to bottom, transparent ${washCurve}rem, black ${domeRadius}rem)`
-      : `linear-gradient(to bottom, transparent, black ${washFadeTop}rem)`
 
   // Re-theming the grid re-renders every styled component in it; as a transition
   // that render is interruptible and doesn't block the click.
@@ -82,26 +22,16 @@ export function Cards() {
       {/* Preset wash: the whole section sits on the selected preset's own
           background — the resolved --color-bg from the shared scoped
           stylesheet, per light/dark mode — spanning the full viewport width.
-          The outer div carves the curved top edge, the inner div fades the
-          bottom; nested masks instead of mask-composite for browser
-          compatibility. --preset-wash-bg is registered as a <color> in
-          styles.css so it tweens on preset switch. */}
+          The outer div fades the top edge, the inner div fades the bottom;
+          nested masks instead of mask-composite for browser compatibility.
+          --preset-wash-bg is registered as a <color> in styles.css so it
+          tweens on preset switch. */}
       <DesignSystemProvider scoped color={preset.color}>
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 -z-20"
-          style={{ top: `${-washTop}rem`, maskImage: topMask }}
+          className="pointer-events-none absolute inset-x-0 -top-56 bottom-0 -z-20 [mask-image:linear-gradient(to_bottom,transparent,black_24rem)]"
         >
-          <div
-            className="size-full motion-safe:transition-[--preset-wash-bg] motion-safe:duration-700"
-            style={
-              {
-                '--preset-wash-bg': 'var(--color-bg)',
-                background: `color-mix(in oklab, var(--preset-wash-bg) ${washOpacity}%, transparent)`,
-                maskImage: `linear-gradient(to bottom, black calc(100% - ${washFadeBottom}rem), transparent)`,
-              } as React.CSSProperties
-            }
-          />
+          <div className="size-full bg-(--preset-wash-bg) [mask-image:linear-gradient(to_bottom,black_calc(100%-24rem),transparent)] [--preset-wash-bg:var(--color-bg)] motion-safe:transition-[--preset-wash-bg] motion-safe:duration-700" />
         </div>
       </DesignSystemProvider>
       <PresetSwitcher selected={selected} onSelect={handleSelect} />
