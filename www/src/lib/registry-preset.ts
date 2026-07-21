@@ -32,6 +32,7 @@ export async function resolveRequestPreset(
       componentParams: ds.componentParams,
       tokens: ds.tokens,
       codeOptions: ds.codeOptions,
+      icons: ds.icons,
     }
   } catch {
     return defaultPreset()

@@ -130,6 +130,18 @@ describe('preset codec — color recipe', () => {
     })
   })
 
+  it('round-trips the icon library and treats lucide as the default', () => {
+    expect(encodePreset({ ...DEFAULTS, icons: 'lucide' })).toBeUndefined()
+    const encoded = encodePreset({ ...DEFAULTS, icons: 'tabler' })
+    expect(encoded).toBeTypeOf('string')
+    expect(decodePreset(encoded ?? '').icons).toBe('tabler')
+  })
+
+  it('decodes an unknown icon library to the default', () => {
+    const encoded = encodeRawState({ i: 'heroicons' })
+    expect(decodePreset(encoded).icons).toBeUndefined()
+  })
+
   it('drops a crafted primary value but keeps the rest of the recipe', () => {
     const encoded = encodeRawState({
       c: {

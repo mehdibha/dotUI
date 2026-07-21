@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { PanelLeftIcon } from 'lucide-react'
 import * as ButtonPrimitives from 'react-aria-components/Button'
 import { composeRenderProps } from 'react-aria-components/composeRenderProps'
 import * as HeaderPrimitives from 'react-aria-components/Header'
@@ -12,6 +11,7 @@ import { useSlotId } from 'react-aria/private/utils/useId'
 import { useControlledState } from 'react-stately/useControlledState'
 
 import { useIsMobile } from '@/registry/hooks/use-mobile'
+import { PanelLeftIcon } from '@/registry/icons'
 import { createContext } from '@/registry/lib/context'
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'

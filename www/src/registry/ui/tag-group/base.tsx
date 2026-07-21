@@ -1,9 +1,9 @@
 'use client'
 
-import { XIcon } from 'lucide-react'
 import { composeRenderProps } from 'react-aria-components/composeRenderProps'
 import * as TagGroupPrimitives from 'react-aria-components/TagGroup'
 
+import { XIcon } from '@/registry/icons'
 import { Button } from '@/registry/ui/button'
 
 import { useStyles } from './styles'

@@ -8,8 +8,7 @@ import {
   SettingsIcon,
   User2Icon,
   Users2Icon,
-} from 'lucide-react'
-
+} from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
 import { Card, CardContent, CardHeader } from '@/registry/ui/card'

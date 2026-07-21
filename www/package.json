@@ -24,6 +24,7 @@
     "@hugeicons/core-free-icons": "^4.1.4",
     "@hugeicons/react": "^1.1.4",
     "@internationalized/date": "^3.12.2",
+    "@phosphor-icons/react": "^2.1.10",
     "@remixicon/react": "^4.2.0",
     "@tabler/icons-react": "^3.35.0",
     "@tailwindcss/vite": "catalog:",

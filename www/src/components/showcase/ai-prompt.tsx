@@ -1,6 +1,8 @@
 'use client'
 
 import React from 'react'
+import type { Selection } from 'react-aria-components'
+
 import {
   AudioLinesIcon,
   BlocksIcon,
@@ -20,9 +22,7 @@ import {
   SlashSquareIcon,
   TelescopeIcon,
   TriangleAlertIcon,
-} from 'lucide-react'
-import type { Selection } from 'react-aria-components'
-
+} from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'

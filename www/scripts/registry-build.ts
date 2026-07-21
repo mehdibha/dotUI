@@ -134,6 +134,8 @@ function getLibraryPackage(library: string): string {
       return '@hugeicons/core-free-icons'
     case 'remix':
       return '@remixicon/react'
+    case 'phosphor':
+      return '@phosphor-icons/react'
     default:
       return ''
   }
@@ -148,6 +150,7 @@ async function buildIconLibraryExports() {
     tabler: new Set(),
     hugeicons: new Set(),
     remix: new Set(),
+    phosphor: new Set(),
   }
 
   for (const iconMapping of Object.values(registryIcons)) {
@@ -155,27 +158,49 @@ async function buildIconLibraryExports() {
     if (iconMapping.hugeicons)
       libraryIcons.hugeicons?.add(iconMapping.hugeicons)
     if (iconMapping.remix) libraryIcons.remix?.add(iconMapping.remix)
+    if (iconMapping.phosphor) libraryIcons.phosphor?.add(iconMapping.phosphor)
   }
 
-  // Generate a file for each library
+  // Generate a file for each library. Remix/tabler export plain components;
+  // hugeicons ships data arrays rendered by `HugeiconsIcon`, so its module
+  // wraps each one into a component — the runtime loader stays uniform.
   for (const [library, icons] of Object.entries(libraryIcons)) {
     const packageName = getLibraryPackage(library)
     const sortedIcons = [...icons].sort((a, b) => a.localeCompare(b))
 
-    const exports =
-      sortedIcons.length > 0
-        ? `export { ${sortedIcons.join(', ')} } from "${packageName}";`
-        : ''
+    const isHugeicons = library === 'hugeicons'
+    const header = `// AUTO-GENERATED - DO NOT EDIT
+// Only exports the ${sortedIcons.length} icons we actually use (not the entire library)`
 
-    const content = `// AUTO-GENERATED - DO NOT EDIT
-// Only exports the ${sortedIcons.length} icons we actually use (not the entire library)
-${exports}
+    const content = isHugeicons
+      ? `${header}
+"use client";
+
+import { HugeiconsIcon } from "@hugeicons/react";
+import type { HugeiconsIconProps } from "@hugeicons/react";
+import {
+${sortedIcons.map((name) => `\t${name} as ${name}Data,`).join('\n')}
+} from "${packageName}";
+
+// The \`hugeicon\` marker class lets the stroke-width axis target the paths
+// (see base.css) — hugeicons paths carry their own stroke-width attribute.
+function wrap(icon: HugeiconsIconProps["icon"]) {
+\treturn function HugeIcon({ className, ...props }: Omit<HugeiconsIconProps, "icon">) {
+\t\treturn <HugeiconsIcon icon={icon} className={className ? \`hugeicon \${className}\` : "hugeicon"} {...props} />;
+\t};
+}
+
+${sortedIcons.map((name) => `export const ${name} = wrap(${name}Data);`).join('\n')}
+`
+      : `${header}
+${sortedIcons.length > 0 ? `export { ${sortedIcons.join(', ')} } from "${packageName}";` : ''}
 `
 
-    const targetPath = path.join(iconsDir, `__${library}__.ts`)
+    const ext = isHugeicons ? 'tsx' : 'ts'
+    const targetPath = path.join(iconsDir, `__${library}__.${ext}`)
     await writeGeneratedFile(targetPath, content)
     console.log(
-      `  ✓ __generated__/__${library}__.ts (${sortedIcons.length} icons)`,
+      `  ✓ __generated__/__${library}__.${ext} (${sortedIcons.length} icons)`,
     )
   }
 }

@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { BitcoinIcon, CreditCardIcon } from 'lucide-react'
 
+import { BitcoinIcon, CreditCardIcon } from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 import { Card, CardContent } from '@/registry/ui/card'

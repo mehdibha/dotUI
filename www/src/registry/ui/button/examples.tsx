@@ -1,5 +1,4 @@
-import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
-
+import { ArrowLeftIcon, ArrowRightIcon } from '@/registry/icons'
 import { Button } from '@/registry/ui/button'
 import { Example } from '@/modules/create/preview/example'
 import { Examples } from '@/modules/create/preview/examples'

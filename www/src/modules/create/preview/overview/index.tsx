@@ -1,4 +1,9 @@
-import { type ReactNode, useMemo } from 'react'
+import { type ReactNode, use, useMemo } from 'react'
+
+import { STEPS, type Theme } from '@dotui/colors'
+
+import { resolveColorConfigCached } from '@/lib/resolve-color'
+import * as icons from '@/registry/__generated__/icons'
 import {
   BoxIcon,
   LayersIcon,
@@ -9,12 +14,9 @@ import {
   SmileIcon,
   SparklesIcon,
   TypeIcon,
-} from 'lucide-react'
-
-import { STEPS, type Theme } from '@dotui/colors'
-
-import { resolveColorConfigCached } from '@/lib/resolve-color'
-import * as icons from '@/registry/__generated__/icons'
+} from '@/registry/icons'
+import { IconLibraryContext } from '@/registry/icons/create-icon'
+import { iconLibraries } from '@/registry/icons/icon-map'
 import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG, PALETTE_ORDER } from '@/registry/theme'
 // Live component atoms — reuse the real demos so the gallery always mirrors the
@@ -469,12 +471,15 @@ const ICON_ENTRIES = Object.entries(icons)
   .slice(0, 60)
 
 function IconSection() {
+  const library = use(IconLibraryContext)
+  const libraryLabel =
+    iconLibraries.find((lib) => lib.name === library)?.label ?? 'Lucide icons'
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-center gap-2">
-        <Badge appearance="subtle">Lucide</Badge>
+        <Badge appearance="subtle">{libraryLabel}</Badge>
         <span className="text-sm text-fg-muted">
-          Clean, consistent 24px line icons — {Object.keys(icons).length} in the
+          A consistent 24px icon family — {Object.keys(icons).length} in the
           curated set.
         </span>
       </div>

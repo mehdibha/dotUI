@@ -1,8 +1,8 @@
 'use client'
 
 import * as React from 'react'
-import { TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
 
+import { TrendingDownIcon, TrendingUpIcon } from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import { Badge } from '@/registry/ui/badge'
 import {

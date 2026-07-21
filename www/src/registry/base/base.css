@@ -43,6 +43,19 @@
   color: var(--neutral-950);
 }
 
+/* Icon stroke width axis. Applies to stroke-based icon libraries only; the
+   fallback is each library's own default, so an unset var changes nothing.
+   Hugeicons paths carry their own stroke-width attribute, so the rule must
+   target the paths (via the wrapper's `hugeicon` marker class), not the root. */
+.lucide,
+.tabler-icon {
+  stroke-width: var(--icon-stroke-width, 2);
+}
+.hugeicon,
+.hugeicon * {
+  stroke-width: var(--icon-stroke-width, 1.5);
+}
+
 @theme {
   --ease-fluid-out: cubic-bezier(0.32, 0.72, 0, 1);
   --cursor-interactive: pointer;

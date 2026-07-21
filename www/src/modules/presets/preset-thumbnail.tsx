@@ -49,6 +49,7 @@ export function PresetThumbnail({
           tokens={designSystem.tokens}
           density={designSystem.density}
           color={designSystem.color}
+          icons={designSystem.icons}
         >
           {/* Canvas, themed by the scope so the cards sit on the preset's own bg. */}
           <div aria-hidden className="absolute inset-0 bg-bg" />

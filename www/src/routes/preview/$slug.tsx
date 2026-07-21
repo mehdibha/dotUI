@@ -86,6 +86,7 @@ function PreviewPage() {
       tokens={designSystem.tokens}
       density={designSystem.density}
       color={designSystem.color}
+      icons={designSystem.icons}
     >
       <div className={embedded ? 'pt-11' : undefined}>{content}</div>
     </DesignSystemProvider>

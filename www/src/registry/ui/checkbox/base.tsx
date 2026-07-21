@@ -2,13 +2,13 @@
 
 import { createContext, useContext, useId } from 'react'
 import type * as React from 'react'
-import { CheckIcon, MinusIcon } from 'lucide-react'
 import * as CheckboxPrimitive from 'react-aria-components/Checkbox'
 import { composeRenderProps } from 'react-aria-components/composeRenderProps'
 import { LabelContext } from 'react-aria-components/Label'
 import { Provider, useSlottedContext } from 'react-aria-components/slots'
 import { useSlotId } from 'react-aria/private/utils/useId'
 
+import { CheckIcon, MinusIcon } from '@/registry/icons'
 import { Label } from '@/registry/ui/field'
 
 import { useStyles } from './styles'

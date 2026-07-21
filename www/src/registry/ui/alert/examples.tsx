@@ -1,5 +1,4 @@
-import { CheckIcon, CircleAlert, CircleAlertIcon } from 'lucide-react'
-
+import { CheckIcon, CircleAlertIcon } from '@/registry/icons'
 import {
   Alert,
   AlertAction,
@@ -69,14 +68,14 @@ function AlertExample2() {
     <Example title="Variants">
       <div className="mx-auto flex w-full max-w-lg flex-col gap-4">
         <Alert variant="danger">
-          <CircleAlert />
+          <CircleAlertIcon />
           <AlertTitle>Something went wrong!</AlertTitle>
           <AlertDescription>
             Your session has expired. Please log in again.
           </AlertDescription>
         </Alert>
         <Alert variant="danger">
-          <CircleAlert />
+          <CircleAlertIcon />
           <AlertTitle>Unable to process your payment.</AlertTitle>
           <AlertDescription>
             <p>
@@ -91,7 +90,7 @@ function AlertExample2() {
           </AlertDescription>
         </Alert>
         <Alert variant="warning">
-          <CircleAlert />
+          <CircleAlertIcon />
           <AlertTitle>Something went wrong!</AlertTitle>
           <AlertDescription>
             Your session has expired. Please log in again.
@@ -114,13 +113,13 @@ function AlertExample3() {
     <Example title="With Icons">
       <div className="mx-auto flex w-full max-w-lg flex-col gap-4">
         <Alert>
-          <CircleAlert />
+          <CircleAlertIcon />
           <AlertTitle>
             Let&apos;s try one with icon, title and a <a href="#">link</a>.
           </AlertTitle>
         </Alert>
         <Alert>
-          <CircleAlert />
+          <CircleAlertIcon />
           <AlertDescription>
             This one has an icon and a description only. No title.{' '}
             <a href="#">But it has a link</a> and a <a href="#">second link</a>.
@@ -128,14 +127,14 @@ function AlertExample3() {
         </Alert>
 
         <Alert>
-          <CircleAlert />
+          <CircleAlertIcon />
           <AlertTitle>Success! Your changes have been saved</AlertTitle>
           <AlertDescription>
             This is an alert with icon, title and description.
           </AlertDescription>
         </Alert>
         <Alert>
-          <CircleAlert />
+          <CircleAlertIcon />
           <AlertTitle>
             This is a very long alert title that demonstrates how the component
             handles extended text content and potentially wraps across multiple
@@ -143,7 +142,7 @@ function AlertExample3() {
           </AlertTitle>
         </Alert>
         <Alert>
-          <CircleAlert />
+          <CircleAlertIcon />
           <AlertDescription>
             This is a very long alert description that demonstrates how the
             component handles extended text content and potentially wraps across
@@ -151,7 +150,7 @@ function AlertExample3() {
           </AlertDescription>
         </Alert>
         <Alert>
-          <CircleAlert />
+          <CircleAlertIcon />
           <AlertTitle>
             This is an extremely long alert title that spans multiple lines to
             demonstrate how the component handles very lengthy headings while
@@ -176,7 +175,7 @@ function AlertExample4() {
     <Example title="With Actions">
       <div className="mx-auto flex w-full max-w-lg flex-col gap-4">
         <Alert>
-          <CircleAlert />
+          <CircleAlertIcon />
           <AlertTitle>The selected emails have been marked as spam.</AlertTitle>
           <AlertAction>
             <Button variant="primary" size="xs" className="h-6">
@@ -185,7 +184,7 @@ function AlertExample4() {
           </AlertAction>
         </Alert>
         <Alert>
-          <CircleAlert />
+          <CircleAlertIcon />
           <AlertTitle>The selected emails have been marked as spam.</AlertTitle>
           <AlertDescription>
             This is a very long alert title that demonstrates how the component

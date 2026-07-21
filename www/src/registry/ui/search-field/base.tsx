@@ -1,10 +1,10 @@
 'use client'
 
 import type * as React from 'react'
-import { SearchIcon } from 'lucide-react'
 import { composeRenderProps } from 'react-aria-components/composeRenderProps'
 import * as SearchFieldPrimitives from 'react-aria-components/SearchField'
 
+import { SearchIcon } from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import { useStyles } from '@/registry/ui/field/styles'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'

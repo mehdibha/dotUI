@@ -1,8 +1,9 @@
+import type { IconLibraryName } from '@/registry/icons/icon-map'
 import type { ColorConfig } from '@/registry/theme'
 import type { Density } from '@/registry/types'
 import type { CodeOptions } from '@/publisher/code-options'
 
-export type { CodeOptions, Density }
+export type { CodeOptions, Density, IconLibraryName }
 
 /**
  * Compact representation for URL serialization. Short keys keep the encoded
@@ -12,6 +13,7 @@ export type { CodeOptions, Density }
  *   d = density
  *   c = color config (palette seeds + engine axes); present only when it differs from the default
  *   o = code options (exported-code style); present only when they differ from the default
+ *   i = icon library; present only when it isn't the default (lucide)
  */
 export type DesignSystemState = {
   p?: Record<string, Record<string, string>>
@@ -19,6 +21,7 @@ export type DesignSystemState = {
   d?: Density
   c?: ColorConfig
   o?: CodeOptions
+  i?: IconLibraryName
 }
 
 /**
@@ -34,6 +37,8 @@ export type DesignSystem = {
   color?: ColorConfig
   /** Exported-code style; `undefined` means the default code style. */
   codeOptions?: CodeOptions
+  /** Icon library; `undefined` means the default (lucide). */
+  icons?: IconLibraryName
 }
 
 export function fromCompact(state: DesignSystemState): DesignSystem {
@@ -43,5 +48,6 @@ export function fromCompact(state: DesignSystemState): DesignSystem {
     density: state.d ?? 'default',
     color: state.c,
     codeOptions: state.o,
+    icons: state.i,
   }
 }

@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { ArrowUpIcon, ChevronRightIcon, GripVerticalIcon } from 'lucide-react'
 import * as ButtonPrimitives from 'react-aria-components/Button'
 import * as CollectionPrimitives from 'react-aria-components/Collection'
 import { composeRenderProps } from 'react-aria-components/composeRenderProps'
@@ -11,6 +10,11 @@ import * as VirtualizerPrimitives from 'react-aria-components/Virtualizer'
 import type { GridNode } from 'react-stately/private/grid/GridCollection'
 import type { LayoutNode } from 'react-stately/useVirtualizerState'
 
+import {
+  ArrowUpIcon,
+  ChevronRightIcon,
+  GripVerticalIcon,
+} from '@/registry/icons'
 import { cn } from '@/registry/lib/utils'
 import { Checkbox } from '@/registry/ui/checkbox'
 import { Loader } from '@/registry/ui/loader'

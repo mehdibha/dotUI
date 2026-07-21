@@ -1,6 +1,7 @@
 'use client'
 
 import { cn } from 'cnfast'
+
 import {
   BoxIcon,
   CircleDotIcon,
@@ -10,8 +11,7 @@ import {
   SquarePenIcon,
   TagIcon,
   UserIcon,
-} from 'lucide-react'
-
+} from '@/registry/icons'
 import { Card } from '@/registry/ui/card'
 import { Command } from '@/registry/ui/command'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'

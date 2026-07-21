@@ -1,12 +1,12 @@
 'use client'
 
 import type * as React from 'react'
+
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MoreHorizontalIcon,
-} from 'lucide-react'
-
+} from '@/registry/icons'
 import { LinkButton } from '@/registry/ui/button'
 import type { LinkButtonProps } from '@/registry/ui/button'
 

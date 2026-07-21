@@ -8,6 +8,12 @@ import type { ClassValue, TVReturnType, VariantProps } from 'tailwind-variants'
 
 import { resolveColorConfigCached } from '@/lib/resolve-color'
 import {
+  IconLibraryContext,
+  IconWeightContext,
+} from '@/registry/icons/create-icon'
+import { phosphorWeights } from '@/registry/icons/icon-map'
+import type { IconLibraryName, PhosphorWeight } from '@/registry/icons/icon-map'
+import {
   DEFAULT_SEMANTICS,
   emitCss,
   emitDarkOverridesCss,
@@ -348,6 +354,8 @@ interface DesignSystemProviderProps {
   tokens?: GlobalTokenSelections
   density?: Density
   color?: ColorConfig
+  /** Icon library rendered by registry icons; defaults to lucide. */
+  icons?: IconLibraryName
   /**
    * Scope the theme to this provider's children instead of the whole page. Off by default:
    * color + radius land on `:root` (and a global `<style>`), re-theming the entire document —
@@ -373,6 +381,7 @@ function DesignSystemProvider({
   tokens = {},
   density = 'default',
   color,
+  icons = 'lucide',
   scoped = false,
   forcedMode,
   children,
@@ -476,9 +485,19 @@ function DesignSystemProvider({
     <style data-dotui-color>{themeCss}</style>
   ) : null
 
+  // The weight axis rides in tokens (so it round-trips the preset URL like any
+  // global token) but reaches icons as a component prop, hence the context.
+  const iconWeight = phosphorWeights.find(
+    (w): w is PhosphorWeight => w === tokens['--icon-weight'],
+  )
+
   const tree = (
     <DesignSystemContext.Provider value={value}>
-      {children}
+      <IconLibraryContext.Provider value={icons}>
+        <IconWeightContext.Provider value={iconWeight}>
+          {children}
+        </IconWeightContext.Provider>
+      </IconLibraryContext.Provider>
     </DesignSystemContext.Provider>
   )
 
