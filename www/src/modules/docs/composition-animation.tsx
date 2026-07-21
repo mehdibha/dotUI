@@ -80,9 +80,12 @@ interface Step {
   compact?: boolean
 }
 
+// Opening mid beat: a bare Input, the seed the TextField builds around. It's
+// the first frame on load, so it dwells a touch longer than the mids after it.
 const firstStep: Step = {
-  title: 'Input',
-  durationMs: 2400,
+  title: 'TextField',
+  mid: true,
+  durationMs: 2000,
   code: `<Input placeholder="hello@example.com" />`,
   preview: (
     <Input
