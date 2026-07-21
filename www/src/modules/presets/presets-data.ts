@@ -42,9 +42,11 @@ function makeDesignSystem(opts: {
   fonts?: { heading?: string; body?: string; mono?: string }
   /** Per-component param overrides on top of the builder defaults. */
   components?: Record<string, Record<string, string>>
+  /** Raw token overrides (semantic color roles, etc.). */
+  tokens?: Record<string, string>
 }): DesignSystem {
   const { neutral, accent, density = 'default' } = opts
-  const tokens: Record<string, string> = {}
+  const tokens: Record<string, string> = { ...opts.tokens }
   if (opts.radiusFactor) tokens['--radius-factor'] = opts.radiusFactor
   if (opts.fonts?.heading)
     tokens[FONT_HEADING_VAR] = fontStack(opts.fonts.heading)
@@ -72,17 +74,27 @@ export const PRESETS: Preset[] = [
   {
     id: 'vercel',
     name: 'Vercel',
-    description: 'Monochrome, tight radii.',
+    description: 'Monochrome, hairline borders.',
     swatch: '#cbd5e1',
     designSystem: makeDesignSystem({
       neutral: '#737373',
       accent: '#171717',
-      radiusFactor: '0.5',
-      density: 'compact',
+      // Geist runs a 14px/32px UI scale at 6px radii — our defaults, not compact/0.5
+      // (verified against live computed styles; see issue #484 Phase 1 audit).
+      density: 'default',
       // A pure-gray accent: zero vividness keeps the ramp from tinting back up
       // (Geist-style neutral primary).
       vividness: 0,
-      components: { command: { style: '3' } },
+      components: {
+        command: { style: '3' },
+        badge: { radius: '--radius-full' },
+      },
+      tokens: {
+        // Geist hairlines sit two ramp steps lighter than our border default.
+        '--color-border': 'var(--neutral-200)',
+        // Vercel's focus ring is opaque blue, not the monochrome accent.
+        '--color-border-focus': '#0072f5',
+      },
     }),
   },
   {

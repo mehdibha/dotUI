@@ -51,7 +51,8 @@ const manifest: RefEntry[] = [
   geist('button'),
   geist('input'),
   geist('tabs'),
-  geist('switch'),
+  // Geist's boolean switch is "Toggle" (/geist/switch is their segmented control).
+  geist('switch', 'toggle'),
   geist('badge'),
   geist('checkbox'),
   geist('tooltip'),
