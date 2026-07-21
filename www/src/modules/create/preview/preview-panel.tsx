@@ -73,6 +73,7 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   const panelRef = useRef<HTMLDivElement>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const blurRef = useRef<HTMLDivElement>(null)
   const [previewMode, setPreviewMode] = useState<PreviewMode>('light')
   const [size, setSize] = useState<DeviceSize>('desktop')
   const [zoom, setZoom] = useState(1)
@@ -139,6 +140,24 @@ export function PreviewPanel({ className }: { className?: string }) {
     }
   }, [previewMode])
 
+  // The iframe reports its scroll progress (0→1 over the first toolbar-height of
+  // scroll — see useReportScrollProgress); write it straight onto the blur wrapper's
+  // --blur-progress, bypassing React state: this fires every scroll frame and a
+  // re-render per frame would be waste. Gives the toolbar the app header's smooth
+  // scroll reveal, which a CSS scroll timeline can't do across the iframe boundary.
+  useEffect(() => {
+    const onMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-scroll') {
+        blurRef.current?.style.setProperty(
+          '--blur-progress',
+          String(event.data.progress),
+        )
+      }
+    }
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+  }, [])
+
   // Keep the fullscreen toggle's icon in sync with the actual state — exiting via Esc
   // (not just the button) still flips it back.
   useEffect(() => {
@@ -192,12 +211,12 @@ export function PreviewPanel({ className }: { className?: string }) {
       </div>
 
       {/* Toolbar — overlays the top of the stage with the app header's progressive
-          blur (pinned always-on via [--blur-progress:1] — no scroll reveal here), so
-          the preview dissolves into a blurred tint beneath the controls. Scoped to
-          the previewed design system's palette + mode so the tint's --color-bg
-          matches the iframe's background, not the site's. The wrapper is
-          pointer-events-none so empty areas click through to the preview; each
-          control cluster re-enables pointer events. */}
+          blur, revealed by the iframe's scroll progress (written onto --blur-progress
+          above), so the preview dissolves into a blurred tint as content slides under
+          the controls. Scoped to the previewed design system's palette + mode so the
+          tint's --color-bg matches the iframe's background, not the site's. The
+          wrapper is pointer-events-none so empty areas click through to the preview;
+          each control cluster re-enables pointer events. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-20">
         <DesignSystemProvider
           scoped
@@ -205,8 +224,9 @@ export function PreviewPanel({ className }: { className?: string }) {
           forcedMode={previewMode}
         >
           <div
+            ref={blurRef}
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] [--blur-progress:1]"
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%]"
           >
             <ProgressiveBlur />
           </div>

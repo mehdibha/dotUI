@@ -12,7 +12,9 @@ type ParentToIframeMessage =
   | { type: 'design-system'; data: DesignSystem }
   | { type: 'preview-mode'; mode: PreviewMode }
 
-type IframeToParentMessage = { type: 'preview-ready' }
+type IframeToParentMessage =
+  | { type: 'preview-ready' }
+  | { type: 'preview-scroll'; progress: number }
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
@@ -101,4 +103,32 @@ export function usePreviewForcedTheme(): PreviewMode | undefined {
   }, [])
 
   return mode
+}
+
+/**
+ * Inside the preview iframe: report scroll progress (0 at rest → 1 at `range` px)
+ * so the embedding toolbar can reveal its blur the way the app header does. CSS
+ * scroll timelines can't cross the document boundary — the parent's CSS cannot
+ * observe this document's scroller — so the progress travels by postMessage
+ * instead: one message per scroll frame, only while the value actually changes.
+ * The mount-time report also resets the parent after an iframe reload.
+ */
+export function useReportScrollProgress(range: number) {
+  React.useEffect(() => {
+    if (!isInIframe()) return
+
+    let last = -1
+    const report = () => {
+      const progress = Math.min(1, Math.max(0, window.scrollY / range))
+      if (progress === last) return
+      last = progress
+      window.parent.postMessage(
+        { type: 'preview-scroll', progress } satisfies IframeToParentMessage,
+        '*',
+      )
+    }
+    report()
+    window.addEventListener('scroll', report, { passive: true })
+    return () => window.removeEventListener('scroll', report)
+  }, [range])
 }

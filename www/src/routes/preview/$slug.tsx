@@ -11,6 +11,7 @@ import {
   DEFAULTS,
   decodePreset,
   useIframeMessageListener,
+  useReportScrollProgress,
 } from '@/modules/create/preset'
 import type { DesignSystem } from '@/modules/create/preset'
 import { PresetOverview } from '@/modules/create/preview/overview'
@@ -63,6 +64,8 @@ function PreviewPage() {
   useIframeMessageListener(
     useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
   )
+  // Ramp range mirrors the app header's reveal: one toolbar height (3.5rem) of scroll.
+  useReportScrollProgress(56)
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
