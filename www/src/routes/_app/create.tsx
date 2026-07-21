@@ -6,6 +6,7 @@ import { cn } from '@/registry/lib/utils'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { CustomizerPanel } from '@/modules/create/customizer-panel'
+import { ExportHeaderAction } from '@/modules/create/export'
 import { LabExperience } from '@/modules/create/panel'
 import { DEFAULTS, useDesignSystem } from '@/modules/create/preset'
 import {
@@ -70,10 +71,18 @@ function CreatePage() {
   }, [designSystem])
 
   // Opt-in exploration of the redesigned control panel + floating panel lab.
-  if (lab) return <LabExperience />
+  if (lab) {
+    return (
+      <>
+        <ExportHeaderAction />
+        <LabExperience />
+      </>
+    )
+  }
 
   return (
     <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">
+      <ExportHeaderAction />
       {/* Mobile-only view switcher — hidden once the two panes fit side by side. */}
       <ToggleButtonGroup
         aria-label="Editor view"

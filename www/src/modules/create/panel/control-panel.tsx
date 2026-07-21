@@ -14,7 +14,7 @@ import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 
-import { ExportFooter } from '../export'
+import { ExportDialog } from '../export'
 import { useDesignSystem } from '../preset'
 import {
   DEFAULT_DESIGN_SYSTEM_NAME,
@@ -43,7 +43,11 @@ export function ControlPanel({ className }: { className?: string }) {
 
       {config.stickyFooter && (
         <div className="flex flex-col gap-2 border-t p-3">
-          <ExportFooter />
+          <ExportDialog>
+            <Button variant="primary" size="sm" className="w-full">
+              Export
+            </Button>
+          </ExportDialog>
         </div>
       )}
 

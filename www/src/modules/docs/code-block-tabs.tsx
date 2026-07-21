@@ -1,4 +1,3 @@
-import { createPersistedStore, enumCodec } from '@/lib/persisted-store'
 import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
 import type {
   TabListProps,
@@ -7,13 +6,8 @@ import type {
   TabsProps,
 } from '@/registry/ui/tabs'
 
-type PackageManager = 'npm' | 'yarn' | 'pnpm' | 'bun'
-
-const packageManagerStore = createPersistedStore<PackageManager>(
-  'dotui-package-manager',
-  'pnpm',
-  enumCodec(['npm', 'yarn', 'pnpm', 'bun'], 'pnpm'),
-)
+import { packageManagerStore } from './install-commands'
+import type { PackageManager } from './install-commands'
 
 export function CodeBlockTabs({
   groupId,
