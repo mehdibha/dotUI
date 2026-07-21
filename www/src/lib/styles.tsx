@@ -9,13 +9,21 @@ import type { ClassValue, TVReturnType, VariantProps } from 'tailwind-variants'
 import { ensureFontStylesheets, fontFamiliesFromTokens } from '@/lib/fonts'
 import { resolveColorConfigCached } from '@/lib/resolve-color'
 import {
+  closureText,
+  DARK_SELECTOR_TOKENS,
+  isHarvestedProp,
+  ROOT_SELECTOR_TOKENS,
+  selectorIn,
+} from '@/lib/root-closure'
+import type { RootClosure } from '@/lib/root-closure'
+import serverRootClosure from '@/lib/root-closure-data'
+import {
   IconLibraryContext,
   IconWeightContext,
 } from '@/registry/icons/create-icon'
 import { phosphorWeights } from '@/registry/icons/icon-map'
 import type { IconLibraryName, PhosphorWeight } from '@/registry/icons/icon-map'
 import {
-  DEFAULT_SEMANTICS,
   emitCss,
   emitDarkOverridesCss,
   emitPrimitivesCss,
@@ -97,55 +105,33 @@ const useIsomorphicLayoutEffect =
  * components added later — then recomputes from the scope's own tokens.
  */
 
-// Simple selectors whose declarations make up the document's theme closure. `.dark` is the
-// palette's dark override (it targets `<html>`, the same element as `:root`).
-const ROOT_SELECTOR_TOKENS = new Set([
-  ':root',
-  ':host',
-  'html',
-  ':where(:root)',
-])
-const DARK_SELECTOR_TOKENS = new Set([
-  '.dark',
-  ':root.dark',
-  'html.dark',
-  ':where(.dark)',
-])
-
-/** A grouped selector (`:root, :host`) counts if any of its simple parts is in `tokens`. */
-function selectorIn(selectorText: string, tokens: Set<string>): boolean {
-  return selectorText.split(',').some((part) => tokens.has(part.trim()))
-}
-
-interface RootClosure {
-  light: string
-  dark: string
-}
 let rootClosureCache: RootClosure | null = null
 
-// The semantic vocabulary's exact prop names. Excluded from the harvest by KEY, not by the
-// `--color-` prefix: component surface vars share the prefix (`--color-area-radius`,
-// `--color-swatch-picker-item-radius`) and must be harvested like any other token, or they
-// stay frozen at `:root` values inside the scope.
-const SEMANTIC_COLOR_PROPS = new Set(
-  Object.keys(DEFAULT_SEMANTICS).map((name) => `--${name}`),
-)
-
 /**
- * Harvest, as raw CSS text, the authored custom-property declarations the document defines at
- * `:root` (light) and `.dark`. Reading from `cssRules` (not `getComputedStyle`) preserves the
- * `var()` / `calc()` references, so re-emitting the result under a scope selector lets each
- * token recompute from that scope's primitives + `--radius-factor`. Cached — the closure is
- * static (scoped mode never writes `:root`); cross-origin sheets are skipped.
+ * The root closure, from whichever source this environment has (shape rules —
+ * selector sets, excluded props — live in `@/lib/root-closure`):
  *
- * The semantic `--color-*` vocabulary is deliberately EXCLUDED here and emitted from
- * `DEFAULT_SEMANTICS` instead (see `buildScopedThemeCss`): it's the typed source of truth, and
- * its targets may be authored as `color-mix()` (the vocabulary supports it), whose CSSOM
- * read-back is unreliable.
+ * On the server, the closure parsed from the compiled stylesheet at build time
+ * (see `root-closure-data`), so scoped themes render during SSR/prerender and
+ * the first paint is already themed.
+ *
+ * On the client, harvest the authored custom-property declarations the
+ * document defines at `:root` (light) and `.dark`, as raw CSS text. Reading
+ * from `cssRules` (not `getComputedStyle`) preserves the `var()` / `calc()`
+ * references, so re-emitting the result under a scope selector lets each token
+ * recompute from that scope's primitives + `--radius-factor`. Cached — the
+ * closure is static (scoped mode never writes `:root`); cross-origin sheets
+ * are skipped.
+ *
+ * The semantic `--color-*` vocabulary is deliberately EXCLUDED here and emitted
+ * from `DEFAULT_SEMANTICS` instead (see `buildScopedThemeCss`): it's the typed
+ * source of truth, and its targets may be authored as `color-mix()` (the
+ * vocabulary supports it), whose CSSOM read-back is unreliable.
  */
-function harvestRootClosure(): RootClosure {
+function getRootClosure(): RootClosure {
+  if (typeof document === 'undefined')
+    return serverRootClosure ?? { light: '', dark: '' }
   if (rootClosureCache) return rootClosureCache
-  if (typeof document === 'undefined') return { light: '', dark: '' }
 
   const light = new Map<string, string>()
   const dark = new Map<string, string>()
@@ -153,15 +139,7 @@ function harvestRootClosure(): RootClosure {
     const { style } = rule
     for (let i = 0; i < style.length; i++) {
       const prop = style.item(i)
-      // Skip: non-custom props; `--radius-factor` (rides inline on the scope element so the
-      // cloned radius scale recomputes there); and the semantic vocabulary (emitted from
-      // DEFAULT_SEMANTICS — see SEMANTIC_COLOR_PROPS for why it's an exact-key match).
-      if (
-        !prop.startsWith('--') ||
-        prop === '--radius-factor' ||
-        SEMANTIC_COLOR_PROPS.has(prop)
-      )
-        continue
+      if (!isHarvestedProp(prop)) continue
       into.set(prop, style.getPropertyValue(prop).trim())
     }
   }
@@ -185,9 +163,7 @@ function harvestRootClosure(): RootClosure {
     }
   }
 
-  const toText = (map: Map<string, string>) =>
-    [...map].map(([prop, value]) => `\t${prop}: ${value};`).join('\n')
-  const closure = { light: toText(light), dark: toText(dark) }
+  const closure = { light: closureText(light), dark: closureText(dark) }
   // An empty harvest means the stylesheets weren't parsed yet — don't cache it, or scoped
   // theming would stay off for the whole session.
   if (closure.light || closure.dark) rootClosureCache = closure
@@ -197,7 +173,7 @@ function harvestRootClosure(): RootClosure {
 /**
  * Build the `<style>` text that themes only `selector`'s subtree: clone `:root`'s token closure
  * onto the scope (primitives + component vars, so they recompute there), add the semantic
- * `--color-*` layer from `DEFAULT_SEMANTICS` (the reliable source — see `harvestRootClosure`),
+ * `--color-*` layer from `DEFAULT_SEMANTICS` (the reliable source — see `getRootClosure`),
  * then, when a `color` is given, override the primitive ramps with the scoped palette.
  * `--radius-factor` + param vars ride inline on the scope element.
  *
@@ -212,11 +188,10 @@ function buildScopedThemeCss(
   color: ColorConfig | undefined,
   forcedMode: 'light' | 'dark' | undefined,
 ): string | null {
-  const { light, dark } = harvestRootClosure()
-  // No closure to clone — we're on the server, or the document's stylesheets aren't
-  // parsed yet. Scoped theming is inherently client-only (it mirrors the live `:root`
-  // closure), so emit nothing here; it applies once mounted on the client. Rendering a
-  // partial closure now would also mismatch the client during hydration.
+  const { light, dark } = getRootClosure()
+  // No closure to clone — the document's stylesheets aren't parsed yet (client) or the
+  // server closure is missing. Emit nothing rather than a partial closure; the caller
+  // retries on a later render.
   if (!light && !dark) return null
 
   const base = forcedMode === 'dark' ? `${light}\n${dark}` : light
@@ -261,23 +236,24 @@ function buildScopedThemeCss(
 
 /*
  * The closure-clone stylesheet is ~10KB and fully determined by `color` + `forcedMode`,
- * so scoped providers on the same theme share one scope token and one injected <style>
- * instead of each carrying their own — a docs page rendering N demos in the user's
- * stored preset injects one style node, not N. Entries are refcounted; the node is
- * removed when the last provider using it unmounts or moves to a different theme.
- * Client-only, like buildScopedThemeCss (null during SSR).
+ * so it renders as a React hoistable <style href precedence>: every provider on the
+ * same theme renders the same href and React dedupes them to one node in <head> — a
+ * docs page rendering N demos in the user's stored preset gets one style node, not N.
+ * Rendering (instead of imperatively injecting) is what makes SSR work: the server has
+ * the closure too (see `root-closure-data`), so the style streams with the shell and
+ * scoped themes paint correctly before hydration. Hydration adopts hoistables by href
+ * without diffing content, so cosmetic serialization differences between the
+ * server-parsed and CSSOM-harvested closure are harmless. React never removes
+ * hoistables, so styles outlive their last provider — fine: they're keyed by content
+ * hash and inert without a matching scope attribute on the page.
  */
 
-interface SharedThemeEntry {
-  refs: number
-  el: HTMLStyleElement
-}
-const sharedThemes = new Map<string, SharedThemeEntry>()
+const scopedThemeCssCache = new Map<string, string>()
 
 /**
  * djb2 over the theme key. Deterministic from content — the token renders as the
- * `data-dotui-scope` attribute on the server too, so it must hydrate identically
- * (a session counter would drift between server and client).
+ * `data-dotui-scope` attribute and the style's href on the server too, so it must
+ * hydrate identically (a session counter would drift between server and client).
  */
 function themeTokenFor(key: string): string {
   let hash = 5381
@@ -288,66 +264,49 @@ function themeTokenFor(key: string): string {
 }
 
 /**
- * Join (or create) the shared <style> for a scoped theme and return its scope token —
- * the value the provider renders as `data-dotui-scope`. `undefined` when the provider
- * doesn't diverge from the page theme (nothing to inject).
+ * The scoped theme's scope token — the value the provider renders as
+ * `data-dotui-scope` — and its stylesheet as a hoistable <style> element for the
+ * provider to render. Both `undefined`/null when the provider doesn't diverge
+ * from the page theme (nothing to emit).
  */
-function useSharedScopedTheme(
+function useScopedTheme(
   color: ColorConfig | undefined,
   forcedMode: 'light' | 'dark' | undefined,
   enabled: boolean,
-): string | undefined {
+): { token: string | undefined; sheet: React.ReactNode } {
   // Content key = everything the stylesheet is built from (color config + pinned mode).
   // Token-only divergence (inline vars, no palette) shares a per-mode colorless entry.
+  // `color`/`forcedMode` enter only through the key: an identity-only `color` change
+  // must not rebuild, and the cache below keys on content.
   const [key, token] = React.useMemo(() => {
     if (!enabled) return [null, undefined] as const
     const k = `${forcedMode ?? 'auto'}:${color ? JSON.stringify(color) : 'default'}`
     return [k, themeTokenFor(k)] as const
   }, [enabled, color, forcedMode])
 
-  useIsomorphicLayoutEffect(() => {
-    if (key === null || token === undefined) return
-    // Layout effect, so the style lands in the same frame as the commit that rendered
-    // the scope attribute — before paint, no flash of the page theme.
-    let acquired = false
-    const entry = sharedThemes.get(key)
-    if (entry) {
-      entry.refs += 1
-      acquired = true
-    } else {
-      const css = buildScopedThemeCss(
+  let css: string | null = null
+  if (key !== null && token !== undefined) {
+    css = scopedThemeCssCache.get(key) ?? null
+    if (css === null) {
+      css = buildScopedThemeCss(
         `[data-dotui-scope="${token}"]`,
         color,
         forcedMode,
       )
-      // null: no closure to harvest yet — skip; a later theme change re-runs this.
-      if (css) {
-        const el = document.createElement('style')
-        el.setAttribute('data-dotui-color', token)
-        el.textContent = css
-        document.head.append(el)
-        sharedThemes.set(key, { refs: 1, el })
-        acquired = true
-      }
+      // null: no closure available yet — don't cache, a later render retries.
+      if (css !== null) scopedThemeCssCache.set(key, css)
     }
-    return () => {
-      // Only release what this effect actually acquired — a skipped (css: null)
-      // acquire must not decrement an entry another instance created since.
-      if (!acquired) return
-      const current = sharedThemes.get(key)
-      if (!current) return
-      current.refs -= 1
-      if (current.refs === 0) {
-        current.el.remove()
-        sharedThemes.delete(key)
-      }
-    }
-    // `color`/`forcedMode` are deliberately not deps: `key` pins their content, and an
-    // identity-only `color` change must not release/re-acquire — a sole holder would
-    // remove and rebuild the shared node every render.
-  }, [key, token])
+  }
 
-  return token
+  return {
+    token,
+    sheet:
+      css !== null && token !== undefined ? (
+        <style href={token} precedence="dotui-scope">
+          {css}
+        </style>
+      ) : null,
+  }
 }
 
 interface DesignSystemProviderProps {
@@ -424,7 +383,7 @@ function DesignSystemProvider({
   }, [tokens, params])
 
   // Per-instance id for the overlay portal target (only used in `scoped` mode). The
-  // scope *selector* is no longer per-instance — see useSharedScopedTheme.
+  // scope *selector* is no longer per-instance — see useScopedTheme.
   const scopeId = React.useId()
 
   // Apply the global token vars to :root so values that reference each other via calc() +
@@ -458,16 +417,16 @@ function DesignSystemProvider({
   // Warm the closure cache off the critical path: built lazily, the first divergence would pay
   // the full-document CSSOM walk synchronously inside the render of the user's first drag tick.
   React.useEffect(() => {
-    if (scoped) harvestRootClosure()
+    if (scoped) getRootClosure()
   }, [scoped])
 
-  // Scoped mode: join the shared closure-clone stylesheet, but only once something
+  // Scoped mode: render the shared closure-clone stylesheet, but only once something
   // actually diverges (a color, or a token like --radius-factor); an untouched preview
-  // injects nothing and inherits the page defaults. `cssVars` ride inline on the scope
+  // emits nothing and inherits the page defaults. `cssVars` ride inline on the scope
   // element and never enter the CSS text, so divergence keys on whether any override
   // EXISTS (a boolean), not object identity — else every radius tick rebuilds identical CSS.
   const hasTokenOverrides = Object.keys(cssVars).length > 0
-  const scopeToken = useSharedScopedTheme(
+  const { token: scopeToken, sheet: scopeSheet } = useScopedTheme(
     color,
     forcedMode,
     scoped && (Boolean(color) || hasTokenOverrides || Boolean(forcedMode)),
@@ -549,6 +508,7 @@ function DesignSystemProvider({
       data-mode={forcedMode}
       style={{ display: 'contents', ...scopeStyle }}
     >
+      {scopeSheet}
       <UNSAFE_PortalProvider
         getContainer={() => document.getElementById(portalDomId)}
       >

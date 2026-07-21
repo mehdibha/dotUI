@@ -6,6 +6,31 @@ import viteReact from '@vitejs/plugin-react'
 import mdx from 'fumadocs-mdx/vite'
 import { nitro } from 'nitro/vite'
 import { defineConfig } from 'vite'
+import type { Plugin } from 'vite'
+
+// Scoped design-system themes must paint before hydration, but the server has
+// no CSSOM to harvest the root token closure from. In server environments,
+// swap the root-closure-data placeholder for the closure parsed out of the
+// compiled stylesheet — see src/lib/root-closure.ts.
+const rootClosureDataId = path.resolve(
+  import.meta.dirname,
+  'src/lib/root-closure-data.ts',
+)
+function rootClosure(): Plugin {
+  return {
+    name: 'dotui-root-closure',
+    enforce: 'pre',
+    load(id) {
+      if (id.split('?')[0] !== rootClosureDataId) return
+      if (this.environment.name === 'client') return
+      return [
+        `import cssText from '../styles.css?inline'`,
+        `import { parseRootClosure } from './root-closure'`,
+        `export default parseRootClosure(cssText)`,
+      ].join('\n')
+    },
+  }
+}
 
 export default defineConfig({
   server: {
@@ -31,6 +56,7 @@ export default defineConfig({
     noExternal: ['@tabler/icons-react'],
   },
   plugins: [
+    rootClosure(),
     mdx(await import('./source.config')),
     nitro({
       preset: process.env.VERCEL ? 'vercel' : 'node',
