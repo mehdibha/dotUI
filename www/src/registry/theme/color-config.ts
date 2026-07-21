@@ -106,6 +106,7 @@ export type PaletteSeeds = ColorConfig['seeds']
 export const DEFAULT_COLOR_CONFIG: ColorConfig = {
   v: 2,
   seeds: { accent: '#438cd6' },
+  background: { dark: 2 },
 }
 
 /** Engine status defaults, re-exported for the customizer's seed pickers. */
