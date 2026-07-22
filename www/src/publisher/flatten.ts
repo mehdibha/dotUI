@@ -100,8 +100,11 @@ function mergeSlots(
     ...Object.keys(b ?? {}),
   ])
   for (const key of keys) {
-    const merged = mergeClass(a?.[key], b?.[key])
-    if (merged !== undefined) result[key] = merged
+    // Every iterated key is declared in a source layer, so preserve it even
+    // when its merged class list is empty ('') — the shipped base file
+    // destructures and calls every declared slot, and a dropped key becomes an
+    // undefined slot function at runtime (e.g. field's `fieldset` / `legend`).
+    result[key] = mergeClass(a?.[key], b?.[key]) ?? ''
   }
   return Object.keys(result).length > 0 ? result : undefined
 }

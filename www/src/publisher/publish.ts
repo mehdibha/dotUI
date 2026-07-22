@@ -54,7 +54,7 @@ let dotuiDepQuery = ''
  * They're not separately fetchable URLs — drop them from per-component
  * `registryDependencies` so shadcn doesn't 404 looking for them.
  */
-const BUNDLED_INTO_INIT = new Set([
+export const BUNDLED_INTO_INIT = new Set([
   // focus-ring / focus-reset / focus-input utilities ship in base.css.
   'focus-styles',
   // @theme blocks ship in theme.css.

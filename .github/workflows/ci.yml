@@ -40,6 +40,8 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/setup
 
+      # publish-smoke.test.ts imports the generated publishables (gitignored).
+      - run: pnpm build:registry
       - run: pnpm test
 
   registry-drift:

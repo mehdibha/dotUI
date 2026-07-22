@@ -68,6 +68,47 @@ describe('extractStylesConfig', () => {
       'shimmer',
     ])
   })
+
+  test('input: resolves module-level const string refs (compactText)', () => {
+    const cfg = extractStylesConfig(path.join(REGISTRY_UI, 'input/styles.ts'))
+    // `inputGroup: compactText` — the identifier resolves to its const literal.
+    expect(cfg.density?.compact?.slots?.inputGroup).toBe(
+      'text-base sm:text-xs/relaxed',
+    )
+  })
+
+  test('input: resolves local tv() factory calls (tokens, outlineField)', () => {
+    const cfg = extractStylesConfig(path.join(REGISTRY_UI, 'input/styles.ts'))
+    // `tokens({ h: 6 })` in density.compact size.sm → the h=6 token string.
+    const sm = cfg.density?.compact?.variants?.size?.sm as Record<
+      string,
+      string
+    >
+    expect(sm.input).toContain('[--input-h:--spacing(6)]')
+    // `outlineField({ focus: 'self' })` in params.style.outline.
+    const outline = cfg.params?.style?.outline?.slots?.input as string
+    expect(outline).toContain('focus:ring-2')
+    expect(outline).toContain('border-border-field')
+  })
+
+  test('otp-field: composes field styles via fieldStyles().field(...)', () => {
+    const cfg = extractStylesConfig(
+      path.join(REGISTRY_UI, 'otp-field/styles.ts'),
+    )
+    const root = cfg.base.slots?.root as string[]
+    expect(Array.isArray(root)).toBe(true)
+    // The composed field slot classes + the passed className, all merged by tv.
+    expect(root[0]).toContain('group/otp-field')
+    expect(root[0]).toContain('w-full flex-col gap-2')
+  })
+
+  test('slider: composes field styles via fieldStyles().field()', () => {
+    const cfg = extractStylesConfig(path.join(REGISTRY_UI, 'slider/styles.ts'))
+    // Same default-composed field slot the app renders (no className arg).
+    expect(cfg.base.slots?.root).toBe(
+      'flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2',
+    )
+  })
 })
 
 /* ============================================================ */
@@ -207,5 +248,39 @@ describe('end-to-end (extract + transform → publish)', () => {
 
     expect(rawContent).toContain('rounded-md')
     expect(rawContent).not.toContain('rounded-(--alert-radius)')
+  })
+
+  test('field: declared-but-empty slots (fieldset/legend) survive to the emitted tv config', () => {
+    const stylesConfig = extractStylesConfig(
+      path.join(REGISTRY_UI, 'field/styles.ts'),
+    )
+    const { template } = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, 'field/base.tsx'),
+      componentName: 'field',
+    })
+
+    const { rawContent } = publish({
+      publishable: {
+        template,
+        stylesConfig,
+        meta: {
+          name: 'field',
+          type: 'registry:ui',
+          files: [
+            {
+              type: 'registry:ui',
+              path: 'ui/field/base.tsx',
+              target: 'ui/field.tsx',
+            },
+          ],
+        },
+      },
+      preset: { density: 'default', componentParams: {} },
+    })
+
+    // The base file destructures `fieldset` / `legend` from the tv slots — if
+    // flatten drops the empty slot keys, those become undefined slot functions.
+    expect(rawContent).toMatch(/fieldset:\s*""/)
+    expect(rawContent).toMatch(/legend:\s*""/)
   })
 })
