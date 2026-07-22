@@ -8,10 +8,12 @@ import type { VariantProps } from 'tailwind-variants'
 
 import { Loader } from '@/registry/ui/loader'
 
-import { buttonStyles, useStyles } from './styles'
+import { useStyles } from './styles'
 import type { ButtonStyles } from './styles'
 
 // MARK: buttonStyles
+
+export { buttonStyles } from './styles'
 
 type ButtonVariants = VariantProps<ButtonStyles>
 
@@ -112,4 +114,4 @@ const LinkButton = ({
 // MARK: Separator
 
 export type { ButtonProps, LinkButtonProps }
-export { Button, buttonStyles, LinkButton }
+export { Button, LinkButton }

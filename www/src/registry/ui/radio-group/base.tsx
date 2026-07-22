@@ -7,7 +7,6 @@ import { LabelContext } from 'react-aria-components/Label'
 import * as RadioGroupPrimitives from 'react-aria-components/RadioGroup'
 import { Provider, useSlottedContext } from 'react-aria-components/slots'
 import { useSlotId } from 'react-aria/private/utils/useId'
-import { tv } from 'tailwind-variants'
 
 import { Label } from '@/registry/ui/field'
 
@@ -15,18 +14,15 @@ import { useStyles } from './styles'
 
 // MARK: radioGroupStyles
 
-const radioGroupStyles = tv({
-  base: 'flex flex-col gap-3',
-})
-
 const RadioGroup = ({
   className,
   ...props
 }: RadioGroupPrimitives.RadioGroupProps) => {
+  const { group } = useStyles()()
   return (
     <RadioGroupPrimitives.RadioGroup
       className={composeRenderProps(className, (className) =>
-        radioGroupStyles({ className }),
+        group({ className }),
       )}
       {...props}
     />
