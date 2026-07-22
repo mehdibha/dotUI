@@ -116,6 +116,7 @@ function rewriteDeps(deps: readonly string[] | undefined): string[] {
  */
 const FILE_IMPORT_NPM_DEPS = [
   'lucide-react',
+  'react-aria-components',
   'react-aria',
   'react-stately',
   '@remixicon/react',
@@ -125,7 +126,7 @@ const FILE_IMPORT_NPM_DEPS = [
   '@phosphor-icons/react',
 ]
 
-function depsFromFileImports(
+export function depsFromFileImports(
   files: ReadonlyArray<{ content?: string }>,
 ): string[] {
   const found: string[] = []

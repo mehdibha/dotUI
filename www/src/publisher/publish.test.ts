@@ -14,6 +14,7 @@ import { alertPublishable } from './__fixtures__/alert-publishable'
 import { buttonPublishable } from './__fixtures__/button-publishable'
 import { flatten } from './flatten'
 import {
+  depsFromFileImports,
   publish,
   setDotuiDepResolver,
   setKnownDotuiNames,
@@ -389,5 +390,42 @@ describe('publish', () => {
     expect(base?.content).not.toContain(TV_CONFIG_PLACEHOLDER)
     expect(hook?.content).toBe(hookContent)
     expect(hook?.content).not.toContain('export function Thing()')
+  })
+})
+
+/* ============================================================ */
+/* depsFromFileImports                                           */
+/* ============================================================ */
+
+describe('depsFromFileImports', () => {
+  const deps = (content: string) => depsFromFileImports([{ content }])
+
+  test('deep react-aria-components import maps to react-aria-components', () => {
+    const found = deps(
+      `import { Autocomplete } from "react-aria-components/Autocomplete"`,
+    )
+    expect(found).toContain('react-aria-components')
+    // must NOT be misattributed to the react-aria entry
+    expect(found).not.toContain('react-aria')
+  })
+
+  test('bare react-aria-components import maps to react-aria-components', () => {
+    const found = deps(`import { Button } from "react-aria-components"`)
+    expect(found).toContain('react-aria-components')
+    expect(found).not.toContain('react-aria')
+  })
+
+  test('react-aria deep import still maps to react-aria (not the -components pkg)', () => {
+    const found = deps(`import { useButton } from "react-aria/button"`)
+    expect(found).toContain('react-aria')
+    expect(found).not.toContain('react-aria-components')
+  })
+
+  test('a file importing both lists both packages', () => {
+    const found = deps(
+      `import { useFilter } from "react-aria"\nimport { Autocomplete } from "react-aria-components/Autocomplete"`,
+    )
+    expect(found).toContain('react-aria')
+    expect(found).toContain('react-aria-components')
   })
 })
