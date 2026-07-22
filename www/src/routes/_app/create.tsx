@@ -21,6 +21,9 @@ export const createSearchSchema = z.object({
   panel: z.string().optional().catch(undefined),
   preview: z.string().default('overview').catch('overview'),
   preset: z.string().optional().catch(undefined),
+  // Opens the preset gallery modal — set by the panel's Presets button and the
+  // /presets permanent redirect. Coerced like `lab` below.
+  gallery: z.coerce.boolean().optional().catch(undefined),
   // Opt-in flag for the in-progress control-panel redesign + panel lab. Keeps
   // the shipped /create untouched while the new IA is explored at /create?lab=true.
   // Coerced boolean: the search parser reads bare `1`/`true` as non-strings, so a

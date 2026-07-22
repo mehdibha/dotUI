@@ -33,9 +33,9 @@ function PaletteSwatches({ preset }: { preset: Preset }) {
  * One preset in the gallery — same shape as a /charts card: a quiet header row
  * (name + palette) over a framed live preview. The preview is a scaled, themed
  * render of the showcase; it's decorative (`inert`) and a transparent button
- * overlays the whole box to open the presentation modal. The preview contains
- * its own buttons, so the box itself can't be a <button> (nested buttons are
- * invalid HTML) — hence the overlay sibling.
+ * overlays the whole box to trigger `onSelect`. The preview contains its own
+ * buttons, so the box itself can't be a <button> (nested buttons are invalid
+ * HTML) — hence the overlay sibling.
  */
 export function PresetCard({
   preset,
@@ -56,7 +56,7 @@ export function PresetCard({
       <button
         type="button"
         onClick={onSelect}
-        aria-label={`Preview ${preset.name}`}
+        aria-label={`Use the ${preset.name} preset`}
         className="absolute inset-0 z-10 rounded-2xl focus-visible:focus-ring"
       />
     </ShowcaseCard>

@@ -10,7 +10,7 @@ interface ShowcaseCardProps extends React.ComponentProps<'div'> {
 }
 
 /**
- * The gallery card shell shared by /charts and /presets: a quiet header row
+ * The gallery card shell shared by /charts and the preset gallery: a quiet header row
  * (label left, optional action right) above a fixed-height framed box that holds
  * a live preview. Extra props spread onto the framed box, so callers can pass
  * `inert aria-hidden` (the decorative chart previews) or wire interactions.

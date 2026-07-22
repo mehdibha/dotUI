@@ -11,6 +11,7 @@ import {
   ChevronLeftIcon,
   MousePointer2Icon,
   ShuffleIcon,
+  SwatchBookIcon,
   Undo2Icon,
 } from 'lucide-react'
 import { AnimatePresence, motion, type Transition } from 'motion/react'
@@ -26,6 +27,8 @@ import type { PhosphorWeight } from '@/registry/icons/icon-map'
 import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
+import { PresetGalleryModal } from '@/modules/presets/preset-gallery-modal'
+import type { Preset } from '@/modules/presets/presets-data'
 
 import { ExamplesIndex } from './__generated__/examples'
 import { ColorsConfig, ColorsSummary } from './colors'
@@ -52,7 +55,7 @@ import {
   RADIUS_FACTOR_VAR,
   RadiusConfig,
 } from './layout'
-import { useDesignSystem } from './preset'
+import { encodePreset, useDesignSystem } from './preset'
 import { TypographyConfig, TypographySummary } from './typography'
 
 /* -------------------------------- Types -------------------------------- */
@@ -140,7 +143,7 @@ function pickRandom<T>(arr: readonly T[]): T {
 const routeApi = getRouteApi('/_app/create')
 
 export function CustomizerPanel({ className }: { className?: string }) {
-  const { panel, preset } = routeApi.useSearch()
+  const { panel, preset, gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
   const {
     designSystem,
@@ -198,6 +201,25 @@ export function CustomizerPanel({ className }: { className?: string }) {
         tokens: { ...prev.tokens, [RADIUS_FACTOR_VAR]: radius },
         color: { ...base, seeds: { ...base.seeds, accent } },
       }
+    })
+  }
+
+  // Apply a gallery preset and close the modal in one navigation — two separate
+  // updates (setDesignSystem + closing) would race on the functional `prev`.
+  // The `?preset=` change lands in the undo history like any other edit.
+  function applyPreset(picked: Preset) {
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        preset: encodePreset(picked.designSystem),
+        gallery: undefined,
+      }),
+    })
+  }
+
+  function setGalleryOpen(open: boolean) {
+    navigate({
+      search: (prev) => ({ ...prev, gallery: open ? true : undefined }),
     })
   }
 
@@ -437,6 +459,10 @@ export function CustomizerPanel({ className }: { className?: string }) {
         <div className="flex w-full items-center justify-between gap-2 pl-1">
           <span className="text-sm font-medium">Customize</span>
           <div className="flex items-center gap-1">
+            <Button size="sm" onPress={() => setGalleryOpen(true)}>
+              <SwatchBookIcon />
+              Presets
+            </Button>
             <Button size="sm" isIconOnly aria-label="Shuffle" onPress={shuffle}>
               <ShuffleIcon />
             </Button>
@@ -516,6 +542,12 @@ export function CustomizerPanel({ className }: { className?: string }) {
           </Button>
         </ExportDialog>
       </div>
+
+      <PresetGalleryModal
+        isOpen={gallery === true}
+        onOpenChange={setGalleryOpen}
+        onApply={applyPreset}
+      />
     </div>
   )
 }
