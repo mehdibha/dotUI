@@ -6,7 +6,7 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
   base: {
     slots: {
       content: [
-        'w-fit max-w-xs origin-(--trigger-anchor-point) rounded-(--tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip forced-color-adjust-none outline-none',
+        'w-fit max-w-xs origin-(--trigger-anchor-point) rounded-(--tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip shadow-[var(--shadow-overlay,none)] forced-color-adjust-none outline-none',
         'transition-[transform,opacity,scale] duration-200 ease-out will-change-[transform,opacity,scale] [--slide-offset:--spacing(0.5)]',
         'entering:scale-95 entering:transform-(--origin) entering:opacity-0',
         'exiting:scale-95 exiting:transform-(--origin) exiting:opacity-0 exiting:duration-150',

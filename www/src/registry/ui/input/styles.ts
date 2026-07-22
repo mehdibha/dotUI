@@ -29,7 +29,7 @@ const defaultText = 'text-base sm:text-sm'
 // nested input-control.
 
 const outlineField = tv({
-  base: 'rounded-(--input-radius) border border-border-field bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-border-disabled disabled:bg-disabled',
+  base: 'rounded-(--input-radius) border border-border-field bg-field px-(--edge-to-text) shadow-[var(--shadow-control,none)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-border-disabled disabled:bg-disabled',
   variants: {
     focus: {
       self: 'focus:ring-2 focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted',
@@ -62,7 +62,7 @@ const filledLineBottomField = tv({
 })
 
 const filledField = tv({
-  base: 'rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-disabled',
+  base: 'rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,none)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-disabled',
   variants: {
     focus: {
       self: 'focus:ring-2 focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted',

@@ -1550,7 +1550,7 @@
                     },
                     {
                       "type": "identifier",
-                      "name": "{ readonly content: readonly [\"w-fit max-w-xs origin-(--trigger-anchor-point) rounded-(--tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip forced-color-adjust-none outline-none\", \"transition-[transform,opacity,scale] duration-200 ease-out will-change-[transform,opacity,scale] [--slide-off..."
+                      "name": "{ readonly content: readonly [\"w-fit max-w-xs origin-(--trigger-anchor-point) rounded-(--tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip shadow-[var(--shadow-overlay,none)] forced-color-adjust-none outline-none\", \"transition-[transform,opacity,scale] duration-200 ease-out will-change-[t..."
                     },
                     {
                       "type": "identifier",

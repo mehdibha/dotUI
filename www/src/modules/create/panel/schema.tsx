@@ -47,6 +47,7 @@ import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
 import { Popover } from '@/registry/ui/popover'
 import { Select, SelectValue } from '@/registry/ui/select'
 import { Switch } from '@/registry/ui/switch'
+import { TextField } from '@/registry/ui/text-field'
 
 import { ContrastReadout } from '../colors/contrast'
 import { ColorFineTuneControls, useBorderSeeds } from '../colors/knobs'
@@ -96,6 +97,8 @@ const SPACING_SCALE_VAR = '--ds-spacing-scale'
 const SEED_FALLBACKS: Record<keyof PaletteSeeds, string> = {
   accent: DEFAULT_COLOR_CONFIG.seeds.accent,
   neutral: '#808080',
+  // Absent by default (selection mirrors primary); a blue stands in for the picker.
+  selection: '#0072f5',
   ...DEFAULT_STATUS_SEEDS,
 }
 
@@ -412,6 +415,36 @@ function BackdropBlurWidget() {
   )
 }
 
+/** One free-form box-shadow token; empty clears it back to the theme default. */
+function ShadowField({ varName, label }: { varName: string; label: string }) {
+  const { designSystem, setToken } = useDesignSystem()
+  const value = designSystem.tokens[varName] ?? ''
+  return (
+    <div className="flex flex-col gap-1">
+      <span className="text-[10px] tracking-wider text-fg-muted uppercase">
+        {label}
+      </span>
+      <TextField
+        value={value}
+        onChange={(v) => setToken(varName, v === '' ? undefined : v)}
+        aria-label={label}
+      >
+        <Input size="sm" className="w-full font-mono text-xs" />
+      </TextField>
+    </div>
+  )
+}
+
+function ShadowsWidget() {
+  return (
+    <div className="flex flex-col gap-2">
+      <ShadowField varName="--shadow-overlay" label="Overlay" />
+      <ShadowField varName="--shadow-card" label="Card" />
+      <ShadowField varName="--shadow-control" label="Control" />
+    </div>
+  )
+}
+
 /* ------------------------------- Motion --------------------------------- */
 
 function DurationWidget() {
@@ -622,6 +655,18 @@ export const SECTIONS: Section[] = [
         Widget: StatusColorsWidget,
       }),
       c({
+        id: 'selection-color',
+        label: 'Selection',
+        description:
+          'Focus rings and checked controls; follows primary when unset.',
+        domain: 'color',
+        tier: 'semantic',
+        tempo: 'micro',
+        binding: 'live',
+        keywords: ['focus', 'ring', 'checked', 'accent'],
+        Widget: () => <SeedField seed="selection" />,
+      }),
+      c({
         id: 'color-engine',
         label: 'Ramps & contrast',
         description: 'Engine axes, contrast readout, generated scales.',
@@ -771,6 +816,19 @@ export const SECTIONS: Section[] = [
         tempo: 'micro',
         binding: 'stub',
         Widget: BackdropBlurWidget,
+      }),
+      c({
+        id: 'shadows',
+        label: 'Shadows',
+        description:
+          'Raw box-shadow for overlays, cards and controls; empty uses the default.',
+        domain: 'elevation',
+        tier: 'primitive',
+        tempo: 'micro',
+        binding: 'live',
+        block: true,
+        keywords: ['shadow', 'elevation', 'box-shadow'],
+        Widget: ShadowsWidget,
       }),
     ],
   },

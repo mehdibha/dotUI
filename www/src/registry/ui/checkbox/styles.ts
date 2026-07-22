@@ -12,10 +12,10 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
       ],
       indicator: [
         'grid size-4 shrink-0 place-content-center rounded-(--checkbox-radius) border border-border-control bg-transparent text-transparent transition-[background-color,border-color,box-shadow,color] duration-75 *:[svg]:size-3',
-        'selected:border-transparent selected:bg-primary selected:text-fg-on-primary',
+        'selected:border-transparent selected:bg-selection selected:text-fg-on-selection',
         'disabled:border-border-disabled disabled:indeterminate:bg-disabled disabled:selected:bg-disabled disabled:selected:text-fg-disabled',
         'invalid:border-border-danger invalid:selected:bg-danger-muted invalid:selected:text-fg-danger',
-        'indeterminate:border-transparent indeterminate:bg-primary indeterminate:text-fg-on-primary',
+        'indeterminate:border-transparent indeterminate:bg-selection indeterminate:text-fg-on-selection',
       ],
     },
   },

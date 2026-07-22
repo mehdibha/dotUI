@@ -36,8 +36,14 @@ function makeDesignSystem(opts: {
   radiusFactor?: string
   /** Ramp the primary-action tokens draw from (default neutral black/white). */
   primary?: ColorConfig['primary']
+  /** Splits selection controls + focus onto their own ramp (else = primary). */
+  selection?: string
   /** Chroma-curve scale (1 = engine default). */
   vividness?: ColorConfig['vividness']
+  /** App-background lightness per mode (engine axis; dark accepts 0–20 or 'oled'). */
+  background?: ColorConfig['background']
+  /** Per-token semantic remaps (palette + job, optionally per-mode). */
+  colorOverrides?: ColorConfig['overrides']
   /** Google font families for the typography tokens (default Geist / match body). */
   fonts?: { heading?: string; body?: string; mono?: string }
   /** Per-component param overrides on top of the builder defaults. */
@@ -63,9 +69,15 @@ function makeDesignSystem(opts: {
     tokens,
     color: {
       v: 2,
-      seeds: { accent, neutral },
+      seeds: {
+        accent,
+        neutral,
+        ...(opts.selection ? { selection: opts.selection } : {}),
+      },
       ...(opts.primary ? { primary: opts.primary } : {}),
       ...(opts.vividness !== undefined ? { vividness: opts.vividness } : {}),
+      ...(opts.background ? { background: opts.background } : {}),
+      ...(opts.colorOverrides ? { overrides: opts.colorOverrides } : {}),
     },
   }
 }
@@ -82,18 +94,34 @@ export const PRESETS: Preset[] = [
       // Geist runs a 14px/32px UI scale at 6px radii — our defaults, not compact/0.5
       // (verified against live computed styles; see issue #484 Phase 1 audit).
       density: 'default',
-      // A pure-gray accent: zero vividness keeps the ramp from tinting back up
-      // (Geist-style neutral primary).
-      vividness: 0,
+      // Geist runs black CTAs but a blue selection: focus rings + checked
+      // controls. The #171717 accent + #737373 neutral seeds are already
+      // achromatic, so the monochrome chrome needs no vividness clamp — and
+      // clamping it would flatten this chromatic selection ramp back to gray.
+      selection: '#0072f5',
+      // Vercel dark runs a true-black page with #0a0a0a panels; dark:0 lands
+      // n50 (the card step) on 0x0a0a0a exactly.
+      background: { dark: 0 },
+      colorOverrides: {
+        // Geist hairlines sit two ramp steps lighter than our border default.
+        'color-border': { palette: 'neutral', job: 'ui-hover' },
+        // Light mode inverts our elevation: white cards float on a #fafafa page.
+        'color-bg': { light: { palette: 'neutral', job: 'subtle-bg' } },
+        'color-card': { light: { palette: 'neutral', job: 'app-bg' } },
+        'color-popover': { light: { palette: 'neutral', job: 'app-bg' } },
+      },
       components: {
         command: { style: '3' },
         badge: { radius: '--radius-full' },
       },
       tokens: {
-        // Geist hairlines sit two ramp steps lighter than our border default.
-        '--color-border': 'var(--neutral-200)',
-        // Vercel's focus ring is opaque blue, not the monochrome accent.
-        '--color-border-focus': '#0072f5',
+        // Geist elevation: two soft layered shadows + a 1px hairline ring that
+        // rides the neutral ramp so it adapts per mode. Overlays and cards share
+        // the value — both float over the page.
+        '--shadow-overlay':
+          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06), 0 0 0 1px var(--neutral-400)',
+        '--shadow-card':
+          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06), 0 0 0 1px var(--neutral-400)',
       },
     }),
   },
@@ -127,6 +155,10 @@ export const PRESETS: Preset[] = [
       density: 'default',
       // Stripe's UI font is Söhne (proprietary); Inter is the closest free grotesque.
       fonts: { body: 'Inter' },
+      tokens: {
+        // Stripe's "floating hairline": a 1px drop shadow riding on the field border.
+        '--shadow-control': 'rgb(16 17 26 / 0.16) 0 1px 1px',
+      },
     }),
   },
   {
@@ -142,8 +174,12 @@ export const PRESETS: Preset[] = [
       density: 'default',
       // Linear ships Inter (verified against live production CSS).
       fonts: { body: 'Inter' },
-      // Linear hairlines are far softer than our border default.
-      tokens: { '--color-border': 'var(--neutral-200)' },
+      // Linear's dark-first page is near-black #08090a.
+      background: { dark: 2 },
+      // Hairlines are far softer than our border default.
+      colorOverrides: {
+        'color-border': { palette: 'neutral', job: 'ui-hover' },
+      },
     }),
   },
   {
@@ -161,6 +197,8 @@ export const PRESETS: Preset[] = [
       // Anthropic Sans is a neutral grotesque (Inter is closest free); Anthropic
       // Serif is a calm book serif (Source Serif 4, not display-contrast Fraunces).
       fonts: { heading: 'Source Serif 4', body: 'Inter' },
+      // Claude's signature cream page (#faf9f5 ≈ L* 98, warm hue from the seed).
+      background: { light: 98 },
     }),
   },
   {
@@ -193,6 +231,15 @@ export const PRESETS: Preset[] = [
       density: 'default',
       // GitHub's brand font, open-sourced and on Google Fonts.
       fonts: { body: 'Mona Sans' },
+      // GitHub dark sits on blue-black #0d1117.
+      background: { dark: 4.5 },
+      // Inputs are canvas-white in light but a raised panel in dark.
+      colorOverrides: {
+        'color-field': {
+          light: { palette: 'neutral', job: 'app-bg' },
+          dark: { palette: 'neutral', job: 'ui-rest' },
+        },
+      },
       // Labels/counters are pills; focus ring is a brighter blue than link blue.
       components: { badge: { radius: '--radius-full' } },
       tokens: { '--color-border-focus': '#1f6feb' },
@@ -213,7 +260,9 @@ export const PRESETS: Preset[] = [
       density: 'default',
       // Notion ships NotionInter, a customized Inter.
       fonts: { body: 'Inter' },
-      tokens: { '--color-border': 'var(--neutral-200)' },
+      colorOverrides: {
+        'color-border': { palette: 'neutral', job: 'ui-hover' },
+      },
     }),
   },
   {
