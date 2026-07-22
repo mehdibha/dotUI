@@ -52,9 +52,10 @@ export function ExportSection() {
           to { stroke-dashoffset: 0; }
         }
       `}</style>
-      <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+      {/* Visual left, copy right on lg — mirrored from the composition section. */}
+      <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
         {/* Copy */}
-        <div className="flex flex-col items-start gap-4">
+        <div className="flex flex-col items-start gap-4 lg:order-2">
           <h2 className="font-mono text-sm tracking-wide text-fg-muted">
             Export
           </h2>
@@ -79,7 +80,7 @@ export function ExportSection() {
         </div>
 
         {/* One system flowing out to every destination. */}
-        <div className="relative overflow-hidden rounded-xl border bg-card p-6 shadow-xs sm:p-10">
+        <div className="relative overflow-hidden rounded-xl border bg-card p-6 shadow-xs sm:p-10 lg:order-1">
           <div
             aria-hidden
             className="absolute inset-0 bg-[radial-gradient(var(--color-border)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_70%_80%_at_50%_50%,black,transparent)] bg-[size:14px_14px]"
