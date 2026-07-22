@@ -95,6 +95,7 @@ function PresetModalBody({ preset }: { preset: Preset }) {
   const { resolvedTheme } = useTheme()
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [previewMode, setPreviewMode] = useState<PreviewMode>('light')
+  const lightOnly = Boolean(preset.lightOnly)
 
   const encoded = useMemo(
     () => encodePreset(preset.designSystem),
@@ -107,8 +108,9 @@ function PresetModalBody({ preset }: { preset: Preset }) {
   // Seed the preview's light / dark from the site theme on open, then it's
   // independent (mirrors the /create PreviewPanel: the SSR'd server can't know
   // the client's stored theme, so seed after mount rather than during render).
+  // Light-only presets stay pinned to light regardless.
   useEffect(() => {
-    setPreviewMode(resolvedTheme === 'dark' ? 'dark' : 'light')
+    setPreviewMode(!lightOnly && resolvedTheme === 'dark' ? 'dark' : 'light')
     // oxlint-disable-next-line react/exhaustive-deps -- seed once at open; preview mode is independent thereafter
   }, [])
 
@@ -229,22 +231,29 @@ function PresetModalBody({ preset }: { preset: Preset }) {
       {/* RIGHT: the live showcase, themed by this preset. */}
       <div className="relative flex min-h-0 flex-1 flex-col bg-bg">
         <div className="flex h-11 shrink-0 items-center justify-end gap-1 border-b px-2">
-          <Tooltip>
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              onPress={() =>
-                setPreviewMode((m) => (m === 'dark' ? 'light' : 'dark'))
-              }
-              aria-label="Toggle preview mode"
-            >
-              {previewMode === 'dark' ? <SunIcon /> : <MoonIcon />}
-            </Button>
-            <TooltipContent>
-              {previewMode === 'dark' ? 'Light mode' : 'Dark mode'}
-            </TooltipContent>
-          </Tooltip>
+          {lightOnly ? (
+            <span className="flex items-center gap-1.5 px-1.5 text-xs font-medium text-fg-muted">
+              <SunIcon className="size-3.5" />
+              Light only
+            </span>
+          ) : (
+            <Tooltip>
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                onPress={() =>
+                  setPreviewMode((m) => (m === 'dark' ? 'light' : 'dark'))
+                }
+                aria-label="Toggle preview mode"
+              >
+                {previewMode === 'dark' ? <SunIcon /> : <MoonIcon />}
+              </Button>
+              <TooltipContent>
+                {previewMode === 'dark' ? 'Light mode' : 'Dark mode'}
+              </TooltipContent>
+            </Tooltip>
+          )}
           <Tooltip>
             <Button
               size="sm"

@@ -50,7 +50,10 @@ export function PresetCard({
       action={<PaletteSwatches preset={preset} />}
       className="transition hover:border-border-hover hover:shadow-md has-[button:focus-visible]:border-border-hover"
     >
-      <PresetThumbnail designSystem={preset.designSystem} />
+      <PresetThumbnail
+        designSystem={preset.designSystem}
+        forcedMode={preset.lightOnly ? 'light' : undefined}
+      />
       {/* Fade the clipped bottom edge into the card chrome. */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card to-transparent" />
       <button

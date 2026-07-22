@@ -25,6 +25,8 @@ export type Preset = {
    * near-black accent would vanish; it shows as a monochrome light dot).
    */
   swatch: string
+  /** Supports light mode only — previews pin light and drop the mode toggle. */
+  lightOnly?: boolean
   designSystem: DesignSystem
 }
 
@@ -38,6 +40,10 @@ function makeDesignSystem(opts: {
   primary?: ColorConfig['primary']
   /** Chroma-curve scale (1 = engine default). */
   vividness?: ColorConfig['vividness']
+  /** App-background lightness per mode (e.g. a dimmer paper-cream light). */
+  background?: ColorConfig['background']
+  /** Neutral whisper-tint scale (1 = engine default). */
+  neutralTint?: ColorConfig['neutralTint']
   /** Google font families for the typography tokens (default Geist / match body). */
   fonts?: { heading?: string; body?: string; mono?: string }
   /** Per-component param overrides on top of the builder defaults. */
@@ -66,6 +72,10 @@ function makeDesignSystem(opts: {
       seeds: { accent, neutral },
       ...(opts.primary ? { primary: opts.primary } : {}),
       ...(opts.vividness !== undefined ? { vividness: opts.vividness } : {}),
+      ...(opts.background ? { background: opts.background } : {}),
+      ...(opts.neutralTint !== undefined
+        ? { neutralTint: opts.neutralTint }
+        : {}),
     },
   }
 }
@@ -234,6 +244,29 @@ export const PRESETS: Preset[] = [
         badge: { radius: '--radius-full' },
         input: { style: 'filled' },
       },
+    }),
+  },
+  {
+    id: 'paper',
+    name: 'Paper',
+    description: 'Bookish serif on warm paper, light-only.',
+    swatch: '#e3d9c6',
+    lightOnly: true,
+    // A writing mood, not a brand replica: reading serifs, cream paper, ink
+    // actions. Dark mode is deliberately unsupported — paper has one side.
+    designSystem: makeDesignSystem({
+      // Warm stone ink; the boosted whisper tint plus a dimmer background
+      // lightness turn the neutral ramp into cream paper.
+      neutral: '#7a7265',
+      // Russet ink — deep enough to read as ink, warm enough to sit on cream.
+      accent: '#8f4731',
+      neutralTint: 2,
+      background: { light: 97 },
+      radiusFactor: '0.75',
+      density: 'comfortable',
+      fonts: { heading: 'Lora', body: 'Literata' },
+      // Printed-page hairlines: soft rules, not UI borders.
+      tokens: { '--color-border': 'var(--neutral-200)' },
     }),
   },
 ]

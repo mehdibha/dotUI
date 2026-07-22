@@ -62,10 +62,18 @@ function usePreviewMode(): PreviewMode | undefined {
     : undefined
 }
 
+/** True when the selected docs preset supports light mode only. */
+function useSelectedPresetLightOnly(): boolean {
+  const selected = presetStore.useValue()
+  return Boolean(PRESETS.find((p) => p.id === selected)?.lightOnly)
+}
+
 /** The mode previews must pin, or undefined when the site theme already provides it. */
 export function useForcedPreviewMode(): PreviewMode | undefined {
   const mode = usePreviewMode()
   const { resolvedTheme } = useTheme()
+  const lightOnly = useSelectedPresetLightOnly()
+  if (lightOnly) return resolvedTheme === 'light' ? undefined : 'light'
   return mode === undefined || mode === resolvedTheme ? undefined : mode
 }
 
@@ -163,9 +171,27 @@ function PresetSelector() {
 }
 
 function PreviewModeToggle({ className }: { className?: string }) {
-  const mode = usePreviewMode() ?? 'light'
+  const storedMode = usePreviewMode() ?? 'light'
+  const lightOnly = useSelectedPresetLightOnly()
+  const mode = lightOnly ? 'light' : storedMode
   const next = mode === 'light' ? 'dark' : 'light'
   const Icon = mode === 'light' ? SunIcon : MoonIcon
+
+  // A light-only preset has no dark rendering to switch to.
+  if (lightOnly) {
+    return (
+      <Button
+        variant="quiet"
+        size="sm"
+        isIconOnly
+        isDisabled
+        aria-label="Light-only preset"
+        className={cn('text-fg-muted', className)}
+      >
+        <SunIcon />
+      </Button>
+    )
+  }
 
   return (
     <Tooltip>

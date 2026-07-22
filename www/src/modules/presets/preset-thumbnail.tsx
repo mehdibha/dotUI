@@ -23,8 +23,11 @@ const BASE_WIDTH = 720
  */
 export function PresetThumbnail({
   designSystem,
+  forcedMode,
 }: {
   designSystem: DesignSystem
+  /** Pin the scoped theme to one mode (light-only presets), ignoring the site theme. */
+  forcedMode?: 'light' | 'dark'
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(0)
@@ -50,6 +53,7 @@ export function PresetThumbnail({
           density={designSystem.density}
           color={designSystem.color}
           icons={designSystem.icons}
+          forcedMode={forcedMode}
         >
           {/* Canvas, themed by the scope so the cards sit on the preset's own bg. */}
           <div aria-hidden className="absolute inset-0 bg-bg" />

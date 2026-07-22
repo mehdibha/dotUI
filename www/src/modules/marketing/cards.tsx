@@ -9,7 +9,10 @@ import { PRESETS } from '@/modules/presets/presets-data'
 
 export function Cards() {
   const [selected, setSelected] = useState(0)
-  const preset = PRESETS[selected]?.designSystem ?? DEFAULTS
+  const active = PRESETS[selected]
+  const preset = active?.designSystem ?? DEFAULTS
+  // A light-only preset pins its scope to light even under the dark site theme.
+  const forcedMode = active?.lightOnly ? ('light' as const) : undefined
 
   // Re-theming the grid re-renders every styled component in it; as a transition
   // that render is interruptible and doesn't block the click.
@@ -26,7 +29,7 @@ export function Cards() {
           nested masks instead of mask-composite for browser compatibility.
           --preset-wash-bg is registered as a <color> in styles.css so it
           tweens on preset switch. */}
-      <DesignSystemProvider scoped color={preset.color}>
+      <DesignSystemProvider scoped color={preset.color} forcedMode={forcedMode}>
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 -top-56 bottom-0 -z-20 [mask-image:linear-gradient(to_bottom,transparent,black_24rem)]"
@@ -47,6 +50,7 @@ export function Cards() {
           density={preset.density}
           color={preset.color}
           icons={preset.icons}
+          forcedMode={forcedMode}
         >
           <CardsGrid className="relative z-20 w-[max(52rem,150vw)] max-w-none shrink-0 [zoom:0.8] [mask-image:linear-gradient(to_right,black_calc(125vw_-_1.25*var(--crop-pl)_-_1.25*var(--edge-fade)),transparent_calc(125vw_-_1.25*var(--crop-pl)))] [--edge-fade:2.5rem] lg:w-full lg:max-w-(--grid-max) lg:min-w-0 lg:shrink lg:[zoom:1] lg:[mask-image:none]" />
         </DesignSystemProvider>
