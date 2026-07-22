@@ -10,7 +10,7 @@ import {
   diffCleanupSemanticLossless,
   type Diff,
 } from 'diff-match-patch-es'
-import { PauseIcon, PlayIcon } from 'lucide-react'
+import { PauseIcon, PlayIcon, RotateCcwIcon } from 'lucide-react'
 import {
   codeToKeyedTokens,
   syncTokenKeys,
@@ -78,6 +78,9 @@ interface Step {
   // only steps within a few code lines of each other, so the pane height
   // barely moves (see compactSteps).
   compact?: boolean
+  // A stop on the home section's chapter rail (see chapters). Clicking the
+  // next chapter plays the steps in between as a fast walk.
+  chapter?: boolean
 }
 
 // Opening mid beat: a bare Input, the seed the TextField builds around. It's
@@ -137,6 +140,7 @@ const steps: Step[] = [
   {
     // Headline: the full field — label, input, and description.
     title: 'TextField',
+    chapter: true,
     durationMs: 3000,
     code: `<TextField>
   <Label>Email</Label>
@@ -214,6 +218,7 @@ const steps: Step[] = [
     // Headline step: add the trailing addon — the full InputGroup.
     title: 'InputGroup',
     compact: true,
+    chapter: true,
     durationMs: 3600,
     code: `<TextField>
   <Label>Email</Label>
@@ -350,6 +355,7 @@ const steps: Step[] = [
   {
     // Headline: attach the popover calendar.
     title: 'DatePicker',
+    chapter: true,
     durationMs: 3400,
     code: `<DatePicker>
   <Label>Meeting date</Label>
@@ -555,6 +561,7 @@ const steps: Step[] = [
   },
   {
     title: 'Drawer',
+    chapter: true,
     durationMs: 2800,
     code: `<DateRangePicker>
   <Label>Trip dates</Label>
@@ -634,6 +641,7 @@ const steps: Step[] = [
     // Headline: attach the options list.
     title: 'Select',
     compact: true,
+    chapter: true,
     durationMs: 3200,
     code: `<Select>
   <Label>Assignee</Label>
@@ -716,6 +724,7 @@ const steps: Step[] = [
   {
     // Headline: multi-select — selected people surface as tags.
     title: 'Tags',
+    chapter: true,
     durationMs: 3000,
     code: `<Combobox>
   <Label>Assignee</Label>
@@ -859,6 +868,7 @@ const steps: Step[] = [
     // Headline: one item nests a submenu.
     title: 'Menu',
     compact: true,
+    chapter: true,
     durationMs: 3000,
     code: `<Menu>
   <Button size="sm" isIconOnly>
@@ -1001,6 +1011,7 @@ const steps: Step[] = [
   {
     // Headline: each suggestion gains an avatar.
     title: 'Mention',
+    chapter: true,
     durationMs: 3200,
     code: `<Mention>
   <TextField>
@@ -1122,6 +1133,7 @@ const steps: Step[] = [
     // Every part recomposed into a live command palette — sectioned,
     // shortcut-hinted, and typing filters it in place.
     title: 'Command palette',
+    chapter: true,
     durationMs: 4200,
     code: `<Command>
   <SearchField>
@@ -1232,6 +1244,7 @@ const steps: Step[] = [
     // The same searchable list drops into a Select — Command is React Aria's
     // Autocomplete, so the popover filters in place.
     title: 'Searchable select',
+    chapter: true,
     durationMs: 3600,
     code: `<Select>
   <Label>Assignee</Label>
@@ -1306,6 +1319,11 @@ const paginate = (list: Step[]) =>
 const paginatedSteps = paginate(steps)
 const compactPaginatedSteps = paginate(compactSteps)
 
+// The home section's rail entries — the story's curated stops.
+export const chapters = steps.flatMap((s, index) =>
+  s.chapter ? [{ title: s.title, index }] : [],
+)
+
 export type CompositionPlayer = ReturnType<typeof useCompositionPlayer>
 
 // shiki-magic-move delays each phase by a *fraction of* `duration` and then runs
@@ -1325,6 +1343,11 @@ const MANUAL_BEAT_MS = Math.ceil(
   CODE_SPAN * CODE_DURATION_MS + 120 * WALK_CODE_STAGGER_MS,
 )
 
+// A manual navigation landing within this window of the previous one means
+// the user is browsing, not watching — the step applies instantly instead of
+// queuing another animation behind the one still in flight.
+const MANUAL_INTERRUPT_MS = Math.ceil(CODE_SPAN * CODE_DURATION_MS)
+
 // Shared player: auto-advance while visible, with a CSS animation as the step
 // clock (see StepTimer) so the visible progress and the advance tick can never
 // drift. Hovering or focusing the showcase pauses; the play/pause button is a
@@ -1333,7 +1356,13 @@ const MANUAL_BEAT_MS = Math.ceil(
 // `compactBelowLg` swaps in the compact loop when the viewport is under the
 // lg breakpoint. It flips after mount only, so server and hydration markup
 // always show the full list's first step.
-export function useCompositionPlayer({ compactBelowLg = false } = {}) {
+// `oneShot` plays the story once and parks at the end instead of looping —
+// and the moment the user navigates manually, the clock yields to them until
+// they press play again.
+export function useCompositionPlayer({
+  compactBelowLg = false,
+  oneShot = false,
+} = {}) {
   const [step, setStep] = useState(0)
   const [compact, setCompact] = useState(false)
   const [userPaused, setUserPaused] = useState(false)
@@ -1416,15 +1445,29 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
   }, [])
 
   const stepRef = useRef(0)
-  const applyStep = useCallback((next: number) => {
+  // `instant` snaps: the in-flight morph completes on the spot and the new
+  // step lands with no animation of its own (the code renders at duration 0
+  // via `codeInstant`).
+  const [instantStep, setInstantStep] = useState(false)
+  const applyStep = useCallback((next: number, { instant = false } = {}) => {
     stepRef.current = next
+    setInstantStep(instant)
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduce || scrollingRef.current || !document.startViewTransition) {
+    if (
+      instant ||
+      reduce ||
+      scrollingRef.current ||
+      !document.startViewTransition
+    ) {
+      activeTransitionRef.current?.skipTransition()
       setStep(next)
       return
     }
+    // Always commit the *latest* requested step: a skipped transition's update
+    // callback still runs after the interrupting navigation's state landed,
+    // and committing its own stale `next` would revert it.
     const transition = document.startViewTransition(() => {
-      flushSync(() => setStep(next))
+      flushSync(() => setStep(stepRef.current))
     })
     activeTransitionRef.current = transition
     transition.finished.finally(() => {
@@ -1455,10 +1498,28 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
   }, [compact, cancelWalk])
 
   const [walking, setWalking] = useState(false)
+  const lastManualRef = useRef(-Infinity)
   const goToStep = useCallback(
-    (next: number) => {
+    // `walkAll` (chapter-rail advance) walks through headline steps too, not
+    // just mid beats — the whole story between two chapters plays.
+    (next: number, { walkAll = false } = {}) => {
+      // A navigation while a walk or the previous navigation's animation is
+      // still in flight is browsing, not watching — snap to the target so no
+      // click ever waits behind an animation.
+      const interrupting =
+        walkTimerRef.current !== null ||
+        performance.now() - lastManualRef.current < MANUAL_INTERRUPT_MS
+      lastManualRef.current = performance.now()
       cancelWalk()
+      // Manual navigation takes over from the one-shot clock for good.
+      if (oneShot) setUserPaused(true)
       const from = stepRef.current
+      if (next === from) return
+      if (interrupting) {
+        setWalking(false)
+        applyStep(next, { instant: true })
+        return
+      }
       const between = activeSteps.slice(from + 1, next)
       const reduce = window.matchMedia(
         '(prefers-reduced-motion: reduce)',
@@ -1467,7 +1528,7 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
         reduce ||
         next <= from ||
         between.length === 0 ||
-        !between.every((s) => s.mid)
+        !(walkAll || between.every((s) => s.mid))
       ) {
         setWalking(false)
         applyStep(next)
@@ -1486,23 +1547,35 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
       }
       walk()
     },
-    [applyStep, cancelWalk, activeSteps],
+    [applyStep, cancelWalk, activeSteps, oneShot],
   )
 
-  const advance = useCallback(
-    () => applyStep((stepRef.current + 1) % activeSteps.length),
-    [applyStep, activeSteps],
-  )
+  // One-shot plays once: reaching the end parks the player instead of
+  // wrapping around.
+  const advance = useCallback(() => {
+    const next = stepRef.current + 1
+    if (next < activeSteps.length) {
+      applyStep(next)
+    } else if (oneShot) {
+      setUserPaused(true)
+    } else {
+      applyStep(0)
+    }
+  }, [applyStep, activeSteps, oneShot])
 
   // Hovering is a real pause to the reader, so the button reads and toggles
   // this rather than the explicit override alone. Excludes off-screen and
   // background-tab parking, which pause the clock but aren't the reader's doing.
   const paused = userPaused || hoverPaused
   const togglePlay = useCallback(() => {
+    // Playing from the end restarts the story from the top.
+    if (paused && oneShot && stepRef.current >= activeSteps.length - 1) {
+      applyStep(0)
+    }
     setUserPaused(!paused)
     // Resuming with the cursor still inside must actually resume.
     setHoverPausedState(false)
-  }, [paused])
+  }, [paused, oneShot, activeSteps, applyStep])
 
   const playing = mounted && inView && !hidden && !paused
   const paginated = compact ? compactPaginatedSteps : paginatedSteps
@@ -1545,6 +1618,7 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
     paginated,
     activePaginated,
     codeStaggerMs: walking ? WALK_CODE_STAGGER_MS : CODE_STAGGER_MS,
+    codeInstant: instantStep,
   }
 }
 
@@ -1647,24 +1721,36 @@ export function StepDots({
   )
 }
 
+// `showLabel` spells the action out (Play / Pause / Replay) where there's
+// room for it; icon-only elsewhere.
 export function PlayPauseButton({
   player,
+  showLabel = false,
   className,
 }: {
   player: CompositionPlayer
+  showLabel?: boolean
   className?: string
 }) {
-  const { paused, togglePlay } = player
+  const { paused, togglePlay, step, steps } = player
+  const label = !paused ? 'Pause' : step >= steps.length - 1 ? 'Replay' : 'Play'
   return (
     <Button
       size="sm"
       variant="quiet"
-      isIconOnly
-      aria-label={paused ? 'Play steps' : 'Pause steps'}
+      isIconOnly={!showLabel}
+      aria-label={`${label} steps`}
       onPress={togglePlay}
       className={cn('text-fg-muted', className)}
     >
-      {paused ? <PlayIcon /> : <PauseIcon />}
+      {label === 'Replay' ? (
+        <RotateCcwIcon />
+      ) : paused ? (
+        <PlayIcon />
+      ) : (
+        <PauseIcon />
+      )}
+      {showLabel && label}
     </Button>
   )
 }
@@ -1888,6 +1974,7 @@ export function CompositionAnimation({ className }: { className?: string }) {
     reducedMotion,
     setHoverPaused,
     codeStaggerMs,
+    codeInstant,
   } = player
 
   return (
@@ -1915,7 +2002,7 @@ export function CompositionAnimation({ className }: { className?: string }) {
           {mounted ? (
             <CompositionCode
               code={current.code}
-              reducedMotion={reducedMotion}
+              reducedMotion={reducedMotion || codeInstant}
               stagger={codeStaggerMs}
             />
           ) : (
