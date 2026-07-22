@@ -16,7 +16,7 @@ export function CtaSection() {
   return (
     <section className="container mt-24 flex flex-col items-center text-center md:mt-36">
       <h2 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-3xl leading-tight font-normal tracking-[-0.05em] text-balance antialiased sm:text-5xl">
-        Your design system, one command away
+        Your design system, one command away.
       </h2>
       <div className="mt-8 flex max-w-full flex-wrap items-center justify-center gap-3">
         <LinkButton
