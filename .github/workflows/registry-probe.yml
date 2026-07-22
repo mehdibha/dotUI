@@ -1,0 +1,71 @@
+# Post-deploy probe (issue #496): checks what the DEPLOYED app serves at /r/*.
+#
+# CI (ci.yml) guards the registry build from source, but __generated__/publishables
+# is gitignored and rebuilt per deploy — so production can drift from a green CI
+# (this is how #477's /r/input 404 stayed invisible). This workflow probes the
+# live production app after each production deploy, and once daily as a safety net.
+#
+# Vercel's GitHub integration emits `deployment_status` events; we run on the
+# successful Production one. dotui.org is the stable production alias, so the
+# probe always targets it (the script cache-busts every request to dodge stale
+# CDN copies from the previous deploy).
+
+name: Registry probe
+
+on:
+  deployment_status:
+  schedule:
+    # Daily safety net — catches drift even without a deploy, or a missed event.
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+    inputs:
+      origin:
+        description: 'Origin to probe'
+        required: false
+        default: 'https://dotui.org'
+
+# Never run two probes at once; a newer deploy supersedes an in-flight probe.
+concurrency:
+  group: registry-probe
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    # For deployment_status, only the successful Production deployment. Other
+    # triggers (schedule, manual) always run.
+    if: >-
+      github.event_name != 'deployment_status' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment_status.environment == 'Production')
+    runs-on: ubuntu-latest
+    name: Probe production registry
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      # Give the production alias a moment to point at the new deployment before
+      # probing; deployment_status success can fire a beat before promotion.
+      - name: Wait for promotion
+        if: github.event_name == 'deployment_status'
+        run: sleep 30
+
+      - name: Probe
+        env:
+          PROBE_ORIGIN: ${{ github.event.inputs.origin || 'https://dotui.org' }}
+        # Retry a couple of times: a just-promoted deploy plus cache warming can
+        # briefly race. Three attempts, 20s apart, before we call it a failure.
+        run: |
+          for attempt in 1 2 3; do
+            echo "::group::probe attempt $attempt"
+            if pnpm probe:registry --origin "$PROBE_ORIGIN"; then
+              echo "::endgroup::"
+              exit 0
+            fi
+            echo "::endgroup::"
+            if [ "$attempt" -lt 3 ]; then
+              echo "attempt $attempt failed; retrying in 20s"
+              sleep 20
+            fi
+          done
+          echo "probe failed after 3 attempts"
+          exit 1
