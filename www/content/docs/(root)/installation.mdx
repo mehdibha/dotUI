@@ -28,10 +28,12 @@ This writes the `@dotui` registry into `components.json`:
 ```json title="components.json"
 {
   "registries": {
-    "@dotui": "https://dotui.org/r/{name}"
+    "@dotui": "https://dotui.org/r/{name}?preset="
   }
 }
 ```
+
+The empty `?preset=` is a placeholder — a style exported from the [editor](/create) fills it in so every component installs pre-themed.
 
 <Alert>
   Building a style in the [editor](/create)? Its export dialog gives you an
