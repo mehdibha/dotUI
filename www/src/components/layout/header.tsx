@@ -10,40 +10,10 @@ import { GitHubIcon } from '@/components/icons/github'
 import { HeaderActionsSlot } from '@/components/layout/header-slot'
 import { Logo } from '@/components/layout/logo'
 import { MobileNav } from '@/components/layout/mobile-nav'
+import { ProgressiveBlur } from '@/components/progressive-blur'
 import { SearchCommand } from '@/components/search-command'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { DocsTocSelect } from '@/modules/docs/docs-toc-select'
-
-// iOS-style progressive blur: each layer adds a larger backdrop blur over an
-// overlapping gradient window. Where the windows overlap the blurs compound,
-// ramping smoothly from sharp (bottom edge) to heavily blurred (top). The
-// `to top` direction puts the strongest blur under the nav content. The wrapper
-// must stay mask-free — a mask there establishes a backdrop root and kills the
-// cross-layer compounding that makes the ramp smooth.
-const BLUR_LAYERS = [
-  {
-    blur: 0.5,
-    mask: 'linear-gradient(to top, transparent 0%, #000 10%, #000 30%, transparent 40%)',
-  },
-  {
-    blur: 1,
-    mask: 'linear-gradient(to top, transparent 10%, #000 20%, #000 40%, transparent 50%)',
-  },
-  {
-    blur: 2,
-    mask: 'linear-gradient(to top, transparent 15%, #000 30%, #000 50%, transparent 60%)',
-  },
-  {
-    blur: 4,
-    mask: 'linear-gradient(to top, transparent 20%, #000 40%, #000 60%, transparent 70%)',
-  },
-  {
-    blur: 8,
-    mask: 'linear-gradient(to top, transparent 40%, #000 60%, #000 80%, transparent 90%)',
-  },
-  { blur: 16, mask: 'linear-gradient(to top, transparent 60%, #000 80%)' },
-  { blur: 24, mask: 'linear-gradient(to top, transparent 70%, #000 100%)' },
-]
 
 interface HeaderProps {
   className?: string
@@ -64,7 +34,7 @@ export function Header({ className, items = [] }: HeaderProps) {
   return (
     <header
       className={cn(
-        'sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between header-blur-fallback pr-3 pl-4 md:pr-4 md:pl-6',
+        'sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between blur-reveal-fallback pr-3 pl-4 md:pr-4 md:pl-6',
         className,
       )}
     >
@@ -77,38 +47,9 @@ export function Header({ className, items = [] }: HeaderProps) {
       <div
         key={pathname}
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] header-blur-reveal"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] blur-reveal"
       >
-        {BLUR_LAYERS.map(({ blur, mask }) => (
-          <div
-            key={blur}
-            className="absolute inset-0"
-            style={{
-              backdropFilter: `blur(calc(var(--blur-progress, 0) * ${blur}px))`,
-              WebkitBackdropFilter: `blur(calc(var(--blur-progress, 0) * ${blur}px))`,
-              maskImage: mask,
-              WebkitMaskImage: mask,
-            }}
-          />
-        ))}
-        <div
-          className="absolute inset-0"
-          style={{
-            // Darkness rides this element's opacity (0.9 at full scroll) — never the
-            // backdrop-filter layers, which would form an opacity group and drop the
-            // blur. The gradient peaks at full --color-bg at the top.
-            opacity: 'calc(var(--blur-progress, 0) * 0.9)',
-            background:
-              'linear-gradient(to top, transparent 0%, color-mix(in oklab, var(--color-bg) 76%, transparent) 55%, var(--color-bg) 100%)',
-          }}
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 header-blur-dither"
-          style={{
-            opacity: 'calc(var(--blur-progress, 0) * 0.035)',
-          }}
-        />
+        <ProgressiveBlur />
       </div>
       <div className="flex items-center gap-3 md:gap-6">
         <Logo />

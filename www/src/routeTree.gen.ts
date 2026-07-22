@@ -24,6 +24,7 @@ import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as InternalColorsRouteImport } from './routes/internal.colors'
 import { Route as InternalColorLabRouteImport } from './routes/internal.color-lab'
+import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-reveal'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
 import { Route as AppPresetsRouteImport } from './routes/_app/presets'
@@ -109,6 +110,11 @@ const InternalColorLabRoute = InternalColorLabRouteImport.update({
   path: '/internal/color-lab',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InternalBlurRevealRoute = InternalBlurRevealRouteImport.update({
+  id: '/internal/blur-reveal',
+  path: '/internal/blur-reveal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemosSlugRoute = DemosSlugRouteImport.update({
   id: '/demos/$slug',
   path: '/demos/$slug',
@@ -177,6 +183,7 @@ export interface FileRoutesByFullPath {
   '/presets': typeof AppPresetsRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/colors': typeof InternalColorsRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -202,6 +209,7 @@ export interface FileRoutesByTo {
   '/presets': typeof AppPresetsRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/colors': typeof InternalColorsRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -230,6 +238,7 @@ export interface FileRoutesById {
   '/_app/presets': typeof AppPresetsRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
+  '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/colors': typeof InternalColorsRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -259,6 +268,7 @@ export interface FileRouteTypes {
     | '/presets'
     | '/api/search'
     | '/demos/$slug'
+    | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/colors'
     | '/preview/$slug'
@@ -284,6 +294,7 @@ export interface FileRouteTypes {
     | '/presets'
     | '/api/search'
     | '/demos/$slug'
+    | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/colors'
     | '/preview/$slug'
@@ -311,6 +322,7 @@ export interface FileRouteTypes {
     | '/_app/presets'
     | '/api/search'
     | '/demos/$slug'
+    | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/colors'
     | '/preview/$slug'
@@ -334,6 +346,7 @@ export interface RootRouteChildren {
   DotwellKnownApiCatalogRoute: typeof DotwellKnownApiCatalogRoute
   ApiSearchRoute: typeof ApiSearchRoute
   DemosSlugRoute: typeof DemosSlugRoute
+  InternalBlurRevealRoute: typeof InternalBlurRevealRoute
   InternalColorLabRoute: typeof InternalColorLabRoute
   InternalColorsRoute: typeof InternalColorsRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
@@ -448,6 +461,13 @@ declare module '@tanstack/react-router' {
       path: '/internal/color-lab'
       fullPath: '/internal/color-lab'
       preLoaderRoute: typeof InternalColorLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internal/blur-reveal': {
+      id: '/internal/blur-reveal'
+      path: '/internal/blur-reveal'
+      fullPath: '/internal/blur-reveal'
+      preLoaderRoute: typeof InternalBlurRevealRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demos/$slug': {
@@ -570,6 +590,7 @@ const rootRouteChildren: RootRouteChildren = {
   DotwellKnownApiCatalogRoute: DotwellKnownApiCatalogRoute,
   ApiSearchRoute: ApiSearchRoute,
   DemosSlugRoute: DemosSlugRoute,
+  InternalBlurRevealRoute: InternalBlurRevealRoute,
   InternalColorLabRoute: InternalColorLabRoute,
   InternalColorsRoute: InternalColorsRoute,
   PreviewSlugRoute: PreviewSlugRoute,
