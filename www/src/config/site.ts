@@ -55,6 +55,5 @@ export const navItems: {
     params: { _splat: 'components' },
   },
   { name: 'Charts', match: '/charts', to: '/charts' },
-  { name: 'Presets', match: '/presets', to: '/presets' },
   { name: 'Create', match: '/create', to: '/create' },
 ]

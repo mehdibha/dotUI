@@ -14,10 +14,10 @@ interface PageHeroProps {
 }
 
 /**
- * The centered marketing hero shared by the landing-style pages (/charts,
- * /presets): an optional eyebrow pill, a tracking-tight headline, a muted
- * supporting line, and a responsive row of actions. Mirrors the landing page's
- * hero so these pages read as one family.
+ * The centered marketing hero shared by the landing-style pages (/charts): an
+ * optional eyebrow pill, a tracking-tight headline, a muted supporting line,
+ * and a responsive row of actions. Mirrors the landing page's hero so these
+ * pages read as one family.
  */
 export function PageHero({
   eyebrow,
