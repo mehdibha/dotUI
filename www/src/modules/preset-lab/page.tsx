@@ -8,6 +8,10 @@ import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import type { DesignSystem } from '@/modules/create/preset'
 import { PRESETS } from '@/modules/presets/presets-data'
 
+import { claudeAudit } from './data/claude'
+import { linearAudit } from './data/linear'
+import { stripeAudit } from './data/stripe'
+import { supabaseAudit } from './data/supabase'
 import { vercelAudit } from './data/vercel'
 import { componentRenders, renderCaptions } from './renders'
 import {
@@ -36,6 +40,10 @@ function presetSystem(
 
 const SYSTEMS: System[] = [
   presetSystem('vercel', 'Vercel', vercelAudit),
+  presetSystem('linear', 'Linear', linearAudit),
+  presetSystem('supabase', 'Supabase', supabaseAudit),
+  presetSystem('stripe', 'Stripe', stripeAudit),
+  presetSystem('claude', 'Claude', claudeAudit),
 ].filter((s): s is System => s !== null)
 
 // refs/<system>/<component>-<light|dark>.png
@@ -54,7 +62,11 @@ function refUrl(
 }
 
 export function PresetLab() {
-  const [systemId, setSystemId] = useState('vercel')
+  const [systemId, setSystemId] = useState(
+    () =>
+      new URLSearchParams(globalThis.location?.search).get('system') ??
+      'vercel',
+  )
   const [mounted, setMounted] = useState(false)
 
   // Scoped theming is client-only (it mirrors the live `:root` closure); render
