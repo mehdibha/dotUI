@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="container flex items-center justify-center py-10">
+    <footer className="mx-auto flex h-24 w-full max-w-[calc(1500px+16rem)] items-center justify-start px-4 sm:px-6 lg:px-32">
       <p className="text-sm text-fg-muted">
         Built with passion by{' '}
         <a
