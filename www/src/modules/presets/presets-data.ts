@@ -103,7 +103,9 @@ export const PRESETS: Preset[] = [
     description: 'Emerald on cool gray.',
     swatch: '#3ecf8e',
     designSystem: makeDesignSystem({
-      neutral: '#6b7280',
+      // Supabase grays are near-neutral with a faint green cast (hue ~159), not
+      // cool blue; measured on production docs CSS (issue #484 audit).
+      neutral: '#6d726f',
       accent: '#3ecf8e',
       primary: 'accent',
       density: 'default',
@@ -120,7 +122,8 @@ export const PRESETS: Preset[] = [
       neutral: '#687385',
       accent: '#635bff',
       primary: 'accent',
-      radiusFactor: '0.75',
+      // Stripe controls measure ~8px radius — rounder than default, not tighter.
+      radiusFactor: '1.33',
       density: 'default',
       // Stripe's UI font is Söhne (proprietary); Inter is the closest free grotesque.
       fonts: { body: 'Inter' },
@@ -129,15 +132,18 @@ export const PRESETS: Preset[] = [
   {
     id: 'linear',
     name: 'Linear',
-    description: 'Indigo, crisp and compact.',
+    description: 'Indigo, crisp hairlines.',
     swatch: '#818cf8',
     designSystem: makeDesignSystem({
       neutral: '#8a8f98',
       accent: '#5e6ad2',
       primary: 'accent',
-      density: 'compact',
+      // Linear controls measure 32px/12px — our default scale, not compact.
+      density: 'default',
       // Linear ships Inter (verified against live production CSS).
       fonts: { body: 'Inter' },
+      // Linear hairlines are far softer than our border default.
+      tokens: { '--color-border': 'var(--neutral-200)' },
     }),
   },
   {
@@ -146,29 +152,33 @@ export const PRESETS: Preset[] = [
     description: 'Warm coral on sand.',
     swatch: '#e0916f',
     designSystem: makeDesignSystem({
-      neutral: '#8a8278',
+      // Claude neutrals are yellow-warm beige (hue ~96), not orange (issue #484 audit).
+      neutral: '#84806f',
       accent: '#d97757',
       primary: 'accent',
       radiusFactor: '1.5',
       density: 'default',
-      // Anthropic Sans is proprietary; Space Grotesk stands in, with a warm
-      // Fraunces heading to show the heading axis on an editorial system.
-      fonts: { heading: 'Fraunces', body: 'Space Grotesk' },
+      // Anthropic Sans is a neutral grotesque (Inter is closest free); Anthropic
+      // Serif is a calm book serif (Source Serif 4, not display-contrast Fraunces).
+      fonts: { heading: 'Source Serif 4', body: 'Inter' },
     }),
   },
   {
     id: 'airbnb',
     name: 'Airbnb',
-    description: 'Rausch pink, pill-round.',
+    description: 'Rausch accents, ink actions.',
     swatch: '#ff5c7c',
     designSystem: makeDesignSystem({
       neutral: '#717171',
       accent: '#ff385c',
-      primary: 'accent',
-      radiusFactor: '2',
+      // Airbnb's primary CTA and selection controls are near-black (#222); Rausch
+      // stays the accent for badges, links, prices (issue #484 audit).
+      // Controls measure 8px radius, not 12.
+      radiusFactor: '1.33',
       density: 'comfortable',
       // Airbnb Cereal is proprietary; Plus Jakarta Sans is the closest free match.
       fonts: { body: 'Plus Jakarta Sans' },
+      components: { badge: { radius: '--radius-full' } },
     }),
   },
   {
@@ -183,6 +193,9 @@ export const PRESETS: Preset[] = [
       density: 'default',
       // GitHub's brand font, open-sourced and on Google Fonts.
       fonts: { body: 'Mona Sans' },
+      // Labels/counters are pills; focus ring is a brighter blue than link blue.
+      components: { badge: { radius: '--radius-full' } },
+      tokens: { '--color-border-focus': '#1f6feb' },
     }),
   },
   {
@@ -192,9 +205,15 @@ export const PRESETS: Preset[] = [
     swatch: '#d4cec2',
     designSystem: makeDesignSystem({
       neutral: '#787774',
-      accent: '#2383e2',
+      // The blue actually measured on Notion CTAs/links; #2383e2 rendered too light.
+      accent: '#0075de',
+      primary: 'accent',
       radiusFactor: '0.75',
-      density: 'compact',
+      // Notion chrome text is 14px — our default, not compact (issue #484 audit).
+      density: 'default',
+      // Notion ships NotionInter, a customized Inter.
+      fonts: { body: 'Inter' },
+      tokens: { '--color-border': 'var(--neutral-200)' },
     }),
   },
   {
@@ -204,12 +223,17 @@ export const PRESETS: Preset[] = [
     swatch: '#1ed760',
     designSystem: makeDesignSystem({
       neutral: '#6a6a6a',
-      accent: '#1db954',
+      // Spotify's interactive green (buttons, Play) — brighter than the logo green.
+      accent: '#1ed760',
       primary: 'accent',
       radiusFactor: '2',
       density: 'default',
       // Spotify Circular is proprietary; Figtree is the closest free geometric.
       fonts: { body: 'Figtree' },
+      components: {
+        badge: { radius: '--radius-full' },
+        input: { style: 'filled' },
+      },
     }),
   },
 ]

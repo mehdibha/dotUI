@@ -8,8 +8,12 @@ import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import type { DesignSystem } from '@/modules/create/preset'
 import { PRESETS } from '@/modules/presets/presets-data'
 
+import { airbnbAudit } from './data/airbnb'
 import { claudeAudit } from './data/claude'
+import { githubAudit } from './data/github'
 import { linearAudit } from './data/linear'
+import { notionAudit } from './data/notion'
+import { spotifyAudit } from './data/spotify'
 import { stripeAudit } from './data/stripe'
 import { supabaseAudit } from './data/supabase'
 import { vercelAudit } from './data/vercel'
@@ -44,6 +48,10 @@ const SYSTEMS: System[] = [
   presetSystem('supabase', 'Supabase', supabaseAudit),
   presetSystem('stripe', 'Stripe', stripeAudit),
   presetSystem('claude', 'Claude', claudeAudit),
+  presetSystem('github', 'GitHub', githubAudit),
+  presetSystem('notion', 'Notion', notionAudit),
+  presetSystem('airbnb', 'Airbnb', airbnbAudit),
+  presetSystem('spotify', 'Spotify', spotifyAudit),
 ].filter((s): s is System => s !== null)
 
 // refs/<system>/<component>-<light|dark>.png
