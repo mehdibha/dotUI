@@ -43,6 +43,7 @@ export function CompositionSection() {
     current,
     reducedMotion,
     codeStaggerMs,
+    codeInstant,
   } = player
 
   // While walking toward a chapter, its rail entry stays lit (mirrors how mid
@@ -222,7 +223,7 @@ export function CompositionSection() {
                 {mounted ? (
                   <CompositionCode
                     code={current.code}
-                    reducedMotion={reducedMotion}
+                    reducedMotion={reducedMotion || codeInstant}
                     stagger={codeStaggerMs}
                   />
                 ) : (

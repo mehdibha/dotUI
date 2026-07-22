@@ -1343,6 +1343,11 @@ const MANUAL_BEAT_MS = Math.ceil(
   CODE_SPAN * CODE_DURATION_MS + 120 * WALK_CODE_STAGGER_MS,
 )
 
+// A manual navigation landing within this window of the previous one means
+// the user is browsing, not watching — the step applies instantly instead of
+// queuing another animation behind the one still in flight.
+const MANUAL_INTERRUPT_MS = Math.ceil(CODE_SPAN * CODE_DURATION_MS)
+
 // Shared player: auto-advance while visible, with a CSS animation as the step
 // clock (see StepTimer) so the visible progress and the advance tick can never
 // drift. Hovering or focusing the showcase pauses; the play/pause button is a
@@ -1440,15 +1445,29 @@ export function useCompositionPlayer({
   }, [])
 
   const stepRef = useRef(0)
-  const applyStep = useCallback((next: number) => {
+  // `instant` snaps: the in-flight morph completes on the spot and the new
+  // step lands with no animation of its own (the code renders at duration 0
+  // via `codeInstant`).
+  const [instantStep, setInstantStep] = useState(false)
+  const applyStep = useCallback((next: number, { instant = false } = {}) => {
     stepRef.current = next
+    setInstantStep(instant)
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduce || scrollingRef.current || !document.startViewTransition) {
+    if (
+      instant ||
+      reduce ||
+      scrollingRef.current ||
+      !document.startViewTransition
+    ) {
+      activeTransitionRef.current?.skipTransition()
       setStep(next)
       return
     }
+    // Always commit the *latest* requested step: a skipped transition's update
+    // callback still runs after the interrupting navigation's state landed,
+    // and committing its own stale `next` would revert it.
     const transition = document.startViewTransition(() => {
-      flushSync(() => setStep(next))
+      flushSync(() => setStep(stepRef.current))
     })
     activeTransitionRef.current = transition
     transition.finished.finally(() => {
@@ -1479,15 +1498,28 @@ export function useCompositionPlayer({
   }, [compact, cancelWalk])
 
   const [walking, setWalking] = useState(false)
+  const lastManualRef = useRef(-Infinity)
   const goToStep = useCallback(
     // `walkAll` (chapter-rail advance) walks through headline steps too, not
     // just mid beats — the whole story between two chapters plays.
     (next: number, { walkAll = false } = {}) => {
+      // A navigation while a walk or the previous navigation's animation is
+      // still in flight is browsing, not watching — snap to the target so no
+      // click ever waits behind an animation.
+      const interrupting =
+        walkTimerRef.current !== null ||
+        performance.now() - lastManualRef.current < MANUAL_INTERRUPT_MS
+      lastManualRef.current = performance.now()
       cancelWalk()
       // Manual navigation takes over from the one-shot clock for good.
       if (oneShot) setUserPaused(true)
       const from = stepRef.current
       if (next === from) return
+      if (interrupting) {
+        setWalking(false)
+        applyStep(next, { instant: true })
+        return
+      }
       const between = activeSteps.slice(from + 1, next)
       const reduce = window.matchMedia(
         '(prefers-reduced-motion: reduce)',
@@ -1586,6 +1618,7 @@ export function useCompositionPlayer({
     paginated,
     activePaginated,
     codeStaggerMs: walking ? WALK_CODE_STAGGER_MS : CODE_STAGGER_MS,
+    codeInstant: instantStep,
   }
 }
 
@@ -1941,6 +1974,7 @@ export function CompositionAnimation({ className }: { className?: string }) {
     reducedMotion,
     setHoverPaused,
     codeStaggerMs,
+    codeInstant,
   } = player
 
   return (
@@ -1968,7 +2002,7 @@ export function CompositionAnimation({ className }: { className?: string }) {
           {mounted ? (
             <CompositionCode
               code={current.code}
-              reducedMotion={reducedMotion}
+              reducedMotion={reducedMotion || codeInstant}
               stagger={codeStaggerMs}
             />
           ) : (
