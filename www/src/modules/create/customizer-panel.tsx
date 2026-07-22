@@ -9,9 +9,9 @@ import {
 import { getRouteApi } from '@tanstack/react-router'
 import {
   ChevronLeftIcon,
+  ChevronsUpDownIcon,
   MousePointer2Icon,
   ShuffleIcon,
-  SwatchBookIcon,
   Undo2Icon,
 } from 'lucide-react'
 import { AnimatePresence, motion, type Transition } from 'motion/react'
@@ -55,7 +55,9 @@ import {
   RADIUS_FACTOR_VAR,
   RadiusConfig,
 } from './layout'
-import { encodePreset, useDesignSystem } from './preset'
+import { encodePreset, useDesignSystem, useMyPresets } from './preset'
+import { saveDesignSystemName, useDesignSystemName } from './preset/storage'
+import { SavePresetDialog } from './save-preset-dialog'
 import { TypographyConfig, TypographySummary } from './typography'
 
 /* -------------------------------- Types -------------------------------- */
@@ -155,6 +157,14 @@ export function CustomizerPanel({ className }: { className?: string }) {
 
   const navStack = useMemo(() => (panel ? panel.split('.') : []), [panel])
 
+  // The header names what's being edited: the active saved preset (dotted when
+  // edited past its snapshot), else the standalone design-system name.
+  const { presets, activeId, setActive } = useMyPresets()
+  const storedName = useDesignSystemName()
+  const activeSaved = presets.find((p) => p.id === activeId)
+  const isDirty = activeSaved ? activeSaved.state !== (preset ?? '') : false
+  const displayName = activeSaved?.name ?? storedName
+
   // Undo history. Every design change is encoded into the `?preset=` search param
   // with `replace: true`, so the browser back button can't step through edits — we
   // keep our own stack of past preset values and walk back through it. Watching
@@ -208,10 +218,24 @@ export function CustomizerPanel({ className }: { className?: string }) {
   // updates (setDesignSystem + closing) would race on the functional `prev`.
   // The `?preset=` change lands in the undo history like any other edit.
   function applyPreset(picked: Preset) {
+    setActive(undefined)
+    saveDesignSystemName(picked.name)
     navigate({
       search: (prev) => ({
         ...prev,
         preset: encodePreset(picked.designSystem),
+        gallery: undefined,
+      }),
+    })
+  }
+
+  // A saved preset's `state` is already an encoded `?preset=` value — apply it
+  // directly (no re-encode) and close the gallery in one navigation.
+  function applySavedPreset(state: string) {
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        preset: state || undefined,
         gallery: undefined,
       }),
     })
@@ -456,13 +480,23 @@ export function CustomizerPanel({ className }: { className?: string }) {
     >
       {/* Header */}
       <div className="relative overflow-hidden border-b p-2">
-        <div className="flex w-full items-center justify-between gap-2 pl-1">
-          <span className="text-sm font-medium">Customize</span>
+        <div className="flex w-full items-center justify-between gap-2">
+          <Button
+            variant="quiet"
+            size="sm"
+            onPress={() => setGalleryOpen(true)}
+            className="min-w-0 justify-start gap-1.5 font-medium"
+          >
+            <span className="truncate">{displayName}</span>
+            {isDirty ? (
+              <span
+                aria-label="Unsaved changes"
+                className="size-1.5 shrink-0 rounded-full bg-fg-muted"
+              />
+            ) : null}
+            <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
+          </Button>
           <div className="flex items-center gap-1">
-            <Button size="sm" onPress={() => setGalleryOpen(true)}>
-              <SwatchBookIcon />
-              Presets
-            </Button>
             <Button size="sm" isIconOnly aria-label="Shuffle" onPress={shuffle}>
               <ShuffleIcon />
             </Button>
@@ -535,9 +569,10 @@ export function CustomizerPanel({ className }: { className?: string }) {
       </div>
 
       {/* Footer */}
-      <div className="border-t p-3">
+      <div className="flex items-center gap-2 border-t p-3">
+        <SavePresetDialog />
         <ExportDialog>
-          <Button variant="primary" size="sm" className="w-full">
+          <Button variant="primary" size="sm" className="flex-1">
             Export
           </Button>
         </ExportDialog>
@@ -546,7 +581,9 @@ export function CustomizerPanel({ className }: { className?: string }) {
       <PresetGalleryModal
         isOpen={gallery === true}
         onOpenChange={setGalleryOpen}
+        currentState={preset ?? ''}
         onApply={applyPreset}
+        onApplySaved={applySavedPreset}
       />
     </div>
   )
