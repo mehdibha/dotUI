@@ -159,7 +159,8 @@ interface BuildOneInput {
 
 /**
  * Build one publishable. Returns the file path written, "skipped" when the
- * component has no base.tsx (non-ui registry entries), or throws.
+ * item has no shippable files, or throws. Style-less lib/hook items (no
+ * `base.tsx`) ship their files verbatim so `/r/<name>` serves them too.
  */
 async function buildOne({
   meta,
@@ -167,7 +168,9 @@ async function buildOne({
   outDir,
 }: BuildOneInput): Promise<string | 'skipped'> {
   const baseFiles = collectBaseFiles(meta)
-  if (baseFiles.length === 0) return 'skipped'
+  if (baseFiles.length === 0) {
+    return buildStylelessPublishable({ meta, registryDir, outDir })
+  }
 
   // Extract the styles config once per component (it's shared across enum-file variants).
   const componentDir = path.join(registryDir, 'ui', meta.name)
@@ -212,6 +215,33 @@ async function buildOne({
     templates,
     extraFiles,
   })
+  await fs.writeFile(outPath, source, 'utf8')
+  return outPath
+}
+
+/**
+ * Build a style-less publishable (registry:lib / registry:hook) — no tv config,
+ * no template transform. Every file ships verbatim (registry import paths
+ * rewritten) as an `extraFile`, so `publish()` emits each one unchanged.
+ */
+async function buildStylelessPublishable({
+  meta,
+  registryDir,
+  outDir,
+}: BuildOneInput): Promise<string | 'skipped'> {
+  const files = meta.files ?? []
+  if (files.length === 0) return 'skipped'
+
+  const extraFiles: Record<string, string> = {}
+  for (const file of files) {
+    extraFiles[file.path] = await transformExtraFile(
+      path.join(registryDir, file.path),
+      meta.name,
+    )
+  }
+
+  const outPath = path.join(outDir, `${meta.name}.ts`)
+  const source = await renderStylelessPublishableSource({ meta, extraFiles })
   await fs.writeFile(outPath, source, 'utf8')
   return outPath
 }
@@ -332,6 +362,44 @@ interface RenderInput {
   stylesConfig: StylesConfig
   templates: Array<{ file: RegistryItemFile; template: string }>
   extraFiles: Record<string, string>
+}
+
+/** Render a style-less publishable: empty template, all files as extraFiles. */
+async function renderStylelessPublishableSource({
+  meta,
+  extraFiles,
+}: {
+  meta: RegistryItem
+  extraFiles: Record<string, string>
+}): Promise<string> {
+  const metaLiteral = JSON.stringify(meta, null, 2)
+  const lines: string[] = [
+    `// AUTO-GENERATED — do not edit. Source: ${meta.type} "${meta.name}"`,
+    `// Run \`pnpm build:registry\` to regenerate.`,
+    ``,
+    `import type { Publishable } from "@/publisher/types";`,
+    ``,
+    `const meta = ${metaLiteral} as const;`,
+    ``,
+    `export const publishable: Publishable = {`,
+    `\ttemplate: "",`,
+    `\tstylesConfig: { base: {} } as unknown as Publishable["stylesConfig"],`,
+    `\tmeta: meta as unknown as Publishable["meta"],`,
+    `\textraFiles: ${renderExtraFilesLiteral(extraFiles, 1)},`,
+    `};`,
+    ``,
+  ]
+
+  const raw = lines.join('\n')
+  try {
+    const { code } = await format('publishable.ts', raw, {
+      printWidth: 120,
+      useTabs: true,
+    })
+    return code
+  } catch {
+    return raw
+  }
 }
 
 async function renderPublishableSource({
