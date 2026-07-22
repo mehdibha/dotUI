@@ -11,6 +11,7 @@ import {
   DEFAULTS,
   decodePreset,
   useIframeMessageListener,
+  useReportScrollProgress,
 } from '@/modules/create/preset'
 import type { DesignSystem } from '@/modules/create/preset'
 import { PresetOverview } from '@/modules/create/preview/overview'
@@ -34,6 +35,16 @@ function getExamplesPromise(slug: string) {
   return promise
 }
 
+// Embedded, the /create toolbar overlays the top 3.5rem of the viewport; the native
+// viewport scrollbar would run beneath it and get caught in its blur, and a styled
+// (classic-mode) scrollbar can't match the native overlay look. Hide it instead —
+// wheel/trackpad scrolling is unaffected. Standalone (open-in-new-tab) previews
+// keep the native scrollbar.
+const EMBEDDED_SCROLLBAR_CSS = `
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+`
+
 export const Route = createFileRoute('/preview/$slug')({
   validateSearch: z.object({ preset: z.string().optional().catch(undefined) }),
   ssr: false,
@@ -53,6 +64,8 @@ function PreviewPage() {
   useIframeMessageListener(
     useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
   )
+  // Ramp range mirrors the app header's reveal: one toolbar height (3.5rem) of scroll.
+  useReportScrollProgress(56)
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
@@ -88,6 +101,7 @@ function PreviewPage() {
       color={designSystem.color}
       icons={designSystem.icons}
     >
+      {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
       <div className={embedded ? 'pt-11' : undefined}>{content}</div>
     </DesignSystemProvider>
   )
