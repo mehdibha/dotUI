@@ -113,24 +113,7 @@ async function buildFixture(): Promise<void> {
  * fails the test; an allowlisted component that starts compiling is stale and
  * also fails, forcing the entry's removal once the bug is fixed.
  */
-const KNOWN_BROKEN = new Map<string, string>([
-  [
-    'radio-group',
-    'transform renames the source `radioGroupStyles` tv to `radioGroupVariants`, colliding with the generated tv (duplicate declaration).',
-  ],
-  [
-    'toggle-button-group',
-    'imports `toggleButtonStyles` from toggle-button, but the transform renames that export to `toggleButtonVariants`.',
-  ],
-  [
-    'toast',
-    'ships `import type { … } from "./types"` but toast/types.ts is not in meta.files, so the type module is missing.',
-  ],
-  [
-    'time-picker',
-    'ships `import type { … } from "./types"` but time-picker/types.ts is not in meta.files, so the type module is missing.',
-  ],
-])
+const KNOWN_BROKEN = new Map<string, string>([])
 
 const DIAGNOSTIC_RE = /^(src\/.+?)\((\d+),\d+\): error TS/
 
