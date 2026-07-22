@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/registry/lib/utils'
 import { LinkButton } from '@/registry/ui/button'
 import {
+  chapters,
   compactMaxCodeLines,
   CompositionCode,
   CompositionTransitionStyles,
@@ -28,12 +29,15 @@ const compactCodeMinHeight = codePaneHeight(compactMaxCodeLines)
 const panelMaxHeight = `calc(14rem + 2px + ${codePaneHeight(maxCodeLines)})`
 
 export function CompositionSection() {
-  const player = useCompositionPlayer({ compactBelowLg: true })
+  // Plays the story once on its own; the moment the user picks a step the
+  // clock yields to them, and the play button restarts the tour.
+  const player = useCompositionPlayer({
+    compactBelowLg: true,
+    oneShot: true,
+  })
   const {
-    paginated,
-    activePaginated,
+    step,
     goToStep,
-    setHoverPaused,
     mounted,
     containerRef,
     current,
@@ -41,11 +45,18 @@ export function CompositionSection() {
     codeStaggerMs,
   } = player
 
-  // Keep the active step centered in the fixed-height rail as the loop runs.
+  // While walking toward a chapter, its rail entry stays lit (mirrors how mid
+  // steps map to the next headline during the tour).
+  const activeChapter = Math.max(
+    0,
+    chapters.findIndex((c) => c.index >= step),
+  )
+
+  // Keep the active chapter centered in the fixed-height rail.
   const railRef = useRef<HTMLOListElement>(null)
   useEffect(() => {
     const rail = railRef.current
-    const active = rail?.querySelectorAll('li')[activePaginated] as
+    const active = rail?.querySelectorAll('li')[activeChapter] as
       | HTMLElement
       | undefined
     if (!rail || !active) return
@@ -53,7 +64,7 @@ export function CompositionSection() {
       top: active.offsetTop - rail.clientHeight / 2 + active.offsetHeight / 2,
       behavior: reducedMotion ? 'auto' : 'smooth',
     })
-  }, [activePaginated, reducedMotion])
+  }, [activeChapter, reducedMotion])
 
   // The code pane hugs its content. The target height is computed from the
   // step's line count (calibrated once against the first rendered snippet) so
@@ -78,13 +89,6 @@ export function CompositionSection() {
     const { line, pad } = codeMetrics.current
     setCodeHeight(lines * line + pad)
   }, [mounted, current.code])
-
-  const pauseHandlers = {
-    onMouseEnter: () => setHoverPaused(true),
-    onMouseLeave: () => setHoverPaused(false),
-    onFocus: () => setHoverPaused(true),
-    onBlur: () => setHoverPaused(false),
-  }
 
   return (
     // Width mirrors the cards strip: 1500px grid + 8rem rail gutters.
@@ -112,27 +116,32 @@ export function CompositionSection() {
           <ol
             ref={railRef}
             className="relative mt-2 no-scrollbar h-88 self-stretch overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_3rem,black_calc(100%-3rem),transparent)] py-5 max-lg:hidden"
-            {...pauseHandlers}
           >
             {/* One indicator for the whole rail — it travels to the active
-                step instead of each step lighting its own segment. */}
+                chapter instead of each entry lighting its own segment. */}
             <span
               aria-hidden
               className="absolute top-5 left-0 z-10 h-8 w-px bg-fg transition-transform ease-[cubic-bezier(0.645,0.045,0.355,1)] motion-reduce:transition-none"
               style={{
-                transform: `translateY(${activePaginated * 2}rem)`,
+                transform: `translateY(${activeChapter * 2}rem)`,
                 transitionDuration: '450ms',
               }}
             />
-            {paginated.map((p, pos) => (
-              <li key={p.title}>
+            {chapters.map((c, pos) => (
+              <li key={c.title}>
                 <button
                   type="button"
-                  aria-current={pos === activePaginated ? 'step' : undefined}
-                  onClick={() => goToStep(p.index)}
+                  aria-current={pos === activeChapter ? 'step' : undefined}
+                  // Clicking the next chapter walks through the steps in
+                  // between; farther and backward clicks jump direct.
+                  onClick={() =>
+                    goToStep(c.index, {
+                      walkAll: pos === activeChapter + 1,
+                    })
+                  }
                   className={cn(
                     'relative flex h-8 w-full cursor-pointer items-center gap-3 border-l pl-4 text-left text-sm transition-colors',
-                    pos === activePaginated
+                    pos === activeChapter
                       ? 'text-fg'
                       : 'text-fg-muted hover:text-fg',
                   )}
@@ -140,14 +149,14 @@ export function CompositionSection() {
                   <span
                     className={cn(
                       'font-mono text-xs tabular-nums transition-colors',
-                      pos === activePaginated
+                      pos === activeChapter
                         ? 'text-fg-muted'
                         : 'text-fg-muted/50',
                     )}
                   >
                     {String(pos + 1).padStart(2, '0')}
                   </span>
-                  {p.title}
+                  {c.title}
                 </button>
               </li>
             ))}
@@ -170,7 +179,6 @@ export function CompositionSection() {
         <div
           className="min-w-0 lg:min-h-(--panel-max)"
           style={{ '--panel-max': panelMaxHeight } as React.CSSProperties}
-          {...pauseHandlers}
         >
           {/* Stands in for the step rail, which is desktop-only. */}
           <div className="mb-3 flex items-center justify-between gap-2 lg:hidden">
@@ -193,6 +201,7 @@ export function CompositionSection() {
               </div>
               <PlayPauseButton
                 player={player}
+                showLabel
                 className="absolute right-2 bottom-2 max-lg:hidden"
               />
             </div>
