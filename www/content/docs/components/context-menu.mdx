@@ -20,9 +20,9 @@ npx shadcn@latest add @dotui/context-menu
 Wrap the trigger content and the menu's `Popover` inside `ContextMenu`. The menu opens at the pointer when the trigger is right-clicked, or after a long press on touch devices.
 
 ```tsx
-import { ContextMenu } from '@/components/ui/context-menu'
-import { MenuContent, MenuItem } from '@/components/ui/menu'
-import { Popover } from '@/components/ui/popover'
+import { ContextMenu } from '@/ui/context-menu'
+import { MenuContent, MenuItem } from '@/ui/menu'
+import { Popover } from '@/ui/popover'
 ```
 
 ```tsx
@@ -44,10 +44,10 @@ import { Popover } from '@/components/ui/popover'
 `ContextMenu` is a right-click / long-press trigger wrapping a `Popover` and a `MenuContent`. Items, submenus (`MenuSub`), and every menu concept come from the [Menu](/docs/components/menu) component.
 
 ```tsx
-import { ContextMenu } from '@/components/ui/context-menu'
-import { MenuContent, MenuItem, MenuSub } from '@/components/ui/menu'
-import { Popover } from '@/components/ui/popover'
-import { Separator } from '@/components/ui/separator'
+import { ContextMenu } from '@/ui/context-menu'
+import { MenuContent, MenuItem, MenuSub } from '@/ui/menu'
+import { Popover } from '@/ui/popover'
+import { Separator } from '@/ui/separator'
 ;<ContextMenu>
   {/* trigger content */}
   <Popover>

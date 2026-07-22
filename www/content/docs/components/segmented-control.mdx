@@ -20,10 +20,7 @@ npx shadcn@latest add @dotui/segmented-control
 Use a segmented control for a small set of mutually exclusive options — view modes, ranges, filters. It's built on `ToggleButtonGroup` with single selection, and the indicator slides between segments (React Aria's `SelectionIndicator`).
 
 ```tsx
-import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from '@/components/ui/segmented-control'
+import { SegmentedControl, SegmentedControlItem } from '@/ui/segmented-control'
 ```
 
 ```tsx
@@ -39,10 +36,7 @@ import {
 A `SegmentedControl` wraps one `SegmentedControlItem` per option. Each item needs a unique `id`, which is the value the control reports as selected.
 
 ```tsx
-import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from '@/components/ui/segmented-control'
+import { SegmentedControl, SegmentedControlItem } from '@/ui/segmented-control'
 ;<SegmentedControl>
   <SegmentedControlItem id="…">…</SegmentedControlItem>
 </SegmentedControl>

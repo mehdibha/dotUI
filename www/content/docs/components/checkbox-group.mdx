@@ -43,9 +43,9 @@ npx shadcn@latest add @dotui/checkbox-group
 Use `CheckboxGroup` to allow users to select multiple items from a list of options.
 
 ```tsx
-import { CheckboxGroup } from '@/components/ui/checkbox-group'
-import { Checkbox, CheckboxControl } from '@/components/ui/checkbox'
-import { FieldGroup, Label } from '@/components/ui/field'
+import { CheckboxGroup } from '@/ui/checkbox-group'
+import { Checkbox, CheckboxControl } from '@/ui/checkbox'
+import { FieldGroup, Label } from '@/ui/field'
 ```
 
 ```tsx
@@ -85,8 +85,8 @@ const [frameworks, setFrameworks] = useState<string[]>(['nextjs'])
 Set `isRequired` to require a selection, or drive `isInvalid` yourself. Render errors with `FieldError` — with the default `validationBehavior="native"` it surfaces the browser's message on form submit; use `validationBehavior="aria"` to validate live without native form semantics.
 
 ```tsx
-import { CheckboxGroup } from '@/components/ui/checkbox-group'
-import { FieldError, FieldGroup, Label } from '@/components/ui/field'
+import { CheckboxGroup } from '@/ui/checkbox-group'
+import { FieldError, FieldGroup, Label } from '@/ui/field'
 ;<CheckboxGroup isRequired>
   <Label>React frameworks</Label>
   <FieldGroup>{/* ... */}</FieldGroup>

@@ -167,10 +167,13 @@ function rewriteImports(sf: SourceFile): void {
       imp.remove()
       continue
     }
-    imp.setModuleSpecifier(
+    // `rewriteImportPath` yields the shipped base.tsx paths, where `ui/*` maps to
+    // `@/components/ui/*`. Displayed docs code must match where a real install
+    // lands files — `ui/<name>.tsx` targets resolve to `@/ui/*`.
+    const rewritten =
       rewriteImportPath(imp.getModuleSpecifierValue()) ??
-        imp.getModuleSpecifierValue(),
-    )
+      imp.getModuleSpecifierValue()
+    imp.setModuleSpecifier(rewritten.replace(/^@\/components\/ui\//, '@/ui/'))
   }
 }
 

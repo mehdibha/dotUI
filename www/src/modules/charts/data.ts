@@ -63,13 +63,13 @@ const rawDemoSources = import.meta.glob(
 
 /**
  * Rewrite a demo's source the way the docs display it: registry imports become
- * the installed `@/components/*` paths, the default export is unwrapped, and
- * tabs become spaces. (Mirrors the docs transformer's full-source output; the
- * ts-morph preview pass it also runs is build-only and unneeded here.)
+ * the installed `@/*` paths, the default export is unwrapped, and tabs become
+ * spaces. (Mirrors the docs transformer's full-source output; the ts-morph
+ * preview pass it also runs is build-only and unneeded here.)
  */
 function toDisplaySource(raw: string): string {
   return raw
-    .replace(/@\/registry\/ui\//g, '@/components/ui/')
+    .replace(/@\/registry\/ui\//g, '@/ui/')
     .replace(/@\/registry\//g, '@/')
     .replace('export default function', 'export function')
     .replace(/\t/g, '  ')

@@ -48,8 +48,8 @@ npx shadcn@latest add @dotui/checkbox
 Use `Checkbox` to allow users to select multiple items from a list of individual items, or to mark one individual item as selected.
 
 ```tsx
-import { Checkbox, CheckboxControl } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/field'
+import { Checkbox, CheckboxControl } from '@/ui/checkbox'
+import { Label } from '@/ui/field'
 ```
 
 ```tsx
@@ -64,12 +64,8 @@ import { Label } from '@/components/ui/field'
 Pass a plain string and `Checkbox` wraps it in a `CheckboxControl` and `Label` for you. Pass elements instead and you compose the tree yourself — `CheckboxControl` renders the `CheckboxIndicator` (the box) and can hold `FieldContent` with a `Label` and `Description`.
 
 ```tsx
-import {
-  Checkbox,
-  CheckboxControl,
-  CheckboxIndicator,
-} from '@/components/ui/checkbox'
-import { Description, FieldContent, Label } from '@/components/ui/field'
+import { Checkbox, CheckboxControl, CheckboxIndicator } from '@/ui/checkbox'
+import { Description, FieldContent, Label } from '@/ui/field'
 ;<Checkbox>
   <CheckboxControl>
     <CheckboxIndicator />

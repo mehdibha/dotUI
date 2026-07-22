@@ -30,9 +30,9 @@ npx shadcn@latest add @dotui/menu
 Use menus to display a list of actions or options that a user can choose from.
 
 ```tsx
-import { Button } from '@/components/ui/button'
-import { Menu, MenuContent, MenuItem } from '@/components/ui/menu'
-import { Popover } from '@/components/ui/popover'
+import { Button } from '@/ui/button'
+import { Menu, MenuContent, MenuItem } from '@/ui/menu'
+import { Popover } from '@/ui/popover'
 ```
 
 ```tsx
@@ -53,7 +53,7 @@ import { Popover } from '@/components/ui/popover'
 A `Menu` links a trigger (`Button`) to an overlay (`Popover`) that wraps the `MenuContent`. Each `MenuItem` auto-wraps string children in a `MenuItemLabel`; add a `MenuItemDescription` for secondary text, group items with `MenuSection` + `MenuSectionHeader`, and nest a submenu with `MenuSub`.
 
 ```tsx
-import { Button } from '@/components/ui/button'
+import { Button } from '@/ui/button'
 import {
   Menu,
   MenuContent,
@@ -63,8 +63,8 @@ import {
   MenuSection,
   MenuSectionHeader,
   MenuSub,
-} from '@/components/ui/menu'
-import { Popover } from '@/components/ui/popover'
+} from '@/ui/menu'
+import { Popover } from '@/ui/popover'
 ;<Menu>
   <Button>Open Menu</Button>
   <Popover>

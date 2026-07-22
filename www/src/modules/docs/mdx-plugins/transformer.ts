@@ -160,7 +160,7 @@ function findExportFunction(
  */
 function transformPaths(code: string): string {
   return code
-    .replace(/@\/registry\/ui\//g, '@/components/ui/')
+    .replace(/@\/registry\/ui\//g, '@/ui/')
     .replace(/@\/registry\//g, '@/')
 }
 
