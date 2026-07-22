@@ -1,15 +1,9 @@
 import { lazy, Suspense } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 
-// DEV-only: the import (and the bundled reference screenshots) is
-// dead-code-eliminated from production builds — brand captures must never ship.
-const PresetLab = import.meta.env.DEV
-  ? lazy(() =>
-      import('@/modules/preset-lab/page').then((m) => ({
-        default: m.PresetLab,
-      })),
-    )
-  : null
+const PresetLab = lazy(() =>
+  import('@/modules/preset-lab/page').then((m) => ({ default: m.PresetLab })),
+)
 
 export const Route = createFileRoute('/internal/preset-lab')({
   component: RouteComponent,
@@ -17,7 +11,6 @@ export const Route = createFileRoute('/internal/preset-lab')({
 })
 
 function RouteComponent() {
-  if (!PresetLab) return null
   return (
     <Suspense fallback={null}>
       <PresetLab />
