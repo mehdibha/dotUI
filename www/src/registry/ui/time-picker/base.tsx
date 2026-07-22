@@ -27,7 +27,6 @@ import { useTimeFieldState } from 'react-stately/useTimeFieldState'
 import { useStyles as useFieldStyles } from '@/registry/ui/field/styles'
 
 import { useStyles } from './styles'
-import type { TimePickerColumnsProps, TimePickerProps } from './types'
 
 // MARK: timePickerStyles
 
@@ -46,6 +45,20 @@ const useSlot = (
 }
 
 // MARK: TimePicker
+
+interface TimePickerProps<T extends TimeFieldPrimitive.TimeValue> extends Omit<
+  TimeFieldPrimitive.TimeFieldProps<T>,
+  'className' | 'children'
+> {
+  className?: string
+  children?: React.ReactNode
+  /** Whether the popover is open by default (uncontrolled). */
+  defaultOpen?: boolean
+  /** Whether the popover is open (controlled). */
+  isOpen?: boolean
+  /** Handler that is called when the popover's open state changes. */
+  onOpenChange?: (isOpen: boolean) => void
+}
 
 // There is no React Aria `TimePicker` primitive, so we compose one from the
 // same building blocks its `DatePicker` uses: a shared `TimeFieldState` drives
@@ -170,6 +183,8 @@ const range = (length: number, offset = 0): number[] =>
   Array.from({ length }, (_, i) => i + offset)
 
 const pad = (value: number): string => String(value).padStart(2, '0')
+
+interface TimePickerColumnsProps extends React.ComponentProps<'div'> {}
 
 const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
   const state = React.useContext(TimeFieldStateContext)

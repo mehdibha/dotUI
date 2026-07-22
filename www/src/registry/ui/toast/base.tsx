@@ -11,7 +11,31 @@ import {
 } from '@/registry/icons'
 
 import { useStyles } from './styles'
-import type { ToastData, ToastPosition, ToastVariant } from './types'
+
+type ToastVariant =
+  | 'neutral'
+  | 'success'
+  | 'error'
+  | 'danger'
+  | 'warning'
+  | 'info'
+  | 'loading'
+
+type ToastPosition =
+  | 'top-left'
+  | 'top-center'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-center'
+  | 'bottom-right'
+
+interface ToastData {
+  /** Props forwarded to the root toast element. */
+  rootProps?: Omit<
+    ToastPrimitive.Root.Props,
+    'children' | 'className' | 'swipeDirection' | 'toast'
+  >
+}
 
 type ToastObject = ToastPrimitive.Root.ToastObject<ToastData>
 

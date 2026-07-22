@@ -13,9 +13,9 @@ import { Label } from '@/registry/ui/field'
 
 import { useStyles } from './styles'
 
-// MARK: radioGroupStyles
+// MARK: radioGroupRootStyles
 
-const radioGroupStyles = tv({
+const radioGroupRootStyles = tv({
   base: 'flex flex-col gap-3',
 })
 
@@ -26,7 +26,7 @@ const RadioGroup = ({
   return (
     <RadioGroupPrimitives.RadioGroup
       className={composeRenderProps(className, (className) =>
-        radioGroupStyles({ className }),
+        radioGroupRootStyles({ className }),
       )}
       {...props}
     />

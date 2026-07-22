@@ -7,10 +7,11 @@ import type { VariantProps } from 'tailwind-variants'
 
 import { createVariantsContext } from '@/registry/lib/context'
 
-import { toggleButtonStyles, useStyles } from './styles'
+import { useStyles } from './styles'
 import type { ToggleButtonStyles } from './styles'
 
 // MARK: toggleButtonStyles
+export { toggleButtonStyles } from './styles'
 
 type ToggleButtonVariants = VariantProps<ToggleButtonStyles>
 
@@ -75,4 +76,4 @@ const ToggleButton = (localProps: ToggleButtonProps) => {
 // MARK: Separator
 
 export type { ToggleButtonProps }
-export { ToggleButton, ToggleButtonProvider, toggleButtonStyles }
+export { ToggleButton, ToggleButtonProvider }
