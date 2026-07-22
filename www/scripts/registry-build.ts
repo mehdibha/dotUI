@@ -723,22 +723,20 @@ function checkDependencyClosure(
 
 /**
  * Non-component `@dotui/<name>` install targets docs may advertise, name →
- * reason. `base`/`all` are the init + aggregate targets from installation.mdx;
- * `form`/`text-area` are WIP components (docs pages carry `wip: true`) with no
- * publishable yet. A component name here is stale once it starts publishing.
+ * reason. Starts EMPTY: every install name in the docs must resolve to a
+ * publishable or a served route (see SERVED_ROUTE_NAMES). An entry here is a
+ * standing excuse for a name that 404s, so add one only for a genuinely
+ * unservable target, with a reason; a name that starts publishing makes it stale.
  */
-const DOCS_INSTALL_NAME_ALLOWLIST = new Map<string, string>([
-  [
-    'base',
-    'installation.mdx — the `registry:base` init target served by /r/init.',
-  ],
-  ['all', 'installation.mdx — the aggregate "add every component" target.'],
-  [
-    'form',
-    'components/form.mdx (wip) — react-hook-form/tanstack-form not yet publishable.',
-  ],
-  ['text-area', 'components/text-area.mdx (wip) — no registered item yet.'],
-])
+const DOCS_INSTALL_NAME_ALLOWLIST = new Map<string, string>()
+
+/**
+ * Names that resolve to a real `/r/<name>` route but aren't components, so they
+ * never appear in `builtNames`. `init` serves the `registry:base` item that
+ * `shadcn init https://dotui.org/r/init` consumes (see routes/r/init.tsx). Docs
+ * may advertise these; the guard treats them as served, not dangling.
+ */
+const SERVED_ROUTE_NAMES = new Set(['init'])
 
 /** `@dotui/<name>` install targets, excluding import paths like `@dotui/registry/ui/x` (trailing slash). */
 const DOCS_INSTALL_RE = /@dotui\/([a-z0-9][a-z0-9-]*)(?![/a-z0-9-])/g
@@ -749,8 +747,9 @@ const DOCS_REGISTRY_URL_RE =
 /**
  * Guard 3: every install name advertised in the docs must ship. Scans
  * content/docs for `@dotui/<name>` install targets and `dotui.org/r/<name>`
- * URLs; each must be a publishable or an allowlisted non-component. This is what
- * would have caught `@dotui/text-field` advertising a component that 404'd.
+ * URLs; each must be a publishable, a served route (SERVED_ROUTE_NAMES), or an
+ * allowlisted non-component. This is what would have caught `@dotui/text-field`
+ * advertising a component that 404'd.
  */
 async function checkDocsRegistryConsistency(
   build: PublishablesBuild,
@@ -771,6 +770,7 @@ async function checkDocsRegistryConsistency(
           const name = match[1]
           if (!name) continue
           if (build.builtNames.has(name)) continue
+          if (SERVED_ROUTE_NAMES.has(name)) continue
           if (DOCS_INSTALL_NAME_ALLOWLIST.has(name)) {
             seen.add(name)
             continue
