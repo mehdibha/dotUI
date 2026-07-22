@@ -12,6 +12,8 @@ import { TypeScriptIcon } from '@/components/icons/typescript'
 import { Footer } from '@/components/layout/footer'
 import Cards from '@/modules/marketing/cards'
 import { CompositionSection } from '@/modules/marketing/composition-section'
+import { CtaSection } from '@/modules/marketing/cta-section'
+import { ExportSection } from '@/modules/marketing/export-section'
 
 export function HomePage() {
   return (
@@ -73,7 +75,13 @@ export function HomePage() {
 
       <CompositionSection />
 
-      <Footer />
+<ExportSection />
+
+      <CtaSection />
+
+      <div className="mt-10 md:mt-14">
+        <Footer />
+      </div>
     </div>
   )
 }
