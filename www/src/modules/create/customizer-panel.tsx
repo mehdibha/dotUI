@@ -56,6 +56,7 @@ import {
   RadiusConfig,
 } from './layout'
 import { encodePreset, useDesignSystem } from './preset'
+import { SavePresetDialog } from './save-preset-dialog'
 import { TypographyConfig, TypographySummary } from './typography'
 
 /* -------------------------------- Types -------------------------------- */
@@ -212,6 +213,18 @@ export function CustomizerPanel({ className }: { className?: string }) {
       search: (prev) => ({
         ...prev,
         preset: encodePreset(picked.designSystem),
+        gallery: undefined,
+      }),
+    })
+  }
+
+  // A saved preset's `state` is already an encoded `?preset=` value — apply it
+  // directly (no re-encode) and close the gallery in one navigation.
+  function applySavedPreset(state: string) {
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        preset: state || undefined,
         gallery: undefined,
       }),
     })
@@ -535,9 +548,10 @@ export function CustomizerPanel({ className }: { className?: string }) {
       </div>
 
       {/* Footer */}
-      <div className="border-t p-3">
+      <div className="flex items-center gap-2 border-t p-3">
+        <SavePresetDialog />
         <ExportDialog>
-          <Button variant="primary" size="sm" className="w-full">
+          <Button variant="primary" size="sm" className="flex-1">
             Export
           </Button>
         </ExportDialog>
@@ -546,7 +560,9 @@ export function CustomizerPanel({ className }: { className?: string }) {
       <PresetGalleryModal
         isOpen={gallery === true}
         onOpenChange={setGalleryOpen}
+        currentState={preset ?? ''}
         onApply={applyPreset}
+        onApplySaved={applySavedPreset}
       />
     </div>
   )

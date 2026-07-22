@@ -1,5 +1,6 @@
 export { decodePreset, encodePreset } from './codec'
 export { DEFAULTS } from './defaults'
+export { type SavedPreset, useMyPresets } from './my-presets'
 export {
   type PreviewMode,
   sendPreviewMode,
