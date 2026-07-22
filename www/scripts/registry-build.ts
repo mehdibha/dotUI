@@ -659,20 +659,7 @@ function checkPublishableSkips(build: PublishablesBuild): string[] {
  * and UNREGISTERED_DEP_ALLOWLIST (derived-import gaps). Drop an entry once the
  * dep is inlined or becomes a publishable, and the guard requires it to resolve.
  */
-const KNOWN_UNSERVABLE_DEPS = new Map<string, string>([
-  [
-    'responsive',
-    'lib/responsive — declared by ui/dialog, ui/menu; not inlined, not servable.',
-  ],
-  [
-    'react-aria-token-field',
-    'lib/react-aria-token-field — declared by ui/mention, ui/token-field; not inlined, not servable.',
-  ],
-  [
-    'use-mobile',
-    'hooks/use-mobile — declared by ui/sidebar; not inlined, not servable.',
-  ],
-])
+const KNOWN_UNSERVABLE_DEPS = new Map<string, string>()
 
 /**
  * Guard 2: every publishable's `registryDependencies` must resolve to something
@@ -843,11 +830,11 @@ interface PublishablesBuild {
 }
 
 async function buildShadcnPublishables(
-  registryUi: RegistryItem[],
+  items: RegistryItem[],
 ): Promise<PublishablesBuild> {
   const { written, skipped } = await buildPublishables({
     registryDir: REGISTRY_DIR,
-    items: registryUi,
+    items,
   })
   for (const filePath of written) {
     console.log(`  ✓ ${path.relative(REGISTRY_DIR, filePath)}`)
@@ -921,7 +908,14 @@ async function main() {
     await buildInternalExamples()
 
     console.log('\nGenerating shadcn publishables')
-    const publishablesBuild = await buildShadcnPublishables(registryUi)
+    // lib/hook items publish too (as verbatim files) so registryDependencies
+    // like `responsive` / `use-mobile` resolve at /r/<name> instead of falling
+    // through to shadcn's default registry.
+    const publishablesBuild = await buildShadcnPublishables([
+      ...registryUi,
+      ...registryLib,
+      ...registryHooks,
+    ])
 
     console.log('\nChecking publishable integrity')
     await checkPublishableIntegrity(registryUi, publishablesBuild)
