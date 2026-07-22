@@ -503,23 +503,34 @@ function checkAllowlistReadiness(): void {
 const BUNDLED_INTO_INIT = new Set(['utils', 'focus-styles', 'theme'])
 
 /**
- * Derived dep names whose target is NOT a registered item yet — a known packaging gap
- * (lib/context + the use-image-loading-status hook are unregistered). Skipped so the
- * drift check doesn't demand a dep `shadcn add` couldn't resolve. Keyed by DEP-NAME and
- * covers the hooks scope, so it is deliberately DISTINCT from ORPHAN_ALLOWLIST (folder-
- * path keyed, ui|lib only) — do not unify them. Drop an entry once its target is a
- * registered item, and the guard will then require consumers to declare it.
+ * Dep names satisfied by files the item ships inline: a `lib/<name>/…` or
+ * `hooks/<name>.ts` entry in meta.files covers imports of `@/registry/lib/<name>`
+ * or `@/registry/hooks/<name>` (the tabs pattern for deps with no installable
+ * registry item).
  */
-const UNREGISTERED_DEP_ALLOWLIST = new Set([
-  'context',
-  'use-image-loading-status',
-])
+function inlinedFileDepNames(meta: RegistryItem): Set<string> {
+  const names = new Set<string>()
+  for (const file of meta.files ?? []) {
+    const [scope, second] = file.path.split('/')
+    if ((scope === 'lib' || scope === 'hooks') && second) {
+      names.add(second.replace(/\.[a-z]+$/, ''))
+    }
+  }
+  return names
+}
 
 /**
- * Asserts each registered ui item DECLARES every registry dependency its shipped base
- * file(s) import. The shipped import graph is a SUBSET of the intended dependency
- * closure (composition/CSS-only deps are legitimately hand-added and not flagged), so
- * this catches only UNDER-declaration: a base file imports @/registry/X but meta omits "X".
+ * Asserts each registered ui item RESOLVES every registry dependency its shipped base
+ * file(s) import — either declared in registryDependencies or shipped inline via
+ * meta.files. The shipped import graph is a SUBSET of the intended dependency closure
+ * (composition/CSS-only deps are legitimately hand-added and not flagged), so this
+ * catches only UNDER-declaration: a base file imports @/registry/X but meta omits "X".
+ *
+ * Also asserts the reverse: every declared dep must be SERVABLE. Only ui items get
+ * publishables, so only ui names resolve at GET /r/{name}; a declared lib/hook dep is
+ * emitted as a bare name that `shadcn add` resolves against ITS default registry —
+ * silently installing shadcn's component instead of ours (#477). Those deps must ship
+ * inline (see ui/tabs/meta.ts).
  */
 async function checkRegistryDepsDrift(
   registryUi: RegistryItem[],
@@ -530,6 +541,7 @@ async function checkRegistryDepsDrift(
       (item) => item.name,
     ),
   )
+  const servableNames = new Set<string>(registryUi.map((item) => item.name))
   const errors: string[] = []
 
   for (const meta of registryUi) {
@@ -538,11 +550,12 @@ async function checkRegistryDepsDrift(
       baseFiles: collectBaseFiles(meta),
     })
     const declared = new Set(meta.registryDependencies ?? [])
+    const inlined = inlinedFileDepNames(meta)
 
     for (const dep of derived) {
       if (declared.has(dep)) continue
       if (BUNDLED_INTO_INIT.has(dep)) continue
-      if (UNREGISTERED_DEP_ALLOWLIST.has(dep)) continue
+      if (inlined.has(dep)) continue
       if (registeredNames.has(dep)) {
         errors.push(
           `registryDependencies drift: "${meta.name}" base file imports "${dep}" but meta omits it. ` +
@@ -551,9 +564,20 @@ async function checkRegistryDepsDrift(
       } else {
         errors.push(
           `Unresolved @/registry import in "${meta.name}": derived dep "${dep}" is not a registered item, ` +
-            `not bundled, and not in UNREGISTERED_DEP_ALLOWLIST. Register it or add it to the allowlist.`,
+            `not bundled, and not shipped inline via meta.files. Register it or ship its file(s) with the item.`,
         )
       }
+    }
+
+    for (const dep of declared) {
+      if (BUNDLED_INTO_INIT.has(dep)) continue
+      if (dep.includes('://') || dep.startsWith('@')) continue
+      if (servableNames.has(dep)) continue
+      errors.push(
+        `Unservable registryDependency in "${meta.name}": "${dep}" is not a ui item, so it is emitted ` +
+          `as a bare name that falls through to shadcn's default registry. Ship its file(s) in meta.files ` +
+          `instead (see ui/tabs/meta.ts) or drop the dep.`,
+      )
     }
   }
   return errors
