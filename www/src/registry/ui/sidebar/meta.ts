@@ -10,6 +10,18 @@ const sidebarMeta = {
       path: 'ui/sidebar/base.tsx',
       target: 'ui/sidebar.tsx',
     },
+    // base.tsx imports @/hooks/use-mobile and @/lib/context, which have no
+    // installable registry items — ship the files until they become publishable.
+    {
+      type: 'registry:hook',
+      path: 'hooks/use-mobile.ts',
+      target: 'hooks/use-mobile.ts',
+    },
+    {
+      type: 'registry:lib',
+      path: 'lib/context/index.tsx',
+      target: 'lib/context.tsx',
+    },
   ],
   registryDependencies: [
     'button',
@@ -17,7 +29,6 @@ const sidebarMeta = {
     'separator',
     'skeleton',
     'tooltip',
-    'use-mobile',
   ],
 } satisfies RegistryItem
 
