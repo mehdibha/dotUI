@@ -32,8 +32,8 @@ npx shadcn@latest add @dotui/switch
 Use switch for communicating activation (e.g. on/off states), while checkboxes are best used for communicating selection (e.g. multiple table rows).
 
 ```tsx
-import { Label } from '@/components/ui/field'
-import { Switch, SwitchControl } from '@/components/ui/switch'
+import { Label } from '@/ui/field'
+import { Switch, SwitchControl } from '@/ui/switch'
 ```
 
 ```tsx
@@ -48,13 +48,13 @@ import { Switch, SwitchControl } from '@/components/ui/switch'
 A `Switch` wraps a `SwitchControl` (which auto-renders its `SwitchIndicator` and `SwitchThumb`) and a `Label`. Pass a string child for the label shorthand, or omit children for a standalone control with an `aria-label`.
 
 ```tsx
-import { Label } from '@/components/ui/field'
+import { Label } from '@/ui/field'
 import {
   Switch,
   SwitchControl,
   SwitchIndicator,
   SwitchThumb,
-} from '@/components/ui/switch'
+} from '@/ui/switch'
 
 <Switch>
   <SwitchControl>

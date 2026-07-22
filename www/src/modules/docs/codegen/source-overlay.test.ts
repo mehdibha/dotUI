@@ -67,7 +67,7 @@ describe('button', () => {
     expect(collapsed).toBe(`<Button variant="primary" size="lg" isDisabled>
   Button
 </Button>`)
-    expect(expanded).toBe(`import { Button } from "@/components/ui/button";
+    expect(expanded).toBe(`import { Button } from "@/ui/button";
 
 export function Demo() {
   return (
@@ -139,8 +139,8 @@ describe('switch', () => {
   <SwitchControl />
   <Label>Airplane mode</Label>
 </Switch>`)
-    expect(expanded).toBe(`import { Label } from "@/components/ui/field";
-import { Switch, SwitchControl } from "@/components/ui/switch";
+    expect(expanded).toBe(`import { Label } from "@/ui/field";
+import { Switch, SwitchControl } from "@/ui/switch";
 
 export function Demo() {
   return (
@@ -289,9 +289,8 @@ describe('accordion', () => {
     </Disclosure>
   ))}
 </Accordion>`)
-    expect(expanded)
-      .toBe(`import { Accordion } from "@/components/ui/accordion";
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/components/ui/disclosure";
+    expect(expanded).toBe(`import { Accordion } from "@/ui/accordion";
+import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/ui/disclosure";
 
 const items = [
   { id: "a", question: "Q one?", answer: "A one." },

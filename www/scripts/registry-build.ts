@@ -732,6 +732,13 @@ const DOCS_REGISTRY_URL_RE =
   /dotui\.org\/r\/([a-z0-9][a-z0-9-]*)(?![/a-z0-9-])/g
 
 /**
+ * Stale consumer import prefix. A `shadcn add` install lands `ui/<name>.tsx`
+ * targets at `@/ui/<name>` — never `@/components/ui/<name>` — so any docs
+ * snippet showing the old prefix would break when copied after install.
+ */
+const DOCS_STALE_UI_IMPORT_RE = /@\/components\/ui\//
+
+/**
  * Guard 3: every install name advertised in the docs must ship. Scans
  * content/docs for `@dotui/<name>` install targets and `dotui.org/r/<name>`
  * URLs; each must be a publishable, a served route (SERVED_ROUTE_NAMES), or an
@@ -750,6 +757,13 @@ async function checkDocsRegistryConsistency(
     const source = await fs.readFile(file, 'utf8')
     const lines = source.split('\n')
     lines.forEach((line, i) => {
+      if (DOCS_STALE_UI_IMPORT_RE.test(line)) {
+        errors.push(
+          `${path.relative(process.cwd(), file)}:${i + 1} imports from "@/components/ui/", ` +
+            `but a shadcn install lands components at "@/ui/". Use "@/ui/<name>" so copied ` +
+            `snippets resolve after install.`,
+        )
+      }
       for (const re of [DOCS_INSTALL_RE, DOCS_REGISTRY_URL_RE]) {
         re.lastIndex = 0
         let match: RegExpExecArray | null

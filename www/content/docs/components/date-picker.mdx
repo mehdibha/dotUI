@@ -22,13 +22,13 @@ Use date pickers to allow users to select a date using a field and a calendar po
 ```tsx
 import { CalendarIcon } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
-import { DatePicker } from '@/components/ui/date-picker'
-import { DialogContent } from '@/components/ui/dialog'
-import { Label } from '@/components/ui/field'
-import { DateInput, InputGroup, InputGroupAddon } from '@/components/ui/input'
-import { Popover } from '@/components/ui/popover'
+import { Button } from '@/ui/button'
+import { Calendar } from '@/ui/calendar'
+import { DatePicker } from '@/ui/date-picker'
+import { DialogContent } from '@/ui/dialog'
+import { Label } from '@/ui/field'
+import { DateInput, InputGroup, InputGroupAddon } from '@/ui/input'
+import { Popover } from '@/ui/popover'
 ```
 
 ```tsx
@@ -55,13 +55,13 @@ import { Popover } from '@/components/ui/popover'
 A date picker assembles a date field and a calendar overlay. The `InputGroup` holds the `DateInput` and a trigger `Button`; the `Popover` reveals a `Calendar`. `Label`, `Description`, and `FieldError` are optional field parts.
 
 ```tsx
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
-import { DatePicker } from '@/components/ui/date-picker'
-import { DialogContent } from '@/components/ui/dialog'
-import { Description, FieldError, Label } from '@/components/ui/field'
-import { DateInput, InputGroup, InputGroupAddon } from '@/components/ui/input'
-import { Popover } from '@/components/ui/popover'
+import { Button } from '@/ui/button'
+import { Calendar } from '@/ui/calendar'
+import { DatePicker } from '@/ui/date-picker'
+import { DialogContent } from '@/ui/dialog'
+import { Description, FieldError, Label } from '@/ui/field'
+import { DateInput, InputGroup, InputGroupAddon } from '@/ui/input'
+import { Popover } from '@/ui/popover'
 ;<DatePicker>
   <Label />
   <InputGroup>
@@ -99,8 +99,8 @@ import { parseDate } from '@internationalized/date'
 ```tsx
 import { parseDate } from '@internationalized/date'
 
-import { RangeCalendar } from '@/components/ui/calendar'
-import { DateRangePicker } from '@/components/ui/date-picker'
+import { RangeCalendar } from '@/ui/calendar'
+import { DateRangePicker } from '@/ui/date-picker'
 ;<DateRangePicker
   defaultValue={{
     start: parseDate('2020-02-03'),

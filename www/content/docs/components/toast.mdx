@@ -13,7 +13,7 @@ npx shadcn@latest add @dotui/toast
 ## Usage
 
 ```tsx
-import { ToastProvider, toastManager } from '@/components/ui/toast'
+import { ToastProvider, toastManager } from '@/ui/toast'
 ```
 
 ```tsx
@@ -35,7 +35,7 @@ toastManager.add({
 Toasts aren't rendered as JSX. Mount `<ToastProvider />` once at your app root, then push notifications imperatively with `toastManager`. `add` returns an id you can pass to `close`.
 
 ```tsx
-import { ToastProvider, toastManager } from '@/components/ui/toast'
+import { ToastProvider, toastManager } from '@/ui/toast'
 ;<ToastProvider />
 
 const id = toastManager.add({ title: 'Your message has been sent.' })

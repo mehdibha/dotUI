@@ -30,9 +30,9 @@ npx shadcn@latest add @dotui/drawer
 Use drawers to display content that slides in from the edge of the screen.
 
 ```tsx
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
-import { Drawer } from '@/components/ui/drawer'
+import { Button } from '@/ui/button'
+import { Dialog, DialogContent } from '@/ui/dialog'
+import { Drawer } from '@/ui/drawer'
 ```
 
 ```tsx
@@ -49,8 +49,8 @@ import { Drawer } from '@/components/ui/drawer'
 A `Drawer` has no built-in trigger. Wrap it in a `Dialog` with a `Button` child as the trigger, and put your content inside `DialogContent`.
 
 ```tsx
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Button } from '@/ui/button'
+import { Dialog, DialogContent } from '@/ui/dialog'
 import {
   Drawer,
   DrawerHandle,
@@ -58,7 +58,7 @@ import {
   DrawerProvider,
   DrawerIndent,
   DrawerIndentBackground,
-} from '@/components/ui/drawer'
+} from '@/ui/drawer'
 ;<Dialog>
   <Button />
   <Drawer>
