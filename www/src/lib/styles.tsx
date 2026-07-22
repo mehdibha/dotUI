@@ -30,7 +30,7 @@ import {
   semanticDelta,
   semanticsFor,
 } from '@/registry/theme'
-import type { ColorConfig } from '@/registry/theme'
+import type { ColorConfig, SemanticVocabulary } from '@/registry/theme'
 import type {
   Density,
   EnumParamDef,
@@ -183,6 +183,20 @@ function getRootClosure(): RootClosure {
  * class-keyed and can't be pinned from here — the scope's `data-mode` attribute handles
  * them via the dark custom-variant in registry/base/base.css.
  */
+function flattenSemanticsToMode(
+  vocabulary: SemanticVocabulary,
+  mode: 'light' | 'dark',
+): SemanticVocabulary {
+  return Object.fromEntries(
+    Object.entries(vocabulary).map(([name, token]) => [
+      name,
+      'light' in token.target
+        ? { ...token, target: token.target[mode] }
+        : token,
+    ]),
+  )
+}
+
 function buildScopedThemeCss(
   selector: string,
   color: ColorConfig | undefined,
@@ -204,11 +218,22 @@ function buildScopedThemeCss(
     `${selector} {\n${base}\n\tcolor: var(--color-fg);\n}`,
     `.dark ${selector} {\n${darkOverrides}\n}`,
     // Mode-agnostic `--color-*` (they reference primitives that flip via the blocks above).
-    emitCss(semanticsFor(color), { selector }),
+    // A forced mode flattens per-mode targets to that mode — the `.dark`-selector
+    // re-point below can't reach a forced-dark scope on a light page.
+    emitCss(
+      forcedMode
+        ? flattenSemanticsToMode(semanticsFor(color), forcedMode)
+        : semanticsFor(color),
+      { selector },
+    ),
     // `.dark` re-points for per-mode targets (per-mode token overrides).
-    emitDarkOverridesCss(semanticsFor(color), {
-      selector: `.dark ${selector}`,
-    }),
+    ...(forcedMode
+      ? []
+      : [
+          emitDarkOverridesCss(semanticsFor(color), {
+            selector: `.dark ${selector}`,
+          }),
+        ]),
   ]
   if (color) {
     let resolved = resolveColorConfigCached(color)

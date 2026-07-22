@@ -38,6 +38,10 @@ function makeDesignSystem(opts: {
   primary?: ColorConfig['primary']
   /** Chroma-curve scale (1 = engine default). */
   vividness?: ColorConfig['vividness']
+  /** App-background lightness per mode (engine axis; dark accepts 0–20 or 'oled'). */
+  background?: ColorConfig['background']
+  /** Per-token semantic remaps (palette + job, optionally per-mode). */
+  colorOverrides?: ColorConfig['overrides']
   /** Google font families for the typography tokens (default Geist / match body). */
   fonts?: { heading?: string; body?: string; mono?: string }
   /** Per-component param overrides on top of the builder defaults. */
@@ -66,6 +70,8 @@ function makeDesignSystem(opts: {
       seeds: { accent, neutral },
       ...(opts.primary ? { primary: opts.primary } : {}),
       ...(opts.vividness !== undefined ? { vividness: opts.vividness } : {}),
+      ...(opts.background ? { background: opts.background } : {}),
+      ...(opts.colorOverrides ? { overrides: opts.colorOverrides } : {}),
     },
   }
 }
@@ -85,13 +91,22 @@ export const PRESETS: Preset[] = [
       // A pure-gray accent: zero vividness keeps the ramp from tinting back up
       // (Geist-style neutral primary).
       vividness: 0,
+      // Vercel dark runs a true-black page with #0a0a0a panels; dark:0 lands
+      // n50 (the card step) on 0x0a0a0a exactly.
+      background: { dark: 0 },
+      colorOverrides: {
+        // Geist hairlines sit two ramp steps lighter than our border default.
+        'color-border': { palette: 'neutral', job: 'ui-hover' },
+        // Light mode inverts our elevation: white cards float on a #fafafa page.
+        'color-bg': { light: { palette: 'neutral', job: 'subtle-bg' } },
+        'color-card': { light: { palette: 'neutral', job: 'app-bg' } },
+        'color-popover': { light: { palette: 'neutral', job: 'app-bg' } },
+      },
       components: {
         command: { style: '3' },
         badge: { radius: '--radius-full' },
       },
       tokens: {
-        // Geist hairlines sit two ramp steps lighter than our border default.
-        '--color-border': 'var(--neutral-200)',
         // Vercel's focus ring is opaque blue, not the monochrome accent.
         '--color-border-focus': '#0072f5',
       },
@@ -142,8 +157,12 @@ export const PRESETS: Preset[] = [
       density: 'default',
       // Linear ships Inter (verified against live production CSS).
       fonts: { body: 'Inter' },
-      // Linear hairlines are far softer than our border default.
-      tokens: { '--color-border': 'var(--neutral-200)' },
+      // Linear's dark-first page is near-black #08090a.
+      background: { dark: 2 },
+      // Hairlines are far softer than our border default.
+      colorOverrides: {
+        'color-border': { palette: 'neutral', job: 'ui-hover' },
+      },
     }),
   },
   {
@@ -161,6 +180,8 @@ export const PRESETS: Preset[] = [
       // Anthropic Sans is a neutral grotesque (Inter is closest free); Anthropic
       // Serif is a calm book serif (Source Serif 4, not display-contrast Fraunces).
       fonts: { heading: 'Source Serif 4', body: 'Inter' },
+      // Claude's signature cream page (#faf9f5 ≈ L* 98, warm hue from the seed).
+      background: { light: 98 },
     }),
   },
   {
@@ -193,6 +214,15 @@ export const PRESETS: Preset[] = [
       density: 'default',
       // GitHub's brand font, open-sourced and on Google Fonts.
       fonts: { body: 'Mona Sans' },
+      // GitHub dark sits on blue-black #0d1117.
+      background: { dark: 4.5 },
+      // Inputs are canvas-white in light but a raised panel in dark.
+      colorOverrides: {
+        'color-field': {
+          light: { palette: 'neutral', job: 'app-bg' },
+          dark: { palette: 'neutral', job: 'ui-rest' },
+        },
+      },
       // Labels/counters are pills; focus ring is a brighter blue than link blue.
       components: { badge: { radius: '--radius-full' } },
       tokens: { '--color-border-focus': '#1f6feb' },
@@ -213,7 +243,9 @@ export const PRESETS: Preset[] = [
       density: 'default',
       // Notion ships NotionInter, a customized Inter.
       fonts: { body: 'Inter' },
-      tokens: { '--color-border': 'var(--neutral-200)' },
+      colorOverrides: {
+        'color-border': { palette: 'neutral', job: 'ui-hover' },
+      },
     }),
   },
   {
