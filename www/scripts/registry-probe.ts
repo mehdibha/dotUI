@@ -34,6 +34,9 @@
 
 const DEFAULT_ORIGIN = 'https://dotui.org'
 const CONCURRENCY = 6
+// Hard per-request ceiling so a slow/blackholing host can't stretch the run
+// past undici's ~300s default headers timeout (× retries).
+const REQUEST_TIMEOUT_MS = 15_000
 // Extra names to probe that don't appear in registry.json's items list.
 const EXTRA_NAMES = ['init']
 
@@ -66,9 +69,17 @@ async function fetchJson(
 ): Promise<{ json?: unknown; error?: string }> {
   let res: Response
   try {
-    res = await fetch(bust(url), { headers: { accept: 'application/json' } })
+    res = await fetch(bust(url), {
+      headers: { accept: 'application/json' },
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    })
   } catch (err) {
-    return { error: `network error: ${(err as Error).message}` }
+    const e = err as Error
+    const reason =
+      e.name === 'TimeoutError'
+        ? `timed out after ${REQUEST_TIMEOUT_MS}ms`
+        : `network error: ${e.message}`
+    return { error: reason }
   }
   if (res.status !== 200) {
     return { error: `HTTP ${res.status} ${res.statusText}` }
@@ -105,28 +116,45 @@ async function mapPool<T, R>(
   return results
 }
 
-function isAbsoluteOrNamespaced(dep: string): boolean {
-  return /^https?:\/\//.test(dep) || dep.startsWith('@')
+/**
+ * A served dep must resolve back to us: an absolute URL at the probe origin, or
+ * an "@dotui/…" namespaced id. A bare name means the rewriter didn't recognize
+ * it (the #477 failure); a foreign URL or a non-dotui namespace means it points
+ * somewhere it shouldn't, so shadcn would install from the wrong place.
+ */
+function classifyDep(dep: string, origin: string): string | undefined {
+  if (/^https?:\/\//.test(dep)) {
+    return dep.startsWith(`${origin}/`)
+      ? undefined
+      : `foreign URL dep (not ${origin}): ${dep}`
+  }
+  if (dep.startsWith('@')) {
+    return dep.startsWith('@dotui/')
+      ? undefined
+      : `non-dotui namespaced dep: ${dep}`
+  }
+  return `bare dep (rewriter didn't recognize): ${dep}`
 }
 
-/** Check one served item for bare registryDependencies. */
-function checkDeps(name: string, url: string, item: unknown): Failure[] {
+/** Check one served item's registryDependencies all resolve back to us. */
+function checkDeps(
+  name: string,
+  url: string,
+  item: unknown,
+  origin: string,
+): Failure[] {
   const deps = (item as { registryDependencies?: unknown }).registryDependencies
   if (deps === undefined) return []
   if (!Array.isArray(deps)) {
     return [{ name, url, reason: 'registryDependencies is not an array' }]
   }
-  const bare = deps.filter(
-    (d): d is string => typeof d === 'string' && !isAbsoluteOrNamespaced(d),
-  )
-  if (bare.length === 0) return []
-  return [
-    {
-      name,
-      url,
-      reason: `bare registryDependencies (dep rewriter didn't recognize): ${bare.join(', ')}`,
-    },
-  ]
+  const bad = deps
+    .map((d) =>
+      typeof d === 'string' ? classifyDep(d, origin) : `non-string dep: ${d}`,
+    )
+    .filter((r): r is string => r !== undefined)
+  if (bad.length === 0) return []
+  return [{ name, url, reason: `bad registryDependencies: ${bad.join('; ')}` }]
 }
 
 /**
@@ -215,7 +243,7 @@ async function main(): Promise<void> {
       return [{ name, url, reason: res.error ?? 'no body' }]
     }
     if (name === 'field') fieldItem = res.json
-    return checkDeps(name, url, res.json)
+    return checkDeps(name, url, res.json, origin)
   })
 
   const failures: Failure[] = failureLists.flat()

@@ -24,6 +24,10 @@ on:
         required: false
         default: 'https://dotui.org'
 
+# The probe only reads a public site; it needs nothing else from the token.
+permissions:
+  contents: read
+
 # Never run two probes at once; a newer deploy supersedes an in-flight probe.
 concurrency:
   group: registry-probe
@@ -39,6 +43,7 @@ jobs:
        github.event.deployment_status.environment == 'Production')
     runs-on: ubuntu-latest
     name: Probe production registry
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
