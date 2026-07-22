@@ -114,6 +114,22 @@ describe('flatten', () => {
     expect(dangerSlots.root).toMatch(/text-fg-danger/)
   })
 
+  test('preserves declared-but-empty slots when a density layer merges', () => {
+    // A slot declared empty in base (like field's `fieldset`/`legend`) must
+    // survive the merge as "" — the shipped base file calls every declared slot.
+    const layer = flatten({
+      stylesConfig: {
+        base: { slots: { fieldset: '', field: 'flex gap-2' } },
+        density: { default: { slots: { field: 'text-sm' } } },
+      },
+      meta: { name: 'x', type: 'registry:ui' } as never,
+      density: 'default',
+      paramSelections: {},
+    })
+    expect(layer.slots).toHaveProperty('fieldset', '')
+    expect(layer.slots?.field).toBeDefined()
+  })
+
   test('alert: undefined density layer leaves base untouched', () => {
     // density compact entry is an empty object — should be a no-op.
     const compact = flatten({
@@ -239,6 +255,39 @@ describe('publish', () => {
 
     expect(item.registryDependencies).toEqual([
       'https://dotui.com/r/loader?preset=abc',
+    ])
+  })
+
+  test('text-field: rewrites BOTH deps (field + input) to absolute URLs, none bare', () => {
+    // Regression for #477: `input` used to pass through bare (it had no
+    // publishable), so `shadcn add` resolved it against shadcn's default
+    // registry. With `input` publishable, both deps rewrite to dotui URLs.
+    setKnownDotuiNames(['field', 'input'])
+    setDotuiDepResolver('https://dotui.org')
+
+    const { item } = publish({
+      publishable: {
+        template: TV_CONFIG_PLACEHOLDER,
+        stylesConfig: { base: {} },
+        meta: {
+          name: 'text-field',
+          type: 'registry:ui',
+          registryDependencies: ['field', 'input'],
+          files: [
+            {
+              type: 'registry:ui',
+              path: 'ui/text-field/base.tsx',
+              target: 'ui/text-field.tsx',
+            },
+          ],
+        },
+      },
+      preset: { density: 'default', componentParams: {} },
+    })
+
+    expect(item.registryDependencies).toEqual([
+      'https://dotui.org/r/field',
+      'https://dotui.org/r/input',
     ])
   })
 
