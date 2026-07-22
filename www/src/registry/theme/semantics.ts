@@ -25,6 +25,8 @@ import { JOB_STEPS } from './types'
 const NEUTRAL = ['neutral', '..'] as const
 /** Picker pool for "primary"-flavored tokens: neutral or the brand accent ramp. */
 const PRIMARY = ['neutral', 'accent', '..'] as const
+/** Picker pool for selection/focus tokens once a `selection` ramp exists. */
+const SELECTION = ['neutral', 'accent', 'selection', '..'] as const
 
 const ref = (palette: string, step: string): SemanticTarget =>
   ({ ref: { palette, step } }) as SemanticTarget
@@ -90,42 +92,64 @@ function statusCluster(palette: string): SemanticVocabulary {
  */
 export function semanticVocabulary(
   primary: PrimaryColorSource = 'neutral',
+  hasSelection = false,
 ): SemanticVocabulary {
-  const primaryCluster: SemanticVocabulary =
-    primary === 'accent'
-      ? {
-          'color-primary': bg(ref('accent', '700'), PRIMARY),
-          'color-primary-hover': bg(ref('accent', '800'), PRIMARY),
-          'color-primary-active': bg(
-            mix(ref('accent', '800'), 88, ref('neutral', '950')),
-            PRIMARY,
-          ),
-          'color-primary-muted': bg(ref('accent', '100'), PRIMARY),
-          'color-fg-on-primary': {
-            target: on('accent', '700'),
-            category: 'foreground',
-          },
-          'color-fg-primary-disabled': fg(ref('accent', '400'), PRIMARY),
-        }
-      : {
-          // The inverse surface: high-contrast text step as a background.
-          'color-primary': bg(ref('neutral', '950'), PRIMARY),
-          'color-primary-hover': bg(
-            mix(ref('neutral', '950'), 90, ref('neutral', '25')),
-            PRIMARY,
-          ),
-          'color-primary-active': bg(
-            mix(ref('neutral', '950'), 80, ref('neutral', '25')),
-            PRIMARY,
-          ),
-          'color-primary-muted': bg(ref('neutral', '200'), PRIMARY),
-          // Text on the inverse surface is the app background by construction.
-          'color-fg-on-primary': {
-            target: ref('neutral', '25'),
-            category: 'foreground',
-          },
-          'color-fg-primary-disabled': fg(ref('neutral', '500'), PRIMARY),
-        }
+  // The primary fill/hover/on trio — shared by the primary cluster and, by
+  // default, the selection cluster (they only diverge under a `selection` seed).
+  const isAccent = primary === 'accent'
+  const primaryFill = isAccent
+    ? bg(ref('accent', '700'), PRIMARY)
+    : // The inverse surface: high-contrast text step as a background.
+      bg(ref('neutral', '950'), PRIMARY)
+  const primaryFillHover = isAccent
+    ? bg(ref('accent', '800'), PRIMARY)
+    : bg(mix(ref('neutral', '950'), 90, ref('neutral', '25')), PRIMARY)
+  const primaryFillOn: SemanticToken = isAccent
+    ? { target: on('accent', '700'), category: 'foreground' }
+    : // Text on the inverse surface is the app background by construction.
+      { target: ref('neutral', '25'), category: 'foreground' }
+
+  const primaryCluster: SemanticVocabulary = isAccent
+    ? {
+        'color-primary': primaryFill,
+        'color-primary-hover': primaryFillHover,
+        'color-primary-active': bg(
+          mix(ref('accent', '800'), 88, ref('neutral', '950')),
+          PRIMARY,
+        ),
+        'color-primary-muted': bg(ref('accent', '100'), PRIMARY),
+        'color-fg-on-primary': primaryFillOn,
+        'color-fg-primary-disabled': fg(ref('accent', '400'), PRIMARY),
+      }
+    : {
+        'color-primary': primaryFill,
+        'color-primary-hover': primaryFillHover,
+        'color-primary-active': bg(
+          mix(ref('neutral', '950'), 80, ref('neutral', '25')),
+          PRIMARY,
+        ),
+        'color-primary-muted': bg(ref('neutral', '200'), PRIMARY),
+        'color-fg-on-primary': primaryFillOn,
+        'color-fg-primary-disabled': fg(ref('neutral', '500'), PRIMARY),
+      }
+
+  // Checked-control fills (switch/checkbox/radio) + focus draw from here.
+  // Defaults to the primary targets — nothing shifts — until a `selection` seed
+  // splits them onto their own ramp (Vercel: black primary, blue selection).
+  const selectionCluster: SemanticVocabulary = hasSelection
+    ? {
+        'color-selection': bg(ref('selection', '700'), SELECTION),
+        'color-selection-hover': bg(ref('selection', '800'), SELECTION),
+        'color-fg-on-selection': {
+          target: on('selection', '700'),
+          category: 'foreground',
+        },
+      }
+    : {
+        'color-selection': primaryFill,
+        'color-selection-hover': primaryFillHover,
+        'color-fg-on-selection': primaryFillOn,
+      }
 
   return {
     // ---- surfaces / backgrounds ----
@@ -144,6 +168,7 @@ export function semanticVocabulary(
     'color-neutral-hover': bg(ref('neutral', '200'), ['neutral']),
     'color-neutral-active': bg(ref('neutral', '300'), ['neutral']),
     ...primaryCluster,
+    ...selectionCluster,
     ...statusCluster('success'),
     ...statusCluster('danger'),
     ...statusCluster('warning'),
@@ -162,8 +187,14 @@ export function semanticVocabulary(
     'color-border-field': bd(ref('neutral', '500'), NEUTRAL),
     'color-border-control': bd(ref('neutral', '600'), NEUTRAL),
     'color-border-disabled': bd(ref('neutral', '400'), NEUTRAL),
-    'color-border-focus': bd(ref('accent', '700'), PRIMARY),
-    'color-border-focus-muted': bd(ref('accent', '300'), PRIMARY),
+    'color-border-focus': bd(
+      ref(hasSelection ? 'selection' : 'accent', '700'),
+      PRIMARY,
+    ),
+    'color-border-focus-muted': bd(
+      ref(hasSelection ? 'selection' : 'accent', '300'),
+      PRIMARY,
+    ),
     // ---- component surfaces ----
     'color-tooltip': bg(ref('neutral', '950'), NEUTRAL),
     'color-fg-on-tooltip': fg(ref('neutral', '25')),
@@ -228,14 +259,22 @@ export function applyTokenOverrides(
   return out
 }
 
+/** A color slice carries the presence of an optional `selection` seed. */
+type ColorSlice = {
+  primary?: PrimaryColorSource
+  overrides?: TokenOverrides
+  seeds?: { selection?: string }
+}
+
 /** The one resolver every emitter goes through (T4): primary + overrides. */
 export function semanticsFor(
-  color:
-    | { primary?: PrimaryColorSource; overrides?: TokenOverrides }
-    | undefined,
+  color: ColorSlice | undefined,
 ): SemanticVocabulary {
   return applyTokenOverrides(
-    semanticVocabulary(color?.primary ?? 'neutral'),
+    semanticVocabulary(
+      color?.primary ?? 'neutral',
+      Boolean(color?.seeds?.selection),
+    ),
     color?.overrides,
   )
 }
@@ -246,9 +285,7 @@ export function semanticsFor(
  * the full `@theme` layer ships static and only divergences re-point.
  */
 export function semanticDelta(
-  color:
-    | { primary?: PrimaryColorSource; overrides?: TokenOverrides }
-    | undefined,
+  color: ColorSlice | undefined,
 ): SemanticVocabulary {
   return Object.fromEntries(
     Object.entries(semanticsFor(color)).filter(

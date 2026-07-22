@@ -29,6 +29,7 @@ export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
     'warning',
     'danger',
     'info',
+    'selection',
   ] as const) {
     const seed = config.seeds[name]
     if (seed) options.seeds[name] = seed

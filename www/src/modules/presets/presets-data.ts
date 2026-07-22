@@ -36,6 +36,8 @@ function makeDesignSystem(opts: {
   radiusFactor?: string
   /** Ramp the primary-action tokens draw from (default neutral black/white). */
   primary?: ColorConfig['primary']
+  /** Splits selection controls + focus onto their own ramp (else = primary). */
+  selection?: string
   /** Chroma-curve scale (1 = engine default). */
   vividness?: ColorConfig['vividness']
   /** App-background lightness per mode (engine axis; dark accepts 0–20 or 'oled'). */
@@ -67,7 +69,11 @@ function makeDesignSystem(opts: {
     tokens,
     color: {
       v: 2,
-      seeds: { accent, neutral },
+      seeds: {
+        accent,
+        neutral,
+        ...(opts.selection ? { selection: opts.selection } : {}),
+      },
       ...(opts.primary ? { primary: opts.primary } : {}),
       ...(opts.vividness !== undefined ? { vividness: opts.vividness } : {}),
       ...(opts.background ? { background: opts.background } : {}),
@@ -88,9 +94,11 @@ export const PRESETS: Preset[] = [
       // Geist runs a 14px/32px UI scale at 6px radii — our defaults, not compact/0.5
       // (verified against live computed styles; see issue #484 Phase 1 audit).
       density: 'default',
-      // A pure-gray accent: zero vividness keeps the ramp from tinting back up
-      // (Geist-style neutral primary).
-      vividness: 0,
+      // Geist runs black CTAs but a blue selection: focus rings + checked
+      // controls. The #171717 accent + #737373 neutral seeds are already
+      // achromatic, so the monochrome chrome needs no vividness clamp — and
+      // clamping it would flatten this chromatic selection ramp back to gray.
+      selection: '#0072f5',
       // Vercel dark runs a true-black page with #0a0a0a panels; dark:0 lands
       // n50 (the card step) on 0x0a0a0a exactly.
       background: { dark: 0 },
@@ -107,8 +115,13 @@ export const PRESETS: Preset[] = [
         badge: { radius: '--radius-full' },
       },
       tokens: {
-        // Vercel's focus ring is opaque blue, not the monochrome accent.
-        '--color-border-focus': '#0072f5',
+        // Geist elevation: two soft layered shadows + a 1px hairline ring that
+        // rides the neutral ramp so it adapts per mode. Overlays and cards share
+        // the value — both float over the page.
+        '--shadow-overlay':
+          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06), 0 0 0 1px var(--neutral-400)',
+        '--shadow-card':
+          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06), 0 0 0 1px var(--neutral-400)',
       },
     }),
   },
@@ -142,6 +155,10 @@ export const PRESETS: Preset[] = [
       density: 'default',
       // Stripe's UI font is Söhne (proprietary); Inter is the closest free grotesque.
       fonts: { body: 'Inter' },
+      tokens: {
+        // Stripe's "floating hairline": a 1px drop shadow riding on the field border.
+        '--shadow-control': 'rgb(16 17 26 / 0.16) 0 1px 1px',
+      },
     }),
   },
   {

@@ -69,13 +69,17 @@ describe('semanticDelta', () => {
     expect(semanticDelta(DEFAULT_COLOR_CONFIG)).toEqual({})
   })
 
-  test('an accent primary yields exactly the diverging primary cluster', () => {
+  test('an accent primary yields the diverging primary + selection clusters', () => {
+    // With no `selection` seed the selection cluster mirrors primary, so it
+    // diverges alongside it when the primary source flips.
     const delta = semanticDelta({ primary: 'accent' })
     expect(Object.keys(delta).length).toBeGreaterThan(0)
     for (const name of Object.keys(delta))
       expect(
         name.startsWith('color-primary') ||
+          name.startsWith('color-selection') ||
           name === 'color-fg-on-primary' ||
+          name === 'color-fg-on-selection' ||
           name === 'color-fg-primary-disabled',
         name,
       ).toBe(true)

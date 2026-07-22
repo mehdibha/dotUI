@@ -96,6 +96,8 @@ const SPACING_SCALE_VAR = '--ds-spacing-scale'
 const SEED_FALLBACKS: Record<keyof PaletteSeeds, string> = {
   accent: DEFAULT_COLOR_CONFIG.seeds.accent,
   neutral: '#808080',
+  // Absent by default (selection mirrors primary); a blue stands in for the picker.
+  selection: '#0072f5',
   ...DEFAULT_STATUS_SEEDS,
 }
 

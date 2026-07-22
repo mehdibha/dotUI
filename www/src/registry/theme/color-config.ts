@@ -56,6 +56,8 @@ export const colorConfigSchema = z.object({
     warning: z.string().optional(),
     danger: z.string().optional(),
     info: z.string().optional(),
+    /** Splits selection controls + focus onto their own ramp (else = primary). */
+    selection: z.string().optional(),
   }),
   /** App-background lightness per mode (L*); dark accepts OLED black. */
   background: z
@@ -137,6 +139,7 @@ function salvageSeeds(raw: unknown): ColorConfig['seeds'] {
     'warning',
     'danger',
     'info',
+    'selection',
   ] as const) {
     if (isColor(input[name])) seeds[name] = input[name]
   }

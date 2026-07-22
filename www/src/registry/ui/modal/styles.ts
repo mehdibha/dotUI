@@ -15,7 +15,7 @@ const { useStyles, styles } = createStyles(modalMeta, {
       viewport:
         '@container-[size] sticky top-0 left-0 flex h-(--visual-viewport-height) w-full items-center justify-center',
       modal: [
-        'relative flex max-h-[calc(var(--visual-viewport-height)-2rem)] w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--modal-radius) border bg-(--modal-background) shadow-lg sm:max-h-[calc(var(--visual-viewport-height)*.9)]',
+        'relative flex max-h-[calc(var(--visual-viewport-height)-2rem)] w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--modal-radius) border bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))] sm:max-h-[calc(var(--visual-viewport-height)*.9)]',
         'transition-[opacity,scale] ease-[cubic-bezier(0.165,0.84,0.44,1)]',
         'duration-200 entering:scale-95 entering:opacity-0',
         'exiting:scale-95 exiting:opacity-0 exiting:duration-150',

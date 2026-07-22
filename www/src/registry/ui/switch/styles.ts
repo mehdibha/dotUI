@@ -12,7 +12,7 @@ const { useStyles, styles } = createStyles(switchMeta, {
       ],
       indicator: [
         'inline-flex shrink-0 cursor-pointer items-center rounded-(--switch-radius) border border-transparent bg-neutral p-0.5 transition-[background-color,border-color,box-shadow] duration-200',
-        'selected:bg-accent',
+        'selected:bg-selection',
         'read-only:cursor-default disabled:cursor-disabled disabled:border-border-disabled disabled:bg-transparent disabled:selected:border-transparent disabled:selected:bg-disabled',
       ],
       thumb: [
