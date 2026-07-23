@@ -1,10 +1,9 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { MoreHorizontalIcon } from 'lucide-react'
 
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
-import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 import { DialogContent, DialogTitle } from '@/registry/ui/dialog'
 import { Label } from '@/registry/ui/field'
@@ -13,32 +12,24 @@ import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Modal } from '@/registry/ui/modal'
 import { Popover } from '@/registry/ui/popover'
 import { TextField } from '@/registry/ui/text-field'
-import { ShowcaseCard } from '@/components/showcase-card'
-import { decodePreset, type SavedPreset } from '@/modules/create/preset'
-
-import { PresetThumbnail } from './preset-thumbnail'
+import type { SavedPreset } from '@/modules/create/preset'
 
 /**
- * A user-saved preset in the gallery — the same framed live preview as a
- * built-in card, plus an actions menu (rename / duplicate / copy link / delete)
- * in the header slot and an accent ring when it's the active preset.
+ * The actions menu on a saved preset's picker row: rename / duplicate / copy
+ * link / delete. Lives on the row's trailing edge, so pressing it must not
+ * apply the preset — the menu button handles its own press.
  */
-export function SavedPresetCard({
+export function SavedPresetActions({
   saved,
-  isActive,
-  onApply,
   onRename,
   onDuplicate,
   onDelete,
 }: {
   saved: SavedPreset
-  isActive: boolean
-  onApply: () => void
   onRename: (name: string) => void
   onDuplicate: () => void
   onDelete: () => void
 }) {
-  const designSystem = useMemo(() => decodePreset(saved.state), [saved.state])
   const { copyToClipboard } = useCopyToClipboard()
   const [renameOpen, setRenameOpen] = useState(false)
 
@@ -52,45 +43,27 @@ export function SavedPresetCard({
 
   return (
     <>
-      <ShowcaseCard
-        label={saved.name}
-        action={
-          <Menu>
-            <Button
-              variant="quiet"
-              size="sm"
-              isIconOnly
-              aria-label={`Actions for ${saved.name}`}
-              className="-my-1"
-            >
-              <MoreHorizontalIcon />
-            </Button>
-            <Popover placement="bottom end">
-              <MenuContent onAction={(key) => onAction(String(key))}>
-                <MenuItem id="rename">Rename</MenuItem>
-                <MenuItem id="duplicate">Duplicate</MenuItem>
-                <MenuItem id="copy">Copy link</MenuItem>
-                <MenuItem id="delete" variant="danger">
-                  Delete
-                </MenuItem>
-              </MenuContent>
-            </Popover>
-          </Menu>
-        }
-        className={cn(
-          'transition hover:border-border-hover hover:shadow-md has-[button:focus-visible]:border-border-hover',
-          isActive && 'ring-2 ring-border-focus ring-offset-2 ring-offset-bg',
-        )}
-      >
-        <PresetThumbnail designSystem={designSystem} />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card to-transparent" />
-        <button
-          type="button"
-          onClick={onApply}
-          aria-label={`Apply the ${saved.name} preset`}
-          className="absolute inset-0 z-10 rounded-2xl focus-visible:focus-ring"
-        />
-      </ShowcaseCard>
+      <Menu>
+        <Button
+          variant="quiet"
+          size="sm"
+          isIconOnly
+          aria-label={`Actions for ${saved.name}`}
+          className="shrink-0 text-fg-muted"
+        >
+          <MoreHorizontalIcon />
+        </Button>
+        <Popover placement="bottom end">
+          <MenuContent onAction={(key) => onAction(String(key))}>
+            <MenuItem id="rename">Rename</MenuItem>
+            <MenuItem id="duplicate">Duplicate</MenuItem>
+            <MenuItem id="copy">Copy link</MenuItem>
+            <MenuItem id="delete" variant="danger">
+              Delete
+            </MenuItem>
+          </MenuContent>
+        </Popover>
+      </Menu>
       <RenamePresetDialog
         isOpen={renameOpen}
         onOpenChange={setRenameOpen}

@@ -1,8 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { MoonIcon, SunIcon } from 'lucide-react'
-import type { Key } from 'react-aria-components'
+import { ChevronsUpDownIcon, MoonIcon, SunIcon } from 'lucide-react'
 import { useTheme } from 'starter-themes'
 
 import { createPersistedStore, enumCodec } from '@/lib/persisted-store'
@@ -10,13 +9,6 @@ import { DesignSystemProvider } from '@/lib/styles'
 import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/registry/ui/select'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import { DEFAULTS, type DesignSystem } from '@/modules/create/preset'
 import {
@@ -24,6 +16,7 @@ import {
   useDesignSystemName,
   useStoredPreset,
 } from '@/modules/create/preset/storage'
+import { PresetPicker } from '@/modules/presets/preset-picker'
 import { PRESETS } from '@/modules/presets/presets-data'
 
 /**
@@ -118,47 +111,61 @@ function PresetSwatch({
 
 function PresetSelector() {
   const selected = presetStore.useValue()
+  const previewMode = useForcedPreviewMode()
   const yours = useStoredPreset()
   const yoursName = useDesignSystemName().trim() || DEFAULT_DESIGN_SYSTEM_NAME
   const yoursSwatch =
     (yours.color ?? DEFAULT_COLOR_CONFIG).seeds.accent ?? 'var(--color-primary)'
-  const swatchFor = (id: string) =>
-    id === YOURS
+  const selectedName =
+    selected === YOURS
+      ? yoursName
+      : (PRESETS.find((p) => p.id === selected)?.name ?? yoursName)
+  const selectedSwatch =
+    selected === YOURS
       ? yoursSwatch
-      : (PRESETS.find((p) => p.id === id)?.swatch ?? yoursSwatch)
+      : (PRESETS.find((p) => p.id === selected)?.swatch ?? yoursSwatch)
 
   return (
-    // The field slot is w-full; keep the control sized to its content.
-    <div className="w-fit">
-      <Select
+    <PresetPicker
+      selectedId={selected}
+      onPick={(item) => presetStore.set(item.id)}
+      previewMode={previewMode}
+      sections={[
+        {
+          id: 'yours',
+          title: 'Yours',
+          items: [
+            {
+              id: YOURS,
+              name: yoursName,
+              description: 'Your design system from /create.',
+              designSystem: yours,
+            },
+          ],
+        },
+        {
+          id: 'built-in',
+          title: 'Presets',
+          items: PRESETS.map((preset) => ({
+            id: preset.id,
+            name: preset.name,
+            description: preset.description,
+            designSystem: preset.designSystem,
+          })),
+        },
+      ]}
+    >
+      <Button
+        variant="quiet"
+        size="sm"
         aria-label="Preview design system"
-        selectedKey={selected}
-        onSelectionChange={(key: Key | null) => {
-          if (key != null) presetStore.set(String(key))
-        }}
+        className="gap-1.5"
       >
-        <SelectTrigger size="sm" variant="quiet" className="gap-1.5">
-          <PresetSwatch color={swatchFor(selected)} />
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent placement="bottom start">
-          <SelectItem id={YOURS} textValue={yoursName}>
-            <span className="flex items-center gap-2">
-              <PresetSwatch color={yoursSwatch} className="size-2.5" />
-              {yoursName}
-            </span>
-          </SelectItem>
-          {PRESETS.map((preset) => (
-            <SelectItem key={preset.id} id={preset.id} textValue={preset.name}>
-              <span className="flex items-center gap-2">
-                <PresetSwatch color={preset.swatch} className="size-2.5" />
-                {preset.name}
-              </span>
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+        <PresetSwatch color={selectedSwatch} />
+        {selectedName}
+        <ChevronsUpDownIcon className="size-3.5! text-fg-muted" />
+      </Button>
+    </PresetPicker>
   )
 }
 
