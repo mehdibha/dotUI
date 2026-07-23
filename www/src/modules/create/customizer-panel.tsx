@@ -27,8 +27,8 @@ import type { PhosphorWeight } from '@/registry/icons/icon-map'
 import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
-import { PresetGalleryModal } from '@/modules/presets/preset-gallery-modal'
-import type { Preset } from '@/modules/presets/presets-data'
+import { PresetPicker } from '@/modules/presets/preset-picker'
+import { PRESETS, type Preset } from '@/modules/presets/presets-data'
 
 import { ExamplesIndex } from './__generated__/examples'
 import { ColorsConfig, ColorsSummary } from './colors'
@@ -55,9 +55,15 @@ import {
   RADIUS_FACTOR_VAR,
   RadiusConfig,
 } from './layout'
-import { encodePreset, useDesignSystem, useMyPresets } from './preset'
+import {
+  decodePreset,
+  encodePreset,
+  useDesignSystem,
+  useMyPresets,
+} from './preset'
 import { saveDesignSystemName, useDesignSystemName } from './preset/storage'
 import { SavePresetDialog } from './save-preset-dialog'
+import { SavedPresetActions } from './saved-preset-actions'
 import { TypographyConfig, TypographySummary } from './typography'
 
 /* -------------------------------- Types -------------------------------- */
@@ -159,7 +165,8 @@ export function CustomizerPanel({ className }: { className?: string }) {
 
   // The header names what's being edited: the active saved preset (dotted when
   // edited past its snapshot), else the standalone design-system name.
-  const { presets, activeId, setActive } = useMyPresets()
+  const { presets, activeId, setActive, rename, duplicate, remove } =
+    useMyPresets()
   const storedName = useDesignSystemName()
   const activeSaved = presets.find((p) => p.id === activeId)
   const isDirty = activeSaved ? activeSaved.state !== (preset ?? '') : false
@@ -245,6 +252,41 @@ export function CustomizerPanel({ className }: { className?: string }) {
     navigate({
       search: (prev) => ({ ...prev, gallery: open ? true : undefined }),
     })
+  }
+
+  // Saved presets decode to full design systems for the picker's mini previews.
+  const pickerSections = useMemo(() => {
+    const mine = {
+      id: 'mine',
+      title: 'My presets',
+      items: presets.map((saved) => ({
+        id: saved.id,
+        name: saved.name,
+        designSystem: decodePreset(saved.state),
+      })),
+    }
+    const builtIn = {
+      id: 'built-in',
+      title: 'Built-in',
+      items: PRESETS.map((p) => ({
+        id: p.id,
+        name: p.name,
+        description: p.description,
+        designSystem: p.designSystem,
+      })),
+    }
+    return presets.length > 0 ? [mine, builtIn] : [builtIn]
+  }, [presets])
+
+  function pickPreset(itemId: string) {
+    const saved = presets.find((p) => p.id === itemId)
+    if (saved) {
+      setActive(saved.id)
+      applySavedPreset(saved.state)
+      return
+    }
+    const builtIn = PRESETS.find((p) => p.id === itemId)
+    if (builtIn) applyPreset(builtIn)
   }
 
   function push(id: string) {
@@ -481,21 +523,40 @@ export function CustomizerPanel({ className }: { className?: string }) {
       {/* Header */}
       <div className="relative overflow-hidden border-b p-2">
         <div className="flex w-full items-center justify-between gap-2">
-          <Button
-            variant="quiet"
-            size="sm"
-            onPress={() => setGalleryOpen(true)}
-            className="min-w-0 justify-start gap-1.5 font-medium"
+          <PresetPicker
+            isOpen={gallery === true}
+            onOpenChange={setGalleryOpen}
+            sections={pickerSections}
+            selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}
+            onPick={(item) => pickPreset(item.id)}
+            renderItemActions={(item) => {
+              const saved = presets.find((p) => p.id === item.id)
+              if (!saved) return null
+              return (
+                <SavedPresetActions
+                  saved={saved}
+                  onRename={(name) => rename(saved.id, name)}
+                  onDuplicate={() => duplicate(saved.id)}
+                  onDelete={() => remove(saved.id)}
+                />
+              )
+            }}
           >
-            <span className="truncate">{displayName}</span>
-            {isDirty ? (
-              <span
-                aria-label="Unsaved changes"
-                className="size-1.5 shrink-0 rounded-full bg-fg-muted"
-              />
-            ) : null}
-            <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
-          </Button>
+            <Button
+              variant="quiet"
+              size="sm"
+              className="min-w-0 justify-start gap-1.5 font-medium"
+            >
+              <span className="truncate">{displayName}</span>
+              {isDirty ? (
+                <span
+                  aria-label="Unsaved changes"
+                  className="size-1.5 shrink-0 rounded-full bg-fg-muted"
+                />
+              ) : null}
+              <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
+            </Button>
+          </PresetPicker>
           <div className="flex items-center gap-1">
             <Button size="sm" isIconOnly aria-label="Shuffle" onPress={shuffle}>
               <ShuffleIcon />
@@ -577,14 +638,6 @@ export function CustomizerPanel({ className }: { className?: string }) {
           </Button>
         </ExportDialog>
       </div>
-
-      <PresetGalleryModal
-        isOpen={gallery === true}
-        onOpenChange={setGalleryOpen}
-        currentState={preset ?? ''}
-        onApply={applyPreset}
-        onApplySaved={applySavedPreset}
-      />
     </div>
   )
 }
