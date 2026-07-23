@@ -115,13 +115,14 @@ export const PRESETS: Preset[] = [
         badge: { radius: '--radius-full' },
       },
       tokens: {
-        // Geist elevation: two soft layered shadows + a 1px hairline ring that
-        // rides the neutral ramp so it adapts per mode. Overlays and cards share
-        // the value — both float over the page.
+        // Geist elevation: two soft layered shadows. The hairline comes from the
+        // components' own border (color-border above) — a shadow ring on top
+        // would double it and smear the corners. Overlays and cards share the
+        // value — both float over the page.
         '--shadow-overlay':
-          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06), 0 0 0 1px var(--neutral-400)',
+          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06)',
         '--shadow-card':
-          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06), 0 0 0 1px var(--neutral-400)',
+          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06)',
       },
     }),
   },
