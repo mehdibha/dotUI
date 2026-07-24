@@ -4,33 +4,41 @@ import type { ReactNode } from 'react'
 import { CheckIcon, SearchIcon } from 'lucide-react'
 import type { Key } from 'react-aria-components'
 
+import {
+  DEFAULT_BODY_FAMILY,
+  familyFromStack,
+  FONT_HEADING_VAR,
+  FONT_SANS_VAR,
+} from '@/lib/fonts'
 import { DesignSystemProvider } from '@/lib/styles'
+import {
+  ArrowRightIcon,
+  CircleIcon,
+  LayersIcon,
+  SearchIcon as PresetSearchIcon,
+  SparklesIcon,
+} from '@/registry/__generated__/icons'
 import { Responsive } from '@/registry/lib/responsive'
 import { cn } from '@/registry/lib/utils'
-import { Badge } from '@/registry/ui/badge'
 import { Button } from '@/registry/ui/button'
-import { Checkbox } from '@/registry/ui/checkbox'
-import { Command } from '@/registry/ui/command'
+import {
+  Command,
+  CommandContent,
+  CommandItem,
+  CommandSection,
+  CommandSectionHeader,
+} from '@/registry/ui/command'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Drawer } from '@/registry/ui/drawer'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import {
-  MenuContent,
-  MenuItem,
-  MenuSection,
-  MenuSectionHeader,
-} from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
 import type { PopoverProps } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
-import { Slider, SliderControl } from '@/registry/ui/slider'
-import { Switch } from '@/registry/ui/switch'
 import type { DesignSystem } from '@/modules/create/preset'
 
 interface PresetPickerItem {
   id: string
   name: string
-  description?: string
   /** Themes the option's card preview. */
   designSystem: DesignSystem
 }
@@ -61,8 +69,8 @@ interface PresetPickerProps {
 /**
  * The one preset picker, used by both the docs preview toolbar and the /create
  * panel: a searchable command list where every option is a live card preview
- * of the preset (see PresetOptionCard). Popover on desktop, bottom drawer on
- * mobile.
+ * of the preset (see PresetOptionCard). Two-column grid inside a wide popover
+ * on desktop, single-column bottom drawer on mobile.
  */
 export function PresetPicker({
   children,
@@ -75,7 +83,7 @@ export function PresetPicker({
   previewMode,
   renderItemActions,
 }: PresetPickerProps) {
-  const content = (autoFocusSearch: boolean) => (
+  const content = (surface: 'popover' | 'drawer') => (
     <DialogContent
       aria-label="Presets"
       className="flex flex-col gap-0 rounded-[inherit] p-0"
@@ -86,7 +94,7 @@ export function PresetPicker({
           selectedId={selectedId}
           onPick={onPick}
           close={close}
-          autoFocusSearch={autoFocusSearch}
+          surface={surface}
           previewMode={previewMode}
           renderItemActions={renderItemActions}
         />
@@ -100,11 +108,13 @@ export function PresetPicker({
       <Responsive
         render={(isMobile) =>
           isMobile ? (
-            // No search autofocus on mobile — the keyboard would cover the list.
-            <Drawer>{content(false)}</Drawer>
+            <Drawer>{content('drawer')}</Drawer>
           ) : (
-            <Popover placement={placement} className="w-96">
-              {content(true)}
+            // 348px = the picked 330px card + the list's 8px gutters + the
+            // popover's 1px borders. Where the browser draws a classic
+            // scrollbar it takes ~12px of that back off the card.
+            <Popover placement={placement} className="w-[348px]">
+              {content('popover')}
             </Popover>
           )
         }
@@ -118,7 +128,7 @@ function PresetPickerContent({
   selectedId,
   onPick,
   close,
-  autoFocusSearch,
+  surface,
   previewMode,
   renderItemActions,
 }: {
@@ -126,7 +136,7 @@ function PresetPickerContent({
   selectedId?: string
   onPick: (item: PresetPickerItem) => void
   close: () => void
-  autoFocusSearch: boolean
+  surface: 'popover' | 'drawer'
   previewMode?: 'light' | 'dark'
   renderItemActions?: (item: PresetPickerItem) => ReactNode
 }) {
@@ -140,11 +150,17 @@ function PresetPickerContent({
   }
 
   return (
-    <Command>
+    // The Command wrapper is the scroll container, so the search field has to
+    // stick to its top or it scrolls away with the cards.
+    <Command className="gap-0 p-0">
       <SearchField
-        autoFocus={autoFocusSearch}
+        // No search autofocus on mobile — the keyboard would cover the list.
+        autoFocus={surface === 'popover'}
         aria-label="Search presets"
-        className="p-1"
+        className={cn(
+          'sticky top-0 z-10 p-2',
+          surface === 'popover' ? 'bg-popover' : 'bg-bg',
+        )}
       >
         <InputGroup>
           <InputGroupAddon>
@@ -153,10 +169,17 @@ function PresetPickerContent({
           <Input placeholder="Search presets..." />
         </InputGroup>
       </SearchField>
-      <MenuContent
+      <CommandContent
         aria-label="Presets"
         onAction={pick}
-        className="max-h-96 overflow-y-auto p-1 pt-0"
+        // Spacing rides inline: the Command wrapper forces `p-0` on us through a
+        // descendant selector that any class of ours would lose to.
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 8,
+          padding: '0 8px 8px',
+        }}
         renderEmptyState={() => (
           <div className="py-6 text-center text-sm text-fg-muted">
             No presets found
@@ -164,20 +187,22 @@ function PresetPickerContent({
         )}
       >
         {sections.map((section) => (
-          <MenuSection key={section.id}>
-            {/* px-0 keeps the title flush with the card edges below it. */}
-            <MenuSectionHeader className="px-0">
+          // `contents` lifts the options into the outer column, so one gap rule
+          // spaces headers and cards alike.
+          <CommandSection key={section.id} className="contents">
+            <CommandSectionHeader className="px-0.5 pt-1 pb-0">
               {section.title}
-            </MenuSectionHeader>
+            </CommandSectionHeader>
             {section.items.map((item) => (
-              <MenuItem
+              <CommandItem
                 key={item.id}
                 id={item.id}
                 textValue={item.name}
-                // The themed card IS the option — it fills the item, so the
-                // menu highlight never shows; hover/focus render as an overlay
-                // on the card instead (group-*/option below).
-                className="group/option mb-1 rounded-lg p-0"
+                // The themed card IS the option and covers the item edge to
+                // edge, so the list highlight never shows; hover/focus render
+                // as an overlay on the card instead (group-*/option below).
+                // `overflow-visible` lets the selected badge sit on the corner.
+                className="group/option block overflow-visible rounded-xl p-0"
               >
                 <PresetOptionCard
                   item={item}
@@ -185,24 +210,60 @@ function PresetPickerContent({
                   forcedMode={previewMode}
                   actions={renderItemActions?.(item)}
                 />
-              </MenuItem>
+              </CommandItem>
             ))}
-          </MenuSection>
+          </CommandSection>
         ))}
-      </MenuContent>
+      </CommandContent>
     </Command>
   )
 }
 
+/** Accent steps rendered as the ramp strip — the mid-range read best at swatch size. */
+const RAMP_STEPS = [
+  '50',
+  '100',
+  '200',
+  '300',
+  '400',
+  '500',
+  '600',
+  '700',
+  '800',
+] as const
+
+/** The families behind the preset's heading/body tokens, resolved to names. */
+function fontPair(designSystem: DesignSystem) {
+  const body = designSystem.tokens[FONT_SANS_VAR]
+    ? familyFromStack(designSystem.tokens[FONT_SANS_VAR])
+    : DEFAULT_BODY_FAMILY
+  const headingStack = designSystem.tokens[FONT_HEADING_VAR]
+  const heading = headingStack ? familyFromStack(headingStack) : body
+  return { heading, body }
+}
+
 /**
- * One preset option: a full-width card that IS the preview — themed by the
- * preset via a scoped provider, name set in the preset's own heading font,
- * over a small cluster of real components (buttons, switch, input, checkbox,
- * badge, slider) covering the preset's telling axes: accent + primary color,
- * neutral surfaces, radius, fonts, density. No iframes, no scaling; the scoped
- * stylesheet is content-cached, so a list of these stays cheap. The check and
- * actions menu sit over the card but OUTSIDE the scope, so site chrome (and
- * the rename modal the actions open) keeps the site theme.
+ * One preset option: a scoped, themed miniature of the design system, and
+ * nothing else — no site-chrome caption underneath. The card carries its own
+ * name, and selection plus the saved-preset actions ride as a corner badge.
+ *
+ * The miniature reads top-to-bottom as identity → palette → product, which is
+ * what keeps the preset's NAME the loudest thing on the card:
+ *
+ * - Identity strip — the two font families each set in their own face (so the
+ *   label is itself the type specimen), and on the right three glyphs from the
+ *   preset's icon library, picked because their silhouettes diverge most
+ *   between libraries.
+ * - The name in the heading font, closed by a hairline rule. This is the card's
+ *   headline; everything below it is deliberately smaller.
+ * - The accent ramp.
+ * - A vignette panel — real components (body copy, a search field, the primary
+ *   action) nested inside an inset surface, so radius, field style, primary
+ *   color, icon set and control height all read off actual UI while staying
+ *   visually subordinate to the headline.
+ *
+ * No iframes, no scaling; the scoped stylesheet is content-cached, so a list of
+ * these stays cheap.
  */
 function PresetOptionCard({
   item,
@@ -216,7 +277,8 @@ function PresetOptionCard({
   actions?: ReactNode
 }) {
   const { designSystem } = item
-  const hasControls = isSelected || actions !== undefined
+  const { heading, body } = fontPair(designSystem)
+
   return (
     <div className="relative w-full">
       <DesignSystemProvider
@@ -228,65 +290,110 @@ function PresetOptionCard({
         icons={designSystem.icons}
         forcedMode={forcedMode}
       >
-        <div className="relative w-full overflow-hidden rounded-lg border bg-bg p-3 pt-2.5">
-          <div
-            className={cn('flex items-baseline gap-2', hasControls && 'pr-14')}
-          >
-            <span className="shrink-0 font-heading text-sm font-medium text-fg">
-              {item.name}
+        <div
+          className={cn(
+            'relative overflow-hidden rounded-lg border bg-bg p-3',
+            isSelected &&
+              'ring-2 ring-accent ring-offset-2 ring-offset-popover',
+          )}
+        >
+          <div className="flex items-center justify-between gap-2">
+            <span className="min-w-0 truncate text-[11px] leading-none text-fg-accent">
+              <span className="font-heading">{heading}</span>
+              {heading !== body && (
+                <>
+                  <span className="text-fg-muted"> / </span>
+                  <span className="font-sans">{body}</span>
+                </>
+              )}
             </span>
-            {item.description && (
-              <span className="min-w-0 flex-1 truncate text-xs text-fg-muted">
-                {item.description}
-              </span>
-            )}
+            <div
+              aria-hidden
+              className="flex shrink-0 items-center gap-1.5 text-fg-muted [&_svg]:size-4"
+            >
+              {/* Only the off-default densities earn a chip — the vignette's
+                  real control heights carry the rest. */}
+              {designSystem.density !== 'default' && (
+                <>
+                  <span className="text-[10px] leading-none tracking-wide uppercase">
+                    {designSystem.density}
+                  </span>
+                  <span className="h-3.5 w-px bg-border" />
+                </>
+              )}
+              <SparklesIcon />
+              <LayersIcon />
+              <CircleIcon />
+            </div>
           </div>
+
+          <p className="mt-2.5 truncate border-b pb-2.5 font-heading text-lg leading-tight font-semibold text-fg">
+            {item.name}
+          </p>
+
+          <div aria-hidden className="mt-2.5 flex gap-[3px]">
+            {RAMP_STEPS.map((step) => (
+              <span
+                key={step}
+                // The hairline keeps the near-white low steps from vanishing
+                // into a light card.
+                className="h-3.5 flex-1 rounded-[2px] ring-1 ring-fg/10 ring-inset"
+                style={{ background: `var(--accent-${step})` }}
+              />
+            ))}
+          </div>
+
           <div
             inert
             aria-hidden
-            className="pointer-events-none mt-2.5 flex flex-col gap-2.5 select-none"
+            className="mt-2.5 rounded-md border bg-muted p-2.5 select-none"
           >
-            <div className="flex items-center gap-2">
-              <Button variant="primary" size="sm">
-                Save
+            <p className="line-clamp-2 text-[11px] leading-relaxed text-fg-muted">
+              The quick brown fox jumps over the lazy dog.
+            </p>
+            <div className="mt-2 flex items-center gap-2">
+              <InputGroup className="min-w-0 flex-1">
+                <InputGroupAddon>
+                  <PresetSearchIcon />
+                </InputGroupAddon>
+                <Input placeholder="Search" />
+              </InputGroup>
+              <Button variant="primary" size="sm" className="shrink-0">
+                Continue
+                <ArrowRightIcon />
               </Button>
-              <Button size="sm">Cancel</Button>
-              <Switch
-                isSelected
-                aria-label="Sample switch"
-                className="ml-auto"
-              />
-            </div>
-            <Input placeholder="Input" className="w-full" />
-            <div className="flex items-center gap-2.5">
-              <Checkbox isSelected aria-label="Sample checkbox" />
-              <Badge>Badge</Badge>
-              <Slider
-                aria-label="Sample slider"
-                defaultValue={60}
-                className="ml-auto w-28"
-              >
-                <SliderControl />
-              </Slider>
             </div>
           </div>
-          {/* Hover/virtual-focus feedback: a subtle lightening overlay (the
-              preset's own fg, so it adapts to the card's mode) — no border
-              change. */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-[inherit] bg-fg opacity-0 transition-opacity group-hover/option:opacity-4 group-data-focused/option:opacity-6"
-          />
         </div>
       </DesignSystemProvider>
-      {hasControls && (
-        <div className="absolute top-2 right-2 flex items-center gap-0.5">
+
+      {/* Site chrome, deliberately outside the preset scope and outside the
+          card's `overflow-hidden` so it can sit on the corner. */}
+      {(isSelected || actions !== undefined) && (
+        <div className="absolute -top-2 -right-2 z-10 flex items-center gap-1">
           {isSelected && (
-            <CheckIcon aria-hidden className="size-4 shrink-0 text-fg-accent" />
+            <span
+              aria-hidden
+              // Site fg, not accent: the card's own ring already answers in the
+              // preset's colour, and this marker has to stay legible over every
+              // palette (Vercel's accent is near-black).
+              className="flex size-5 items-center justify-center rounded-full bg-fg text-bg shadow-sm"
+            >
+              <CheckIcon className="size-3" />
+            </span>
           )}
           {actions}
         </div>
       )}
+
+      {/* Hover/virtual-focus feedback over the whole option, in the site's own
+          fg so it reads consistently regardless of the
+          preset underneath. Keyboard focus is virtual — it lands as
+          `data-focused` on the item, never as a real `:focus-visible`. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-1 rounded-xl bg-fg opacity-0 ring-fg/25 transition-opacity group-hover/option:opacity-4 group-data-focused/option:opacity-6 group-data-focused/option:ring-2"
+      />
     </div>
   )
 }

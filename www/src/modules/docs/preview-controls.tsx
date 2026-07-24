@@ -138,7 +138,6 @@ function PresetSelector() {
             {
               id: YOURS,
               name: yoursName,
-              description: 'Your design system from /create.',
               designSystem: yours,
             },
           ],
@@ -149,7 +148,6 @@ function PresetSelector() {
           items: PRESETS.map((preset) => ({
             id: preset.id,
             name: preset.name,
-            description: preset.description,
             designSystem: preset.designSystem,
           })),
         },
