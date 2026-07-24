@@ -39,6 +39,7 @@ import {
 } from '@/modules/create/preset'
 import type { PreviewMode } from '@/modules/create/preset'
 import { componentsData } from '@/modules/docs/components-list/components-data'
+import { useTweak } from '@/dev/tweaker'
 
 type DeviceSize = 'mobile' | 'tablet' | 'desktop'
 
@@ -65,6 +66,10 @@ const ZOOM_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2]
 
 const routeApi = getRouteApi('/_app/create')
 
+/** Glass-card chrome shared by the floating / detached header bars. */
+const CARD_CHROME =
+  'pointer-events-auto rounded-xl border border-border/45 bg-neutral/90 p-1 backdrop-blur-sm'
+
 export function PreviewPanel({ className }: { className?: string }) {
   const { preview, preset } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
@@ -78,9 +83,34 @@ export function PreviewPanel({ className }: { className?: string }) {
   const [size, setSize] = useState<DeviceSize>('desktop')
   const [zoom, setZoom] = useState(1)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const effectivePreview = preview
   const constrained = size !== 'desktop'
+
+  const headerStyle = useTweak('Header style', {
+    type: 'select',
+    options: ['blur', 'floating', 'attached', 'detached'],
+    default: 'blur',
+    group: 'Preview panel',
+  })
+  const headerPosition = useTweak('Header position', {
+    type: 'select',
+    options: ['top', 'bottom'],
+    default: 'top',
+    group: 'Preview panel',
+  })
+  // Two cards (picker left, controls right) instead of one bar — only visible
+  // on the card-style headers (floating / detached).
+  const headerPanels = useTweak('Header panels', {
+    type: 'select',
+    options: ['uniform', 'split'],
+    default: 'uniform',
+    group: 'Preview panel',
+  })
+
+  const isCardHeader = headerStyle === 'floating' || headerStyle === 'detached'
+  const splitHeader = isCardHeader && headerPanels === 'split'
 
   // Open the preview in the same light / dark mode the site is currently in. Seeded on
   // mount rather than via the useState initializer: this page is server-rendered and the
@@ -100,6 +130,22 @@ export function PreviewPanel({ className }: { className?: string }) {
     return preset ? `${base}?preset=${encodeURIComponent(preset)}` : base
     // oxlint-disable-next-line react/exhaustive-deps -- keep live preset changes on the postMessage channel to avoid iframe reloads
   }, [effectivePreview])
+
+  // The iframe remounts per previewed component (key below) — show the stage
+  // skeleton again until the new document signals it has rendered. The iframe's
+  // `load` event is too early (it fires before the SPA paints), so listen for
+  // the app's own `preview-ready` message instead.
+  useEffect(() => {
+    setIsLoaded(false)
+  }, [iframeSrc])
+
+  useEffect(() => {
+    const onReady = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-ready') setIsLoaded(true)
+    }
+    window.addEventListener('message', onReady)
+    return () => window.removeEventListener('message', onReady)
+  }, [])
 
   // Send the design system to the iframe on change, on load, and when the iframe signals it's
   // ready — its message listener can mount after the load event, racing the load-fired send.
@@ -179,7 +225,10 @@ export function PreviewPanel({ className }: { className?: string }) {
     <div
       ref={panelRef}
       className={cn(
-        'relative flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border bg-bg',
+        'relative flex min-w-0 flex-1 flex-col',
+        headerStyle === 'detached'
+          ? 'gap-2'
+          : 'overflow-hidden rounded-xl border border-border/45 bg-bg shadow-xs',
         className,
       )}
     >
@@ -189,7 +238,12 @@ export function PreviewPanel({ className }: { className?: string }) {
       <div
         className={cn(
           'relative flex-1 overflow-auto',
-          constrained && 'bg-neutral',
+          headerStyle === 'detached' &&
+            'rounded-xl border border-border/45 bg-bg shadow-xs',
+          // Constrained sizes reveal the stage: a recessed, dot-gridded surface
+          // the device "floats" on, so tool chrome and artifact read as layers.
+          constrained &&
+            'bg-neutral [background-image:radial-gradient(var(--color-border)_1px,transparent_1px)] [background-size:14px_14px]',
         )}
       >
         <div className="flex h-full w-full justify-center">
@@ -200,13 +254,26 @@ export function PreviewPanel({ className }: { className?: string }) {
             title="preview"
             className={cn(
               'h-full border-0 bg-bg',
-              constrained && 'border-x shadow-sm',
+              constrained && 'border-x shadow-md',
             )}
             style={{
               width: constrained ? DEVICE_WIDTHS[size] : '100%',
               zoom,
             }}
           />
+        </div>
+        {/* Stage skeleton — the preview never opens on a black void. */}
+        <div
+          aria-hidden
+          className={cn(
+            'absolute inset-0 z-10 flex flex-col gap-4 bg-bg p-8 pt-20 transition-opacity duration-300',
+            isLoaded && 'pointer-events-none opacity-0',
+          )}
+        >
+          <div className="h-3 w-24 animate-pulse rounded bg-neutral" />
+          <div className="h-10 w-56 animate-pulse rounded-md bg-neutral" />
+          <div className="h-3 w-80 max-w-full animate-pulse rounded bg-neutral" />
+          <div className="mt-4 h-64 w-full animate-pulse rounded-xl bg-neutral" />
         </div>
       </div>
 
@@ -217,79 +284,119 @@ export function PreviewPanel({ className }: { className?: string }) {
           tint's --color-bg matches the iframe's background, not the site's. The
           wrapper is pointer-events-none so empty areas click through to the preview;
           each control cluster re-enables pointer events. */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-20">
-        <DesignSystemProvider
-          scoped
-          color={designSystem.color}
-          forcedMode={previewMode}
-        >
-          <div
-            ref={blurRef}
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%]"
+      <div
+        className={cn(
+          headerStyle === 'detached'
+            ? headerPosition === 'bottom'
+              ? 'order-last'
+              : 'order-first'
+            : 'pointer-events-none absolute inset-x-0 z-20',
+          headerStyle === 'floating' &&
+            (headerPosition === 'bottom' ? 'bottom-2 px-2' : 'top-2 px-2'),
+          (headerStyle === 'blur' || headerStyle === 'attached') &&
+            (headerPosition === 'bottom' ? 'bottom-0' : 'top-0'),
+        )}
+      >
+        {headerStyle === 'blur' && (
+          <DesignSystemProvider
+            scoped
+            color={designSystem.color}
+            forcedMode={previewMode}
           >
-            <ProgressiveBlur />
-          </div>
-        </DesignSystemProvider>
+            <div
+              ref={blurRef}
+              aria-hidden
+              className={cn(
+                'pointer-events-none absolute inset-x-0 -z-10 h-[140%]',
+                headerPosition === 'bottom' ? 'bottom-0 rotate-180' : 'top-0',
+              )}
+            >
+              <ProgressiveBlur />
+            </div>
+          </DesignSystemProvider>
+        )}
 
-        <div className="relative flex h-(--header-height) items-center gap-2 px-3">
+        <div
+          className={cn(
+            'relative flex items-center gap-2',
+            headerStyle === 'blur' && 'h-(--header-height) px-3',
+            splitHeader && 'justify-between',
+            isCardHeader && !splitHeader && CARD_CHROME,
+            headerStyle === 'attached' &&
+              cn(
+                'pointer-events-auto bg-neutral/90 p-1 backdrop-blur-sm',
+                headerPosition === 'bottom'
+                  ? 'border-t border-border/45'
+                  : 'border-b border-border/45',
+              ),
+          )}
+        >
           {/* Preview selector */}
-          <Select
-            value={effectivePreview}
-            onChange={(v) =>
-              navigate({
-                search: (prev) => ({ ...prev, preview: v as string }),
-              })
-            }
-            className="pointer-events-auto w-44 max-w-[45%]"
-            aria-label="Preview"
+          <div
+            className={cn('max-w-[45%] min-w-0', splitHeader && CARD_CHROME)}
           >
-            <Button size="sm" className="w-full">
-              <SelectValue className="truncate" />
-              <ChevronDownIcon data-icon-end="" />
-            </Button>
-            <Popover>
-              <Command>
-                <SearchField autoFocus aria-label="Search previews">
-                  <Input />
-                </SearchField>
-                <ListBox>
-                  <ListBoxSection>
-                    <ListBoxSectionHeader>Overview</ListBoxSectionHeader>
-                    {/* The style-guide view — a designer walkthrough of the whole system. */}
-                    <ListBoxItem id="overview" textValue="Overview">
-                      <span className="truncate">Style guide</span>
-                    </ListBoxItem>
-                  </ListBoxSection>
-                  <ListBoxSection>
-                    <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
-                    {/* Composed, real-world UI (the landing cards grid), themed live. */}
-                    <ListBoxItem id="cards" textValue="Cards">
-                      <span className="truncate">Cards</span>
-                    </ListBoxItem>
-                  </ListBoxSection>
-                  <ListBoxSection>
-                    <ListBoxSectionHeader>Components</ListBoxSectionHeader>
-                    {componentsData
-                      .flatMap((category) => category.components)
-                      .sort((a, b) => a.name.localeCompare(b.name))
-                      .map((comp) => (
-                        <ListBoxItem
-                          key={comp.slug}
-                          id={comp.slug}
-                          textValue={comp.name}
-                        >
-                          <span className="truncate">{comp.name}</span>
-                        </ListBoxItem>
-                      ))}
-                  </ListBoxSection>
-                </ListBox>
-              </Command>
-            </Popover>
-          </Select>
+            <Select
+              value={effectivePreview}
+              onChange={(v) =>
+                navigate({
+                  search: (prev) => ({ ...prev, preview: v as string }),
+                })
+              }
+              className="pointer-events-auto w-fit"
+              aria-label="Preview"
+            >
+              <Button size="sm" variant="quiet">
+                <SelectValue className="truncate" />
+                <ChevronDownIcon data-icon-end="" />
+              </Button>
+              <Popover>
+                <Command>
+                  <SearchField autoFocus aria-label="Search previews">
+                    <Input />
+                  </SearchField>
+                  <ListBox>
+                    <ListBoxSection>
+                      <ListBoxSectionHeader>Overview</ListBoxSectionHeader>
+                      {/* The style-guide view — a designer walkthrough of the whole system. */}
+                      <ListBoxItem id="overview" textValue="Overview">
+                        <span className="truncate">Style guide</span>
+                      </ListBoxItem>
+                    </ListBoxSection>
+                    <ListBoxSection>
+                      <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
+                      {/* Composed, real-world UI (the landing cards grid), themed live. */}
+                      <ListBoxItem id="cards" textValue="Cards">
+                        <span className="truncate">Cards</span>
+                      </ListBoxItem>
+                    </ListBoxSection>
+                    <ListBoxSection>
+                      <ListBoxSectionHeader>Components</ListBoxSectionHeader>
+                      {componentsData
+                        .flatMap((category) => category.components)
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((comp) => (
+                          <ListBoxItem
+                            key={comp.slug}
+                            id={comp.slug}
+                            textValue={comp.name}
+                          >
+                            <span className="truncate">{comp.name}</span>
+                          </ListBoxItem>
+                        ))}
+                    </ListBoxSection>
+                  </ListBox>
+                </Command>
+              </Popover>
+            </Select>
+          </div>
 
           {/* Right cluster */}
-          <div className="pointer-events-auto ml-auto flex items-center gap-1">
+          <div
+            className={cn(
+              'pointer-events-auto ml-auto flex items-center gap-1',
+              splitHeader && CARD_CHROME,
+            )}
+          >
             {/* Device size — desktop only; the mobile pane is already viewport-width. */}
             <ToggleButtonGroup
               aria-label="Preview size"

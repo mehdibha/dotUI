@@ -81,6 +81,11 @@ function paramCount(item: RegistryItem): number {
   return item.params ? Object.keys(item.params).length : 0
 }
 
+/** Every component with at least one customizable param, A–Z. */
+export const paramComponents = allComponents.filter(
+  (comp) => paramCount(comp) >= 1,
+)
+
 /* ----------------------- Card (shared card style) ----------------------- */
 
 const cardClass =

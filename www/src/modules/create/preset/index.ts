@@ -3,9 +3,12 @@ export { DEFAULTS } from './defaults'
 export { type SavedPreset, useMyPresets } from './my-presets'
 export {
   type PreviewMode,
+  sendInspect,
   sendPreviewMode,
   sendToIframe,
   useIframeMessageListener,
+  useInspectMessages,
+  useIsEmbeddedPreview,
   usePreviewForcedTheme,
   useReportScrollProgress,
 } from './iframe-sync'
