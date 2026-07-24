@@ -15,6 +15,7 @@ type ParentToIframeMessage =
 type IframeToParentMessage =
   | { type: 'preview-ready' }
   | { type: 'preview-scroll'; progress: number }
+  | { type: 'preview-inspect'; panel: string }
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
@@ -103,6 +104,45 @@ export function usePreviewForcedTheme(): PreviewMode | undefined {
   }, [])
 
   return mode
+}
+
+/** Inside the preview iframe: whether this document is embedded in /create. */
+export function useIsEmbeddedPreview(): boolean {
+  const [embedded] = React.useState(() => isInIframe())
+  return embedded
+}
+
+/**
+ * Inside the preview iframe: ask the embedding panel to open the controls for
+ * one of its chapters — the preview's half of the two-way coupling.
+ */
+export function sendInspect(panel: string) {
+  if (!isInIframe()) return
+  window.parent.postMessage(
+    { type: 'preview-inspect', panel } satisfies IframeToParentMessage,
+    '*',
+  )
+}
+
+/** In the /create parent: react to the preview's inspect requests. */
+export function useInspectMessages(onInspect: (panel: string) => void) {
+  const onInspectRef = React.useRef(onInspect)
+  React.useEffect(() => {
+    onInspectRef.current = onInspect
+  }, [onInspect])
+
+  React.useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (
+        event.data?.type === 'preview-inspect' &&
+        typeof event.data.panel === 'string'
+      ) {
+        onInspectRef.current(event.data.panel)
+      }
+    }
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [])
 }
 
 /**
