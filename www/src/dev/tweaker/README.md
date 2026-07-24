@@ -83,6 +83,7 @@ A small **trigger** is always docked to a screen edge (default: centre-right; a 
 
 - **Click the trigger** → opens the panel as a popover beside it (the trigger stays put).
 - **Close** (×) or press **Escape** → closes the popover. Clicking the page does NOT close it — the page stays interactive while you tweak.
+- **Works inside overlays.** Tweaking a feature that lives in a popover, drawer or modal means clicking the panel while that overlay is open. The trigger and panel carry `data-react-aria-top-layer` (react-aria's own escape hatch, the one their toast region uses), so `useInteractOutside` skips them — nothing dismisses — `FocusScope` treats them as inside the scope, so a modal won't yank focus back, and `ariaHideOutside` leaves them visible to assistive tech. Every registry overlay dismisses through `useInteractOutside`, the base-ui Drawer included, so **overlays need no opt-in of their own**.
 - **Minimize** (⌄⌃) → collapses the panel to its header bar; expand the same way.
 - **⌘ .** (or **Ctrl .**) → toggles the popover from anywhere.
 - **Reset** (↺) → all controls back to their defaults.
