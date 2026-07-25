@@ -1,8 +1,10 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { CheckIcon, SearchIcon } from 'lucide-react'
 import type { Key } from 'react-aria-components'
+import { useFilter } from 'react-aria-components/Autocomplete'
 
 import {
   DEFAULT_BODY_FAMILY,
@@ -13,14 +15,13 @@ import {
 import { DesignSystemProvider } from '@/lib/styles'
 import {
   ArrowRightIcon,
-  CircleIcon,
-  LayersIcon,
   SearchIcon as PresetSearchIcon,
-  SparklesIcon,
 } from '@/registry/__generated__/icons'
 import { Responsive } from '@/registry/lib/responsive'
 import { cn } from '@/registry/lib/utils'
+import { Badge } from '@/registry/ui/badge'
 import { Button } from '@/registry/ui/button'
+import { Checkbox } from '@/registry/ui/checkbox'
 import {
   Command,
   CommandContent,
@@ -31,15 +32,18 @@ import {
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Drawer } from '@/registry/ui/drawer'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { Kbd } from '@/registry/ui/kbd'
 import { Popover } from '@/registry/ui/popover'
 import type { PopoverProps } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
+import { Switch } from '@/registry/ui/switch'
+import { RADIUS_FACTOR_VAR } from '@/modules/create/layout'
 import type { DesignSystem } from '@/modules/create/preset'
 
 interface PresetPickerItem {
   id: string
   name: string
-  /** Themes the option's card preview. */
+  /** Themes the option's preview. */
   designSystem: DesignSystem
 }
 
@@ -60,7 +64,7 @@ interface PresetPickerProps {
   onOpenChange?: (open: boolean) => void
   /** Desktop popover placement. */
   placement?: PopoverProps['placement']
-  /** Pin the rows' mini previews to one mode (docs previews pin light/dark). */
+  /** Pin the previews to one mode (docs previews pin light/dark). */
   previewMode?: 'light' | 'dark'
   /** Trailing controls on a row (e.g. a saved preset's actions menu). */
   renderItemActions?: (item: PresetPickerItem) => ReactNode
@@ -68,9 +72,14 @@ interface PresetPickerProps {
 
 /**
  * The one preset picker, used by both the docs preview toolbar and the /create
- * panel: a searchable command list where every option is a live card preview
- * of the preset (see PresetOptionCard). Two-column grid inside a wide popover
- * on desktop, single-column bottom drawer on mobile.
+ * panel: a searchable list where every row is a compact, themed summary of the
+ * design system — its name in its own heading font, its font/radius/density and
+ * three palette dots — and the row under the cursor or the keyboard highlight
+ * expands into a live vignette of real components (see PresetOptionRow).
+ *
+ * Only one row is open at a time, which is what buys the vignette its space:
+ * the list stays scannable at rest and the option you are actually considering
+ * shows you the design system rather than describing it.
  */
 export function PresetPicker({
   children,
@@ -110,10 +119,9 @@ export function PresetPicker({
           isMobile ? (
             <Drawer>{content('drawer')}</Drawer>
           ) : (
-            // 348px = the picked 330px card + the list's 8px gutters + the
-            // popover's 1px borders. Where the browser draws a classic
-            // scrollbar it takes ~12px of that back off the card.
-            <Popover placement={placement} className="w-[348px]">
+            // 364px = the 346px row the expanded vignette needs + the list's
+            // 8px gutters + the popover's 1px borders.
+            <Popover placement={placement} className="w-[364px]">
               {content('popover')}
             </Popover>
           )
@@ -140,6 +148,43 @@ function PresetPickerContent({
   previewMode?: 'light' | 'dark'
   renderItemActions?: (item: PresetPickerItem) => ReactNode
 }) {
+  // Autocomplete owns the filtering; we mirror the query only to keep the
+  // section counts honest and to drop a section whose matches all filtered out
+  // (its header is our child, so the collection can't hide it for us). Reading
+  // it off `onInput` leaves the value under Autocomplete's control.
+  const [query, setQuery] = useState('')
+  const { contains } = useFilter({
+    sensitivity: 'base',
+    ignorePunctuation: true,
+  })
+  // Which row is open: the one under the pointer while the pointer is on a row,
+  // else the keyboard highlight — without this, the mouse resting on one row
+  // and the arrow keys walking another would open both. Until either happens,
+  // the current selection stands in, so the picker opens showing what you are
+  // on rather than a list of closed rows.
+  const [pointerOnRow, setPointerOnRow] = useState(false)
+  const [navigated, setNavigated] = useState(false)
+  const visible = sections
+    .map((section) => ({
+      ...section,
+      items: query
+        ? section.items.filter((item) => contains(item.name, query))
+        : section.items,
+    }))
+    .filter((section) => section.items.length > 0)
+
+  function isOpen(
+    item: PresetPickerItem,
+    isFocused: boolean,
+    isHovered: boolean,
+  ) {
+    // The drawer has neither a pointer nor a highlight to follow, so every row
+    // stays open there.
+    if (surface === 'drawer') return true
+    if (pointerOnRow) return isHovered
+    return navigated ? isFocused : item.id === selectedId
+  }
+
   function pick(key: Key) {
     const item = sections
       .flatMap((section) => section.items)
@@ -150,86 +195,134 @@ function PresetPickerContent({
   }
 
   return (
-    // The Command wrapper is the scroll container, so the search field has to
-    // stick to its top or it scrolls away with the cards.
-    <Command className="gap-0 p-0">
+    // Scrolling belongs to the list alone, so the search field and the shortcut
+    // bar stay put while the options move under them.
+    <Command
+      className="gap-0 overflow-hidden p-0"
+      onPointerMove={(e) =>
+        setPointerOnRow(
+          (e.target as HTMLElement).closest('[data-listbox-item]') !== null,
+        )
+      }
+      onPointerLeave={() => setPointerOnRow(false)}
+      onKeyDownCapture={(e) => {
+        if (!e.key.startsWith('Arrow')) return
+        setPointerOnRow(false)
+        setNavigated(true)
+      }}
+    >
       <SearchField
         // No search autofocus on mobile — the keyboard would cover the list.
         autoFocus={surface === 'popover'}
-        aria-label="Search presets"
-        className={cn(
-          'sticky top-0 z-10 p-2',
-          surface === 'popover' ? 'bg-popover' : 'bg-bg',
-        )}
+        aria-label="Search design systems"
+        className="shrink-0 p-2"
       >
         <InputGroup>
           <InputGroupAddon>
             <SearchIcon />
           </InputGroupAddon>
-          <Input placeholder="Search presets..." />
+          <Input
+            placeholder="Search design systems..."
+            onInput={(e) => {
+              setQuery(e.currentTarget.value)
+              // Typing moves the highlight to the first match, so the open row
+              // has to follow it from here on.
+              setNavigated(true)
+            }}
+          />
         </InputGroup>
       </SearchField>
       <CommandContent
-        aria-label="Presets"
+        aria-label="Design systems"
         onAction={pick}
-        // Spacing rides inline: the Command wrapper forces `p-0` on us through a
-        // descendant selector that any class of ours would lose to.
+        // Spacing and scrolling ride inline: the Command wrapper forces `p-0`
+        // and `overflow-visible` on us through descendant selectors that any
+        // class of ours would lose to.
         style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: 8,
+          gap: 4,
           padding: '0 8px 8px',
+          maxHeight: surface === 'popover' ? 420 : '60vh',
+          overflowY: 'auto',
+          scrollPaddingBlock: 8,
         }}
         renderEmptyState={() => (
           <div className="py-6 text-center text-sm text-fg-muted">
-            No presets found
+            No design systems found
           </div>
         )}
       >
-        {sections.map((section) => (
+        {visible.map((section) => (
           // `contents` lifts the options into the outer column, so one gap rule
-          // spaces headers and cards alike.
+          // spaces headers and rows alike.
           <CommandSection key={section.id} className="contents">
-            <CommandSectionHeader className="px-0.5 pt-1 pb-0">
+            <CommandSectionHeader className="flex items-center justify-between px-1 pt-2.5 pb-1 text-[10px] font-medium tracking-[0.09em] uppercase">
               {section.title}
+              <span className="tabular-nums">{section.items.length}</span>
             </CommandSectionHeader>
             {section.items.map((item) => (
               <CommandItem
                 key={item.id}
                 id={item.id}
                 textValue={item.name}
-                // The themed card IS the option and covers the item edge to
-                // edge, so the list highlight never shows; hover/focus render
-                // as an overlay on the card instead (group-*/option below).
-                // `overflow-visible` lets the selected badge sit on the corner.
-                className="group/option block overflow-visible rounded-xl p-0"
+                // The themed row IS the option and covers the item edge to edge,
+                // so the list highlight never shows; hover/focus render on the
+                // row instead (`before:hidden` drops the highlight style's own
+                // accent bar, which would paint the site's accent over the
+                // preset's). `overflow-visible` lets the focus ring and the
+                // selected badge sit outside the row.
+                className="block overflow-visible rounded-xl p-0 before:hidden"
               >
-                <PresetOptionCard
-                  item={item}
-                  isSelected={item.id === selectedId}
-                  forcedMode={previewMode}
-                  actions={renderItemActions?.(item)}
-                />
+                {({ isFocused, isHovered }) => (
+                  <PresetOptionRow
+                    item={item}
+                    isSelected={item.id === selectedId}
+                    isFocused={isFocused}
+                    isActive={isOpen(item, isFocused, isHovered)}
+                    forcedMode={previewMode}
+                    actions={renderItemActions?.(item)}
+                  />
+                )}
               </CommandItem>
             ))}
           </CommandSection>
         ))}
       </CommandContent>
+      {surface === 'popover' && (
+        <div className="flex shrink-0 items-center justify-between border-t px-2.5 py-1.5 text-[11px] text-fg-muted">
+          <span className="flex items-center gap-1.5">
+            <span className="flex gap-0.5">
+              <Kbd>↑</Kbd>
+              <Kbd>↓</Kbd>
+            </span>
+            Navigate
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Kbd>↵</Kbd>
+            Apply
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Kbd>Esc</Kbd>
+            Close
+          </span>
+        </div>
+      )}
     </Command>
   )
 }
 
-/** Accent steps rendered as the ramp strip — the mid-range read best at swatch size. */
-const RAMP_STEPS = [
-  '50',
-  '100',
-  '200',
-  '300',
-  '400',
-  '500',
-  '600',
-  '700',
-  '800',
+/** The palette roles the row's dots sample — the ones two systems disagree on first. */
+const DOT_ROLES = ['bg-primary', 'bg-accent', 'bg-neutral'] as const
+
+/** The vignette's swatch strip: the semantic vocabulary, not one ramp. */
+const SWATCH_ROLES = [
+  'bg-primary',
+  'bg-accent',
+  'bg-success',
+  'bg-warning',
+  'bg-danger',
+  'bg-neutral',
 ] as const
 
 /** The families behind the preset's heading/body tokens, resolved to names. */
@@ -242,45 +335,65 @@ function fontPair(designSystem: DesignSystem) {
   return { heading, body }
 }
 
+/** The control radius the factor lands on — `--radius-md` is 0.375rem at 1x. */
+function radiusLabel(designSystem: DesignSystem) {
+  const parsed = Number.parseFloat(
+    designSystem.tokens[RADIUS_FACTOR_VAR] ?? '1',
+  )
+  const factor = Number.isFinite(parsed) ? parsed : 1
+  return `${Math.round(6 * factor)}px`
+}
+
 /**
- * One preset option: a scoped, themed miniature of the design system, and
- * nothing else — no site-chrome caption underneath. The card carries its own
- * name, and selection plus the saved-preset actions ride as a corner badge.
+ * One option: a compact themed row that expands into a live vignette while it
+ * is the active one.
  *
- * The miniature reads top-to-bottom as identity → palette → product, which is
- * what keeps the preset's NAME the loudest thing on the card:
+ * Collapsed, the row answers the three questions you scan a preset list for —
+ * what is it called (set in the preset's own heading font, so the name is its
+ * own type specimen), what does it read like (body family · control radius ·
+ * density) and what colour is it (primary / accent / neutral dots).
  *
- * - Identity strip — the two font families each set in their own face (so the
- *   label is itself the type specimen), and on the right three glyphs from the
- *   preset's icon library, picked because their silhouettes diverge most
- *   between libraries.
- * - The name in the heading font, closed by a hairline rule. This is the card's
- *   headline; everything below it is deliberately smaller.
- * - The accent ramp.
- * - A vignette panel — real components (body copy, a search field, the primary
- *   action) nested inside an inset surface, so radius, field style, primary
- *   color, icon set and control height all read off actual UI while staying
- *   visually subordinate to the headline.
+ * Expanded, it answers the one question the summary can't: what does UI built
+ * with it look like. Real components — a primary and a secondary action, a
+ * badge, a switch, a checkbox, a search field — plus the semantic swatch strip,
+ * so radius, field style, control height, icon set and the whole colour
+ * vocabulary read off actual UI.
  *
  * No iframes, no scaling; the scoped stylesheet is content-cached, so a list of
  * these stays cheap.
  */
-function PresetOptionCard({
+function PresetOptionRow({
   item,
   isSelected,
+  isFocused,
+  isActive,
   forcedMode,
   actions,
 }: {
   item: PresetPickerItem
   isSelected: boolean
+  isFocused: boolean
+  isActive: boolean
   forcedMode?: 'light' | 'dark'
   actions?: ReactNode
 }) {
   const { designSystem } = item
   const { heading, body } = fontPair(designSystem)
+  const ref = useRef<HTMLDivElement>(null)
+
+  // Keyboard focus scrolls the row into view before it expands, so the row that
+  // grows off the bottom edge has to be pulled back once the growth settles.
+  useEffect(() => {
+    if (!isFocused || !isActive) return
+    const timeout = setTimeout(
+      () => ref.current?.scrollIntoView({ block: 'nearest' }),
+      220,
+    )
+    return () => clearTimeout(timeout)
+  }, [isFocused, isActive])
 
   return (
-    <div className="relative w-full">
+    <div ref={ref} className="relative w-full">
       <DesignSystemProvider
         scoped
         params={designSystem.componentParams}
@@ -292,107 +405,133 @@ function PresetOptionCard({
       >
         <div
           className={cn(
-            'relative overflow-hidden rounded-lg border bg-bg p-3',
-            isSelected &&
-              'ring-2 ring-accent ring-offset-2 ring-offset-popover',
+            'overflow-hidden rounded-lg border bg-bg',
+            isSelected && 'ring-1 ring-accent',
           )}
         >
-          <div className="flex items-center justify-between gap-2">
-            <span className="min-w-0 truncate text-[11px] leading-none text-fg-accent">
-              <span className="font-heading">{heading}</span>
-              {heading !== body && (
-                <>
-                  <span className="text-fg-muted"> / </span>
-                  <span className="font-sans">{body}</span>
-                </>
-              )}
-            </span>
-            <div
-              aria-hidden
-              className="flex shrink-0 items-center gap-1.5 text-fg-muted [&_svg]:size-4"
-            >
-              {/* Only the off-default densities earn a chip — the vignette's
-                  real control heights carry the rest. */}
-              {designSystem.density !== 'default' && (
-                <>
-                  <span className="text-[10px] leading-none tracking-wide uppercase">
-                    {designSystem.density}
-                  </span>
-                  <span className="h-3.5 w-px bg-border" />
-                </>
-              )}
-              <SparklesIcon />
-              <LayersIcon />
-              <CircleIcon />
+          <div
+            className={cn(
+              'flex items-center gap-3 p-3',
+              actions ? 'pr-10' : undefined,
+            )}
+          >
+            <div className="min-w-0 flex-1">
+              <p className="truncate font-heading text-[15px] leading-tight font-semibold text-fg">
+                {item.name}
+              </p>
+              <p className="mt-1 truncate text-[11px] leading-none text-fg-muted">
+                {heading === body ? body : `${heading} / ${body}`} ·{' '}
+                {radiusLabel(designSystem)} · {designSystem.density}
+              </p>
+            </div>
+            <div aria-hidden className="flex shrink-0 items-center gap-1">
+              {DOT_ROLES.map((role) => (
+                <span
+                  key={role}
+                  // The hairline keeps a near-white or near-black role from
+                  // vanishing into the row it sits on.
+                  className={cn(
+                    'size-2.5 rounded-full ring-1 ring-fg/10 ring-inset',
+                    role,
+                  )}
+                />
+              ))}
             </div>
           </div>
 
-          <p className="mt-2.5 truncate border-b pb-2.5 font-heading text-lg leading-tight font-semibold text-fg">
-            {item.name}
-          </p>
-
-          <div aria-hidden className="mt-2.5 flex gap-[3px]">
-            {RAMP_STEPS.map((step) => (
-              <span
-                key={step}
-                // The hairline keeps the near-white low steps from vanishing
-                // into a light card.
-                className="h-3.5 flex-1 rounded-[2px] ring-1 ring-fg/10 ring-inset"
-                style={{ background: `var(--accent-${step})` }}
-              />
-            ))}
-          </div>
-
+          {/* 0fr → 1fr: the row measures its own vignette, so nothing here is a
+              hardcoded height. */}
           <div
-            inert
-            aria-hidden
-            className="mt-2.5 rounded-md border bg-muted p-2.5 select-none"
+            className={cn(
+              'grid transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none',
+              isActive ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
+            )}
           >
-            <p className="line-clamp-2 text-[11px] leading-relaxed text-fg-muted">
-              The quick brown fox jumps over the lazy dog.
-            </p>
-            <div className="mt-2 flex items-center gap-2">
-              <InputGroup className="min-w-0 flex-1">
-                <InputGroupAddon>
-                  <PresetSearchIcon />
-                </InputGroupAddon>
-                <Input placeholder="Search" />
-              </InputGroup>
-              <Button variant="primary" size="sm" className="shrink-0">
-                Continue
-                <ArrowRightIcon />
-              </Button>
+            <div className="overflow-hidden">
+              <div
+                inert
+                aria-hidden
+                className={cn(
+                  'flex flex-col gap-2.5 border-t p-3 transition-opacity duration-200 select-none motion-reduce:transition-none',
+                  isActive ? 'opacity-100' : 'opacity-0',
+                )}
+              >
+                <div>
+                  <p className="font-heading text-sm leading-tight font-semibold text-fg">
+                    Ship a system you own
+                  </p>
+                  <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-fg-muted">
+                    Every token, component and style, exported as code in your
+                    codebase.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-1.5">
+                  <Button variant="primary" size="sm">
+                    Get started
+                    <ArrowRightIcon />
+                  </Button>
+                  <Button size="sm">Preview</Button>
+                  <Badge variant="accent" appearance="subtle" size="sm">
+                    Beta
+                  </Badge>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Switch isSelected />
+                  <Checkbox isSelected />
+                  <InputGroup className="min-w-0 flex-1">
+                    <InputGroupAddon>
+                      <PresetSearchIcon />
+                    </InputGroupAddon>
+                    <Input placeholder="Search" />
+                  </InputGroup>
+                </div>
+
+                <div className="flex gap-1">
+                  {SWATCH_ROLES.map((role) => (
+                    <span
+                      key={role}
+                      className={cn(
+                        'h-2.5 flex-1 rounded-[2px] ring-1 ring-fg/10 ring-inset',
+                        role,
+                      )}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </DesignSystemProvider>
 
-      {/* Site chrome, deliberately outside the preset scope and outside the
-          card's `overflow-hidden` so it can sit on the corner. */}
-      {(isSelected || actions !== undefined) && (
-        <div className="absolute -top-2 -right-2 z-10 flex items-center gap-1">
-          {isSelected && (
-            <span
-              aria-hidden
-              // Site fg, not accent: the card's own ring already answers in the
-              // preset's colour, and this marker has to stay legible over every
-              // palette (Vercel's accent is near-black).
-              className="flex size-5 items-center justify-center rounded-full bg-fg text-bg shadow-sm"
-            >
-              <CheckIcon className="size-3" />
-            </span>
-          )}
-          {actions}
-        </div>
+      {/* Site chrome, deliberately outside the preset scope: the actions menu
+          belongs to the site, not to the system it acts on. */}
+      {actions ? (
+        <div className="absolute top-2.5 right-2.5 z-10">{actions}</div>
+      ) : null}
+      {isSelected && (
+        <span
+          aria-hidden
+          // Site fg, not accent: the row's own ring already answers in the
+          // preset's colour, and this marker has to stay legible over every
+          // palette (Vercel's accent is near-black).
+          className="absolute -top-1.5 -left-1.5 z-10 flex size-4.5 items-center justify-center rounded-full bg-fg text-bg shadow-sm"
+        >
+          <CheckIcon className="size-2.5" />
+        </span>
       )}
 
       {/* Hover/virtual-focus feedback over the whole option, in the site's own
-          fg so it reads consistently regardless of the
-          preset underneath. Keyboard focus is virtual — it lands as
-          `data-focused` on the item, never as a real `:focus-visible`. */}
+          fg so it reads consistently regardless of the preset underneath.
+          Keyboard focus is virtual — it lands as `data-focused` on the item,
+          never as a real `:focus-visible`. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-1 rounded-xl bg-fg opacity-0 ring-fg/25 transition-opacity group-hover/option:opacity-4 group-data-focused/option:opacity-6 group-data-focused/option:ring-2"
+        className={cn(
+          'pointer-events-none absolute -inset-1 rounded-xl bg-fg ring-fg/20 transition-opacity',
+          isActive ? 'opacity-5 ring-2' : 'opacity-0',
+        )}
       />
     </div>
   )
