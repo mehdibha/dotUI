@@ -2,7 +2,6 @@ import { Link } from 'react-aria-components'
 
 import { LinkButton } from '@/registry/ui/button'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
-import { Announcement } from '@/components/announcement'
 import { BaseUiIcon } from '@/components/icons/base-ui'
 import { ReactAriaIcon } from '@/components/icons/react-aria'
 import { ReactJsIcon } from '@/components/icons/react-js'
@@ -17,11 +16,8 @@ export function HomePage() {
   return (
     <div>
       {/* Hero section */}
-      <section className="container flex flex-col pt-7.5 sm:pt-10 md:pt-15">
+      <section className="container flex flex-col pt-14 sm:pt-18 md:pt-26">
         <div className="flex flex-col items-center text-center">
-          <div className="mb-6 sm:mb-8">
-            <Announcement />
-          </div>
           <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-none">
             Build your design system,
             <br />
