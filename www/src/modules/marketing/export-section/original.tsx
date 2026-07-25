@@ -42,7 +42,7 @@ const rowCenter = (i: number) => i * (44 + 12) + 22
 const beamPath = (i: number) =>
   `M 0 ${LIST_HEIGHT / 2} C 50 ${LIST_HEIGHT / 2} 50 ${rowCenter(i)} 100 ${rowCenter(i)}`
 
-export function ExportSection() {
+export function ExportSectionOriginal() {
   return (
     // Width mirrors the composition section: 1500px grid + 8rem rail gutters.
     <section className="mx-auto mt-24 w-full max-w-[calc(1500px+16rem)] px-4 sm:px-6 md:mt-32 lg:px-32">
