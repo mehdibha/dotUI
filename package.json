@@ -28,6 +28,7 @@
     "build:registry": "pnpm --filter=www build:registry",
     "preview:www": "pnpm --filter=www preview",
     "build:references": "pnpm --filter=www build:references",
+    "probe:registry": "pnpm --filter=www probe:registry",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
     "check": "oxlint . && oxfmt --check .",
