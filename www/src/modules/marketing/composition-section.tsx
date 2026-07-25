@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { cn } from '@/registry/lib/utils'
-import { LinkButton } from '@/registry/ui/button'
 import {
   compactMaxCodeLines,
   CompositionCode,
@@ -152,14 +151,6 @@ export function CompositionSection() {
               </li>
             ))}
           </ol>
-          <div className="flex flex-wrap gap-2 pt-2">
-            <LinkButton href="/docs/components" variant="primary">
-              Explore components
-            </LinkButton>
-            <LinkButton href="/docs" variant="default">
-              Read the docs
-            </LinkButton>
-          </div>
         </div>
 
         {/* Code with its rendered result below — one card, no window chrome.
