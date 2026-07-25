@@ -272,6 +272,7 @@ export function CustomizerPanel({ className }: { className?: string }) {
         id: p.id,
         name: p.name,
         designSystem: p.designSystem,
+        swatch: p.swatch,
       })),
     }
     return presets.length > 0 ? [mine, builtIn] : [builtIn]

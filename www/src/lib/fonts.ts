@@ -650,16 +650,29 @@ export function googleFontsUrl(
   return `https://fonts.googleapis.com/css2?${params}&display=swap${text}`
 }
 
+/** `Source Serif 4` + `Claude` → `source-serif-4-claude`, an id-safe key. */
+function previewKey(family: string, label: string): string {
+  return `${family} ${label}`
+    .toLowerCase()
+    .replaceAll(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
 /**
- * Load one family's preview face, subset (`text=`) to just its own name glyphs
- * — a couple of KB, enough to render that row's label in itself. Idempotent;
- * the picker calls this per row as it scrolls into view, so a ~500-font list
- * fetches only the handful actually seen instead of every face up front.
+ * Load one family's preview face, subset (`text=`) to the glyphs of the label
+ * it has to render — its own name by default — a couple of KB instead of the
+ * full face. Idempotent, and keyed by family + label; the font picker calls it
+ * per row as it scrolls into view, so a ~500-font list fetches only the handful
+ * actually seen instead of every face up front.
  */
-export function loadFontPreview(doc: Document, family: string): void {
-  const id = `dotui-font-preview-${family.replaceAll(' ', '-').toLowerCase()}`
+export function loadFontPreview(
+  doc: Document,
+  family: string,
+  label: string = family,
+): void {
+  const id = `dotui-font-preview-${previewKey(family, label)}`
   if (doc.getElementById(id)) return
-  const text = [...new Set([...family])].join('')
+  const text = [...new Set([...label])].join('')
   const link = doc.createElement('link')
   link.id = id
   link.rel = 'stylesheet'

@@ -139,6 +139,7 @@ function PresetSelector() {
               id: YOURS,
               name: yoursName,
               designSystem: yours,
+              swatch: yoursSwatch,
             },
           ],
         },
@@ -149,6 +150,7 @@ function PresetSelector() {
             id: preset.id,
             name: preset.name,
             designSystem: preset.designSystem,
+            swatch: preset.swatch,
           })),
         },
       ]}
