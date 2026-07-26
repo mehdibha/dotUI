@@ -33,7 +33,7 @@ import type { Preset } from '@/modules/presets/presets-data'
  * the copied `init` URL. The editor is the quiet second path underneath.
  */
 export function CtaSection() {
-  const [presetId, setPresetId] = useState<string | null>(null)
+  const [presetId, setPresetId] = useState<string | null>('claude')
   const preset = PRESETS.find((p) => p.id === presetId) ?? null
   const ds = preset?.designSystem ?? DEFAULTS
 
@@ -122,7 +122,7 @@ function InstallCommand({
   }
 
   return (
-    <div className="flex h-12 max-w-full items-center gap-1 rounded-full border bg-card px-1.5 shadow-xs">
+    <div className="flex max-w-full items-center gap-1 rounded-full border bg-card p-2 shadow-xs">
       <Menu>
         <Button
           size="sm"
