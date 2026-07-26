@@ -265,7 +265,7 @@ export function CustomizerPanel({ className }: { className?: string }) {
         designSystem: decodePreset(saved.state),
       })),
       emptyState: (
-        <p className="rounded-2xl border border-dashed p-6 text-center text-sm text-fg-muted">
+        <p className="rounded-xl border border-dashed p-4 text-center text-xs text-fg-muted">
           No saved presets yet — save your current system from the panel.
         </p>
       ),
@@ -533,8 +533,7 @@ export function CustomizerPanel({ className }: { className?: string }) {
             sections={gallerySections}
             selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}
             onPick={(item) => pickPreset(item.id)}
-            title="Start from a preset"
-            description="Ready-made design systems. Pick one, then make it yours — Undo brings your current system back."
+            label="Presets"
             renderItemActions={(item) => {
               const saved = presets.find((p) => p.id === item.id)
               if (!saved) return null

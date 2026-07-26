@@ -114,7 +114,7 @@ export function PresetTile({
         <div
           inert
           aria-hidden
-          className="flex flex-1 flex-col overflow-hidden rounded-xl bg-bg p-4 select-none"
+          className="flex flex-1 flex-col overflow-hidden rounded-xl bg-bg p-3.5 select-none"
         >
           <div className="flex items-center justify-between gap-2">
             <span className="min-w-0 truncate text-[11px] leading-none text-fg-accent">
@@ -151,7 +151,7 @@ export function PresetTile({
 
           <div className="mt-3 flex min-h-24 flex-1 items-stretch gap-2.5">
             <div className="flex min-w-0 flex-1 flex-col justify-between gap-2 rounded-md bg-muted p-2.5">
-              <p className="line-clamp-2 text-[11px] leading-relaxed text-fg-muted">
+              <p className="line-clamp-3 text-[11px] leading-relaxed text-fg-muted">
                 The quick brown fox jumps over the lazy dog.
               </p>
               <Button variant="primary" size="sm" className="self-start">
@@ -160,7 +160,7 @@ export function PresetTile({
               </Button>
             </div>
             <div
-              className="w-2/5 shrink-0 rounded-md ring-1 ring-fg/10 ring-inset"
+              className="w-1/3 shrink-0 rounded-md ring-1 ring-fg/10 ring-inset"
               style={{
                 backgroundColor: 'var(--accent-500)',
                 backgroundImage: `radial-gradient(120% 90% at 12% 8%, var(--accent-200), transparent 62%),

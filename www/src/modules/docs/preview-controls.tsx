@@ -125,8 +125,7 @@ function PresetSelector() {
       selectedId={selected}
       onPick={(item) => presetStore.set(item.id)}
       previewMode={previewMode}
-      title="Preview design system"
-      description="Every demo on the site renders in the design system you pick here."
+      label="Preview design system"
       sections={[
         {
           id: 'yours',

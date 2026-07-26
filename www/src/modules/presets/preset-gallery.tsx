@@ -1,18 +1,15 @@
 'use client'
 
 import { type ReactNode, useState } from 'react'
-import { SearchIcon, XIcon } from 'lucide-react'
+import { SearchIcon } from 'lucide-react'
 
-import { useIsMobile } from '@/registry/hooks/use-mobile'
-import { Button } from '@/registry/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from '@/registry/ui/dialog'
+import { Responsive } from '@/registry/lib/responsive'
+import { cn } from '@/registry/lib/utils'
+import { Dialog, DialogContent } from '@/registry/ui/dialog'
+import { Drawer } from '@/registry/ui/drawer'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Modal } from '@/registry/ui/modal'
+import { Popover } from '@/registry/ui/popover'
+import type { PopoverProps } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
 
 import { type PresetGalleryItem, PresetTile } from './preset-tile'
@@ -34,8 +31,10 @@ interface PresetGalleryProps {
   onPick: (item: PresetGalleryItem) => void
   isOpen?: boolean
   onOpenChange?: (open: boolean) => void
-  title?: string
-  description?: string
+  /** Names the overlay for assistive tech; the gallery shows no visible title. */
+  label?: string
+  /** Desktop popover placement. */
+  placement?: PopoverProps['placement']
   /** Pin the tiles' previews to one mode (docs previews pin light/dark). */
   previewMode?: 'light' | 'dark'
   /** Trailing controls on a tile's caption row (e.g. a saved preset's actions menu). */
@@ -45,8 +44,9 @@ interface PresetGalleryProps {
 /**
  * The one preset picker, used by both the docs preview toolbar and the /create
  * panel header: a searchable gallery of live preset previews (see PresetTile),
- * laid out as a grid in a wide modal. One surface everywhere — you pick a
- * design system by looking at it, not by reading its name off a list.
+ * laid out two-up in a popover on desktop and one-up in a bottom drawer on
+ * mobile. You pick a design system by looking at it, not by reading its name
+ * off a list.
  */
 export function PresetGallery({
   children,
@@ -55,33 +55,49 @@ export function PresetGallery({
   onPick,
   isOpen,
   onOpenChange,
-  title = 'Presets',
-  description,
+  label = 'Presets',
+  placement = 'bottom start',
   previewMode,
   renderItemActions,
 }: PresetGalleryProps) {
+  const content = (surface: 'popover' | 'drawer') => (
+    <DialogContent
+      aria-label={label}
+      className="flex flex-col gap-0 rounded-[inherit] p-0"
+    >
+      {({ close }) => (
+        <PresetGalleryContent
+          sections={sections}
+          selectedId={selectedId}
+          onPick={onPick}
+          close={close}
+          surface={surface}
+          previewMode={previewMode}
+          renderItemActions={renderItemActions}
+        />
+      )}
+    </DialogContent>
+  )
+
   return (
     <Dialog isOpen={isOpen} onOpenChange={onOpenChange}>
       {children}
-      <Modal className="h-[85vh] w-full sm:max-w-3xl lg:max-w-5xl xl:max-w-6xl">
-        <DialogContent
-          aria-label={title}
-          className="relative flex h-full min-h-0 flex-col rounded-[inherit] p-0"
-        >
-          {({ close }) => (
-            <PresetGalleryContent
-              sections={sections}
-              selectedId={selectedId}
-              onPick={onPick}
-              close={close}
-              title={title}
-              description={description}
-              previewMode={previewMode}
-              renderItemActions={renderItemActions}
-            />
-          )}
-        </DialogContent>
-      </Modal>
+      <Responsive
+        render={(isMobile) =>
+          isMobile ? (
+            <Drawer>{content('drawer')}</Drawer>
+          ) : (
+            // Two tile columns wide, clamped so the popover never outgrows a
+            // narrow desktop window (RAC repositions it but won't shrink it).
+            <Popover
+              placement={placement}
+              className="w-[min(calc(100vw-2rem),40rem)]"
+            >
+              {content('popover')}
+            </Popover>
+          )
+        }
+      />
     </Dialog>
   )
 }
@@ -91,8 +107,7 @@ function PresetGalleryContent({
   selectedId,
   onPick,
   close,
-  title,
-  description,
+  surface,
   previewMode,
   renderItemActions,
 }: {
@@ -100,12 +115,10 @@ function PresetGalleryContent({
   selectedId?: string
   onPick: (item: PresetGalleryItem) => void
   close: () => void
-  title: string
-  description?: string
+  surface: 'popover' | 'drawer'
   previewMode?: 'light' | 'dark'
   renderItemActions?: (item: PresetGalleryItem) => ReactNode
 }) {
-  const isMobile = useIsMobile()
   const [query, setQuery] = useState('')
   const search = query.trim().toLowerCase()
   const filtered = search
@@ -125,55 +138,35 @@ function PresetGalleryContent({
   }
 
   return (
-    <>
-      {/* Close sits just outside the panel's top-right corner (kept inside the
-          dialog so focus management still scopes to it). */}
-      <Button
-        variant="quiet"
-        size="sm"
-        isIconOnly
-        aria-label="Close"
-        onPress={close}
-        className="absolute -top-10 right-0 z-10 text-fg-muted hover:bg-inverse/10 hover:text-fg"
+    // This is the scroll container (the overlay caps its own height), so the
+    // search field has to stick to its top or it scrolls away with the tiles.
+    <div className="max-h-[inherit] overflow-y-auto">
+      <SearchField
+        // No search autofocus on mobile — the keyboard would cover the grid.
+        autoFocus={surface === 'popover'}
+        aria-label="Search presets"
+        value={query}
+        onChange={setQuery}
+        className={cn(
+          'sticky top-0 z-20 p-2',
+          surface === 'popover' ? 'bg-popover' : 'bg-bg',
+        )}
       >
-        <XIcon />
-      </Button>
-      <div className="flex shrink-0 flex-col gap-3 border-b p-5 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex min-w-0 flex-col gap-1">
-          <DialogTitle className="text-lg font-semibold tracking-tight">
-            {title}
-          </DialogTitle>
-          {description && (
-            // Three lines of preamble on a phone push every tile below the fold.
-            <DialogDescription className="hidden text-sm text-fg-muted sm:block">
-              {description}
-            </DialogDescription>
-          )}
-        </div>
-        <SearchField
-          // No search autofocus on mobile — the keyboard would cover the grid.
-          autoFocus={!isMobile}
-          aria-label="Search presets"
-          value={query}
-          onChange={setQuery}
-          className="w-full sm:w-56"
-        >
-          <InputGroup>
-            <InputGroupAddon>
-              <SearchIcon />
-            </InputGroupAddon>
-            <Input placeholder="Search presets..." />
-          </InputGroup>
-        </SearchField>
-      </div>
-      <div className="min-h-0 flex-1 space-y-8 overflow-y-auto p-5">
+        <InputGroup>
+          <InputGroupAddon>
+            <SearchIcon />
+          </InputGroupAddon>
+          <Input placeholder="Search presets..." />
+        </InputGroup>
+      </SearchField>
+      <div className="space-y-4 px-2 pb-2">
         {filtered.map((section) => (
-          <section key={section.id} className="space-y-3">
+          <section key={section.id} className="space-y-2">
             <h3 className="px-1 text-[10px] tracking-widest text-fg-muted uppercase">
               {section.title}
             </h3>
             {section.items.length > 0 ? (
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-3 sm:grid-cols-2">
                 {section.items.map((item) => (
                   <PresetTile
                     key={item.id}
@@ -191,12 +184,12 @@ function PresetGalleryContent({
           </section>
         ))}
         {filtered.length === 0 && (
-          <p className="py-10 text-center text-sm text-fg-muted">
+          <p className="py-8 text-center text-sm text-fg-muted">
             No presets found
           </p>
         )}
       </div>
-    </>
+    </div>
   )
 }
 
