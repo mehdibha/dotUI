@@ -8,6 +8,7 @@ import { Booking } from '@/components/showcase/booking'
 import { ColorEditorCard } from '@/components/showcase/color-editor'
 import { CommandMenu } from '@/components/showcase/command-menu'
 import { ComputerUse } from '@/components/showcase/computer-use'
+import { Controls } from '@/components/showcase/controls'
 import { CookiePreferences } from '@/components/showcase/cookie-preferences'
 import { DisplaySettings } from '@/components/showcase/display-settings'
 import { Faq } from '@/components/showcase/faq'
@@ -18,7 +19,6 @@ import { Metrics } from '@/components/showcase/metrics'
 import { Notifications } from '@/components/showcase/notifications'
 import { Payment } from '@/components/showcase/payment'
 import { PricingPlans } from '@/components/showcase/pricing-plans'
-import { Shortcuts } from '@/components/showcase/shortcuts'
 import { Storage } from '@/components/showcase/storage'
 import { TeamName } from '@/components/showcase/team-name'
 import { TwoFactor } from '@/components/showcase/two-factor'
@@ -33,6 +33,7 @@ const CARDS = {
   colorEditor: <ColorEditorCard />,
   commandMenu: <CommandMenu />,
   computerUse: <ComputerUse />,
+  controls: <Controls />,
   cookiePreferences: <CookiePreferences />,
   displaySettings: <DisplaySettings />,
   faq: <Faq />,
@@ -43,7 +44,6 @@ const CARDS = {
   notifications: <Notifications className="h-100" />,
   payment: <Payment />,
   pricingPlans: <PricingPlans />,
-  shortcuts: <Shortcuts />,
   storage: <Storage />,
   teamName: <TeamName />,
   twoFactor: <TwoFactor />,
@@ -61,14 +61,14 @@ type CardKey = keyof typeof CARDS
 // hiding it elsewhere leaves the remaining three columns balanced on their
 // own.
 const RAIL: CardKey[] = [
+  'controls',
   'booking',
   'twoFactor',
   'filters',
   'accountMenu',
-  'shortcuts',
 ]
 const MAIN_LEFT: CardKey[] = [
-  'colorEditor',
+  'commandMenu',
   'storage',
   'inviteMembers',
   'loginForm',
@@ -82,7 +82,7 @@ const MAIN_RIGHT: CardKey[] = [
   'appearance',
 ]
 const SIDE: CardKey[] = [
-  'commandMenu',
+  'colorEditor',
   'computerUse',
   'uploadAvatar',
   'pricingPlans',
