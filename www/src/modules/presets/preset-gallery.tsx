@@ -1,10 +1,17 @@
 'use client'
 
-import { type ReactNode, useState } from 'react'
+import type { ReactNode } from 'react'
 import { SearchIcon } from 'lucide-react'
+import type { Key } from 'react-aria-components'
 
 import { Responsive } from '@/registry/lib/responsive'
-import { cn } from '@/registry/lib/utils'
+import {
+  Command,
+  CommandContent,
+  CommandItem,
+  CommandSection,
+  CommandSectionHeader,
+} from '@/registry/ui/command'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Drawer } from '@/registry/ui/drawer'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
@@ -18,8 +25,6 @@ interface PresetGallerySection {
   id: string
   title: string
   items: PresetGalleryItem[]
-  /** Shown in place of the grid when the section has no items and no search is running. */
-  emptyState?: ReactNode
 }
 
 interface PresetGalleryProps {
@@ -31,22 +36,22 @@ interface PresetGalleryProps {
   onPick: (item: PresetGalleryItem) => void
   isOpen?: boolean
   onOpenChange?: (open: boolean) => void
-  /** Names the overlay for assistive tech; the gallery shows no visible title. */
+  /** Names the option grid for assistive tech; the gallery shows no visible title. */
   label?: string
   /** Desktop popover placement. */
   placement?: PopoverProps['placement']
   /** Pin the tiles' previews to one mode (docs previews pin light/dark). */
   previewMode?: 'light' | 'dark'
-  /** Trailing controls on a tile's caption row (e.g. a saved preset's actions menu). */
+  /** Corner controls on a tile (e.g. a saved preset's actions menu). */
   renderItemActions?: (item: PresetGalleryItem) => ReactNode
 }
 
 /**
  * The one preset picker, used by both the docs preview toolbar and the /create
- * panel header: a searchable gallery of live preset previews (see PresetTile),
- * laid out two-up in a popover on desktop and one-up in a bottom drawer on
- * mobile. You pick a design system by looking at it, not by reading its name
- * off a list.
+ * panel header: a `Command` whose options are live preset previews (see
+ * PresetTile), laid out two-up by the list box's grid layout — so arrow keys
+ * walk the tiles in both axes while typing filters them. Popover on desktop,
+ * bottom drawer on mobile.
  */
 export function PresetGallery({
   children,
@@ -72,6 +77,7 @@ export function PresetGallery({
           onPick={onPick}
           close={close}
           surface={surface}
+          label={label}
           previewMode={previewMode}
           renderItemActions={renderItemActions}
         />
@@ -108,6 +114,7 @@ function PresetGalleryContent({
   onPick,
   close,
   surface,
+  label,
   previewMode,
   renderItemActions,
 }: {
@@ -116,41 +123,28 @@ function PresetGalleryContent({
   onPick: (item: PresetGalleryItem) => void
   close: () => void
   surface: 'popover' | 'drawer'
+  label: string
   previewMode?: 'light' | 'dark'
   renderItemActions?: (item: PresetGalleryItem) => ReactNode
 }) {
-  const [query, setQuery] = useState('')
-  const search = query.trim().toLowerCase()
-  const filtered = search
-    ? sections
-        .map((section) => ({
-          ...section,
-          items: section.items.filter((item) =>
-            item.name.toLowerCase().includes(search),
-          ),
-        }))
-        .filter((section) => section.items.length > 0)
-    : sections
-
-  function pick(item: PresetGalleryItem) {
+  function pick(key: Key) {
+    const item = sections
+      .flatMap((section) => section.items)
+      .find((candidate) => candidate.id === key)
+    if (!item) return
     onPick(item)
     close()
   }
 
   return (
-    // This is the scroll container (the overlay caps its own height), so the
-    // search field has to stick to its top or it scrolls away with the tiles.
-    <div className="max-h-[inherit] overflow-y-auto">
+    // The grid scrolls under a pinned search field, so the Command shell must
+    // not scroll itself.
+    <Command className="max-h-[inherit] gap-0 overflow-hidden p-0">
       <SearchField
         // No search autofocus on mobile — the keyboard would cover the grid.
         autoFocus={surface === 'popover'}
         aria-label="Search presets"
-        value={query}
-        onChange={setQuery}
-        className={cn(
-          'sticky top-0 z-20 p-2',
-          surface === 'popover' ? 'bg-popover' : 'bg-bg',
-        )}
+        className="shrink-0 p-2 pb-0"
       >
         <InputGroup>
           <InputGroupAddon>
@@ -159,37 +153,56 @@ function PresetGalleryContent({
           <Input placeholder="Search presets..." />
         </InputGroup>
       </SearchField>
-      <div className="space-y-4 px-2 pb-2">
-        {filtered.map((section) => (
-          <section key={section.id} className="space-y-2">
-            <h3 className="px-1 text-[10px] tracking-widest text-fg-muted uppercase">
-              {section.title}
-            </h3>
-            {section.items.length > 0 ? (
-              <div className="grid gap-3 sm:grid-cols-2">
-                {section.items.map((item) => (
-                  <PresetTile
-                    key={item.id}
-                    item={item}
-                    isSelected={item.id === selectedId}
-                    forcedMode={previewMode}
-                    actions={renderItemActions?.(item)}
-                    onSelect={() => pick(item)}
-                  />
-                ))}
-              </div>
-            ) : (
-              section.emptyState
-            )}
-          </section>
-        ))}
-        {filtered.length === 0 && (
-          <p className="py-8 text-center text-sm text-fg-muted">
+      <CommandContent
+        aria-label={label}
+        // Per-item `onAction` doesn't fire inside `Autocomplete`; activation has
+        // to be handled at the list level.
+        onAction={pick}
+        // One tile column on mobile, two on desktop, where the grid layout also
+        // gives arrow keys a second axis.
+        layout={surface === 'popover' ? 'grid' : 'stack'}
+        className="min-h-0 flex-1"
+        // Spacing rides inline: the Command shell zeroes descendant list-box
+        // padding, and the grid layout sets its own gap, through selectors any
+        // class of ours would lose to.
+        style={{ padding: 8, gap: 8 }}
+        renderEmptyState={() => (
+          <div className="col-span-full py-8 text-center text-sm text-fg-muted">
             No presets found
-          </p>
+          </div>
         )}
-      </div>
-    </div>
+      >
+        {sections.map((section) => (
+          // `contents` lifts the options into the grid, so headers and tiles
+          // share one set of tracks.
+          <CommandSection key={section.id} className="contents">
+            <CommandSectionHeader className="col-span-full px-1 pt-1 pb-0 text-[10px] tracking-widest uppercase">
+              {section.title}
+            </CommandSectionHeader>
+            {section.items.map((item) => (
+              <CommandItem
+                key={item.id}
+                id={item.id}
+                textValue={item.name}
+                // The themed card IS the option and covers the item edge to
+                // edge, so the list highlight never shows; hover/focus render
+                // as an overlay on the card instead (group-*/option in
+                // PresetTile). `overflow-visible` lets the corner badge sit
+                // outside the card.
+                className="group/option block h-full overflow-visible rounded-xl p-0"
+              >
+                <PresetTile
+                  item={item}
+                  isSelected={item.id === selectedId}
+                  forcedMode={previewMode}
+                  actions={renderItemActions?.(item)}
+                />
+              </CommandItem>
+            ))}
+          </CommandSection>
+        ))}
+      </CommandContent>
+    </Command>
   )
 }
 

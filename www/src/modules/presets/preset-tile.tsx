@@ -51,19 +51,20 @@ function fontPair(designSystem: DesignSystem) {
 }
 
 /**
- * One preset in the gallery: a live, scoped miniature of the design system in a
- * site-chrome frame, with the name and the tile's actions on a caption row
- * underneath — so the preset's own type and colour never compete with the
- * site's.
+ * One preset option: a scoped, themed miniature of the design system, and
+ * nothing else — no site-chrome frame or caption around it. The card carries
+ * its own name, and selection plus the saved-preset actions ride as a corner
+ * badge.
  *
- * The miniature reads top-to-bottom as identity → palette → product:
+ * The miniature reads top-to-bottom as identity → palette → product, which is
+ * what keeps the preset's NAME the loudest thing on the card:
  *
  * - Identity strip — the two font families each set in their own face (so the
  *   label is itself the type specimen), and on the right three glyphs from the
  *   preset's icon library, picked because their silhouettes diverge most
  *   between libraries.
- * - The name in the heading font, closed by a hairline rule — the miniature's
- *   headline, and the largest type on the tile.
+ * - The name in the heading font, closed by a hairline rule. This is the card's
+ *   headline; everything below it is deliberately smaller.
  * - The accent ramp.
  * - A vignette row: real components (body copy, the primary action) on an inset
  *   surface next to a palette field. The components put radius, primary colour,
@@ -78,27 +79,19 @@ export function PresetTile({
   isSelected,
   forcedMode,
   actions,
-  onSelect,
 }: {
   item: PresetGalleryItem
   isSelected: boolean
   /** Pin the preview to one mode (docs previews pin light/dark). */
   forcedMode?: 'light' | 'dark'
-  /** Trailing controls on the caption row (e.g. a saved preset's actions menu). */
+  /** Corner controls outside the preset scope (e.g. a saved preset's actions menu). */
   actions?: ReactNode
-  onSelect: () => void
 }) {
   const { designSystem } = item
   const { heading, body } = fontPair(designSystem)
 
   return (
-    <div
-      className={cn(
-        'group relative flex flex-col rounded-2xl border bg-card p-2 transition',
-        'hover:border-border-hover has-[button:focus-visible]:border-border-hover',
-        isSelected && 'border-border-focus ring-2 ring-border-focus',
-      )}
-    >
+    <div className="relative h-full w-full">
       <DesignSystemProvider
         scoped
         params={designSystem.componentParams}
@@ -108,13 +101,16 @@ export function PresetTile({
         icons={designSystem.icons}
         forcedMode={forcedMode}
       >
-        {/* Decorative: the tile's overlay button owns every press inside it.
-            `flex-1` (the provider's wrapper is `display: contents`) fills the
-            grid row, so denser presets don't shift their caption up. */}
+        {/* Decorative: the option owns activation, and the card's own buttons
+            must never take focus inside it. */}
         <div
           inert
           aria-hidden
-          className="flex flex-1 flex-col overflow-hidden rounded-xl bg-bg p-3.5 select-none"
+          className={cn(
+            'flex h-full flex-col overflow-hidden rounded-lg border bg-bg p-3.5 select-none',
+            isSelected &&
+              'ring-2 ring-accent ring-offset-2 ring-offset-popover',
+          )}
         >
           <div className="flex items-center justify-between gap-2">
             <span className="min-w-0 truncate text-[11px] leading-none text-fg-accent">
@@ -171,27 +167,32 @@ export function PresetTile({
         </div>
       </DesignSystemProvider>
 
-      <div className="flex min-h-8 items-center justify-between gap-2 px-1.5 pt-2.5 pb-0.5">
-        <span className="truncate text-sm font-medium">{item.name}</span>
-        {/* Above the overlay button so the menu stays pressable. */}
-        <div className="relative z-20 flex shrink-0 items-center gap-1">
+      {/* Site chrome, deliberately outside the preset scope and outside the
+          card's `overflow-hidden` so it can sit on the corner. */}
+      {(isSelected || actions !== undefined) && (
+        <div className="absolute -top-2 -right-2 z-10 flex items-center gap-1">
           {isSelected && (
-            <span className="flex items-center gap-1 rounded-full bg-muted px-2 py-1 text-[11px] leading-none text-fg-muted">
+            <span
+              aria-hidden
+              // Site fg, not accent: the card's own ring already answers in the
+              // preset's colour, and this marker has to stay legible over every
+              // palette (Vercel's accent is near-black).
+              className="flex size-5 items-center justify-center rounded-full bg-fg text-bg shadow-sm"
+            >
               <CheckIcon className="size-3" />
-              Selected
             </span>
           )}
           {actions}
         </div>
-      </div>
+      )}
 
-      {/* The miniature contains its own buttons, so the tile can't be a
-          <button> (nested buttons are invalid HTML) — hence the overlay. */}
-      <button
-        type="button"
-        onClick={onSelect}
-        aria-label={`Use the ${item.name} preset`}
-        className="absolute inset-0 z-10 rounded-2xl focus-visible:focus-ring"
+      {/* Hover/virtual-focus feedback over the whole option, in the site's own
+          fg so it reads consistently regardless of the preset underneath.
+          Keyboard focus is virtual — it lands as `data-focused` on the item,
+          never as a real `:focus-visible`. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-1 rounded-xl bg-fg opacity-0 ring-fg/25 transition-opacity group-hover/option:opacity-4 group-data-focused/option:opacity-6 group-data-focused/option:ring-2"
       />
     </div>
   )

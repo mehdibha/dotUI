@@ -264,11 +264,6 @@ export function CustomizerPanel({ className }: { className?: string }) {
         name: saved.name,
         designSystem: decodePreset(saved.state),
       })),
-      emptyState: (
-        <p className="rounded-xl border border-dashed p-4 text-center text-xs text-fg-muted">
-          No saved presets yet — save your current system from the panel.
-        </p>
-      ),
     }
     const builtIn = {
       id: 'built-in',
@@ -279,7 +274,7 @@ export function CustomizerPanel({ className }: { className?: string }) {
         designSystem: p.designSystem,
       })),
     }
-    return [mine, builtIn]
+    return presets.length > 0 ? [mine, builtIn] : [builtIn]
   }, [presets])
 
   function pickPreset(itemId: string) {
