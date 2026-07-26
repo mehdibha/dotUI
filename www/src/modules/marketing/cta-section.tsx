@@ -1,11 +1,15 @@
 import { startTransition, useEffect, useState } from 'react'
-import { CheckIcon, ChevronDownIcon, CopyIcon } from 'lucide-react'
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CopyIcon,
+} from 'lucide-react'
 
 import { siteConfig } from '@/config/site'
 import { DesignSystemProvider } from '@/lib/styles'
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
-import { Button } from '@/registry/ui/button'
-import { Link } from '@/registry/ui/link'
+import { Button, LinkButton } from '@/registry/ui/button'
 import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
 import { DEFAULTS } from '@/modules/create/preset'
@@ -63,15 +67,18 @@ export function CtaSection() {
               onSelectPreset={(id) => startTransition(() => setPresetId(id))}
             />
           </div>
-          <p className="mt-6 text-sm text-fg-muted">
-            or{' '}
-            <Link
-              href="/create"
-              className="text-fg underline underline-offset-4"
-            >
-              build your own in the editor
-            </Link>
-          </p>
+          <LinkButton
+            href="/create"
+            variant="quiet"
+            size="sm"
+            className="group mt-6 rounded-full text-fg-muted hover:text-fg"
+          >
+            or build your own in the editor
+            <ArrowRightIcon
+              data-icon-end=""
+              className="transition-transform group-hover:translate-x-0.5"
+            />
+          </LinkButton>
         </div>
       </DesignSystemProvider>
     </section>
@@ -101,6 +108,11 @@ function InstallCommand({
     ? `${baseUrl}?preset=${(encoded ?? '').slice(0, BLOB_PREVIEW_CHARS)}…`
     : baseUrl
   const displayCommand = buildInitCommands(displayUrl)[packageManager]
+  // Widest command the slot can show (`yarn dlx` prefix + truncated preset) —
+  // an invisible sizer keeps the pill from shifting on preset/pm switches.
+  const sizerCommand = buildInitCommands(
+    `${baseUrl}?preset=${'M'.repeat(BLOB_PREVIEW_CHARS)}…`,
+  ).yarn
 
   // Async so a copy racing the codec load still gets the full URL.
   const copyCommand = async () => {
@@ -115,7 +127,7 @@ function InstallCommand({
         <Button
           size="sm"
           variant="quiet"
-          className="rounded-full text-xs"
+          className="w-30 rounded-full text-xs"
           style={
             preset ? { fontFamily: presetLabelStack(preset.id) } : undefined
           }
@@ -126,7 +138,7 @@ function InstallCommand({
               {preset.name}
             </>
           ) : (
-            'dotUI'
+            <span className="text-fg-muted">Preset</span>
           )}
           <ChevronDownIcon data-icon-end="" />
         </Button>
@@ -134,17 +146,14 @@ function InstallCommand({
           <MenuContent
             aria-label="Preset"
             selectionMode="single"
-            selectedKeys={[preset?.id ?? 'default']}
+            selectedKeys={preset ? [preset.id] : []}
             onSelectionChange={(keys) => {
               if (keys === 'all') return
+              // Re-selecting the active preset clears it back to plain dotUI.
               const next = keys.values().next().value
-              if (typeof next !== 'string') return
-              onSelectPreset(next === 'default' ? null : next)
+              onSelectPreset(typeof next === 'string' ? next : null)
             }}
           >
-            <MenuItem id="default" className="text-xs">
-              dotUI
-            </MenuItem>
             {PRESETS.map((p) => (
               <MenuItem
                 key={p.id}
@@ -164,7 +173,7 @@ function InstallCommand({
         <Button
           size="sm"
           variant="quiet"
-          className="rounded-full font-mono text-xs text-fg-muted"
+          className="w-17 rounded-full font-mono text-xs text-fg-muted"
         >
           {packageManager}
           <ChevronDownIcon data-icon-end="" />
@@ -191,9 +200,16 @@ function InstallCommand({
         </Popover>
       </Menu>
       <div aria-hidden className="h-4 w-px shrink-0 bg-border" />
-      <code className="no-scrollbar min-w-0 overflow-x-auto px-1.5 font-mono text-[0.8125rem] whitespace-nowrap">
-        <span className="text-fg-muted select-none">$ </span>
-        {displayCommand}
+      <code className="no-scrollbar min-w-0 overflow-x-auto px-1.5 text-left font-mono text-[0.8125rem] whitespace-nowrap">
+        {/* Invisible widest-case line: sets the slot width once so the visible
+            command never resizes the pill. */}
+        <span aria-hidden className="invisible block h-0">
+          $ {sizerCommand}
+        </span>
+        <span className="block">
+          <span className="text-fg-muted select-none">$ </span>
+          {displayCommand}
+        </span>
       </code>
       <Button
         size="sm"
