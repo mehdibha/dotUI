@@ -1,9 +1,15 @@
 'use client'
 
-import { type ReactNode, useEffect, useMemo, useState } from 'react'
-import { SearchIcon } from 'lucide-react'
+import {
+  type ReactNode,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
+import { SearchIcon, XIcon } from 'lucide-react'
 import type { Key } from 'react-aria-components'
-import { useFilter } from 'react-aria-components/Autocomplete'
+import { Autocomplete, useFilter } from 'react-aria-components/Autocomplete'
 
 import {
   DEFAULT_BODY_FAMILY,
@@ -15,16 +21,16 @@ import {
 import { Responsive } from '@/registry/lib/responsive'
 import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import {
-  Command,
-  CommandContent,
-  CommandItem,
-  CommandSection,
-  CommandSectionHeader,
-} from '@/registry/ui/command'
+import { Button } from '@/registry/ui/button'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Drawer } from '@/registry/ui/drawer'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import {
+  ListBox,
+  ListBoxItem,
+  ListBoxSection,
+  ListBoxSectionHeader,
+} from '@/registry/ui/list-box'
 import { Modal } from '@/registry/ui/modal'
 import { SearchField } from '@/registry/ui/search-field'
 import {
@@ -33,7 +39,7 @@ import {
 } from '@/modules/create/layout'
 import type { DesignSystem } from '@/modules/create/preset'
 
-import { PresetShowcase } from './preset-showcase'
+import { PresetPreview, type PreviewSceneId } from './preset-preview'
 
 interface PresetPickerItem {
   id: string
@@ -113,17 +119,33 @@ export function PresetPicker({
             <Modal className="h-[min(660px,85vh)] w-full sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl">
               <DialogContent
                 aria-label="Presets"
-                className="flex min-h-0 flex-1 flex-row overflow-hidden rounded-[inherit] p-0"
+                // `overflow-visible` so the close button can sit above the
+                // panel; the panes below clip themselves to its corners.
+                className="flex min-h-0 flex-1 flex-col gap-0 overflow-visible rounded-[inherit] p-0"
               >
                 {({ close }) => (
-                  <PresetPickerPanes
-                    sections={sections}
-                    selectedId={selectedId}
-                    onPick={onPick}
-                    close={close}
-                    previewMode={previewMode}
-                    renderItemActions={renderItemActions}
-                  />
+                  <>
+                    {/* Sits just outside the panel's top-right corner — kept
+                        inside the dialog so focus management still scopes to it. */}
+                    <Button
+                      variant="quiet"
+                      size="sm"
+                      isIconOnly
+                      aria-label="Close"
+                      onPress={close}
+                      className="absolute -top-10 right-0 text-fg-muted hover:bg-inverse/10 hover:text-fg"
+                    >
+                      <XIcon />
+                    </Button>
+                    <PresetPickerPanes
+                      sections={sections}
+                      selectedId={selectedId}
+                      onPick={onPick}
+                      close={close}
+                      previewMode={previewMode}
+                      renderItemActions={renderItemActions}
+                    />
+                  </>
                 )}
               </DialogContent>
             </Modal>
@@ -161,8 +183,17 @@ function PresetPickerPanes({
     items.find((item) => item.id === selectedId) ??
     items[0]
 
+  // The scene outlives the row you're on, so switching to e.g. the style guide
+  // and then walking the rail compares every system on the same screen.
+  const [scene, setScene] = useState<PreviewSceneId>('app')
+
+  // Deferred so the rail always keeps up with the keyboard: the heavier scenes
+  // cost a couple of hundred milliseconds to re-render, and at low priority
+  // React lets the highlight land first and the preview catch up.
+  const shown = useDeferredValue(previewed)
+
   return (
-    <>
+    <div className="flex min-h-0 flex-1 overflow-hidden rounded-[inherit]">
       <div className="flex w-64 shrink-0 flex-col border-r lg:w-72">
         <PresetList
           sections={sections}
@@ -174,18 +205,20 @@ function PresetPickerPanes({
           renderItemActions={renderItemActions}
         />
       </div>
-      <div className="min-w-0 flex-1 overflow-hidden rounded-r-[inherit]">
-        {previewed && (
+      <div className="min-w-0 flex-1 overflow-hidden">
+        {shown && (
           // Not keyed per preset: the provider re-themes in place (same path as
           // the live builder), so browsing the rail never remounts the screen.
-          <PresetShowcase
-            name={previewed.name}
-            designSystem={previewed.designSystem}
+          <PresetPreview
+            name={shown.name}
+            designSystem={shown.designSystem}
             forcedMode={previewMode}
+            scene={scene}
+            onSceneChange={setScene}
           />
         )}
       </div>
-    </>
+    </div>
   )
 }
 
@@ -206,9 +239,9 @@ function PresetList({
   onPreview?: (id: string) => void
   renderItemActions?: (item: PresetPickerItem) => ReactNode
 }) {
-  // Filtering runs here, not only inside Autocomplete, so the counts on the
-  // section headers and in the footer describe what the rail actually shows.
-  // Same predicate the Command applies to the collection, so the two agree.
+  // The rail owns its filtering (Autocomplete gets no `filter`, so it only
+  // wires the field to the list's keyboard nav): one predicate, so the counts
+  // on the section headers and in the footer always describe what's rendered.
   const { contains } = useFilter({
     sensitivity: 'base',
     ignorePunctuation: true,
@@ -238,16 +271,12 @@ function PresetList({
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      {/* The Command wrapper is the scroll container, so the search field has to
-          stick to its top or it scrolls away with the rows. */}
-      <Command className="min-h-0 flex-1 gap-0 p-0">
+      <Autocomplete>
         <SearchField
           // No search autofocus on mobile — the keyboard would cover the list.
           autoFocus={surface === 'modal'}
           aria-label="Search design systems"
-          // The panel's own surface, so rows scroll under it: the modal's
-          // background var, or the page background inside the drawer.
-          className="sticky top-0 z-10 border-b bg-[var(--modal-background,var(--color-bg))] p-2"
+          className="shrink-0 p-2"
         >
           <InputGroup>
             <InputGroupAddon>
@@ -255,19 +284,17 @@ function PresetList({
             </InputGroupAddon>
             {/* `onInput`, not the field's `onChange`: Autocomplete owns the
                 field's value through context, and a direct `onChange` would
-                take its place and stop the collection filtering. */}
+                take its place. */}
             <Input
               placeholder="Search design systems..."
               onInput={(event) => setQuery(event.currentTarget.value)}
             />
           </InputGroup>
         </SearchField>
-        <CommandContent
+        <ListBox
           aria-label="Design systems"
           onAction={pick}
-          // Spacing rides inline: the Command wrapper forces `p-0` on us through a
-          // descendant selector that any class of ours would lose to.
-          style={{ padding: 6 }}
+          className="min-h-0 flex-1 px-1.5 pb-1.5"
           renderEmptyState={() => (
             <div className="py-6 text-center text-sm text-fg-muted">
               No presets found
@@ -275,13 +302,13 @@ function PresetList({
           )}
         >
           {matched.map((section) => (
-            <CommandSection key={section.id}>
-              <CommandSectionHeader className="flex items-center justify-between gap-2 pr-1">
+            <ListBoxSection key={section.id}>
+              <ListBoxSectionHeader className="flex items-center justify-between gap-2 pr-1">
                 {section.title}
                 <span className="tabular-nums">{section.items.length}</span>
-              </CommandSectionHeader>
+              </ListBoxSectionHeader>
               {section.items.map((item) => (
-                <CommandItem
+                <ListBoxItem
                   key={item.id}
                   id={item.id}
                   textValue={item.name}
@@ -301,12 +328,12 @@ function PresetList({
                       actions={renderItemActions?.(item)}
                     />
                   )}
-                </CommandItem>
+                </ListBoxItem>
               ))}
-            </CommandSection>
+            </ListBoxSection>
           ))}
-        </CommandContent>
-      </Command>
+        </ListBox>
+      </Autocomplete>
       <div className="shrink-0 border-t px-3 py-2 text-xs text-fg-muted">
         {total} {total === 1 ? 'system' : 'systems'}
       </div>
