@@ -23,6 +23,8 @@ import type { DesignSystem } from '@/modules/create/preset'
 interface PresetGalleryItem {
   id: string
   name: string
+  /** A few words characterising the preset. Absent for the user's own systems. */
+  description?: string
   /** Themes the tile's live preview. */
   designSystem: DesignSystem
 }
@@ -63,7 +65,7 @@ function fontPair(designSystem: DesignSystem) {
  *   label is itself the type specimen), and on the right three glyphs from the
  *   preset's icon library, picked because their silhouettes diverge most
  *   between libraries.
- * - The name in the heading font, closed by a hairline rule. This is the card's
+ * - The name in the heading font over its description. This is the card's
  *   headline; everything below it is deliberately smaller.
  * - The accent ramp.
  * - A vignette row: real components (body copy, the primary action) on an inset
@@ -129,9 +131,16 @@ export function PresetTile({
             </div>
           </div>
 
-          <p className="mt-3 truncate border-b pb-3 font-heading text-2xl leading-tight font-semibold tracking-tight text-fg">
-            {item.name}
-          </p>
+          <div className="mt-3">
+            <p className="truncate font-heading text-2xl leading-tight font-semibold tracking-tight text-fg">
+              {item.name}
+            </p>
+            {item.description && (
+              <p className="mt-1.5 truncate text-[11px] leading-none text-fg-muted">
+                {item.description}
+              </p>
+            )}
+          </div>
 
           <div className="mt-3 flex gap-[3px]">
             {RAMP_STEPS.map((step) => (

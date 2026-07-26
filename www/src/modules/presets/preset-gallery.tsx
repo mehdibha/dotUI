@@ -183,7 +183,11 @@ function PresetGalleryContent({
               <CommandItem
                 key={item.id}
                 id={item.id}
-                textValue={item.name}
+                // The description joins the filter text, so "monochrome" finds
+                // Vercel — it's the only prose on the card.
+                textValue={[item.name, item.description]
+                  .filter(Boolean)
+                  .join(' ')}
                 // The themed card IS the option and covers the item edge to
                 // edge, so the list highlight never shows; hover/focus render
                 // as an overlay on the card instead (group-*/option in

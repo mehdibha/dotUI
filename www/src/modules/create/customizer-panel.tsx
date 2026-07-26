@@ -271,6 +271,7 @@ export function CustomizerPanel({ className }: { className?: string }) {
       items: PRESETS.map((p) => ({
         id: p.id,
         name: p.name,
+        description: p.description,
         designSystem: p.designSystem,
       })),
     }

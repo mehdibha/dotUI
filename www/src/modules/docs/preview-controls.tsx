@@ -138,6 +138,7 @@ function PresetSelector() {
           items: PRESETS.map((preset) => ({
             id: preset.id,
             name: preset.name,
+            description: preset.description,
             designSystem: preset.designSystem,
           })),
         },
