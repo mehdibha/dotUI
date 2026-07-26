@@ -1,8 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { MoonIcon, SunIcon } from 'lucide-react'
-import type { Key } from 'react-aria-components'
+import { ChevronsUpDownIcon, MoonIcon, SunIcon } from 'lucide-react'
 import { useTheme } from 'starter-themes'
 
 import { createPersistedStore, enumCodec } from '@/lib/persisted-store'
@@ -10,13 +9,6 @@ import { DesignSystemProvider } from '@/lib/styles'
 import { cn } from '@/registry/lib/utils'
 import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
 import { Button } from '@/registry/ui/button'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/registry/ui/select'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import { DEFAULTS, type DesignSystem } from '@/modules/create/preset'
 import {
@@ -24,6 +16,7 @@ import {
   useDesignSystemName,
   useStoredPreset,
 } from '@/modules/create/preset/storage'
+import { PresetGallery } from '@/modules/presets/preset-gallery'
 import { PRESETS } from '@/modules/presets/presets-data'
 
 /**
@@ -118,47 +111,50 @@ function PresetSwatch({
 
 function PresetSelector() {
   const selected = presetStore.useValue()
+  const previewMode = useForcedPreviewMode()
   const yours = useStoredPreset()
   const yoursName = useDesignSystemName().trim() || DEFAULT_DESIGN_SYSTEM_NAME
   const yoursSwatch =
     (yours.color ?? DEFAULT_COLOR_CONFIG).seeds.accent ?? 'var(--color-primary)'
-  const swatchFor = (id: string) =>
-    id === YOURS
-      ? yoursSwatch
-      : (PRESETS.find((p) => p.id === id)?.swatch ?? yoursSwatch)
+  const selectedPreset = PRESETS.find((p) => p.id === selected)
+  const selectedName = selectedPreset?.name ?? yoursName
+  const selectedSwatch = selectedPreset?.swatch ?? yoursSwatch
 
   return (
-    // The field slot is w-full; keep the control sized to its content.
-    <div className="w-fit">
-      <Select
+    <PresetGallery
+      selectedId={selected}
+      onPick={(item) => presetStore.set(item.id)}
+      previewMode={previewMode}
+      title="Preview design system"
+      description="Every demo on the site renders in the design system you pick here."
+      sections={[
+        {
+          id: 'yours',
+          title: 'Yours',
+          items: [{ id: YOURS, name: yoursName, designSystem: yours }],
+        },
+        {
+          id: 'built-in',
+          title: 'Built-in',
+          items: PRESETS.map((preset) => ({
+            id: preset.id,
+            name: preset.name,
+            designSystem: preset.designSystem,
+          })),
+        },
+      ]}
+    >
+      <Button
+        size="sm"
+        variant="quiet"
         aria-label="Preview design system"
-        selectedKey={selected}
-        onSelectionChange={(key: Key | null) => {
-          if (key != null) presetStore.set(String(key))
-        }}
+        className="gap-1.5"
       >
-        <SelectTrigger size="sm" variant="quiet" className="gap-1.5">
-          <PresetSwatch color={swatchFor(selected)} />
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent placement="bottom start">
-          <SelectItem id={YOURS} textValue={yoursName}>
-            <span className="flex items-center gap-2">
-              <PresetSwatch color={yoursSwatch} className="size-2.5" />
-              {yoursName}
-            </span>
-          </SelectItem>
-          {PRESETS.map((preset) => (
-            <SelectItem key={preset.id} id={preset.id} textValue={preset.name}>
-              <span className="flex items-center gap-2">
-                <PresetSwatch color={preset.swatch} className="size-2.5" />
-                {preset.name}
-              </span>
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+        <PresetSwatch color={selectedSwatch} />
+        <span className="truncate">{selectedName}</span>
+        <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
+      </Button>
+    </PresetGallery>
   )
 }
 
