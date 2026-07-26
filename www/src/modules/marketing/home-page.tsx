@@ -33,7 +33,7 @@ export function HomePage() {
           </p>
           <div className="mt-9 flex items-center gap-3">
             <LinkButton href="/create" variant="primary" size="lg">
-              Launch the editor
+              Start building
             </LinkButton>
             <LinkButton href="/docs/components" variant="default" size="lg">
               View components
