@@ -19,10 +19,10 @@ export function ExportSection() {
           <br />
           <span className="text-fg-muted">Export everywhere.</span>
         </p>
-        <p className="max-w-xl text-base text-balance text-fg-muted">
-          Everything you configure compiles to plain React and Tailwind —
-          components, tokens and styles as files in your repo. No runtime, no
-          dependency on dotUI, nothing to eject from later.
+        <p className="max-w-2xl text-base text-balance text-fg-muted">
+          Your design system ships as plain React and Tailwind — real files in
+          your repo, yours to read, diff and rewrite. No runtime, no dotUI
+          dependency, nothing to eject from later.
         </p>
       </div>
 
