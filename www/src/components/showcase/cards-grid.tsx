@@ -62,32 +62,32 @@ type CardKey = keyof typeof CARDS
 // own.
 const RAIL: CardKey[] = [
   'controls',
-  'booking',
   'twoFactor',
   'filters',
   'accountMenu',
+  'inviteMembers',
 ]
 const MAIN_LEFT: CardKey[] = [
   'commandMenu',
+  'payment',
   'storage',
-  'inviteMembers',
   'loginForm',
-  'teamName',
+  'metrics',
 ]
 const MAIN_RIGHT: CardKey[] = [
-  'notifications',
-  'payment',
-  'faq',
-  'metrics',
-  'appearance',
-]
-const SIDE: CardKey[] = [
-  'colorEditor',
-  'computerUse',
+  'booking',
   'uploadAvatar',
   'pricingPlans',
+  'appearance',
+  'colorEditor',
+]
+const SIDE: CardKey[] = [
+  'computerUse',
+  'notifications',
+  'faq',
   'displaySettings',
   'cookiePreferences',
+  'teamName',
 ]
 
 // A fixed flex column of cards. Fixed columns (rather than CSS `columns`) keep
