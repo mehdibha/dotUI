@@ -58,7 +58,12 @@ export function ExportSection() {
                 {name}
               </h3>
             </div>
-            <p className="mt-3.5 text-sm text-fg-muted transition-colors duration-200 group-hover:text-fg motion-reduce:transition-none">
+            <p
+              className={cn(
+                'mt-3.5 text-sm transition-colors duration-200 motion-reduce:transition-none',
+                live ? 'text-fg-muted group-hover:text-fg' : 'text-fg-disabled',
+              )}
+            >
               {detail}
             </p>
           </div>
