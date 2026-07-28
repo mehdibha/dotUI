@@ -32,7 +32,6 @@ import {
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
 import { Drawer } from '@/registry/ui/drawer'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Kbd } from '@/registry/ui/kbd'
 import { Popover } from '@/registry/ui/popover'
 import type { PopoverProps } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
@@ -66,20 +65,26 @@ interface PresetPickerProps {
   placement?: PopoverProps['placement']
   /** Pin the previews to one mode (docs previews pin light/dark). */
   previewMode?: 'light' | 'dark'
+  /**
+   * Show the live vignettes: a pinned preview pane on desktop, inline on each
+   * drawer row. Off by default.
+   */
+  withPreview?: boolean
   /** Trailing controls on a row (e.g. a saved preset's actions menu). */
   renderItemActions?: (item: PresetPickerItem) => ReactNode
 }
 
 /**
  * The one preset picker, used by both the docs preview toolbar and the /create
- * panel. Desktop is master–detail: a searchable list of compact, themed rows —
- * each preset's name in its own heading font, its font/radius/density and three
- * palette dots — beside a pinned pane showing a live vignette of the row under
- * the pointer or the keyboard highlight (see PresetPreviewPane).
+ * panel: a searchable list of compact, themed rows — each preset's name in its
+ * own heading font, its font/radius/density and three palette dots. Popover on
+ * desktop, drawer on mobile.
  *
- * The pane is what keeps the list honest: rows never change size, so scanning
- * never reflows the list under the cursor, keyboard navigation responds
- * instantly, and one vignette is always visible instead of unfolding on demand.
+ * `withPreview` adds live vignettes. Desktop becomes master–detail: the rows
+ * beside a pinned pane previewing the row under the pointer or the keyboard
+ * highlight (see PresetPreviewPane) — rows never change size, so scanning
+ * never reflows the list under the cursor. Drawer rows — no pointer, no
+ * highlight — carry the vignette inline instead.
  */
 export function PresetPicker({
   children,
@@ -90,6 +95,7 @@ export function PresetPicker({
   onOpenChange,
   placement = 'bottom start',
   previewMode,
+  withPreview = false,
   renderItemActions,
 }: PresetPickerProps) {
   const content = (surface: 'popover' | 'drawer') => (
@@ -105,6 +111,7 @@ export function PresetPicker({
           close={close}
           surface={surface}
           previewMode={previewMode}
+          withPreview={withPreview}
           renderItemActions={renderItemActions}
         />
       )}
@@ -119,9 +126,13 @@ export function PresetPicker({
           isMobile ? (
             <Drawer>{content('drawer')}</Drawer>
           ) : (
-            // 600px = the 260px list column + its 1px divider + the 337px the
-            // preview pane's vignette needs + the popover's 1px borders.
-            <Popover placement={placement} className="w-[600px]">
+            // With the pane, 600px = the 260px list column + its 1px divider +
+            // the 337px the pane's vignette needs + the popover's 1px borders;
+            // without it, the popover sizes to the list column.
+            <Popover
+              placement={placement}
+              className={withPreview ? 'w-[600px]' : undefined}
+            >
               {content('popover')}
             </Popover>
           )
@@ -138,6 +149,7 @@ function PresetPickerContent({
   close,
   surface,
   previewMode,
+  withPreview,
   renderItemActions,
 }: {
   sections: PresetPickerSection[]
@@ -146,6 +158,7 @@ function PresetPickerContent({
   close: () => void
   surface: 'popover' | 'drawer'
   previewMode?: 'light' | 'dark'
+  withPreview: boolean
   renderItemActions?: (item: PresetPickerItem) => ReactNode
 }) {
   // Autocomplete owns the filtering; we mirror the query only to keep the
@@ -262,7 +275,7 @@ function PresetPickerContent({
                     isActive={
                       surface === 'popover' && item.id === previewItem?.id
                     }
-                    withVignette={surface === 'drawer'}
+                    withVignette={surface === 'drawer' && withPreview}
                     onShow={surface === 'popover' ? showPreview : undefined}
                     forcedMode={previewMode}
                     actions={renderItemActions?.(item)}
@@ -287,25 +300,17 @@ function PresetPickerContent({
       }}
     >
       <div className="flex min-h-0">
-        <div className="flex w-[260px] shrink-0 flex-col border-r">{list}</div>
-        <PresetPreviewPane item={previewItem} forcedMode={previewMode} />
-      </div>
-      <div className="flex shrink-0 items-center justify-between border-t px-2.5 py-1.5 text-[11px] text-fg-muted">
-        <span className="flex items-center gap-1.5">
-          <span className="flex gap-0.5">
-            <Kbd>↑</Kbd>
-            <Kbd>↓</Kbd>
-          </span>
-          Navigate
-        </span>
-        <span className="flex items-center gap-1.5">
-          <Kbd>↵</Kbd>
-          Apply
-        </span>
-        <span className="flex items-center gap-1.5">
-          <Kbd>Esc</Kbd>
-          Close
-        </span>
+        <div
+          className={cn(
+            'flex w-[260px] shrink-0 flex-col',
+            withPreview && 'border-r',
+          )}
+        >
+          {list}
+        </div>
+        {withPreview && (
+          <PresetPreviewPane item={previewItem} forcedMode={previewMode} />
+        )}
       </div>
     </Command>
   )
