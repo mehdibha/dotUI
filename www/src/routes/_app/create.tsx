@@ -17,7 +17,7 @@ import { PreviewPanel } from '@/modules/create/preview/preview-panel'
 
 export const createSearchSchema = z.object({
   panel: z.string().optional().catch(undefined),
-  preview: z.string().default('overview').catch('overview'),
+  preview: z.string().default('cards').catch('cards'),
   preset: z.string().optional().catch(undefined),
   // Opens the preset gallery modal — set by the panel's Presets button and the
   // /presets permanent redirect. Coerced boolean: the search parser reads bare
@@ -26,7 +26,7 @@ export const createSearchSchema = z.object({
   gallery: z.coerce.boolean().optional().catch(undefined),
 })
 
-const searchDefaults = { preview: 'overview' }
+const searchDefaults = { preview: 'cards' }
 
 export const Route = createFileRoute('/_app/create')({
   validateSearch: createSearchSchema,
