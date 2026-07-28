@@ -28,8 +28,8 @@ export function HomePage() {
             not someone else&rsquo;s.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
-            Beautiful components, accessibility out of the box, composition, and
-            more.
+            Set the colors, the type, the whole personality. Every component
+            follows. Export it as code you own, or straight to v0.
           </p>
           <div className="mt-9 flex items-center gap-3">
             <LinkButton href="/create" variant="primary" size="lg">
