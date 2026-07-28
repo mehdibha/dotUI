@@ -11,7 +11,7 @@ const toggleButtonMeta = {
       target: 'ui/toggle-button.tsx',
     },
   ],
-  registryDependencies: ['focus-styles'],
+  registryDependencies: ['context', 'focus-styles'],
 } satisfies RegistryItem
 
 export default toggleButtonMeta
