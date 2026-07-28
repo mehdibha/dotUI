@@ -40,7 +40,8 @@ export function CommandMenu({
             <Input placeholder="Type a command or search..." />
           </InputGroup>
         </SearchField>
-        <ListBox aria-label="Commands" onAction={() => console.log('action')}>
+        {/* Showcase-only: items are actionable but intentionally lead nowhere. */}
+        <ListBox aria-label="Commands" onAction={() => {}}>
           <ListBoxSection>
             <ListBoxSectionHeader>Issue</ListBoxSectionHeader>
             <ListBoxItem textValue="Assign to">
