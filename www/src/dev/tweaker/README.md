@@ -43,6 +43,27 @@ function Hero() {
 
 `useTweak(label, config)` returns the live value. `label` is the control's name in the panel; `config.group` buckets related controls under a heading (defaults to an ungrouped section).
 
+### Linked controls
+
+`setTweak(label, value, group?)` writes a control's value from code — for two controls that are two views of one value (a size in px and the same size in grid units, say), so moving either updates the other. Mirror in an effect and keep the last pair in a ref, or the two writes chase each other:
+
+```tsx
+const last = useRef({ px, units })
+useEffect(() => {
+  if (px !== last.current.px) {
+    const next = toUnits(px)
+    last.current = { px, units: next }
+    setTweak('Size (units)', next, group)
+  } else if (units !== last.current.units) {
+    const next = toPx(units)
+    last.current = { px: next, units }
+    setTweak('Size', next, group)
+  }
+}, [px, units])
+```
+
+Give the linked pair defaults that already agree, so **Reset** lands on a consistent state.
+
 ### Control types
 
 | `type`    | renders as                                   | value      | extra fields            |

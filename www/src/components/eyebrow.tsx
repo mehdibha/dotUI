@@ -1,9 +1,8 @@
 import { cn } from '@/registry/lib/utils'
 
 /**
- * The small pill "eyebrow" shown above a page headline — the landing
- * announcement, the /charts hero, and so on. Static by default; wrap it in a
- * link for an interactive one (see the landing's Announcement).
+ * The small pill "eyebrow" shown above a page headline. Static by default;
+ * wrap it in a link for an interactive one.
  */
 export function Eyebrow({ className, ...props }: React.ComponentProps<'span'>) {
   return (

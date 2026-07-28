@@ -84,45 +84,22 @@ function makeDesignSystem(opts: {
 
 export const PRESETS: Preset[] = [
   {
-    id: 'vercel',
-    name: 'Vercel',
-    description: 'Monochrome, hairline borders.',
-    swatch: '#cbd5e1',
+    id: 'claude',
+    name: 'Claude',
+    description: 'Warm coral on sand.',
+    swatch: '#e0916f',
     designSystem: makeDesignSystem({
-      neutral: '#737373',
-      accent: '#171717',
-      // Geist runs a 14px/32px UI scale at 6px radii — our defaults, not compact/0.5
-      // (verified against live computed styles; see issue #484 Phase 1 audit).
+      // Claude neutrals are yellow-warm beige (hue ~96), not orange (issue #484 audit).
+      neutral: '#84806f',
+      accent: '#d97757',
+      primary: 'accent',
+      radiusFactor: '1.5',
       density: 'default',
-      // Geist runs black CTAs but a blue selection: focus rings + checked
-      // controls. The #171717 accent + #737373 neutral seeds are already
-      // achromatic, so the monochrome chrome needs no vividness clamp — and
-      // clamping it would flatten this chromatic selection ramp back to gray.
-      selection: '#0072f5',
-      // Vercel dark runs a true-black page with #0a0a0a panels; dark:0 lands
-      // n50 (the card step) on 0x0a0a0a exactly.
-      background: { dark: 0 },
-      colorOverrides: {
-        // Geist hairlines sit two ramp steps lighter than our border default.
-        'color-border': { palette: 'neutral', job: 'ui-hover' },
-        // Light mode inverts our elevation: white cards float on a #fafafa page.
-        'color-bg': { light: { palette: 'neutral', job: 'subtle-bg' } },
-        'color-card': { light: { palette: 'neutral', job: 'app-bg' } },
-        'color-popover': { light: { palette: 'neutral', job: 'app-bg' } },
-      },
-      components: {
-        command: { style: '3' },
-        badge: { radius: '--radius-full' },
-      },
-      tokens: {
-        // Geist elevation: two soft layered shadows + a 1px hairline ring that
-        // rides the neutral ramp so it adapts per mode. Overlays and cards share
-        // the value — both float over the page.
-        '--shadow-overlay':
-          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06), 0 0 0 1px var(--neutral-400)',
-        '--shadow-card':
-          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06), 0 0 0 1px var(--neutral-400)',
-      },
+      // Anthropic Sans is a neutral grotesque (Inter is closest free); Anthropic
+      // Serif is a calm book serif (Source Serif 4, not display-contrast Fraunces).
+      fonts: { heading: 'Source Serif 4', body: 'Inter' },
+      // Claude's signature cream page (#faf9f5 ≈ L* 98, warm hue from the seed).
+      background: { light: 98 },
     }),
   },
   {
@@ -183,22 +160,46 @@ export const PRESETS: Preset[] = [
     }),
   },
   {
-    id: 'claude',
-    name: 'Claude',
-    description: 'Warm coral on sand.',
-    swatch: '#e0916f',
+    id: 'vercel',
+    name: 'Vercel',
+    description: 'Monochrome, hairline borders.',
+    swatch: '#cbd5e1',
     designSystem: makeDesignSystem({
-      // Claude neutrals are yellow-warm beige (hue ~96), not orange (issue #484 audit).
-      neutral: '#84806f',
-      accent: '#d97757',
-      primary: 'accent',
-      radiusFactor: '1.5',
+      neutral: '#737373',
+      accent: '#171717',
+      // Geist runs a 14px/32px UI scale at 6px radii — our defaults, not compact/0.5
+      // (verified against live computed styles; see issue #484 Phase 1 audit).
       density: 'default',
-      // Anthropic Sans is a neutral grotesque (Inter is closest free); Anthropic
-      // Serif is a calm book serif (Source Serif 4, not display-contrast Fraunces).
-      fonts: { heading: 'Source Serif 4', body: 'Inter' },
-      // Claude's signature cream page (#faf9f5 ≈ L* 98, warm hue from the seed).
-      background: { light: 98 },
+      // Geist runs black CTAs but a blue selection: focus rings + checked
+      // controls. The #171717 accent + #737373 neutral seeds are already
+      // achromatic, so the monochrome chrome needs no vividness clamp — and
+      // clamping it would flatten this chromatic selection ramp back to gray.
+      selection: '#0072f5',
+      // Vercel dark runs a true-black page with #0a0a0a panels; dark:0 lands
+      // n50 (the card step) on 0x0a0a0a exactly.
+      background: { dark: 0 },
+      colorOverrides: {
+        // Geist hairlines sit two ramp steps lighter than our border default.
+        'color-border': { palette: 'neutral', job: 'ui-hover' },
+        // Light mode inverts our elevation: white cards float on a #fafafa page.
+        'color-bg': { light: { palette: 'neutral', job: 'subtle-bg' } },
+        'color-card': { light: { palette: 'neutral', job: 'app-bg' } },
+        'color-popover': { light: { palette: 'neutral', job: 'app-bg' } },
+      },
+      components: {
+        command: { style: '3' },
+        badge: { radius: '--radius-full' },
+      },
+      tokens: {
+        // Geist elevation: two soft layered shadows. The hairline comes from the
+        // components' own border (color-border above) — a shadow ring on top
+        // would double it and smear the corners. Overlays and cards share the
+        // value — both float over the page.
+        '--shadow-overlay':
+          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06)',
+        '--shadow-card':
+          '0 8px 16px -4px rgb(0 0 0 / 0.04), 0 24px 32px -8px rgb(0 0 0 / 0.06)',
+      },
     }),
   },
   {

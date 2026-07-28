@@ -411,6 +411,11 @@ function DesignSystemProvider({
   // scope *selector* is no longer per-instance — see useScopedTheme.
   const scopeId = React.useId()
 
+  // The portal target must wait for mount: rendering it during hydration inserts
+  // a node into <body> — a React-hydrated element — and the whole tree mismatches.
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
+
   // Apply the global token vars to :root so values that reference each other via calc() +
   // var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor))) recompute correctly —
   // setting them on a wrapper <div> would leave the :root-declared tokens frozen. In `scoped`
@@ -539,7 +544,7 @@ function DesignSystemProvider({
       >
         {tree}
       </UNSAFE_PortalProvider>
-      {typeof document === 'undefined'
+      {!mounted
         ? null
         : createPortal(
             <div

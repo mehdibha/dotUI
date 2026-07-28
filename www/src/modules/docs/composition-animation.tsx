@@ -1289,12 +1289,8 @@ const steps: Step[] = [
   },
 ]
 
-const maxLines = (list: Step[]) =>
-  Math.max(...list.map((s) => s.code.split('\n').length))
-
 const compactSteps = steps.filter((s) => s.compact)
-export const maxCodeLines = maxLines(steps)
-export const compactMaxCodeLines = maxLines(compactSteps)
+const maxCodeLines = Math.max(...steps.map((s) => s.code.split('\n').length))
 
 // Pagination lists only the headline steps; mid steps play during auto-advance
 // but aren't clickable stops. Each entry keeps its index into its list so the
@@ -1649,9 +1645,11 @@ export function StepDots({
 
 export function PlayPauseButton({
   player,
+  withLabel = false,
   className,
 }: {
   player: CompositionPlayer
+  withLabel?: boolean
   className?: string
 }) {
   const { paused, togglePlay } = player
@@ -1659,12 +1657,13 @@ export function PlayPauseButton({
     <Button
       size="sm"
       variant="quiet"
-      isIconOnly
+      isIconOnly={!withLabel}
       aria-label={paused ? 'Play steps' : 'Pause steps'}
       onPress={togglePlay}
       className={cn('text-fg-muted', className)}
     >
       {paused ? <PlayIcon /> : <PauseIcon />}
+      {withLabel && (paused ? 'Play' : 'Pause')}
     </Button>
   )
 }
@@ -1831,16 +1830,50 @@ function lockTagPunctuation(from: KeyedTokensInfo, to: KeyedTokensInfo) {
 
 const EMPTY_TOKENS = toKeyedTokens('', [])
 
+// The gutter is sized for the loop's longest snippet, so it can't widen at line
+// 10 and shift the code sideways mid-transition.
+export const lineNumberWidth = String(maxCodeLines).length
+
+// Line numbers are injected after the key sync rather than through the
+// library's `lineNumbers` option: the numbers stay out of the code's diff (which
+// the option would interleave them into), and each one keeps a key that depends
+// on the line, not the snippet — so a number present in both steps moves instead
+// of fading out and back in with the line's tokens.
+function withLineNumbers(info: KeyedTokensInfo): KeyedTokensInfo {
+  const tokens: KeyedToken[] = []
+  let line = 1
+  let atLineStart = true
+  for (const token of info.tokens) {
+    if (atLineStart) {
+      tokens.push({
+        key: `ln-${line}`,
+        content: `${String(line).padStart(lineNumberWidth, ' ')}  `,
+        offset: token.offset,
+        htmlClass: 'shiki-magic-move-line-number',
+      })
+      atLineStart = false
+    }
+    tokens.push(token)
+    if (token.content === '\n') {
+      line += 1
+      atLineStart = true
+    }
+  }
+  return { ...info, tokens }
+}
+
 export function CompositionCode({
   code,
   reducedMotion,
   duration = CODE_DURATION_MS,
   stagger = CODE_STAGGER_MS,
+  lineNumbers = false,
 }: {
   code: string
   reducedMotion: boolean
   duration?: number
   stagger?: number
+  lineNumbers?: boolean
 }) {
   const { resolvedTheme } = useTheme()
   const theme = resolvedTheme === 'light' ? 'github-light' : 'github-dark'
@@ -1864,10 +1897,22 @@ export function CompositionCode({
     cache.current = { from, to }
     return cache.current
   }, [code, theme])
+  // Numbered outside the cache, so the next step still syncs against the bare
+  // tokens.
+  const rendered = useMemo(
+    () =>
+      lineNumbers
+        ? {
+            from: withLineNumbers(step.from),
+            to: withLineNumbers(step.to),
+          }
+        : step,
+    [step, lineNumbers],
+  )
   return (
     <ShikiMagicMoveRenderer
-      tokens={step.to}
-      previous={step.from}
+      tokens={rendered.to}
+      previous={rendered.from}
       options={{
         duration: reducedMotion ? 0 : duration,
         stagger,
