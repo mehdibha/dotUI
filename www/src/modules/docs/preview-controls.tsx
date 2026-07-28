@@ -37,8 +37,8 @@ const YOURS = 'yours'
 
 const presetStore = createPersistedStore(
   'dotui:preview-preset',
-  YOURS,
-  enumCodec([YOURS, ...PRESETS.map((p) => p.id)], YOURS),
+  'claude',
+  enumCodec([YOURS, ...PRESETS.map((p) => p.id)], 'claude'),
 )
 
 type PreviewMode = 'light' | 'dark'

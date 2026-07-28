@@ -106,10 +106,14 @@ function RootComponent() {
         <ToastProvider>
           <Outlet />
         </ToastProvider>
+        {/* ClientOnly: the !SSR guard above renders nothing on the server, so
+            without it the client's first render mismatches and hydration fails. */}
         {DevTweaker && (
-          <Suspense fallback={null}>
-            <DevTweaker />
-          </Suspense>
+          <ClientOnly fallback={null}>
+            <Suspense fallback={null}>
+              <DevTweaker />
+            </Suspense>
+          </ClientOnly>
         )}
       </RootDocument>
     </ThemeProvider>

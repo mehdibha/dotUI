@@ -5,6 +5,7 @@ import { useEffect, useId, useSyncExternalStore } from 'react'
 import {
   getValue,
   registerControl,
+  setValue,
   subscribe,
   unregisterControl,
 } from './store'
@@ -73,3 +74,13 @@ export const useTweak: UseTweak =
   import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'
     ? useTweakDev
     : useTweakNoop
+
+/**
+ * Write a control's value from code. For linked controls — two views of one
+ * value, e.g. a floor in pixels and the same floor in code lines, where moving
+ * either has to update the other. Same dev/no-op split as `useTweak`.
+ */
+export const setTweak: (label: string, value: unknown, group?: string) => void =
+  import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'
+    ? (label, value, group = 'default') => setValue(`${group}::${label}`, value)
+    : () => {}

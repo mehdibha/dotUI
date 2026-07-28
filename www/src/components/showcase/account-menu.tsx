@@ -39,8 +39,10 @@ export function AccountMenu({
         </div>
       </CardHeader>
       <CardContent className="p-0">
+        {/* Showcase-only: items are actionable but intentionally lead nowhere. */}
         <ListBox
           aria-label="Account Menu"
+          onAction={() => {}}
           className="h-full max-h-none w-full rounded-none border-0 bg-transparent **:data-[slot='list-box-item']:text-sm"
         >
           <ListBoxItem textValue="Profile">

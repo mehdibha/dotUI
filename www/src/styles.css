@@ -157,3 +157,12 @@
   inherits: false;
   initial-value: transparent;
 }
+
+/* cta-glow-color — registered so the closing CTA's pill glow tweens between
+   preset accents on switch; inherits so the glow layers inside the pill read
+   the transitioning value. */
+@property --cta-glow-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
