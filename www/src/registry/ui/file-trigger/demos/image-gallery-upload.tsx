@@ -50,7 +50,7 @@ export default function Demo() {
           }
         }}
       >
-        <Button variant="default" size="sm" className="w-full">
+        <Button variant="secondary" size="sm" className="w-full">
           <UploadIcon /> Upload images
         </Button>
       </FileTrigger>

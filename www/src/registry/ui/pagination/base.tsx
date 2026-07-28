@@ -67,7 +67,7 @@ const PaginationLink = ({
     <LinkButton
       aria-current={isActive ? 'page' : undefined}
       data-pagination-link=""
-      variant={variant ?? (isActive ? 'default' : 'quiet')}
+      variant={variant ?? (isActive ? 'secondary' : 'quiet')}
       isIconOnly={isIconOnly}
       {...props}
     />

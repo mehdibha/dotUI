@@ -11,7 +11,7 @@ export default function Demo() {
         </p>
       </CardContent>
       <CardFooter className="border-t">
-        <Button variant="default" size="sm" className="w-full">
+        <Button variant="secondary" size="sm" className="w-full">
           Footer with Border
         </Button>
       </CardFooter>

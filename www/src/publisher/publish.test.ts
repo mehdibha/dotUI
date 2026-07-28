@@ -61,7 +61,7 @@ describe('flatten', () => {
     expect(primary).toContain('bg-primary')
 
     // `defaultVariants` flows through.
-    expect(layer.defaultVariants).toEqual({ variant: 'default', size: 'md' })
+    expect(layer.defaultVariants).toEqual({ variant: 'secondary', size: 'md' })
   })
 
   test("button: density 'default' uses the default-density classes", () => {

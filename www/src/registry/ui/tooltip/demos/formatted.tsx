@@ -4,7 +4,7 @@ import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 export default function Demo() {
   return (
     <Tooltip>
-      <Button variant="default">Status</Button>
+      <Button variant="secondary">Status</Button>
       <TooltipContent className="text-left">
         <div className="flex flex-col gap-1">
           <p className="font-semibold">Active</p>

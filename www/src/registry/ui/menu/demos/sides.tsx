@@ -8,7 +8,7 @@ export default function Demo() {
       {(['bottom', 'top', 'left', 'right', 'start', 'end'] as const).map(
         (placement) => (
           <Menu key={placement}>
-            <Button variant="default" className="w-fit capitalize">
+            <Button variant="secondary" className="w-fit capitalize">
               {placement}
             </Button>
             <Popover placement={placement}>

@@ -16,7 +16,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <Menu>
-      <Button variant="default" className="w-fit">
+      <Button variant="secondary" className="w-fit">
         Radio Group
       </Button>
       <Popover>

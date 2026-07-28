@@ -15,7 +15,7 @@ export default function ButtonExamples() {
 }
 
 const sizes = ['xs', 'sm', 'md', 'lg'] as const
-const variants = ['primary', 'default', 'link', 'danger', 'quiet'] as const
+const variants = ['primary', 'secondary', 'link', 'danger', 'quiet'] as const
 
 const ButtonVariantsAndSizes = () => {
   return (

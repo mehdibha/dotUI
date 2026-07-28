@@ -28,7 +28,7 @@ export default function Demo() {
           }
         }}
       >
-        <Button variant="default" className="w-full">
+        <Button variant="secondary" className="w-full">
           <UploadIcon /> Upload documents
         </Button>
       </FileTrigger>

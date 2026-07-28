@@ -14,7 +14,7 @@ export default function Demo() {
         <DateInput />
         <InputGroupAddon>
           <Button
-            variant="default"
+            variant="secondary"
             size="sm"
             isIconOnly
             aria-label="Choose time"

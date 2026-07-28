@@ -14,7 +14,7 @@ import { TextField } from '@/registry/ui/text-field'
 export default function Demo() {
   return (
     <Dialog>
-      <Button variant="default">Open Popover</Button>
+      <Button variant="secondary">Open Popover</Button>
       <Popover placement="bottom start" className="w-64">
         <DialogContent>
           <DialogHeader>

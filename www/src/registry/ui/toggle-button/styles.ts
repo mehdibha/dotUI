@@ -13,10 +13,10 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
     ],
     variants: {
       variant: {
-        default:
-          'border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:border-border-active pressed:bg-neutral-active selected:not-data-disabled:border-border-active',
         primary:
           'bg-primary text-fg-on-primary [--color-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0 pressed:bg-primary-active',
+        secondary:
+          'border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:border-border-active pressed:bg-neutral-active selected:not-data-disabled:border-border-active',
         quiet:
           'bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20',
       },
@@ -31,7 +31,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
       },
     },
     defaultVariants: {
-      variant: 'default',
+      variant: 'secondary',
       size: 'md',
     },
   },

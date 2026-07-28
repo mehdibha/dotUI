@@ -36,7 +36,7 @@ interface ToggleButtonProps
 const ToggleButton = (localProps: ToggleButtonProps) => {
   const styles = useStyles()
   const {
-    variant = 'default',
+    variant = 'secondary',
     size = 'md',
     isIconOnly,
     className,

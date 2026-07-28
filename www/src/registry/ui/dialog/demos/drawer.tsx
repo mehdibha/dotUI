@@ -25,7 +25,7 @@ export default function Demo() {
     <div className="flex w-full items-center">
       <div className="flex flex-1 items-center justify-center">
         <Dialog>
-          <Button variant="default">Open drawer</Button>
+          <Button variant="secondary">Open drawer</Button>
           <Drawer>
             <DialogContent>
               <DialogHeader>

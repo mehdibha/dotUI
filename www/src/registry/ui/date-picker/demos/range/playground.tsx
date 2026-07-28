@@ -32,7 +32,7 @@ export function DateRangePickerPlayground({
         <span>–</span>
         <DateInput slot="end" />
         <InputGroupAddon>
-          <Button variant="default" size="sm" isIconOnly>
+          <Button variant="secondary" size="sm" isIconOnly>
             <CalendarIcon />
           </Button>
         </InputGroupAddon>

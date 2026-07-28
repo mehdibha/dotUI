@@ -10,9 +10,9 @@ export interface ButtonProps extends React.ComponentProps<
 > {
   /**
    * The visual style of the button (Vanilla CSS implementation specific).
-   * @default 'default'
+   * @default 'secondary'
    */
-  variant?: 'default' | 'primary' | 'quiet' | 'link' | 'warning' | 'danger'
+  variant?: 'primary' | 'secondary' | 'quiet' | 'link' | 'warning' | 'danger'
 
   /**
    * The size of the button.
@@ -31,9 +31,9 @@ export interface LinkButtonProps extends React.ComponentProps<
 > {
   /**
    * The visual style of the button.
-   * @default "default"
+   * @default "secondary"
    */
-  variant?: 'default' | 'primary' | 'quiet' | 'link' | 'warning' | 'danger'
+  variant?: 'primary' | 'secondary' | 'quiet' | 'link' | 'warning' | 'danger'
 
   /**
    * The size of the button.

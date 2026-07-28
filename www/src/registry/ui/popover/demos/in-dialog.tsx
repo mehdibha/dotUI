@@ -14,7 +14,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <Dialog>
-      <Button variant="default">Open Dialog</Button>
+      <Button variant="secondary">Open Dialog</Button>
       <Responsive
         render={(isMobile) => {
           const content = (
@@ -26,7 +26,7 @@ export default function Demo() {
                 </DialogDescription>
               </DialogHeader>
               <Dialog>
-                <Button variant="default" className="w-fit">
+                <Button variant="secondary" className="w-fit">
                   Open Popover
                 </Button>
                 <Popover placement="bottom start">

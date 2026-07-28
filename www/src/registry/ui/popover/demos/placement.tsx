@@ -13,7 +13,7 @@ export default function Demo() {
     <div className="flex flex-wrap justify-center gap-6">
       {placements.map((placement) => (
         <Dialog key={placement.label}>
-          <Button variant="default" size="sm">
+          <Button variant="secondary" size="sm">
             {placement.label}
           </Button>
           <Popover placement={placement.placement} className="w-48">

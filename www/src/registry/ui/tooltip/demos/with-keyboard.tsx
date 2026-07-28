@@ -6,7 +6,7 @@ import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 export default function Demo() {
   return (
     <Tooltip>
-      <Button variant="default" isIconOnly aria-label="Save">
+      <Button variant="secondary" isIconOnly aria-label="Save">
         <SaveIcon />
       </Button>
       <TooltipContent>

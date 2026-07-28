@@ -3,15 +3,11 @@
   "description": "A toggle button allows a user to toggle a selection on or off, for example switching between two states or modes.",
   "props": {
     "variant": {
-      "type": "\"default\" | \"primary\" | \"quiet\"",
-      "detailedType": "'default' | 'primary' | 'quiet' | undefined",
+      "type": "\"primary\" | \"quiet\" | \"secondary\"",
+      "detailedType": "'primary' | 'quiet' | 'secondary' | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "default"
-          },
           {
             "type": "stringLiteral",
             "value": "primary"
@@ -19,11 +15,15 @@
           {
             "type": "stringLiteral",
             "value": "quiet"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "secondary"
           }
         ]
       },
       "description": "The visual style of the toggle button.",
-      "default": "'default'"
+      "default": "'secondary'"
     },
     "size": {
       "type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",

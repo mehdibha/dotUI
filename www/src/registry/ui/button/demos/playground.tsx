@@ -4,7 +4,7 @@ import { Button, type ButtonProps } from '@/registry/ui/button'
 
 export default function Demo({
   children = 'Button',
-  variant = 'default',
+  variant = 'secondary',
   size = 'md',
   isDisabled = false,
   isPending = false,
