@@ -8,20 +8,20 @@ import {
   buildStrip,
   LED_COUNT,
   packStrip,
-  stadiumParamPx,
   stadiumPointPx,
+  WAVE_SPEED,
 } from './strip'
 import type { Led } from './strip'
 
 // Laps of the pill perimeter per second — a full circuit takes about 11s.
 const DRIFT_RATE = 0.09
 
-// Cursor capture, measured from the pill border in canvas-height units: full
-// capture inside NEAR, pure drift beyond FAR.
-const FOLLOW_NEAR = 0.1
-const FOLLOW_FAR = 0.42
-// The beam point chases its target in 2D (see draw), not along the perimeter.
-const CHASE_STIFFNESS = 12
+// Hovering the pill trades the travelling cluster for the whole-rim wave
+// (see strip.ts): full within the border, gone this far outside it (in
+// canvas-height units), eased in time at the given rate. The same blend
+// brightens the CSS ring glow.
+const HOVER_FADE = 0.06
+const HOVER_EASE = 6
 
 // Tint tween toward the preset accent — roughly the ring glow's 700ms ease.
 const TINT_STIFFNESS = 5
@@ -91,10 +91,11 @@ function createProgram(gl: WebGL2RenderingContext) {
 
 /**
  * The CTA pill's light field: an LED strip rides the pill's stadium perimeter
- * behind the DOM, one bright cluster drifts around it and is captured by the
- * cursor when it comes close. The same loop drives the CSS ring glow — it
- * writes `--cta-glow-x/y/boost` on the pill, so the border highlight and the
- * spill always sit on the same point of the perimeter.
+ * behind the DOM, one bright cluster drifts around it, and hovering the pill
+ * crossfades the cluster into an animated whole-rim glow. The same loop
+ * drives the CSS ring glow — it writes `--cta-glow-x/y/boost` on the pill,
+ * so the border highlight and the spill always sit on the same point of the
+ * perimeter.
  *
  * Purely decorative: the canvas is inert to pointer events and `-z`-stacked
  * behind the pill. Without WebGL2 the ring glow simply stays parked at its
@@ -144,6 +145,8 @@ export function PillBacklight({
     const uTint = gl.getUniformLocation(program, 'uTint')
     const uPanel = gl.getUniformLocation(program, 'uPanel')
     const uCluster = gl.getUniformLocation(program, 'uCluster')
+    const uHover = gl.getUniformLocation(program, 'uHover')
+    const uPhase = gl.getUniformLocation(program, 'uPhase')
     const uLed = gl.getUniformLocation(program, 'uLed')
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -152,12 +155,9 @@ export function PillBacklight({
     let strip: Led[] = []
     let geomKey = ''
     let stillS = 0 // top-centre of the perimeter, the reduced-motion park spot
-    let cluster = -1 // parked at stillS once the geometry is first measured
-    let sOrbit = -1 // free-drift phase along the perimeter, normalised
-    let posX = 0 // rendered beam point (pill border-box px)
-    let posY = 0
-    let hasPos = false
-    let boost = 0 // smoothed cursor pull, also drives the ring brightness
+    let cluster = -1 // drift phase along the perimeter, parked at stillS
+    let hover = 0 // eased whole-rim blend, 1 with the cursor on the pill
+    let phase = 0 // hover wave position, in laps
     let width = 0
     let height = 0
     let frame = 0
@@ -210,64 +210,25 @@ export function PillBacklight({
         gl.uniform4f(uPanel, cx, cy, halfFlat, radius)
       }
       if (cluster < 0) cluster = stillS
-      if (sOrbit < 0) sOrbit = stillS
 
       const pxR = pRect.height / 2
       const pxFlat = Math.max(pRect.width - pRect.height, 0)
       const perimeter = 2 * pxFlat + 2 * Math.PI * pxR
 
       if (dt > 0) {
-        // Cursor pull (1 at the border, 0 at FOLLOW_FAR away) and the border
-        // point nearest the cursor, in pill border-box px.
-        let pull = 0
-        let projX = 0
-        let projY = 0
-        let hasProj = false
+        // Hover: 1 with the cursor on the pill, fading over HOVER_FADE
+        // outside the border.
+        let onPill = 0
         if (cursor.active) {
           const px = cursor.x - pRect.left
           const py = cursor.y - pRect.top
           const cxq = Math.min(Math.max(px, pxR), pxR + pxFlat)
-          const dx = px - cxq
-          const dy = py - pxR
-          const dist = Math.hypot(dx, dy)
-          pull =
-            1 -
-            smoothstep(FOLLOW_NEAR, FOLLOW_FAR, Math.max(dist - pxR, 0) / unit)
-          if (dist > 0) {
-            projX = cxq + (dx / dist) * pxR
-            projY = pxR + (dy / dist) * pxR
-            hasProj = true
-          }
+          const dist = Math.hypot(px - cxq, py - pxR)
+          onPill = 1 - smoothstep(0, HOVER_FADE, Math.max(dist - pxR, 0) / unit)
         }
-        boost += (pull - boost) * (1 - Math.exp(-10 * dt))
-        // Positional pull uses the instantaneous distance so a cursor darting
-        // away releases the beam immediately; boost keeps the brightness
-        // fading smoothly on its own.
-        const capture = hasProj ? boost * pull : 0
-
-        // Orbit slows as the cursor takes over; the target blends between the
-        // orbit point and the cursor's border point. The beam chases it in
-        // 2D, so when the nearest side flips (cursor crossing the pill's
-        // centerline) it cuts straight across the interior instead of lapping
-        // around a cap.
-        sOrbit = wrap(sOrbit + DRIFT_RATE * dt * (1 - capture))
-        const [ox, oy] = stadiumPointPx(sOrbit * perimeter, pxR, pxFlat)
-        const tx = ox + (projX - ox) * capture
-        const ty = oy + (projY - oy) * capture
-        if (!hasPos) {
-          posX = tx
-          posY = ty
-          hasPos = true
-        } else {
-          const k = 1 - Math.exp(-CHASE_STIFFNESS * dt)
-          posX += (tx - posX) * k
-          posY += (ty - posY) * k
-        }
-        // The cluster lives on the perimeter: project the beam back onto it.
-        // Re-anchoring the orbit there means leaving the cursor resumes the
-        // tour from wherever the beam is now.
-        cluster = wrap(stadiumParamPx(posX, posY, pxR, pxFlat) / perimeter)
-        if (capture > 0.05) sOrbit = cluster
+        hover += (onPill - hover) * (1 - Math.exp(-HOVER_EASE * dt))
+        phase = wrap(phase + WAVE_SPEED * dt)
+        cluster = wrap(cluster + DRIFT_RATE * dt)
 
         const kt = 1 - Math.exp(-TINT_STIFFNESS * dt)
         tint = [
@@ -275,25 +236,24 @@ export function PillBacklight({
           tint[1] + (tintTarget[1] - tint[1]) * kt,
           tint[2] + (tintTarget[2] - tint[2]) * kt,
         ]
-      } else if (!hasPos) {
-        ;[posX, posY] = stadiumPointPx(cluster * perimeter, pxR, pxFlat)
-        hasPos = true
       }
+      const [posX, posY] = stadiumPointPx(cluster * perimeter, pxR, pxFlat)
 
       syncTint()
-      packStrip(strip, cluster, packed)
+      packStrip(strip, cluster, packed, hover, phase)
       gl.uniform2f(uResolution, width, height)
       gl.uniform1f(uSeed, reduced.matches ? 0 : Math.random() * 1000)
       gl.uniform1f(uCluster, cluster)
+      gl.uniform1f(uHover, hover)
+      gl.uniform1f(uPhase, phase)
       gl.uniform3f(uTint, tint[0], tint[1], tint[2])
       gl.uniform4fv(uLed, packed)
       gl.drawArrays(gl.TRIANGLES, 0, 3)
 
-      // The CSS ring glow follows the 2D beam point itself — masked to the
-      // border, it dims naturally while the beam crosses the interior.
+      // The CSS ring glow rides the drifting cluster and brightens on hover.
       pill.style.setProperty('--cta-glow-x', `${posX}px`)
       pill.style.setProperty('--cta-glow-y', `${posY}px`)
-      pill.style.setProperty('--cta-glow-boost', boost.toFixed(3))
+      pill.style.setProperty('--cta-glow-boost', hover.toFixed(3))
     }
 
     const loop = (now: number) => {

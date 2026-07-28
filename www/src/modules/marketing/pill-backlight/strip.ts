@@ -25,7 +25,16 @@ const MIN_PER_SEGMENT = 4
 // in sync with ENV_2SIGMA2 in fragment.ts.
 const ENVELOPE_FLOOR = 0.1
 const ENVELOPE_PEAK = 1
-const ENVELOPE_SIGMA = 0.14
+const ENVELOPE_SIGMA = 0.18
+
+// Whole-rim hover glow: while the pill is hovered the cluster gives way to a
+// band of light around the entire perimeter, kept alive by waves circling it.
+// The count must be an integer so the pattern tiles around the loop; speed is
+// in laps per second. Mirrored in fragment.ts via template constants.
+export const WAVE_BASE = 0.55
+export const WAVE_AMP = 0.3
+export const WAVE_COUNT = 2
+export const WAVE_SPEED = 0.25
 
 export type Led = {
   x: number
@@ -127,15 +136,26 @@ export function buildStrip({ cx, cy, halfFlat, radius }: Stadium): Led[] {
  * normal times quadrature weight times brightness. Folding all three into one
  * vector lets the shader recover cosine, weight and brightness from a single
  * dot product — the weight cancels against the `1/r` in the cosine.
+ *
+ * `hover` crossfades the travelling bump toward the circling whole-rim wave
+ * (the floor stays), with `phase` its position in laps.
  */
-export function packStrip(leds: Led[], target: number, out: Float32Array) {
+export function packStrip(
+  leds: Led[],
+  target: number,
+  out: Float32Array,
+  hover = 0,
+  phase = 0,
+) {
   let o = 0
   for (const led of leds) {
     let ds = Math.abs(led.s - target)
     if (ds > 0.5) ds = 1 - ds
-    const b =
-      ENVELOPE_FLOOR +
-      ENVELOPE_PEAK * Math.exp(-(ds * ds) / (2 * ENVELOPE_SIGMA ** 2))
+    const bump = Math.exp(-(ds * ds) / (2 * ENVELOPE_SIGMA ** 2))
+    const wave =
+      WAVE_BASE +
+      WAVE_AMP * Math.cos(2 * Math.PI * (led.s * WAVE_COUNT - phase))
+    const b = ENVELOPE_FLOOR + ENVELOPE_PEAK * (bump + (wave - bump) * hover)
     out[o] = led.x
     out[o + 1] = led.y
     out[o + 2] = led.nx * b
@@ -166,23 +186,4 @@ export function stadiumPointPx(
   if (s < flat) return [r + flat - s, 2 * r]
   const beta = Math.PI + (s - flat) / r
   return [r + Math.sin(beta) * r, r - Math.cos(beta) * r]
-}
-
-/** Perimeter distance of the stadium point nearest to (px, py) — the inverse
- *  of stadiumPointPx, used to project the beam back onto the border. */
-export function stadiumParamPx(
-  px: number,
-  py: number,
-  r: number,
-  flat: number,
-) {
-  const cx = Math.min(Math.max(px, r), r + flat)
-  if (cx > r && cx < r + flat) {
-    return py < r ? cx - r : flat + Math.PI * r + (r + flat - cx)
-  }
-  // Caps: angle from the cap's top, clockwise.
-  let beta = Math.atan2(px - cx, r - py)
-  if (cx === r + flat) return flat + Math.max(beta, 0) * r
-  if (beta < Math.PI) beta += 2 * Math.PI
-  return 2 * flat + Math.PI * r + (beta - Math.PI) * r
 }

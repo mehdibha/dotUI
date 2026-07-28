@@ -1,4 +1,4 @@
-import { LED_COUNT } from './strip'
+import { LED_COUNT, WAVE_AMP, WAVE_BASE, WAVE_COUNT } from './strip'
 
 /**
  * Backlit pill — an LED strip runs behind the perimeter of the CTA pill, and a
@@ -32,6 +32,9 @@ uniform vec3  uTint;
 uniform vec4  uPanel;
 // Cluster position along the perimeter, normalised [0, 1).
 uniform float uCluster;
+// Hover blend [0, 1] toward the whole-rim wave, and the wave phase in laps.
+uniform float uHover;
+uniform float uPhase;
 uniform vec4  uLed[${LED_COUNT}];
 
 // The rim is analytic (distance to the stadium border), so it stays perfectly
@@ -42,7 +45,7 @@ uniform vec4  uLed[${LED_COUNT}];
 const float TIGHT_R = 0.06;
 const float TIGHT_G = 0.2;
 const float TIGHT_SCALE = 0.006;
-const float WIDE_R  = 0.8;
+const float WIDE_R  = 1.2;
 const float WIDE_G  = 0.005;
 
 // Emitter weights are normalised to sum to 1, so the accumulation is a
@@ -51,9 +54,9 @@ const float EXPOSURE = 150.0;
 const float GAMMA    = 1.15;
 const float GRAIN    = 0.035;
 
-// 2σ² of the travelling-cluster envelope, σ = 0.14 of the perimeter — keep in
+// 2σ² of the travelling-cluster envelope, σ = 0.18 of the perimeter — keep in
 // sync with ENVELOPE_SIGMA in strip.ts.
-const float ENV_2SIGMA2 = 0.0392;
+const float ENV_2SIGMA2 = 0.0648;
 
 // Stadium (capsule) signed distance, negative inside the pill.
 float panel(vec2 p) {
@@ -113,7 +116,10 @@ void main() {
   }
   float dsc = abs(s / per - uCluster);
   dsc = min(dsc, 1.0 - dsc);
-  float env = 0.1 + exp(-dsc * dsc / ENV_2SIGMA2);
+  float bump = exp(-dsc * dsc / ENV_2SIGMA2);
+  float wave = ${WAVE_BASE} +
+    ${WAVE_AMP} * cos(${2 * Math.PI} * (s / per * float(${WAVE_COUNT}) - uPhase));
+  float env = 0.1 + mix(bump, wave, uHover);
   float tight = env / (1.0 + sd * sd / (TIGHT_R * TIGHT_R));
 
   float v = TIGHT_G * TIGHT_SCALE * tight + WIDE_G * wide;
