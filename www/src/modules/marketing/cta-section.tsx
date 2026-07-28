@@ -51,7 +51,8 @@ export function CtaSection() {
       >
         <div className="container flex flex-col items-center py-16 text-center md:py-24">
           <h2 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-3xl leading-tight font-normal tracking-[-0.05em] text-balance text-fg antialiased sm:text-5xl">
-            Your design system, one command away.
+            <span className="block">Your design system,</span>
+            <span className="block text-fg-muted">one command away.</span>
           </h2>
           <div className="mt-10 max-w-full">
             <InstallCommand
