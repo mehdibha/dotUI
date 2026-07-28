@@ -33,6 +33,25 @@ const TRIGGER_SIZE = 40 // px (size-10)
 const EDGE_GAP = 12 // px between the trigger and the screen edge
 const PANEL_OFFSET = EDGE_GAP + TRIGGER_SIZE + 8 // edge → panel's near side
 
+/**
+ * You tweak features that live inside overlays — the preset picker's popover,
+ * a dialog's layout — so the panel has to survive being clicked while one is
+ * open. `data-react-aria-top-layer` is react-aria's own escape hatch for
+ * exactly this (it's what their toast region uses), and it settles all three
+ * ways an overlay would otherwise fight the panel:
+ *
+ * - `useInteractOutside` skips these targets, so nothing dismisses on a click
+ *   in here — every registry overlay dismisses through it, the base-ui Drawer
+ *   included.
+ * - `FocusScope` treats them as inside the scope, so a modal won't yank focus
+ *   back out of a control you just clicked.
+ * - `ariaHideOutside` leaves them visible to assistive tech.
+ *
+ * Overlays need no opt-in of their own; keep this on both the trigger and the
+ * panel, and keep the z-index above every registry layer.
+ */
+const TOP_LAYER = { 'data-react-aria-top-layer': true } as const
+
 const noopSubscribe = () => () => {}
 
 /** SSR-safe "are we on the client yet?" — false on the server + first paint, true after. */
@@ -172,10 +191,12 @@ export function DevTweaker() {
 
   return (
     <>
-      {/* Trigger — always visible, docked to a side, draggable (snaps to an edge). z-40 keeps
-          it above page content but below the popover layer (z-50) and modals (z-100). */}
+      {/* Trigger — always visible, docked to a side, draggable (snaps to an edge). z-110 sits
+          above every registry layer (popovers z-50, modals z-100): you tweak features that live
+          *inside* those overlays, so the panel has to outrank them. See TOP_LAYER below. */}
       <button
         type="button"
+        {...TOP_LAYER}
         aria-label="Open tweaker"
         aria-expanded={ui.open}
         onPointerDown={onPointerDown}
@@ -183,7 +204,7 @@ export function DevTweaker() {
         onPointerUp={onPointerUp}
         style={triggerStyle}
         className={cn(
-          'hover:bg-bg-muted fixed z-40 flex size-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer touch-none items-center justify-center rounded-full border border-border bg-bg text-fg shadow-lg',
+          'hover:bg-bg-muted fixed z-110 flex size-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer touch-none items-center justify-center rounded-full border border-border bg-bg text-fg shadow-lg',
           !drag && 'transition-[left,top] duration-200 ease-out',
           ui.open && 'bg-bg-muted',
         )}
@@ -197,8 +218,9 @@ export function DevTweaker() {
       {/* Popover panel — anchored beside the trigger; the trigger stays visible. */}
       {ui.open && !drag && (
         <div
+          {...TOP_LAYER}
           style={{ ...panelSideStyle, top: panelTop }}
-          className="fixed z-40 flex max-h-[70vh] w-75 max-w-[calc(100vw-5rem)] -translate-y-1/2 flex-col overflow-hidden rounded-xl border border-border bg-bg shadow-2xl"
+          className="fixed z-110 flex max-h-[70vh] w-75 max-w-[calc(100vw-5rem)] -translate-y-1/2 flex-col overflow-hidden rounded-xl border border-border bg-bg shadow-2xl"
         >
           <div className="flex items-center justify-between gap-2 border-b border-border px-3 py-2">
             <div className="flex items-center gap-2">
