@@ -15,7 +15,7 @@ const { useStyles, styles } = createStyles(sliderMeta, {
       thumb: [
         'top-1/2 left-1/2 grid cursor-(--slider-cursor) place-items-center rounded-(--slider-thumb-radius) shadow-(--slider-thumb-shadow) focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor)',
       ],
-      output: 'text-fg-muted disabled:text-fg-disabled',
+      output: 'text-fg-muted tabular-nums disabled:text-fg-disabled',
     },
     variants: {
       orientation: {
