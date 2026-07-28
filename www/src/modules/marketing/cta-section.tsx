@@ -1,4 +1,5 @@
-import { startTransition, useEffect, useState } from 'react'
+import { startTransition, useEffect, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 import {
   ArrowRightIcon,
   CheckIcon,
@@ -19,6 +20,7 @@ import {
   packageManagerStore,
 } from '@/modules/docs/install-commands'
 import type { PackageManager } from '@/modules/docs/install-commands'
+import { PillBacklight } from '@/modules/marketing/pill-backlight'
 import {
   presetLabelStack,
   usePresetLabelFonts,
@@ -38,7 +40,7 @@ export function CtaSection() {
   const ds = preset?.designSystem ?? DEFAULTS
 
   return (
-    <section className="relative mt-32 md:mt-44">
+    <section className="relative mt-32 overflow-x-clip md:mt-44">
       <DesignSystemProvider
         scoped
         params={ds.componentParams}
@@ -47,16 +49,6 @@ export function CtaSection() {
         color={ds.color}
         icons={ds.icons}
       >
-        {/* Preset wash: the section sits on the selected preset's own
-            background (resolved per light/dark mode), fading in from the page
-            above and out before the footer. Registered as a <color> in
-            styles.css so it tweens on preset switch. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 -inset-y-16 -z-10 [mask-image:linear-gradient(to_bottom,transparent,black_8rem,black_calc(100%-6rem),transparent)]"
-        >
-          <div className="size-full bg-(--preset-wash-bg) [--preset-wash-bg:var(--color-bg)] motion-safe:transition-[--preset-wash-bg] motion-safe:duration-700" />
-        </div>
         <div className="container flex flex-col items-center py-16 text-center md:py-24">
           <h2 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-3xl leading-tight font-normal tracking-[-0.05em] text-balance text-fg antialiased sm:text-5xl">
             Your design system, one command away.
@@ -98,6 +90,7 @@ function InstallCommand({
   const packageManager = packageManagerStore.useValue()
   const { isCopied, copyToClipboard } = useCopyToClipboard()
   const encoded = useEncodedPreset(preset)
+  const pillRef = useRef<HTMLDivElement>(null)
 
   usePresetLabelFonts()
 
@@ -122,7 +115,24 @@ function InstallCommand({
   }
 
   return (
-    <div className="flex max-w-full items-center gap-1 rounded-full border bg-card p-2 shadow-xs">
+    <div
+      ref={pillRef}
+      className="relative flex max-w-full items-center gap-1 rounded-full border bg-card p-2 shadow-xs motion-safe:transition-[--cta-glow-color] motion-safe:duration-700"
+      style={
+        {
+          '--cta-glow-color': preset ? preset.swatch : 'var(--color-fg)',
+        } as CSSProperties
+      }
+    >
+      {/* The shader field around the pill: -z-stacked, so it paints behind the
+          pill's own background and the section's text (the pill is not a
+          stacking context). Its loop also drives the ring glow below. */}
+      <PillBacklight
+        pillRef={pillRef}
+        color={preset?.swatch ?? null}
+        className="-inset-x-64 -inset-y-40 -z-10"
+      />
+      <PillGlow />
       <Menu>
         <Button
           size="sm"
@@ -222,6 +232,46 @@ function InstallCommand({
         {isCopied ? <CheckIcon /> : <CopyIcon />}
       </Button>
     </div>
+  )
+}
+
+/** Glow position on the pill border, set by PillBacklight (border-box px). */
+const GLOW_X = 'var(--cta-glow-x, 50%)'
+const GLOW_Y = 'var(--cta-glow-y, 0px)'
+/** Only the border ring: two full-cover mask layers, content-box excluded. */
+const RING_MASK: CSSProperties = {
+  maskImage: 'linear-gradient(#000 0 0), linear-gradient(#000 0 0)',
+  maskClip: 'content-box, border-box',
+  maskComposite: 'exclude',
+}
+
+/**
+ * Accent glow on the pill border: a hot core over a wider falloff, plus a
+ * blurred halo bleeding past the edge. Both are masked to a ring so only the
+ * border lights up; `--cta-glow-boost` (0–1) brightens them near the cursor.
+ */
+function PillGlow() {
+  return (
+    <>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-px rounded-full p-px"
+        style={{
+          ...RING_MASK,
+          background: `radial-gradient(4rem circle at ${GLOW_X} ${GLOW_Y}, var(--cta-glow-color), transparent 70%), radial-gradient(9rem circle at ${GLOW_X} ${GLOW_Y}, color-mix(in oklab, var(--cta-glow-color) 55%, transparent), transparent 70%)`,
+          opacity: 'calc(0.8 + 0.2 * var(--cta-glow-boost, 0))',
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -inset-1 rounded-full p-1 blur-xs"
+        style={{
+          ...RING_MASK,
+          background: `radial-gradient(5rem circle at calc(${GLOW_X} + 3px) calc(${GLOW_Y} + 3px), color-mix(in oklab, var(--cta-glow-color) 45%, transparent), transparent 70%)`,
+          opacity: 'calc(0.5 + 0.4 * var(--cta-glow-boost, 0))',
+        }}
+      />
+    </>
   )
 }
 
