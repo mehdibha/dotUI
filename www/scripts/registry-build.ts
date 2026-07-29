@@ -413,8 +413,6 @@ ${arrayBlock('registryLib', 'lib', lib)}
  *   ui/react-hook-form   WIP — name:"form"; meta points to a base.tsx that does
  *                         not exist yet.
  *   ui/tanstack-form     WIP — name:"form"; stub (index.tsx + meta only).
- *   lib/context          Real runtime dep (avatar/tabs/toggle-button) but not yet
- *                         a registered item.
  *
  * NOTE: react-hook-form and tanstack-form both declare name:"form"; they never
  * collide because both are excluded here (and bare ui/form has no meta.ts).
@@ -422,7 +420,6 @@ ${arrayBlock('registryLib', 'lib', lib)}
 const ORPHAN_ALLOWLIST = new Set<string>([
   'ui/react-hook-form',
   'ui/tanstack-form',
-  'lib/context',
 ])
 
 /**
@@ -498,17 +495,14 @@ function checkAllowlistReadiness(): void {
 }
 
 /**
- * Derived dep names whose target is NOT a registered item yet — a known packaging gap
- * (lib/context + the use-image-loading-status hook are unregistered). Skipped so the
- * drift check doesn't demand a dep `shadcn add` couldn't resolve. Keyed by DEP-NAME and
- * covers the hooks scope, so it is deliberately DISTINCT from ORPHAN_ALLOWLIST (folder-
- * path keyed, ui|lib only) — do not unify them. Drop an entry once its target is a
- * registered item, and the guard will then require consumers to declare it.
+ * Derived dep names whose target is NOT a registered item yet — a known packaging gap.
+ * Skipped so the drift check doesn't demand a dep `shadcn add` couldn't resolve. Keyed
+ * by DEP-NAME and covers the hooks scope, so it is deliberately DISTINCT from
+ * ORPHAN_ALLOWLIST (folder-path keyed, ui|lib only) — do not unify them. Drop an entry
+ * once its target is a registered item, and the guard will then require consumers to
+ * declare it. Currently empty — every derived dep resolves to a registered item.
  */
-const UNREGISTERED_DEP_ALLOWLIST = new Set([
-  'context',
-  'use-image-loading-status',
-])
+const UNREGISTERED_DEP_ALLOWLIST = new Set<string>()
 
 /**
  * Asserts each registered ui item DECLARES every registry dependency its shipped base
