@@ -11,6 +11,7 @@ const avatarMeta = {
       target: 'ui/avatar.tsx',
     },
   ],
+  registryDependencies: ['context', 'use-image-loading-status'],
   params: {
     radius: {
       kind: 'scalar',
