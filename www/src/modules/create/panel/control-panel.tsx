@@ -6,7 +6,6 @@ import { BoxSelectIcon, ChevronsUpDownIcon } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import { PresetPicker } from '@/modules/presets/preset-picker'
 import { PRESETS, type Preset } from '@/modules/presets/presets-data'
 

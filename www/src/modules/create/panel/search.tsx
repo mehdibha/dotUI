@@ -49,8 +49,16 @@ export function PanelSearch({
   onJump: (target: CommandTarget) => void
 }) {
   const [isOpen, setOpen] = useState(false)
+  // The suggestions menu is triggered by the input: focusing it (or opening
+  // the search, which autofocuses) shows it; the clear button hides it so the
+  // panel's controls are visible again while the bar stays up.
+  const [menuOpen, setMenuOpen] = useState(true)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (isOpen) setMenuOpen(true)
+  }, [isOpen])
 
   const { contains } = AutocompletePrimitive.useFilter({
     sensitivity: 'base',
@@ -144,86 +152,99 @@ export function PanelSearch({
                 <Input
                   placeholder="Search every control…"
                   className="h-full w-full border-0 bg-transparent px-0 shadow-none focus:ring-0"
+                  onFocus={() => setMenuOpen(true)}
                 />
-                {/* RAC wires this to clear-and-refocus; hidden until there's text. */}
+                {/* RAC wires this to clear; hidden until there's text. On top
+                    of clearing, it dismisses the menu and blurs the input
+                    (after RAC's own refocus) so the controls show through. */}
                 <Button
                   variant="quiet"
                   size="sm"
                   isIconOnly
                   aria-label="Clear search"
                   className="group-data-empty/search-field:hidden"
+                  onPress={() => {
+                    setMenuOpen(false)
+                    requestAnimationFrame(() =>
+                      wrapperRef.current?.querySelector('input')?.blur(),
+                    )
+                  }}
                 >
                   <XIcon />
                 </Button>
               </SearchField>
             </div>
             {/* The suggestions card — same chrome and rhythm as the header. */}
-            <div
-              className={cn(
-                // Solid bg — backdrop-blur can't sample past the header's own
-                // backdrop-filter (it bounds the backdrop root), so glass here
-                // would just bleed the cards through crisply.
-                'absolute inset-x-0 top-full z-10 mt-3 origin-top overflow-hidden rounded-xl border border-border/45 bg-neutral shadow-[0_4px_16px_-4px_rgb(0_0_0/0.2),0_2px_6px_-2px_rgb(0_0_0/0.12)]',
-                REVEAL,
-              )}
-            >
-              <ListBox
-                aria-label="Controls"
-                className="max-h-80 overflow-y-auto p-1"
-                renderEmptyState={() => (
-                  <div className="px-3 py-6 text-center text-sm text-fg-muted">
-                    No matching controls
-                  </div>
+            {menuOpen && (
+              <div
+                className={cn(
+                  // Solid bg — backdrop-blur can't sample past the header's own
+                  // backdrop-filter (it bounds the backdrop root), so glass here
+                  // would just bleed the cards through crisply.
+                  'absolute inset-x-0 top-full z-10 mt-3 origin-top overflow-hidden rounded-xl border border-border/45 bg-neutral shadow-[0_4px_16px_-4px_rgb(0_0_0/0.2),0_2px_6px_-2px_rgb(0_0_0/0.12)]',
+                  REVEAL,
                 )}
               >
-                {SECTIONS.map((section) => (
-                  <ListBoxSection key={section.id}>
-                    <ListBoxSectionHeader>{section.label}</ListBoxSectionHeader>
-                    {section.controls.map((control) => (
+                <ListBox
+                  aria-label="Controls"
+                  className="max-h-80 overflow-y-auto p-1"
+                  renderEmptyState={() => (
+                    <div className="px-3 py-6 text-center text-sm text-fg-muted">
+                      No matching controls
+                    </div>
+                  )}
+                >
+                  {SECTIONS.map((section) => (
+                    <ListBoxSection key={section.id}>
+                      <ListBoxSectionHeader>
+                        {section.label}
+                      </ListBoxSectionHeader>
+                      {section.controls.map((control) => (
+                        <ListBoxItem
+                          key={control.id}
+                          id={control.id}
+                          textValue={[
+                            control.label,
+                            section.label,
+                            ...(control.keywords ?? []),
+                          ].join(' ')}
+                          onAction={() =>
+                            jump({
+                              kind: 'control',
+                              sectionId: section.id,
+                              id: control.id,
+                            })
+                          }
+                        >
+                          <span className="truncate">{control.label}</span>
+                        </ListBoxItem>
+                      ))}
+                    </ListBoxSection>
+                  ))}
+                  <ListBoxSection>
+                    <ListBoxSectionHeader>Components</ListBoxSectionHeader>
+                    {paramComponents.map((comp) => (
                       <ListBoxItem
-                        key={control.id}
-                        id={control.id}
-                        textValue={[
-                          control.label,
-                          section.label,
-                          ...(control.keywords ?? []),
-                        ].join(' ')}
+                        key={comp.name}
+                        id={`component-${comp.name}`}
+                        textValue={`${getComponentDisplayName(comp.name)} component`}
                         onAction={() =>
                           jump({
-                            kind: 'control',
-                            sectionId: section.id,
-                            id: control.id,
+                            kind: 'component',
+                            sectionId: 'components',
+                            id: comp.name,
                           })
                         }
                       >
-                        <span className="truncate">{control.label}</span>
+                        <span className="truncate">
+                          {getComponentDisplayName(comp.name)}
+                        </span>
                       </ListBoxItem>
                     ))}
                   </ListBoxSection>
-                ))}
-                <ListBoxSection>
-                  <ListBoxSectionHeader>Components</ListBoxSectionHeader>
-                  {paramComponents.map((comp) => (
-                    <ListBoxItem
-                      key={comp.name}
-                      id={`component-${comp.name}`}
-                      textValue={`${getComponentDisplayName(comp.name)} component`}
-                      onAction={() =>
-                        jump({
-                          kind: 'component',
-                          sectionId: 'components',
-                          id: comp.name,
-                        })
-                      }
-                    >
-                      <span className="truncate">
-                        {getComponentDisplayName(comp.name)}
-                      </span>
-                    </ListBoxItem>
-                  ))}
-                </ListBoxSection>
-              </ListBox>
-            </div>
+                </ListBox>
+              </div>
+            )}
           </AutocompletePrimitive.Autocomplete>
         </div>
       )}
