@@ -76,7 +76,9 @@ export function HomePage() {
         <CompositionSection />
       </div>
 
-      <div className="mt-24 md:mt-32">
+      {/* Tighter than the section gap: composition ends on a heavy code block
+          and export opens on a small label, so equal space reads as more. */}
+      <div className="mt-16 md:mt-24">
         <ExportSection />
       </div>
 

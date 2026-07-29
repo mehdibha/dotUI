@@ -41,11 +41,14 @@ export function CtaSection() {
 
   return (
     <section className="relative overflow-x-clip">
+      {/* Density is pinned rather than taken from the preset: it's the one axis
+          that resizes the pill, and a command that changes height mid-switch
+          reads as a layout glitch instead of a re-theme. */}
       <DesignSystemProvider
         scoped
         params={ds.componentParams}
         tokens={ds.tokens}
-        density={ds.density}
+        density="default"
         color={ds.color}
         icons={ds.icons}
       >
