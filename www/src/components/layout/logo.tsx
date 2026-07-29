@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useLocation } from '@tanstack/react-router'
 import { TypeIcon } from 'lucide-react'
 import { useTheme } from 'starter-themes'
 
@@ -37,14 +37,10 @@ function BrandAssetPreview({
   )
 }
 
-export function Logo({
-  className,
-  type = 'link',
-}: {
-  className?: string
-  type?: 'link' | 'span'
-}) {
+export function Logo({ className }: { className?: string }) {
   const { resolvedTheme } = useTheme()
+  const pathname = useLocation({ select: (location) => location.pathname })
+  const isLanding = pathname === '/'
 
   const copyBrandAsset = (file: string) => {
     fetch(`/brand/${file}`)
@@ -80,22 +76,26 @@ export function Logo({
     </svg>
   )
 
+  // On the landing page the logo is already "home": no self-link, and
+  // right-click offers the brand assets. Everywhere else it's a plain link.
+  if (!isLanding) {
+    return (
+      <Link
+        to="/"
+        aria-label={`${siteConfig.name} home`}
+        className={cn(
+          'flex items-center opacity-100 transition-opacity duration-150 ease-out hover:opacity-80',
+          className,
+        )}
+      >
+        {mark}
+      </Link>
+    )
+  }
+
   return (
     <ContextMenu aria-label="Brand assets">
-      {type === 'link' ? (
-        <Link
-          to="/"
-          aria-label={`${siteConfig.name} home`}
-          className={cn(
-            'flex items-center opacity-100 transition-opacity duration-150 ease-out hover:opacity-80',
-            className,
-          )}
-        >
-          {mark}
-        </Link>
-      ) : (
-        <span className={cn('flex items-center', className)}>{mark}</span>
-      )}
+      <span className={cn('flex items-center', className)}>{mark}</span>
       <Popover className="w-56">
         <MenuContent>
           <MenuItem

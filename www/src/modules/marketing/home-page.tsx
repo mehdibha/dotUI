@@ -40,12 +40,13 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="mt-23">
+      <section className="mt-24">
         <Cards />
       </section>
 
-      {/* Tools section. */}
-      <section className="relative z-10 -mt-[20px] py-12 shadow-xs">
+      {/* Tools section. Hero, cards and tools read as one opening block, so
+          they keep their own tight spacing instead of the section rhythm. */}
+      <section className="relative z-10 -mt-[20px] pt-12 shadow-xs">
         <div className="container flex flex-col items-center justify-center gap-5 lg:gap-10">
           <h2 className="font-mono text-sm tracking-wide text-pretty text-fg-muted xs:text-base lg:text-base">
             Built on modern tools
@@ -69,13 +70,23 @@ export function HomePage() {
         </div>
       </section>
 
-      <CompositionSection />
+      {/* Section rhythm lives here, not inside the sections: one gap between
+          peers, one step up before the CTA so the page reads as ending. */}
+      <div className="mt-24 md:mt-32">
+        <CompositionSection />
+      </div>
 
-      <ExportSection />
+      {/* Tighter than the section gap: composition ends on a heavy code block
+          and export opens on a small label, so equal space reads as more. */}
+      <div className="mt-16 md:mt-24">
+        <ExportSection />
+      </div>
 
-      <CtaSection />
+      <div className="mt-32 md:mt-44">
+        <CtaSection />
+      </div>
 
-      <div className="mt-10 md:mt-14">
+      <div className="mt-24 md:mt-32">
         <Footer />
       </div>
     </div>
