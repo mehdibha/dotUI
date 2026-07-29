@@ -26,9 +26,11 @@ export interface CommandTarget {
 }
 
 /**
- * The global ⌘K palette — reaches every control and every component's params
+ * The global ⌘P palette — reaches every control and every component's params
  * in two keystrokes. Selecting jumps the rail to the owning section and
  * scrolls/flashes the control (the panel owns that behavior via `onJump`).
+ *
+ * ⌘P, not ⌘K: the site header's docs search owns ⌘K everywhere, /create included.
  */
 export function CommandPalette({
   isOpen,
@@ -39,10 +41,13 @@ export function CommandPalette({
   onOpenChange: (open: boolean) => void
   onJump: (target: CommandTarget) => void
 }) {
-  // Global shortcut — ⌘K / Ctrl+K from anywhere on the page.
+  // Global shortcut — ⌘P / Ctrl+P from anywhere on the page. `preventDefault`
+  // also suppresses the browser's print dialog; `repeat` keeps a held chord
+  // from toggling the modal every key-repeat tick.
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'k' && (event.metaKey || event.ctrlKey)) {
+      if (event.repeat) return
+      if (event.key === 'p' && (event.metaKey || event.ctrlKey)) {
         event.preventDefault()
         onOpenChange(!isOpen)
       }

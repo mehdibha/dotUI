@@ -7,6 +7,7 @@ export {
   sendInspect,
   sendPreviewMode,
   sendToIframe,
+  useAnnouncePreviewReady,
   useIframeMessageListener,
   useInspectMessages,
   useIsEmbeddedPreview,

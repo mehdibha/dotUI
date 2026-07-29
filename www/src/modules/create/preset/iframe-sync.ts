@@ -101,28 +101,51 @@ export function usePreviewForcedTheme(): PreviewMode | undefined {
   React.useEffect(() => {
     if (!isInIframe()) return
 
-    const announceReady = () =>
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-mode') {
+        setMode(event.data.mode === 'dark' ? 'dark' : 'light')
+      }
+    }
+
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [])
+
+  return mode
+}
+
+/**
+ * Inside the preview iframe: announce that the previewed content has rendered,
+ * and keep answering the parent's pings.
+ *
+ * Call this from the previewed page itself, never from the root shell: the shell
+ * commits while the example chunk is still suspended, so announcing there clears
+ * the parent's skeleton over a frame that hasn't painted. Effects don't run on a
+ * render that suspends, so mounting this inside the page ties the signal to the
+ * content actually committing.
+ *
+ * Answering pings matters as much as the first announcement — the parent polls
+ * because that one message is lost whenever the iframe mounts before the
+ * server-rendered parent hydrates.
+ */
+export function useAnnouncePreviewReady() {
+  React.useEffect(() => {
+    if (!isInIframe()) return
+
+    const announce = () =>
       window.parent.postMessage(
         { type: 'preview-ready' } satisfies IframeToParentMessage,
         '*',
       )
 
     const handleMessage = (event: MessageEvent) => {
-      if (event.data?.type === 'preview-mode') {
-        setMode(event.data.mode === 'dark' ? 'dark' : 'light')
-      }
-      // The parent polls when it missed the announcement below.
-      if (event.data?.type === 'preview-ping') announceReady()
+      if (event.data?.type === 'preview-ping') announce()
     }
 
     window.addEventListener('message', handleMessage)
-    // Signal readiness so the parent (re)sends the current mode — its load-event send can
-    // race ahead of this listener mounting.
-    announceReady()
+    announce()
     return () => window.removeEventListener('message', handleMessage)
   }, [])
-
-  return mode
 }
 
 /** Inside the preview iframe: whether this document is embedded in /create. */

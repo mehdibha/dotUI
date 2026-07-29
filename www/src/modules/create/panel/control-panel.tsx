@@ -99,7 +99,7 @@ export function CreatePanel({ className }: { className?: string }) {
   const navigate = routeApi.useNavigate()
 
   // `?panel=` deep-links a chapter of the scroll (`components.<name>` expands a
-  // component's params). It's read on arrival and by ⌘K; scrolling never writes it.
+  // component's params). It's read on arrival and by ⌘P; scrolling never writes it.
   const [linkedSection, expandedComponent] = panel?.split('.') ?? []
 
   const { canUndo, canRedo, undo, redo } = usePresetHistory()
@@ -164,7 +164,7 @@ export function CreatePanel({ className }: { className?: string }) {
     })
   }
 
-  // ⌘K jump: controls just scroll (every chapter is always in the DOM);
+  // ⌘P jump: controls just scroll (every chapter is always in the DOM);
   // components first expand via `?panel=`, then scroll once rendered.
   function jump(target: CommandTarget) {
     if (target.kind === 'component') {
@@ -187,7 +187,7 @@ export function CreatePanel({ className }: { className?: string }) {
   useInspectMessages((panelId) => scrollToAnchor(panelId, false))
 
   // Deep link on arrival: scroll the linked chapter (or expanded component)
-  // into view once, without the ⌘K flash.
+  // into view once, without the ⌘P flash.
   const arrivedRef = useRef(false)
   useEffect(() => {
     if (arrivedRef.current) return
@@ -359,7 +359,7 @@ export function CreatePanel({ className }: { className?: string }) {
             >
               <SearchIcon />
             </Button>
-            <TooltipContent>Search controls ⌘K</TooltipContent>
+            <TooltipContent>Search controls ⌘P</TooltipContent>
           </Tooltip>
         </div>
       </div>

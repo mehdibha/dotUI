@@ -10,6 +10,7 @@ import {
 import {
   DEFAULTS,
   decodePreset,
+  useAnnouncePreviewReady,
   useIframeMessageListener,
 } from '@/modules/create/preset'
 import type { DesignSystem } from '@/modules/create/preset'
@@ -61,6 +62,10 @@ function PreviewPage() {
   useIframeMessageListener(
     useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
   )
+
+  // Declared above the `use()` below on purpose: a render that suspends never
+  // commits, so this effect first runs once the example chunk has resolved.
+  useAnnouncePreviewReady()
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
