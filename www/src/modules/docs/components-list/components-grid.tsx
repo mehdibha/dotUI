@@ -4,9 +4,9 @@ import { DemoPreset } from '../demo-preset'
 import { ComponentCard } from './component-card'
 import { componentsData } from './components-data'
 
-// Categories with large components (calendars, tables, cards, color pickers,
-// the command palette) get a taller card so those components can scale down
-// into it while staying legible. Everything else uses the default height.
+// Categories with tall components (calendars, tables, opened overlay/picker
+// scenes, the command palette) get a taller card so those components render at
+// or near native size. Everything else uses the default height.
 const CATEGORY_PREVIEW_HEIGHT: Record<string, string> = {
   dates: 'h-52',
   navigation: 'h-52',
