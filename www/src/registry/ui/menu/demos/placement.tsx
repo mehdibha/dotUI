@@ -15,7 +15,7 @@ export default function Demo() {
   return (
     <div className="flex items-center gap-10">
       <Menu>
-        <Button variant="default" size="sm" isIconOnly>
+        <Button variant="secondary" size="sm" isIconOnly>
           <MenuIcon />
         </Button>
         <Popover placement={placement}>

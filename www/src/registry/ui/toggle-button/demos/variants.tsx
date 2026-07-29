@@ -1,7 +1,7 @@
 import { PinIcon } from '@/registry/__generated__/icons'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 
-const variants = ['default', 'primary', 'quiet'] as const
+const variants = ['primary', 'secondary', 'quiet'] as const
 
 export default function Demo() {
   return (

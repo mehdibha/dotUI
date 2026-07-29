@@ -8,7 +8,7 @@ import { TwitterIcon } from '@/components/icons/twitter'
 export default function Demo() {
   return (
     <Menu>
-      <Button variant="default" size="sm">
+      <Button variant="secondary" size="sm">
         Social
       </Button>
       <Popover>

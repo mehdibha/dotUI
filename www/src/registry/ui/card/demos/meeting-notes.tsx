@@ -26,7 +26,7 @@ export default function Demo() {
           Transcript from the meeting with the client.
         </CardDescription>
         <CardAction>
-          <Button variant="default" size="sm">
+          <Button variant="secondary" size="sm">
             <CaptionsIcon />
             Transcribe
           </Button>

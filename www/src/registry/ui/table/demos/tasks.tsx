@@ -806,7 +806,7 @@ function FacetedFilter({
 }) {
   return (
     <Menu>
-      <Button variant="default" size="sm" className="border-dashed">
+      <Button variant="secondary" size="sm" className="border-dashed">
         <PlusCircleIcon />
         {title}
         {selectedKeys.size > 0 && (
@@ -864,7 +864,7 @@ function ViewOptions({
 
   return (
     <Menu>
-      <Button variant="default" size="sm">
+      <Button variant="secondary" size="sm">
         <Settings2Icon />
         View
       </Button>

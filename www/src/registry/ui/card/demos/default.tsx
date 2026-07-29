@@ -22,7 +22,7 @@ export default function Demo() {
         </p>
       </CardContent>
       <CardFooter>
-        <Button variant="default" className="w-full">
+        <Button variant="secondary" className="w-full">
           Action
         </Button>
       </CardFooter>

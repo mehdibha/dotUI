@@ -32,14 +32,14 @@ export default function Demo() {
   return (
     <div className="flex w-full items-center gap-8">
       <Dialog>
-        <Button variant="default">Dialog</Button>
+        <Button variant="secondary">Dialog</Button>
         <Overlay>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog</DialogTitle>
             </DialogHeader>
             <Dialog>
-              <Button variant="default">Nested dialog</Button>
+              <Button variant="secondary">Nested dialog</Button>
               <Overlay>
                 <DialogContent>
                   <DialogHeader>

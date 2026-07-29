@@ -3,15 +3,11 @@
   "description": "A toggle button group allows a user to toggle multiple options, with single or multiple selection.",
   "props": {
     "variant": {
-      "type": "\"default\" | \"primary\" | \"quiet\"",
-      "detailedType": "'default' | 'primary' | 'quiet' | undefined",
+      "type": "\"primary\" | \"quiet\" | \"secondary\"",
+      "detailedType": "'primary' | 'quiet' | 'secondary' | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "default"
-          },
           {
             "type": "stringLiteral",
             "value": "primary"
@@ -19,11 +15,15 @@
           {
             "type": "stringLiteral",
             "value": "quiet"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "secondary"
           }
         ]
       },
       "description": "The visual style of the toggle buttons.",
-      "default": "'default'"
+      "default": "'secondary'"
     },
     "size": {
       "type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",

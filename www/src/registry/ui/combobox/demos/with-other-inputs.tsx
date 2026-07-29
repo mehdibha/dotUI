@@ -33,7 +33,7 @@ export default function Demo() {
         </Popover>
       </Combobox>
       <Select aria-label="framework" className="w-52">
-        <SelectTrigger variant="default" />
+        <SelectTrigger variant="secondary" />
         <SelectContent>
           {frameworks.map((framework) => (
             <SelectItem key={framework} id={framework}>
@@ -42,7 +42,7 @@ export default function Demo() {
           ))}
         </SelectContent>
       </Select>
-      <Button variant="default" className="w-52 justify-between">
+      <Button variant="secondary" className="w-52 justify-between">
         <span className="text-fg-muted">Select a framework</span>
         <ChevronDownIcon />
       </Button>

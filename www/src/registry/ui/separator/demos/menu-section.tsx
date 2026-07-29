@@ -15,7 +15,7 @@ import { Separator } from '@/registry/ui/separator'
 export default function Demo() {
   return (
     <Menu>
-      <Button variant="default" className="w-fit">
+      <Button variant="secondary" className="w-fit">
         Account
       </Button>
       <Popover>

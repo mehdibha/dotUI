@@ -8,9 +8,9 @@ export interface ToggleButtonGroupProps extends React.ComponentProps<
 > {
   /**
    * The visual style of the toggle buttons.
-   * @default 'default'
+   * @default 'secondary'
    */
-  variant?: 'default' | 'primary' | 'quiet'
+  variant?: 'primary' | 'secondary' | 'quiet'
 
   /**
    * The size of the toggle buttons.

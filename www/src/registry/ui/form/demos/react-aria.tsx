@@ -83,7 +83,7 @@ export default function Demo() {
         </Combobox>
         <Select name="referral" isRequired>
           <Label>How did you hear about us?</Label>
-          <SelectTrigger variant="default" className="w-full" />
+          <SelectTrigger variant="secondary" className="w-full" />
           <SelectContent>
             <SelectItem id="linkedin">LinkedIn</SelectItem>
             <SelectItem id="x">X</SelectItem>

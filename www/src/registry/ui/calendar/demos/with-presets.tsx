@@ -40,7 +40,7 @@ export default function Demo() {
         {presets.map((preset) => (
           <Button
             key={preset.label}
-            variant="default"
+            variant="secondary"
             className="flex-1"
             onPress={() => {
               const next = today(getLocalTimeZone()).add({ days: preset.days })

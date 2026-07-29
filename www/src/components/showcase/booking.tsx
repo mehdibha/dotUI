@@ -46,7 +46,7 @@ export function Booking({ className, ...props }: React.ComponentProps<'div'>) {
               <InputGroup>
                 <DateInput />
                 <InputGroupAddon>
-                  <Button variant="default" size="sm" isIconOnly>
+                  <Button variant="secondary" size="sm" isIconOnly>
                     <CalendarIcon />
                   </Button>
                 </InputGroupAddon>
@@ -66,7 +66,7 @@ export function Booking({ className, ...props }: React.ComponentProps<'div'>) {
                 <DateInput />
                 <InputGroupAddon>
                   <Button
-                    variant="default"
+                    variant="secondary"
                     size="sm"
                     isIconOnly
                     aria-label="Choose time"
@@ -96,7 +96,7 @@ export function Booking({ className, ...props }: React.ComponentProps<'div'>) {
               <InputGroup>
                 <DateInput />
                 <InputGroupAddon>
-                  <Button variant="default" size="sm" isIconOnly>
+                  <Button variant="secondary" size="sm" isIconOnly>
                     <CalendarIcon />
                   </Button>
                 </InputGroupAddon>
@@ -116,7 +116,7 @@ export function Booking({ className, ...props }: React.ComponentProps<'div'>) {
                 <DateInput />
                 <InputGroupAddon>
                   <Button
-                    variant="default"
+                    variant="secondary"
                     size="sm"
                     isIconOnly
                     aria-label="Choose time"

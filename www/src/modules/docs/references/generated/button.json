@@ -3,18 +3,14 @@
   "description": "A clickable element that triggers an action. Buttons communicate actions users can take\nand allow users to interact with the page.",
   "props": {
     "variant": {
-      "type": "\"danger\" | \"default\" | \"link\" | \"primary\" | \"quiet\" | \"warning\"",
-      "detailedType": "| 'danger'\n| 'default'\n| 'link'\n| 'primary'\n| 'quiet'\n| 'warning'\n| undefined",
+      "type": "\"danger\" | \"link\" | \"primary\" | \"quiet\" | \"secondary\" | \"warning\"",
+      "detailedType": "| 'danger'\n| 'link'\n| 'primary'\n| 'quiet'\n| 'secondary'\n| 'warning'\n| undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
             "value": "danger"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "default"
           },
           {
             "type": "stringLiteral",
@@ -30,12 +26,16 @@
           },
           {
             "type": "stringLiteral",
+            "value": "secondary"
+          },
+          {
+            "type": "stringLiteral",
             "value": "warning"
           }
         ]
       },
       "description": "The visual style of the button (Vanilla CSS implementation specific).",
-      "default": "'default'"
+      "default": "'secondary'"
     },
     "size": {
       "type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",

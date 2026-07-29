@@ -93,10 +93,10 @@ export const buttonPublishable: Publishable = {
       ],
       variants: {
         variant: {
-          default:
-            'border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:border-border-active pressed:bg-neutral-active',
           primary:
             'bg-primary text-fg-on-primary [--color-disabled:var(--neutral-500)] [--color-fg-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0 pending:border-0 pressed:bg-primary-active',
+          secondary:
+            'border bg-neutral text-fg-on-neutral hover:border-border-hover hover:bg-neutral-hover pressed:border-border-active pressed:bg-neutral-active',
           quiet:
             'bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20',
           link: 'text-fg underline-offset-4 hover:underline',
@@ -116,7 +116,7 @@ export const buttonPublishable: Publishable = {
         },
       },
       defaultVariants: {
-        variant: 'default',
+        variant: 'secondary',
         size: 'md',
       },
     },

@@ -138,7 +138,7 @@ export function MacroFrontDoor() {
         </span>
         <Button
           size="sm"
-          variant="default"
+          variant="secondary"
           onPress={reroll}
           className="h-7 gap-1.5 px-2 text-xs"
         >

@@ -5,7 +5,7 @@ import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 import { TextField } from '@/registry/ui/text-field'
 
 const variants = [
-  'default',
+  'secondary',
   'primary',
   'quiet',
   'link',

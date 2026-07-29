@@ -28,14 +28,14 @@ export function ComponentCluster() {
         <Button variant="primary" size="sm">
           Primary
         </Button>
-        <Button variant="default" size="sm">
+        <Button variant="secondary" size="sm">
           Default
         </Button>
         <Button variant="quiet" size="sm">
           Quiet
         </Button>
         <Menu>
-          <Button variant="default" size="sm">
+          <Button variant="secondary" size="sm">
             Menu
           </Button>
           <Popover>

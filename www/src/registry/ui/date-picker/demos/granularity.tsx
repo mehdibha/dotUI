@@ -22,7 +22,7 @@ export default function Demo() {
         <InputGroup>
           <DateInput />
           <InputGroupAddon>
-            <Button variant="default" size="sm" isIconOnly>
+            <Button variant="secondary" size="sm" isIconOnly>
               <CalendarIcon />
             </Button>
           </InputGroupAddon>
@@ -42,7 +42,7 @@ export default function Demo() {
         <InputGroup>
           <DateInput />
           <InputGroupAddon>
-            <Button variant="default" size="sm" isIconOnly>
+            <Button variant="secondary" size="sm" isIconOnly>
               <CalendarIcon />
             </Button>
           </InputGroupAddon>
@@ -62,7 +62,7 @@ export default function Demo() {
         <InputGroup>
           <DateInput />
           <InputGroupAddon>
-            <Button variant="default" size="sm" isIconOnly>
+            <Button variant="secondary" size="sm" isIconOnly>
               <CalendarIcon />
             </Button>
           </InputGroupAddon>

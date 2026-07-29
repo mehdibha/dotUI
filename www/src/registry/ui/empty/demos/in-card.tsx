@@ -30,7 +30,7 @@ export default function Demo() {
               <LinkButton variant="primary" href="#">
                 Create project
               </LinkButton>
-              <Button variant="default">Import project</Button>
+              <Button variant="secondary">Import project</Button>
             </div>
             <LinkButton variant="link" href="#" className="text-fg-muted">
               Learn more <ArrowUpRightIcon />

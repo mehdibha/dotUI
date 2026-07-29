@@ -1,6 +1,6 @@
 import { Button } from '@/registry/ui/button'
 
-const variants = ['default', 'primary', 'quiet', 'warning', 'danger'] as const
+const variants = ['primary', 'secondary', 'quiet', 'warning', 'danger'] as const
 
 export default function Demo() {
   return (

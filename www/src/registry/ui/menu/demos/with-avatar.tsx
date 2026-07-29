@@ -40,7 +40,7 @@ export default function Demo() {
     <div className="flex w-full items-center justify-between gap-4">
       <Menu>
         <Button
-          variant="default"
+          variant="secondary"
           className="h-12 justify-start gap-2 px-2 md:max-w-[200px]"
         >
           <Avatar size="sm">
