@@ -131,7 +131,7 @@ function InstallCommand({
       <PillBacklight
         pillRef={pillRef}
         color={preset?.swatch ?? null}
-        className="-inset-x-64 -inset-y-40 -z-10"
+        className="-inset-x-64 -inset-y-40 -z-10 opacity-50"
       />
       <PillGlow />
       <Menu>
