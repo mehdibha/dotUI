@@ -25,6 +25,7 @@ What this means when writing code today:
 - New axes and styles must be switchable at runtime (CSS variables, variant props, data attributes), never decided at build time — the builder previews live.
 - Registry items import only from `@/registry/*`, relative paths, and published packages — plain React files, shadcn-schema compatible. www-side imports (router, fumadocs, `@/components`) must never leak in.
 - Author registry source in one canonical style (current files are the reference) — `codeOptions` will be mechanical publisher transforms over it, and inconsistent source breaks the transforms.
+- Researching design systems (preset fidelity, a missing axis, component comparisons)? Start from [docs/design-system-references.md](docs/design-system-references.md) — a curated, link-verified list of the systems worth studying.
 
 ## Current state of the project
 
