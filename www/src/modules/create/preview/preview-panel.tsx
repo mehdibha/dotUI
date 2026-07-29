@@ -343,10 +343,12 @@ export function PreviewPanel({ className }: { className?: string }) {
       </div>
 
       {/* Stage — holds the iframe at full height for every device size. Smaller sizes
-          narrow the iframe and center it on the surface. Scrolls when zoomed past fit. */}
+          narrow the iframe and center it on the surface. Scrolls when zoomed past fit.
+          Inset on three sides so the panel's surface frames the artifact; the top
+          stays flush under the toolbar. Radius is the panel's minus the inset. */}
       <div
         className={cn(
-          'relative flex-1 overflow-auto border-t border-border/45 bg-bg',
+          'relative mx-1 mb-1 min-h-0 flex-1 overflow-auto rounded-lg border border-border/45 bg-bg',
           // Constrained sizes reveal the stage: a recessed, dot-gridded surface
           // the device "floats" on, so tool chrome and artifact read as layers.
           constrained &&
