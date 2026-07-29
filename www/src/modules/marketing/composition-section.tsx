@@ -1,31 +1,21 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { cn } from '@/registry/lib/utils'
-import { LinkButton } from '@/registry/ui/button'
 import {
-  compactMaxCodeLines,
   CompositionCode,
   CompositionTransitionStyles,
-  maxCodeLines,
+  lineNumberWidth,
   PlayPauseButton,
   StepDots,
   StepTimer,
   useCompositionPlayer,
 } from '@/modules/docs/composition-animation'
 
-// The code pane's height at a given line count: p-6 padding plus lines at
-// text-[0.8125rem]/leading-normal.
-const codePaneHeight = (lines: number) =>
-  `calc(3rem + ${lines} * 0.8125rem * 1.5)`
-
-// Pinning the pane below lg (where the section stacks) keeps the page from
-// moving between compact-loop steps.
-const compactCodeMinHeight = codePaneHeight(compactMaxCodeLines)
-
-// The right panel at its tallest step: preview area (min-h-56) + code pane +
-// the card's own y-borders. Reserving it on the panel's container keeps the
-// animating card from ever moving the page.
-const panelMaxHeight = `calc(14rem + 2px + ${codePaneHeight(maxCodeLines)})`
+// The right panel at its tallest step: the play/pause row (h-7 + mb-3) + the
+// preview area (min-h-56) + the code pane at its ceiling (max-h-86) + the card's
+// own y-borders. Reserving it on the panel's container keeps the animating card
+// from ever moving the page.
+const panelMaxHeight = 'calc(2.5rem + 14rem + 21.5rem + 2px)'
 
 export function CompositionSection() {
   const player = useCompositionPlayer({ compactBelowLg: true })
@@ -111,7 +101,7 @@ export function CompositionSection() {
           </p>
           <ol
             ref={railRef}
-            className="relative mt-2 no-scrollbar h-88 self-stretch overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_3rem,black_calc(100%-3rem),transparent)] py-5 max-lg:hidden"
+            className="relative mt-2 no-scrollbar h-80 max-w-54 self-stretch overflow-y-auto [mask-image:linear-gradient(to_bottom,transparent,black_3rem,black_calc(100%-3rem),transparent)] py-5 max-lg:hidden"
             {...pauseHandlers}
           >
             {/* One indicator for the whole rail — it travels to the active
@@ -152,14 +142,6 @@ export function CompositionSection() {
               </li>
             ))}
           </ol>
-          <div className="flex flex-wrap gap-2 pt-2">
-            <LinkButton href="/docs/components" variant="primary">
-              Explore components
-            </LinkButton>
-            <LinkButton href="/docs" variant="default">
-              Read the docs
-            </LinkButton>
-          </div>
         </div>
 
         {/* Code with its rendered result below — one card, no window chrome.
@@ -170,19 +152,28 @@ export function CompositionSection() {
         <div
           className="min-w-0 lg:min-h-(--panel-max)"
           style={{ '--panel-max': panelMaxHeight } as React.CSSProperties}
-          {...pauseHandlers}
         >
-          {/* Stands in for the step rail, which is desktop-only. */}
-          <div className="mb-3 flex items-center justify-between gap-2 lg:hidden">
-            <span className="truncate font-mono text-xs text-fg-muted">
+          {/* Title and dots stand in for the step rail, which is desktop-only.
+              The play/pause button stays at both sizes, and sits outside the
+              card: hovering the card is itself a pause, so a play button inside
+              it flips to "play" as you reach for it. */}
+          <div className="mb-3 flex items-center gap-1">
+            <span className="truncate font-mono text-xs text-fg-muted lg:hidden">
               {current.title}
             </span>
-            <div className="flex shrink-0 items-center gap-1">
-              <StepDots player={player} />
-              <PlayPauseButton player={player} />
-            </div>
+            <StepDots player={player} className="ml-auto shrink-0 lg:hidden" />
+            <PlayPauseButton
+              player={player}
+              withLabel
+              // Pulled by the button's own padding, so the icon — not the hit
+              // area — lines up with the card's left edge.
+              className="shrink-0 lg:-ml-2.5"
+            />
           </div>
-          <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
+          <div
+            className="overflow-hidden rounded-xl border bg-card shadow-xs"
+            {...pauseHandlers}
+          >
             <div className="relative flex min-h-56 items-center justify-center p-6">
               <div
                 aria-hidden
@@ -191,20 +182,17 @@ export function CompositionSection() {
               <div className="relative flex w-full justify-center">
                 {current.preview}
               </div>
-              <PlayPauseButton
-                player={player}
-                className="absolute right-2 bottom-2 max-lg:hidden"
-              />
             </div>
+            {/* The pane hugs its snippet between a floor and a ceiling; past the
+                ceiling the code scrolls, faded at whichever edge still has
+                code beyond it. Below lg, where the section stacks, it's pinned
+                instead — the page can't move between steps. */}
             <div
-              className="overflow-hidden border-t [mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] transition-[height] ease-in-out motion-reduce:transition-none max-lg:min-h-(--code-min)"
-              style={
-                {
-                  height: codeHeight ?? 'auto',
-                  transitionDuration: '500ms',
-                  '--code-min': compactCodeMinHeight,
-                } as React.CSSProperties
-              }
+              className="no-scrollbar scroll-fade-y overflow-x-hidden overflow-y-auto overscroll-contain border-t transition-[height] ease-in-out scroll-fade-6 motion-reduce:transition-none max-lg:max-h-62 max-lg:min-h-62 lg:max-h-86 lg:min-h-51"
+              style={{
+                height: codeHeight ?? 'auto',
+                transitionDuration: '500ms',
+              }}
             >
               <div
                 ref={codeInnerRef}
@@ -215,9 +203,21 @@ export function CompositionSection() {
                     code={current.code}
                     reducedMotion={reducedMotion}
                     stagger={codeStaggerMs}
+                    lineNumbers
                   />
                 ) : (
-                  <pre className="whitespace-pre">{current.code}</pre>
+                  // Carries the gutter too, so hydration doesn't shift the
+                  // snippet sideways.
+                  <pre className="whitespace-pre">
+                    {current.code.split('\n').map((line, i) => (
+                      <span key={i}>
+                        <span className="opacity-30">
+                          {`${String(i + 1).padStart(lineNumberWidth, ' ')}  `}
+                        </span>
+                        {`${line}\n`}
+                      </span>
+                    ))}
+                  </pre>
                 )}
               </div>
             </div>
