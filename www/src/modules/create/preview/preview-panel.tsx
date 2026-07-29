@@ -13,7 +13,6 @@ import {
 } from 'lucide-react'
 import { useTheme } from 'starter-themes'
 
-import { DesignSystemProvider } from '@/lib/styles'
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 import { Command } from '@/registry/ui/command'
@@ -31,8 +30,8 @@ import { Select, SelectValue } from '@/registry/ui/select'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
-import { ProgressiveBlur } from '@/components/progressive-blur'
 import {
+  pingIframe,
   sendPreviewMode,
   sendToIframe,
   useDesignSystem,
@@ -63,6 +62,9 @@ const SIZE_OPTIONS: {
 // size, which reflows the content. Combined, they behave like a browser's device bar.
 const ZOOM_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2]
 
+const PREVIEW_PING_INTERVAL = 150
+const PREVIEW_READY_TIMEOUT = 8000
+
 const routeApi = getRouteApi('/_app/create')
 
 export function PreviewPanel({ className }: { className?: string }) {
@@ -73,11 +75,11 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   const panelRef = useRef<HTMLDivElement>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const blurRef = useRef<HTMLDivElement>(null)
   const [previewMode, setPreviewMode] = useState<PreviewMode>('light')
   const [size, setSize] = useState<DeviceSize>('desktop')
   const [zoom, setZoom] = useState(1)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const effectivePreview = preview
   const constrained = size !== 'desktop'
@@ -100,6 +102,42 @@ export function PreviewPanel({ className }: { className?: string }) {
     return preset ? `${base}?preset=${encodeURIComponent(preset)}` : base
     // oxlint-disable-next-line react/exhaustive-deps -- keep live preset changes on the postMessage channel to avoid iframe reloads
   }, [effectivePreview])
+
+  // The iframe remounts per previewed component (key below) — show the stage
+  // skeleton again until the new document signals it has rendered. The iframe's
+  // `load` event is too early (it fires before the SPA paints), so wait for the
+  // app's own `preview-ready` instead. On first load the iframe usually mounts
+  // before this server-rendered parent hydrates, so its unprompted announcement
+  // lands with no listener attached — poll until it answers rather than trusting
+  // that one message. Give up after PREVIEW_READY_TIMEOUT so a preview that
+  // never reports (an error page, say) reveals itself instead of hanging.
+  useEffect(() => {
+    setIsLoaded(false)
+    const iframe = iframeRef.current
+    if (!iframe) return
+
+    let poll: ReturnType<typeof setInterval>
+    const settle = () => {
+      setIsLoaded(true)
+      clearInterval(poll)
+      clearTimeout(giveUp)
+      window.removeEventListener('message', onReady)
+    }
+    const onReady = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-ready') settle()
+    }
+
+    window.addEventListener('message', onReady)
+    const giveUp = setTimeout(settle, PREVIEW_READY_TIMEOUT)
+    poll = setInterval(() => pingIframe(iframe), PREVIEW_PING_INTERVAL)
+    pingIframe(iframe)
+
+    return () => {
+      clearInterval(poll)
+      clearTimeout(giveUp)
+      window.removeEventListener('message', onReady)
+    }
+  }, [iframeSrc])
 
   // Send the design system to the iframe on change, on load, and when the iframe signals it's
   // ready — its message listener can mount after the load event, racing the load-fired send.
@@ -140,24 +178,6 @@ export function PreviewPanel({ className }: { className?: string }) {
     }
   }, [previewMode])
 
-  // The iframe reports its scroll progress (0→1 over the first toolbar-height of
-  // scroll — see useReportScrollProgress); write it straight onto the blur wrapper's
-  // --blur-progress, bypassing React state: this fires every scroll frame and a
-  // re-render per frame would be waste. Gives the toolbar the app header's smooth
-  // scroll reveal, which a CSS scroll timeline can't do across the iframe boundary.
-  useEffect(() => {
-    const onMessage = (event: MessageEvent) => {
-      if (event.data?.type === 'preview-scroll') {
-        blurRef.current?.style.setProperty(
-          '--blur-progress',
-          String(event.data.progress),
-        )
-      }
-    }
-    window.addEventListener('message', onMessage)
-    return () => window.removeEventListener('message', onMessage)
-  }, [])
-
   // Keep the fullscreen toggle's icon in sync with the actual state — exiting via Esc
   // (not just the button) still flips it back.
   useEffect(() => {
@@ -179,61 +199,15 @@ export function PreviewPanel({ className }: { className?: string }) {
     <div
       ref={panelRef}
       className={cn(
-        'relative flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border bg-bg',
+        'relative flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-border/45 bg-neutral shadow-xs',
         className,
       )}
     >
-      {/* Stage — holds the iframe at full height for every device size; the toolbar's
-          progressive blur overlays its top edge. Smaller sizes narrow the iframe and center
-          it on a muted backdrop. Scrolls when zoomed past fit. */}
-      <div
-        className={cn(
-          'relative flex-1 overflow-auto',
-          constrained && 'bg-neutral',
-        )}
-      >
-        <div className="flex h-full w-full justify-center">
-          <iframe
-            ref={iframeRef}
-            key={effectivePreview}
-            src={iframeSrc}
-            title="preview"
-            className={cn(
-              'h-full border-0 bg-bg',
-              constrained && 'border-x shadow-sm',
-            )}
-            style={{
-              width: constrained ? DEVICE_WIDTHS[size] : '100%',
-              zoom,
-            }}
-          />
-        </div>
-      </div>
-
-      {/* Toolbar — overlays the top of the stage with the app header's progressive
-          blur, revealed by the iframe's scroll progress (written onto --blur-progress
-          above), so the preview dissolves into a blurred tint as content slides under
-          the controls. Scoped to the previewed design system's palette + mode so the
-          tint's --color-bg matches the iframe's background, not the site's. The
-          wrapper is pointer-events-none so empty areas click through to the preview;
-          each control cluster re-enables pointer events. */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-20">
-        <DesignSystemProvider
-          scoped
-          color={designSystem.color}
-          forcedMode={previewMode}
-        >
-          <div
-            ref={blurRef}
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%]"
-          >
-            <ProgressiveBlur />
-          </div>
-        </DesignSystemProvider>
-
-        <div className="relative flex h-(--header-height) items-center gap-2 px-3">
-          {/* Preview selector */}
+      {/* Toolbar — an in-flow bar attached above the stage. The wrapper owns the
+          neutral surface; the bar itself stays transparent. */}
+      <div className="flex items-center gap-2 p-1">
+        {/* Preview selector */}
+        <div className="max-w-[45%] min-w-0">
           <Select
             value={effectivePreview}
             onChange={(v) =>
@@ -241,10 +215,10 @@ export function PreviewPanel({ className }: { className?: string }) {
                 search: (prev) => ({ ...prev, preview: v as string }),
               })
             }
-            className="pointer-events-auto w-44 max-w-[45%]"
+            className="w-fit"
             aria-label="Preview"
           >
-            <Button size="sm" className="w-full">
+            <Button size="sm" variant="quiet">
               <SelectValue className="truncate" />
               <ChevronDownIcon data-icon-end="" />
             </Button>
@@ -255,17 +229,14 @@ export function PreviewPanel({ className }: { className?: string }) {
                 </SearchField>
                 <ListBox>
                   <ListBoxSection>
-                    <ListBoxSectionHeader>Overview</ListBoxSectionHeader>
-                    {/* The style-guide view — a designer walkthrough of the whole system. */}
-                    <ListBoxItem id="overview" textValue="Overview">
-                      <span className="truncate">Style guide</span>
-                    </ListBoxItem>
-                  </ListBoxSection>
-                  <ListBoxSection>
-                    <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
+                    <ListBoxSectionHeader>Preview</ListBoxSectionHeader>
                     {/* Composed, real-world UI (the landing cards grid), themed live. */}
                     <ListBoxItem id="cards" textValue="Cards">
                       <span className="truncate">Cards</span>
+                    </ListBoxItem>
+                    {/* A designer walkthrough of the whole system. */}
+                    <ListBoxItem id="overview" textValue="Brand Guidelines">
+                      <span className="truncate">Brand Guidelines</span>
                     </ListBoxItem>
                   </ListBoxSection>
                   <ListBoxSection>
@@ -287,111 +258,160 @@ export function PreviewPanel({ className }: { className?: string }) {
               </Command>
             </Popover>
           </Select>
+        </div>
 
-          {/* Right cluster */}
-          <div className="pointer-events-auto ml-auto flex items-center gap-1">
-            {/* Device size — desktop only; the mobile pane is already viewport-width. */}
-            <ToggleButtonGroup
-              aria-label="Preview size"
-              selectionMode="single"
-              disallowEmptySelection
+        {/* Right cluster */}
+        <div className="ml-auto flex items-center gap-1">
+          {/* Device size — desktop only; the mobile pane is already viewport-width. */}
+          <ToggleButtonGroup
+            aria-label="Preview size"
+            selectionMode="single"
+            disallowEmptySelection
+            size="sm"
+            isIconOnly
+            selectedKeys={[size]}
+            onSelectionChange={(keys) => {
+              const next = keys.values().next().value
+              if (next) setSize(next as DeviceSize)
+            }}
+            className="max-lg:hidden"
+          >
+            {SIZE_OPTIONS.map(({ id, label, Icon }) => (
+              <ToggleButton key={id} id={id} aria-label={label}>
+                <Icon />
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+
+          {/* Zoom level */}
+          <Menu>
+            <Button
               size="sm"
-              isIconOnly
-              selectedKeys={[size]}
-              onSelectionChange={(keys) => {
-                const next = keys.values().next().value
-                if (next) setSize(next as DeviceSize)
-              }}
-              className="max-lg:hidden"
+              variant="quiet"
+              className="gap-1 tabular-nums max-lg:hidden"
             >
-              {SIZE_OPTIONS.map(({ id, label, Icon }) => (
-                <ToggleButton key={id} id={id} aria-label={label}>
-                  <Icon />
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
-
-            {/* Zoom level */}
-            <Menu>
-              <Button
-                size="sm"
-                variant="quiet"
-                className="gap-1 tabular-nums max-lg:hidden"
+              {Math.round(zoom * 100)}%
+              <ChevronDownIcon data-icon-end="" />
+            </Button>
+            <Popover placement="bottom end" className="min-w-28">
+              <MenuContent
+                selectionMode="single"
+                selectedKeys={[String(zoom)]}
+                onSelectionChange={(keys) => {
+                  if (keys === 'all') return
+                  const v = keys.values().next().value
+                  if (v != null) setZoom(Number(v))
+                }}
               >
-                {Math.round(zoom * 100)}%
-                <ChevronDownIcon data-icon-end="" />
-              </Button>
-              <Popover placement="bottom end" className="min-w-28">
-                <MenuContent
-                  selectionMode="single"
-                  selectedKeys={[String(zoom)]}
-                  onSelectionChange={(keys) => {
-                    if (keys === 'all') return
-                    const v = keys.values().next().value
-                    if (v != null) setZoom(Number(v))
-                  }}
-                >
-                  {ZOOM_LEVELS.map((z) => (
-                    <MenuItem key={z} id={String(z)} textValue={`${z * 100}%`}>
-                      {Math.round(z * 100)}%
-                    </MenuItem>
-                  ))}
-                </MenuContent>
-              </Popover>
-            </Menu>
+                {ZOOM_LEVELS.map((z) => (
+                  <MenuItem key={z} id={String(z)} textValue={`${z * 100}%`}>
+                    {Math.round(z * 100)}%
+                  </MenuItem>
+                ))}
+              </MenuContent>
+            </Popover>
+          </Menu>
 
-            <div className="mx-0.5 h-5 w-px bg-border max-lg:hidden" />
+          <div className="mx-0.5 h-5 w-px bg-border max-lg:hidden" />
 
-            {/* Light / dark preview mode */}
-            <Tooltip>
-              <Button
-                size="sm"
-                variant="quiet"
-                isIconOnly
-                onPress={() =>
-                  setPreviewMode((m) => (m === 'dark' ? 'light' : 'dark'))
-                }
-                aria-label="Toggle preview mode"
-              >
-                {previewMode === 'dark' ? <SunIcon /> : <MoonIcon />}
-              </Button>
-              <TooltipContent>
-                {previewMode === 'dark' ? 'Light mode' : 'Dark mode'}
-              </TooltipContent>
-            </Tooltip>
+          {/* Light / dark preview mode */}
+          <Tooltip>
+            <Button
+              size="sm"
+              variant="quiet"
+              isIconOnly
+              onPress={() =>
+                setPreviewMode((m) => (m === 'dark' ? 'light' : 'dark'))
+              }
+              aria-label="Toggle preview mode"
+            >
+              {previewMode === 'dark' ? <SunIcon /> : <MoonIcon />}
+            </Button>
+            <TooltipContent>
+              {previewMode === 'dark' ? 'Light mode' : 'Dark mode'}
+            </TooltipContent>
+          </Tooltip>
 
-            {/* Open in new tab */}
-            <Tooltip>
-              <Button
-                size="sm"
-                variant="quiet"
-                isIconOnly
-                onPress={() =>
-                  window.open(iframeSrc, '_blank', 'noopener,noreferrer')
-                }
-                aria-label="Open preview in new tab"
-              >
-                <ExternalLinkIcon />
-              </Button>
-              <TooltipContent>Open in new tab</TooltipContent>
-            </Tooltip>
+          {/* Open in new tab */}
+          <Tooltip>
+            <Button
+              size="sm"
+              variant="quiet"
+              isIconOnly
+              onPress={() =>
+                window.open(iframeSrc, '_blank', 'noopener,noreferrer')
+              }
+              aria-label="Open preview in new tab"
+            >
+              <ExternalLinkIcon />
+            </Button>
+            <TooltipContent>Open in new tab</TooltipContent>
+          </Tooltip>
 
-            {/* Fullscreen */}
-            <Tooltip>
-              <Button
-                size="sm"
-                variant="quiet"
-                isIconOnly
-                onPress={toggleFullscreen}
-                aria-label="Toggle fullscreen"
-              >
-                {isFullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
-              </Button>
-              <TooltipContent>
-                {isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
-              </TooltipContent>
-            </Tooltip>
-          </div>
+          {/* Fullscreen */}
+          <Tooltip>
+            <Button
+              size="sm"
+              variant="quiet"
+              isIconOnly
+              onPress={toggleFullscreen}
+              aria-label="Toggle fullscreen"
+            >
+              {isFullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
+            </Button>
+            <TooltipContent>
+              {isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      </div>
+
+      {/* Stage — holds the iframe at full height for every device size. Smaller sizes
+          narrow the iframe and center it on the surface. Scrolls when zoomed past fit.
+          Inset on three sides so the panel's surface frames the artifact; the top
+          stays flush under the toolbar. Radius is the panel's minus the inset. */}
+      <div
+        className={cn(
+          'relative mx-1 mb-1 min-h-0 flex-1 overflow-auto rounded-lg border border-border/45 bg-bg',
+          // Constrained sizes reveal the stage: a recessed, dot-gridded surface
+          // the device "floats" on, so tool chrome and artifact read as layers.
+          constrained &&
+            'bg-neutral [background-image:radial-gradient(var(--color-border)_1px,transparent_1px)] [background-size:14px_14px]',
+        )}
+      >
+        {/* Centred with `mx-auto`, not `justify-center`: auto margins collapse to
+            zero once the device is wider than the stage, so it stays scrollable
+            from its left edge. `shrink-0` keeps the set device width — as a flex
+            item the iframe would otherwise shrink to fit and preview a lie. */}
+        <div className="flex h-full w-full">
+          <iframe
+            ref={iframeRef}
+            key={effectivePreview}
+            src={iframeSrc}
+            title="preview"
+            className={cn(
+              'mx-auto h-full shrink-0 border-0 bg-bg',
+              constrained && 'border-x shadow-md',
+            )}
+            style={{
+              width: constrained ? DEVICE_WIDTHS[size] : '100%',
+              zoom,
+            }}
+          />
+        </div>
+        {/* Stage skeleton — the preview never opens on a black void. One surface
+            rather than mock content: the incoming preview is an arbitrary page,
+            so any guessed layout would be wrong more often than right. */}
+        <div
+          aria-hidden
+          className={cn(
+            'absolute inset-0 z-10 transition-opacity duration-300',
+            isLoaded && 'pointer-events-none opacity-0',
+          )}
+        >
+          {/* The pulse lives on the inner surface: `animate-pulse` drives opacity,
+              which would otherwise override the fade-out above and never clear. */}
+          <div className="skeleton size-full animate-pulse" />
         </div>
       </div>
     </div>

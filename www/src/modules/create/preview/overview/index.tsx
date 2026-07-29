@@ -18,6 +18,7 @@ import {
   MousePointer2Icon,
   PaletteIcon,
   RulerIcon,
+  Settings2Icon,
   ShapesIcon,
   SmileIcon,
   SparklesIcon,
@@ -53,6 +54,7 @@ import {
   DEFAULT_RADIUS_FACTOR,
   RADIUS_FACTOR_VAR,
 } from '@/modules/create/layout'
+import { sendInspect, useIsEmbeddedPreview } from '@/modules/create/preset'
 import type { DesignSystem } from '@/modules/create/preset'
 
 /* ---------------------------------------------------------------------------
@@ -140,12 +142,15 @@ function SectionHeader({
   icon: Icon,
   title,
   description,
+  panelId,
 }: {
   index: string
   icon: typeof PaletteIcon
   title: string
   description: string
+  panelId?: string
 }) {
+  const embedded = useIsEmbeddedPreview()
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2 text-fg-muted">
@@ -153,6 +158,17 @@ function SectionHeader({
         <span className="font-mono text-xs tracking-widest uppercase">
           {index} — {title}
         </span>
+        {/* Embedded only: hop to this chapter's controls in the /create panel. */}
+        {embedded && panelId && (
+          <button
+            type="button"
+            onClick={() => sendInspect(panelId)}
+            className="ml-auto flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs opacity-0 transition-opacity group-hover/section:opacity-100 hover:bg-neutral hover:text-fg focus-visible:opacity-100"
+          >
+            <Settings2Icon className="size-3" />
+            Adjust
+          </button>
+        )}
       </div>
       <p className="max-w-prose text-pretty text-fg-muted">{description}</p>
     </div>
@@ -821,21 +837,25 @@ function Section({
   icon,
   title,
   description,
+  panelId,
   children,
 }: {
   index: string
   icon: typeof PaletteIcon
   title: string
   description: string
+  /** The /create panel chapter these values are edited in (embedded inspect). */
+  panelId?: string
   children: ReactNode
 }) {
   return (
-    <section className="flex flex-col gap-8 border-t border-border/60 py-14 first:border-t-0 first:pt-0 sm:py-16">
+    <section className="group/section flex flex-col gap-8 border-t border-border/60 py-14 first:border-t-0 first:pt-0 sm:py-16">
       <SectionHeader
         index={index}
         icon={icon}
         title={title}
         description={description}
+        panelId={panelId}
       />
       {children}
     </section>
@@ -908,6 +928,7 @@ export function PresetOverview({
 
         <Section
           index="01"
+          panelId="color"
           icon={PaletteIcon}
           title="Color"
           description="Every palette is generated from a handful of seeds into perceptually even ramps, then mapped onto a semantic vocabulary that flips cleanly between light and dark."
@@ -917,6 +938,7 @@ export function PresetOverview({
 
         <Section
           index="02"
+          panelId="typography"
           icon={TypeIcon}
           title="Typography"
           description="A heading voice for display and titles, a body face for interface text, and a matched monospace for code and numerics."
@@ -930,6 +952,7 @@ export function PresetOverview({
 
         <Section
           index="03"
+          panelId="icons"
           icon={SmileIcon}
           title="Iconography"
           description="A single, consistent icon family keeps the interface legible at every size."
@@ -939,6 +962,7 @@ export function PresetOverview({
 
         <Section
           index="04"
+          panelId="shape"
           icon={ShapesIcon}
           title="Shape"
           description="A single radius factor scales the whole corner-radius ramp at once, setting the softness of the entire system."
@@ -951,6 +975,7 @@ export function PresetOverview({
 
         <Section
           index="05"
+          panelId="shape"
           icon={RulerIcon}
           title="Density & spacing"
           description="Density sets control heights and padding across every component; the spacing scale keeps rhythm consistent."
@@ -960,6 +985,7 @@ export function PresetOverview({
 
         <Section
           index="06"
+          panelId="details"
           icon={LayersIcon}
           title="Surfaces & elevation"
           description="Layered surface tokens and a restrained shadow ramp give depth without noise."
@@ -969,6 +995,7 @@ export function PresetOverview({
 
         <Section
           index="07"
+          panelId="components"
           icon={BoxIcon}
           title="Components"
           description="The system under load — the same tokens, resolved across real components and compositions."
@@ -978,6 +1005,7 @@ export function PresetOverview({
 
         <Section
           index="08"
+          panelId="details"
           icon={MousePointer2Icon}
           title="Interaction"
           description="Cursors signal what's actionable and what isn't."

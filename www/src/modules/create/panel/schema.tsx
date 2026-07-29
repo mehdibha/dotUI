@@ -2,33 +2,26 @@
 
 import { useMemo } from 'react'
 import {
-  BoxSelectIcon,
   ChevronDownIcon,
-  type LucideIcon,
-  GaugeIcon,
-  LayersIcon,
-  MousePointer2Icon,
-  MoonIcon,
   PaletteIcon,
-  RulerIcon,
   ShapesIcon,
+  SlidersHorizontalIcon,
   SmileIcon,
-  SparklesIcon,
   TypeIcon,
-  ZapIcon,
 } from 'lucide-react'
+import { useTheme } from 'starter-themes'
 
 import { STEPS } from '@dotui/colors'
 
-import {
-  DEFAULT_BODY_FAMILY,
-  familyFromStack,
-  FONT_CATALOG,
-  FONT_HEADING_VAR,
-  FONT_SANS_VAR,
-  fontStack,
-} from '@/lib/fonts'
+import { FONT_HEADING_VAR, FONT_MONO_VAR, FONT_SANS_VAR } from '@/lib/fonts'
 import { resolveColorConfigCached } from '@/lib/resolve-color'
+import * as icons from '@/registry/__generated__/icons'
+import {
+  IconLibraryContext,
+  IconWeightContext,
+} from '@/registry/icons/create-icon'
+import { iconLibraries, phosphorWeights } from '@/registry/icons/icon-map'
+import type { IconLibraryName, PhosphorWeight } from '@/registry/icons/icon-map'
 import {
   DEFAULT_COLOR_CONFIG,
   DEFAULT_STATUS_SEEDS,
@@ -42,34 +35,41 @@ import { ColorPicker } from '@/registry/ui/color-picker'
 import { ColorSlider } from '@/registry/ui/color-slider'
 import { ColorSwatch } from '@/registry/ui/color-swatch'
 import { DialogContent } from '@/registry/ui/dialog'
-import { Input } from '@/registry/ui/input'
+import {
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTrigger,
+} from '@/registry/ui/disclosure'
+import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
 import { Popover } from '@/registry/ui/popover'
 import { Select, SelectValue } from '@/registry/ui/select'
-import { Switch } from '@/registry/ui/switch'
 import { TextField } from '@/registry/ui/text-field'
 
 import { ContrastReadout } from '../colors/contrast'
 import { ColorFineTuneControls, useBorderSeeds } from '../colors/knobs'
-import { ComponentDetailView } from '../components'
 import {
   CURSOR_DISABLED_VAR,
   CURSOR_INTERACTIVE_VAR,
   DEFAULT_CURSOR_DISABLED,
   DEFAULT_CURSOR_INTERACTIVE,
 } from '../cursor'
+import {
+  ICON_STROKE_WIDTH_VAR,
+  ICON_WEIGHT_VAR,
+  STROKE_DEFAULTS,
+} from '../iconography'
 import { DEFAULT_RADIUS_FACTOR, RADIUS_FACTOR_VAR } from '../layout'
 import { useDesignSystem } from '../preset'
-import { Segmented, ValueSlider } from './primitives'
+import { FontPicker, useTypography } from '../typography'
+import { InlineRow, Segmented, ValueSlider } from './primitives'
 import type { Control, Section } from './types'
 
 /* ----------------------------------------------------------------------------
- * Token helpers
- *
- * Every control writes into the existing DesignSystem state. Real ones map to
- * tokens the preview already consumes (color, radius, density, cursor, params);
- * "stub" ones still write a CSS var through the same channel — harmless if no
- * component reads it yet, and instantly live the moment one does.
+ * Every control writes into the existing DesignSystem state and maps to a token
+ * the preview already consumes (color, fonts, radius, density, cursor, shadows,
+ * component params). Nothing here invents an axis — new axes are product
+ * decisions made outside this file.
  * -------------------------------------------------------------------------- */
 
 function useToken(name: string, fallback: string) {
@@ -79,17 +79,18 @@ function useToken(name: string, fallback: string) {
   return [value, set] as const
 }
 
-/* invented stub-token names (preview has no consumer yet) */
-const BORDER_WIDTH_VAR = '--ds-border-width'
-const ELEVATION_STYLE_VAR = '--ds-elevation-style'
-const SHADOW_INTENSITY_VAR = '--ds-shadow-intensity'
-const BACKDROP_BLUR_VAR = '--ds-backdrop-blur'
-const MOTION_DURATION_VAR = '--ds-motion-duration'
-const MOTION_ENABLED_VAR = '--ds-motion-enabled'
-const FOCUS_RING_WIDTH_VAR = '--ds-focus-ring-width'
-const TYPE_SCALE_VAR = '--ds-type-scale'
-const TYPE_BASE_VAR = '--ds-type-base'
-const SPACING_SCALE_VAR = '--ds-spacing-scale'
+/** The resolved color theme for the mode the panel is currently viewed in. */
+function useResolvedScales() {
+  const { designSystem } = useDesignSystem()
+  const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
+  const theme = useMemo(() => resolveColorConfigCached(config), [config])
+  const { resolvedTheme } = useTheme()
+  return {
+    config,
+    theme,
+    scales: resolvedTheme === 'dark' ? theme.dark.scales : theme.light.scales,
+  }
+}
 
 /* ------------------------------- Color ---------------------------------- */
 
@@ -102,8 +103,19 @@ const SEED_FALLBACKS: Record<keyof PaletteSeeds, string> = {
   ...DEFAULT_STATUS_SEEDS,
 }
 
-/** A color seed swatch+picker bound to one palette seed of the live recipe. */
-export function SeedField({ seed }: { seed: keyof PaletteSeeds }) {
+/**
+ * A color seed field bound to one palette seed. The label lives inside the
+ * field; `compact` drops the hex readout for tight grids (it's in the popover).
+ */
+export function SeedField({
+  seed,
+  label,
+  compact,
+}: {
+  seed: keyof PaletteSeeds
+  label: string
+  compact?: boolean
+}) {
   const { designSystem, setColorSeed } = useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
   const value = config.seeds[seed] ?? SEED_FALLBACKS[seed]
@@ -114,11 +126,16 @@ export function SeedField({ seed }: { seed: keyof PaletteSeeds }) {
     >
       {({ color }) => (
         <>
-          <Button size="sm" className="w-full justify-start pl-2">
-            <ColorSwatch />
-            <span className="truncate font-mono text-xs">
-              {color.toString('hex')}
+          <Button size="sm" className="w-full justify-start gap-2 pl-2.5">
+            <ColorSwatch className="shrink-0" />
+            <span className="min-w-0 flex-1 truncate text-left text-xs font-normal text-fg-muted">
+              {label}
             </span>
+            {!compact && (
+              <span className="shrink-0 font-mono text-xs text-fg">
+                {color.toString('hex')}
+              </span>
+            )}
           </Button>
           <Popover>
             <DialogContent className="flex flex-col gap-2">
@@ -146,6 +163,34 @@ export function SeedField({ seed }: { seed: keyof PaletteSeeds }) {
   )
 }
 
+/** The chapter opener: the live accent and neutral ramps, current mode. */
+function ColorRampsVisual() {
+  const { scales } = useResolvedScales()
+  return (
+    <div className="flex flex-col gap-1">
+      {(['accent', 'neutral'] as const).map((palette) => {
+        const scale = scales[palette]
+        if (!scale) return null
+        return (
+          <div
+            key={palette}
+            className="flex h-5 overflow-hidden rounded-md"
+            title={palette}
+          >
+            {STEPS.map((step) => (
+              <div
+                key={step}
+                className="flex-1"
+                style={{ backgroundColor: scale[step] }}
+              />
+            ))}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 function StatusColorsWidget() {
   const status: Array<{ seed: keyof PaletteSeeds; label: string }> = [
     { seed: 'success', label: 'Success' },
@@ -156,53 +201,53 @@ function StatusColorsWidget() {
   return (
     <div className="grid grid-cols-2 gap-2">
       {status.map((s) => (
-        <div key={s.seed} className="flex flex-col gap-1">
-          <span className="text-[10px] tracking-wider text-fg-muted uppercase">
-            {s.label}
-          </span>
-          <SeedField seed={s.seed} />
-        </div>
+        <SeedField key={s.seed} seed={s.seed} label={s.label} compact />
       ))}
     </div>
   )
 }
 
-/** Fine-tune axes + contrast readout + generated ramps — the deep color engine. */
+/** Fine-tune axes + contrast readout + every generated ramp, tucked away. */
 function ColorEngineWidget() {
-  const { designSystem } = useDesignSystem()
-  const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
-  const theme = useMemo(() => resolveColorConfigCached(config), [config])
+  const { config, theme, scales } = useResolvedScales()
   const borderSeeds = useBorderSeeds(config, theme)
   return (
-    <div className="flex flex-col gap-4">
-      <ColorFineTuneControls
-        seedDelta={theme.report.seedDelta.accent}
-        borderSeeds={borderSeeds}
-      />
-      <ContrastReadout report={theme.report} />
-      <div className="flex flex-col gap-1">
-        {PALETTE_ORDER.map((palette) => {
-          const scale = theme.light.scales[palette]
-          if (!scale) return null
-          return (
-            <div
-              key={palette}
-              className="flex overflow-hidden rounded"
-              title={palette}
-            >
-              {STEPS.map((step) => (
+    <Disclosure>
+      <DisclosureTrigger className="text-xs text-fg-muted">
+        Fine-tune & ramps
+      </DisclosureTrigger>
+      <DisclosurePanel>
+        <div className="flex flex-col gap-4 pt-2">
+          <ColorFineTuneControls
+            seedDelta={theme.report.seedDelta.accent}
+            borderSeeds={borderSeeds}
+          />
+          <ContrastReadout report={theme.report} />
+          <div className="flex flex-col gap-1">
+            {PALETTE_ORDER.map((palette) => {
+              const scale = scales[palette]
+              if (!scale) return null
+              return (
                 <div
-                  key={step}
-                  className="h-4 flex-1"
-                  style={{ backgroundColor: scale[step] }}
-                  title={`--${palette}-${step}`}
-                />
-              ))}
-            </div>
-          )
-        })}
-      </div>
-    </div>
+                  key={palette}
+                  className="flex overflow-hidden rounded"
+                  title={palette}
+                >
+                  {STEPS.map((step) => (
+                    <div
+                      key={step}
+                      className="h-4 flex-1"
+                      style={{ backgroundColor: scale[step] }}
+                      title={`--${palette}-${step}`}
+                    />
+                  ))}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </DisclosurePanel>
+    </Disclosure>
   )
 }
 
@@ -212,17 +257,19 @@ function GrayStrategyWidget() {
   const { designSystem, setColorAxis } = useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
   return (
-    <Segmented
-      ariaLabel="Gray strategy"
-      value={config.neutralTint === 0 ? 'pure' : 'tinted'}
-      onChange={(v) =>
-        setColorAxis('neutralTint', v === 'pure' ? 0 : undefined)
-      }
-      options={[
-        { value: 'pure', label: 'Pure' },
-        { value: 'tinted', label: 'Brand-tinted' },
-      ]}
-    />
+    <InlineRow label="Gray">
+      <Segmented
+        ariaLabel="Gray strategy"
+        value={config.neutralTint === 0 ? 'pure' : 'tinted'}
+        onChange={(v) =>
+          setColorAxis('neutralTint', v === 'pure' ? 0 : undefined)
+        }
+        options={[
+          { value: 'pure', label: 'Pure' },
+          { value: 'tinted', label: 'Tinted' },
+        ]}
+      />
+    </InlineRow>
   )
 }
 
@@ -230,27 +277,229 @@ function PrimarySourceWidget() {
   const { designSystem, setColorPrimary } = useDesignSystem()
   const config = designSystem.color ?? DEFAULT_COLOR_CONFIG
   return (
-    <Segmented
-      ariaLabel="Primary color"
-      value={config.primary ?? 'neutral'}
-      onChange={(v) => setColorPrimary(v === 'accent' ? 'accent' : undefined)}
-      options={[
-        { value: 'neutral', label: 'Neutral' },
-        { value: 'accent', label: 'Accent' },
-      ]}
+    <InlineRow label="Primary">
+      <Segmented
+        ariaLabel="Primary color"
+        value={config.primary ?? 'neutral'}
+        onChange={(v) => setColorPrimary(v === 'accent' ? 'accent' : undefined)}
+        options={[
+          { value: 'neutral', label: 'Neutral' },
+          { value: 'accent', label: 'Accent' },
+        ]}
+      />
+    </InlineRow>
+  )
+}
+
+/* ----------------------------- Typography ------------------------------- */
+
+function HeadingFontWidget() {
+  const { bodyFamily, headingFamily, setHeading } = useTypography()
+  return (
+    <FontPicker
+      label="Heading"
+      categories={['sans-serif', 'serif', 'display', 'handwriting']}
+      selectedKey={headingFamily ?? bodyFamily}
+      onChange={setHeading}
     />
   )
 }
 
-/* ------------------------------- Shape ---------------------------------- */
+function BodyFontWidget() {
+  const { bodyFamily, setBody } = useTypography()
+  return (
+    <FontPicker
+      label="Body"
+      categories={['sans-serif', 'serif']}
+      selectedKey={bodyFamily}
+      onChange={setBody}
+    />
+  )
+}
+
+function MonoFontWidget() {
+  const { monoFamily, setMono } = useTypography()
+  return (
+    <FontPicker
+      label="Mono"
+      categories={['mono']}
+      selectedKey={monoFamily}
+      onChange={setMono}
+    />
+  )
+}
+
+/* -------------------------------- Icons --------------------------------- */
+
+function useIconography() {
+  const { designSystem, setIconLibrary, setToken } = useDesignSystem()
+  const library = designSystem.icons ?? 'lucide'
+
+  const strokeDefault = STROKE_DEFAULTS[library]
+  const strokeParsed = Number.parseFloat(
+    designSystem.tokens[ICON_STROKE_WIDTH_VAR] ?? '',
+  )
+  const strokeValue = Number.isFinite(strokeParsed)
+    ? strokeParsed
+    : (strokeDefault ?? 2)
+
+  const weightToken = designSystem.tokens[ICON_WEIGHT_VAR]
+  const weight = phosphorWeights.includes(weightToken as PhosphorWeight)
+    ? (weightToken as PhosphorWeight)
+    : 'regular'
+
+  return {
+    library,
+    setIconLibrary,
+    setToken,
+    strokeDefault,
+    strokeValue,
+    weight,
+  }
+}
+
+/** The chapter opener: a live strip of the selected library's icons. */
+function IconStripVisual() {
+  const { library, strokeValue, weight } = useIconography()
+  return (
+    <div
+      className="flex items-center gap-2 overflow-hidden [mask-image:linear-gradient(to_right,black_80%,transparent)] text-fg-muted [&_svg]:size-4 [&_svg]:shrink-0"
+      style={
+        { [ICON_STROKE_WIDTH_VAR]: String(strokeValue) } as React.CSSProperties
+      }
+    >
+      <IconLibraryContext.Provider value={library}>
+        <IconWeightContext.Provider value={weight}>
+          {Object.entries(icons)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .slice(0, 16)
+            .map(([name, IconComponent]) => (
+              <IconComponent key={name} />
+            ))}
+        </IconWeightContext.Provider>
+      </IconLibraryContext.Provider>
+    </div>
+  )
+}
+
+function IconLibraryWidget() {
+  const {
+    library,
+    setIconLibrary,
+    setToken,
+    strokeDefault,
+    strokeValue,
+    weight,
+  } = useIconography()
+  return (
+    <div className="flex flex-col gap-3">
+      <Select
+        aria-label="Icon library"
+        className="w-full"
+        selectedKey={library}
+        onSelectionChange={(k) => setIconLibrary(k as IconLibraryName)}
+      >
+        <Button
+          size="sm"
+          className="h-auto w-full justify-start gap-2 py-1.5 pl-2.5"
+        >
+          <div className="flex min-w-0 flex-1 flex-col items-start gap-0.5">
+            <span className="text-xs font-normal text-fg-muted">Library</span>
+            <SelectValue className="w-full truncate text-left" />
+          </div>
+          <ChevronDownIcon data-icon-end="" className="text-fg-muted" />
+        </Button>
+        <Popover>
+          <ListBox>
+            {iconLibraries.map((lib) => (
+              <ListBoxItem key={lib.name} id={lib.name}>
+                {lib.label}
+              </ListBoxItem>
+            ))}
+          </ListBox>
+        </Popover>
+      </Select>
+
+      {/* Stroke width — only for stroke-based libraries (filled sets have no strokes). */}
+      {strokeDefault !== undefined && (
+        <ValueSlider
+          label="Stroke"
+          value={strokeValue}
+          min={1}
+          max={3}
+          step={0.25}
+          format={(v) => v.toFixed(2)}
+          onChange={(v) => setToken(ICON_STROKE_WIDTH_VAR, String(v))}
+        />
+      )}
+
+      {/* Weight — only for libraries whose components take a weight prop (phosphor). */}
+      {library === 'phosphor' && (
+        <Select
+          aria-label="Icon weight"
+          className="w-full"
+          selectedKey={weight}
+          onSelectionChange={(k) => setToken(ICON_WEIGHT_VAR, k as string)}
+        >
+          <Button
+            size="sm"
+            className="h-auto w-full justify-start gap-2 py-1.5 pl-2.5"
+          >
+            <div className="flex min-w-0 flex-1 flex-col items-start gap-0.5">
+              <span className="text-xs font-normal text-fg-muted">Weight</span>
+              <SelectValue className="w-full truncate text-left capitalize" />
+            </div>
+            <ChevronDownIcon data-icon-end="" className="text-fg-muted" />
+          </Button>
+          <Popover>
+            <ListBox>
+              {phosphorWeights.map((w) => (
+                <ListBoxItem key={w} id={w} className="capitalize">
+                  {w}
+                </ListBoxItem>
+              ))}
+            </ListBox>
+          </Popover>
+        </Select>
+      )}
+    </div>
+  )
+}
+
+/* ---------------------------- Shape & space ------------------------------ */
+
+function useRadiusFactor() {
+  const [value, set] = useToken(RADIUS_FACTOR_VAR, DEFAULT_RADIUS_FACTOR)
+  const parsed = Number.parseFloat(value)
+  return [Number.isFinite(parsed) ? parsed : 1, set] as const
+}
+
+/** The chapter opener: three tiles wearing the live radius at three scales. */
+function RadiusVisual() {
+  const [factor] = useRadiusFactor()
+  return (
+    <div className="flex items-end gap-2">
+      {[
+        { size: 'size-8', radius: 6 },
+        { size: 'size-10', radius: 10 },
+        { size: 'size-12', radius: 16 },
+      ].map(({ size, radius }) => (
+        <div
+          key={radius}
+          className={`${size} border bg-neutral transition-[border-radius]`}
+          style={{ borderRadius: Math.min(radius * factor, 32) }}
+        />
+      ))}
+    </div>
+  )
+}
 
 function RadiusFactorWidget() {
-  const [value, set] = useToken(RADIUS_FACTOR_VAR, DEFAULT_RADIUS_FACTOR)
-  const num = Number.parseFloat(value) || 1
+  const [factor, set] = useRadiusFactor()
   return (
     <ValueSlider
-      ariaLabel="Radius factor"
-      value={num}
+      label="Radius"
+      value={factor}
       min={0}
       max={2}
       step={0.05}
@@ -260,178 +509,50 @@ function RadiusFactorWidget() {
   )
 }
 
-function BorderWidthWidget() {
-  const [value, set] = useToken(BORDER_WIDTH_VAR, '1')
-  return (
-    <ValueSlider
-      ariaLabel="Border width"
-      value={Number.parseFloat(value) || 1}
-      min={0}
-      max={3}
-      step={0.5}
-      format={(v) => `${v}px`}
-      onChange={(v) => set(String(v))}
-    />
-  )
-}
-
-/* ------------------------------ Spacing --------------------------------- */
-
 function DensityWidget() {
   const { designSystem, setDensity } = useDesignSystem()
   return (
-    <Segmented
-      ariaLabel="Density"
-      value={designSystem.density}
-      onChange={setDensity}
-      options={[
-        { value: 'compact', label: 'Compact' },
-        { value: 'default', label: 'Default' },
-        { value: 'comfortable', label: 'Cozy' },
-      ]}
-    />
+    <InlineRow label="Density">
+      <Segmented
+        ariaLabel="Density"
+        size="xs"
+        value={designSystem.density}
+        onChange={setDensity}
+        options={[
+          { value: 'compact', label: 'Compact' },
+          { value: 'default', label: 'Default' },
+          { value: 'comfortable', label: 'Cozy' },
+        ]}
+      />
+    </InlineRow>
   )
 }
 
-function SpacingScaleWidget() {
-  const [value, set] = useToken(SPACING_SCALE_VAR, '1')
-  return (
-    <ValueSlider
-      ariaLabel="Spacing scale"
-      value={Number.parseFloat(value) || 1}
-      min={0.75}
-      max={1.5}
-      step={0.05}
-      format={(v) => `${v.toFixed(2)}×`}
-      onChange={(v) => set(String(v))}
-    />
-  )
-}
-
-/* ----------------------------- Typography ------------------------------- */
-
-function FontWidget({ varName }: { varName: string }) {
-  const [value, set] = useToken(varName, fontStack(DEFAULT_BODY_FAMILY))
-  return (
-    <Select
-      className="w-full"
-      selectedKey={familyFromStack(value)}
-      onSelectionChange={(k) => set(fontStack(k as string))}
-      aria-label="Font"
-    >
-      <Button size="sm" className="w-full justify-between">
-        <SelectValue className="truncate" />
-        <ChevronDownIcon data-icon-end="" />
-      </Button>
-      <Popover>
-        <ListBox className="max-h-72">
-          {FONT_CATALOG.filter((f) => f.category !== 'mono').map((f) => (
-            <ListBoxItem key={f.family} id={f.family}>
-              {f.family}
-            </ListBoxItem>
-          ))}
-        </ListBox>
-      </Popover>
-    </Select>
-  )
-}
-
-function TypeScaleWidget() {
-  const [value, set] = useToken(TYPE_SCALE_VAR, '1.25')
-  return (
-    <ValueSlider
-      ariaLabel="Type scale ratio"
-      value={Number.parseFloat(value) || 1.25}
-      min={1.1}
-      max={1.5}
-      step={0.01}
-      format={(v) => v.toFixed(3)}
-      onChange={(v) => set(String(v))}
-    />
-  )
-}
-
-function BaseSizeWidget() {
-  const [value, set] = useToken(TYPE_BASE_VAR, '16')
-  return (
-    <ValueSlider
-      ariaLabel="Base size"
-      value={Number.parseFloat(value) || 16}
-      min={13}
-      max={18}
-      step={1}
-      format={(v) => `${v}px`}
-      onChange={(v) => set(String(v))}
-    />
-  )
-}
-
-/* ------------------------------ Elevation ------------------------------- */
-
-function StyleFamilyWidget() {
-  const [value, set] = useToken(ELEVATION_STYLE_VAR, 'soft')
-  return (
-    <Segmented
-      ariaLabel="Style family"
-      value={value}
-      onChange={set}
-      options={[
-        { value: 'flat', label: 'Flat' },
-        { value: 'soft', label: 'Soft' },
-        { value: 'depth', label: '3D' },
-        { value: 'glass', label: 'Glass' },
-      ]}
-    />
-  )
-}
-
-function ShadowIntensityWidget() {
-  const [value, set] = useToken(SHADOW_INTENSITY_VAR, '0.5')
-  return (
-    <ValueSlider
-      ariaLabel="Shadow intensity"
-      value={Number.parseFloat(value) || 0.5}
-      min={0}
-      max={1}
-      step={0.05}
-      format={(v) => `${Math.round(v * 100)}%`}
-      onChange={(v) => set(String(v))}
-    />
-  )
-}
-
-function BackdropBlurWidget() {
-  const [value, set] = useToken(BACKDROP_BLUR_VAR, '0')
-  return (
-    <ValueSlider
-      ariaLabel="Backdrop blur"
-      value={Number.parseFloat(value) || 0}
-      min={0}
-      max={24}
-      step={1}
-      format={(v) => `${v}px`}
-      onChange={(v) => set(String(v))}
-    />
-  )
-}
+/* ------------------------------- Details --------------------------------- */
 
 /** One free-form box-shadow token; empty clears it back to the theme default. */
 function ShadowField({ varName, label }: { varName: string; label: string }) {
   const { designSystem, setToken } = useDesignSystem()
   const value = designSystem.tokens[varName] ?? ''
   return (
-    <div className="flex flex-col gap-1">
-      <span className="text-[10px] tracking-wider text-fg-muted uppercase">
-        {label}
-      </span>
-      <TextField
-        value={value}
-        onChange={(v) => setToken(varName, v === '' ? undefined : v)}
-        aria-label={label}
-      >
-        <Input size="sm" className="w-full font-mono text-xs" />
-      </TextField>
-    </div>
+    <TextField
+      value={value}
+      onChange={(v) => setToken(varName, v === '' ? undefined : v)}
+      aria-label={`${label} shadow`}
+    >
+      <InputGroup>
+        <InputGroupAddon>
+          <span className="w-14 shrink-0 text-left text-xs text-fg-muted">
+            {label}
+          </span>
+        </InputGroupAddon>
+        <Input
+          size="sm"
+          className="w-full font-mono text-xs"
+          placeholder="theme default"
+        />
+      </InputGroup>
+    </TextField>
   )
 }
 
@@ -445,42 +566,6 @@ function ShadowsWidget() {
   )
 }
 
-/* ------------------------------- Motion --------------------------------- */
-
-function DurationWidget() {
-  const [value, set] = useToken(MOTION_DURATION_VAR, '150')
-  return (
-    <ValueSlider
-      ariaLabel="Duration scale"
-      value={Number.parseFloat(value) || 150}
-      min={0}
-      max={400}
-      step={10}
-      format={(v) => `${v}ms`}
-      onChange={(v) => set(String(v))}
-    />
-  )
-}
-
-function BoolToken({
-  varName,
-  fallback,
-}: {
-  varName: string
-  fallback: string
-}) {
-  const [value, set] = useToken(varName, fallback)
-  return (
-    <Switch
-      isSelected={value === 'true'}
-      onChange={(s) => set(String(s))}
-      aria-label="Toggle"
-    />
-  )
-}
-
-/* ---------------------------- Interaction ------------------------------- */
-
 const CURSORS = [
   'default',
   'pointer',
@@ -491,10 +576,13 @@ const CURSORS = [
   'grab',
 ]
 
+/** Cursor select — hover the field to feel the cursor it maps to. */
 function CursorWidget({
+  label,
   varName,
   fallback,
 }: {
+  label: string
   varName: string
   fallback: string
 }) {
@@ -504,11 +592,18 @@ function CursorWidget({
       className="w-full"
       selectedKey={value}
       onSelectionChange={(k) => set(k as string)}
-      aria-label="Cursor"
+      aria-label={`${label} cursor`}
     >
-      <Button size="sm" className="w-full justify-between">
-        <SelectValue className="truncate" />
-        <ChevronDownIcon data-icon-end="" />
+      <Button
+        size="sm"
+        className="w-full justify-start gap-2 pl-2.5"
+        style={{ cursor: value }}
+      >
+        <span className="w-14 shrink-0 text-left text-xs font-normal text-fg-muted">
+          {label}
+        </span>
+        <SelectValue className="min-w-0 flex-1 truncate text-left" />
+        <ChevronDownIcon data-icon-end="" className="text-fg-muted" />
       </Button>
       <Popover>
         <ListBox>
@@ -523,72 +618,10 @@ function CursorWidget({
   )
 }
 
-function FocusRingWidthWidget() {
-  const [value, set] = useToken(FOCUS_RING_WIDTH_VAR, '2')
-  return (
-    <ValueSlider
-      ariaLabel="Focus ring width"
-      value={Number.parseFloat(value) || 2}
-      min={0}
-      max={4}
-      step={1}
-      format={(v) => `${v}px`}
-      onChange={(v) => set(String(v))}
-    />
-  )
-}
-
-/* ----------------------------- Components -------------------------------- */
-
-/** Reuses the real, live per-component param editor for one component. */
-function ComponentAnatomyWidget({ name }: { name: string }) {
-  const { designSystem, setComponentParam } = useDesignSystem()
-  return (
-    <ComponentDetailView
-      componentName={name}
-      selectedParams={designSystem.componentParams[name] ?? {}}
-      onParamChange={(param, value) => setComponentParam(name, param, value)}
-    />
-  )
-}
-
-/* -------------------------------- Icons --------------------------------- */
-
-function IconStrokeWidget() {
-  const [value, set] = useToken('--ds-icon-stroke', '2')
-  return (
-    <ValueSlider
-      ariaLabel="Icon stroke"
-      value={Number.parseFloat(value) || 2}
-      min={1}
-      max={2.5}
-      step={0.25}
-      format={(v) => `${v}px`}
-      onChange={(v) => set(String(v))}
-    />
-  )
-}
-
-/* --------------------------------- Mode --------------------------------- */
-
-function DefaultModeWidget() {
-  const [value, set] = useToken('--ds-default-mode', 'system')
-  return (
-    <Segmented
-      ariaLabel="Default mode"
-      value={value}
-      onChange={set}
-      options={[
-        { value: 'light', label: 'Light' },
-        { value: 'dark', label: 'Dark' },
-        { value: 'system', label: 'Auto' },
-      ]}
-    />
-  )
-}
-
 /* ----------------------------------------------------------------------------
- * The schema — every atomic control, tagged on all three axes.
+ * The schema — the chapters of the story scroll, in reading order. The
+ * Components section (per-component param editors) is rendered separately by
+ * the panel: it's a registry-driven list, not a fixed set of controls.
  * -------------------------------------------------------------------------- */
 
 const c = (control: Control): Control => control
@@ -597,298 +630,130 @@ export const SECTIONS: Section[] = [
   {
     id: 'color',
     label: 'Color',
-    domain: 'color',
     icon: PaletteIcon,
+    Visual: ColorRampsVisual,
     controls: [
       c({
         id: 'brand-color',
         label: 'Brand color',
-        description: 'The one real color on screen — drives accent ramps.',
-        domain: 'color',
-        tier: 'primitive',
-        tempo: 'macro',
-        binding: 'live',
         keywords: ['accent', 'primary', 'hue'],
-        Widget: () => <SeedField seed="accent" />,
+        Widget: () => <SeedField seed="accent" label="Brand" />,
       }),
       c({
         id: 'base-color',
         label: 'Base / gray',
-        description: 'Neutral seed the whole surface system derives from.',
-        domain: 'color',
-        tier: 'primitive',
-        tempo: 'macro',
-        binding: 'live',
         keywords: ['neutral', 'gray', 'grey'],
-        Widget: () => <SeedField seed="neutral" />,
+        Widget: () => <SeedField seed="neutral" label="Base" />,
       }),
       c({
         id: 'gray-strategy',
         label: 'Gray strategy',
-        description: 'Pure neutrals or grays tinted toward the brand.',
-        domain: 'color',
-        tier: 'semantic',
-        tempo: 'macro',
-        binding: 'live',
+        keywords: ['pure', 'tinted', 'neutral'],
         Widget: GrayStrategyWidget,
       }),
       c({
         id: 'primary-color',
         label: 'Primary color',
-        description: 'Black & white actions, or the brand accent.',
-        domain: 'color',
-        tier: 'semantic',
-        tempo: 'macro',
-        binding: 'live',
         keywords: ['primary', 'button', 'brand'],
         Widget: PrimarySourceWidget,
       }),
       c({
         id: 'status-colors',
-        label: 'Status families',
-        description: 'Success, warning, danger, info seeds.',
-        domain: 'color',
-        tier: 'semantic',
-        tempo: 'micro',
-        binding: 'live',
-        block: true,
+        label: 'Status colors',
+        keywords: ['success', 'warning', 'danger', 'info', 'error'],
         Widget: StatusColorsWidget,
       }),
       c({
         id: 'selection-color',
         label: 'Selection',
-        description:
-          'Focus rings and checked controls; follows primary when unset.',
-        domain: 'color',
-        tier: 'semantic',
-        tempo: 'micro',
-        binding: 'live',
         keywords: ['focus', 'ring', 'checked', 'accent'],
-        Widget: () => <SeedField seed="selection" />,
+        Widget: () => <SeedField seed="selection" label="Selection" />,
       }),
       c({
         id: 'color-engine',
         label: 'Ramps & contrast',
-        description: 'Engine axes, contrast readout, generated scales.',
-        domain: 'color',
-        tier: 'primitive',
-        tempo: 'micro',
-        binding: 'live',
-        block: true,
+        keywords: ['scale', 'palette', 'wcag', 'fine-tune'],
         Widget: ColorEngineWidget,
       }),
     ],
   },
   {
     id: 'typography',
-    label: 'Typography',
-    domain: 'typography',
+    label: 'Type',
     icon: TypeIcon,
     controls: [
       c({
         id: 'heading-font',
-        label: 'Display font',
-        description: 'Headings and large type.',
-        domain: 'typography',
-        tier: 'primitive',
-        tempo: 'macro',
-        binding: 'live',
-        Widget: () => <FontWidget varName={FONT_HEADING_VAR} />,
+        label: 'Heading font',
+        keywords: ['heading', 'title', 'display'],
+        Widget: HeadingFontWidget,
       }),
       c({
         id: 'body-font',
         label: 'Body font',
-        domain: 'typography',
-        tier: 'primitive',
-        tempo: 'macro',
-        binding: 'live',
-        Widget: () => <FontWidget varName={FONT_SANS_VAR} />,
+        keywords: ['text', 'sans'],
+        Widget: BodyFontWidget,
       }),
       c({
-        id: 'type-scale',
-        label: 'Scale ratio',
-        description: 'Modular scale between type steps.',
-        domain: 'typography',
-        tier: 'primitive',
-        tempo: 'micro',
-        binding: 'stub',
-        Widget: TypeScaleWidget,
+        id: 'mono-font',
+        label: 'Mono font',
+        keywords: ['code', 'monospace'],
+        Widget: MonoFontWidget,
       }),
+    ],
+  },
+  {
+    id: 'icons',
+    label: 'Icons',
+    icon: SmileIcon,
+    Visual: IconStripVisual,
+    controls: [
       c({
-        id: 'base-size',
-        label: 'Base size',
-        domain: 'typography',
-        tier: 'primitive',
-        tempo: 'micro',
-        binding: 'stub',
-        Widget: BaseSizeWidget,
+        id: 'icon-library',
+        label: 'Icon library',
+        keywords: ['lucide', 'phosphor', 'tabler', 'remix', 'stroke', 'weight'],
+        Widget: IconLibraryWidget,
       }),
     ],
   },
   {
     id: 'shape',
-    label: 'Shape',
-    domain: 'shape',
+    label: 'Shape & space',
     icon: ShapesIcon,
+    Visual: RadiusVisual,
     controls: [
       c({
         id: 'radius-factor',
-        label: 'Radius factor',
-        description: 'Scales the whole corner-radius scale at once.',
-        domain: 'shape',
-        tier: 'primitive',
-        tempo: 'macro',
-        binding: 'live',
-        keywords: ['corner', 'rounding'],
+        label: 'Radius',
+        keywords: ['corner', 'rounding', 'radius'],
         Widget: RadiusFactorWidget,
       }),
       c({
-        id: 'border-width',
-        label: 'Border width',
-        domain: 'shape',
-        tier: 'primitive',
-        tempo: 'micro',
-        binding: 'stub',
-        Widget: BorderWidthWidget,
-      }),
-    ],
-  },
-  {
-    id: 'spacing',
-    label: 'Spacing & density',
-    domain: 'spacing',
-    icon: RulerIcon,
-    controls: [
-      c({
         id: 'density',
         label: 'Density',
-        description: 'Global control heights, gaps and padding.',
-        domain: 'spacing',
-        tier: 'primitive',
-        tempo: 'macro',
-        binding: 'live',
-        keywords: ['compact', 'comfortable', 'scale'],
+        keywords: ['compact', 'comfortable', 'spacing', 'scale'],
         Widget: DensityWidget,
-      }),
-      c({
-        id: 'spacing-scale',
-        label: 'Spacing scale',
-        domain: 'spacing',
-        tier: 'primitive',
-        tempo: 'micro',
-        binding: 'stub',
-        Widget: SpacingScaleWidget,
       }),
     ],
   },
   {
-    id: 'elevation',
-    label: 'Elevation & depth',
-    domain: 'elevation',
-    icon: LayersIcon,
+    id: 'details',
+    label: 'Details',
+    icon: SlidersHorizontalIcon,
     controls: [
-      c({
-        id: 'style-family',
-        label: 'Style family',
-        description: 'The big re-skin: flat, soft, 3D or glass.',
-        domain: 'elevation',
-        tier: 'semantic',
-        tempo: 'macro',
-        binding: 'stub',
-        keywords: ['flat', 'glass', 'neumorphism', 'skeuomorphic'],
-        Widget: StyleFamilyWidget,
-      }),
-      c({
-        id: 'shadow-intensity',
-        label: 'Shadow intensity',
-        domain: 'elevation',
-        tier: 'primitive',
-        tempo: 'micro',
-        binding: 'stub',
-        Widget: ShadowIntensityWidget,
-      }),
-      c({
-        id: 'backdrop-blur',
-        label: 'Backdrop blur',
-        description: 'Frost behind overlays and menus.',
-        domain: 'elevation',
-        tier: 'primitive',
-        tempo: 'micro',
-        binding: 'stub',
-        Widget: BackdropBlurWidget,
-      }),
       c({
         id: 'shadows',
         label: 'Shadows',
-        description:
-          'Raw box-shadow for overlays, cards and controls; empty uses the default.',
-        domain: 'elevation',
-        tier: 'primitive',
-        tempo: 'micro',
-        binding: 'live',
-        block: true,
-        keywords: ['shadow', 'elevation', 'box-shadow'],
+        keywords: ['shadow', 'elevation', 'box-shadow', 'depth'],
         Widget: ShadowsWidget,
       }),
-    ],
-  },
-  {
-    id: 'motion',
-    label: 'Motion',
-    domain: 'motion',
-    icon: ZapIcon,
-    controls: [
-      c({
-        id: 'duration',
-        label: 'Duration scale',
-        description: 'Baseline transition speed.',
-        domain: 'motion',
-        tier: 'primitive',
-        tempo: 'macro',
-        binding: 'stub',
-        Widget: DurationWidget,
-      }),
-      c({
-        id: 'reduced-motion',
-        label: 'Respect reduced-motion',
-        domain: 'motion',
-        tier: 'semantic',
-        tempo: 'micro',
-        binding: 'stub',
-        Widget: () => (
-          <BoolToken varName="--ds-reduced-motion" fallback="true" />
-        ),
-      }),
-      c({
-        id: 'motion-enabled',
-        label: 'Animations',
-        description: 'Global on/off for all transitions.',
-        domain: 'motion',
-        tier: 'semantic',
-        tempo: 'micro',
-        binding: 'stub',
-        Widget: () => (
-          <BoolToken varName={MOTION_ENABLED_VAR} fallback="true" />
-        ),
-      }),
-    ],
-  },
-  {
-    id: 'interaction',
-    label: 'Interaction',
-    domain: 'interaction',
-    icon: MousePointer2Icon,
-    controls: [
       c({
         id: 'cursor-interactive',
         label: 'Interactive cursor',
-        description: 'Pointer on actionable elements.',
-        domain: 'interaction',
-        tier: 'semantic',
-        tempo: 'micro',
-        binding: 'live',
+        keywords: ['cursor', 'pointer', 'hover'],
         Widget: () => (
           <CursorWidget
+            label="Cursor"
             varName={CURSOR_INTERACTIVE_VAR}
             fallback={DEFAULT_CURSOR_INTERACTIVE}
           />
@@ -897,150 +762,103 @@ export const SECTIONS: Section[] = [
       c({
         id: 'cursor-disabled',
         label: 'Disabled cursor',
-        domain: 'interaction',
-        tier: 'semantic',
-        tempo: 'micro',
-        binding: 'live',
+        keywords: ['cursor', 'disabled', 'not-allowed'],
         Widget: () => (
           <CursorWidget
+            label="Disabled"
             varName={CURSOR_DISABLED_VAR}
             fallback={DEFAULT_CURSOR_DISABLED}
           />
         ),
       }),
-      c({
-        id: 'focus-ring-width',
-        label: 'Focus ring width',
-        description: 'Keyboard focus outline thickness.',
-        domain: 'interaction',
-        tier: 'semantic',
-        tempo: 'micro',
-        binding: 'stub',
-        Widget: FocusRingWidthWidget,
-      }),
-    ],
-  },
-  {
-    id: 'components',
-    label: 'Component anatomy',
-    domain: 'component',
-    icon: BoxSelectIcon,
-    controls: [
-      c({
-        id: 'button-anatomy',
-        label: 'Button',
-        description: 'Style family, radius and the params buttons differ on.',
-        domain: 'component',
-        tier: 'component',
-        tempo: 'micro',
-        binding: 'live',
-        block: true,
-        Widget: () => <ComponentAnatomyWidget name="button" />,
-      }),
-      c({
-        id: 'input-anatomy',
-        label: 'Input',
-        domain: 'component',
-        tier: 'component',
-        tempo: 'micro',
-        binding: 'live',
-        block: true,
-        Widget: () => <ComponentAnatomyWidget name="input" />,
-      }),
-      c({
-        id: 'card-anatomy',
-        label: 'Card',
-        domain: 'component',
-        tier: 'component',
-        tempo: 'micro',
-        binding: 'live',
-        block: true,
-        Widget: () => <ComponentAnatomyWidget name="card" />,
-      }),
-    ],
-  },
-  {
-    id: 'icons',
-    label: 'Icons',
-    domain: 'icon',
-    icon: SmileIcon,
-    controls: [
-      c({
-        id: 'icon-stroke',
-        label: 'Stroke width',
-        domain: 'icon',
-        tier: 'primitive',
-        tempo: 'micro',
-        binding: 'stub',
-        Widget: IconStrokeWidget,
-      }),
-    ],
-  },
-  {
-    id: 'mode',
-    label: 'Modes',
-    domain: 'mode',
-    icon: MoonIcon,
-    controls: [
-      c({
-        id: 'default-mode',
-        label: 'Default mode',
-        description: 'Which mode the exported system boots in.',
-        domain: 'mode',
-        tier: 'semantic',
-        tempo: 'micro',
-        binding: 'stub',
-        Widget: DefaultModeWidget,
-      }),
     ],
   },
 ]
 
-/* ----------------------------------------------------------------------------
- * Derived views — the lab re-groups the SAME controls without touching them.
- * -------------------------------------------------------------------------- */
+/* --------------------------- Chapter status ------------------------------ */
+
+const TYPE_VARS = [FONT_HEADING_VAR, FONT_SANS_VAR, FONT_MONO_VAR]
+const ICON_VARS = [ICON_STROKE_WIDTH_VAR, ICON_WEIGHT_VAR]
+const SHAPE_VARS = [RADIUS_FACTOR_VAR]
+const DETAIL_VARS = [
+  '--shadow-overlay',
+  '--shadow-card',
+  '--shadow-control',
+  CURSOR_INTERACTIVE_VAR,
+  CURSOR_DISABLED_VAR,
+]
+
+function stripTokens(
+  tokens: Record<string, string>,
+  vars: string[],
+): Record<string, string> {
+  const next = { ...tokens }
+  for (const v of vars) delete next[v]
+  return next
+}
+
+/**
+ * Whether a chapter deviates from the default system, and the way back.
+ * Defaults are the absent state (`undefined` color/icons, empty tokens), so
+ * modified = the chapter's slice is present.
+ */
+export function useSectionStatus(sectionId: string): {
+  modified: boolean
+  reset: () => void
+} {
+  const { designSystem, setDesignSystem } = useDesignSystem()
+  const hasVar = (vars: string[]) =>
+    vars.some((v) => designSystem.tokens[v] !== undefined)
+  const stripVars = (vars: string[]) => () =>
+    setDesignSystem((prev) => ({
+      ...prev,
+      tokens: stripTokens(prev.tokens, vars),
+    }))
+
+  switch (sectionId) {
+    case 'color':
+      return {
+        modified: designSystem.color !== undefined,
+        reset: () => setDesignSystem((prev) => ({ ...prev, color: undefined })),
+      }
+    case 'typography':
+      return { modified: hasVar(TYPE_VARS), reset: stripVars(TYPE_VARS) }
+    case 'icons':
+      return {
+        modified: designSystem.icons !== undefined || hasVar(ICON_VARS),
+        reset: () =>
+          setDesignSystem((prev) => ({
+            ...prev,
+            icons: undefined,
+            tokens: stripTokens(prev.tokens, ICON_VARS),
+          })),
+      }
+    case 'shape':
+      return {
+        modified: designSystem.density !== 'default' || hasVar(SHAPE_VARS),
+        reset: () =>
+          setDesignSystem((prev) => ({
+            ...prev,
+            density: 'default',
+            tokens: stripTokens(prev.tokens, SHAPE_VARS),
+          })),
+      }
+    case 'details':
+      return { modified: hasVar(DETAIL_VARS), reset: stripVars(DETAIL_VARS) }
+    case 'components':
+      return {
+        modified: Object.keys(designSystem.componentParams).length > 0,
+        reset: () =>
+          setDesignSystem((prev) => ({ ...prev, componentParams: {} })),
+      }
+    default:
+      return { modified: false, reset: () => {} }
+  }
+}
 
 export const ALL_CONTROLS: Control[] = SECTIONS.flatMap((s) => s.controls)
 
-const TIER_META: Record<string, { label: string; icon: LucideIcon }> = {
-  primitive: { label: 'Primitives', icon: PaletteIcon },
-  semantic: { label: 'Semantic', icon: ShapesIcon },
-  component: { label: 'Components', icon: BoxSelectIcon },
-}
-const TEMPO_META: Record<string, { label: string; icon: LucideIcon }> = {
-  macro: { label: 'Macros', icon: SparklesIcon },
-  micro: { label: 'Fine controls', icon: GaugeIcon },
-}
-
-function regroup(
-  key: 'tier' | 'tempo',
-  order: string[],
-  meta: Record<string, { label: string; icon: LucideIcon }>,
-): Section[] {
-  return order
-    .flatMap((bucket) => {
-      const m = meta[bucket]
-      if (!m) return []
-      return [
-        {
-          id: bucket,
-          label: m.label,
-          domain: 'color' as const,
-          icon: m.icon,
-          controls: ALL_CONTROLS.filter((ctrl) => ctrl[key] === bucket),
-        },
-      ]
-    })
-    .filter((s) => s.controls.length > 0)
-}
-
-/** Sections for the active grouping. Domain is the authored order; the others derive. */
-export function sectionsFor(grouping: 'domain' | 'tier' | 'tempo'): Section[] {
-  if (grouping === 'tier') {
-    return regroup('tier', ['primitive', 'semantic', 'component'], TIER_META)
-  }
-  if (grouping === 'tempo') {
-    return regroup('tempo', ['macro', 'micro'], TEMPO_META)
-  }
-  return SECTIONS
+/** Section a control lives in — for the command palette's jump target. */
+export function sectionOfControl(controlId: string): Section | undefined {
+  return SECTIONS.find((s) => s.controls.some((ctrl) => ctrl.id === controlId))
 }

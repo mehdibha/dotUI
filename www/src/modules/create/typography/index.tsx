@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
-import { SearchIcon, XIcon } from 'lucide-react'
+import { ChevronDownIcon, SearchIcon, XIcon } from 'lucide-react'
 
 import {
   DEFAULT_BODY_FAMILY,
@@ -16,7 +16,6 @@ import {
 import type { FontCategory } from '@/lib/fonts'
 import { Button } from '@/registry/ui/button'
 import { Command } from '@/registry/ui/command'
-import { Label } from '@/registry/ui/field'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 import {
   ListBox,
@@ -26,7 +25,7 @@ import {
 } from '@/registry/ui/list-box'
 import { Popover } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
-import { Select, SelectTrigger } from '@/registry/ui/select'
+import { Select, SelectValue } from '@/registry/ui/select'
 
 import { useDesignSystem } from '../preset'
 
@@ -39,14 +38,14 @@ const CATEGORY_LABELS: Record<FontCategory, string> = {
 }
 
 /** Load families into THIS document (the panel page, not the preview iframe). */
-function useLoadedFamilies(families: (string | null)[]) {
+export function useLoadedFamilies(families: (string | null)[]) {
   const key = families.filter(Boolean).join('\n')
   useEffect(() => {
     if (key) ensureFontStylesheets(document, key.split('\n'))
   }, [key])
 }
 
-function useTypography() {
+export function useTypography() {
   const { designSystem, setToken } = useDesignSystem()
   const { tokens } = designSystem
 
@@ -80,74 +79,6 @@ function useTypography() {
     )
 
   return { bodyFamily, headingFamily, monoFamily, setBody, setHeading, setMono }
-}
-
-export function TypographyConfig() {
-  const {
-    bodyFamily,
-    headingFamily,
-    monoFamily,
-    setBody,
-    setHeading,
-    setMono,
-  } = useTypography()
-
-  return (
-    <div className="flex flex-col gap-3">
-      <FontPicker
-        label="Heading font"
-        categories={['sans-serif', 'serif', 'display', 'handwriting']}
-        selectedKey={headingFamily ?? bodyFamily}
-        onChange={setHeading}
-      />
-      <FontPicker
-        label="Body font"
-        categories={['sans-serif', 'serif']}
-        selectedKey={bodyFamily}
-        onChange={setBody}
-      />
-      <FontPicker
-        label="Mono font"
-        categories={['mono']}
-        selectedKey={monoFamily}
-        onChange={setMono}
-      />
-    </div>
-  )
-}
-
-/** The customizer home tile — the selected families, rendered in themselves. */
-export function TypographySummary() {
-  const { bodyFamily, headingFamily, monoFamily } = useTypography()
-  const effectiveHeading = headingFamily ?? bodyFamily
-  useLoadedFamilies([effectiveHeading, bodyFamily, monoFamily])
-
-  const rows = [
-    { label: 'Heading', family: effectiveHeading, sampleClass: 'text-2xl' },
-    { label: 'Body', family: bodyFamily, sampleClass: 'text-base' },
-    { label: 'Mono', family: monoFamily, sampleClass: 'text-base' },
-  ]
-
-  return (
-    <div className="flex flex-col gap-1.5">
-      {rows.map(({ label, family, sampleClass }) => (
-        <div key={label} className="flex items-center justify-between">
-          <div className="flex flex-col items-start gap-1">
-            <span className="text-[10px] tracking-widest text-fg-muted uppercase">
-              {label}
-            </span>
-            <p className="font-medium">{family}</p>
-          </div>
-          <p
-            className={`${sampleClass} leading-none tracking-tight`}
-            style={{ fontFamily: fontStack(family) }}
-          >
-            Ag
-          </p>
-        </div>
-      ))}
-    </div>
-  )
 }
 
 /**
@@ -202,7 +133,11 @@ function useLazyFontPreviews() {
   }, [])
 }
 
-const FontPicker = ({
+/**
+ * A searchable font select whose label lives inside the trigger and whose
+ * value renders in its own typeface — the control doubles as the specimen.
+ */
+export const FontPicker = ({
   label,
   categories,
   selectedKey,
@@ -214,14 +149,27 @@ const FontPicker = ({
   onChange: (family: string) => void
 }) => {
   const listRef = useLazyFontPreviews()
+  useLoadedFamilies([selectedKey])
   return (
     <Select
       className="w-full"
       selectedKey={selectedKey}
       onSelectionChange={(key) => onChange(key as string)}
+      aria-label={label}
     >
-      <Label>{label}</Label>
-      <SelectTrigger className="w-full" />
+      <Button
+        size="sm"
+        className="h-auto w-full justify-start gap-2 py-1.5 pl-2.5"
+      >
+        <div className="flex min-w-0 flex-1 flex-col items-start gap-0.5">
+          <span className="text-xs font-normal text-fg-muted">{label}</span>
+          <SelectValue
+            className="w-full truncate text-left"
+            style={{ fontFamily: fontStack(selectedKey) }}
+          />
+        </div>
+        <ChevronDownIcon data-icon-end="" className="text-fg-muted" />
+      </Button>
       <Popover className="w-(--trigger-width) outline-hidden">
         <Command>
           <SearchField autoFocus aria-label="Search fonts">
