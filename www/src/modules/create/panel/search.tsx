@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { SearchIcon } from 'lucide-react'
+import { SearchIcon, XIcon } from 'lucide-react'
 import * as AutocompletePrimitive from 'react-aria-components/Autocomplete'
 
 import { cn } from '@/registry/lib/utils'
@@ -139,12 +139,22 @@ export function PanelSearch({
               <SearchField
                 autoFocus
                 aria-label="Search controls"
-                className="min-w-0 flex-1"
+                className="flex min-w-0 flex-1 flex-row items-center gap-1"
               >
                 <Input
                   placeholder="Search every control…"
                   className="h-full w-full border-0 bg-transparent px-0 shadow-none focus:ring-0"
                 />
+                {/* RAC wires this to clear-and-refocus; hidden until there's text. */}
+                <Button
+                  variant="quiet"
+                  size="sm"
+                  isIconOnly
+                  aria-label="Clear search"
+                  className="group-data-empty/search-field:hidden"
+                >
+                  <XIcon />
+                </Button>
               </SearchField>
             </div>
             {/* The suggestions card — same chrome and rhythm as the header. */}
