@@ -149,6 +149,15 @@
   }
 }
 
+/* Reveal for the /create panel's inline search — shared by the input bar and
+   its suggestions card so they enter as one unit. */
+@keyframes create-search-in {
+  from {
+    opacity: 0;
+    transform: translateY(-2px) scale(0.98);
+  }
+}
+
 /* preset-wash-bg — registered as a real <color> so the home cards-section
    background wash can tween the preset's --color-bg when the selected preset
    switches; browsers without @property just swap instantly. */
