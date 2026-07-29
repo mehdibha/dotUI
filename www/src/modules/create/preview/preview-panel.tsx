@@ -379,14 +379,18 @@ export function PreviewPanel({ className }: { className?: string }) {
             'bg-neutral [background-image:radial-gradient(var(--color-border)_1px,transparent_1px)] [background-size:14px_14px]',
         )}
       >
-        <div className="flex h-full w-full justify-center">
+        {/* Centred with `mx-auto`, not `justify-center`: auto margins collapse to
+            zero once the device is wider than the stage, so it stays scrollable
+            from its left edge. `shrink-0` keeps the set device width — as a flex
+            item the iframe would otherwise shrink to fit and preview a lie. */}
+        <div className="flex h-full w-full">
           <iframe
             ref={iframeRef}
             key={effectivePreview}
             src={iframeSrc}
             title="preview"
             className={cn(
-              'h-full border-0 bg-bg',
+              'mx-auto h-full shrink-0 border-0 bg-bg',
               constrained && 'border-x shadow-md',
             )}
             style={{
