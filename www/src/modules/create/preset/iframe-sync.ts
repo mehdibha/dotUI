@@ -11,6 +11,7 @@ export type PreviewMode = 'light' | 'dark'
 type ParentToIframeMessage =
   | { type: 'design-system'; data: DesignSystem }
   | { type: 'preview-mode'; mode: PreviewMode }
+  | { type: 'preview-ping' }
 
 type IframeToParentMessage =
   | { type: 'preview-ready' }
@@ -36,6 +37,20 @@ export function sendPreviewMode(
   if (!iframe?.contentWindow) return
   iframe.contentWindow.postMessage(
     { type: 'preview-mode', mode } satisfies ParentToIframeMessage,
+    '*',
+  )
+}
+
+/**
+ * Ask the iframe to re-announce readiness. The iframe's unprompted `preview-ready`
+ * is fire-and-forget: it often mounts before the server-rendered parent hydrates,
+ * so that message lands with no listener attached and is lost forever. Polling this
+ * until it answers makes readiness robust to either side winning the race.
+ */
+export function pingIframe(iframe: HTMLIFrameElement | null) {
+  if (!iframe?.contentWindow) return
+  iframe.contentWindow.postMessage(
+    { type: 'preview-ping' } satisfies ParentToIframeMessage,
     '*',
   )
 }
@@ -86,19 +101,24 @@ export function usePreviewForcedTheme(): PreviewMode | undefined {
   React.useEffect(() => {
     if (!isInIframe()) return
 
+    const announceReady = () =>
+      window.parent.postMessage(
+        { type: 'preview-ready' } satisfies IframeToParentMessage,
+        '*',
+      )
+
     const handleMessage = (event: MessageEvent) => {
       if (event.data?.type === 'preview-mode') {
         setMode(event.data.mode === 'dark' ? 'dark' : 'light')
       }
+      // The parent polls when it missed the announcement below.
+      if (event.data?.type === 'preview-ping') announceReady()
     }
 
     window.addEventListener('message', handleMessage)
     // Signal readiness so the parent (re)sends the current mode — its load-event send can
     // race ahead of this listener mounting.
-    window.parent.postMessage(
-      { type: 'preview-ready' } satisfies IframeToParentMessage,
-      '*',
-    )
+    announceReady()
     return () => window.removeEventListener('message', handleMessage)
   }, [])
 

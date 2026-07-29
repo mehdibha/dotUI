@@ -31,6 +31,7 @@ import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import {
+  pingIframe,
   sendPreviewMode,
   sendToIframe,
   useDesignSystem,
@@ -60,6 +61,9 @@ const SIZE_OPTIONS: {
 // Zoom magnifies the rendered iframe (CSS `zoom`, no reflow) — distinct from device
 // size, which reflows the content. Combined, they behave like a browser's device bar.
 const ZOOM_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2]
+
+const PREVIEW_PING_INTERVAL = 150
+const PREVIEW_READY_TIMEOUT = 8000
 
 const routeApi = getRouteApi('/_app/create')
 
@@ -101,19 +105,39 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   // The iframe remounts per previewed component (key below) — show the stage
   // skeleton again until the new document signals it has rendered. The iframe's
-  // `load` event is too early (it fires before the SPA paints), so listen for
-  // the app's own `preview-ready` message instead.
+  // `load` event is too early (it fires before the SPA paints), so wait for the
+  // app's own `preview-ready` instead. On first load the iframe usually mounts
+  // before this server-rendered parent hydrates, so its unprompted announcement
+  // lands with no listener attached — poll until it answers rather than trusting
+  // that one message. Give up after PREVIEW_READY_TIMEOUT so a preview that
+  // never reports (an error page, say) reveals itself instead of hanging.
   useEffect(() => {
     setIsLoaded(false)
-  }, [iframeSrc])
+    const iframe = iframeRef.current
+    if (!iframe) return
 
-  useEffect(() => {
-    const onReady = (event: MessageEvent) => {
-      if (event.data?.type === 'preview-ready') setIsLoaded(true)
+    let poll: ReturnType<typeof setInterval>
+    const settle = () => {
+      setIsLoaded(true)
+      clearInterval(poll)
+      clearTimeout(giveUp)
+      window.removeEventListener('message', onReady)
     }
+    const onReady = (event: MessageEvent) => {
+      if (event.data?.type === 'preview-ready') settle()
+    }
+
     window.addEventListener('message', onReady)
-    return () => window.removeEventListener('message', onReady)
-  }, [])
+    const giveUp = setTimeout(settle, PREVIEW_READY_TIMEOUT)
+    poll = setInterval(() => pingIframe(iframe), PREVIEW_PING_INTERVAL)
+    pingIframe(iframe)
+
+    return () => {
+      clearInterval(poll)
+      clearTimeout(giveUp)
+      window.removeEventListener('message', onReady)
+    }
+  }, [iframeSrc])
 
   // Send the design system to the iframe on change, on load, and when the iframe signals it's
   // ready — its message listener can mount after the load event, racing the load-fired send.
@@ -371,18 +395,19 @@ export function PreviewPanel({ className }: { className?: string }) {
             }}
           />
         </div>
-        {/* Stage skeleton — the preview never opens on a black void. */}
+        {/* Stage skeleton — the preview never opens on a black void. One surface
+            rather than mock content: the incoming preview is an arbitrary page,
+            so any guessed layout would be wrong more often than right. */}
         <div
           aria-hidden
           className={cn(
-            'absolute inset-0 z-10 flex flex-col gap-4 bg-bg p-8 transition-opacity duration-300',
+            'absolute inset-0 z-10 transition-opacity duration-300',
             isLoaded && 'pointer-events-none opacity-0',
           )}
         >
-          <div className="h-3 w-24 animate-pulse rounded bg-neutral" />
-          <div className="h-10 w-56 animate-pulse rounded-md bg-neutral" />
-          <div className="h-3 w-80 max-w-full animate-pulse rounded bg-neutral" />
-          <div className="mt-4 h-64 w-full animate-pulse rounded-xl bg-neutral" />
+          {/* The pulse lives on the inner surface: `animate-pulse` drives opacity,
+              which would otherwise override the fade-out above and never clear. */}
+          <div className="skeleton size-full animate-pulse" />
         </div>
       </div>
     </div>
