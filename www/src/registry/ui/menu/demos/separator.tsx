@@ -6,7 +6,7 @@ import { Separator } from '@/registry/ui/separator'
 export default function Demo() {
   return (
     <Menu>
-      <Button variant="default">File</Button>
+      <Button variant="secondary">File</Button>
       <Popover>
         <MenuContent>
           <MenuItem>New...</MenuItem>

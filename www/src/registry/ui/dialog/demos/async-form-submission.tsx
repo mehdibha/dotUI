@@ -59,7 +59,7 @@ export default function Demo() {
                     </FormPrimitives.Form>
                   </DialogBody>
                   <DialogFooter>
-                    <Button variant="default" slot="close">
+                    <Button variant="secondary" slot="close">
                       Cancel
                     </Button>
                     <Button

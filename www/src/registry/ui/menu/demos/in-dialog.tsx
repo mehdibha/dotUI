@@ -23,7 +23,7 @@ import { Separator } from '@/registry/ui/separator'
 export default function Demo() {
   return (
     <Dialog>
-      <Button variant="default">Open Dialog</Button>
+      <Button variant="secondary">Open Dialog</Button>
       <Responsive
         render={(isMobile) => {
           const content = (
@@ -36,7 +36,7 @@ export default function Demo() {
               </DialogHeader>
               <DialogBody>
                 <Menu>
-                  <Button variant="default" className="w-fit">
+                  <Button variant="secondary" className="w-fit">
                     Open Menu
                   </Button>
                   <Popover>

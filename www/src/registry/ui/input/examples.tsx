@@ -188,7 +188,7 @@ function InputForm() {
             <Input type="text" placeholder="123 Main St" />
           </TextField>
           <Field orientation="horizontal">
-            <Button type="button" variant="default">
+            <Button type="button" variant="secondary">
               Cancel
             </Button>
             <Button type="submit" variant="primary">

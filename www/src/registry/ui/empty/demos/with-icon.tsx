@@ -23,7 +23,7 @@ export default function Demo() {
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-        <Button variant="default">
+        <Button variant="secondary">
           <PlusIcon />
           New Post
         </Button>

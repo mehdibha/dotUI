@@ -24,7 +24,7 @@ export default function Demo() {
   )
   return (
     <Menu>
-      <Button variant="default" className="w-fit">
+      <Button variant="secondary" className="w-fit">
         Notifications
       </Button>
       <Popover>

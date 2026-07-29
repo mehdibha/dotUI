@@ -12,7 +12,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <Menu>
-      <Button variant="default" isIconOnly>
+      <Button variant="secondary" isIconOnly>
         <MenuIcon />
       </Button>
       <Popover>

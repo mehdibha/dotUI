@@ -1,6 +1,7 @@
 // AUTO-GENERATED - DO NOT EDIT
 // Run "tsx scripts/registry-build.ts" to regenerate
 
+import LibContext from "@/registry/lib/context/meta";
 import LibFocusStyles from "@/registry/lib/focus-styles/meta";
 import LibReactAriaTokenField from "@/registry/lib/react-aria-token-field/meta";
 import LibResponsive from "@/registry/lib/responsive/meta";
@@ -161,6 +162,7 @@ export const registryUi: RegistryItem[] = [
 ];
 
 export const registryLib: RegistryItem[] = [
+	LibContext,
 	LibFocusStyles,
 	LibReactAriaTokenField,
 	LibResponsive,

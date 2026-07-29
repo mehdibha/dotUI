@@ -17,7 +17,7 @@ export default function Demo() {
   const [selected, setSelected] = React.useState<Set<Key>>(new Set(['status']))
   return (
     <Menu>
-      <Button variant="default" className="w-fit">
+      <Button variant="secondary" className="w-fit">
         Checkboxes
       </Button>
       <Popover>

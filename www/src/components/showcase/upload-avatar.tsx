@@ -40,7 +40,7 @@ export function UploadAvatar({
             Drag a file here to upload
           </DropZoneLabel>
           <FileTrigger acceptedFileTypes={['image/png', 'image/jpeg']}>
-            <Button variant="default" size="sm">
+            <Button variant="secondary" size="sm">
               Choose file
             </Button>
           </FileTrigger>

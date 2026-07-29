@@ -32,9 +32,9 @@ export interface PaginationLinkProps extends React.ComponentProps<
 
   /**
    * The visual style of the link.
-   * @default isActive ? 'default' : 'quiet'
+   * @default isActive ? 'secondary' : 'quiet'
    */
-  variant?: 'default' | 'primary' | 'quiet' | 'link' | 'warning' | 'danger'
+  variant?: 'primary' | 'secondary' | 'quiet' | 'link' | 'warning' | 'danger'
 
   /**
    * The size of the link.

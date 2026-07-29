@@ -24,7 +24,7 @@ export default function Demo() {
           }
         }}
       >
-        <Button variant="default" size="sm">
+        <Button variant="secondary" size="sm">
           <UploadIcon /> {src ? 'Change photo' : 'Upload photo'}
         </Button>
       </FileTrigger>

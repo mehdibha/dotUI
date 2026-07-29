@@ -39,7 +39,7 @@ export default function Demo() {
     <div className="flex w-full items-center">
       <div className="flex flex-1 items-center justify-center">
         <Dialog>
-          <Button variant="default" isIconOnly>
+          <Button variant="secondary" isIconOnly>
             <InfoIcon />
           </Button>
           <Responsive

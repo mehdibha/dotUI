@@ -42,7 +42,7 @@ export const componentRenders: Record<string, () => ReactNode> = {
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap items-center gap-2">
         <Button variant="primary">Primary</Button>
-        <Button variant="default">Secondary</Button>
+        <Button variant="secondary">Secondary</Button>
         <Button variant="danger">Destructive</Button>
         <Button variant="quiet">Quiet</Button>
       </div>
@@ -130,7 +130,7 @@ export const componentRenders: Record<string, () => ReactNode> = {
 
   tooltip: () => (
     <Tooltip>
-      <Button variant="default">Hover me</Button>
+      <Button variant="secondary">Hover me</Button>
       <TooltipContent>Add to library</TooltipContent>
     </Tooltip>
   ),

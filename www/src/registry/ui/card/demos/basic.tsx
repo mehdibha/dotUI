@@ -55,7 +55,7 @@ export default function Demo() {
         <Button variant="primary" type="submit" className="w-full">
           Login
         </Button>
-        <Button variant="default" className="w-full">
+        <Button variant="secondary" className="w-full">
           Login with Google
         </Button>
       </CardFooter>

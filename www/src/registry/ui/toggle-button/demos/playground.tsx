@@ -6,13 +6,13 @@ import { ToggleButton } from '@/registry/ui/toggle-button'
 
 export default function Demo({
   children = 'Pin',
-  variant = 'default',
+  variant = 'secondary',
   size = 'md',
   isIconOnly = false,
   isDisabled = false,
 }: {
   children?: string
-  variant?: 'default' | 'primary' | 'quiet'
+  variant?: 'primary' | 'secondary' | 'quiet'
   size?: 'lg' | 'md' | 'sm' | 'xs'
   isIconOnly?: boolean
   isDisabled?: boolean

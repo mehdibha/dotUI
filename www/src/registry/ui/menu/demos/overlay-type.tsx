@@ -29,7 +29,7 @@ export default function Demo() {
   return (
     <div className="flex items-center gap-14">
       <Menu>
-        <Button variant="default" isIconOnly>
+        <Button variant="secondary" isIconOnly>
           <MenuIcon />
         </Button>
         <Responsive

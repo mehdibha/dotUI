@@ -29,7 +29,7 @@ export default function Demo() {
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
-                <Button slot="close" variant="default">
+                <Button slot="close" variant="secondary">
                   Cancel
                 </Button>
                 <Button slot="close" variant="danger">

@@ -24,7 +24,11 @@ export function ChartsPage() {
           <LinkButton href="/create" variant="primary" size="lg">
             Launch the editor
           </LinkButton>
-          <LinkButton href="/docs/components/chart" variant="default" size="lg">
+          <LinkButton
+            href="/docs/components/chart"
+            variant="secondary"
+            size="lg"
+          >
             View documentation
           </LinkButton>
         </PageHero>

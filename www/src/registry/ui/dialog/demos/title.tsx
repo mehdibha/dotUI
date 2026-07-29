@@ -15,7 +15,7 @@ import { TextField } from '@/registry/ui/text-field'
 export default function Demo() {
   return (
     <Dialog>
-      <Button variant="default">Edit username</Button>
+      <Button variant="secondary">Edit username</Button>
       <Responsive
         render={(isMobile) => {
           const content = (

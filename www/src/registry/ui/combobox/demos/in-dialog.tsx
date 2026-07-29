@@ -22,7 +22,7 @@ import { Popover } from '@/registry/ui/popover'
 export default function Demo() {
   return (
     <Dialog>
-      <Button variant="default">Open Dialog</Button>
+      <Button variant="secondary">Open Dialog</Button>
       <Responsive
         render={(isMobile) => {
           const content = (

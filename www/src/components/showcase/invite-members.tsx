@@ -54,7 +54,7 @@ export function InviteMembers(props: React.ComponentProps<'div'>) {
           Collaborate with members on this project.
         </CardDescription>
         <CardAction>
-          <Button variant="default">
+          <Button variant="secondary">
             <ExternalLinkIcon />
             Invite link
           </Button>
