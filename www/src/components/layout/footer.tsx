@@ -1,7 +1,7 @@
 export function Footer() {
   return (
-    <footer className="mx-auto flex h-24 w-full max-w-[calc(1500px+16rem)] items-center justify-start px-4 sm:px-6 lg:px-32">
-      <p className="text-sm text-fg-muted">
+    <footer className="mx-auto flex h-24 w-full max-w-[calc(1500px+16rem)] items-center justify-center px-4 sm:px-6 lg:px-32">
+      <p className="text-center text-sm text-fg-muted">
         Built with passion by{' '}
         <a
           href="https://x.com/mehdibha"

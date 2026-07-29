@@ -40,16 +40,19 @@ export function CtaSection() {
   const ds = preset?.designSystem ?? DEFAULTS
 
   return (
-    <section className="relative mt-32 overflow-x-clip md:mt-44">
+    <section className="relative overflow-x-clip">
+      {/* Density is pinned rather than taken from the preset: it's the one axis
+          that resizes the pill, and a command that changes height mid-switch
+          reads as a layout glitch instead of a re-theme. */}
       <DesignSystemProvider
         scoped
         params={ds.componentParams}
         tokens={ds.tokens}
-        density={ds.density}
+        density="default"
         color={ds.color}
         icons={ds.icons}
       >
-        <div className="container flex flex-col items-center py-16 text-center md:py-24">
+        <div className="container flex flex-col items-center text-center">
           <h2 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-3xl leading-tight font-normal tracking-[-0.05em] text-balance text-fg antialiased sm:text-5xl">
             <span className="block">Your design system,</span>
             <span className="block text-fg-muted">one command away.</span>
@@ -131,7 +134,7 @@ function InstallCommand({
       <PillBacklight
         pillRef={pillRef}
         color={preset?.swatch ?? null}
-        className="-inset-x-64 -inset-y-40 -z-10"
+        className="-inset-x-64 -inset-y-40 -z-10 opacity-50"
       />
       <PillGlow />
       <Menu>
