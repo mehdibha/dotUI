@@ -33,7 +33,7 @@ export function HomePage() {
             <LinkButton href="/create" variant="primary" size="lg">
               Start building
             </LinkButton>
-            <LinkButton href="/docs/components" variant="secondary" size="lg">
+            <LinkButton href="/components" variant="secondary" size="lg">
               View components
             </LinkButton>
           </div>

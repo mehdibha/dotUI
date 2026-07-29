@@ -135,7 +135,7 @@
   -webkit-mask-image: linear-gradient(to top, transparent 10%, #000 60%);
 }
 
-/* Click ripple for the docs component-gallery cursor (components-list/autoplay).
+/* Click ripple for the component-gallery cursor (modules/components/autoplay).
    Expands and fades from the pointer hotspot; mounts only during the press beat
    so it replays on each loop. */
 @keyframes cursor-click {

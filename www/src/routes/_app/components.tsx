@@ -1,13 +1,33 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 
-// The components gallery moved into the docs at /docs/components. Keep this path
-// as a permanent redirect so existing links and bookmarks don't break.
+import { siteConfig } from '@/config/site'
+import { ComponentsPage } from '@/modules/components/components-page'
+
+const TITLE = 'Components'
+const DESCRIPTION =
+  'Browse every component in the library — accessible, composable, and styled to match your design system.'
+
 export const Route = createFileRoute('/_app/components')({
-  beforeLoad: () => {
-    throw redirect({
-      to: '/docs/$',
-      params: { _splat: 'components' },
-      statusCode: 301,
-    })
+  head: () => {
+    const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(
+      TITLE,
+    )}&description=${encodeURIComponent(DESCRIPTION)}`
+    return {
+      meta: [
+        { title: `${TITLE} - ${siteConfig.name}` },
+        { name: 'description', content: DESCRIPTION },
+        { property: 'og:title', content: TITLE },
+        { property: 'og:description', content: DESCRIPTION },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:url', content: `${siteConfig.url}/components` },
+        { property: 'og:image', content: ogImageUrl },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: TITLE },
+        { name: 'twitter:description', content: DESCRIPTION },
+        { name: 'twitter:image', content: ogImageUrl },
+        { name: 'twitter:creator', content: siteConfig.twitter.creator },
+      ],
+    }
   },
+  component: ComponentsPage,
 })

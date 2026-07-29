@@ -30,6 +30,7 @@ import { Select, SelectValue } from '@/registry/ui/select'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { componentsData } from '@/modules/components/components-data'
 import {
   pingIframe,
   sendPreviewMode,
@@ -37,7 +38,6 @@ import {
   useDesignSystem,
 } from '@/modules/create/preset'
 import type { PreviewMode } from '@/modules/create/preset'
-import { componentsData } from '@/modules/docs/components-list/components-data'
 
 type DeviceSize = 'mobile' | 'tablet' | 'desktop'
 

@@ -35,10 +35,7 @@ export const Route = createFileRoute('/llms.txt')({
     handlers: {
       GET: () => {
         const docs = docsSource.getPages()
-        // The components overview lives at /docs/components (no trailing slash);
-        // individual component pages live beneath it.
-        const isComponent = (url: string) =>
-          url === '/docs/components' || url.startsWith('/docs/components/')
+        const isComponent = (url: string) => url.startsWith('/docs/components/')
         const gettingStarted = docs.filter((page) => !isComponent(page.url))
         const components = docs.filter((page) => isComponent(page.url))
 

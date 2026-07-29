@@ -22,14 +22,9 @@ interface HeaderProps {
 
 export function Header({ className, items = [] }: HeaderProps) {
   const { pathname } = useLocation()
-  // Longest-matching-prefix wins so "/docs/components" highlights Components (not
-  // Docs) while "/docs/button" still highlights Docs.
-  const activeMatch = [...navItems]
-    .sort((a, b) => b.match.length - a.match.length)
-    .find(
-      (item) =>
-        pathname === item.match || pathname.startsWith(`${item.match}/`),
-    )?.match
+  const activeMatch = navItems.find(
+    (item) => pathname === item.match || pathname.startsWith(`${item.match}/`),
+  )?.match
 
   return (
     <header
@@ -62,10 +57,10 @@ export function Header({ className, items = [] }: HeaderProps) {
         >
           {navItems.map((item) => {
             // Color highlights the whole section (Docs stays lit on /docs/button)
-            // via the longest-prefix match above. aria-current is left to Router
-            // Link with `exact` matching so it marks only the literal current page
-            // — otherwise Link's default fuzzy match lights aria-current on both
-            // Docs and Components for any /docs/components/* page.
+            // via the prefix match above. aria-current is left to Router Link
+            // with `exact` matching so it marks only the literal current page —
+            // otherwise Link's default fuzzy match would light aria-current on
+            // Docs for every /docs/* page.
             const isActive = item.match === activeMatch
             return (
               <RouterLink

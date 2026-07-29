@@ -17,10 +17,11 @@ import { docsSource } from '@/lib/source'
 const escapeXml = (value: string) =>
   value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
-// /docs/components and every component page come from the docs source below, so
-// they are not listed here. /components is a permanent redirect, so it is omitted,
-// and /playground is a dev scratch page that shouldn't be advertised/indexed.
-const STATIC_PATHS = ['/', '/create']
+// Every component docs page comes from the docs source below, so they are not
+// listed here. /docs/components is a permanent redirect to /components, so it
+// is omitted, and /playground is a dev scratch page that shouldn't be
+// advertised/indexed.
+const STATIC_PATHS = ['/', '/components', '/create']
 
 export const Route = createFileRoute('/sitemap.xml')({
   server: {

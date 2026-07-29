@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from '@tanstack/react-router'
+import { createFileRoute, notFound, redirect } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { setResponseHeader } from '@tanstack/react-start/server'
 import { findNeighbour } from 'fumadocs-core/page-tree'
@@ -20,6 +20,13 @@ import { MiniTOC, TOC, TOCProvider } from '@/modules/docs/toc'
 import browserCollections from '@/.source/browser'
 
 export const Route = createFileRoute('/_app/docs/$')({
+  // The components gallery moved back to /components. Keep its old docs URL as
+  // a permanent redirect so existing links and bookmarks don't break.
+  beforeLoad: ({ params }) => {
+    if (params._splat === 'components') {
+      throw redirect({ to: '/components', statusCode: 301 })
+    }
+  },
   component: DocsPage,
   // Docs content only changes with a build/deploy (Vercel purges the CDN cache
   // on deploy), so never background-revalidate it on re-match.

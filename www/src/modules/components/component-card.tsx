@@ -20,7 +20,7 @@ function ComponentPreview({
   return (
     <div
       className={cn(
-        'relative h-40 w-full overflow-hidden rounded-lg border bg-bg',
+        'relative h-48 w-full overflow-hidden rounded-lg border bg-bg',
         className,
       )}
     >
