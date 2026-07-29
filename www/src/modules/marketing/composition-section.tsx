@@ -184,11 +184,11 @@ export function CompositionSection() {
               </div>
             </div>
             {/* The pane hugs its snippet between a floor and a ceiling; past the
-                ceiling the code crops under the bottom fade. Below lg, where the
-                section stacks, it's pinned instead — the page can't move between
-                steps. */}
+                ceiling the code scrolls under the bottom fade. Below lg, where
+                the section stacks, it's pinned instead — the page can't move
+                between steps. */}
             <div
-              className="overflow-hidden border-t [mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] transition-[height] ease-in-out motion-reduce:transition-none max-lg:max-h-62 max-lg:min-h-62 lg:max-h-86 lg:min-h-51"
+              className="no-scrollbar overflow-x-hidden overflow-y-auto overscroll-contain border-t [mask-image:linear-gradient(to_bottom,black_calc(100%-1.5rem),transparent)] transition-[height] ease-in-out motion-reduce:transition-none max-lg:max-h-62 max-lg:min-h-62 lg:max-h-86 lg:min-h-51"
               style={{
                 height: codeHeight ?? 'auto',
                 transitionDuration: '500ms',
