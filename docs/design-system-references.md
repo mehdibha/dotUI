@@ -55,6 +55,7 @@ The systems worth studying when researching presets, missing axes, or component 
 ### Components catalog
 
 - [HeroUI pro](https://heroui.pro)
+- [Beautiful UI (Turbo)](https://beautiful-ui-five.vercel.app/) — AI-native UI primitives
 
 ### Button
 
