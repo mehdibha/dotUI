@@ -20,8 +20,13 @@ import { useDesignSystemName } from './preset/storage'
  * Snapshots the current design system to a named localStorage preset ("Save as").
  * When an active saved preset has diverged it also offers to update it in place.
  */
-export function SavePresetDialog() {
-  const [isOpen, setIsOpen] = useState(false)
+export function SavePresetDialog({
+  isOpen,
+  onOpenChange,
+}: {
+  isOpen: boolean
+  onOpenChange: (open: boolean) => void
+}) {
   const { designSystem } = useDesignSystem()
   const { presets, activeId, save, update } = useMyPresets()
   const storedName = useDesignSystemName()
@@ -39,74 +44,69 @@ export function SavePresetDialog() {
 
   function saveAsNew() {
     save(trimmed || storedName, currentState)
-    setIsOpen(false)
+    onOpenChange(false)
   }
 
   function updateActive() {
     if (active) update(active.id, currentState, trimmed || undefined)
-    setIsOpen(false)
+    onOpenChange(false)
   }
 
   return (
-    <>
-      <Button size="sm" className="shrink-0" onPress={() => setIsOpen(true)}>
-        Save
-      </Button>
-      <Modal
-        isOpen={isOpen}
-        onOpenChange={setIsOpen}
-        className="w-full sm:max-w-sm"
-      >
-        <DialogContent aria-label="Save preset" className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1">
-            <DialogTitle className="text-base font-semibold">
-              Save preset
-            </DialogTitle>
-            <DialogDescription className="text-sm text-fg-muted">
-              Store the current system as a named preset you can reapply later.
-            </DialogDescription>
-          </div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              if (!trimmed) return
-              if (active && isDirty) updateActive()
-              else saveAsNew()
-            }}
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      className="w-full sm:max-w-sm"
+    >
+      <DialogContent aria-label="Save preset" className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
+          <DialogTitle className="text-base font-semibold">
+            Save preset
+          </DialogTitle>
+          <DialogDescription className="text-sm text-fg-muted">
+            Store the current system as a named preset you can reapply later.
+          </DialogDescription>
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            if (!trimmed) return
+            if (active && isDirty) updateActive()
+            else saveAsNew()
+          }}
+        >
+          <TextField
+            autoFocus
+            aria-label="Preset name"
+            value={name}
+            onChange={setName}
           >
-            <TextField
-              autoFocus
-              aria-label="Preset name"
-              value={name}
-              onChange={setName}
-            >
-              <Label>Name</Label>
-              <Input placeholder="Untitled" />
-            </TextField>
-          </form>
-          <div className="flex justify-end gap-2">
-            {active && isDirty ? (
-              <>
-                <Button size="sm" onPress={saveAsNew}>
-                  Save as new
-                </Button>
-                <Button size="sm" variant="primary" onPress={updateActive}>
-                  Update “{active.name}”
-                </Button>
-              </>
-            ) : (
-              <Button
-                size="sm"
-                variant="primary"
-                onPress={saveAsNew}
-                isDisabled={!trimmed}
-              >
-                Save
+            <Label>Name</Label>
+            <Input placeholder="Untitled" />
+          </TextField>
+        </form>
+        <div className="flex justify-end gap-2">
+          {active && isDirty ? (
+            <>
+              <Button size="sm" onPress={saveAsNew}>
+                Save as new
               </Button>
-            )}
-          </div>
-        </DialogContent>
-      </Modal>
-    </>
+              <Button size="sm" variant="primary" onPress={updateActive}>
+                Update “{active.name}”
+              </Button>
+            </>
+          ) : (
+            <Button
+              size="sm"
+              variant="primary"
+              onPress={saveAsNew}
+              isDisabled={!trimmed}
+            >
+              Save
+            </Button>
+          )}
+        </div>
+      </DialogContent>
+    </Modal>
   )
 }
