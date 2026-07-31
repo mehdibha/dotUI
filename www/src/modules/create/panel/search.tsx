@@ -27,10 +27,30 @@ export interface CommandTarget {
   id: string
 }
 
-/** Entrance shared by the bar and the suggestions card — they move as one
- * unit. Fast (the search is a frequent gesture) and skipped on reduced motion. */
-const REVEAL =
-  'motion-safe:animate-[create-search-in_150ms_cubic-bezier(0.165,0.84,0.44,1)]'
+/** Shared timing so the bar and menu read as one gesture. Strong ease-out
+ * (quint) — entering elements start fast; 200ms keeps a frequent gesture
+ * snappy. Everything is `motion-safe:` so reduced motion appears instantly. */
+const REVEAL_TIMING =
+  'motion-safe:duration-200 motion-safe:ease-[cubic-bezier(0.23,1,0.32,1)]'
+
+/** The bar morphs out of the search button: it mounts full-width but clipped
+ * to the button's box (right end of the header), then the clip wipes open
+ * leftward via `@starting-style`. A clip reveal — not a crossfade — so the
+ * button visually *becomes* the input. Transitions (not keyframes) stay
+ * interruptible on rapid toggling. */
+const BAR_REVEAL = cn(
+  '[clip-path:inset(0_0_0_0_round_var(--radius-xl))]',
+  'motion-safe:transition-[clip-path]',
+  'motion-safe:starting:[clip-path:inset(7px_6px_7px_calc(100%-34px)_round_var(--btn-radius,10px))]',
+  REVEAL_TIMING,
+)
+
+/** The paired menu drops in beneath the bar with the same curve and clock. */
+const MENU_REVEAL = cn(
+  'origin-top motion-safe:transition-[opacity,translate,scale]',
+  'motion-safe:starting:-translate-y-1 motion-safe:starting:scale-[0.98] motion-safe:starting:opacity-0',
+  REVEAL_TIMING,
+)
 
 /**
  * The panel's inline search — the header's search button expands into a
@@ -139,8 +159,8 @@ export function PanelSearch({
             {/* The bar — takes over the header while searching. */}
             <div
               className={cn(
-                'absolute inset-0 z-10 flex origin-top-right items-center gap-2 rounded-xl bg-neutral px-3',
-                REVEAL,
+                'absolute inset-0 z-10 flex items-center gap-2 rounded-xl bg-neutral px-3',
+                BAR_REVEAL,
               )}
             >
               <SearchIcon className="size-4 shrink-0 text-fg-muted" />
@@ -181,8 +201,8 @@ export function PanelSearch({
                   // Solid bg — backdrop-blur can't sample past the header's own
                   // backdrop-filter (it bounds the backdrop root), so glass here
                   // would just bleed the cards through crisply.
-                  'absolute inset-x-0 top-full z-10 mt-3 origin-top overflow-hidden rounded-xl border border-border/45 bg-neutral shadow-[0_4px_16px_-4px_rgb(0_0_0/0.2),0_2px_6px_-2px_rgb(0_0_0/0.12)]',
-                  REVEAL,
+                  'absolute inset-x-0 top-full z-10 mt-3 overflow-hidden rounded-xl border border-border/45 bg-neutral shadow-[0_4px_16px_-4px_rgb(0_0_0/0.2),0_2px_6px_-2px_rgb(0_0_0/0.12)]',
+                  MENU_REVEAL,
                 )}
               >
                 <ListBox
