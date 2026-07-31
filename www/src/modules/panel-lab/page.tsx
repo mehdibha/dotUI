@@ -21,6 +21,7 @@ import {
   ShapeSection,
   TypographySection,
 } from './sections'
+import { CardsFrame } from './variants/cards'
 import { InspectorFrame } from './variants/inspector'
 import { OverviewFrame } from './variants/overview'
 import { SpotlightFrame } from './variants/spotlight'
@@ -191,6 +192,9 @@ export function PanelLab() {
       </div>
 
       <div className="flex items-start gap-10 overflow-x-auto pb-8">
+        <Frame label="Current /create — chapter cards">
+          <CardsFrame lab={lab} />
+        </Frame>
         <BaselineFrame
           lab={lab}
           onShuffle={shuffle}
