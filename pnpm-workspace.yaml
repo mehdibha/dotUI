@@ -86,3 +86,5 @@ minimumReleaseAgeExclude:
   - '@typescript/typescript-win32-arm64@7.0.2'
   - '@typescript/typescript-win32-x64@7.0.2'
   - typescript@7.0.2
+  - '@tanstack/charts@0.0.2'
+  - '@tanstack/react-charts@0.0.2'
