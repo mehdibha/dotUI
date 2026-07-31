@@ -6,12 +6,12 @@
    builder schema; design only: local state, nothing wired into /create. */
 
 import { useState } from 'react'
-import { Redo2Icon, SearchIcon, ShuffleIcon, Undo2Icon } from 'lucide-react'
+import { SearchIcon } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
 
-import { ACCENT_POOL, BUTTON_STYLES, DEFAULTS } from './data'
+import { DEFAULTS } from './data'
 import type { Lab, LabState } from './data'
 import {
   ColorSection,
@@ -56,11 +56,9 @@ function Frame({
 /** The baseline: card shell, story scroll of grouped-row sections. */
 function BaselineFrame({
   lab,
-  onShuffle,
   anyModified,
 }: {
   lab: Lab
-  onShuffle: () => void
   anyModified: boolean
 }) {
   return (
@@ -77,43 +75,15 @@ function BaselineFrame({
             />
           )}
         </span>
-        <span className="flex shrink-0 items-center">
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            aria-label="Shuffle"
-            onPress={onShuffle}
-          >
-            <ShuffleIcon />
-          </Button>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            isDisabled
-            aria-label="Undo"
-          >
-            <Undo2Icon />
-          </Button>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            isDisabled
-            aria-label="Redo"
-          >
-            <Redo2Icon />
-          </Button>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            aria-label="Search controls"
-          >
-            <SearchIcon />
-          </Button>
-        </span>
+        <Button
+          size="sm"
+          variant="quiet"
+          isIconOnly
+          aria-label="Search controls"
+          className="shrink-0"
+        >
+          <SearchIcon />
+        </Button>
       </header>
 
       <div className="flex min-h-0 flex-1 flex-col gap-1.5 overflow-y-auto p-3 *:shrink-0">
@@ -164,17 +134,6 @@ export function PanelLab() {
     (key) => state[key] !== DEFAULTS[key],
   )
 
-  const shuffle = () =>
-    setState((prev) => ({
-      ...prev,
-      brand:
-        ACCENT_POOL[Math.floor(Math.random() * ACCENT_POOL.length)] ??
-        prev.brand,
-      buttonStyle:
-        BUTTON_STYLES[Math.floor(Math.random() * BUTTON_STYLES.length)]?.id ??
-        prev.buttonStyle,
-    }))
-
   return (
     <div className="flex min-h-svh flex-col gap-8 px-8 py-12">
       <div className="flex max-w-lg flex-col gap-1.5">
@@ -194,11 +153,7 @@ export function PanelLab() {
         >
           <CardsFrame lab={lab} />
         </Frame>
-        <BaselineFrame
-          lab={lab}
-          onShuffle={shuffle}
-          anyModified={anyModified}
-        />
+        <BaselineFrame lab={lab} anyModified={anyModified} />
       </div>
     </div>
   )
