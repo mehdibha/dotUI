@@ -131,9 +131,9 @@ function ChapterHeading({
 
 export function CardsFrame({ lab }: { lab: Lab }) {
   return (
-    <div className="relative flex h-full min-h-0 flex-col bg-bg">
+    <div className="relative flex h-full min-h-0 flex-col">
       {/* Floating glass header — cards dip under it, never past it. */}
-      <div className="absolute inset-x-2.5 top-2.5 z-20 flex items-center justify-between gap-2 rounded-xl border border-border/45 bg-neutral/90 p-1.5 shadow-[0_4px_16px_-4px_rgb(0_0_0/0.2),0_2px_6px_-2px_rgb(0_0_0/0.12)] backdrop-blur-sm">
+      <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 rounded-xl border border-border/45 bg-neutral/90 p-1.5 shadow-[0_4px_16px_-4px_rgb(0_0_0/0.2),0_2px_6px_-2px_rgb(0_0_0/0.12)] backdrop-blur-sm">
         <Button
           variant="quiet"
           size="sm"
@@ -176,7 +176,7 @@ export function CardsFrame({ lab }: { lab: Lab }) {
       </div>
 
       {/* The story scroll: every chapter its own card. */}
-      <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-2.5 pt-[66px] pb-[72px] *:shrink-0">
+      <div className="no-scrollbar flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overscroll-contain rounded-xl pt-[56px] pb-[62px] *:shrink-0">
         {CHAPTERS.map(({ id, label, icon, keys, Body }) => {
           const status = lab.section(keys)
           return (
@@ -199,7 +199,7 @@ export function CardsFrame({ lab }: { lab: Lab }) {
       </div>
 
       {/* Floating glass footer — same treatment as the header. */}
-      <div className="absolute inset-x-2.5 bottom-2.5 z-20 flex items-center gap-2 rounded-xl border border-border/45 bg-neutral/90 p-2 shadow-[0_-4px_16px_-4px_rgb(0_0_0/0.2),0_-2px_6px_-2px_rgb(0_0_0/0.12)] backdrop-blur-sm">
+      <div className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-2 rounded-xl border border-border/45 bg-neutral/90 p-2 shadow-[0_-4px_16px_-4px_rgb(0_0_0/0.2),0_-2px_6px_-2px_rgb(0_0_0/0.12)] backdrop-blur-sm">
         <Button size="sm" className="flex-1">
           Save
         </Button>

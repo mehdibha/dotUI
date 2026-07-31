@@ -192,7 +192,11 @@ export function PanelLab() {
       </div>
 
       <div className="flex items-start gap-10 overflow-x-auto pb-8">
-        <Frame label="Current /create — chapter cards">
+        {/* The real panel sits on the page bg — no card chrome around it. */}
+        <Frame
+          label="Current /create — chapter cards"
+          className="rounded-none border-0 bg-transparent"
+        >
           <CardsFrame lab={lab} />
         </Frame>
         <BaselineFrame
