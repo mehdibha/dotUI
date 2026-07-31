@@ -2,8 +2,9 @@ export const siteConfig = {
   url: 'https://dotui.org',
   name: 'dotUI',
   title: 'dotUI',
+  tagline: 'The Design System Studio for the Web',
   description:
-    "Build your design system, not someone else's. Compose beautiful, accessible React components and export them as code you own.",
+    'The design system studio for the web. Every design decision is yours — build on real components, then install with the shadcn CLI or export to v0.',
   keywords: [
     'dotUI',
     'React',
@@ -24,9 +25,9 @@ export const siteConfig = {
     creator: '@mehdibha',
   },
   og: {
-    title: 'Ship unique.',
+    title: 'The Design System Studio for the Web',
     description:
-      "Build your design system, not someone else's. Compose beautiful, accessible React components and export them as code you own.",
+      'Every design decision is yours — build on real components, then install with the shadcn CLI or export to v0.',
   },
   links: {
     github: 'https://github.com/mehdibha/dotUI',
