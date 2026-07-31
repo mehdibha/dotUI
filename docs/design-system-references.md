@@ -57,6 +57,10 @@ The systems worth studying when researching presets, missing axes, or component 
 - [HeroUI pro](https://heroui.pro)
 - [Beautiful UI (Turbo)](https://beautiful-ui-five.vercel.app/) — AI-native UI primitives
 
+### Motion & interaction
+
+- [interior.dev](https://www.interior.dev/docs) — copy-paste headless interaction primitives (layout-shift-free state changes, interruptible animations, reduced-motion)
+
 ### Button
 
 - [Supabase](https://supabase.com/design-system/docs/components/button)
