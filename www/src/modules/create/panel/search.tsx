@@ -27,11 +27,12 @@ export interface CommandTarget {
   id: string
 }
 
-/** Shared timing so the bar and menu read as one gesture. Strong ease-out
- * (quint) — entering elements start fast; 200ms keeps a frequent gesture
- * snappy. Everything is `motion-safe:` so reduced motion appears instantly. */
+/** Shared timing so the bar and menu read as one gesture. Ease-out quart at
+ * 250ms — starts fast (responsive) but keeps the wipe visible; a stronger
+ * curve front-loads so hard the morph reads as a pop. Everything is
+ * `motion-safe:` so reduced motion appears instantly. */
 const REVEAL_TIMING =
-  'motion-safe:duration-200 motion-safe:ease-[cubic-bezier(0.23,1,0.32,1)]'
+  'motion-safe:duration-250 motion-safe:ease-[cubic-bezier(0.165,0.84,0.44,1)]'
 
 /** The bar morphs out of the search button: it mounts full-width but clipped
  * to the button's box (right end of the header), then the clip wipes open
