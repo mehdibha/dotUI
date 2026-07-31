@@ -124,7 +124,9 @@ export function PanelSearch({
         >
           <AutocompletePrimitive.Autocomplete filter={contains}>
             {/* The bar — takes over the header while searching. */}
-            <div className="absolute inset-0 z-10 flex items-center gap-2 rounded-xl bg-neutral px-3">
+            {/* pr matches the header's p-1.5 so the close button sits exactly
+                where the search button is; the roomier pl is for the text. */}
+            <div className="absolute inset-0 z-10 flex items-center gap-2 rounded-xl bg-neutral pr-1.5 pl-3">
               <SearchIcon className="size-4 shrink-0 text-fg-muted" />
               <SearchField
                 autoFocus
