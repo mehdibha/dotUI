@@ -23,6 +23,8 @@ import { Route as RInitRouteImport } from './routes/r/init'
 import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as InternalPresetLabRouteImport } from './routes/internal.preset-lab'
+import { Route as InternalPanelLabRouteImport } from './routes/internal.panel-lab'
+import { Route as InternalControlLabRouteImport } from './routes/internal.control-lab'
 import { Route as InternalColorsRouteImport } from './routes/internal.colors'
 import { Route as InternalColorLabRouteImport } from './routes/internal.color-lab'
 import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-reveal'
@@ -104,6 +106,16 @@ const PreviewSlugRoute = PreviewSlugRouteImport.update({
 const InternalPresetLabRoute = InternalPresetLabRouteImport.update({
   id: '/internal/preset-lab',
   path: '/internal/preset-lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InternalPanelLabRoute = InternalPanelLabRouteImport.update({
+  id: '/internal/panel-lab',
+  path: '/internal/panel-lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InternalControlLabRoute = InternalControlLabRouteImport.update({
+  id: '/internal/control-lab',
+  path: '/internal/control-lab',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InternalColorsRoute = InternalColorsRouteImport.update({
@@ -192,6 +204,8 @@ export interface FileRoutesByFullPath {
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/colors': typeof InternalColorsRoute
+  '/internal/control-lab': typeof InternalControlLabRoute
+  '/internal/panel-lab': typeof InternalPanelLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -219,6 +233,8 @@ export interface FileRoutesByTo {
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/colors': typeof InternalColorsRoute
+  '/internal/control-lab': typeof InternalControlLabRoute
+  '/internal/panel-lab': typeof InternalPanelLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -249,6 +265,8 @@ export interface FileRoutesById {
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/colors': typeof InternalColorsRoute
+  '/internal/control-lab': typeof InternalControlLabRoute
+  '/internal/panel-lab': typeof InternalPanelLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -280,6 +298,8 @@ export interface FileRouteTypes {
     | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/colors'
+    | '/internal/control-lab'
+    | '/internal/panel-lab'
     | '/internal/preset-lab'
     | '/preview/$slug'
     | '/r/$name'
@@ -307,6 +327,8 @@ export interface FileRouteTypes {
     | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/colors'
+    | '/internal/control-lab'
+    | '/internal/panel-lab'
     | '/internal/preset-lab'
     | '/preview/$slug'
     | '/r/$name'
@@ -336,6 +358,8 @@ export interface FileRouteTypes {
     | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/colors'
+    | '/internal/control-lab'
+    | '/internal/panel-lab'
     | '/internal/preset-lab'
     | '/preview/$slug'
     | '/r/$name'
@@ -361,6 +385,8 @@ export interface RootRouteChildren {
   InternalBlurRevealRoute: typeof InternalBlurRevealRoute
   InternalColorLabRoute: typeof InternalColorLabRoute
   InternalColorsRoute: typeof InternalColorsRoute
+  InternalControlLabRoute: typeof InternalControlLabRoute
+  InternalPanelLabRoute: typeof InternalPanelLabRoute
   InternalPresetLabRoute: typeof InternalPresetLabRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   RNameRoute: typeof RNameRoute
@@ -467,6 +493,20 @@ declare module '@tanstack/react-router' {
       path: '/internal/preset-lab'
       fullPath: '/internal/preset-lab'
       preLoaderRoute: typeof InternalPresetLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internal/panel-lab': {
+      id: '/internal/panel-lab'
+      path: '/internal/panel-lab'
+      fullPath: '/internal/panel-lab'
+      preLoaderRoute: typeof InternalPanelLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internal/control-lab': {
+      id: '/internal/control-lab'
+      path: '/internal/control-lab'
+      fullPath: '/internal/control-lab'
+      preLoaderRoute: typeof InternalControlLabRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/internal/colors': {
@@ -613,6 +653,8 @@ const rootRouteChildren: RootRouteChildren = {
   InternalBlurRevealRoute: InternalBlurRevealRoute,
   InternalColorLabRoute: InternalColorLabRoute,
   InternalColorsRoute: InternalColorsRoute,
+  InternalControlLabRoute: InternalControlLabRoute,
+  InternalPanelLabRoute: InternalPanelLabRoute,
   InternalPresetLabRoute: InternalPresetLabRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   RNameRoute: RNameRoute,
