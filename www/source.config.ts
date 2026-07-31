@@ -20,6 +20,8 @@ export const docs = defineDocs({
         )
         .optional(),
       wip: z.boolean().optional().default(false),
+      // Wide layout: the content column expands and the xl TOC rail is dropped.
+      full: z.boolean().optional().default(false),
     }),
     postprocess: {
       includeProcessedMarkdown: true,
