@@ -66,7 +66,7 @@ import {
   TypeSpecimen,
 } from './patterns'
 
-export function ColorSection({ lab }: { lab: Lab }) {
+export function ColorSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   const semanticModified = (
     ['success', 'warning', 'danger', 'info', 'selection'] as const
@@ -75,7 +75,6 @@ export function ColorSection({ lab }: { lab: Lab }) {
     state.contrast !== DEFAULTS.contrast || state.chroma !== DEFAULTS.chroma
   return (
     <>
-      <SectionHeader label="Color" {...lab.section(COLOR_KEYS)} />
       <RampStrip seeds={[state.brand, state.gray]} />
       <ControlGroup>
         <ColorPickerRow
@@ -172,11 +171,10 @@ export function ColorSection({ lab }: { lab: Lab }) {
   )
 }
 
-export function TypographySection({ lab }: { lab: Lab }) {
+export function TypographySectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
-      <SectionHeader label="Typography" {...lab.section(TYPE_KEYS)} />
       <TypeSpecimen heading={state.headingFont} body={state.bodyFont} />
       <ControlGroup>
         <FontPickerRow
@@ -232,11 +230,10 @@ export function IconStrip({ stroke }: { stroke: number }) {
   )
 }
 
-export function IconsSection({ lab }: { lab: Lab }) {
+export function IconsSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
-      <SectionHeader label="Icons" {...lab.section(ICON_KEYS)} />
       <ControlGroup>
         <IconStrip stroke={state.iconStroke} />
         <SelectRow
@@ -267,11 +264,10 @@ export function IconsSection({ lab }: { lab: Lab }) {
   )
 }
 
-export function ShapeSection({ lab }: { lab: Lab }) {
+export function ShapeSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
-      <SectionHeader label="Shape" {...lab.section(SHAPE_KEYS)} />
       <div className="flex flex-col gap-1.5">
         {/* Self-demo: the row's own corners round with the value. */}
         <SliderRow
@@ -295,11 +291,10 @@ export function ShapeSection({ lab }: { lab: Lab }) {
   )
 }
 
-export function EffectsSection({ lab }: { lab: Lab }) {
+export function EffectsSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
-      <SectionHeader label="Effects" {...lab.section(EFFECT_KEYS)} />
       <StyleGridRow
         label="Shadows"
         value={state.shadows}
@@ -328,7 +323,7 @@ export function EffectsSection({ lab }: { lab: Lab }) {
   )
 }
 
-export function ComponentsSection({ lab }: { lab: Lab }) {
+export function ComponentsSectionBody({ lab }: { lab: Lab }) {
   const [query, setQuery] = useState('')
   const q = query.trim().toLowerCase()
   const clusters = CLUSTERS.map((cluster) => ({
@@ -338,7 +333,6 @@ export function ComponentsSection({ lab }: { lab: Lab }) {
 
   return (
     <>
-      <SectionHeader label="Components" {...lab.section(COMPONENT_KEYS)} />
       <FilterRow
         value={query}
         onChange={setQuery}
@@ -364,6 +358,63 @@ export function ComponentsSection({ lab }: { lab: Lab }) {
         A representative slice — the real panel lists every component with
         styles, in these clusters.
       </GroupCaption>
+    </>
+  )
+}
+
+/* Composed sections: baseline header + body. Frames that bring their own
+   chapter chrome (e.g. the current-/create cards frame) use the bodies. */
+
+export function ColorSection({ lab }: { lab: Lab }) {
+  return (
+    <>
+      <SectionHeader label="Color" {...lab.section(COLOR_KEYS)} />
+      <ColorSectionBody lab={lab} />
+    </>
+  )
+}
+
+export function TypographySection({ lab }: { lab: Lab }) {
+  return (
+    <>
+      <SectionHeader label="Typography" {...lab.section(TYPE_KEYS)} />
+      <TypographySectionBody lab={lab} />
+    </>
+  )
+}
+
+export function IconsSection({ lab }: { lab: Lab }) {
+  return (
+    <>
+      <SectionHeader label="Icons" {...lab.section(ICON_KEYS)} />
+      <IconsSectionBody lab={lab} />
+    </>
+  )
+}
+
+export function ShapeSection({ lab }: { lab: Lab }) {
+  return (
+    <>
+      <SectionHeader label="Shape" {...lab.section(SHAPE_KEYS)} />
+      <ShapeSectionBody lab={lab} />
+    </>
+  )
+}
+
+export function EffectsSection({ lab }: { lab: Lab }) {
+  return (
+    <>
+      <SectionHeader label="Effects" {...lab.section(EFFECT_KEYS)} />
+      <EffectsSectionBody lab={lab} />
+    </>
+  )
+}
+
+export function ComponentsSection({ lab }: { lab: Lab }) {
+  return (
+    <>
+      <SectionHeader label="Components" {...lab.section(COMPONENT_KEYS)} />
+      <ComponentsSectionBody lab={lab} />
     </>
   )
 }
