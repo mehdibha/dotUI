@@ -87,6 +87,9 @@ export function ComponentCard({
       )
     }
     update()
+    // Web-font swaps can change the demo's size without a reliable resize
+    // notification; re-measure once the fonts settle.
+    document.fonts?.ready.then(update).catch(() => {})
     const observer = new ResizeObserver(update)
     observer.observe(stage)
     observer.observe(demo)

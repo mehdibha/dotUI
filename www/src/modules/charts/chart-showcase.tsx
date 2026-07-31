@@ -20,7 +20,7 @@ export function ChartShowcase() {
       <TabList
         aria-label="Chart families"
         variant="default"
-        className="flex-wrap justify-center gap-2 self-center bg-transparent [&_[data-tab-indicator]]:rounded-full [&_[data-tab-indicator]]:bg-muted [&_[data-tab-indicator]]:shadow-none"
+        className="h-auto min-h-(--tabs-list-height) flex-wrap justify-center gap-2 self-center bg-transparent [&_[data-tab-indicator]]:rounded-full [&_[data-tab-indicator]]:bg-muted [&_[data-tab-indicator]]:shadow-none"
       >
         {CHART_FAMILIES.map((f) => (
           <Tab

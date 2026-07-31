@@ -47,7 +47,7 @@ export function Example({
       )}
       {...props}
     >
-      {/* Header row: title left, "Show code" right — like the gallery cards on /charts. */}
+      {/* Header row: title left, "Show code" right — like the gallery cards on /docs/charts. */}
       <div className="flex min-h-7 items-center justify-between gap-2 pl-1">
         <div className="min-w-0">{heading}</div>
         {code ? (

@@ -138,7 +138,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
       neighbours,
     }: { url: string; rawContent: string; neighbours: SerializedNeighbours },
   ) {
-    const hasToc = toc?.length
+    const hasToc = (toc?.length ?? 0) > 0
     // Wide layout (frontmatter `full: true`): widen the content column and drop
     // the xl TOC rail; the in-flow MiniTOC column takes over at every width.
     // Width only — prose and heading styles stay identical to other docs pages.
@@ -150,7 +150,7 @@ const clientLoader = browserCollections.docs.createClientLoader({
           <div
             className={cn(
               'mx-auto flex w-full min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 lg:px-0 dark:text-neutral-300',
-              full ? 'max-w-[62rem]' : 'max-w-2xl',
+              full ? 'max-w-4xl' : 'max-w-2xl',
             )}
           >
             <div data-page-header="" className="relative mb-2 space-y-3 pb-4">
