@@ -1,7 +1,7 @@
 import { DemosIndex } from '@/registry/__generated__/demos'
 
 /**
- * Data layer for the standalone `/charts` showcase. Live demo components come
+ * Data layer for the `/docs/charts` showcase. Live demo components come
  * from the generated `DemosIndex` (lazy). The "Show code" modal additionally
  * pulls each variant's raw source on demand (see below).
  */
@@ -109,7 +109,7 @@ export const POLAR_FAMILIES = new Set([
 export interface ChartFamily {
   /** Registry item id, e.g. `chart-bar`. */
   id: string
-  /** Tab label noun, e.g. `Bar`. */
+  /** Family label noun, e.g. `Bar`. */
   name: string
 }
 
