@@ -21,6 +21,7 @@ import {
   PUBLISHABLE_NAMES,
 } from '@/registry/__generated__/publishables'
 
+import { CN_UTILS_TS } from './emit-theme'
 import {
   publish,
   selectPublishable,
@@ -71,7 +72,7 @@ async function buildFixture(): Promise<void> {
   }
 
   // Init-bundled cn helper (ships in the registry:base item, not per-component).
-  writeFixtureFile('src/lib/utils.ts', `export { cn } from "cnfast";\n`)
+  writeFixtureFile('src/lib/utils.ts', CN_UTILS_TS)
   // `@/components/icons` is resolved to a real library at publish; type it away
   // in case any emitted file still references the marker.
   writeFixtureFile('src/env.d.ts', `declare module "@/components/icons";\n`)

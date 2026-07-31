@@ -4,7 +4,12 @@ import * as React from 'react'
 import { createPortal } from 'react-dom'
 import { UNSAFE_PortalProvider } from 'react-aria/PortalProvider'
 import { tv } from 'tailwind-variants'
-import type { ClassValue, TVReturnType, VariantProps } from 'tailwind-variants'
+import type {
+  ClassValue,
+  TVReturnType,
+  TVReturnTypeLike,
+  VariantProps,
+} from 'tailwind-variants'
 
 import { ensureFontStylesheets, fontFamiliesFromTokens } from '@/lib/fonts'
 import { resolveColorConfigCached } from '@/lib/resolve-color'
@@ -720,7 +725,8 @@ type InferTv<Base> = TVReturnType<
   ExtractSlots<Base>,
   ExtractBase<Base>,
   EmptyVariants,
-  undefined
+  undefined,
+  TVReturnTypeLike<never, never> | undefined
 >
 
 /* ----- createStyles ----- */

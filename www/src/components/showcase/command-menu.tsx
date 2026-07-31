@@ -1,7 +1,5 @@
 'use client'
 
-import { cn } from 'cnfast'
-
 import {
   BoxIcon,
   CircleDotIcon,
@@ -12,6 +10,7 @@ import {
   TagIcon,
   UserIcon,
 } from '@/registry/icons'
+import { cn } from '@/registry/lib/utils'
 import { Card } from '@/registry/ui/card'
 import { Command } from '@/registry/ui/command'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'

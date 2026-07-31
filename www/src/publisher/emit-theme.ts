@@ -39,10 +39,6 @@ export interface EmitThemeInput {
 
 export const DEFAULT_DEPENDENCIES = [
   'tailwind-variants',
-  // Peer dependency of `tailwind-variants` (its internal `twMerge`). `cn` itself
-  // no longer depends on it directly — that's `cnfast` now.
-  'tailwind-merge',
-  'cnfast',
   'react-aria-components',
   'tailwindcss-react-aria-components',
   'tw-animate-css',
@@ -51,7 +47,11 @@ export const DEFAULT_DEPENDENCIES = [
   'tailwindcss-with',
 ]
 
-const CN_UTILS_TS = `export { cn } from "cnfast";
+export const CN_UTILS_TS = `import { cn as cnBase } from "tailwind-variants";
+
+// Narrowed to \`string\`: React Aria className render props reject \`undefined\`.
+export const cn = (...classes: Parameters<typeof cnBase>): string =>
+  cnBase(...classes) ?? "";
 `
 
 /**
