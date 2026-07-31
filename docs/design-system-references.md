@@ -69,3 +69,7 @@ The systems worth studying when researching presets, missing axes, or component 
 
 ### Command Dialog
 
+### Shadows
+
+- [Shadow (Florian Kiem)](https://shadow.floriankiem.com/) — Tailwind CSS plugin for smoother, layered shadow effects
+
