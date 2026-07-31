@@ -2,11 +2,10 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
-import { BoxSelectIcon, ChevronsUpDownIcon, SearchIcon } from 'lucide-react'
+import { BoxSelectIcon, ChevronsUpDownIcon } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
 import { PresetPicker } from '@/modules/presets/preset-picker'
 import { PRESETS, type Preset } from '@/modules/presets/presets-data'
 
@@ -22,11 +21,11 @@ import { saveDesignSystemName, useDesignSystemName } from '../preset/storage'
 import { SavePresetDialog } from '../save-preset-dialog'
 import { SavedPresetActions } from '../saved-preset-actions'
 import { UnsavedChangesDialog } from '../unsaved-changes-dialog'
-import { CommandPalette } from './command'
-import type { CommandTarget } from './command'
 import { ComponentsSection } from './components-section'
 import { ChapterHeading, ControlRow } from './primitives'
 import { SECTIONS, useSectionStatus } from './schema'
+import { PanelSearch } from './search'
+import type { CommandTarget } from './search'
 import type { Section } from './types'
 
 const routeApi = getRouteApi('/_app/create')
@@ -95,7 +94,6 @@ export function CreatePanel({ className }: { className?: string }) {
   // component's params). It's read on arrival and by ⌘P; scrolling never writes it.
   const [linkedSection, expandedComponent] = panel?.split('.') ?? []
 
-  const [commandOpen, setCommandOpen] = useState(false)
   const [saveOpen, setSaveOpen] = useState(false)
   // Preset pick held back by the unsaved-changes guard, awaiting save/discard.
   const [pendingPick, setPendingPick] = useState<string | null>(null)
@@ -175,7 +173,7 @@ export function CreatePanel({ className }: { className?: string }) {
     })
   }
 
-  // ⌘P jump: controls just scroll (every chapter is always in the DOM);
+  // Search jump: controls just scroll (every chapter is always in the DOM);
   // components first expand via `?panel=`, then scroll once rendered.
   function jump(target: CommandTarget) {
     if (target.kind === 'component') {
@@ -341,18 +339,7 @@ export function CreatePanel({ className }: { className?: string }) {
               Save
             </Button>
           )}
-          <Tooltip delay={300}>
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              aria-label="Search controls"
-              onPress={() => setCommandOpen(true)}
-            >
-              <SearchIcon />
-            </Button>
-            <TooltipContent>Search controls ⌘P</TooltipContent>
-          </Tooltip>
+          <PanelSearch onJump={jump} />
         </div>
       </div>
 
@@ -395,11 +382,6 @@ export function CreatePanel({ className }: { className?: string }) {
         }}
         onSave={() => resolvePendingPick(true)}
         onDiscard={() => resolvePendingPick(false)}
-      />
-      <CommandPalette
-        isOpen={commandOpen}
-        onOpenChange={setCommandOpen}
-        onJump={jump}
       />
     </div>
   )
