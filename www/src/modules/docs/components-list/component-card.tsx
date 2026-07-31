@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 
 import { cn } from '@/registry/lib/utils'
@@ -58,7 +58,7 @@ export function ComponentCard({
   name,
   slug,
   href,
-  scale = 0.8,
+  scale = 1,
   previewClassName,
   fill = false,
   stretch = false,
@@ -70,6 +70,31 @@ export function ComponentCard({
   // or focused — it broadcasts that state down through CardHoverProvider.
   const [active, setActive] = useState(false)
   const stageRef = useRef<HTMLDivElement>(null)
+  const demoRef = useRef<HTMLDivElement>(null)
+
+  // The card is fluid, so a demo's configured scale can exceed what a narrow
+  // stage (mobile, tablet) can hold. Cap it by the measured fit so previews
+  // shrink instead of clipping.
+  const [fit, setFit] = useState(1)
+  useEffect(() => {
+    const stage = stageRef.current
+    const demo = demoRef.current
+    if (!stage || !demo) return
+    const update = () => {
+      const { offsetWidth: w, offsetHeight: h } = demo
+      setFit(
+        w && h ? Math.min(stage.clientWidth / w, stage.clientHeight / h) : 1,
+      )
+    }
+    update()
+    // Web-font swaps can change the demo's size without a reliable resize
+    // notification; re-measure once the fonts settle.
+    document.fonts?.ready.then(update).catch(() => {})
+    const observer = new ResizeObserver(update)
+    observer.observe(stage)
+    observer.observe(demo)
+    return () => observer.disconnect()
+  }, [])
 
   const content = Demo ? (
     <Demo />
@@ -112,9 +137,10 @@ export function ComponentCard({
             </div>
           ) : (
             <div
+              ref={demoRef}
               inert
               className="flex items-center justify-center"
-              style={{ transform: `scale(${scale})` }}
+              style={{ transform: `scale(${Math.min(scale, fit)})` }}
             >
               {content}
             </div>

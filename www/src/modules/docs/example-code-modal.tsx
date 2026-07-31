@@ -31,7 +31,7 @@ export interface ExampleCodeModalProps {
 /**
  * The example card's "Show code" action: a quiet trigger that opens a large
  * modal with the live preview and install command on the left and the example's
- * source on the right — mirroring the gallery modal on /charts. The source is
+ * source on the right — mirroring the gallery modal on /docs/charts. The source is
  * already highlighted at build time (passed in as `code`), so nothing here pulls
  * in the syntax highlighter.
  */
