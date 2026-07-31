@@ -43,7 +43,7 @@ const RouterDevtools =
 
 export const Route = createRootRoute({
   head: () => {
-    const title = `${siteConfig.title} - ${siteConfig.description}`
+    const title = `${siteConfig.title} - ${siteConfig.tagline}`
     const description = truncateOnWord(siteConfig.description, 148, true)
     const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(siteConfig.og.title)}&description=${encodeURIComponent(siteConfig.og.description)}`
 
