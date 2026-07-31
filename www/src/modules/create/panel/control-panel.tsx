@@ -2,14 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { getRouteApi } from '@tanstack/react-router'
-import {
-  BoxSelectIcon,
-  ChevronsUpDownIcon,
-  Redo2Icon,
-  SearchIcon,
-  ShuffleIcon,
-  Undo2Icon,
-} from 'lucide-react'
+import { BoxSelectIcon, ChevronsUpDownIcon, SearchIcon } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
@@ -28,10 +21,10 @@ import {
 import { saveDesignSystemName, useDesignSystemName } from '../preset/storage'
 import { SavePresetDialog } from '../save-preset-dialog'
 import { SavedPresetActions } from '../saved-preset-actions'
+import { UnsavedChangesDialog } from '../unsaved-changes-dialog'
 import { CommandPalette } from './command'
 import type { CommandTarget } from './command'
 import { ComponentsSection } from './components-section'
-import { usePresetHistory, useShuffle } from './history'
 import { ChapterHeading, ControlRow } from './primitives'
 import { SECTIONS, useSectionStatus } from './schema'
 import type { Section } from './types'
@@ -102,10 +95,10 @@ export function CreatePanel({ className }: { className?: string }) {
   // component's params). It's read on arrival and by ⌘P; scrolling never writes it.
   const [linkedSection, expandedComponent] = panel?.split('.') ?? []
 
-  const { canUndo, canRedo, undo, redo } = usePresetHistory()
-  const shuffle = useShuffle()
-
   const [commandOpen, setCommandOpen] = useState(false)
+  const [saveOpen, setSaveOpen] = useState(false)
+  // Preset pick held back by the unsaved-changes guard, awaiting save/discard.
+  const [pendingPick, setPendingPick] = useState<string | null>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
   const pendingJumpRef = useRef<string | null>(null)
 
@@ -123,12 +116,30 @@ export function CreatePanel({ className }: { className?: string }) {
 
   // The header names what's being edited: the active saved preset (dotted when
   // edited past its snapshot), else the standalone design-system name.
-  const { presets, activeId, setActive, rename, duplicate, remove } =
-    useMyPresets()
+  const {
+    presets,
+    activeId,
+    setActive,
+    save,
+    update,
+    rename,
+    duplicate,
+    remove,
+  } = useMyPresets()
   const storedName = useDesignSystemName()
   const activeSaved = presets.find((p) => p.id === activeId)
-  const isDirty = activeSaved ? activeSaved.state !== (preset ?? '') : false
   const displayName = activeSaved?.name ?? storedName
+
+  // Built-in presets are re-loadable from the gallery, so a freshly applied one
+  // isn't unsaved work — only edits past it (or past a saved snapshot) are.
+  const builtInStates = useMemo(
+    () => new Set(PRESETS.map((p) => encodePreset(p.designSystem) ?? '')),
+    [],
+  )
+  const currentState = preset ?? ''
+  const isDirty = activeSaved
+    ? activeSaved.state !== currentState
+    : currentState !== '' && !builtInStates.has(currentState)
 
   // Expanding a component also switches the live preview to it so param edits
   // are visible immediately; collapsing leaves the preview where it is.
@@ -199,7 +210,6 @@ export function CreatePanel({ className }: { className?: string }) {
 
   // Apply a gallery preset and close the modal in one navigation — two separate
   // updates (setDesignSystem + closing) would race on the functional `prev`.
-  // The `?preset=` change lands in the undo history like any other edit.
   function applyPreset(picked: Preset) {
     setActive(undefined)
     saveDesignSystemName(picked.name)
@@ -264,6 +274,21 @@ export function CreatePanel({ className }: { className?: string }) {
     if (builtIn) applyPreset(builtIn)
   }
 
+  // Applying a preset over unsaved work asks first; over clean state it's instant.
+  function requestPick(itemId: string) {
+    if (isDirty) setPendingPick(itemId)
+    else pickPreset(itemId)
+  }
+
+  function resolvePendingPick(saveFirst: boolean) {
+    if (saveFirst) {
+      if (activeSaved) update(activeSaved.id, currentState)
+      else save(displayName, currentState)
+    }
+    if (pendingPick) pickPreset(pendingPick)
+    setPendingPick(null)
+  }
+
   return (
     <div
       className={cn(
@@ -281,7 +306,7 @@ export function CreatePanel({ className }: { className?: string }) {
           onOpenChange={setGalleryOpen}
           sections={pickerSections}
           selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}
-          onPick={(item) => pickPreset(item.id)}
+          onPick={(item) => requestPick(item.id)}
           renderItemActions={(item) => {
             const saved = presets.find((p) => p.id === item.id)
             if (!saved) return null
@@ -311,44 +336,11 @@ export function CreatePanel({ className }: { className?: string }) {
           </Button>
         </PresetPicker>
         <div className="flex shrink-0 items-center gap-0.5">
-          <Tooltip delay={300}>
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              aria-label="Shuffle"
-              onPress={shuffle}
-            >
-              <ShuffleIcon />
+          {isDirty && (
+            <Button size="sm" onPress={() => setSaveOpen(true)}>
+              Save
             </Button>
-            <TooltipContent>Shuffle the system</TooltipContent>
-          </Tooltip>
-          <Tooltip delay={300}>
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              onPress={undo}
-              isDisabled={!canUndo}
-              aria-label="Undo"
-            >
-              <Undo2Icon />
-            </Button>
-            <TooltipContent>Undo</TooltipContent>
-          </Tooltip>
-          <Tooltip delay={300}>
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              onPress={redo}
-              isDisabled={!canRedo}
-              aria-label="Redo"
-            >
-              <Redo2Icon />
-            </Button>
-            <TooltipContent>Redo</TooltipContent>
-          </Tooltip>
+          )}
           <Tooltip delay={300}>
             <Button
               size="sm"
@@ -388,7 +380,6 @@ export function CreatePanel({ className }: { className?: string }) {
         ref={footerRef}
         className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-2 rounded-xl border border-border/45 bg-neutral/90 p-2 shadow-[0_-4px_16px_-4px_rgb(0_0_0/0.2),0_-2px_6px_-2px_rgb(0_0_0/0.12)] backdrop-blur-sm"
       >
-        <SavePresetDialog />
         <ExportDialog>
           <Button variant="primary" size="sm" className="flex-1">
             Export
@@ -396,6 +387,15 @@ export function CreatePanel({ className }: { className?: string }) {
         </ExportDialog>
       </div>
 
+      <SavePresetDialog isOpen={saveOpen} onOpenChange={setSaveOpen} />
+      <UnsavedChangesDialog
+        isOpen={pendingPick !== null}
+        onOpenChange={(open) => {
+          if (!open) setPendingPick(null)
+        }}
+        onSave={() => resolvePendingPick(true)}
+        onDiscard={() => resolvePendingPick(false)}
+      />
       <CommandPalette
         isOpen={commandOpen}
         onOpenChange={setCommandOpen}
