@@ -4,7 +4,7 @@ import type { MDXComponents } from 'mdx/types'
 import { cn } from '@/registry/lib/utils'
 import { Alert, type AlertProps } from '@/registry/ui/alert'
 import { Link } from '@/registry/ui/link'
-import { ChartShowcase } from '@/modules/charts/chart-showcase'
+import { ChartFamilyGrid } from '@/modules/charts/chart-family-grid'
 import { CodeBlock, Pre } from '@/modules/docs/code-block'
 import {
   CodeBlockTab,
@@ -211,7 +211,7 @@ export const mdxComponents: MDXComponents = {
     <Reference className={cn('mt-4', className)} {...props} />
   ),
   ComponentsGrid,
-  ChartShowcase,
+  ChartFamilyGrid,
   CompositionAnimation: ({
     className,
     ...props

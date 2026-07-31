@@ -109,7 +109,7 @@ export const POLAR_FAMILIES = new Set([
 export interface ChartFamily {
   /** Registry item id, e.g. `chart-bar`. */
   id: string
-  /** Tab label noun, e.g. `Bar`. */
+  /** Family label noun, e.g. `Bar`. */
   name: string
 }
 
