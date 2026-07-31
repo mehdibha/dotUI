@@ -9,15 +9,12 @@ import {
   BoxSelectIcon,
   ChevronsUpDownIcon,
   PaletteIcon,
-  Redo2Icon,
   RotateCcwIcon,
   SearchIcon,
   ShapesIcon,
-  ShuffleIcon,
   SlidersHorizontalIcon,
   SmileIcon,
   TypeIcon,
-  Undo2Icon,
 } from 'lucide-react'
 
 import { Button } from '@/registry/ui/button'
@@ -142,37 +139,15 @@ export function CardsFrame({ lab }: { lab: Lab }) {
           <span className="truncate">Acme design system</span>
           <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
         </Button>
-        <span className="flex shrink-0 items-center gap-0.5">
-          <Button size="sm" variant="quiet" isIconOnly aria-label="Shuffle">
-            <ShuffleIcon />
-          </Button>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            isDisabled
-            aria-label="Undo"
-          >
-            <Undo2Icon />
-          </Button>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            isDisabled
-            aria-label="Redo"
-          >
-            <Redo2Icon />
-          </Button>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            aria-label="Search controls"
-          >
-            <SearchIcon />
-          </Button>
-        </span>
+        <Button
+          size="sm"
+          variant="quiet"
+          isIconOnly
+          aria-label="Search controls"
+          className="shrink-0"
+        >
+          <SearchIcon />
+        </Button>
       </div>
 
       {/* The story scroll: every chapter its own card. */}
