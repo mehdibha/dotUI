@@ -302,6 +302,95 @@
       "description": "The additional offset applied along the main axis between the element and its\nanchor element.",
       "default": "8"
     },
+    "onBlurWithin": {
+      "type": "((e: FocusEvent<Element, Element>) => void)",
+      "detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "identifier",
+                  "name": "FocusEvent"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the target element and all descendants lose focus."
+    },
+    "onFocusWithin": {
+      "type": "((e: FocusEvent<Element, Element>) => void)",
+      "detailedType": "| ((e: FocusEvent<Element, Element>) => void)\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "identifier",
+                  "name": "FocusEvent"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          }
+        ]
+      },
+      "description": "Handler that is called when the target element or a descendant receives focus."
+    },
+    "onFocusWithinChange": {
+      "type": "((isFocusWithin: boolean) => void)",
+      "detailedType": "((isFocusWithin: boolean) => void) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "isFocusWithin",
+            "value": {
+              "type": "link",
+              "id": "boolean",
+              "name": "boolean"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "void"
+        },
+        "typeParameters": []
+      },
+      "description": "Handler that is called when the the focus within state changes."
+    },
     "onOpenChange": {
       "type": "((isOpen: boolean) => void)",
       "detailedType": "((isOpen: boolean) => void) | undefined",
@@ -436,6 +525,14 @@
       },
       "description": "Whether the element should flip its orientation (e.g. top to bottom or left to right) when\nthere is insufficient room for it to render completely.",
       "default": "true"
+    },
+    "shouldSkipAnimation": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the popover should appear and disappear without an entry or exit animation. This is\nused by components such as PreviewTrigger to skip animations when quickly swapping between\noverlays."
     },
     "shouldUpdatePosition": {
       "type": "boolean",

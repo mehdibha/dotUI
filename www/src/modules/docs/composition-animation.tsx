@@ -11,6 +11,7 @@ import {
   type Diff,
 } from 'diff-match-patch-es'
 import { PauseIcon, PlayIcon } from 'lucide-react'
+import { Pressable } from 'react-aria-components/Pressable'
 import {
   codeToKeyedTokens,
   syncTokenKeys,
@@ -33,7 +34,6 @@ import { Button } from '@/registry/ui/button'
 import { Calendar, RangeCalendar } from '@/registry/ui/calendar'
 import { Combobox } from '@/registry/ui/combobox'
 import { Command } from '@/registry/ui/command'
-import { ContextMenu } from '@/registry/ui/context-menu'
 import { DateField } from '@/registry/ui/date-field'
 import { DatePicker, DateRangePicker } from '@/registry/ui/date-picker'
 import { Dialog, DialogContent } from '@/registry/ui/dialog'
@@ -915,13 +915,15 @@ const steps: Step[] = [
     ),
   },
   {
-    // Headline: the same menu, now opened by right-click — only the root and
-    // trigger change.
-    title: 'ContextMenu',
+    // Headline: the same menu, now opened by right-click — only the trigger
+    // changes.
+    title: 'Context menu',
     compact: true,
     durationMs: 3000,
-    code: `<ContextMenu>
-  Right click here
+    code: `<Menu trigger="contextMenu">
+  <Pressable>
+    <div role="button" tabIndex={0}>Right click here</div>
+  </Pressable>
   <Popover>
     <MenuContent>
       <MenuItem>Edit <Kbd>⌘E</Kbd></MenuItem>
@@ -937,10 +939,18 @@ const steps: Step[] = [
       <MenuItem>Delete <Kbd>⌘⌫</Kbd></MenuItem>
     </MenuContent>
   </Popover>
-</ContextMenu>`,
+</Menu>`,
     preview: (
-      <ContextMenu className="bg-bg-muted flex h-24 w-full max-w-xs items-center justify-center rounded-md border border-dashed text-sm text-fg-muted">
-        Right click here
+      <Menu trigger="contextMenu">
+        <Pressable>
+          <div
+            role="button"
+            tabIndex={0}
+            className="bg-bg-muted flex h-24 w-full max-w-xs items-center justify-center rounded-md border border-dashed text-sm text-fg-muted"
+          >
+            Right click here
+          </div>
+        </Pressable>
         <Popover>
           <MenuContent className="[view-transition-name:cmp-list]">
             <MenuItem textValue="Edit">
@@ -962,7 +972,7 @@ const steps: Step[] = [
             </MenuItem>
           </MenuContent>
         </Popover>
-      </ContextMenu>
+      </Menu>
     ),
   },
   {

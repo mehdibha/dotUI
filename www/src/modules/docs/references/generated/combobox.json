@@ -885,7 +885,7 @@
           }
         ]
       },
-      "description": "The filter function used to determine if a option should be included in the combo box list."
+      "description": "The filter function used to determine if an option should be included in the combo box list.\nBy default, a language-sensitive \"contains\" filter from `useFilter` is used."
     },
     "form": {
       "type": "string",

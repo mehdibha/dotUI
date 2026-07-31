@@ -1,11 +1,12 @@
 'use client'
 
 import { FileIcon, TerminalIcon } from 'lucide-react'
+import { TokenFieldValue } from 'react-aria-components/TokenField'
 
 import { Mention } from '@/registry/ui/mention'
 import { MenuContent, MenuItem } from '@/registry/ui/menu'
 import { Popover } from '@/registry/ui/popover'
-import { TokenInput, TokenSegmentList } from '@/registry/ui/token-field'
+import { TokenInput } from '@/registry/ui/token-field'
 
 interface Suggestion {
   id: string
@@ -35,7 +36,7 @@ export default function Demo() {
       allowsNewlines
       trigger={/[@/]/}
       defaultValue={
-        new TokenSegmentList([
+        new TokenFieldValue([
           { type: 'token', text: '/review' },
           { type: 'text', text: ' the changes in ' },
           { type: 'token', text: '@src/app.tsx' },

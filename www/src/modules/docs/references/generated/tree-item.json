@@ -243,6 +243,14 @@
       },
       "description": "Handler that is called when the hover state changes."
     },
+    "allowsArrowNavigation": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the row should support arrow key navigation even when the containing collection uses\ntab keyboard navigation. Allows users to navigate between rows with arrow keys while\nfocus is on an interactive child element within the row."
+    },
     "aria-label": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -311,6 +319,25 @@
         ]
       },
       "description": "Causes the browser to download the linked URL. A string may be provided to suggest a file name.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#download)."
+    },
+    "focusMode": {
+      "type": "\"child\" | \"row\"",
+      "detailedType": "'child' | 'row' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "child"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "row"
+          }
+        ]
+      },
+      "description": "Whether the row or its first focusable child element should be focused when the row is\nfocused.",
+      "default": "'row'"
     },
     "hasChildItems": {
       "type": "boolean",

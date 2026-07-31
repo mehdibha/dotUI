@@ -11,7 +11,7 @@ const tokenFieldMeta = {
       target: 'ui/token-field.tsx',
     },
   ],
-  registryDependencies: ['field', 'react-aria-token-field'],
+  registryDependencies: ['field'],
 } satisfies RegistryItem
 
 export default tokenFieldMeta
