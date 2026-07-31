@@ -22,11 +22,6 @@ import {
   TypographySection,
 } from './sections'
 import { CardsFrame } from './variants/cards'
-import { InspectorFrame } from './variants/inspector'
-import { OverviewFrame } from './variants/overview'
-import { SpotlightFrame } from './variants/spotlight'
-import { TabsFrame } from './variants/tabs'
-import { WizardFrame } from './variants/wizard'
 
 /* ---------------------------------- Frame ----------------------------------- */
 
@@ -204,21 +199,6 @@ export function PanelLab() {
           onShuffle={shuffle}
           anyModified={anyModified}
         />
-        <Frame label="Sectioned tabs">
-          <TabsFrame lab={lab} />
-        </Frame>
-        <Frame label="Inspector">
-          <InspectorFrame lab={lab} />
-        </Frame>
-        <Frame label="Guided steps">
-          <WizardFrame lab={lab} />
-        </Frame>
-        <Frame label="Command-first">
-          <SpotlightFrame lab={lab} />
-        </Frame>
-        <Frame label="Overview cards">
-          <OverviewFrame lab={lab} />
-        </Frame>
       </div>
     </div>
   )
