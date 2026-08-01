@@ -1,16 +1,19 @@
 'use client'
 
-/* Chapter cards — the CURRENT /create panel layout (control-panel.tsx): every
-   section its own bordered card in a story scroll, floating glass header and
-   footer bars the cards dip under. The Color chapter carries the ideal,
-   engine-true section (color-ideal.tsx); the rest are row-language sketches
-   of the other chapters, unchanged from the original recreation. */
+/* v1 — the reference frame. The CURRENT /create panel layout
+   (control-panel.tsx): every section its own bordered card in a story scroll,
+   floating glass header and footer bars the cards dip under.
+
+   FROZEN: this frame is the baseline every section experiment is judged
+   against, so it must keep rendering what it renders today. V1_CHAPTERS below
+   pins the bodies it uses. To enhance a section, write a NEW body and point
+   the working list (section-frames.tsx) at it — never edit a body V1_CHAPTERS
+   still names, or the reference moves with the experiment. */
 
 import {
   BoxSelectIcon,
   ChevronsUpDownIcon,
   PaletteIcon,
-  RotateCcwIcon,
   SearchIcon,
   ShapesIcon,
   SlidersHorizontalIcon,
@@ -29,7 +32,7 @@ import {
   SHAPE_KEYS,
   TYPE_KEYS,
 } from '../data'
-import type { Lab, LabState } from '../data'
+import type { Lab } from '../data'
 import {
   ComponentsSectionBody,
   EffectsSectionBody,
@@ -37,14 +40,10 @@ import {
   ShapeSectionBody,
   TypographySectionBody,
 } from '../sections'
+import { ChapterCard } from './chapter'
+import type { Chapter } from './chapter'
 
-const CHAPTERS: {
-  id: string
-  label: string
-  icon: React.ComponentType<{ className?: string }>
-  keys: (keyof LabState)[]
-  Body: React.ComponentType<{ lab: Lab }>
-}[] = [
+const V1_CHAPTERS: Chapter[] = [
   {
     id: 'color',
     label: 'Color',
@@ -89,44 +88,6 @@ const CHAPTERS: {
   },
 ]
 
-/** The real panel's ChapterHeading: icon, label, modified dot, reset. */
-function ChapterHeading({
-  icon: Icon,
-  label,
-  modified,
-  onReset,
-}: {
-  icon: React.ComponentType<{ className?: string }>
-  label: string
-  modified: boolean
-  onReset: () => void
-}) {
-  return (
-    <div className="mb-1.5 flex h-7 items-center gap-2 px-1">
-      <Icon className="size-3.5 text-fg-muted" />
-      <span className="text-[0.8125rem] font-medium text-fg">{label}</span>
-      {modified && (
-        <>
-          <span
-            aria-label="Modified"
-            className="size-1 rounded-full bg-accent"
-          />
-          <Button
-            size="xs"
-            variant="quiet"
-            isIconOnly
-            aria-label={`Reset ${label.toLowerCase()}`}
-            onPress={onReset}
-            className="ml-auto text-fg-muted"
-          >
-            <RotateCcwIcon />
-          </Button>
-        </>
-      )}
-    </div>
-  )
-}
-
 export function CardsFrame({ lab }: { lab: Lab }) {
   return (
     <div className="relative flex h-full min-h-0 flex-col">
@@ -153,25 +114,9 @@ export function CardsFrame({ lab }: { lab: Lab }) {
 
       {/* The story scroll: every chapter its own card. */}
       <div className="no-scrollbar flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overscroll-contain rounded-xl pt-[56px] pb-[62px] *:shrink-0">
-        {CHAPTERS.map(({ id, label, icon, keys, Body }) => {
-          const status = lab.section(keys)
-          return (
-            <section
-              key={id}
-              className="rounded-xl border border-border/45 bg-card p-3"
-            >
-              <ChapterHeading
-                icon={icon}
-                label={label}
-                modified={status.modified}
-                onReset={status.onReset}
-              />
-              <div className="flex flex-col gap-1.5">
-                <Body lab={lab} />
-              </div>
-            </section>
-          )
-        })}
+        {V1_CHAPTERS.map((chapter) => (
+          <ChapterCard key={chapter.id} chapter={chapter} lab={lab} />
+        ))}
       </div>
 
       {/* Floating glass footer — same treatment as the header. */}
