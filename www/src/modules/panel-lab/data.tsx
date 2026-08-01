@@ -321,6 +321,11 @@ export const COLOR_KEYS: (keyof LabState)[] = [
   'border500',
   'border600',
 ]
+/** COLOR_KEYS minus backgrounds — the v2 Color frame hands those to Surfaces. */
+export const COLOR_V2_KEYS: (keyof LabState)[] = COLOR_KEYS.filter(
+  (key) => key !== 'bgLight' && key !== 'bgDark',
+)
+export const SURFACE_KEYS: (keyof LabState)[] = ['bgLight', 'bgDark']
 export const TYPE_KEYS: (keyof LabState)[] = [
   'headingFont',
   'bodyFont',

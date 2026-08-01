@@ -53,13 +53,13 @@ import {
   SwatchDots,
 } from './patterns'
 
-type Mode = 'light' | 'dark'
+export type Mode = 'light' | 'dark'
 
 /* ------------------------------ Config bridge ------------------------------ */
 
 /** Lab state → ColorConfig, undefined at every default so the recipe stays
  *  minimal — the same absent-means-default contract the real config keeps. */
-function useLabConfig(state: LabState): ColorConfig {
+export function useLabConfig(state: LabState): ColorConfig {
   const {
     brand,
     primary,
@@ -142,7 +142,7 @@ function useLabConfig(state: LabState): ColorConfig {
 
 /** WCAG of the untouched borders vs the app background — the border sliders'
  *  stable zero point, measured with any border targets stripped. */
-function useBorderSeeds(config: ColorConfig) {
+export function useBorderSeeds(config: ColorConfig) {
   return useMemo(() => {
     const { borders: _drop, ...rest } = config
     const baseline = resolveColorConfigCached(config.borders ? rest : config)
@@ -155,7 +155,7 @@ function useBorderSeeds(config: ColorConfig) {
   }, [config])
 }
 
-function cssToHex(css: string): string {
+export function cssToHex(css: string): string {
   return toHex(toOklch(css))
 }
 
@@ -168,7 +168,7 @@ function cssToHex(css: string): string {
  * between icon slots, so — unlike a toggle-button group swapping `selected:`
  * backgrounds instantly — it glides.
  */
-function ModeSwitch({
+export function ModeSwitch({
   mode,
   onChange,
 }: {
@@ -381,7 +381,7 @@ function AutoColorRow({
 }
 
 /** AutoColorRow at sub-row scale, for the semantic seeds inside a DetailRow. */
-function MiniAutoColorRow({
+export function MiniAutoColorRow({
   label,
   value,
   derived,
@@ -436,7 +436,7 @@ function MiniAutoColorRow({
 
 /** A continuous axis at sub-row scale: label left, compact drag pill + value
  *  right — the engine's sliders in the mini-control language. */
-function MiniSliderRow({
+export function MiniSliderRow({
   label,
   value,
   onChange,
@@ -483,7 +483,7 @@ function MiniSliderRow({
 
 /* --------------------------------- Section --------------------------------- */
 
-const GUARANTEE_OPTIONS = [
+export const GUARANTEE_OPTIONS = [
   { value: 'default', label: 'Default' },
   { value: 'relaxed', label: 'Relaxed' },
   { value: 'strict', label: 'Strict' },
@@ -498,14 +498,14 @@ const FINE_KEYS = [
   'borderContrast',
 ] as const
 
-const SEMANTIC_SEEDS = [
+export const SEMANTIC_SEEDS = [
   { key: 'successSeed', palette: 'success', label: 'Success' },
   { key: 'warningSeed', palette: 'warning', label: 'Warning' },
   { key: 'dangerSeed', palette: 'danger', label: 'Danger' },
   { key: 'infoSeed', palette: 'info', label: 'Info' },
 ] as const
 
-const BORDER_JOBS = [
+export const BORDER_JOBS = [
   { key: 'border400', job: '400', label: 'Border · subtle', maxValue: 3 },
   { key: 'border500', job: '500', label: 'Border · interactive', maxValue: 4 },
   { key: 'border600', job: '600', label: 'Border · emphasized', maxValue: 8 },
