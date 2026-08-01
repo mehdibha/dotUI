@@ -263,7 +263,11 @@ export const DEFAULTS = {
   // Icons
   iconLibrary: 'lucide',
   iconStroke: 2,
+  // Auto = follow the library's own stroke default (2 / 2 / 1.5); dragging the
+  // stroke slider turns it into an explicit override.
+  iconStrokeAuto: true,
   iconWeight: 'regular',
+  iconScale: 1,
   // Shape
   radius: 1,
   density: 'default',
@@ -329,7 +333,9 @@ export const TYPE_KEYS: (keyof LabState)[] = [
 export const ICON_KEYS: (keyof LabState)[] = [
   'iconLibrary',
   'iconStroke',
+  'iconStrokeAuto',
   'iconWeight',
+  'iconScale',
 ]
 export const SHAPE_KEYS: (keyof LabState)[] = ['radius', 'density']
 export const EFFECT_KEYS: (keyof LabState)[] = [

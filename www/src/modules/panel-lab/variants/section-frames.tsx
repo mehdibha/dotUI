@@ -28,10 +28,10 @@ import {
   TYPE_KEYS,
 } from '../data'
 import type { Lab } from '../data'
+import { IdealIconsSectionBody } from '../icons-ideal'
 import {
   ComponentsSectionBody,
   EffectsSectionBody,
-  IconsSectionBody,
   ShapeSectionBody,
   TypographySectionBody,
 } from '../sections'
@@ -58,7 +58,7 @@ export const WORKING_CHAPTERS: Chapter[] = [
     label: 'Icons',
     icon: SmileIcon,
     keys: ICON_KEYS,
-    Body: IconsSectionBody,
+    Body: IdealIconsSectionBody,
   },
   {
     id: 'shape',
