@@ -1,0 +1,419 @@
+{
+  "name": "RadarChartProps",
+  "description": "Radar chart. Give it one row per category plus the fields to read: one `y`\nfield per series for wide rows, or a single `y` with `series` for long rows.\nInteraction and animation props are shared by every family — see\n`ChartBehaviorProps` — and the host props (`height`, `width`, `className`,\ncallbacks) live on `Chart`.",
+  "props": {
+    "data": {
+      "type": "readonly unknown[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "unknown"
+        }
+      },
+      "description": "The rows to plot, one per category. Compared by identity — define it outside render.",
+      "required": true
+    },
+    "x": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field holding the category laid around the circumference.",
+      "required": true
+    },
+    "y": {
+      "type": "readonly string[] | string",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "One field per series (wide rows), or a single field paired with `series`\n(long rows).",
+      "required": true
+    },
+    "series": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field splitting rows into series — the long-format alternative to `y`."
+    },
+    "seriesOrder": {
+      "type": "readonly string[]",
+      "detailedType": "readonly string[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "Series order. Drives color-slot assignment and the legend."
+    },
+    "labels": {
+      "type": "Readonly<Record<string, string>>",
+      "detailedType": "Readonly<Record<string, string>> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "Readonly"
+            },
+            "typeParameters": [
+              {
+                "type": "application",
+                "base": {
+                  "type": "identifier",
+                  "name": "Record"
+                },
+                "typeParameters": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Display names for series keys, used by the legend and the tooltip."
+    },
+    "ariaLabel": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Accessible name. Required: a chart is a figure, not decoration.",
+      "required": true
+    },
+    "fill": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Series fill opacity. `0` draws outlines only.",
+      "default": "0.6"
+    },
+    "strokeWidth": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Stroke width of the outline.",
+      "default": "2.25"
+    },
+    "points": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Draw a dot at every point.",
+      "default": "false"
+    },
+    "grid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the rings.",
+      "default": "true"
+    },
+    "gridShape": {
+      "type": "\"circle\" | \"polygon\"",
+      "detailedType": "'circle' | 'polygon' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "circle"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "polygon"
+          }
+        ]
+      },
+      "description": "Ring shape.",
+      "default": "\"polygon\""
+    },
+    "gridTicks": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Number of rings.",
+      "default": "4"
+    },
+    "gridFill": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Fill opacity of the area inside the outer ring. Omitted leaves it unfilled."
+    },
+    "gridFillColor": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Color of that fill.",
+      "default": "\"var(--chart-1)\""
+    },
+    "spokes": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Draw the spokes running out to each category.",
+      "default": "matches `grid`"
+    },
+    "axes": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the circumference labels.",
+      "default": "true"
+    },
+    "axisDetail": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "A second, muted label line above each category label — a function, or serializable `Intl` options."
+    },
+    "legend": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the color legend. Turn it off for a single series.",
+      "default": "true"
+    },
+    "formatX": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "Formats the circumference labels and the tooltip title."
+    },
+    "formatY": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "Formats the tooltip values."
+    },
+    "radiusRatio": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Fraction of the available radius the chart fills.",
+      "default": "0.78"
+    },
+    "max": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Outer value of the radius scale. Defaults to the largest value, rounded up."
+    },
+    "rowKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Stable row identity, so filtered rows animate instead of respawning."
+    },
+    "polarMarks": {
+      "type": "readonly ChartMarkLayer[]",
+      "detailedType": "readonly ChartMarkLayer[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+                "name": "ChartMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "description": "Extra mark layers spliced into the polar container — cartesian marks would land outside it."
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Overlay rendered above the chart surface, ignoring pointer events."
+    }
+  },
+  "typeLinks": {
+    "@tanstack/charts/dist/types.d.ts:ChartMark": {
+      "type": "interface",
+      "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+      "name": "ChartMark",
+      "extends": [],
+      "properties": {
+        "__xScaleValue": {
+          "type": "property",
+          "name": "__xScaleValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__xValue": {
+          "type": "property",
+          "name": "__xValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__yScaleValue": {
+          "type": "property",
+          "name": "__yScaleValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__yValue": {
+          "type": "property",
+          "name": "__yValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "initialize": {
+          "type": "method",
+          "name": "initialize",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "context",
+                "value": {
+                  "type": "link",
+                  "id": "@tanstack/charts/dist/types.d.ts:MarkInitializeContext",
+                  "name": "MarkInitializeContext"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:InitializedMark",
+                "name": "InitializedMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": ""
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    }
+  }
+}

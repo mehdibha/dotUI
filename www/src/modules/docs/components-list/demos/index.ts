@@ -10,10 +10,13 @@ import { CalendarDemo } from './calendar'
 import { CardDemo } from './card'
 import { ChartAreaDemo } from './chart-area'
 import { ChartBarDemo } from './chart-bar'
+import { ChartHeatmapDemo } from './chart-heatmap'
 import { ChartLineDemo } from './chart-line'
 import { ChartPieDemo } from './chart-pie'
 import { ChartRadarDemo } from './chart-radar'
 import { ChartRadialDemo } from './chart-radial'
+import { ChartScatterDemo } from './chart-scatter'
+import { ChartSparklineDemo } from './chart-sparkline'
 import { CheckboxDemo } from './checkbox'
 import { CheckboxGroupDemo } from './checkbox-group'
 import { ColorAreaDemo } from './color-area'
@@ -78,10 +81,13 @@ export const componentDemos: Record<string, ComponentType> = {
   card: CardDemo,
   'chart-area': ChartAreaDemo,
   'chart-bar': ChartBarDemo,
+  'chart-heatmap': ChartHeatmapDemo,
   'chart-line': ChartLineDemo,
   'chart-pie': ChartPieDemo,
   'chart-radar': ChartRadarDemo,
   'chart-radial': ChartRadialDemo,
+  'chart-scatter': ChartScatterDemo,
+  'chart-sparkline': ChartSparklineDemo,
   checkbox: CheckboxDemo,
   'checkbox-group': CheckboxGroupDemo,
   'color-area': ColorAreaDemo,

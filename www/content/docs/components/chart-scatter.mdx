@@ -1,0 +1,156 @@
+---
+title: Scatter Chart
+description: Plot two quantitative measures against each other, with optional color groups and a bubble radius.
+---
+
+<Demo name="chart-scatter/demos/grouped" />
+
+A scatter plot answers one question: do two measures move together? Position carries the evidence — one dot per row, a linear scale on both axes. Color and radius each add one more dimension when you need it.
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/chart-scatter
+```
+
+It brings the [`chart`](/docs/components/chart) core — the host, the palette, and the shared frame — along with it.
+
+## Usage
+
+```tsx
+import { ScatterChart } from '@/ui/chart-scatter'
+```
+
+Give it your rows and the two numeric fields to position them by. `ariaLabel` is required — a chart is a figure, not decoration.
+
+```tsx
+const routes = [
+  { route: '/', size: 118, load: 0.8 },
+  { route: '/docs', size: 212, load: 1.4 },
+  { route: '/editor', size: 476, load: 3.2 },
+]
+
+export function Example() {
+  return (
+    <ScatterChart
+      data={routes}
+      x="size"
+      y="load"
+      rowKey="route"
+      ariaLabel="First load time by bundle size"
+    />
+  )
+}
+```
+
+`x` and `y` accept only numeric fields of your row type, so a typo or a string field is a type error rather than an empty chart. `rowKey` names the field that identifies a row, which keeps a dot animating in place when the data is filtered or re-sorted instead of respawning it.
+
+## Bubbles
+
+Pass `r` to size each dot by a third measure. Values map onto `radiusRange` through a square-root scale, so **area** reads as magnitude — a country with twice the population draws twice the ink, not four times.
+
+```tsx
+<ScatterChart
+  data={countries}
+  x="income"
+  y="lifespan"
+  r="population"
+  radiusRange={[4, 26]}
+  fillOpacity={0.55}
+  ariaLabel="Life expectancy by income, sized by population"
+/>
+```
+
+Bubbles overlap by nature; `fillOpacity` keeps the ones underneath readable. Without `r`, every dot uses the flat `radius`.
+
+## Groups
+
+`series` splits rows into colored groups and turns on the legend. `seriesOrder` fixes color-slot assignment so a group keeps its color when the data changes, and `labels` maps raw keys to display names.
+
+```tsx
+<ScatterChart
+  data={accounts}
+  x="seats"
+  y="spend"
+  series="plan"
+  seriesOrder={['starter', 'growth', 'scale']}
+  labels={{ starter: 'Starter', growth: 'Growth', scale: 'Scale' }}
+  ariaLabel="Monthly spend by seat count, grouped by plan"
+/>
+```
+
+The legend follows `series`: an ungrouped scatter has nothing to name, so it renders none. Pass `legend` explicitly to override either way.
+
+## Overlays
+
+A trend line is derived data. Fit it in your application, then pass the result as its own mark layer — `marksBefore` paints under the dots, `marks` over them. The chart draws the model; it does not fit it.
+
+```tsx
+import { lineY } from '@tanstack/charts/line'
+
+// Computed once, outside render: mark layers are compared by identity.
+const trend = [
+  lineY(fit, {
+    x: 'spend',
+    y: 'signups',
+    stroke: 'var(--color-fg-muted)',
+    strokeDasharray: '4 4',
+  }),
+]
+
+<ScatterChart
+  data={campaigns}
+  x="spend"
+  y="signups"
+  marksBefore={trend}
+  ariaLabel="Signups by campaign spend"
+/>
+```
+
+The same escape hatch takes a `ruleY` for a target line, or a `text` layer for annotations. Any mark from `@tanstack/charts` shares the chart's scales.
+
+## Dense data
+
+Scatter focuses the nearest point in **two** dimensions, unlike the category-axis charts that highlight a whole column. In a dense cloud, lower `fillOpacity` to expose the distribution and tighten `maxFocusDistance` so a hover never claims a point on the far side of the plot.
+
+```tsx
+<ScatterChart
+  data={requests}
+  x="latency"
+  y="errors"
+  radius={2.5}
+  fillOpacity={0.35}
+  maxFocusDistance={12}
+  ariaLabel="Error rate by response time"
+/>
+```
+
+Above roughly 800 points, animation turns itself off — the redraw cost stops being worth it.
+
+## Accessibility
+
+The chart surface is focusable and keyboard-navigable: arrow keys move between points, and each focused point is announced with its axis values. `ariaLabel` is required and names the figure; `ariaDescription` adds the longer explanation a sighted reader gets from the surrounding copy.
+
+Color is never the only encoding — position always carries the relationship, and groups stay distinguishable through the legend and the tooltip. When a group's name matters more than its hue, say so in `labels` rather than relying on the palette.
+
+## Examples
+
+<Examples>
+  <Example name="chart-scatter/demos/default" title="Default" />
+  <Example name="chart-scatter/demos/bubble" title="Bubble" />
+  <Example name="chart-scatter/demos/grouped" title="Grouped" />
+  <Example name="chart-scatter/demos/with-regression" title="With Regression" />
+  <Example name="chart-scatter/demos/dense" title="Dense" />
+</Examples>
+
+## API Reference
+
+### ScatterChart
+
+<Reference name="scatter-chart" />
+
+Interaction and animation props are shared by every chart family:
+
+<Reference name="chart-behavior" />
+
+The host props — `height`, `width`, `className`, and the focus callbacks — are documented on the [Chart](/docs/components/chart) page.

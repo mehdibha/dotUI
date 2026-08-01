@@ -1,13 +1,13 @@
-/* Source panes for both seats. The Recharts primitive is the real registry
-   file, shown as the docs would ship it. The TanStack example is generated
-   from the live knob state, so the code pane always shows exactly the
-   definition the chart is rendering — the export story in miniature. */
-
-import rechartsPrimitiveRaw from '@/registry/ui/chart/base.tsx?raw'
+/* Source panes for both seats. The Recharts primitive is the pre-migration
+   registry file, vendored here so the lab keeps its shadcn baseline. The
+   TanStack example is generated from the live knob state, so the code pane
+   always shows exactly the definition the chart is rendering — the export
+   story in miniature. */
 
 import { desktopAverage, slotVar, visits, type ChartSlot } from './data'
 import { chartDefaults } from './primitive'
 import tanstackPrimitiveRaw from './primitive.tsx?raw'
+import rechartsPrimitiveRaw from './recharts-chart.tsx?raw'
 
 export type MarkKind = 'area' | 'line' | 'bar'
 export type CurveKind = 'linear' | 'natural' | 'monotone' | 'step'

@@ -329,9 +329,9 @@ export const DemosIndex: Record<
 		files: ["ui/chart-area/demos/gradient.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-area/demos/gradient")),
 	},
-	"chart-area/demos/icons": {
-		files: ["ui/chart-area/demos/icons.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-area/demos/icons")),
+	"chart-area/demos/labels": {
+		files: ["ui/chart-area/demos/labels.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-area/demos/labels")),
 	},
 	"chart-area/demos/legend": {
 		files: ["ui/chart-area/demos/legend.tsx"],
@@ -388,6 +388,22 @@ export const DemosIndex: Record<
 	"chart-bar/demos/stacked": {
 		files: ["ui/chart-bar/demos/stacked.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/stacked")),
+	},
+	"chart-heatmap/demos/calendar-months": {
+		files: ["ui/chart-heatmap/demos/calendar-months.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-heatmap/demos/calendar-months")),
+	},
+	"chart-heatmap/demos/discrete-scale": {
+		files: ["ui/chart-heatmap/demos/discrete-scale.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-heatmap/demos/discrete-scale")),
+	},
+	"chart-heatmap/demos/matrix": {
+		files: ["ui/chart-heatmap/demos/matrix.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-heatmap/demos/matrix")),
+	},
+	"chart-heatmap/demos/with-values": {
+		files: ["ui/chart-heatmap/demos/with-values.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-heatmap/demos/with-values")),
 	},
 	"chart-line/demos/default": {
 		files: ["ui/chart-line/demos/default.tsx"],
@@ -544,6 +560,46 @@ export const DemosIndex: Record<
 	"chart-radial/demos/text": {
 		files: ["ui/chart-radial/demos/text.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-radial/demos/text")),
+	},
+	"chart-scatter/demos/bubble": {
+		files: ["ui/chart-scatter/demos/bubble.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-scatter/demos/bubble")),
+	},
+	"chart-scatter/demos/default": {
+		files: ["ui/chart-scatter/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-scatter/demos/default")),
+	},
+	"chart-scatter/demos/dense": {
+		files: ["ui/chart-scatter/demos/dense.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-scatter/demos/dense")),
+	},
+	"chart-scatter/demos/grouped": {
+		files: ["ui/chart-scatter/demos/grouped.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-scatter/demos/grouped")),
+	},
+	"chart-scatter/demos/with-regression": {
+		files: ["ui/chart-scatter/demos/with-regression.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-scatter/demos/with-regression")),
+	},
+	"chart-sparkline/demos/area": {
+		files: ["ui/chart-sparkline/demos/area.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-sparkline/demos/area")),
+	},
+	"chart-sparkline/demos/default": {
+		files: ["ui/chart-sparkline/demos/default.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-sparkline/demos/default")),
+	},
+	"chart-sparkline/demos/negative-highlight": {
+		files: ["ui/chart-sparkline/demos/negative-highlight.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-sparkline/demos/negative-highlight")),
+	},
+	"chart-sparkline/demos/stat-card": {
+		files: ["ui/chart-sparkline/demos/stat-card.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-sparkline/demos/stat-card")),
+	},
+	"chart-sparkline/demos/with-trend": {
+		files: ["ui/chart-sparkline/demos/with-trend.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-sparkline/demos/with-trend")),
 	},
 	"checkbox/demos/basic": {
 		files: ["ui/checkbox/demos/basic.tsx"],

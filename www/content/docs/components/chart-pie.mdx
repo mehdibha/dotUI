@@ -1,0 +1,163 @@
+---
+title: Pie Chart
+description: A circle divided into slices, for parts of a single whole.
+---
+
+<Demo name="chart-pie/demos/donut" />
+
+A pie chart answers one question: how does this total break down? It reads well with a handful of slices and a clear leader, and badly with a dozen near-equal ones — comparing angles is harder than comparing lengths. When the ranking matters more than the share, use a [bar chart](/docs/components/chart-bar).
+
+`PieChart` takes your rows and the names of the fields to read. Colors, typography, tooltip, and legend all come from your design system.
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/chart-pie
+```
+
+It brings the [`chart`](/docs/components/chart) core — the host, the palette, and the shared frame — along with it.
+
+## Usage
+
+```tsx
+import { PieChart } from '@/ui/chart-pie'
+```
+
+One row per slice. `value` names the field holding the magnitude, `name` the field holding the slice key. A chart is a figure, so `ariaLabel` is required.
+
+```tsx
+const data = [
+  { browser: 'chrome', visitors: 275 },
+  { browser: 'safari', visitors: 200 },
+  { browser: 'firefox', visitors: 187 },
+]
+
+export function Example() {
+  return (
+    <PieChart
+      data={data}
+      value="visitors"
+      name="browser"
+      labels={{ chrome: 'Chrome', safari: 'Safari', firefox: 'Firefox' }}
+      ariaLabel="Visitors by browser"
+    />
+  )
+}
+```
+
+`data` is compared by identity, so define it outside your component — or memoize it. Every other prop is a flat scalar and can change freely.
+
+Slices are drawn in data order and take colors from `--chart-1` through `--chart-8` in the same order. Set `seriesOrder` to fix that assignment when the data can arrive sorted differently.
+
+## Geometry
+
+Radii are ratios, never pixels, so a pie keeps its proportions at every size.
+
+- `innerRadius` above `0` makes it a donut. `0.55` is a good starting point.
+- `outerRadius` shrinks the ring inside the available radius; `radiusRatio` reserves room around the whole chart for labels and the legend.
+- `startAngle` and `endAngle` are radians clockwise from twelve o'clock. `endAngle={Math.PI}` draws a semicircle.
+- `padAngle` opens a gap between slices, `cornerRadius` rounds their corners.
+
+Slices touch by default. To separate them the way a printed chart does, stroke them with the page background:
+
+```tsx
+<PieChart
+  data={data}
+  value="visitors"
+  name="browser"
+  innerRadius={0.55}
+  stroke="var(--color-bg)"
+  strokeWidth={2}
+  ariaLabel="Visitors by browser"
+/>
+```
+
+`activeIndex` pushes one slice out of the ring by `activeOffset`, for calling out the slice the surrounding copy is about.
+
+## Labels and center content
+
+`sliceLabel` draws text on each slice — `'value'` for the magnitude, `'name'` for the key — positioned with `sliceLabelRadius` and styled with `sliceLabelFill` and `sliceLabelFontSize`. Slice labels are part of the chart surface, so they are also focusable points; they carry the same slice as the arc under them, so the tooltip reads the same either way.
+
+The hole in a donut is best filled with plain HTML: anything passed as `children` renders as an overlay above the surface and ignores pointer events.
+
+```tsx
+<PieChart
+  data={data}
+  value="visitors"
+  name="browser"
+  innerRadius={0.6}
+  ariaLabel="Visitors by browser"
+>
+  <div className="flex h-full flex-col items-center justify-center">
+    <span className="text-3xl font-bold">{total}</span>
+    <span className="text-sm text-fg-muted">Visitors</span>
+  </div>
+</PieChart>
+```
+
+## Concentric rings
+
+A second series is a second ring, not a stack. `pieRing` builds one, and `polarMarks` splices it inside the chart's polar container — plain `marks` would land outside the transform. Build it outside your component so it keeps its identity across renders.
+
+```tsx
+import { pieRing, PieChart } from '@/ui/chart-pie'
+
+const mobileRing = pieRing({
+  id: 'mobile',
+  data: mobile,
+  value: 'mobile',
+  name: 'month',
+  innerRadius: 0.7,
+  outerRadius: 0.95,
+})
+```
+
+```tsx
+<PieChart
+  data={desktop}
+  value="desktop"
+  name="month"
+  outerRadius={0.6}
+  polarMarks={mobileRing}
+  ariaLabel="Desktop and mobile visitors by month"
+/>
+```
+
+Both rings key their colors off the same field, so one month is one color from the middle out.
+
+## Animation
+
+Pie charts do not animate by default. Arc paths animate by interpolating their `d` attribute, and an arc that crosses half a turn flips an SVG flag mid-tween — which briefly draws an invalid path. Pass `animate` explicitly if your slices never cross that boundary.
+
+## Accessibility
+
+- `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
+- The chart surface is in the tab order. Arrow keys move between slices, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
+- Color alone never carries the distinction — the legend, tooltip, and slice labels all name the slice.
+
+## Examples
+
+<Examples>
+  <Example name="chart-pie/demos/simple" title="Default" />
+  <Example name="chart-pie/demos/donut" title="Donut" />
+  <Example name="chart-pie/demos/donut-active" title="Active Slice" />
+  <Example name="chart-pie/demos/donut-text" title="Donut with Text" />
+  <Example name="chart-pie/demos/label" title="Value Labels" />
+  <Example name="chart-pie/demos/label-custom" title="Custom Labels" />
+  <Example name="chart-pie/demos/label-list" title="Name Labels" />
+  <Example name="chart-pie/demos/legend" title="Legend" />
+  <Example name="chart-pie/demos/separator-none" title="No Separator" />
+  <Example name="chart-pie/demos/stacked" title="Concentric Rings" />
+</Examples>
+
+## API Reference
+
+### PieChart
+
+<Reference name="pie-chart" />
+
+Interaction and animation props are shared by every chart family:
+
+<Reference name="chart-behavior" />
+
+The host props — `height`, `width`, `className`, and the focus callbacks — are documented on the [Chart](/docs/components/chart) page.

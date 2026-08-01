@@ -251,6 +251,9 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
       ? { description: meta.description }
       : {}),
     ...(dependencies.length > 0 ? { dependencies } : {}),
+    ...(meta.devDependencies?.length
+      ? { devDependencies: meta.devDependencies }
+      : {}),
     ...(registryDependencies.length > 0 ? { registryDependencies } : {}),
     ...(meta.css ? { css: meta.css } : {}),
     ...(meta.cssVars ? { cssVars: meta.cssVars } : {}),

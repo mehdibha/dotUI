@@ -1,0 +1,138 @@
+'use client'
+
+import type { ChartBuildContext, ChartLinearGradient } from '@tanstack/charts'
+import { areaY } from '@tanstack/charts/area'
+import { d3Curve } from '@tanstack/charts/d3/shape'
+import { lineY } from '@tanstack/charts/line'
+import { scalePoint } from 'd3-scale'
+import { curveMonotoneX, curveNatural, curveStepAfter } from 'd3-shape'
+
+import type {
+  ChartBaseSpecOptions,
+  ChartComponentProps,
+  ChartCurve,
+  ChartFrameOptions,
+  ChartSpecOf,
+  ChartXField,
+  ChartXValueOf,
+  ChartYField,
+} from '@/registry/ui/chart'
+import {
+  Chart,
+  chartDefaults,
+  chartFrame,
+  gradientPrefix,
+  paletteColor,
+  useChartDefinition,
+} from '@/registry/ui/chart'
+
+const CURVES = /* @__PURE__ */ {
+  linear: undefined,
+  natural: /* @__PURE__ */ d3Curve(curveNatural),
+  monotone: /* @__PURE__ */ d3Curve(curveMonotoneX),
+  step: /* @__PURE__ */ d3Curve(curveStepAfter),
+} as const satisfies Record<ChartCurve, unknown>
+
+/* A sparkline is one series, no chrome: the frame props (axes, grid, legend,
+   tick formats) are dropped rather than ignored. */
+export interface SparklineSpecOptions<
+  TDatum,
+  TXField extends ChartXField<TDatum>,
+> extends Omit<ChartBaseSpecOptions<TDatum>, keyof ChartFrameOptions> {
+  /** Field holding the category / time value. */
+  x: TXField
+  /** Field holding the value. */
+  y: ChartYField<TDatum>
+  mode?: 'line' | 'area'
+  curve?: ChartCurve
+  /** Any CSS color. Defaults to the first palette slot. */
+  color?: string
+  /** Area fill opacity, or `'gradient'` to fade it out downward. */
+  fill?: number | 'gradient'
+  strokeWidth?: number
+}
+
+function fadeGradient(id: string, color: string): ChartLinearGradient {
+  const [from, to] = chartDefaults.gradientStops
+  return {
+    id,
+    y1: 1,
+    y2: 0,
+    stops: [
+      { offset: 0, color, opacity: from },
+      { offset: 1, color, opacity: to },
+    ],
+  }
+}
+
+export function sparklineSpec<TDatum, TXField extends ChartXField<TDatum>>(
+  options: SparklineSpecOptions<TDatum, TXField>,
+  ctx: ChartBuildContext,
+): ChartSpecOf<TDatum, ChartXValueOf<TDatum, TXField>> {
+  const color = options.color ?? paletteColor(0)
+  const curve = CURVES[options.curve ?? chartDefaults.curve]
+  const strokeWidth = options.strokeWidth ?? chartDefaults.strokeWidth
+  const fill = options.fill ?? chartDefaults.fill
+  const gradient = fill === 'gradient'
+  const fillId = `${gradientPrefix(options.gradientIdPrefix, 'sparkline')}-fill`
+  const channels = { x: options.x, y: options.y, key: options.rowKey }
+  return {
+    ...chartFrame({ axes: false, grid: false, legend: false }, ctx, {
+      // No outer padding: a sparkline spans its box edge to edge. And no
+      // nicening: the shape comes from the data extent, not round numbers.
+      x: { scale: () => scalePoint().padding(0) },
+      y: { nice: false },
+    }),
+    guides: false,
+    // Half the stroke, so the round caps at the extremes are not clipped.
+    margin: Math.ceil(strokeWidth / 2),
+    marks: [
+      ...(options.marksBefore ?? []),
+      ...(options.mode === 'area'
+        ? [
+            areaY(options.data, {
+              ...channels,
+              fill: gradient ? `url(#${fillId})` : color,
+              fillOpacity: gradient ? 1 : fill,
+              curve,
+            }),
+          ]
+        : []),
+      lineY(options.data, { ...channels, stroke: color, strokeWidth, curve }),
+      ...(options.marks ?? []),
+    ],
+    gradients: gradient ? [fadeGradient(fillId, color)] : undefined,
+  }
+}
+
+export type SparklineProps<TDatum, TXField extends ChartXField<TDatum>> = Omit<
+  ChartComponentProps<
+    SparklineSpecOptions<TDatum, TXField>,
+    TDatum,
+    ChartXValueOf<TDatum, TXField>
+  >,
+  'tooltip'
+> & {
+  /** Sparklines are read at a glance, so the tooltip is opt-in. */
+  tooltip?: boolean
+}
+
+export function Sparkline<TDatum, TXField extends ChartXField<TDatum>>({
+  tooltip = false,
+  height = chartDefaults.sparklineHeight,
+  ...props
+}: SparklineProps<TDatum, TXField>) {
+  const { definition, host, children } = useChartDefinition<
+    TDatum,
+    ChartXValueOf<TDatum, TXField>,
+    SparklineSpecOptions<TDatum, TXField>
+  >(
+    { ...props, height, tooltip: tooltip ? undefined : (false as const) },
+    sparklineSpec,
+  )
+  return (
+    <Chart definition={definition} {...host}>
+      {children}
+    </Chart>
+  )
+}

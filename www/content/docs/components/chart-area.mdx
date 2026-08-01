@@ -1,0 +1,163 @@
+---
+title: Area Chart
+description: A filled line chart for values that accumulate, compose, or are read against a baseline.
+---
+
+<Demo name="chart-area/demos/gradient" />
+
+An area chart is a line chart whose fill carries meaning: distance from a baseline, or the span between two boundaries. Reach for it when the reader should compare magnitude or composition — not just because a filled chart looks stronger. When only the trend matters, use the [line chart](/docs/components/chart-line).
+
+`AreaChart` takes your rows and the names of the fields to read. Colors, typography, grid, tooltip, and legend all come from your design system.
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/chart-area
+```
+
+It brings the [`chart`](/docs/components/chart) core — the host, the palette, and the shared frame — along with it.
+
+## Usage
+
+```tsx
+import { AreaChart } from '@/ui/chart-area'
+```
+
+Point `x` at the category or time field and `y` at the value field. A chart is a figure, so `ariaLabel` is required.
+
+```tsx
+const data = [
+  { month: 'Jan', desktop: 186 },
+  { month: 'Feb', desktop: 305 },
+  { month: 'Mar', desktop: 237 },
+]
+
+export function Example() {
+  return (
+    <AreaChart
+      data={data}
+      x="month"
+      y="desktop"
+      labels={{ desktop: 'Desktop' }}
+      legend={false}
+      ariaLabel="Desktop visitors by month"
+    />
+  )
+}
+```
+
+`data` is compared by identity, so define it outside your component — or memoize it. Every other prop is a flat scalar and can change freely.
+
+## Data shape
+
+Two shapes work, and both draw the same chart.
+
+**Wide** rows carry one column per series. Pass the columns as an array, and name them with `labels`:
+
+```tsx
+<AreaChart
+  data={data}
+  x="month"
+  y={['desktop', 'mobile']}
+  labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
+  ariaLabel="Visitors by device"
+/>
+```
+
+**Long** rows carry one row per series per x value, with the series key in its own field. Pass that field as `series`, and set `seriesOrder` to fix color slots and legend order:
+
+```tsx
+<AreaChart
+  data={data}
+  x="month"
+  y="visitors"
+  series="channel"
+  seriesOrder={['paid_social', 'organic_search']}
+  labels={{ organic_search: 'Organic search', paid_social: 'Paid social' }}
+  ariaLabel="Visitors by acquisition channel"
+/>
+```
+
+Series take colors from `--chart-1` through `--chart-8` in order. A `null` value leaves a gap rather than dropping to zero.
+
+## Stacking
+
+Stacking is a data transform, not a chart flag: `stackY` turns wide rows into one long row per band, carrying the `base` and `top` of the band it should fill plus its own `value` for the tooltip. Call it outside your component, then read those fields.
+
+```tsx
+import { stackY } from '@/ui/chart'
+
+const stacked = stackY(data, { x: 'month', y: ['desktop', 'mobile', 'other'] })
+```
+
+```tsx
+<AreaChart
+  data={stacked}
+  x="x"
+  y="top"
+  y1="base"
+  series="series"
+  labels={{ desktop: 'Desktop', mobile: 'Mobile', other: 'Other' }}
+  ariaLabel="Visitors by device, stacked"
+/>
+```
+
+Add `normalize: true` for a 100% stack — each band is divided by its own x-group total — and format the value axis as a percentage with `formatY`.
+
+## Shape
+
+`curve` sets the interpolation: `natural` (the default), `monotone`, `linear`, or `step`. `fill` takes an opacity, or `'gradient'` for a fade toward the baseline. `strokeWidth` and `points` control the upper edge.
+
+Interpolation only changes the path drawn between observations. It does not smooth the data or create evidence between samples.
+
+## Annotations
+
+`marks` and `marksBefore` accept raw [TanStack Charts](https://tanstack.com/charts) mark layers, painted over and under the areas on the same scales. Use them for a target rule, a highlighted band, or end labels.
+
+```tsx
+import { ruleY } from '@tanstack/charts/rule'
+
+const target = ruleY([200], { strokeDasharray: '4 4' })
+```
+
+```tsx
+<AreaChart
+  data={data}
+  x="month"
+  y="desktop"
+  marks={[target]}
+  ariaLabel="Desktop visitors against target"
+/>
+```
+
+## Accessibility
+
+- `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
+- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
+- Color alone never carries the distinction — the legend, tooltip, and axis labels all name the series.
+
+## Examples
+
+<Examples>
+  <Example name="chart-area/demos/default" title="Default" />
+  <Example name="chart-area/demos/legend" title="Multiple Series" />
+  <Example name="chart-area/demos/gradient" title="Gradient" />
+  <Example name="chart-area/demos/stacked" title="Stacked" />
+  <Example name="chart-area/demos/stacked-expand" title="Stacked Expanded" />
+  <Example name="chart-area/demos/labels" title="Long Format Labels" />
+  <Example name="chart-area/demos/axes" title="Axis Formatting" />
+  <Example name="chart-area/demos/linear" title="Linear" />
+  <Example name="chart-area/demos/step" title="Step" />
+</Examples>
+
+## API Reference
+
+### AreaChart
+
+<Reference name="area-chart" />
+
+Interaction and animation props are shared by every chart family:
+
+<Reference name="chart-behavior" />
+
+The host props — `height`, `width`, `className`, and the focus callbacks — are documented on the [Chart](/docs/components/chart) page.

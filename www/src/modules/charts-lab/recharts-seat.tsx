@@ -3,19 +3,18 @@
 import { useMemo, useState } from 'react'
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'
 
-import type { ChartConfig } from '@/registry/ui/chart'
+import { CodePane, SeatViewBar, type SeatView } from './code-view'
+import { RECHARTS_PRIMITIVE_CODE, rechartsExampleCode } from './codegen'
+import { PanelSection, SlotSelect } from './controls'
+import { slotVar, visits, type ChartSlot } from './data'
+import type { ChartConfig } from './recharts-chart'
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from '@/registry/ui/chart'
-
-import { CodePane, SeatViewBar, type SeatView } from './code-view'
-import { RECHARTS_PRIMITIVE_CODE, rechartsExampleCode } from './codegen'
-import { PanelSection, SlotSelect } from './controls'
-import { slotVar, visits, type ChartSlot } from './data'
+} from './recharts-chart'
 
 /* The shadcn seat: the chart is frozen JSX, and `ChartConfig` — label, icon,
    color per series — is the entire runtime customization surface. */

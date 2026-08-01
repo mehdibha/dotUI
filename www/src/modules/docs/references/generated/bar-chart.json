@@ -1,0 +1,408 @@
+{
+  "name": "BarChartProps",
+  "description": "A bar chart. Field props (`x`, `y`, `series`, …) name keys of your row type\nand are checked against it. Every prop of `Chart` (`ariaLabel`, `height`,\n`className`, `children`, the focus callbacks) and every prop of\n`ChartBehaviorProps` (`focus`, `tooltip`, `animate`, …) is accepted too.",
+  "props": {
+    "data": {
+      "type": "readonly Record<string, unknown>[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "application",
+          "base": {
+            "type": "identifier",
+            "name": "Record"
+          },
+          "typeParameters": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "unknown"
+            }
+          ]
+        }
+      },
+      "description": "The rows to plot. Compared by identity — keep it out of render.",
+      "required": true
+    },
+    "x": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field holding the category.",
+      "required": true
+    },
+    "y": {
+      "type": "readonly string[] | string",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "One field per series (wide rows), or a single field with `series`.",
+      "required": true
+    },
+    "y1": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Lower baseline field — pair with `stackY` for stacked bars."
+    },
+    "series": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field splitting rows into series — the long-format alternative to `y`."
+    },
+    "seriesOrder": {
+      "type": "readonly string[]",
+      "detailedType": "readonly string[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "Series order — drives color-slot assignment and the legend."
+    },
+    "labels": {
+      "type": "Readonly<Record<string, string>>",
+      "detailedType": "Readonly<Record<string, string>> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "Readonly"
+            },
+            "typeParameters": [
+              {
+                "type": "application",
+                "base": {
+                  "type": "identifier",
+                  "name": "Record"
+                },
+                "typeParameters": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Display names for series keys."
+    },
+    "rowKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Stable row identity, so sorted or filtered rows are retained, not respawned."
+    },
+    "horizontal": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Categories down the y axis and values along x. `formatX` still formats the\nvalue axis, and `focus=\"group-y\"` groups along the categories.",
+      "default": "false"
+    },
+    "grouped": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Side-by-side series inside each category band.",
+      "default": "true for multi-series wide data, false otherwise"
+    },
+    "radius": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Corner radius in pixels.",
+      "default": "4"
+    },
+    "inset": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Pixels trimmed from both categorical edges of every bar."
+    },
+    "fillOpacity": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Bar fill opacity. Dim every bar to highlight one with an extra layer."
+    },
+    "grid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Gridlines on the value axis.",
+      "default": "true"
+    },
+    "axes": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Axis ticks and labels, on both axes.",
+      "default": "true"
+    },
+    "legend": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Color legend, when the chart has more than one series.",
+      "default": "true"
+    },
+    "formatX": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "Formats x tick labels: a function, or Intl number/date options."
+    },
+    "formatY": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "Formats y tick labels: a function, or Intl number/date options."
+    },
+    "marksBefore": {
+      "type": "readonly ChartMarkLayer[]",
+      "detailedType": "readonly ChartMarkLayer[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+                "name": "ChartMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "description": "Mark layers painted under the bars — a baseline rule, a target band."
+    },
+    "marks": {
+      "type": "readonly ChartMarkLayer[]",
+      "detailedType": "readonly ChartMarkLayer[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+                "name": "ChartMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "description": "Mark layers painted over the bars — value labels, annotations."
+    },
+    "ariaLabel": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Accessible name. Required: a chart is a figure, not decoration.",
+      "required": true
+    }
+  },
+  "typeLinks": {
+    "@tanstack/charts/dist/types.d.ts:ChartMark": {
+      "type": "interface",
+      "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+      "name": "ChartMark",
+      "extends": [],
+      "properties": {
+        "__xScaleValue": {
+          "type": "property",
+          "name": "__xScaleValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__xValue": {
+          "type": "property",
+          "name": "__xValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__yScaleValue": {
+          "type": "property",
+          "name": "__yScaleValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__yValue": {
+          "type": "property",
+          "name": "__yValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "initialize": {
+          "type": "method",
+          "name": "initialize",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "context",
+                "value": {
+                  "type": "link",
+                  "id": "@tanstack/charts/dist/types.d.ts:MarkInitializeContext",
+                  "name": "MarkInitializeContext"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:InitializedMark",
+                "name": "InitializedMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": ""
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    }
+  }
+}

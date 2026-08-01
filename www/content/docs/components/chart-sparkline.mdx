@@ -1,0 +1,135 @@
+---
+title: Sparkline
+description: A tiny, chrome-free chart that reads at a glance next to a number.
+---
+
+<Demo name="chart-sparkline/demos/stat-card" />
+
+A sparkline is one series and nothing else — no axes, no grid, no legend, no tooltip. It belongs inside a stat card, a table cell, or a list row, where the number is the message and the line is the context. Everything else about it is a normal chart: same palette, same animation, same keyboard focus.
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/chart-sparkline
+```
+
+It brings the [`chart`](/docs/components/chart) core — the host, the palette, and the shared frame — along with it.
+
+## Usage
+
+```tsx
+import { Sparkline } from '@/ui/chart-sparkline'
+```
+
+Point `x` and `y` at fields of your rows. There is no config object and no series list — a sparkline draws exactly one series.
+
+```tsx
+const data = [
+  { day: 'Mon', visitors: 186 },
+  { day: 'Tue', visitors: 205 },
+  { day: 'Wed', visitors: 173 },
+  { day: 'Thu', visitors: 241 },
+]
+
+export function Example() {
+  return (
+    <Sparkline
+      data={data}
+      x="day"
+      y="visitors"
+      ariaLabel="Visitors over the last four days"
+    />
+  )
+}
+```
+
+## Size and chrome
+
+`height` defaults to `40` — short enough to sit under a headline number, tall enough to show a shape. Width fills the container. The line spans the box edge to edge, inset only by half its own stroke, so a sparkline lines up with the text above it.
+
+```tsx
+<Sparkline data={data} x="day" y="visitors" height={56} ariaLabel="Visitors" />
+```
+
+Pass `mode="area"` to fill under the line, and `fill="gradient"` to fade that fill out downward:
+
+```tsx
+<Sparkline data={data} x="day" y="visitors" mode="area" fill="gradient" />
+```
+
+The tooltip is off by default, since a sparkline is usually read as a whole rather than point by point. Turn it on with `tooltip`:
+
+```tsx
+<Sparkline data={data} x="day" y="visitors" tooltip />
+```
+
+## Color
+
+`color` takes any CSS color and paints both the stroke and the fill. It defaults to the first palette slot, `var(--chart-1)`. Because it is a plain string, a sparkline can encode its own direction:
+
+```tsx
+const first = data[0]?.visitors ?? 0
+const last = data.at(-1)?.visitors ?? 0
+const up = last >= first
+
+<Sparkline
+  data={data}
+  x="day"
+  y="visitors"
+  color={up ? 'var(--color-success)' : 'var(--color-danger)'}
+  ariaLabel="Visitors"
+/>
+```
+
+## Annotations
+
+Anything beyond the line is a mark you pass yourself: `marksBefore` paints under the series, `marks` over it. A dashed average line and a dot on the latest point are the two most common:
+
+```tsx
+import { dot } from '@tanstack/charts/dot'
+import { ruleY } from '@tanstack/charts/rule'
+
+const mean = data.reduce((total, row) => total + row.visitors, 0) / data.length
+
+// Module scope: mark arrays are compared by identity, so an inline array would
+// rebuild the chart on every render.
+const average = [ruleY([mean], { stroke: 'var(--color-border)', strokeDasharray: '3 3' })]
+const latest = [dot(data.slice(-1), { x: 'day', y: 'visitors', r: 3 })]
+
+<Sparkline data={data} x="day" y="visitors" marksBefore={average} marks={latest} />
+```
+
+The same rule applies to `data`: keep it stable across renders — defined at module scope, or memoized — and the chart rebuilds only when it actually changes.
+
+## Accessibility
+
+`ariaLabel` is required — a chart is a figure, not decoration, and a sparkline carries no axis labels to fall back on. Describe the series and its window, not the shape: `"Revenue over the last six months"`.
+
+The chart surface is keyboard-focusable; arrow keys move between points and Home and End jump to the ends, so a sparkline stays reachable even with the tooltip off. When the sparkline sits beside the number it summarizes, keep that number in the DOM as text — it is what most assistive technology will read first.
+
+If you color a sparkline by its direction, do not let color carry that meaning alone: print the delta next to it, as the stat card example does.
+
+## Examples
+
+<Examples>
+  <Example name="chart-sparkline/demos/default" title="Default" />
+  <Example name="chart-sparkline/demos/area" title="Area" />
+  <Example name="chart-sparkline/demos/with-trend" title="With Average" />
+  <Example
+    name="chart-sparkline/demos/negative-highlight"
+    title="Trend Coloring"
+  />
+  <Example name="chart-sparkline/demos/stat-card" title="Stat Card" />
+</Examples>
+
+## API Reference
+
+### Sparkline
+
+<Reference name="sparkline" />
+
+Interaction and animation props are shared by every chart family:
+
+<Reference name="chart-behavior" />
+
+The host props — `height`, `width`, `className`, and the focus callbacks — are documented on the [Chart](/docs/components/chart) page.

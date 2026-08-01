@@ -687,6 +687,19 @@ async function getPropsWithTypeChecker(
   // Track original order from TypeScript's type checker (preserves inherited order)
   const originalOrder: string[] = []
 
+  // Documented props come from `types.ts` (the docs contract). When a
+  // component file also exports a same-named generic interface whose type
+  // parameters have no defaults (the chart families' `<TDatum>` Props),
+  // scanning it would merge unbound generics into the table — skip those.
+  // Defaulted generics (the vendored token-field) resolve fine and still
+  // contribute their richer types.
+  const skipDeclaration = (
+    sourceFile: ts.SourceFile,
+    node: ts.InterfaceDeclaration | ts.TypeAliasDeclaration,
+  ) =>
+    !sourceFile.fileName.endsWith('/types.ts') &&
+    (node.typeParameters ?? []).some((param) => param.default === undefined)
+
   // Find the source file containing this type
   for (const sourceFile of program.getSourceFiles()) {
     if (
@@ -706,6 +719,7 @@ async function getPropsWithTypeChecker(
           ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export
         )
         if (!isExported) return
+        if (skipDeclaration(sourceFile, node)) return
 
         const symbol = checker.getSymbolAtLocation(node.name)
         if (!symbol) return

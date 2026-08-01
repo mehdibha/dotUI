@@ -1,0 +1,150 @@
+---
+title: Bar Chart
+description: Compares categories with bars — grouped, stacked, horizontal, or labelled.
+---
+
+<Demo name="chart-bar/demos/multiple" />
+
+`BarChart` plots one bar per category, or one bar per series inside each category band. It builds its own scales, axes, grid, legend, and tooltip from the fields you name, and paints series from your design system's chart palette.
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/chart-bar
+```
+
+It brings the [`chart`](/docs/components/chart) core — the host, the palette, and the shared frame — along with it.
+
+## Usage
+
+```tsx
+import { BarChart } from '@/ui/chart-bar'
+```
+
+```tsx
+const data = [
+  { month: 'Jan', desktop: 186, mobile: 80 },
+  { month: 'Feb', desktop: 305, mobile: 200 },
+  { month: 'Mar', desktop: 237, mobile: 120 },
+]
+
+export function Example() {
+  return (
+    <BarChart
+      data={data}
+      x="month"
+      y={['desktop', 'mobile']}
+      labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
+      ariaLabel="Visitors per month"
+    />
+  )
+}
+```
+
+`x` names the category field and `y` names one field per series. Series take palette slots — `--chart-1`, `--chart-2`, … — in the order you list them, and `labels` renames the keys wherever they surface: legend, tooltip, and screen readers.
+
+Keep `data` out of the render body. It is compared by identity, so a fresh array on every render rebuilds the chart instead of animating it.
+
+## Wide and long data
+
+Rows come in two shapes, and the chart reads both.
+
+**Wide** rows carry one field per series — pass them as a `y` array, as above.
+
+**Long** rows carry one value and name their own series. Pass a single `y` and a `series` field:
+
+```tsx
+const data = [
+  { browser: 'chrome', visitors: 275 },
+  { browser: 'safari', visitors: 200 },
+]
+
+<BarChart data={data} x="browser" y="visitors" series="browser" />
+```
+
+Naming the category field as `series` is also how each bar gets its own color, as in the [Per-category color](#examples) example.
+
+## Stacked bars
+
+`stackY` turns wide rows into long rows carrying the interval each segment spans. Feed it the same fields you would have passed to `y`, then plot `top` over `base`:
+
+```tsx
+import { stackY } from '@/ui/chart'
+
+const data = stackY(rows, { x: 'month', y: ['desktop', 'mobile', 'tablet'] })
+
+<BarChart
+  data={data}
+  x="x"
+  y="top"
+  y1="base"
+  series="series"
+  seriesOrder={['desktop', 'mobile', 'tablet']}
+/>
+```
+
+Call `stackY` at module scope — its result is the `data` identity. Add `normalize: true` for a 100% stack, and format the axis as a percentage with `formatY={{ locale: 'en-US', number: { style: 'percent' } }}`.
+
+## Orientation and grouping
+
+`horizontal` moves the categories to the y axis and the values to x, which is what long category names want. The value axis is still `x`, so `formatX` formats the numbers, and `focus="group-y"` groups the tooltip along the categories.
+
+Multi-series wide data is grouped side by side by default. Set `grouped={false}` to let layers share the band, or `grouped` to group long-format series.
+
+## Labels and annotations
+
+`marks` paints layers over the bars and `marksBefore` under them — any mark from `@tanstack/charts`, on the same scales:
+
+```tsx
+import { text } from '@tanstack/charts/text'
+
+// Same `z` as the bars, so grouped focus keeps one tooltip row per category.
+const labels = [
+  text(data, {
+    x: 'month',
+    y: 'desktop',
+    text: 'desktop',
+    z: () => 'Desktop',
+    fill: 'var(--color-fg-muted)',
+    dy: -10,
+  }),
+]
+
+<BarChart data={data} x="month" y="desktop" marks={labels} />
+```
+
+Both props are compared by identity, like `data`. A layer that depends on state belongs in a `useMemo`.
+
+## Accessibility
+
+`ariaLabel` is required: a chart is a figure, not decoration. Describe what the bars measure, not the chart type.
+
+The chart surface is keyboard-focusable. `Tab` moves to it, arrow keys walk the bars, `Home` and `End` jump to the ends, and `Enter` or `Space` pins the tooltip and fires `onSelect`. Grouped focus reads one representative per category, so a grouped or stacked chart announces the whole category at once.
+
+Color alone never carries the meaning: pass `labels` so every series has a name in the legend and tooltip, and keep the legend on when a chart has more than one series.
+
+## Examples
+
+<Examples>
+  <Example name="chart-bar/demos/default" title="Default" />
+  <Example name="chart-bar/demos/multiple" title="Grouped" />
+  <Example name="chart-bar/demos/stacked" title="Stacked" />
+  <Example name="chart-bar/demos/horizontal" title="Horizontal" />
+  <Example name="chart-bar/demos/mixed" title="Per-category color" />
+  <Example name="chart-bar/demos/negative" title="Negative values" />
+  <Example name="chart-bar/demos/label" title="Labels" />
+  <Example name="chart-bar/demos/label-custom" title="Labels inside bars" />
+  <Example name="chart-bar/demos/active" title="Highlight on focus" />
+</Examples>
+
+## API Reference
+
+### BarChart
+
+<Reference name="bar-chart" />
+
+Interaction and animation props are shared by every chart family:
+
+<Reference name="chart-behavior" />
+
+The host props — `height`, `width`, `className`, and the focus callbacks — are documented on the [Chart](/docs/components/chart) page.

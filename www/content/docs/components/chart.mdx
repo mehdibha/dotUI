@@ -1,199 +1,239 @@
 ---
 title: Chart
-description: Beautiful, accessible charts built on Recharts and themed by your design system.
+description: The core every chart family is built on — the host, the palette, the shared frame, and the house defaults.
 ---
 
 <Demo name="chart-bar/demos/multiple" />
 
-Charts are a thin, themeable layer over [Recharts](https://recharts.org). You write a chart with Recharts' own components — `BarChart`, `Bar`, `XAxis`, and the rest — and wrap them in `ChartContainer`, which maps your series to your design system's colors, handles light and dark theming, and makes the chart responsive. The tooltip, legend, and a visually-hidden data table are styled to match the rest of your components, so a chart looks at home next to a card or a button with no extra work.
+Every chart family — area, bar, line, pie, radar, radial, scatter, heatmap, sparkline — is a small builder over one core item. `chart` ships the host that renders a chart, the eight-slot palette, the shared frame (axes, grid, color scale, legend, tooltip, focus), and the helpers the families share. Underneath it is [TanStack Charts](https://tanstack.com/charts), which owns the scales, the scene, and the interaction.
 
-Use the primitives directly to build any chart Recharts supports, or install a ready-made family and copy the variant you need. Browse every variant on the [charts page](/docs/charts).
+You rarely install it on its own: pick a family and it brings the core along. Reach for the core directly when you compose a chart by hand, when you need the host's props, or when you want the values in `chartDefaults`.
 
 ## Installation
-
-The primitives — `ChartContainer`, `ChartTooltip`, `ChartLegend`, their `*Content` variants, and `ChartDataTable` — ship as a single `chart` item:
 
 ```npm
 npx shadcn@latest add @dotui/chart
 ```
 
-Each family — bar, line, area, pie, radar, and radial — ships as its own item with a curated set of variants, and pulls in `chart` and `card` automatically:
+Installing any family installs it too:
 
 ```npm
 npx shadcn@latest add @dotui/chart-bar
 ```
 
-You only need to add the `chart` item directly when you are composing a chart by hand. Installing any family brings the primitives along with it.
+## Families
+
+Each family is an independent item with its own curated set of variants. Browse them all on the [charts page](/docs/charts).
+
+- [Area chart](/docs/components/chart-area) — magnitude and composition across an ordered domain.
+- [Bar chart](/docs/components/chart-bar) — categories compared by length, grouped, stacked, or horizontal.
+- [Line chart](/docs/components/chart-line) — how a value moves across an ordered domain.
+- [Pie chart](/docs/components/chart-pie) — parts of a single whole, including donuts and rings.
+- [Radar chart](/docs/components/chart-radar) — a profile across a handful of categories.
+- [Radial chart](/docs/components/chart-radial) — bars bent around a circle; gauges and progress.
+- [Scatter chart](/docs/components/chart-scatter) — two quantitative measures against each other.
+- [Heatmap](/docs/components/chart-heatmap) — one value per pair of categories, carried by color.
+- [Sparkline](/docs/components/chart-sparkline) — a chrome-free line beside a number.
 
 ## Usage
 
-Import the primitives you need alongside the Recharts components for your chart type:
+A family component owns the whole chart: give it rows and the names of the fields to read.
 
 ```tsx
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/ui/chart'
+import { AreaChart } from '@/ui/chart-area'
 ```
 
-A chart is built from three pieces: your **data** (an array of rows), a **config** that describes each series, and the **Recharts chart** wrapped in `ChartContainer`.
+The core is what you import when you need the host, the defaults, or a helper:
 
 ```tsx
-const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
+import { Chart, chartDefaults, stackY } from '@/ui/chart'
+```
+
+## The host
+
+`Chart` renders a chart definition. Every family renders one, so its props are available on every family component:
+
+```tsx
+<Chart
+  definition={definition}
+  ariaLabel="Visitors by month"
+  height={220}
+  className="w-full"
+/>
+```
+
+- `ariaLabel` is required — a chart is a figure, not decoration.
+- `height` defaults to 256. Pass `aspectRatio` to size by ratio instead, or `width` to opt out of measuring the container. Width is measured and tracked on resize; height never is.
+- `className` lands on the outer box — size and place the chart there.
+- `children` render as an HTML overlay above the surface, ignoring pointer events: center text on a donut, a hover readout, a watermark. The tooltip is portaled, so it always paints above the overlay.
+
+The `definition` is compared by identity, and that identity is the update contract: build it at module scope, or memoize it. Family components do this for you.
+
+## Wide and long data
+
+Two row shapes draw the same chart, and every cartesian family accepts both.
+
+**Wide** rows carry one column per series. Pass the columns as an array and name them with `labels`:
+
+```tsx
+const data = [
+  { month: 'Jan', desktop: 186, mobile: 80 },
+  { month: 'Feb', desktop: 305, mobile: 200 },
 ]
-
-const chartConfig = {
-  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
-} satisfies ChartConfig
-
-export function Example() {
-  return (
-    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-      <BarChart accessibilityLayer data={chartData}>
-        <CartesianGrid vertical={false} />
-        <XAxis dataKey="month" tickLine={false} axisLine={false} />
-        <ChartTooltip content={<ChartTooltipContent />} />
-        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-      </BarChart>
-    </ChartContainer>
-  )
-}
 ```
-
-`ChartContainer` reads `chartConfig` and exposes each series key as a CSS variable — the `desktop` key becomes `var(--color-desktop)`, which the `Bar` references with its `fill`. This name-keyed indirection is the heart of the API: you assign a color once in config, and every Recharts element, the tooltip, and the legend pick it up by name. There is no color array to keep aligned with your data.
-
-### Chart config
-
-`config` maps each series key to a `label`, a `color` (or a per-theme `theme`), and an optional `icon`:
 
 ```tsx
-const chartConfig = {
-  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
-  mobile: { label: 'Mobile', color: 'var(--chart-2)' },
-} satisfies ChartConfig
+<AreaChart
+  data={data}
+  x="month"
+  y={['desktop', 'mobile']}
+  labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
+  ariaLabel="Visitors by device"
+/>
 ```
 
-`ChartContainer` turns each entry into a `--color-<key>` CSS variable you reference from Recharts (`fill="var(--color-desktop)"`), and the tooltip and legend read it for labels and icons. Use `satisfies ChartConfig` rather than a type annotation so TypeScript keeps the exact keys, which makes the matching `var(--color-<key>)` names easy to keep in sync.
+**Long** rows carry one row per series and point. Name the splitting field with `series`, and fix the order with `seriesOrder` — it drives both the color slots and the legend:
 
-Because config is separate from data, a key with no series of its own — an axis category, for example — can still carry a label and a color, which is how per-category coloring on pie and radial charts works.
+```tsx
+const data = [
+  { month: 'Jan', device: 'desktop', visitors: 186 },
+  { month: 'Jan', device: 'mobile', visitors: 80 },
+]
+```
+
+```tsx
+<AreaChart
+  data={data}
+  x="month"
+  y="visitors"
+  series="device"
+  seriesOrder={['desktop', 'mobile']}
+  labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
+  ariaLabel="Visitors by device"
+/>
+```
+
+`data` is compared by identity, so define it outside your component — or memoize it. Every other prop is a flat scalar and can change freely.
+
+### Stacking
+
+Stacking is a data transform, not a chart flag. `stackY` takes wide rows and returns one long row per band, carrying the interval to draw (`base`, `top`) plus the row's own `value` for tooltips and labels:
+
+```tsx
+import { stackY } from '@/ui/chart'
+
+const stacked = stackY(data, {
+  x: 'month',
+  y: ['desktop', 'mobile', 'other'],
+})
+```
+
+```tsx
+<AreaChart
+  data={stacked}
+  x="x"
+  y="top"
+  y1="base"
+  series="series"
+  seriesOrder={['desktop', 'mobile', 'other']}
+  ariaLabel="Visitors by device, stacked"
+/>
+```
+
+Pass `normalize` to divide each group by its own total for a 100% stack. A null contribution leaves a gap instead of a zero-height band. Call `stackY` at module scope: its result is identity-compared like any other `data`.
+
+## Defaults
+
+`chartDefaults` holds every house decision in one object — height, curve, stroke width, fill opacity, dot and bar radii, padding, focus mode, tooltip anchor, animation:
+
+```tsx
+import { chartDefaults } from '@/ui/chart'
+
+chartDefaults.height // 256
+chartDefaults.curve // 'natural'
+chartDefaults.focus // 'group-x'
+chartDefaults.animate // { duration: 240, respectReducedMotion: true }
+```
+
+Read from it instead of repeating a literal, and change it there when you want a different house style — every family picks the change up. Charts above `chartDefaults.animateMaxPoints` (800 points) turn animation off on their own.
+
+## Marks
+
+`marks` and `marksBefore` take raw [TanStack Charts](https://tanstack.com/charts) mark layers, painted over and under the family's own marks on the same scales. This is the escape hatch for anything the family props don't cover — a target rule, an end dot, value labels:
+
+```tsx
+import { text } from '@tanstack/charts/text'
+
+// Same `z` as the bars, so grouped focus keeps one tooltip row per month.
+const labels = [
+  text(data, {
+    x: 'month',
+    y: 'desktop',
+    text: 'desktop',
+    z: () => 'Desktop',
+    fill: 'var(--color-fg-muted)',
+    fontSize: 12,
+    dy: -10,
+  }),
+]
+```
+
+```tsx
+<BarChart data={data} x="month" y="desktop" marks={labels} ariaLabel="…" />
+```
+
+Build mark arrays at module scope — they are compared by identity, so an inline array rebuilds the chart on every render.
+
+## Spec fragments
+
+Each family also exports its spec builder — `areaChartSpec`, `barChartSpec`, `pieChartSpec`, and so on. A builder returns the chart spec the family would have rendered, so you can pass it to `defineChart` yourself and keep full control of the definition:
+
+```tsx
+import { defineChart } from '@tanstack/charts'
+
+import { Chart } from '@/ui/chart'
+import { barChartSpec } from '@/ui/chart-bar'
+
+const definition = defineChart({
+  chart: (ctx) => barChartSpec({ data, x: 'month', y: 'desktop' }, ctx),
+  focus: 'nearest',
+})
+```
+
+```tsx
+<Chart definition={definition} ariaLabel="Visitors by month" />
+```
+
+The builder receives the library's build context, which re-runs inside every scene build: that is how tick density tracks the chart's width for free. For a chart with no family at all, compose `chartFrame`, `planChart`, and `paletteGradients` the same way the families do.
 
 ## Theming
 
-Series colors come from a categorical palette of five slots, `--chart-1` through `--chart-5`. Your design system derives them from its theme hues, so charts stay on-brand and adapt to light and dark automatically — no per-mode values to maintain. The palette is editable under **Chart colors** in the [editor](/create), and updates live as you tweak it on the [charts page](/docs/charts).
+Series colors come from a categorical palette of eight slots, `--chart-1` through `--chart-8`. Your design system derives them from its theme hues, so charts stay on-brand and adapt to light and dark automatically — no per-mode values to maintain. The palette is editable under **Chart colors** in the [editor](/create), and updates live on the [charts page](/docs/charts).
 
-Point each series at a slot through its config color:
-
-```tsx
-const chartConfig = {
-  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
-  mobile: { label: 'Mobile', color: 'var(--chart-2)' },
-} satisfies ChartConfig
-```
-
-A color can be any CSS value, so you are not limited to the palette. To set a different color per mode, use `theme` instead of `color`:
+Series are assigned slots in order, so `seriesOrder` decides which series gets which color. To reach a slot yourself — a mark's fill, a stat card's accent — use the variable directly, or `paletteColor`, which wraps around the eight slots:
 
 ```tsx
-const chartConfig = {
-  desktop: { label: 'Desktop', theme: { light: '#2563eb', dark: '#60a5fa' } },
-} satisfies ChartConfig
+import { paletteColor } from '@/ui/chart'
+
+paletteColor(0) // 'var(--chart-1)'
+paletteColor(8) // 'var(--chart-1)'
 ```
 
-For per-category colors — common on pie and radial charts — give each row its own `fill` using the same `var(--color-<key>)` names:
-
-```tsx
-const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-]
-```
-
-## Tooltip and legend
-
-`ChartTooltip` and `ChartLegend` are the Recharts primitives; `ChartTooltipContent` and `ChartLegendContent` are the styled, config-aware contents you pass to them. Both resolve labels, colors, and icons from your config, so they stay consistent with the chart without extra wiring:
-
-```tsx
-<ChartTooltip content={<ChartTooltipContent indicator="line" />} />
-<ChartLegend content={<ChartLegendContent />} />
-```
-
-`ChartTooltipContent` accepts an `indicator` of `dot`, `line`, or `dashed` to change the marker next to each value, plus `hideLabel` and `hideIndicator` to trim it down. `ChartLegendContent` accepts `hideIcon` and a `nameKey` for reading labels from a different config key. See the [API reference](#api-reference) for the full set of props.
+`var(--chart-N)` works anywhere a color does, including gradient stops. Any CSS color works too, so a semantic mark — a threshold rule, a negative bar — can point at `var(--color-fg-danger)` instead of a palette slot.
 
 ## Accessibility
 
-Charts encode data with color and position, which is invisible to assistive technology, so accessibility is handled in two layers.
-
-First, pass `accessibilityLayer` to the Recharts chart. It enables keyboard navigation and screen-reader announcements as the user moves across data points:
-
-```tsx
-<BarChart accessibilityLayer data={chartData}>
-```
-
-Second — and unique to dotUI — every family demo renders `ChartDataTable` alongside the chart: a visually-hidden `<table>` derived from the same `data` and `config`. It exposes the underlying figures to screen readers and other assistive tools without affecting the visual layout, giving you a real data-table fallback for free:
-
-```tsx
-<ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
-```
-
-`labelKey` names the field used for each row's header — the x-axis category on cartesian charts, or the slice name on pie and radial charts. `ChartDataTable` adapts to your data's shape on its own: one column per series for bar, line, area, and radar; a two-column category/value table for pie and radial. Pass it the same `data` and `config` you gave `ChartContainer` and it stays in sync.
-
-## Families
-
-Each family is a curated set of variants — install one, then copy the variant you need. Browse them all on the [charts page](/docs/charts).
-
-<Examples className="lg:grid-cols-2">
-  <Example
-    name="chart-line/demos/multiple"
-    title="Line"
-    className="col-span-full"
-  />
-  <Example
-    name="chart-area/demos/stacked"
-    title="Area"
-    className="col-span-full"
-  />
-  <Example
-    name="chart-pie/demos/donut-text"
-    title="Pie"
-    className="col-span-full"
-  />
-  <Example
-    name="chart-radar/demos/dots"
-    title="Radar"
-    className="col-span-full"
-  />
-  <Example
-    name="chart-radial/demos/stacked"
-    title="Radial"
-    className="col-span-full"
-  />
-  <Example
-    name="chart-bar/demos/horizontal"
-    title="Bar"
-    className="col-span-full"
-  />
-</Examples>
+- `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
+- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
+- Color alone never carries the distinction — the legend, tooltip, and axis labels all name the series.
+- Keep the surrounding context in normal HTML: a heading, the units and time range, and a table when exact values matter. It is easier to navigate, translate, and print than text inside an SVG.
 
 ## API Reference
 
-### ChartContainer
+### Chart
 
-<Reference name="chart-container" />
+<Reference name="chart" />
 
-### ChartTooltipContent
+Interaction and animation props are shared by every chart family:
 
-<Reference name="chart-tooltip-content" />
-
-### ChartLegendContent
-
-<Reference name="chart-legend-content" />
-
-### ChartDataTable
-
-<Reference name="chart-data-table" />
+<Reference name="chart-behavior" />

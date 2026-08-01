@@ -1,85 +1,106 @@
 'use client'
 
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
+import type { ChartBuildContext } from '@tanstack/charts'
+import { barX, barY } from '@tanstack/charts/bar'
+import { scaleBand } from 'd3-scale'
 
-import { TrendingUpIcon } from '@/registry/icons'
+import type {
+  ChartComponentProps,
+  ChartSpecOf,
+  ChartXField,
+  ChartXValueOf,
+  XYChartSpecOptions,
+} from '@/registry/ui/chart'
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/registry/ui/card'
-import type { ChartConfig } from '@/registry/ui/chart'
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
+  Chart,
+  chartDefaults,
+  chartFrame,
+  planChart,
+  useChartDefinition,
 } from '@/registry/ui/chart'
 
-const chartData = [
-  { month: 'January', desktop: 186, mobile: 80 },
-  { month: 'February', desktop: 305, mobile: 200 },
-  { month: 'March', desktop: 237, mobile: 120 },
-  { month: 'April', desktop: 73, mobile: 190 },
-  { month: 'May', desktop: 209, mobile: 130 },
-  { month: 'June', desktop: 214, mobile: 140 },
-]
+export interface BarChartSpecOptions<
+  TDatum,
+  TXField extends ChartXField<TDatum>,
+> extends XYChartSpecOptions<TDatum, TXField> {
+  /** Categories down the y axis, values along x. */
+  horizontal?: boolean
+  /** Side-by-side series inside each category band. */
+  grouped?: boolean
+  /** Corner radius in pixels. */
+  radius?: number
+  /** Pixels trimmed from both categorical edges of every bar. */
+  inset?: number
+  fillOpacity?: number
+}
 
-const chartConfig = {
-  desktop: {
-    label: 'Desktop',
-    color: 'var(--chart-1)',
-  },
-  mobile: {
-    label: 'Mobile',
-    color: 'var(--chart-2)',
-  },
-} satisfies ChartConfig
+export function barChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
+  options: BarChartSpecOptions<TDatum, TXField>,
+  ctx: ChartBuildContext,
+): ChartSpecOf<TDatum, ChartXValueOf<TDatum, TXField>> {
+  const { order, layers } = planChart(options)
+  const horizontal = options.horizontal ?? false
+  const grouped = (options.grouped ?? layers.length > 1) && order.length > 1
+  const bar = {
+    radius: options.radius ?? chartDefaults.barRadius,
+    inset: options.inset,
+    fillOpacity: options.fillOpacity,
+    /* The group scale carries an explicit domain: a factory would infer one
+       value per layer and park every series in the middle of the band. */
+    groupScale: grouped
+      ? scaleBand<string>()
+          .domain([...order])
+          .padding(chartDefaults.groupPadding)
+      : undefined,
+  }
+  return {
+    ...chartFrame(
+      options,
+      ctx,
+      horizontal
+        ? { order, x: 'linear', y: 'band', grid: 'x' }
+        : { order, x: 'band', grid: 'y' },
+    ),
+    marks: [
+      ...(options.marksBefore ?? []),
+      ...layers.map((layer) =>
+        horizontal
+          ? barX(options.data, {
+              x: layer.channels.y,
+              x1: layer.channels.y1,
+              y: layer.channels.x,
+              z: layer.channels.z,
+              color: layer.channels.color,
+              key: layer.channels.key,
+              ...bar,
+            })
+          : barY(options.data, { ...layer.channels, ...bar }),
+      ),
+      ...(options.marks ?? []),
+    ],
+  }
+}
 
-export function ChartBar() {
+export type BarChartProps<
+  TDatum,
+  TXField extends ChartXField<TDatum>,
+> = ChartComponentProps<
+  BarChartSpecOptions<TDatum, TXField>,
+  TDatum,
+  ChartXValueOf<TDatum, TXField>
+>
+
+export function BarChart<TDatum, TXField extends ChartXField<TDatum>>(
+  props: BarChartProps<TDatum, TXField>,
+) {
+  const { definition, host, children } = useChartDefinition<
+    TDatum,
+    ChartXValueOf<TDatum, TXField>,
+    BarChartSpecOptions<TDatum, TXField>
+  >(props, barChartSpec)
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Bar Chart</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
-            />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-          </BarChart>
-        </ChartContainer>
-        <ChartDataTable
-          data={chartData}
-          config={chartConfig}
-          labelKey="month"
-          caption="Desktop and mobile visitors, January through June 2024"
-        />
-      </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUpIcon className="size-4" />
-        </div>
-        <div className="leading-none text-fg-muted">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
-    </Card>
+    <Chart definition={definition} {...host}>
+      {children}
+    </Chart>
   )
 }

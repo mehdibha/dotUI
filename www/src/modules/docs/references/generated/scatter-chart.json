@@ -1,0 +1,383 @@
+{
+  "name": "ScatterChartProps",
+  "description": "A scatter plot: one dot per row, positioned by two quantitative fields, with\noptional color grouping and an optional radius channel for bubbles.\n\nIt also accepts every prop of `Chart` (`ariaLabel`, `height`, `className`, …)\nand every interaction prop of `ChartBehaviorProps`.",
+  "props": {
+    "data": {
+      "type": "readonly unknown[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "unknown"
+        }
+      },
+      "description": "Rows to plot. Compared by identity — define it outside render.",
+      "required": true
+    },
+    "x": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field on the horizontal axis. Must be numeric.",
+      "required": true
+    },
+    "y": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field on the vertical axis. Must be numeric.",
+      "required": true
+    },
+    "r": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field sizing each dot. Values map to `radiusRange` through an\narea-preserving square-root scale, so area — not radius — reads as\nmagnitude. Omit it for a plain scatter."
+    },
+    "radius": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Dot radius in pixels, used when `r` is absent.",
+      "default": "4"
+    },
+    "radiusRange": {
+      "type": "readonly [number, number]",
+      "detailedType": "readonly [number, number] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "tuple",
+            "elements": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Smallest and largest dot radius in pixels, used when `r` is set.",
+      "default": "[3, 18]"
+    },
+    "series": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field splitting rows into colored groups."
+    },
+    "seriesOrder": {
+      "type": "readonly string[]",
+      "detailedType": "readonly string[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "Group order. Drives color-slot assignment and legend order."
+    },
+    "labels": {
+      "type": "Readonly<Record<string, string>>",
+      "detailedType": "Readonly<Record<string, string>> | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "Readonly"
+            },
+            "typeParameters": [
+              {
+                "type": "application",
+                "base": {
+                  "type": "identifier",
+                  "name": "Record"
+                },
+                "typeParameters": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Display names for group keys, used by the legend and the tooltip."
+    },
+    "fillOpacity": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Dot opacity. Lower it when points overlap."
+    },
+    "rowKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Stable row identity, so filtered or re-sorted data animates instead of respawning."
+    },
+    "axes": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the axis lines and their tick labels.",
+      "default": "true"
+    },
+    "grid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show grid lines. Scatter draws them on both axes.",
+      "default": "true"
+    },
+    "legend": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the color legend. Defaults to `true` once `series` is set, and to\n`false` for an ungrouped scatter, where a one-entry legend is noise."
+    },
+    "formatX": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "Formats x tick labels: a function, or `Intl` options with a locale."
+    },
+    "formatY": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "Formats y tick labels: a function, or `Intl` options with a locale."
+    },
+    "marksBefore": {
+      "type": "readonly ChartMarkLayer[]",
+      "detailedType": "readonly ChartMarkLayer[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+                "name": "ChartMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "description": "Extra mark layers painted under the dots — a regression line, a rule."
+    },
+    "marks": {
+      "type": "readonly ChartMarkLayer[]",
+      "detailedType": "readonly ChartMarkLayer[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+                "name": "ChartMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "description": "Extra mark layers painted over the dots — labels, annotations."
+    },
+    "ariaLabel": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Accessible name. Required: a chart is a figure, not decoration.",
+      "required": true
+    }
+  },
+  "typeLinks": {
+    "@tanstack/charts/dist/types.d.ts:ChartMark": {
+      "type": "interface",
+      "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+      "name": "ChartMark",
+      "extends": [],
+      "properties": {
+        "__xScaleValue": {
+          "type": "property",
+          "name": "__xScaleValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__xValue": {
+          "type": "property",
+          "name": "__xValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__yScaleValue": {
+          "type": "property",
+          "name": "__yScaleValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__yValue": {
+          "type": "property",
+          "name": "__yValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "initialize": {
+          "type": "method",
+          "name": "initialize",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "context",
+                "value": {
+                  "type": "link",
+                  "id": "@tanstack/charts/dist/types.d.ts:MarkInitializeContext",
+                  "name": "MarkInitializeContext"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:InitializedMark",
+                "name": "InitializedMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": ""
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    }
+  }
+}

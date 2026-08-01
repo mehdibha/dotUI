@@ -11,8 +11,9 @@ const chartBarMeta = {
       target: 'ui/chart-bar.tsx',
     },
   ],
-  dependencies: ['recharts'],
-  registryDependencies: ['chart', 'card'],
+  dependencies: ['@tanstack/charts@0.0.2', 'd3-scale'],
+  devDependencies: ['@types/d3-scale'],
+  registryDependencies: ['chart'],
 } satisfies RegistryItem
 
 export default chartBarMeta
