@@ -24,6 +24,7 @@ import {
 } from '@/registry/ui/select'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+import { InternalHeader } from '@/modules/internal/shell'
 
 import type { CvdType } from './color'
 import { ENGINE_SLOT, referenceSystems, type ScaleRole } from './data'
@@ -99,20 +100,12 @@ export function ColorLab() {
   return (
     <div>
       <div className="min-h-screen bg-white font-sans text-neutral-900 antialiased transition-colors duration-300 dark:bg-neutral-950 dark:text-neutral-100">
-        <header className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-          <p className="font-mono text-[11px] tracking-widest text-neutral-400 uppercase dark:text-neutral-500">
-            internal / color-lab
-          </p>
-          <h1 className="mt-3 text-4xl font-semibold tracking-tight">
-            Color Lab
-          </h1>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
-            The bench for the engine rewrite. Eight reference systems, extracted
-            from their canonical sources, compared on the axes that make a scale
-            good — with the dotUI engine generating live from the seed and
-            judged by the exact same views.
-          </p>
-        </header>
+        <InternalHeader
+          className="mx-auto max-w-6xl px-6 pt-10 pb-10"
+          crumbs={[{ label: 'Color Lab' }]}
+          title="Color Lab"
+          description="The bench for the engine rewrite. Eight reference systems, extracted from their canonical sources, compared on the axes that make a scale good — with the dotUI engine generating live from the seed and judged by the exact same views."
+        />
 
         <nav className="sticky top-0 z-40 border-y border-neutral-200 bg-white/85 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/85">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-2.5">

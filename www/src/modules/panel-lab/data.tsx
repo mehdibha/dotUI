@@ -232,6 +232,35 @@ export function labelOf(
   return options.find((o) => o.value === value)?.label ?? value
 }
 
+/* ---------------------------------- Modes ---------------------------------- */
+
+/**
+ * A color mode — one named scheme in the user's set (1..n), not a light/dark
+ * boolean. A mode is the same seeds resolved under different conditions:
+ * polarity (ramp direction + prefers-color-scheme bucket), background
+ * lightness, and a contrast level. Working color section only; v1 keeps the
+ * fixed light/dark pair.
+ */
+export interface LabMode {
+  id: string
+  name: string
+  polarity: 'light' | 'dark'
+  /** Background L*; 0 on a dark mode = OLED black. */
+  bg: number
+  contrast: 'default' | 'high'
+}
+
+const DEFAULT_MODES: LabMode[] = [
+  {
+    id: 'light',
+    name: 'Light',
+    polarity: 'light',
+    bg: 99,
+    contrast: 'default',
+  },
+  { id: 'dark', name: 'Dark', polarity: 'dark', bg: 2, contrast: 'default' },
+]
+
 /* ---------------------------------- State ---------------------------------- */
 
 export const DEFAULTS = {
@@ -256,6 +285,10 @@ export const DEFAULTS = {
   border400: 0,
   border500: 0,
   border600: 0,
+  // Color modes (working section) — the user-defined scheme set. Edits must
+  // replace the array (never mutate) so reference-diffing sees them.
+  modes: DEFAULT_MODES,
+  defaultMode: 'light',
   // Typography
   headingFont: DEFAULT_BODY_FAMILY,
   bodyFont: DEFAULT_BODY_FAMILY,
@@ -311,6 +344,29 @@ export const COLOR_KEYS: (keyof LabState)[] = [
   'selectionSeed',
   'bgLight',
   'bgDark',
+  'vividness',
+  'hueShift',
+  'grayTintAmount',
+  'preserveSeed',
+  'guarantees',
+  'borderContrast',
+  'border400',
+  'border500',
+  'border600',
+]
+/** The working color section's slice: v1's keys minus the fixed light/dark
+ *  backgrounds, plus the mode set. */
+export const WORKING_COLOR_KEYS: (keyof LabState)[] = [
+  'brand',
+  'primary',
+  'graySeed',
+  'successSeed',
+  'warningSeed',
+  'dangerSeed',
+  'infoSeed',
+  'selectionSeed',
+  'modes',
+  'defaultMode',
   'vividness',
   'hueShift',
   'grayTintAmount',

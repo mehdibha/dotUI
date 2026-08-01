@@ -6,6 +6,7 @@ import { DesignSystemProvider } from '@/lib/styles'
 import { ToggleButton } from '@/registry/ui/toggle-button'
 import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
 import type { DesignSystem } from '@/modules/create/preset'
+import { InternalHeader } from '@/modules/internal/shell'
 import { PRESETS } from '@/modules/presets/presets-data'
 
 import { airbnbAudit } from './data/airbnb'
@@ -86,19 +87,12 @@ export function PresetLab() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100">
-      <header className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-        <p className="font-mono text-[11px] tracking-widest text-neutral-400 uppercase dark:text-neutral-500">
-          internal / preset-lab
-        </p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight">
-          Preset Lab
-        </h1>
-        <p className="mt-3 max-w-xl text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
-          Every audited component rendered live under a preset, side by side
-          with a reference capture of the real system, scored against the
-          fidelity rubric.
-        </p>
-      </header>
+      <InternalHeader
+        className="mx-auto max-w-6xl px-6 pt-10 pb-10"
+        crumbs={[{ label: 'Preset Lab' }]}
+        title="Preset Lab"
+        description="Every audited component rendered live under a preset, side by side with a reference capture of the real system, scored against the fidelity rubric."
+      />
 
       <nav className="sticky top-0 z-40 border-y border-neutral-200 bg-white/85 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/85">
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-2.5">

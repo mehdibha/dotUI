@@ -1,11 +1,13 @@
 import { lazy, Suspense } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 
-const PanelLab = lazy(() =>
-  import('@/modules/panel-lab/page').then((m) => ({ default: m.PanelLab })),
+const PanelLabGallery = lazy(() =>
+  import('@/modules/panel-lab/gallery').then((m) => ({
+    default: m.PanelLabGallery,
+  })),
 )
 
-export const Route = createFileRoute('/internal/panel-lab')({
+export const Route = createFileRoute('/internal/panel-lab/')({
   component: RouteComponent,
   head: () => ({ meta: [{ title: 'Panel Lab · dotUI' }] }),
 })
@@ -13,7 +15,7 @@ export const Route = createFileRoute('/internal/panel-lab')({
 function RouteComponent() {
   return (
     <Suspense fallback={null}>
-      <PanelLab />
+      <PanelLabGallery />
     </Suspense>
   )
 }

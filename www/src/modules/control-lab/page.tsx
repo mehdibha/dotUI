@@ -22,6 +22,7 @@ import { DisclosureGroup } from 'react-aria-components'
 import { DEFAULT_BODY_FAMILY } from '@/lib/fonts'
 import { cn } from '@/registry/lib/utils'
 import { Button } from '@/registry/ui/button'
+import { InternalShell } from '@/modules/internal/shell'
 
 import {
   ActionRow,
@@ -551,15 +552,14 @@ export function ControlLab() {
     }))
 
   return (
-    <div className="flex min-h-svh flex-col gap-8 px-8 py-12">
-      <div className="flex max-w-lg flex-col gap-1.5">
-        <h1 className="text-lg font-semibold text-fg">Control Lab</h1>
-        <p className="text-sm text-fg-muted">
-          Panel explorations for /create — one shared design-system state
-          rendered through two chromes. Edit in any frame; the other follows.
-        </p>
-      </div>
-
+    <InternalShell
+      crumbs={[
+        { label: 'Panel Lab', href: '/internal/panel-lab' },
+        { label: 'Control Lab' },
+      ]}
+      title="Control Lab"
+      description="The row language the panel is built from — one shared design-system state rendered through two chromes. Edit in any frame; the other follows."
+    >
       <div className="flex items-start gap-8 overflow-x-auto pb-8">
         <GroupedFrame lab={lab} />
         <CardFrame
@@ -568,6 +568,6 @@ export function ControlLab() {
           onResetAll={() => setState(DEFAULTS)}
         />
       </div>
-    </div>
+    </InternalShell>
   )
 }

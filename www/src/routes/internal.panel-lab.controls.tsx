@@ -7,7 +7,7 @@ const ControlLab = lazy(() =>
   })),
 )
 
-export const Route = createFileRoute('/internal/control-lab')({
+export const Route = createFileRoute('/internal/panel-lab/controls')({
   component: RouteComponent,
   head: () => ({ meta: [{ title: 'Control Lab · dotUI' }] }),
 })

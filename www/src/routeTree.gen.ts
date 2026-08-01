@@ -16,6 +16,7 @@ import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
 import { Route as HomeDotmdRouteImport } from './routes/home[.]md'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as InternalIndexRouteImport } from './routes/internal.index'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
 import { Route as RV0RouteImport } from './routes/r/v0'
 import { Route as RRegistryDotjsonRouteImport } from './routes/r/registry[.]json'
@@ -23,9 +24,6 @@ import { Route as RInitRouteImport } from './routes/r/init'
 import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as InternalPresetLabRouteImport } from './routes/internal.preset-lab'
-import { Route as InternalPanelLabRouteImport } from './routes/internal.panel-lab'
-import { Route as InternalControlLabRouteImport } from './routes/internal.control-lab'
-import { Route as InternalColorsRouteImport } from './routes/internal.colors'
 import { Route as InternalColorLabRouteImport } from './routes/internal.color-lab'
 import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-reveal'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
@@ -36,6 +34,9 @@ import { Route as AppComponentsRouteImport } from './routes/_app/components'
 import { Route as AppChartsRouteImport } from './routes/_app/charts'
 import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-known/api-catalog'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
+import { Route as InternalPanelLabIndexRouteImport } from './routes/internal.panel-lab.index'
+import { Route as InternalPanelLabControlsRouteImport } from './routes/internal.panel-lab.controls'
+import { Route as InternalPanelLabVersionRouteImport } from './routes/internal.panel-lab.$version'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
 
@@ -73,6 +74,11 @@ const AppRouteRoute = AppRouteRouteImport.update({
   id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InternalIndexRoute = InternalIndexRouteImport.update({
+  id: '/internal/',
+  path: '/internal/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -106,21 +112,6 @@ const PreviewSlugRoute = PreviewSlugRouteImport.update({
 const InternalPresetLabRoute = InternalPresetLabRouteImport.update({
   id: '/internal/preset-lab',
   path: '/internal/preset-lab',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InternalPanelLabRoute = InternalPanelLabRouteImport.update({
-  id: '/internal/panel-lab',
-  path: '/internal/panel-lab',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InternalControlLabRoute = InternalControlLabRouteImport.update({
-  id: '/internal/control-lab',
-  path: '/internal/control-lab',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InternalColorsRoute = InternalColorsRouteImport.update({
-  id: '/internal/colors',
-  path: '/internal/colors',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InternalColorLabRoute = InternalColorLabRouteImport.update({
@@ -173,6 +164,22 @@ const AppDocsRouteRoute = AppDocsRouteRouteImport.update({
   path: '/docs',
   getParentRoute: () => AppRouteRoute,
 } as any)
+const InternalPanelLabIndexRoute = InternalPanelLabIndexRouteImport.update({
+  id: '/internal/panel-lab/',
+  path: '/internal/panel-lab/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InternalPanelLabControlsRoute =
+  InternalPanelLabControlsRouteImport.update({
+    id: '/internal/panel-lab/controls',
+    path: '/internal/panel-lab/controls',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const InternalPanelLabVersionRoute = InternalPanelLabVersionRouteImport.update({
+  id: '/internal/panel-lab/$version',
+  path: '/internal/panel-lab/$version',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppDocsChar123Char125DotmdRoute =
   AppDocsChar123Char125DotmdRouteImport.update({
     id: '/{$}.md',
@@ -203,17 +210,18 @@ export interface FileRoutesByFullPath {
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
-  '/internal/colors': typeof InternalColorsRoute
-  '/internal/control-lab': typeof InternalControlLabRoute
-  '/internal/panel-lab': typeof InternalPanelLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
   '/r/registry.json': typeof RRegistryDotjsonRoute
   '/r/v0': typeof RV0Route
+  '/internal/': typeof InternalIndexRoute
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
+  '/internal/panel-lab/$version': typeof InternalPanelLabVersionRoute
+  '/internal/panel-lab/controls': typeof InternalPanelLabControlsRoute
+  '/internal/panel-lab/': typeof InternalPanelLabIndexRoute
 }
 export interface FileRoutesByTo {
   '/home.md': typeof HomeDotmdRoute
@@ -232,9 +240,6 @@ export interface FileRoutesByTo {
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
-  '/internal/colors': typeof InternalColorsRoute
-  '/internal/control-lab': typeof InternalControlLabRoute
-  '/internal/panel-lab': typeof InternalPanelLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -242,8 +247,12 @@ export interface FileRoutesByTo {
   '/r/registry.json': typeof RRegistryDotjsonRoute
   '/r/v0': typeof RV0Route
   '/': typeof AppIndexRoute
+  '/internal': typeof InternalIndexRoute
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
+  '/internal/panel-lab/$version': typeof InternalPanelLabVersionRoute
+  '/internal/panel-lab/controls': typeof InternalPanelLabControlsRoute
+  '/internal/panel-lab': typeof InternalPanelLabIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -264,9 +273,6 @@ export interface FileRoutesById {
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
-  '/internal/colors': typeof InternalColorsRoute
-  '/internal/control-lab': typeof InternalControlLabRoute
-  '/internal/panel-lab': typeof InternalPanelLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
@@ -274,8 +280,12 @@ export interface FileRoutesById {
   '/r/registry.json': typeof RRegistryDotjsonRoute
   '/r/v0': typeof RV0Route
   '/_app/': typeof AppIndexRoute
+  '/internal/': typeof InternalIndexRoute
   '/_app/docs/$': typeof AppDocsSplatRoute
   '/_app/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
+  '/internal/panel-lab/$version': typeof InternalPanelLabVersionRoute
+  '/internal/panel-lab/controls': typeof InternalPanelLabControlsRoute
+  '/internal/panel-lab/': typeof InternalPanelLabIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -297,17 +307,18 @@ export interface FileRouteTypes {
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
-    | '/internal/colors'
-    | '/internal/control-lab'
-    | '/internal/panel-lab'
     | '/internal/preset-lab'
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
     | '/r/registry.json'
     | '/r/v0'
+    | '/internal/'
     | '/docs/$'
     | '/docs/{$}.md'
+    | '/internal/panel-lab/$version'
+    | '/internal/panel-lab/controls'
+    | '/internal/panel-lab/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/home.md'
@@ -326,9 +337,6 @@ export interface FileRouteTypes {
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
-    | '/internal/colors'
-    | '/internal/control-lab'
-    | '/internal/panel-lab'
     | '/internal/preset-lab'
     | '/preview/$slug'
     | '/r/$name'
@@ -336,8 +344,12 @@ export interface FileRouteTypes {
     | '/r/registry.json'
     | '/r/v0'
     | '/'
+    | '/internal'
     | '/docs/$'
     | '/docs/{$}.md'
+    | '/internal/panel-lab/$version'
+    | '/internal/panel-lab/controls'
+    | '/internal/panel-lab'
   id:
     | '__root__'
     | '/_app'
@@ -357,9 +369,6 @@ export interface FileRouteTypes {
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
-    | '/internal/colors'
-    | '/internal/control-lab'
-    | '/internal/panel-lab'
     | '/internal/preset-lab'
     | '/preview/$slug'
     | '/r/$name'
@@ -367,8 +376,12 @@ export interface FileRouteTypes {
     | '/r/registry.json'
     | '/r/v0'
     | '/_app/'
+    | '/internal/'
     | '/_app/docs/$'
     | '/_app/docs/{$}.md'
+    | '/internal/panel-lab/$version'
+    | '/internal/panel-lab/controls'
+    | '/internal/panel-lab/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -384,15 +397,16 @@ export interface RootRouteChildren {
   DemosSlugRoute: typeof DemosSlugRoute
   InternalBlurRevealRoute: typeof InternalBlurRevealRoute
   InternalColorLabRoute: typeof InternalColorLabRoute
-  InternalColorsRoute: typeof InternalColorsRoute
-  InternalControlLabRoute: typeof InternalControlLabRoute
-  InternalPanelLabRoute: typeof InternalPanelLabRoute
   InternalPresetLabRoute: typeof InternalPresetLabRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   RNameRoute: typeof RNameRoute
   RInitRoute: typeof RInitRoute
   RRegistryDotjsonRoute: typeof RRegistryDotjsonRoute
   RV0Route: typeof RV0Route
+  InternalIndexRoute: typeof InternalIndexRoute
+  InternalPanelLabVersionRoute: typeof InternalPanelLabVersionRoute
+  InternalPanelLabControlsRoute: typeof InternalPanelLabControlsRoute
+  InternalPanelLabIndexRoute: typeof InternalPanelLabIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -446,6 +460,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/internal/': {
+      id: '/internal/'
+      path: '/internal'
+      fullPath: '/internal/'
+      preLoaderRoute: typeof InternalIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app/': {
       id: '/_app/'
       path: '/'
@@ -493,27 +514,6 @@ declare module '@tanstack/react-router' {
       path: '/internal/preset-lab'
       fullPath: '/internal/preset-lab'
       preLoaderRoute: typeof InternalPresetLabRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/internal/panel-lab': {
-      id: '/internal/panel-lab'
-      path: '/internal/panel-lab'
-      fullPath: '/internal/panel-lab'
-      preLoaderRoute: typeof InternalPanelLabRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/internal/control-lab': {
-      id: '/internal/control-lab'
-      path: '/internal/control-lab'
-      fullPath: '/internal/control-lab'
-      preLoaderRoute: typeof InternalControlLabRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/internal/colors': {
-      id: '/internal/colors'
-      path: '/internal/colors'
-      fullPath: '/internal/colors'
-      preLoaderRoute: typeof InternalColorsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/internal/color-lab': {
@@ -586,6 +586,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDocsRouteRouteImport
       parentRoute: typeof AppRouteRoute
     }
+    '/internal/panel-lab/': {
+      id: '/internal/panel-lab/'
+      path: '/internal/panel-lab'
+      fullPath: '/internal/panel-lab/'
+      preLoaderRoute: typeof InternalPanelLabIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internal/panel-lab/controls': {
+      id: '/internal/panel-lab/controls'
+      path: '/internal/panel-lab/controls'
+      fullPath: '/internal/panel-lab/controls'
+      preLoaderRoute: typeof InternalPanelLabControlsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internal/panel-lab/$version': {
+      id: '/internal/panel-lab/$version'
+      path: '/internal/panel-lab/$version'
+      fullPath: '/internal/panel-lab/$version'
+      preLoaderRoute: typeof InternalPanelLabVersionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_app/docs/{$}.md': {
       id: '/_app/docs/{$}.md'
       path: '/{$}.md'
@@ -652,15 +673,16 @@ const rootRouteChildren: RootRouteChildren = {
   DemosSlugRoute: DemosSlugRoute,
   InternalBlurRevealRoute: InternalBlurRevealRoute,
   InternalColorLabRoute: InternalColorLabRoute,
-  InternalColorsRoute: InternalColorsRoute,
-  InternalControlLabRoute: InternalControlLabRoute,
-  InternalPanelLabRoute: InternalPanelLabRoute,
   InternalPresetLabRoute: InternalPresetLabRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   RNameRoute: RNameRoute,
   RInitRoute: RInitRoute,
   RRegistryDotjsonRoute: RRegistryDotjsonRoute,
   RV0Route: RV0Route,
+  InternalIndexRoute: InternalIndexRoute,
+  InternalPanelLabVersionRoute: InternalPanelLabVersionRoute,
+  InternalPanelLabControlsRoute: InternalPanelLabControlsRoute,
+  InternalPanelLabIndexRoute: InternalPanelLabIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
