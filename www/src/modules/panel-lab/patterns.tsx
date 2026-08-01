@@ -56,7 +56,7 @@ export function DetailRow({
         slot="trigger"
         className={cn(
           ROW,
-          'flex cursor-interactive items-center justify-between gap-3 px-4 focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight motion-safe:pressed:scale-[0.99]',
+          'flex cursor-interactive items-center justify-between gap-3 px-4 focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight',
         )}
       >
         <span className={ROW_LABEL}>{label}</span>
