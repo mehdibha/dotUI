@@ -23,6 +23,7 @@ import { Route as RRegistryDotjsonRouteImport } from './routes/r/registry[.]json
 import { Route as RInitRouteImport } from './routes/r/init'
 import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
+import { Route as InternalRegistriesRouteImport } from './routes/internal.registries'
 import { Route as InternalPresetLabRouteImport } from './routes/internal.preset-lab'
 import { Route as InternalColorLabRouteImport } from './routes/internal.color-lab'
 import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-reveal'
@@ -108,6 +109,11 @@ const RNameRoute = RNameRouteImport.update({
 const PreviewSlugRoute = PreviewSlugRouteImport.update({
   id: '/preview/$slug',
   path: '/preview/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InternalRegistriesRoute = InternalRegistriesRouteImport.update({
+  id: '/internal/registries',
+  path: '/internal/registries',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InternalPresetLabRoute = InternalPresetLabRouteImport.update({
@@ -218,6 +224,7 @@ export interface FileRoutesByFullPath {
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
+  '/internal/registries': typeof InternalRegistriesRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
@@ -249,6 +256,7 @@ export interface FileRoutesByTo {
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
+  '/internal/registries': typeof InternalRegistriesRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
@@ -283,6 +291,7 @@ export interface FileRoutesById {
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
+  '/internal/registries': typeof InternalRegistriesRoute
   '/preview/$slug': typeof PreviewSlugRoute
   '/r/$name': typeof RNameRoute
   '/r/init': typeof RInitRoute
@@ -318,6 +327,7 @@ export interface FileRouteTypes {
     | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/preset-lab'
+    | '/internal/registries'
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
@@ -349,6 +359,7 @@ export interface FileRouteTypes {
     | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/preset-lab'
+    | '/internal/registries'
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
@@ -382,6 +393,7 @@ export interface FileRouteTypes {
     | '/internal/blur-reveal'
     | '/internal/color-lab'
     | '/internal/preset-lab'
+    | '/internal/registries'
     | '/preview/$slug'
     | '/r/$name'
     | '/r/init'
@@ -411,6 +423,7 @@ export interface RootRouteChildren {
   InternalBlurRevealRoute: typeof InternalBlurRevealRoute
   InternalColorLabRoute: typeof InternalColorLabRoute
   InternalPresetLabRoute: typeof InternalPresetLabRoute
+  InternalRegistriesRoute: typeof InternalRegistriesRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
   RNameRoute: typeof RNameRoute
   RInitRoute: typeof RInitRoute
@@ -521,6 +534,13 @@ declare module '@tanstack/react-router' {
       path: '/preview/$slug'
       fullPath: '/preview/$slug'
       preLoaderRoute: typeof PreviewSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internal/registries': {
+      id: '/internal/registries'
+      path: '/internal/registries'
+      fullPath: '/internal/registries'
+      preLoaderRoute: typeof InternalRegistriesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/internal/preset-lab': {
@@ -695,6 +715,7 @@ const rootRouteChildren: RootRouteChildren = {
   InternalBlurRevealRoute: InternalBlurRevealRoute,
   InternalColorLabRoute: InternalColorLabRoute,
   InternalPresetLabRoute: InternalPresetLabRoute,
+  InternalRegistriesRoute: InternalRegistriesRoute,
   PreviewSlugRoute: PreviewSlugRoute,
   RNameRoute: RNameRoute,
   RInitRoute: RInitRoute,
