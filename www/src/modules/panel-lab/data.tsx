@@ -256,10 +256,14 @@ export const DEFAULTS = {
   border400: 0,
   border500: 0,
   border600: 0,
-  // Typography
-  headingFont: DEFAULT_BODY_FAMILY,
+  // Typography — '' heading means Auto (follows body), like the color seeds.
+  headingFont: '',
   bodyFont: DEFAULT_BODY_FAMILY,
   monoFont: DEFAULT_MONO_FAMILY,
+  headingWeight: '600',
+  headingTracking: 'normal',
+  baseSize: 16,
+  typeScale: '1.25',
   // Icons
   iconLibrary: 'lucide',
   iconStroke: 2,
@@ -325,6 +329,10 @@ export const TYPE_KEYS: (keyof LabState)[] = [
   'headingFont',
   'bodyFont',
   'monoFont',
+  'headingWeight',
+  'headingTracking',
+  'baseSize',
+  'typeScale',
 ]
 export const ICON_KEYS: (keyof LabState)[] = [
   'iconLibrary',

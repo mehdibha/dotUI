@@ -49,14 +49,16 @@ import {
 
 export function TypographySectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
+  // '' heading = Auto (follows body); resolve so v1 renders unchanged.
+  const heading = state.headingFont || state.bodyFont
   return (
     <>
-      <TypeSpecimen heading={state.headingFont} body={state.bodyFont} />
+      <TypeSpecimen heading={heading} body={state.bodyFont} />
       <ControlGroup>
         <FontPickerRow
           label="Heading"
           categories={['sans-serif', 'serif', 'display', 'handwriting']}
-          selectedKey={state.headingFont}
+          selectedKey={heading}
           onChange={set('headingFont')}
         />
         <FontPickerRow
