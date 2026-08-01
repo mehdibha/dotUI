@@ -1515,58 +1515,50 @@
           },
           "typeParameters": [
             {
-              "type": "intersection",
-              "types": [
+              "type": "function",
+              "parameters": [
                 {
-                  "type": "function",
-                  "parameters": [
-                    {
-                      "type": "parameter",
-                      "name": "props",
-                      "value": {
+                  "type": "parameter",
+                  "name": "props",
+                  "value": {
+                    "type": "union",
+                    "elements": [
+                      {
                         "type": "identifier",
-                        "name": "({} & ClassProp<ClassNameValue>) | undefined"
+                        "name": "{} & { class?: ClassNameValue; className?: undefined; }"
                       },
-                      "optional": true,
-                      "rest": false
-                    }
-                  ],
-                  "return": {
-                    "type": "identifier",
-                    "name": "{} & { readonly content: (slotProps?: ({} & ClassProp<ClassNameValue>) | undefined) => string; readonly arrow: (slotProps?: ({} & ClassProp<ClassNameValue>) | undefined) => string; } & {}"
+                      {
+                        "type": "identifier",
+                        "name": "{} & { class?: undefined; className?: ClassNameValue; }"
+                      },
+                      {
+                        "type": "identifier",
+                        "name": "undefined"
+                      }
+                    ]
                   },
-                  "typeParameters": []
-                },
-                {
-                  "type": "application",
-                  "base": {
-                    "type": "identifier",
-                    "name": "TVReturnProps"
-                  },
-                  "typeParameters": [
-                    {
-                      "type": "identifier",
-                      "name": "EmptyVariants"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "{ readonly content: readonly [\"w-fit max-w-xs origin-(--trigger-anchor-point) rounded-(--tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip shadow-[var(--shadow-overlay,none)] forced-color-adjust-none outline-none\", \"transition-[transform,opacity,scale] duration-200 ease-out will-change-[t..."
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "undefined"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "EmptyVariants"
-                    },
-                    {
-                      "type": "identifier",
-                      "name": "undefined"
-                    }
-                  ]
+                  "optional": true,
+                  "rest": false
                 }
-              ]
+              ],
+              "return": {
+                "type": "intersection",
+                "types": [
+                  {
+                    "type": "identifier",
+                    "name": "{}"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "{ readonly content: (slotProps?: ({} & ClassProp<ClassNameValue>) | undefined) => string; readonly arrow: (slotProps?: ({} & ClassProp<ClassNameValue>) | undefined) => string; }"
+                  },
+                  {
+                    "type": "identifier",
+                    "name": "{ base: (slotProps?: ({} & ClassProp<ClassNameValue>) | undefined) => string; }"
+                  }
+                ]
+              },
+              "typeParameters": []
             }
           ]
         }
