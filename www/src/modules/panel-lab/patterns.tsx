@@ -9,17 +9,18 @@ import { Button as RacButton } from 'react-aria-components'
 
 import { fontStack } from '@/lib/fonts'
 import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
 import { ColorArea } from '@/registry/ui/color-area'
 import { ColorField } from '@/registry/ui/color-field'
-import { ColorPicker } from '@/registry/ui/color-picker'
 import { ColorSlider } from '@/registry/ui/color-slider'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
 import { DialogContent } from '@/registry/ui/dialog'
 import { Disclosure, DisclosurePanel } from '@/registry/ui/disclosure'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 import { Popover } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from '@/registry/ui/segmented-control'
 import { ROW, ROW_LABEL, ROW_VALUE } from '@/modules/control-lab/rows'
 import { useLoadedFamilies } from '@/modules/create/typography'
 
@@ -71,6 +72,55 @@ export function DetailRow({
   )
 }
 
+/* --------------------------- Segmented control row -------------------------- */
+
+/**
+ * SegmentedRow's layout (label left, joined pills right) on top of the real
+ * `ui/segmented-control` instead of a plain toggle-button group — its
+ * SelectionIndicator glides between segments instead of the flat instant
+ * background swap `MiniSegmented`/`SegmentedRow` do. Default density: this
+ * prototype has no `DesignSystemProvider`, which is what density reads from.
+ */
+export function SegmentedControlRow({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string
+  value: string
+  onChange: (value: string) => void
+  options: { value: string; label: React.ReactNode }[]
+}) {
+  return (
+    <div
+      data-row=""
+      className={cn(ROW, 'flex items-center justify-between gap-3 pr-1.5 pl-4')}
+    >
+      <span className={ROW_LABEL}>{label}</span>
+      <SegmentedControl
+        aria-label={label}
+        selectedKeys={[value]}
+        onSelectionChange={(keys) => {
+          const next = keys.values().next().value
+          if (next) onChange(next as string)
+        }}
+        className="shrink-0 bg-bg/50 p-0.5"
+      >
+        {options.map((option) => (
+          <SegmentedControlItem
+            key={option.value}
+            id={option.value}
+            className="text-xs"
+          >
+            {option.label}
+          </SegmentedControlItem>
+        ))}
+      </SegmentedControl>
+    </div>
+  )
+}
+
 /* ------------------------------- Swatch dots ------------------------------- */
 
 /** Collapsed-row summary for a set of colors: overlapping dots. */
@@ -91,7 +141,7 @@ export function SwatchDots({ colors }: { colors: string[] }) {
 /* ------------------------------ Mini color row ----------------------------- */
 
 /** Shared picker popover body (area + hue + hex). */
-function PickerPopoverContent() {
+export function PickerPopoverContent() {
   return (
     <Popover>
       <DialogContent className="flex flex-col gap-2">
@@ -113,77 +163,6 @@ function PickerPopoverContent() {
         </ColorField>
       </DialogContent>
     </Popover>
-  )
-}
-
-/** A color picker at sub-row scale, for use inside an expanded DetailRow. */
-export function MiniColorRow({
-  label,
-  value,
-  onChange,
-}: {
-  label: string
-  value: string
-  onChange: (hex: string) => void
-}) {
-  return (
-    <ColorPicker value={value} onChange={(c) => onChange(c.toString('hex'))}>
-      {({ color }) => (
-        <>
-          <Button
-            variant="quiet"
-            className="flex h-9 w-full items-center justify-between gap-3 rounded-lg px-2 font-normal"
-          >
-            <span className="truncate text-xs text-fg-muted">{label}</span>
-            <span className="flex shrink-0 items-center gap-2">
-              <span className="font-mono text-xs text-fg-muted uppercase">
-                {color.toString('hex')}
-              </span>
-              <ColorSwatch className="size-4 rounded-full" />
-            </span>
-          </Button>
-          <PickerPopoverContent />
-        </>
-      )}
-    </ColorPicker>
-  )
-}
-
-/* -------------------------------- Ramp strip ------------------------------- */
-
-/* Approximate 10-step ramps via color-mix — enough to sell the visual; the
-   real ramps come from the color engine, not the panel. */
-const RAMP_MIXES = [
-  'white 92%',
-  'white 82%',
-  'white 68%',
-  'white 52%',
-  'white 32%',
-  'white 12%',
-  'black 10%',
-  'black 26%',
-  'black 42%',
-  'black 58%',
-]
-
-/** Live ramps for the given seeds — the Color section's opening visual. */
-export function RampStrip({ seeds }: { seeds: string[] }) {
-  return (
-    <div className="flex flex-col gap-1">
-      {seeds.map((seed) => (
-        <div key={seed} className="flex h-4 overflow-hidden rounded-md">
-          {RAMP_MIXES.map((mix) => (
-            <div
-              key={mix}
-              className="flex-1"
-              style={{
-                backgroundColor: `color-mix(in oklch, ${seed}, ${mix})`,
-              }}
-            />
-          ))}
-        </div>
-      ))}
-    </div>
   )
 }
 

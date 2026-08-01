@@ -21,26 +21,9 @@ import { DetailRow } from './patterns'
 
 /* --------------------------------- Options -------------------------------- */
 
-export const GRAY_TINT_OPTIONS = [
-  { value: 'pure', label: 'Pure' },
-  { value: 'tinted', label: 'Tinted' },
-]
-
 export const PRIMARY_OPTIONS = [
   { value: 'neutral', label: 'Neutral' },
   { value: 'accent', label: 'Accent' },
-]
-
-export const CONTRAST_OPTIONS: SegmentedRowOption[] = [
-  { value: 'low', label: 'Low' },
-  { value: 'default', label: 'Default' },
-  { value: 'high', label: 'High' },
-]
-
-export const CHROMA_OPTIONS: SegmentedRowOption[] = [
-  { value: 'muted', label: 'Muted' },
-  { value: 'default', label: 'Default' },
-  { value: 'vivid', label: 'Vivid' },
 ]
 
 export const ICON_LIBRARY_OPTIONS = [
@@ -252,18 +235,27 @@ export function labelOf(
 /* ---------------------------------- State ---------------------------------- */
 
 export const DEFAULTS = {
-  // Color — seeds, strategy, semantics, engine knobs (panel/schema.tsx)
+  // Color — the engine-true section. Mirrors ColorConfig: '' on a seed means
+  // Auto (absent from the config), 0 on a border means unmeasured.
   brand: '#635BFF',
-  gray: '#8B8D98',
-  grayTint: 'tinted',
   primary: 'neutral',
-  success: '#1A9338',
-  warning: '#E79D13',
-  danger: '#DC3E42',
-  info: '#0072F5',
-  selection: '#0072F5',
-  contrast: 'default',
-  chroma: 'default',
+  graySeed: '',
+  successSeed: '',
+  warningSeed: '',
+  dangerSeed: '',
+  infoSeed: '',
+  selectionSeed: '',
+  bgLight: 99,
+  bgDark: 2,
+  vividness: 1,
+  hueShift: 1,
+  grayTintAmount: 1,
+  preserveSeed: false,
+  guarantees: 'default',
+  borderContrast: false,
+  border400: 0,
+  border500: 0,
+  border600: 0,
   // Typography
   headingFont: DEFAULT_BODY_FAMILY,
   bodyFont: DEFAULT_BODY_FAMILY,
@@ -310,16 +302,24 @@ export interface Lab {
 
 export const COLOR_KEYS: (keyof LabState)[] = [
   'brand',
-  'gray',
-  'grayTint',
   'primary',
-  'success',
-  'warning',
-  'danger',
-  'info',
-  'selection',
-  'contrast',
-  'chroma',
+  'graySeed',
+  'successSeed',
+  'warningSeed',
+  'dangerSeed',
+  'infoSeed',
+  'selectionSeed',
+  'bgLight',
+  'bgDark',
+  'vividness',
+  'hueShift',
+  'grayTintAmount',
+  'preserveSeed',
+  'guarantees',
+  'borderContrast',
+  'border400',
+  'border500',
+  'border600',
 ]
 export const TYPE_KEYS: (keyof LabState)[] = [
   'headingFont',
