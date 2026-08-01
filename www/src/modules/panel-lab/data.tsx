@@ -216,6 +216,11 @@ export const BACKDROP_OPTIONS: SegmentedRowOption[] = [
   { value: '60', label: '60%' },
 ]
 
+export const OVERLAY_OPTIONS: SegmentedRowOption[] = [
+  { value: 'solid', label: 'Solid' },
+  { value: 'glass', label: 'Glass' },
+]
+
 export const ACCENT_POOL = [
   '#635BFF',
   '#3B82F6',
@@ -256,6 +261,8 @@ export const DEFAULTS = {
   border400: 0,
   border500: 0,
   border600: 0,
+  // Surfaces (working frames split bgLight/bgDark out of Color into here)
+  overlayMaterial: 'solid',
   // Typography
   headingFont: DEFAULT_BODY_FAMILY,
   bodyFont: DEFAULT_BODY_FAMILY,
@@ -320,6 +327,16 @@ export const COLOR_KEYS: (keyof LabState)[] = [
   'border400',
   'border500',
   'border600',
+]
+/* The working frames' split: Color v2 owns the seeds and engine axes, the
+   Surfaces section owns the canvas. v1 keeps reading COLOR_KEYS above. */
+export const COLOR_V2_KEYS: (keyof LabState)[] = COLOR_KEYS.filter(
+  (key) => key !== 'bgLight' && key !== 'bgDark',
+)
+export const SURFACE_KEYS: (keyof LabState)[] = [
+  'bgLight',
+  'bgDark',
+  'overlayMaterial',
 ]
 export const TYPE_KEYS: (keyof LabState)[] = [
   'headingFont',

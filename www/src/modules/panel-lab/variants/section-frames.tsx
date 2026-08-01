@@ -11,6 +11,7 @@
 
 import {
   BoxSelectIcon,
+  LayersIcon,
   PaletteIcon,
   ShapesIcon,
   SlidersHorizontalIcon,
@@ -18,13 +19,14 @@ import {
   TypeIcon,
 } from 'lucide-react'
 
-import { IdealColorSectionBody } from '../color-ideal'
+import { ColorSectionV2Body } from '../color-v2'
 import {
-  COLOR_KEYS,
+  COLOR_V2_KEYS,
   COMPONENT_KEYS,
   EFFECT_KEYS,
   ICON_KEYS,
   SHAPE_KEYS,
+  SURFACE_KEYS,
   TYPE_KEYS,
 } from '../data'
 import type { Lab } from '../data'
@@ -35,6 +37,7 @@ import {
   ShapeSectionBody,
   TypographySectionBody,
 } from '../sections'
+import { SurfacesSectionBody } from '../surfaces'
 import { ChapterCard } from './chapter'
 import type { Chapter } from './chapter'
 
@@ -43,8 +46,15 @@ export const WORKING_CHAPTERS: Chapter[] = [
     id: 'color',
     label: 'Color',
     icon: PaletteIcon,
-    keys: COLOR_KEYS,
-    Body: IdealColorSectionBody,
+    keys: COLOR_V2_KEYS,
+    Body: ColorSectionV2Body,
+  },
+  {
+    id: 'surfaces',
+    label: 'Surfaces',
+    icon: LayersIcon,
+    keys: SURFACE_KEYS,
+    Body: SurfacesSectionBody,
   },
   {
     id: 'typography',
