@@ -20,6 +20,8 @@ import {
 } from 'lucide-react'
 
 import { DEFAULT_BODY_FAMILY } from '@/lib/fonts'
+import { TOCItems, TOCProvider } from '@/modules/docs/toc'
+import type { TOCItemType } from '@/modules/docs/toc'
 import { InternalHeader } from '@/modules/internal/shell'
 
 import {
@@ -510,60 +512,65 @@ const ENTRIES: Entry[] = [
 
 /* ---------------------------------- Page ----------------------------------- */
 
+const TOC_ITEMS: TOCItemType[] = ENTRIES.map((entry) => ({
+  url: `#${entry.id}`,
+  title: entry.name,
+  depth: 2,
+}))
+
 export function ControlLab() {
   return (
-    <div className="flex min-h-svh flex-col gap-8 px-8 py-10">
-      <InternalHeader
-        crumbs={[
-          { label: 'Panel Lab', href: '/internal/panel-lab' },
-          { label: 'Control Lab' },
-        ]}
-        title="Control Lab"
-        description="The row language the panel is built from — one visual grammar (compact row, label left, control right) applied to every interaction model. Each control on its own, with the variants that matter."
-      />
+    <TOCProvider toc={TOC_ITEMS}>
+      <div className="flex min-h-svh flex-col gap-8 px-8 py-10">
+        <InternalHeader
+          crumbs={[
+            { label: 'Panel Lab', href: '/internal/panel-lab' },
+            { label: 'Control Lab' },
+          ]}
+          title="Control Lab"
+          description="The row language the panel is built from — one visual grammar (compact row, label left, control right) applied to every interaction model. Each control on its own, with the variants that matter."
+        />
 
-      <div className="flex items-start gap-12">
-        <nav className="sticky top-10 hidden h-fit w-44 shrink-0 flex-col gap-0.5 lg:flex">
-          {ENTRIES.map((entry) => (
-            <a
-              key={entry.id}
-              href={`#${entry.id}`}
-              className="rounded-md px-2 py-1 text-xs text-fg-muted focus-reset transition-colors hover:bg-muted hover:text-fg focus-visible:focus-ring"
-            >
-              {entry.name}
-            </a>
-          ))}
-        </nav>
+        <div className="flex items-start gap-12">
+          <div className="flex min-w-0 flex-1 flex-col gap-12 pb-16">
+            {ENTRIES.map((entry) => (
+              <section
+                key={entry.id}
+                id={entry.id}
+                className="flex scroll-mt-10 flex-col gap-4"
+              >
+                <div className="flex max-w-lg flex-col gap-1">
+                  <h2 className="font-mono text-[0.8125rem] font-medium text-fg">
+                    {entry.name}
+                  </h2>
+                  <p className="text-xs/relaxed text-pretty text-fg-muted">
+                    {entry.description}
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-start gap-5">
+                  {entry.variants.map((variant) => (
+                    <div key={variant.label} className="flex flex-col gap-1.5">
+                      <span className="text-[11px] text-fg-muted">
+                        {variant.label}
+                      </span>
+                      <Stage>{variant.render}</Stage>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
 
-        <div className="flex min-w-0 flex-col gap-12 pb-16">
-          {ENTRIES.map((entry) => (
-            <section
-              key={entry.id}
-              id={entry.id}
-              className="flex scroll-mt-10 flex-col gap-4"
-            >
-              <div className="flex max-w-lg flex-col gap-1">
-                <h2 className="font-mono text-[0.8125rem] font-medium text-fg">
-                  {entry.name}
-                </h2>
-                <p className="text-xs/relaxed text-pretty text-fg-muted">
-                  {entry.description}
-                </p>
-              </div>
-              <div className="flex flex-wrap items-start gap-5">
-                {entry.variants.map((variant) => (
-                  <div key={variant.label} className="flex flex-col gap-1.5">
-                    <span className="text-[11px] text-fg-muted">
-                      {variant.label}
-                    </span>
-                    <Stage>{variant.render}</Stage>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ))}
+          {/* Docs-site TOC: fumadocs' AnchorProvider tracks which section is in
+            view, so the active entry highlights as you scroll. */}
+          <aside className="sticky top-10 hidden h-fit w-44 shrink-0 flex-col gap-2 lg:flex">
+            <span className="text-[11px] font-medium tracking-wider text-fg-muted uppercase">
+              On this page
+            </span>
+            <TOCItems className="gap-0.5 [&_a]:rounded-md [&_a]:px-2 [&_a]:py-1 [&_a]:text-xs [&_a:hover]:bg-muted [&_a:hover]:text-fg" />
+          </aside>
         </div>
       </div>
-    </div>
+    </TOCProvider>
   )
 }
