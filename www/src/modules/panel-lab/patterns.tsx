@@ -143,7 +143,7 @@ export function SwatchDots({ colors }: { colors: string[] }) {
 /** Shared picker popover body (area + hue + hex). */
 export function PickerPopoverContent() {
   return (
-    <Popover>
+    <Popover placement="right top">
       <DialogContent className="flex flex-col gap-2">
         <div className="flex gap-2">
           <ColorArea

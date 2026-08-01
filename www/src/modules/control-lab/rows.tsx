@@ -240,7 +240,7 @@ export function SelectRow({
           <ChevronsUpDownIcon className="size-3.5 text-fg-muted" />
         </span>
       </Button>
-      <Popover className="w-(--trigger-width)" placement="bottom">
+      <Popover className="w-(--trigger-width)" placement="right top">
         <ListBox>
           {options.map((opt) => (
             <ListBoxItem key={opt.value} id={opt.value} textValue={opt.label}>
@@ -281,7 +281,7 @@ export function ColorPickerRow({
               <ColorSwatch className="size-5 rounded-full" />
             </span>
           </Button>
-          <Popover>
+          <Popover placement="right top">
             <DialogContent className="flex flex-col gap-2">
               <div className="flex gap-2">
                 <ColorArea
@@ -340,7 +340,10 @@ export function FontPickerRow({
           <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
         </span>
       </Button>
-      <Popover className="w-(--trigger-width) outline-hidden">
+      <Popover
+        className="w-(--trigger-width) outline-hidden"
+        placement="right top"
+      >
         <Command>
           <SearchField autoFocus aria-label="Search fonts">
             <InputGroup>
