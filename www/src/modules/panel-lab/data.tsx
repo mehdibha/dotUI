@@ -256,10 +256,16 @@ export const DEFAULTS = {
   border400: 0,
   border500: 0,
   border600: 0,
-  // Typography
-  headingFont: DEFAULT_BODY_FAMILY,
+  // Typography — '' on heading means Auto (no token; follows body), the same
+  // absent-means-default contract the real --font-heading token keeps.
+  headingFont: '',
   bodyFont: DEFAULT_BODY_FAMILY,
   monoFont: DEFAULT_MONO_FAMILY,
+  typeRatio: '1.2',
+  typeBase: 16,
+  headingWeight: '600',
+  headingTracking: 0,
+  bodyLeading: 1.5,
   // Icons
   iconLibrary: 'lucide',
   iconStroke: 2,
@@ -325,6 +331,11 @@ export const TYPE_KEYS: (keyof LabState)[] = [
   'headingFont',
   'bodyFont',
   'monoFont',
+  'typeRatio',
+  'typeBase',
+  'headingWeight',
+  'headingTracking',
+  'bodyLeading',
 ]
 export const ICON_KEYS: (keyof LabState)[] = [
   'iconLibrary',

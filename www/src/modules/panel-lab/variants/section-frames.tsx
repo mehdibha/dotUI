@@ -33,8 +33,8 @@ import {
   EffectsSectionBody,
   IconsSectionBody,
   ShapeSectionBody,
-  TypographySectionBody,
 } from '../sections'
+import { IdealTypeSectionBody } from '../type-ideal'
 import { ChapterCard } from './chapter'
 import type { Chapter } from './chapter'
 
@@ -51,7 +51,7 @@ export const WORKING_CHAPTERS: Chapter[] = [
     label: 'Type',
     icon: TypeIcon,
     keys: TYPE_KEYS,
-    Body: TypographySectionBody,
+    Body: IdealTypeSectionBody,
   },
   {
     id: 'icons',

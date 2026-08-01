@@ -55,7 +55,10 @@ import {
   SliderTrack,
 } from '@/registry/ui/slider'
 import { Switch, SwitchControl, SwitchIndicator } from '@/registry/ui/switch'
-import { useLoadedFamilies } from '@/modules/create/typography'
+import {
+  useLazyFontPreviews,
+  useLoadedFamilies,
+} from '@/modules/create/typography'
 
 /* -------------------------------- Shared shell --------------------------- */
 
@@ -309,6 +312,68 @@ export function ColorPickerRow({
 
 /* ------------------------------- Font picker ------------------------------ */
 
+/** The searchable font list shared by every font trigger: search on top, the
+ *  catalog grouped by category, each family previewed in its own lazily-loaded
+ *  face. Must render inside a Select. */
+export function FontListPopover({
+  categories,
+}: {
+  categories: FontCategory[]
+}) {
+  const listRef = useLazyFontPreviews()
+  return (
+    <Popover
+      className="w-(--trigger-width) outline-hidden"
+      placement="right top"
+    >
+      <Command>
+        <SearchField autoFocus aria-label="Search fonts">
+          <InputGroup>
+            <InputGroupAddon>
+              <SearchIcon />
+            </InputGroupAddon>
+            <Input placeholder="Search fonts..." />
+            <InputGroupAddon className="[--addon-button-inset:--spacing(1.5)]">
+              <Button variant="quiet" isIconOnly>
+                <XIcon aria-hidden="true" />
+              </Button>
+            </InputGroupAddon>
+          </InputGroup>
+        </SearchField>
+        {/* The `display:contents` wrapper hands the lazy-preview observer the
+            listbox scroll container (ListBox forwards no ref). */}
+        <div ref={listRef} className="contents">
+          <ListBox className="max-h-64 overflow-y-auto! overscroll-contain">
+            {categories.map((category) => (
+              <ListBoxSection key={category}>
+                <ListBoxSectionHeader className="capitalize">
+                  {category}
+                </ListBoxSectionHeader>
+                {FONT_CATALOG.filter((font) => font.category === category).map(
+                  (font) => (
+                    <ListBoxItem
+                      key={font.family}
+                      id={font.family}
+                      textValue={font.family}
+                    >
+                      <span
+                        data-preview-family={font.family}
+                        style={{ fontFamily: fontStack(font.family) }}
+                      >
+                        {font.family}
+                      </span>
+                    </ListBoxItem>
+                  ),
+                )}
+              </ListBoxSection>
+            ))}
+          </ListBox>
+        </div>
+      </Command>
+    </Popover>
+  )
+}
+
 /** A searchable font trigger shaped as a settings row: label left, the family
  *  itself set in its own typeface on the right — the row doubles as a specimen. */
 export function FontPickerRow({
@@ -340,48 +405,7 @@ export function FontPickerRow({
           <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
         </span>
       </Button>
-      <Popover
-        className="w-(--trigger-width) outline-hidden"
-        placement="right top"
-      >
-        <Command>
-          <SearchField autoFocus aria-label="Search fonts">
-            <InputGroup>
-              <InputGroupAddon>
-                <SearchIcon />
-              </InputGroupAddon>
-              <Input placeholder="Search fonts..." />
-              <InputGroupAddon className="[--addon-button-inset:--spacing(1.5)]">
-                <Button variant="quiet" isIconOnly>
-                  <XIcon aria-hidden="true" />
-                </Button>
-              </InputGroupAddon>
-            </InputGroup>
-          </SearchField>
-          <ListBox className="max-h-64 overflow-y-auto! overscroll-contain">
-            {categories.map((category) => (
-              <ListBoxSection key={category}>
-                <ListBoxSectionHeader className="capitalize">
-                  {category}
-                </ListBoxSectionHeader>
-                {FONT_CATALOG.filter((font) => font.category === category).map(
-                  (font) => (
-                    <ListBoxItem
-                      key={font.family}
-                      id={font.family}
-                      textValue={font.family}
-                    >
-                      <span style={{ fontFamily: fontStack(font.family) }}>
-                        {font.family}
-                      </span>
-                    </ListBoxItem>
-                  ),
-                )}
-              </ListBoxSection>
-            ))}
-          </ListBox>
-        </Command>
-      </Popover>
+      <FontListPopover categories={categories} />
     </Select>
   )
 }
