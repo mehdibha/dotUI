@@ -321,6 +321,12 @@ export const COLOR_KEYS: (keyof LabState)[] = [
   'border500',
   'border600',
 ]
+/* Working-frame split (Color v2): backgrounds leave Color for their own
+   Surfaces section, so each carries its own reset scope. v1 keeps COLOR_KEYS. */
+export const COLOR_V2_KEYS: (keyof LabState)[] = COLOR_KEYS.filter(
+  (key) => key !== 'bgLight' && key !== 'bgDark',
+)
+export const SURFACE_KEYS: (keyof LabState)[] = ['bgLight', 'bgDark']
 export const TYPE_KEYS: (keyof LabState)[] = [
   'headingFont',
   'bodyFont',

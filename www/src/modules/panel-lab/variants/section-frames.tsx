@@ -5,12 +5,13 @@
    reference to judge it against.
 
    To enhance a section: write a NEW body component and point that section's
-   entry below at it. v1 keeps naming the old body, so it doesn't move. The
-   list starts as a copy of v1's, so every frame reads identically until the
-   first experiment lands. */
+   entry below at it. v1 keeps naming the old body, so it doesn't move. First
+   experiment: Color v2 (color-v2.tsx), which also splits backgrounds out into
+   a Surfaces section v1 doesn't have. */
 
 import {
   BoxSelectIcon,
+  LayersIcon,
   PaletteIcon,
   ShapesIcon,
   SlidersHorizontalIcon,
@@ -18,13 +19,14 @@ import {
   TypeIcon,
 } from 'lucide-react'
 
-import { IdealColorSectionBody } from '../color-ideal'
+import { ColorSectionV2Body, SurfacesSectionBody } from '../color-v2'
 import {
-  COLOR_KEYS,
+  COLOR_V2_KEYS,
   COMPONENT_KEYS,
   EFFECT_KEYS,
   ICON_KEYS,
   SHAPE_KEYS,
+  SURFACE_KEYS,
   TYPE_KEYS,
 } from '../data'
 import type { Lab } from '../data'
@@ -43,8 +45,15 @@ export const WORKING_CHAPTERS: Chapter[] = [
     id: 'color',
     label: 'Color',
     icon: PaletteIcon,
-    keys: COLOR_KEYS,
-    Body: IdealColorSectionBody,
+    keys: COLOR_V2_KEYS,
+    Body: ColorSectionV2Body,
+  },
+  {
+    id: 'surfaces',
+    label: 'Surfaces',
+    icon: LayersIcon,
+    keys: SURFACE_KEYS,
+    Body: SurfacesSectionBody,
   },
   {
     id: 'typography',
