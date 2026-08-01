@@ -2,8 +2,9 @@
 
 /* Chapter cards — the CURRENT /create panel layout (control-panel.tsx): every
    section its own bordered card in a story scroll, floating glass header and
-   footer bars the cards dip under. The reference frame: the new row controls
-   inside today's chrome, so directions are judged against what ships. */
+   footer bars the cards dip under. The Color chapter carries the ideal,
+   engine-true section (color-ideal.tsx); the rest are row-language sketches
+   of the other chapters, unchanged from the original recreation. */
 
 import {
   BoxSelectIcon,
@@ -19,6 +20,7 @@ import {
 
 import { Button } from '@/registry/ui/button'
 
+import { IdealColorSectionBody } from '../color-ideal'
 import {
   COLOR_KEYS,
   COMPONENT_KEYS,
@@ -29,7 +31,6 @@ import {
 } from '../data'
 import type { Lab, LabState } from '../data'
 import {
-  ColorSectionBody,
   ComponentsSectionBody,
   EffectsSectionBody,
   IconsSectionBody,
@@ -49,7 +50,7 @@ const CHAPTERS: {
     label: 'Color',
     icon: PaletteIcon,
     keys: COLOR_KEYS,
-    Body: ColorSectionBody,
+    Body: IdealColorSectionBody,
   },
   {
     id: 'typography',

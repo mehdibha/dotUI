@@ -2,25 +2,15 @@
 
 /* Panel Lab — the entire /create control panel recreated in the control-lab
    row language, explored as a canvas of design directions (Figma-style
-   frames) all driven by ONE shared design-system state. Derived from the real
+   frames) driven by ONE shared design-system state. Derived from the real
    builder schema; design only: local state, nothing wired into /create. */
 
 import { useState } from 'react'
-import { SearchIcon } from 'lucide-react'
 
 import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
 
 import { DEFAULTS } from './data'
 import type { Lab, LabState } from './data'
-import {
-  ColorSection,
-  ComponentsSection,
-  EffectsSection,
-  IconsSection,
-  ShapeSection,
-  TypographySection,
-} from './sections'
 import { CardsFrame } from './variants/cards'
 
 /* ---------------------------------- Frame ----------------------------------- */
@@ -51,62 +41,6 @@ function Frame({
   )
 }
 
-/* ------------------------------ Baseline frame ------------------------------ */
-
-/** The baseline: card shell, story scroll of grouped-row sections. */
-function BaselineFrame({
-  lab,
-  anyModified,
-}: {
-  lab: Lab
-  anyModified: boolean
-}) {
-  return (
-    <Frame label="Baseline — story scroll">
-      <header className="flex h-11 shrink-0 items-center justify-between border-b border-border/40 pr-1.5 pl-4">
-        <span className="flex min-w-0 items-center gap-1.5">
-          <span className="truncate text-[0.8125rem] font-semibold text-fg">
-            Acme design system
-          </span>
-          {anyModified && (
-            <span
-              aria-label="Unsaved changes"
-              className="size-1.5 shrink-0 rounded-full bg-fg-muted"
-            />
-          )}
-        </span>
-        <Button
-          size="sm"
-          variant="quiet"
-          isIconOnly
-          aria-label="Search controls"
-          className="shrink-0"
-        >
-          <SearchIcon />
-        </Button>
-      </header>
-
-      <div className="flex min-h-0 flex-1 flex-col gap-1.5 overflow-y-auto p-3 *:shrink-0">
-        <ColorSection lab={lab} />
-        <TypographySection lab={lab} />
-        <IconsSection lab={lab} />
-        <ShapeSection lab={lab} />
-        <EffectsSection lab={lab} />
-        <ComponentsSection lab={lab} />
-      </div>
-
-      <footer className="flex shrink-0 gap-2 border-t border-border/40 p-3">
-        <Button size="sm" className="flex-1">
-          Save
-        </Button>
-        <Button variant="primary" size="sm" className="flex-1">
-          Export
-        </Button>
-      </footer>
-    </Frame>
-  )
-}
-
 /* ---------------------------------- Page ----------------------------------- */
 
 export function PanelLab() {
@@ -130,30 +64,25 @@ export function PanelLab() {
 
   const lab: Lab = { state, set, section }
 
-  const anyModified = (Object.keys(DEFAULTS) as (keyof LabState)[]).some(
-    (key) => state[key] !== DEFAULTS[key],
-  )
-
   return (
     <div className="flex min-h-svh flex-col gap-8 px-8 py-12">
       <div className="flex max-w-lg flex-col gap-1.5">
         <h1 className="text-lg font-semibold text-fg">Panel Lab</h1>
         <p className="text-sm text-fg-muted">
-          The entire /create control panel as a canvas of design directions —
-          one shared design-system state rendered through every frame. Edit in
-          any frame; the others follow.
+          The entire /create control panel rebuilt in the row language — the
+          current chapter-cards chrome carrying the ideal, engine-true Color
+          section.
         </p>
       </div>
 
-      <div className="flex items-start gap-10 overflow-x-auto pb-8">
+      <div className="flex items-start justify-center gap-10 overflow-x-auto pb-8">
         {/* The real panel sits on the page bg — no card chrome around it. */}
         <Frame
-          label="Current /create — chapter cards"
+          label="Chapter cards — ideal Color section"
           className="rounded-none border-0 bg-transparent"
         >
           <CardsFrame lab={lab} />
         </Frame>
-        <BaselineFrame lab={lab} anyModified={anyModified} />
       </div>
     </div>
   )

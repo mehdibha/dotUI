@@ -1,8 +1,8 @@
 'use client'
 
-/* Panel Lab sections — the baseline rendering of each schema section in the
-   grouped-row language. Panel explorations may compose these directly or
-   rebuild a section from data.tsx when their design calls for it. */
+/* Panel Lab sections — each schema section rendered in the grouped-row
+   language, composed by the frames in variants/. The Color section lives in
+   color-ideal.tsx (engine-true, its own state slice). */
 
 import { useState } from 'react'
 import {
@@ -23,153 +23,29 @@ import {
 import { DisclosureGroup } from 'react-aria-components'
 
 import {
-  ColorPickerRow,
   ControlGroup,
   FontPickerRow,
   GroupCaption,
-  MiniSegmented,
-  ParamRow,
-  SectionHeader,
-  SegmentedRow,
   SelectRow,
   SliderRow,
   StyleGridRow,
 } from '@/modules/control-lab/rows'
 
 import {
-  CHROMA_OPTIONS,
   CLUSTERS,
-  COLOR_KEYS,
-  COMPONENT_KEYS,
-  CONTRAST_OPTIONS,
   CURSOR_OPTIONS,
-  DEFAULTS,
   DENSITY_OPTIONS,
-  EFFECT_KEYS,
-  GRAY_TINT_OPTIONS,
-  ICON_KEYS,
   ICON_LIBRARY_OPTIONS,
   ICON_WEIGHT_OPTIONS,
-  PRIMARY_OPTIONS,
   SHADOW_OPTIONS,
-  SHAPE_KEYS,
-  TYPE_KEYS,
 } from './data'
 import type { Lab } from './data'
 import {
   ClusterHeader,
-  DetailRow,
   FilterRow,
-  MiniColorRow,
-  RampStrip,
-  SwatchDots,
+  SegmentedControlRow,
   TypeSpecimen,
 } from './patterns'
-
-export function ColorSectionBody({ lab }: { lab: Lab }) {
-  const { state, set } = lab
-  const semanticModified = (
-    ['success', 'warning', 'danger', 'info', 'selection'] as const
-  ).some((k) => state[k] !== DEFAULTS[k])
-  const engineModified =
-    state.contrast !== DEFAULTS.contrast || state.chroma !== DEFAULTS.chroma
-  return (
-    <>
-      <RampStrip seeds={[state.brand, state.gray]} />
-      <ControlGroup>
-        <ColorPickerRow
-          label="Brand"
-          value={state.brand}
-          onChange={set('brand')}
-        />
-        <ColorPickerRow
-          label="Gray"
-          value={state.gray}
-          onChange={set('gray')}
-        />
-        <SegmentedRow
-          label="Gray tint"
-          value={state.grayTint}
-          onChange={set('grayTint')}
-          options={GRAY_TINT_OPTIONS}
-        />
-        <SegmentedRow
-          label="Primary"
-          value={state.primary}
-          onChange={set('primary')}
-          options={PRIMARY_OPTIONS}
-        />
-      </ControlGroup>
-      <GroupCaption>
-        Two seeds generate every ramp. Primary picks which one solid buttons
-        wear.
-      </GroupCaption>
-      <DetailRow
-        label="Semantic colors"
-        summary={
-          <SwatchDots
-            colors={[state.success, state.warning, state.danger, state.info]}
-          />
-        }
-      >
-        <MiniColorRow
-          label="Success"
-          value={state.success}
-          onChange={set('success')}
-        />
-        <MiniColorRow
-          label="Warning"
-          value={state.warning}
-          onChange={set('warning')}
-        />
-        <MiniColorRow
-          label="Danger"
-          value={state.danger}
-          onChange={set('danger')}
-        />
-        <MiniColorRow label="Info" value={state.info} onChange={set('info')} />
-        <MiniColorRow
-          label="Selection"
-          value={state.selection}
-          onChange={set('selection')}
-        />
-      </DetailRow>
-      <DetailRow
-        label="Fine-tune"
-        summary={engineModified || semanticModified ? 'Custom' : 'Default'}
-      >
-        <ParamRow label="Contrast">
-          <MiniSegmented
-            ariaLabel="Contrast"
-            value={state.contrast}
-            onChange={set('contrast')}
-            options={CONTRAST_OPTIONS}
-          />
-        </ParamRow>
-        <ParamRow label="Chroma">
-          <MiniSegmented
-            ariaLabel="Chroma"
-            value={state.chroma}
-            onChange={set('chroma')}
-            options={CHROMA_OPTIONS}
-          />
-        </ParamRow>
-        <div className="px-2 pt-1.5 pb-2">
-          <RampStrip
-            seeds={[
-              state.brand,
-              state.gray,
-              state.success,
-              state.warning,
-              state.danger,
-              state.info,
-            ]}
-          />
-        </div>
-      </DetailRow>
-    </>
-  )
-}
 
 export function TypographySectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
@@ -280,7 +156,7 @@ export function ShapeSectionBody({ lab }: { lab: Lab }) {
           format={(v) => `${v.toFixed(2)}×`}
           trackStyle={{ borderRadius: `${4 + state.radius * 10}px` }}
         />
-        <SegmentedRow
+        <SegmentedControlRow
           label="Density"
           value={state.density}
           onChange={set('density')}
@@ -358,63 +234,6 @@ export function ComponentsSectionBody({ lab }: { lab: Lab }) {
         A representative slice — the real panel lists every component with
         styles, in these clusters.
       </GroupCaption>
-    </>
-  )
-}
-
-/* Composed sections: baseline header + body. Frames that bring their own
-   chapter chrome (e.g. the current-/create cards frame) use the bodies. */
-
-export function ColorSection({ lab }: { lab: Lab }) {
-  return (
-    <>
-      <SectionHeader label="Color" {...lab.section(COLOR_KEYS)} />
-      <ColorSectionBody lab={lab} />
-    </>
-  )
-}
-
-export function TypographySection({ lab }: { lab: Lab }) {
-  return (
-    <>
-      <SectionHeader label="Typography" {...lab.section(TYPE_KEYS)} />
-      <TypographySectionBody lab={lab} />
-    </>
-  )
-}
-
-export function IconsSection({ lab }: { lab: Lab }) {
-  return (
-    <>
-      <SectionHeader label="Icons" {...lab.section(ICON_KEYS)} />
-      <IconsSectionBody lab={lab} />
-    </>
-  )
-}
-
-export function ShapeSection({ lab }: { lab: Lab }) {
-  return (
-    <>
-      <SectionHeader label="Shape" {...lab.section(SHAPE_KEYS)} />
-      <ShapeSectionBody lab={lab} />
-    </>
-  )
-}
-
-export function EffectsSection({ lab }: { lab: Lab }) {
-  return (
-    <>
-      <SectionHeader label="Effects" {...lab.section(EFFECT_KEYS)} />
-      <EffectsSectionBody lab={lab} />
-    </>
-  )
-}
-
-export function ComponentsSection({ lab }: { lab: Lab }) {
-  return (
-    <>
-      <SectionHeader label="Components" {...lab.section(COMPONENT_KEYS)} />
-      <ComponentsSectionBody lab={lab} />
     </>
   )
 }
