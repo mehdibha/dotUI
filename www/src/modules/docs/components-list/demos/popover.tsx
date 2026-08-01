@@ -1,17 +1,13 @@
-'use client'
-
 import { InfoIcon } from 'lucide-react'
 
 import { Button } from '@/registry/ui/button'
 import { DialogHeader, DialogTitle } from '@/registry/ui/dialog'
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene } from '../overlay-scene'
 
 export function PopoverDemo() {
-  const { phase } = useOpenAutoplay()
   return (
     <OverlayScene
-      phase={phase}
       variant="popover"
       side="bottom"
       surfaceClassName="w-52 text-left"

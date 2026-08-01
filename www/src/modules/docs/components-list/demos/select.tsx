@@ -1,17 +1,13 @@
-'use client'
-
 import { ChevronDownIcon } from 'lucide-react'
 
 import { Button } from '@/registry/ui/button'
 import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene } from '../overlay-scene'
 
 export function SelectDemo() {
-  const { phase } = useOpenAutoplay()
   return (
     <OverlayScene
-      phase={phase}
       variant="menu"
       side="bottom"
       fluid
@@ -26,7 +22,7 @@ export function SelectDemo() {
       <ListBox
         aria-label="Provider"
         selectionMode="single"
-        selectedKeys={['perplexity']}
+        defaultSelectedKeys={['perplexity']}
         className="border-0 bg-transparent shadow-none"
       >
         <ListBoxItem id="perplexity">Perplexity</ListBoxItem>

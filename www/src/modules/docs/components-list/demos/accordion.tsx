@@ -1,5 +1,3 @@
-'use client'
-
 import { Accordion } from '@/registry/ui/accordion'
 import {
   Disclosure,
@@ -7,17 +5,9 @@ import {
   DisclosureTrigger,
 } from '@/registry/ui/disclosure'
 
-import { useStepAutoplay } from '../autoplay'
-
 export function AccordionDemo() {
-  const { index } = useStepAutoplay(2, { dwell: 1600 })
-  const expandedKeys = index === 0 ? ['react'] : ['nextjs']
   return (
-    <Accordion
-      className="w-72"
-      expandedKeys={expandedKeys}
-      onExpandedChange={() => {}}
-    >
+    <Accordion className="w-72" defaultExpandedKeys={['react']}>
       <Disclosure id="react">
         <DisclosureTrigger>What is React?</DisclosureTrigger>
         <DisclosurePanel>

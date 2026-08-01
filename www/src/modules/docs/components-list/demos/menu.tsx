@@ -1,17 +1,13 @@
-'use client'
-
 import { MenuIcon } from 'lucide-react'
 
 import { Button } from '@/registry/ui/button'
 import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene } from '../overlay-scene'
 
 export function MenuDemo() {
-  const { phase } = useOpenAutoplay()
   return (
     <OverlayScene
-      phase={phase}
       variant="menu"
       side="bottom"
       surfaceClassName="w-44 p-0"

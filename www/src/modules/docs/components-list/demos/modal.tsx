@@ -1,5 +1,3 @@
-'use client'
-
 import { Button } from '@/registry/ui/button'
 import {
   DialogBody,
@@ -11,13 +9,11 @@ import { Label } from '@/registry/ui/field'
 import { Input } from '@/registry/ui/input'
 import { TextField } from '@/registry/ui/text-field'
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene } from '../overlay-scene'
 
 export function ModalDemo() {
-  const { phase } = useOpenAutoplay()
   return (
     <OverlayScene
-      phase={phase}
       variant="modal"
       surfaceClassName="space-y-3"
       trigger={<Button>Open Modal</Button>}
