@@ -59,11 +59,10 @@ import { useLoadedFamilies } from '@/modules/create/typography'
 
 /* -------------------------------- Shared shell --------------------------- */
 
-export const ROW =
-  'h-11 w-full rounded-xl bg-muted transition-[background-color,transform]'
+export const ROW = 'h-11 w-full rounded-xl bg-muted transition-colors'
 export const ROW_TRIGGER = cn(
   ROW,
-  'flex items-center justify-between gap-3 px-4 text-left hover:bg-highlight pressed:bg-highlight motion-safe:pressed:scale-[0.99]',
+  'flex items-center justify-between gap-3 px-4 text-left hover:bg-highlight pressed:bg-highlight',
 )
 export const ROW_LABEL = 'truncate text-[0.8125rem] font-medium text-fg'
 export const ROW_VALUE = 'truncate text-[0.8125rem] text-fg-muted'
@@ -160,7 +159,7 @@ export function ActionRow({
       onPress={onPress}
       className={cn(
         ROW,
-        'flex cursor-interactive items-center justify-center px-4 text-[0.8125rem] font-medium focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight motion-safe:pressed:scale-[0.99]',
+        'flex cursor-interactive items-center justify-center px-4 text-[0.8125rem] font-medium focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight',
         destructive ? 'text-danger' : 'text-accent',
       )}
     >
@@ -780,7 +779,7 @@ export function ComponentRow({
         slot="trigger"
         className={cn(
           ROW,
-          'flex cursor-interactive items-center justify-between gap-3 px-4 focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight motion-safe:pressed:scale-[0.99]',
+          'flex cursor-interactive items-center justify-between gap-3 px-4 focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight',
         )}
       >
         <span className={ROW_LABEL}>{name}</span>
