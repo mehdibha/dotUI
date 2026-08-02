@@ -84,6 +84,14 @@ function makeDesignSystem(opts: {
 
 export const PRESETS: Preset[] = [
   {
+    id: 'origin',
+    name: 'Origin',
+    description: 'dotUI blue, the starting point.',
+    swatch: '#438cd6',
+    // The untouched builder defaults — absent `color` is the default palette.
+    designSystem: DEFAULTS,
+  },
+  {
     id: 'claude',
     name: 'Claude',
     description: 'Warm coral on sand.',
