@@ -40,7 +40,7 @@ export function CtaSection() {
   const ds = preset?.designSystem ?? DEFAULTS
 
   return (
-    <section className="relative overflow-x-clip">
+    <section className="relative">
       {/* Density is pinned rather than taken from the preset: it's the one axis
           that resizes the pill, and a command that changes height mid-switch
           reads as a layout glitch instead of a re-theme. */}
@@ -52,7 +52,7 @@ export function CtaSection() {
         color={ds.color}
         icons={ds.icons}
       >
-        <div className="container flex flex-col items-center text-center">
+        <div className="flex flex-col items-center text-center">
           <h2 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-3xl leading-tight font-normal tracking-[-0.05em] text-balance text-fg antialiased sm:text-5xl">
             <span className="block">Your design system,</span>
             <span className="block text-fg-muted">one command away.</span>
