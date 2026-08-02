@@ -28,7 +28,7 @@ import {
   GroupCaption,
   SelectRow,
   SliderRow,
-  StyleGridRow,
+  OptionGridRow,
 } from '@/modules/control-lab/rows'
 
 import {
@@ -171,7 +171,7 @@ export function EffectsSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
-      <StyleGridRow
+      <OptionGridRow
         label="Shadows"
         value={state.shadows}
         onChange={set('shadows')}

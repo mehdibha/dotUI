@@ -14,7 +14,7 @@ import {
 } from '@/modules/control-lab/rows'
 import type {
   SegmentedRowOption,
-  StyleGridOption,
+  OptionGridItem,
 } from '@/modules/control-lab/rows'
 
 import { DetailRow } from './patterns'
@@ -75,7 +75,7 @@ function ShadowTile({ boxShadow }: { boxShadow?: string }) {
   )
 }
 
-export const SHADOW_OPTIONS: StyleGridOption[] = [
+export const SHADOW_OPTIONS: OptionGridItem[] = [
   { id: 'none', label: 'None', preview: <ShadowTile /> },
   {
     id: 'crisp',
@@ -115,7 +115,7 @@ function MiniInput({ className }: { className: string }) {
   )
 }
 
-export const BUTTON_STYLES: StyleGridOption[] = [
+export const BUTTON_STYLES: OptionGridItem[] = [
   {
     id: 'solid',
     label: 'Solid',
@@ -135,7 +135,7 @@ export const BUTTON_STYLES: StyleGridOption[] = [
 ]
 
 /* Real enum: outline | line | filled-line-bottom | filled (input/meta.ts). */
-export const INPUT_STYLES: StyleGridOption[] = [
+export const INPUT_STYLES: OptionGridItem[] = [
   {
     id: 'outline',
     label: 'Outline',
@@ -161,7 +161,7 @@ export const INPUT_STYLES: StyleGridOption[] = [
 ]
 
 /* Real enum: default | tasnim (card/meta.ts). */
-export const CARD_STYLES: StyleGridOption[] = [
+export const CARD_STYLES: OptionGridItem[] = [
   {
     id: 'default',
     label: 'Default',
@@ -177,7 +177,7 @@ export const CARD_STYLES: StyleGridOption[] = [
 ]
 
 /* Real enum: spinner | ring (loader/meta.ts). */
-export const LOADER_STYLES: StyleGridOption[] = [
+export const LOADER_STYLES: OptionGridItem[] = [
   {
     id: 'spinner',
     label: 'Spinner',
