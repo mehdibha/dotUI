@@ -37,6 +37,7 @@ import {
   ColorPickerRow,
   ComponentRow,
   ControlGroup,
+  DisclosureRow,
   DrillInRow,
   FontPickerRow,
   GroupCaption,
@@ -50,6 +51,7 @@ import {
   SliderRow,
   StepperRow,
   OptionGridRow,
+  SubRows,
   SwitchRow,
 } from './rows'
 import type { NeutralValue, SegmentedRowOption, OptionGridItem } from './rows'
@@ -130,6 +132,12 @@ const ALIGN_OPTIONS: SegmentedRowOption[] = [
   { value: 'left', label: <AlignLeftIcon />, ariaLabel: 'Align left' },
   { value: 'center', label: <AlignCenterIcon />, ariaLabel: 'Align center' },
   { value: 'right', label: <AlignRightIcon />, ariaLabel: 'Align right' },
+]
+
+const TRACKING_OPTIONS: SegmentedRowOption[] = [
+  { value: 'tight', label: 'Tight' },
+  { value: 'normal', label: 'Normal' },
+  { value: 'wide', label: 'Wide' },
 ]
 
 const THEME_OPTIONS = [
@@ -420,7 +428,7 @@ function ComponentRowDemo({
         defaultExpanded={withParams}
       >
         {withParams && (
-          <>
+          <SubRows>
             <ParamRow label="Radius">
               <MiniSegmented
                 ariaLabel="Button radius"
@@ -436,10 +444,80 @@ function ComponentRowDemo({
                 onChange={setLift}
               />
             </ParamRow>
-          </>
+          </SubRows>
         )}
       </ComponentRow>
     </>
+  )
+}
+
+function DisclosureDemo({ described }: { described?: boolean }) {
+  const [tracking, setTracking] = useState('normal')
+  const [size, setSize] = useState(16)
+  return (
+    <DisclosureRow
+      label="Body text"
+      description={
+        described ? 'Every UI string that isn’t a heading.' : undefined
+      }
+      value="Inter"
+      defaultExpanded
+    >
+      <SubRows>
+        <SegmentedRow
+          label="Tracking"
+          value={tracking}
+          onChange={setTracking}
+          options={TRACKING_OPTIONS}
+        />
+        <StepperRow
+          label="Size"
+          value={size}
+          onChange={setSize}
+          minValue={10}
+          maxValue={24}
+          unit="px"
+        />
+      </SubRows>
+    </DisclosureRow>
+  )
+}
+
+function SubRowsDemo({ deep }: { deep?: boolean }) {
+  const [radius, setRadius] = useState('md')
+  const [on, setOn] = useState(true)
+  const [align, setAlign] = useState('left')
+  return (
+    <div className="rounded-xl bg-muted p-2">
+      <div className="flex h-8 items-center px-2">
+        <span className="truncate text-[0.8125rem] font-medium text-fg">
+          Parent row
+        </span>
+      </div>
+      <SubRows>
+        <ParamRow label="Radius">
+          <MiniSegmented
+            ariaLabel="Radius"
+            value={radius}
+            onChange={setRadius}
+            options={RADIUS_OPTIONS}
+          />
+        </ParamRow>
+        {deep && (
+          <ParamRow label="Align">
+            <MiniSegmented
+              ariaLabel="Align"
+              value={align}
+              onChange={setAlign}
+              options={ALIGN_OPTIONS}
+            />
+          </ParamRow>
+        )}
+        <ParamRow label="Shadow">
+          <MiniSwitch ariaLabel="Shadow" value={on} onChange={setOn} />
+        </ParamRow>
+      </SubRows>
+    </div>
   )
 }
 
@@ -673,6 +751,26 @@ const GROUPS: Group[] = [
               </ControlGroup>
             ),
           },
+        ],
+      },
+      {
+        id: 'disclosure-row',
+        name: 'DisclosureRow',
+        description:
+          'A row that opens in place: label left, current value and chevron right, its own rows inside. Where DrillInRow pushes a sub-panel, this one unfolds — depth without leaving the page.',
+        variants: [
+          { label: 'Default', render: <DisclosureDemo /> },
+          { label: 'With description', render: <DisclosureDemo described /> },
+        ],
+      },
+      {
+        id: 'sub-rows',
+        name: 'SubRows',
+        description:
+          'Ties rows to the row above them. Indent alone reads as a margin, so the group draws the relationship: a hairline drops from the parent, elbows into each child and stops at the last one.',
+        variants: [
+          { label: 'Two children', render: <SubRowsDemo /> },
+          { label: 'Three children', render: <SubRowsDemo deep /> },
         ],
       },
       {

@@ -6,7 +6,7 @@
    the grouped-list container that fuses rows into cards.
    Prototype only: local state in, callback out, no design-system wiring. */
 
-import { useState } from 'react'
+import { Children, isValidElement, useState } from 'react'
 import {
   ChevronDownIcon,
   ChevronRightIcon,
@@ -231,6 +231,80 @@ export function DrillInRow({
         <ChevronRightIcon className="size-3.5 shrink-0 text-fg-muted" />
       </span>
     </RacButton>
+  )
+}
+
+/* ------------------------------ Disclosure row ---------------------------- */
+
+/**
+ * A row that opens in place: label left, current value and chevron right, its
+ * own rows inside. The panel's answer to depth that shouldn't cost a
+ * sub-panel — DrillInRow pushes, this one unfolds.
+ */
+export function DisclosureRow({
+  label,
+  description,
+  value,
+  defaultExpanded,
+  children,
+}: {
+  label: string
+  description?: string
+  /** What the row reads back while collapsed. */
+  value?: React.ReactNode
+  defaultExpanded?: boolean
+  children?: React.ReactNode
+}) {
+  return (
+    <Disclosure
+      id={label}
+      defaultExpanded={defaultExpanded}
+      className="w-full rounded-xl bg-muted"
+    >
+      <RacButton
+        slot="trigger"
+        className={cn(
+          ROW,
+          'flex cursor-interactive items-center justify-between gap-3 px-4 focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight',
+          description && ROW_DESCRIBED,
+        )}
+      >
+        <RowLabel label={label} description={description} />
+        <span className="flex shrink-0 items-center gap-1.5">
+          {value && <span className={ROW_VALUE}>{value}</span>}
+          <ChevronDownIcon className="size-3.5 text-fg-muted transition-transform duration-200 group-expanded/disclosure:rotate-180" />
+        </span>
+      </RacButton>
+      <DisclosurePanel className="text-inherit">
+        <div className="flex flex-col gap-1 px-2 pb-1">{children}</div>
+      </DisclosurePanel>
+    </Disclosure>
+  )
+}
+
+/* --------------------------------- Sub-rows ------------------------------- */
+
+/**
+ * Marks rows as belonging to the row above them. Indent alone reads as a
+ * margin, so the group draws the tie: a hairline dropping from the parent,
+ * elbowing into each child and stopping at the last one.
+ */
+export function SubRows({ children }: { children: React.ReactNode }) {
+  // toArray + filter, not Children.map: a conditional child arrives as null
+  // and would still get a wrapper, branching the hairline into nothing.
+  return (
+    <div className="flex flex-col pl-5">
+      {Children.toArray(children)
+        .filter(isValidElement)
+        .map((child) => (
+          <div
+            key={child.key}
+            className="relative before:absolute before:top-0 before:-left-2.5 before:h-full before:w-px before:bg-border/70 after:absolute after:top-1/2 after:-left-2.5 after:h-px after:w-2.5 after:bg-border/70 last:before:h-1/2"
+          >
+            {child}
+          </div>
+        ))}
+    </div>
   )
 }
 
@@ -1191,37 +1265,20 @@ export function ComponentRow({
 }) {
   const selected = options.find((o) => o.id === value)
   return (
-    <Disclosure
-      id={name}
+    <DisclosureRow
+      label={name}
+      description={description}
+      value={selected?.label}
       defaultExpanded={defaultExpanded}
-      className="w-full rounded-xl bg-muted"
     >
-      <RacButton
-        slot="trigger"
-        className={cn(
-          ROW,
-          'flex cursor-interactive items-center justify-between gap-3 px-4 focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight',
-          description && ROW_DESCRIBED,
-        )}
-      >
-        <RowLabel label={name} description={description} />
-        <span className="flex shrink-0 items-center gap-1.5">
-          <span className={ROW_VALUE}>{selected?.label}</span>
-          <ChevronDownIcon className="size-3.5 text-fg-muted transition-transform duration-200 group-expanded/disclosure:rotate-180" />
-        </span>
-      </RacButton>
-      <DisclosurePanel className="text-inherit">
-        <div className="flex flex-col gap-1 px-2">
-          <OptionGrid
-            ariaLabel={`${name} style`}
-            value={value}
-            onChange={onChange}
-            options={options}
-            columns={columns}
-          />
-          {children}
-        </div>
-      </DisclosurePanel>
-    </Disclosure>
+      <OptionGrid
+        ariaLabel={`${name} style`}
+        value={value}
+        onChange={onChange}
+        options={options}
+        columns={columns}
+      />
+      {children}
+    </DisclosureRow>
   )
 }
