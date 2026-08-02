@@ -42,8 +42,11 @@ export function Cards() {
       {/* The bottom fade can't live on this wrapper: a mask clips painting to
           the element's border box, which would erase the rails hanging outside
           it — so the grid and each rail carry their own copy (same geometry:
-          the rails span the wrapper's height). */}
-      <div className="relative [--crop-pl:--spacing(4)] [--mask-clear:45px] [--mask-solid:180px] sm:[--crop-pl:--spacing(6)]">
+          the rails span the wrapper's height). Below lg the wrapper breaks out
+          of the container padding for the same reason: the grid overflows to
+          the viewport edge there, and a container-width mask would crop it
+          short of its own right-edge fade. */}
+      <div className="relative -mx-4 pl-(--crop-pl) [--crop-pl:--spacing(4)] [--mask-clear:45px] [--mask-solid:180px] sm:-mx-6 sm:[--crop-pl:--spacing(6)] lg:mx-0 lg:pl-0">
         <SkeletonRail side="left" />
         <div className="[mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))]">
           <DesignSystemProvider
