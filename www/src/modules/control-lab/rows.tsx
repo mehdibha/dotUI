@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 import {
   Button as RacButton,
+  SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from 'react-aria-components'
@@ -490,7 +491,7 @@ export function SliderRow({
         >
           <SliderFill className="absolute inset-y-0 left-0 bg-highlight" />
         </SliderTrack>
-        <SliderThumb className="absolute top-1/2 z-10 h-5 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-fg/25" />
+        <SliderThumb className="z-10 h-5 w-0.5 rounded-full bg-fg/25" />
       </SliderControl>
       <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-between px-4">
         <span className={ROW_LABEL}>{label}</span>
@@ -658,9 +659,12 @@ export function SegmentedRow({
             key={option.value}
             id={option.value}
             aria-label={option.ariaLabel}
-            className="flex h-7 cursor-interactive items-center rounded-md px-3 text-[0.8125rem] text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring selected:bg-highlight selected:text-fg **:[svg]:size-3.5"
+            className="relative isolate flex h-7 cursor-interactive items-center rounded-md px-3 text-[0.8125rem] text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring selected:text-fg **:[svg]:size-3.5"
           >
-            {option.label}
+            <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-highlight duration-150 ease-out motion-safe:transition-[translate,width,height]" />
+            <span className="relative z-10 flex items-center">
+              {option.label}
+            </span>
           </RacToggleButton>
         ))}
       </RacToggleButtonGroup>
@@ -774,9 +778,12 @@ export function MiniSegmented({
           key={option.value}
           id={option.value}
           aria-label={option.ariaLabel}
-          className="flex h-6 cursor-interactive items-center rounded-[5px] px-2 text-xs text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring selected:bg-highlight selected:text-fg **:[svg]:size-3"
+          className="relative isolate flex h-6 cursor-interactive items-center rounded-[5px] px-2 text-xs text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring selected:text-fg **:[svg]:size-3"
         >
-          {option.label}
+          <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-[5px] bg-highlight duration-150 ease-out motion-safe:transition-[translate,width,height]" />
+          <span className="relative z-10 flex items-center">
+            {option.label}
+          </span>
         </RacToggleButton>
       ))}
     </RacToggleButtonGroup>
