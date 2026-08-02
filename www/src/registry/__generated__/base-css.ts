@@ -374,6 +374,7 @@ export const baseRegistryCss = {
 			"--chart-6": "oklch(0.5183 0.1337 253.25)",
 			"--chart-7": "oklch(0.4662 0.1337 254.29)",
 			"--chart-8": "oklch(0.4168 0.1337 255.28)",
+			"--color-popover": "color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100))",
 		},
 	},
 	cssVars: {
@@ -463,6 +464,7 @@ export const baseRegistryCss = {
 			"--color-fg-disabled": "var(--neutral-600)",
 			"--color-fg-on-neutral": "var(--neutral-950)",
 			"--color-border": "var(--neutral-400)",
+			"--color-border-muted": "var(--neutral-200)",
 			"--color-border-hover": "var(--neutral-500)",
 			"--color-border-active": "var(--neutral-600)",
 			"--color-border-field": "var(--neutral-500)",

@@ -35,7 +35,7 @@ const modalMeta = {
       kind: 'scalar',
       type: 'color',
       cssVar: '--modal-background',
-      default: '--color-bg',
+      default: '--color-popover',
       description: 'Background color of the modal surface.',
     },
     radius: {
