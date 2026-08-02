@@ -37,7 +37,7 @@ import type { PopoverProps } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
 import { Switch } from '@/registry/ui/switch'
 import { Controls } from '@/components/showcase/controls'
-import { RADIUS_FACTOR_VAR } from '@/modules/create/layout'
+import { DEFAULT_RADIUS, RADIUS_VAR } from '@/modules/create/layout'
 import type { DesignSystem } from '@/modules/create/preset'
 
 interface PresetPickerItem {
@@ -383,13 +383,12 @@ function fontPair(designSystem: DesignSystem) {
   return { heading, body }
 }
 
-/** The control radius the factor lands on — `--radius-md` is 0.375rem at 1x. */
+/** The control radius the base lands on — `--radius-md` = 0.75 × the base. */
 function radiusLabel(designSystem: DesignSystem) {
-  const parsed = Number.parseFloat(
-    designSystem.tokens[RADIUS_FACTOR_VAR] ?? '1',
-  )
-  const factor = Number.isFinite(parsed) ? parsed : 1
-  return `${Math.round(6 * factor)}px`
+  const raw = designSystem.tokens[RADIUS_VAR] ?? DEFAULT_RADIUS
+  const parsed = Number.parseFloat(raw)
+  const px = raw.trim().endsWith('rem') ? parsed * 16 : parsed
+  return `${Math.round((Number.isFinite(px) ? px : 10) * 0.75)}px`
 }
 
 /**

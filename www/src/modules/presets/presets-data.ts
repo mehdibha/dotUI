@@ -32,8 +32,8 @@ function makeDesignSystem(opts: {
   neutral: string
   accent: string
   density?: DesignSystem['density']
-  /** Multiplier on every radius token (1 = builder default). */
-  radiusFactor?: string
+  /** Base radius length written to `--radius` (0.625rem = builder default). */
+  radius?: string
   /** Ramp the primary-action tokens draw from (default neutral black/white). */
   primary?: ColorConfig['primary']
   /** Splits selection controls + focus onto their own ramp (else = primary). */
@@ -53,7 +53,7 @@ function makeDesignSystem(opts: {
 }): DesignSystem {
   const { neutral, accent, density = 'default' } = opts
   const tokens: Record<string, string> = { ...opts.tokens }
-  if (opts.radiusFactor) tokens['--radius-factor'] = opts.radiusFactor
+  if (opts.radius) tokens['--radius'] = opts.radius
   if (opts.fonts?.heading)
     tokens[FONT_HEADING_VAR] = fontStack(opts.fonts.heading)
   if (opts.fonts?.body) tokens[FONT_SANS_VAR] = fontStack(opts.fonts.body)
@@ -116,7 +116,7 @@ export const PRESETS: Preset[] = [
       neutral: '#84806f',
       accent: '#d97757',
       primary: 'accent',
-      radiusFactor: '1.5',
+      radius: '0.75rem',
       density: 'default',
       // Anthropic Sans is a neutral grotesque (Inter is closest free); Anthropic
       // Serif is a calm book serif (Source Serif 4, not display-contrast Fraunces).
@@ -150,8 +150,8 @@ export const PRESETS: Preset[] = [
       neutral: '#687385',
       accent: '#635bff',
       primary: 'accent',
-      // Stripe controls measure ~8px radius — rounder than default, not tighter.
-      radiusFactor: '1.33',
+      // Stripe controls measure ~8px radius (md = 0.75 × base).
+      radius: '0.665rem',
       density: 'default',
       // Stripe's UI font is Söhne (proprietary); Inter is the closest free grotesque.
       fonts: { body: 'Inter' },
@@ -235,8 +235,8 @@ export const PRESETS: Preset[] = [
       accent: '#ff385c',
       // Airbnb's primary CTA and selection controls are near-black (#222); Rausch
       // stays the accent for badges, links, prices (issue #484 audit).
-      // Controls measure 8px radius, not 12.
-      radiusFactor: '1.33',
+      // Controls measure 8px radius (md = 0.75 × base), not 12.
+      radius: '0.665rem',
       density: 'comfortable',
       // Airbnb Cereal is proprietary; Plus Jakarta Sans is the closest free match.
       fonts: { body: 'Plus Jakarta Sans' },
@@ -279,7 +279,7 @@ export const PRESETS: Preset[] = [
       // The blue actually measured on Notion CTAs/links; #2383e2 rendered too light.
       accent: '#0075de',
       primary: 'accent',
-      radiusFactor: '0.75',
+      radius: '0.375rem',
       // Notion chrome text is 14px — our default, not compact (issue #484 audit).
       density: 'default',
       // Notion ships NotionInter, a customized Inter.
@@ -299,7 +299,7 @@ export const PRESETS: Preset[] = [
       // Spotify's interactive green (buttons, Play) — brighter than the logo green.
       accent: '#1ed760',
       primary: 'accent',
-      radiusFactor: '2',
+      radius: '1rem',
       density: 'default',
       // Spotify Circular is proprietary; Figtree is the closest free geometric.
       fonts: { body: 'Figtree' },

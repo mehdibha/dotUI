@@ -9,7 +9,7 @@ export type { CodeOptions, Density, IconLibraryName }
  * Compact representation for URL serialization. Short keys keep the encoded
  * string small.
  *   p = component params (per-component values, e.g. { alert: { style: "sousse", radius: "--radius-md" } })
- *   t = global theme tokens (CSS vars not owned by any component, e.g. { "--radius-factor": "1.25" })
+ *   t = global theme tokens (CSS vars not owned by any component, e.g. { "--radius": "0.75rem" })
  *   d = density
  *   c = color config (palette seeds + engine axes); present only when it differs from the default
  *   o = code options (exported-code style); present only when they differ from the default

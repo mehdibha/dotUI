@@ -34,11 +34,11 @@ export function PresetSwitcher({
     if (index >= 0) onSelect(index)
   }
 
-  // The indicator wears the selected preset: its radius factor and a subtle
-  // wash of its accent over the neutral selected surface.
-  const radiusFactor = active?.designSystem.tokens['--radius-factor'] ?? '1'
+  // The indicator wears the selected preset: its control radius (md = 0.75 ×
+  // the base) and a subtle wash of its accent over the neutral selected surface.
+  const radius = active?.designSystem.tokens['--radius'] ?? '0.625rem'
   const indicatorStyle = {
-    '--indicator-radius': `calc(0.375rem * ${radiusFactor})`,
+    '--indicator-radius': `calc(${radius} * 0.75)`,
     '--indicator-bg': active
       ? `color-mix(in oklab, var(--color-selected), ${active.swatch} 25%)`
       : 'var(--color-selected)',

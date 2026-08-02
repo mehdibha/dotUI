@@ -59,7 +59,7 @@ import {
   ICON_WEIGHT_VAR,
   STROKE_DEFAULTS,
 } from '../iconography'
-import { DEFAULT_RADIUS_FACTOR, RADIUS_FACTOR_VAR } from '../layout'
+import { DEFAULT_RADIUS, RADIUS_VAR } from '../layout'
 import { useDesignSystem } from '../preset'
 import { FontPicker, useTypography } from '../typography'
 import { InlineRow, Segmented, ValueSlider } from './primitives'
@@ -468,43 +468,48 @@ function IconLibraryWidget() {
 
 /* ---------------------------- Shape & space ------------------------------ */
 
-function useRadiusFactor() {
-  const [value, set] = useToken(RADIUS_FACTOR_VAR, DEFAULT_RADIUS_FACTOR)
+/** The base radius in px (the value of `--radius`, = a card's radius). */
+function useRadiusPx() {
+  const [value, set] = useToken(RADIUS_VAR, DEFAULT_RADIUS)
   const parsed = Number.parseFloat(value)
-  return [Number.isFinite(parsed) ? parsed : 1, set] as const
+  const px = value.trim().endsWith('rem') ? parsed * 16 : parsed
+  return [
+    Number.isFinite(px) ? px : 10,
+    (nextPx: number) => set(`${nextPx / 16}rem`),
+  ] as const
 }
 
 /** The chapter opener: three tiles wearing the live radius at three scales. */
 function RadiusVisual() {
-  const [factor] = useRadiusFactor()
+  const [px] = useRadiusPx()
   return (
     <div className="flex items-end gap-2">
       {[
-        { size: 'size-8', radius: 6 },
-        { size: 'size-10', radius: 10 },
-        { size: 'size-12', radius: 16 },
-      ].map(({ size, radius }) => (
+        { size: 'size-8', ratio: 0.5 },
+        { size: 'size-10', ratio: 1 },
+        { size: 'size-12', ratio: 1.5 },
+      ].map(({ size, ratio }) => (
         <div
-          key={radius}
+          key={ratio}
           className={`${size} border bg-neutral transition-[border-radius]`}
-          style={{ borderRadius: Math.min(radius * factor, 32) }}
+          style={{ borderRadius: Math.min(px * ratio, 32) }}
         />
       ))}
     </div>
   )
 }
 
-function RadiusFactorWidget() {
-  const [factor, set] = useRadiusFactor()
+function RadiusWidget() {
+  const [px, set] = useRadiusPx()
   return (
     <ValueSlider
       label="Radius"
-      value={factor}
+      value={px}
       min={0}
-      max={2}
-      step={0.05}
-      format={(v) => `${v.toFixed(2)}×`}
-      onChange={(v) => set(String(v))}
+      max={16}
+      step={0.5}
+      format={(v) => `${v}px`}
+      onChange={set}
     />
   )
 }
@@ -723,10 +728,10 @@ export const SECTIONS: Section[] = [
     Visual: RadiusVisual,
     controls: [
       c({
-        id: 'radius-factor',
+        id: 'radius',
         label: 'Radius',
         keywords: ['corner', 'rounding', 'radius'],
-        Widget: RadiusFactorWidget,
+        Widget: RadiusWidget,
       }),
       c({
         id: 'density',
@@ -779,7 +784,7 @@ export const SECTIONS: Section[] = [
 
 const TYPE_VARS = [FONT_HEADING_VAR, FONT_SANS_VAR, FONT_MONO_VAR]
 const ICON_VARS = [ICON_STROKE_WIDTH_VAR, ICON_WEIGHT_VAR]
-const SHAPE_VARS = [RADIUS_FACTOR_VAR]
+const SHAPE_VARS = [RADIUS_VAR]
 const DETAIL_VARS = [
   '--shadow-overlay',
   '--shadow-card',
