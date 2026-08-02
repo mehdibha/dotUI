@@ -6,7 +6,7 @@
    the grouped-list container that fuses rows into cards.
    Prototype only: local state in, callback out, no design-system wiring. */
 
-import { Children, isValidElement, useState } from 'react'
+import { useState } from 'react'
 import {
   ChevronDownIcon,
   ChevronRightIcon,
@@ -287,25 +287,41 @@ export function DisclosureRow({
 /* --------------------------------- Sub-rows ------------------------------- */
 
 /**
- * Marks rows as belonging to the row above them. Indent alone reads as a
- * margin, so the group draws the tie: a hairline dropping from the parent,
- * elbowing into each child and stopping at the last one.
+ * Rows that belong to the row above them: indented past the parent's label,
+ * separated by inset hairlines. No rails or elbows — that's file-tree
+ * language; the parent's own chevron already says these are its.
  */
 export function SubRows({ children }: { children: React.ReactNode }) {
-  // toArray + filter, not Children.map: a conditional child arrives as null
-  // and would still get a wrapper, branching the hairline into nothing.
   return (
-    <div className="flex flex-col pl-5">
-      {Children.toArray(children)
-        .filter(isValidElement)
-        .map((child) => (
-          <div
-            key={child.key}
-            className="relative before:absolute before:top-0 before:-left-2.5 before:h-full before:w-px before:bg-border/70 after:absolute after:top-1/2 after:-left-2.5 after:h-px after:w-2.5 after:bg-border/70 last:before:h-1/2"
-          >
-            {child}
-          </div>
-        ))}
+    <div className="flex flex-col divide-y divide-border/40 pl-4">
+      {children}
+    </div>
+  )
+}
+
+/* -------------------------------- Sub-panel ------------------------------- */
+
+/**
+ * A panel inside a panel: rows on their own recessed surface, for a group
+ * that belongs to the row above but is too big to read as a few sub-rows.
+ * Where SubRows indents, this one sinks.
+ */
+export function SubPanel({
+  label,
+  children,
+}: {
+  /** A quiet caption for the group — omit when the parent row already names it. */
+  label?: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex w-full flex-col gap-1 rounded-lg bg-bg/40 p-1.5 inset-ring-1 inset-ring-border/40">
+      {label && (
+        <span className="px-2 pt-1 text-[11px] font-medium tracking-wider text-fg-muted uppercase">
+          {label}
+        </span>
+      )}
+      {children}
     </div>
   )
 }

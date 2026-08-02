@@ -51,6 +51,7 @@ import {
   SliderRow,
   StepperRow,
   OptionGridRow,
+  SubPanel,
   SubRows,
   SwitchRow,
 } from './rows'
@@ -521,6 +522,28 @@ function SubRowsDemo({ deep }: { deep?: boolean }) {
   )
 }
 
+function SubPanelDemo({ labelled }: { labelled?: boolean }) {
+  const [translucent, setTranslucent] = useState(true)
+  const [radius, setRadius] = useState('md')
+  return (
+    <DisclosureRow label="Menus" value="2 changed" defaultExpanded>
+      <SubPanel label={labelled ? 'Overlay' : undefined}>
+        <SwitchRow
+          label="Translucent"
+          value={translucent}
+          onChange={setTranslucent}
+        />
+        <SegmentedRow
+          label="Radius"
+          value={radius}
+          onChange={setRadius}
+          options={RADIUS_OPTIONS}
+        />
+      </SubPanel>
+    </DisclosureRow>
+  )
+}
+
 function GroupDemo({ caption }: { caption?: boolean }) {
   const [brand, setBrand] = useState('#635BFF')
   const [radius, setRadius] = useState('md')
@@ -767,10 +790,20 @@ const GROUPS: Group[] = [
         id: 'sub-rows',
         name: 'SubRows',
         description:
-          'Ties rows to the row above them. Indent alone reads as a margin, so the group draws the relationship: a hairline drops from the parent, elbows into each child and stops at the last one.',
+          'Rows that belong to the row above: indented past the parent’s label, separated by inset hairlines. No rails or elbows — that’s file-tree language, and the parent’s chevron already says these are its.',
         variants: [
           { label: 'Two children', render: <SubRowsDemo /> },
           { label: 'Three children', render: <SubRowsDemo deep /> },
+        ],
+      },
+      {
+        id: 'sub-panel',
+        name: 'SubPanel',
+        description:
+          'A panel inside a panel: rows on their own recessed surface, for a group that belongs to the row above but is too big to read as a few sub-rows. Where SubRows indents, this one sinks.',
+        variants: [
+          { label: 'Default', render: <SubPanelDemo /> },
+          { label: 'With caption', render: <SubPanelDemo labelled /> },
         ],
       },
       {
