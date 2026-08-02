@@ -1,19 +1,8 @@
-import { lazy, Suspense } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 
-const InternalIndex = lazy(() =>
-  import('@/modules/internal/page').then((m) => ({ default: m.InternalIndex })),
-)
+import { InternalIndex } from '@/modules/internal/page'
 
 export const Route = createFileRoute('/internal/')({
-  component: RouteComponent,
+  component: InternalIndex,
   head: () => ({ meta: [{ title: 'Internal · dotUI' }] }),
 })
-
-function RouteComponent() {
-  return (
-    <Suspense fallback={null}>
-      <InternalIndex />
-    </Suspense>
-  )
-}
