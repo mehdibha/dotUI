@@ -36,6 +36,7 @@ import { Popover } from '@/registry/ui/popover'
 import type { PopoverProps } from '@/registry/ui/popover'
 import { SearchField } from '@/registry/ui/search-field'
 import { Switch } from '@/registry/ui/switch'
+import { Controls } from '@/components/showcase/controls'
 import { RADIUS_FACTOR_VAR } from '@/modules/create/layout'
 import type { DesignSystem } from '@/modules/create/preset'
 
@@ -66,8 +67,8 @@ interface PresetPickerProps {
   /** Pin the previews to one mode (docs previews pin light/dark). */
   previewMode?: 'light' | 'dark'
   /**
-   * Show the live vignettes: a pinned preview pane on desktop, inline on each
-   * drawer row. Off by default.
+   * Show the live vignettes: a hover flyout beside the popover on desktop,
+   * inline on each drawer row. Off by default.
    */
   withPreview?: boolean
   /** Trailing controls on a row (e.g. a saved preset's actions menu). */
@@ -80,11 +81,13 @@ interface PresetPickerProps {
  * own heading font, its font/radius/density and three palette dots. Popover on
  * desktop, drawer on mobile.
  *
- * `withPreview` adds live vignettes. Desktop becomes master–detail: the rows
- * beside a pinned pane previewing the row under the pointer or the keyboard
- * highlight (see PresetPreviewPane) — rows never change size, so scanning
- * never reflows the list under the cursor. Drawer rows — no pointer, no
- * highlight — carry the vignette inline instead.
+ * `withPreview` adds live previews. On desktop the popover stays a plain
+ * list; a detached flyout card — a big tooltip in the previewed preset's own
+ * surface — opens beside it after a short hover delay and previews whatever
+ * row the pointer or the keyboard highlight is on (see PresetPreviewFlyout).
+ * Rows never change size, so scanning never reflows the list under the
+ * cursor. Drawer rows — no pointer, no highlight — carry a compact vignette
+ * inline instead.
  */
 export function PresetPicker({
   children,
@@ -126,15 +129,9 @@ export function PresetPicker({
           isMobile ? (
             <Drawer>{content('drawer')}</Drawer>
           ) : (
-            // With the pane, 600px = the 260px list column + its 1px divider +
-            // the 337px the pane's vignette needs + the popover's 1px borders;
-            // without it, the popover sizes to the list column.
-            <Popover
-              placement={placement}
-              className={withPreview ? 'w-[600px]' : undefined}
-            >
-              {content('popover')}
-            </Popover>
+            // The popover always sizes to the list column — the preview, when
+            // on, floats outside it as a detached flyout.
+            <Popover placement={placement}>{content('popover')}</Popover>
           )
         }
       />
@@ -177,9 +174,50 @@ function PresetPickerContent({
   // the current selection, not the first row.
   const navigatedRef = useRef(false)
   const [previewId, setPreviewId] = useState<string | null>(selectedId ?? null)
+  // The flyout lives and dies with the hover: it opens on a tooltip-style
+  // delay — passing over a row on the way to a click shouldn't flash a panel —
+  // swaps instantly while the pointer moves row to row, and closes again once
+  // no row is hovered or highlighted. The close grace period covers the gaps
+  // between rows so scanning doesn't flicker it.
+  const [engaged, setEngaged] = useState(false)
+  const openTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  // Which row currently claims the preview — a row leaving only closes the
+  // flyout if no successor has claimed it since (effect order between the two
+  // rows isn't guaranteed).
+  const activeRowRef = useRef<string | null>(null)
+  useEffect(
+    () => () => {
+      if (openTimerRef.current != null) clearTimeout(openTimerRef.current)
+      if (closeTimerRef.current != null) clearTimeout(closeTimerRef.current)
+    },
+    [],
+  )
   const showPreview = useCallback((id: string, via: 'hover' | 'focus') => {
     if (via === 'focus' && !navigatedRef.current) return
+    activeRowRef.current = id
     setPreviewId(id)
+    if (closeTimerRef.current != null) {
+      clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
+    openTimerRef.current ??= setTimeout(() => {
+      openTimerRef.current = null
+      setEngaged(true)
+    }, 400)
+  }, [])
+  const hidePreview = useCallback((id: string) => {
+    if (activeRowRef.current !== id) return
+    if (closeTimerRef.current != null) clearTimeout(closeTimerRef.current)
+    closeTimerRef.current = setTimeout(() => {
+      closeTimerRef.current = null
+      if (openTimerRef.current != null) {
+        clearTimeout(openTimerRef.current)
+        openTimerRef.current = null
+      }
+      activeRowRef.current = null
+      setEngaged(false)
+    }, 150)
   }, [])
 
   const visible = sections
@@ -193,6 +231,7 @@ function PresetPickerContent({
   const allItems = sections.flatMap((section) => section.items)
   const previewItem =
     allItems.find((item) => item.id === previewId) ?? allItems[0]
+  const flyout = surface === 'popover' && withPreview
 
   function pick(key: Key) {
     const item = allItems.find((candidate) => candidate.id === key)
@@ -227,6 +266,9 @@ function PresetPickerContent({
       <CommandContent
         aria-label="Design systems"
         onAction={pick}
+        // App-only utilities (fine here, www-side): hide the scrollbar and
+        // fade the rows out at the scroll edges instead of clipping them hard.
+        className="no-scrollbar scroll-fade-y scroll-fade-4"
         // Spacing and scrolling ride inline: the Command wrapper forces `p-0`
         // and `overflow-visible` on us through descendant selectors that any
         // class of ours would lose to.
@@ -266,17 +308,22 @@ function PresetPickerContent({
                 // selected badge sit outside the row.
                 className="block overflow-visible rounded-xl p-0 before:hidden"
               >
-                {({ isFocused, isHovered }) => (
+                {({ isHovered, isFocusVisible }) => (
                   <PresetOptionRow
                     item={item}
                     isSelected={item.id === selectedId}
-                    isFocused={isFocused}
+                    // Focus-visible, not focus: hovering moves the collection's
+                    // virtual focus too, and it lingers after the pointer
+                    // leaves — only the keyboard's highlight should hold the
+                    // flyout open.
+                    isFocused={isFocusVisible}
                     isHovered={isHovered}
                     isActive={
                       surface === 'popover' && item.id === previewItem?.id
                     }
                     withVignette={surface === 'drawer' && withPreview}
                     onShow={surface === 'popover' ? showPreview : undefined}
+                    onHide={surface === 'popover' ? hidePreview : undefined}
                     forcedMode={previewMode}
                     actions={renderItemActions?.(item)}
                   />
@@ -293,26 +340,23 @@ function PresetPickerContent({
     return <Command className="gap-0 p-0">{list}</Command>
 
   return (
-    <Command
-      className="gap-0 overflow-hidden p-0"
-      onKeyDownCapture={(e) => {
-        if (e.key.startsWith('Arrow')) navigatedRef.current = true
-      }}
-    >
-      <div className="flex min-h-0">
-        <div
-          className={cn(
-            'flex w-[260px] shrink-0 flex-col',
-            withPreview && 'border-r',
-          )}
-        >
-          {list}
-        </div>
-        {withPreview && (
-          <PresetPreviewPane item={previewItem} forcedMode={previewMode} />
-        )}
-      </div>
-    </Command>
+    <>
+      <Command
+        className="gap-0 overflow-hidden p-0"
+        onKeyDownCapture={(e) => {
+          if (e.key.startsWith('Arrow')) navigatedRef.current = true
+        }}
+      >
+        <div className="flex w-[260px] shrink-0 flex-col">{list}</div>
+      </Command>
+      {flyout && (
+        <PresetPreviewFlyout
+          item={previewItem}
+          isVisible={engaged}
+          forcedMode={previewMode}
+        />
+      )}
+    </>
   )
 }
 
@@ -368,6 +412,7 @@ function PresetOptionRow({
   isActive,
   withVignette,
   onShow,
+  onHide,
   forcedMode,
   actions,
 }: {
@@ -378,18 +423,21 @@ function PresetOptionRow({
   isActive: boolean
   withVignette: boolean
   onShow?: (id: string, via: 'hover' | 'focus') => void
+  onHide?: (id: string) => void
   forcedMode?: 'light' | 'dark'
   actions?: ReactNode
 }) {
   const { designSystem } = item
   const { heading, body } = fontPair(designSystem)
 
-  // Route this row to the pane: the pointer and the keyboard highlight both
-  // land here, and whichever spoke last wins.
+  // Route this row to the flyout: the pointer and the keyboard highlight both
+  // land here, and whichever spoke last wins. Losing both signals the flyout
+  // to close — unless another row claims it first.
   useEffect(() => {
     if (isHovered) onShow?.(item.id, 'hover')
     else if (isFocused) onShow?.(item.id, 'focus')
-  }, [isHovered, isFocused, item.id, onShow])
+    else onHide?.(item.id)
+  }, [isHovered, isFocused, item.id, onShow, onHide])
 
   return (
     <div className="relative w-full">
@@ -463,15 +511,15 @@ function PresetOptionRow({
         </span>
       )}
 
-      {/* Hover/virtual-focus feedback over the whole option, in the site's own
-          fg so it reads consistently regardless of the preset underneath.
-          Keyboard focus is virtual — it lands as `data-focused` on the item,
-          never as a real `:focus-visible`. */}
+      {/* Hover/virtual-focus feedback: a faint wash in the site's own fg,
+          flush with the row — extending past it reads as a glow ring on dark
+          backgrounds. Keyboard focus is virtual — it lands as `data-focused`
+          on the item, never as a real `:focus-visible`. */}
       <div
         aria-hidden
         className={cn(
-          'pointer-events-none absolute -inset-1 rounded-xl bg-fg ring-fg/20 transition-opacity',
-          isActive ? 'opacity-5 ring-2' : 'opacity-0',
+          'pointer-events-none absolute inset-0 rounded-lg bg-fg transition-opacity',
+          isActive ? 'opacity-5' : 'opacity-0',
         )}
       />
     </div>
@@ -479,25 +527,25 @@ function PresetOptionRow({
 }
 
 /**
- * The pinned detail pane: a live vignette of the previewed preset, always
- * visible beside the list. Swapping presets swaps its content outright — the
- * highlight moves tens of times per open, and animating that would only slow
- * it down.
+ * The detached preview: a big tooltip floating right of the popover, top
+ * aligned with it and sized to its content, drawn entirely on the previewed
+ * preset's own surface. The body is the landing showcase's Controls card — the
+ * same sampler the marketing grid opens with — so the preview and the landing
+ * agree on what a design system looks like. It opens once (after the hover
+ * delay upstream) and then never moves; swapping presets swaps its content
+ * outright — the highlight moves tens of times per open, and animating the
+ * swap would only slow it down.
  */
-function PresetPreviewPane({
+function PresetPreviewFlyout({
   item,
+  isVisible,
   forcedMode,
 }: {
   item?: PresetPickerItem
+  isVisible: boolean
   forcedMode?: 'light' | 'dark'
 }) {
-  if (!item) {
-    return (
-      <div className="flex min-w-0 flex-1 items-center justify-center text-sm text-fg-muted">
-        No design systems
-      </div>
-    )
-  }
+  if (!item) return null
 
   const { designSystem } = item
   const { heading, body } = fontPair(designSystem)
@@ -512,8 +560,19 @@ function PresetPreviewPane({
       icons={designSystem.icons}
       forcedMode={forcedMode}
     >
-      <div className="flex min-w-0 flex-1 flex-col bg-bg">
-        <div className="flex items-center gap-3 border-b p-3.5">
+      <div
+        aria-hidden
+        className={cn(
+          // The Controls card *is* the surface: the shell borrows its bg and
+          // sizes to it, so the flyout may run taller than the popover.
+          'pointer-events-none absolute top-0 left-full ml-3 flex w-[340px] flex-col overflow-hidden rounded-xl border bg-card shadow-lg',
+          'origin-left transition-[opacity,transform,scale] ease-out will-change-[transform,opacity] motion-reduce:transition-none',
+          isVisible
+            ? 'scale-100 opacity-100 duration-200'
+            : '-translate-x-1 scale-97 opacity-0 duration-150',
+        )}
+      >
+        <div className="flex shrink-0 items-center gap-3 border-b p-3.5">
           <div className="min-w-0 flex-1">
             <p className="truncate font-heading text-base leading-tight font-semibold text-fg">
               {item.name}
@@ -535,9 +594,10 @@ function PresetPreviewPane({
             ))}
           </div>
         </div>
-        <div className="flex-1 p-3.5">
-          <PresetVignette />
-        </div>
+        <Controls
+          inert
+          className="rounded-none border-0 bg-transparent shadow-none select-none"
+        />
       </div>
     </DesignSystemProvider>
   )
