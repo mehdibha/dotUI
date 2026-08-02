@@ -461,6 +461,7 @@ export function SliderRow({
   step = 0.05,
   format = (v: number) => v.toFixed(2),
   trackStyle,
+  ticks,
 }: {
   label: string
   value: number
@@ -472,6 +473,8 @@ export function SliderRow({
   /** Style the track from the current value — lets the control demo itself
    *  (e.g. the Radius row rounding its own corners as you drag). */
   trackStyle?: React.CSSProperties
+  /** Values worth stopping at, marked on the track as faint dots. */
+  ticks?: number[]
 }) {
   return (
     <Slider
@@ -490,6 +493,15 @@ export function SliderRow({
           style={trackStyle}
         >
           <SliderFill className="absolute inset-y-0 left-0 bg-highlight" />
+          {ticks?.map((tick) => (
+            <span
+              key={tick}
+              className="absolute top-1/2 size-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-fg/20"
+              style={{
+                left: `${((tick - minValue) / (maxValue - minValue)) * 100}%`,
+              }}
+            />
+          ))}
         </SliderTrack>
         <SliderThumb className="z-10 h-5 w-0.5 rounded-full bg-fg/25" />
       </SliderControl>
