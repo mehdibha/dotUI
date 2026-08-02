@@ -491,7 +491,7 @@ export function SliderRow({
         >
           <SliderFill className="absolute inset-y-0 left-0 bg-highlight" />
         </SliderTrack>
-        <SliderThumb className="absolute top-1/2 z-10 h-5 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-fg/25" />
+        <SliderThumb className="z-10 h-5 w-0.5 rounded-full bg-fg/25" />
       </SliderControl>
       <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-between px-4">
         <span className={ROW_LABEL}>{label}</span>
