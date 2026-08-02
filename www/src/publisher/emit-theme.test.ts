@@ -40,7 +40,15 @@ describe('emitInitItem', () => {
     })
 
     expect(item.type).toBe('registry:base')
-    expect(item.css).toEqual(baseRegistryCss.css)
+    // Base CSS passes through, plus the vocabulary's per-mode re-points on `.dark`.
+    expect(item.css).toEqual({
+      ...baseRegistryCss.css,
+      '.dark': {
+        ...baseRegistryCss.css['.dark'],
+        '--color-popover':
+          'color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100))',
+      },
+    })
     // The semantic block ships resolved from the vocabulary (neutral primary).
     expect(item.cssVars?.theme).toMatchObject({
       '--color-bg': 'var(--neutral-25)',

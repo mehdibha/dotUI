@@ -182,6 +182,9 @@ export function semanticVocabulary(
     'color-fg-on-neutral': fg(ref('neutral', '950')),
     // ---- borders ----
     'color-border': bd(ref('neutral', '400'), NEUTRAL),
+    // Quiet edges on non-interactive containers (cards, separators) — the
+    // Radix step-6 role; `color-border` keeps the interactive-adjacent weight.
+    'color-border-muted': bd(ref('neutral', '200'), NEUTRAL),
     'color-border-hover': bd(ref('neutral', '500'), NEUTRAL),
     'color-border-active': bd(ref('neutral', '600'), NEUTRAL),
     'color-border-field': bd(ref('neutral', '500'), NEUTRAL),
@@ -199,7 +202,17 @@ export function semanticVocabulary(
     'color-tooltip': bg(ref('neutral', '950'), NEUTRAL),
     'color-fg-on-tooltip': fg(ref('neutral', '25')),
     'color-card': bg(ref('neutral', '50'), NEUTRAL),
-    'color-popover': bg(ref('neutral', '50'), NEUTRAL),
+    // Dark overlays get their own rung between card (50) and muted (100), so a
+    // popover lifts off the card it floats over while field/muted content
+    // inside it still reads. Light keeps the card value — there the shadow
+    // separates, as in Atlassian/shadcn.
+    'color-popover': bg(
+      {
+        light: ref('neutral', '50'),
+        dark: mix(ref('neutral', '50'), 50, ref('neutral', '100')),
+      },
+      NEUTRAL,
+    ),
     'color-sidebar': bg(ref('neutral', '50'), NEUTRAL),
     'color-border-sidebar': bd(ref('neutral', '400'), NEUTRAL),
     // ---- overlay / chrome (previously hardcoded in components) ----

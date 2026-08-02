@@ -426,7 +426,7 @@ const ENTRIES: Entry[] = [
     id: 'color-picker-row',
     name: 'ColorPickerRow',
     description:
-      'A color seed as a row: hex on the right beside its swatch, opening an area + hue + hex picker anchored to the trigger.',
+      'A color seed as a row: hex on the right beside its swatch, opening a picker anchored to the trigger — preset seeds, area, labelled hue, hex.',
     variants: [{ label: 'Default', render: <ColorDemo /> }],
   },
   {

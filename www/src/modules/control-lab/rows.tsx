@@ -27,11 +27,20 @@ import { Button } from '@/registry/ui/button'
 import { ColorArea } from '@/registry/ui/color-area'
 import { ColorField } from '@/registry/ui/color-field'
 import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSlider } from '@/registry/ui/color-slider'
+import {
+  ColorSlider,
+  ColorSliderControl,
+  ColorSliderOutput,
+} from '@/registry/ui/color-slider'
 import { ColorSwatch } from '@/registry/ui/color-swatch'
+import {
+  ColorSwatchPicker,
+  ColorSwatchPickerItem,
+} from '@/registry/ui/color-swatch-picker'
 import { Command } from '@/registry/ui/command'
 import { DialogContent } from '@/registry/ui/dialog'
 import { Disclosure, DisclosurePanel } from '@/registry/ui/disclosure'
+import { Label } from '@/registry/ui/field'
 import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
 import {
   ListBox,
@@ -261,6 +270,19 @@ export function SelectRow({
 
 /* ------------------------------ Color picker ------------------------------ */
 
+/** Hue-spaced seeds: one tap to a plausible brand before touching the area. */
+const COLOR_PRESETS = [
+  '#EF4444',
+  '#F97316',
+  '#EAB308',
+  '#22C55E',
+  '#14B8A6',
+  '#3B82F6',
+  '#8B5CF6',
+  '#EC4899',
+  '#F43F5E',
+]
+
 /** A color-picker trigger shaped as a settings row: label left, hex + swatch right. */
 export function ColorPickerRow({
   label,
@@ -284,23 +306,38 @@ export function ColorPickerRow({
               <ColorSwatch className="size-5 rounded-full" />
             </span>
           </Button>
-          <Popover placement="right top">
-            <DialogContent className="flex flex-col gap-2">
-              <div className="flex gap-2">
-                <ColorArea
-                  colorSpace="hsb"
-                  xChannel="saturation"
-                  yChannel="brightness"
-                />
-                <ColorSlider
-                  orientation="vertical"
-                  colorSpace="hsb"
-                  channel="hue"
-                  className="h-auto self-stretch"
-                />
-              </div>
+          <Popover placement="right top" className="w-64 min-w-0">
+            <DialogContent className="flex flex-col gap-3 p-3">
+              <ColorSwatchPicker className="justify-between gap-0">
+                {COLOR_PRESETS.map((preset) => (
+                  <ColorSwatchPickerItem
+                    key={preset}
+                    color={preset}
+                    className="size-5 rounded-full ring-offset-2 ring-offset-popover before:hidden selected:ring-2 selected:ring-(--color)"
+                  />
+                ))}
+              </ColorSwatchPicker>
+              <ColorArea
+                aria-label="Saturation and brightness"
+                colorSpace="hsb"
+                xChannel="saturation"
+                yChannel="brightness"
+                className="w-full rounded-xl"
+              />
+              <ColorSlider colorSpace="hsb" channel="hue" className="w-full">
+                <div className="flex items-baseline justify-between">
+                  <Label className={ROW_LABEL}>Hue</Label>
+                  <ColorSliderOutput className={ROW_VALUE} />
+                </div>
+                <ColorSliderControl className="h-5 rounded-full" />
+              </ColorSlider>
               <ColorField aria-label="Hex" className="w-full">
-                <Input size="sm" className="w-full" />
+                <InputGroup size="sm" className="w-full">
+                  <InputGroupAddon>
+                    <ColorSwatch className="size-4 rounded-full" />
+                  </InputGroupAddon>
+                  <Input className="font-mono uppercase" />
+                </InputGroup>
               </ColorField>
             </DialogContent>
           </Popover>
