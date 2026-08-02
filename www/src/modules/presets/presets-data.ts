@@ -4,7 +4,7 @@ import {
   FONT_SANS_VAR,
   fontStack,
 } from '@/lib/fonts'
-import type { ColorConfig } from '@/registry/theme'
+import { DEFAULT_COLOR_CONFIG, type ColorConfig } from '@/registry/theme'
 import { DEFAULTS, type DesignSystem } from '@/modules/create/preset'
 
 /**
@@ -82,14 +82,29 @@ function makeDesignSystem(opts: {
   }
 }
 
+/** Geist's measured blue: Vercel's selection ramp, Origin's accent + selection. */
+const SELECTION_BLUE = '#0072f5'
+
 export const PRESETS: Preset[] = [
   {
     id: 'origin',
     name: 'Origin',
     description: 'dotUI blue, the starting point.',
-    swatch: '#438cd6',
-    // The untouched builder defaults — absent `color` is the default palette.
-    designSystem: DEFAULTS,
+    swatch: SELECTION_BLUE,
+    // Tracks the builder defaults on every axis but the brand blue, which drives
+    // both the accent ramp and — since `primary` stays absent (neutral
+    // black/white actions) — the split selection + focus ramp.
+    designSystem: {
+      ...DEFAULTS,
+      color: {
+        ...DEFAULT_COLOR_CONFIG,
+        seeds: {
+          ...DEFAULT_COLOR_CONFIG.seeds,
+          accent: SELECTION_BLUE,
+          selection: SELECTION_BLUE,
+        },
+      },
+    },
   },
   {
     id: 'claude',
@@ -182,7 +197,7 @@ export const PRESETS: Preset[] = [
       // controls. The #171717 accent + #737373 neutral seeds are already
       // achromatic, so the monochrome chrome needs no vividness clamp — and
       // clamping it would flatten this chromatic selection ramp back to gray.
-      selection: '#0072f5',
+      selection: SELECTION_BLUE,
       // Vercel dark runs a true-black page with #0a0a0a panels; dark:0 lands
       // n50 (the card step) on 0x0a0a0a exactly.
       background: { dark: 0 },
