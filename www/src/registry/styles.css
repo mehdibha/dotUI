@@ -2,6 +2,7 @@
 @import './base/colors.css';
 @import './base/theme.css';
 @import './base/fonts.css';
+@import './roles.css';
 
 @import './ui/avatar/styles.css';
 @import './ui/alert/styles.css';

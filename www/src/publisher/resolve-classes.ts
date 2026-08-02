@@ -32,10 +32,22 @@ export function buildStyleVarMap(
   defaults: Record<string, string>,
 ): Map<string, string> {
   const map = new Map<string, string>()
+  const bareRef = (value: string) =>
+    /^var\((--[\w-]+)\)$/.exec(value.trim())?.[1]
+  // Follows role hops (--btn-radius → --radius-control → --radius-md) until a
+  // real token or a dead end; depth-capped so a cycle can't hang the build.
+  const refToSuffix = (ref: string, depth = 0): string | undefined => {
+    const direct = tokenRefToSuffix(ref)
+    if (direct !== undefined) return direct
+    if (depth >= 4) return undefined
+    const next = defaults[ref]
+    const nextRef = next === undefined ? undefined : bareRef(next)
+    return nextRef === undefined ? undefined : refToSuffix(nextRef, depth + 1)
+  }
   for (const [cssVar, value] of Object.entries(defaults)) {
-    const ref = /^var\((--[\w-]+)\)$/.exec(value.trim())?.[1]
+    const ref = bareRef(value)
     if (!ref) continue
-    const suffix = tokenRefToSuffix(ref)
+    const suffix = refToSuffix(ref)
     if (suffix !== undefined) map.set(cssVar, suffix)
   }
   return map
