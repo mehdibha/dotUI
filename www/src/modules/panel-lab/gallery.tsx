@@ -9,6 +9,7 @@ import { ArrowUpRightIcon } from 'lucide-react'
 
 import { InternalShell } from '@/modules/internal/shell'
 
+import { DRAFTS, draftUrl } from './drafts'
 import { useStaticLab } from './use-lab'
 import { PanelFrame } from './variants/panel'
 import { PANEL_VERSIONS } from './versions'
@@ -101,6 +102,47 @@ export function PanelLabGallery() {
               <VersionCard key={version.id} version={version} />
             ))}
           </div>
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <h2 className="text-[11px] font-semibold tracking-wider text-fg-muted uppercase">
+            Drafts
+          </h2>
+          <p className="max-w-xl text-xs/relaxed text-pretty text-fg-muted">
+            Open PRs reworking a section, none landed yet. Drafts sharing a
+            section are competing takes on the same ground, not a sequence —
+            pick one, then fold it in as the next version.
+          </p>
+          <ul className="flex flex-col gap-2">
+            {DRAFTS.map((draft) => (
+              <li key={draft.pr}>
+                <a
+                  href={draftUrl(draft.pr)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group/draft flex cursor-interactive items-start gap-3 rounded-xl border border-border/45 bg-card p-3 focus-reset transition-colors hover:bg-muted focus-visible:focus-ring"
+                >
+                  <span className="mt-px shrink-0 rounded-md bg-muted px-1.5 py-0.5 font-mono text-[11px] text-fg-muted">
+                    {draft.section}
+                  </span>
+                  <span className="flex min-w-0 flex-col gap-0.5">
+                    <span className="flex items-center gap-1.5">
+                      <span className="text-[0.8125rem] font-medium text-fg">
+                        {draft.title}
+                      </span>
+                      <span className="font-mono text-xs text-fg-muted">
+                        #{draft.pr}
+                      </span>
+                      <ArrowUpRightIcon className="size-3.5 text-fg-muted opacity-0 transition-opacity group-hover/draft:opacity-100" />
+                    </span>
+                    <span className="text-xs/relaxed text-pretty text-fg-muted">
+                      {draft.summary}
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </InternalShell>

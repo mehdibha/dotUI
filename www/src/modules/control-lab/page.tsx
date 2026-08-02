@@ -20,6 +20,11 @@ import {
 } from 'lucide-react'
 
 import { DEFAULT_BODY_FAMILY } from '@/lib/fonts'
+import { cn } from '@/registry/lib/utils'
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from '@/registry/ui/segmented-control'
 import { TOCItems, TOCProvider } from '@/modules/docs/toc'
 import type { TOCItemType } from '@/modules/docs/toc'
 import { InternalHeader } from '@/modules/internal/shell'
@@ -143,11 +148,35 @@ interface Entry {
   variants: { label: string; render: React.ReactNode }[]
 }
 
-/** A demo's frame: panel width, panel surface — the only context rows are
- *  designed for. */
-function Stage({ children }: { children: React.ReactNode }) {
+/**
+ * How a demo is framed. `card` is the honest one — panel width on a panel
+ * card, the only context these rows actually ship in. `bare` drops the chrome
+ * to judge the control alone, and `wide` stretches it past the panel column,
+ * which is where a row that only works at 360px gives itself away.
+ */
+type PreviewMode = 'card' | 'bare' | 'wide'
+
+const PREVIEW_MODES: SegmentedRowOption[] = [
+  { value: 'card', label: 'Card' },
+  { value: 'bare', label: 'Bare' },
+  { value: 'wide', label: 'Wide' },
+]
+
+function Stage({
+  mode,
+  children,
+}: {
+  mode: PreviewMode
+  children: React.ReactNode
+}) {
   return (
-    <div className="flex w-[360px] shrink-0 flex-col gap-1.5 rounded-xl border border-border/45 bg-card p-3">
+    <div
+      className={cn(
+        'flex flex-col gap-1.5',
+        mode === 'wide' ? 'w-full min-w-[360px]' : 'w-[360px] shrink-0',
+        mode === 'card' && 'rounded-xl border border-border/45 bg-card p-3',
+      )}
+    >
       {children}
     </div>
   )
@@ -519,6 +548,8 @@ const TOC_ITEMS: TOCItemType[] = ENTRIES.map((entry) => ({
 }))
 
 export function ControlLab() {
+  const [preview, setPreview] = useState<PreviewMode>('card')
+
   return (
     <TOCProvider toc={TOC_ITEMS}>
       <div className="flex min-h-svh flex-col gap-8 px-8 py-10">
@@ -529,6 +560,30 @@ export function ControlLab() {
           ]}
           title="Control Lab"
           description="The row language the panel is built from — one visual grammar (compact row, label left, control right) applied to every interaction model. Each control on its own, with the variants that matter."
+          actions={
+            <label className="flex items-center gap-2">
+              <span className="text-xs text-fg-muted">Preview</span>
+              <SegmentedControl
+                aria-label="Preview framing"
+                selectedKeys={[preview]}
+                onSelectionChange={(keys) => {
+                  const next = keys.values().next().value
+                  if (next) setPreview(next as PreviewMode)
+                }}
+                className="bg-muted"
+              >
+                {PREVIEW_MODES.map((mode) => (
+                  <SegmentedControlItem
+                    key={mode.value}
+                    id={mode.value}
+                    className="text-xs"
+                  >
+                    {mode.label}
+                  </SegmentedControlItem>
+                ))}
+              </SegmentedControl>
+            </label>
+          }
         />
 
         <div className="flex items-start gap-12">
@@ -547,13 +602,25 @@ export function ControlLab() {
                     {entry.description}
                   </p>
                 </div>
-                <div className="flex flex-wrap items-start gap-5">
+                <div
+                  className={cn(
+                    'flex items-start gap-5',
+                    // Wide gives each variant the full column, so they stack.
+                    preview === 'wide' ? 'flex-col' : 'flex-wrap',
+                  )}
+                >
                   {entry.variants.map((variant) => (
-                    <div key={variant.label} className="flex flex-col gap-1.5">
+                    <div
+                      key={variant.label}
+                      className={cn(
+                        'flex flex-col gap-1.5',
+                        preview === 'wide' && 'w-full',
+                      )}
+                    >
                       <span className="text-[11px] text-fg-muted">
                         {variant.label}
                       </span>
-                      <Stage>{variant.render}</Stage>
+                      <Stage mode={preview}>{variant.render}</Stage>
                     </div>
                   ))}
                 </div>
