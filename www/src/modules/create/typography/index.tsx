@@ -88,7 +88,7 @@ export function useTypography() {
  * callback ref wires it when the popover's ListBox mounts and tears it down on
  * unmount. `loadFontPreview` is idempotent, so re-scanning on scroll is cheap.
  */
-function useLazyFontPreviews() {
+export function useLazyFontPreviews() {
   const cleanupRef = useRef<(() => void) | null>(null)
 
   return useCallback((wrapper: HTMLElement | null) => {

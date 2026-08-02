@@ -104,7 +104,7 @@ export const PANEL_VERSIONS: PanelVersion[] = [
   },
   {
     id: 'v2',
-    label: 'v2',
+    label: 'v2 (wip)',
     summary:
       'Color modes become a user-defined set — one to many, with archetypes and per-mode contrast.',
     chapters: [

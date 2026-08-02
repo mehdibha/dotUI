@@ -39,6 +39,7 @@ import { Route as InternalPanelLabControlsRouteImport } from './routes/internal.
 import { Route as InternalPanelLabVersionRouteImport } from './routes/internal.panel-lab.$version'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
+import { Route as InternalPanelLabDraftDraftRouteImport } from './routes/internal.panel-lab.draft.$draft'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -191,6 +192,12 @@ const AppDocsSplatRoute = AppDocsSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => AppDocsRouteRoute,
 } as any)
+const InternalPanelLabDraftDraftRoute =
+  InternalPanelLabDraftDraftRouteImport.update({
+    id: '/internal/panel-lab/draft/$draft',
+    path: '/internal/panel-lab/draft/$draft',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
@@ -222,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/internal/panel-lab/$version': typeof InternalPanelLabVersionRoute
   '/internal/panel-lab/controls': typeof InternalPanelLabControlsRoute
   '/internal/panel-lab/': typeof InternalPanelLabIndexRoute
+  '/internal/panel-lab/draft/$draft': typeof InternalPanelLabDraftDraftRoute
 }
 export interface FileRoutesByTo {
   '/home.md': typeof HomeDotmdRoute
@@ -253,6 +261,7 @@ export interface FileRoutesByTo {
   '/internal/panel-lab/$version': typeof InternalPanelLabVersionRoute
   '/internal/panel-lab/controls': typeof InternalPanelLabControlsRoute
   '/internal/panel-lab': typeof InternalPanelLabIndexRoute
+  '/internal/panel-lab/draft/$draft': typeof InternalPanelLabDraftDraftRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -286,6 +295,7 @@ export interface FileRoutesById {
   '/internal/panel-lab/$version': typeof InternalPanelLabVersionRoute
   '/internal/panel-lab/controls': typeof InternalPanelLabControlsRoute
   '/internal/panel-lab/': typeof InternalPanelLabIndexRoute
+  '/internal/panel-lab/draft/$draft': typeof InternalPanelLabDraftDraftRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -319,6 +329,7 @@ export interface FileRouteTypes {
     | '/internal/panel-lab/$version'
     | '/internal/panel-lab/controls'
     | '/internal/panel-lab/'
+    | '/internal/panel-lab/draft/$draft'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/home.md'
@@ -350,6 +361,7 @@ export interface FileRouteTypes {
     | '/internal/panel-lab/$version'
     | '/internal/panel-lab/controls'
     | '/internal/panel-lab'
+    | '/internal/panel-lab/draft/$draft'
   id:
     | '__root__'
     | '/_app'
@@ -382,6 +394,7 @@ export interface FileRouteTypes {
     | '/internal/panel-lab/$version'
     | '/internal/panel-lab/controls'
     | '/internal/panel-lab/'
+    | '/internal/panel-lab/draft/$draft'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -407,6 +420,7 @@ export interface RootRouteChildren {
   InternalPanelLabVersionRoute: typeof InternalPanelLabVersionRoute
   InternalPanelLabControlsRoute: typeof InternalPanelLabControlsRoute
   InternalPanelLabIndexRoute: typeof InternalPanelLabIndexRoute
+  InternalPanelLabDraftDraftRoute: typeof InternalPanelLabDraftDraftRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -621,6 +635,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDocsSplatRouteImport
       parentRoute: typeof AppDocsRouteRoute
     }
+    '/internal/panel-lab/draft/$draft': {
+      id: '/internal/panel-lab/draft/$draft'
+      path: '/internal/panel-lab/draft/$draft'
+      fullPath: '/internal/panel-lab/draft/$draft'
+      preLoaderRoute: typeof InternalPanelLabDraftDraftRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -683,6 +704,7 @@ const rootRouteChildren: RootRouteChildren = {
   InternalPanelLabVersionRoute: InternalPanelLabVersionRoute,
   InternalPanelLabControlsRoute: InternalPanelLabControlsRoute,
   InternalPanelLabIndexRoute: InternalPanelLabIndexRoute,
+  InternalPanelLabDraftDraftRoute: InternalPanelLabDraftDraftRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

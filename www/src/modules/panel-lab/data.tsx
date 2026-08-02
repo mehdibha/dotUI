@@ -26,6 +26,12 @@ export const PRIMARY_OPTIONS = [
   { value: 'accent', label: 'Accent' },
 ]
 
+/** Draft-only (drafts/surfaces-562): overlay material for menus/popovers. */
+export const OVERLAY_OPTIONS: SegmentedRowOption[] = [
+  { value: 'solid', label: 'Solid' },
+  { value: 'glass', label: 'Glass' },
+]
+
 export const ICON_LIBRARY_OPTIONS = [
   { value: 'lucide', label: 'Lucide' },
   { value: 'phosphor', label: 'Phosphor' },
@@ -289,6 +295,20 @@ export const DEFAULTS = {
   // replace the array (never mutate) so reference-diffing sees them.
   modes: DEFAULT_MODES,
   defaultMode: 'light',
+  // Draft-only state (see drafts/) — keys the open section PRs introduced.
+  // Drafts on the same section are alternatives, so where two chose the same
+  // name for different things the numeric one is suffixed (headingTrackingEm).
+  overlayMaterial: 'solid',
+  headingWeight: '600',
+  headingTracking: 'normal',
+  headingTrackingEm: 0,
+  baseSize: 16,
+  typeScale: '1.25',
+  typeBase: 16,
+  typeRatio: '1.2',
+  bodyLeading: 1.5,
+  iconStrokeAuto: true,
+  iconScale: 1,
   // Typography
   headingFont: DEFAULT_BODY_FAMILY,
   bodyFont: DEFAULT_BODY_FAMILY,

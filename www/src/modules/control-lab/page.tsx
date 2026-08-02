@@ -560,30 +560,6 @@ export function ControlLab() {
           ]}
           title="Control Lab"
           description="The row language the panel is built from — one visual grammar (compact row, label left, control right) applied to every interaction model. Each control on its own, with the variants that matter."
-          actions={
-            <label className="flex items-center gap-2">
-              <span className="text-xs text-fg-muted">Preview</span>
-              <SegmentedControl
-                aria-label="Preview framing"
-                selectedKeys={[preview]}
-                onSelectionChange={(keys) => {
-                  const next = keys.values().next().value
-                  if (next) setPreview(next as PreviewMode)
-                }}
-                className="bg-muted"
-              >
-                {PREVIEW_MODES.map((mode) => (
-                  <SegmentedControlItem
-                    key={mode.value}
-                    id={mode.value}
-                    className="text-xs"
-                  >
-                    {mode.label}
-                  </SegmentedControlItem>
-                ))}
-              </SegmentedControl>
-            </label>
-          }
         />
 
         <div className="flex items-start gap-12">
@@ -629,12 +605,40 @@ export function ControlLab() {
           </div>
 
           {/* Docs-site TOC: fumadocs' AnchorProvider tracks which section is in
-            view, so the active entry highlights as you scroll. */}
-          <aside className="sticky top-10 hidden h-fit w-44 shrink-0 flex-col gap-2 lg:flex">
-            <span className="text-[11px] font-medium tracking-wider text-fg-muted uppercase">
-              On this page
-            </span>
-            <TOCItems className="gap-0.5 [&_a]:rounded-md [&_a]:px-2 [&_a]:py-1 [&_a]:text-xs [&_a:hover]:bg-muted [&_a:hover]:text-fg" />
+            view, so the active entry highlights as you scroll. The preview
+            control rides along, staying reachable however far you scroll. */}
+          <aside className="sticky top-10 hidden h-fit w-44 shrink-0 flex-col gap-5 lg:flex">
+            <div className="flex flex-col gap-2">
+              <span className="text-[11px] font-medium tracking-wider text-fg-muted uppercase">
+                Preview
+              </span>
+              <SegmentedControl
+                aria-label="Preview framing"
+                selectedKeys={[preview]}
+                onSelectionChange={(keys) => {
+                  const next = keys.values().next().value
+                  if (next) setPreview(next as PreviewMode)
+                }}
+                className="w-full bg-muted"
+              >
+                {PREVIEW_MODES.map((mode) => (
+                  <SegmentedControlItem
+                    key={mode.value}
+                    id={mode.value}
+                    className="flex-1 justify-center text-xs"
+                  >
+                    {mode.label}
+                  </SegmentedControlItem>
+                ))}
+              </SegmentedControl>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <span className="text-[11px] font-medium tracking-wider text-fg-muted uppercase">
+                On this page
+              </span>
+              <TOCItems className="gap-0.5 [&_a]:rounded-md [&_a]:px-2 [&_a]:py-1 [&_a]:text-xs [&_a:hover]:bg-muted [&_a:hover]:text-fg" />
+            </div>
           </aside>
         </div>
       </div>
