@@ -22,7 +22,7 @@ const tooltipMeta = {
       kind: 'scalar',
       type: 'radius',
       cssVar: '--tooltip-radius',
-      default: '--radius-sm',
+      default: '--radius-md',
     },
   },
 } satisfies RegistryItem

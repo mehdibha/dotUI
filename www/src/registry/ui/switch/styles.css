@@ -1,4 +1,4 @@
 :root {
-  --switch-radius: 9999px;
+  --switch-radius: var(--radius-full);
   --switch-card-radius: var(--radius-lg);
 }
