@@ -79,7 +79,9 @@ export const ROW_VALUE = 'truncate text-[0.8125rem] text-fg-muted'
 export const ROW_DESCRIBED = 'h-auto py-2.5'
 
 /** The left column of a row: the label, and the line under it that says what
- *  the axis actually changes. Rows stay one line until a description arrives. */
+ *  the axis actually changes. Rows stay one line until a description arrives.
+ *  `text-left` is explicit — stacked, the label stretches to the column width
+ *  and would otherwise inherit a `<button>`'s centered text. */
 export function RowLabel({
   label,
   description,
@@ -88,7 +90,7 @@ export function RowLabel({
   description?: string
 }) {
   return (
-    <span className="flex min-w-0 flex-col gap-0.5">
+    <span className="flex min-w-0 flex-col gap-0.5 text-left">
       <span className={ROW_LABEL}>{label}</span>
       {description && (
         <span className="text-xs/snug text-pretty text-fg-muted">
@@ -264,8 +266,8 @@ export function DisclosureRow({
       <RacButton
         slot="trigger"
         className={cn(
-          ROW,
-          'flex cursor-interactive items-center justify-between gap-3 px-4 focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight',
+          ROW_TRIGGER,
+          'cursor-interactive focus-reset focus-visible:focus-ring',
           description && ROW_DESCRIBED,
         )}
       >
