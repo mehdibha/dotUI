@@ -35,7 +35,7 @@ import type { Preset } from '@/modules/presets/presets-data'
  * the copied `init` URL. The editor is the quiet second path underneath.
  */
 export function CtaSection() {
-  const [presetId, setPresetId] = useState<string | null>('claude')
+  const [presetId, setPresetId] = useState<string | null>('origin')
   const preset = PRESETS.find((p) => p.id === presetId) ?? null
   const ds = preset?.designSystem ?? DEFAULTS
 
@@ -100,9 +100,10 @@ function InstallCommand({
 
   const baseUrl = `${siteConfig.url}/r/init`
   // The encoded preset is a few hundred chars — display it truncated, copy it
-  // whole.
-  const displayUrl = preset
-    ? `${baseUrl}?preset=${(encoded ?? '').slice(0, BLOB_PREVIEW_CHARS)}…`
+  // whole. No param while the codec loads or when the preset is the builder
+  // defaults (`''` — the plain URL already is that preset).
+  const displayUrl = encoded
+    ? `${baseUrl}?preset=${encoded.slice(0, BLOB_PREVIEW_CHARS)}…`
     : baseUrl
   const displayCommand = buildInitCommands(displayUrl)[packageManager]
   // Widest command the slot can show (`yarn dlx` prefix + truncated preset) —
