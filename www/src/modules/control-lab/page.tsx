@@ -479,7 +479,15 @@ function ComponentRowDemo({
   )
 }
 
-function DisclosureDemo({ described }: { described?: boolean }) {
+function DisclosureDemo({
+  withValue,
+  described,
+  inset,
+}: {
+  withValue?: boolean
+  described?: boolean
+  inset?: boolean
+}) {
   const [tracking, setTracking] = useState('normal')
   const [size, setSize] = useState(16)
   return (
@@ -488,7 +496,8 @@ function DisclosureDemo({ described }: { described?: boolean }) {
       description={
         described ? 'Every UI string that isn’t a heading.' : undefined
       }
-      value="Inter"
+      value={withValue ? 'Inter' : undefined}
+      inset={inset}
       defaultExpanded
     >
       <SegmentedRow
@@ -750,7 +759,9 @@ const GROUPS: Group[] = [
           'A row that opens in place: label left, current value and chevron right, its own rows inside. Where DrillInRow pushes a sub-panel, this one unfolds — depth without leaving the page.',
         variants: [
           { label: 'Default', render: <DisclosureDemo /> },
+          { label: 'With value', render: <DisclosureDemo withValue /> },
           { label: 'With description', render: <DisclosureDemo described /> },
+          { label: 'Inset', render: <DisclosureDemo withValue inset /> },
         ],
       },
       {

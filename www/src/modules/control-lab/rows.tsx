@@ -248,6 +248,7 @@ export function DisclosureRow({
   description,
   value,
   defaultExpanded,
+  inset,
   children,
 }: {
   label: string
@@ -255,16 +256,26 @@ export function DisclosureRow({
   /** What the row reads back while collapsed. */
   value?: React.ReactNode
   defaultExpanded?: boolean
+  /** Drops the content onto a recessed, hairlined surface — separates the
+   *  panel from its rows when the flat look reads as one long card. */
+  inset?: boolean
   children?: React.ReactNode
 }) {
   return (
     <Disclosure
       id={label}
       defaultExpanded={defaultExpanded}
-      className="w-full rounded-xl bg-muted"
+      className={cn(
+        'w-full rounded-xl bg-muted',
+        // The root owns the recessed surface; the header keeps its own row
+        // fill and reads as raised on it, content rows clear theirs below.
+        inset &&
+          'bg-[color-mix(in_oklab,var(--color-card),var(--color-muted))]',
+      )}
     >
       <RacButton
         slot="trigger"
+        data-row=""
         className={cn(
           ROW_TRIGGER,
           'cursor-interactive focus-reset focus-visible:focus-ring',
@@ -277,10 +288,21 @@ export function DisclosureRow({
           <ChevronDownIcon className="size-3.5 text-fg-muted transition-transform duration-200 group-expanded/disclosure:rotate-180" />
         </span>
       </RacButton>
-      <DisclosurePanel className="text-inherit">
-        {/* No inset: rows inside sit at the trigger's own padding, so every
-            label in the card shares one left edge. */}
-        <div className="flex flex-col pb-1">{children}</div>
+      {/* `*:pb-0` cancels the panel's built-in bottom pad — spacing is owned
+          here so content bottom matches the row insets. */}
+      <DisclosurePanel className="text-inherit *:pb-0">
+        {/* No inset either way: rows inside carry the trigger's own padding,
+            so content shares the header's text edges on both sides. */}
+        <div
+          className={cn(
+            'flex flex-col pb-2',
+            // Symmetric padding: the raised header needs the same breathing
+            // room above the content as below it.
+            inset && 'pt-2 **:data-row:bg-transparent',
+          )}
+        >
+          {children}
+        </div>
       </DisclosurePanel>
     </Disclosure>
   )
@@ -1089,7 +1111,7 @@ export function SegmentedRow({
       data-row=""
       className={cn(
         ROW,
-        'flex items-center justify-between gap-3 pr-1.5 pl-4',
+        'flex items-center justify-between gap-3 px-4',
         description && ROW_DESCRIBED,
       )}
     >
@@ -1159,7 +1181,7 @@ export function StepperRow({
         data-row=""
         className={cn(
           ROW,
-          'flex items-center justify-between gap-3 pr-1.5 pl-4',
+          'flex items-center justify-between gap-3 px-4',
           description && ROW_DESCRIBED,
         )}
       >
