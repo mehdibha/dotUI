@@ -13,9 +13,6 @@ export interface ComponentInfo {
   /** Render the demo full-width (responsive, not scaled) — for field-like demos
    *  that should share one consistent, responsive width. */
   stretch?: boolean
-  /** Show a macOS pointer that follows the demo's simulated clicks. Set on demos
-   *  that press or select a control (buttons, toggles, tabs, lists…). */
-  cursor?: boolean
   status: ComponentStatus
 }
 
@@ -34,35 +31,30 @@ export const componentsData: ComponentCategory[] = [
         name: 'Button',
         slug: 'button',
         href: '/docs/components/button',
-        cursor: true,
         status: 'done',
       },
       {
         name: 'ToggleButton',
         slug: 'toggle-button',
         href: '/docs/components/toggle-button',
-        cursor: true,
         status: 'in review',
       },
       {
         name: 'ToggleButtonGroup',
         slug: 'toggle-button-group',
         href: '/docs/components/toggle-button-group',
-        cursor: true,
         status: 'in review',
       },
       {
         name: 'FileTrigger',
         slug: 'file-trigger',
         href: '/docs/components/file-trigger',
-        cursor: true,
         status: 'done',
       },
       {
         name: 'Group',
         slug: 'group',
         href: '/docs/components/group',
-        cursor: true,
         status: 'done',
       },
     ],
@@ -129,28 +121,24 @@ export const componentsData: ComponentCategory[] = [
         name: 'Checkbox',
         slug: 'checkbox',
         href: '/docs/components/checkbox',
-        cursor: true,
         status: 'done',
       },
       {
         name: 'CheckboxGroup',
         slug: 'checkbox-group',
         href: '/docs/components/checkbox-group',
-        cursor: true,
         status: 'done',
       },
       {
         name: 'RadioGroup',
         slug: 'radio-group',
         href: '/docs/components/radio-group',
-        cursor: true,
         status: 'in review',
       },
       {
         name: 'Switch',
         slug: 'switch',
         href: '/docs/components/switch',
-        cursor: true,
         status: 'in review',
       },
       {
@@ -285,7 +273,6 @@ export const componentsData: ComponentCategory[] = [
         slug: 'list-box',
         href: '/docs/components/list-box',
         scale: 0.95,
-        cursor: true,
         status: 'done',
       },
       {
@@ -299,7 +286,6 @@ export const componentsData: ComponentCategory[] = [
         name: 'TagGroup',
         slug: 'tag-group',
         href: '/docs/components/tag-group',
-        cursor: true,
         status: 'done',
       },
     ],
@@ -318,7 +304,6 @@ export const componentsData: ComponentCategory[] = [
         name: 'Tabs',
         slug: 'tabs',
         href: '/docs/components/tabs',
-        cursor: true,
         status: 'pending',
       },
       {
@@ -338,7 +323,6 @@ export const componentsData: ComponentCategory[] = [
         name: 'Pagination',
         slug: 'pagination',
         href: '/docs/components/pagination',
-        cursor: true,
         status: 'in review',
       },
       {
@@ -449,7 +433,6 @@ export const componentsData: ComponentCategory[] = [
         name: 'ColorSwatchPicker',
         slug: 'color-swatch-picker',
         href: '/docs/components/color-swatch-picker',
-        cursor: true,
         status: 'pending',
       },
     ],

@@ -5,7 +5,7 @@ import { ComponentCard } from './component-card'
 import { componentsData } from './components-data'
 
 // Categories with tall components (calendars, tables, opened overlay/picker
-// scenes, the command palette) get a taller card so those components render at
+// surfaces, the command palette) get a taller card so those components render at
 // or near native size. Everything else uses the default height.
 const CATEGORY_PREVIEW_HEIGHT: Record<string, string> = {
   dates: 'h-52',
@@ -13,7 +13,7 @@ const CATEGORY_PREVIEW_HEIGHT: Record<string, string> = {
   'data-display': 'h-52',
   colors: 'h-52',
   charts: 'h-72',
-  // Overlay scenes (and the pickers' dropdowns) need room for the opened surface.
+  // Overlay previews (and the pickers' dropdowns) need room for the open surface.
   overlays: 'h-52',
   pickers: 'h-52',
 }
@@ -47,7 +47,6 @@ export function ComponentsGrid({ category }: { category: string }) {
             scale={component.scale}
             fill={component.fill}
             stretch={component.stretch}
-            cursor={component.cursor}
             previewClassName={CATEGORY_PREVIEW_HEIGHT[category]}
           />
         ))}

@@ -1,22 +1,17 @@
-'use client'
-
 import { ChevronDownIcon } from 'lucide-react'
 
 import { Button } from '@/registry/ui/button'
 import { ColorEditor } from '@/registry/ui/color-editor'
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene } from '../overlay-scene'
 
 const COLOR = '#7f007f'
 
-// Trigger → hover → click → the color editor popover unfolds and the scene zooms
-// out. The trigger is a real Button showing the current swatch + hex; the surface
-// is the real ColorEditor (area + hue slider + hex field).
+// The trigger is a real Button showing the current swatch + hex; the surface is
+// the real ColorEditor (area + hue slider + hex field).
 export function ColorPickerDemo() {
-  const { phase } = useOpenAutoplay()
   return (
     <OverlayScene
-      phase={phase}
       variant="popover"
       side="bottom"
       openScale={0.66}
