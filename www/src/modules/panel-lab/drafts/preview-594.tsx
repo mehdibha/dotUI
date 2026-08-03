@@ -6,10 +6,11 @@
    it glides to the active spot and morphs its height while the content
    crossfades, so moving through the panel reads as one surface retargeting.
 
-   Two levels of preview. Every section has a global preview; controls with
-   something meaningful to show override it with their own (Brand shows the
-   color in real demos, the Input row shows real inputs). A control's preview
-   anchors to its ROW, not the section card.
+   Control previews only. Rows with something meaningful to show have their
+   own preview (Brand shows the color in real demos, the Input row shows real
+   inputs), anchored to the ROW. Rows without one show nothing — a section
+   fallback proved noisy between controls, so it's gone. The 120ms grace also
+   covers the gaps between rows, so control-to-control never flickers.
 
    Three signals drive the target, strongest first: an OPEN overlay (a picker,
    select or menu whose trigger reads aria-expanded inside the panel) pins its
@@ -77,9 +78,9 @@ interface Target {
   /** Content identity — drives the crossfade. */
   key: string
   sectionId: string
-  /** Row label when a control preview matched; null = section preview. */
-  control: string | null
-  /** Element the preview aligns to (row, disclosure root, or section card). */
+  /** The matched row's label. */
+  control: string
+  /** Element the preview aligns to (the row or its disclosure root). */
   anchor: Element
   /** Anchor top relative to the frame, unclamped. */
   top: number
@@ -94,12 +95,12 @@ function labelOf(el: Element): string | null {
   )
 }
 
-/** Climb from a DOM node to the innermost thing with a registered preview:
+/** Climb from a DOM node to the innermost row with a registered preview:
  *  a labeled row first, then the enclosing disclosure (so "Success" inside
- *  Semantic colors attributes to Semantic colors), else the section. */
+ *  Semantic colors attributes to Semantic colors). No match → no preview. */
 function resolveTarget(
   start: Element,
-): { sectionId: string; control: string | null; anchor: Element } | null {
+): { sectionId: string; control: string; anchor: Element } | null {
   const section = start.closest('[data-chapter]')
   if (!section) return null
   const sectionId = section.getAttribute('data-chapter') ?? ''
@@ -117,7 +118,7 @@ function resolveTarget(
     }
     node = candidate.parentElement
   }
-  return { sectionId, control: null, anchor: section }
+  return null
 }
 
 export function HoverPreviewFrame({
@@ -184,9 +185,7 @@ export function HoverPreviewFrame({
       if (!resolved || !frame) return null
       const { sectionId, control, anchor } = resolved
       return {
-        key: control
-          ? `control:${sectionId}:${control}`
-          : `section:${sectionId}`,
+        key: `${sectionId}:${control}`,
         sectionId,
         control,
         anchor,
@@ -219,9 +218,17 @@ export function HoverPreviewFrame({
     return () => observer.disconnect()
   }, [toTarget])
 
+  /* A non-control spot doesn't clear immediately — the grace delay carries
+     the preview across the gaps between rows, so only genuinely leaving the
+     controls (heroes, captions, out of the panel) hides it. */
   const onPointerOver = (e: React.PointerEvent) => {
-    clearTimeout(leaveTimer.current)
-    setHoverT(toTarget(resolveTarget(e.target as Element)))
+    const target = toTarget(resolveTarget(e.target as Element))
+    if (target) {
+      clearTimeout(leaveTimer.current)
+      setHoverT(target)
+    } else {
+      scheduleLeave()
+    }
   }
 
   /* Grace delay so brushing past the panel edge doesn't flicker the card. */
@@ -407,12 +414,10 @@ export function HoverPreviewFrame({
                     <chapter.icon className="size-3.5 text-fg-muted" />
                     <span className="text-[0.8125rem] font-medium text-fg">
                       {chapter.label}
-                      {display.control && (
-                        <span className="text-fg-muted">
-                          {' · '}
-                          {display.control}
-                        </span>
-                      )}
+                      <span className="text-fg-muted">
+                        {' · '}
+                        {display.control}
+                      </span>
                     </span>
                     <span className="ml-auto text-[11px] text-fg-muted">
                       Live preview
@@ -448,9 +453,8 @@ const contentVariants = {
 }
 
 /* ------------------------------- Previews --------------------------------- */
-/* Section previews are the fallback; control previews override them when a
-   row has something specific to show. Each reads the lab state where a
-   single value carries the idea. */
+/* One demo per registered control, reading the lab state where a single
+   value carries the idea. Rows without an entry show no preview. */
 
 function PreviewBody({
   sectionId,
@@ -458,20 +462,11 @@ function PreviewBody({
   lab,
 }: {
   sectionId: string
-  control: string | null
+  control: string
   lab: Lab
 }) {
-  const Control = control ? CONTROL_PREVIEWS[sectionId]?.[control] : undefined
-  const Section = SECTION_PREVIEWS[sectionId]
-  const Body = Control ?? Section
-  if (!Body) {
-    return (
-      <p className="text-xs/relaxed text-fg-muted">
-        No preview for this section yet.
-      </p>
-    )
-  }
-  return <Body lab={lab} />
+  const Body = CONTROL_PREVIEWS[sectionId]?.[control]
+  return Body ? <Body lab={lab} /> : null
 }
 
 type Preview = React.ComponentType<{ lab: Lab }>
@@ -497,69 +492,6 @@ function Panel({
 }
 
 /* --------------------------------- Color ---------------------------------- */
-
-function ColorSectionPreview({ lab }: { lab: Lab }) {
-  const semantics = [
-    { label: 'Accent', className: 'bg-accent' },
-    { label: 'Success', className: 'bg-success' },
-    { label: 'Warning', className: 'bg-warning' },
-    { label: 'Danger', className: 'bg-danger' },
-    { label: 'Info', className: 'bg-info' },
-  ]
-  return (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center gap-2.5 rounded-lg border border-border/45 bg-bg p-2.5">
-        <span
-          className="size-8 shrink-0 rounded-md"
-          style={{ backgroundColor: lab.state.brand }}
-        />
-        <div className="flex min-w-0 flex-col">
-          <span className="text-xs font-medium text-fg">Brand</span>
-          <span className="truncate font-mono text-[11px] text-fg-muted uppercase">
-            {lab.state.brand}
-          </span>
-        </div>
-      </div>
-      <div className="flex flex-col gap-1.5">
-        <Caption>Semantic scales</Caption>
-        <div className="flex gap-1.5">
-          {semantics.map((semantic) => (
-            <div key={semantic.label} className="flex flex-1 flex-col gap-1">
-              <span className={`h-7 rounded-md ${semantic.className}`} />
-              <span className="text-center text-[10px] text-fg-muted">
-                {semantic.label}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-      <ModeChips lab={lab} />
-    </div>
-  )
-}
-
-function ModeChips({ lab }: { lab: Lab }) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <Caption>Modes</Caption>
-      <div className="flex gap-1.5">
-        {lab.state.modes.map((mode) => (
-          <span
-            key={mode.id}
-            className="flex-1 rounded-md border border-border/45 px-2 py-1 text-center text-[11px]"
-            style={{
-              backgroundColor: `oklch(${mode.bg}% 0 0)`,
-              color: mode.polarity === 'light' ? 'black' : 'white',
-            }}
-          >
-            {mode.name}
-            {mode.id === lab.state.defaultMode ? ' ✦' : ''}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
 
 /** The brand color doing its real jobs: CTA, link, controls, badge. */
 function BrandPreview({ lab }: { lab: Lab }) {
@@ -733,25 +665,6 @@ function SemanticPreview({ lab }: { lab: Lab }) {
 
 /* ------------------------------- Typography ------------------------------- */
 
-function TypeSectionPreview() {
-  return (
-    <div className="flex flex-col gap-2.5">
-      <Panel className="gap-1">
-        <span className="text-4xl/none font-semibold text-fg">Ag</span>
-        <span className="mt-1 text-sm font-semibold text-fg">
-          Ship your design system
-        </span>
-        <span className="text-xs text-fg-muted">
-          Every decision, one panel — previewed live on real components.
-        </span>
-      </Panel>
-      <span className="rounded-lg border border-border/45 bg-bg px-3 py-2 font-mono text-[11px] text-fg-muted">
-        npx shadcn add button
-      </span>
-    </div>
-  )
-}
-
 function FontPreview({
   family,
   role,
@@ -816,7 +729,7 @@ const ICON_SAMPLE = [
   MailIcon,
 ]
 
-function IconsSectionPreview({ lab }: { lab: Lab }) {
+function IconGridPreview({ lab }: { lab: Lab }) {
   return (
     <div className="flex flex-col gap-1.5">
       <div className="grid grid-cols-4 gap-1.5">
@@ -873,7 +786,7 @@ const SHAPE_ROLE_DEMOS = [
 const cornerShapeStyle = (shape: string): React.CSSProperties =>
   shape === 'round' ? {} : ({ cornerShape: shape } as React.CSSProperties)
 
-function ShapeSectionPreview({ lab }: { lab: Lab }) {
+function RadiusPreview({ lab }: { lab: Lab }) {
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex gap-1.5">
@@ -981,7 +894,7 @@ const DENSITY_PADDING: Record<string, string> = {
   comfortable: 'py-2.5',
 }
 
-function SpaceSectionPreview({ lab }: { lab: Lab }) {
+function DensityPreview({ lab }: { lab: Lab }) {
   const padding = DENSITY_PADDING[lab.state.density] ?? DENSITY_PADDING.default
   const rows = [
     { icon: MousePointerClickIcon, label: 'Select all' },
@@ -1015,7 +928,7 @@ const SHADOW_DEMOS = [
   { label: 'Modal', className: 'shadow-xl' },
 ]
 
-function DetailsSectionPreview({ lab }: { lab: Lab }) {
+function ShadowsPreview({ lab }: { lab: Lab }) {
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex gap-2 rounded-lg bg-bg p-3">
@@ -1353,42 +1266,10 @@ function LoaderPreview({ lab }: { lab: Lab }) {
   )
 }
 
-function ComponentsSectionPreview({ lab }: { lab: Lab }) {
-  return (
-    <div className="flex flex-col gap-2.5">
-      <div className="flex items-center gap-2">
-        <Button variant="primary" size="sm">
-          Confirm
-        </Button>
-        <Button size="sm">Cancel</Button>
-        <Button variant="quiet" size="sm">
-          Skip
-        </Button>
-      </div>
-      <span className="flex h-8 items-center rounded-lg border border-border bg-bg px-2.5 text-xs text-fg-muted">
-        Email address
-      </span>
-      <Caption>
-        Button: {lab.state.buttonStyle} · Input: {lab.state.inputStyle}
-      </Caption>
-    </div>
-  )
-}
-
-/* ------------------------------- Registries ------------------------------- */
-
-const SECTION_PREVIEWS: Record<string, Preview> = {
-  color: ColorSectionPreview,
-  typography: TypeSectionPreview,
-  icons: IconsSectionPreview,
-  shape: ShapeSectionPreview,
-  space: SpaceSectionPreview,
-  details: DetailsSectionPreview,
-  components: ComponentsSectionPreview,
-}
+/* ------------------------------- Registry --------------------------------- */
 
 /* Keyed by the row's visible label (or aria-label) — what resolveTarget
-   reads from the DOM. Rows not listed fall back to the section preview. */
+   reads from the DOM. Rows not listed show no preview. */
 const CONTROL_PREVIEWS: Record<string, Record<string, Preview>> = {
   color: {
     Brand: BrandPreview,
@@ -1405,21 +1286,21 @@ const CONTROL_PREVIEWS: Record<string, Record<string, Preview>> = {
     Mono: ({ lab }) => <FontPreview family={lab.state.monoFont} role="mono" />,
   },
   icons: {
-    Library: IconsSectionPreview,
+    Library: IconGridPreview,
     Stroke: StrokePreview,
-    Weight: IconsSectionPreview,
+    Weight: IconGridPreview,
   },
   shape: {
-    Radius: ShapeSectionPreview,
+    Radius: RadiusPreview,
     Character: RolesPreview,
     Roles: RolesPreview,
     Corners: CornersPreview,
   },
   space: {
-    Density: SpaceSectionPreview,
+    Density: DensityPreview,
   },
   details: {
-    Shadows: DetailsSectionPreview,
+    Shadows: ShadowsPreview,
     Cursor: CursorPreview,
     'Disabled cursor': CursorPreview,
   },

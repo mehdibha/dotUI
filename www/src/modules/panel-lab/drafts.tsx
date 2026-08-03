@@ -161,7 +161,7 @@ export const DRAFTS: Draft[] = [
     section: 'Frame',
     title: 'Hover preview rail',
     summary:
-      'A frame take, sections untouched: hovering a section floats a live preview beside the panel — one shared container that glides between cards and morphs its content.',
+      'A frame take, sections untouched: hovering, focusing or opening a control floats its live preview beside the panel — one shared container that glides between rows and morphs its content.',
     overrides: [],
     Frame: HoverPreviewFrame,
   },

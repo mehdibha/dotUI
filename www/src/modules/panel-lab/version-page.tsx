@@ -82,7 +82,7 @@ export function PanelDraftPage({ draft }: { draft: Draft }) {
           An open draft, shown on top of{' '}
           <span className="text-fg">{base.label}</span> —{' '}
           {draft.Frame
-            ? 'only the frame differs; hover a section.'
+            ? 'only the frame differs; hover a control.'
             : `only the ${draft.section} section differs.`}{' '}
           Not merged; one of several takes.
         </p>
