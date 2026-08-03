@@ -117,3 +117,18 @@ export function tokenValueToSuffix(
   const options = getStaticTokenOptions(type)
   return options?.find((opt) => opt.value === value)?.suffix
 }
+
+/**
+ * Map a token var reference (`--radius-md`) to its Tailwind suffix by
+ * searching every static pool. For callers that don't know the token type —
+ * the styles.css default-seeding path. Only var-shaped values are looked up:
+ * literal option values (`0`, `none`, `40%`) are ambiguous across pools.
+ */
+export function tokenRefToSuffix(ref: string): string | undefined {
+  if (!ref.startsWith('--')) return undefined
+  for (const options of Object.values(STATIC_OPTIONS_BY_TYPE)) {
+    const hit = options.find((opt) => opt.value === ref)
+    if (hit) return hit.suffix
+  }
+  return undefined
+}
