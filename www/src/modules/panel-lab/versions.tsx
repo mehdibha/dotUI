@@ -11,6 +11,7 @@
 
 import {
   BoxSelectIcon,
+  LayersIcon,
   PaletteIcon,
   ShapesIcon,
   SlidersHorizontalIcon,
@@ -25,22 +26,26 @@ import {
   COLOR_KEYS,
   COMPONENT_KEYS,
   EFFECT_KEYS,
+  EFFECT_KEYS_V2,
   ICON_KEYS,
   SHAPE_KEYS,
   SHAPE_KEYS_V2,
   SPACE_KEYS_V2,
+  SURFACE_KEYS_V2,
   TYPE_KEYS,
   WORKING_COLOR_KEYS,
 } from "./data"
 import {
   ComponentsSectionBody,
   EffectsSectionBody,
+  EffectsSectionBodyV2,
   IconsSectionBody,
   ShapeSectionBody,
   ShapeSectionBodyV2,
   SpaceSectionBody,
   TypographySectionBody,
 } from "./sections"
+import { SurfacesSectionBody } from "./surfaces"
 import type { Chapter } from "./variants/chapter"
 
 /* The chapters every version shares so far — only Color has diverged. */
@@ -111,7 +116,7 @@ export const PANEL_VERSIONS: PanelVersion[] = [
     id: "v2",
     label: "v2 (wip)",
     summary:
-      "Color modes become a user-defined set — one to many, with archetypes and per-mode contrast. Shape and Space split; radius speaks px (#575) with a nested-corner preview and a corner-shape axis.",
+      "Color modes become a user-defined set — one to many, with archetypes and per-mode contrast. Shape and Space split; radius speaks px (#575) with a nested-corner preview and a corner-shape axis. Surfaces lands as its own chapter (#590): a delineation recipe (hairline · adaptive · shadow · outline) that absorbs shadows and the overlay material.",
     chapters: [
       {
         id: "color",
@@ -120,26 +125,43 @@ export const PANEL_VERSIONS: PanelVersion[] = [
         keys: WORKING_COLOR_KEYS,
         Body: WorkingColorSectionBody,
       },
-      ...SHARED_CHAPTERS.flatMap((chapter) =>
-        chapter.id === "shape"
-          ? [
-              {
-                id: "shape",
-                label: "Shape",
-                icon: ShapesIcon,
-                keys: SHAPE_KEYS_V2,
-                Body: ShapeSectionBodyV2,
-              },
-              {
-                id: "space",
-                label: "Space",
-                icon: StretchVerticalIcon,
-                keys: SPACE_KEYS_V2,
-                Body: SpaceSectionBody,
-              },
-            ]
-          : [chapter],
-      ),
+      ...SHARED_CHAPTERS.flatMap((chapter) => {
+        if (chapter.id === "shape")
+          return [
+            {
+              id: "shape",
+              label: "Shape",
+              icon: ShapesIcon,
+              keys: SHAPE_KEYS_V2,
+              Body: ShapeSectionBodyV2,
+            },
+            {
+              id: "space",
+              label: "Space",
+              icon: StretchVerticalIcon,
+              keys: SPACE_KEYS_V2,
+              Body: SpaceSectionBody,
+            },
+          ]
+        if (chapter.id === "details")
+          return [
+            {
+              id: "surfaces",
+              label: "Surfaces",
+              icon: LayersIcon,
+              keys: SURFACE_KEYS_V2,
+              Body: SurfacesSectionBody,
+            },
+            {
+              id: "details",
+              label: "Details",
+              icon: SlidersHorizontalIcon,
+              keys: EFFECT_KEYS_V2,
+              Body: EffectsSectionBodyV2,
+            },
+          ]
+        return [chapter]
+      }),
     ],
   },
 ]
