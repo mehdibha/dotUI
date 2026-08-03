@@ -114,7 +114,7 @@ describe('emitInitItem', () => {
         density: 'default',
         componentParams: {},
         tokens: {
-          '--radius-factor': '0.5',
+          '--radius': '0.5rem',
           '--btn-radius': '--radius-md',
         },
       },
@@ -122,10 +122,10 @@ describe('emitInitItem', () => {
     })
 
     expect(item.css?.[':root']).toMatchObject({
-      '--radius-factor': '0.5',
+      '--radius': '0.5rem',
       '--btn-radius': 'var(--radius-md)',
     })
-    expect(baseRegistryCss.css[':root']).not.toHaveProperty('--radius-factor')
+    expect(baseRegistryCss.css[':root']).not.toHaveProperty('--radius-factor') // legacy knob must stay gone
   })
 
   test('a custom color recipe regenerates the :root + .dark primitive layer', () => {
