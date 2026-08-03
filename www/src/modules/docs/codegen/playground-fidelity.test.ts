@@ -16,28 +16,28 @@
  * Failures print the demo name and the control values that produced the
  * mismatching render.
  */
-import fs from 'node:fs/promises'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { format } from 'oxfmt'
-import { describe, expect, it } from 'vitest'
+import fs from "node:fs/promises"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+import { format } from "oxfmt"
+import { describe, expect, it } from "vitest"
 
-import { getDefaultControlValue } from '../interactive-demo/control-defaults'
+import { getDefaultControlValue } from "../interactive-demo/control-defaults"
 import {
   buildControlsFromReference,
   toControlSelections,
-} from '../interactive-demo/process-controls'
-import type { Control, ControlInput } from '../interactive-demo/types'
+} from "../interactive-demo/process-controls"
+import type { Control, ControlInput } from "../interactive-demo/types"
 import {
   collectTemplateHoles,
   renderCode,
   type CodeTemplate,
-} from './code-template'
-import { buildSourceOverlay, OXFMT_OPTIONS } from './source-overlay'
+} from "./code-template"
+import { buildSourceOverlay, OXFMT_OPTIONS } from "./source-overlay"
 
-const WWW_DIR = fileURLToPath(new URL('../../../../', import.meta.url))
-const DOCS_DIR = path.join(WWW_DIR, 'content/docs')
-const REGISTRY_UI_DIR = path.join(WWW_DIR, 'src/registry/ui')
+const WWW_DIR = fileURLToPath(new URL("../../../../", import.meta.url))
+const DOCS_DIR = path.join(WWW_DIR, "content/docs")
+const REGISTRY_UI_DIR = path.join(WWW_DIR, "src/registry/ui")
 
 // ---------------------------------------------------------------------------
 // Discovery: every <InteractiveDemo> in the docs content
@@ -59,13 +59,13 @@ async function discoverInteractiveDemos(): Promise<DiscoveredDemo[]> {
   })
   const demos: DiscoveredDemo[] = []
   for (const entry of entries) {
-    if (!entry.isFile() || !entry.name.endsWith('.mdx')) continue
+    if (!entry.isFile() || !entry.name.endsWith(".mdx")) continue
     const mdxPath = path.join(entry.parentPath, entry.name)
-    const text = await fs.readFile(mdxPath, 'utf-8')
-    for (const tag of extractTags(text, 'InteractiveDemo')) {
+    const text = await fs.readFile(mdxPath, "utf-8")
+    for (const tag of extractTags(text, "InteractiveDemo")) {
       const name = /\bname="([^"]+)"/.exec(tag)?.[1]
       if (!name) continue
-      const file = /\bfile="([^"]+)"/.exec(tag)?.[1] ?? 'playground'
+      const file = /\bfile="([^"]+)"/.exec(tag)?.[1] ?? "playground"
       demos.push({ name, file, controls: parseControlsAttr(tag), mdxPath })
     }
   }
@@ -75,9 +75,9 @@ async function discoverInteractiveDemos(): Promise<DiscoveredDemo[]> {
 /** Self-closing `<TagName … />` occurrences, full tag text. */
 function extractTags(text: string, tagName: string): string[] {
   const out: string[] = []
-  const re = new RegExp(`<${tagName}\\b`, 'g')
+  const re = new RegExp(`<${tagName}\\b`, "g")
   for (let m = re.exec(text); m; m = re.exec(text)) {
-    const end = text.indexOf('/>', m.index)
+    const end = text.indexOf("/>", m.index)
     if (end < 0) break
     out.push(text.slice(m.index, end))
   }
@@ -86,14 +86,14 @@ function extractTags(text: string, tagName: string): string[] {
 
 /** Evaluate the `controls={…}` MDX expression the same way the rehype build does. */
 function parseControlsAttr(tag: string): ControlInput[] {
-  const at = tag.indexOf('controls={')
+  const at = tag.indexOf("controls={")
   if (at < 0) return []
-  const start = at + 'controls='.length
+  const start = at + "controls=".length
   let depth = 0
   let end = start
   for (let i = start; i < tag.length; i++) {
-    if (tag[i] === '{') depth++
-    else if (tag[i] === '}') {
+    if (tag[i] === "{") depth++
+    else if (tag[i] === "}") {
       depth--
       if (depth === 0) {
         end = i
@@ -115,22 +115,22 @@ function parseControlsAttr(tag: string): ControlInput[] {
 // ---------------------------------------------------------------------------
 
 const LONG_TEXT =
-  'This is a very long piece of text that a user could absolutely type into this control to stress the layout'
+  "This is a very long piece of text that a user could absolutely type into this control to stress the layout"
 const TRICKY_TEXT = 'Says "hi" with {braces}, <angles> and a  double space'
 
 function variantsFor(control: Control): unknown[] {
   const d = getDefaultControlValue(control)
   switch (control.type) {
-    case 'boolean':
+    case "boolean":
       return [!d]
-    case 'enum':
+    case "enum":
       return control.options.filter((o) => o !== d)
-    case 'string':
-      return ['Hello world', '', LONG_TEXT, TRICKY_TEXT].filter((v) => v !== d)
-    case 'number':
+    case "string":
+      return ["Hello world", "", LONG_TEXT, TRICKY_TEXT].filter((v) => v !== d)
+    case "number":
       return [(control.defaultValue ?? 0) + 37]
-    case 'icon':
-      return ['MailIcon', 'SettingsIcon']
+    case "icon":
+      return ["MailIcon", "SettingsIcon"]
     default:
       return []
   }
@@ -139,21 +139,21 @@ function variantsFor(control: Control): unknown[] {
 /** The variant that renders widest, to stress cumulative line width. */
 function widestVariantFor(control: Control): unknown {
   switch (control.type) {
-    case 'boolean':
+    case "boolean":
       return true
-    case 'enum': {
+    case "enum": {
       let widest = getDefaultControlValue(control)
       for (const o of control.options) {
         if (o.length > String(widest).length) widest = o
       }
       return widest
     }
-    case 'string':
+    case "string":
       return LONG_TEXT
-    case 'number':
+    case "number":
       return 1234567.5
-    case 'icon':
-      return 'SettingsIcon'
+    case "icon":
+      return "SettingsIcon"
     default:
       return undefined
   }
@@ -162,11 +162,11 @@ function widestVariantFor(control: Control): unknown {
 /** The variant that renders narrowest/emptiest, to stress drops + self-close. */
 function emptiestVariantFor(control: Control): unknown {
   switch (control.type) {
-    case 'boolean':
+    case "boolean":
       return false
-    case 'string':
-      return ''
-    case 'icon':
+    case "string":
+      return ""
+    case "icon":
       return null
     default:
       return getDefaultControlValue(control)
@@ -202,20 +202,20 @@ function valueMatrix(controls: Control[]): Record<string, unknown>[] {
 
 /** Extract the JSX body from the rendered expanded code, dedented to column 0. */
 function bodyOfExpanded(expanded: string): string {
-  const open = expanded.lastIndexOf('\n  return (\n')
+  const open = expanded.lastIndexOf("\n  return (\n")
   if (open >= 0) {
-    const start = open + '\n  return (\n'.length
-    const close = expanded.indexOf('\n  );', start)
-    expect(close, 'expanded `return (` never closes').toBeGreaterThan(start)
+    const start = open + "\n  return (\n".length
+    const close = expanded.indexOf("\n  );", start)
+    expect(close, "expanded `return (` never closes").toBeGreaterThan(start)
     return expanded
       .slice(start, close)
-      .split('\n')
-      .map((l) => (l.trim() === '' ? '' : l.slice(4)))
-      .join('\n')
+      .split("\n")
+      .map((l) => (l.trim() === "" ? "" : l.slice(4)))
+      .join("\n")
   }
   const inline = /\n {2}return (.*);\n\}$/.exec(expanded)
-  expect(inline, 'expanded code has no return statement').not.toBeNull()
-  return inline?.[1] ?? ''
+  expect(inline, "expanded code has no return statement").not.toBeNull()
+  return inline?.[1] ?? ""
 }
 
 async function assertFidelity(
@@ -228,7 +228,7 @@ async function assertFidelity(
   const collapsed = renderCode(template, values, { expanded: false })
 
   // 1. Expanded is an oxfmt fixed point (oxfmt only appends the final newline).
-  const result = await format('demo.tsx', expanded, OXFMT_OPTIONS)
+  const result = await format("demo.tsx", expanded, OXFMT_OPTIONS)
   expect(
     result.errors.map((e) => e.message),
     `${label}\n→ rendered expanded code does not parse:\n${expanded}`,
@@ -241,7 +241,7 @@ async function assertFidelity(
   const placeholders = template.consts
     .filter((c) => expanded.includes(c.real))
     .map((c) => c.placeholder)
-    .join('\n')
+    .join("\n")
   const expectedCollapsed = placeholders
     ? `${placeholders}\n\n${bodyOfExpanded(expanded)}`
     : bodyOfExpanded(expanded)
@@ -251,7 +251,7 @@ async function assertFidelity(
 
   // 3. Every icon the values inject is imported in the expanded code.
   for (const hole of collectTemplateHoles(template.root)) {
-    if (hole.kind !== 'icon') continue
+    if (hole.kind !== "icon") continue
     const icon = values[hole.control]
     if (!icon) continue
     expect(
@@ -267,19 +267,19 @@ async function assertFidelity(
 
 const discovered = await discoverInteractiveDemos()
 
-describe('playground code generation matches oxfmt', () => {
-  it('discovers the docs playgrounds', () => {
+describe("playground code generation matches oxfmt", () => {
+  it("discovers the docs playgrounds", () => {
     expect(discovered.length).toBeGreaterThanOrEqual(44)
     const names = new Set(discovered.map((d) => d.name))
-    expect(names.has('button')).toBe(true)
-    expect(names.has('select')).toBe(true)
+    expect(names.has("button")).toBe(true)
+    expect(names.has("select")).toBe(true)
   })
 
   for (const demo of discovered) {
     it(demo.name, async () => {
       const source = await fs.readFile(
-        path.join(REGISTRY_UI_DIR, demo.name, 'demos', `${demo.file}.tsx`),
-        'utf-8',
+        path.join(REGISTRY_UI_DIR, demo.name, "demos", `${demo.file}.tsx`),
+        "utf-8",
       )
       const controls = await buildControlsFromReference(
         demo.name,

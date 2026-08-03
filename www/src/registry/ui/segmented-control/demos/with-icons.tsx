@@ -2,15 +2,15 @@ import {
   LayoutGridIcon,
   ListIcon,
   TableIcon,
-} from '@/registry/__generated__/icons'
+} from "@/registry/__generated__/icons"
 import {
   SegmentedControl,
   SegmentedControlItem,
-} from '@/registry/ui/segmented-control'
+} from "@/registry/ui/segmented-control"
 
 export default function Demo() {
   return (
-    <SegmentedControl defaultSelectedKeys={['grid']} aria-label="View">
+    <SegmentedControl defaultSelectedKeys={["grid"]} aria-label="View">
       <SegmentedControlItem id="grid">
         <LayoutGridIcon />
         Grid

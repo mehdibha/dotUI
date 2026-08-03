@@ -1,23 +1,23 @@
-'use client'
+"use client"
 
-import type { ReactNode } from 'react'
-import { ChevronsUpDownIcon, MoonIcon, SunIcon } from 'lucide-react'
-import { useTheme } from 'starter-themes'
+import type { ReactNode } from "react"
+import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react"
+import { useTheme } from "starter-themes"
 
-import { createPersistedStore, enumCodec } from '@/lib/persisted-store'
-import { DesignSystemProvider } from '@/lib/styles'
-import { cn } from '@/registry/lib/utils'
-import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
-import { DEFAULTS, type DesignSystem } from '@/modules/create/preset'
+import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
+import { DesignSystemProvider } from "@/lib/styles"
+import { cn } from "@/registry/lib/utils"
+import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
+import { Button } from "@/registry/ui/button"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { DEFAULTS, type DesignSystem } from "@/modules/create/preset"
 import {
   DEFAULT_DESIGN_SYSTEM_NAME,
   useDesignSystemName,
   useStoredPreset,
-} from '@/modules/create/preset/storage'
-import { PresetPicker } from '@/modules/presets/preset-picker'
-import { PRESETS } from '@/modules/presets/presets-data'
+} from "@/modules/create/preset/storage"
+import { PresetPicker } from "@/modules/presets/preset-picker"
+import { PRESETS } from "@/modules/presets/presets-data"
 
 /**
  * Which design system and light/dark mode the docs previews render in. Global
@@ -26,21 +26,21 @@ import { PRESETS } from '@/modules/presets/presets-data'
  * picks one, then pins previews to that choice.
  */
 
-const YOURS = 'yours'
+const YOURS = "yours"
 
 const presetStore = createPersistedStore(
-  'dotui:preview-preset',
-  'claude',
-  enumCodec([YOURS, ...PRESETS.map((p) => p.id)], 'claude'),
+  "dotui:preview-preset",
+  "claude",
+  enumCodec([YOURS, ...PRESETS.map((p) => p.id)], "claude"),
 )
 
-type PreviewMode = 'light' | 'dark'
+type PreviewMode = "light" | "dark"
 
 const modeStore = createPersistedStore<PreviewMode | null>(
-  'dotui:preview-mode',
+  "dotui:preview-mode",
   null,
   {
-    decode: (raw) => (raw === 'light' || raw === 'dark' ? raw : null),
+    decode: (raw) => (raw === "light" || raw === "dark" ? raw : null),
     encode: (mode) => mode,
   },
 )
@@ -50,7 +50,7 @@ function usePreviewMode(): PreviewMode | undefined {
   const stored = modeStore.useValue()
   const { resolvedTheme } = useTheme()
   if (stored) return stored
-  return resolvedTheme === 'dark' || resolvedTheme === 'light'
+  return resolvedTheme === "dark" || resolvedTheme === "light"
     ? resolvedTheme
     : undefined
 }
@@ -85,7 +85,7 @@ export function PreviewPanel({
   return (
     <DesignSystemProvider forcedMode={useForcedPreviewMode()} scoped>
       {/* `relative` anchors the absolutely-positioned PreviewControls toolbar. */}
-      <div className={cn('relative bg-bg', className)}>{children}</div>
+      <div className={cn("relative bg-bg", className)}>{children}</div>
     </DesignSystemProvider>
   )
 }
@@ -101,7 +101,7 @@ function PresetSwatch({
     <span
       aria-hidden
       className={cn(
-        'size-3 shrink-0 rounded-full border border-border',
+        "size-3 shrink-0 rounded-full border border-border",
         className,
       )}
       style={{ background: color }}
@@ -115,7 +115,7 @@ function PresetSelector() {
   const yours = useStoredPreset()
   const yoursName = useDesignSystemName().trim() || DEFAULT_DESIGN_SYSTEM_NAME
   const yoursSwatch =
-    (yours.color ?? DEFAULT_COLOR_CONFIG).seeds.accent ?? 'var(--color-primary)'
+    (yours.color ?? DEFAULT_COLOR_CONFIG).seeds.accent ?? "var(--color-primary)"
   const selectedName =
     selected === YOURS
       ? yoursName
@@ -132,8 +132,8 @@ function PresetSelector() {
       previewMode={previewMode}
       sections={[
         {
-          id: 'yours',
-          title: 'Yours',
+          id: "yours",
+          title: "Yours",
           items: [
             {
               id: YOURS,
@@ -143,8 +143,8 @@ function PresetSelector() {
           ],
         },
         {
-          id: 'built-in',
-          title: 'Presets',
+          id: "built-in",
+          title: "Presets",
           items: PRESETS.map((preset) => ({
             id: preset.id,
             name: preset.name,
@@ -168,9 +168,9 @@ function PresetSelector() {
 }
 
 function PreviewModeToggle({ className }: { className?: string }) {
-  const mode = usePreviewMode() ?? 'light'
-  const next = mode === 'light' ? 'dark' : 'light'
-  const Icon = mode === 'light' ? SunIcon : MoonIcon
+  const mode = usePreviewMode() ?? "light"
+  const next = mode === "light" ? "dark" : "light"
+  const Icon = mode === "light" ? SunIcon : MoonIcon
 
   return (
     <Tooltip>
@@ -179,7 +179,7 @@ function PreviewModeToggle({ className }: { className?: string }) {
         size="sm"
         isIconOnly
         aria-label={`Switch preview to ${next} mode`}
-        className={cn('text-fg-muted', className)}
+        className={cn("text-fg-muted", className)}
         onPress={() => modeStore.set(next)}
       >
         <Icon />
@@ -199,7 +199,7 @@ export function PreviewControls({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between gap-2 px-2 pt-2 *:pointer-events-auto',
+        "pointer-events-none absolute inset-x-0 top-0 z-10 flex items-center justify-between gap-2 px-2 pt-2 *:pointer-events-auto",
         className,
       )}
     >

@@ -1,30 +1,30 @@
-import { Label } from '@/registry/ui/field'
+import { Label } from "@/registry/ui/field"
 import {
   ProgressBar,
   ProgressBarControl,
   ProgressBarFill,
-} from '@/registry/ui/progress-bar'
+} from "@/registry/ui/progress-bar"
 
 const variants = [
   {
-    label: 'primary',
-    className: 'bg-primary',
+    label: "primary",
+    className: "bg-primary",
   },
   {
-    label: 'success',
-    className: 'bg-success',
+    label: "success",
+    className: "bg-success",
   },
   {
-    label: 'accent',
-    className: 'bg-accent',
+    label: "accent",
+    className: "bg-accent",
   },
   {
-    label: 'danger',
-    className: 'bg-danger',
+    label: "danger",
+    className: "bg-danger",
   },
   {
-    label: 'warning',
-    className: 'bg-warning',
+    label: "warning",
+    className: "bg-warning",
   },
 ] as const
 

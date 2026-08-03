@@ -2,26 +2,26 @@ import {
   Checkbox,
   CheckboxControl,
   CheckboxIndicator,
-} from '@/registry/ui/checkbox'
-import { Description, FieldContent, Label } from '@/registry/ui/field'
+} from "@/registry/ui/checkbox"
+import { Description, FieldContent, Label } from "@/registry/ui/field"
 
 const preferences = [
   {
-    id: 'updates',
-    label: 'Product updates',
-    description: 'Get notified about new features.',
+    id: "updates",
+    label: "Product updates",
+    description: "Get notified about new features.",
     defaultSelected: true,
   },
   {
-    id: 'security',
-    label: 'Security alerts',
-    description: 'Important account activity.',
+    id: "security",
+    label: "Security alerts",
+    description: "Important account activity.",
     defaultSelected: true,
   },
   {
-    id: 'newsletter',
-    label: 'Weekly newsletter',
-    description: 'A digest of tips and news.',
+    id: "newsletter",
+    label: "Weekly newsletter",
+    description: "A digest of tips and news.",
     defaultSelected: false,
   },
 ]

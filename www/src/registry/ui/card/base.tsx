@@ -1,16 +1,16 @@
-import type * as React from 'react'
+import type * as React from "react"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: cardStyles
 
 // MARK: Card
 
-interface CardProps extends React.ComponentProps<'div'> {
-  size?: 'sm' | 'default'
+interface CardProps extends React.ComponentProps<"div"> {
+  size?: "sm" | "default"
 }
 
-function Card({ className, size = 'default', ...props }: CardProps) {
+function Card({ className, size = "default", ...props }: CardProps) {
   const { root } = useStyles()()
   return (
     <div
@@ -24,7 +24,7 @@ function Card({ className, size = 'default', ...props }: CardProps) {
 
 // MARK: CardHeader
 
-interface CardHeaderProps extends React.ComponentProps<'div'> {}
+interface CardHeaderProps extends React.ComponentProps<"div"> {}
 
 function CardHeader({ className, ...props }: CardHeaderProps) {
   const { header } = useStyles()()
@@ -35,7 +35,7 @@ function CardHeader({ className, ...props }: CardHeaderProps) {
 
 // MARK: CardTitle
 
-interface CardTitleProps extends React.ComponentProps<'div'> {}
+interface CardTitleProps extends React.ComponentProps<"div"> {}
 
 function CardTitle({ className, ...props }: CardTitleProps) {
   const { title } = useStyles()()
@@ -44,7 +44,7 @@ function CardTitle({ className, ...props }: CardTitleProps) {
 
 // MARK: CardDescription
 
-interface CardDescriptionProps extends React.ComponentProps<'div'> {}
+interface CardDescriptionProps extends React.ComponentProps<"div"> {}
 
 function CardDescription({ className, ...props }: CardDescriptionProps) {
   const { description } = useStyles()()
@@ -59,7 +59,7 @@ function CardDescription({ className, ...props }: CardDescriptionProps) {
 
 // MARK: CardAction
 
-interface CardActionProps extends React.ComponentProps<'div'> {}
+interface CardActionProps extends React.ComponentProps<"div"> {}
 
 function CardAction({ className, ...props }: CardActionProps) {
   const { action } = useStyles()()
@@ -70,7 +70,7 @@ function CardAction({ className, ...props }: CardActionProps) {
 
 // MARK: CardContent
 
-interface CardContentProps extends React.ComponentProps<'div'> {}
+interface CardContentProps extends React.ComponentProps<"div"> {}
 
 function CardContent({ className, ...props }: CardContentProps) {
   const { content } = useStyles()()
@@ -81,7 +81,7 @@ function CardContent({ className, ...props }: CardContentProps) {
 
 // MARK: CardFooter
 
-interface CardFooterProps extends React.ComponentProps<'div'> {}
+interface CardFooterProps extends React.ComponentProps<"div"> {}
 
 function CardFooter({ className, ...props }: CardFooterProps) {
   const { footer } = useStyles()()

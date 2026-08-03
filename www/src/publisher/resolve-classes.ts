@@ -14,10 +14,10 @@
  * made dead.
  */
 
-import type { RegistryItem, ScalarParamDef } from '@/registry/types'
+import type { RegistryItem, ScalarParamDef } from "@/registry/types"
 
-import { tokenRefToSuffix, tokenValueToSuffix } from './token-map'
-import type { ClassValue, TvLayer, VariantSliceValue } from './types'
+import { tokenRefToSuffix, tokenValueToSuffix } from "./token-map"
+import type { ClassValue, TvLayer, VariantSliceValue } from "./types"
 
 /* ---------------------------- var → suffix map ---------------------------- */
 
@@ -66,7 +66,7 @@ export function buildScalarVarMap(
   const map = new Map<string, string>()
   const params = meta.params ?? {}
   for (const [paramName, def] of Object.entries(params)) {
-    if (def.kind !== 'scalar') continue
+    if (def.kind !== "scalar") continue
     const scalar = def as ScalarParamDef
     const value = paramSelections[paramName] ?? scalar.default
     const suffix = tokenValueToSuffix(scalar.type, value)
@@ -80,7 +80,7 @@ export function buildScalarVarMap(
 /* ----------------------------- class rewrite ----------------------------- */
 
 function escapeRegex(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 }
 
 /**
@@ -95,7 +95,7 @@ export function rewriteClassString(
   if (varMap.size === 0) return input
   let output = input
   for (const [cssVar, suffix] of varMap) {
-    const pattern = new RegExp(`-\\(${escapeRegex(cssVar)}\\)`, 'g')
+    const pattern = new RegExp(`-\\(${escapeRegex(cssVar)}\\)`, "g")
     output = output.replace(pattern, `-${suffix}`)
   }
   return output
@@ -106,7 +106,7 @@ function rewriteClassValue(
   varMap: Map<string, string>,
 ): ClassValue | undefined {
   if (value == null || value === false) return value
-  if (typeof value === 'string') return rewriteClassString(value, varMap)
+  if (typeof value === "string") return rewriteClassString(value, varMap)
   if (Array.isArray(value)) {
     return value.map(
       (v) => rewriteClassValue(v, varMap) as string | string[],
@@ -118,7 +118,7 @@ function rewriteClassValue(
 function isSlotMap(
   value: VariantSliceValue | undefined,
 ): value is Record<string, ClassValue> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
+  return typeof value === "object" && value !== null && !Array.isArray(value)
 }
 
 function rewriteVariantSlice(
@@ -154,7 +154,7 @@ function corpusWithout(css: CssObject, skipPath: readonly string[]): string {
   const walk = (node: CssObject, path: readonly string[]): void => {
     for (const [key, value] of Object.entries(node)) {
       const here = [...path, key]
-      if (typeof value === 'string') {
+      if (typeof value === "string") {
         const skipped =
           here.length === skipPath.length &&
           here.every((seg, i) => seg === skipPath[i])
@@ -166,7 +166,7 @@ function corpusWithout(css: CssObject, skipPath: readonly string[]): string {
     }
   }
   walk(css, [])
-  return parts.join('\n')
+  return parts.join("\n")
 }
 
 /**
@@ -177,10 +177,10 @@ function corpusWithout(css: CssObject, skipPath: readonly string[]): string {
  * fully. Vars outside `resolved` are never touched.
  */
 export function pruneResolvedCssVars(
-  css: RegistryItem['css'],
+  css: RegistryItem["css"],
   resolved: ReadonlySet<string>,
   externalCorpus: string,
-): RegistryItem['css'] | undefined {
+): RegistryItem["css"] | undefined {
   if (!css) return css
   const work = structuredClone(css) as CssObject
 
@@ -190,12 +190,12 @@ export function pruneResolvedCssVars(
     const visit = (node: CssObject, path: readonly string[]): void => {
       for (const [key, value] of Object.entries(node)) {
         const here = [...path, key]
-        if (typeof value !== 'string') {
+        if (typeof value !== "string") {
           visit(value, here)
           continue
         }
-        if (!key.startsWith('--') || !resolved.has(key)) continue
-        const corpus = externalCorpus + '\n' + corpusWithout(work, here)
+        if (!key.startsWith("--") || !resolved.has(key)) continue
+        const corpus = externalCorpus + "\n" + corpusWithout(work, here)
         if (!isReferenced(key, corpus)) {
           delete node[key]
           changed = true
@@ -211,26 +211,26 @@ export function pruneResolvedCssVars(
   ): CssObject | undefined => {
     const out: CssObject = {}
     for (const [key, value] of Object.entries(node)) {
-      if (typeof value === 'string') {
+      if (typeof value === "string") {
         out[key] = value
         continue
       }
       const originalChild = original[key]
       const child = compact(
         value,
-        typeof originalChild === 'object' ? originalChild : {},
+        typeof originalChild === "object" ? originalChild : {},
       )
       // Keep originally-empty objects (`@plugin` statements); drop selectors
       // that pruning emptied out.
       const wasEmpty =
-        typeof originalChild === 'object' &&
+        typeof originalChild === "object" &&
         Object.keys(originalChild).length === 0
       if (child !== undefined || wasEmpty) out[key] = child ?? {}
     }
     return Object.keys(out).length > 0 ? out : undefined
   }
 
-  return compact(work, css as CssObject) as RegistryItem['css'] | undefined
+  return compact(work, css as CssObject) as RegistryItem["css"] | undefined
 }
 
 /**
@@ -259,7 +259,7 @@ export function resolveClasses(
   }
 
   if (layer.variants) {
-    const variants: NonNullable<TvLayer['variants']> = {}
+    const variants: NonNullable<TvLayer["variants"]> = {}
     for (const [variantName, values] of Object.entries(layer.variants)) {
       const valuesOut: Record<string, VariantSliceValue> = {}
       for (const [valueName, sliceValue] of Object.entries(values)) {
@@ -277,7 +277,7 @@ export function resolveClasses(
     out.compoundVariants = layer.compoundVariants.map((cv) => {
       const result: Record<string, unknown> = {}
       for (const [k, v] of Object.entries(cv)) {
-        if (k === 'class' || k === 'className') {
+        if (k === "class" || k === "className") {
           const rewritten = rewriteClassValue(v as ClassValue, varMap)
           if (rewritten !== undefined) result[k] = rewritten
         } else {

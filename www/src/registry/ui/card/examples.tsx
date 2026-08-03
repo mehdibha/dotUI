@@ -1,16 +1,16 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import BasicDemo from './demos/basic'
-import DefaultDemo from './demos/default'
-import FooterBorderDemo from './demos/footer-border'
-import FooterBorderSmallDemo from './demos/footer-border-small'
-import HeaderBorderDemo from './demos/header-border'
-import HeaderBorderSmallDemo from './demos/header-border-small'
-import MeetingNotesDemo from './demos/meeting-notes'
-import SmallDemo from './demos/small'
-import WithImageDemo from './demos/with-image'
-import WithImageSmallDemo from './demos/with-image-small'
+import BasicDemo from "./demos/basic"
+import DefaultDemo from "./demos/default"
+import FooterBorderDemo from "./demos/footer-border"
+import FooterBorderSmallDemo from "./demos/footer-border-small"
+import HeaderBorderDemo from "./demos/header-border"
+import HeaderBorderSmallDemo from "./demos/header-border-small"
+import MeetingNotesDemo from "./demos/meeting-notes"
+import SmallDemo from "./demos/small"
+import WithImageDemo from "./demos/with-image"
+import WithImageSmallDemo from "./demos/with-image-small"
 
 export default function CardExamples() {
   return (

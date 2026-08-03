@@ -1,72 +1,72 @@
-'use client'
+"use client"
 
-import { useMemo } from 'react'
-import { ChevronDownIcon } from 'lucide-react'
+import { useMemo } from "react"
+import { ChevronDownIcon } from "lucide-react"
 
-import { STEPS } from '@dotui/colors'
+import { STEPS } from "@dotui/colors"
 
-import { resolveColorConfigCached } from '@/lib/resolve-color'
+import { resolveColorConfigCached } from "@/lib/resolve-color"
 import {
   DEFAULT_COLOR_CONFIG,
   DEFAULT_STATUS_SEEDS,
   PALETTE_ORDER,
-} from '@/registry/theme'
-import type { PrimaryColorSource } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
-import { ColorEditor } from '@/registry/ui/color-editor'
-import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
-import { DialogContent } from '@/registry/ui/dialog'
+} from "@/registry/theme"
+import type { PrimaryColorSource } from "@/registry/theme"
+import { Button } from "@/registry/ui/button"
+import { ColorEditor } from "@/registry/ui/color-editor"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import { ColorSwatch } from "@/registry/ui/color-swatch"
+import { DialogContent } from "@/registry/ui/dialog"
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
-import { Label } from '@/registry/ui/field'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { Select, SelectValue } from '@/registry/ui/select'
+} from "@/registry/ui/disclosure"
+import { Label } from "@/registry/ui/field"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { Select, SelectValue } from "@/registry/ui/select"
 
-import { ChartColorsSection, ChartSwatchStrip } from '../chart-colors'
-import { useDesignSystem } from '../preset'
-import { ContrastReadout } from './contrast'
+import { ChartColorsSection, ChartSwatchStrip } from "../chart-colors"
+import { useDesignSystem } from "../preset"
+import { ContrastReadout } from "./contrast"
 import {
   ColorBackgroundControls,
   ColorFineTuneControls,
   useBorderSeeds,
-} from './knobs'
-import { TokenOverridesSection } from './overrides'
+} from "./knobs"
+import { TokenOverridesSection } from "./overrides"
 
-type GrayMode = 'auto' | 'pure' | 'custom'
+type GrayMode = "auto" | "pure" | "custom"
 
 const GRAY_MODES: ReadonlyArray<{ id: GrayMode; label: string }> = [
-  { id: 'auto', label: 'Auto (tinted from brand)' },
-  { id: 'pure', label: 'Pure gray' },
-  { id: 'custom', label: 'Custom' },
+  { id: "auto", label: "Auto (tinted from brand)" },
+  { id: "pure", label: "Pure gray" },
+  { id: "custom", label: "Custom" },
 ]
 
 const PRIMARY_SOURCES: ReadonlyArray<{
   id: PrimaryColorSource
   label: string
 }> = [
-  { id: 'neutral', label: 'Neutral (black & white)' },
-  { id: 'accent', label: 'Accent (brand color)' },
+  { id: "neutral", label: "Neutral (black & white)" },
+  { id: "accent", label: "Accent (brand color)" },
 ]
 
 const STATUS_FIELDS = [
-  { key: 'success', label: 'Success' },
-  { key: 'warning', label: 'Warning' },
-  { key: 'danger', label: 'Danger' },
-  { key: 'info', label: 'Info' },
+  { key: "success", label: "Success" },
+  { key: "warning", label: "Warning" },
+  { key: "danger", label: "Danger" },
+  { key: "info", label: "Info" },
 ] as const
 
 function grayModeOf(config: {
   seeds: { neutral?: string }
   neutralTint?: number
 }): GrayMode {
-  if (config.seeds.neutral) return 'custom'
-  if (config.neutralTint === 0) return 'pure'
-  return 'auto'
+  if (config.seeds.neutral) return "custom"
+  if (config.neutralTint === 0) return "pure"
+  return "auto"
 }
 
 function SeedPicker({
@@ -81,7 +81,7 @@ function SeedPicker({
   return (
     <ColorPicker
       value={value}
-      onChange={(color) => onChange(color.toString('hex'))}
+      onChange={(color) => onChange(color.toString("hex"))}
     >
       {({ color }) => (
         <>
@@ -89,7 +89,7 @@ function SeedPicker({
             <Label>{label}</Label>
             <Button className="justify-start pl-2.5">
               <ColorSwatch />
-              <span className="truncate">{color.toString('hex')}</span>
+              <span className="truncate">{color.toString("hex")}</span>
             </Button>
           </div>
           <Popover>
@@ -133,7 +133,7 @@ export function ColorsSummary() {
           Primary
         </span>
         <p className="font-medium">
-          {config.primary === 'accent' ? 'Accent' : 'Neutral'}
+          {config.primary === "accent" ? "Accent" : "Neutral"}
         </p>
       </div>
       <div className="flex flex-col gap-1">
@@ -162,9 +162,9 @@ export function ColorsConfig() {
       const { neutral, ...seeds } = base.seeds
       const { neutralTint: _tint, ...rest } = base
       const color =
-        mode === 'custom'
-          ? { ...rest, seeds: { ...seeds, neutral: neutral ?? '#808080' } }
-          : mode === 'pure'
+        mode === "custom"
+          ? { ...rest, seeds: { ...seeds, neutral: neutral ?? "#808080" } }
+          : mode === "pure"
             ? { ...rest, seeds, neutralTint: 0 }
             : { ...rest, seeds }
       return { ...prev, color }
@@ -181,7 +181,7 @@ export function ColorsConfig() {
       <SeedPicker
         label="Brand color"
         value={config.seeds.accent}
-        onChange={(hex) => setColorSeed('accent', hex)}
+        onChange={(hex) => setColorSeed("accent", hex)}
       />
 
       <Select
@@ -205,19 +205,19 @@ export function ColorsConfig() {
         </Popover>
       </Select>
 
-      {grayMode === 'custom' && (
+      {grayMode === "custom" && (
         <SeedPicker
           label="Gray seed"
-          value={config.seeds.neutral ?? '#808080'}
-          onChange={(hex) => setColorSeed('neutral', hex)}
+          value={config.seeds.neutral ?? "#808080"}
+          onChange={(hex) => setColorSeed("neutral", hex)}
         />
       )}
 
       <Select
         className="w-full"
-        selectedKey={config.primary ?? 'neutral'}
+        selectedKey={config.primary ?? "neutral"}
         onSelectionChange={(key) =>
-          setColorPrimary(key === 'accent' ? 'accent' : undefined)
+          setColorPrimary(key === "accent" ? "accent" : undefined)
         }
       >
         <Label>Primary color</Label>

@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { Time } from '@internationalized/date'
+import { Time } from "@internationalized/date"
 
-import { ClockIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Label } from '@/registry/ui/field'
-import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Popover } from '@/registry/ui/popover'
-import { TimePicker, TimePickerColumns } from '@/registry/ui/time-picker'
+import { ClockIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Popover } from "@/registry/ui/popover"
+import { TimePicker, TimePickerColumns } from "@/registry/ui/time-picker"
 
-const granularities = ['hour', 'minute', 'second'] as const
+const granularities = ["hour", "minute", "second"] as const
 
 export default function Demo() {
   return (

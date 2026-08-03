@@ -1,19 +1,19 @@
-'use client'
+"use client"
 
-import { toHex, toOklch, type Theme } from '@dotui/colors'
+import { toHex, toOklch, type Theme } from "@dotui/colors"
 
-import { Button } from '@/registry/ui/button'
-import { ColorArea } from '@/registry/ui/color-area'
-import { ColorField } from '@/registry/ui/color-field'
-import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSlider } from '@/registry/ui/color-slider'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { Popover } from '@/registry/ui/popover'
+import { Button } from "@/registry/ui/button"
+import { ColorArea } from "@/registry/ui/color-area"
+import { ColorField } from "@/registry/ui/color-field"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import { ColorSlider } from "@/registry/ui/color-slider"
+import { ColorSwatch } from "@/registry/ui/color-swatch"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { Popover } from "@/registry/ui/popover"
 
-import { useDesignSystem } from '../preset'
+import { useDesignSystem } from "../preset"
 
 /**
  * The categorical chart palette, inside the Colors section. The engine
@@ -103,14 +103,14 @@ export function ChartColorsSection({ theme }: { theme: Theme }) {
       <div className="grid grid-cols-2 gap-4">
         {CHART_SLOTS.map((slot) => {
           const override = tokens[slot.token]
-          const pickerValue = override?.startsWith('#')
+          const pickerValue = override?.startsWith("#")
             ? override
-            : (generated[slot.index] ?? '#808080')
+            : (generated[slot.index] ?? "#808080")
           return (
             <ColorPicker
               key={slot.token}
               value={pickerValue}
-              onChange={(color) => setToken(slot.token, color.toString('hex'))}
+              onChange={(color) => setToken(slot.token, color.toString("hex"))}
             >
               {({ color }) => (
                 <>
@@ -121,7 +121,7 @@ export function ChartColorsSection({ theme }: { theme: Theme }) {
                         className="size-4 shrink-0 rounded-sm border"
                         style={{ backgroundColor: `var(${slot.token})` }}
                       />
-                      <span className="truncate">{color.toString('hex')}</span>
+                      <span className="truncate">{color.toString("hex")}</span>
                     </Button>
                   </div>
                   <Popover>

@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { getLocalTimeZone, today } from '@internationalized/date'
-import type * as CalendarPrimitives from 'react-aria-components/Calendar'
+import React from "react"
+import { getLocalTimeZone, today } from "@internationalized/date"
+import type * as CalendarPrimitives from "react-aria-components/Calendar"
 
-import { PlusIcon, Trash2Icon } from '@/registry/__generated__/icons'
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
+import { PlusIcon, Trash2Icon } from "@/registry/__generated__/icons"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
 import {
   Calendar,
   CalendarCell,
@@ -15,20 +15,20 @@ import {
   CalendarGridHeader,
   CalendarHeader,
   CalendarHeaderCell,
-} from '@/registry/ui/calendar'
-import { Card, CardContent } from '@/registry/ui/card'
-import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
+} from "@/registry/ui/calendar"
+import { Card, CardContent } from "@/registry/ui/card"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import { ColorSwatch } from "@/registry/ui/color-swatch"
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from '@/registry/ui/color-swatch-picker'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Popover } from '@/registry/ui/popover'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/color-swatch-picker"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Popover } from "@/registry/ui/popover"
+import { TextField } from "@/registry/ui/text-field"
 
-type EventVariant = 'accent' | 'info' | 'success' | 'warning' | 'danger'
+type EventVariant = "accent" | "info" | "success" | "warning" | "danger"
 type ScheduleEvent = {
   id: string
   title: string
@@ -37,54 +37,54 @@ type ScheduleEvent = {
 }
 
 const EVENT_DOT_CLASS: Record<EventVariant, string> = {
-  accent: 'bg-accent',
-  info: 'bg-info',
-  success: 'bg-success',
-  warning: 'bg-warning',
-  danger: 'bg-danger',
+  accent: "bg-accent",
+  info: "bg-info",
+  success: "bg-success",
+  warning: "bg-warning",
+  danger: "bg-danger",
 }
 
 const INITIAL_EVENTS = (now: CalendarPrimitives.DateValue): ScheduleEvent[] => [
   {
-    id: '1',
-    title: 'Standup',
+    id: "1",
+    title: "Standup",
     date: now.subtract({ days: 2 }),
-    variant: 'accent',
+    variant: "accent",
   },
-  { id: '2', title: 'Design review', date: now, variant: 'info' },
-  { id: '3', title: '1:1 with Sam', date: now, variant: 'success' },
-  { id: '4', title: 'Product sync', date: now, variant: 'warning' },
-  { id: '5', title: 'Lunch w/ Alex', date: now, variant: 'danger' },
+  { id: "2", title: "Design review", date: now, variant: "info" },
+  { id: "3", title: "1:1 with Sam", date: now, variant: "success" },
+  { id: "4", title: "Product sync", date: now, variant: "warning" },
+  { id: "5", title: "Lunch w/ Alex", date: now, variant: "danger" },
   {
-    id: '6',
-    title: 'Sprint planning',
+    id: "6",
+    title: "Sprint planning",
     date: now.add({ days: 1 }),
-    variant: 'accent',
+    variant: "accent",
   },
-  { id: '7', title: 'Ship v2.1', date: now.add({ days: 3 }), variant: 'info' },
+  { id: "7", title: "Ship v2.1", date: now.add({ days: 3 }), variant: "info" },
   {
-    id: '8',
-    title: 'Customer call',
+    id: "8",
+    title: "Customer call",
     date: now.add({ days: 4 }),
-    variant: 'success',
+    variant: "success",
   },
   {
-    id: '9',
-    title: 'Team offsite',
+    id: "9",
+    title: "Team offsite",
     date: now.add({ days: 7 }),
-    variant: 'warning',
+    variant: "warning",
   },
   {
-    id: '10',
-    title: 'Board meeting',
+    id: "10",
+    title: "Board meeting",
     date: now.add({ days: 9 }),
-    variant: 'danger',
+    variant: "danger",
   },
   {
-    id: '11',
-    title: 'Launch review',
+    id: "11",
+    title: "Launch review",
     date: now.add({ days: 14 }),
-    variant: 'info',
+    variant: "info",
   },
 ]
 
@@ -95,8 +95,8 @@ export default function Demo() {
   )
   const [selectedDate, setSelectedDate] =
     React.useState<CalendarPrimitives.DateValue>(now)
-  const [newTitle, setNewTitle] = React.useState('')
-  const [newVariant] = React.useState<EventVariant>('accent')
+  const [newTitle, setNewTitle] = React.useState("")
+  const [newVariant] = React.useState<EventVariant>("accent")
   const idCounter = React.useRef(events.length + 1)
 
   const eventsByDay = React.useMemo(() => {
@@ -116,9 +116,9 @@ export default function Demo() {
   const selectedLabel = selectedDate
     .toDate(getLocalTimeZone())
     .toLocaleDateString(undefined, {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric',
+      weekday: "long",
+      month: "long",
+      day: "numeric",
     })
   const selectedEvents = getEvents(selectedDate)
 
@@ -134,7 +134,7 @@ export default function Demo() {
         variant: newVariant,
       },
     ])
-    setNewTitle('')
+    setNewTitle("")
   }
 
   return (
@@ -199,8 +199,8 @@ export default function Demo() {
           <div>
             <h4 className="text-sm font-medium">{selectedLabel}</h4>
             <p className="text-xs text-fg-muted">
-              {selectedEvents.length}{' '}
-              {selectedEvents.length === 1 ? 'event' : 'events'}
+              {selectedEvents.length}{" "}
+              {selectedEvents.length === 1 ? "event" : "events"}
             </p>
           </div>
           {selectedEvents.length === 0 ? (
@@ -256,7 +256,7 @@ export default function Demo() {
                       <Popover>
                         <DialogContent>
                           <ColorSwatchPicker>
-                            {[''].map((v) => (
+                            {[""].map((v) => (
                               <ColorSwatchPickerItem key={v} color={v} />
                             ))}
                           </ColorSwatchPicker>

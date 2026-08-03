@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
 import {
   CalendarIcon,
   HomeIcon,
   InboxIcon,
   SettingsIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
 import {
   Sidebar,
   SidebarContent,
@@ -18,13 +18,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-} from '@/registry/ui/sidebar'
+} from "@/registry/ui/sidebar"
 
 const items = [
-  { title: 'Dashboard', icon: HomeIcon, isActive: true },
-  { title: 'Inbox', icon: InboxIcon },
-  { title: 'Calendar', icon: CalendarIcon },
-  { title: 'Settings', icon: SettingsIcon },
+  { title: "Dashboard", icon: HomeIcon, isActive: true },
+  { title: "Inbox", icon: InboxIcon },
+  { title: "Calendar", icon: CalendarIcon },
+  { title: "Settings", icon: SettingsIcon },
 ]
 
 export default function Demo() {
@@ -55,10 +55,10 @@ export default function Demo() {
       <SidebarInset>
         <header className="flex h-12 items-center gap-2 border-b px-3">
           <Button size="sm" onPress={() => setOpen((open) => !open)}>
-            {isOpen ? 'Close' : 'Open'} sidebar
+            {isOpen ? "Close" : "Open"} sidebar
           </Button>
           <span className="text-sm text-fg-muted">
-            State: {isOpen ? 'expanded' : 'collapsed'}
+            State: {isOpen ? "expanded" : "collapsed"}
           </span>
         </header>
       </SidebarInset>

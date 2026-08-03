@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { Collection } from 'react-aria-components/Collection'
+import { Collection } from "react-aria-components/Collection"
 
-import { Tree, TreeItem, TreeItemContent } from '@/registry/ui/tree'
+import { Tree, TreeItem, TreeItemContent } from "@/registry/ui/tree"
 
 interface Item {
   id: string
@@ -12,23 +12,23 @@ interface Item {
 
 const items: Item[] = [
   {
-    id: 'documents',
-    name: 'Documents',
+    id: "documents",
+    name: "Documents",
     children: [
       {
-        id: 'project',
-        name: 'Project',
-        children: [{ id: 'report', name: 'Weekly report' }],
+        id: "project",
+        name: "Project",
+        children: [{ id: "report", name: "Weekly report" }],
       },
-      { id: 'resume', name: 'Resume.pdf' },
+      { id: "resume", name: "Resume.pdf" },
     ],
   },
   {
-    id: 'photos',
-    name: 'Photos',
+    id: "photos",
+    name: "Photos",
     children: [
-      { id: 'mountains', name: 'Mountains.jpg' },
-      { id: 'beach', name: 'Beach.jpg' },
+      { id: "mountains", name: "Mountains.jpg" },
+      { id: "beach", name: "Beach.jpg" },
     ],
   },
 ]
@@ -38,7 +38,7 @@ export default function Demo() {
     <Tree
       aria-label="Files"
       items={items}
-      defaultExpandedKeys={['documents']}
+      defaultExpandedKeys={["documents"]}
       className="w-72"
     >
       {function renderItem(item: Item) {

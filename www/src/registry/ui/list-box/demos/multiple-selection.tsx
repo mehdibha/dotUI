@@ -1,4 +1,4 @@
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
 export default function Demo() {
   return (
@@ -6,7 +6,7 @@ export default function Demo() {
       <ListBox
         aria-label="Toppings"
         selectionMode="multiple"
-        defaultSelectedKeys={['mushroom', 'olives']}
+        defaultSelectedKeys={["mushroom", "olives"]}
       >
         <ListBoxItem id="mushroom">Mushroom</ListBoxItem>
         <ListBoxItem id="olives">Olives</ListBoxItem>

@@ -9,16 +9,16 @@ links:
 <InteractiveDemo
   name="button"
   controls={[
-    { name: 'children', type: 'string', defaultValue: 'Button' },
-    'variant',
+    { name: "children", type: "string", defaultValue: "Button" },
+    "variant",
     {
-      name: 'size',
-      type: 'enum',
-      options: ['xs', 'sm', 'md', 'lg'],
-      defaultValue: 'md',
+      name: "size",
+      type: "enum",
+      options: ["xs", "sm", "md", "lg"],
+      defaultValue: "md",
     },
-    'isDisabled',
-    'isPending',
+    "isDisabled",
+    "isPending",
   ]}
 />
 
@@ -34,7 +34,7 @@ Button allow users to initiate an action or command with mouse, touch or keyboar
 The button's label indicates the purpose of the action to the user. You may also include an icon for additional context.
 
 ```tsx
-import { Button } from '@dotui/registry/ui/button'
+import { Button } from "@dotui/registry/ui/button"
 ```
 
 ```tsx
@@ -46,7 +46,7 @@ import { Button } from '@dotui/registry/ui/button'
 Use `LinkButton` with `href` to render a navigation control styled as a button. Internal paths integrate with the client router; external URLs render a plain `<a>`.
 
 ```tsx
-import { LinkButton } from '@dotui/registry/ui/button'
+import { LinkButton } from "@dotui/registry/ui/button"
 ```
 
 ```tsx

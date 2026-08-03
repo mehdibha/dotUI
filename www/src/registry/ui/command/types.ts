@@ -1,11 +1,11 @@
-import type { ListBoxProps } from '@/registry/ui/list-box'
-import type { SearchFieldProps } from '@/registry/ui/search-field'
+import type { ListBoxProps } from "@/registry/ui/list-box"
+import type { SearchFieldProps } from "@/registry/ui/search-field"
 
 /**
  * A command palette combines a search input with a list of commands, allowing
  * a user to filter and run them.
  */
-export interface CommandProps extends React.ComponentProps<'div'> {
+export interface CommandProps extends React.ComponentProps<"div"> {
   /**
    * Collator options used to match items against the query as the user types.
    *

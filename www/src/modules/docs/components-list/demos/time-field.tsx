@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { Time } from '@internationalized/date'
+import { Time } from "@internationalized/date"
 
-import { Label } from '@/registry/ui/field'
-import { DateInput } from '@/registry/ui/input'
-import { TimeField } from '@/registry/ui/time-field'
+import { Label } from "@/registry/ui/field"
+import { DateInput } from "@/registry/ui/input"
+import { TimeField } from "@/registry/ui/time-field"
 
-import { DemoFocus, useCardHover } from '../autoplay'
+import { DemoFocus, useCardHover } from "../autoplay"
 
 // Shows a real time and lights up its real focus ring while the card is hovered.
 // We only set `data-focused` on the field (no real `:focus`), so it never steals

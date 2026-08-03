@@ -1,5 +1,5 @@
-import { FolderIcon, PlusIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
+import { FolderIcon, PlusIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
 import {
   Empty,
   EmptyContent,
@@ -7,7 +7,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from '@/registry/ui/empty'
+} from "@/registry/ui/empty"
 
 export default function Demo() {
   return (
@@ -18,7 +18,7 @@ export default function Demo() {
         </EmptyMedia>
         <EmptyTitle>Nothing to see here</EmptyTitle>
         <EmptyDescription>
-          No posts have been created yet. Get started by{' '}
+          No posts have been created yet. Get started by{" "}
           <a href="#">creating your first post</a>.
         </EmptyDescription>
       </EmptyHeader>

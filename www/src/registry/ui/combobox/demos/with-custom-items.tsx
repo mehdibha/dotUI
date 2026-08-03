@@ -1,43 +1,43 @@
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Combobox } from '@/registry/ui/combobox'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { Button } from "@/registry/ui/button"
+import { Combobox } from "@/registry/ui/combobox"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
   ListBoxItem,
   ListBoxItemDescription,
   ListBoxItemLabel,
-} from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
+} from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
 
 const countries = [
-  { code: 'af', id: 'afghanistan', label: 'Afghanistan', continent: 'Asia' },
+  { code: "af", id: "afghanistan", label: "Afghanistan", continent: "Asia" },
   {
-    code: 'ar',
-    id: 'argentina',
-    label: 'Argentina',
-    continent: 'South America',
+    code: "ar",
+    id: "argentina",
+    label: "Argentina",
+    continent: "South America",
   },
-  { code: 'au', id: 'australia', label: 'Australia', continent: 'Oceania' },
-  { code: 'br', id: 'brazil', label: 'Brazil', continent: 'South America' },
-  { code: 'ca', id: 'canada', label: 'Canada', continent: 'North America' },
-  { code: 'fr', id: 'france', label: 'France', continent: 'Europe' },
-  { code: 'de', id: 'germany', label: 'Germany', continent: 'Europe' },
-  { code: 'in', id: 'india', label: 'India', continent: 'Asia' },
-  { code: 'jp', id: 'japan', label: 'Japan', continent: 'Asia' },
-  { code: 'tn', id: 'tunisia', label: 'Tunisia', continent: 'Africa' },
+  { code: "au", id: "australia", label: "Australia", continent: "Oceania" },
+  { code: "br", id: "brazil", label: "Brazil", continent: "South America" },
+  { code: "ca", id: "canada", label: "Canada", continent: "North America" },
+  { code: "fr", id: "france", label: "France", continent: "Europe" },
+  { code: "de", id: "germany", label: "Germany", continent: "Europe" },
+  { code: "in", id: "india", label: "India", continent: "Asia" },
+  { code: "jp", id: "japan", label: "Japan", continent: "Asia" },
+  { code: "tn", id: "tunisia", label: "Tunisia", continent: "Africa" },
   {
-    code: 'us',
-    id: 'united-states',
-    label: 'United States',
-    continent: 'North America',
+    code: "us",
+    id: "united-states",
+    label: "United States",
+    continent: "North America",
   },
   {
-    code: 'gb',
-    id: 'united-kingdom',
-    label: 'United Kingdom',
-    continent: 'Europe',
+    code: "gb",
+    id: "united-kingdom",
+    label: "United Kingdom",
+    continent: "Europe",
   },
 ]
 

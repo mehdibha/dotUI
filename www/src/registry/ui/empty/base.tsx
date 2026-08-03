@@ -1,14 +1,14 @@
-import type * as React from 'react'
-import type { VariantProps } from 'tailwind-variants'
+import type * as React from "react"
+import type { VariantProps } from "tailwind-variants"
 
-import { useStyles } from './styles'
-import type { EmptyStyles } from './styles'
+import { useStyles } from "./styles"
+import type { EmptyStyles } from "./styles"
 
 // MARK: emptyStyles
 
 // MARK: Separator
 
-interface EmptyProps extends React.ComponentProps<'div'> {}
+interface EmptyProps extends React.ComponentProps<"div"> {}
 
 const Empty = ({ className, ...props }: EmptyProps) => {
   const { base } = useStyles()()
@@ -17,7 +17,7 @@ const Empty = ({ className, ...props }: EmptyProps) => {
 
 // MARK: Separator
 
-interface EmptyHeaderProps extends React.ComponentProps<'div'> {}
+interface EmptyHeaderProps extends React.ComponentProps<"div"> {}
 
 const EmptyHeader = ({ className, ...props }: EmptyHeaderProps) => {
   const { header } = useStyles()()
@@ -32,7 +32,7 @@ const EmptyHeader = ({ className, ...props }: EmptyHeaderProps) => {
 
 // MARK: Separator
 
-interface EmptyTitleProps extends React.ComponentProps<'div'> {}
+interface EmptyTitleProps extends React.ComponentProps<"div"> {}
 
 const EmptyTitle = ({ className, ...props }: EmptyTitleProps) => {
   const { title } = useStyles()()
@@ -43,7 +43,7 @@ const EmptyTitle = ({ className, ...props }: EmptyTitleProps) => {
 
 // MARK: Separator
 
-interface EmptyDescriptionProps extends React.ComponentProps<'div'> {}
+interface EmptyDescriptionProps extends React.ComponentProps<"div"> {}
 
 const EmptyDescription = ({ className, ...props }: EmptyDescriptionProps) => {
   const { description } = useStyles()()
@@ -58,7 +58,7 @@ const EmptyDescription = ({ className, ...props }: EmptyDescriptionProps) => {
 
 // MARK: Separator
 
-interface EmptyContentProps extends React.ComponentProps<'div'> {}
+interface EmptyContentProps extends React.ComponentProps<"div"> {}
 
 const EmptyContent = ({ className, ...props }: EmptyContentProps) => {
   const { content } = useStyles()()
@@ -74,7 +74,7 @@ const EmptyContent = ({ className, ...props }: EmptyContentProps) => {
 // MARK: Separator
 
 interface EmptyMediaProps
-  extends React.ComponentProps<'div'>, VariantProps<EmptyStyles> {}
+  extends React.ComponentProps<"div">, VariantProps<EmptyStyles> {}
 const EmptyMedia = ({ variant, className, ...props }: EmptyMediaProps) => {
   const { media } = useStyles()()
   return (

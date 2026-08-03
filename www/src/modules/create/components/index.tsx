@@ -2,30 +2,30 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   SlidersHorizontalIcon,
-} from 'lucide-react'
-import * as ButtonPrimitives from 'react-aria-components/Button'
+} from "lucide-react"
+import * as ButtonPrimitives from "react-aria-components/Button"
 
-import { colorTokenNames } from '@/registry/theme'
+import { colorTokenNames } from "@/registry/theme"
 import type {
   ParamDef,
   RegistryItem,
   ScalarParamDef,
   TokenType,
-} from '@/registry/types'
-import { Button } from '@/registry/ui/button'
-import { Description, Label } from '@/registry/ui/field'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { registryUi } from '@/registry/ui/registry'
-import { Select, SelectValue } from '@/registry/ui/select'
-import { Slider, SliderControl, SliderOutput } from '@/registry/ui/slider'
+} from "@/registry/types"
+import { Button } from "@/registry/ui/button"
+import { Description, Label } from "@/registry/ui/field"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { registryUi } from "@/registry/ui/registry"
+import { Select, SelectValue } from "@/registry/ui/select"
+import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider"
 import {
   BLUR_OPTIONS,
   CURSOR_OPTIONS,
   OPACITY_OPTIONS,
   RADIUS_OPTIONS,
   SHADOW_OPTIONS,
-} from '@/publisher/token-map'
+} from "@/publisher/token-map"
 
 /* ----------------------------- Data helpers ----------------------------- */
 
@@ -49,14 +49,14 @@ export const GROUP_IDS = new Set<string>(allGroups)
 
 function toTitleCase(slug: string): string {
   return slug
-    .split('-')
+    .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ')
+    .join(" ")
 }
 
 const COMPONENT_DISPLAY_NAMES: Record<string, string> = {
-  'otp-field': 'OTP Field',
-  'qr-code': 'QR Code',
+  "otp-field": "OTP Field",
+  "qr-code": "QR Code",
 }
 
 export function getComponentDisplayName(slug: string): string {
@@ -89,7 +89,7 @@ export const paramComponents = allComponents.filter(
 /* ----------------------- Card (shared card style) ----------------------- */
 
 const cardClass =
-  'flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover focus-reset focus-visible:focus-ring'
+  "flex flex-col items-stretch gap-2 rounded-lg border bg-neutral p-3 text-sm transition-colors hover:bg-neutral-hover focus-reset focus-visible:focus-ring"
 
 /* ---------------------- All components flat view ---------------------- */
 
@@ -119,7 +119,7 @@ export function AllComponentsView({ onSelect }: AllComponentsViewProps) {
               <div className="flex items-center gap-2 text-xs text-fg-muted/60">
                 <span className="flex items-center gap-1">
                   <SlidersHorizontalIcon className="size-3" />
-                  {count} {count === 1 ? 'param' : 'params'}
+                  {count} {count === 1 ? "param" : "params"}
                 </span>
               </div>
             )}
@@ -140,8 +140,8 @@ const cursorOptions = CURSOR_OPTIONS
 
 const SPACING_REM_PER_UNIT = 0.25
 
-const colorOptions = colorTokenNames('background').map((name) => ({
-  label: toTitleCase(name.replace(/^color-/, '')),
+const colorOptions = colorTokenNames("background").map((name) => ({
+  label: toTitleCase(name.replace(/^color-/, "")),
   value: `--${name}`,
 }))
 
@@ -194,7 +194,7 @@ interface ParamEditorProps {
 }
 
 function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
-  if (def.kind === 'enum') {
+  if (def.kind === "enum") {
     return (
       <div className="flex flex-col gap-2">
         <span className="text-xs font-medium text-fg-muted">
@@ -226,7 +226,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
     )
   }
 
-  if (def.type === 'radius') {
+  if (def.type === "radius") {
     return (
       <RadiusParamSlider
         paramName={paramName}
@@ -237,7 +237,7 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
     )
   }
 
-  if (def.type === 'spacing') {
+  if (def.type === "spacing") {
     return (
       <SpacingParamSlider
         paramName={paramName}
@@ -252,11 +252,11 @@ function ParamEditor({ paramName, def, selected, onChange }: ParamEditorProps) {
     blur: blurOptions,
     color: colorOptions,
     cursor: cursorOptions,
-    'font-size': [],
+    "font-size": [],
     opacity: opacityOptions,
     shadow: shadowOptions,
   } satisfies Record<
-    Exclude<TokenType, 'radius' | 'spacing'>,
+    Exclude<TokenType, "radius" | "spacing">,
     readonly { label: string; value: string }[]
   >
   const options = optionsByType[def.type]
@@ -323,7 +323,7 @@ function RadiusParamSlider({
         step={1}
         onChange={(value) => {
           const rawIndex = Array.isArray(value) ? value[0] : value
-          if (typeof rawIndex !== 'number') return
+          if (typeof rawIndex !== "number") return
 
           const nextIndex = Math.min(
             Math.max(Math.round(rawIndex), 0),
@@ -355,7 +355,7 @@ function spacingValueToScale(value: string): number | null {
   )
   if (spacingCalcMatch?.groups) {
     const scale = Number.parseFloat(
-      spacingCalcMatch.groups.right ?? spacingCalcMatch.groups.left ?? '',
+      spacingCalcMatch.groups.right ?? spacingCalcMatch.groups.left ?? "",
     )
     if (Number.isFinite(scale)) return scale
   }
@@ -371,8 +371,8 @@ function spacingValueToScale(value: string): number | null {
   const numeric = Number.parseFloat(normalizedValue)
   if (!Number.isFinite(numeric)) return null
 
-  if (normalizedValue.endsWith('rem')) return numeric / SPACING_REM_PER_UNIT
-  if (normalizedValue.endsWith('px')) return numeric / 4
+  if (normalizedValue.endsWith("rem")) return numeric / SPACING_REM_PER_UNIT
+  if (normalizedValue.endsWith("px")) return numeric / 4
 
   return numeric
 }
@@ -411,7 +411,7 @@ function SpacingParamSlider({
         step={step}
         onChange={(value) => {
           const rawValue = Array.isArray(value) ? value[0] : value
-          if (typeof rawValue !== 'number') return
+          if (typeof rawValue !== "number") return
 
           const nextValue = Math.min(Math.max(rawValue, minValue), maxValue)
           onChange(scaleToSpacingValue(nextValue))

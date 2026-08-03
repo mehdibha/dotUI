@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
@@ -9,13 +9,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Input } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/card"
+import { Input } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
 
-export function TeamName({ className, ...props }: React.ComponentProps<'div'>) {
+export function TeamName({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <Card className={cn('', className)} {...props}>
+    <Card className={cn("", className)} {...props}>
       <CardHeader>
         <CardTitle>Team Name</CardTitle>
         <CardDescription>

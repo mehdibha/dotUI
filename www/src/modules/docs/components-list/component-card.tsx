@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { useEffect, useRef, useState } from 'react'
-import { Link } from '@tanstack/react-router'
+import { useEffect, useRef, useState } from "react"
+import { Link } from "@tanstack/react-router"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
-import { CardHoverProvider, DemoCursor } from './autoplay'
-import { componentDemos } from './demos'
+import { CardHoverProvider, DemoCursor } from "./autoplay"
+import { componentDemos } from "./demos"
 
 function ComponentPreview({
   children,
@@ -20,7 +20,7 @@ function ComponentPreview({
   return (
     <div
       className={cn(
-        'relative h-40 w-full overflow-hidden rounded-lg border bg-bg',
+        "relative h-40 w-full overflow-hidden rounded-lg border bg-bg",
         className,
       )}
     >
@@ -105,7 +105,7 @@ export function ComponentCard({
   return (
     <Link
       to="/docs/$"
-      params={{ _splat: href.replace('/docs/', '') }}
+      params={{ _splat: href.replace("/docs/", "") }}
       aria-label={name}
       data-component={slug}
       className="group flex flex-col items-center gap-3 rounded-lg focus-reset focus-visible:focus-ring"
@@ -117,7 +117,7 @@ export function ComponentCard({
       <ComponentPreview
         stageRef={stageRef}
         className={cn(
-          'w-full transition-colors group-hover:border-border-hover',
+          "w-full transition-colors group-hover:border-border-hover",
           previewClassName,
         )}
       >

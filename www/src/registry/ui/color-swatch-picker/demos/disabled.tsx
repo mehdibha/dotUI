@@ -1,7 +1,7 @@
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from '@/registry/ui/color-swatch-picker'
+} from "@/registry/ui/color-swatch-picker"
 
 export default function Demo() {
   return (

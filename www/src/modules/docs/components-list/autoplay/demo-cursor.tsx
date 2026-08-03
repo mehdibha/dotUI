@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
-import { useReducedMotion } from 'motion/react'
+import { useEffect, useState } from "react"
+import { useReducedMotion } from "motion/react"
 
-import { Pointer } from './pointer'
+import { Pointer } from "./pointer"
 
 /**
  * A decorative macOS pointer that follows whatever control the card's autoplay is
@@ -69,11 +69,11 @@ export function DemoCursor({
         return
       }
 
-      const pressedEl = firstMatch(container, '[data-pressed]')
+      const pressedEl = firstMatch(container, "[data-pressed]")
       const selectedEl =
-        firstMatch(container, '[data-selected]:not([data-disabled])') ??
+        firstMatch(container, "[data-selected]:not([data-disabled])") ??
         firstMatch(container, '[aria-current="page"]')
-      const hoveredEl = firstMatch(container, '[data-hovered]')
+      const hoveredEl = firstMatch(container, "[data-hovered]")
 
       // Where the pointer wants to be. A live press wins; otherwise a moving
       // selection; otherwise a plain hover. A selection that merely *contains* the
@@ -137,7 +137,7 @@ export function DemoCursor({
         transform: `translate(${point.x}px, ${point.y}px)`,
         opacity: shown ? 1 : 0,
         transition:
-          'transform 340ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease-out',
+          "transform 340ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease-out",
       }}
     >
       {/* Anchor the arrow tip on the target point. */}

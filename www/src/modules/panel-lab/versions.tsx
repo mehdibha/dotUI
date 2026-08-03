@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* The versions of the /create panel. Each version is the WHOLE panel — same
    chrome, its own chapter list — so they're read against each other end to
@@ -17,10 +17,10 @@ import {
   SmileIcon,
   StretchVerticalIcon,
   TypeIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
-import { IdealColorSectionBody } from './color-ideal'
-import { WorkingColorSectionBody } from './color-working'
+import { IdealColorSectionBody } from "./color-ideal"
+import { WorkingColorSectionBody } from "./color-working"
 import {
   COLOR_KEYS,
   COMPONENT_KEYS,
@@ -31,7 +31,7 @@ import {
   SPACE_KEYS_V2,
   TYPE_KEYS,
   WORKING_COLOR_KEYS,
-} from './data'
+} from "./data"
 import {
   ComponentsSectionBody,
   EffectsSectionBody,
@@ -40,42 +40,42 @@ import {
   ShapeSectionBodyV2,
   SpaceSectionBody,
   TypographySectionBody,
-} from './sections'
-import type { Chapter } from './variants/chapter'
+} from "./sections"
+import type { Chapter } from "./variants/chapter"
 
 /* The chapters every version shares so far — only Color has diverged. */
 const SHARED_CHAPTERS: Chapter[] = [
   {
-    id: 'typography',
-    label: 'Type',
+    id: "typography",
+    label: "Type",
     icon: TypeIcon,
     keys: TYPE_KEYS,
     Body: TypographySectionBody,
   },
   {
-    id: 'icons',
-    label: 'Icons',
+    id: "icons",
+    label: "Icons",
     icon: SmileIcon,
     keys: ICON_KEYS,
     Body: IconsSectionBody,
   },
   {
-    id: 'shape',
-    label: 'Shape & space',
+    id: "shape",
+    label: "Shape & space",
     icon: ShapesIcon,
     keys: SHAPE_KEYS,
     Body: ShapeSectionBody,
   },
   {
-    id: 'details',
-    label: 'Details',
+    id: "details",
+    label: "Details",
     icon: SlidersHorizontalIcon,
     keys: EFFECT_KEYS,
     Body: EffectsSectionBody,
   },
   {
-    id: 'components',
-    label: 'Components',
+    id: "components",
+    label: "Components",
     icon: BoxSelectIcon,
     keys: COMPONENT_KEYS,
     Body: ComponentsSectionBody,
@@ -92,14 +92,14 @@ export interface PanelVersion {
 
 export const PANEL_VERSIONS: PanelVersion[] = [
   {
-    id: 'v1',
-    label: 'v1',
+    id: "v1",
+    label: "v1",
     summary:
-      'The baseline. Engine-true Color section with a fixed light/dark pair.',
+      "The baseline. Engine-true Color section with a fixed light/dark pair.",
     chapters: [
       {
-        id: 'color',
-        label: 'Color',
+        id: "color",
+        label: "Color",
         icon: PaletteIcon,
         keys: COLOR_KEYS,
         Body: IdealColorSectionBody,
@@ -108,31 +108,31 @@ export const PANEL_VERSIONS: PanelVersion[] = [
     ],
   },
   {
-    id: 'v2',
-    label: 'v2 (wip)',
+    id: "v2",
+    label: "v2 (wip)",
     summary:
-      'Color modes become a user-defined set — one to many, with archetypes and per-mode contrast. Shape and Space split; radius speaks px (#575) with a nested-corner preview and a corner-shape axis.',
+      "Color modes become a user-defined set — one to many, with archetypes and per-mode contrast. Shape and Space split; radius speaks px (#575) with a nested-corner preview and a corner-shape axis.",
     chapters: [
       {
-        id: 'color',
-        label: 'Color',
+        id: "color",
+        label: "Color",
         icon: PaletteIcon,
         keys: WORKING_COLOR_KEYS,
         Body: WorkingColorSectionBody,
       },
       ...SHARED_CHAPTERS.flatMap((chapter) =>
-        chapter.id === 'shape'
+        chapter.id === "shape"
           ? [
               {
-                id: 'shape',
-                label: 'Shape',
+                id: "shape",
+                label: "Shape",
                 icon: ShapesIcon,
                 keys: SHAPE_KEYS_V2,
                 Body: ShapeSectionBodyV2,
               },
               {
-                id: 'space',
-                label: 'Space',
+                id: "space",
+                label: "Space",
                 icon: StretchVerticalIcon,
                 keys: SPACE_KEYS_V2,
                 Body: SpaceSectionBody,

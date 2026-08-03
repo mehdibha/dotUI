@@ -1,16 +1,16 @@
-import { CopyIcon, RotateCcwIcon, SearchIcon, StarIcon } from 'lucide-react'
+import { CopyIcon, RotateCcwIcon, SearchIcon, StarIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Input,
   InputGroup,
   InputGroupAddon,
   TextArea,
-} from '@/registry/ui/input'
-import { Kbd } from '@/registry/ui/kbd'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/input"
+import { Kbd } from "@/registry/ui/kbd"
+import { TextField } from "@/registry/ui/text-field"
 
-const sizes = ['sm', 'md', 'lg'] as const
+const sizes = ["sm", "md", "lg"] as const
 
 export default function Demo() {
   return (

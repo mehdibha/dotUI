@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import { useAsyncList } from 'react-stately'
+import { useAsyncList } from "react-stately"
 
-import { Loader } from '@/registry/ui/loader'
+import { Loader } from "@/registry/ui/loader"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
+} from "@/registry/ui/select"
 
 interface Pokemon {
   name: string
@@ -35,7 +35,7 @@ export default function Demo() {
       <SelectContent
         className="max-h-64 overflow-auto overscroll-none"
         items={list.items}
-        isLoading={list.loadingState === 'loadingMore'}
+        isLoading={list.loadingState === "loadingMore"}
         onLoadMore={list.loadMore}
         renderEmptyState={() => (
           <div className="flex items-center justify-center py-4">

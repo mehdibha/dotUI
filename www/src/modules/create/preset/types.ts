@@ -1,7 +1,7 @@
-import type { IconLibraryName } from '@/registry/icons/icon-map'
-import type { ColorConfig } from '@/registry/theme'
-import type { Density } from '@/registry/types'
-import type { CodeOptions } from '@/publisher/code-options'
+import type { IconLibraryName } from "@/registry/icons/icon-map"
+import type { ColorConfig } from "@/registry/theme"
+import type { Density } from "@/registry/types"
+import type { CodeOptions } from "@/publisher/code-options"
 
 export type { CodeOptions, Density, IconLibraryName }
 
@@ -45,7 +45,7 @@ export function fromCompact(state: DesignSystemState): DesignSystem {
   return {
     componentParams: state.p ?? {},
     tokens: state.t ?? {},
-    density: state.d ?? 'default',
+    density: state.d ?? "default",
     color: state.c,
     codeOptions: state.o,
     icons: state.i,

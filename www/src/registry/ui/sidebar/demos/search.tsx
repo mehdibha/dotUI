@@ -3,8 +3,8 @@ import {
   HomeIcon,
   InboxIcon,
   SettingsIcon,
-} from '@/registry/__generated__/icons'
-import { SearchField } from '@/registry/ui/search-field'
+} from "@/registry/__generated__/icons"
+import { SearchField } from "@/registry/ui/search-field"
 import {
   Sidebar,
   SidebarContent,
@@ -16,13 +16,13 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from '@/registry/ui/sidebar'
+} from "@/registry/ui/sidebar"
 
 const items = [
-  { title: 'Dashboard', icon: HomeIcon, isActive: true },
-  { title: 'Inbox', icon: InboxIcon },
-  { title: 'Calendar', icon: CalendarIcon },
-  { title: 'Settings', icon: SettingsIcon },
+  { title: "Dashboard", icon: HomeIcon, isActive: true },
+  { title: "Inbox", icon: InboxIcon },
+  { title: "Calendar", icon: CalendarIcon },
+  { title: "Settings", icon: SettingsIcon },
 ]
 
 export default function Demo() {

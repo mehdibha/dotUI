@@ -1,10 +1,10 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import AllowsMultiple from './demos/allows-multiple'
-import Basic from './demos/basic'
-import DefaultExpanded from './demos/default-expanded'
-import Disabled from './demos/disabled'
+import AllowsMultiple from "./demos/allows-multiple"
+import Basic from "./demos/basic"
+import DefaultExpanded from "./demos/default-expanded"
+import Disabled from "./demos/disabled"
 
 export default function AccordionExamples() {
   return (

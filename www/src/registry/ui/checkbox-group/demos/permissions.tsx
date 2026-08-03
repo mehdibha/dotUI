@@ -1,11 +1,11 @@
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
-import { CheckboxGroup } from '@/registry/ui/checkbox-group'
-import { Description, FieldGroup, Label } from '@/registry/ui/field'
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import { CheckboxGroup } from "@/registry/ui/checkbox-group"
+import { Description, FieldGroup, Label } from "@/registry/ui/field"
 
 export default function Demo() {
   return (
     <div className="w-full max-w-xs space-y-6">
-      <CheckboxGroup defaultValue={['email', 'push']}>
+      <CheckboxGroup defaultValue={["email", "push"]}>
         <Label>Channels</Label>
         <Description>Where we reach you.</Description>
         <FieldGroup>
@@ -23,7 +23,7 @@ export default function Demo() {
           </Checkbox>
         </FieldGroup>
       </CheckboxGroup>
-      <CheckboxGroup defaultValue={['updates', 'security']}>
+      <CheckboxGroup defaultValue={["updates", "security"]}>
         <Label>Notification types</Label>
         <Description>What we notify you about.</Description>
         <FieldGroup>

@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import { Accordion } from '@/registry/ui/accordion'
+import { Accordion } from "@/registry/ui/accordion"
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
-import { useStepAutoplay } from '../autoplay'
+import { useStepAutoplay } from "../autoplay"
 
 export function AccordionDemo() {
   const { index } = useStepAutoplay(2, { dwell: 1600 })
-  const expandedKeys = index === 0 ? ['react'] : ['nextjs']
+  const expandedKeys = index === 0 ? ["react"] : ["nextjs"]
   return (
     <Accordion
       className="w-72"

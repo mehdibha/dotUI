@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
 /* Browser for the mirrored shadcn registry directory (data.ts). Facets are
    declarative — one entry in FACETS gives you a searchable popover, live
    counts and a filter pass. Counts for a facet ignore that facet's own
    selection, so a filtered facet still shows what else you could pick. */
 
-import * as React from 'react'
+import * as React from "react"
 import {
   BuildingIcon,
   CircleHelpIcon,
@@ -17,21 +17,21 @@ import {
   UserIcon,
   UserRoundCogIcon,
   XIcon,
-} from 'lucide-react'
-import type { Selection } from 'react-aria-components'
-import { useFilter } from 'react-aria-components/Autocomplete'
-import type { SortDescriptor } from 'react-aria-components/Table'
+} from "lucide-react"
+import type { Selection } from "react-aria-components"
+import { useFilter } from "react-aria-components/Autocomplete"
+import type { SortDescriptor } from "react-aria-components/Table"
 
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
-import { Command, CommandContent, CommandItem } from '@/registry/ui/command'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Link } from '@/registry/ui/link'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { SearchField } from '@/registry/ui/search-field'
-import { Separator } from '@/registry/ui/separator'
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
+import { Command, CommandContent, CommandItem } from "@/registry/ui/command"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Link } from "@/registry/ui/link"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { SearchField } from "@/registry/ui/search-field"
+import { Separator } from "@/registry/ui/separator"
 import {
   Table,
   TableBody,
@@ -40,17 +40,17 @@ import {
   TableContainer,
   TableHeader,
   TableRow,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
-import { registries, type Maintainer, type Registry } from './data'
+import { registries, type Maintainer, type Registry } from "./data"
 
 type BadgeVariant =
-  | 'accent'
-  | 'danger'
-  | 'info'
-  | 'neutral'
-  | 'success'
-  | 'warning'
+  | "accent"
+  | "danger"
+  | "info"
+  | "neutral"
+  | "success"
+  | "warning"
 
 interface Option {
   value: string
@@ -61,23 +61,23 @@ const MAINTAINERS: (Option & {
   variant: BadgeVariant
   icon: typeof UserIcon
 })[] = [
-  { value: 'company', label: 'Company', variant: 'accent', icon: BuildingIcon },
+  { value: "company", label: "Company", variant: "accent", icon: BuildingIcon },
   {
-    value: 'solo-business',
-    label: 'Solo business',
-    variant: 'warning',
+    value: "solo-business",
+    label: "Solo business",
+    variant: "warning",
     icon: UserRoundCogIcon,
   },
   {
-    value: 'individual',
-    label: 'Individual',
-    variant: 'neutral',
+    value: "individual",
+    label: "Individual",
+    variant: "neutral",
     icon: UserIcon,
   },
   {
-    value: 'unclear',
-    label: 'Unclear',
-    variant: 'info',
+    value: "unclear",
+    label: "Unclear",
+    variant: "info",
     icon: CircleHelpIcon,
   },
 ]
@@ -87,81 +87,81 @@ const MAINTAINER_BY_VALUE = Object.fromEntries(
 ) as Record<Maintainer, (typeof MAINTAINERS)[number]>
 
 const CATEGORIES: Option[] = [
-  { value: 'components', label: 'Components' },
-  { value: 'blocks', label: 'Blocks & templates' },
-  { value: 'animations', label: 'Animations' },
-  { value: 'icons', label: 'Icons' },
-  { value: 'charts', label: 'Charts' },
-  { value: 'ai', label: 'AI & agents' },
-  { value: 'editor', label: 'Editors' },
-  { value: 'forms', label: 'Forms' },
-  { value: 'media', label: 'Media' },
-  { value: 'maps', label: 'Maps' },
-  { value: '3d', label: '3D' },
-  { value: 'product-sdk', label: 'Product SDK' },
-  { value: 'theming', label: 'Theming' },
-  { value: 'utilities', label: 'Utilities' },
-  { value: 'specialty', label: 'Specialty' },
+  { value: "components", label: "Components" },
+  { value: "blocks", label: "Blocks & templates" },
+  { value: "animations", label: "Animations" },
+  { value: "icons", label: "Icons" },
+  { value: "charts", label: "Charts" },
+  { value: "ai", label: "AI & agents" },
+  { value: "editor", label: "Editors" },
+  { value: "forms", label: "Forms" },
+  { value: "media", label: "Media" },
+  { value: "maps", label: "Maps" },
+  { value: "3d", label: "3D" },
+  { value: "product-sdk", label: "Product SDK" },
+  { value: "theming", label: "Theming" },
+  { value: "utilities", label: "Utilities" },
+  { value: "specialty", label: "Specialty" },
 ]
 
 const ENTITY_KINDS: Option[] = [
-  { value: 'big-tech', label: 'Big tech' },
-  { value: 'startup-saas', label: 'SaaS startup' },
-  { value: 'product-company', label: 'Product company' },
-  { value: 'agency-studio', label: 'Agency / studio' },
-  { value: 'oss-org', label: 'Open-source org' },
-  { value: 'solo-business', label: 'Solo business' },
-  { value: 'individual', label: 'Individual' },
-  { value: 'unknown', label: 'Unknown' },
+  { value: "big-tech", label: "Big tech" },
+  { value: "startup-saas", label: "SaaS startup" },
+  { value: "product-company", label: "Product company" },
+  { value: "agency-studio", label: "Agency / studio" },
+  { value: "oss-org", label: "Open-source org" },
+  { value: "solo-business", label: "Solo business" },
+  { value: "individual", label: "Individual" },
+  { value: "unknown", label: "Unknown" },
 ]
 
 const FRAMEWORKS: Option[] = [
-  { value: 'react', label: 'React' },
-  { value: 'vue', label: 'Vue' },
-  { value: 'svelte', label: 'Svelte' },
-  { value: 'solid', label: 'Solid' },
-  { value: 'angular', label: 'Angular' },
-  { value: 'other', label: 'Other' },
+  { value: "react", label: "React" },
+  { value: "vue", label: "Vue" },
+  { value: "svelte", label: "Svelte" },
+  { value: "solid", label: "Solid" },
+  { value: "angular", label: "Angular" },
+  { value: "other", label: "Other" },
 ]
 
 const BASES: Option[] = [
-  { value: 'shadcn', label: 'shadcn/ui' },
-  { value: 'radix', label: 'Radix' },
-  { value: 'base-ui', label: 'Base UI' },
-  { value: 'react-aria', label: 'React Aria' },
-  { value: 'none', label: 'No headless layer' },
-  { value: 'unknown', label: 'Unknown' },
+  { value: "shadcn", label: "shadcn/ui" },
+  { value: "radix", label: "Radix" },
+  { value: "base-ui", label: "Base UI" },
+  { value: "react-aria", label: "React Aria" },
+  { value: "none", label: "No headless layer" },
+  { value: "unknown", label: "Unknown" },
 ]
 
 const PRICINGS: Option[] = [
-  { value: 'free', label: 'Free' },
-  { value: 'freemium', label: 'Freemium' },
-  { value: 'paid', label: 'Paid' },
-  { value: 'unknown', label: 'Unknown' },
+  { value: "free", label: "Free" },
+  { value: "freemium", label: "Freemium" },
+  { value: "paid", label: "Paid" },
+  { value: "unknown", label: "Unknown" },
 ]
 
 const CONFIDENCES: Option[] = [
-  { value: 'high', label: 'High' },
-  { value: 'medium', label: 'Medium' },
-  { value: 'low', label: 'Low' },
+  { value: "high", label: "High" },
+  { value: "medium", label: "Medium" },
+  { value: "low", label: "Low" },
 ]
 
 const TAGS: Option[] = [
-  { value: 'open-source', label: 'Open source' },
-  { value: 'marketing', label: 'Marketing' },
-  { value: 'dashboard', label: 'Dashboard' },
-  { value: 'accessibility', label: 'Accessibility' },
-  { value: 'minimal', label: 'Minimal' },
-  { value: 'playful', label: 'Playful' },
-  { value: 'brutalism', label: 'Brutalism' },
-  { value: 'glass', label: 'Glass' },
-  { value: 'retro', label: 'Retro' },
-  { value: 'clay', label: 'Clay' },
-  { value: 'terminal', label: 'Terminal' },
-  { value: 'web3', label: 'Web3' },
-  { value: 'mobile', label: 'Mobile' },
-  { value: 'gsap', label: 'GSAP' },
-  { value: 'tailwind-v4', label: 'Tailwind v4' },
+  { value: "open-source", label: "Open source" },
+  { value: "marketing", label: "Marketing" },
+  { value: "dashboard", label: "Dashboard" },
+  { value: "accessibility", label: "Accessibility" },
+  { value: "minimal", label: "Minimal" },
+  { value: "playful", label: "Playful" },
+  { value: "brutalism", label: "Brutalism" },
+  { value: "glass", label: "Glass" },
+  { value: "retro", label: "Retro" },
+  { value: "clay", label: "Clay" },
+  { value: "terminal", label: "Terminal" },
+  { value: "web3", label: "Web3" },
+  { value: "mobile", label: "Mobile" },
+  { value: "gsap", label: "GSAP" },
+  { value: "tailwind-v4", label: "Tailwind v4" },
 ]
 
 interface Facet {
@@ -173,40 +173,40 @@ interface Facet {
 
 const FACETS: Facet[] = [
   {
-    id: 'maintainer',
-    title: 'Maintainer',
+    id: "maintainer",
+    title: "Maintainer",
     options: MAINTAINERS,
     values: (r) => [r.maintainer],
   },
   {
-    id: 'entityKind',
-    title: 'Org type',
+    id: "entityKind",
+    title: "Org type",
     options: ENTITY_KINDS,
     values: (r) => [r.entityKind],
   },
   {
-    id: 'category',
-    title: 'Library type',
+    id: "category",
+    title: "Library type",
     options: CATEGORIES,
     values: (r) => [r.category],
   },
   {
-    id: 'framework',
-    title: 'Framework',
+    id: "framework",
+    title: "Framework",
     options: FRAMEWORKS,
     values: (r) => r.frameworks,
   },
-  { id: 'base', title: 'Built on', options: BASES, values: (r) => [r.base] },
+  { id: "base", title: "Built on", options: BASES, values: (r) => [r.base] },
   {
-    id: 'pricing',
-    title: 'Pricing',
+    id: "pricing",
+    title: "Pricing",
     options: PRICINGS,
     values: (r) => [r.pricing],
   },
-  { id: 'tags', title: 'Tags', options: TAGS, values: (r) => r.tags },
+  { id: "tags", title: "Tags", options: TAGS, values: (r) => r.tags },
   {
-    id: 'confidence',
-    title: 'Audit confidence',
+    id: "confidence",
+    title: "Audit confidence",
     options: CONFIDENCES,
     values: (r) => [r.confidence],
   },
@@ -214,7 +214,7 @@ const FACETS: Facet[] = [
 
 const MAINTAINER_RANK: Record<Maintainer, number> = {
   company: 0,
-  'solo-business': 1,
+  "solo-business": 1,
   individual: 2,
   unclear: 3,
 }
@@ -233,8 +233,8 @@ interface Column {
 
 const COLUMNS: Column[] = [
   {
-    id: 'name',
-    name: 'Registry',
+    id: "name",
+    name: "Registry",
     width: 190,
     minWidth: 150,
     isRowHeader: true,
@@ -254,16 +254,16 @@ const COLUMNS: Column[] = [
     ),
   },
   {
-    id: 'summary',
-    name: 'What it is',
+    id: "summary",
+    name: "What it is",
     width: 340,
     minWidth: 220,
     sortValue: (r) => r.summary,
     cell: (r) => <span className="truncate text-fg-muted">{r.summary}</span>,
   },
   {
-    id: 'category',
-    name: 'Type',
+    id: "category",
+    name: "Type",
     width: 140,
     minWidth: 110,
     sortValue: (r) => r.category,
@@ -274,8 +274,8 @@ const COLUMNS: Column[] = [
     ),
   },
   {
-    id: 'maintainer',
-    name: 'Maintainer',
+    id: "maintainer",
+    name: "Maintainer",
     width: 150,
     minWidth: 120,
     sortValue: (r) => MAINTAINER_RANK[r.maintainer],
@@ -292,16 +292,16 @@ const COLUMNS: Column[] = [
     },
   },
   {
-    id: 'entity',
-    name: 'Built by',
+    id: "entity",
+    name: "Built by",
     width: 230,
     minWidth: 160,
     sortValue: (r) => r.entity.toLowerCase(),
     cell: (r) => <span className="truncate">{r.entity}</span>,
   },
   {
-    id: 'entityKind',
-    name: 'Org type',
+    id: "entityKind",
+    name: "Org type",
     width: 150,
     minWidth: 110,
     hiddenByDefault: true,
@@ -313,20 +313,20 @@ const COLUMNS: Column[] = [
     ),
   },
   {
-    id: 'frameworks',
-    name: 'Framework',
+    id: "frameworks",
+    name: "Framework",
     width: 130,
     minWidth: 100,
-    sortValue: (r) => r.frameworks.join(','),
+    sortValue: (r) => r.frameworks.join(","),
     cell: (r) => (
       <span className="truncate text-fg-muted">
-        {r.frameworks.map((f) => labelOf(FRAMEWORKS, f)).join(', ')}
+        {r.frameworks.map((f) => labelOf(FRAMEWORKS, f)).join(", ")}
       </span>
     ),
   },
   {
-    id: 'base',
-    name: 'Built on',
+    id: "base",
+    name: "Built on",
     width: 130,
     minWidth: 100,
     hiddenByDefault: true,
@@ -336,18 +336,18 @@ const COLUMNS: Column[] = [
     ),
   },
   {
-    id: 'pricing',
-    name: 'Pricing',
+    id: "pricing",
+    name: "Pricing",
     width: 120,
     minWidth: 90,
     sortValue: (r) => r.pricing,
     cell: (r) =>
-      r.pricing === 'unknown' ? (
+      r.pricing === "unknown" ? (
         <span className="text-fg-muted">—</span>
       ) : (
         <Badge
           appearance="subtle"
-          variant={r.pricing === 'free' ? 'success' : 'warning'}
+          variant={r.pricing === "free" ? "success" : "warning"}
           className="font-normal"
         >
           {labelOf(PRICINGS, r.pricing)}
@@ -355,21 +355,21 @@ const COLUMNS: Column[] = [
       ),
   },
   {
-    id: 'tags',
-    name: 'Tags',
+    id: "tags",
+    name: "Tags",
     width: 220,
     minWidth: 140,
     hiddenByDefault: true,
-    sortValue: (r) => r.tags.join(','),
+    sortValue: (r) => r.tags.join(","),
     cell: (r) => (
       <span className="truncate text-fg-muted">
-        {r.tags.length > 0 ? r.tags.join(' · ') : '—'}
+        {r.tags.length > 0 ? r.tags.join(" · ") : "—"}
       </span>
     ),
   },
   {
-    id: 'confidence',
-    name: 'Confidence',
+    id: "confidence",
+    name: "Confidence",
     width: 120,
     minWidth: 100,
     hiddenByDefault: true,
@@ -381,8 +381,8 @@ const COLUMNS: Column[] = [
     ),
   },
   {
-    id: 'details',
-    name: 'Details',
+    id: "details",
+    name: "Details",
     width: 48,
     minWidth: 48,
     alwaysVisible: true,
@@ -398,17 +398,17 @@ const DEFAULT_VISIBLE = new Set(
 
 export function RegistriesPage() {
   const { contains } = useFilter({
-    sensitivity: 'base',
+    sensitivity: "base",
     ignorePunctuation: true,
   })
-  const [query, setQuery] = React.useState('')
+  const [query, setQuery] = React.useState("")
   const [selections, setSelections] = React.useState<
     Record<string, Set<string>>
   >({})
   const [visibleIds, setVisibleIds] = React.useState(DEFAULT_VISIBLE)
   const [sort, setSort] = React.useState<SortDescriptor>({
-    column: 'maintainer',
-    direction: 'ascending',
+    column: "maintainer",
+    direction: "ascending",
   })
 
   const searched = React.useMemo(
@@ -441,13 +441,13 @@ export function RegistriesPage() {
     const column = COLUMNS.find((candidate) => candidate.id === sort.column)
     if (!column?.sortValue) return rows
     const { sortValue } = column
-    const direction = sort.direction === 'descending' ? -1 : 1
+    const direction = sort.direction === "descending" ? -1 : 1
 
     return [...rows].sort((a, b) => {
       const left = sortValue(a)
       const right = sortValue(b)
       const order =
-        typeof left === 'number' && typeof right === 'number'
+        typeof left === "number" && typeof right === "number"
           ? left - right
           : String(left).localeCompare(String(right))
       return (order || a.name.localeCompare(b.name)) * direction
@@ -461,7 +461,7 @@ export function RegistriesPage() {
       ),
     [visibleIds],
   )
-  const columnKey = visibleColumns.map((column) => column.id).join(':')
+  const columnKey = visibleColumns.map((column) => column.id).join(":")
   const dependencies = React.useMemo(() => [columnKey], [columnKey])
 
   const activeFilterCount = Object.values(selections).reduce(
@@ -474,7 +474,7 @@ export function RegistriesPage() {
     setSelections((current) => {
       const next = { ...current }
       const values =
-        keys === 'all' ? new Set<string>() : new Set([...keys].map(String))
+        keys === "all" ? new Set<string>() : new Set([...keys].map(String))
       if (values.size === 0) delete next[facetId]
       else next[facetId] = values
       return next
@@ -495,7 +495,7 @@ export function RegistriesPage() {
 
   const reset = React.useCallback(() => {
     setSelections({})
-    setQuery('')
+    setQuery("")
   }, [])
 
   return (
@@ -503,7 +503,7 @@ export function RegistriesPage() {
       <header className="flex flex-col gap-2">
         <h1 className="text-xl font-semibold">shadcn registry directory</h1>
         <p className="max-w-3xl text-sm text-fg-muted">
-          All {registries.length} registries in{' '}
+          All {registries.length} registries in{" "}
           <Link
             href="https://ui.shadcn.com/docs/directory"
             target="_blank"
@@ -511,7 +511,7 @@ export function RegistriesPage() {
           >
             ui.shadcn.com/docs/directory
           </Link>
-          , each audited for who actually maintains it. Install any of them with{' '}
+          , each audited for who actually maintains it. Install any of them with{" "}
           <code className="rounded-sm bg-muted px-1 py-0.5 font-mono text-xs">
             npx shadcn add @name/item
           </code>
@@ -526,7 +526,7 @@ export function RegistriesPage() {
               <Button
                 key={option.value}
                 size="sm"
-                variant={isActive ? 'primary' : 'secondary'}
+                variant={isActive ? "primary" : "secondary"}
                 onPress={() => toggleMaintainer(option.value)}
               >
                 <Icon />
@@ -592,7 +592,7 @@ export function RegistriesPage() {
                 width={column.width}
                 minWidth={column.minWidth}
               >
-                {column.id === 'details' ? (
+                {column.id === "details" ? (
                   <span className="sr-only">{column.name}</span>
                 ) : (
                   column.name
@@ -603,7 +603,7 @@ export function RegistriesPage() {
           <TableBody
             items={sortedRows}
             dependencies={dependencies}
-            renderEmptyState={() => 'No registry matches these filters.'}
+            renderEmptyState={() => "No registry matches these filters."}
           >
             {(registry) => (
               <TableRow
@@ -672,7 +672,7 @@ function FacetFilter({
                   No option found
                 </div>
               )}
-              style={{ maxHeight: 300, overflowY: 'auto' }}
+              style={{ maxHeight: 300, overflowY: "auto" }}
             >
               {options.map((option) => (
                 <CommandItem
@@ -731,7 +731,7 @@ function ColumnsMenu({
           selectedKeys={visibleIds}
           onSelectionChange={(keys) =>
             onChange(
-              keys === 'all'
+              keys === "all"
                 ? new Set(hideable.map((column) => column.id))
                 : new Set([...keys].map(String)),
             )
@@ -795,7 +795,7 @@ function DetailsPopover({ registry }: { registry: Registry }) {
             rel="noreferrer"
             className="text-sm"
           >
-            {registry.homepage.replace(/^https?:\/\//, '')}
+            {registry.homepage.replace(/^https?:\/\//, "")}
             <ExternalLinkIcon className="size-3.5" />
           </Link>
         </DialogContent>
@@ -823,8 +823,8 @@ function searchTextOf(registry: Registry) {
     registry.entity,
     registry.summary,
     registry.description,
-    registry.tags.join(' '),
-  ].join(' ')
+    registry.tags.join(" "),
+  ].join(" ")
 }
 
 function applyFacets(

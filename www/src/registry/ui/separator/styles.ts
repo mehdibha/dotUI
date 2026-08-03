@@ -1,18 +1,18 @@
-import { createStyles } from '@/lib/styles'
+import { createStyles } from "@/lib/styles"
 
-import separatorMeta from './meta'
+import separatorMeta from "./meta"
 
 const { useStyles, styles } = createStyles(separatorMeta, {
   base: {
-    base: 'separator shrink-0 border-0 bg-border-muted',
+    base: "separator shrink-0 border-0 bg-border-muted",
     variants: {
       orientation: {
-        horizontal: 'h-px w-full',
-        vertical: 'h-full w-px',
+        horizontal: "h-px w-full",
+        vertical: "h-full w-px",
       },
     },
     defaultVariants: {
-      orientation: 'horizontal',
+      orientation: "horizontal",
     },
   },
   density: {

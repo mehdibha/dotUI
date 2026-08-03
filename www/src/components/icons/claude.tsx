@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react'
+import type { SVGProps } from "react"
 
 // Official Claude (claude.ai / Anthropic) spark, via svgl. Single-path,
 // monochrome — tints with `currentColor`.

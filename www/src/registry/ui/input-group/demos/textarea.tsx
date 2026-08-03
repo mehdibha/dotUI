@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
 import {
   ArrowUpIcon,
   CodeIcon,
   CopyIcon,
   InfoIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Description, Label } from '@/registry/ui/field'
-import { InputGroup, InputGroupAddon, TextArea } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Description, Label } from "@/registry/ui/field"
+import { InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   return (

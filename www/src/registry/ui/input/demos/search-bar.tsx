@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { SearchIcon, XIcon } from 'lucide-react'
+import { useState } from "react"
+import { SearchIcon, XIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
+import { Button } from "@/registry/ui/button"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState("")
   return (
     <TextField
       aria-label="Search members"
@@ -27,7 +27,7 @@ export default function Demo() {
               variant="quiet"
               isIconOnly
               aria-label="Clear search"
-              onPress={() => setValue('')}
+              onPress={() => setValue("")}
             >
               <XIcon />
             </Button>

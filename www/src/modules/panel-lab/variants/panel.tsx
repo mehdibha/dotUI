@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* The panel chrome — the CURRENT /create layout (control-panel.tsx): every
    section its own bordered card in a story scroll, floating glass header and
@@ -6,13 +6,13 @@
    its own chapter list (see versions.tsx), so the chrome is shared and only
    the sections differ between versions. */
 
-import { ChevronsUpDownIcon, SearchIcon } from 'lucide-react'
+import { ChevronsUpDownIcon, SearchIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 
-import type { Lab } from '../data'
-import { ChapterCard } from './chapter'
-import type { Chapter } from './chapter'
+import type { Lab } from "../data"
+import { ChapterCard } from "./chapter"
+import type { Chapter } from "./chapter"
 
 export function PanelFrame({
   chapters,

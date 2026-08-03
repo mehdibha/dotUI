@@ -1,14 +1,14 @@
-import { GlobeIcon } from 'lucide-react'
+import { GlobeIcon } from "lucide-react"
 
-import { Combobox } from '@/registry/ui/combobox'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { Combobox } from "@/registry/ui/combobox"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
+} from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (

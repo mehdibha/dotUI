@@ -16,29 +16,29 @@
  * content through `oxfmt.format` since that's async and route-side.
  */
 
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 // Relative import: the publisher sits in vite.config's module graph, where
 // value imports through the `@/` alias break vitest/vite startup.
-import { STYLE_VAR_DEFAULTS } from '../registry/__generated__/style-var-defaults'
+import { STYLE_VAR_DEFAULTS } from "../registry/__generated__/style-var-defaults"
 import {
   applySectionComments,
   DEFAULT_CODE_OPTIONS,
   flattenClassArrays,
-} from './code-options'
-import { flatten } from './flatten'
+} from "./code-options"
+import { flatten } from "./flatten"
 import {
   buildScalarVarMap,
   buildStyleVarMap,
   pruneResolvedCssVars,
   resolveClasses,
   rewriteClassString,
-} from './resolve-classes'
-import { resolveIconImports } from './resolve-icons'
-import { serializeTvConfig } from './serialize'
-import type { Publishable, PublishPreset } from './types'
+} from "./resolve-classes"
+import { resolveIconImports } from "./resolve-icons"
+import { serializeTvConfig } from "./serialize"
+import type { Publishable, PublishPreset } from "./types"
 
-export const TV_CONFIG_PLACEHOLDER = '%%TV_CONFIG%%'
+export const TV_CONFIG_PLACEHOLDER = "%%TV_CONFIG%%"
 
 /**
  * Names of registry items that live in the dotui registry — i.e. anything
@@ -56,7 +56,7 @@ let knownDotuiNames: Set<string> | undefined
 let dotuiOrigin: string | undefined
 
 /** Query string (including leading `?`) appended to dep URLs, e.g. `?preset=…`. */
-let dotuiDepQuery = ''
+let dotuiDepQuery = ""
 
 /**
  * Names of registry items the consumer already has from the init bundle.
@@ -65,11 +65,11 @@ let dotuiDepQuery = ''
  */
 export const BUNDLED_INTO_INIT = new Set([
   // focus-ring / focus-reset / focus-input utilities ship in base.css.
-  'focus-styles',
+  "focus-styles",
   // @theme blocks ship in theme.css.
-  'theme',
+  "theme",
   // cn() helper ships as `src/lib/utils.ts` in the init item.
-  'utils',
+  "utils",
 ])
 
 export function setKnownDotuiNames(names: Iterable<string>): void {
@@ -85,8 +85,8 @@ export function setKnownDotuiNames(names: Iterable<string>): void {
  *
  * Called once per request from the route handler.
  */
-export function setDotuiDepResolver(origin: string, depQuery = ''): void {
-  dotuiOrigin = origin.replace(/\/$/, '')
+export function setDotuiDepResolver(origin: string, depQuery = ""): void {
+  dotuiOrigin = origin.replace(/\/$/, "")
   dotuiDepQuery = depQuery
 }
 
@@ -98,12 +98,12 @@ function rewriteDeps(deps: readonly string[] | undefined): string[] {
     // Drop deps that the consumer already has from the init bundle.
     if (BUNDLED_INTO_INIT.has(dep)) continue
     // Already a fully-qualified URL? leave alone.
-    if (dep.includes('://')) {
+    if (dep.includes("://")) {
       out.push(dep)
       continue
     }
     // Already namespaced (e.g. `@dotui/loader`)? leave alone.
-    if (dep.startsWith('@')) {
+    if (dep.startsWith("@")) {
       out.push(dep)
       continue
     }
@@ -124,15 +124,15 @@ function rewriteDeps(deps: readonly string[] | undefined): string[] {
  * historically omit them (icons especially), which breaks fresh consumers.
  */
 const FILE_IMPORT_NPM_DEPS = [
-  'lucide-react',
-  'react-aria-components',
-  'react-aria',
-  'react-stately',
-  '@remixicon/react',
-  '@tabler/icons-react',
-  '@hugeicons/react',
-  '@hugeicons/core-free-icons',
-  '@phosphor-icons/react',
+  "lucide-react",
+  "react-aria-components",
+  "react-aria",
+  "react-stately",
+  "@remixicon/react",
+  "@tabler/icons-react",
+  "@hugeicons/react",
+  "@hugeicons/core-free-icons",
+  "@phosphor-icons/react",
 ]
 
 export function depsFromFileImports(
@@ -141,7 +141,7 @@ export function depsFromFileImports(
   const found: string[] = []
   for (const pkg of FILE_IMPORT_NPM_DEPS) {
     const hit = files.some((file) => {
-      const content = file.content ?? ''
+      const content = file.content ?? ""
       return ['"', "'"].some(
         (q) =>
           content.includes(`${q}${pkg}${q}`) || content.includes(`${q}${pkg}/`),
@@ -171,7 +171,7 @@ export function selectPublishable(
   const selections = preset.componentParams[meta.name] ?? {}
 
   for (const [paramName, def] of Object.entries(meta.params ?? {})) {
-    if (def.kind !== 'enum' || !def.files) continue
+    if (def.kind !== "enum" || !def.files) continue
     const value = selections[paramName] ?? def.default
     const filesForValue = def.files[value]
     const targetFile = filesForValue?.[0]
@@ -242,7 +242,7 @@ export function publish({
 
   // 4c. Resolve the `@/components/icons` marker import to the preset's icon
   // library. Always runs — consumers have no such module.
-  const iconOptions = { weight: preset.tokens?.['--icon-weight'] }
+  const iconOptions = { weight: preset.tokens?.["--icon-weight"] }
   content = resolveIconImports(content, preset.icons, iconOptions)
 
   // 4d. Surface-var refs can also sit in base.tsx markup outside the tv
@@ -271,9 +271,9 @@ export function publish({
   // 5a. Drop styles.css declarations the rewrite made dead. Anything still
   // referenced (calc() chains, plain var() reads) keeps shipping.
   const externalCorpus = [
-    ...files.map((file) => file.content ?? ''),
-    meta.cssVars ? JSON.stringify(meta.cssVars) : '',
-  ].join('\n')
+    ...files.map((file) => file.content ?? ""),
+    meta.cssVars ? JSON.stringify(meta.cssVars) : "",
+  ].join("\n")
   const css = pruneResolvedCssVars(
     meta.css,
     new Set(varMap.keys()),

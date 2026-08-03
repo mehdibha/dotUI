@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
+import type * as React from "react"
 
-import { useIsMobile } from '@/registry/hooks/use-mobile'
+import { useIsMobile } from "@/registry/hooks/use-mobile"
 
 export interface ResponsiveProps {
   /**

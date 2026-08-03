@@ -5,12 +5,12 @@ import {
   MessageSquareIcon,
   SettingsIcon,
   UserIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { Separator } from '@/registry/ui/separator'
+import { Button } from "@/registry/ui/button"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

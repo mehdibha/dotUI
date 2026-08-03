@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { useMemo } from 'react'
+import { useMemo } from "react"
 import {
   ChevronDownIcon,
   PaletteIcon,
@@ -8,62 +8,62 @@ import {
   SlidersHorizontalIcon,
   SmileIcon,
   TypeIcon,
-} from 'lucide-react'
-import { useTheme } from 'starter-themes'
+} from "lucide-react"
+import { useTheme } from "starter-themes"
 
-import { STEPS } from '@dotui/colors'
+import { STEPS } from "@dotui/colors"
 
-import { FONT_HEADING_VAR, FONT_MONO_VAR, FONT_SANS_VAR } from '@/lib/fonts'
-import { resolveColorConfigCached } from '@/lib/resolve-color'
-import * as icons from '@/registry/__generated__/icons'
+import { FONT_HEADING_VAR, FONT_MONO_VAR, FONT_SANS_VAR } from "@/lib/fonts"
+import { resolveColorConfigCached } from "@/lib/resolve-color"
+import * as icons from "@/registry/__generated__/icons"
 import {
   IconLibraryContext,
   IconWeightContext,
-} from '@/registry/icons/create-icon'
-import { iconLibraries, phosphorWeights } from '@/registry/icons/icon-map'
-import type { IconLibraryName, PhosphorWeight } from '@/registry/icons/icon-map'
+} from "@/registry/icons/create-icon"
+import { iconLibraries, phosphorWeights } from "@/registry/icons/icon-map"
+import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
 import {
   DEFAULT_COLOR_CONFIG,
   DEFAULT_STATUS_SEEDS,
   PALETTE_ORDER,
-} from '@/registry/theme'
-import type { PaletteSeeds } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
-import { ColorArea } from '@/registry/ui/color-area'
-import { ColorField } from '@/registry/ui/color-field'
-import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSlider } from '@/registry/ui/color-slider'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
-import { DialogContent } from '@/registry/ui/dialog'
+} from "@/registry/theme"
+import type { PaletteSeeds } from "@/registry/theme"
+import { Button } from "@/registry/ui/button"
+import { ColorArea } from "@/registry/ui/color-area"
+import { ColorField } from "@/registry/ui/color-field"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import { ColorSlider } from "@/registry/ui/color-slider"
+import { ColorSwatch } from "@/registry/ui/color-swatch"
+import { DialogContent } from "@/registry/ui/dialog"
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { Select, SelectValue } from '@/registry/ui/select'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/disclosure"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { Select, SelectValue } from "@/registry/ui/select"
+import { TextField } from "@/registry/ui/text-field"
 
-import { ContrastReadout } from '../colors/contrast'
-import { ColorFineTuneControls, useBorderSeeds } from '../colors/knobs'
+import { ContrastReadout } from "../colors/contrast"
+import { ColorFineTuneControls, useBorderSeeds } from "../colors/knobs"
 import {
   CURSOR_DISABLED_VAR,
   CURSOR_INTERACTIVE_VAR,
   DEFAULT_CURSOR_DISABLED,
   DEFAULT_CURSOR_INTERACTIVE,
-} from '../cursor'
+} from "../cursor"
 import {
   ICON_STROKE_WIDTH_VAR,
   ICON_WEIGHT_VAR,
   STROKE_DEFAULTS,
-} from '../iconography'
-import { DEFAULT_RADIUS, RADIUS_VAR } from '../layout'
-import { useDesignSystem } from '../preset'
-import { FontPicker, useTypography } from '../typography'
-import { InlineRow, Segmented, ValueSlider } from './primitives'
-import type { Control, Section } from './types'
+} from "../iconography"
+import { DEFAULT_RADIUS, RADIUS_VAR } from "../layout"
+import { useDesignSystem } from "../preset"
+import { FontPicker, useTypography } from "../typography"
+import { InlineRow, Segmented, ValueSlider } from "./primitives"
+import type { Control, Section } from "./types"
 
 /* ----------------------------------------------------------------------------
  * Every control writes into the existing DesignSystem state and maps to a token
@@ -88,7 +88,7 @@ function useResolvedScales() {
   return {
     config,
     theme,
-    scales: resolvedTheme === 'dark' ? theme.dark.scales : theme.light.scales,
+    scales: resolvedTheme === "dark" ? theme.dark.scales : theme.light.scales,
   }
 }
 
@@ -97,9 +97,9 @@ function useResolvedScales() {
 /** Picker fallbacks for seeds the default config leaves absent (engine-derived). */
 const SEED_FALLBACKS: Record<keyof PaletteSeeds, string> = {
   accent: DEFAULT_COLOR_CONFIG.seeds.accent,
-  neutral: '#808080',
+  neutral: "#808080",
   // Absent by default (selection mirrors primary); a blue stands in for the picker.
-  selection: '#0072f5',
+  selection: "#0072f5",
   ...DEFAULT_STATUS_SEEDS,
 }
 
@@ -122,7 +122,7 @@ export function SeedField({
   return (
     <ColorPicker
       value={value}
-      onChange={(c) => setColorSeed(seed, c.toString('hex'))}
+      onChange={(c) => setColorSeed(seed, c.toString("hex"))}
     >
       {({ color }) => (
         <>
@@ -133,7 +133,7 @@ export function SeedField({
             </span>
             {!compact && (
               <span className="shrink-0 font-mono text-xs text-fg">
-                {color.toString('hex')}
+                {color.toString("hex")}
               </span>
             )}
           </Button>
@@ -168,7 +168,7 @@ function ColorRampsVisual() {
   const { scales } = useResolvedScales()
   return (
     <div className="flex flex-col gap-1">
-      {(['accent', 'neutral'] as const).map((palette) => {
+      {(["accent", "neutral"] as const).map((palette) => {
         const scale = scales[palette]
         if (!scale) return null
         return (
@@ -193,10 +193,10 @@ function ColorRampsVisual() {
 
 function StatusColorsWidget() {
   const status: Array<{ seed: keyof PaletteSeeds; label: string }> = [
-    { seed: 'success', label: 'Success' },
-    { seed: 'warning', label: 'Warning' },
-    { seed: 'danger', label: 'Danger' },
-    { seed: 'info', label: 'Info' },
+    { seed: "success", label: "Success" },
+    { seed: "warning", label: "Warning" },
+    { seed: "danger", label: "Danger" },
+    { seed: "info", label: "Info" },
   ]
   return (
     <div className="grid grid-cols-2 gap-2">
@@ -260,13 +260,13 @@ function GrayStrategyWidget() {
     <InlineRow label="Gray">
       <Segmented
         ariaLabel="Gray strategy"
-        value={config.neutralTint === 0 ? 'pure' : 'tinted'}
+        value={config.neutralTint === 0 ? "pure" : "tinted"}
         onChange={(v) =>
-          setColorAxis('neutralTint', v === 'pure' ? 0 : undefined)
+          setColorAxis("neutralTint", v === "pure" ? 0 : undefined)
         }
         options={[
-          { value: 'pure', label: 'Pure' },
-          { value: 'tinted', label: 'Tinted' },
+          { value: "pure", label: "Pure" },
+          { value: "tinted", label: "Tinted" },
         ]}
       />
     </InlineRow>
@@ -280,11 +280,11 @@ function PrimarySourceWidget() {
     <InlineRow label="Primary">
       <Segmented
         ariaLabel="Primary color"
-        value={config.primary ?? 'neutral'}
-        onChange={(v) => setColorPrimary(v === 'accent' ? 'accent' : undefined)}
+        value={config.primary ?? "neutral"}
+        onChange={(v) => setColorPrimary(v === "accent" ? "accent" : undefined)}
         options={[
-          { value: 'neutral', label: 'Neutral' },
-          { value: 'accent', label: 'Accent' },
+          { value: "neutral", label: "Neutral" },
+          { value: "accent", label: "Accent" },
         ]}
       />
     </InlineRow>
@@ -298,7 +298,7 @@ function HeadingFontWidget() {
   return (
     <FontPicker
       label="Heading"
-      categories={['sans-serif', 'serif', 'display', 'handwriting']}
+      categories={["sans-serif", "serif", "display", "handwriting"]}
       selectedKey={headingFamily ?? bodyFamily}
       onChange={setHeading}
     />
@@ -310,7 +310,7 @@ function BodyFontWidget() {
   return (
     <FontPicker
       label="Body"
-      categories={['sans-serif', 'serif']}
+      categories={["sans-serif", "serif"]}
       selectedKey={bodyFamily}
       onChange={setBody}
     />
@@ -322,7 +322,7 @@ function MonoFontWidget() {
   return (
     <FontPicker
       label="Mono"
-      categories={['mono']}
+      categories={["mono"]}
       selectedKey={monoFamily}
       onChange={setMono}
     />
@@ -333,11 +333,11 @@ function MonoFontWidget() {
 
 function useIconography() {
   const { designSystem, setIconLibrary, setToken } = useDesignSystem()
-  const library = designSystem.icons ?? 'lucide'
+  const library = designSystem.icons ?? "lucide"
 
   const strokeDefault = STROKE_DEFAULTS[library]
   const strokeParsed = Number.parseFloat(
-    designSystem.tokens[ICON_STROKE_WIDTH_VAR] ?? '',
+    designSystem.tokens[ICON_STROKE_WIDTH_VAR] ?? "",
   )
   const strokeValue = Number.isFinite(strokeParsed)
     ? strokeParsed
@@ -346,7 +346,7 @@ function useIconography() {
   const weightToken = designSystem.tokens[ICON_WEIGHT_VAR]
   const weight = phosphorWeights.includes(weightToken as PhosphorWeight)
     ? (weightToken as PhosphorWeight)
-    : 'regular'
+    : "regular"
 
   return {
     library,
@@ -434,7 +434,7 @@ function IconLibraryWidget() {
       )}
 
       {/* Weight — only for libraries whose components take a weight prop (phosphor). */}
-      {library === 'phosphor' && (
+      {library === "phosphor" && (
         <Select
           aria-label="Icon weight"
           className="w-full"
@@ -472,7 +472,7 @@ function IconLibraryWidget() {
 function useRadiusPx() {
   const [value, set] = useToken(RADIUS_VAR, DEFAULT_RADIUS)
   const parsed = Number.parseFloat(value)
-  const px = value.trim().endsWith('rem') ? parsed * 16 : parsed
+  const px = value.trim().endsWith("rem") ? parsed * 16 : parsed
   return [
     Number.isFinite(px) ? px : 10,
     (nextPx: number) => set(`${nextPx / 16}rem`),
@@ -485,9 +485,9 @@ function RadiusVisual() {
   return (
     <div className="flex items-end gap-2">
       {[
-        { size: 'size-8', ratio: 0.5 },
-        { size: 'size-10', ratio: 1 },
-        { size: 'size-12', ratio: 1.5 },
+        { size: "size-8", ratio: 0.5 },
+        { size: "size-10", ratio: 1 },
+        { size: "size-12", ratio: 1.5 },
       ].map(({ size, ratio }) => (
         <div
           key={ratio}
@@ -524,9 +524,9 @@ function DensityWidget() {
         value={designSystem.density}
         onChange={setDensity}
         options={[
-          { value: 'compact', label: 'Compact' },
-          { value: 'default', label: 'Default' },
-          { value: 'comfortable', label: 'Cozy' },
+          { value: "compact", label: "Compact" },
+          { value: "default", label: "Default" },
+          { value: "comfortable", label: "Cozy" },
         ]}
       />
     </InlineRow>
@@ -538,11 +538,11 @@ function DensityWidget() {
 /** One free-form box-shadow token; empty clears it back to the theme default. */
 function ShadowField({ varName, label }: { varName: string; label: string }) {
   const { designSystem, setToken } = useDesignSystem()
-  const value = designSystem.tokens[varName] ?? ''
+  const value = designSystem.tokens[varName] ?? ""
   return (
     <TextField
       value={value}
-      onChange={(v) => setToken(varName, v === '' ? undefined : v)}
+      onChange={(v) => setToken(varName, v === "" ? undefined : v)}
       aria-label={`${label} shadow`}
     >
       <InputGroup>
@@ -572,13 +572,13 @@ function ShadowsWidget() {
 }
 
 const CURSORS = [
-  'default',
-  'pointer',
-  'not-allowed',
-  'wait',
-  'progress',
-  'text',
-  'grab',
+  "default",
+  "pointer",
+  "not-allowed",
+  "wait",
+  "progress",
+  "text",
+  "grab",
 ]
 
 /** Cursor select — hover the field to feel the cursor it maps to. */
@@ -633,129 +633,129 @@ const c = (control: Control): Control => control
 
 export const SECTIONS: Section[] = [
   {
-    id: 'color',
-    label: 'Color',
+    id: "color",
+    label: "Color",
     icon: PaletteIcon,
     Visual: ColorRampsVisual,
     controls: [
       c({
-        id: 'brand-color',
-        label: 'Brand color',
-        keywords: ['accent', 'primary', 'hue'],
+        id: "brand-color",
+        label: "Brand color",
+        keywords: ["accent", "primary", "hue"],
         Widget: () => <SeedField seed="accent" label="Brand" />,
       }),
       c({
-        id: 'base-color',
-        label: 'Base / gray',
-        keywords: ['neutral', 'gray', 'grey'],
+        id: "base-color",
+        label: "Base / gray",
+        keywords: ["neutral", "gray", "grey"],
         Widget: () => <SeedField seed="neutral" label="Base" />,
       }),
       c({
-        id: 'gray-strategy',
-        label: 'Gray strategy',
-        keywords: ['pure', 'tinted', 'neutral'],
+        id: "gray-strategy",
+        label: "Gray strategy",
+        keywords: ["pure", "tinted", "neutral"],
         Widget: GrayStrategyWidget,
       }),
       c({
-        id: 'primary-color',
-        label: 'Primary color',
-        keywords: ['primary', 'button', 'brand'],
+        id: "primary-color",
+        label: "Primary color",
+        keywords: ["primary", "button", "brand"],
         Widget: PrimarySourceWidget,
       }),
       c({
-        id: 'status-colors',
-        label: 'Status colors',
-        keywords: ['success', 'warning', 'danger', 'info', 'error'],
+        id: "status-colors",
+        label: "Status colors",
+        keywords: ["success", "warning", "danger", "info", "error"],
         Widget: StatusColorsWidget,
       }),
       c({
-        id: 'selection-color',
-        label: 'Selection',
-        keywords: ['focus', 'ring', 'checked', 'accent'],
+        id: "selection-color",
+        label: "Selection",
+        keywords: ["focus", "ring", "checked", "accent"],
         Widget: () => <SeedField seed="selection" label="Selection" />,
       }),
       c({
-        id: 'color-engine',
-        label: 'Ramps & contrast',
-        keywords: ['scale', 'palette', 'wcag', 'fine-tune'],
+        id: "color-engine",
+        label: "Ramps & contrast",
+        keywords: ["scale", "palette", "wcag", "fine-tune"],
         Widget: ColorEngineWidget,
       }),
     ],
   },
   {
-    id: 'typography',
-    label: 'Type',
+    id: "typography",
+    label: "Type",
     icon: TypeIcon,
     controls: [
       c({
-        id: 'heading-font',
-        label: 'Heading font',
-        keywords: ['heading', 'title', 'display'],
+        id: "heading-font",
+        label: "Heading font",
+        keywords: ["heading", "title", "display"],
         Widget: HeadingFontWidget,
       }),
       c({
-        id: 'body-font',
-        label: 'Body font',
-        keywords: ['text', 'sans'],
+        id: "body-font",
+        label: "Body font",
+        keywords: ["text", "sans"],
         Widget: BodyFontWidget,
       }),
       c({
-        id: 'mono-font',
-        label: 'Mono font',
-        keywords: ['code', 'monospace'],
+        id: "mono-font",
+        label: "Mono font",
+        keywords: ["code", "monospace"],
         Widget: MonoFontWidget,
       }),
     ],
   },
   {
-    id: 'icons',
-    label: 'Icons',
+    id: "icons",
+    label: "Icons",
     icon: SmileIcon,
     Visual: IconStripVisual,
     controls: [
       c({
-        id: 'icon-library',
-        label: 'Icon library',
-        keywords: ['lucide', 'phosphor', 'tabler', 'remix', 'stroke', 'weight'],
+        id: "icon-library",
+        label: "Icon library",
+        keywords: ["lucide", "phosphor", "tabler", "remix", "stroke", "weight"],
         Widget: IconLibraryWidget,
       }),
     ],
   },
   {
-    id: 'shape',
-    label: 'Shape & space',
+    id: "shape",
+    label: "Shape & space",
     icon: ShapesIcon,
     Visual: RadiusVisual,
     controls: [
       c({
-        id: 'radius',
-        label: 'Radius',
-        keywords: ['corner', 'rounding', 'radius'],
+        id: "radius",
+        label: "Radius",
+        keywords: ["corner", "rounding", "radius"],
         Widget: RadiusWidget,
       }),
       c({
-        id: 'density',
-        label: 'Density',
-        keywords: ['compact', 'comfortable', 'spacing', 'scale'],
+        id: "density",
+        label: "Density",
+        keywords: ["compact", "comfortable", "spacing", "scale"],
         Widget: DensityWidget,
       }),
     ],
   },
   {
-    id: 'details',
-    label: 'Details',
+    id: "details",
+    label: "Details",
     icon: SlidersHorizontalIcon,
     controls: [
       c({
-        id: 'shadows',
-        label: 'Shadows',
-        keywords: ['shadow', 'elevation', 'box-shadow', 'depth'],
+        id: "shadows",
+        label: "Shadows",
+        keywords: ["shadow", "elevation", "box-shadow", "depth"],
         Widget: ShadowsWidget,
       }),
       c({
-        id: 'cursor-interactive',
-        label: 'Interactive cursor',
-        keywords: ['cursor', 'pointer', 'hover'],
+        id: "cursor-interactive",
+        label: "Interactive cursor",
+        keywords: ["cursor", "pointer", "hover"],
         Widget: () => (
           <CursorWidget
             label="Cursor"
@@ -765,9 +765,9 @@ export const SECTIONS: Section[] = [
         ),
       }),
       c({
-        id: 'cursor-disabled',
-        label: 'Disabled cursor',
-        keywords: ['cursor', 'disabled', 'not-allowed'],
+        id: "cursor-disabled",
+        label: "Disabled cursor",
+        keywords: ["cursor", "disabled", "not-allowed"],
         Widget: () => (
           <CursorWidget
             label="Disabled"
@@ -786,9 +786,9 @@ const TYPE_VARS = [FONT_HEADING_VAR, FONT_SANS_VAR, FONT_MONO_VAR]
 const ICON_VARS = [ICON_STROKE_WIDTH_VAR, ICON_WEIGHT_VAR]
 const SHAPE_VARS = [RADIUS_VAR]
 const DETAIL_VARS = [
-  '--shadow-overlay',
-  '--shadow-card',
-  '--shadow-control',
+  "--shadow-overlay",
+  "--shadow-card",
+  "--shadow-control",
   CURSOR_INTERACTIVE_VAR,
   CURSOR_DISABLED_VAR,
 ]
@@ -821,14 +821,14 @@ export function useSectionStatus(sectionId: string): {
     }))
 
   switch (sectionId) {
-    case 'color':
+    case "color":
       return {
         modified: designSystem.color !== undefined,
         reset: () => setDesignSystem((prev) => ({ ...prev, color: undefined })),
       }
-    case 'typography':
+    case "typography":
       return { modified: hasVar(TYPE_VARS), reset: stripVars(TYPE_VARS) }
-    case 'icons':
+    case "icons":
       return {
         modified: designSystem.icons !== undefined || hasVar(ICON_VARS),
         reset: () =>
@@ -838,19 +838,19 @@ export function useSectionStatus(sectionId: string): {
             tokens: stripTokens(prev.tokens, ICON_VARS),
           })),
       }
-    case 'shape':
+    case "shape":
       return {
-        modified: designSystem.density !== 'default' || hasVar(SHAPE_VARS),
+        modified: designSystem.density !== "default" || hasVar(SHAPE_VARS),
         reset: () =>
           setDesignSystem((prev) => ({
             ...prev,
-            density: 'default',
+            density: "default",
             tokens: stripTokens(prev.tokens, SHAPE_VARS),
           })),
       }
-    case 'details':
+    case "details":
       return { modified: hasVar(DETAIL_VARS), reset: stripVars(DETAIL_VARS) }
-    case 'components':
+    case "components":
       return {
         modified: Object.keys(designSystem.componentParams).length > 0,
         reset: () =>

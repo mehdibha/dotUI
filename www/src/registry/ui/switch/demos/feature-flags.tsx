@@ -1,27 +1,27 @@
-import { Badge } from '@/registry/ui/badge'
-import { Description, FieldContent, Label } from '@/registry/ui/field'
-import { Switch, SwitchControl, SwitchIndicator } from '@/registry/ui/switch'
+import { Badge } from "@/registry/ui/badge"
+import { Description, FieldContent, Label } from "@/registry/ui/field"
+import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
 
 const flags = [
   {
-    key: 'new-dashboard',
-    description: 'Redesigned analytics overview.',
-    status: 'Stable',
-    variant: 'success' as const,
+    key: "new-dashboard",
+    description: "Redesigned analytics overview.",
+    status: "Stable",
+    variant: "success" as const,
     defaultSelected: true,
   },
   {
-    key: 'ai-suggestions',
-    description: 'Inline AI completions in the editor.',
-    status: 'Beta',
-    variant: 'info' as const,
+    key: "ai-suggestions",
+    description: "Inline AI completions in the editor.",
+    status: "Beta",
+    variant: "info" as const,
     defaultSelected: true,
   },
   {
-    key: 'edge-cache',
-    description: 'Serve responses from the edge.',
-    status: 'Experimental',
-    variant: 'warning' as const,
+    key: "edge-cache",
+    description: "Serve responses from the edge.",
+    status: "Experimental",
+    variant: "warning" as const,
     defaultSelected: false,
   },
 ]

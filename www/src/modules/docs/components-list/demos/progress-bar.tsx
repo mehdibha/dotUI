@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import { Label } from '@/registry/ui/field'
+import { Label } from "@/registry/ui/field"
 import {
   ProgressBar,
   ProgressBarControl,
   ProgressBarOutput,
-} from '@/registry/ui/progress-bar'
+} from "@/registry/ui/progress-bar"
 
-import { useValueAutoplay } from '../autoplay'
+import { useValueAutoplay } from "../autoplay"
 
 // The fill already ships `transition-all` + `origin-left`, so its `scaleX`
 // transform glides on its own — we just step `value` through waypoints and the

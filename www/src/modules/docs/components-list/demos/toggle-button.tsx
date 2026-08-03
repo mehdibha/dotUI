@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { PinIcon } from 'lucide-react'
+import { PinIcon } from "lucide-react"
 
-import { ToggleButton } from '@/registry/ui/toggle-button'
+import { ToggleButton } from "@/registry/ui/toggle-button"
 
-import { DemoPress, useToggleAutoplay } from '../autoplay'
+import { DemoPress, useToggleAutoplay } from "../autoplay"
 
 export function ToggleButtonDemo() {
   const { selected, pressing } = useToggleAutoplay({ initial: true })

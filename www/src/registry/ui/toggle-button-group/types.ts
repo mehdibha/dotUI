@@ -1,4 +1,4 @@
-import type * as ToggleButtonGroupPrimitives from 'react-aria-components/ToggleButtonGroup'
+import type * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
 
 /**
  * A toggle button group allows a user to toggle multiple options, with single or multiple selection.
@@ -10,13 +10,13 @@ export interface ToggleButtonGroupProps extends React.ComponentProps<
    * The visual style of the toggle buttons.
    * @default 'secondary'
    */
-  variant?: 'primary' | 'secondary' | 'quiet'
+  variant?: "primary" | "secondary" | "quiet"
 
   /**
    * The size of the toggle buttons.
    * @default 'md'
    */
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: "xs" | "sm" | "md" | "lg"
 
   /**
    * Whether the toggle buttons only contain icons.

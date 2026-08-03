@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { type Color, parseColor } from 'react-aria-components/ColorField'
+import React from "react"
+import { type Color, parseColor } from "react-aria-components/ColorField"
 
-import { ColorField } from '@/registry/ui/color-field'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
+import { ColorField } from "@/registry/ui/color-field"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
 
 export default function Demo() {
-  const [color, setColor] = React.useState<Color | null>(parseColor('#7f007f'))
+  const [color, setColor] = React.useState<Color | null>(parseColor("#7f007f"))
 
   return (
     <div className="grid w-full grid-cols-3 gap-2">

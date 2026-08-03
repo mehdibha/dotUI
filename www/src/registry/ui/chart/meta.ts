@@ -1,17 +1,17 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const chartMeta = {
-  name: 'chart',
-  type: 'registry:ui',
-  group: 'charts',
+  name: "chart",
+  type: "registry:ui",
+  group: "charts",
   files: [
     {
-      type: 'registry:ui',
-      path: 'ui/chart/base.tsx',
-      target: 'ui/chart.tsx',
+      type: "registry:ui",
+      path: "ui/chart/base.tsx",
+      target: "ui/chart.tsx",
     },
   ],
-  dependencies: ['recharts'],
+  dependencies: ["recharts"],
 } satisfies RegistryItem
 
 export default chartMeta

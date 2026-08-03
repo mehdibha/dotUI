@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect } from "react"
 
-import { familyFromStack, FONT_SANS_VAR, googleFontsUrl } from '@/lib/fonts'
-import { PRESETS } from '@/modules/presets/presets-data'
+import { familyFromStack, FONT_SANS_VAR, googleFontsUrl } from "@/lib/fonts"
+import { PRESETS } from "@/modules/presets/presets-data"
 
 /**
  * Display font for a preset's name in the landing switcher — the preset's own
@@ -32,16 +32,16 @@ export function usePresetLabelFonts() {
     if (families.length === 0) return
 
     const load = () => {
-      if (document.getElementById('preset-label-fonts')) return
-      const text = [...new Set(PRESETS.flatMap((p) => [...p.name]))].join('')
-      const link = document.createElement('link')
-      link.id = 'preset-label-fonts'
-      link.rel = 'stylesheet'
+      if (document.getElementById("preset-label-fonts")) return
+      const text = [...new Set(PRESETS.flatMap((p) => [...p.name]))].join("")
+      const link = document.createElement("link")
+      link.id = "preset-label-fonts"
+      link.rel = "stylesheet"
       link.href = googleFontsUrl(families, { text })
       document.head.append(link)
     }
 
-    if ('requestIdleCallback' in window) {
+    if ("requestIdleCallback" in window) {
       const id = requestIdleCallback(load)
       return () => cancelIdleCallback(id)
     }

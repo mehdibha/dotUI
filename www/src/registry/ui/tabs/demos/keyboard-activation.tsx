@@ -1,4 +1,4 @@
-import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 
 export default function Demo() {
   return (

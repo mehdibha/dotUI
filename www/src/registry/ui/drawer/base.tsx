@@ -1,33 +1,33 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import { Drawer as DrawerPrimitive } from '@base-ui/react/drawer'
-import { OverlayTriggerStateContext } from 'react-aria-components/Dialog'
-import { DismissButton } from 'react-aria/Overlay'
-import { useIsHidden } from 'react-aria/private/collections/Hidden'
-import { ClearPressResponder } from 'react-aria/private/interactions/PressResponder'
-import { useInteractOutside } from 'react-aria/useInteractOutside'
-import { useOverlayTriggerState } from 'react-stately'
+import * as React from "react"
+import { Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
+import { OverlayTriggerStateContext } from "react-aria-components/Dialog"
+import { DismissButton } from "react-aria/Overlay"
+import { useIsHidden } from "react-aria/private/collections/Hidden"
+import { ClearPressResponder } from "react-aria/private/interactions/PressResponder"
+import { useInteractOutside } from "react-aria/useInteractOutside"
+import { useOverlayTriggerState } from "react-stately"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: drawerStyles
 
 // MARK: Separator
 
-type DrawerPlacement = 'top' | 'bottom' | 'left' | 'right'
+type DrawerPlacement = "top" | "bottom" | "left" | "right"
 
 const swipeDirectionMap = {
-  top: 'up',
-  bottom: 'down',
-  left: 'left',
-  right: 'right',
+  top: "up",
+  bottom: "down",
+  left: "left",
+  right: "right",
 } satisfies Record<
   DrawerPlacement,
-  DrawerPrimitive.Root.Props['swipeDirection']
+  DrawerPrimitive.Root.Props["swipeDirection"]
 >
 
-const DrawerPlacementContext = React.createContext<DrawerPlacement>('bottom')
+const DrawerPlacementContext = React.createContext<DrawerPlacement>("bottom")
 
 type DrawerPopupRenderProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>
@@ -37,13 +37,13 @@ function resolveClassName<TState>(
   className: string | ((state: TState) => string | undefined) | undefined,
   state: TState,
 ) {
-  return typeof className === 'function' ? className(state) : className
+  return typeof className === "function" ? className(state) : className
 }
 
 function stripPopupDialogProps(props: DrawerPopupRenderProps) {
   const {
-    'aria-describedby': _ariaDescribedBy,
-    'aria-labelledby': _ariaLabelledBy,
+    "aria-describedby": _ariaDescribedBy,
+    "aria-labelledby": _ariaLabelledBy,
     role: _role,
     ...presentationProps
   } = props
@@ -67,8 +67,8 @@ interface DrawerProps {
   isDismissable?: boolean
   isKeyboardDismissDisabled?: boolean
   swipeToDismiss?: boolean
-  className?: DrawerPrimitive.Popup.Props['className']
-  style?: DrawerPrimitive.Popup.Props['style']
+  className?: DrawerPrimitive.Popup.Props["className"]
+  style?: DrawerPrimitive.Popup.Props["style"]
   children?: React.ReactNode
 }
 
@@ -80,7 +80,7 @@ function Drawer({
   isKeyboardDismissDisabled = false,
   isOpen,
   onOpenChange,
-  placement = 'bottom',
+  placement = "bottom",
   swipeToDismiss = true,
   style,
 }: DrawerProps) {
@@ -117,12 +117,12 @@ function Drawer({
           if (
             !nextOpen &&
             isKeyboardDismissDisabled &&
-            eventDetails.reason === 'escape-key'
+            eventDetails.reason === "escape-key"
           ) {
             eventDetails.cancel()
             return
           }
-          if (!nextOpen && !swipeToDismiss && eventDetails.reason === 'swipe') {
+          if (!nextOpen && !swipeToDismiss && eventDetails.reason === "swipe") {
             eventDetails.cancel()
             return
           }
@@ -137,7 +137,7 @@ function Drawer({
               <DrawerPrimitive.Backdrop className={backdrop()} />
               <DrawerPrimitive.Viewport className={viewport({ placement })}>
                 <DrawerPrimitive.Popup
-                  data-base-ui-swipe-ignore={swipeToDismiss ? undefined : ''}
+                  data-base-ui-swipe-ignore={swipeToDismiss ? undefined : ""}
                   initialFocus={() => getInitialFocusTarget(popupRef.current)}
                   className={(state) =>
                     popup({
@@ -170,13 +170,13 @@ function Drawer({
 
 // MARK: Separator
 
-interface DrawerHandleProps extends React.ComponentProps<'div'> {}
+interface DrawerHandleProps extends React.ComponentProps<"div"> {}
 
 function DrawerHandle({ className, ...props }: DrawerHandleProps) {
   const { handle } = useStyles()()
   const placement = React.useContext(DrawerPlacementContext)
   const orientation =
-    placement === 'top' || placement === 'bottom' ? 'horizontal' : 'vertical'
+    placement === "top" || placement === "bottom" ? "horizontal" : "vertical"
 
   return (
     <div

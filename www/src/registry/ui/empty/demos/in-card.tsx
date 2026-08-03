@@ -1,6 +1,6 @@
-import { ArrowUpRightIcon, FolderIcon } from '@/registry/__generated__/icons'
-import { Button, LinkButton } from '@/registry/ui/button'
-import { Card, CardContent } from '@/registry/ui/card'
+import { ArrowUpRightIcon, FolderIcon } from "@/registry/__generated__/icons"
+import { Button, LinkButton } from "@/registry/ui/button"
+import { Card, CardContent } from "@/registry/ui/card"
 import {
   Empty,
   EmptyContent,
@@ -8,7 +8,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from '@/registry/ui/empty'
+} from "@/registry/ui/empty"
 
 export default function Demo() {
   return (

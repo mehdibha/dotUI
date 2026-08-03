@@ -1,13 +1,13 @@
-import { useMemo, useState, type ReactNode } from 'react'
+import { useMemo, useState, type ReactNode } from "react"
 
 import {
   scaleByRole,
   type ColorSystem,
   type ScaleRole,
   type Step,
-} from '../data'
-import type { Mode } from '../page'
-import { CurvePlot, type CurveSeries } from '../primitives'
+} from "../data"
+import type { Mode } from "../page"
+import { CurvePlot, type CurveSeries } from "../primitives"
 
 /** OKLCH anatomy: lightness ramp, chroma arc, and hue drift of every system's
     scale for the selected family, overlaid on shared axes. Hovering a system
@@ -32,7 +32,7 @@ export function CurvesSection({
         .map((system) => {
           const scale = scaleByRole(system, family)
           if (!scale) return null
-          const steps = mode === 'dark' && scale.dark ? scale.dark : scale.light
+          const steps = mode === "dark" && scale.dark ? scale.dark : scale.light
           return { system, steps }
         })
         .filter((r): r is { system: ColorSystem; steps: Step[] } =>
@@ -85,7 +85,7 @@ export function CurvesSection({
         <button
           type="button"
           onClick={() => setPinned(null)}
-          className={`rounded-md px-2 py-1 ${solo === null ? 'bg-neutral-100 font-medium dark:bg-neutral-900' : 'text-neutral-400 dark:text-neutral-500'}`}
+          className={`rounded-md px-2 py-1 ${solo === null ? "bg-neutral-100 font-medium dark:bg-neutral-900" : "text-neutral-400 dark:text-neutral-500"}`}
         >
           All systems
         </button>
@@ -98,8 +98,8 @@ export function CurvesSection({
             onClick={() => setPinned(pinned === system.id ? null : system.id)}
             className={`rounded-md px-2 py-1 ${
               solo === system.id
-                ? 'bg-neutral-100 font-medium dark:bg-neutral-900'
-                : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                ? "bg-neutral-100 font-medium dark:bg-neutral-900"
+                : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
             }`}
           >
             {system.name}
@@ -133,7 +133,7 @@ export function CurvesSection({
           <CurvePlot
             series={hueDeviation}
             yDomain={[-25, 25]}
-            formatY={(v) => `${v > 0 ? '+' : ''}${v.toFixed(0)}°`}
+            formatY={(v) => `${v > 0 ? "+" : ""}${v.toFixed(0)}°`}
           />
         </Plot>
       </div>
@@ -157,7 +157,7 @@ export function CurvesSection({
                   height={130}
                   series={system.scales.map((scale) => {
                     const steps =
-                      mode === 'dark' && scale.dark ? scale.dark : scale.light
+                      mode === "dark" && scale.dark ? scale.dark : scale.light
                     return {
                       id: scale.id,
                       label: scale.name,

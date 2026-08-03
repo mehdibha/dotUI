@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import * as ColorFieldPrimitives from 'react-aria-components/ColorField'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
+import type * as React from "react"
+import * as ColorFieldPrimitives from "react-aria-components/ColorField"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
 
-import { useStyles } from '@/registry/ui/field/styles'
+import { useStyles } from "@/registry/ui/field/styles"
 
 // MARK: colorFieldStyles
 
@@ -19,7 +19,7 @@ const ColorField = ({ className, ...props }: ColorFieldProps) => {
   return (
     <ColorFieldPrimitives.ColorField
       className={composeRenderProps(className, (className) =>
-        fieldStyles().field({ orientation: 'vertical', className }),
+        fieldStyles().field({ orientation: "vertical", className }),
       )}
       {...props}
     />

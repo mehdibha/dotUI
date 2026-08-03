@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* The ideal Icons section — every option judged by look, on the real icon
    infrastructure. The specimen grid, the library rows and the weight segments
@@ -9,21 +9,21 @@
    own default, drag to override), weight (Phosphor's variant axis) and size
    (a proposed global icon scale — flagged, not yet a builder axis). */
 
-import { useState } from 'react'
-import { CheckIcon } from 'lucide-react'
+import { useState } from "react"
+import { CheckIcon } from "lucide-react"
 import {
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
-} from 'react-aria-components'
+} from "react-aria-components"
 
-import * as icons from '@/registry/icons'
+import * as icons from "@/registry/icons"
 import {
   IconLibraryContext,
   IconWeightContext,
-} from '@/registry/icons/create-icon'
-import { phosphorWeights } from '@/registry/icons/icon-map'
-import type { IconLibraryName, PhosphorWeight } from '@/registry/icons/icon-map'
-import { cn } from '@/registry/lib/utils'
+} from "@/registry/icons/create-icon"
+import { phosphorWeights } from "@/registry/icons/icon-map"
+import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
+import { cn } from "@/registry/lib/utils"
 import {
   ControlGroup,
   GroupCaption,
@@ -31,13 +31,13 @@ import {
   ROW_TRIGGER,
   SegmentedRow,
   SliderRow,
-} from '@/modules/control-lab/rows'
+} from "@/modules/control-lab/rows"
 import {
   ICON_STROKE_WIDTH_VAR,
   STROKE_DEFAULTS,
-} from '@/modules/create/iconography'
+} from "@/modules/create/iconography"
 
-import type { Lab } from '../data'
+import type { Lab } from "../data"
 
 /* --------------------------------- Scope ---------------------------------- */
 
@@ -83,37 +83,37 @@ function useIcons(lab: Lab) {
   const strokeDefault = STROKE_DEFAULTS[library]
   const stroke = state.iconStrokeAuto ? (strokeDefault ?? 2) : state.iconStroke
   const weight =
-    library === 'phosphor' ? (state.iconWeight as PhosphorWeight) : undefined
+    library === "phosphor" ? (state.iconWeight as PhosphorWeight) : undefined
   return { library, strokeDefault, stroke, weight }
 }
 
 /* -------------------------------- Specimen -------------------------------- */
 
 const SPECIMEN = [
-  ['Home', icons.HomeIcon],
-  ['Search', icons.SearchIcon],
-  ['Heart', icons.HeartIcon],
-  ['Star', icons.StarIcon],
-  ['Bell', icons.BellIcon],
-  ['Mail', icons.MailIcon],
-  ['Calendar', icons.CalendarIcon],
-  ['Settings', icons.SettingsIcon],
-  ['User', icons.UserIcon],
-  ['Folder', icons.FolderIcon],
-  ['Camera', icons.CameraIcon],
-  ['Image', icons.ImageIcon],
-  ['Trash', icons.TrashIcon],
-  ['Pencil', icons.PencilIcon],
-  ['Share', icons.ShareIcon],
-  ['Download', icons.DownloadIcon],
-  ['Globe', icons.GlobeIcon],
-  ['Zap', icons.ZapIcon],
-  ['Shield', icons.ShieldIcon],
-  ['Eye', icons.EyeIcon],
-  ['Tag', icons.TagIcon],
-  ['Clock', icons.ClockIcon],
-  ['Card', icons.CreditCardIcon],
-  ['Message', icons.MessageSquareIcon],
+  ["Home", icons.HomeIcon],
+  ["Search", icons.SearchIcon],
+  ["Heart", icons.HeartIcon],
+  ["Star", icons.StarIcon],
+  ["Bell", icons.BellIcon],
+  ["Mail", icons.MailIcon],
+  ["Calendar", icons.CalendarIcon],
+  ["Settings", icons.SettingsIcon],
+  ["User", icons.UserIcon],
+  ["Folder", icons.FolderIcon],
+  ["Camera", icons.CameraIcon],
+  ["Image", icons.ImageIcon],
+  ["Trash", icons.TrashIcon],
+  ["Pencil", icons.PencilIcon],
+  ["Share", icons.ShareIcon],
+  ["Download", icons.DownloadIcon],
+  ["Globe", icons.GlobeIcon],
+  ["Zap", icons.ZapIcon],
+  ["Shield", icons.ShieldIcon],
+  ["Eye", icons.EyeIcon],
+  ["Tag", icons.TagIcon],
+  ["Clock", icons.ClockIcon],
+  ["Card", icons.CreditCardIcon],
+  ["Message", icons.MessageSquareIcon],
 ] as const
 
 /**
@@ -143,10 +143,10 @@ function IconSpecimen({ lab }: { lab: Lab }) {
             onMouseEnter={() => setInspected(i)}
             onFocus={() => setInspected(i)}
             className={cn(
-              'flex aspect-square cursor-interactive items-center justify-center rounded-lg text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring',
+              "flex aspect-square cursor-interactive items-center justify-center rounded-lg text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring",
               i === inspected
-                ? 'bg-highlight text-fg'
-                : 'hover:bg-highlight/60',
+                ? "bg-highlight text-fg"
+                : "hover:bg-highlight/60",
             )}
           >
             <Icon size={Math.round(16 * scale)} />
@@ -172,11 +172,11 @@ function IconSpecimen({ lab }: { lab: Lab }) {
 /* ------------------------------ Library rows ------------------------------- */
 
 const LIBRARIES: { name: IconLibraryName; label: string }[] = [
-  { name: 'lucide', label: 'Lucide' },
-  { name: 'remix', label: 'Remix' },
-  { name: 'tabler', label: 'Tabler' },
-  { name: 'hugeicons', label: 'Hugeicons' },
-  { name: 'phosphor', label: 'Phosphor' },
+  { name: "lucide", label: "Lucide" },
+  { name: "remix", label: "Remix" },
+  { name: "tabler", label: "Tabler" },
+  { name: "hugeicons", label: "Hugeicons" },
+  { name: "phosphor", label: "Phosphor" },
 ]
 
 /**
@@ -195,7 +195,7 @@ function LibraryRows({ lab }: { lab: Lab }) {
       selectedKeys={[library]}
       onSelectionChange={(keys) => {
         const next = keys.values().next().value
-        if (next) lab.set('iconLibrary')(next as string)
+        if (next) lab.set("iconLibrary")(next as string)
       }}
       className="flex w-full flex-col divide-y divide-bg/50 overflow-hidden rounded-xl bg-muted"
     >
@@ -207,7 +207,7 @@ function LibraryRows({ lab }: { lab: Lab }) {
             id={lib.name}
             className={cn(
               ROW_TRIGGER,
-              'cursor-interactive rounded-none bg-transparent focus-reset focus-visible:focus-ring',
+              "cursor-interactive rounded-none bg-transparent focus-reset focus-visible:focus-ring",
             )}
           >
             <span className={ROW_LABEL}>{lib.label}</span>
@@ -226,8 +226,8 @@ function LibraryRows({ lab }: { lab: Lab }) {
               <CheckIcon
                 aria-hidden
                 className={cn(
-                  'size-3.5 text-accent',
-                  selected ? 'opacity-100' : 'opacity-0',
+                  "size-3.5 text-accent",
+                  selected ? "opacity-100" : "opacity-0",
                 )}
               />
             </span>
@@ -246,7 +246,7 @@ function WeightRow({ lab }: { lab: Lab }) {
     <SegmentedRow
       label="Weight"
       value={lab.state.iconWeight}
-      onChange={lab.set('iconWeight')}
+      onChange={lab.set("iconWeight")}
       options={phosphorWeights.map((weight) => ({
         value: weight,
         ariaLabel: weight,
@@ -276,8 +276,8 @@ export function IdealIconsSectionBody({ lab }: { lab: Lab }) {
             label="Stroke"
             value={stroke}
             onChange={(v) => {
-              set('iconStroke')(v)
-              set('iconStrokeAuto')(false)
+              set("iconStroke")(v)
+              set("iconStrokeAuto")(false)
             }}
             minValue={1}
             maxValue={3}
@@ -287,11 +287,11 @@ export function IdealIconsSectionBody({ lab }: { lab: Lab }) {
             }
           />
         )}
-        {library === 'phosphor' && <WeightRow lab={lab} />}
+        {library === "phosphor" && <WeightRow lab={lab} />}
         <SliderRow
           label="Size"
           value={state.iconScale}
-          onChange={set('iconScale')}
+          onChange={set("iconScale")}
           minValue={0.8}
           maxValue={1.2}
           step={0.05}

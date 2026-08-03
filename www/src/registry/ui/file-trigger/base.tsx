@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import * as FileTriggerPrimitives from 'react-aria-components/FileTrigger'
+import * as FileTriggerPrimitives from "react-aria-components/FileTrigger"
 
 type FileTriggerProps = FileTriggerPrimitives.FileTriggerProps
 

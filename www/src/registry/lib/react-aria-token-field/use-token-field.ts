@@ -7,7 +7,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from "react"
 import type {
   ClipboardEventHandler,
   FocusEvent,
@@ -15,28 +15,28 @@ import type {
   KeyboardEvent as ReactKeyboardEvent,
   ModifierKey,
   RefObject,
-} from 'react'
-import { useLocale } from 'react-aria/I18nProvider'
-import { mergeProps } from 'react-aria/mergeProps'
-import { setInteractionModality } from 'react-aria/private/interactions/useFocusVisible'
-import { announce } from 'react-aria/private/live-announcer/LiveAnnouncer'
-import { getOwnerDocument } from 'react-aria/private/utils/domHelpers'
-import { isMac } from 'react-aria/private/utils/platform'
-import { getActiveElement } from 'react-aria/private/utils/shadowdom/DOMFunctions'
-import { useEvent } from 'react-aria/private/utils/useEvent'
-import { useLayoutEffect } from 'react-aria/private/utils/useLayoutEffect'
-import { useField } from 'react-aria/useField'
-import { useFocusable } from 'react-aria/useFocusable'
-import { useKeyboard } from 'react-aria/useKeyboard'
-import type { KeyboardProps } from 'react-aria/useKeyboard'
+} from "react"
+import { useLocale } from "react-aria/I18nProvider"
+import { mergeProps } from "react-aria/mergeProps"
+import { setInteractionModality } from "react-aria/private/interactions/useFocusVisible"
+import { announce } from "react-aria/private/live-announcer/LiveAnnouncer"
+import { getOwnerDocument } from "react-aria/private/utils/domHelpers"
+import { isMac } from "react-aria/private/utils/platform"
+import { getActiveElement } from "react-aria/private/utils/shadowdom/DOMFunctions"
+import { useEvent } from "react-aria/private/utils/useEvent"
+import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect"
+import { useField } from "react-aria/useField"
+import { useFocusable } from "react-aria/useFocusable"
+import { useKeyboard } from "react-aria/useKeyboard"
+import type { KeyboardProps } from "react-aria/useKeyboard"
 
-import { Direction } from './segment-list'
+import { Direction } from "./segment-list"
 import type {
   Position,
   TokenFieldSegment,
   TokenSegmentList,
-} from './segment-list'
-import type { TokenFieldState, TokenFieldStateProps } from './state'
+} from "./segment-list"
+import type { TokenFieldState, TokenFieldStateProps } from "./state"
 
 export interface AriaTokenFieldProps<
   T extends TokenSegmentList = TokenSegmentList,
@@ -47,7 +47,7 @@ export interface AriaTokenFieldProps<
    *
    * @default 'textbox'
    */
-  role?: 'textbox' | 'searchbox' | 'combobox'
+  role?: "textbox" | "searchbox" | "combobox"
   /** Whether the token field allows newlines. */
   allowsNewlines?: boolean
   /** Whether the token field is read only. */
@@ -71,13 +71,13 @@ export interface AriaTokenFieldProps<
   /** Handler that is called when the element's focus status changes. */
   onFocusChange?: (isFocused: boolean) => void
   /** Defines a string value that labels the current element. */
-  'aria-label'?: string
+  "aria-label"?: string
   /** Identifies the element (or elements) that labels the current element. */
-  'aria-labelledby'?: string
+  "aria-labelledby"?: string
   /** Identifies the element (or elements) that describes the object. */
-  'aria-describedby'?: string
+  "aria-describedby"?: string
   /** Identifies the element (or elements) that provide a detailed, extended description for the object. */
-  'aria-details'?: string
+  "aria-details"?: string
 }
 
 export interface TokenFieldAria {
@@ -89,7 +89,7 @@ export interface TokenFieldAria {
   descriptionProps: HTMLAttributes<HTMLElement>
 }
 
-const CLIPBOARD_MIME_TYPE = 'application/vnd.react-aria.tokens+json'
+const CLIPBOARD_MIME_TYPE = "application/vnd.react-aria.tokens+json"
 
 export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
   props: AriaTokenFieldProps<T>,
@@ -97,21 +97,21 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
   ref: RefObject<HTMLDivElement | null>,
 ): TokenFieldAria {
   let {
-    role = 'textbox',
+    role = "textbox",
     allowsNewlines: multiline = false,
     isReadOnly = false,
     isDisabled = false,
-    'aria-details': ariaDetails,
+    "aria-details": ariaDetails,
   } = props
 
   let { value } = state
   let { locale } = useLocale()
   let graphemeSegmenter = useMemo(
-    () => new Intl.Segmenter(locale, { granularity: 'grapheme' }),
+    () => new Intl.Segmenter(locale, { granularity: "grapheme" }),
     [locale],
   )
   let wordSegmenter = useMemo(
-    () => new Intl.Segmenter(locale, { granularity: 'word' }),
+    () => new Intl.Segmenter(locale, { granularity: "word" }),
     [locale],
   )
 
@@ -143,7 +143,7 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
     state.setComposing(false)
   }, [state, mutationTracker])
 
-  useEvent(ref, 'compositionstart', () => {
+  useEvent(ref, "compositionstart", () => {
     startComposition()
 
     let range = window.getSelection()?.getRangeAt(0)
@@ -168,7 +168,7 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
     }
   })
 
-  useEvent(ref, 'compositionend', stopComposition)
+  useEvent(ref, "compositionend", stopComposition)
 
   // If a prop update occurs during composition that doesn't match the expected value,
   // end composition and re-render the controlled value.
@@ -196,7 +196,7 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
   })
 
   // Handle text editing commands and prevent browser default behavior.
-  useEvent(ref, 'beforeinput', (e: InputEvent) => {
+  useEvent(ref, "beforeinput", (e: InputEvent) => {
     // Android sometimes doesn't fire a compositionend event before a regular input event.
     if (state.isComposing && !e.isComposing) {
       stopComposition()
@@ -211,14 +211,14 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
 
     // https://www.w3.org/TR/input-events-2/#interface-InputEvent-Attributes
     switch (e.inputType) {
-      case 'insertText':
-      case 'insertReplacementText':
-      case 'insertCompositionText':
-      case 'insertFromComposition': // Removed from the spec, but still fired by Safari.
-      case 'insertFromPaste':
-      case 'insertFromYank':
-      case 'insertFromDrop': {
-        let data: TokenFieldSegment[] = [{ type: 'text', text: e.data ?? '' }]
+      case "insertText":
+      case "insertReplacementText":
+      case "insertCompositionText":
+      case "insertFromComposition": // Removed from the spec, but still fired by Safari.
+      case "insertFromPaste":
+      case "insertFromYank":
+      case "insertFromDrop": {
+        let data: TokenFieldSegment[] = [{ type: "text", text: e.data ?? "" }]
         if (transferredData.current) {
           data = transferredData.current
           transferredData.current = null
@@ -228,19 +228,19 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
             : null
           if (parsed) {
             data = parsed
-          } else if (e.dataTransfer.types.includes('text/plain')) {
-            data[0]!.text = e.dataTransfer.getData('text/plain')
+          } else if (e.dataTransfer.types.includes("text/plain")) {
+            data[0]!.text = e.dataTransfer.getData("text/plain")
           }
         }
 
-        if (e.inputType === 'insertFromDrop' && dropPosition.current) {
+        if (e.inputType === "insertFromDrop" && dropPosition.current) {
           start = end = dropPosition.current
           dropPosition.current = null
         }
 
         if (!multiline) {
           for (let segment of data) {
-            segment.text = segment.text.replace(/[\r\n]+/g, ' ')
+            segment.text = segment.text.replace(/[\r\n]+/g, " ")
           }
         }
 
@@ -250,81 +250,81 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
             end,
             data,
             // Don't coalesce paste/drop events with other edits.
-            e.inputType === 'insertText' ||
-              e.inputType === 'insertCompositionText' ||
-              e.inputType === 'insertFromComposition',
+            e.inputType === "insertText" ||
+              e.inputType === "insertCompositionText" ||
+              e.inputType === "insertFromComposition",
           ),
         )
         break
       }
-      case 'insertParagraph':
-      case 'insertLineBreak': {
-        if (e.inputType === 'insertParagraph' && props.onSubmit) {
+      case "insertParagraph":
+      case "insertLineBreak": {
+        if (e.inputType === "insertParagraph" && props.onSubmit) {
           props.onSubmit()
           break
         }
         if (multiline) {
-          apply((tokens) => tokens.replaceRange(start, end, '\n'))
+          apply((tokens) => tokens.replaceRange(start, end, "\n"))
         }
         break
       }
-      case 'deleteContentBackward':
-      case 'deleteContentForward':
-      case 'deleteWordBackward':
-      case 'deleteWordForward':
-      case 'deleteHardLineForward':
-      case 'deleteHardLineBackward':
-      case 'deleteSoftLineForward':
-      case 'deleteSoftLineBackward':
-      case 'deleteContent':
-      case 'deleteByCut':
-      case 'deleteCompositionText': {
+      case "deleteContentBackward":
+      case "deleteContentForward":
+      case "deleteWordBackward":
+      case "deleteWordForward":
+      case "deleteHardLineForward":
+      case "deleteHardLineBackward":
+      case "deleteSoftLineForward":
+      case "deleteSoftLineBackward":
+      case "deleteContent":
+      case "deleteByCut":
+      case "deleteCompositionText": {
         if (!range.collapsed) {
-          apply((tokens) => tokens.replaceRange(start, end, ''))
+          apply((tokens) => tokens.replaceRange(start, end, ""))
           break
         }
 
         switch (e.inputType) {
-          case 'deleteContentBackward': {
+          case "deleteContentBackward": {
             apply((tokens) =>
               tokens.delete(start, graphemeSegmenter, Direction.Backward),
             )
             break
           }
-          case 'deleteContentForward':
+          case "deleteContentForward":
             apply((tokens) =>
               tokens.delete(start, graphemeSegmenter, Direction.Forward),
             )
             break
-          case 'deleteWordBackward': {
+          case "deleteWordBackward": {
             apply((tokens) =>
               tokens.delete(start, wordSegmenter, Direction.Backward),
             )
             break
           }
-          case 'deleteWordForward':
+          case "deleteWordForward":
             apply((tokens) =>
               tokens.delete(start, wordSegmenter, Direction.Forward),
             )
             break
-          case 'deleteHardLineForward':
-          case 'deleteSoftLineForward': // TODO: this usually deletes to the nearest *visual* line break rather than a hard break
+          case "deleteHardLineForward":
+          case "deleteSoftLineForward": // TODO: this usually deletes to the nearest *visual* line break rather than a hard break
             apply((tokens) => tokens.deleteLine(start, Direction.Forward))
             break
-          case 'deleteHardLineBackward':
-          case 'deleteSoftLineBackward':
+          case "deleteHardLineBackward":
+          case "deleteSoftLineBackward":
             apply((tokens) => tokens.deleteLine(start, Direction.Backward))
             break
         }
         break
       }
-      case 'deleteByDrag': {
+      case "deleteByDrag": {
         apply((tokens) => {
           let endOffset =
             start.index === end.index
               ? end.offset
               : tokens.segments[start.index]!.text.length
-          let change = tokens.replaceRange(start, end, '')
+          let change = tokens.replaceRange(start, end, "")
           if (
             dropPosition.current &&
             dropPosition.current.index === start.index &&
@@ -343,7 +343,7 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
   })
 
   let writeClipboardData = (e: ClipboardEvent | DragEvent) => {
-    if ('clipboardData' in e) {
+    if ("clipboardData" in e) {
       e.preventDefault()
     }
     let selection = getSelection(ref.current!)
@@ -352,19 +352,19 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
     }
     let [start, end] = selection
     let slice = value.slice(start, end)
-    let dataTransfer = 'clipboardData' in e ? e.clipboardData : e.dataTransfer
+    let dataTransfer = "clipboardData" in e ? e.clipboardData : e.dataTransfer
     dataTransfer?.setData(CLIPBOARD_MIME_TYPE, JSON.stringify(slice.segments))
-    dataTransfer?.setData('text/plain', slice.toString())
+    dataTransfer?.setData("text/plain", slice.toString())
 
-    if (e.type === 'cut') {
-      apply((tokens) => tokens.replaceRange(start, end, '', false))
+    if (e.type === "cut") {
+      apply((tokens) => tokens.replaceRange(start, end, "", false))
     }
   }
 
-  useEvent(ref, 'copy', writeClipboardData)
-  useEvent(ref, 'cut', writeClipboardData)
-  useEvent(ref, 'dragstart', writeClipboardData)
-  useEvent(ref, 'paste', (e: ClipboardEvent) => {
+  useEvent(ref, "copy", writeClipboardData)
+  useEvent(ref, "cut", writeClipboardData)
+  useEvent(ref, "dragstart", writeClipboardData)
+  useEvent(ref, "paste", (e: ClipboardEvent) => {
     // Safari doesn't pass the custom clipboard data type to beforeinput dataTransfer so we handle it here.
     if (
       e.clipboardData &&
@@ -377,8 +377,8 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
   })
 
   // Store the cursor position on drop so we know where to insert when the insertFromDrop event occurs.
-  useEvent(ref, 'drop', (e: DragEvent) => {
-    if (typeof document.caretPositionFromPoint === 'function') {
+  useEvent(ref, "drop", (e: DragEvent) => {
+    if (typeof document.caretPositionFromPoint === "function") {
       let pos = document.caretPositionFromPoint(e.clientX, e.clientY)
       if (pos) {
         dropPosition.current = getPosition(
@@ -387,7 +387,7 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
           pos.offset,
         )
       }
-    } else if (typeof document.caretRangeFromPoint === 'function') {
+    } else if (typeof document.caretRangeFromPoint === "function") {
       let range = document.caretRangeFromPoint(e.clientX, e.clientY)
       if (range) {
         dropPosition.current = getPosition(
@@ -418,11 +418,11 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
       let [start, end] = getSelection(ref.current!)!
       if (start.offset === 0) {
         let segment = value.segments[start.index]
-        if (segment?.type !== 'token') {
+        if (segment?.type !== "token") {
           segment = value.segments[start.index - 1]
         }
-        if (segment?.type === 'token') {
-          announce(segment.text, 'assertive')
+        if (segment?.type === "token") {
+          announce(segment.text, "assertive")
         }
 
         // Update the caret position in the value.
@@ -433,7 +433,7 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
 
   // Override the default triple click behavior to ensure that tokens get selected.
   // Some browsers only select the text between tokens instead of the entire line.
-  useEvent(ref, 'mousedown', (e: MouseEvent) => {
+  useEvent(ref, "mousedown", (e: MouseEvent) => {
     if (e.detail === 3) {
       let selection = getSelection(ref.current!)
       if (!selection) {
@@ -450,8 +450,8 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
   })
 
   let moveSelection = (
-    direction: 'left' | 'right',
-    granularity: 'character' | 'word',
+    direction: "left" | "right",
+    granularity: "character" | "word",
     extend = false,
   ) => {
     let selection = window.getSelection()
@@ -481,7 +481,7 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
     while (true) {
       let prevFocusNode: Node | null = selection.focusNode
       let prevFocusOffset: number = selection.focusOffset
-      selection.modify(extend ? 'extend' : 'move', direction, granularity)
+      selection.modify(extend ? "extend" : "move", direction, granularity)
       if (
         selection.focusNode === prevFocusNode &&
         selection.focusOffset === prevFocusOffset
@@ -499,8 +499,8 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
     }
   }
 
-  let mod = isMac() ? 'Meta' : 'Control'
-  let wordModKey = isMac() ? 'Alt' : 'Control'
+  let mod = isMac() ? "Meta" : "Control"
+  let wordModKey = isMac() ? "Alt" : "Control"
   let shortcuts: Record<string, () => boolean | void> = {
     [`${mod}+z`]: () => {
       // If composing, the browser handles undo natively.
@@ -509,35 +509,35 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
       }
       apply((state) => state.undo())
     },
-    [isMac() ? 'Shift+Meta+z' : 'Control+y']: () => {
+    [isMac() ? "Shift+Meta+z" : "Control+y"]: () => {
       if (state.isComposing) {
         return false
       }
       apply((state) => state.redo())
     },
     ArrowLeft: () => {
-      return moveSelection('left', 'character')
+      return moveSelection("left", "character")
     },
     [`${wordModKey}+ArrowLeft`]: () => {
-      return moveSelection('left', 'word')
+      return moveSelection("left", "word")
     },
-    'Shift+ArrowLeft': () => {
-      return moveSelection('left', 'character', true)
+    "Shift+ArrowLeft": () => {
+      return moveSelection("left", "character", true)
     },
     [`Shift+${wordModKey}+ArrowLeft`]: () => {
-      return moveSelection('left', 'word', true)
+      return moveSelection("left", "word", true)
     },
     ArrowRight: () => {
-      return moveSelection('right', 'character')
+      return moveSelection("right", "character")
     },
     [`${wordModKey}+ArrowRight`]: () => {
-      return moveSelection('right', 'word')
+      return moveSelection("right", "word")
     },
-    'Shift+ArrowRight': () => {
-      return moveSelection('right', 'character', true)
+    "Shift+ArrowRight": () => {
+      return moveSelection("right", "character", true)
     },
     [`Shift+${wordModKey}+ArrowRight`]: () => {
-      return moveSelection('right', 'word', true)
+      return moveSelection("right", "word", true)
     },
     Home: () => {
       // Browsers do not behave consistently when there are tokens.
@@ -573,16 +573,16 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
 
       // mini version of useKeyboard shortcuts until it is merged.
       let modifiers = [
-        'Shift',
-        'Control',
-        'Alt',
-        'Meta',
+        "Shift",
+        "Control",
+        "Alt",
+        "Meta",
       ] satisfies ModifierKey[]
       let modifierKeys = modifiers.filter((modifier) =>
         (e as unknown as ReactKeyboardEvent).getModifierState(modifier),
       )
       let keys =
-        modifierKeys.length > 0 ? `${modifierKeys.join('+')}+${e.key}` : e.key
+        modifierKeys.length > 0 ? `${modifierKeys.join("+")}+${e.key}` : e.key
       let handler = shortcuts[keys]
       if (handler) {
         let result = handler()
@@ -600,7 +600,7 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
   let { focusableProps } = useFocusable(props, ref)
   let { labelProps, fieldProps, descriptionProps } = useField({
     ...props,
-    labelElementType: 'span',
+    labelElementType: "span",
   })
 
   return {
@@ -611,7 +611,7 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
           ref.current?.focus()
 
           // Show the focus ring so the user knows where focus went
-          setInteractionModality('keyboard')
+          setInteractionModality("keyboard")
         }
       },
     },
@@ -623,11 +623,11 @@ export function useTokenField<T extends TokenSegmentList = TokenSegmentList>(
       contentEditable: !isDisabled && !isReadOnly,
       suppressContentEditableWarning: true,
       role,
-      'aria-multiline': multiline,
-      'aria-details': ariaDetails,
-      'aria-readonly': isReadOnly,
-      'aria-disabled': isDisabled,
-      style: { whiteSpace: 'pre-wrap' },
+      "aria-multiline": multiline,
+      "aria-details": ariaDetails,
+      "aria-readonly": isReadOnly,
+      "aria-disabled": isDisabled,
+      style: { whiteSpace: "pre-wrap" },
     }) as HTMLAttributes<HTMLDivElement>,
   }
 }
@@ -643,8 +643,8 @@ export function useToken(ref: RefObject<HTMLSpanElement | null>): TokenAria {
   let [isSelected, setSelected] = useState(false)
 
   useEvent(
-    useRef(typeof document !== 'undefined' ? document : null),
-    'selectionchange',
+    useRef(typeof document !== "undefined" ? document : null),
+    "selectionchange",
     () => {
       let selection = window.getSelection()
       if (!selection || selection.rangeCount === 0 || !ref.current) {
@@ -665,8 +665,8 @@ export function useToken(ref: RefObject<HTMLSpanElement | null>): TokenAria {
       contentEditable: false,
       suppressContentEditableWarning: true,
       style: {
-        userSelect: 'all',
-        WebkitUserSelect: 'all',
+        userSelect: "all",
+        WebkitUserSelect: "all",
       },
     },
     isSelected,
@@ -747,7 +747,7 @@ function getPosition(container: Element, node: Node, offset: number): Position {
   return { index, offset }
 }
 
-const isProgrammaticSelectionChange = Symbol('isProgrammaticSelectionChange')
+const isProgrammaticSelectionChange = Symbol("isProgrammaticSelectionChange")
 
 interface ProgrammaticSelectionElement extends Element {
   [isProgrammaticSelectionChange]?: boolean
@@ -829,11 +829,11 @@ function parseSegments(json: string): TokenFieldSegment[] | null {
 
 function isValidSegment(segment: unknown): segment is TokenFieldSegment {
   return (
-    typeof segment === 'object' &&
+    typeof segment === "object" &&
     segment != null &&
-    ((segment as TokenFieldSegment).type === 'text' ||
-      (segment as TokenFieldSegment).type === 'token') &&
-    typeof (segment as TokenFieldSegment).text === 'string'
+    ((segment as TokenFieldSegment).type === "text" ||
+      (segment as TokenFieldSegment).type === "token") &&
+    typeof (segment as TokenFieldSegment).text === "string"
   )
 }
 
@@ -842,8 +842,8 @@ function useSelectionChange(
   handler: () => void,
 ) {
   useEvent(
-    useRef(typeof document !== 'undefined' ? document : null),
-    'selectionchange',
+    useRef(typeof document !== "undefined" ? document : null),
+    "selectionchange",
     () => {
       let el = ref.current as ProgrammaticSelectionElement | null
       if (el && el[isProgrammaticSelectionChange]) {
@@ -914,7 +914,7 @@ function trackMutations(element: Element) {
 
     for (let record of mutations.reverse()) {
       switch (record.type) {
-        case 'childList':
+        case "childList":
           for (let node of record.removedNodes) {
             record.target.insertBefore(node, record.nextSibling)
           }
@@ -922,7 +922,7 @@ function trackMutations(element: Element) {
             record.target.removeChild(node)
           }
           break
-        case 'characterData':
+        case "characterData":
           record.target.nodeValue = record.oldValue
           break
       }

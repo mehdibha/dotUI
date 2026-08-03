@@ -1,7 +1,7 @@
-import type * as DateFieldPrimitives from 'react-aria-components/DateField'
-import type * as GroupPrimitives from 'react-aria-components/Group'
-import type * as InputPrimitives from 'react-aria-components/Input'
-import type * as TextAreaPrimitives from 'react-aria-components/TextArea'
+import type * as DateFieldPrimitives from "react-aria-components/DateField"
+import type * as GroupPrimitives from "react-aria-components/Group"
+import type * as InputPrimitives from "react-aria-components/Input"
+import type * as TextAreaPrimitives from "react-aria-components/TextArea"
 
 /**
  * An input group combines an input with addons like buttons, icons, or labels.
@@ -13,7 +13,7 @@ export interface InputGroupProps extends React.ComponentProps<
    * The size of the input group.
    * @default "md"
    */
-  size?: 'sm' | 'md' | 'lg'
+  size?: "sm" | "md" | "lg"
 }
 
 /**
@@ -21,13 +21,13 @@ export interface InputGroupProps extends React.ComponentProps<
  */
 export interface InputProps extends Omit<
   React.ComponentProps<typeof InputPrimitives.Input>,
-  'size'
+  "size"
 > {
   /**
    * The size of the input.
    * @default "md"
    */
-  size?: 'sm' | 'md' | 'lg'
+  size?: "sm" | "md" | "lg"
 }
 
 /**
@@ -40,22 +40,22 @@ export interface TextAreaProps extends React.ComponentProps<
 /**
  * An addon rendered inside an `InputGroup` alongside the input.
  */
-export interface InputGroupAddonProps extends React.ComponentProps<'div'> {}
+export interface InputGroupAddonProps extends React.ComponentProps<"div"> {}
 
 /**
  * A date input groups the editable date segments within a date field.
  */
 export interface DateInputProps extends Omit<
   DateFieldPrimitives.DateInputProps,
-  'children'
+  "children"
 > {
-  children?: DateFieldPrimitives.DateInputProps['children']
+  children?: DateFieldPrimitives.DateInputProps["children"]
 
   /**
    * The size of the date input.
    * @default "md"
    */
-  size?: 'sm' | 'md' | 'lg'
+  size?: "sm" | "md" | "lg"
 }
 
 /**

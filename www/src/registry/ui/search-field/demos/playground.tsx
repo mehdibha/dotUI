@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { SearchField } from '@/registry/ui/search-field'
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { SearchField } from "@/registry/ui/search-field"
 
 export default function Demo({
-  label = 'Search',
-  placeholder = 'Search...',
+  label = "Search",
+  placeholder = "Search...",
   isDisabled = false,
   isReadOnly = false,
 } = {}) {

@@ -1,24 +1,24 @@
-'use client'
+"use client"
 
-import React from 'react'
-import type * as MenuPrimitives from 'react-aria-components/Menu'
+import React from "react"
+import type * as MenuPrimitives from "react-aria-components/Menu"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Label } from '@/registry/ui/field'
-import { Select, SelectContent, SelectItem } from '@/registry/ui/select'
-import { Switch } from '@/registry/ui/switch'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Label } from "@/registry/ui/field"
+import { Select, SelectContent, SelectItem } from "@/registry/ui/select"
+import { Switch } from "@/registry/ui/switch"
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState<MenuPrimitives.Key | null>(
-    'top',
+    "top",
   )
   const [swipeable, setSwipeable] = React.useState<boolean>(true)
   return (

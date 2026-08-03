@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { cn } from '@/registry/lib/utils'
-import { Accordion } from '@/registry/ui/accordion'
+import { cn } from "@/registry/lib/utils"
+import { Accordion } from "@/registry/ui/accordion"
 import {
   Card,
   CardContent,
@@ -9,41 +9,41 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
+} from "@/registry/ui/card"
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
 const faqs = [
   {
-    id: 'billing',
-    question: 'How does billing work?',
+    id: "billing",
+    question: "How does billing work?",
     answer:
-      'Plans are billed monthly or annually and charged automatically to your card. Annual plans save you two months compared to paying monthly.',
+      "Plans are billed monthly or annually and charged automatically to your card. Annual plans save you two months compared to paying monthly.",
   },
   {
-    id: 'cancel',
-    question: 'Can I cancel anytime?',
+    id: "cancel",
+    question: "Can I cancel anytime?",
     answer:
       "Yes. You can cancel from your billing settings and keep access until the end of your current period. We don't charge any cancellation fees.",
   },
   {
-    id: 'seats',
-    question: 'How are team seats counted?',
+    id: "seats",
+    question: "How are team seats counted?",
     answer:
       "Each active member uses one seat. You can add or remove seats whenever you like, and we'll prorate the change on your next invoice.",
   },
   {
-    id: 'support',
-    question: 'What support is included?',
+    id: "support",
+    question: "What support is included?",
     answer:
-      'Every plan includes email support with a one business-day response. Pro and Team plans add priority chat and a dedicated success contact.',
+      "Every plan includes email support with a one business-day response. Pro and Team plans add priority chat and a dedicated success contact.",
   },
 ]
 
-export function Faq({ className, ...props }: React.ComponentProps<'div'>) {
+export function Faq({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <Card className={cn(className)} {...props}>
       <CardHeader>
@@ -51,7 +51,7 @@ export function Faq({ className, ...props }: React.ComponentProps<'div'>) {
         <CardDescription>Answers to common questions.</CardDescription>
       </CardHeader>
       <CardContent>
-        <Accordion defaultExpandedKeys={['billing']} className="w-full min-w-0">
+        <Accordion defaultExpandedKeys={["billing"]} className="w-full min-w-0">
           {faqs.map((faq) => (
             <Disclosure key={faq.id} id={faq.id}>
               <DisclosureTrigger className="text-left text-sm">

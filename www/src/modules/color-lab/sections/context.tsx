@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react"
 
-import type { CvdType } from '../color'
-import type { ColorSystem } from '../data'
-import type { Mode } from '../page'
-import { SystemPreview } from '../preview'
+import type { CvdType } from "../color"
+import type { ColorSystem } from "../data"
+import type { Mode } from "../page"
+import { SystemPreview } from "../preview"
 
 export function ContextSection({
   systems,

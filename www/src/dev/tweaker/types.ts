@@ -12,19 +12,19 @@ export interface BaseTweakConfig {
 }
 
 export interface BooleanTweakConfig extends BaseTweakConfig {
-  type: 'boolean'
+  type: "boolean"
   default: boolean
 }
 
 export interface SelectTweakConfig extends BaseTweakConfig {
-  type: 'select'
+  type: "select"
   /** The choices. Each string is both the option's label and its value. */
   options: readonly string[]
   default: string
 }
 
 export interface NumberTweakConfig extends BaseTweakConfig {
-  type: 'number'
+  type: "number"
   default: number
   /** When both `min` and `max` are set the control renders as a slider. */
   min?: number
@@ -33,13 +33,13 @@ export interface NumberTweakConfig extends BaseTweakConfig {
 }
 
 export interface ColorTweakConfig extends BaseTweakConfig {
-  type: 'color'
+  type: "color"
   /** Any CSS color string (e.g. "#635bff", "hsl(217 91% 60%)"). */
   default: string
 }
 
 export interface TextTweakConfig extends BaseTweakConfig {
-  type: 'text'
+  type: "text"
   default: string
 }
 
@@ -63,7 +63,7 @@ export type TweakValue<C extends TweakConfig> = C extends BooleanTweakConfig
   : C extends NumberTweakConfig
     ? number
     : C extends SelectTweakConfig
-      ? SelectOptionValue<C['options']>
+      ? SelectOptionValue<C["options"]>
       : string
 
 /** A control currently mounted in a feature component (lives only while mounted). */
@@ -87,7 +87,7 @@ export interface TweakerUiState {
   /** Collapsed to just the header bar (still open, controls hidden). */
   minimized: boolean
   /** Which edge the trigger is docked to. */
-  side: 'left' | 'right'
+  side: "left" | "right"
   /** Vertical position of the trigger as a fraction (0–1) of the viewport height. */
   y: number
 }

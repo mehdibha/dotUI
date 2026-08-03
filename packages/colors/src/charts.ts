@@ -5,15 +5,15 @@
  * midpoint to the surface neutral.
  */
 
-import { CHART_GATES } from './data'
+import { CHART_GATES } from "./data"
 import {
   CVD_KINDS,
   type CvdKind,
   deltaEok,
   minPairwiseDeltaEok,
   simulateCvd,
-} from './meters'
-import { bentHue, type Mode } from './scale'
+} from "./meters"
+import { bentHue, type Mode } from "./scale"
 import {
   cusp,
   fitSrgb,
@@ -21,7 +21,7 @@ import {
   maxChroma,
   type Oklch,
   solveLstar,
-} from './space'
+} from "./space"
 
 export interface ChartPalettes {
   categorical: Oklch[]
@@ -62,7 +62,7 @@ export const TONAL_MIN_ADJACENT_LSTAR = 6
 export function tonalCategoricalPalette(
   accent: Oklch,
   n = 8,
-  mode: Mode = 'light',
+  mode: Mode = "light",
 ): Oklch[] {
   // The seed's chroma is authoritative: a muted brand gives muted charts, an
   // achromatic brand gives grays (lightness stays the series encoding).
@@ -138,7 +138,7 @@ function isMuddy(candidate: Oklch, lstar: number): boolean {
 export function categoricalPalette(
   accent: Oklch,
   n = 8,
-  mode: Mode = 'light',
+  mode: Mode = "light",
 ): Oklch[] {
   const baseLadder = CATEGORICAL_LSTAR[mode]
   // Give the brand series the rung closest to its natural lightness.
@@ -157,15 +157,15 @@ export function categoricalPalette(
   // Incremental gate scoring: keep every chosen color's CVD simulations and
   // the chosen-set's running per-condition minimum, so scoring a candidate is
   // O(chosen) instead of re-measuring all pairs under all conditions.
-  type Simulated = Record<'normal' | CvdKind, Oklch>
+  type Simulated = Record<"normal" | CvdKind, Oklch>
   const simulate = (color: Oklch): Simulated => {
     const out = { normal: color } as Simulated
     for (const kind of CVD_KINDS) out[kind] = simulateCvd(color, kind)
     return out
   }
-  const CONDITIONS = ['normal', ...CVD_KINDS] as const
+  const CONDITIONS = ["normal", ...CVD_KINDS] as const
   const gateFor = (condition: (typeof CONDITIONS)[number]) =>
-    condition === 'normal'
+    condition === "normal"
       ? CHART_GATES.categoricalNormal
       : CHART_GATES.categoricalCvd
 
@@ -235,10 +235,10 @@ export function categoricalPalette(
 export function sequentialPalette(
   accentHue: number,
   n = 7,
-  mode: Mode = 'light',
+  mode: Mode = "light",
 ): Oklch[] {
   const peak = cusp(accentHue)
-  const [from, to] = mode === 'light' ? [95, 25] : [12, 82]
+  const [from, to] = mode === "light" ? [95, 25] : [12, 82]
   const out: Oklch[] = []
   for (let i = 0; i < n; i++) {
     const t = i / (n - 1)
@@ -261,7 +261,7 @@ export function divergingPalette(
   accentHue: number,
   neutralMidpoint: Oklch,
   armLength = 3,
-  mode: Mode = 'light',
+  mode: Mode = "light",
 ): Oklch[] {
   const opposite = (accentHue + 180) % 360
   const arm = (hue: number) =>

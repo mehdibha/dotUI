@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
 import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbSeparator,
   Breadcrumbs,
-} from '@/registry/ui/breadcrumbs'
+} from "@/registry/ui/breadcrumbs"
 
 export default function Demo({ isDisabled = false } = {}) {
   return (

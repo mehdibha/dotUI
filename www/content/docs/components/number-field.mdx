@@ -11,23 +11,23 @@ wip: true
   name="number-field"
   controls={[
     {
-      type: 'string',
-      name: 'label',
-      defaultValue: 'Quantity',
+      type: "string",
+      name: "label",
+      defaultValue: "Quantity",
     },
     {
-      type: 'boolean',
-      name: 'isDisabled',
+      type: "boolean",
+      name: "isDisabled",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isReadOnly',
+      type: "boolean",
+      name: "isReadOnly",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isInvalid',
+      type: "boolean",
+      name: "isInvalid",
       defaultValue: false,
     },
   ]}
@@ -44,9 +44,9 @@ npx shadcn@latest add @dotui/number-field
 Use `NumberField` to allow users to enter a numeric value with keyboard or increment/decrement buttons.
 
 ```tsx
-import { NumberField } from '@/ui/number-field'
-import { Input } from '@/ui/input'
-import { Label } from '@/ui/field'
+import { NumberField } from "@/ui/number-field"
+import { Input } from "@/ui/input"
+import { Label } from "@/ui/field"
 ```
 
 ```tsx
@@ -66,9 +66,9 @@ import {
   NumberFieldGroup,
   NumberFieldDecrement,
   NumberFieldIncrement,
-} from '@/ui/number-field'
-import { Input } from '@/ui/input'
-import { Label, FieldError } from '@/ui/field'
+} from "@/ui/number-field"
+import { Input } from "@/ui/input"
+import { Label, FieldError } from "@/ui/field"
 ```
 
 ```tsx
@@ -100,7 +100,7 @@ const [value, setValue] = React.useState(69)
 Pass `formatOptions` (an `Intl.NumberFormat` options object) to format the value as a decimal, percent, currency, or unit.
 
 ```tsx
-<NumberField formatOptions={{ style: 'currency', currency: 'EUR' }}>
+<NumberField formatOptions={{ style: "currency", currency: "EUR" }}>
   <Input />
 </NumberField>
 ```

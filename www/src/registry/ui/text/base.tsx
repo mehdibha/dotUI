@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import * as TextPrimitives from 'react-aria-components/Text'
+import * as TextPrimitives from "react-aria-components/Text"
 
 interface TextProps extends TextPrimitives.TextProps {}
 

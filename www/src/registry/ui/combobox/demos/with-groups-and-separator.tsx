@@ -1,39 +1,39 @@
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Combobox } from '@/registry/ui/combobox'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { Button } from "@/registry/ui/button"
+import { Combobox } from "@/registry/ui/combobox"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { Separator } from "@/registry/ui/separator"
 
 const timezones = [
   {
-    value: 'Americas',
+    value: "Americas",
     items: [
-      '(GMT-5) New York',
-      '(GMT-8) Los Angeles',
-      '(GMT-6) Chicago',
-      '(GMT-3) São Paulo',
+      "(GMT-5) New York",
+      "(GMT-8) Los Angeles",
+      "(GMT-6) Chicago",
+      "(GMT-3) São Paulo",
     ],
   },
   {
-    value: 'Europe',
+    value: "Europe",
     items: [
-      '(GMT+0) London',
-      '(GMT+1) Paris',
-      '(GMT+1) Berlin',
-      '(GMT+1) Rome',
+      "(GMT+0) London",
+      "(GMT+1) Paris",
+      "(GMT+1) Berlin",
+      "(GMT+1) Rome",
     ],
   },
   {
-    value: 'Asia/Pacific',
-    items: ['(GMT+9) Tokyo', '(GMT+8) Singapore', '(GMT+11) Sydney'],
+    value: "Asia/Pacific",
+    items: ["(GMT+9) Tokyo", "(GMT+8) Singapore", "(GMT+11) Sydney"],
   },
 ]
 

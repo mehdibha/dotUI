@@ -1,20 +1,20 @@
-import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import type {
   TabListProps,
   TabPanelProps,
   TabProps,
   TabsProps,
-} from '@/registry/ui/tabs'
+} from "@/registry/ui/tabs"
 
-import { packageManagerStore } from './install-commands'
-import type { PackageManager } from './install-commands'
+import { packageManagerStore } from "./install-commands"
+import type { PackageManager } from "./install-commands"
 
 export function CodeBlockTabs({
   groupId,
   defaultValue,
   children,
   ...props
-}: Omit<TabsProps, 'defaultSelectedKey'> & {
+}: Omit<TabsProps, "defaultSelectedKey"> & {
   groupId?: string
   defaultValue?: string
 }) {
@@ -45,14 +45,14 @@ export function CodeBlockTabsList(props: TabListProps) {
 export function CodeBlockTabsTrigger({
   value,
   ...props
-}: Omit<TabProps, 'id'> & { value?: string }) {
+}: Omit<TabProps, "id"> & { value?: string }) {
   return <Tab className="px-3" id={value} {...props} />
 }
 
 export function CodeBlockTab({
   value,
   ...props
-}: Omit<TabPanelProps, 'id'> & { value?: string }) {
+}: Omit<TabPanelProps, "id"> & { value?: string }) {
   return (
     <TabPanel
       id={value}

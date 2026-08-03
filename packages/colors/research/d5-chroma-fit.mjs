@@ -7,16 +7,16 @@
 //   M_rel : C(s) = k(s) * CmaxSRGB(L_s, H_s) shared cusp-relative table, 0 params/family
 // Then fits parametric forms: skew-Gaussian for g(s), cubic for k(s).
 // Deterministic; run: node research/d5-chroma-fit.mjs
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from "node:fs"
 
 const data = JSON.parse(
   readFileSync(
-    new URL('./data/radix-light-chroma.json', import.meta.url),
-    'utf8',
+    new URL("./data/radix-light-chroma.json", import.meta.url),
+    "utf8",
   ),
 )
 const round = (x, d = 4) => Number(x.toFixed(d))
-const MUTED = new Set(['bronze', 'gold', 'brown'])
+const MUTED = new Set(["bronze", "gold", "brown"])
 const vivid = data.radix.filter((f) => !MUTED.has(f.name))
 
 const N = 12
@@ -181,13 +181,13 @@ for (const f of vivid)
 
 const out = {
   meta: {
-    generated: 'd5-chroma-fit.mjs',
+    generated: "d5-chroma-fit.mjs",
     families: {
       radixVivid: vivid.map((f) => f.name),
       excludedMuted: [...MUTED],
     },
     residualUnits:
-      'absolute OKLCH chroma; at fixed L,H this equals OKLab deltaE of the chroma error',
+      "absolute OKLCH chroma; at fixed L,H this equals OKLab deltaE of the chroma error",
   },
   sharedTables: {
     steps: Array.from({ length: N }, (_, i) => i + 1),
@@ -203,22 +203,22 @@ const out = {
   },
   parametric: {
     gSkewGaussian: {
-      form: 'g(s) = amp * exp(-0.5*((s-mu)/sigma)^2), sigma = sigmaL if s<mu else sigmaR',
+      form: "g(s) = amp * exp(-0.5*((s-mu)/sigma)^2), sigma = sigmaL if s<mu else sigmaR",
       params: { amp: gFit[0], mu: gFit[1], sigmaL: gFit[2], sigmaR: gFit[3] },
       fit: { rmse: mNormParam.rmse, maxAbsResidual: mNormParam.maxAbsResidual },
     },
     kCubic: {
-      form: 'k(t) = c0 + c1*t + c2*t^2 + c3*t^3, t=(step-1)/11',
+      form: "k(t) = c0 + c1*t + c2*t^2 + c3*t^3, t=(step-1)/11",
       params: kCubic.map((c) => round(c, 4)),
       table: Array.from({ length: N }, (_, i) => round(kOf(i))),
       fit: { rmse: mRelParam.rmse, maxAbsResidual: mRelParam.maxAbsResidual },
     },
     tailwindKQuadratic: {
-      form: 'k(t) = c0 + c1*t + c2*t^2, t=(idx-1)/10, idx over 50..950',
+      form: "k(t) = c0 + c1*t + c2*t^2, t=(idx-1)/10, idx over 50..950",
       params: twQuad.map((c) => round(c, 4)),
       table: Array.from({ length: NT }, (_, i) => round(twKOf(i))),
       fit: { rmse: round(twRmse), maxAbsResidual: round(twMax) },
-      note: 'Tailwind v4 literals exceed sRGB (P3-target); k is measured against the sRGB ceiling',
+      note: "Tailwind v4 literals exceed sRGB (P3-target); k is measured against the sRGB ceiling",
     },
   },
   winnerDiagnostics: {
@@ -239,34 +239,34 @@ const out = {
 }
 
 writeFileSync(
-  new URL('./data/chroma-curve-fit.json', import.meta.url),
+  new URL("./data/chroma-curve-fit.json", import.meta.url),
   JSON.stringify(out, null, 2),
 )
 
-console.log('Model comparison (Radix vivid, absolute-C residuals):')
+console.log("Model comparison (Radix vivid, absolute-C residuals):")
 for (const [name, m] of Object.entries(out.models))
   console.log(`  ${name.padEnd(28)} rmse=${m.rmse} max=${m.maxAbsResidual}`)
-console.log('\nShared tables:')
-console.log('  A(s)  =', out.sharedTables.absC_A.join(', '))
-console.log('  g(s)  =', out.sharedTables.peakNorm_g.join(', '))
-console.log('  k(s)  =', out.sharedTables.cuspRel_k.join(', '))
+console.log("\nShared tables:")
+console.log("  A(s)  =", out.sharedTables.absC_A.join(", "))
+console.log("  g(s)  =", out.sharedTables.peakNorm_g.join(", "))
+console.log("  k(s)  =", out.sharedTables.cuspRel_k.join(", "))
 console.log(
-  '\ng skew-Gaussian:',
+  "\ng skew-Gaussian:",
   out.parametric.gSkewGaussian.params,
   out.parametric.gSkewGaussian.fit,
 )
-console.log('k cubic:', out.parametric.kCubic.params, out.parametric.kCubic.fit)
-console.log('k cubic table:', out.parametric.kCubic.table.join(', '))
+console.log("k cubic:", out.parametric.kCubic.params, out.parametric.kCubic.fit)
+console.log("k cubic table:", out.parametric.kCubic.table.join(", "))
 console.log(
-  'TW k quadratic:',
+  "TW k quadratic:",
   out.parametric.tailwindKQuadratic.params,
   out.parametric.tailwindKQuadratic.fit,
 )
-console.log('TW k table:', out.parametric.tailwindKQuadratic.table.join(', '))
+console.log("TW k table:", out.parametric.tailwindKQuadratic.table.join(", "))
 console.log(
-  '\nWinner worst residuals:',
+  "\nWinner worst residuals:",
   JSON.stringify(out.winnerDiagnostics.worstResiduals),
 )
-console.log('Peak-step histogram:', out.winnerDiagnostics.peakStepHistogram)
-console.log('peakC / cuspC:', out.winnerDiagnostics.peakCOverCuspC)
-console.log('\nSolids vs cusp:', JSON.stringify(out.solids, null, 1))
+console.log("Peak-step histogram:", out.winnerDiagnostics.peakStepHistogram)
+console.log("peakC / cuspC:", out.winnerDiagnostics.peakCOverCuspC)
+console.log("\nSolids vs cusp:", JSON.stringify(out.solids, null, 1))

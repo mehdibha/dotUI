@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   BookIcon,
@@ -8,24 +8,24 @@ import {
   SettingsIcon,
   User2Icon,
   Users2Icon,
-} from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
-import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
-import { Card, CardContent, CardHeader } from '@/registry/ui/card'
+} from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Card, CardContent, CardHeader } from "@/registry/ui/card"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/ui/list-box"
+import { Separator } from "@/registry/ui/separator"
 
 export function AccountMenu({
   className,
   ...props
-}: React.ComponentProps<'div'>) {
+}: React.ComponentProps<"div">) {
   return (
-    <Card className={cn('min-w-56 gap-0 py-0', className)} {...props}>
+    <Card className={cn("min-w-56 gap-0 py-0", className)} {...props}>
       <CardHeader className="flex w-full items-center border-b px-4 py-3">
         <Avatar size="sm">
           <AvatarImage src="https://github.com/mehdibha.png" alt="mehdibha" />

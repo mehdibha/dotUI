@@ -7,7 +7,7 @@ description: >-
   hook.
 type: framework
 library: tanstack-start
-library_version: '1.166.2'
+library_version: "1.166.2"
 framework: react
 requires:
   - start-core
@@ -78,9 +78,9 @@ npm i -D vite @vitejs/plugin-react typescript @types/react @types/react-dom
 ### 4. vite.config.ts
 
 ```ts
-import { defineConfig } from 'vite'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import viteReact from '@vitejs/plugin-react'
+import { defineConfig } from "vite"
+import { tanstackStart } from "@tanstack/react-start/plugin/vite"
+import viteReact from "@vitejs/plugin-react"
 
 export default defineConfig({
   plugins: [
@@ -93,8 +93,8 @@ export default defineConfig({
 ### 5. Router Factory (src/router.tsx)
 
 ```tsx
-import { createRouter } from '@tanstack/react-router'
-import { routeTree } from './routeTree.gen'
+import { createRouter } from "@tanstack/react-router"
+import { routeTree } from "./routeTree.gen"
 
 export function getRouter() {
   const router = createRouter({
@@ -108,20 +108,20 @@ export function getRouter() {
 ### 6. Root Route (src/routes/\_\_root.tsx)
 
 ```tsx
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react"
 import {
   Outlet,
   createRootRoute,
   HeadContent,
   Scripts,
-} from '@tanstack/react-router'
+} from "@tanstack/react-router"
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My TanStack Start App' },
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "My TanStack Start App" },
     ],
   }),
   component: RootComponent,
@@ -153,14 +153,14 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 ### 7. Index Route (src/routes/index.tsx)
 
 ```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { createServerFn } from '@tanstack/react-start'
+import { createFileRoute } from "@tanstack/react-router"
+import { createServerFn } from "@tanstack/react-start"
 
-const getGreeting = createServerFn({ method: 'GET' }).handler(async () => {
-  return 'Hello from TanStack Start!'
+const getGreeting = createServerFn({ method: "GET" }).handler(async () => {
+  return "Hello from TanStack Start!"
 })
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   loader: () => getGreeting(),
   component: HomePage,
 })
@@ -176,9 +176,9 @@ function HomePage() {
 Use `useServerFn` to call server functions from React components with proper integration:
 
 ```tsx
-import { createServerFn, useServerFn } from '@tanstack/react-start'
+import { createServerFn, useServerFn } from "@tanstack/react-start"
 
-const updatePost = createServerFn({ method: 'POST' })
+const updatePost = createServerFn({ method: "POST" })
   .inputValidator((data: { id: string; title: string }) => data)
   .handler(async ({ data }) => {
     await db.posts.update(data.id, { title: data.title })
@@ -187,7 +187,7 @@ const updatePost = createServerFn({ method: 'POST' })
 
 function EditPostForm({ postId }: { postId: string }) {
   const updatePostFn = useServerFn(updatePost)
-  const [title, setTitle] = useState('')
+  const [title, setTitle] = useState("")
 
   return (
     <form
@@ -206,7 +206,7 @@ function EditPostForm({ postId }: { postId: string }) {
 ## Global Start Configuration (src/start.ts)
 
 ```tsx
-import { createStart, createMiddleware } from '@tanstack/react-start'
+import { createStart, createMiddleware } from "@tanstack/react-start"
 
 const requestLogger = createMiddleware().server(async ({ next, request }) => {
   console.log(`${request.method} ${request.url}`)
@@ -253,13 +253,13 @@ All hooks from `@tanstack/react-router` work in Start:
 
 ```tsx
 // WRONG — this is the SPA router, NOT Start
-import { createServerFn } from '@tanstack/react-router'
+import { createServerFn } from "@tanstack/react-router"
 
 // CORRECT — server functions come from react-start
-import { createServerFn } from '@tanstack/react-start'
+import { createServerFn } from "@tanstack/react-start"
 
 // CORRECT — routing APIs come from react-router (re-exported by Start too)
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link } from "@tanstack/react-router"
 ```
 
 ### 2. HIGH: Using React hooks in beforeLoad or loader

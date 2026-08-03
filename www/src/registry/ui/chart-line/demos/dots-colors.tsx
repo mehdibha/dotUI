@@ -1,33 +1,33 @@
-'use client'
+"use client"
 
-import { CartesianGrid, Dot, Line, LineChart, XAxis } from 'recharts'
+import { CartesianGrid, Dot, Line, LineChart, XAxis } from "recharts"
 
-import type { ChartConfig } from '@/registry/ui/chart'
+import type { ChartConfig } from "@/registry/ui/chart"
 import {
   ChartContainer,
   ChartDataTable,
   ChartTooltip,
   ChartTooltipContent,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--chart-1)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--chart-2)' },
-  { browser: 'firefox', visitors: 187, fill: 'var(--chart-3)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--chart-4)' },
-  { browser: 'other', visitors: 90, fill: 'var(--chart-5)' },
+  { browser: "chrome", visitors: 275, fill: "var(--chart-1)" },
+  { browser: "safari", visitors: 200, fill: "var(--chart-2)" },
+  { browser: "firefox", visitors: 187, fill: "var(--chart-3)" },
+  { browser: "edge", visitors: 173, fill: "var(--chart-4)" },
+  { browser: "other", visitors: 90, fill: "var(--chart-5)" },
 ]
 
 const chartConfig = {
   visitors: {
-    label: 'Visitors',
-    color: 'var(--chart-1)',
+    label: "Visitors",
+    color: "var(--chart-1)",
   },
-  chrome: { label: 'Chrome', color: 'var(--chart-1)' },
-  safari: { label: 'Safari', color: 'var(--chart-2)' },
-  firefox: { label: 'Firefox', color: 'var(--chart-3)' },
-  edge: { label: 'Edge', color: 'var(--chart-4)' },
-  other: { label: 'Other', color: 'var(--chart-5)' },
+  chrome: { label: "Chrome", color: "var(--chart-1)" },
+  safari: { label: "Safari", color: "var(--chart-2)" },
+  firefox: { label: "Firefox", color: "var(--chart-3)" },
+  edge: { label: "Edge", color: "var(--chart-4)" },
+  other: { label: "Other", color: "var(--chart-5)" },
 } satisfies ChartConfig
 
 interface ColoredDotProps {

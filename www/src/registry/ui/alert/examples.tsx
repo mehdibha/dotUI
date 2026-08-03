@@ -1,12 +1,12 @@
-import { CheckIcon, CircleAlertIcon } from '@/registry/icons'
+import { CheckIcon, CircleAlertIcon } from "@/registry/icons"
 import {
   Alert,
   AlertAction,
   AlertDescription,
   AlertTitle,
-} from '@/registry/ui/alert'
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
+} from "@/registry/ui/alert"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
@@ -14,19 +14,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
+} from "@/registry/ui/card"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/registry/ui/select'
-import { TextField } from '@/registry/ui/text-field'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+} from "@/registry/ui/select"
+import { TextField } from "@/registry/ui/text-field"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function AlertExample() {
   return (
@@ -121,7 +121,7 @@ function AlertExample3() {
         <Alert>
           <CircleAlertIcon />
           <AlertDescription>
-            This one has an icon and a description only. No title.{' '}
+            This one has an icon and a description only. No title.{" "}
             <a href="#">But it has a link</a> and a <a href="#">second link</a>.
           </AlertDescription>
         </Alert>

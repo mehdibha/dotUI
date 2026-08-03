@@ -1,33 +1,33 @@
-import { Accordion } from '@/registry/ui/accordion'
+import { Accordion } from "@/registry/ui/accordion"
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
 const categories = [
   {
-    name: 'Collaboration',
+    name: "Collaboration",
     features: [
-      'Real-time multiplayer editing',
-      'Inline comments and mentions',
-      'Shared workspaces with roles',
+      "Real-time multiplayer editing",
+      "Inline comments and mentions",
+      "Shared workspaces with roles",
     ],
   },
   {
-    name: 'Automation',
+    name: "Automation",
     features: [
-      'Custom workflow triggers',
-      'Scheduled tasks and reminders',
-      'Webhooks for any event',
+      "Custom workflow triggers",
+      "Scheduled tasks and reminders",
+      "Webhooks for any event",
     ],
   },
   {
-    name: 'Security',
+    name: "Security",
     features: [
-      'SSO and SCIM provisioning',
-      'Granular access controls',
-      'Audit logs and data export',
+      "SSO and SCIM provisioning",
+      "Granular access controls",
+      "Audit logs and data export",
     ],
   },
 ]
@@ -36,7 +36,7 @@ export default function Demo() {
   return (
     <Accordion
       className="w-full max-w-xs"
-      defaultExpandedKeys={['Collaboration']}
+      defaultExpandedKeys={["Collaboration"]}
     >
       {categories.map((category) => (
         <Disclosure key={category.name} id={category.name}>

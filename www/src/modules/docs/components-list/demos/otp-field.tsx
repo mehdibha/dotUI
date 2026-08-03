@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from "react"
 
-import { Label } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
-import { OTPField, OTPFieldSeparator } from '@/registry/ui/otp-field'
+import { Label } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
+import { OTPField, OTPFieldSeparator } from "@/registry/ui/otp-field"
 
-import { useTypewriter } from '../autoplay'
+import { useTypewriter } from "../autoplay"
 
 // Layout effect on the client, no-op on the server (avoids the SSR warning).
 const useIsoLayoutEffect =
-  typeof window === 'undefined' ? useEffect : useLayoutEffect
+  typeof window === "undefined" ? useEffect : useLayoutEffect
 
 export function OTPFieldDemo() {
   const ref = useRef<HTMLDivElement>(null)
-  const { value, active } = useTypewriter('284917', {
+  const { value, active } = useTypewriter("284917", {
     startDelay: 200,
     charInterval: 220,
     holdAfter: 1600,
@@ -30,8 +30,8 @@ export function OTPFieldDemo() {
       '[data-slot="otp-field-input"]',
     )
     inputs?.forEach((el, i) => {
-      if (i === current) el.setAttribute('data-focused', '')
-      else el.removeAttribute('data-focused')
+      if (i === current) el.setAttribute("data-focused", "")
+      else el.removeAttribute("data-focused")
     })
   })
 

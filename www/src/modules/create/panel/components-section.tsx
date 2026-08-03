@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { ChevronRightIcon } from 'lucide-react'
-import * as ButtonPrimitives from 'react-aria-components/Button'
+import { ChevronRightIcon } from "lucide-react"
+import * as ButtonPrimitives from "react-aria-components/Button"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
 import {
   ComponentDetailView,
   getComponentDisplayName,
   paramComponents,
-} from '../components'
-import { useDesignSystem } from '../preset'
+} from "../components"
+import { useDesignSystem } from "../preset"
 
 /**
  * The Components section: every registry component with params, one expanded at
@@ -37,8 +37,8 @@ export function ComponentsSection({
             <ButtonPrimitives.Button
               onPress={() => onToggle(isExpanded ? undefined : comp.name)}
               className={cn(
-                'flex w-full items-center justify-between gap-2 rounded-md px-1 py-2.5 text-sm focus-reset transition-colors hover:bg-neutral focus-visible:focus-ring',
-                isExpanded && 'font-medium',
+                "flex w-full items-center justify-between gap-2 rounded-md px-1 py-2.5 text-sm focus-reset transition-colors hover:bg-neutral focus-visible:focus-ring",
+                isExpanded && "font-medium",
               )}
             >
               <span className="truncate">
@@ -48,8 +48,8 @@ export function ComponentsSection({
                 {count}
                 <ChevronRightIcon
                   className={cn(
-                    'size-4 text-fg-muted transition-transform',
-                    isExpanded && 'rotate-90',
+                    "size-4 text-fg-muted transition-transform",
+                    isExpanded && "rotate-90",
                   )}
                 />
               </span>

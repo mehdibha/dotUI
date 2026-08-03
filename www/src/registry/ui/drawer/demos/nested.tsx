@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogBody,
@@ -8,8 +8,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer, DrawerHandle } from '@/registry/ui/drawer'
+} from "@/registry/ui/dialog"
+import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 
 /**
  * Nested drawers — open a drawer from inside another drawer. The parent

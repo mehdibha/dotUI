@@ -3,7 +3,7 @@ import {
   AvatarBadge,
   AvatarFallback,
   AvatarImage,
-} from '@/registry/ui/avatar'
+} from "@/registry/ui/avatar"
 
 export default function Demo() {
   return (

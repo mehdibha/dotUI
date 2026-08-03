@@ -1,18 +1,18 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Modal } from '@/registry/ui/modal'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Modal } from "@/registry/ui/modal"
 
 export default function Demo() {
   const [isOpen, setOpen] = React.useState(false)

@@ -30,27 +30,27 @@ You only need to add the `chart` item directly when you are composing a chart by
 Import the primitives you need alongside the Recharts components for your chart type:
 
 ```tsx
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
 import {
   type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from '@/ui/chart'
+} from "@/ui/chart"
 ```
 
 A chart is built from three pieces: your **data** (an array of rows), a **config** that describes each series, and the **Recharts chart** wrapped in `ChartContainer`.
 
 ```tsx
 const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
 ]
 
 const chartConfig = {
-  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
+  desktop: { label: "Desktop", color: "var(--chart-1)" },
 } satisfies ChartConfig
 
 export function Example() {
@@ -75,8 +75,8 @@ export function Example() {
 
 ```tsx
 const chartConfig = {
-  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
-  mobile: { label: 'Mobile', color: 'var(--chart-2)' },
+  desktop: { label: "Desktop", color: "var(--chart-1)" },
+  mobile: { label: "Mobile", color: "var(--chart-2)" },
 } satisfies ChartConfig
 ```
 
@@ -92,8 +92,8 @@ Point each series at a slot through its config color:
 
 ```tsx
 const chartConfig = {
-  desktop: { label: 'Desktop', color: 'var(--chart-1)' },
-  mobile: { label: 'Mobile', color: 'var(--chart-2)' },
+  desktop: { label: "Desktop", color: "var(--chart-1)" },
+  mobile: { label: "Mobile", color: "var(--chart-2)" },
 } satisfies ChartConfig
 ```
 
@@ -101,7 +101,7 @@ A color can be any CSS value, so you are not limited to the palette. To set a di
 
 ```tsx
 const chartConfig = {
-  desktop: { label: 'Desktop', theme: { light: '#2563eb', dark: '#60a5fa' } },
+  desktop: { label: "Desktop", theme: { light: "#2563eb", dark: "#60a5fa" } },
 } satisfies ChartConfig
 ```
 
@@ -109,8 +109,8 @@ For per-category colors — common on pie and radial charts — give each row it
 
 ```tsx
 const chartData = [
-  { browser: 'chrome', visitors: 275, fill: 'var(--color-chrome)' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
+  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
+  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
 ]
 ```
 

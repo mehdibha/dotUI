@@ -1,16 +1,16 @@
-import { Accordion } from '@/registry/ui/accordion'
+import { Accordion } from "@/registry/ui/accordion"
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
 export default function Demo() {
   return (
     <Accordion
       allowsMultipleExpanded
       className="max-w-xs"
-      defaultExpandedKeys={['getting-started']}
+      defaultExpandedKeys={["getting-started"]}
     >
       <Disclosure id="getting-started">
         <DisclosureTrigger>How do I get started with DotUI?</DisclosureTrigger>

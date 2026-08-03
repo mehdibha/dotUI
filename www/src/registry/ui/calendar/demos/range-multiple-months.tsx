@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
 import {
   CalendarGrid,
   CalendarHeader,
   RangeCalendar,
-} from '@/registry/ui/calendar'
+} from "@/registry/ui/calendar"
 
 export default function Demo() {
   return (

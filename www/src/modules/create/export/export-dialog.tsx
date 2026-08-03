@@ -4,37 +4,37 @@
  * passed as children (the navbar CTA, the panel lab's footer button).
  */
 
-import { useState, type ReactNode } from 'react'
-import { ArrowUpRightIcon, CheckIcon, Code2Icon, CopyIcon } from 'lucide-react'
-import * as ButtonPrimitives from 'react-aria-components/Button'
+import { useState, type ReactNode } from "react"
+import { ArrowUpRightIcon, CheckIcon, Code2Icon, CopyIcon } from "lucide-react"
+import * as ButtonPrimitives from "react-aria-components/Button"
 
-import { createPersistedStore, enumCodec } from '@/lib/persisted-store'
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
-import { cn } from '@/registry/lib/utils'
-import { buttonStyles } from '@/registry/ui/button'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Modal } from '@/registry/ui/modal'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
-import { ShadcnIcon } from '@/components/icons/shadcn'
+import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
+import { cn } from "@/registry/lib/utils"
+import { buttonStyles } from "@/registry/ui/button"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Modal } from "@/registry/ui/modal"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
+import { ShadcnIcon } from "@/components/icons/shadcn"
 import {
   buildInitCommands,
   buildInstallCommands,
   PACKAGE_MANAGERS,
   packageManagerStore,
-} from '@/modules/docs/install-commands'
-import type { PackageManager } from '@/modules/docs/install-commands'
+} from "@/modules/docs/install-commands"
+import type { PackageManager } from "@/modules/docs/install-commands"
 
-import { CodeOptionsControls, CodeOptionsPreview } from '../code-options'
-import { DEEPLINK_TARGETS, UPCOMING_TARGETS } from './targets'
-import type { DeeplinkTarget } from './targets'
-import { useExportUrl } from './use-export-url'
+import { CodeOptionsControls, CodeOptionsPreview } from "../code-options"
+import { DEEPLINK_TARGETS, UPCOMING_TARGETS } from "./targets"
+import type { DeeplinkTarget } from "./targets"
+import { useExportUrl } from "./use-export-url"
 
 // Remembered so reopening lands on the tool the user actually exports to.
 const lastTargetStore = createPersistedStore<string>(
-  'dotui-export-target',
-  'shadcn',
-  enumCodec(['shadcn', ...DEEPLINK_TARGETS.map((t) => t.id)], 'shadcn'),
+  "dotui-export-target",
+  "shadcn",
+  enumCodec(["shadcn", ...DEEPLINK_TARGETS.map((t) => t.id)], "shadcn"),
 )
 
 export function ExportDialog({ children }: { children: ReactNode }) {
@@ -75,8 +75,8 @@ function ExportDialogBody() {
         >
           <SectionLabel className="max-md:hidden">Export to</SectionLabel>
           <NavRow
-            isSelected={view === 'shadcn'}
-            onPress={() => selectTarget('shadcn')}
+            isSelected={view === "shadcn"}
+            onPress={() => selectTarget("shadcn")}
           >
             <ShadcnIcon className="size-4 shrink-0" />
             shadcn CLI
@@ -109,8 +109,8 @@ function ExportDialogBody() {
           ))}
           <SectionLabel className="mt-3 max-md:hidden">Options</SectionLabel>
           <NavRow
-            isSelected={view === 'code-style'}
-            onPress={() => setView('code-style')}
+            isSelected={view === "code-style"}
+            onPress={() => setView("code-style")}
           >
             <Code2Icon className="size-4 shrink-0" />
             Code style
@@ -119,7 +119,7 @@ function ExportDialogBody() {
       </div>
 
       <div className="min-h-0 min-w-0 flex-1">
-        {view === 'code-style' ? (
+        {view === "code-style" ? (
           <CodeStylePane />
         ) : deeplink ? (
           <DeeplinkPane target={deeplink} />
@@ -136,8 +136,8 @@ function ExportDialogBody() {
 function ShadcnPane() {
   const presetUrl = useExportUrl()
   const packageManager = packageManagerStore.useValue()
-  const initCommand = buildInitCommands(presetUrl('/r/init'))[packageManager]
-  const addCommand = buildInstallCommands(['button'])[packageManager]
+  const initCommand = buildInitCommands(presetUrl("/r/init"))[packageManager]
+  const addCommand = buildInstallCommands(["button"])[packageManager]
 
   return (
     <div className="flex h-full min-h-0 flex-col gap-5 overflow-y-auto p-5">
@@ -155,7 +155,7 @@ function ShadcnPane() {
         selectedKeys={[packageManager]}
         onSelectionChange={(keys) => {
           const next = keys.values().next().value
-          if (typeof next === 'string') {
+          if (typeof next === "string") {
             packageManagerStore.set(next as PackageManager)
           }
         }}
@@ -196,7 +196,7 @@ function DeeplinkPane({ target }: { target: DeeplinkTarget }) {
         href={target.href(presetUrl)}
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(buttonStyles({ variant: 'primary' }), 'mt-4')}
+        className={cn(buttonStyles({ variant: "primary" }), "mt-4")}
       >
         Open in {target.name}
         <ArrowUpRightIcon data-icon-end="" />
@@ -242,14 +242,14 @@ function NavRow({
       aria-label={label}
       onPress={onPress}
       isDisabled={isDisabled}
-      aria-current={isSelected ? 'true' : undefined}
+      aria-current={isSelected ? "true" : undefined}
       className={cn(
-        'flex h-8 shrink-0 items-center gap-2 rounded-md px-2.5 text-sm focus-reset transition-colors focus-visible:focus-ring md:w-full',
+        "flex h-8 shrink-0 items-center gap-2 rounded-md px-2.5 text-sm focus-reset transition-colors focus-visible:focus-ring md:w-full",
         isSelected
-          ? 'bg-neutral text-fg'
-          : 'text-fg-muted hover:bg-neutral hover:text-fg',
+          ? "bg-neutral text-fg"
+          : "text-fg-muted hover:bg-neutral hover:text-fg",
         isDisabled &&
-          'text-fg-muted/60 hover:bg-transparent hover:text-fg-muted/60',
+          "text-fg-muted/60 hover:bg-transparent hover:text-fg-muted/60",
       )}
     >
       {children}
@@ -297,7 +297,7 @@ function SectionLabel({
   return (
     <div
       className={cn(
-        'px-2.5 pt-1 pb-1.5 text-[10px] tracking-widest text-fg-muted uppercase',
+        "px-2.5 pt-1 pb-1.5 text-[10px] tracking-widest text-fg-muted uppercase",
         className,
       )}
     >

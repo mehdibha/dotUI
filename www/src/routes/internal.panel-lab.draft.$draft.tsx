@@ -1,9 +1,9 @@
-import { createFileRoute, notFound } from '@tanstack/react-router'
+import { createFileRoute, notFound } from "@tanstack/react-router"
 
-import { DRAFTS } from '@/modules/panel-lab/drafts'
-import { PanelDraftPage } from '@/modules/panel-lab/version-page'
+import { DRAFTS } from "@/modules/panel-lab/drafts"
+import { PanelDraftPage } from "@/modules/panel-lab/version-page"
 
-export const Route = createFileRoute('/internal/panel-lab/draft/$draft')({
+export const Route = createFileRoute("/internal/panel-lab/draft/$draft")({
   loader: ({ params }) => {
     const draft = DRAFTS.find((d) => d.id === params.draft)
     if (!draft) throw notFound()
@@ -11,7 +11,7 @@ export const Route = createFileRoute('/internal/panel-lab/draft/$draft')({
   },
   component: RouteComponent,
   head: ({ loaderData }) => ({
-    meta: [{ title: `Draft #${loaderData?.pr ?? ''} · dotUI` }],
+    meta: [{ title: `Draft #${loaderData?.pr ?? ""} · dotUI` }],
   }),
 })
 

@@ -1,18 +1,18 @@
-'use client'
+"use client"
 
-import React from 'react'
-import type * as MenuPrimitives from 'react-aria-components/Menu'
+import React from "react"
+import type * as MenuPrimitives from "react-aria-components/Menu"
 
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
+} from "@/registry/ui/select"
 
 export default function Demo() {
   const [provider, setProvider] = React.useState<MenuPrimitives.Key | null>(
-    'eleven-labs',
+    "eleven-labs",
   )
   return (
     <div className="flex w-52 flex-col items-center gap-6">

@@ -11,9 +11,9 @@ import {
   simulateCvd,
   toOklab,
   toSrgb8,
-} from './space'
+} from "./space"
 
-export { type CvdKind, simulateCvd } from './space'
+export { type CvdKind, simulateCvd } from "./space"
 
 /** WCAG 2 contrast ratio (order-independent). */
 export function wcag2(a: Oklch, b: Oklch): number {
@@ -95,7 +95,7 @@ export function deltaEok(a: Oklch, b: Oklch): number {
   return Math.hypot(la.l - lb.l, la.a - lb.a, la.b - lb.b)
 }
 
-export const CVD_KINDS: CvdKind[] = ['protan', 'deutan', 'tritan']
+export const CVD_KINDS: CvdKind[] = ["protan", "deutan", "tritan"]
 
 /**
  * Min pairwise ΔEok of a palette under normal vision and each CVD condition.

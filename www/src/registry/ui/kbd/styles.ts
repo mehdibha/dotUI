@@ -1,14 +1,14 @@
-import { createStyles } from '@/lib/styles'
+import { createStyles } from "@/lib/styles"
 
-import kbdMeta from './meta'
+import kbdMeta from "./meta"
 
 const { useStyles, styles } = createStyles(kbdMeta, {
   base: {
     slots: {
-      group: 'inline-flex items-center gap-1',
+      group: "inline-flex items-center gap-1",
       kbd: [
-        'pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-(--kbd-radius) bg-muted px-1 font-sans text-xs font-medium text-fg-muted select-none',
-        '**:[svg]:not-with-[size]:size-3',
+        "pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-(--kbd-radius) bg-muted px-1 font-sans text-xs font-medium text-fg-muted select-none",
+        "**:[svg]:not-with-[size]:size-3",
       ],
     },
   },

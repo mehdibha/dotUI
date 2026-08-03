@@ -5,8 +5,8 @@
  * for rich type rendering with popovers and navigation.
  */
 
-import path from 'node:path'
-import ts from 'typescript'
+import path from "node:path"
+import ts from "typescript"
 
 import type {
   TAlias,
@@ -33,7 +33,7 @@ import type {
   TTypeParameter,
   TUnion,
   TypeLinksRegistry,
-} from '@/modules/docs/references/types/type-ast'
+} from "@/modules/docs/references/types/type-ast"
 
 export interface ConversionContext {
   checker: ts.TypeChecker
@@ -48,9 +48,9 @@ export interface ConversionContext {
  * These are typically render prop types where the type parameter is meaningful.
  */
 const PRESERVE_ALL_TYPE_ARGS = new Set([
-  'ChildrenOrFunction',
-  'StyleOrFunction',
-  'ClassNameOrFunction',
+  "ChildrenOrFunction",
+  "StyleOrFunction",
+  "ClassNameOrFunction",
 ])
 
 /**
@@ -113,7 +113,7 @@ function filterDefaultTypeArgs(
     // Check if the argument equals the default by comparing type strings
     // This is a simple heuristic that works well for common cases like `any`, `undefined`
     // lastArg is guaranteed to exist since we check result.length > 0
-    const argString = lastArg ? checker.typeToString(lastArg) : ''
+    const argString = lastArg ? checker.typeToString(lastArg) : ""
     const defaultString = checker.typeToString(defaultType)
 
     if (argString !== defaultString) {
@@ -133,33 +133,33 @@ function filterDefaultTypeArgs(
  */
 export function parseSimpleType(typeName: string): TType {
   switch (typeName) {
-    case 'void':
-      return { type: 'void' } as TKeyword
-    case 'string':
-      return { type: 'string' } as TKeyword
-    case 'number':
-      return { type: 'number' } as TKeyword
-    case 'boolean':
-      return { type: 'boolean' } as TKeyword
-    case 'null':
-      return { type: 'null' } as TKeyword
-    case 'undefined':
-      return { type: 'undefined' } as TKeyword
-    case 'any':
-      return { type: 'any' } as TKeyword
-    case 'unknown':
-      return { type: 'unknown' } as TKeyword
-    case 'never':
-      return { type: 'never' } as TKeyword
-    case 'object':
-      return { type: 'object' } as TKeyword
-    case 'bigint':
-      return { type: 'bigint' } as TKeyword
-    case 'symbol':
-      return { type: 'symbol' } as TKeyword
+    case "void":
+      return { type: "void" } as TKeyword
+    case "string":
+      return { type: "string" } as TKeyword
+    case "number":
+      return { type: "number" } as TKeyword
+    case "boolean":
+      return { type: "boolean" } as TKeyword
+    case "null":
+      return { type: "null" } as TKeyword
+    case "undefined":
+      return { type: "undefined" } as TKeyword
+    case "any":
+      return { type: "any" } as TKeyword
+    case "unknown":
+      return { type: "unknown" } as TKeyword
+    case "never":
+      return { type: "never" } as TKeyword
+    case "object":
+      return { type: "object" } as TKeyword
+    case "bigint":
+      return { type: "bigint" } as TKeyword
+    case "symbol":
+      return { type: "symbol" } as TKeyword
     default:
       // For complex types, return as identifier
-      return { type: 'identifier', name: typeName } as TIdentifier
+      return { type: "identifier", name: typeName } as TIdentifier
   }
 }
 
@@ -181,17 +181,17 @@ export function buildTypeAstFromString(
   if (childrenOrFunctionMatch) {
     const renderPropsName = childrenOrFunctionMatch[1]
     return {
-      type: 'union',
+      type: "union",
       elements: [
-        { type: 'identifier', name: 'ReactNode' } as TIdentifier,
+        { type: "identifier", name: "ReactNode" } as TIdentifier,
         {
-          type: 'function',
+          type: "function",
           parameters: [
             {
-              type: 'parameter',
-              name: 'values',
+              type: "parameter",
+              name: "values",
               value: {
-                type: 'link',
+                type: "link",
                 id: renderPropsName,
                 name: renderPropsName,
               } as TLink,
@@ -199,7 +199,7 @@ export function buildTypeAstFromString(
               rest: false,
             } as TParameter,
           ],
-          return: { type: 'identifier', name: 'ReactNode' } as TIdentifier,
+          return: { type: "identifier", name: "ReactNode" } as TIdentifier,
           typeParameters: [],
         } as TFunction,
       ],
@@ -213,17 +213,17 @@ export function buildTypeAstFromString(
   if (expandedChildrenMatch) {
     const renderPropsName = expandedChildrenMatch[1]
     return {
-      type: 'union',
+      type: "union",
       elements: [
-        { type: 'identifier', name: 'ReactNode' } as TIdentifier,
+        { type: "identifier", name: "ReactNode" } as TIdentifier,
         {
-          type: 'function',
+          type: "function",
           parameters: [
             {
-              type: 'parameter',
-              name: 'values',
+              type: "parameter",
+              name: "values",
               value: {
-                type: 'link',
+                type: "link",
                 id: renderPropsName,
                 name: renderPropsName,
               } as TLink,
@@ -231,7 +231,7 @@ export function buildTypeAstFromString(
               rest: false,
             } as TParameter,
           ],
-          return: { type: 'identifier', name: 'ReactNode' } as TIdentifier,
+          return: { type: "identifier", name: "ReactNode" } as TIdentifier,
           typeParameters: [],
         } as TFunction,
       ],
@@ -248,17 +248,17 @@ export function buildTypeAstFromString(
   if (classNameOrFunctionMatch) {
     const renderPropsName = classNameOrFunctionMatch[1]
     return {
-      type: 'union',
+      type: "union",
       elements: [
-        { type: 'string' } as TKeyword,
+        { type: "string" } as TKeyword,
         {
-          type: 'function',
+          type: "function",
           parameters: [
             {
-              type: 'parameter',
-              name: 'values',
+              type: "parameter",
+              name: "values",
               value: {
-                type: 'link',
+                type: "link",
                 id: renderPropsName,
                 name: renderPropsName,
               } as TLink,
@@ -266,7 +266,7 @@ export function buildTypeAstFromString(
               rest: false,
             } as TParameter,
           ],
-          return: { type: 'string' } as TKeyword,
+          return: { type: "string" } as TKeyword,
           typeParameters: [],
         } as TFunction,
       ],
@@ -280,17 +280,17 @@ export function buildTypeAstFromString(
   if (expandedClassNameMatch) {
     const renderPropsName = expandedClassNameMatch[1]
     return {
-      type: 'union',
+      type: "union",
       elements: [
-        { type: 'string' } as TKeyword,
+        { type: "string" } as TKeyword,
         {
-          type: 'function',
+          type: "function",
           parameters: [
             {
-              type: 'parameter',
-              name: 'values',
+              type: "parameter",
+              name: "values",
               value: {
-                type: 'link',
+                type: "link",
                 id: renderPropsName,
                 name: renderPropsName,
               } as TLink,
@@ -298,7 +298,7 @@ export function buildTypeAstFromString(
               rest: false,
             } as TParameter,
           ],
-          return: { type: 'string' } as TKeyword,
+          return: { type: "string" } as TKeyword,
           typeParameters: [],
         } as TFunction,
       ],
@@ -315,17 +315,17 @@ export function buildTypeAstFromString(
   if (styleOrFunctionMatch) {
     const renderPropsName = styleOrFunctionMatch[1]
     return {
-      type: 'union',
+      type: "union",
       elements: [
-        { type: 'identifier', name: 'CSSProperties' } as TIdentifier,
+        { type: "identifier", name: "CSSProperties" } as TIdentifier,
         {
-          type: 'function',
+          type: "function",
           parameters: [
             {
-              type: 'parameter',
-              name: 'values',
+              type: "parameter",
+              name: "values",
               value: {
-                type: 'link',
+                type: "link",
                 id: renderPropsName,
                 name: renderPropsName,
               } as TLink,
@@ -333,7 +333,7 @@ export function buildTypeAstFromString(
               rest: false,
             } as TParameter,
           ],
-          return: { type: 'identifier', name: 'CSSProperties' } as TIdentifier,
+          return: { type: "identifier", name: "CSSProperties" } as TIdentifier,
           typeParameters: [],
         } as TFunction,
       ],
@@ -347,17 +347,17 @@ export function buildTypeAstFromString(
   if (expandedStyleMatch) {
     const renderPropsName = expandedStyleMatch[1]
     return {
-      type: 'union',
+      type: "union",
       elements: [
-        { type: 'identifier', name: 'CSSProperties' } as TIdentifier,
+        { type: "identifier", name: "CSSProperties" } as TIdentifier,
         {
-          type: 'function',
+          type: "function",
           parameters: [
             {
-              type: 'parameter',
-              name: 'values',
+              type: "parameter",
+              name: "values",
               value: {
-                type: 'link',
+                type: "link",
                 id: renderPropsName,
                 name: renderPropsName,
               } as TLink,
@@ -365,7 +365,7 @@ export function buildTypeAstFromString(
               rest: false,
             } as TParameter,
           ],
-          return: { type: 'identifier', name: 'CSSProperties' } as TIdentifier,
+          return: { type: "identifier", name: "CSSProperties" } as TIdentifier,
           typeParameters: [],
         } as TFunction,
       ],
@@ -376,7 +376,7 @@ export function buildTypeAstFromString(
   // Pattern: Simple primitives and identifiers (e.g., ReactNode, string, number)
   // ============================================================================
   const simpleType = parseSimpleType(typeString)
-  if (simpleType.type !== 'identifier') {
+  if (simpleType.type !== "identifier") {
     return simpleType
   }
 
@@ -388,7 +388,7 @@ export function buildTypeAstFromString(
     const elements = literals.map(
       (lit) =>
         ({
-          type: 'stringLiteral',
+          type: "stringLiteral",
           value: lit.slice(1, -1), // Remove quotes
         }) as TStringLiteral,
     )
@@ -398,7 +398,7 @@ export function buildTypeAstFromString(
     if (elements.length === 1 && firstElement) {
       return firstElement
     }
-    return { type: 'union', elements } as TUnion
+    return { type: "union", elements } as TUnion
   }
 
   // ============================================================================
@@ -412,12 +412,12 @@ export function buildTypeAstFromString(
     const paramType = functionMatch[2]
     const returnType = functionMatch[3]
     return {
-      type: 'function',
+      type: "function",
       parameters: [
         {
-          type: 'parameter',
+          type: "parameter",
           name: paramName,
-          value: { type: 'link', id: paramType, name: paramType } as TLink,
+          value: { type: "link", id: paramType, name: paramType } as TLink,
           optional: false,
           rest: false,
         } as TParameter,
@@ -437,7 +437,7 @@ export function buildTypeAstFromString(
  * form (`[Symbol.iterator]`) instead.
  */
 export function formatMemberName(name: string): string {
-  return name.replace(/^__@(\w+)@\d+$/, '[Symbol.$1]')
+  return name.replace(/^__@(\w+)@\d+$/, "[Symbol.$1]")
 }
 
 /**
@@ -446,13 +446,13 @@ export function formatMemberName(name: string): string {
  * which also drops the pnpm store key), cwd-relative for repo files.
  */
 function normalizeDeclarationPath(fileName: string): string {
-  const posixFileName = fileName.replaceAll('\\', '/')
-  const marker = 'node_modules/'
+  const posixFileName = fileName.replaceAll("\\", "/")
+  const marker = "node_modules/"
   const markerIndex = posixFileName.lastIndexOf(marker)
   if (markerIndex !== -1) {
     return posixFileName.slice(markerIndex + marker.length)
   }
-  return path.relative(process.cwd(), posixFileName).replaceAll('\\', '/')
+  return path.relative(process.cwd(), posixFileName).replaceAll("\\", "/")
 }
 
 /**
@@ -464,7 +464,7 @@ function isDefaultLibType(symbol: ts.Symbol): boolean {
   const declarations = symbol.getDeclarations()
   return !!declarations?.some((decl) =>
     normalizeDeclarationPath(decl.getSourceFile().fileName).startsWith(
-      'typescript/lib/',
+      "typescript/lib/",
     ),
   )
 }
@@ -498,7 +498,7 @@ export function typeToAst(
   // Prevent infinite recursion
   if (currentDepth > maxDepth) {
     return {
-      type: 'identifier',
+      type: "identifier",
       name: checker.typeToString(type),
     } as TIdentifier
   }
@@ -518,7 +518,7 @@ export function typeToAst(
     const declarations = aliasSymbol.getDeclarations()
     const isExternalType = declarations?.some((decl) => {
       const fileName = decl.getSourceFile().fileName
-      return fileName.includes('node_modules') || fileName.includes('.d.ts')
+      return fileName.includes("node_modules") || fileName.includes(".d.ts")
     })
 
     if (isExternalType) {
@@ -540,13 +540,13 @@ export function typeToAst(
             .filter((t): t is TType => t !== null)
 
           return {
-            type: 'application',
-            base: { type: 'identifier', name: aliasName } as TIdentifier,
+            type: "application",
+            base: { type: "identifier", name: aliasName } as TIdentifier,
             typeParameters: typeParams,
           } as TApplication
         }
       }
-      return { type: 'identifier', name: aliasName } as TIdentifier
+      return { type: "identifier", name: aliasName } as TIdentifier
     }
   }
 
@@ -566,25 +566,25 @@ export function typeToAst(
   const flags = type.getFlags()
 
   // Keyword types
-  if (flags & ts.TypeFlags.Any) return { type: 'any' } as TKeyword
-  if (flags & ts.TypeFlags.Unknown) return { type: 'unknown' } as TKeyword
-  if (flags & ts.TypeFlags.Void) return { type: 'void' } as TKeyword
-  if (flags & ts.TypeFlags.Undefined) return { type: 'undefined' } as TKeyword
-  if (flags & ts.TypeFlags.Null) return { type: 'null' } as TKeyword
-  if (flags & ts.TypeFlags.Never) return { type: 'never' } as TKeyword
-  if (flags & ts.TypeFlags.BigInt) return { type: 'bigint' } as TKeyword
+  if (flags & ts.TypeFlags.Any) return { type: "any" } as TKeyword
+  if (flags & ts.TypeFlags.Unknown) return { type: "unknown" } as TKeyword
+  if (flags & ts.TypeFlags.Void) return { type: "void" } as TKeyword
+  if (flags & ts.TypeFlags.Undefined) return { type: "undefined" } as TKeyword
+  if (flags & ts.TypeFlags.Null) return { type: "null" } as TKeyword
+  if (flags & ts.TypeFlags.Never) return { type: "never" } as TKeyword
+  if (flags & ts.TypeFlags.BigInt) return { type: "bigint" } as TKeyword
 
   // Literal types
   if (flags & ts.TypeFlags.StringLiteral) {
     return {
-      type: 'stringLiteral',
+      type: "stringLiteral",
       value: (type as ts.StringLiteralType).value,
     } as TStringLiteral
   }
 
   if (flags & ts.TypeFlags.NumberLiteral) {
     return {
-      type: 'numberLiteral',
+      type: "numberLiteral",
       value: (type as ts.NumberLiteralType).value,
     } as TNumberLiteral
   }
@@ -594,16 +594,16 @@ export function typeToAst(
     // Use type checker to get the string representation
     const typeStr = checker.typeToString(type)
     return {
-      type: 'booleanLiteral',
-      value: typeStr === 'true',
+      type: "booleanLiteral",
+      value: typeStr === "true",
     } as TBooleanLiteral
   }
 
   // Non-literal primitives
-  if (flags & ts.TypeFlags.String) return { type: 'string' } as TKeyword
-  if (flags & ts.TypeFlags.Number) return { type: 'number' } as TKeyword
-  if (flags & ts.TypeFlags.Boolean) return { type: 'boolean' } as TKeyword
-  if (flags & ts.TypeFlags.ESSymbol) return { type: 'symbol' } as TKeyword
+  if (flags & ts.TypeFlags.String) return { type: "string" } as TKeyword
+  if (flags & ts.TypeFlags.Number) return { type: "number" } as TKeyword
+  if (flags & ts.TypeFlags.Boolean) return { type: "boolean" } as TKeyword
+  if (flags & ts.TypeFlags.ESSymbol) return { type: "symbol" } as TKeyword
 
   // Union types
   if (type.isUnion()) {
@@ -619,7 +619,7 @@ export function typeToAst(
     if (collapsedElements.length === 1 && firstElement) return firstElement
 
     return {
-      type: 'union',
+      type: "union",
       elements: sortUnionElements(collapsedElements),
     } as TUnion
   }
@@ -633,7 +633,7 @@ export function typeToAst(
     const firstType = types[0]
     if (types.length === 1 && firstType) return firstType
 
-    return { type: 'intersection', types } as TIntersection
+    return { type: "intersection", types } as TIntersection
   }
 
   // Function/callable types
@@ -653,7 +653,7 @@ export function typeToAst(
         currentDepth: currentDepth + 1,
       })
       if (elementType) {
-        return { type: 'array', elementType } as TArray
+        return { type: "array", elementType } as TArray
       }
     }
   }
@@ -664,7 +664,7 @@ export function typeToAst(
     const elements = typeArgs
       .map((t) => typeToAst(t, { ...context, currentDepth: currentDepth + 1 }))
       .filter((t): t is TType => t !== null)
-    return { type: 'tuple', elements } as TTuple
+    return { type: "tuple", elements } as TTuple
   }
 
   // Object types (interfaces, type literals, classes)
@@ -677,39 +677,39 @@ export function typeToAst(
     if (
       symbol &&
       typeName &&
-      !typeName.startsWith('__') &&
-      typeName !== '__type'
+      !typeName.startsWith("__") &&
+      typeName !== "__type"
     ) {
       // Check if this is a generic type application
       const typeArgs = (type as ts.TypeReference).typeArguments
 
       // Common built-in types we want to show as identifiers
       const builtInTypes = [
-        'ReactNode',
-        'ReactElement',
-        'CSSProperties',
-        'Element',
-        'Event',
-        'FocusEvent',
-        'KeyboardEvent',
-        'MouseEvent',
-        'PointerEvent',
-        'TouchEvent',
-        'DragEvent',
-        'ClipboardEvent',
-        'WheelEvent',
-        'AnimationEvent',
-        'TransitionEvent',
-        'FormEvent',
-        'ChangeEvent',
-        'FocusableElement',
-        'Key',
-        'Ref',
-        'RefObject',
-        'MutableRefObject',
-        'ComponentProps',
-        'HTMLAttributes',
-        'AriaAttributes',
+        "ReactNode",
+        "ReactElement",
+        "CSSProperties",
+        "Element",
+        "Event",
+        "FocusEvent",
+        "KeyboardEvent",
+        "MouseEvent",
+        "PointerEvent",
+        "TouchEvent",
+        "DragEvent",
+        "ClipboardEvent",
+        "WheelEvent",
+        "AnimationEvent",
+        "TransitionEvent",
+        "FormEvent",
+        "ChangeEvent",
+        "FocusableElement",
+        "Key",
+        "Ref",
+        "RefObject",
+        "MutableRefObject",
+        "ComponentProps",
+        "HTMLAttributes",
+        "AriaAttributes",
       ]
 
       if (builtInTypes.includes(typeName) || isDefaultLibType(symbol)) {
@@ -730,13 +730,13 @@ export function typeToAst(
               .filter((t): t is TType => t !== null)
 
             return {
-              type: 'application',
-              base: { type: 'identifier', name: typeName } as TIdentifier,
+              type: "application",
+              base: { type: "identifier", name: typeName } as TIdentifier,
               typeParameters: typeParams,
             } as TApplication
           }
         }
-        return { type: 'identifier', name: typeName } as TIdentifier
+        return { type: "identifier", name: typeName } as TIdentifier
       }
 
       // For custom types, create a link if we haven't seen it yet
@@ -753,7 +753,7 @@ export function typeToAst(
 
       // Return a link to the type
       const link: TLink = {
-        type: 'link',
+        type: "link",
         id: typeId,
         name: cleanTypeName(typeName),
       }
@@ -776,7 +776,7 @@ export function typeToAst(
             .filter((t): t is TType => t !== null)
 
           return {
-            type: 'application',
+            type: "application",
             base: link,
             typeParameters: typeParams,
           } as TApplication
@@ -798,7 +798,7 @@ export function typeToAst(
     if (objectFlags & ts.ObjectFlags.Mapped) {
       // For mapped types, just return a simplified representation
       return {
-        type: 'identifier',
+        type: "identifier",
         name: checker.typeToString(type),
       } as TIdentifier
     }
@@ -808,7 +808,7 @@ export function typeToAst(
   if (flags & ts.TypeFlags.Conditional) {
     // For conditional types, just show as identifier since they're complex
     return {
-      type: 'identifier',
+      type: "identifier",
       name: checker.typeToString(type),
     } as TIdentifier
   }
@@ -817,12 +817,12 @@ export function typeToAst(
   if (flags & ts.TypeFlags.Index) {
     const indexType = type as ts.IndexType
     return {
-      type: 'keyof',
+      type: "keyof",
       keyof:
         typeToAst(indexType.type, {
           ...context,
           currentDepth: currentDepth + 1,
-        }) || ({ type: 'unknown' } as TKeyword),
+        }) || ({ type: "unknown" } as TKeyword),
     } as TKeyof
   }
 
@@ -830,17 +830,17 @@ export function typeToAst(
   if (flags & ts.TypeFlags.IndexedAccess) {
     const indexed = type as ts.IndexedAccessType
     return {
-      type: 'indexedAccess',
+      type: "indexedAccess",
       objectType:
         typeToAst(indexed.objectType, {
           ...context,
           currentDepth: currentDepth + 1,
-        }) || ({ type: 'unknown' } as TKeyword),
+        }) || ({ type: "unknown" } as TKeyword),
       indexType:
         typeToAst(indexed.indexType, {
           ...context,
           currentDepth: currentDepth + 1,
-        }) || ({ type: 'unknown' } as TKeyword),
+        }) || ({ type: "unknown" } as TKeyword),
     } as TIndexedAccess
   }
 
@@ -851,7 +851,7 @@ export function typeToAst(
 
     template.texts.forEach((text, i) => {
       if (text) {
-        elements.push({ type: 'stringLiteral', value: text } as TStringLiteral)
+        elements.push({ type: "stringLiteral", value: text } as TStringLiteral)
       }
       const templateType = template.types[i]
       if (i < template.types.length && templateType) {
@@ -863,7 +863,7 @@ export function typeToAst(
       }
     })
 
-    return { type: 'template', elements } as TTemplate
+    return { type: "template", elements } as TTemplate
   }
 
   // Type parameter
@@ -873,8 +873,8 @@ export function typeToAst(
     const constraint = typeParam.getConstraint()
     const defaultType = typeParam.getDefault()
     return {
-      type: 'typeParameter',
-      name: symbol?.getName() || 'T',
+      type: "typeParameter",
+      name: symbol?.getName() || "T",
       constraint: constraint
         ? typeToAst(constraint, {
             ...context,
@@ -892,7 +892,7 @@ export function typeToAst(
 
   // Fallback: return as identifier with string representation
   return {
-    type: 'identifier',
+    type: "identifier",
     name: cleanTypeName(checker.typeToString(type)),
   } as TIdentifier
 }
@@ -911,11 +911,11 @@ function functionSignatureToAst(
     const declaration = param.valueDeclaration as ts.ParameterDeclaration
 
     return {
-      type: 'parameter',
+      type: "parameter",
       name: param.getName(),
       value:
         typeToAst(paramType, { ...context, currentDepth: currentDepth + 1 }) ||
-        ({ type: 'unknown' } as TKeyword),
+        ({ type: "unknown" } as TKeyword),
       optional: declaration ? checker.isOptionalParameter(declaration) : false,
       rest: declaration ? !!declaration.dotDotDotToken : false,
     } as TParameter
@@ -928,8 +928,8 @@ function functionSignatureToAst(
     const constraint = tp.getConstraint()
     const defaultType = tp.getDefault()
     return {
-      type: 'typeParameter',
-      name: tp.getSymbol()?.getName() || 'T',
+      type: "typeParameter",
+      name: tp.getSymbol()?.getName() || "T",
       constraint: constraint
         ? typeToAst(constraint, {
             ...context,
@@ -946,11 +946,11 @@ function functionSignatureToAst(
   })
 
   return {
-    type: 'function',
+    type: "function",
     parameters,
     return:
       typeToAst(returnType, { ...context, currentDepth: currentDepth + 1 }) ||
-      ({ type: 'void' } as TKeyword),
+      ({ type: "void" } as TKeyword),
     typeParameters,
   }
 }
@@ -979,7 +979,7 @@ function objectTypeToAst(
     const firstSig = callSignatures[0]
     if (firstSig && !propType.getProperties().length) {
       propsRecord[propName] = {
-        type: 'method',
+        type: "method",
         name: propName,
         value: functionSignatureToAst(firstSig, context),
         optional: (prop.flags & ts.SymbolFlags.Optional) !== 0,
@@ -989,13 +989,13 @@ function objectTypeToAst(
       } as TMethod
     } else {
       propsRecord[propName] = {
-        type: 'property',
+        type: "property",
         name: propName,
         value:
           typeToAst(propType, {
             ...context,
             currentDepth: currentDepth + 1,
-          }) || ({ type: 'unknown' } as TKeyword),
+          }) || ({ type: "unknown" } as TKeyword),
         optional: (prop.flags & ts.SymbolFlags.Optional) !== 0,
         readonly:
           declaration && ts.isPropertySignature(declaration)
@@ -1010,7 +1010,7 @@ function objectTypeToAst(
     }
   }
 
-  return { type: 'objectLiteral', properties: propsRecord }
+  return { type: "objectLiteral", properties: propsRecord }
 }
 
 /**
@@ -1048,7 +1048,7 @@ function resolveNamedType(
 
       if (firstCallSig && !propType.getProperties().length) {
         propsRecord[propName] = {
-          type: 'method',
+          type: "method",
           name: propName,
           value: functionSignatureToAst(firstCallSig, context),
           optional: (prop.flags & ts.SymbolFlags.Optional) !== 0,
@@ -1058,13 +1058,13 @@ function resolveNamedType(
         } as TMethod
       } else {
         propsRecord[propName] = {
-          type: 'property',
+          type: "property",
           name: propName,
           value:
             typeToAst(propType, {
               ...context,
               currentDepth: currentDepth + 1,
-            }) || ({ type: 'unknown' } as TKeyword),
+            }) || ({ type: "unknown" } as TKeyword),
           optional: (prop.flags & ts.SymbolFlags.Optional) !== 0,
           readonly: false,
           description: ts.displayPartsToString(
@@ -1092,7 +1092,7 @@ function resolveNamedType(
     }
 
     return {
-      type: 'interface',
+      type: "interface",
       id: getTypeId(type, checker),
       name: cleanTypeName(name),
       extends: extendsTypes,
@@ -1106,14 +1106,14 @@ function resolveNamedType(
   if (ts.isTypeAliasDeclaration(decl)) {
     const aliasedType = checker.getTypeAtLocation(decl.type)
     return {
-      type: 'alias',
+      type: "alias",
       id: getTypeId(type, checker),
       name: cleanTypeName(name),
       value:
         typeToAst(aliasedType, {
           ...context,
           currentDepth: currentDepth + 1,
-        }) || ({ type: 'unknown' } as TKeyword),
+        }) || ({ type: "unknown" } as TKeyword),
       typeParameters: [],
       description,
     } as TAlias
@@ -1139,32 +1139,32 @@ export function sortUnionElements(elements: TType[]): TType[] {
 
 function getTypeSortKey(node: TType): string {
   switch (node.type) {
-    case 'stringLiteral':
+    case "stringLiteral":
       return `0_${(node as TStringLiteral).value}`
-    case 'numberLiteral':
+    case "numberLiteral":
       return `1_${(node as TNumberLiteral).value}`
-    case 'booleanLiteral':
+    case "booleanLiteral":
       return `2_${(node as TBooleanLiteral).value}`
-    case 'null':
-      return '3_null'
-    case 'undefined':
-      return '4_undefined'
-    case 'string':
-    case 'number':
-    case 'boolean':
-    case 'bigint':
-    case 'symbol':
-    case 'void':
-    case 'any':
-    case 'unknown':
-    case 'never':
-    case 'object':
+    case "null":
+      return "3_null"
+    case "undefined":
+      return "4_undefined"
+    case "string":
+    case "number":
+    case "boolean":
+    case "bigint":
+    case "symbol":
+    case "void":
+    case "any":
+    case "unknown":
+    case "never":
+    case "object":
       return `5_${node.type}`
-    case 'identifier':
+    case "identifier":
       return `6_${(node as TIdentifier).name}`
-    case 'link':
+    case "link":
       return `7_${(node as TLink).name}`
-    case 'function':
+    case "function":
       return `8_function`
     default:
       return `9_${node.type}`
@@ -1176,9 +1176,9 @@ function getTypeSortKey(node: TType): string {
  */
 function cleanTypeName(name: string): string {
   return name
-    .replace(/^React\./, '')
-    .replace(/^import\([^)]+\)\./, '')
-    .replace(/^typeof\s+/, '')
+    .replace(/^React\./, "")
+    .replace(/^import\([^)]+\)\./, "")
+    .replace(/^typeof\s+/, "")
 }
 
 /**
@@ -1204,17 +1204,17 @@ export function createConversionContext(
  */
 function collapseBooleanLiterals(elements: TType[]): TType[] {
   const hasTrue = elements.some(
-    (e) => e.type === 'booleanLiteral' && e.value === true,
+    (e) => e.type === "booleanLiteral" && e.value === true,
   )
   const hasFalse = elements.some(
-    (e) => e.type === 'booleanLiteral' && e.value === false,
+    (e) => e.type === "booleanLiteral" && e.value === false,
   )
 
   if (hasTrue && hasFalse) {
     // Remove both true and false, add boolean keyword
     return [
-      { type: 'boolean' } as TKeyword,
-      ...elements.filter((e) => e.type !== 'booleanLiteral'),
+      { type: "boolean" } as TKeyword,
+      ...elements.filter((e) => e.type !== "booleanLiteral"),
     ]
   }
 

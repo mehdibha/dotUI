@@ -14,7 +14,7 @@ import {
   type Oklch as CuloriOklch,
   parse,
   type Rgb,
-} from 'culori'
+} from "culori"
 
 export interface Oklch {
   l: number
@@ -22,9 +22,9 @@ export interface Oklch {
   h: number
 }
 
-const toOklchConv = converter('oklch')
-const toRgbConv = converter('rgb')
-const toOklabConv = converter('oklab')
+const toOklchConv = converter("oklch")
+const toRgbConv = converter("rgb")
+const toOklabConv = converter("oklab")
 
 /** Parse any CSS color into OKLCH (throws on unparsable input). */
 export function toOklch(color: string): Oklch {
@@ -35,7 +35,7 @@ export function toOklch(color: string): Oklch {
 }
 
 function asCulori(color: Oklch): CuloriOklch {
-  return { mode: 'oklch', l: color.l, c: color.c, h: color.h }
+  return { mode: "oklch", l: color.l, c: color.c, h: color.h }
 }
 
 /** 8-bit sRGB channels of an (in-gamut) OKLCH color. */
@@ -55,7 +55,7 @@ export function toOklab(color: Oklch): { l: number; a: number; b: number } {
   return { l, a, b }
 }
 
-export type CvdKind = 'protan' | 'deutan' | 'tritan'
+export type CvdKind = "protan" | "deutan" | "tritan"
 
 const CVD_FILTERS: Record<CvdKind, (color: Rgb) => Rgb> = {
   protan: filterDeficiencyProt(1) as (color: Rgb) => Rgb,

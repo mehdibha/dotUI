@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { ColorEditor, type ColorEditorProps } from '@/registry/ui/color-editor'
+import { ColorEditor, type ColorEditorProps } from "@/registry/ui/color-editor"
 
 export default function Demo({
   showAlphaChannel = false,

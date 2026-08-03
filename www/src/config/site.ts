@@ -1,39 +1,39 @@
 export const siteConfig = {
-  url: 'https://dotui.org',
-  name: 'dotUI',
-  title: 'dotUI',
-  tagline: 'The Design System Studio for the Web',
+  url: "https://dotui.org",
+  name: "dotUI",
+  title: "dotUI",
+  tagline: "The Design System Studio for the Web",
   description:
-    'The design system studio for the web. Every design decision is yours — build on real components, then install with the shadcn CLI or export to v0.',
+    "The design system studio for the web. Every design decision is yours — build on real components, then install with the shadcn CLI or export to v0.",
   keywords: [
-    'dotUI',
-    'React',
-    'Tailwind CSS',
-    'React components',
-    'React Aria',
-    'Accessible components',
+    "dotUI",
+    "React",
+    "Tailwind CSS",
+    "React components",
+    "React Aria",
+    "Accessible components",
   ],
   authors: [
     {
-      name: 'mehdibha',
-      url: 'https://www.mehdibha.com',
+      name: "mehdibha",
+      url: "https://www.mehdibha.com",
     },
   ],
-  creator: 'mehdibha',
-  thumbnail: '/images/thumbnail.png',
+  creator: "mehdibha",
+  thumbnail: "/images/thumbnail.png",
   twitter: {
-    creator: '@mehdibha',
+    creator: "@mehdibha",
   },
   og: {
-    title: 'The Design System Studio for the Web',
+    title: "The Design System Studio for the Web",
     description:
-      'Every design decision is yours — build on real components, then install with the shadcn CLI or export to v0.',
+      "Every design decision is yours — build on real components, then install with the shadcn CLI or export to v0.",
   },
   links: {
-    github: 'https://github.com/mehdibha/dotUI',
-    twitter: 'https://x.com/mehdibha',
-    discord: 'https://discord.gg/DXpj5V2fU8',
-    creatorGithub: 'https://github.com/mehdibha',
+    github: "https://github.com/mehdibha/dotUI",
+    twitter: "https://x.com/mehdibha",
+    discord: "https://discord.gg/DXpj5V2fU8",
+    creatorGithub: "https://github.com/mehdibha",
   },
 } as const
 
@@ -48,18 +48,18 @@ export const navItems: {
   to: string
   params?: { _splat: string }
 }[] = [
-  { name: 'Docs', match: '/docs', to: '/docs/$', params: { _splat: '' } },
+  { name: "Docs", match: "/docs", to: "/docs/$", params: { _splat: "" } },
   {
-    name: 'Components',
-    match: '/docs/components',
-    to: '/docs/$',
-    params: { _splat: 'components' },
+    name: "Components",
+    match: "/docs/components",
+    to: "/docs/$",
+    params: { _splat: "components" },
   },
   {
-    name: 'Charts',
-    match: '/docs/charts',
-    to: '/docs/$',
-    params: { _splat: 'charts' },
+    name: "Charts",
+    match: "/docs/charts",
+    to: "/docs/$",
+    params: { _splat: "charts" },
   },
-  { name: 'Create', match: '/create', to: '/create' },
+  { name: "Create", match: "/create", to: "/create" },
 ]

@@ -6,8 +6,8 @@ description: >
   hideUntilHover, requireUrlFlag, eventBusConfig). TanStackDevtools component,
   defaultOpen, localStorage persistence.
 type: core
-library: '@tanstack/devtools'
-library_version: '0.10.12'
+library: "@tanstack/devtools"
+library_version: "0.10.12"
 sources:
   - docs/quick-start.md
   - docs/installation.md
@@ -33,12 +33,12 @@ npm install -D @tanstack/react-devtools @tanstack/devtools-vite
 Mount `TanStackDevtools` at the root of your application:
 
 ```tsx
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import App from './App'
+import { StrictMode } from "react"
+import { createRoot } from "react-dom/client"
+import { TanStackDevtools } from "@tanstack/react-devtools"
+import App from "./App"
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />
     <TanStackDevtools />
@@ -49,17 +49,17 @@ createRoot(document.getElementById('root')!).render(
 Add plugins via the `plugins` prop. Each plugin needs `name` (string) and `render` (JSX element or render function):
 
 ```tsx
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'
-import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+import { TanStackDevtools } from "@tanstack/react-devtools"
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools"
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
 ;<TanStackDevtools
   plugins={[
     {
-      name: 'TanStack Query',
+      name: "TanStack Query",
       render: <ReactQueryDevtoolsPanel />,
     },
     {
-      name: 'TanStack Router',
+      name: "TanStack Router",
       render: <TanStackRouterDevtoolsPanel />,
     },
   ]}
@@ -76,12 +76,12 @@ Vue uses `component` (not `render`) in plugin definitions. This is the `TanStack
 
 ```vue
 <script setup lang="ts">
-import { TanStackDevtools } from '@tanstack/vue-devtools'
-import type { TanStackDevtoolsVuePlugin } from '@tanstack/vue-devtools'
-import { VueQueryDevtoolsPanel } from '@tanstack/vue-query-devtools'
+import { TanStackDevtools } from "@tanstack/vue-devtools"
+import type { TanStackDevtoolsVuePlugin } from "@tanstack/vue-devtools"
+import { VueQueryDevtoolsPanel } from "@tanstack/vue-query-devtools"
 
 const plugins: TanStackDevtoolsVuePlugin[] = [
-  { name: 'Vue Query', component: VueQueryDevtoolsPanel },
+  { name: "Vue Query", component: VueQueryDevtoolsPanel },
 ]
 </script>
 
@@ -100,10 +100,10 @@ npm install -D @tanstack/solid-devtools @tanstack/devtools-vite
 ```
 
 ```tsx
-import { render } from 'solid-js/web'
-import { TanStackDevtools } from '@tanstack/solid-devtools'
-import { SolidQueryDevtoolsPanel } from '@tanstack/solid-query-devtools'
-import App from './App'
+import { render } from "solid-js/web"
+import { TanStackDevtools } from "@tanstack/solid-devtools"
+import { SolidQueryDevtoolsPanel } from "@tanstack/solid-query-devtools"
+import App from "./App"
 
 render(
   () => (
@@ -112,14 +112,14 @@ render(
       <TanStackDevtools
         plugins={[
           {
-            name: 'TanStack Query',
+            name: "TanStack Query",
             render: <SolidQueryDevtoolsPanel />,
           },
         ]}
       />
     </>
   ),
-  document.getElementById('root')!,
+  document.getElementById("root")!,
 )
 ```
 
@@ -130,9 +130,9 @@ npm install -D @tanstack/preact-devtools @tanstack/devtools-vite
 ```
 
 ```tsx
-import { render } from 'preact'
-import { TanStackDevtools } from '@tanstack/preact-devtools'
-import App from './App'
+import { render } from "preact"
+import { TanStackDevtools } from "@tanstack/preact-devtools"
+import App from "./App"
 
 render(
   <>
@@ -140,13 +140,13 @@ render(
     <TanStackDevtools
       plugins={[
         {
-          name: 'Your Plugin',
+          name: "Your Plugin",
           render: <YourPluginComponent />,
         },
       ]}
     />
   </>,
-  document.getElementById('root')!,
+  document.getElementById("root")!,
 )
 ```
 
@@ -168,13 +168,13 @@ All config properties are optional. Defaults shown below:
   config={{
     defaultOpen: false, // open panel on mount
     hideUntilHover: false, // hide trigger until mouse hover
-    position: 'bottom-right', // trigger position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'middle-left' | 'middle-right'
-    panelLocation: 'bottom', // panel position: 'top' | 'bottom'
-    openHotkey: ['Control', '~'],
-    inspectHotkey: ['Shift', 'Alt', 'CtrlOrMeta'],
+    position: "bottom-right", // trigger position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'middle-left' | 'middle-right'
+    panelLocation: "bottom", // panel position: 'top' | 'bottom'
+    openHotkey: ["Control", "~"],
+    inspectHotkey: ["Shift", "Alt", "CtrlOrMeta"],
     requireUrlFlag: false, // require URL param to show devtools
-    urlFlag: 'tanstack-devtools', // the URL param name when requireUrlFlag is true
-    theme: 'dark', // 'light' | 'dark' (defaults to system preference)
+    urlFlag: "tanstack-devtools", // the URL param name when requireUrlFlag is true
+    theme: "dark", // 'light' | 'dark' (defaults to system preference)
     triggerHidden: false, // completely hide trigger (hotkey still works)
   }}
 />
@@ -201,14 +201,14 @@ The server event bus requires the `@tanstack/devtools-vite` plugin to be running
 Each plugin entry can include a `defaultOpen` flag to control whether that plugin tab is active when devtools first opens:
 
 ```tsx
-import { TanStackDevtools } from '@tanstack/react-devtools'
-import { FormDevtools } from '@tanstack/react-form'
+import { TanStackDevtools } from "@tanstack/react-devtools"
+import { FormDevtools } from "@tanstack/react-form"
 ;<TanStackDevtools
   config={{ hideUntilHover: true }}
   eventBusConfig={{ debug: true }}
   plugins={[
     {
-      name: 'TanStack Form',
+      name: "TanStack Form",
       render: <FormDevtools />,
       defaultOpen: true,
     },
@@ -224,7 +224,7 @@ Use `requireUrlFlag` to hide devtools unless a specific URL parameter is present
 <TanStackDevtools
   config={{
     requireUrlFlag: true,
-    urlFlag: 'tanstack-devtools', // visit ?tanstack-devtools to enable
+    urlFlag: "tanstack-devtools", // visit ?tanstack-devtools to enable
   }}
 />
 ```
@@ -240,7 +240,7 @@ Wrong:
 ```vue
 <!-- This silently fails - render is ignored in Vue adapter -->
 <script setup lang="ts">
-const plugins = [{ name: 'My Plugin', render: MyComponent }]
+const plugins = [{ name: "My Plugin", render: MyComponent }]
 </script>
 ```
 
@@ -248,10 +248,10 @@ Correct:
 
 ```vue
 <script setup lang="ts">
-import type { TanStackDevtoolsVuePlugin } from '@tanstack/vue-devtools'
+import type { TanStackDevtoolsVuePlugin } from "@tanstack/vue-devtools"
 
 const plugins: TanStackDevtoolsVuePlugin[] = [
-  { name: 'My Plugin', component: MyComponent },
+  { name: "My Plugin", component: MyComponent },
 ]
 </script>
 ```
@@ -265,8 +265,8 @@ The `@tanstack/devtools-vite` plugin performs source injection that must run bef
 Wrong:
 
 ```ts
-import { devtools } from '@tanstack/devtools-vite'
-import react from '@vitejs/plugin-react'
+import { devtools } from "@tanstack/devtools-vite"
+import react from "@vitejs/plugin-react"
 
 export default {
   plugins: [react(), devtools()],
@@ -276,8 +276,8 @@ export default {
 Correct:
 
 ```ts
-import { devtools } from '@tanstack/devtools-vite'
-import react from '@vitejs/plugin-react'
+import { devtools } from "@tanstack/devtools-vite"
+import react from "@vitejs/plugin-react"
 
 export default {
   plugins: [devtools(), react()],
@@ -292,7 +292,7 @@ Wrong:
 
 ```tsx
 // In a server-rendered component without framework 'use client' support
-import { TanStackDevtools } from '@tanstack/react-devtools'
+import { TanStackDevtools } from "@tanstack/react-devtools"
 
 export default function Layout({ children }) {
   return (
@@ -307,13 +307,13 @@ export default function Layout({ children }) {
 Correct:
 
 ```tsx
-import { TanStackDevtools } from '@tanstack/react-devtools'
+import { TanStackDevtools } from "@tanstack/react-devtools"
 
 export default function Layout({ children }) {
   return (
     <>
       {children}
-      {typeof window !== 'undefined' && <TanStackDevtools />}
+      {typeof window !== "undefined" && <TanStackDevtools />}
     </>
   )
 }

@@ -3,7 +3,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
+} from "@/registry/ui/select"
 
 export default function Demo() {
   return (

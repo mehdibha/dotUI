@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy } from "react"
 
 // Lazy on purpose — see the note in chart-bar.tsx: a module imported both
 // statically here and dynamically via DemosIndex breaks in production.
 const ChartAreaDefault = lazy(
-  () => import('@/registry/ui/chart-area/demos/default'),
+  () => import("@/registry/ui/chart-area/demos/default"),
 )
 
 export function ChartAreaDemo() {

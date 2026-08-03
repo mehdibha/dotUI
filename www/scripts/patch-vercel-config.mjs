@@ -15,11 +15,11 @@
 //   3. inject a before-filesystem rewrite: `/` + Accept: text/markdown -> /home.md
 // Browsers (Accept: text/html) don't match the `has` condition and keep the
 // static HTML homepage. Runs in build:postprocess; a no-op for the node preset.
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { dirname } from 'node:path'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import { dirname } from "node:path"
 
-const CONFIG = '.vercel/output/config.json'
-const STATIC_HOME_MD = '.vercel/output/static/home.md'
+const CONFIG = ".vercel/output/config.json"
+const STATIC_HOME_MD = ".vercel/output/static/home.md"
 
 if (!existsSync(CONFIG)) {
   console.log(
@@ -57,26 +57,26 @@ mkdirSync(dirname(STATIC_HOME_MD), { recursive: true })
 writeFileSync(STATIC_HOME_MD, HOME_MD)
 
 // 2) + 3) Override content-type and inject the rewrite.
-const config = JSON.parse(readFileSync(CONFIG, 'utf-8'))
+const config = JSON.parse(readFileSync(CONFIG, "utf-8"))
 
 config.overrides ??= {}
-config.overrides['home.md'] = { contentType: 'text/markdown; charset=utf-8' }
+config.overrides["home.md"] = { contentType: "text/markdown; charset=utf-8" }
 
 config.routes ??= []
 const route = {
-  src: '/',
-  has: [{ type: 'header', key: 'accept', value: '(.*)text/markdown(.*)' }],
-  dest: '/home.md',
+  src: "/",
+  has: [{ type: "header", key: "accept", value: "(.*)text/markdown(.*)" }],
+  dest: "/home.md",
 }
 const already = config.routes.some(
   (r) => r && r.src === route.src && r.dest === route.dest && r.has,
 )
 if (!already) {
-  const fsIndex = config.routes.findIndex((r) => r && r.handle === 'filesystem')
+  const fsIndex = config.routes.findIndex((r) => r && r.handle === "filesystem")
   config.routes.splice(fsIndex === -1 ? 0 : fsIndex, 0, route)
 }
 
 writeFileSync(CONFIG, `${JSON.stringify(config, null, 2)}\n`)
 console.log(
-  '[patch-vercel-config] wrote static home.md, set text/markdown override, injected markdown-negotiation rewrite.',
+  "[patch-vercel-config] wrote static home.md, set text/markdown override, injected markdown-negotiation rewrite.",
 )

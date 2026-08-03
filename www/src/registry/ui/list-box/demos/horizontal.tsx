@@ -1,6 +1,6 @@
-import { LayoutGridIcon, ListIcon, RowsIcon } from 'lucide-react'
+import { LayoutGridIcon, ListIcon, RowsIcon } from "lucide-react"
 
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
 export default function Demo() {
   return (
@@ -9,7 +9,7 @@ export default function Demo() {
         aria-label="View"
         orientation="horizontal"
         selectionMode="single"
-        defaultSelectedKeys={['grid']}
+        defaultSelectedKeys={["grid"]}
       >
         <ListBoxItem id="list" textValue="List">
           <ListIcon />

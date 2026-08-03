@@ -1,8 +1,8 @@
-import type * as React from 'react'
+import type * as React from "react"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
-interface ShowcaseCardProps extends React.ComponentProps<'div'> {
+interface ShowcaseCardProps extends React.ComponentProps<"div"> {
   /** Quiet label shown at the left of the header row. */
   label: React.ReactNode
   /** Optional element pinned to the right of the header row (an action, swatches…). */
@@ -30,7 +30,7 @@ export function ShowcaseCard({
       </div>
       <div
         className={cn(
-          'relative h-60 overflow-hidden rounded-2xl border bg-card',
+          "relative h-60 overflow-hidden rounded-2xl border bg-card",
           className,
         )}
         {...props}

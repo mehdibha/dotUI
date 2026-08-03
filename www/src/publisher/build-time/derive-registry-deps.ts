@@ -13,20 +13,20 @@
  * wholesale replacement.
  */
 
-import path from 'node:path'
-import { Project } from 'ts-morph'
-import type { SourceFile } from 'ts-morph'
+import path from "node:path"
+import { Project } from "ts-morph"
+import type { SourceFile } from "ts-morph"
 
-import type { RegistryItemFile } from '@/registry/types'
+import type { RegistryItemFile } from "@/registry/types"
 
 const SPEC_REWRITES: Array<[RegExp, (m: RegExpMatchArray) => string]> = [
-  [/^@\/registry\/ui\/(.+)$/, (m) => firstSegment(m[1] ?? '')],
-  [/^@\/registry\/lib\/(.+)$/, (m) => firstSegment(m[1] ?? '')],
-  [/^@\/registry\/hooks\/(.+)$/, (m) => firstSegment(m[1] ?? '')],
+  [/^@\/registry\/ui\/(.+)$/, (m) => firstSegment(m[1] ?? "")],
+  [/^@\/registry\/lib\/(.+)$/, (m) => firstSegment(m[1] ?? "")],
+  [/^@\/registry\/hooks\/(.+)$/, (m) => firstSegment(m[1] ?? "")],
 ]
 
 function firstSegment(rest: string): string {
-  return rest.split('/')[0] ?? ''
+  return rest.split("/")[0] ?? ""
 }
 
 /** Map a module specifier to its dotui dep name, or undefined if it isn't a registry import. */

@@ -1,23 +1,23 @@
-'use client'
+"use client"
 
 /* Surfaces — the canvas decisions pulled out of Colors into their own section:
    background lightness per mode, and the overlay material grouped tweak (one
    switch for menus/popovers/tooltips: solid or glass). The hero shows both
    modes at once — editing a background means comparing modes, not toggling. */
 
-import { MoonIcon, SunIcon } from 'lucide-react'
+import { MoonIcon, SunIcon } from "lucide-react"
 
-import { resolveColorConfigCached } from '@/lib/resolve-color'
+import { resolveColorConfigCached } from "@/lib/resolve-color"
 import {
   ControlGroup,
   GroupCaption,
   SliderRow,
-} from '@/modules/control-lab/rows'
+} from "@/modules/control-lab/rows"
 
-import { OVERLAY_OPTIONS } from '../data'
-import type { Lab } from '../data'
-import { SegmentedControlRow } from '../patterns'
-import { cssToHex, useLabConfig } from './engine-562'
+import { OVERLAY_OPTIONS } from "../data"
+import type { Lab } from "../data"
+import { SegmentedControlRow } from "../patterns"
+import { cssToHex, useLabConfig } from "./engine-562"
 
 /** One mode's surface stack, engine-true: the background carrying a card
  *  (neutral-50) with text bars, and a floating menu chip that demos the
@@ -37,10 +37,10 @@ function SurfaceTile({
   scales: Record<string, Record<string, string> | undefined>
   glass: boolean
 }) {
-  const card = scales.neutral?.['50'] ?? background
-  const border = scales.neutral?.['300'] ?? background
-  const fg = scales.neutral?.['900'] ?? background
-  const accent = scales.accent?.['700'] ?? background
+  const card = scales.neutral?.["50"] ?? background
+  const border = scales.neutral?.["300"] ?? background
+  const fg = scales.neutral?.["900"] ?? background
+  const accent = scales.accent?.["700"] ?? background
 
   return (
     <div
@@ -70,7 +70,7 @@ function SurfaceTile({
           style={{
             borderColor: border,
             backgroundColor: glass ? `${cssToHex(card)}B3` : card,
-            backdropFilter: glass ? 'blur(5px)' : undefined,
+            backdropFilter: glass ? "blur(5px)" : undefined,
           }}
         >
           <span className="block h-1 w-3/4 rounded-full bg-current opacity-60" />
@@ -85,7 +85,7 @@ export function SurfacesSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   const config = useLabConfig(state)
   const theme = resolveColorConfigCached(config)
-  const glass = state.overlayMaterial === 'glass'
+  const glass = state.overlayMaterial === "glass"
 
   return (
     <>
@@ -101,7 +101,7 @@ export function SurfacesSectionBody({ lab }: { lab: Lab }) {
         <SurfaceTile
           label="Dark"
           icon={MoonIcon}
-          value={state.bgDark === 0 ? 'OLED' : `L* ${state.bgDark.toFixed(1)}`}
+          value={state.bgDark === 0 ? "OLED" : `L* ${state.bgDark.toFixed(1)}`}
           background={theme.dark.background}
           scales={theme.dark.scales}
           glass={glass}
@@ -111,7 +111,7 @@ export function SurfacesSectionBody({ lab }: { lab: Lab }) {
         <SliderRow
           label="Light background"
           value={state.bgLight}
-          onChange={set('bgLight')}
+          onChange={set("bgLight")}
           minValue={90}
           maxValue={100}
           step={0.5}
@@ -120,11 +120,11 @@ export function SurfacesSectionBody({ lab }: { lab: Lab }) {
         <SliderRow
           label="Dark background"
           value={state.bgDark}
-          onChange={set('bgDark')}
+          onChange={set("bgDark")}
           minValue={0}
           maxValue={20}
           step={0.5}
-          format={(v) => (v === 0 ? 'OLED' : `L* ${v.toFixed(1)}`)}
+          format={(v) => (v === 0 ? "OLED" : `L* ${v.toFixed(1)}`)}
         />
       </ControlGroup>
       <GroupCaption>
@@ -134,7 +134,7 @@ export function SurfacesSectionBody({ lab }: { lab: Lab }) {
       <SegmentedControlRow
         label="Overlays"
         value={state.overlayMaterial}
-        onChange={set('overlayMaterial')}
+        onChange={set("overlayMaterial")}
         options={OVERLAY_OPTIONS}
       />
       <GroupCaption>

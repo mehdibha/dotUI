@@ -1,16 +1,16 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const responsiveMeta = {
-  name: 'responsive',
-  type: 'registry:lib',
+  name: "responsive",
+  type: "registry:lib",
   files: [
     {
-      path: 'lib/responsive/index.tsx',
-      type: 'registry:lib',
-      target: 'lib/responsive.tsx',
+      path: "lib/responsive/index.tsx",
+      type: "registry:lib",
+      target: "lib/responsive.tsx",
     },
   ],
-  registryDependencies: ['use-mobile'],
+  registryDependencies: ["use-mobile"],
 } satisfies RegistryItem
 
 export default responsiveMeta

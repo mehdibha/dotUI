@@ -1,15 +1,15 @@
-import { CircleAlertIcon } from '@/registry/icons'
-import { Alert, AlertDescription, AlertTitle } from '@/registry/ui/alert'
-import { Button } from '@/registry/ui/button'
+import { CircleAlertIcon } from "@/registry/icons"
+import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert"
+import { Button } from "@/registry/ui/button"
 import {
   Empty,
   EmptyDescription,
   EmptyHeader,
   EmptyTitle,
-} from '@/registry/ui/empty'
-import { ToastProvider, toastManager } from '@/registry/ui/toast'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+} from "@/registry/ui/empty"
+import { ToastProvider, toastManager } from "@/registry/ui/toast"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function FeedbackGroupExamples() {
   return (
@@ -28,9 +28,9 @@ export default function FeedbackGroupExamples() {
         <Button
           onPress={() =>
             toastManager.add({
-              title: 'Changes saved',
-              description: 'Your update is live.',
-              type: 'success',
+              title: "Changes saved",
+              description: "Your update is live.",
+              type: "success",
             })
           }
         >

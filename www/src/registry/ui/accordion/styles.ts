@@ -1,10 +1,10 @@
-import { createStyles } from '@/lib/styles'
+import { createStyles } from "@/lib/styles"
 
-import accordionMeta from './meta'
+import accordionMeta from "./meta"
 
 const { useStyles, styles } = createStyles(accordionMeta, {
   base: {
-    base: 'flex w-full flex-col',
+    base: "flex w-full flex-col",
   },
   density: {
     compact: {},
@@ -14,10 +14,10 @@ const { useStyles, styles } = createStyles(accordionMeta, {
   params: {
     style: {
       default: {
-        base: '**:data-disclosure:not-last:border-b',
+        base: "**:data-disclosure:not-last:border-b",
       },
       hammamet: {
-        base: 'border **:data-disclosure:not-last:border-b',
+        base: "border **:data-disclosure:not-last:border-b",
       },
     },
   },

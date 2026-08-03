@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogBody,
@@ -9,10 +9,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer, type DrawerProps } from '@/registry/ui/drawer'
+} from "@/registry/ui/dialog"
+import { Drawer, type DrawerProps } from "@/registry/ui/drawer"
 
-export default function Demo({ placement = 'bottom' }: DrawerProps = {}) {
+export default function Demo({ placement = "bottom" }: DrawerProps = {}) {
   return (
     <Dialog>
       <Button>Open Drawer</Button>

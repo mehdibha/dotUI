@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useAsyncList } from 'react-stately'
+import { useAsyncList } from "react-stately"
 
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Loader } from '@/registry/ui/loader'
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Loader } from "@/registry/ui/loader"
 
 interface Pokemon {
   name: string
@@ -30,7 +30,7 @@ export default function Demo() {
         aria-label="Pick a Pokemon"
         className="max-h-64 overflow-auto overscroll-none"
         items={list.items}
-        isLoading={list.loadingState === 'loadingMore'}
+        isLoading={list.loadingState === "loadingMore"}
         onLoadMore={list.loadMore}
         renderEmptyState={() => (
           <div className="flex items-center justify-center py-4">

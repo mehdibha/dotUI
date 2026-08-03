@@ -1,21 +1,21 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Account from './demos/account'
-import SingleSelectionWithIcons from './demos/checkboxes-with-icons'
-import Complex from './demos/complex'
-import InDialog from './demos/in-dialog'
-import MultipleSelection from './demos/multiple-selection'
-import RadioWithIcons from './demos/radio-with-icons'
-import Sides from './demos/sides'
-import SingleSelection from './demos/single-selection'
-import WithAvatar from './demos/with-avatar'
-import WithDestructive from './demos/with-destructive'
-import WithDrawer from './demos/with-drawer'
-import WithIcons from './demos/with-icons'
-import WithModal from './demos/with-modal'
-import WithShortcuts from './demos/with-shortcuts'
-import WithSubmenu from './demos/with-submenu'
+import Account from "./demos/account"
+import SingleSelectionWithIcons from "./demos/checkboxes-with-icons"
+import Complex from "./demos/complex"
+import InDialog from "./demos/in-dialog"
+import MultipleSelection from "./demos/multiple-selection"
+import RadioWithIcons from "./demos/radio-with-icons"
+import Sides from "./demos/sides"
+import SingleSelection from "./demos/single-selection"
+import WithAvatar from "./demos/with-avatar"
+import WithDestructive from "./demos/with-destructive"
+import WithDrawer from "./demos/with-drawer"
+import WithIcons from "./demos/with-icons"
+import WithModal from "./demos/with-modal"
+import WithShortcuts from "./demos/with-shortcuts"
+import WithSubmenu from "./demos/with-submenu"
 
 export default function MenuExamples() {
   return (

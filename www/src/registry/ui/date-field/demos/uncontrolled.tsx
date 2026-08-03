@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { parseDate } from '@internationalized/date'
+import { parseDate } from "@internationalized/date"
 
-import { DateField } from '@/registry/ui/date-field'
-import { DateInput } from '@/registry/ui/input'
+import { DateField } from "@/registry/ui/date-field"
+import { DateInput } from "@/registry/ui/input"
 
 export default function Demo() {
   return (
     <DateField
       className="max-w-xs"
       aria-label="Event date"
-      defaultValue={parseDate('2020-02-03')}
+      defaultValue={parseDate("2020-02-03")}
     >
       <DateInput />
     </DateField>

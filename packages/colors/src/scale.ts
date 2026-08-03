@@ -20,8 +20,8 @@ import {
   STEPS,
   type StepName,
   TEXT_TARGETS,
-} from './data'
-import { apca, cappedLcBar, wcag2 } from './meters'
+} from "./data"
+import { apca, cappedLcBar, wcag2 } from "./meters"
 import {
   cusp,
   fitSrgb,
@@ -30,21 +30,21 @@ import {
   type Oklch,
   solveLstar,
   yFromLstar,
-} from './space'
+} from "./space"
 
-export type Mode = 'light' | 'dark'
+export type Mode = "light" | "dark"
 
 export interface ScaleColors {
   /** Job-ladder colors, in STEPS order. */
   steps: Record<StepName, Oklch>
   /** Solved solid-label foregrounds (D2). */
-  on: { '700': Oklch; '800': Oklch }
+  on: { "700": Oklch; "800": Oklch }
   /** D7 — the seed anchored outside the solid job window and was clamped. */
   solidClamped: boolean
 }
 
 /** D2 — border placement targets: WCAG vs the app background, per border job. */
-export type BorderTargets = Partial<Record<'400' | '500' | '600', number>>
+export type BorderTargets = Partial<Record<"400" | "500" | "600", number>>
 
 export interface ScaleOptions {
   seed: Oklch
@@ -105,7 +105,7 @@ function chromaticChroma(
   return {
     at(l, i) {
       let c = vividness * cpeak * CHROMA_SHAPE[i]!
-      if (mode === 'dark') {
+      if (mode === "dark") {
         if (i < 8) c *= DARK_CHROMA_MULT[i]!
         else if (i >= 10) c *= darkTextChromaMult(seed.h)
       }
@@ -204,7 +204,7 @@ function solveBorderTarget(
   hueAt: (l: number) => number,
   mode: Mode,
 ): Oklch {
-  let pass = mode === 'light' ? 0 : 100 // the away-from-bg pole clears any bar
+  let pass = mode === "light" ? 0 : 100 // the away-from-bg pole clears any bar
   let fail = lstarOf(bg)
   for (let k = 0; k < 40; k++) {
     const mid = (pass + fail) / 2
@@ -230,7 +230,7 @@ function hoverSolid(
 ): Oklch {
   const delta = 0.03 / (solid.l + 0.1)
   const targetL =
-    mode === 'light'
+    mode === "light"
       ? solid.l > 0.4
         ? solid.l - delta
         : solid.l + delta
@@ -271,7 +271,7 @@ function solveText(
   let color = solveLstar(lstar, chromaAt, hueAt)
   for (let i = 0; i < 90; i++) {
     if (meets(color)) return color
-    lstar += mode === 'light' ? -1 : 1
+    lstar += mode === "light" ? -1 : 1
     if (lstar < 0 || lstar > 100) break
     color = solveLstar(lstar, chromaAt, hueAt)
   }
@@ -290,7 +290,7 @@ export function buildScale(options: ScaleOptions): ScaleColors {
 
   const skeleton =
     options.skeleton ??
-    (mode === 'dark'
+    (mode === "dark"
       ? DARK_SKELETON
       : neutral
         ? LIGHT_SKELETON_NEUTRAL
@@ -308,16 +308,16 @@ export function buildScale(options: ScaleOptions): ScaleColors {
   // app background); relaxed policy keeps anchors as-is and lets verify
   // report any floor miss.
   const borderFloors = [
-    ['400', 5, BARS.border400],
-    ['500', 6, BARS.border500],
-    ['600', 7, BARS.border600],
+    ["400", 5, BARS.border400],
+    ["500", 6, BARS.border500],
+    ["600", 7, BARS.border600],
   ] as const
   for (const [name, i, bar] of borderFloors) {
     const target = options.borderTargets?.[name]
     if (target !== undefined) {
       steps[name] = solveBorderTarget(
         target,
-        steps['25']!,
+        steps["25"]!,
         (l) => chroma.at(l, i),
         hueAt,
         mode,
@@ -326,10 +326,10 @@ export function buildScale(options: ScaleOptions): ScaleColors {
     }
     if (options.relaxedBorders) continue
     const meets = () =>
-      [steps['25']!, steps['50']!].every((bg) => wcag2(steps[name]!, bg) >= bar)
+      [steps["25"]!, steps["50"]!].every((bg) => wcag2(steps[name]!, bg) >= bar)
     let lstar = skeleton[i]!
     for (let k = 0; k < 80 && !meets(); k++) {
-      lstar += mode === 'light' ? -0.25 : 0.25
+      lstar += mode === "light" ? -0.25 : 0.25
       steps[name] = solveLstar(lstar, (l) => chroma.at(l, i), hueAt)
     }
   }
@@ -342,39 +342,39 @@ export function buildScale(options: ScaleOptions): ScaleColors {
         seed,
         chroma,
         hueAt,
-        options.preserveSeed && mode === 'light',
+        options.preserveSeed && mode === "light",
         strictOnSolid,
       )
-  steps['700'] = solid
-  steps['800'] = hoverSolid(solid, on, mode, chroma, strictOnSolid)
+  steps["700"] = solid
+  steps["800"] = hoverSolid(solid, on, mode, chroma, strictOnSolid)
   const on800 = on
 
   // Text (jobs 11–12), solved against this scale's own backgrounds from the
   // job's Radix-measured depth target (retreating only if a bar forces it).
-  const bg25 = steps['25']!
-  const bg50 = steps['50']!
-  const bg100 = steps['100']!
-  const kind = neutral ? 'neutral' : 'chromatic'
-  steps['900'] = solveText(
+  const bg25 = steps["25"]!
+  const bg50 = steps["50"]!
+  const bg100 = steps["100"]!
+  const kind = neutral ? "neutral" : "chromatic"
+  steps["900"] = solveText(
     BARS.text900,
     [bg25, bg50, bg100],
     [bg25, bg50, bg100],
     (l) => chroma.at(l, 10),
     hueAt,
     mode,
-    TEXT_TARGETS[mode]['900'][kind],
+    TEXT_TARGETS[mode]["900"][kind],
   )
-  steps['950'] = solveText(
+  steps["950"] = solveText(
     BARS.text950,
     [bg25, bg50, bg100],
     [bg25, bg50], // Lc 90 promised on app/subtle backgrounds (D2)
     (l) => chroma.at(l, 11),
     hueAt,
     mode,
-    TEXT_TARGETS[mode]['950'][kind],
+    TEXT_TARGETS[mode]["950"][kind],
   )
 
-  return { steps, on: { '700': on, '800': on800 }, solidClamped: clamped }
+  return { steps, on: { "700": on, "800": on800 }, solidClamped: clamped }
 }
 
 /**

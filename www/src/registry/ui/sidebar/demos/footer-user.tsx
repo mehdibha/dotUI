@@ -3,10 +3,10 @@ import {
   CreditCardIcon,
   LogOutIcon,
   SettingsIcon,
-} from '@/registry/__generated__/icons'
-import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
+} from "@/registry/__generated__/icons"
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
 import {
   Sidebar,
   SidebarContent,
@@ -18,7 +18,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from '@/registry/ui/sidebar'
+} from "@/registry/ui/sidebar"
 
 export default function Demo() {
   return (

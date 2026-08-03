@@ -1,10 +1,10 @@
-import { Label } from '@/registry/ui/field'
+import { Label } from "@/registry/ui/field"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
+} from "@/registry/ui/select"
 
 export default function Demo() {
   return (

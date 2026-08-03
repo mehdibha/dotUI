@@ -4,7 +4,7 @@ import {
   InboxIcon,
   SearchIcon,
   SettingsIcon,
-} from '@/registry/__generated__/icons'
+} from "@/registry/__generated__/icons"
 import {
   Sidebar,
   SidebarContent,
@@ -15,14 +15,14 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from '@/registry/ui/sidebar'
+} from "@/registry/ui/sidebar"
 
 const items = [
-  { title: 'Dashboard', icon: HomeIcon, isActive: true },
-  { title: 'Inbox', icon: InboxIcon },
-  { title: 'Calendar', icon: CalendarIcon },
-  { title: 'Search', icon: SearchIcon },
-  { title: 'Settings', icon: SettingsIcon },
+  { title: "Dashboard", icon: HomeIcon, isActive: true },
+  { title: "Inbox", icon: InboxIcon },
+  { title: "Calendar", icon: CalendarIcon },
+  { title: "Search", icon: SearchIcon },
+  { title: "Settings", icon: SettingsIcon },
 ]
 
 export default function Demo() {

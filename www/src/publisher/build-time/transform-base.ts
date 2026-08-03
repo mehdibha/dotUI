@@ -31,12 +31,12 @@
  * Build-time only. Imports ts-morph.
  */
 
-import { IndentationText, Node, Project, QuoteKind, SyntaxKind } from 'ts-morph'
-import type { ImportDeclaration, SourceFile } from 'ts-morph'
+import { IndentationText, Node, Project, QuoteKind, SyntaxKind } from "ts-morph"
+import type { ImportDeclaration, SourceFile } from "ts-morph"
 
-import { TV_CONFIG_PLACEHOLDER } from '../publish'
+import { TV_CONFIG_PLACEHOLDER } from "../publish"
 
-const TS_PLACEHOLDER_IDENT = '__TV_CONFIG__'
+const TS_PLACEHOLDER_IDENT = "__TV_CONFIG__"
 
 function toCamelCase(slug: string): string {
   return slug.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase())
@@ -45,10 +45,10 @@ function toCamelCase(slug: string): string {
 /* ----------------------- import rewriting ----------------------- */
 
 export const REGISTRY_PATH_REWRITES: Array<[RegExp, string]> = [
-  [/^@\/registry\/ui\//, '@/components/ui/'],
-  [/^@\/registry\/hooks\//, '@/hooks/'],
-  [/^@\/registry\/lib\//, '@/lib/'],
-  [/^@\/registry\/icons\b/, '@/components/icons'],
+  [/^@\/registry\/ui\//, "@/components/ui/"],
+  [/^@\/registry\/hooks\//, "@/hooks/"],
+  [/^@\/registry\/lib\//, "@/lib/"],
+  [/^@\/registry\/icons\b/, "@/components/icons"],
 ]
 
 export function rewriteImportPath(specifier: string): string | undefined {
@@ -236,7 +236,7 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
     const callee = call.getExpression()
     if (
       !callee.isKind(SyntaxKind.Identifier) ||
-      callee.getText() !== 'useStyles'
+      callee.getText() !== "useStyles"
     )
       continue
     if (call.getArguments().length !== 0) continue
@@ -250,14 +250,14 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
   //     doesn't ship, so re-export the injected variant const under the same
   //     public name — cross-component imports rely on it staying stable.
   for (const exp of [...sourceFile.getExportDeclarations()]) {
-    if (exp.getModuleSpecifierValue() !== './styles') continue
+    if (exp.getModuleSpecifierValue() !== "./styles") continue
     const specs = exp
       .getNamedExports()
       .map(
         (s) =>
           `${variantIdent} as ${s.getAliasNode()?.getText() ?? s.getName()}`,
       )
-    exp.replaceWithText(`export { ${specs.join(', ')} };`)
+    exp.replaceWithText(`export { ${specs.join(", ")} };`)
   }
 
   // 3. Replace value-position references to `<oldStylesIdent>` (e.g. `buttonStyles`)
@@ -279,7 +279,7 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
 
   // 4. Remove imports from "./styles" (both value and type).
   for (const imp of [...sourceFile.getImportDeclarations()]) {
-    if (imp.getModuleSpecifierValue() === './styles') imp.remove()
+    if (imp.getModuleSpecifierValue() === "./styles") imp.remove()
   }
 
   // 5. Rewrite registry-internal import paths to consumer aliases, and
@@ -303,9 +303,9 @@ function applyTransform(sourceFile: SourceFile, ctx: ApplyContext): void {
   const lastImport = sourceFile.getImportDeclarations().at(-1)
   const insertIndex = lastImport ? lastImport.getChildIndex() + 1 : 0
   sourceFile.insertStatements(insertIndex, [
-    '',
+    "",
     `const ${variantIdent} = tv(${TS_PLACEHOLDER_IDENT});`,
-    '',
+    "",
   ])
 }
 
@@ -316,7 +316,7 @@ function findNextVariantProps(
   // `type X = VariantProps<...>` → TypeReference.
   for (const ref of sourceFile.getDescendantsOfKind(SyntaxKind.TypeReference)) {
     if (ref.wasForgotten()) continue
-    if (ref.getTypeName().getText() !== 'VariantProps') continue
+    if (ref.getTypeName().getText() !== "VariantProps") continue
     const first = ref.getTypeArguments()[0]
     if (!first || first.wasForgotten()) continue
     if (first.getText() === oldStylesTypeIdent) return first
@@ -326,7 +326,7 @@ function findNextVariantProps(
     SyntaxKind.ExpressionWithTypeArguments,
   )) {
     if (ewta.wasForgotten()) continue
-    if (ewta.getExpression().getText() !== 'VariantProps') continue
+    if (ewta.getExpression().getText() !== "VariantProps") continue
     const first = ewta.getTypeArguments()[0]
     if (!first || first.wasForgotten()) continue
     if (first.getText() === oldStylesTypeIdent) return first
@@ -336,17 +336,17 @@ function findNextVariantProps(
 
 function ensureTailwindVariantsImport(sourceFile: SourceFile): void {
   const existing = sourceFile.getImportDeclaration(
-    (imp) => imp.getModuleSpecifierValue() === 'tailwind-variants',
+    (imp) => imp.getModuleSpecifierValue() === "tailwind-variants",
   )
   if (existing) {
     // Make sure both `tv` and `VariantProps` are present.
-    ensureNamedImport(existing, 'tv', false)
-    ensureNamedImport(existing, 'VariantProps', true)
+    ensureNamedImport(existing, "tv", false)
+    ensureNamedImport(existing, "VariantProps", true)
     return
   }
   sourceFile.addImportDeclaration({
-    moduleSpecifier: 'tailwind-variants',
-    namedImports: [{ name: 'tv' }, { name: 'VariantProps', isTypeOnly: true }],
+    moduleSpecifier: "tailwind-variants",
+    namedImports: [{ name: "tv" }, { name: "VariantProps", isTypeOnly: true }],
   })
 }
 

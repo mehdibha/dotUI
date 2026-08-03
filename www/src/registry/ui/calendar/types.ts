@@ -1,5 +1,5 @@
-import type * as CalendarPrimitives from 'react-aria-components/Calendar'
-import type * as RangeCalendarPrimitives from 'react-aria-components/RangeCalendar'
+import type * as CalendarPrimitives from "react-aria-components/Calendar"
+import type * as RangeCalendarPrimitives from "react-aria-components/RangeCalendar"
 
 /**
  * A calendar displays one or more date grids and allows users to select a single date.
@@ -18,7 +18,7 @@ export interface RangeCalendarProps<
 /**
  * The header of a calendar, containing the navigation buttons and the heading.
  */
-export interface CalendarHeaderProps extends React.ComponentProps<'header'> {}
+export interface CalendarHeaderProps extends React.ComponentProps<"header"> {}
 
 /**
  * A calendar grid displays a single grid of days within a calendar or range calendar
@@ -59,5 +59,5 @@ export interface CalendarCellProps extends React.ComponentProps<
    * The color variant of the selected cell.
    * @default 'accent'
    */
-  variant?: 'primary' | 'accent'
+  variant?: "primary" | "accent"
 }

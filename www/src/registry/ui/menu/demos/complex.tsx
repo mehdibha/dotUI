@@ -6,9 +6,9 @@ import {
   MessageSquareIcon,
   SettingsIcon,
   UserIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Kbd } from '@/registry/ui/kbd'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Kbd } from "@/registry/ui/kbd"
 import {
   Menu,
   MenuContent,
@@ -16,9 +16,9 @@ import {
   MenuSection,
   MenuSectionHeader,
   MenuSub,
-} from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
 import {
   FileTextIcon,
   FolderIcon,
   FolderOpenIcon,
   ImageIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
-import { Tree, TreeItem, TreeItemContent } from '@/registry/ui/tree'
+import { Tree, TreeItem, TreeItemContent } from "@/registry/ui/tree"
 
 export default function Demo() {
   return (
@@ -15,7 +15,7 @@ export default function Demo() {
       aria-label="Files"
       selectionMode="single"
       selectionBehavior="replace"
-      defaultExpandedKeys={['documents', 'photos']}
+      defaultExpandedKeys={["documents", "photos"]}
       className="w-72"
     >
       <TreeItem id="documents" textValue="Documents">

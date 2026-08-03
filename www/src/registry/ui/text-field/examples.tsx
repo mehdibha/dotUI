@@ -1,17 +1,17 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Basic from './demos/basic'
-import Controlled from './demos/controlled'
-import Description from './demos/description'
-import Disabled from './demos/disabled'
-import ErrorMessage from './demos/error-message'
-import Label from './demos/label'
-import PrefixAndSuffix from './demos/prefix-and-suffix'
-import ReadOnly from './demos/read-only'
-import Required from './demos/required'
-import Sizes from './demos/sizes'
-import Uncontrolled from './demos/uncontrolled'
+import Basic from "./demos/basic"
+import Controlled from "./demos/controlled"
+import Description from "./demos/description"
+import Disabled from "./demos/disabled"
+import ErrorMessage from "./demos/error-message"
+import Label from "./demos/label"
+import PrefixAndSuffix from "./demos/prefix-and-suffix"
+import ReadOnly from "./demos/read-only"
+import Required from "./demos/required"
+import Sizes from "./demos/sizes"
+import Uncontrolled from "./demos/uncontrolled"
 
 export default function TextFieldExamples() {
   return (

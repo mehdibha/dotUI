@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import React from 'react'
-import * as FormPrimitives from 'react-aria-components/Form'
+import React from "react"
+import * as FormPrimitives from "react-aria-components/Form"
 
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogBody,
@@ -13,12 +13,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { Modal } from '@/registry/ui/modal'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { Modal } from "@/registry/ui/modal"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   const [isPending, setIsPending] = React.useState(false)

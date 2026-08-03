@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
-import { Button } from '@/registry/ui/button'
-import { Loader } from '@/registry/ui/loader'
+import { Button } from "@/registry/ui/button"
+import { Loader } from "@/registry/ui/loader"
 
 export default function Demo() {
   const [isSaving, setIsSaving] = useState(false)
@@ -21,7 +21,7 @@ export default function Demo() {
           Saving...
         </>
       ) : (
-        'Save changes'
+        "Save changes"
       )}
     </Button>
   )

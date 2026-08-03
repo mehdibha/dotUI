@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { cn } from '@/registry/lib/utils'
-import { Avatar, AvatarFallback } from '@/registry/ui/avatar'
+import { cn } from "@/registry/lib/utils"
+import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 
-import { DemoCaret, useAutoplay } from '../autoplay'
+import { DemoCaret, useAutoplay } from "../autoplay"
 
 // A faithful, looping reproduction of the Mention component: at rest the
 // suggestions popover is open on an active `@` query; on hover the scene plays —
@@ -17,11 +17,11 @@ interface Person {
 }
 
 const PEOPLE: Person[] = [
-  { id: 'alexmiller', name: 'Alex Miller' },
-  { id: 'amandarivera', name: 'Amanda Rivera' },
-  { id: 'sarahjones', name: 'Sarah Jones' },
-  { id: 'davidkim', name: 'David Kim' },
-  { id: 'emmawatson', name: 'Emma Watson' },
+  { id: "alexmiller", name: "Alex Miller" },
+  { id: "amandarivera", name: "Amanda Rivera" },
+  { id: "sarahjones", name: "Sarah Jones" },
+  { id: "davidkim", name: "David Kim" },
+  { id: "emmawatson", name: "Emma Watson" },
 ]
 
 // The people matching the active `@` query, minus anyone already mentioned.
@@ -30,9 +30,9 @@ function suggestions(query: string | null, mentioned: string[]): Person[] {
   const q = query.toLowerCase()
   return PEOPLE.filter((p) => {
     if (mentioned.includes(p.id)) return false
-    if (q === '') return true
+    if (q === "") return true
     return (
-      p.name.toLowerCase().replace(/\s+/g, '').startsWith(q) ||
+      p.name.toLowerCase().replace(/\s+/g, "").startsWith(q) ||
       p.id.startsWith(q)
     )
   }).slice(0, 3)
@@ -56,7 +56,7 @@ interface Frame {
 // resting frame (index 0) is the "popover already open" default.
 function buildFrames(): Frame[] {
   const frames: Frame[] = []
-  const parts: Part[] = [{ mention: false, text: 'Great work ' }]
+  const parts: Part[] = [{ mention: false, text: "Great work " }]
   let query: string | null = null
 
   const snap = (d: number, pressing = false) =>
@@ -65,7 +65,7 @@ function buildFrames(): Frame[] {
   const typeText = (text: string, per = 90) => {
     let tail = parts[parts.length - 1]
     if (!tail || tail.mention) {
-      tail = { mention: false, text: '' }
+      tail = { mention: false, text: "" }
       parts.push(tail)
     }
     for (const ch of text) {
@@ -76,7 +76,7 @@ function buildFrames(): Frame[] {
 
   const typeQuery = (text: string, per = 105) => {
     for (const ch of text) {
-      query = (query ?? '') + ch
+      query = (query ?? "") + ch
       snap(per)
     }
   }
@@ -84,23 +84,23 @@ function buildFrames(): Frame[] {
   const select = (id: string) => {
     snap(220, true) // press the highlighted suggestion
     parts.push({ mention: true, text: id })
-    parts.push({ mention: false, text: ' ' })
+    parts.push({ mention: false, text: " " })
     query = null
   }
 
   // First mention query is already open at rest.
-  query = 'a'
+  query = "a"
   snap(1300)
-  select('alexmiller')
+  select("alexmiller")
   snap(650)
-  typeText('and ')
+  typeText("and ")
   snap(320)
   // Type `@` to open the picker again, narrow it, and mention a second person.
-  query = ''
+  query = ""
   snap(380)
-  typeQuery('sa')
+  typeQuery("sa")
   snap(620)
-  select('sarahjones')
+  select("sarahjones")
   snap(1700)
 
   return frames
@@ -115,7 +115,7 @@ const REST_FRAME: Frame = FRAMES[0] ?? {
   d: 0,
 }
 
-const EASE = 'cubic-bezier(0.32,0.72,0,1)'
+const EASE = "cubic-bezier(0.32,0.72,0,1)"
 
 /** The popover unfolds out of the column flow, riding the field up as it opens. */
 function Surface({
@@ -129,7 +129,7 @@ function Surface({
     <div
       className="grid overflow-hidden"
       style={{
-        gridTemplateRows: open ? '1fr' : '0fr',
+        gridTemplateRows: open ? "1fr" : "0fr",
         transition: `grid-template-rows 300ms ${EASE}`,
       }}
     >
@@ -138,7 +138,7 @@ function Surface({
           className="pt-2"
           style={{
             opacity: open ? 1 : 0,
-            transform: open ? 'none' : 'translateY(-4px) scale(0.96)',
+            transform: open ? "none" : "translateY(-4px) scale(0.96)",
             transition: `opacity 200ms ease, transform 260ms ${EASE}`,
           }}
         >
@@ -189,9 +189,9 @@ export function MentionDemo() {
                 <div
                   key={person.id}
                   className={cn(
-                    'flex items-center gap-2 rounded-sm px-2 py-1.5 transition-transform',
-                    active && 'bg-highlight text-fg-on-highlight',
-                    active && frame.pressing && 'scale-[0.98]',
+                    "flex items-center gap-2 rounded-sm px-2 py-1.5 transition-transform",
+                    active && "bg-highlight text-fg-on-highlight",
+                    active && frame.pressing && "scale-[0.98]",
                   )}
                 >
                   <Avatar size="sm">
@@ -203,8 +203,8 @@ export function MentionDemo() {
                     </span>
                     <span
                       className={cn(
-                        'truncate text-xs',
-                        active ? 'text-fg-on-highlight/70' : 'text-fg-muted',
+                        "truncate text-xs",
+                        active ? "text-fg-on-highlight/70" : "text-fg-muted",
                       )}
                     >
                       @{person.id}

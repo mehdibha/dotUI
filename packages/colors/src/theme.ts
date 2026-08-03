@@ -4,15 +4,15 @@
  * palettes, all guarantees enforced in-loop and audited in the report.
  */
 
-import { z } from 'zod'
+import { z } from "zod"
 
-import { alphaTwin } from './alpha'
+import { alphaTwin } from "./alpha"
 import {
   divergingPalette,
   sequentialPalette,
   tonalCategoricalPalette,
   tonalGateReport,
-} from './charts'
+} from "./charts"
 import {
   BARS,
   CVD_GATE,
@@ -30,17 +30,17 @@ import {
   type StatusName,
   type StepName,
   WHISPER_LINE,
-} from './data'
-import { deltaEok, minPairwiseDeltaEok } from './meters'
+} from "./data"
+import { deltaEok, minPairwiseDeltaEok } from "./meters"
 import {
   type BorderTargets,
   buildScale,
   type Mode,
   type ScaleColors,
   transposeSkeleton,
-} from './scale'
-import { lstarOf, type Oklch, oklchCss, toOklch } from './space'
-import { type GuaranteeResult, verifyLadder, verifyScale } from './verify'
+} from "./scale"
+import { lstarOf, type Oklch, oklchCss, toOklch } from "./space"
+import { type GuaranteeResult, verifyLadder, verifyScale } from "./verify"
 
 const colorString = z.string().refine(
   (value) => {
@@ -51,7 +51,7 @@ const colorString = z.string().refine(
       return false
     }
   },
-  { message: 'not a parsable CSS color' },
+  { message: "not a parsable CSS color" },
 )
 
 const borderTargetRatio = z.number().min(1.05).max(21)
@@ -88,7 +88,7 @@ export const themeOptionsSchema = z.object({
   background: z
     .object({
       light: z.number().min(90).max(100).optional(),
-      dark: z.union([z.number().min(0).max(20), z.literal('oled')]).optional(),
+      dark: z.union([z.number().min(0).max(20), z.literal("oled")]).optional(),
     })
     .optional(),
   /** D2 — solve solids to the full WCAG 4.5 on-label bar. */
@@ -98,7 +98,7 @@ export const themeOptionsSchema = z.object({
    * instead of failing the build (text guarantees never relax); `strict`
    * implies `strictOnSolid`. Absent = `default`.
    */
-  guaranteePolicy: z.enum(['relaxed', 'default', 'strict']).optional(),
+  guaranteePolicy: z.enum(["relaxed", "default", "strict"]).optional(),
   /**
    * D2 — per-palette border placement targets: WCAG vs the app background,
    * per border job, one value or per-mode values. Key `'*'` applies to every
@@ -109,9 +109,9 @@ export const themeOptionsSchema = z.object({
     .record(
       z.string(),
       z.object({
-        '400': borderTargetValue.optional(),
-        '500': borderTargetValue.optional(),
-        '600': borderTargetValue.optional(),
+        "400": borderTargetValue.optional(),
+        "500": borderTargetValue.optional(),
+        "600": borderTargetValue.optional(),
       }),
     )
     .optional(),
@@ -126,7 +126,7 @@ export interface ModeOutput {
   /** Alpha twins compositing to the solids over this mode's background. */
   alphas: Record<string, Record<StepName, string>>
   /** Solved solid-label foregrounds. */
-  on: Record<string, { '700': string; '800': string }>
+  on: Record<string, { "700": string; "800": string }>
 }
 
 export interface ThemeReport {
@@ -151,21 +151,21 @@ export interface Theme {
   report: ThemeReport
 }
 
-const CORE_ORDER = ['neutral', 'accent', 'success', 'warning', 'danger', 'info']
+const CORE_ORDER = ["neutral", "accent", "success", "warning", "danger", "info"]
 
 export function createTheme(input: string | ThemeOptions): Theme {
   const options =
-    typeof input === 'string'
+    typeof input === "string"
       ? themeOptionsSchema.parse({ seeds: { accent: input } })
       : themeOptionsSchema.parse(input)
 
   const vividness = options.vividness ?? 1
   const hueShift = options.hueShift ?? 1
   const neutralTint = options.neutralTint ?? 1
-  const guaranteePolicy = options.guaranteePolicy ?? 'default'
+  const guaranteePolicy = options.guaranteePolicy ?? "default"
   const strictOnSolid =
-    (options.strictOnSolid ?? false) || guaranteePolicy === 'strict'
-  const relaxedBorders = guaranteePolicy === 'relaxed'
+    (options.strictOnSolid ?? false) || guaranteePolicy === "strict"
+  const relaxedBorders = guaranteePolicy === "relaxed"
   const preserveSeed = options.preserveSeed ?? false
 
   // D2 — border placement targets, resolved per palette per mode (a palette's
@@ -174,13 +174,13 @@ export function createTheme(input: string | ThemeOptions): Theme {
     name: string,
     mode: Mode,
   ): BorderTargets | undefined => {
-    const spec = options.borders?.[name] ?? options.borders?.['*']
+    const spec = options.borders?.[name] ?? options.borders?.["*"]
     if (!spec) return undefined
     const targets: BorderTargets = {}
-    for (const job of ['400', '500', '600'] as const) {
+    for (const job of ["400", "500", "600"] as const) {
       const value = spec[job]
       if (value === undefined) continue
-      const ratio = typeof value === 'number' ? value : value[mode]
+      const ratio = typeof value === "number" ? value : value[mode]
       if (ratio !== undefined) targets[job] = ratio
     }
     return Object.keys(targets).length > 0 ? targets : undefined
@@ -229,7 +229,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
   // Backgrounds (D9/D12): transpose skeletons when the user moves the floor.
   const lightBg = options.background?.light ?? LIGHT_BG_LSTAR
   const darkBgOption = options.background?.dark
-  const darkBg = darkBgOption === 'oled' ? 0 : (darkBgOption ?? DARK_BG_LSTAR)
+  const darkBg = darkBgOption === "oled" ? 0 : (darkBgOption ?? DARK_BG_LSTAR)
   const skeletons = {
     light: {
       chromatic:
@@ -270,49 +270,49 @@ export function createTheme(input: string | ThemeOptions): Theme {
       hueShift,
       // Seed-classified neutrals tint from their own chroma (D8 explicit rule).
       tintPeak:
-        name === 'neutral'
+        name === "neutral"
           ? tintPeak
           : Math.min(seed.c, NEUTRAL_WHISPER_CEILING),
       strictOnSolid,
       relaxedBorders,
-      preserveSeed: preserveSeed && name === 'accent',
+      preserveSeed: preserveSeed && name === "accent",
     }
     const light = buildScale({
       ...shared,
-      mode: 'light',
+      mode: "light",
       skeleton: neutral ? skeletons.light.neutral : skeletons.light.chromatic,
-      borderTargets: borderTargetsFor(name, 'light'),
+      borderTargets: borderTargetsFor(name, "light"),
     })
     // Step 700 is mode-invariant (verified on Radix) — share the light solve.
     const dark = buildScale({
       ...shared,
-      mode: 'dark',
+      mode: "dark",
       skeleton: neutral ? skeletons.dark.neutral : skeletons.dark.chromatic,
-      sharedSolid: { solid: light.steps['700'], on: light.on['700'] },
-      borderTargets: borderTargetsFor(name, 'dark'),
+      sharedSolid: { solid: light.steps["700"], on: light.on["700"] },
+      borderTargets: borderTargetsFor(name, "dark"),
     })
     built.light[name] = light
     built.dark[name] = dark
 
-    seedDelta[name] = deltaEok(seed, light.steps['700'])
+    seedDelta[name] = deltaEok(seed, light.steps["700"])
 
     // D7 — price every seed move: the window clamp, and (for user-supplied
     // seeds; the synthetic neutral only contributes hue+tint) the snap bound.
     if (light.solidClamped)
       warnings.push(
-        `${name}: seed lightness sits outside the solid job window; solid clamped to L* ${lstarOf(light.steps['700']).toFixed(1)}`,
+        `${name}: seed lightness sits outside the solid job window; solid clamped to L* ${lstarOf(light.steps["700"]).toFixed(1)}`,
       )
     if (
-      name !== 'neutral' &&
+      name !== "neutral" &&
       name in options.seeds &&
-      !(preserveSeed && name === 'accent') &&
+      !(preserveSeed && name === "accent") &&
       seedDelta[name] > SEED_SNAP_BOUND
     )
       warnings.push(
         `${name}: emitted solid deviates from the seed (ΔEok ${seedDelta[name].toFixed(3)} > ${SEED_SNAP_BOUND} snap bound)`,
       )
 
-    for (const mode of ['light', 'dark'] as const) {
+    for (const mode of ["light", "dark"] as const) {
       const scale = built[mode][name]!
       const borderTargets = borderTargetsFor(name, mode)
       const results = verifyScale(name, mode, scale, {
@@ -325,9 +325,9 @@ export function createTheme(input: string | ThemeOptions): Theme {
       )
       // D2 — price every target bought under the default floor.
       for (const [job, floor] of [
-        ['400', BARS.border400],
-        ['500', BARS.border500],
-        ['600', BARS.border600],
+        ["400", BARS.border400],
+        ["500", BARS.border500],
+        ["600", BARS.border600],
       ] as const) {
         const target = borderTargets?.[job]
         if (target !== undefined && target < floor)
@@ -335,9 +335,9 @@ export function createTheme(input: string | ThemeOptions): Theme {
             `${name}/${mode}: border-${job} target ${target} sits below the ${floor} default floor`,
           )
       }
-      if (preserveSeed && name === 'accent') {
+      if (preserveSeed && name === "accent") {
         for (const miss of results.filter(
-          (r) => !r.passes && r.name === 'on-solid',
+          (r) => !r.passes && r.name === "on-solid",
         ))
           warnings.push(
             `accent/${mode}: preserveSeed pins the solid; ${miss.fg} lands at WCAG ${miss.wcag.toFixed(2)} / Lc ${miss.lc.toFixed(1)} (bars ${miss.wcagTarget}/${miss.lcTarget})`,
@@ -347,8 +347,8 @@ export function createTheme(input: string | ThemeOptions): Theme {
   }
 
   // D10 — CVD gate on the emitted status solids, reported not thrown.
-  const statusSolids = (['success', 'warning', 'danger', 'info'] as const).map(
-    (name) => built.light[name]!.steps['700'],
+  const statusSolids = (["success", "warning", "danger", "info"] as const).map(
+    (name) => built.light[name]!.steps["700"],
   )
   const cvd = minPairwiseDeltaEok(statusSolids)
   if (cvd.normal < CVD_GATE.normal)
@@ -360,9 +360,9 @@ export function createTheme(input: string | ThemeOptions): Theme {
     warnings.push(
       `status solids fall below the color-vision-deficiency gate (min ΔEok ${worstCvd.toFixed(3)} < ${CVD_GATE.cvd})`,
     )
-  const accentSolid = built.light.accent!.steps['700']
+  const accentSolid = built.light.accent!.steps["700"]
   for (const [i, name] of (
-    ['success', 'warning', 'danger', 'info'] as const
+    ["success", "warning", "danger", "info"] as const
   ).entries()) {
     const d = deltaEok(accentSolid, statusSolids[i]!)
     if (d < CVD_GATE.accentProximity)
@@ -387,19 +387,19 @@ export function createTheme(input: string | ThemeOptions): Theme {
       sequential: sequentialPalette(accentSeed.h, 7, mode).map(oklchCss),
       diverging: divergingPalette(
         accentSeed.h,
-        built[mode].neutral!.steps['100'],
+        built[mode].neutral!.steps["100"],
         3,
         mode,
       ).map(oklchCss),
     }
   }
-  const charts = { light: chartSet('light'), dark: chartSet('dark') }
+  const charts = { light: chartSet("light"), dark: chartSet("dark") }
 
   const modeOutput = (mode: Mode): ModeOutput => {
-    const background = built[mode].neutral!.steps['25']!
-    const scales: ModeOutput['scales'] = {}
-    const alphas: ModeOutput['alphas'] = {}
-    const on: ModeOutput['on'] = {}
+    const background = built[mode].neutral!.steps["25"]!
+    const scales: ModeOutput["scales"] = {}
+    const alphas: ModeOutput["alphas"] = {}
+    const on: ModeOutput["on"] = {}
     const names = [
       ...CORE_ORDER.filter((n) => n in built[mode]),
       ...Object.keys(built[mode])
@@ -415,8 +415,8 @@ export function createTheme(input: string | ThemeOptions): Theme {
         STEPS.map((s) => [s, alphaTwin(scale.steps[s]!, background)]),
       ) as Record<StepName, string>
       on[name] = {
-        '700': oklchCss(scale.on['700']),
-        '800': oklchCss(scale.on['800']),
+        "700": oklchCss(scale.on["700"]),
+        "800": oklchCss(scale.on["800"]),
       }
     }
     return { background: oklchCss(background), scales, alphas, on }
@@ -427,10 +427,10 @@ export function createTheme(input: string | ThemeOptions): Theme {
   const misses = guarantees.filter(
     (g) =>
       !g.passes &&
-      !(preserveSeed && g.scale === 'accent' && g.name === 'on-solid'),
+      !(preserveSeed && g.scale === "accent" && g.name === "on-solid"),
   )
   const failed = misses.filter(
-    (g) => !(relaxedBorders && g.name.startsWith('border')),
+    (g) => !(relaxedBorders && g.name.startsWith("border")),
   )
   for (const f of misses)
     warnings.push(
@@ -438,8 +438,8 @@ export function createTheme(input: string | ThemeOptions): Theme {
     )
 
   return {
-    light: modeOutput('light'),
-    dark: modeOutput('dark'),
+    light: modeOutput("light"),
+    dark: modeOutput("dark"),
     charts,
     report: { ok: failed.length === 0, guarantees, warnings, seedDelta },
   }

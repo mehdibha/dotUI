@@ -1,19 +1,19 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import * as ButtonPrimitive from 'react-aria-components/Button'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as LinkPrimitive from 'react-aria-components/Link'
-import type { VariantProps } from 'tailwind-variants'
+import type * as React from "react"
+import * as ButtonPrimitive from "react-aria-components/Button"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as LinkPrimitive from "react-aria-components/Link"
+import type { VariantProps } from "tailwind-variants"
 
-import { Loader } from '@/registry/ui/loader'
+import { Loader } from "@/registry/ui/loader"
 
-import { useStyles } from './styles'
-import type { ButtonStyles } from './styles'
+import { useStyles } from "./styles"
+import type { ButtonStyles } from "./styles"
 
 // MARK: buttonStyles
 
-export { buttonStyles } from './styles'
+export { buttonStyles } from "./styles"
 
 type ButtonVariants = VariantProps<ButtonStyles>
 
@@ -45,7 +45,7 @@ const Button = ({
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           />
         )}
-        {typeof children === 'string' ? (
+        {typeof children === "string" ? (
           <span className="truncate">{children}</span>
         ) : (
           children
@@ -57,7 +57,7 @@ const Button = ({
   return (
     <ButtonPrimitive.Button
       data-button=""
-      data-icon-only={isIconOnly ? '' : undefined}
+      data-icon-only={isIconOnly ? "" : undefined}
       className={composeRenderProps(className, (cn) =>
         styles({ variant, size, isIconOnly, className: cn }),
       )}
@@ -92,7 +92,7 @@ const LinkButton = ({
   return (
     <LinkPrimitive.Link
       data-button=""
-      data-icon-only={isIconOnly ? '' : undefined}
+      data-icon-only={isIconOnly ? "" : undefined}
       className={composeRenderProps(className, (cn) =>
         styles({ variant, size, isIconOnly, className: cn }),
       )}
@@ -100,7 +100,7 @@ const LinkButton = ({
     >
       {composeRenderProps(children, (children) => (
         <>
-          {typeof children === 'string' ? (
+          {typeof children === "string" ? (
             <span className="truncate">{children}</span>
           ) : (
             children

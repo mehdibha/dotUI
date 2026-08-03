@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import { useContext } from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as SliderPrimitive from 'react-aria-components/Slider'
-import { Provider } from 'react-aria-components/slots'
-import * as TextPrimitives from 'react-aria-components/Text'
-import { useSlotId } from 'react-aria/private/utils/useId'
+import { useContext } from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as SliderPrimitive from "react-aria-components/Slider"
+import { Provider } from "react-aria-components/slots"
+import * as TextPrimitives from "react-aria-components/Text"
+import { useSlotId } from "react-aria/private/utils/useId"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: sliderStyles
 
@@ -34,7 +34,7 @@ const Slider = ({ className, children, ...props }: SliderProps) => {
           values={[
             [
               TextPrimitives.TextContext,
-              { slot: 'description', id: descriptionId },
+              { slot: "description", id: descriptionId },
             ],
           ]}
         >
@@ -85,7 +85,7 @@ const SliderControl = ({
 
 // MARK: Separator
 
-interface SliderTrackProps extends React.ComponentProps<'div'> {}
+interface SliderTrackProps extends React.ComponentProps<"div"> {}
 
 const SliderTrack = ({ className, ...props }: SliderTrackProps) => {
   const { track } = useStyles()()
@@ -165,7 +165,7 @@ const SliderOutput = ({ children, className, ...props }: SliderOutputProps) => {
         children,
         (children, { state }) =>
           children ??
-          state.values.map((_, i) => state.getThumbValueLabel(i)).join(' - '),
+          state.values.map((_, i) => state.getThumbValueLabel(i)).join(" - "),
       )}
     </SliderPrimitive.SliderOutput>
   )

@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from 'lucide-react'
+import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon } from "lucide-react"
 
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 
-import { useCycle } from '../autoplay'
+import { useCycle } from "../autoplay"
 
-const KEYS = ['left', 'center', 'right']
+const KEYS = ["left", "center", "right"]
 
 export function ToggleButtonGroupDemo() {
   const { item } = useCycle(KEYS, { dwell: 1100 })

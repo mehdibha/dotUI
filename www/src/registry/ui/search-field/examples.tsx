@@ -1,14 +1,14 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Default from './demos/default'
-import Description from './demos/description'
-import Disabled from './demos/disabled'
-import ErrorMessage from './demos/error-message'
-import Label from './demos/label'
-import ReadOnly from './demos/read-only'
-import Required from './demos/required'
-import Sizes from './demos/sizes'
+import Default from "./demos/default"
+import Description from "./demos/description"
+import Disabled from "./demos/disabled"
+import ErrorMessage from "./demos/error-message"
+import Label from "./demos/label"
+import ReadOnly from "./demos/read-only"
+import Required from "./demos/required"
+import Sizes from "./demos/sizes"
 
 export default function SearchFieldExamples() {
   return (

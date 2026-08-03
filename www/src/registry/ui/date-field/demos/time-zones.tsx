@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { parseZonedDateTime } from '@internationalized/date'
+import { parseZonedDateTime } from "@internationalized/date"
 
-import { DateField } from '@/registry/ui/date-field'
-import { DateInput } from '@/registry/ui/input'
+import { DateField } from "@/registry/ui/date-field"
+import { DateInput } from "@/registry/ui/input"
 
 export default function Demo() {
   return (
     <DateField
       className="max-w-xs"
       aria-label="Meeting time"
-      defaultValue={parseZonedDateTime('2022-11-07T00:45[America/Los_Angeles]')}
+      defaultValue={parseZonedDateTime("2022-11-07T00:45[America/Los_Angeles]")}
     >
       <DateInput />
     </DateField>

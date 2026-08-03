@@ -1,17 +1,17 @@
-import fs from 'node:fs'
-import path from 'node:path'
-import { format } from 'oxfmt'
-import ts from 'typescript'
-import * as tae from 'typescript-api-extractor'
+import fs from "node:fs"
+import path from "node:path"
+import { format } from "oxfmt"
+import ts from "typescript"
+import * as tae from "typescript-api-extractor"
 
-import type { TLink, TType } from '@/modules/docs/references/types/type-ast'
+import type { TLink, TType } from "@/modules/docs/references/types/type-ast"
 
 import {
   ALWAYS_EXPAND_TYPES,
   REACT_ARIA_EVENT_ORDER,
   RESOLVABLE_TYPE_PATTERNS,
   SKIP_RESOLVE_TYPES,
-} from './config'
+} from "./config"
 import {
   buildTypeAstFromString,
   type ConversionContext,
@@ -19,56 +19,56 @@ import {
   formatMemberName,
   parseSimpleType,
   typeToAst,
-} from './type-to-ast'
+} from "./type-to-ast"
 
 /**
  * HTML element names that can be extended via React.ComponentProps<"element">
  */
 const HTML_ELEMENTS = new Set([
-  'div',
-  'span',
-  'p',
-  'a',
-  'button',
-  'input',
-  'textarea',
-  'select',
-  'form',
-  'img',
-  'video',
-  'audio',
-  'canvas',
-  'svg',
-  'table',
-  'tr',
-  'td',
-  'th',
-  'ul',
-  'ol',
-  'li',
-  'nav',
-  'header',
-  'footer',
-  'main',
-  'section',
-  'article',
-  'aside',
-  'figure',
-  'figcaption',
-  'label',
-  'fieldset',
-  'legend',
-  'dialog',
-  'details',
-  'summary',
-  'menu',
-  'menuitem',
-  'h1',
-  'h2',
-  'h3',
-  'h4',
-  'h5',
-  'h6',
+  "div",
+  "span",
+  "p",
+  "a",
+  "button",
+  "input",
+  "textarea",
+  "select",
+  "form",
+  "img",
+  "video",
+  "audio",
+  "canvas",
+  "svg",
+  "table",
+  "tr",
+  "td",
+  "th",
+  "ul",
+  "ol",
+  "li",
+  "nav",
+  "header",
+  "footer",
+  "main",
+  "section",
+  "article",
+  "aside",
+  "figure",
+  "figcaption",
+  "label",
+  "fieldset",
+  "legend",
+  "dialog",
+  "details",
+  "summary",
+  "menu",
+  "menuitem",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
 ])
 
 /**
@@ -84,7 +84,7 @@ function detectHTMLElementExtension(
   for (const sourceFile of program.getSourceFiles()) {
     if (
       sourceFile.isDeclarationFile &&
-      !sourceFile.fileName.includes('@dotui')
+      !sourceFile.fileName.includes("@dotui")
     ) {
       continue
     }
@@ -121,10 +121,10 @@ function detectHTMLElementExtension(
                 /(?:React\.)?HTMLAttributes<HTML(\w*)Element>/,
               )
               if (htmlAttrsMatch) {
-                const elementPart = htmlAttrsMatch[1] || ''
-                if (elementPart === '') {
+                const elementPart = htmlAttrsMatch[1] || ""
+                if (elementPart === "") {
                   // Generic HTMLElement -> use "html" as marker
-                  foundElement = 'html'
+                  foundElement = "html"
                   return
                 }
                 const element = elementPart.toLowerCase()
@@ -168,8 +168,8 @@ function isDeclaredOnlyInTypesReact(prop: ts.Symbol): boolean {
   return declarations.every((decl) =>
     decl
       .getSourceFile()
-      .fileName.replaceAll('\\', '/')
-      .includes('node_modules/@types/react/'),
+      .fileName.replaceAll("\\", "/")
+      .includes("node_modules/@types/react/"),
   )
 }
 
@@ -184,7 +184,7 @@ function isPropFromUserCode(prop: ts.Symbol): boolean {
   return declarations.some((decl) => {
     const fileName = decl.getSourceFile().fileName
     // User's code is NOT in node_modules
-    return !fileName.includes('node_modules')
+    return !fileName.includes("node_modules")
   })
 }
 
@@ -242,7 +242,7 @@ function getPropertyDeclarationOrder(
     if (
       requireExport &&
       sourceFile.isDeclarationFile &&
-      !sourceFile.fileName.includes('@dotui')
+      !sourceFile.fileName.includes("@dotui")
     ) {
       continue
     }
@@ -346,7 +346,7 @@ function sortUnionTypeString(typeStr: string): string {
   if (/[()=><]/.test(typeStr)) return typeStr
   const parts = typeStr.split(/\s*\|\s*/)
   if (parts.length <= 1) return typeStr
-  return parts.sort().join(' | ')
+  return parts.sort().join(" | ")
 }
 
 /**
@@ -405,36 +405,36 @@ function collectLinksFromAst(ast: TType | null | undefined): TLink[] {
   const links: TLink[] = []
 
   function traverse(node: TType): void {
-    if (node.type === 'link') {
+    if (node.type === "link") {
       links.push(node as TLink)
       return
     }
 
     // Traverse nested types based on type kind
     switch (node.type) {
-      case 'union':
+      case "union":
         ;(node as { elements: TType[] }).elements.forEach(traverse)
         break
-      case 'intersection':
+      case "intersection":
         ;(node as { types: TType[] }).types.forEach(traverse)
         break
-      case 'function':
+      case "function":
         ;(node as { parameters: TType[]; return: TType }).parameters.forEach(
           traverse,
         )
         traverse((node as { parameters: TType[]; return: TType }).return)
         break
-      case 'parameter':
+      case "parameter":
         traverse((node as { value: TType }).value)
         break
-      case 'application':
+      case "application":
         traverse((node as { base: TType }).base)
         ;(node as { typeParameters: TType[] }).typeParameters.forEach(traverse)
         break
-      case 'array':
+      case "array":
         traverse((node as { elementType: TType }).elementType)
         break
-      case 'tuple':
+      case "tuple":
         ;(node as { elements: TType[] }).elements.forEach(traverse)
         break
       // Add more cases as needed
@@ -453,7 +453,7 @@ function shouldResolveType(typeName: string): boolean {
   if (SKIP_RESOLVE_TYPES.has(typeName)) return false
 
   // Skip if it looks like a full path (already resolved elsewhere)
-  if (typeName.includes('/')) return false
+  if (typeName.includes("/")) return false
 
   // Resolve if it matches our patterns (like ButtonRenderProps)
   return RESOLVABLE_TYPE_PATTERNS.some((pattern) => pattern.test(typeName))
@@ -496,7 +496,7 @@ function resolveTypeByName(
         const propsAst: Record<
           string,
           {
-            type: 'property'
+            type: "property"
             name: string
             value: TType
             optional: boolean
@@ -521,17 +521,17 @@ function resolveTypeByName(
           const simpleType = parseSimpleType(typeString)
 
           propsAst[propName] = {
-            type: 'property',
+            type: "property",
             name: propName,
             value: simpleType,
             optional: isOptional,
             readonly: false,
-            description: docs || '',
+            description: docs || "",
           }
         }
 
         foundType = {
-          type: 'interface',
+          type: "interface",
           name: typeName,
           properties: propsAst,
         } as TType
@@ -559,7 +559,7 @@ interface RenderPropInfo {
   description?: string
 }
 
-const registryDir = path.resolve(process.cwd(), 'src/registry')
+const registryDir = path.resolve(process.cwd(), "src/registry")
 
 /**
  * Expand type aliases into their readable form
@@ -568,9 +568,9 @@ const registryDir = path.resolve(process.cwd(), 'src/registry')
  */
 function expandTypeAliasInString(type: string): string {
   // Check if type ends with | undefined
-  const hasUndefined = type.endsWith(' | undefined')
-  const baseType = hasUndefined ? type.slice(0, -' | undefined'.length) : type
-  const suffix = hasUndefined ? ' | undefined' : ''
+  const hasUndefined = type.endsWith(" | undefined")
+  const baseType = hasUndefined ? type.slice(0, -" | undefined".length) : type
+  const suffix = hasUndefined ? " | undefined" : ""
 
   // ChildrenOrFunction<T> → ReactNode | (values: T) => ReactNode
   const childrenMatch = baseType.match(/^ChildrenOrFunction<(.+)>$/)
@@ -595,15 +595,15 @@ function expandTypeAliasInString(type: string): string {
 
 function kebabToPascal(str: string): string {
   return str
-    .split('-')
+    .split("-")
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join('')
+    .join("")
 }
 
 // Get component group names from the registry directory
-const componentGroupNames = fs.existsSync(path.join(registryDir, 'ui'))
+const componentGroupNames = fs.existsSync(path.join(registryDir, "ui"))
   ? fs
-      .readdirSync(path.join(registryDir, 'ui'), { withFileTypes: true })
+      .readdirSync(path.join(registryDir, "ui"), { withFileTypes: true })
       .filter((dirent) => dirent.isDirectory())
       .map((dirent) => kebabToPascal(dirent.name))
       .sort((a, b) => b.length - a.length)
@@ -615,7 +615,7 @@ export async function formatComponentData(
 ) {
   const description = exportNode.documentation?.description?.replace(
     /\n\nDocumentation: .*$/ms,
-    '',
+    "",
   )
 
   // Detect if this type extends an HTML element
@@ -691,7 +691,7 @@ async function getPropsWithTypeChecker(
   for (const sourceFile of program.getSourceFiles()) {
     if (
       sourceFile.isDeclarationFile &&
-      !sourceFile.fileName.includes('@dotui')
+      !sourceFile.fileName.includes("@dotui")
     ) {
       continue
     }
@@ -720,14 +720,14 @@ async function getPropsWithTypeChecker(
         }
 
         for (const prop of properties) {
-          if (prop.name === 'className') hasClassNameMember = true
+          if (prop.name === "className") hasClassNameMember = true
 
           // Skip ref
-          if (prop.name === 'ref') continue
+          if (prop.name === "ref") continue
 
           // Skip well-known symbol members ([Symbol.iterator] is never a
           // documented component prop)
-          if (prop.name.startsWith('__@')) continue
+          if (prop.name.startsWith("__@")) continue
 
           // Standard DOM/ARIA attributes declared in @types/react are MDN
           // territory — without this, components extending element props via a
@@ -762,7 +762,7 @@ async function getPropsWithTypeChecker(
             if (typeArgs && typeArgs.length > 0) {
               const argsStr = typeArgs
                 .map((t) => checker.typeToString(t))
-                .join(', ')
+                .join(", ")
               typeString += `<${argsStr}>`
             }
           } else {
@@ -779,7 +779,7 @@ async function getPropsWithTypeChecker(
 
           // Get default value from JSDoc @default tag
           const jsDocTags = prop.getJsDocTags(checker)
-          const defaultTag = jsDocTags.find((tag) => tag.name === 'default')
+          const defaultTag = jsDocTags.find((tag) => tag.name === "default")
           let defaultValue = defaultTag
             ? ts.displayPartsToString(defaultTag.text)
             : undefined
@@ -824,7 +824,7 @@ async function getPropsWithTypeChecker(
             if (simpleAliasMatch) {
               // Simple identifier (e.g., HTMLAttributeAnchorTarget, ReactNode)
               typeAst = {
-                type: 'identifier',
+                type: "identifier",
                 name: simpleAliasMatch[1],
               } as TType
             } else {
@@ -884,10 +884,10 @@ async function getPropsWithTypeChecker(
   // Base UI-based components document className, nothing else inherited)
   if (hasClassNameMember && !result.className) {
     result.className = {
-      type: 'string',
-      typeAst: { type: 'string' } as TType,
+      type: "string",
+      typeAst: { type: "string" } as TType,
       description:
-        'The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.',
+        "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element.",
     }
   }
 
@@ -919,7 +919,7 @@ function extractRenderProps(
 
   // Derive render props type name from props type name
   // e.g., "ButtonProps" -> "ButtonRenderProps"
-  const renderPropsTypeName = propsTypeName.replace(/Props$/, 'RenderProps')
+  const renderPropsTypeName = propsTypeName.replace(/Props$/, "RenderProps")
 
   // Search for the render props interface in all source files (including declaration files)
   for (const sourceFile of program.getSourceFiles()) {
@@ -939,7 +939,7 @@ function extractRenderProps(
         for (const prop of properties) {
           // Get JSDoc tags
           const jsDocTags = prop.getJsDocTags(checker)
-          const selectorTag = jsDocTags.find((tag) => tag.name === 'selector')
+          const selectorTag = jsDocTags.find((tag) => tag.name === "selector")
 
           if (selectorTag) {
             const selectorValue = ts.displayPartsToString(selectorTag.text)
@@ -966,8 +966,8 @@ function extractRenderProps(
  */
 function cleanTypeString(typeStr: string): string {
   return typeStr
-    .replace(/React\./g, '') // Remove React. prefix
-    .replace(/import\([^)]+\)\./g, '') // Remove import(...). prefixes
+    .replace(/React\./g, "") // Remove React. prefix
+    .replace(/import\([^)]+\)\./g, "") // Remove import(...). prefixes
 }
 
 /**
@@ -975,13 +975,13 @@ function cleanTypeString(typeStr: string): string {
  */
 function removeUndefinedFromType(typeStr: string): string {
   // Handle "Type | undefined" at the end
-  let result = typeStr.replace(/\s*\|\s*undefined\s*$/, '')
+  let result = typeStr.replace(/\s*\|\s*undefined\s*$/, "")
 
   // Handle "undefined | Type" at the start
-  result = result.replace(/^undefined\s*\|\s*/, '')
+  result = result.replace(/^undefined\s*\|\s*/, "")
 
   // Handle "Type | undefined | OtherType" in the middle
-  result = result.replace(/\s*\|\s*undefined\s*\|/g, ' |')
+  result = result.replace(/\s*\|\s*undefined\s*\|/g, " |")
 
   return result.trim()
 }
@@ -992,17 +992,17 @@ function removeUndefinedFromType(typeStr: string): string {
 export function isPublicPropsType(exportNode: tae.ExportNode): boolean {
   const name = exportNode.name
 
-  if (!name.endsWith('Props')) {
+  if (!name.endsWith("Props")) {
     return false
   }
 
-  if (name.includes('Internal') || name.startsWith('_')) {
+  if (name.includes("Internal") || name.startsWith("_")) {
     return false
   }
 
   if (
-    exportNode.documentation?.hasTag('ignore') ||
-    exportNode.documentation?.hasTag('internal')
+    exportNode.documentation?.hasTag("ignore") ||
+    exportNode.documentation?.hasTag("internal")
   ) {
     return false
   }
@@ -1021,37 +1021,37 @@ export function isPublicPropsType(exportNode: tae.ExportNode): boolean {
  */
 async function formatTypeWithOxfmt(type: string): Promise<string> {
   try {
-    const { code } = await format('type.ts', `type _ = ${type}`, {
+    const { code } = await format("type.ts", `type _ = ${type}`, {
       singleQuote: true,
       semi: false,
       printWidth: 60,
     })
 
-    const lines = code.trimEnd().split('\n')
+    const lines = code.trimEnd().split("\n")
     if (lines.length === 1) {
       // oxlint-disable-next-line typescript/no-non-null-assertion -- length check guarantees existence
-      return lines[0]!.replace(/^type _ = /, '')
+      return lines[0]!.replace(/^type _ = /, "")
     }
 
     // Multi-line: skip first line (`type _ =`) and de-indent
     const codeLines = lines.slice(1)
-    const nonEmptyLines = codeLines.filter((l) => l.trim() !== '')
+    const nonEmptyLines = codeLines.filter((l) => l.trim() !== "")
     if (nonEmptyLines.length > 0) {
       const minIndent = Math.min(
         ...nonEmptyLines.map((l) => l.match(/^\s*/)?.[0].length ?? 0),
       )
       if (Number.isFinite(minIndent) && minIndent > 0) {
-        return codeLines.map((l) => l.substring(minIndent)).join('\n')
+        return codeLines.map((l) => l.substring(minIndent)).join("\n")
       }
     }
-    return codeLines.join('\n')
+    return codeLines.join("\n")
   } catch {
     return type
   }
 }
 
 function extractComponentGroup(componentExportName: string): string {
-  const baseName = componentExportName.replace(/Props$/, '')
+  const baseName = componentExportName.replace(/Props$/, "")
 
   const directMatch = componentGroupNames.find((name) =>
     baseName.startsWith(name),
@@ -1074,13 +1074,13 @@ function rewriteTypeValue(value: string, componentGroup: string): string {
   let result = value
 
   // Clean up internal naming
-  result = result.replaceAll('.RootInternal', '.Root')
+  result = result.replaceAll(".RootInternal", ".Root")
 
   // Format component type references (e.g., ButtonProps → Button.Props)
   if (componentGroup) {
-    const escaped = componentGroup.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const escaped = componentGroup.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
     result = result.replace(
-      new RegExp(`\\b${escaped}(Props|State)\\b`, 'g'),
+      new RegExp(`\\b${escaped}(Props|State)\\b`, "g"),
       `${componentGroup}.$1`,
     )
   }
@@ -1096,7 +1096,7 @@ function rewriteTypeStringsDeep(
     return node
   }
 
-  if (typeof node === 'string') {
+  if (typeof node === "string") {
     return rewriteTypeValue(node, componentGroup)
   }
 
@@ -1104,7 +1104,7 @@ function rewriteTypeStringsDeep(
     return node.map((item) => rewriteTypeStringsDeep(item, componentGroup))
   }
 
-  if (typeof node === 'object') {
+  if (typeof node === "object") {
     const result: Record<string, unknown> = {}
     for (const [key, value] of Object.entries(node)) {
       result[key] = rewriteTypeStringsDeep(value, componentGroup)

@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 
-import { TrendingUpIcon } from '@/registry/icons'
+import { TrendingUpIcon } from "@/registry/icons"
 import {
   Card,
   CardContent,
@@ -10,28 +10,28 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import type { ChartConfig } from '@/registry/ui/chart'
+} from "@/registry/ui/card"
+import type { ChartConfig } from "@/registry/ui/chart"
 import {
   ChartContainer,
   ChartDataTable,
   ChartTooltip,
   ChartTooltipContent,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
+  { month: "April", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "June", desktop: 214 },
 ]
 
 const chartConfig = {
   desktop: {
-    label: 'Desktop',
-    color: 'var(--chart-1)',
+    label: "Desktop",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 

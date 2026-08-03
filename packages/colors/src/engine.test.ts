@@ -4,7 +4,7 @@
  * neutrals, backgrounds, and the yellow solid-label policy.
  */
 
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test } from "vitest"
 
 import {
   DARK_MIN_BG_SEPARATION,
@@ -12,7 +12,7 @@ import {
   LIGHT_SKELETON,
   LIGHT_SKELETON_NEUTRAL,
   SOLID_LSTAR_WINDOW,
-} from './data'
+} from "./data"
 import {
   createTheme,
   fitSrgb,
@@ -21,32 +21,32 @@ import {
   toHex,
   toOklch,
   wcag2,
-} from './index'
+} from "./index"
 
 const CORE_SCALES = [
-  'neutral',
-  'accent',
-  'success',
-  'warning',
-  'danger',
-  'info',
+  "neutral",
+  "accent",
+  "success",
+  "warning",
+  "danger",
+  "info",
 ]
 const SKELETON_STEPS = STEPS.slice(0, 8)
 
-const defaultTheme = createTheme('#438cd6')
+const defaultTheme = createTheme("#438cd6")
 
-describe('default theme', () => {
-  test('all guarantees hold, no warnings', () => {
+describe("default theme", () => {
+  test("all guarantees hold, no warnings", () => {
     expect(defaultTheme.report.ok).toBe(true)
     expect(defaultTheme.report.warnings).toEqual([])
   })
 
-  test('is deterministic', () => {
-    expect(createTheme('#438cd6')).toEqual(createTheme('#438cd6'))
+  test("is deterministic", () => {
+    expect(createTheme("#438cd6")).toEqual(createTheme("#438cd6"))
   })
 
-  test('every scale has exactly the 12 job steps', () => {
-    for (const mode of ['light', 'dark'] as const) {
+  test("every scale has exactly the 12 job steps", () => {
+    for (const mode of ["light", "dark"] as const) {
       const scales = defaultTheme[mode].scales
       for (const name of CORE_SCALES)
         expect(Object.keys(scales)).toContain(name)
@@ -59,13 +59,13 @@ describe('default theme', () => {
     }
   })
 
-  test('jobs 1-8 are L-monotonic per mode', () => {
-    for (const mode of ['light', 'dark'] as const) {
+  test("jobs 1-8 are L-monotonic per mode", () => {
+    for (const mode of ["light", "dark"] as const) {
       for (const [name, scale] of Object.entries(defaultTheme[mode].scales)) {
         const ls = SKELETON_STEPS.map((s) => toOklch(scale[s]).l)
         for (let i = 1; i < ls.length; i++) {
           const ordered =
-            mode === 'light' ? ls[i]! < ls[i - 1]! : ls[i]! > ls[i - 1]!
+            mode === "light" ? ls[i]! < ls[i - 1]! : ls[i]! > ls[i - 1]!
           expect(
             ordered,
             `${name}/${mode} ${SKELETON_STEPS[i - 1]}→${SKELETON_STEPS[i]}`,
@@ -75,7 +75,7 @@ describe('default theme', () => {
     }
   })
 
-  test('jobs 1-8 sit on the L* skeletons (±0.7)', () => {
+  test("jobs 1-8 sit on the L* skeletons (±0.7)", () => {
     const rows = [
       { scale: defaultTheme.light.scales.accent!, skeleton: LIGHT_SKELETON },
       {
@@ -96,7 +96,7 @@ describe('default theme', () => {
     }
   })
 
-  test('guarantee audit: every reported guarantee passes', () => {
+  test("guarantee audit: every reported guarantee passes", () => {
     for (const g of defaultTheme.report.guarantees)
       expect(
         g.passes,
@@ -104,42 +104,42 @@ describe('default theme', () => {
       ).toBe(true)
   })
 
-  test('dark surfaces: neutral 25 near L* 6, distinct from 50 in sRGB', () => {
-    const bg25 = toOklch(defaultTheme.dark.scales.neutral!['25'])
+  test("dark surfaces: neutral 25 near L* 6, distinct from 50 in sRGB", () => {
+    const bg25 = toOklch(defaultTheme.dark.scales.neutral!["25"])
     const lstar = lstarOf(bg25)
     expect(lstar).toBeGreaterThanOrEqual(5.0)
     expect(lstar).toBeLessThanOrEqual(7.0)
     expect(toHex(bg25)).not.toBe(
-      toHex(toOklch(defaultTheme.dark.scales.neutral!['50'])),
+      toHex(toOklch(defaultTheme.dark.scales.neutral!["50"])),
     )
   })
 
-  test('second createTheme call stays under 3s (generous CI bound)', () => {
+  test("second createTheme call stays under 3s (generous CI bound)", () => {
     const start = Date.now()
-    createTheme('#635bff')
+    createTheme("#635bff")
     expect(Date.now() - start).toBeLessThan(3000)
   })
 })
 
-describe('property sweep', () => {
-  test('seeds at every 30° of hue generate clean systems', () => {
+describe("property sweep", () => {
+  test("seeds at every 30° of hue generate clean systems", () => {
     for (let h = 0; h < 360; h += 30) {
       const seed = toHex(fitSrgb({ l: 0.55, c: 0.15, h }))
       const theme = createTheme(seed)
       expect(theme.report.ok, `hue ${h} (${seed})`).toBe(true)
       const offenders = theme.report.warnings.filter(
-        (w) => w.includes('on-solid') || w.includes('text'),
+        (w) => w.includes("on-solid") || w.includes("text"),
       )
       expect(offenders, `hue ${h} (${seed})`).toEqual([])
     }
   })
 
-  test('edge seeds generate without throwing', () => {
+  test("edge seeds generate without throwing", () => {
     for (const seed of [
-      '#ffffff',
-      '#000000',
-      '#808080',
-      'oklch(0.7 0.4 200)',
+      "#ffffff",
+      "#000000",
+      "#808080",
+      "oklch(0.7 0.4 200)",
     ]) {
       const theme = createTheme(seed)
       expect(theme.report.ok, `seed ${seed}`).toBe(true)
@@ -147,17 +147,17 @@ describe('property sweep', () => {
   })
 })
 
-describe('achromatic seeds (D7)', () => {
-  test('achromatic accents ride the neutral model, never a vivid ramp', () => {
-    for (const seed of ['#808080', '#000000', '#ffffff']) {
+describe("achromatic seeds (D7)", () => {
+  test("achromatic accents ride the neutral model, never a vivid ramp", () => {
+    for (const seed of ["#808080", "#000000", "#ffffff"]) {
       const theme = createTheme(seed)
       expect(theme.report.ok, seed).toBe(true)
-      for (const mode of ['light', 'dark'] as const) {
+      for (const mode of ["light", "dark"] as const) {
         for (const step of STEPS) {
           const c = toOklch(theme[mode].scales.accent![step]).c
           expect(c, `${seed}/${mode} ${step}`).toBeLessThanOrEqual(0.02)
         }
-        for (const step of ['700', '800'] as const)
+        for (const step of ["700", "800"] as const)
           expect(
             toOklch(theme[mode].scales.accent![step]).c,
             `${seed}/${mode} solid ${step}`,
@@ -166,122 +166,122 @@ describe('achromatic seeds (D7)', () => {
     }
   })
 
-  test('an achromatic accent keeps the neutral scale pure gray', () => {
-    const theme = createTheme('#808080')
-    for (const mode of ['light', 'dark'] as const)
+  test("an achromatic accent keeps the neutral scale pure gray", () => {
+    const theme = createTheme("#808080")
+    for (const mode of ["light", "dark"] as const)
       for (const step of STEPS)
         expect(toOklch(theme[mode].scales.neutral![step]).c).toBe(0)
   })
 })
 
-describe('solid slotting (D7)', () => {
-  test('the default seed anchors the solid at its own lightness (no clamp)', () => {
-    const seedLstar = lstarOf(toOklch('#438cd6'))
+describe("solid slotting (D7)", () => {
+  test("the default seed anchors the solid at its own lightness (no clamp)", () => {
+    const seedLstar = lstarOf(toOklch("#438cd6"))
     const solidLstar = lstarOf(
-      toOklch(defaultTheme.light.scales.accent!['700']),
+      toOklch(defaultTheme.light.scales.accent!["700"]),
     )
     expect(Math.abs(solidLstar - seedLstar)).toBeLessThan(1)
     expect(defaultTheme.report.seedDelta.accent).toBeLessThan(0.03)
   })
 
-  test('near-white and near-black seeds clamp into the solid job window', () => {
-    for (const seed of ['#fffde7', '#0a0a0a']) {
+  test("near-white and near-black seeds clamp into the solid job window", () => {
+    for (const seed of ["#fffde7", "#0a0a0a"]) {
       const theme = createTheme(seed)
       expect(theme.report.ok, seed).toBe(true)
-      const solidLstar = lstarOf(toOklch(theme.light.scales.accent!['700']))
+      const solidLstar = lstarOf(toOklch(theme.light.scales.accent!["700"]))
       // ±0.5 slack: emitted values pass through 8-bit sRGB quantization.
       expect(solidLstar, seed).toBeGreaterThanOrEqual(
         SOLID_LSTAR_WINDOW.min - 0.5,
       )
       expect(solidLstar, seed).toBeLessThanOrEqual(SOLID_LSTAR_WINDOW.max + 0.5)
       expect(
-        theme.report.warnings.some((w) => w.includes('solid job window')),
+        theme.report.warnings.some((w) => w.includes("solid job window")),
         seed,
       ).toBe(true)
       // The clamp must not disturb the surface ladder (jobs 1-8).
-      for (const mode of ['light', 'dark'] as const) {
+      for (const mode of ["light", "dark"] as const) {
         const ls = SKELETON_STEPS.map(
           (s) => toOklch(theme[mode].scales.accent![s]).l,
         )
         for (let i = 1; i < ls.length; i++)
           expect(
-            mode === 'light' ? ls[i]! < ls[i - 1]! : ls[i]! > ls[i - 1]!,
+            mode === "light" ? ls[i]! < ls[i - 1]! : ls[i]! > ls[i - 1]!,
             `${seed}/${mode} step ${i}`,
           ).toBe(true)
       }
       // on-700 still clears its solved bars (part of report.ok, asserted here
       // explicitly against the WCAG 3.0 UI floor).
       const onSolid = theme.report.guarantees.filter(
-        (g) => g.scale === 'accent' && g.name === 'on-solid',
+        (g) => g.scale === "accent" && g.name === "on-solid",
       )
       expect(onSolid.length, seed).toBeGreaterThan(0)
       for (const g of onSolid) expect(g.passes, `${seed} ${g.fg}`).toBe(true)
     }
   })
 
-  test('a moved seed is priced with a snap-bound warning', () => {
+  test("a moved seed is priced with a snap-bound warning", () => {
     const theme = createTheme({
-      seeds: { accent: '#438cd6', success: '#6ac48c' },
+      seeds: { accent: "#438cd6", success: "#6ac48c" },
     })
     expect(
       theme.report.warnings.some(
-        (w) => w.startsWith('success:') && w.includes('snap bound'),
+        (w) => w.startsWith("success:") && w.includes("snap bound"),
       ),
     ).toBe(true)
   })
 })
 
-describe('neutrals (D8)', () => {
-  test('every neutral step stays under the whisper ceiling (C ≤ 0.02)', () => {
-    for (const mode of ['light', 'dark'] as const)
+describe("neutrals (D8)", () => {
+  test("every neutral step stays under the whisper ceiling (C ≤ 0.02)", () => {
+    for (const mode of ["light", "dark"] as const)
       for (const step of STEPS) {
         const c = toOklch(defaultTheme[mode].scales.neutral![step]).c
         expect(c, `neutral/${mode} ${step}`).toBeLessThanOrEqual(0.02)
       }
   })
 
-  test('neutralTint 0 yields a pure gray at every step', () => {
-    const theme = createTheme({ seeds: { accent: '#438cd6' }, neutralTint: 0 })
-    for (const mode of ['light', 'dark'] as const)
+  test("neutralTint 0 yields a pure gray at every step", () => {
+    const theme = createTheme({ seeds: { accent: "#438cd6" }, neutralTint: 0 })
+    for (const mode of ["light", "dark"] as const)
       for (const step of STEPS)
         expect(toOklch(theme[mode].scales.neutral![step]).c).toBe(0)
   })
 })
 
-describe('seed intake (D7)', () => {
-  test('preserveSeed pins the accent verbatim at the solid step', () => {
+describe("seed intake (D7)", () => {
+  test("preserveSeed pins the accent verbatim at the solid step", () => {
     const theme = createTheme({
-      seeds: { accent: '#eab308' },
+      seeds: { accent: "#eab308" },
       preserveSeed: true,
     })
-    expect(toHex(toOklch(theme.light.scales.accent!['700']))).toBe('#eab308')
+    expect(toHex(toOklch(theme.light.scales.accent!["700"]))).toBe("#eab308")
   })
 
-  test('without preserveSeed the snap price is priced under the bound', () => {
-    const theme = createTheme({ seeds: { accent: '#eab308' } })
+  test("without preserveSeed the snap price is priced under the bound", () => {
+    const theme = createTheme({ seeds: { accent: "#eab308" } })
     expect(theme.report.seedDelta.accent).toBeLessThan(0.12)
   })
 })
 
-describe('backgrounds (D9/D12)', () => {
+describe("backgrounds (D9/D12)", () => {
   test("dark 'oled' drops the floor to black", () => {
     const theme = createTheme({
-      seeds: { accent: '#438cd6' },
-      background: { dark: 'oled' },
+      seeds: { accent: "#438cd6" },
+      background: { dark: "oled" },
     })
-    expect(lstarOf(toOklch(theme.dark.scales.neutral!['25']))).toBeLessThan(1)
+    expect(lstarOf(toOklch(theme.dark.scales.neutral!["25"]))).toBeLessThan(1)
   })
 
-  test('light 97 moves the app background to L* 97', () => {
+  test("light 97 moves the app background to L* 97", () => {
     const theme = createTheme({
-      seeds: { accent: '#438cd6' },
+      seeds: { accent: "#438cd6" },
       background: { light: 97 },
     })
-    const lstar = lstarOf(toOklch(theme.light.scales.neutral!['25']))
+    const lstar = lstarOf(toOklch(theme.light.scales.neutral!["25"]))
     expect(Math.abs(lstar - 97)).toBeLessThanOrEqual(0.7)
   })
 
-  test('slider extremes compress the ladder without inverting it', () => {
+  test("slider extremes compress the ladder without inverting it", () => {
     // Light floor (90) and a dim dark (18): the transposition must keep every
     // guarantee and the surface ordering (an eased offset inverts light ≲93).
     for (const background of [
@@ -289,24 +289,24 @@ describe('backgrounds (D9/D12)', () => {
       { dark: 18 },
       { light: 90, dark: 18 },
     ] as const) {
-      const theme = createTheme({ seeds: { accent: '#438cd6' }, background })
+      const theme = createTheme({ seeds: { accent: "#438cd6" }, background })
       expect(theme.report.ok).toBe(true)
       expect(theme.report.warnings).toEqual([])
     }
     const dim = createTheme({
-      seeds: { accent: '#438cd6' },
+      seeds: { accent: "#438cd6" },
       background: { light: 90 },
     })
-    const bg = lstarOf(toOklch(dim.light.scales.neutral!['25']))
+    const bg = lstarOf(toOklch(dim.light.scales.neutral!["25"]))
     expect(Math.abs(bg - 90)).toBeLessThanOrEqual(0.7)
   })
 
-  test('the full schema range keeps every guarantee and a monotonic ladder', () => {
+  test("the full schema range keeps every guarantee and a monotonic ladder", () => {
     const lights = [90, 92, 94, 96, 98, 99, 100]
-    const darks = [0, 2.5, 6, 10, 14, 18, 20, 'oled'] as const
+    const darks = [0, 2.5, 6, 10, 14, 18, 20, "oled"] as const
     for (const light of lights) {
       const theme = createTheme({
-        seeds: { accent: '#438cd6' },
+        seeds: { accent: "#438cd6" },
         background: { light },
       })
       expect(theme.report.ok, `light ${light}`).toBe(true)
@@ -314,91 +314,91 @@ describe('backgrounds (D9/D12)', () => {
     }
     for (const dark of darks) {
       const theme = createTheme({
-        seeds: { accent: '#438cd6' },
+        seeds: { accent: "#438cd6" },
         background: { dark },
       })
       expect(theme.report.ok, `dark ${dark}`).toBe(true)
       expect(theme.report.warnings, `dark ${dark}`).toEqual([])
       const gap =
-        lstarOf(toOklch(theme.dark.scales.neutral!['50'])) -
-        lstarOf(toOklch(theme.dark.scales.neutral!['25']))
+        lstarOf(toOklch(theme.dark.scales.neutral!["50"])) -
+        lstarOf(toOklch(theme.dark.scales.neutral!["25"]))
       // Steps snap to 8-bit sRGB (±½ step each ≈ ±0.3 L* near L* 20), so the
       // continuous 2.5 floor can render up to one full step shorter.
       expect(gap, `dark ${dark} 25→50 separation`).toBeGreaterThanOrEqual(
         DARK_MIN_BG_SEPARATION - 0.65,
       )
       expect(
-        theme.dark.scales.neutral!['50'],
+        theme.dark.scales.neutral!["50"],
         `dark ${dark} 25/50 render distinct`,
-      ).not.toBe(theme.dark.scales.neutral!['25'])
+      ).not.toBe(theme.dark.scales.neutral!["25"])
     }
   })
 })
 
-describe('yellow policy (D2)', () => {
-  test('yellow solids keep the seed lightness and take a dark label', () => {
-    const theme = createTheme({ seeds: { accent: '#eab308' } })
-    const on = toOklch(theme.light.on.accent!['700'])
+describe("yellow policy (D2)", () => {
+  test("yellow solids keep the seed lightness and take a dark label", () => {
+    const theme = createTheme({ seeds: { accent: "#eab308" } })
+    const on = toOklch(theme.light.on.accent!["700"])
     expect(on.l).toBeLessThan(0.5)
-    const seedLstar = lstarOf(toOklch('#eab308'))
-    const solidLstar = lstarOf(toOklch(theme.light.scales.accent!['700']))
+    const seedLstar = lstarOf(toOklch("#eab308"))
+    const solidLstar = lstarOf(toOklch(theme.light.scales.accent!["700"]))
     expect(Math.abs(solidLstar - seedLstar)).toBeLessThan(3)
   })
 })
 
-describe('guarantee policy & border targets (D2)', () => {
+describe("guarantee policy & border targets (D2)", () => {
   const geistBorders = {
-    '400': { light: 1.2, dark: 1.55 },
-    '500': { light: 1.66, dark: 2.19 },
-    '600': { light: 2.38, dark: 5.85 },
+    "400": { light: 1.2, dark: 1.55 },
+    "500": { light: 1.66, dark: 2.19 },
+    "600": { light: 2.38, dark: 5.85 },
   }
 
-  test('policy `default` is byte-identical to absent', () => {
+  test("policy `default` is byte-identical to absent", () => {
     expect(
-      createTheme({ seeds: { accent: '#438cd6' }, guaranteePolicy: 'default' }),
+      createTheme({ seeds: { accent: "#438cd6" }, guaranteePolicy: "default" }),
     ).toEqual(defaultTheme)
   })
 
-  test('policy `strict` solves solid labels to WCAG 4.5', () => {
+  test("policy `strict` solves solid labels to WCAG 4.5", () => {
     const theme = createTheme({
-      seeds: { accent: '#438cd6' },
-      guaranteePolicy: 'strict',
+      seeds: { accent: "#438cd6" },
+      guaranteePolicy: "strict",
     })
     expect(theme.report.ok).toBe(true)
     for (const g of theme.report.guarantees.filter(
-      (r) => r.name === 'on-solid',
+      (r) => r.name === "on-solid",
     )) {
       expect(g.wcagTarget).toBe(4.5)
       expect(g.passes, `${g.scale}/${g.mode} ${g.fg}`).toBe(true)
     }
   })
 
-  test('policy `relaxed` never relaxes text guarantees', () => {
+  test("policy `relaxed` never relaxes text guarantees", () => {
     const theme = createTheme({
-      seeds: { accent: '#438cd6' },
-      guaranteePolicy: 'relaxed',
+      seeds: { accent: "#438cd6" },
+      guaranteePolicy: "relaxed",
     })
     expect(theme.report.ok).toBe(true)
     for (const g of theme.report.guarantees.filter((r) =>
-      r.name.startsWith('text'),
+      r.name.startsWith("text"),
     ))
       expect(g.passes, `${g.scale}/${g.mode} ${g.name}`).toBe(true)
   })
 
-  test('border targets land within ±0.05 WCAG of the ask, both modes', () => {
+  test("border targets land within ±0.05 WCAG of the ask, both modes", () => {
     const theme = createTheme({
-      seeds: { accent: '#0070f7' },
+      seeds: { accent: "#0070f7" },
       neutralTint: 0,
-      background: { light: 100, dark: 'oled' },
+      background: { light: 100, dark: "oled" },
       borders: { neutral: geistBorders },
     })
-    for (const mode of ['light', 'dark'] as const) {
+    for (const mode of ["light", "dark"] as const) {
       const bg = toOklch(theme[mode].background)
       // 8-bit sRGB quantizes ratios near black into ~0.07-wide plateaus, so
       // dark placements can only land on the nearest plateau at or above the
       // target — the tolerance is one plateau, not solver slack.
-      const overshoot = mode === 'light' ? 0.05 : 0.15
-      for (const job of ['400', '500', '600'] as const) {
+      const overshoot = mode === "light" ? 0.05 : 0.15
+      for (const job of ["400", "500", "600"] as const) {
         const ratio = wcag2(toOklch(theme[mode].scales.neutral![job]), bg)
         const target = geistBorders[job][mode]
         const label = `${mode} border-${job}: ${ratio} vs ${target}`
@@ -409,53 +409,53 @@ describe('guarantee policy & border targets (D2)', () => {
     expect(theme.report.ok).toBe(true)
   })
 
-  test('a sub-floor target is honored and priced as a warning', () => {
+  test("a sub-floor target is honored and priced as a warning", () => {
     const theme = createTheme({
-      seeds: { accent: '#0070f7' },
-      borders: { neutral: { '400': 1.2 } },
+      seeds: { accent: "#0070f7" },
+      borders: { neutral: { "400": 1.2 } },
     })
     expect(theme.report.ok).toBe(true)
     expect(
       theme.report.warnings.some((w) =>
-        w.includes('border-400 target 1.2 sits below the 1.3 default floor'),
+        w.includes("border-400 target 1.2 sits below the 1.3 default floor"),
       ),
     ).toBe(true)
     expect(
-      theme.report.warnings.filter((w) => w.includes('not monotonic')),
+      theme.report.warnings.filter((w) => w.includes("not monotonic")),
     ).toEqual([])
   })
 
-  test('targeted borders may sit above the surface ladder (Geist shape)', () => {
+  test("targeted borders may sit above the surface ladder (Geist shape)", () => {
     // Geist light: border-subtle (L* 92.7) is lighter than ui-active (91.3).
     const theme = createTheme({
-      seeds: { accent: '#0070f7' },
+      seeds: { accent: "#0070f7" },
       neutralTint: 0,
       background: { light: 100 },
-      borders: { neutral: { '400': 1.2 } },
+      borders: { neutral: { "400": 1.2 } },
     })
-    const border = lstarOf(toOklch(theme.light.scales.neutral!['400']))
-    const active = lstarOf(toOklch(theme.light.scales.neutral!['300']))
+    const border = lstarOf(toOklch(theme.light.scales.neutral!["400"]))
+    const active = lstarOf(toOklch(theme.light.scales.neutral!["300"]))
     expect(border).toBeGreaterThan(active)
     expect(theme.report.ok).toBe(true)
   })
 
-  test('the `*` wildcard reaches every palette; a named entry wins', () => {
+  test("the `*` wildcard reaches every palette; a named entry wins", () => {
     const theme = createTheme({
-      seeds: { accent: '#0070f7' },
-      borders: { '*': { '400': 2.0 }, neutral: { '400': 3.0 } },
+      seeds: { accent: "#0070f7" },
+      borders: { "*": { "400": 2.0 }, neutral: { "400": 3.0 } },
     })
     const bg = toOklch(theme.light.background)
-    const accent = wcag2(toOklch(theme.light.scales.accent!['400']), bg)
-    const neutral = wcag2(toOklch(theme.light.scales.neutral!['400']), bg)
+    const accent = wcag2(toOklch(theme.light.scales.accent!["400"]), bg)
+    const neutral = wcag2(toOklch(theme.light.scales.neutral!["400"]), bg)
     expect(Math.abs(accent - 2.0)).toBeLessThanOrEqual(0.05)
     expect(Math.abs(neutral - 3.0)).toBeLessThanOrEqual(0.05)
   })
 
   test("untargeted palettes are untouched by another palette's targets", () => {
-    const plain = createTheme({ seeds: { accent: '#438cd6' } })
+    const plain = createTheme({ seeds: { accent: "#438cd6" } })
     const targeted = createTheme({
-      seeds: { accent: '#438cd6' },
-      borders: { neutral: { '400': 1.2 } },
+      seeds: { accent: "#438cd6" },
+      borders: { neutral: { "400": 1.2 } },
     })
     expect(targeted.light.scales.accent).toEqual(plain.light.scales.accent)
     expect(targeted.dark.scales.accent).toEqual(plain.dark.scales.accent)

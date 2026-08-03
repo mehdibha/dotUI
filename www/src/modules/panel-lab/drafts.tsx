@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* Drafts — the open PRs reworking a panel section, their actual bodies pulled
    in so each is previewed and usable here, not just linked.
@@ -11,62 +11,62 @@
    Their state keys live in data.tsx under "Draft-only state". When a draft
    wins, fold its body into a new version and delete the entry. */
 
-import { LayersIcon, PaletteIcon, SmileIcon, TypeIcon } from 'lucide-react'
+import { LayersIcon, PaletteIcon, SmileIcon, TypeIcon } from "lucide-react"
 
-import { ICON_KEYS, TYPE_KEYS, WORKING_COLOR_KEYS, type LabState } from './data'
+import { ICON_KEYS, TYPE_KEYS, WORKING_COLOR_KEYS, type LabState } from "./data"
 import {
   ColorSectionV2Body as Color560,
   SurfacesSectionBody as Surfaces560,
-} from './drafts/color-560'
+} from "./drafts/color-560"
 import {
   ColorSectionV2Body as Color561,
   SurfacesSectionBody as Surfaces561,
-} from './drafts/color-561'
-import { ColorSectionV2Body as Color562 } from './drafts/color-562'
-import { IdealIconsSectionBody as Icons564 } from './drafts/icons-564'
-import { SurfacesSectionBody as Surfaces562 } from './drafts/surfaces-562'
-import { IdealTypeSectionBody as Type563 } from './drafts/type-563'
-import { IdealTypeSectionBody as Type565 } from './drafts/type-565'
-import type { Chapter } from './variants/chapter'
+} from "./drafts/color-561"
+import { ColorSectionV2Body as Color562 } from "./drafts/color-562"
+import { IdealIconsSectionBody as Icons564 } from "./drafts/icons-564"
+import { SurfacesSectionBody as Surfaces562 } from "./drafts/surfaces-562"
+import { IdealTypeSectionBody as Type563 } from "./drafts/type-563"
+import { IdealTypeSectionBody as Type565 } from "./drafts/type-565"
+import type { Chapter } from "./variants/chapter"
 
 const SURFACE_KEYS: (keyof LabState)[] = [
-  'shadows',
-  'overlayMaterial',
-  'modalBlur',
-  'modalBackdrop',
+  "shadows",
+  "overlayMaterial",
+  "modalBlur",
+  "modalBackdrop",
 ]
 const TYPE_563_KEYS: (keyof LabState)[] = [
   ...TYPE_KEYS,
-  'headingWeight',
-  'headingTracking',
-  'baseSize',
-  'typeScale',
+  "headingWeight",
+  "headingTracking",
+  "baseSize",
+  "typeScale",
 ]
 const TYPE_565_KEYS: (keyof LabState)[] = [
   ...TYPE_KEYS,
-  'headingWeight',
-  'headingTrackingEm',
-  'typeBase',
-  'typeRatio',
-  'bodyLeading',
+  "headingWeight",
+  "headingTrackingEm",
+  "typeBase",
+  "typeRatio",
+  "bodyLeading",
 ]
 const ICON_564_KEYS: (keyof LabState)[] = [
   ...ICON_KEYS,
-  'iconStrokeAuto',
-  'iconScale',
+  "iconStrokeAuto",
+  "iconScale",
 ]
 
-const colorChapter = (Body: Chapter['Body']): Chapter => ({
-  id: 'color',
-  label: 'Color',
+const colorChapter = (Body: Chapter["Body"]): Chapter => ({
+  id: "color",
+  label: "Color",
   icon: PaletteIcon,
   keys: WORKING_COLOR_KEYS,
   Body,
 })
 
-const surfacesChapter = (Body: Chapter['Body']): Chapter => ({
-  id: 'surfaces',
-  label: 'Surfaces',
+const surfacesChapter = (Body: Chapter["Body"]): Chapter => ({
+  id: "surfaces",
+  label: "Surfaces",
   icon: LayersIcon,
   keys: SURFACE_KEYS,
   Body,
@@ -86,43 +86,43 @@ export interface Draft {
 
 export const DRAFTS: Draft[] = [
   {
-    id: 'pr-560',
+    id: "pr-560",
     pr: 560,
-    section: 'Color',
-    title: 'Color v2 and Surfaces frames',
+    section: "Color",
+    title: "Color v2 and Surfaces frames",
     summary:
-      'The first working-frame experiment: an enhanced Color body read against the frozen v1, with surfaces pulled out alongside it.',
+      "The first working-frame experiment: an enhanced Color body read against the frozen v1, with surfaces pulled out alongside it.",
     overrides: [colorChapter(Color560), surfacesChapter(Surfaces560)],
   },
   {
-    id: 'pr-561',
+    id: "pr-561",
     pr: 561,
-    section: 'Color',
-    title: 'Reworked color section, surfaces frame',
+    section: "Color",
+    title: "Reworked color section, surfaces frame",
     summary:
-      'A simpler, more flexible take on the same ground — fewer decisions up front, with surfaces given their own frame.',
+      "A simpler, more flexible take on the same ground — fewer decisions up front, with surfaces given their own frame.",
     overrides: [colorChapter(Color561), surfacesChapter(Surfaces561)],
   },
   {
-    id: 'pr-562',
+    id: "pr-562",
     pr: 562,
-    section: 'Color',
-    title: 'Enhanced Color section, Surfaces split out',
+    section: "Color",
+    title: "Enhanced Color section, Surfaces split out",
     summary:
-      'Keeps the Color body focused on the palette and moves every canvas decision into a dedicated Surfaces frame.',
+      "Keeps the Color body focused on the palette and moves every canvas decision into a dedicated Surfaces frame.",
     overrides: [colorChapter(Color562), surfacesChapter(Surfaces562)],
   },
   {
-    id: 'pr-563',
+    id: "pr-563",
     pr: 563,
-    section: 'Type',
-    title: 'Ideal Type section',
+    section: "Type",
+    title: "Ideal Type section",
     summary:
-      'Replaces the Type body following the lab convention, with a named tracking axis and an explicit type scale.',
+      "Replaces the Type body following the lab convention, with a named tracking axis and an explicit type scale.",
     overrides: [
       {
-        id: 'typography',
-        label: 'Type',
+        id: "typography",
+        label: "Type",
         icon: TypeIcon,
         keys: TYPE_563_KEYS,
         Body: Type563,
@@ -130,16 +130,16 @@ export const DRAFTS: Draft[] = [
     ],
   },
   {
-    id: 'pr-565',
+    id: "pr-565",
     pr: 565,
-    section: 'Type',
-    title: 'Ideal Type section',
+    section: "Type",
+    title: "Ideal Type section",
     summary:
-      'The other Type take: a live hero, absent-means-default state, and depth behind DetailRows — tracking as a continuous em axis.',
+      "The other Type take: a live hero, absent-means-default state, and depth behind DetailRows — tracking as a continuous em axis.",
     overrides: [
       {
-        id: 'typography',
-        label: 'Type',
+        id: "typography",
+        label: "Type",
         icon: TypeIcon,
         keys: TYPE_565_KEYS,
         Body: Type565,
@@ -147,16 +147,16 @@ export const DRAFTS: Draft[] = [
     ],
   },
   {
-    id: 'pr-564',
+    id: "pr-564",
     pr: 564,
-    section: 'Icons',
-    title: 'Ideal Icons section',
+    section: "Icons",
+    title: "Ideal Icons section",
     summary:
-      'The Icons frame rebuilt for real previews from the icon registry and a fuller axis set.',
+      "The Icons frame rebuilt for real previews from the icon registry and a fuller axis set.",
     overrides: [
       {
-        id: 'icons',
-        label: 'Icons',
+        id: "icons",
+        label: "Icons",
         icon: SmileIcon,
         keys: ICON_564_KEYS,
         Body: Icons564,
@@ -173,7 +173,7 @@ export function draftChapters(base: Chapter[], draft: Draft): Chapter[] {
   const added = draft.overrides.filter((c) => !base.some((b) => b.id === c.id))
   if (added.length === 0) return merged
   // New chapters follow Color, which is what they were split out of.
-  const at = merged.findIndex((c) => c.id === 'color') + 1
+  const at = merged.findIndex((c) => c.id === "color") + 1
   return [...merged.slice(0, at), ...added, ...merged.slice(at)]
 }
 

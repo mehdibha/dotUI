@@ -1,36 +1,36 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
-import { BitcoinIcon, CreditCardIcon } from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { Card, CardContent } from '@/registry/ui/card'
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
+import { BitcoinIcon, CreditCardIcon } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { Card, CardContent } from "@/registry/ui/card"
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
 import {
   Radio,
   RadioControl,
   RadioGroup,
   RadioIndicator,
-} from '@/registry/ui/radio-group'
+} from "@/registry/ui/radio-group"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { Separator } from '@/registry/ui/separator'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/select"
+import { Separator } from "@/registry/ui/separator"
+import { TextField } from "@/registry/ui/text-field"
 
 const inputClassName =
-  'h-9 min-w-0 flex-1 bg-transparent text-sm text-fg outline-none placeholder:text-fg-muted'
+  "h-9 min-w-0 flex-1 bg-transparent text-sm text-fg outline-none placeholder:text-fg-muted"
 
 // Each segment of the joined card field: lifts above the dividers and shows its
 // own focus ring on focus, instead of ringing the whole group.
 const segmentClassName =
-  'relative flex items-center px-3 focus-within:z-10 focus-within:rounded-(--input-radius) focus-within:border-transparent focus-within:bg-field focus-within:ring-2 focus-within:ring-border-focus'
+  "relative flex items-center px-3 focus-within:z-10 focus-within:rounded-(--input-radius) focus-within:border-transparent focus-within:bg-field focus-within:ring-2 focus-within:ring-border-focus"
 
 // The whole row (radio dot + icon + label) is one click target: nesting them
 // inside RadioControl (rather than as siblings) makes its native label wrap
@@ -39,16 +39,16 @@ const segmentClassName =
 // The `selected:hover` rule outranks `selected` (extra pseudo-class), so hover
 // stays visible on the checked row instead of the transparent selected fill.
 const methodControlClassName =
-  'has-data-label:border-transparent has-data-label:selected:border-transparent has-data-label:selected:bg-transparent hover:bg-muted has-data-label:selected:hover:bg-muted'
+  "has-data-label:border-transparent has-data-label:selected:border-transparent has-data-label:selected:bg-transparent hover:bg-muted has-data-label:selected:hover:bg-muted"
 
-export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
-  const [method, setMethod] = useState('card')
-  const [announcement, setAnnouncement] = useState('')
+export function Payment({ className, ...props }: React.ComponentProps<"div">) {
+  const [method, setMethod] = useState("card")
+  const [announcement, setAnnouncement] = useState("")
 
   // py-1.5 matches CardContent's px-1.5 so the radio rows sit in a uniform 6px
   // frame — same gap on all four sides and between rows/separators.
   return (
-    <Card className={cn('py-1.5', className)} {...props}>
+    <Card className={cn("py-1.5", className)} {...props}>
       {/* Reduced from the card's default px-4: the row's own p-2.5 provides the
           inset, so the hover highlight reaches near the card edge. */}
       <CardContent className="px-1.5">
@@ -61,13 +61,13 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
             // the live region below queues a summary after the radio's own
             // "checked" announcement.
             setAnnouncement(
-              value === 'card'
-                ? 'Card details form expanded'
-                : value === 'crypto'
-                  ? 'Crypto payment details expanded'
-                  : value === 'apple-pay'
-                    ? 'Apple Pay button expanded'
-                    : '',
+              value === "card"
+                ? "Card details form expanded"
+                : value === "crypto"
+                  ? "Crypto payment details expanded"
+                  : value === "apple-pay"
+                    ? "Apple Pay button expanded"
+                    : "",
             )
           }}
           className="gap-0"
@@ -83,7 +83,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
           {/* The panel is a sibling of the radio, never a child: it holds
               interactive fields, and sitting right after the radio in DOM
               order lets Tab flow from the checked radio into the form. */}
-          <MethodPanel expanded={method === 'card'}>
+          <MethodPanel expanded={method === "card"}>
             <div className="space-y-4 pt-4 pb-1">
               <div
                 role="group"
@@ -99,7 +99,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
                   <label
                     className={cn(
                       segmentClassName,
-                      'gap-2 rounded-t-(--input-radius)',
+                      "gap-2 rounded-t-(--input-radius)",
                     )}
                   >
                     <input
@@ -118,7 +118,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
                     <label
                       className={cn(
                         segmentClassName,
-                        'rounded-bl-(--input-radius) border-t border-border-field',
+                        "rounded-bl-(--input-radius) border-t border-border-field",
                       )}
                     >
                       <input
@@ -132,7 +132,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
                     <label
                       className={cn(
                         segmentClassName,
-                        'gap-2 rounded-br-(--input-radius) border-t border-l border-border-field',
+                        "gap-2 rounded-br-(--input-radius) border-t border-l border-border-field",
                       )}
                     >
                       <input
@@ -174,10 +174,10 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
                 <Checkbox className="items-start">
                   <CheckboxControl />
                   <Label className="block">
-                    Save my information with{' '}
+                    Save my information with{" "}
                     <span className="underline decoration-dotted underline-offset-3">
                       Link
-                    </span>{' '}
+                    </span>{" "}
                     for faster checkout
                   </Label>
                 </Checkbox>
@@ -198,7 +198,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
             </RadioControl>
           </Radio>
 
-          <MethodPanel expanded={method === 'apple-pay'}>
+          <MethodPanel expanded={method === "apple-pay"}>
             <div className="pt-4 pb-1">
               <ApplePayButton />
             </div>
@@ -217,7 +217,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
             </RadioControl>
           </Radio>
 
-          <MethodPanel expanded={method === 'crypto'}>
+          <MethodPanel expanded={method === "crypto"}>
             <div className="space-y-4 pt-4 pb-1">
               <TextField>
                 <Label>Name</Label>
@@ -253,7 +253,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
                   <label
                     className={cn(
                       segmentClassName,
-                      'border-t border-border-field',
+                      "border-t border-border-field",
                     )}
                   >
                     <input
@@ -265,7 +265,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
                   <label
                     className={cn(
                       segmentClassName,
-                      'border-t border-border-field',
+                      "border-t border-border-field",
                     )}
                   >
                     <input
@@ -278,7 +278,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
                     <label
                       className={cn(
                         segmentClassName,
-                        'rounded-bl-(--input-radius) border-t border-border-field',
+                        "rounded-bl-(--input-radius) border-t border-border-field",
                       )}
                     >
                       <input
@@ -290,7 +290,7 @@ export function Payment({ className, ...props }: React.ComponentProps<'div'>) {
                     <label
                       className={cn(
                         segmentClassName,
-                        'rounded-br-(--input-radius) border-t border-l border-border-field',
+                        "rounded-br-(--input-radius) border-t border-l border-border-field",
                       )}
                     >
                       <input
@@ -339,8 +339,8 @@ function MethodPanel({
     <div
       inert={!expanded}
       className={cn(
-        'grid grid-rows-[0fr] opacity-0 duration-300 ease-fluid-out motion-safe:transition-[grid-template-rows,opacity]',
-        expanded && 'grid-rows-[1fr] opacity-100',
+        "grid grid-rows-[0fr] opacity-0 duration-300 ease-fluid-out motion-safe:transition-[grid-template-rows,opacity]",
+        expanded && "grid-rows-[1fr] opacity-100",
       )}
     >
       {/* min-w-0 lets the grid item shrink to the card width instead of the

@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react'
+import type { SVGProps } from "react"
 
 export function TailwindWordmark(props: SVGProps<SVGSVGElement>) {
   return (

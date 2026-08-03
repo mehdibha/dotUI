@@ -1,11 +1,11 @@
-import { type ComponentProps, useEffect, useState } from 'react'
-import { useMatch } from '@tanstack/react-router'
-import { ChevronDownIcon } from 'lucide-react'
-import { Button } from 'react-aria-components/Button'
-import { Select } from 'react-aria-components/Select'
+import { type ComponentProps, useEffect, useState } from "react"
+import { useMatch } from "@tanstack/react-router"
+import { ChevronDownIcon } from "lucide-react"
+import { Button } from "react-aria-components/Button"
+import { Select } from "react-aria-components/Select"
 
-import { cn } from '@/registry/lib/utils'
-import { SelectContent, SelectItem } from '@/registry/ui/select'
+import { cn } from "@/registry/lib/utils"
+import { SelectContent, SelectItem } from "@/registry/ui/select"
 
 type TocEntry = { url: string; title: string; depth: number }
 
@@ -17,7 +17,7 @@ type TocEntry = { url: string; title: string; depth: number }
  */
 export function DocsTocSelect({ className }: { className?: string }) {
   const toc = useMatch({
-    from: '/_app/docs/$',
+    from: "/_app/docs/$",
     shouldThrow: false,
     select: (match) => match.loaderData?.toc,
   })
@@ -32,8 +32,8 @@ function useScrolled() {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 0)
     onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
   return scrolled
 }
@@ -55,11 +55,11 @@ function TocSelect({
       aria-label="On this page"
       selectedKey={activeId}
       onSelectionChange={(key) => scrollToSection(String(key))}
-      className={cn('flex', className)}
+      className={cn("flex", className)}
     >
       <Button className="flex items-center gap-1.5 text-sm text-fg-muted transition-colors outline-none hover:text-fg data-pressed:text-fg">
         <ProgressCircle value={progress} className="shrink-0" />
-        <span className="max-w-36 truncate">{active?.title ?? ''}</span>
+        <span className="max-w-36 truncate">{active?.title ?? ""}</span>
         <ChevronDownIcon className="size-4 shrink-0" />
       </Button>
       <SelectContent
@@ -72,8 +72,8 @@ function TocSelect({
             id={item.url}
             textValue={item.title}
             className={cn(
-              item.depth === 3 && 'pl-6',
-              item.depth >= 4 && 'pl-9',
+              item.depth === 3 && "pl-6",
+              item.depth >= 4 && "pl-9",
             )}
           >
             {item.title}
@@ -92,7 +92,7 @@ function ProgressCircle({
   value,
   className,
   ...props
-}: ComponentProps<'svg'> & { value: number }) {
+}: ComponentProps<"svg"> & { value: number }) {
   const size = 16
   const strokeWidth = 2
   const radius = size / 2 - strokeWidth
@@ -102,7 +102,7 @@ function ProgressCircle({
     cx: size / 2,
     cy: size / 2,
     r: radius,
-    fill: 'none',
+    fill: "none",
     strokeWidth,
   }
 
@@ -110,7 +110,7 @@ function ProgressCircle({
     <svg
       viewBox={`0 0 ${size} ${size}`}
       aria-hidden
-      className={cn('size-4', className)}
+      className={cn("size-4", className)}
       {...props}
     >
       <circle {...circle} className="stroke-current/20" />
@@ -128,15 +128,15 @@ function ProgressCircle({
 }
 
 function scrollToSection(url: string) {
-  const el = document.getElementById(url.replace(/^#/, ''))
+  const el = document.getElementById(url.replace(/^#/, ""))
   if (!el) return
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  history.replaceState(null, '', url)
+  el.scrollIntoView({ behavior: "smooth", block: "start" })
+  history.replaceState(null, "", url)
 }
 
 /** Tracks which heading is currently in view (the last one scrolled past the header). */
 function useActiveSection(toc: TocEntry[]) {
-  const [activeId, setActiveId] = useState(() => toc[0]?.url ?? '')
+  const [activeId, setActiveId] = useState(() => toc[0]?.url ?? "")
 
   useEffect(() => {
     const ids = toc.map((item) => item.url)
@@ -147,7 +147,7 @@ function useActiveSection(toc: TocEntry[]) {
       for (let i = 0; i < ids.length; i++) {
         const url = ids[i]
         if (!url) continue
-        const el = document.getElementById(url.replace(/^#/, ''))
+        const el = document.getElementById(url.replace(/^#/, ""))
         if (!el) continue
         if (el.getBoundingClientRect().top <= offset) index = i
         else break
@@ -157,11 +157,11 @@ function useActiveSection(toc: TocEntry[]) {
     }
 
     compute()
-    window.addEventListener('scroll', compute, { passive: true })
-    window.addEventListener('resize', compute)
+    window.addEventListener("scroll", compute, { passive: true })
+    window.addEventListener("resize", compute)
     return () => {
-      window.removeEventListener('scroll', compute)
-      window.removeEventListener('resize', compute)
+      window.removeEventListener("scroll", compute)
+      window.removeEventListener("resize", compute)
     }
   }, [toc])
 

@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
-import { Badge } from '@/registry/ui/badge'
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Badge } from "@/registry/ui/badge"
 
 export default function Demo() {
   return (

@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { getLocalTimeZone, today } from '@internationalized/date'
+import { getLocalTimeZone, today } from "@internationalized/date"
 
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
 import {
   Calendar,
   CalendarCell,
@@ -16,7 +16,7 @@ import {
   CalendarHeader,
   CalendarHeaderCell,
   CalendarHeading,
-} from '@/registry/ui/calendar'
+} from "@/registry/ui/calendar"
 
 export default function Demo() {
   return (

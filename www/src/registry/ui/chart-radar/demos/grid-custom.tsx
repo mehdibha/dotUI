@@ -1,28 +1,28 @@
-'use client'
+"use client"
 
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts'
+import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
 
-import type { ChartConfig } from '@/registry/ui/chart'
+import type { ChartConfig } from "@/registry/ui/chart"
 import {
   ChartContainer,
   ChartDataTable,
   ChartTooltip,
   ChartTooltipContent,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 285 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 203 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 264 },
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 285 },
+  { month: "March", desktop: 237 },
+  { month: "April", desktop: 203 },
+  { month: "May", desktop: 209 },
+  { month: "June", desktop: 264 },
 ]
 
 const chartConfig = {
   desktop: {
-    label: 'Desktop',
-    color: 'var(--chart-1)',
+    label: "Desktop",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 

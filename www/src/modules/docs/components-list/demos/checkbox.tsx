@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
-import { Label } from '@/registry/ui/field'
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import { Label } from "@/registry/ui/field"
 
-import { DemoPress, useToggleAutoplay } from '../autoplay'
+import { DemoPress, useToggleAutoplay } from "../autoplay"
 
 export function CheckboxDemo() {
   const { selected, pressing } = useToggleAutoplay({ initial: true })

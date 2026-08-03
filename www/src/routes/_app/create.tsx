@@ -1,23 +1,23 @@
-import { useEffect, useRef, useState } from 'react'
-import { createFileRoute, stripSearchParams } from '@tanstack/react-router'
-import { SlidersHorizontalIcon } from 'lucide-react'
-import { z } from 'zod'
+import { useEffect, useRef, useState } from "react"
+import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
+import { SlidersHorizontalIcon } from "lucide-react"
+import { z } from "zod"
 
-import { Button } from '@/registry/ui/button'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Drawer, DrawerHandle } from '@/registry/ui/drawer'
-import { ExportHeaderAction } from '@/modules/create/export'
-import { CreatePanel } from '@/modules/create/panel'
-import { DEFAULTS, useDesignSystem } from '@/modules/create/preset'
+import { Button } from "@/registry/ui/button"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
+import { ExportHeaderAction } from "@/modules/create/export"
+import { CreatePanel } from "@/modules/create/panel"
+import { DEFAULTS, useDesignSystem } from "@/modules/create/preset"
 import {
   loadStoredPreset,
   saveStoredPreset,
-} from '@/modules/create/preset/storage'
-import { PreviewPanel } from '@/modules/create/preview/preview-panel'
+} from "@/modules/create/preset/storage"
+import { PreviewPanel } from "@/modules/create/preview/preview-panel"
 
 export const createSearchSchema = z.object({
   panel: z.string().optional().catch(undefined),
-  preview: z.string().default('cards').catch('cards'),
+  preview: z.string().default("cards").catch("cards"),
   preset: z.string().optional().catch(undefined),
   // Opens the preset gallery modal — set by the panel's Presets button and the
   // /presets permanent redirect. Coerced boolean: the search parser reads bare
@@ -26,9 +26,9 @@ export const createSearchSchema = z.object({
   gallery: z.coerce.boolean().optional().catch(undefined),
 })
 
-const searchDefaults = { preview: 'cards' }
+const searchDefaults = { preview: "cards" }
 
-export const Route = createFileRoute('/_app/create')({
+export const Route = createFileRoute("/_app/create")({
   validateSearch: createSearchSchema,
   search: {
     middlewares: [stripSearchParams(searchDefaults)],

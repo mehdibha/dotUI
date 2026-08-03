@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { createContext, useContext, useId } from 'react'
-import type * as React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import { LabelContext } from 'react-aria-components/Label'
-import * as RadioGroupPrimitives from 'react-aria-components/RadioGroup'
-import { Provider, useSlottedContext } from 'react-aria-components/slots'
-import { useSlotId } from 'react-aria/private/utils/useId'
+import { createContext, useContext, useId } from "react"
+import type * as React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import { LabelContext } from "react-aria-components/Label"
+import * as RadioGroupPrimitives from "react-aria-components/RadioGroup"
+import { Provider, useSlottedContext } from "react-aria-components/slots"
+import { useSlotId } from "react-aria/private/utils/useId"
 
-import { Label } from '@/registry/ui/field'
+import { Label } from "@/registry/ui/field"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: radioGroupStyles
 
@@ -57,7 +57,7 @@ const Radio = ({ id: idProp, className, ...props }: RadioProps) => {
       {composeRenderProps(props.children, (children) => {
         return children ? (
           <Provider values={[[LabelContext, { htmlFor: id, id: labelId }]]}>
-            {typeof children === 'string' ? (
+            {typeof children === "string" ? (
               <>
                 <RadioControl />
                 <Label>{children}</Label>
@@ -95,7 +95,7 @@ const RadioControl = ({ className, ...props }: RadioControlProps) => {
           <Provider
             values={[
               [InternalRadioContext, renderProps],
-              [LabelContext, { id: labelId, elementType: 'span' }],
+              [LabelContext, { id: labelId, elementType: "span" }],
             ]}
           >
             {children ?? <RadioIndicator />}
@@ -106,7 +106,7 @@ const RadioControl = ({ className, ...props }: RadioControlProps) => {
   )
 }
 
-interface RadioIndicatorProps extends React.ComponentProps<'span'> {}
+interface RadioIndicatorProps extends React.ComponentProps<"span"> {}
 
 const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
   const { indicator } = useStyles()()

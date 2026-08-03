@@ -1,12 +1,12 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Default from './demos/default'
-import Disabled from './demos/disabled'
-import PrefixAndSuffix from './demos/prefix-and-suffix'
-import Shapes from './demos/shapes'
-import Sizes from './demos/sizes'
-import Variants from './demos/variants'
+import Default from "./demos/default"
+import Disabled from "./demos/disabled"
+import PrefixAndSuffix from "./demos/prefix-and-suffix"
+import Shapes from "./demos/shapes"
+import Sizes from "./demos/sizes"
+import Variants from "./demos/variants"
 
 export default function ToggleButtonExamples() {
   return (

@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
   type DisclosureProps,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
 export default function Demo({ isDisabled = false }: DisclosureProps = {}) {
   return (

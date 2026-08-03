@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from "react"
 
 export interface UseKeyboardShortcutOptions {
   /**
@@ -76,7 +76,7 @@ export function useKeyboardShortcut({
       onPress()
     }
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
   }, [key, metaKey, ignoreInputFocus, onPress, enabled])
 }

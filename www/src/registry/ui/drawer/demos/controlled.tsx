@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   DialogBody,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer, DrawerHandle } from '@/registry/ui/drawer'
+} from "@/registry/ui/dialog"
+import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 
 /**
  * Controlled drawer via `isOpen` / `onOpenChange`. Useful when an outside event
@@ -24,7 +24,7 @@ export default function Demo() {
         Close
       </Button>
       <span className="text-sm text-fg-muted">
-        Drawer is {open ? 'open' : 'closed'}
+        Drawer is {open ? "open" : "closed"}
       </span>
       <Drawer isOpen={open} onOpenChange={setOpen}>
         <DialogContent>

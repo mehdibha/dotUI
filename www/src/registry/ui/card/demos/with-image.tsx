@@ -1,12 +1,12 @@
-import { PlusIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
+import { PlusIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
+} from "@/registry/ui/card"
 
 export default function Demo() {
   return (

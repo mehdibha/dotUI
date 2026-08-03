@@ -13,9 +13,9 @@
 //
 // Run: node research/chart-gates.mjs   (from packages/colors)
 
-import { mkdirSync, writeFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { mkdirSync, writeFileSync } from "node:fs"
+import { dirname, join } from "node:path"
+import { fileURLToPath } from "node:url"
 import {
   converter,
   differenceEuclidean,
@@ -24,15 +24,15 @@ import {
   filterDeficiencyTrit,
   formatHex,
   parse,
-} from 'culori'
+} from "culori"
 
 const here = dirname(fileURLToPath(import.meta.url))
-const dataDir = join(here, 'data')
+const dataDir = join(here, "data")
 mkdirSync(dataDir, { recursive: true })
 
-const toOklab = converter('oklab')
-const toLab65 = converter('lab65')
-const deltaEok = differenceEuclidean('oklab')
+const toOklab = converter("oklab")
+const toLab65 = converter("lab65")
+const deltaEok = differenceEuclidean("oklab")
 const round = (x, d = 4) => Number(x.toFixed(d))
 
 // ---------------------------------------------------------------------------
@@ -41,74 +41,74 @@ const round = (x, d = 4) => Number(x.toFixed(d))
 
 // Okabe & Ito (2008), "Color Universal Design" — the canonical CVD-safe set.
 const okabeIto = [
-  ['black', '#000000'],
-  ['orange', '#e69f00'],
-  ['skyBlue', '#56b4e9'],
-  ['bluishGreen', '#009e73'],
-  ['yellow', '#f0e442'],
-  ['blue', '#0072b2'],
-  ['vermillion', '#d55e00'],
-  ['reddishPurple', '#cc79a7'],
+  ["black", "#000000"],
+  ["orange", "#e69f00"],
+  ["skyBlue", "#56b4e9"],
+  ["bluishGreen", "#009e73"],
+  ["yellow", "#f0e442"],
+  ["blue", "#0072b2"],
+  ["vermillion", "#d55e00"],
+  ["reddishPurple", "#cc79a7"],
 ]
 
 // matplotlib tab10 (= d3 schemeCategory10).
 const tab10 = [
-  ['blue', '#1f77b4'],
-  ['orange', '#ff7f0e'],
-  ['green', '#2ca02c'],
-  ['red', '#d62728'],
-  ['purple', '#9467bd'],
-  ['brown', '#8c564b'],
-  ['pink', '#e377c2'],
-  ['gray', '#7f7f7f'],
-  ['olive', '#bcbd22'],
-  ['cyan', '#17becf'],
+  ["blue", "#1f77b4"],
+  ["orange", "#ff7f0e"],
+  ["green", "#2ca02c"],
+  ["red", "#d62728"],
+  ["purple", "#9467bd"],
+  ["brown", "#8c564b"],
+  ["pink", "#e377c2"],
+  ["gray", "#7f7f7f"],
+  ["olive", "#bcbd22"],
+  ["cyan", "#17becf"],
 ]
 
 // dotUI's current de-facto chart palette: the five status 500s from
 // www/src/registry/base/colors.css (identical in light and dark blocks).
 const dotuiCurrent = [
-  ['accent-500', 'oklch(0.6478 0.1337 251.06)'],
-  ['success-500', 'oklch(0.6512 0.1869 148.33)'],
-  ['warning-500', 'oklch(0.6497 0.1338 82.26)'],
-  ['danger-500', 'oklch(0.6478 0.2078 25.33)'],
-  ['info-500', 'oklch(0.6478 0.188 259.81)'],
+  ["accent-500", "oklch(0.6478 0.1337 251.06)"],
+  ["success-500", "oklch(0.6512 0.1869 148.33)"],
+  ["warning-500", "oklch(0.6497 0.1338 82.26)"],
+  ["danger-500", "oklch(0.6478 0.2078 25.33)"],
+  ["info-500", "oklch(0.6478 0.188 259.81)"],
 ]
 
 // viridis, 256 entries — d3-scale-chromatic v3.1.0 ramp string (itself derived
 // from matplotlib's published table). Validated below against known anchors.
 const VIRIDIS_RAMP =
-  '44015444025645045745055946075a46085c460a5d460b5e470d60470e6147106347116447136548146748166848176948186a481a6c481b6d481c6e481d6f481f70482071482173482374482475482576482677482878482979472a7a472c7a472d7b472e7c472f7d46307e46327e46337f463480453581453781453882443983443a83443b84433d84433e85423f854240864241864142874144874045884046883f47883f48893e49893e4a893e4c8a3d4d8a3d4e8a3c4f8a3c508b3b518b3b528b3a538b3a548c39558c39568c38588c38598c375a8c375b8d365c8d365d8d355e8d355f8d34608d34618d33628d33638d32648e32658e31668e31678e31688e30698e306a8e2f6b8e2f6c8e2e6d8e2e6e8e2e6f8e2d708e2d718e2c718e2c728e2c738e2b748e2b758e2a768e2a778e2a788e29798e297a8e297b8e287c8e287d8e277e8e277f8e27808e26818e26828e26828e25838e25848e25858e24868e24878e23888e23898e238a8d228b8d228c8d228d8d218e8d218f8d21908d21918c20928c20928c20938c1f948c1f958b1f968b1f978b1f988b1f998a1f9a8a1e9b8a1e9c891e9d891f9e891f9f881fa0881fa1881fa1871fa28720a38620a48621a58521a68522a78522a88423a98324aa8325ab8225ac8226ad8127ad8128ae8029af7f2ab07f2cb17e2db27d2eb37c2fb47c31b57b32b67a34b67935b77937b87838b9773aba763bbb753dbc743fbc7340bd7242be7144bf7046c06f48c16e4ac16d4cc26c4ec36b50c46a52c56954c56856c66758c7655ac8645cc8635ec96260ca6063cb5f65cb5e67cc5c69cd5b6ccd5a6ece5870cf5773d05675d05477d1537ad1517cd2507fd34e81d34d84d44b86d54989d5488bd6468ed64590d74393d74195d84098d83e9bd93c9dd93ba0da39a2da37a5db36a8db34aadc32addc30b0dd2fb2dd2db5de2bb8de29bade28bddf26c0df25c2df23c5e021c8e020cae11fcde11dd0e11cd2e21bd5e21ad8e219dae319dde318dfe318e2e418e5e419e7e419eae51aece51befe51cf1e51df4e61ef6e620f8e621fbe723fde725'
+  "44015444025645045745055946075a46085c460a5d460b5e470d60470e6147106347116447136548146748166848176948186a481a6c481b6d481c6e481d6f481f70482071482173482374482475482576482677482878482979472a7a472c7a472d7b472e7c472f7d46307e46327e46337f463480453581453781453882443983443a83443b84433d84433e85423f854240864241864142874144874045884046883f47883f48893e49893e4a893e4c8a3d4d8a3d4e8a3c4f8a3c508b3b518b3b528b3a538b3a548c39558c39568c38588c38598c375a8c375b8d365c8d365d8d355e8d355f8d34608d34618d33628d33638d32648e32658e31668e31678e31688e30698e306a8e2f6b8e2f6c8e2e6d8e2e6e8e2e6f8e2d708e2d718e2c718e2c728e2c738e2b748e2b758e2a768e2a778e2a788e29798e297a8e297b8e287c8e287d8e277e8e277f8e27808e26818e26828e26828e25838e25848e25858e24868e24878e23888e23898e238a8d228b8d228c8d228d8d218e8d218f8d21908d21918c20928c20928c20938c1f948c1f958b1f968b1f978b1f988b1f998a1f9a8a1e9b8a1e9c891e9d891f9e891f9f881fa0881fa1881fa1871fa28720a38620a48621a58521a68522a78522a88423a98324aa8325ab8225ac8226ad8127ad8128ae8029af7f2ab07f2cb17e2db27d2eb37c2fb47c31b57b32b67a34b67935b77937b87838b9773aba763bbb753dbc743fbc7340bd7242be7144bf7046c06f48c16e4ac16d4cc26c4ec36b50c46a52c56954c56856c66758c7655ac8645cc8635ec96260ca6063cb5f65cb5e67cc5c69cd5b6ccd5a6ece5870cf5773d05675d05477d1537ad1517cd2507fd34e81d34d84d44b86d54989d5488bd6468ed64590d74393d74195d84098d83e9bd93c9dd93ba0da39a2da37a5db36a8db34aadc32addc30b0dd2fb2dd2db5de2bb8de29bade28bddf26c0df25c2df23c5e021c8e020cae11fcde11dd0e11cd2e21bd5e21ad8e219dae319dde318dfe318e2e418e5e419e7e419eae51aece51befe51cf1e51df4e61ef6e620f8e621fbe723fde725"
 
 function viridisTable() {
   if (VIRIDIS_RAMP.length !== 1536) {
     throw new Error(`viridis ramp length ${VIRIDIS_RAMP.length}, expected 1536`)
   }
   if (!/^[0-9a-f]+$/.test(VIRIDIS_RAMP))
-    throw new Error('non-hex chars in viridis ramp')
+    throw new Error("non-hex chars in viridis ramp")
   const colors = []
   for (let i = 0; i < 256; i++)
-    colors.push('#' + VIRIDIS_RAMP.slice(i * 6, i * 6 + 6))
+    colors.push("#" + VIRIDIS_RAMP.slice(i * 6, i * 6 + 6))
   // Anchor validation: endpoints + well-published mid anchors must sit at
   // 6-aligned offsets (catches truncation/transposition in the ramp string).
   const anchors = [
-    [0, '#440154'],
-    [255, '#fde725'],
+    [0, "#440154"],
+    [255, "#fde725"],
   ]
   for (const [idx, hex] of anchors) {
     if (colors[idx] !== hex)
       throw new Error(`viridis[${idx}] = ${colors[idx]}, expected ${hex}`)
   }
-  for (const known of ['31688e', '35b779']) {
+  for (const known of ["31688e", "35b779"]) {
     const at = VIRIDIS_RAMP.indexOf(known)
     if (at < 0 || at % 6 !== 0)
       throw new Error(`viridis anchor ${known} misaligned (at ${at})`)
   }
   // Cross-check widely published quartile values (allow small table quantization).
   const quartiles = [
-    [Math.round(0.25 * 255), '#3b528b'],
-    [Math.round(0.5 * 255), '#21918c'],
-    [Math.round(0.75 * 255), '#5ec962'],
+    [Math.round(0.25 * 255), "#3b528b"],
+    [Math.round(0.5 * 255), "#21918c"],
+    [Math.round(0.75 * 255), "#5ec962"],
   ]
   for (const [idx, hex] of quartiles) {
     const d = deltaEok(colors[idx], hex)
@@ -222,7 +222,7 @@ function sampleViridis(table, n) {
 const table = viridisTable()
 
 const okabe = measureCategorical(okabeIto)
-const okabeNoBlack = measureCategorical(okabeIto.filter(([n]) => n !== 'black'))
+const okabeNoBlack = measureCategorical(okabeIto.filter(([n]) => n !== "black"))
 const tab = measureCategorical(tab10)
 const dotui = measureCategorical(dotuiCurrent)
 
@@ -243,11 +243,11 @@ for (let i = 1; i < fullL.length; i++) {
 
 const referenceFixture = {
   meta: {
-    decision: 'D11',
-    generatedBy: 'research/chart-gates.mjs',
-    deltaEok: 'Euclidean distance in OKLab (raw scale, not ×100)',
-    lStar: 'CIELAB L* with D65 white point (culori lab65)',
-    cvd: 'culori Machado filters, severity 1.0',
+    decision: "D11",
+    generatedBy: "research/chart-gates.mjs",
+    deltaEok: "Euclidean distance in OKLab (raw scale, not ×100)",
+    lStar: "CIELAB L* with D65 white point (culori lab65)",
+    cvd: "culori Machado filters, severity 1.0",
     viridisSource:
       "d3-scale-chromatic@3.1.0 ramp (256 entries, from matplotlib's table)",
   },
@@ -268,8 +268,8 @@ const referenceFixture = {
 }
 
 writeFileSync(
-  join(dataDir, 'chart-reference-palettes.json'),
-  JSON.stringify(referenceFixture, null, 2) + '\n',
+  join(dataDir, "chart-reference-palettes.json"),
+  JSON.stringify(referenceFixture, null, 2) + "\n",
 )
 
 // ---------------------------------------------------------------------------
@@ -304,16 +304,16 @@ const cvdRef = Math.min(
 
 const gates = {
   categorical: {
-    appliesTo: 'palette sizes 5–8',
+    appliesTo: "palette sizes 5–8",
     minPairwiseDeltaEokNormal: 0.09,
     minPairwiseDeltaEokCvd: 0.045,
-    cvdConditions: 'each of protan, deutan, tritan at severity 1.0',
+    cvdConditions: "each of protan, deutan, tritan at severity 1.0",
     lStar: {
       ciGate: { minLstarRange: 25 },
       generationRule: {
         advisory: true,
         minAdjacentInOrderDeltaLstar: 8,
-        note: 'target when ordering generated series; references violate it, so not a CI failure',
+        note: "target when ordering generated series; references violate it, so not a CI failure",
       },
     },
     derivedFrom: {
@@ -331,7 +331,7 @@ const gates = {
     },
   },
   sequential: {
-    rule: 'L* strictly monotonic; every adjacent ΔL* ≥ 0.5 × ideal equal spacing',
+    rule: "L* strictly monotonic; every adjacent ΔL* ≥ 0.5 × ideal equal spacing",
     lStarStrictlyMonotonic: true,
     minStepToIdealRatio: 0.5,
     minAdjacentDeltaEok: 0.02,
@@ -342,7 +342,7 @@ const gates = {
     },
   },
   diverging: {
-    rule: 'each arm passes the sequential gate; midpoint pinned to surface neutral (D11 spec)',
+    rule: "each arm passes the sequential gate; midpoint pinned to surface neutral (D11 spec)",
   },
 }
 
@@ -356,7 +356,7 @@ function testCategorical(m, g) {
       pass: m.minPairwiseDeltaEok.normal.min >= g.minPairwiseDeltaEokNormal,
     },
   }
-  for (const cvd of ['protan', 'deutan', 'tritan']) {
+  for (const cvd of ["protan", "deutan", "tritan"]) {
     checks[`${cvd}DeltaEok`] = {
       measured: m.minPairwiseDeltaEok[cvd].min,
       required: g.minPairwiseDeltaEokCvd,
@@ -395,15 +395,15 @@ const gatesFixture = {
   },
   dotuiCurrentStatus500s: {
     source:
-      'www/src/registry/base/colors.css (accent/success/warning/danger/info 500)',
+      "www/src/registry/base/colors.css (accent/success/warning/danger/info 500)",
     measurements: dotui,
     againstGates: testCategorical(dotui, gates.categorical),
   },
 }
 
 writeFileSync(
-  join(dataDir, 'chart-gates.json'),
-  JSON.stringify(gatesFixture, null, 2) + '\n',
+  join(dataDir, "chart-gates.json"),
+  JSON.stringify(gatesFixture, null, 2) + "\n",
 )
 
 // ---------------------------------------------------------------------------
@@ -413,35 +413,35 @@ writeFileSync(
 const show = (label, m) => {
   const d = m.minPairwiseDeltaEok
   console.log(
-    `${label}: normal ${d.normal.min} (${d.normal.pair.join('/')}) | protan ${d.protan.min} (${d.protan.pair.join('/')}) | deutan ${d.deutan.min} (${d.deutan.pair.join('/')}) | tritan ${d.tritan.min} (${d.tritan.pair.join('/')})`,
+    `${label}: normal ${d.normal.min} (${d.normal.pair.join("/")}) | protan ${d.protan.min} (${d.protan.pair.join("/")}) | deutan ${d.deutan.min} (${d.deutan.pair.join("/")}) | tritan ${d.tritan.min} (${d.tritan.pair.join("/")})`,
   )
   console.log(
     `  L*: range ${m.lStar.range}, min sorted gap ${m.lStar.minSortedGap}, min adjacent-in-order gap ${m.lStar.minAdjacentInOrderGap}`,
   )
-  console.log(`  L* values: ${m.lStar.values.join(', ')}`)
+  console.log(`  L* values: ${m.lStar.values.join(", ")}`)
 }
 
-show('Okabe-Ito 8', okabe)
-show('Okabe-Ito 7 (no black)', okabeNoBlack)
-show('tab10', tab)
-show('dotUI status-500s', dotui)
+show("Okabe-Ito 8", okabe)
+show("Okabe-Ito 7 (no black)", okabeNoBlack)
+show("tab10", tab)
+show("dotUI status-500s", dotui)
 for (const v of [viridis5, viridis8]) {
   console.log(
-    `viridis n=${v.n}: L* ${v.stops.map((s) => s.lStar).join(' → ')} | monotonic ${v.lStarStrictlyMonotonic} | ΔL* min ${v.minDeltaLstar} max ${v.maxDeltaLstar} ideal ${v.idealEqualDeltaLstar} (min/ideal ${v.minToIdealRatio}) | min adj ΔEok ${v.minAdjacentDeltaEok}`,
+    `viridis n=${v.n}: L* ${v.stops.map((s) => s.lStar).join(" → ")} | monotonic ${v.lStarStrictlyMonotonic} | ΔL* min ${v.minDeltaLstar} max ${v.maxDeltaLstar} ideal ${v.idealEqualDeltaLstar} (min/ideal ${v.minToIdealRatio}) | min adj ΔEok ${v.minAdjacentDeltaEok}`,
   )
 }
 console.log(
   `viridis full table: ${nonMonotonic} non-monotonic steps, worst ΔL* ${round(worstWiggle, 4)}`,
 )
 console.log(
-  'dotUI failures:',
-  gatesFixture.dotuiCurrentStatus500s.againstGates.failures.join(', '),
+  "dotUI failures:",
+  gatesFixture.dotuiCurrentStatus500s.againstGates.failures.join(", "),
 )
 console.log(
-  'okabeIto8 vs gates:',
+  "okabeIto8 vs gates:",
   gatesFixture.referencePalettesAgainstGates.okabeIto8.failures,
 )
 console.log(
-  'tab10 vs gates:',
+  "tab10 vs gates:",
   gatesFixture.referencePalettesAgainstGates.tab10.failures,
 )

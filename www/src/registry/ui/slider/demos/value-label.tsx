@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { Label } from '@/registry/ui/field'
-import { Slider, SliderControl, SliderOutput } from '@/registry/ui/slider'
+import { Label } from "@/registry/ui/field"
+import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider"
 
 export default function Demo() {
   return (

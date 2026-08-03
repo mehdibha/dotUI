@@ -1,5 +1,5 @@
 // Test-only ambient types: apca-w3 ships no declarations.
-declare module 'apca-w3' {
+declare module "apca-w3" {
   export function APCAcontrast(
     txtY: number,
     bgY: number,

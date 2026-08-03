@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import type React from 'react'
-import * as CalendarPrimitive from 'react-aria-components/Calendar'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as RangeCalendarPrimitive from 'react-aria-components/RangeCalendar'
+import type React from "react"
+import * as CalendarPrimitive from "react-aria-components/Calendar"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as RangeCalendarPrimitive from "react-aria-components/RangeCalendar"
 
-import { ChevronLeftIcon, ChevronRightIcon } from '@/registry/icons'
-import { Button } from '@/registry/ui/button'
+import { ChevronLeftIcon, ChevronRightIcon } from "@/registry/icons"
+import { Button } from "@/registry/ui/button"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: calendarStyles
 
@@ -94,7 +94,7 @@ const RangeCalendar = <T extends CalendarPrimitive.DateValue>({
 
 // MARK: Separator
 
-interface CalendarHeaderProps extends React.ComponentProps<'header'> {}
+interface CalendarHeaderProps extends React.ComponentProps<"header"> {}
 const CalendarHeader = ({ className, ...props }: CalendarHeaderProps) => {
   const { header } = useStyles()()
   return (

@@ -7,8 +7,8 @@
 //
 // Run: node research/status-cvd.mjs   (from packages/colors)
 
-import { writeFileSync } from 'node:fs'
-import { createRequire } from 'node:module'
+import { writeFileSync } from "node:fs"
+import { createRequire } from "node:module"
 
 const require = createRequire(import.meta.url)
 const {
@@ -20,9 +20,9 @@ const {
   filterDeficiencyProt,
   filterDeficiencyDeuter,
   filterDeficiencyTrit,
-} = require('culori')
+} = require("culori")
 
-const dEok = differenceEuclidean('oklab')
+const dEok = differenceEuclidean("oklab")
 
 const CONDITIONS = {
   normal: (c) => c,
@@ -31,22 +31,22 @@ const CONDITIONS = {
   tritan: filterDeficiencyTrit(1),
 }
 
-const ACCENT = '#438cd6' // typical blue accent, fixed
+const ACCENT = "#438cd6" // typical blue accent, fixed
 
 // dotUI packages/colors/src/shared/constants.ts SEMANTIC_COLORS (Tailwind hexes)
 const CURRENT = {
-  success: '#22c55e',
-  warning: '#eab308',
-  danger: '#ef4444',
-  info: '#3b82f6',
+  success: "#22c55e",
+  warning: "#eab308",
+  danger: "#ef4444",
+  info: "#3b82f6",
 }
 
 // Radix solid steps as a reference point (grass9/amber9/red9/blue9)
 const RADIX_REF = {
-  success: '#46a758',
-  warning: '#ffc53d',
-  danger: '#e5484b',
-  info: '#0090ff',
+  success: "#46a758",
+  warning: "#ffc53d",
+  danger: "#e5484b",
+  info: "#0090ff",
 }
 
 const round4 = (n) => Math.round(n * 1e4) / 1e4
@@ -121,7 +121,7 @@ function candidates(family) {
   for (let h = h0; h <= h1; h += 5)
     for (const l of L_GRID)
       for (const c of C_GRID) {
-        const clamped = clampChroma({ mode: 'oklch', l, c, h }, 'oklch')
+        const clamped = clampChroma({ mode: "oklch", l, c, h }, "oklch")
         if (clamped.c < 0.12 - 1e-6) continue // out-of-gamut below the chroma floor
         const hex = formatHex(rgb(clamped))
         // dedupe identical hexes produced by chroma clamping
@@ -131,7 +131,7 @@ function candidates(family) {
   return out
 }
 
-const FAMILY_ORDER = ['success', 'warning', 'danger', 'info']
+const FAMILY_ORDER = ["success", "warning", "danger", "info"]
 const CANDS = Object.fromEntries(FAMILY_ORDER.map((f) => [f, candidates(f)]))
 
 // identity-preserving variant: each seed's L held within +/-0.05 of the
@@ -189,16 +189,16 @@ const withOklch = (seeds) =>
   )
 
 const result = {
-  decision: 'D10-B status seeds CVD gate',
+  decision: "D10-B status seeds CVD gate",
   method:
-    'culori Machado filterDeficiency{Prot,Deuter,Trit}(1.0) on sRGB; dEok = Euclidean in OKLab. ' +
-    'Sets evaluated as 4 status seeds + fixed accent #438cd6 (10 pairs) under 4 conditions. ' +
-    'Search: deterministic coordinate ascent over OKLCH grid (L 0.55-0.80 step 0.025, C 0.12-0.30 ' +
-    'step 0.02 gamut-clamped, H step 5deg in family windows: green 135-165, amber 55-95, red 15-40, ' +
-    'blue 230-270), objective = min pairwise dEok across normal+protan+deutan+tritan, two starts ' +
-    '(current seeds, Radix 9s).',
+    "culori Machado filterDeficiency{Prot,Deuter,Trit}(1.0) on sRGB; dEok = Euclidean in OKLab. " +
+    "Sets evaluated as 4 status seeds + fixed accent #438cd6 (10 pairs) under 4 conditions. " +
+    "Search: deterministic coordinate ascent over OKLCH grid (L 0.55-0.80 step 0.025, C 0.12-0.30 " +
+    "step 0.02 gamut-clamped, H step 5deg in family windows: green 135-165, amber 55-95, red 15-40, " +
+    "blue 230-270), objective = min pairwise dEok across normal+protan+deutan+tritan, two starts " +
+    "(current seeds, Radix 9s).",
   accent: ACCENT,
-  jndNote: 'dEok ~0.02 is roughly one just-noticeable difference',
+  jndNote: "dEok ~0.02 is roughly one just-noticeable difference",
   current: evaluateSet({ ...CURRENT, accent: ACCENT }),
   currentWithoutAccent: evaluateSet(CURRENT),
   radixReference: evaluateSet({ ...RADIX_REF, accent: ACCENT }),
@@ -212,7 +212,7 @@ const result = {
       withoutAccent: evaluateSet(winner.seeds),
     },
     identityPreserving: {
-      note: 'same search with each seed L held within +/-0.05 of the current Tailwind seed L',
+      note: "same search with each seed L held within +/-0.05 of the current Tailwind seed L",
       seeds: withOklch(identityWinner.seeds),
       minPairwiseDEok: round4(identityWinner.score),
       evaluation: evaluateSet({ ...identityWinner.seeds, accent: ACCENT }),
@@ -221,23 +221,23 @@ const result = {
   },
 }
 
-const out = new URL('./data/status-cvd.json', import.meta.url)
-writeFileSync(out, JSON.stringify(result, null, 2) + '\n')
+const out = new URL("./data/status-cvd.json", import.meta.url)
+writeFileSync(out, JSON.stringify(result, null, 2) + "\n")
 
 const brief = (label, ev) =>
   console.log(
     `${label}: globalMin=${ev.globalMin} (${ev.globalMinPair}) | normal=${ev.perCondition.normal.min} protan=${ev.perCondition.protan.min} deutan=${ev.perCondition.deutan.min} tritan=${ev.perCondition.tritan.min}`,
   )
-brief('current+accent ', result.current)
-brief('current alone  ', result.currentWithoutAccent)
-brief('radix9+accent  ', result.radixReference)
-console.log('winner seeds:', winner.seeds, 'score', round4(winner.score))
-brief('winner+accent  ', result.search.winner.evaluation)
-brief('winner alone   ', result.search.winner.withoutAccent)
+brief("current+accent ", result.current)
+brief("current alone  ", result.currentWithoutAccent)
+brief("radix9+accent  ", result.radixReference)
+console.log("winner seeds:", winner.seeds, "score", round4(winner.score))
+brief("winner+accent  ", result.search.winner.evaluation)
+brief("winner alone   ", result.search.winner.withoutAccent)
 console.log(
-  'identity seeds:',
+  "identity seeds:",
   identityWinner.seeds,
-  'score',
+  "score",
   round4(identityWinner.score),
 )
-brief('identity+accent', result.search.identityPreserving.evaluation)
+brief("identity+accent", result.search.identityPreserving.evaluation)

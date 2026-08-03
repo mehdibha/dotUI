@@ -1,7 +1,7 @@
-import { createPersistedStore, enumCodec } from '@/lib/persisted-store'
+import { createPersistedStore, enumCodec } from "@/lib/persisted-store"
 
 /** Package managers offered in install snippets, in display order. */
-export const PACKAGE_MANAGERS = ['npm', 'pnpm', 'yarn', 'bun'] as const
+export const PACKAGE_MANAGERS = ["npm", "pnpm", "yarn", "bun"] as const
 
 export type PackageManager = (typeof PACKAGE_MANAGERS)[number]
 
@@ -10,9 +10,9 @@ export type PackageManager = (typeof PACKAGE_MANAGERS)[number]
  * tabs, the /create export dialog) so one choice follows them everywhere.
  */
 export const packageManagerStore = createPersistedStore<PackageManager>(
-  'dotui-package-manager',
-  'pnpm',
-  enumCodec(PACKAGE_MANAGERS, 'pnpm'),
+  "dotui-package-manager",
+  "pnpm",
+  enumCodec(PACKAGE_MANAGERS, "pnpm"),
 )
 
 /** `shadcn@latest <arg>` under each package manager's runner. */
@@ -33,7 +33,7 @@ export function buildInstallCommands(
   items: string[],
 ): Record<PackageManager, string> {
   return runnerCommands(
-    `shadcn@latest add ${items.map((item) => `@dotui/${item}`).join(' ')}`,
+    `shadcn@latest add ${items.map((item) => `@dotui/${item}`).join(" ")}`,
   )
 }
 

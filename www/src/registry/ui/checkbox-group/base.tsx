@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import * as CheckboxGroupPrimitives from 'react-aria-components/CheckboxGroup'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import { tv } from 'tailwind-variants'
+import * as CheckboxGroupPrimitives from "react-aria-components/CheckboxGroup"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import { tv } from "tailwind-variants"
 
 const checkboxGroupStyles = tv({
-  base: 'flex flex-col gap-3',
+  base: "flex flex-col gap-3",
 })
 
 const CheckboxGroup = ({

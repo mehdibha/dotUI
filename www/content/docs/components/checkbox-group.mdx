@@ -10,23 +10,23 @@ links:
   name="checkbox-group"
   controls={[
     {
-      type: 'string',
-      name: 'label',
-      defaultValue: 'Select frameworks',
+      type: "string",
+      name: "label",
+      defaultValue: "Select frameworks",
     },
     {
-      type: 'boolean',
-      name: 'isDisabled',
+      type: "boolean",
+      name: "isDisabled",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isReadOnly',
+      type: "boolean",
+      name: "isReadOnly",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isInvalid',
+      type: "boolean",
+      name: "isInvalid",
       defaultValue: false,
     },
   ]}
@@ -43,13 +43,13 @@ npx shadcn@latest add @dotui/checkbox-group
 Use `CheckboxGroup` to allow users to select multiple items from a list of options.
 
 ```tsx
-import { CheckboxGroup } from '@/ui/checkbox-group'
-import { Checkbox, CheckboxControl } from '@/ui/checkbox'
-import { FieldGroup, Label } from '@/ui/field'
+import { CheckboxGroup } from "@/ui/checkbox-group"
+import { Checkbox, CheckboxControl } from "@/ui/checkbox"
+import { FieldGroup, Label } from "@/ui/field"
 ```
 
 ```tsx
-<CheckboxGroup defaultValue={['nextjs']}>
+<CheckboxGroup defaultValue={["nextjs"]}>
   <Label>React frameworks</Label>
   <FieldGroup>
     <Checkbox value="nextjs">
@@ -69,12 +69,12 @@ import { FieldGroup, Label } from '@/ui/field'
 Use `defaultValue` for uncontrolled checkbox groups, or `value` and `onChange` for controlled checkbox groups.
 
 ```tsx
-<CheckboxGroup defaultValue={['nextjs']}>{/* ... */}</CheckboxGroup>
+<CheckboxGroup defaultValue={["nextjs"]}>{/* ... */}</CheckboxGroup>
 ```
 
 ```tsx
 function Example() {
-  const [frameworks, setFrameworks] = useState<string[]>(['nextjs'])
+  const [frameworks, setFrameworks] = useState<string[]>(["nextjs"])
 
   return (
     <CheckboxGroup value={frameworks} onChange={setFrameworks}>
@@ -89,8 +89,8 @@ function Example() {
 Set `isRequired` to require a selection, or drive `isInvalid` yourself. Render errors with `FieldError` — with the default `validationBehavior="native"` it surfaces the browser's message on form submit; use `validationBehavior="aria"` to validate live without native form semantics.
 
 ```tsx
-import { CheckboxGroup } from '@/ui/checkbox-group'
-import { FieldError, FieldGroup, Label } from '@/ui/field'
+import { CheckboxGroup } from "@/ui/checkbox-group"
+import { FieldError, FieldGroup, Label } from "@/ui/field"
 ```
 
 ```tsx

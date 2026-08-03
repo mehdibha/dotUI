@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* The ideal Type section — engine-true. Heading mirrors the real
    --font-heading contract ('' = Auto, follows body); the hero is a live
@@ -6,14 +6,14 @@
    Pairings offers curated combinations picked by look; Scale and Fine-tune
    expose the rhythm axes (ratio, base size, weight, tracking, leading). */
 
-import { useEffect, useState } from 'react'
-import { ChevronsUpDownIcon, RotateCcwIcon } from 'lucide-react'
+import { useEffect, useState } from "react"
+import { ChevronsUpDownIcon, RotateCcwIcon } from "lucide-react"
 
-import { fontStack, loadFontPreview } from '@/lib/fonts'
-import type { FontCategory } from '@/lib/fonts'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { Select } from '@/registry/ui/select'
+import { fontStack, loadFontPreview } from "@/lib/fonts"
+import type { FontCategory } from "@/lib/fonts"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { Select } from "@/registry/ui/select"
 import {
   ControlGroup,
   FontListPopover,
@@ -24,13 +24,13 @@ import {
   ROW,
   ROW_LABEL,
   ROW_VALUE,
-} from '@/modules/control-lab/rows'
-import { useLoadedFamilies } from '@/modules/create/typography'
+} from "@/modules/control-lab/rows"
+import { useLoadedFamilies } from "@/modules/create/typography"
 
-import { MiniSliderRow } from '../color-ideal'
-import { DEFAULTS } from '../data'
-import type { Lab, LabState } from '../data'
-import { DetailRow } from '../patterns'
+import { MiniSliderRow } from "../color-ideal"
+import { DEFAULTS } from "../data"
+import type { Lab, LabState } from "../data"
+import { DetailRow } from "../patterns"
 
 /* ---------------------------------- Scale ---------------------------------- */
 
@@ -42,20 +42,20 @@ function stepPx(state: LabState, step: number): number {
 }
 
 const RATIO_OPTIONS = [
-  { value: '1.125', label: '1.125' },
-  { value: '1.2', label: '1.20' },
-  { value: '1.25', label: '1.25' },
-  { value: '1.333', label: '1.33' },
+  { value: "1.125", label: "1.125" },
+  { value: "1.2", label: "1.20" },
+  { value: "1.25", label: "1.25" },
+  { value: "1.333", label: "1.33" },
 ]
 
-const WEIGHT_OPTIONS = ['400', '500', '600', '700'].map((w) => ({
+const WEIGHT_OPTIONS = ["400", "500", "600", "700"].map((w) => ({
   value: w,
   label: w,
 }))
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-type ProbeId = 'heading' | 'body' | 'ui' | 'code'
+type ProbeId = "heading" | "body" | "ui" | "code"
 
 /** A specimen line as a tappable probe — tap to read the role's recipe. */
 function Probe({
@@ -79,8 +79,8 @@ function Probe({
       aria-pressed={selected}
       onClick={() => onProbe(selected ? null : id)}
       className={cn(
-        '-mx-1 cursor-interactive rounded-md px-1 text-left focus-reset transition-colors focus-visible:focus-ring',
-        selected && 'bg-bg/50',
+        "-mx-1 cursor-interactive rounded-md px-1 text-left focus-reset transition-colors focus-visible:focus-ring",
+        selected && "bg-bg/50",
         className,
       )}
     >
@@ -106,19 +106,19 @@ function TypeHero({ state }: { state: LabState }) {
     { label: string; family: string; px: number; weight: number }
   > = {
     heading: {
-      label: 'Heading',
+      label: "Heading",
       family: heading,
       px: headingPx,
       weight: Number(state.headingWeight),
     },
     body: {
-      label: 'Body',
+      label: "Body",
       family: state.bodyFont,
       px: state.typeBase,
       weight: 400,
     },
-    ui: { label: 'UI label', family: state.bodyFont, px: 13, weight: 500 },
-    code: { label: 'Code', family: state.monoFont, px: 12, weight: 400 },
+    ui: { label: "UI label", family: state.bodyFont, px: 13, weight: 500 },
+    code: { label: "Code", family: state.monoFont, px: 12, weight: 400 },
   }
   const inspected = probe ? probes[probe] : null
 
@@ -223,7 +223,7 @@ function AutoFontRow({
   const resolved = value || derived
   useLoadedFamilies([resolved])
   return (
-    <div data-row="" className={cn(ROW, 'flex items-center gap-0.5 pr-1.5')}>
+    <div data-row="" className={cn(ROW, "flex items-center gap-0.5 pr-1.5")}>
       <Select
         className="h-full min-w-0 flex-1"
         selectedKey={value || null}
@@ -238,7 +238,7 @@ function AutoFontRow({
           <span className="flex min-w-0 items-center gap-1.5">
             {!value && <span className={ROW_VALUE}>Auto ·</span>}
             <span
-              className={cn(ROW_VALUE, 'text-right')}
+              className={cn(ROW_VALUE, "text-right")}
               style={{ fontFamily: fontStack(resolved) }}
             >
               {resolved}
@@ -248,7 +248,7 @@ function AutoFontRow({
         </Button>
         <FontListPopover categories={categories} />
       </Select>
-      {value !== '' && (
+      {value !== "" && (
         <Button
           size="xs"
           variant="quiet"
@@ -269,12 +269,12 @@ function AutoFontRow({
 /** Curated heading + body combinations — pick a voice by look, not by name.
  *  Same-family pairs pin nothing: heading stays Auto. */
 const PAIRINGS = [
-  { heading: 'Geist', body: 'Geist' },
-  { heading: 'Space Grotesk', body: 'Inter' },
-  { heading: 'Fraunces', body: 'Inter' },
-  { heading: 'Playfair Display', body: 'Lora' },
-  { heading: 'Bricolage Grotesque', body: 'Figtree' },
-  { heading: 'EB Garamond', body: 'Work Sans' },
+  { heading: "Geist", body: "Geist" },
+  { heading: "Space Grotesk", body: "Inter" },
+  { heading: "Fraunces", body: "Inter" },
+  { heading: "Playfair Display", body: "Lora" },
+  { heading: "Bricolage Grotesque", body: "Figtree" },
+  { heading: "EB Garamond", body: "Work Sans" },
 ]
 
 /** Collapsed-row summary: “Aa” in the current heading and body faces. */
@@ -313,12 +313,12 @@ function PairingGrid({ lab }: { lab: Lab }) {
             type="button"
             aria-pressed={selected}
             onClick={() => {
-              set('headingFont')(pair.heading === pair.body ? '' : pair.heading)
-              set('bodyFont')(pair.body)
+              set("headingFont")(pair.heading === pair.body ? "" : pair.heading)
+              set("bodyFont")(pair.body)
             }}
             className={cn(
-              'flex cursor-interactive flex-col items-start gap-0.5 overflow-hidden rounded-lg bg-bg/50 p-2.5 text-left focus-reset transition-[background-color,transform] hover:bg-bg/75 focus-visible:focus-ring motion-safe:active:scale-[0.97]',
-              selected && 'bg-bg inset-ring-2 inset-ring-accent hover:bg-bg',
+              "flex cursor-interactive flex-col items-start gap-0.5 overflow-hidden rounded-lg bg-bg/50 p-2.5 text-left focus-reset transition-[background-color,transform] hover:bg-bg/75 focus-visible:focus-ring motion-safe:active:scale-[0.97]",
+              selected && "bg-bg inset-ring-2 inset-ring-accent hover:bg-bg",
             )}
           >
             <span
@@ -368,8 +368,8 @@ function ScaleLadder({ state }: { state: LabState }) {
 
 /* --------------------------------- Section --------------------------------- */
 
-const SCALE_KEYS = ['typeRatio', 'typeBase'] as const
-const FINE_KEYS = ['headingWeight', 'headingTrackingEm', 'bodyLeading'] as const
+const SCALE_KEYS = ["typeRatio", "typeBase"] as const
+const FINE_KEYS = ["headingWeight", "headingTrackingEm", "bodyLeading"] as const
 
 export function IdealTypeSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
@@ -386,21 +386,21 @@ export function IdealTypeSectionBody({ lab }: { lab: Lab }) {
           label="Heading"
           value={state.headingFont}
           derived={state.bodyFont}
-          categories={['sans-serif', 'serif', 'display', 'handwriting']}
-          onChange={set('headingFont')}
-          onReset={() => set('headingFont')('')}
+          categories={["sans-serif", "serif", "display", "handwriting"]}
+          onChange={set("headingFont")}
+          onReset={() => set("headingFont")("")}
         />
         <FontPickerRow
           label="Body"
-          categories={['sans-serif', 'serif']}
+          categories={["sans-serif", "serif"]}
           selectedKey={state.bodyFont}
-          onChange={set('bodyFont')}
+          onChange={set("bodyFont")}
         />
         <FontPickerRow
           label="Mono"
-          categories={['mono']}
+          categories={["mono"]}
           selectedKey={state.monoFont}
-          onChange={set('monoFont')}
+          onChange={set("monoFont")}
         />
       </ControlGroup>
       <GroupCaption>
@@ -420,7 +420,7 @@ export function IdealTypeSectionBody({ lab }: { lab: Lab }) {
             ? `${state.typeBase}px · ${
                 RATIO_OPTIONS.find((o) => o.value === state.typeRatio)?.label
               }`
-            : 'Default'
+            : "Default"
         }
       >
         <ScaleLadder state={state} />
@@ -428,14 +428,14 @@ export function IdealTypeSectionBody({ lab }: { lab: Lab }) {
           <MiniSegmented
             ariaLabel="Scale ratio"
             value={state.typeRatio}
-            onChange={set('typeRatio')}
+            onChange={set("typeRatio")}
             options={RATIO_OPTIONS}
           />
         </ParamRow>
         <MiniSliderRow
           label="Base size"
           value={state.typeBase}
-          onChange={set('typeBase')}
+          onChange={set("typeBase")}
           minValue={14}
           maxValue={18}
           step={1}
@@ -444,31 +444,31 @@ export function IdealTypeSectionBody({ lab }: { lab: Lab }) {
       </DetailRow>
       <DetailRow
         label="Fine-tune"
-        summary={fineModified ? 'Custom' : 'Default'}
+        summary={fineModified ? "Custom" : "Default"}
       >
         <ParamRow label="Heading weight">
           <MiniSegmented
             ariaLabel="Heading weight"
             value={state.headingWeight}
-            onChange={set('headingWeight')}
+            onChange={set("headingWeight")}
             options={WEIGHT_OPTIONS}
           />
         </ParamRow>
         <MiniSliderRow
           label="Heading tracking"
           value={state.headingTrackingEm}
-          onChange={set('headingTrackingEm')}
+          onChange={set("headingTrackingEm")}
           minValue={-0.04}
           maxValue={0.04}
           step={0.005}
           format={(v) =>
-            v === 0 ? 'Normal' : `${v > 0 ? '+' : ''}${v.toFixed(3)}em`
+            v === 0 ? "Normal" : `${v > 0 ? "+" : ""}${v.toFixed(3)}em`
           }
         />
         <MiniSliderRow
           label="Body line height"
           value={state.bodyLeading}
-          onChange={set('bodyLeading')}
+          onChange={set("bodyLeading")}
           minValue={1.3}
           maxValue={1.9}
           step={0.05}

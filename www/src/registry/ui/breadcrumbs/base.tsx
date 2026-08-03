@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import * as BreadcrumbsPrimitive from 'react-aria-components/Breadcrumbs'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
+import * as BreadcrumbsPrimitive from "react-aria-components/Breadcrumbs"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
 
-import { ChevronRightIcon } from '@/registry/icons'
+import { ChevronRightIcon } from "@/registry/icons"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: breadcrumbsStyles
 interface BreadcrumbsProps<
@@ -65,7 +65,7 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
 
 // MARK: Separator
 
-interface BreadcrumbSeparatorProps extends React.ComponentProps<'span'> {}
+interface BreadcrumbSeparatorProps extends React.ComponentProps<"span"> {}
 const BreadcrumbSeparator = ({
   children,
   className,

@@ -4,10 +4,10 @@
  * same bytes (our apca rounds Oklch to 8-bit sRGB internally).
  */
 
-import { APCAcontrast, sRGBtoY } from 'apca-w3'
-import { expect, test } from 'vitest'
+import { APCAcontrast, sRGBtoY } from "apca-w3"
+import { expect, test } from "vitest"
 
-import { apca, toOklch } from './index'
+import { apca, toOklch } from "./index"
 
 /** Deterministic PRNG (mulberry32) — no Math.random in the corpus. */
 function mulberry32(seed: number): () => number {
@@ -26,10 +26,10 @@ function randomRgb8(next: () => number): [number, number, number] {
 }
 
 function hexOf([r, g, b]: [number, number, number]): string {
-  return `#${[r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('')}`
+  return `#${[r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")}`
 }
 
-test('apca matches apca-w3 within ±0.6 Lc on 200 random sRGB pairs', () => {
+test("apca matches apca-w3 within ±0.6 Lc on 200 random sRGB pairs", () => {
   const next = mulberry32(0xd0701)
   for (let i = 0; i < 200; i++) {
     const text = randomRgb8(next)

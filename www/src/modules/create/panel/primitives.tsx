@@ -1,19 +1,19 @@
-'use client'
+"use client"
 
-import type { ReactNode } from 'react'
-import { RotateCcwIcon } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import type { ReactNode } from "react"
+import { RotateCcwIcon } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   SegmentedControl,
   SegmentedControlItem,
-} from '@/registry/ui/segmented-control'
-import { Slider, SliderControl } from '@/registry/ui/slider'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+} from "@/registry/ui/segmented-control"
+import { Slider, SliderControl } from "@/registry/ui/slider"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-import type { Control } from './types'
+import type { Control } from "./types"
 
 /* ------------------------------ Control row ------------------------------ */
 
@@ -47,7 +47,7 @@ export function ChapterHeading({
   className?: string
 }) {
   return (
-    <div className={cn('flex h-8 items-center gap-2', className)}>
+    <div className={cn("flex h-8 items-center gap-2", className)}>
       <Icon className="size-3.5 text-fg-muted" />
       <span className="text-[11px] font-semibold tracking-wider text-fg-muted uppercase">
         {label}
@@ -104,13 +104,13 @@ export function Segmented<T extends string>({
   value,
   onChange,
   options,
-  size = 'sm',
+  size = "sm",
   ariaLabel,
 }: {
   value: T
   onChange: (value: T) => void
   options: ReadonlyArray<{ value: T; label: ReactNode; hint?: string }>
-  size?: 'xs' | 'sm'
+  size?: "xs" | "sm"
   ariaLabel?: string
 }) {
   return (
@@ -128,7 +128,7 @@ export function Segmented<T extends string>({
           key={opt.value}
           id={opt.value}
           aria-label={opt.hint}
-          className={cn('flex-1', size === 'xs' && 'px-2 text-xs')}
+          className={cn("flex-1", size === "xs" && "px-2 text-xs")}
         >
           {opt.label}
         </SegmentedControlItem>

@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
@@ -9,24 +9,24 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
+} from "@/registry/ui/card"
 import {
   Checkbox,
   CheckboxControl,
   CheckboxIndicator,
-} from '@/registry/ui/checkbox'
-import { CheckboxGroup } from '@/registry/ui/checkbox-group'
+} from "@/registry/ui/checkbox"
+import { CheckboxGroup } from "@/registry/ui/checkbox-group"
 import {
   Description,
   FieldContent,
   FieldGroup,
   Label,
-} from '@/registry/ui/field'
+} from "@/registry/ui/field"
 
 export function CookiePreferences({
   className,
   ...props
-}: React.ComponentProps<'div'>) {
+}: React.ComponentProps<"div">) {
   return (
     <Card className={cn(className)} {...props}>
       <CardHeader>
@@ -38,7 +38,7 @@ export function CookiePreferences({
       <CardContent>
         <CheckboxGroup
           aria-label="Cookie preferences"
-          defaultValue={['performance', 'analytics']}
+          defaultValue={["performance", "analytics"]}
         >
           <FieldGroup>
             <Checkbox value="analytics">

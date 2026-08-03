@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { UploadIcon } from '@/registry/__generated__/icons'
-import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
-import { Button } from '@/registry/ui/button'
-import { FileTrigger } from '@/registry/ui/file-trigger'
+import { UploadIcon } from "@/registry/__generated__/icons"
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Button } from "@/registry/ui/button"
+import { FileTrigger } from "@/registry/ui/file-trigger"
 
 export default function Demo() {
   const [src, setSrc] = React.useState<string | null>(null)
@@ -16,7 +16,7 @@ export default function Demo() {
         <AvatarFallback>M</AvatarFallback>
       </Avatar>
       <FileTrigger
-        acceptedFileTypes={['image/*']}
+        acceptedFileTypes={["image/*"]}
         onSelect={(e) => {
           if (e) {
             const file = Array.from(e)[0]
@@ -25,7 +25,7 @@ export default function Demo() {
         }}
       >
         <Button variant="secondary" size="sm">
-          <UploadIcon /> {src ? 'Change photo' : 'Upload photo'}
+          <UploadIcon /> {src ? "Change photo" : "Upload photo"}
         </Button>
       </FileTrigger>
     </div>

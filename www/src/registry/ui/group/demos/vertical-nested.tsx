@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   CopyIcon,
@@ -8,9 +8,9 @@ import {
   SearchIcon,
   ShareIcon,
   TrashIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Group } from '@/registry/ui/group'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Group } from "@/registry/ui/group"
 
 export default function Demo() {
   return (

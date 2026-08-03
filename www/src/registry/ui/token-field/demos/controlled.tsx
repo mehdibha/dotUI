@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
-import { Label } from '@/registry/ui/field'
+import { Label } from "@/registry/ui/field"
 import {
   TokenField,
   TokenInput,
   TokenSegmentList,
-} from '@/registry/ui/token-field'
+} from "@/registry/ui/token-field"
 
 export default function Demo() {
   const [value, setValue] = React.useState(
     () =>
       new TokenSegmentList([
-        { type: 'text', text: 'Hello ' },
-        { type: 'token', text: '@sarahjones' },
-        { type: 'text', text: '!' },
+        { type: "text", text: "Hello " },
+        { type: "token", text: "@sarahjones" },
+        { type: "text", text: "!" },
       ]),
   )
   return (

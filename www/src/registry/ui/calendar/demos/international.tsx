@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { getLocalTimeZone, today } from '@internationalized/date'
-import * as I18nProviderPrimitives from 'react-aria-components/I18nProvider'
+import { getLocalTimeZone, today } from "@internationalized/date"
+import * as I18nProviderPrimitives from "react-aria-components/I18nProvider"
 
-import { Calendar } from '@/registry/ui/calendar'
+import { Calendar } from "@/registry/ui/calendar"
 
 export default function Demo() {
   return (

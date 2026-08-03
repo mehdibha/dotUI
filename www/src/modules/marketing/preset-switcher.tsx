@@ -1,15 +1,15 @@
-import type * as React from 'react'
-import type { Selection } from 'react-aria-components'
+import type * as React from "react"
+import type { Selection } from "react-aria-components"
 
 import {
   SegmentedControl,
   SegmentedControlItem,
-} from '@/registry/ui/segmented-control'
+} from "@/registry/ui/segmented-control"
 import {
   presetLabelStack,
   usePresetLabelFonts,
-} from '@/modules/marketing/preset-fonts'
-import { PRESETS } from '@/modules/presets/presets-data'
+} from "@/modules/marketing/preset-fonts"
+import { PRESETS } from "@/modules/presets/presets-data"
 
 // The landing showcase's design-system selector: a segmented control over the cards.
 // Picking a preset re-skins the scoped grid below instantly (no tween — repainting
@@ -28,7 +28,7 @@ export function PresetSwitcher({
   usePresetLabelFonts()
 
   const handleChange = (keys: Selection) => {
-    if (keys === 'all') return
+    if (keys === "all") return
     const id = [...keys][0]
     const index = PRESETS.findIndex((preset) => preset.id === id)
     if (index >= 0) onSelect(index)
@@ -36,12 +36,12 @@ export function PresetSwitcher({
 
   // The indicator wears the selected preset: its control radius (md = 0.75 ×
   // the base) and a subtle wash of its accent over the neutral selected surface.
-  const radius = active?.designSystem.tokens['--radius'] ?? '0.625rem'
+  const radius = active?.designSystem.tokens["--radius"] ?? "0.625rem"
   const indicatorStyle = {
-    '--indicator-radius': `calc(${radius} * 0.75)`,
-    '--indicator-bg': active
+    "--indicator-radius": `calc(${radius} * 0.75)`,
+    "--indicator-bg": active
       ? `color-mix(in oklab, var(--color-selected), ${active.swatch} 25%)`
-      : 'var(--color-selected)',
+      : "var(--color-selected)",
   } as React.CSSProperties
 
   return (

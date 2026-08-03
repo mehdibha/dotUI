@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   Pagination,
@@ -7,9 +7,9 @@ import {
   PaginationList,
   PaginationNext,
   PaginationPrevious,
-} from '@/registry/ui/pagination'
+} from "@/registry/ui/pagination"
 
-import { useStepAutoplay } from '../autoplay'
+import { useStepAutoplay } from "../autoplay"
 
 // Kept short so the row fits the preview card without overflowing.
 const PAGES = [1, 2, 3]

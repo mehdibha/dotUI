@@ -5,12 +5,12 @@
  * max ≈ 0.038 (step 11 — we solve text to stricter bars than Radix ships).
  */
 
-import { blue } from '@radix-ui/colors'
-import { expect, test } from 'vitest'
+import { blue } from "@radix-ui/colors"
+import { expect, test } from "vitest"
 
-import { createTheme, deltaEok, STEPS, toOklch } from './index'
+import { createTheme, deltaEok, STEPS, toOklch } from "./index"
 
-test('a blue-9 seed regenerates the Radix blue scale within the bar', () => {
+test("a blue-9 seed regenerates the Radix blue scale within the bar", () => {
   const theme = createTheme(blue.blue9)
   const deltas = STEPS.map((step, i) =>
     deltaEok(

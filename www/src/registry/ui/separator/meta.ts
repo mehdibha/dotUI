@@ -1,14 +1,14 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const separatorMeta = {
-  name: 'separator',
-  type: 'registry:ui',
-  group: 'containers',
+  name: "separator",
+  type: "registry:ui",
+  group: "containers",
   files: [
     {
-      type: 'registry:ui',
-      path: 'ui/separator/base.tsx',
-      target: 'ui/separator.tsx',
+      type: "registry:ui",
+      path: "ui/separator/base.tsx",
+      target: "ui/separator.tsx",
     },
   ],
 } satisfies RegistryItem

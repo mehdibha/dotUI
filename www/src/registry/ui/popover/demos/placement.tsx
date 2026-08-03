@@ -1,11 +1,11 @@
-import { Button } from '@/registry/ui/button'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Popover } from '@/registry/ui/popover'
+import { Button } from "@/registry/ui/button"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Popover } from "@/registry/ui/popover"
 
 const placements = [
-  { label: 'Start', placement: 'bottom start' },
-  { label: 'Center', placement: 'bottom' },
-  { label: 'End', placement: 'bottom end' },
+  { label: "Start", placement: "bottom start" },
+  { label: "Center", placement: "bottom" },
+  { label: "End", placement: "bottom end" },
 ] as const
 
 export default function Demo() {
