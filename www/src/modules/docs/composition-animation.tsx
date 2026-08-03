@@ -1,8 +1,11 @@
-import 'shiki-magic-move/style.css'
+import '@shikijs/magic-move/style.css'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
 import { parseDate } from '@internationalized/date'
+import { syncTokenKeys, toKeyedTokens } from '@shikijs/magic-move/core'
+import { ShikiMagicMoveRenderer } from '@shikijs/magic-move/react'
+import type { KeyedToken, KeyedTokensInfo } from '@shikijs/magic-move/types'
 import {
   DIFF_DELETE,
   DIFF_EQUAL,
@@ -11,14 +14,6 @@ import {
   type Diff,
 } from 'diff-match-patch-es'
 import { PauseIcon, PlayIcon } from 'lucide-react'
-import {
-  codeToKeyedTokens,
-  syncTokenKeys,
-  toKeyedTokens,
-} from 'shiki-magic-move/core'
-import { ShikiMagicMoveRenderer } from 'shiki-magic-move/react'
-import type { KeyedToken, KeyedTokensInfo } from 'shiki-magic-move/types'
-import { useTheme } from 'starter-themes'
 
 import {
   CalendarIcon,
@@ -1830,6 +1825,39 @@ function lockTagPunctuation(from: KeyedTokensInfo, to: KeyedTokensInfo) {
 
 const EMPTY_TOKENS = toKeyedTokens('', [])
 
+// Bridges @tanstack/highlight's flat token stream to magic-move's keyed-token
+// model: per-line {content, offset} runs whose colors ride on th-* classes
+// (highlight.css), so a theme switch is pure CSS — no re-tokenize, no re-key.
+function codeToKeyedTokens(code: string): KeyedTokensInfo {
+  const { tokens } = highlighter.tokenize(code, { lang: 'tsx' })
+  type LineToken = { content: string; offset: number; htmlClass?: string }
+  const lines: LineToken[][] = []
+  let line: LineToken[] = []
+  lines.push(line)
+  let offset = 0
+  for (const token of tokens) {
+    const parts = token.value.split('\n')
+    for (let i = 0; i < parts.length; i++) {
+      if (i > 0) {
+        offset += 1
+        line = []
+        lines.push(line)
+      }
+      const content = parts[i]
+      if (!content) continue
+      line.push({
+        content,
+        offset,
+        ...(token.className
+          ? { htmlClass: `th-token th-${token.className}` }
+          : {}),
+      })
+      offset += content.length
+    }
+  }
+  return { ...toKeyedTokens(code, lines, 'tsx'), lang: 'tsx' }
+}
+
 // The gutter is sized for the loop's longest snippet, so it can't widen at line
 // 10 and shift the code sideways mid-transition.
 export const lineNumberWidth = String(maxCodeLines).length
@@ -1875,10 +1903,8 @@ export function CompositionCode({
   stagger?: number
   lineNumbers?: boolean
 }) {
-  const { resolvedTheme } = useTheme()
-  const theme = resolvedTheme === 'light' ? 'github-light' : 'github-dark'
   // Inlined ShikiMagicMove machine so lockTagPunctuation can rewrite the
-  // synced keys before they reach the renderer. The code/theme guard keeps a
+  // synced keys before they reach the renderer. The code guard keeps a
   // strict-mode double render from committing the same step twice (which
   // would make from === to and swallow the transition).
   const cache = useRef<{ from: KeyedTokensInfo; to: KeyedTokensInfo } | null>(
@@ -1886,17 +1912,17 @@ export function CompositionCode({
   )
   const step = useMemo(() => {
     const previous = cache.current?.to ?? EMPTY_TOKENS
-    if (previous.code === code && previous.themeName === theme) {
+    if (previous.code === code) {
       return cache.current!
     }
-    const next = codeToKeyedTokens(highlighter, code, { lang: 'tsx', theme })
+    const next = codeToKeyedTokens(code)
     const { from, to } = syncTokenKeys(previous, next, {
       diffCleanup: cleanupCodeDiff,
     })
     lockTagPunctuation(from, to)
     cache.current = { from, to }
     return cache.current
-  }, [code, theme])
+  }, [code])
   // Numbered outside the cache, so the next step still syncs against the bare
   // tokens.
   const rendered = useMemo(

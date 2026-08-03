@@ -1,11 +1,7 @@
 import { useDeferredValue, useMemo } from 'react'
-import { Fragment, jsx, jsxs } from 'react/jsx-runtime'
-import { toJsxRuntime } from 'hast-util-to-jsx-runtime'
-
-import { cn } from '@/registry/lib/utils'
 
 import { Pre } from './code-block'
-import { highlightTsx } from './highlight'
+import { highlightTsxHtml } from './highlight'
 
 export interface DynamicPreProps {
   lang: 'tsx'
@@ -21,18 +17,11 @@ export interface DynamicPreProps {
  */
 export function DynamicPre({ children: code, className }: DynamicPreProps) {
   const deferredCode = useDeferredValue(code)
-  return useMemo(
-    () =>
-      toJsxRuntime(highlightTsx(deferredCode), {
-        Fragment,
-        jsx,
-        jsxs,
-        components: {
-          pre: (props) => (
-            <Pre {...props} className={cn(props.className, className)} />
-          ),
-        },
-      }),
-    [deferredCode, className],
+  const html = useMemo(() => highlightTsxHtml(deferredCode), [deferredCode])
+  return (
+    <Pre className={className}>
+      {/* Markup is escaped token spans from our own highlighter, not user HTML. */}
+      <code dangerouslySetInnerHTML={{ __html: html }} />
+    </Pre>
   )
 }

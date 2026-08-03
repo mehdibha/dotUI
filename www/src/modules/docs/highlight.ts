@@ -1,9 +1,9 @@
-import type { Root } from 'hast'
-import { createHighlighterCoreSync } from 'shiki/core'
-import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
-import tsx from 'shiki/langs/tsx.mjs'
-import githubDark from 'shiki/themes/github-dark.mjs'
-import githubLight from 'shiki/themes/github-light.mjs'
+import {
+  createHighlighter,
+  renderNodesToHtml,
+  renderTokens,
+} from '@tanstack/highlight/core'
+import { tsx } from '@tanstack/highlight/languages/tsx'
 
 /**
  * Synchronous TSX highlighter for code the client generates at runtime
@@ -11,24 +11,15 @@ import githubLight from 'shiki/themes/github-light.mjs'
  * rehype pipeline — this module exists for code that doesn't exist until the
  * user moves a control.
  *
- * Everything is statically imported (grammar + themes ≈ 35KB gzipped) so
- * highlighting works during SSR and on the very first render — no async
- * highlighter load, no flash of unhighlighted code, ever.
+ * @tanstack/highlight is synchronous and isomorphic (core + tsx tokenizer
+ * ≈ 4KB gzipped), so highlighting works during SSR and on the very first
+ * render — no async highlighter load, no flash of unhighlighted code, ever.
+ * Token colors come from the th-* classes in highlight.css.
  */
-const highlighter = createHighlighterCoreSync({
-  langs: [tsx],
-  themes: [githubLight, githubDark],
-  engine: createJavaScriptRegexEngine({ forgiving: true }),
-})
+export const highlighter = createHighlighter({ languages: [tsx] })
 
-/** The raw highlighter, for consumers that need token-level access (magic-move). */
-export { highlighter }
-
-/** Highlight TSX to HAST with the same dual-theme CSS variables the build uses. */
-export function highlightTsx(code: string): Root {
-  return highlighter.codeToHast(code, {
-    lang: 'tsx',
-    themes: { light: 'github-light', dark: 'github-dark' },
-    defaultColor: false,
-  })
+/** Highlight TSX to inner `<code>` markup (escaped token spans). */
+export function highlightTsxHtml(code: string): string {
+  const { tokens } = highlighter.tokenize(code, { lang: 'tsx' })
+  return renderNodesToHtml(renderTokens(tokens))
 }

@@ -1,0 +1,119 @@
+/* Token colors for @tanstack/highlight — the github-light/github-dark palettes
+   from @tanstack/highlight/themes, inlined as inherited CSS variables so
+   [data-mode] preview subtrees override them naturally (nearest ancestor wins).
+   Highlighted markup carries semantic classes (th-keyword, th-string, …); one
+   HTML tree serves both themes. */
+
+:root,
+[data-mode='light'] {
+  --th-token: #24292f;
+  --th-attr: #0550ae;
+  --th-code-inline: #953800;
+  --th-command: #8250df;
+  --th-comment: #6e7781;
+  --th-deleted: #cf222e;
+  --th-function: #8250df;
+  --th-heading: #0550ae;
+  --th-inserted: #1a7f37;
+  --th-keyword: #cf222e;
+  --th-link: #0969da;
+  --th-literal: #0550ae;
+  --th-meta: #57606a;
+  --th-number: #0550ae;
+  --th-operator: #8250df;
+  --th-property: #0550ae;
+  --th-selector: #116329;
+  --th-string: #0a7f64;
+  --th-tag: #116329;
+  --th-type: #953800;
+  --th-variable: #953800;
+}
+
+.dark,
+[data-mode='dark'] {
+  --th-token: #c9d1d9;
+  --th-attr: #79c0ff;
+  --th-code-inline: #ffa657;
+  --th-command: #d2a8ff;
+  --th-comment: #8b949e;
+  --th-deleted: #ff7b72;
+  --th-function: #d2a8ff;
+  --th-heading: #79c0ff;
+  --th-inserted: #7ee787;
+  --th-keyword: #ff7b72;
+  --th-link: #58a6ff;
+  --th-literal: #79c0ff;
+  --th-meta: #8b949e;
+  --th-number: #79c0ff;
+  --th-operator: #d2a8ff;
+  --th-property: #79c0ff;
+  --th-selector: #7ee787;
+  --th-string: #a5d6ff;
+  --th-tag: #7ee787;
+  --th-type: #ffa657;
+  --th-variable: #ffa657;
+}
+
+.th-token {
+  color: var(--th-token);
+}
+.th-attr {
+  color: var(--th-attr);
+}
+.th-code-inline {
+  color: var(--th-code-inline);
+}
+.th-command {
+  color: var(--th-command);
+}
+.th-comment {
+  color: var(--th-comment);
+}
+.th-deleted {
+  color: var(--th-deleted);
+}
+.th-function {
+  color: var(--th-function);
+}
+.th-heading {
+  color: var(--th-heading);
+}
+.th-inserted {
+  color: var(--th-inserted);
+}
+.th-keyword {
+  color: var(--th-keyword);
+}
+.th-link {
+  color: var(--th-link);
+}
+.th-literal {
+  color: var(--th-literal);
+}
+.th-meta {
+  color: var(--th-meta);
+}
+.th-number {
+  color: var(--th-number);
+}
+.th-operator {
+  color: var(--th-operator);
+}
+.th-property {
+  color: var(--th-property);
+}
+.th-selector {
+  color: var(--th-selector);
+}
+.th-string {
+  color: var(--th-string);
+}
+.th-tag {
+  color: var(--th-tag);
+}
+.th-type {
+  color: var(--th-type);
+}
+.th-variable {
+  color: var(--th-variable);
+}
