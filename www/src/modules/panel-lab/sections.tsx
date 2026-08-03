@@ -30,7 +30,7 @@ import {
   GroupCaption,
   SelectRow,
   SliderRow,
-  StyleGridRow,
+  OptionGridRow,
 } from '@/modules/control-lab/rows'
 
 import {
@@ -332,7 +332,7 @@ export function ShapeSectionBodyV2({ lab }: { lab: Lab }) {
             ...cornerShapeStyle(state.cornerShape),
           }}
         />
-        <StyleGridRow
+        <OptionGridRow
           label="Character"
           value={activeCharacter(state)}
           onChange={(id) => {
@@ -388,7 +388,7 @@ export function EffectsSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
-      <StyleGridRow
+      <OptionGridRow
         label="Shadows"
         value={state.shadows}
         onChange={set('shadows')}

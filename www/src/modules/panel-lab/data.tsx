@@ -14,7 +14,7 @@ import {
 } from '@/modules/control-lab/rows'
 import type {
   SegmentedRowOption,
-  StyleGridOption,
+  OptionGridItem,
 } from '@/modules/control-lab/rows'
 
 import { DetailRow } from './patterns'
@@ -172,13 +172,13 @@ export const CURSOR_OPTIONS = [
 function ShadowTile({ boxShadow }: { boxShadow?: string }) {
   return (
     <span
-      className="h-9 w-14 rounded-md bg-highlight"
+      className="h-9 w-full max-w-14 rounded-md bg-highlight"
       style={boxShadow ? { boxShadow } : undefined}
     />
   )
 }
 
-export const SHADOW_OPTIONS: StyleGridOption[] = [
+export const SHADOW_OPTIONS: OptionGridItem[] = [
   { id: 'none', label: 'None', preview: <ShadowTile /> },
   {
     id: 'crisp',
@@ -197,11 +197,13 @@ export const SHADOW_OPTIONS: StyleGridOption[] = [
   },
 ]
 
-/* Mini specimens for the component style grids. */
+/* Mini specimens for the component style grids — the real components at
+   their default size (density default, size md), as spans: a button can't
+   nest in the card's toggle button. */
 function MiniButton({ className }: { className: string }) {
   return (
     <span
-      className={`flex h-7 items-center rounded-full px-3.5 text-xs font-medium ${className}`}
+      className={`flex h-8 items-center rounded-(--btn-radius) px-2.5 text-sm font-medium ${className}`}
     >
       Button
     </span>
@@ -211,14 +213,14 @@ function MiniButton({ className }: { className: string }) {
 function MiniInput({ className }: { className: string }) {
   return (
     <span
-      className={`flex h-7 w-24 items-center px-2.5 text-xs text-fg-muted ${className}`}
+      className={`flex h-8 w-full min-w-0 items-center px-2.5 text-sm text-fg-muted ${className}`}
     >
       Value
     </span>
   )
 }
 
-export const BUTTON_STYLES: StyleGridOption[] = [
+export const BUTTON_STYLES: OptionGridItem[] = [
   {
     id: 'solid',
     label: 'Solid',
@@ -238,11 +240,13 @@ export const BUTTON_STYLES: StyleGridOption[] = [
 ]
 
 /* Real enum: outline | line | filled-line-bottom | filled (input/meta.ts). */
-export const INPUT_STYLES: StyleGridOption[] = [
+export const INPUT_STYLES: OptionGridItem[] = [
   {
     id: 'outline',
     label: 'Outline',
-    preview: <MiniInput className="rounded-lg border border-border-field" />,
+    preview: (
+      <MiniInput className="rounded-(--input-radius) border border-border-field bg-field" />
+    ),
   },
   {
     id: 'line',
@@ -253,18 +257,18 @@ export const INPUT_STYLES: StyleGridOption[] = [
     id: 'filled-line-bottom',
     label: 'Filled line',
     preview: (
-      <MiniInput className="rounded-t-lg border-b border-border-field bg-neutral" />
+      <MiniInput className="rounded-t-(--input-radius) border-b border-border-field bg-neutral" />
     ),
   },
   {
     id: 'filled',
     label: 'Filled',
-    preview: <MiniInput className="rounded-lg bg-neutral" />,
+    preview: <MiniInput className="rounded-(--input-radius) bg-neutral" />,
   },
 ]
 
 /* Real enum: default | tasnim (card/meta.ts). */
-export const CARD_STYLES: StyleGridOption[] = [
+export const CARD_STYLES: OptionGridItem[] = [
   {
     id: 'default',
     label: 'Default',
@@ -280,7 +284,7 @@ export const CARD_STYLES: StyleGridOption[] = [
 ]
 
 /* Real enum: spinner | ring (loader/meta.ts). */
-export const LOADER_STYLES: StyleGridOption[] = [
+export const LOADER_STYLES: OptionGridItem[] = [
   {
     id: 'spinner',
     label: 'Spinner',

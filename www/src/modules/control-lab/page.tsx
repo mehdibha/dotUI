@@ -9,7 +9,7 @@
    panel-width card, because that's the only context these rows are designed
    for — a 360px column. */
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   AlignCenterIcon,
   AlignLeftIcon,
@@ -18,6 +18,9 @@ import {
   MoonIcon,
   SunIcon,
 } from 'lucide-react'
+import { useTheme } from 'starter-themes'
+
+import { createTheme, STEPS, toOklch } from '@dotui/colors'
 
 import { DEFAULT_BODY_FAMILY } from '@/lib/fonts'
 import { cn } from '@/registry/lib/utils'
@@ -34,28 +37,33 @@ import {
   ColorPickerRow,
   ComponentRow,
   ControlGroup,
+  DisclosureRow,
   DrillInRow,
   FontPickerRow,
   GroupCaption,
   MiniSegmented,
   MiniSwitch,
+  NeutralPickerRow,
   ParamRow,
   SectionHeader,
   SegmentedRow,
   SelectRow,
   SliderRow,
   StepperRow,
-  StyleGridRow,
+  OptionGridRow,
   SwitchRow,
 } from './rows'
-import type { SegmentedRowOption, StyleGridOption } from './rows'
+import type { NeutralValue, SegmentedRowOption, OptionGridItem } from './rows'
 
 /* ------------------------------ Mini specimens ----------------------------- */
 
+/* Specimens mirror the real components at their default size (density
+   default, size md) — spans, not real controls: a button can't nest in the
+   card's toggle button. */
 function MiniButton({ className }: { className: string }) {
   return (
     <span
-      className={`flex h-7 items-center rounded-full px-3.5 text-xs font-medium ${className}`}
+      className={`flex h-8 items-center rounded-(--btn-radius) px-2.5 text-sm font-medium ${className}`}
     >
       Button
     </span>
@@ -65,14 +73,14 @@ function MiniButton({ className }: { className: string }) {
 function MiniInput({ className }: { className: string }) {
   return (
     <span
-      className={`flex h-7 w-24 items-center px-2.5 text-xs text-fg-muted ${className}`}
+      className={`flex h-8 w-full min-w-0 items-center px-2.5 text-sm text-fg-muted ${className}`}
     >
       Value
     </span>
   )
 }
 
-const BUTTON_STYLES: StyleGridOption[] = [
+const BUTTON_STYLES: OptionGridItem[] = [
   {
     id: 'solid',
     label: 'Solid',
@@ -91,11 +99,13 @@ const BUTTON_STYLES: StyleGridOption[] = [
   { id: 'quiet', label: 'Quiet', preview: <MiniButton className="text-fg" /> },
 ]
 
-const INPUT_STYLES: StyleGridOption[] = [
+const INPUT_STYLES: OptionGridItem[] = [
   {
     id: 'outline',
     label: 'Outline',
-    preview: <MiniInput className="rounded-lg border border-border-field" />,
+    preview: (
+      <MiniInput className="rounded-(--input-radius) border border-border-field bg-field" />
+    ),
   },
   {
     id: 'line',
@@ -105,13 +115,13 @@ const INPUT_STYLES: StyleGridOption[] = [
   {
     id: 'filled',
     label: 'Filled',
-    preview: <MiniInput className="rounded-lg bg-neutral" />,
+    preview: <MiniInput className="rounded-(--input-radius) bg-neutral" />,
   },
   {
     id: 'filled-line',
     label: 'Filled line',
     preview: (
-      <MiniInput className="rounded-t-lg border-b border-border-field bg-neutral" />
+      <MiniInput className="rounded-t-(--input-radius) border-b border-border-field bg-neutral" />
     ),
   },
 ]
@@ -126,6 +136,12 @@ const ALIGN_OPTIONS: SegmentedRowOption[] = [
   { value: 'left', label: <AlignLeftIcon />, ariaLabel: 'Align left' },
   { value: 'center', label: <AlignCenterIcon />, ariaLabel: 'Align center' },
   { value: 'right', label: <AlignRightIcon />, ariaLabel: 'Align right' },
+]
+
+const TRACKING_OPTIONS: SegmentedRowOption[] = [
+  { value: 'tight', label: 'Tight' },
+  { value: 'normal', label: 'Normal' },
+  { value: 'wide', label: 'Wide' },
 ]
 
 const THEME_OPTIONS = [
@@ -146,6 +162,14 @@ interface Entry {
   name: string
   description: string
   variants: { label: string; render: React.ReactNode }[]
+}
+
+interface Group {
+  id: string
+  title: string
+  /** One line on what belongs in the group — and what doesn't. */
+  blurb: string
+  entries: Entry[]
 }
 
 /**
@@ -182,11 +206,20 @@ function Stage({
   )
 }
 
-function SelectDemo({ withIcons }: { withIcons?: boolean }) {
+function SelectDemo({
+  withIcons,
+  described,
+}: {
+  withIcons?: boolean
+  described?: boolean
+}) {
   const [value, setValue] = useState(withIcons ? 'system' : 'pointer')
   return (
     <SelectRow
       label={withIcons ? 'Theme' : 'Cursor'}
+      description={
+        described ? 'The pointer shown over anything interactive.' : undefined
+      }
       value={value}
       onChange={setValue}
       options={withIcons ? THEME_OPTIONS : CURSOR_OPTIONS}
@@ -194,16 +227,87 @@ function SelectDemo({ withIcons }: { withIcons?: boolean }) {
   )
 }
 
-function ColorDemo() {
+function ColorDemo({ described }: { described?: boolean }) {
   const [value, setValue] = useState('#635BFF')
-  return <ColorPickerRow label="Brand" value={value} onChange={setValue} />
+  return (
+    <ColorPickerRow
+      label="Brand"
+      description={
+        described
+          ? 'Seeds the accent scale and every solid built on it.'
+          : undefined
+      }
+      value={value}
+      onChange={setValue}
+    />
+  )
 }
 
-function FontDemo({ mono }: { mono?: boolean }) {
+function ColorTilesDemo() {
+  const [brand, setBrand] = useState('#635BFF')
+  const [danger, setDanger] = useState('#E5484D')
+  return (
+    <div className="grid grid-cols-2 gap-2">
+      <ColorPickerRow
+        layout="tile"
+        label="Brand"
+        value={brand}
+        onChange={setBrand}
+      />
+      <ColorPickerRow
+        layout="tile"
+        label="Danger"
+        value={danger}
+        onChange={setDanger}
+      />
+    </div>
+  )
+}
+
+const DEMO_BRAND = '#635BFF'
+
+function NeutralDemo() {
+  const { resolvedTheme } = useTheme()
+  const [value, setValue] = useState<NeutralValue>({ hue: null, tint: 1 })
+
+  // The preview is the engine's own output for these two inputs, in the mode
+  // you're looking at — the row never guesses what the gray will become.
+  const ramp = useMemo(() => {
+    const theme = createTheme({
+      seeds: { accent: DEMO_BRAND },
+      neutralHue: value.hue ?? undefined,
+      neutralTint: value.tint,
+    })
+    const mode = resolvedTheme === 'dark' ? theme.dark : theme.light
+    return STEPS.map((step) => mode.scales.neutral?.[step] ?? mode.background)
+  }, [value, resolvedTheme])
+
+  return (
+    <NeutralPickerRow
+      value={value}
+      onChange={setValue}
+      brandHue={toOklch(DEMO_BRAND).h}
+      ramp={ramp}
+    />
+  )
+}
+
+function FontDemo({
+  mono,
+  described,
+}: {
+  mono?: boolean
+  described?: boolean
+}) {
   const [value, setValue] = useState(mono ? 'Geist Mono' : DEFAULT_BODY_FAMILY)
   return (
     <FontPickerRow
       label={mono ? 'Mono' : 'Body'}
+      description={
+        described
+          ? 'Used for body copy, labels and every UI string.'
+          : undefined
+      }
       categories={mono ? ['mono'] : ['sans-serif', 'serif']}
       selectedKey={value}
       onChange={setValue}
@@ -211,7 +315,13 @@ function FontDemo({ mono }: { mono?: boolean }) {
   )
 }
 
-function SliderDemo({ selfDemo }: { selfDemo?: boolean }) {
+function SliderDemo({
+  selfDemo,
+  described,
+}: {
+  selfDemo?: boolean
+  described?: boolean
+}) {
   const [value, setValue] = useState(selfDemo ? 1 : 0.5)
   return selfDemo ? (
     <SliderRow
@@ -225,22 +335,47 @@ function SliderDemo({ selfDemo }: { selfDemo?: boolean }) {
       trackStyle={{ borderRadius: `${4 + value * 10}px` }}
     />
   ) : (
-    <SliderRow label="Opacity" value={value} onChange={setValue} />
+    <SliderRow
+      label="Opacity"
+      description={
+        described ? 'How see-through disabled controls look.' : undefined
+      }
+      value={value}
+      onChange={setValue}
+    />
   )
 }
 
-function SwitchDemo() {
+function SwitchDemo({ described }: { described?: boolean }) {
   const [value, setValue] = useState(true)
   return (
-    <SwitchRow label="Translucent menus" value={value} onChange={setValue} />
+    <SwitchRow
+      label="Translucent menus"
+      description={
+        described
+          ? 'Menus, popovers and dropdowns blur whatever sits behind them.'
+          : undefined
+      }
+      value={value}
+      onChange={setValue}
+    />
   )
 }
 
-function SegmentedDemo({ icons }: { icons?: boolean }) {
+function SegmentedDemo({
+  icons,
+  described,
+}: {
+  icons?: boolean
+  described?: boolean
+}) {
   const [value, setValue] = useState(icons ? 'center' : 'md')
   return (
     <SegmentedRow
       label={icons ? 'Align' : 'Radius'}
+      description={
+        described ? 'Applies to buttons, inputs, cards and menus.' : undefined
+      }
       value={value}
       onChange={setValue}
       options={icons ? ALIGN_OPTIONS : RADIUS_OPTIONS}
@@ -248,11 +383,14 @@ function SegmentedDemo({ icons }: { icons?: boolean }) {
   )
 }
 
-function StepperDemo() {
+function StepperDemo({ described }: { described?: boolean }) {
   const [value, setValue] = useState(16)
   return (
     <StepperRow
       label="Base size"
+      description={
+        described ? 'Every other size scales from this one.' : undefined
+      }
       value={value}
       onChange={setValue}
       minValue={10}
@@ -262,20 +400,37 @@ function StepperDemo() {
   )
 }
 
-function StyleGridDemo({ columns }: { columns: number }) {
-  const [value, setValue] = useState(columns === 4 ? 'solid' : 'outline')
+function OptionGridDemo({
+  columns,
+  described,
+}: {
+  columns: number
+  described?: boolean
+}) {
+  const [value, setValue] = useState(columns === 1 ? 'outline' : 'solid')
   return (
-    <StyleGridRow
-      label={columns === 4 ? 'Button' : 'Input'}
+    <OptionGridRow
+      label={columns === 1 ? 'Input' : 'Button'}
+      description={
+        described
+          ? 'Pick by look: each card renders the style itself.'
+          : undefined
+      }
       value={value}
       onChange={setValue}
-      options={columns === 4 ? BUTTON_STYLES : INPUT_STYLES}
+      options={columns === 1 ? INPUT_STYLES : BUTTON_STYLES}
       columns={columns}
     />
   )
 }
 
-function ComponentRowDemo({ withParams }: { withParams?: boolean }) {
+function ComponentRowDemo({
+  withParams,
+  described,
+}: {
+  withParams?: boolean
+  described?: boolean
+}) {
   const [style, setStyle] = useState('solid')
   const [radius, setRadius] = useState('md')
   const [lift, setLift] = useState(true)
@@ -286,10 +441,15 @@ function ComponentRowDemo({ withParams }: { withParams?: boolean }) {
     <>
       <ComponentRow
         name="Button"
+        description={
+          described
+            ? 'Shared with ToggleButton — the pair stays in sync.'
+            : undefined
+        }
         value={style}
         onChange={setStyle}
         options={BUTTON_STYLES}
-        columns={4}
+        columns={2}
         defaultExpanded={withParams}
       >
         {withParams && (
@@ -313,6 +473,36 @@ function ComponentRowDemo({ withParams }: { withParams?: boolean }) {
         )}
       </ComponentRow>
     </>
+  )
+}
+
+function DisclosureDemo({ described }: { described?: boolean }) {
+  const [tracking, setTracking] = useState('normal')
+  const [size, setSize] = useState(16)
+  return (
+    <DisclosureRow
+      label="Body text"
+      description={
+        described ? 'Every UI string that isn’t a heading.' : undefined
+      }
+      value="Inter"
+      defaultExpanded
+    >
+      <SegmentedRow
+        label="Tracking"
+        value={tracking}
+        onChange={setTracking}
+        options={TRACKING_OPTIONS}
+      />
+      <StepperRow
+        label="Size"
+        value={size}
+        onChange={setSize}
+        minValue={10}
+        maxValue={24}
+        unit="px"
+      />
+    </DisclosureRow>
   )
 }
 
@@ -391,149 +581,222 @@ function ParamRowDemo() {
   )
 }
 
-const ENTRIES: Entry[] = [
+/* Primitives first, ordered as the panel is built up: the rows that hold one
+   value, then the rows that do something instead of holding one, then the
+   containers — they only make sense once there are rows to put in them. */
+const GROUPS: Group[] = [
   {
-    id: 'control-group',
-    name: 'ControlGroup',
-    description:
-      'Fuses adjacent rows into one card: shared surface, hairline separators, only the group’s corners round. Rows opt in by carrying data-row.',
-    variants: [
-      { label: 'Default', render: <GroupDemo /> },
-      { label: 'With caption', render: <GroupDemo caption /> },
-    ],
-  },
-  {
-    id: 'section-header',
-    name: 'SectionHeader',
-    description:
-      'A section marker: quiet uppercase label, a dot once the section is touched, and reset on the right. Change the radius below to see it arm.',
-    variants: [
-      { label: 'Default', render: <HeaderDemo /> },
-      { label: 'Modified', render: <HeaderDemo modified /> },
-    ],
-  },
-  {
-    id: 'select-row',
-    name: 'SelectRow',
-    description:
-      'A listbox trigger shaped as a settings row: label left, value and chevrons right. Options may carry a glyph, shown in both trigger and list.',
-    variants: [
-      { label: 'Default', render: <SelectDemo /> },
-      { label: 'With icons', render: <SelectDemo withIcons /> },
-    ],
-  },
-  {
-    id: 'color-picker-row',
-    name: 'ColorPickerRow',
-    description:
-      'A color seed as a row: hex on the right beside its swatch, opening a picker anchored to the trigger — preset seeds, area, labelled hue, hex.',
-    variants: [{ label: 'Default', render: <ColorDemo /> }],
-  },
-  {
-    id: 'font-picker-row',
-    name: 'FontPickerRow',
-    description:
-      'A searchable font trigger — the family is set in its own typeface on the right, so the row doubles as a specimen.',
-    variants: [
-      { label: 'Body', render: <FontDemo /> },
-      { label: 'Mono', render: <FontDemo mono /> },
-    ],
-  },
-  {
-    id: 'slider-row',
-    name: 'SliderRow',
-    description:
-      'A full-bleed slider: the entire pill is the drag surface, label and value float on top, and the fill reads as row progress.',
-    variants: [
-      { label: 'Default', render: <SliderDemo /> },
-      { label: 'Self-demoing track', render: <SliderDemo selfDemo /> },
-    ],
-  },
-  {
-    id: 'switch-row',
-    name: 'SwitchRow',
-    description: 'A switch shaped as a row: the whole pill toggles.',
-    variants: [{ label: 'Default', render: <SwitchDemo /> }],
-  },
-  {
-    id: 'segmented-row',
-    name: 'SegmentedRow',
-    description:
-      'Joined pills for a small, mutually exclusive set. Icon-only segments must carry an ariaLabel.',
-    variants: [
-      { label: 'Text', render: <SegmentedDemo /> },
-      { label: 'Icons', render: <SegmentedDemo icons /> },
-    ],
-  },
-  {
-    id: 'stepper-row',
-    name: 'StepperRow',
-    description:
-      'A numeric stepper as a row: label left, − value + right, with an optional unit.',
-    variants: [{ label: 'Default', render: <StepperDemo /> }],
-  },
-  {
-    id: 'style-grid-row',
-    name: 'StyleGridRow',
-    description:
-      'A style picker whose body is a grid of selectable cards, each showing the style as a mini specimen — pick by look, not by name.',
-    variants: [
-      { label: '2 columns', render: <StyleGridDemo columns={2} /> },
-      { label: '4 columns', render: <StyleGridDemo columns={4} /> },
-    ],
-  },
-  {
-    id: 'component-row',
-    name: 'ComponentRow',
-    description:
-      'A component’s entry in the panel: a collapsed pill showing its current style, expanding in place to the grid plus its params. The answer to “inline grid vs popover” at 20+ components.',
-    variants: [
-      { label: 'Collapsed', render: <ComponentRowDemo /> },
+    id: 'primitives',
+    title: 'Primitives',
+    blurb:
+      'One control each, in the row shape the whole panel is built from: label left, control right, sized for a 360px column.',
+    entries: [
       {
-        label: 'Expanded, with params',
-        render: <ComponentRowDemo withParams />,
+        id: 'switch-row',
+        name: 'SwitchRow',
+        description:
+          'A switch shaped as a row: the whole pill toggles. An optional description carries the axes whose name isn’t enough — the row grows to fit it.',
+        variants: [
+          { label: 'Default', render: <SwitchDemo /> },
+          { label: 'With description', render: <SwitchDemo described /> },
+        ],
+      },
+      {
+        id: 'segmented-row',
+        name: 'SegmentedRow',
+        description:
+          'Joined pills for a small, mutually exclusive set. Icon-only segments must carry an ariaLabel.',
+        variants: [
+          { label: 'Text', render: <SegmentedDemo /> },
+          { label: 'Icons', render: <SegmentedDemo icons /> },
+          { label: 'With description', render: <SegmentedDemo described /> },
+        ],
+      },
+      {
+        id: 'select-row',
+        name: 'SelectRow',
+        description:
+          'A listbox trigger shaped as a settings row: label left, value and chevrons right. Options may carry a glyph, shown in both trigger and list.',
+        variants: [
+          { label: 'Default', render: <SelectDemo /> },
+          { label: 'With icons', render: <SelectDemo withIcons /> },
+          { label: 'With description', render: <SelectDemo described /> },
+        ],
+      },
+      {
+        id: 'slider-row',
+        name: 'SliderRow',
+        description:
+          'A full-bleed slider: the entire pill is the drag surface, label and value float on top, and the fill reads as row progress.',
+        variants: [
+          { label: 'Default', render: <SliderDemo /> },
+          { label: 'Self-demoing track', render: <SliderDemo selfDemo /> },
+          { label: 'With description', render: <SliderDemo described /> },
+        ],
+      },
+      {
+        id: 'stepper-row',
+        name: 'StepperRow',
+        description:
+          'A numeric stepper as a row: label left, − value + right, with an optional unit.',
+        variants: [
+          { label: 'Default', render: <StepperDemo /> },
+          { label: 'With description', render: <StepperDemo described /> },
+        ],
+      },
+      {
+        id: 'color-picker-row',
+        name: 'ColorPickerRow',
+        description:
+          'A color seed as a row: hex on the right beside its swatch, opening a picker anchored to the trigger — preset seeds, area, hue, hex. The neutral gets its own picker: a gray is a direction and an amount, not a point in a spectrum, so it offers those two axes and previews the scale they resolve to.',
+        variants: [
+          { label: 'Brand', render: <ColorDemo /> },
+          { label: 'Neutral', render: <NeutralDemo /> },
+          { label: 'With description', render: <ColorDemo described /> },
+          { label: 'Tiles, two up', render: <ColorTilesDemo /> },
+        ],
+      },
+      {
+        id: 'font-picker-row',
+        name: 'FontPickerRow',
+        description:
+          'A searchable font trigger — the family is set in its own typeface on the right, so the row doubles as a specimen.',
+        variants: [
+          { label: 'Body', render: <FontDemo /> },
+          { label: 'Mono', render: <FontDemo mono /> },
+          { label: 'With description', render: <FontDemo described /> },
+        ],
+      },
+      {
+        id: 'option-grid-row',
+        name: 'OptionGridRow',
+        description:
+          'A row whose body is a grid of selectable cards, each rendering its option as a mini specimen — pick by look, not by name. Nothing style-specific about it: shadows, densities and loaders use the same grid.',
+        variants: [
+          { label: '1 column', render: <OptionGridDemo columns={1} /> },
+          { label: '2 columns', render: <OptionGridDemo columns={2} /> },
+          {
+            label: 'With description',
+            render: <OptionGridDemo columns={2} described />,
+          },
+        ],
+      },
+      {
+        id: 'action-row',
+        name: 'ActionRow',
+        description:
+          'A verb as a row: centered label, accent for actions, danger for destructive.',
+        variants: [
+          {
+            label: 'Default',
+            render: <ActionRow label="Add color" onPress={() => {}} />,
+          },
+          {
+            label: 'Destructive',
+            render: (
+              <ActionRow label="Delete system" destructive onPress={() => {}} />
+            ),
+          },
+        ],
+      },
+      {
+        id: 'drill-in-row',
+        name: 'DrillInRow',
+        description:
+          'A navigation row: label left, current value and chevron right, pushing a sub-panel. Depth lives here; the accordion handles breadth.',
+        variants: [
+          {
+            label: 'Default',
+            render: (
+              <ControlGroup>
+                <DrillInRow
+                  label="Semantic colors"
+                  value="5"
+                  onPress={() => {}}
+                />
+                <DrillInRow label="Charts" value="Default" onPress={() => {}} />
+              </ControlGroup>
+            ),
+          },
+          {
+            label: 'With description',
+            render: (
+              <ControlGroup>
+                <DrillInRow
+                  label="Semantic colors"
+                  description="Success, warning, danger and info scales."
+                  value="5"
+                  onPress={() => {}}
+                />
+                <DrillInRow
+                  label="Charts"
+                  description="Categorical, sequential and diverging palettes."
+                  value="Default"
+                  onPress={() => {}}
+                />
+              </ControlGroup>
+            ),
+          },
+        ],
+      },
+      {
+        id: 'disclosure-row',
+        name: 'DisclosureRow',
+        description:
+          'A row that opens in place: label left, current value and chevron right, its own rows inside. Where DrillInRow pushes a sub-panel, this one unfolds — depth without leaving the page.',
+        variants: [
+          { label: 'Default', render: <DisclosureDemo /> },
+          { label: 'With description', render: <DisclosureDemo described /> },
+        ],
+      },
+      {
+        id: 'section-header',
+        name: 'SectionHeader',
+        description:
+          'A section marker: quiet uppercase label, a dot once the section is touched, and reset on the right. Change the radius below to see it arm.',
+        variants: [
+          { label: 'Default', render: <HeaderDemo /> },
+          { label: 'Modified', render: <HeaderDemo modified /> },
+        ],
+      },
+      {
+        id: 'control-group',
+        name: 'ControlGroup',
+        description:
+          'Fuses adjacent rows into one card: shared surface, hairline separators, only the group’s corners round. Rows opt in by carrying data-row.',
+        variants: [
+          { label: 'Default', render: <GroupDemo /> },
+          { label: 'With caption', render: <GroupDemo caption /> },
+        ],
       },
     ],
   },
   {
-    id: 'param-row',
-    name: 'ParamRow',
-    description:
-      'A quiet sub-row for inside an expanded component: label left, a mini control right. Pairs with MiniSegmented and MiniSwitch.',
-    variants: [{ label: 'Default', render: <ParamRowDemo /> }],
-  },
-  {
-    id: 'action-row',
-    name: 'ActionRow',
-    description:
-      'A verb as a row: centered label, accent for actions, danger for destructive.',
-    variants: [
+    id: 'compositions',
+    title: 'Compositions',
+    blurb:
+      'Not new controls — primitives assembled into the shapes the panel actually ships: a grid inside a disclosure, mini controls inside a sub-row.',
+    entries: [
       {
-        label: 'Default',
-        render: <ActionRow label="Add color" onPress={() => {}} />,
+        id: 'component-row',
+        name: 'ComponentRow',
+        description:
+          'A component’s entry in the panel: a collapsed pill showing its current style, expanding in place to the grid plus its params. The answer to “inline grid vs popover” at 20+ components.',
+        variants: [
+          { label: 'Collapsed', render: <ComponentRowDemo /> },
+          {
+            label: 'Expanded, with params',
+            render: <ComponentRowDemo withParams />,
+          },
+          { label: 'With description', render: <ComponentRowDemo described /> },
+        ],
       },
       {
-        label: 'Destructive',
-        render: (
-          <ActionRow label="Delete system" destructive onPress={() => {}} />
-        ),
-      },
-    ],
-  },
-  {
-    id: 'drill-in-row',
-    name: 'DrillInRow',
-    description:
-      'A navigation row: label left, current value and chevron right, pushing a sub-panel. Depth lives here; the accordion handles breadth.',
-    variants: [
-      {
-        label: 'Default',
-        render: (
-          <ControlGroup>
-            <DrillInRow label="Semantic colors" value="5" onPress={() => {}} />
-            <DrillInRow label="Charts" value="Default" onPress={() => {}} />
-          </ControlGroup>
-        ),
+        id: 'param-row',
+        name: 'ParamRow',
+        description:
+          'A quiet sub-row for inside an expanded component: label left, a mini control right. Pairs with MiniSegmented and MiniSwitch.',
+        variants: [{ label: 'Default', render: <ParamRowDemo /> }],
       },
     ],
   },
@@ -541,11 +804,14 @@ const ENTRIES: Entry[] = [
 
 /* ---------------------------------- Page ----------------------------------- */
 
-const TOC_ITEMS: TOCItemType[] = ENTRIES.map((entry) => ({
-  url: `#${entry.id}`,
-  title: entry.name,
-  depth: 2,
-}))
+const TOC_ITEMS: TOCItemType[] = GROUPS.flatMap((group) => [
+  { url: `#${group.id}`, title: group.title, depth: 2 },
+  ...group.entries.map((entry) => ({
+    url: `#${entry.id}`,
+    title: entry.name,
+    depth: 3,
+  })),
+])
 
 export function ControlLab() {
   const [preview, setPreview] = useState<PreviewMode>('card')
@@ -563,43 +829,57 @@ export function ControlLab() {
         />
 
         <div className="flex items-start gap-12">
-          <div className="flex min-w-0 flex-1 flex-col gap-12 pb-16">
-            {ENTRIES.map((entry) => (
+          <div className="flex min-w-0 flex-1 flex-col gap-16 pb-16">
+            {GROUPS.map((group) => (
               <section
-                key={entry.id}
-                id={entry.id}
-                className="flex scroll-mt-10 flex-col gap-4"
+                key={group.id}
+                id={group.id}
+                className="flex scroll-mt-10 flex-col gap-10"
               >
-                <div className="flex max-w-lg flex-col gap-1">
-                  <h2 className="font-mono text-[0.8125rem] font-medium text-fg">
-                    {entry.name}
-                  </h2>
+                <div className="flex max-w-lg flex-col gap-1 border-b border-border/45 pb-3">
+                  <h2 className="text-sm font-medium text-fg">{group.title}</h2>
                   <p className="text-xs/relaxed text-pretty text-fg-muted">
-                    {entry.description}
+                    {group.blurb}
                   </p>
                 </div>
-                <div
-                  className={cn(
-                    'flex items-start gap-5',
-                    // Wide gives each variant the full column, so they stack.
-                    preview === 'wide' ? 'flex-col' : 'flex-wrap',
-                  )}
-                >
-                  {entry.variants.map((variant) => (
+                {group.entries.map((entry) => (
+                  <section
+                    key={entry.id}
+                    id={entry.id}
+                    className="flex scroll-mt-10 flex-col gap-4"
+                  >
+                    <div className="flex max-w-lg flex-col gap-1">
+                      <h3 className="font-mono text-[0.8125rem] font-medium text-fg">
+                        {entry.name}
+                      </h3>
+                      <p className="text-xs/relaxed text-pretty text-fg-muted">
+                        {entry.description}
+                      </p>
+                    </div>
                     <div
-                      key={variant.label}
                       className={cn(
-                        'flex flex-col gap-1.5',
-                        preview === 'wide' && 'w-full',
+                        'flex items-start gap-5',
+                        // Wide gives each variant the full column, so they stack.
+                        preview === 'wide' ? 'flex-col' : 'flex-wrap',
                       )}
                     >
-                      <span className="text-[11px] text-fg-muted">
-                        {variant.label}
-                      </span>
-                      <Stage mode={preview}>{variant.render}</Stage>
+                      {entry.variants.map((variant) => (
+                        <div
+                          key={variant.label}
+                          className={cn(
+                            'flex flex-col gap-1.5',
+                            preview === 'wide' && 'w-full',
+                          )}
+                        >
+                          <span className="text-[11px] text-fg-muted">
+                            {variant.label}
+                          </span>
+                          <Stage mode={preview}>{variant.render}</Stage>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </section>
+                ))}
               </section>
             ))}
           </div>
