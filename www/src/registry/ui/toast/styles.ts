@@ -61,7 +61,7 @@ const { useStyles, styles } = createStyles(toastMeta, {
       },
       variant: {
         neutral: {
-          toast: "border-border",
+          toast: "border-border-elevated",
         },
         success: {
           toast: "border-border-success",

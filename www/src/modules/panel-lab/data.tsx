@@ -26,11 +26,39 @@ export const PRIMARY_OPTIONS = [
   { value: "accent", label: "Accent" },
 ]
 
-/** Draft-only (drafts/surfaces-562): overlay material for menus/popovers. */
+/** Overlay material for menus/popovers (Surfaces v2 + drafts/surfaces-562). */
 export const OVERLAY_OPTIONS: SegmentedRowOption[] = [
   { value: "solid", label: "Solid" },
   { value: "glass", label: "Glass" },
 ]
+
+/* Surface delineation recipes — the Surfaces axis (issue #590, the 7-system
+   border survey). Hairline, shadow role and dark elevation are traded against
+   each other in every surveyed system, so they move as one recipe, never as
+   independent knobs. References: Hairline ≈ shadcn/coss, Adaptive ≈ Spectrum
+   S2/Geist (shadow-only light, hairline dark), Shadow ≈ HeroUI/Astryx,
+   Outline ≈ Linear (solid near-bg step + heavy shadow). */
+export const SURFACE_RECIPES = [
+  { id: "hairline", label: "Hairline" },
+  { id: "adaptive", label: "Adaptive" },
+  { id: "shadow", label: "Shadow" },
+  { id: "outline", label: "Outline" },
+] as const
+
+export type SurfaceRecipeId = (typeof SURFACE_RECIPES)[number]["id"]
+
+/** Hairline ink strength — fg alpha, the survey's observed 5–12% band. */
+export const HAIRLINE_OPTIONS: SegmentedRowOption[] = [
+  { value: "subtle", label: "Subtle" },
+  { value: "default", label: "Default" },
+  { value: "strong", label: "Strong" },
+]
+
+export const HAIRLINE_ALPHA: Record<string, number> = {
+  subtle: 6,
+  default: 9,
+  strong: 13,
+}
 
 export const ICON_LIBRARY_OPTIONS = [
   { value: "lucide", label: "Lucide" },
@@ -405,7 +433,6 @@ export const DEFAULTS = {
   // Draft-only state (see drafts/) — keys the open section PRs introduced.
   // Drafts on the same section are alternatives, so where two chose the same
   // name for different things the numeric one is suffixed (headingTrackingEm).
-  overlayMaterial: "solid",
   headingWeight: "600",
   headingTracking: "normal",
   headingTrackingEm: 0,
@@ -435,6 +462,12 @@ export const DEFAULTS = {
   roleSurface: "lg",
   rolePanel: "xl",
   density: "default",
+  // Surfaces (v2) — the delineation axis (issue #590). Defaults are the
+  // study's recommended direction, not today's solid neutral-400.
+  surfaceDelineation: "hairline",
+  surfaceHairline: "default",
+  surfaceDarkElevate: true,
+  overlayMaterial: "solid",
   // Effects
   shadows: "soft",
   cursorInteractive: "default",
@@ -534,6 +567,19 @@ export const SHAPE_KEYS_V2: (keyof LabState)[] = [
 export const SPACE_KEYS_V2: (keyof LabState)[] = ["density"]
 export const EFFECT_KEYS: (keyof LabState)[] = [
   "shadows",
+  "cursorInteractive",
+  "cursorDisabled",
+]
+/** v2: Surfaces absorbs shadows (the recipe and the shadow family are one
+ *  decision) and the overlay material; Details keeps the cursors. */
+export const SURFACE_KEYS_V2: (keyof LabState)[] = [
+  "surfaceDelineation",
+  "surfaceHairline",
+  "surfaceDarkElevate",
+  "shadows",
+  "overlayMaterial",
+]
+export const EFFECT_KEYS_V2: (keyof LabState)[] = [
   "cursorInteractive",
   "cursorDisabled",
 ]

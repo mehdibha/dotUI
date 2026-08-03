@@ -33,6 +33,8 @@ const ref = (palette: string, step: string): SemanticTarget =>
 const on = (palette: string, step: "700" | "800"): SemanticTarget => ({
   on: { palette, step },
 })
+const alpha = (palette: string, step: string): SemanticTarget =>
+  ({ alpha: { palette, step } }) as SemanticTarget
 const mix = (
   a: SemanticTarget,
   weight: number,
@@ -185,6 +187,19 @@ export function semanticVocabulary(
     // Quiet edges on non-interactive containers (cards, separators) — the
     // Radix step-6 role; `color-border` keeps the interactive-adjacent weight.
     "color-border-muted": bd(ref("neutral", "200"), NEUTRAL),
+    // Hairline on elevated surfaces (popover/menu, modal, drawer, toast) —
+    // ~9% ink over the surface in both modes (a200 light / a100 dark: equal
+    // nominal alpha; the rung numbers differ because the ladder calibrates
+    // alphas per mode). Alpha, not a solid rung: it composites correctly over
+    // elevated/translucent surfaces, and a solid step tuned for control edges
+    // lands ~2× too strong in dark (issue #590, the 7-system border survey).
+    "color-border-elevated": bd(
+      {
+        light: alpha("neutral", "200"),
+        dark: alpha("neutral", "100"),
+      },
+      NEUTRAL,
+    ),
     "color-border-hover": bd(ref("neutral", "500"), NEUTRAL),
     "color-border-active": bd(ref("neutral", "600"), NEUTRAL),
     "color-border-field": bd(ref("neutral", "500"), NEUTRAL),
