@@ -34,18 +34,20 @@ export function PresetSwitcher({
     if (index >= 0) onSelect(index)
   }
 
-  // The indicator wears the selected preset: its radius factor and a subtle
-  // wash of its accent over the neutral selected surface.
-  const radiusFactor = active?.designSystem.tokens['--radius-factor'] ?? '1'
+  // The indicator wears the selected preset: its control radius (md = 0.75 ×
+  // the base) and a subtle wash of its accent over the neutral selected surface.
+  const radius = active?.designSystem.tokens['--radius'] ?? '0.625rem'
   const indicatorStyle = {
-    '--indicator-radius': `calc(0.375rem * ${radiusFactor})`,
+    '--indicator-radius': `calc(${radius} * 0.75)`,
     '--indicator-bg': active
       ? `color-mix(in oklab, var(--color-selected), ${active.swatch} 25%)`
       : 'var(--color-selected)',
   } as React.CSSProperties
 
   return (
-    <div className="mb-5 no-scrollbar flex max-w-full scroll-fade-x overflow-x-auto px-4">
+    // Negative margins cancel the landing container's padding so the row still
+    // scrolls edge-to-edge on small screens; lg fits without overflowing.
+    <div className="-mx-4 mb-5 no-scrollbar flex scroll-fade-x overflow-x-auto px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0">
       <SegmentedControl
         aria-label="Preview design system"
         className="mx-auto bg-transparent p-0 [&_[data-segmented-control-indicator]]:rounded-(--indicator-radius) [&_[data-segmented-control-indicator]]:bg-(--indicator-bg) [&_[data-segmented-control-indicator]]:motion-safe:transition-[translate,width,height,border-radius,background-color]"

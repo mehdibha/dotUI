@@ -50,10 +50,7 @@ import {
   DEFAULT_CURSOR_DISABLED,
   DEFAULT_CURSOR_INTERACTIVE,
 } from '@/modules/create/cursor'
-import {
-  DEFAULT_RADIUS_FACTOR,
-  RADIUS_FACTOR_VAR,
-} from '@/modules/create/layout'
+import { DEFAULT_RADIUS, RADIUS_VAR } from '@/modules/create/layout'
 import { sendInspect, useIsEmbeddedPreview } from '@/modules/create/preset'
 import type { DesignSystem } from '@/modules/create/preset'
 
@@ -80,14 +77,14 @@ const DENSITY_DESCRIPTION: Record<string, string> = {
     'Generous padding and breathing room for a relaxed, spacious feel.',
 }
 
-/** A descriptive word for a `--radius-factor` multiplier (1 = builder default). */
-function radiusLabel(factor: number): string {
-  if (Number.isNaN(factor)) return 'Default'
-  if (factor === 0) return 'Square'
-  if (factor <= 0.5) return 'Sharp'
-  if (factor < 1) return 'Tight'
-  if (factor === 1) return 'Default'
-  if (factor >= 2) return 'Pill'
+/** A descriptive word for the base radius in px (10 = builder default). */
+function radiusLabel(px: number): string {
+  if (Number.isNaN(px)) return 'Default'
+  if (px === 0) return 'Square'
+  if (px <= 5) return 'Sharp'
+  if (px < 10) return 'Tight'
+  if (px === 10) return 'Default'
+  if (px >= 20) return 'Pill'
   return 'Rounded'
 }
 
@@ -560,10 +557,10 @@ const RADII: { token: string; className: string }[] = [
 ]
 
 function ShapeSection({
-  radiusFactor,
+  radiusPx,
   radiusText,
 }: {
-  radiusFactor: number
+  radiusPx: number
   radiusText: string
 }) {
   return (
@@ -571,9 +568,9 @@ function ShapeSection({
       <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
         <div className="flex items-baseline gap-2">
           <span className="text-3xl font-semibold tracking-tight tabular-nums">
-            {radiusFactor.toFixed(2)}×
+            {radiusPx}px
           </span>
-          <span className="text-fg-muted">radius factor</span>
+          <span className="text-fg-muted">base radius</span>
         </div>
         <Badge variant="accent" appearance="subtle" size="lg">
           {radiusText}
@@ -879,10 +876,12 @@ export function PresetOverview({
     }
   }, [config])
 
-  const radiusFactorRaw =
-    designSystem.tokens[RADIUS_FACTOR_VAR] ?? DEFAULT_RADIUS_FACTOR
-  const radiusFactor = Number.parseFloat(radiusFactorRaw)
-  const numericRadius = Number.isFinite(radiusFactor) ? radiusFactor : 1
+  const radiusRaw = designSystem.tokens[RADIUS_VAR] ?? DEFAULT_RADIUS
+  const radiusParsed = Number.parseFloat(radiusRaw)
+  const radiusPx = radiusRaw.trim().endsWith('rem')
+    ? radiusParsed * 16
+    : radiusParsed
+  const numericRadius = Number.isFinite(radiusPx) ? radiusPx : 10
 
   const cursorInteractive =
     designSystem.tokens[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE
@@ -965,10 +964,10 @@ export function PresetOverview({
           panelId="shape"
           icon={ShapesIcon}
           title="Shape"
-          description="A single radius factor scales the whole corner-radius ramp at once, setting the softness of the entire system."
+          description="A single base radius scales the whole corner-radius ramp at once, setting the softness of the entire system."
         >
           <ShapeSection
-            radiusFactor={numericRadius}
+            radiusPx={numericRadius}
             radiusText={radiusLabel(numericRadius)}
           />
         </Section>

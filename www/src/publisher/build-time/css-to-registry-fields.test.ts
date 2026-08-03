@@ -32,12 +32,12 @@ describe('cssToRegistryFields', () => {
 			}
 
 			@theme inline {
-				--radius-md: calc(0.375rem * var(--radius-factor));
+				--radius-md: calc(var(--radius) * 0.75);
 			}
 
 			:root {
 				--neutral-50: hsl(0, 0%, 98%);
-				--radius-factor: 1;
+				--radius: 0.625rem;
 				color-scheme: light;
 			}
 
@@ -49,7 +49,7 @@ describe('cssToRegistryFields', () => {
     expect(fields.cssVars).toEqual({
       theme: {
         '--color-bg': 'var(--neutral-50)',
-        '--radius-md': 'calc(0.375rem * var(--radius-factor))',
+        '--radius-md': 'calc(var(--radius) * 0.75)',
       },
     })
     expect(fields.css).toMatchObject({
@@ -72,7 +72,7 @@ describe('cssToRegistryFields', () => {
       },
       ':root': {
         '--neutral-50': 'hsl(0, 0%, 98%)',
-        '--radius-factor': '1',
+        '--radius': '0.625rem',
         'color-scheme': 'light',
       },
       '.dark': {

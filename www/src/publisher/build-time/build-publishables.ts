@@ -74,7 +74,70 @@ export async function buildPublishables({
   )
   written.push(bundlePath)
 
+  // Aggregate every component's styles.css `:root` defaults. The publisher
+  // seeds its class rewriter from this map so per-surface vars (builder-only
+  // indirection) resolve to plain utilities in shipped code — including
+  // cross-component refs like toggle-button's `rounded-(--btn-radius)`.
+  const defaultsPath = path.join(
+    registryDir,
+    '__generated__',
+    'style-var-defaults.ts',
+  )
+  await fs.writeFile(
+    defaultsPath,
+    await renderStyleVarDefaults(registryDir),
+    'utf8',
+  )
+  written.push(defaultsPath)
+
   return { written, skipped }
+}
+
+async function renderStyleVarDefaults(registryDir: string): Promise<string> {
+  const uiDir = path.join(registryDir, 'ui')
+  const defaults: Record<string, string> = {}
+  const collectRootVars = async (cssPath: string) => {
+    if (!existsSync(cssPath)) return
+    const fields = cssToRegistryFields(await fs.readFile(cssPath, 'utf8'))
+    const root = fields.css?.[':root']
+    if (typeof root !== 'object' || root === null) return
+    for (const [prop, value] of Object.entries(root)) {
+      if (prop.startsWith('--') && typeof value === 'string') {
+        defaults[prop] = value
+      }
+    }
+  }
+  // Radius roles — the chain hop between component vars and ladder rungs.
+  await collectRootVars(path.join(registryDir, 'roles.css'))
+  const dirs = (await fs.readdir(uiDir, { withFileTypes: true }))
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort()
+  for (const dir of dirs) {
+    await collectRootVars(path.join(uiDir, dir, 'styles.css'))
+  }
+
+  const sorted = Object.fromEntries(
+    Object.entries(defaults).sort(([a], [b]) => a.localeCompare(b)),
+  )
+  const raw = [
+    `// AUTO-GENERATED — do not edit. Run \`pnpm build:registry\`.`,
+    `// Every component styles.css \`:root\` default, aggregated for the`,
+    `// publisher's class rewriter (see resolve-classes.ts).`,
+    ``,
+    `export const STYLE_VAR_DEFAULTS: Record<string, string> = ${JSON.stringify(sorted, null, 2)};`,
+    ``,
+  ].join('\n')
+
+  try {
+    const { code } = await format('style-var-defaults.ts', raw, {
+      printWidth: 120,
+      useTabs: true,
+    })
+    return code
+  } catch {
+    return raw
+  }
 }
 
 function renderIndex(writtenPaths: string[], outDir: string): string {

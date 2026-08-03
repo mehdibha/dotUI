@@ -18,13 +18,22 @@
 
 import type { RegistryItem } from '@/registry/types'
 
+// Relative import: the publisher sits in vite.config's module graph, where
+// value imports through the `@/` alias break vitest/vite startup.
+import { STYLE_VAR_DEFAULTS } from '../registry/__generated__/style-var-defaults'
 import {
   applySectionComments,
   DEFAULT_CODE_OPTIONS,
   flattenClassArrays,
 } from './code-options'
 import { flatten } from './flatten'
-import { buildScalarVarMap, resolveClasses } from './resolve-classes'
+import {
+  buildScalarVarMap,
+  buildStyleVarMap,
+  pruneResolvedCssVars,
+  resolveClasses,
+  rewriteClassString,
+} from './resolve-classes'
 import { resolveIconImports } from './resolve-icons'
 import { serializeTvConfig } from './serialize'
 import type { Publishable, PublishPreset } from './types'
@@ -183,9 +192,18 @@ export interface PublishedItem {
 export interface PublishInput {
   publishable: Publishable
   preset: PublishPreset
+  /**
+   * Registry-wide styles.css `:root` defaults seeding the class rewriter.
+   * Defaults to the generated aggregate; overridable for tests.
+   */
+  styleVarDefaults?: Record<string, string>
 }
 
-export function publish({ publishable, preset }: PublishInput): PublishedItem {
+export function publish({
+  publishable,
+  preset,
+  styleVarDefaults,
+}: PublishInput): PublishedItem {
   const { template, stylesConfig, meta, extraFiles } = publishable
   const paramSelections = preset.componentParams[meta.name] ?? {}
   const codeOptions = preset.codeOptions ?? DEFAULT_CODE_OPTIONS
@@ -198,8 +216,13 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
     paramSelections,
   })
 
-  // 2. Rewrite scalar-param var refs to Tailwind suffixes.
-  const varMap = buildScalarVarMap(meta, paramSelections)
+  // 2. Rewrite surface-var refs to Tailwind suffixes. The registry-wide
+  // styles.css defaults seed the map (those vars are builder-only
+  // indirection); this component's scalar-param selections override.
+  const varMap = buildStyleVarMap(styleVarDefaults ?? STYLE_VAR_DEFAULTS)
+  for (const [cssVar, suffix] of buildScalarVarMap(meta, paramSelections)) {
+    varMap.set(cssVar, suffix)
+  }
   let resolved = resolveClasses(flat, varMap)
 
   // 2b. Code-style: collapse grouped class arrays to a single string per
@@ -222,6 +245,10 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
   const iconOptions = { weight: preset.tokens?.['--icon-weight'] }
   content = resolveIconImports(content, preset.icons, iconOptions)
 
+  // 4d. Surface-var refs can also sit in base.tsx markup outside the tv
+  // config (e.g. color-swatch's `rounded-(--color-swatch-radius)`).
+  content = rewriteClassString(content, varMap)
+
   // 5. Assemble shadcn item — drop dotui-only fields (params, group).
   // Shadcn's RegistryItem is a discriminated union on `type`. We can't carry the
   // discriminant through generic plumbing, so we build a structurally-correct
@@ -233,10 +260,25 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
     return {
       ...file,
       content: extra
-        ? resolveIconImports(extra, preset.icons, iconOptions)
+        ? rewriteClassString(
+            resolveIconImports(extra, preset.icons, iconOptions),
+            varMap,
+          )
         : content,
     }
   })
+
+  // 5a. Drop styles.css declarations the rewrite made dead. Anything still
+  // referenced (calc() chains, plain var() reads) keeps shipping.
+  const externalCorpus = [
+    ...files.map((file) => file.content ?? ''),
+    meta.cssVars ? JSON.stringify(meta.cssVars) : '',
+  ].join('\n')
+  const css = pruneResolvedCssVars(
+    meta.css,
+    new Set(varMap.keys()),
+    externalCorpus,
+  )
 
   const registryDependencies = rewriteDeps(meta.registryDependencies)
   const dependencies = [
@@ -252,7 +294,7 @@ export function publish({ publishable, preset }: PublishInput): PublishedItem {
       : {}),
     ...(dependencies.length > 0 ? { dependencies } : {}),
     ...(registryDependencies.length > 0 ? { registryDependencies } : {}),
-    ...(meta.css ? { css: meta.css } : {}),
+    ...(css ? { css } : {}),
     ...(meta.cssVars ? { cssVars: meta.cssVars } : {}),
     files,
   }

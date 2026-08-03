@@ -98,11 +98,11 @@ const useIsomorphicLayoutEffect =
 /* ----------------------------- Scoped theming ----------------------------- */
 
 /*
- * Why scoping needs more than overriding `--radius-factor` / the primitive ramps on a wrapper:
+ * Why scoping needs more than overriding `--radius` / the primitive ramps on a wrapper:
  * the design system declares its whole token closure at `:root` — primitive ramps, the
  * semantic `--color-*` vocabulary, AND every component surface var (`--card-radius:
  * var(--radius-lg)`, `--btn-radius`, …). Because those are computed *on `:root`*, they bake in
- * `:root`'s `--radius-factor` / primitives and inherit down frozen; re-pointing them on a
+ * `:root`'s `--radius` / primitives and inherit down frozen; re-pointing them on a
  * descendant does nothing (dark mode escapes this only because `.dark` lives on the same
  * `<html>` element as `:root`). The robust, self-maintaining fix is to clone that closure onto
  * the scope: re-emit `:root`'s *authored* (var-preserving) declarations under the scope
@@ -124,7 +124,7 @@ let rootClosureCache: RootClosure | null = null
  * document defines at `:root` (light) and `.dark`, as raw CSS text. Reading
  * from `cssRules` (not `getComputedStyle`) preserves the `var()` / `calc()`
  * references, so re-emitting the result under a scope selector lets each token
- * recompute from that scope's primitives + `--radius-factor`. Cached — the
+ * recompute from that scope's primitives + `--radius`. Cached — the
  * closure is static (scoped mode never writes `:root`); cross-origin sheets
  * are skipped.
  *
@@ -180,7 +180,7 @@ function getRootClosure(): RootClosure {
  * onto the scope (primitives + component vars, so they recompute there), add the semantic
  * `--color-*` layer from `DEFAULT_SEMANTICS` (the reliable source — see `getRootClosure`),
  * then, when a `color` is given, override the primitive ramps with the scoped palette.
- * `--radius-factor` + param vars ride inline on the scope element.
+ * `--radius` + param vars ride inline on the scope element.
  *
  * A forced mode pins one mode's values on both the base and the `.dark`-page selector, so
  * the page theme can't flip them. The dark harvest holds only `.dark`'s overrides over
@@ -422,7 +422,7 @@ function DesignSystemProvider({
   React.useEffect(() => setMounted(true), [])
 
   // Apply the global token vars to :root so values that reference each other via calc() +
-  // var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor))) recompute correctly —
+  // var() (e.g. --radius-sm = calc(var(--radius) * 0.5)) recompute correctly —
   // setting them on a wrapper <div> would leave the :root-declared tokens frozen. In `scoped`
   // mode they ride inline on the wrapper instead, over the cloned closure (see buildScopedThemeCss).
   useIsomorphicLayoutEffect(() => {
@@ -456,7 +456,7 @@ function DesignSystemProvider({
   }, [scoped])
 
   // Scoped mode: render the shared closure-clone stylesheet, but only once something
-  // actually diverges (a color, or a token like --radius-factor); an untouched preview
+  // actually diverges (a color, or a token like --radius); an untouched preview
   // emits nothing and inherits the page defaults. `cssVars` ride inline on the scope
   // element and never enter the CSS text, so divergence keys on whether any override
   // EXISTS (a boolean), not object identity — else every radius tick rebuilds identical CSS.
