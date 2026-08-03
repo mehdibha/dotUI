@@ -1,0 +1,24 @@
+/* TEMPORARY (PR #587): shiki vs @tanstack/highlight comparison lab — delete after merge decision. */
+
+.hl-seg {
+  color: var(--l);
+}
+
+.dark .hl-seg {
+  color: var(--d);
+}
+
+/* Bucket swatches follow the theme in pure CSS, so they can't desync on hydration. */
+.hl-swatch {
+  background: var(--l);
+}
+
+.dark .hl-swatch {
+  background: var(--d);
+}
+
+.hl-mark .hl-seg[data-diff] {
+  background: color-mix(in oklab, currentColor 18%, transparent);
+  box-shadow: inset 0 -1.5px currentColor;
+  border-radius: 2px;
+}
