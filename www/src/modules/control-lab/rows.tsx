@@ -315,9 +315,12 @@ export function SubPanel({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex w-full flex-col gap-1 rounded-lg bg-bg/40 p-1.5 inset-ring-1 inset-ring-border/40">
+    // Rows flush to the edges and transparent, so the lighter surface is what
+    // you see. Hover can't be `highlight` here — that's the surface itself —
+    // so it rides on fg, which lightens in dark and darkens in light.
+    <div className="flex w-full flex-col divide-y divide-bg/30 overflow-hidden rounded-lg bg-highlight **:data-row:rounded-none **:data-row:bg-transparent **:data-row:hover:bg-fg/5">
       {label && (
-        <span className="px-2 pt-1 text-[11px] font-medium tracking-wider text-fg-muted uppercase">
+        <span className="px-4 pt-2.5 pb-1 text-[11px] font-medium tracking-wider text-fg-muted uppercase">
           {label}
         </span>
       )}
