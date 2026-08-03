@@ -1,0 +1,6 @@
+# Mechanical reformats to skip in git blame.
+# GitHub honors this file automatically; locally run once:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# style: switch to double quotes (#592)
+3b13610effbdcb41143fcc5e7918cd4339401e0f
