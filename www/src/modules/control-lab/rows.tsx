@@ -971,12 +971,15 @@ function OptionGrid({
   onChange,
   options,
   columns = 2,
+  variant = 'card',
 }: {
   ariaLabel: string
   value: string
   onChange: (id: string) => void
   options: OptionGridItem[]
   columns?: number
+  /** `plain` drops the card surface: specimens sit right on the panel. */
+  variant?: 'card' | 'plain'
 }) {
   return (
     <RacToggleButtonGroup
@@ -996,10 +999,14 @@ function OptionGrid({
           key={option.id}
           id={option.id}
           aria-label={option.label}
-          className="relative isolate flex min-w-0 cursor-interactive items-center justify-center rounded-lg bg-bg/50 p-4 focus-reset transition-[background-color,transform] hover:bg-bg/75 focus-visible:focus-ring motion-safe:pressed:scale-[0.98]"
+          className={cn(
+            'relative flex min-w-0 cursor-interactive items-center justify-center rounded-lg p-4 focus-reset transition-transform after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:bg-white/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 focus-visible:focus-ring motion-safe:pressed:scale-[0.98]',
+            variant === 'card'
+              ? 'bg-bg selected:inset-ring selected:inset-ring-accent'
+              : 'border border-border transition-[background-color,transform] selected:bg-white/10',
+          )}
         >
-          <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-lg bg-bg inset-ring inset-ring-accent duration-200 ease-out motion-safe:transition-[translate,width,height]" />
-          <span className="relative z-10 flex w-full min-w-0 items-center justify-center">
+          <span className="flex w-full min-w-0 items-center justify-center">
             {option.preview}
           </span>
         </RacToggleButton>
@@ -1019,6 +1026,7 @@ export function OptionGridRow({
   onChange,
   options,
   columns,
+  variant,
 }: {
   label: string
   description?: string
@@ -1026,6 +1034,8 @@ export function OptionGridRow({
   onChange: (id: string) => void
   options: OptionGridItem[]
   columns?: number
+  /** `plain` drops the card surface: specimens sit right on the panel. */
+  variant?: 'card' | 'plain'
 }) {
   const selected = options.find((o) => o.id === value)
   return (
@@ -1045,6 +1055,7 @@ export function OptionGridRow({
         onChange={onChange}
         options={options}
         columns={columns}
+        variant={variant}
       />
     </div>
   )

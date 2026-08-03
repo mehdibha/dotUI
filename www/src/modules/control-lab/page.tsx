@@ -403,9 +403,11 @@ function StepperDemo({ described }: { described?: boolean }) {
 function OptionGridDemo({
   columns,
   described,
+  plain,
 }: {
   columns: number
   described?: boolean
+  plain?: boolean
 }) {
   const [value, setValue] = useState(columns === 1 ? 'outline' : 'solid')
   return (
@@ -420,6 +422,7 @@ function OptionGridDemo({
       onChange={setValue}
       options={columns === 1 ? INPUT_STYLES : BUTTON_STYLES}
       columns={columns}
+      variant={plain ? 'plain' : undefined}
     />
   )
 }
@@ -675,6 +678,7 @@ const GROUPS: Group[] = [
         variants: [
           { label: '1 column', render: <OptionGridDemo columns={1} /> },
           { label: '2 columns', render: <OptionGridDemo columns={2} /> },
+          { label: 'Plain', render: <OptionGridDemo columns={2} plain /> },
           {
             label: 'With description',
             render: <OptionGridDemo columns={2} described />,
