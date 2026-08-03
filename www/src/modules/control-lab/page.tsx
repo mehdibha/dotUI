@@ -51,8 +51,6 @@ import {
   SliderRow,
   StepperRow,
   OptionGridRow,
-  SubPanel,
-  SubRows,
   SwitchRow,
 } from './rows'
 import type { NeutralValue, SegmentedRowOption, OptionGridItem } from './rows'
@@ -429,7 +427,7 @@ function ComponentRowDemo({
         defaultExpanded={withParams}
       >
         {withParams && (
-          <SubRows>
+          <>
             <ParamRow label="Radius">
               <MiniSegmented
                 ariaLabel="Button radius"
@@ -445,7 +443,7 @@ function ComponentRowDemo({
                 onChange={setLift}
               />
             </ParamRow>
-          </SubRows>
+          </>
         )}
       </ComponentRow>
     </>
@@ -464,82 +462,20 @@ function DisclosureDemo({ described }: { described?: boolean }) {
       value="Inter"
       defaultExpanded
     >
-      <SubRows>
-        <SegmentedRow
-          label="Tracking"
-          value={tracking}
-          onChange={setTracking}
-          options={TRACKING_OPTIONS}
-        />
-        <StepperRow
-          label="Size"
-          value={size}
-          onChange={setSize}
-          minValue={10}
-          maxValue={24}
-          unit="px"
-        />
-      </SubRows>
-    </DisclosureRow>
-  )
-}
-
-function SubRowsDemo({ deep }: { deep?: boolean }) {
-  const [radius, setRadius] = useState('md')
-  const [on, setOn] = useState(true)
-  const [align, setAlign] = useState('left')
-  return (
-    <div className="rounded-xl bg-muted p-2">
-      <div className="flex h-8 items-center px-2">
-        <span className="truncate text-[0.8125rem] font-medium text-fg">
-          Parent row
-        </span>
-      </div>
-      <SubRows>
-        <ParamRow label="Radius">
-          <MiniSegmented
-            ariaLabel="Radius"
-            value={radius}
-            onChange={setRadius}
-            options={RADIUS_OPTIONS}
-          />
-        </ParamRow>
-        {deep && (
-          <ParamRow label="Align">
-            <MiniSegmented
-              ariaLabel="Align"
-              value={align}
-              onChange={setAlign}
-              options={ALIGN_OPTIONS}
-            />
-          </ParamRow>
-        )}
-        <ParamRow label="Shadow">
-          <MiniSwitch ariaLabel="Shadow" value={on} onChange={setOn} />
-        </ParamRow>
-      </SubRows>
-    </div>
-  )
-}
-
-function SubPanelDemo({ labelled }: { labelled?: boolean }) {
-  const [translucent, setTranslucent] = useState(true)
-  const [radius, setRadius] = useState('md')
-  return (
-    <DisclosureRow label="Menus" value="2 changed" defaultExpanded>
-      <SubPanel label={labelled ? 'Overlay' : undefined}>
-        <SwitchRow
-          label="Translucent"
-          value={translucent}
-          onChange={setTranslucent}
-        />
-        <SegmentedRow
-          label="Radius"
-          value={radius}
-          onChange={setRadius}
-          options={RADIUS_OPTIONS}
-        />
-      </SubPanel>
+      <SegmentedRow
+        label="Tracking"
+        value={tracking}
+        onChange={setTracking}
+        options={TRACKING_OPTIONS}
+      />
+      <StepperRow
+        label="Size"
+        value={size}
+        onChange={setSize}
+        minValue={10}
+        maxValue={24}
+        unit="px"
+      />
     </DisclosureRow>
   )
 }
@@ -784,26 +720,6 @@ const GROUPS: Group[] = [
         variants: [
           { label: 'Default', render: <DisclosureDemo /> },
           { label: 'With description', render: <DisclosureDemo described /> },
-        ],
-      },
-      {
-        id: 'sub-rows',
-        name: 'SubRows',
-        description:
-          'Rows that belong to the row above: indented past the parent’s label, separated by inset hairlines. No rails or elbows — that’s file-tree language, and the parent’s chevron already says these are its.',
-        variants: [
-          { label: 'Two children', render: <SubRowsDemo /> },
-          { label: 'Three children', render: <SubRowsDemo deep /> },
-        ],
-      },
-      {
-        id: 'sub-panel',
-        name: 'SubPanel',
-        description:
-          'A panel inside a panel: rows on their own recessed surface, for a group that belongs to the row above but is too big to read as a few sub-rows. Where SubRows indents, this one sinks.',
-        variants: [
-          { label: 'Default', render: <SubPanelDemo /> },
-          { label: 'With caption', render: <SubPanelDemo labelled /> },
         ],
       },
       {

@@ -278,54 +278,11 @@ export function DisclosureRow({
         </span>
       </RacButton>
       <DisclosurePanel className="text-inherit">
-        <div className="flex flex-col gap-1 px-2 pb-1">{children}</div>
+        {/* No inset: rows inside sit at the trigger's own padding, so every
+            label in the card shares one left edge. */}
+        <div className="flex flex-col pb-1">{children}</div>
       </DisclosurePanel>
     </Disclosure>
-  )
-}
-
-/* --------------------------------- Sub-rows ------------------------------- */
-
-/**
- * Rows that belong to the row above them: indented past the parent's label,
- * separated by inset hairlines. No rails or elbows — that's file-tree
- * language; the parent's own chevron already says these are its.
- */
-export function SubRows({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex flex-col divide-y divide-border/40 pl-4">
-      {children}
-    </div>
-  )
-}
-
-/* -------------------------------- Sub-panel ------------------------------- */
-
-/**
- * A panel inside a panel: rows on their own recessed surface, for a group
- * that belongs to the row above but is too big to read as a few sub-rows.
- * Where SubRows indents, this one sinks.
- */
-export function SubPanel({
-  label,
-  children,
-}: {
-  /** A quiet caption for the group — omit when the parent row already names it. */
-  label?: string
-  children: React.ReactNode
-}) {
-  return (
-    // Rows flush to the edges and transparent, so the lighter surface is what
-    // you see. Hover can't be `highlight` here — that's the surface itself —
-    // so it rides on fg, which lightens in dark and darkens in light.
-    <div className="flex w-full flex-col divide-y divide-bg/30 overflow-hidden rounded-lg bg-highlight **:data-row:rounded-none **:data-row:bg-transparent **:data-row:hover:bg-fg/5">
-      {label && (
-        <span className="px-4 pt-2.5 pb-1 text-[11px] font-medium tracking-wider text-fg-muted uppercase">
-          {label}
-        </span>
-      )}
-      {children}
-    </div>
   )
 }
 
@@ -1292,14 +1249,16 @@ export function ComponentRow({
       value={selected?.label}
       defaultExpanded={defaultExpanded}
     >
-      <OptionGrid
-        ariaLabel={`${name} style`}
-        value={value}
-        onChange={onChange}
-        options={options}
-        columns={columns}
-      />
-      {children}
+      <div className="flex flex-col gap-1 px-2">
+        <OptionGrid
+          ariaLabel={`${name} style`}
+          value={value}
+          onChange={onChange}
+          options={options}
+          columns={columns}
+        />
+        {children}
+      </div>
     </DisclosureRow>
   )
 }
