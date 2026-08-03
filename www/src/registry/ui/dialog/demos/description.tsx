@@ -1,17 +1,17 @@
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { Modal } from '@/registry/ui/modal'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { Modal } from "@/registry/ui/modal"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   return (

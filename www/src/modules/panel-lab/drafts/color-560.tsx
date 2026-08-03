@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* Color v2 — the enhanced working section, read against v1 (color-ideal.tsx,
    frozen). Same engine-true contract, three UX moves:
@@ -14,15 +14,15 @@
       choice and vice versa. Still no tokens view: the engine's output stays
       visual — ramps you can inspect, not a table. */
 
-import { useState } from 'react'
-import { CheckIcon, TriangleAlertIcon } from 'lucide-react'
+import { useState } from "react"
+import { CheckIcon, TriangleAlertIcon } from "lucide-react"
 
-import { STEPS, toOklch, wcag2 } from '@dotui/colors'
-import type { ModeOutput, StepName, Theme } from '@dotui/colors'
+import { STEPS, toOklch, wcag2 } from "@dotui/colors"
+import type { ModeOutput, StepName, Theme } from "@dotui/colors"
 
-import { resolveColorConfigCached } from '@/lib/resolve-color'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
+import { resolveColorConfigCached } from "@/lib/resolve-color"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   ColorPickerRow,
   ControlGroup,
@@ -33,7 +33,7 @@ import {
   ROW,
   ROW_VALUE,
   SliderRow,
-} from '@/modules/control-lab/rows'
+} from "@/modules/control-lab/rows"
 
 import {
   AutoColorRow,
@@ -46,12 +46,12 @@ import {
   SEMANTIC_SEEDS,
   useBorderSeeds,
   useLabConfig,
-} from '../color-ideal'
-import { ACCENT_POOL, DEFAULTS, PRIMARY_OPTIONS } from '../data'
-import type { Lab } from '../data'
-import { DetailRow, SegmentedControlRow, SwatchDots } from '../patterns'
+} from "../color-ideal"
+import { ACCENT_POOL, DEFAULTS, PRIMARY_OPTIONS } from "../data"
+import type { Lab } from "../data"
+import { DetailRow, SegmentedControlRow, SwatchDots } from "../patterns"
 
-type Mode = 'light' | 'dark'
+type Mode = "light" | "dark"
 
 /* ---------------------------------- Hero ----------------------------------- */
 
@@ -68,12 +68,12 @@ function CopyHex({ hex }: { hex: string }) {
         setTimeout(() => setCopied(false), 1200)
       }}
     >
-      {copied ? 'Copied' : hex}
+      {copied ? "Copied" : hex}
     </button>
   )
 }
 
-const HERO_PALETTES = ['accent', 'neutral'] as const
+const HERO_PALETTES = ["accent", "neutral"] as const
 
 /** v1's engine hero with one addition: the inspected hex copies on tap. */
 function EngineHero({
@@ -104,7 +104,7 @@ function EngineHero({
       <div className="flex items-center justify-between gap-3">
         <span
           className="flex min-w-0 items-center gap-1.5 text-xs text-fg-muted"
-          title={theme.report.warnings.join('\n') || undefined}
+          title={theme.report.warnings.join("\n") || undefined}
         >
           {warnings === 0 ? (
             <CheckIcon className="size-3 shrink-0" />
@@ -113,8 +113,8 @@ function EngineHero({
           )}
           <span className="truncate">
             {warnings === 0
-              ? 'Contrast guarantees pass'
-              : `${warnings} contrast warning${warnings === 1 ? '' : 's'}`}
+              ? "Contrast guarantees pass"
+              : `${warnings} contrast warning${warnings === 1 ? "" : "s"}`}
           </span>
         </span>
         <ModeSwitch mode={mode} onChange={onModeChange} />
@@ -132,8 +132,8 @@ function EngineHero({
                 aria-label={`Inspect ${palette} ${step}`}
                 aria-pressed={selected}
                 className={cn(
-                  'flex-1 cursor-interactive focus-reset focus-visible:z-10 focus-visible:focus-ring',
-                  selected && 'z-10 rounded-[3px] ring-2 ring-bg ring-inset',
+                  "flex-1 cursor-interactive focus-reset focus-visible:z-10 focus-visible:focus-ring",
+                  selected && "z-10 rounded-[3px] ring-2 ring-bg ring-inset",
                 )}
                 style={{ backgroundColor: m.scales[palette]?.[step] }}
                 onClick={() => setInspect(selected ? null : { palette, step })}
@@ -168,7 +168,7 @@ function EngineHero({
             size="xs"
             variant="quiet"
             className="shrink-0"
-            onPress={() => set('preserveSeed')(true)}
+            onPress={() => set("preserveSeed")(true)}
           >
             Pin exact
           </Button>
@@ -180,7 +180,7 @@ function EngineHero({
 
 /* -------------------------------- Brand pool -------------------------------- */
 
-const BRAND_POOL = [...ACCENT_POOL, '#EF4444', '#14B8A6']
+const BRAND_POOL = [...ACCENT_POOL, "#EF4444", "#14B8A6"]
 
 /** One-tap brand seeds under the Brand row — exploration without the picker. */
 function BrandPoolRow({
@@ -191,7 +191,7 @@ function BrandPoolRow({
   onChange: (hex: string) => void
 }) {
   return (
-    <div data-row="" className={cn(ROW, 'flex h-9 items-center gap-2.5 px-4')}>
+    <div data-row="" className={cn(ROW, "flex h-9 items-center gap-2.5 px-4")}>
       {BRAND_POOL.map((hex) => {
         const selected = value.toLowerCase() === hex.toLowerCase()
         return (
@@ -202,8 +202,8 @@ function BrandPoolRow({
             aria-pressed={selected}
             onClick={() => onChange(hex)}
             className={cn(
-              'size-5 cursor-interactive rounded-full focus-reset focus-visible:focus-ring',
-              selected && 'ring-2 ring-fg/35 ring-offset-2 ring-offset-muted',
+              "size-5 cursor-interactive rounded-full focus-reset focus-visible:focus-ring",
+              selected && "ring-2 ring-fg/35 ring-offset-2 ring-offset-muted",
             )}
             style={{ backgroundColor: hex }}
           />
@@ -215,19 +215,19 @@ function BrandPoolRow({
 
 /* --------------------------------- Section --------------------------------- */
 
-const CHARACTER_KEYS = ['vividness', 'hueShift', 'grayTintAmount'] as const
+const CHARACTER_KEYS = ["vividness", "hueShift", "grayTintAmount"] as const
 const CONTRAST_KEYS = [
-  'preserveSeed',
-  'guarantees',
-  'borderContrast',
-  'border400',
-  'border500',
-  'border600',
+  "preserveSeed",
+  "guarantees",
+  "borderContrast",
+  "border400",
+  "border500",
+  "border600",
 ] as const
 
 export function ColorSectionV2Body({ lab }: { lab: Lab }) {
   const { state, set } = lab
-  const [mode, setMode] = useState<Mode>('light')
+  const [mode, setMode] = useState<Mode>("light")
 
   const config = useLabConfig(state)
   const theme = resolveColorConfigCached(config)
@@ -235,14 +235,14 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
   const m = theme[mode]
   const warnings = theme.report.warnings
 
-  const solid = (palette: string) => m.scales[palette]?.['700'] ?? m.background
+  const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
   const selectionDerived =
-    m.scales.selection?.['700'] ??
-    (state.primary === 'accent' ? solid('accent') : solid('neutral'))
+    m.scales.selection?.["700"] ??
+    (state.primary === "accent" ? solid("accent") : solid("neutral"))
 
   const semanticModified =
-    SEMANTIC_SEEDS.some(({ key }) => state[key] !== '') ||
-    state.selectionSeed !== ''
+    SEMANTIC_SEEDS.some(({ key }) => state[key] !== "") ||
+    state.selectionSeed !== ""
   const characterModified = CHARACTER_KEYS.some(
     (key) => state[key] !== DEFAULTS[key],
   )
@@ -251,7 +251,7 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
   )
 
   const setBorderContrast = (on: boolean) => {
-    set('borderContrast')(on)
+    set("borderContrast")(on)
     for (const { key, job } of BORDER_JOBS) set(key)(on ? borderSeeds[job] : 0)
   }
 
@@ -262,20 +262,20 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
         <ColorPickerRow
           label="Brand"
           value={state.brand}
-          onChange={set('brand')}
+          onChange={set("brand")}
         />
-        <BrandPoolRow value={state.brand} onChange={set('brand')} />
+        <BrandPoolRow value={state.brand} onChange={set("brand")} />
         <AutoColorRow
           label="Gray"
           value={state.graySeed}
-          derived={m.scales.neutral?.['500'] ?? m.background}
-          onChange={set('graySeed')}
-          onReset={() => set('graySeed')('')}
+          derived={m.scales.neutral?.["500"] ?? m.background}
+          onChange={set("graySeed")}
+          onReset={() => set("graySeed")("")}
         />
         <SegmentedControlRow
           label="Primary"
           value={state.primary}
-          onChange={set('primary')}
+          onChange={set("primary")}
           options={PRIMARY_OPTIONS}
         />
       </ControlGroup>
@@ -301,25 +301,25 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
             value={state[key]}
             derived={solid(palette)}
             onChange={set(key)}
-            onReset={() => set(key)('')}
+            onReset={() => set(key)("")}
           />
         ))}
         <MiniAutoColorRow
           label="Selection"
           value={state.selectionSeed}
           derived={selectionDerived}
-          onChange={set('selectionSeed')}
-          onReset={() => set('selectionSeed')('')}
+          onChange={set("selectionSeed")}
+          onReset={() => set("selectionSeed")("")}
         />
       </DetailRow>
       <DetailRow
         label="Character"
-        summary={characterModified ? 'Custom' : 'Default'}
+        summary={characterModified ? "Custom" : "Default"}
       >
         <MiniSliderRow
           label="Vividness"
           value={state.vividness}
-          onChange={set('vividness')}
+          onChange={set("vividness")}
           minValue={0}
           maxValue={2}
           step={0.05}
@@ -328,7 +328,7 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
         <MiniSliderRow
           label="Hue shift"
           value={state.hueShift}
-          onChange={set('hueShift')}
+          onChange={set("hueShift")}
           minValue={0}
           maxValue={3}
           step={0.1}
@@ -337,11 +337,11 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
         <MiniSliderRow
           label="Gray tint"
           value={state.grayTintAmount}
-          onChange={set('grayTintAmount')}
+          onChange={set("grayTintAmount")}
           minValue={0}
           maxValue={4}
           step={0.1}
-          format={(v) => (v === 0 ? 'Pure' : `${v.toFixed(1)}×`)}
+          format={(v) => (v === 0 ? "Pure" : `${v.toFixed(1)}×`)}
         />
       </DetailRow>
       <DetailRow
@@ -353,9 +353,9 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
               {warnings.length}
             </span>
           ) : contrastModified ? (
-            'Custom'
+            "Custom"
           ) : (
-            'Pass'
+            "Pass"
           )
         }
       >
@@ -363,7 +363,7 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
           <MiniSegmented
             ariaLabel="Contrast guarantees"
             value={state.guarantees}
-            onChange={set('guarantees')}
+            onChange={set("guarantees")}
             options={GUARANTEE_OPTIONS}
           />
         </ParamRow>
@@ -371,7 +371,7 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
           <MiniSwitch
             ariaLabel="Pin exact brand color"
             value={state.preserveSeed}
-            onChange={set('preserveSeed')}
+            onChange={set("preserveSeed")}
           />
         </ParamRow>
         <ParamRow label="Custom borders">
@@ -422,20 +422,20 @@ function SurfaceTile({ label, m }: { label: string; m: ModeOutput }) {
       className="flex flex-1 flex-col gap-2 rounded-lg border border-border/45 p-2.5"
       style={{ backgroundColor: m.background }}
     >
-      <span className="text-[11px] font-medium" style={{ color: n?.['800'] }}>
+      <span className="text-[11px] font-medium" style={{ color: n?.["800"] }}>
         {label}
       </span>
       <div
         className="flex flex-col gap-1.5 rounded-md border p-2"
-        style={{ backgroundColor: n?.['50'], borderColor: n?.['200'] }}
+        style={{ backgroundColor: n?.["50"], borderColor: n?.["200"] }}
       >
         <span
           className="h-1.5 w-12 rounded-full"
-          style={{ backgroundColor: n?.['300'] }}
+          style={{ backgroundColor: n?.["300"] }}
         />
         <span
           className="h-1.5 w-8 rounded-full"
-          style={{ backgroundColor: n?.['200'] }}
+          style={{ backgroundColor: n?.["200"] }}
         />
       </div>
     </div>
@@ -456,7 +456,7 @@ export function SurfacesSectionBody({ lab }: { lab: Lab }) {
       <SliderRow
         label="Light background"
         value={state.bgLight}
-        onChange={set('bgLight')}
+        onChange={set("bgLight")}
         minValue={90}
         maxValue={100}
         step={0.5}
@@ -465,11 +465,11 @@ export function SurfacesSectionBody({ lab }: { lab: Lab }) {
       <SliderRow
         label="Dark background"
         value={state.bgDark}
-        onChange={set('bgDark')}
+        onChange={set("bgDark")}
         minValue={0}
         maxValue={20}
         step={0.5}
-        format={(v) => (v === 0 ? 'OLED' : `L* ${v.toFixed(1)}`)}
+        format={(v) => (v === 0 ? "OLED" : `L* ${v.toFixed(1)}`)}
       />
       <GroupCaption>
         Every surface — cards, fields, popovers — resteps from the background

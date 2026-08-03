@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
-import type { ChartConfig } from '@/registry/ui/chart'
+import type { ChartConfig } from "@/registry/ui/chart"
 import {
   ChartContainer,
   ChartDataTable,
@@ -10,29 +10,29 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 const chartData = [
-  { month: 'January', desktop: 186, mobile: 80, tablet: 45 },
-  { month: 'February', desktop: 305, mobile: 200, tablet: 90 },
-  { month: 'March', desktop: 237, mobile: 120, tablet: 60 },
-  { month: 'April', desktop: 73, mobile: 190, tablet: 110 },
-  { month: 'May', desktop: 209, mobile: 130, tablet: 70 },
-  { month: 'June', desktop: 214, mobile: 140, tablet: 85 },
+  { month: "January", desktop: 186, mobile: 80, tablet: 45 },
+  { month: "February", desktop: 305, mobile: 200, tablet: 90 },
+  { month: "March", desktop: 237, mobile: 120, tablet: 60 },
+  { month: "April", desktop: 73, mobile: 190, tablet: 110 },
+  { month: "May", desktop: 209, mobile: 130, tablet: 70 },
+  { month: "June", desktop: 214, mobile: 140, tablet: 85 },
 ]
 
 const chartConfig = {
   desktop: {
-    label: 'Desktop',
-    color: 'var(--chart-1)',
+    label: "Desktop",
+    color: "var(--chart-1)",
   },
   mobile: {
-    label: 'Mobile',
-    color: 'var(--chart-2)',
+    label: "Mobile",
+    color: "var(--chart-2)",
   },
   tablet: {
-    label: 'Tablet',
-    color: 'var(--chart-3)',
+    label: "Tablet",
+    color: "var(--chart-3)",
   },
 } satisfies ChartConfig
 

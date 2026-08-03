@@ -1,30 +1,30 @@
-'use client'
+"use client"
 
-import { Accordion } from '@/registry/ui/accordion'
+import { Accordion } from "@/registry/ui/accordion"
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
 const items = [
   {
-    id: 'getting-started',
-    question: 'How do I get started with DotUI?',
+    id: "getting-started",
+    question: "How do I get started with DotUI?",
     answer:
-      'Getting started is simple! Install the package using your preferred package manager, then import the components you need.',
+      "Getting started is simple! Install the package using your preferred package manager, then import the components you need.",
   },
   {
-    id: 'free-to-use',
-    question: 'Is DotUI free to use?',
+    id: "free-to-use",
+    question: "Is DotUI free to use?",
     answer:
-      'Yes, DotUI is completely free and open source. You can use it in any project, whether personal or commercial.',
+      "Yes, DotUI is completely free and open source. You can use it in any project, whether personal or commercial.",
   },
   {
-    id: 'customization',
-    question: 'Can I customize the components?',
+    id: "customization",
+    question: "Can I customize the components?",
     answer:
-      'Absolutely! All components use Tailwind Variants for styling, making it easy to customize colors, sizes, and other visual properties.',
+      "Absolutely! All components use Tailwind Variants for styling, making it easy to customize colors, sizes, and other visual properties.",
   },
 ]
 

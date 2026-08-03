@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Toast as ToastPrimitive } from '@base-ui/react/toast'
+import { Toast as ToastPrimitive } from "@base-ui/react/toast"
 
 import {
   CircleAlertIcon,
@@ -8,26 +8,26 @@ import {
   InfoIcon,
   LoaderCircleIcon,
   TriangleAlertIcon,
-} from '@/registry/icons'
+} from "@/registry/icons"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 type ToastVariant =
-  | 'neutral'
-  | 'success'
-  | 'error'
-  | 'danger'
-  | 'warning'
-  | 'info'
-  | 'loading'
+  | "neutral"
+  | "success"
+  | "error"
+  | "danger"
+  | "warning"
+  | "info"
+  | "loading"
 
 type ToastPosition =
-  | 'top-left'
-  | 'top-center'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-center'
-  | 'bottom-right'
+  | "top-left"
+  | "top-center"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-center"
+  | "bottom-right"
 
 interface ToastData {
   /**
@@ -35,7 +35,7 @@ interface ToastData {
    */
   rootProps?: Omit<
     ToastPrimitive.Root.Props,
-    'children' | 'className' | 'swipeDirection' | 'toast'
+    "children" | "className" | "swipeDirection" | "toast"
   >
 }
 
@@ -53,23 +53,23 @@ const toastIcons = {
 const defaultToastManager = ToastPrimitive.createToastManager<ToastData>()
 
 function getToastVariant(type: string | undefined): ToastVariant {
-  return type && type in toastIcons ? (type as ToastVariant) : 'neutral'
+  return type && type in toastIcons ? (type as ToastVariant) : "neutral"
 }
 
 function getSwipeDirection(
   position: ToastPosition,
-): ToastPrimitive.Root.Props['swipeDirection'] {
-  const verticalDirection = position.startsWith('top') ? 'up' : 'down'
+): ToastPrimitive.Root.Props["swipeDirection"] {
+  const verticalDirection = position.startsWith("top") ? "up" : "down"
 
-  if (position.endsWith('center')) {
+  if (position.endsWith("center")) {
     return [verticalDirection]
   }
 
-  if (position.endsWith('left')) {
-    return ['left', verticalDirection]
+  if (position.endsWith("left")) {
+    return ["left", verticalDirection]
   }
 
-  return ['right', verticalDirection]
+  return ["right", verticalDirection]
 }
 
 interface ToastProviderProps extends ToastPrimitive.Provider.Props {
@@ -80,7 +80,7 @@ interface ToastProviderProps extends ToastPrimitive.Provider.Props {
 function ToastProvider({
   children,
   limit = 3,
-  position = 'bottom-right',
+  position = "bottom-right",
   portalProps,
   timeout = 5000,
   toastManager = defaultToastManager,
@@ -131,7 +131,7 @@ interface ToastItemProps {
 function ToastItem({ position, toast: toastItem }: ToastItemProps) {
   const data = toastItem.data
   const variant = getToastVariant(toastItem.type)
-  const Icon = variant === 'neutral' ? null : toastIcons[variant]
+  const Icon = variant === "neutral" ? null : toastIcons[variant]
   const {
     action,
     actions,

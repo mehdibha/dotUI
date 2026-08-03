@@ -1,10 +1,10 @@
-import { Button } from '@/registry/ui/button'
-import { ColorArea } from '@/registry/ui/color-area'
-import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSlider } from '@/registry/ui/color-slider'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Popover } from '@/registry/ui/popover'
+import { Button } from "@/registry/ui/button"
+import { ColorArea } from "@/registry/ui/color-area"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import { ColorSlider } from "@/registry/ui/color-slider"
+import { ColorSwatch } from "@/registry/ui/color-swatch"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (

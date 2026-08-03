@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import { createContext, useContext, useId } from 'react'
-import type * as React from 'react'
-import * as CheckboxPrimitive from 'react-aria-components/Checkbox'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import { LabelContext } from 'react-aria-components/Label'
-import { Provider, useSlottedContext } from 'react-aria-components/slots'
-import { useSlotId } from 'react-aria/private/utils/useId'
+import { createContext, useContext, useId } from "react"
+import type * as React from "react"
+import * as CheckboxPrimitive from "react-aria-components/Checkbox"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import { LabelContext } from "react-aria-components/Label"
+import { Provider, useSlottedContext } from "react-aria-components/slots"
+import { useSlotId } from "react-aria/private/utils/useId"
 
-import { CheckIcon, MinusIcon } from '@/registry/icons'
-import { Label } from '@/registry/ui/field'
+import { CheckIcon, MinusIcon } from "@/registry/icons"
+import { Label } from "@/registry/ui/field"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: checkboxStyles
 
@@ -43,7 +43,7 @@ const Checkbox = ({ id: idProp, className, ...props }: CheckboxProps) => {
       {composeRenderProps(props.children, (children) => {
         return children ? (
           <Provider values={[[LabelContext, { htmlFor: id, id: labelId }]]}>
-            {typeof children === 'string' ? (
+            {typeof children === "string" ? (
               <>
                 <CheckboxControl />
                 <Label>{children}</Label>
@@ -81,7 +81,7 @@ const CheckboxControl = ({ className, ...props }: CheckboxControlProps) => {
           <Provider
             values={[
               [InternalCheckboxContext, renderProps],
-              [LabelContext, { id: labelId, elementType: 'span' }],
+              [LabelContext, { id: labelId, elementType: "span" }],
             ]}
           >
             {children ?? <CheckboxIndicator />}
@@ -92,7 +92,7 @@ const CheckboxControl = ({ className, ...props }: CheckboxControlProps) => {
   )
 }
 
-interface CheckboxIndicatorProps extends React.ComponentProps<'span'> {}
+interface CheckboxIndicatorProps extends React.ComponentProps<"span"> {}
 
 const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
   const { indicator } = useStyles()()

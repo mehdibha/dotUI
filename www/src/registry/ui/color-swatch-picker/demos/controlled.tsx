@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import React from 'react'
-import * as ColorAreaPrimitives from 'react-aria-components/ColorArea'
+import React from "react"
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from '@/registry/ui/color-swatch-picker'
+} from "@/registry/ui/color-swatch-picker"
 
 export default function Demo() {
   const [value, setValue] = React.useState<ColorAreaPrimitives.Color>(
-    ColorAreaPrimitives.parseColor('#f80'),
+    ColorAreaPrimitives.parseColor("#f80"),
   )
   return (
     <ColorSwatchPicker

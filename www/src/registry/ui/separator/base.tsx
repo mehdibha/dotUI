@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import type React from 'react'
-import * as SeparatorPrimitives from 'react-aria-components/Separator'
-import { useSlottedContext } from 'react-aria-components/slots'
+import type React from "react"
+import * as SeparatorPrimitives from "react-aria-components/Separator"
+import { useSlottedContext } from "react-aria-components/slots"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: separatorStyles
 

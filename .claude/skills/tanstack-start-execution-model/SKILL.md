@@ -8,7 +8,7 @@ description: >-
   safety (VITE_ prefix, process.env).
 type: sub-skill
 library: tanstack-start
-library_version: '1.166.2'
+library_version: "1.166.2"
 requires:
   - start-core
 sources:
@@ -43,7 +43,7 @@ The primary way to run server-only code. On the client, calls become fetch reque
 
 ```tsx
 // Use @tanstack/<framework>-start for your framework (react, solid, vue)
-import { createServerFn } from '@tanstack/react-start'
+import { createServerFn } from "@tanstack/react-start"
 
 const fetchUser = createServerFn().handler(async () => {
   const secret = process.env.API_SECRET // safe — server only
@@ -60,7 +60,7 @@ For utility functions that must never run on client:
 
 ```tsx
 // Use @tanstack/<framework>-start for your framework (react, solid, vue)
-import { createServerOnlyFn } from '@tanstack/react-start'
+import { createServerOnlyFn } from "@tanstack/react-start"
 
 const getSecret = createServerOnlyFn(() => process.env.DATABASE_URL)
 
@@ -74,7 +74,7 @@ const getSecret = createServerOnlyFn(() => process.env.DATABASE_URL)
 
 ```tsx
 // Use @tanstack/<framework>-start for your framework (react, solid, vue)
-import { createClientOnlyFn } from '@tanstack/react-start'
+import { createClientOnlyFn } from "@tanstack/react-start"
 
 const saveToStorage = createClientOnlyFn((key: string, value: string) => {
   localStorage.setItem(key, value)
@@ -85,7 +85,7 @@ const saveToStorage = createClientOnlyFn((key: string, value: string) => {
 
 ```tsx
 // Use @tanstack/<framework>-router for your framework (react, solid, vue)
-import { ClientOnly } from '@tanstack/react-router'
+import { ClientOnly } from "@tanstack/react-router"
 
 function Analytics() {
   return (
@@ -100,13 +100,13 @@ function Analytics() {
 
 ```tsx
 // Use @tanstack/<framework>-router for your framework (react, solid, vue)
-import { useHydrated } from '@tanstack/react-router'
+import { useHydrated } from "@tanstack/react-router"
 
 function TimeZoneDisplay() {
   const hydrated = useHydrated()
   const timeZone = hydrated
     ? Intl.DateTimeFormat().resolvedOptions().timeZone
-    : 'UTC'
+    : "UTC"
 
   return <div>Your timezone: {timeZone}</div>
 }
@@ -118,11 +118,11 @@ Behavior: SSR → `false`, first client render → `false`, after hydration → 
 
 ```tsx
 // Use @tanstack/<framework>-start for your framework (react, solid, vue)
-import { createIsomorphicFn } from '@tanstack/react-start'
+import { createIsomorphicFn } from "@tanstack/react-start"
 
 const getDeviceInfo = createIsomorphicFn()
-  .server(() => ({ type: 'server', platform: process.platform }))
-  .client(() => ({ type: 'client', userAgent: navigator.userAgent }))
+  .server(() => ({ type: "server", platform: process.platform }))
+  .client(() => ({ type: "client", userAgent: navigator.userAgent }))
 ```
 
 ## Environment Variables
@@ -158,11 +158,11 @@ function ApiProvider({ children }: { children: React.ReactNode }) {
 If you need server-side variables on the client without `VITE_` prefix, pass them through a server function:
 
 ```tsx
-const getRuntimeVar = createServerFn({ method: 'GET' }).handler(() => {
+const getRuntimeVar = createServerFn({ method: "GET" }).handler(() => {
   return process.env.MY_RUNTIME_VAR
 })
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   loader: async () => {
     const foo = await getRuntimeVar()
     return { foo }
@@ -207,7 +207,7 @@ export {}
 
 ```tsx
 // WRONG — loader runs on BOTH server and client
-export const Route = createFileRoute('/dashboard')({
+export const Route = createFileRoute("/dashboard")({
   loader: async () => {
     const secret = process.env.API_SECRET // LEAKED to client
     return fetch(`https://api.example.com/data`, {
@@ -217,14 +217,14 @@ export const Route = createFileRoute('/dashboard')({
 })
 
 // CORRECT — use createServerFn
-const getData = createServerFn({ method: 'GET' }).handler(async () => {
+const getData = createServerFn({ method: "GET" }).handler(async () => {
   const secret = process.env.API_SECRET
   return fetch(`https://api.example.com/data`, {
     headers: { Authorization: secret },
   })
 })
 
-export const Route = createFileRoute('/dashboard')({
+export const Route = createFileRoute("/dashboard")({
   loader: () => getData(),
 })
 ```
@@ -239,7 +239,7 @@ export function fetchData() {
 }
 
 // CORRECT — access inside server function only
-const fetchData = createServerFn({ method: 'GET' }).handler(async () => {
+const fetchData = createServerFn({ method: "GET" }).handler(async () => {
   const apiKey = process.env.SECRET_KEY
   return fetch(url, { headers: { Authorization: apiKey } })
 })
@@ -272,7 +272,7 @@ function CurrentTime() {
   useEffect(() => {
     setTime(new Date().toLocaleString())
   }, [])
-  return <div>{time || 'Loading...'}</div>
+  return <div>{time || "Loading..."}</div>
 }
 ```
 

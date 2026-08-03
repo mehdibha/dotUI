@@ -6,11 +6,11 @@
  * lazily so it stays out of the route handlers' eager server graph.
  */
 
-import { migrateColorConfig } from '@/registry/theme'
-import type { PublishPreset } from '@/publisher/types'
+import { migrateColorConfig } from "@/registry/theme"
+import type { PublishPreset } from "@/publisher/types"
 
 export function defaultPreset(): PublishPreset {
-  return { density: 'default', componentParams: {} }
+  return { density: "default", componentParams: {} }
 }
 
 /**
@@ -22,7 +22,7 @@ export async function resolveRequestPreset(
 ): Promise<PublishPreset> {
   if (!encoded) return defaultPreset()
   try {
-    const { decodePreset } = await import('@/modules/create/preset/codec')
+    const { decodePreset } = await import("@/modules/create/preset/codec")
     const ds = decodePreset(encoded)
     return {
       // Old `?preset=` URLs and components.json replays can carry v1 color

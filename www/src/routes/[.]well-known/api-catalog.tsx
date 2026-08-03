@@ -1,6 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-import { siteConfig } from '@/config/site'
+import { siteConfig } from "@/config/site"
 
 // Serves /.well-known/api-catalog (RFC 9727) — a linkset that points agents at
 // dotUI's real, machine-consumable resources: the shadcn component registry
@@ -16,7 +16,7 @@ import { siteConfig } from '@/config/site'
 // flat list of { rel, href } objects (a conformant parser reads those as zero
 // links).
 
-export const Route = createFileRoute('/.well-known/api-catalog')({
+export const Route = createFileRoute("/.well-known/api-catalog")({
   server: {
     handlers: {
       GET: () => {
@@ -26,34 +26,34 @@ export const Route = createFileRoute('/.well-known/api-catalog')({
           linkset: [
             {
               anchor: url,
-              'api-catalog': [
+              "api-catalog": [
                 {
                   href: `${url}/.well-known/api-catalog`,
-                  title: 'dotUI API catalog',
+                  title: "dotUI API catalog",
                 },
               ],
               item: [
                 {
                   href: `${url}/r/{name}`,
-                  type: 'application/json',
+                  type: "application/json",
                   title:
-                    'dotUI shadcn component registry — GET /r/{name} returns the resolved registry item JSON for a component, consumable by the shadcn CLI and AI tooling.',
+                    "dotUI shadcn component registry — GET /r/{name} returns the resolved registry item JSON for a component, consumable by the shadcn CLI and AI tooling.",
                 },
               ],
-              'service-doc': [
+              "service-doc": [
                 {
                   href: `${url}/docs/installation`,
-                  type: 'text/html',
+                  type: "text/html",
                   title:
-                    'How to install and consume dotUI components via the registry and the shadcn CLI.',
+                    "How to install and consume dotUI components via the registry and the shadcn CLI.",
                 },
               ],
               describedby: [
                 {
                   href: `${url}/llms.txt`,
-                  type: 'text/plain',
+                  type: "text/plain",
                   title:
-                    'llms.txt — machine-readable index of dotUI documentation for AI agents.',
+                    "llms.txt — machine-readable index of dotUI documentation for AI agents.",
                 },
               ],
             },
@@ -62,9 +62,9 @@ export const Route = createFileRoute('/.well-known/api-catalog')({
 
         return new Response(`${JSON.stringify(linkset, null, 2)}\n`, {
           headers: {
-            'Content-Type': 'application/linkset+json',
-            'Cache-Control':
-              'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400',
+            "Content-Type": "application/linkset+json",
+            "Cache-Control":
+              "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
           },
         })
       },

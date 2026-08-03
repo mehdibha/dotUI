@@ -7,10 +7,10 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { useState } from 'react'
-import { useControlledState } from 'react-stately/useControlledState'
+import { useState } from "react"
+import { useControlledState } from "react-stately/useControlledState"
 
-import { TokenSegmentList } from './segment-list'
+import { TokenSegmentList } from "./segment-list"
 
 export interface TokenFieldStateProps<
   T extends TokenSegmentList = TokenSegmentList,
@@ -50,7 +50,7 @@ export function useTokenFieldState<
       value: T | undefined,
       defaultValue: T,
       onChange?: (value: T) => void,
-    ) => [T, TokenFieldState<T>['setValue']]
+    ) => [T, TokenFieldState<T>["setValue"]]
   )(valueProp, defaultValueProp, onChange)
   let [isComposing, setComposing] = useState(false)
 

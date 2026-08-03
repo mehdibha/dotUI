@@ -3,9 +3,9 @@ import {
   CopyIcon,
   ScissorsIcon,
   TrashIcon,
-} from '@/registry/__generated__/icons'
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
+} from "@/registry/__generated__/icons"
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogBody,
@@ -13,12 +13,12 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Menu, MenuContent, MenuItem, MenuSub } from '@/registry/ui/menu'
-import { Modal } from '@/registry/ui/modal'
-import { Popover } from '@/registry/ui/popover'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Menu, MenuContent, MenuItem, MenuSub } from "@/registry/ui/menu"
+import { Modal } from "@/registry/ui/modal"
+import { Popover } from "@/registry/ui/popover"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

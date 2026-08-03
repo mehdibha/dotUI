@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from 'recharts'
+import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts"
 
-import type { ChartConfig } from '@/registry/ui/chart'
-import { ChartContainer, ChartDataTable } from '@/registry/ui/chart'
+import type { ChartConfig } from "@/registry/ui/chart"
+import { ChartContainer, ChartDataTable } from "@/registry/ui/chart"
 
 const chartData = [
-  { browser: 'safari', visitors: 1260, fill: 'var(--chart-2)' },
+  { browser: "safari", visitors: 1260, fill: "var(--chart-2)" },
 ]
 
 const chartConfig = {
   visitors: {
-    label: 'Visitors',
+    label: "Visitors",
   },
   safari: {
-    label: 'Safari',
-    color: 'var(--chart-2)',
+    label: "Safari",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig
 
@@ -38,7 +38,7 @@ export default function ChartRadialText() {
           <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
             <Label
               content={({ viewBox }) => {
-                if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                if (viewBox && "cx" in viewBox && "cy" in viewBox) {
                   return (
                     <text
                       x={viewBox.cx}

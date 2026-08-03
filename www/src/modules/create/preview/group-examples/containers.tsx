@@ -1,10 +1,10 @@
-import AvatarDemo from '@/registry/ui/avatar/demos/default'
-import CardDemo from '@/registry/ui/card/demos/default'
-import GroupDemo from '@/registry/ui/group/demos/basic'
-import { Separator } from '@/registry/ui/separator'
-import TableDemo from '@/registry/ui/table/demos/basic'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import AvatarDemo from "@/registry/ui/avatar/demos/default"
+import CardDemo from "@/registry/ui/card/demos/default"
+import GroupDemo from "@/registry/ui/group/demos/basic"
+import { Separator } from "@/registry/ui/separator"
+import TableDemo from "@/registry/ui/table/demos/basic"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function ContainersGroupExamples() {
   return (

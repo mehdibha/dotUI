@@ -1,18 +1,18 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { BoldIcon, ItalicIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Label } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { InputGroup, InputGroupAddon, TextArea } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+import { BoldIcon, ItalicIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Label } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 
 export default function Demo() {
-  const [inputValue, setInputValue] = React.useState('')
+  const [inputValue, setInputValue] = React.useState("")
   const insertEmoji = (emoji: string) => {
     setInputValue(`${inputValue}${emoji}`)
   }
@@ -25,7 +25,7 @@ export default function Demo() {
             <Button
               variant="quiet"
               onPress={() => {
-                insertEmoji('👍')
+                insertEmoji("👍")
               }}
             >
               👍
@@ -33,7 +33,7 @@ export default function Demo() {
             <Button
               variant="quiet"
               onPress={() => {
-                insertEmoji('❤️')
+                insertEmoji("❤️")
               }}
             >
               ❤️

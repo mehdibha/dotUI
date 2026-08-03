@@ -1,15 +1,15 @@
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Combobox } from '@/registry/ui/combobox'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { Button } from "@/registry/ui/button"
+import { Combobox } from "@/registry/ui/combobox"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
+} from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (

@@ -1,15 +1,15 @@
-import type * as React from 'react'
-import type { VariantProps } from 'tailwind-variants'
+import type * as React from "react"
+import type { VariantProps } from "tailwind-variants"
 
-import { useStyles } from './styles'
-import type { AlertStyles } from './styles'
+import { useStyles } from "./styles"
+import type { AlertStyles } from "./styles"
 
 // MARK: alertStyles
 
 // MARK: Separator
 
 interface AlertProps
-  extends React.ComponentProps<'div'>, VariantProps<AlertStyles> {}
+  extends React.ComponentProps<"div">, VariantProps<AlertStyles> {}
 
 function Alert({ className, variant, ...props }: AlertProps) {
   const { root } = useStyles()()
@@ -25,7 +25,7 @@ function Alert({ className, variant, ...props }: AlertProps) {
 
 // MARK: Separator
 
-interface AlertTitleProps extends React.ComponentProps<'div'> {}
+interface AlertTitleProps extends React.ComponentProps<"div"> {}
 
 function AlertTitle({ className, ...props }: AlertTitleProps) {
   const { title } = useStyles()()
@@ -34,7 +34,7 @@ function AlertTitle({ className, ...props }: AlertTitleProps) {
 
 // MARK: Separator
 
-interface AlertDescriptionProps extends React.ComponentProps<'div'> {}
+interface AlertDescriptionProps extends React.ComponentProps<"div"> {}
 
 function AlertDescription({ className, ...props }: AlertDescriptionProps) {
   const { description } = useStyles()()
@@ -49,7 +49,7 @@ function AlertDescription({ className, ...props }: AlertDescriptionProps) {
 
 // MARK: Separator
 
-interface AlertActionProps extends React.ComponentProps<'div'> {}
+interface AlertActionProps extends React.ComponentProps<"div"> {}
 
 function AlertAction({ className, ...props }: AlertActionProps) {
   const { action } = useStyles()()

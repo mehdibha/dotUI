@@ -6,11 +6,11 @@ import {
   RadioIcon,
   SearchIcon,
   StarIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
-import { Description, Label } from '@/registry/ui/field'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
+import { Description, Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   return (

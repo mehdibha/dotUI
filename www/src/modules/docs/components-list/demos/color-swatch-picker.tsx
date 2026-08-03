@@ -1,23 +1,23 @@
-'use client'
+"use client"
 
-import * as ColorAreaPrimitives from 'react-aria-components/ColorArea'
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from '@/registry/ui/color-swatch-picker'
+} from "@/registry/ui/color-swatch-picker"
 
-import { useCycle } from '../autoplay'
+import { useCycle } from "../autoplay"
 
 // Selection is controlled by a Color matched against each item's `color`, so we
 // cycle `value` through the swatches — the selected one lights up its ring.
 const SWATCHES = [
-  '#FF6B6B',
-  '#FFA07A',
-  '#FFD93D',
-  '#6BCB77',
-  '#4D96FF',
-  '#A29BFE',
+  "#FF6B6B",
+  "#FFA07A",
+  "#FFD93D",
+  "#6BCB77",
+  "#4D96FF",
+  "#A29BFE",
 ]
 
 export function ColorSwatchPickerDemo() {

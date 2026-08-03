@@ -1,8 +1,8 @@
-import { Button } from '@/registry/ui/button'
-import { Kbd } from '@/registry/ui/kbd'
-import { Menu, MenuContent, MenuItem, MenuSub } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { Separator } from '@/registry/ui/separator'
+import { Button } from "@/registry/ui/button"
+import { Kbd } from "@/registry/ui/kbd"
+import { Menu, MenuContent, MenuItem, MenuSub } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

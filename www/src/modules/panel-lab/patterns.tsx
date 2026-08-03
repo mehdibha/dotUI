@@ -1,28 +1,28 @@
-'use client'
+"use client"
 
 /* Panel Lab patterns — controls invented for the full-panel recreation, built
    on the control-lab row language. If one earns its keep it graduates into
    control-lab/rows.tsx. Prototype only: local state in, callback out. */
 
-import { ChevronDownIcon, SearchIcon } from 'lucide-react'
-import { Button as RacButton } from 'react-aria-components'
+import { ChevronDownIcon, SearchIcon } from "lucide-react"
+import { Button as RacButton } from "react-aria-components"
 
-import { fontStack } from '@/lib/fonts'
-import { cn } from '@/registry/lib/utils'
-import { ColorArea } from '@/registry/ui/color-area'
-import { ColorField } from '@/registry/ui/color-field'
-import { ColorSlider } from '@/registry/ui/color-slider'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Disclosure, DisclosurePanel } from '@/registry/ui/disclosure'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Popover } from '@/registry/ui/popover'
-import { SearchField } from '@/registry/ui/search-field'
+import { fontStack } from "@/lib/fonts"
+import { cn } from "@/registry/lib/utils"
+import { ColorArea } from "@/registry/ui/color-area"
+import { ColorField } from "@/registry/ui/color-field"
+import { ColorSlider } from "@/registry/ui/color-slider"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Disclosure, DisclosurePanel } from "@/registry/ui/disclosure"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Popover } from "@/registry/ui/popover"
+import { SearchField } from "@/registry/ui/search-field"
 import {
   SegmentedControl,
   SegmentedControlItem,
-} from '@/registry/ui/segmented-control'
-import { ROW, ROW_LABEL, ROW_VALUE } from '@/modules/control-lab/rows'
-import { useLoadedFamilies } from '@/modules/create/typography'
+} from "@/registry/ui/segmented-control"
+import { ROW, ROW_LABEL, ROW_VALUE } from "@/modules/control-lab/rows"
+import { useLoadedFamilies } from "@/modules/create/typography"
 
 /* -------------------------------- Detail row ------------------------------- */
 
@@ -56,7 +56,7 @@ export function DetailRow({
         slot="trigger"
         className={cn(
           ROW,
-          'flex cursor-interactive items-center justify-between gap-3 px-4 focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight',
+          "flex cursor-interactive items-center justify-between gap-3 px-4 focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight",
         )}
       >
         <span className={ROW_LABEL}>{label}</span>
@@ -95,7 +95,7 @@ export function SegmentedControlRow({
   return (
     <div
       data-row=""
-      className={cn(ROW, 'flex items-center justify-between gap-3 pr-1.5 pl-4')}
+      className={cn(ROW, "flex items-center justify-between gap-3 pr-1.5 pl-4")}
     >
       <span className={ROW_LABEL}>{label}</span>
       <SegmentedControl
@@ -217,7 +217,7 @@ export function FilterRow({
 }) {
   return (
     <SearchField value={value} onChange={onChange} aria-label={placeholder}>
-      <InputGroup className={cn(ROW, 'border-0 shadow-none')}>
+      <InputGroup className={cn(ROW, "border-0 shadow-none")}>
         <InputGroupAddon>
           <SearchIcon />
         </InputGroupAddon>

@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import { Label } from '@/registry/ui/field'
-import { Slider, SliderControl, type SliderProps } from '@/registry/ui/slider'
+import { Label } from "@/registry/ui/field"
+import { Slider, SliderControl, type SliderProps } from "@/registry/ui/slider"
 
 export default function Demo({
-  label = 'Volume',
-  orientation = 'horizontal',
+  label = "Volume",
+  orientation = "horizontal",
   isDisabled = false,
 }: {
   label?: string
-  orientation?: SliderProps['orientation']
+  orientation?: SliderProps["orientation"]
   isDisabled?: boolean
 } = {}) {
   return (

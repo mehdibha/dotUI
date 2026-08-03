@@ -13,10 +13,10 @@ import {
   STEPS,
   type Theme,
   type ThemeOptions,
-} from '@dotui/colors'
+} from "@dotui/colors"
 
-import { type ColorConfig, colorConfigSchema } from './color-config'
-import { PALETTE_ORDER } from './palettes'
+import { type ColorConfig, colorConfigSchema } from "./color-config"
+import { PALETTE_ORDER } from "./palettes"
 
 export type Ramp = Record<string, string>
 
@@ -24,12 +24,12 @@ export type Ramp = Record<string, string>
 export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
   const options: ThemeOptions = { seeds: { accent: config.seeds.accent } }
   for (const name of [
-    'neutral',
-    'success',
-    'warning',
-    'danger',
-    'info',
-    'selection',
+    "neutral",
+    "success",
+    "warning",
+    "danger",
+    "info",
+    "selection",
   ] as const) {
     const seed = config.seeds[name]
     if (seed) options.seeds[name] = seed
@@ -83,7 +83,7 @@ function orderedNames(scales: Record<string, unknown>): string[] {
 
 function emitModeBlock(
   out: string[],
-  mode: Theme['light'],
+  mode: Theme["light"],
   names: string[],
   alphas: boolean,
 ): void {
@@ -99,10 +99,10 @@ function emitModeBlock(
     }
     const on = mode.on[name]
     if (on) {
-      out.push(`\t--on-${name}-700: ${on['700']};`)
-      out.push(`\t--on-${name}-800: ${on['800']};`)
+      out.push(`\t--on-${name}-700: ${on["700"]};`)
+      out.push(`\t--on-${name}-800: ${on["800"]};`)
     }
-    if (index < names.length - 1) out.push('')
+    if (index < names.length - 1) out.push("")
   })
 }
 
@@ -112,34 +112,34 @@ export function emitPrimitivesCss(
   options: EmitPrimitivesOptions = {},
 ): string {
   const {
-    lightSelector = ':root',
-    darkSelector = '.dark',
+    lightSelector = ":root",
+    darkSelector = ".dark",
     alphas = true,
     charts = true,
   } = options
-  const isRoot = lightSelector === ':root'
+  const isRoot = lightSelector === ":root"
   const names = orderedNames(theme.light.scales)
   const out: string[] = []
   if (isRoot) {
     out.push(
-      '/* AUTO-GENERATED — do not edit. Run `pnpm build:registry`. */',
-      '/* Primitive ramps generated from DEFAULT_COLOR_CONFIG (see @/registry/theme). */',
-      '',
+      "/* AUTO-GENERATED — do not edit. Run `pnpm build:registry`. */",
+      "/* Primitive ramps generated from DEFAULT_COLOR_CONFIG (see @/registry/theme). */",
+      "",
     )
   }
   const emitCharts = (set: { categorical: string[] }) => {
-    out.push('')
+    out.push("")
     set.categorical.forEach((color, i) => {
       out.push(`\t--chart-${i + 1}: ${color};`)
     })
   }
   out.push(`${lightSelector} {`)
-  if (isRoot) out.push('\t--radius: 0.625rem;', '')
+  if (isRoot) out.push("\t--radius: 0.625rem;", "")
   emitModeBlock(out, theme.light, names, alphas)
   if (charts) emitCharts(theme.charts.light)
-  out.push('}', '', `${darkSelector} {`)
+  out.push("}", "", `${darkSelector} {`)
   emitModeBlock(out, theme.dark, names, alphas)
   if (charts) emitCharts(theme.charts.dark)
-  out.push('}')
-  return `${out.join('\n')}\n`
+  out.push("}")
+  return `${out.join("\n")}\n`
 }

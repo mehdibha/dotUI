@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react"
 
-import { Switch } from '@/registry/ui/switch'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
-import { DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
+import { Switch } from "@/registry/ui/switch"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
+import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
 
-import { useDesignSystem } from '../preset'
+import { useDesignSystem } from "../preset"
 
 /* ------------------------------ row helpers ------------------------------ */
 
@@ -115,18 +115,18 @@ export function CodeOptionsControls() {
       <EnumRow
         label="Class lists"
         description="tv() base & slot classes"
-        value={opts.classArrays ? 'arrays' : 'string'}
+        value={opts.classArrays ? "arrays" : "string"}
         options={[
-          { value: 'arrays', label: 'Arrays' },
-          { value: 'string', label: 'String' },
+          { value: "arrays", label: "Arrays" },
+          { value: "string", label: "String" },
         ]}
-        onChange={(v) => setCodeOption('classArrays', v === 'arrays')}
+        onChange={(v) => setCodeOption("classArrays", v === "arrays")}
       />
       <SwitchRow
         label="Section separators"
         description="Divide the file with comment rules"
         value={opts.sectionComments}
-        onChange={(v) => setCodeOption('sectionComments', v)}
+        onChange={(v) => setCodeOption("sectionComments", v)}
       />
     </div>
   )

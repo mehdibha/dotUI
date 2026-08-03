@@ -1,19 +1,19 @@
-'use client'
+"use client"
 
-import React, { useCallback } from 'react'
-import { chain } from 'react-aria'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as DateFieldPrimitive from 'react-aria-components/DateField'
-import * as GroupPrimitive from 'react-aria-components/Group'
-import * as InputPrimitive from 'react-aria-components/Input'
-import * as TextAreaPrimitive from 'react-aria-components/TextArea'
-import { mergeRefs } from 'react-aria/mergeRefs'
-import { getEventTarget } from 'react-aria/private/utils/shadowdom/DOMFunctions'
-import { useLayoutEffect } from 'react-aria/private/utils/useLayoutEffect'
-import { useControlledState } from 'react-stately/useControlledState'
-import type { VariantProps } from 'tailwind-variants'
+import React, { useCallback } from "react"
+import { chain } from "react-aria"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as DateFieldPrimitive from "react-aria-components/DateField"
+import * as GroupPrimitive from "react-aria-components/Group"
+import * as InputPrimitive from "react-aria-components/Input"
+import * as TextAreaPrimitive from "react-aria-components/TextArea"
+import { mergeRefs } from "react-aria/mergeRefs"
+import { getEventTarget } from "react-aria/private/utils/shadowdom/DOMFunctions"
+import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect"
+import { useControlledState } from "react-stately/useControlledState"
+import type { VariantProps } from "tailwind-variants"
 
-import { type InputStyles, useStyles } from './styles'
+import { type InputStyles, useStyles } from "./styles"
 
 // MARK: Separator
 
@@ -25,7 +25,7 @@ interface InputGroupProps
 const INTERACTIVE_SELECTOR = "button,input,textarea,[role='button']"
 
 const focusInnerInput = (group: HTMLElement) => {
-  ;(group.querySelector('input, textarea') as HTMLElement | null)?.focus()
+  ;(group.querySelector("input, textarea") as HTMLElement | null)?.focus()
 }
 
 const InputGroup = ({
@@ -42,7 +42,7 @@ const InputGroup = ({
       data-size={size}
       onPointerDown={(e) => {
         onPointerDown?.(e)
-        if (e.defaultPrevented || e.pointerType !== 'mouse') return
+        if (e.defaultPrevented || e.pointerType !== "mouse") return
         const target = getEventTarget(e) as Element
         if (target.closest(INTERACTIVE_SELECTOR)) return
         e.preventDefault()
@@ -69,7 +69,7 @@ const InputGroup = ({
 
 interface InputProps
   extends
-    Omit<React.ComponentProps<typeof InputPrimitive.Input>, 'size'>,
+    Omit<React.ComponentProps<typeof InputPrimitive.Input>, "size">,
     VariantProps<InputStyles> {}
 
 const Input = ({ className, size, ...props }: InputProps) => {
@@ -97,7 +97,7 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
   const { textArea } = useStyles()()
   const [inputValue, setInputValue] = useControlledState(
     props.value,
-    props.defaultValue ?? '',
+    props.defaultValue ?? "",
     () => {},
   )
   const inputRef = React.useRef<HTMLTextAreaElement>(null)
@@ -109,13 +109,13 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
       const prevOverflow = input.style.overflow
       const prevFlex = input.style.flex
 
-      const isFirefox = 'MozAppearance' in input.style
+      const isFirefox = "MozAppearance" in input.style
       if (!isFirefox) {
-        input.style.overflow = 'hidden'
+        input.style.overflow = "hidden"
       }
-      input.style.flex = 'none'
-      input.style.alignSelf = 'start'
-      input.style.height = 'auto'
+      input.style.flex = "none"
+      input.style.alignSelf = "start"
+      input.style.height = "auto"
       input.style.height = `${input.scrollHeight + (input.offsetHeight - input.clientHeight)}px`
       input.style.overflow = prevOverflow
       input.style.alignSelf = prevAlignment
@@ -148,7 +148,7 @@ const TextArea = ({ ref, className, onChange, ...props }: TextAreaProps) => {
 
 // MARK: Separator
 
-interface InputGroupAddonProps extends React.ComponentProps<'div'> {}
+interface InputGroupAddonProps extends React.ComponentProps<"div"> {}
 
 function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
   const { inputGroupAddon } = useStyles()()
@@ -165,9 +165,9 @@ function InputGroupAddon({ className, ...props }: InputGroupAddonProps) {
 
 interface DateInputProps
   extends
-    Omit<DateFieldPrimitive.DateInputProps, 'children'>,
+    Omit<DateFieldPrimitive.DateInputProps, "children">,
     VariantProps<InputStyles> {
-  children?: DateFieldPrimitive.DateInputProps['children']
+  children?: DateFieldPrimitive.DateInputProps["children"]
 }
 
 const DateInput = ({ className, size, ...props }: DateInputProps) => {
@@ -200,7 +200,7 @@ interface DateSegmentProps extends React.ComponentProps<
 // these exotic spaces to a regular space makes server and client render identical text, which
 // avoids a hydration mismatch on the literal segments.
 const normalizeSegmentWhitespace = (text: string) =>
-  text.replace(/[\u00A0\u2007\u2009\u202F]/g, ' ')
+  text.replace(/[\u00A0\u2007\u2009\u202F]/g, " ")
 
 const DateSegment = ({ className, ...props }: DateSegmentProps) => {
   const { dateInputSegment } = useStyles()()

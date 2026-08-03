@@ -1,7 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-import { siteConfig } from '@/config/site'
-import { docsSource } from '@/lib/source'
+import { siteConfig } from "@/config/site"
+import { docsSource } from "@/lib/source"
 
 // Serves /sitemap.xml — a valid XML sitemap covering every canonical page:
 // the top-level routes plus all docs pages, generated from the docs
@@ -15,15 +15,15 @@ import { docsSource } from '@/lib/source'
 // currently plain ASCII, but a future filename containing "&" would otherwise
 // emit malformed XML — cheap insurance.
 const escapeXml = (value: string) =>
-  value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
 
 // /docs/components, /docs/charts and every component page come from the docs
 // source below, so they are not listed here. /components and /charts are
 // permanent redirects, so they are omitted, and /playground is a dev scratch
 // page that shouldn't be advertised/indexed.
-const STATIC_PATHS = ['/', '/create']
+const STATIC_PATHS = ["/", "/create"]
 
-export const Route = createFileRoute('/sitemap.xml')({
+export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: () => {
@@ -37,15 +37,15 @@ export const Route = createFileRoute('/sitemap.xml')({
             (path) =>
               `\t<url>\n\t\t<loc>${escapeXml(`${siteConfig.url}${path}`)}</loc>\n\t</url>`,
           )
-          .join('\n')
+          .join("\n")
 
         const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
 
         return new Response(body, {
           headers: {
-            'Content-Type': 'application/xml; charset=utf-8',
-            'Cache-Control':
-              'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400',
+            "Content-Type": "application/xml; charset=utf-8",
+            "Cache-Control":
+              "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
           },
         })
       },

@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import type React from 'react'
-import * as FormPrimitives from 'react-aria-components/Form'
+import type React from "react"
+import * as FormPrimitives from "react-aria-components/Form"
 
-import { Button } from '@/registry/ui/button'
-import { Description, Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
+import { Button } from "@/registry/ui/button"
+import { Description, Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

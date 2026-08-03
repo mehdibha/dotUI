@@ -4,12 +4,12 @@ import {
   CreditCardIcon,
   LogOutIcon,
   UserIcon,
-} from '@/registry/__generated__/icons'
-import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
-import { Button } from '@/registry/ui/button'
-import { Menu, MenuContent, MenuItem, MenuSection } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/__generated__/icons"
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Button } from "@/registry/ui/button"
+import { Menu, MenuContent, MenuItem, MenuSection } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { Separator } from "@/registry/ui/separator"
 
 const accountItems = (
   <>

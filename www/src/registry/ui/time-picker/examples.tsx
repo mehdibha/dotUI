@@ -1,19 +1,19 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Basic from './demos/basic'
-import Composition from './demos/composition'
-import Controlled from './demos/controlled'
-import Description from './demos/description'
-import Disabled from './demos/disabled'
-import ErrorMessage from './demos/error-message'
-import Granularity from './demos/granularity'
-import HourCycle from './demos/hour-cycle'
-import Label from './demos/label'
-import Placeholder from './demos/placeholder'
-import ReadOnly from './demos/read-only'
-import Required from './demos/required'
-import Uncontrolled from './demos/uncontrolled'
+import Basic from "./demos/basic"
+import Composition from "./demos/composition"
+import Controlled from "./demos/controlled"
+import Description from "./demos/description"
+import Disabled from "./demos/disabled"
+import ErrorMessage from "./demos/error-message"
+import Granularity from "./demos/granularity"
+import HourCycle from "./demos/hour-cycle"
+import Label from "./demos/label"
+import Placeholder from "./demos/placeholder"
+import ReadOnly from "./demos/read-only"
+import Required from "./demos/required"
+import Uncontrolled from "./demos/uncontrolled"
 
 export default function TimePickerExamples() {
   return (

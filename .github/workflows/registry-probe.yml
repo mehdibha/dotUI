@@ -16,13 +16,13 @@ on:
   deployment_status:
   schedule:
     # Daily safety net — catches drift even without a deploy, or a missed event.
-    - cron: '17 6 * * *'
+    - cron: "17 6 * * *"
   workflow_dispatch:
     inputs:
       origin:
-        description: 'Origin to probe'
+        description: "Origin to probe"
         required: false
-        default: 'https://dotui.org'
+        default: "https://dotui.org"
 
 # The probe only reads a public site; it needs nothing else from the token.
 permissions:

@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 import {
   flexRender,
   getCoreRowModel,
@@ -18,7 +18,7 @@ import {
   type RowSelectionState,
   type SortingState,
   type VisibilityState,
-} from '@tanstack/react-table'
+} from "@tanstack/react-table"
 import {
   ArrowDownIcon,
   ArrowRightIcon,
@@ -36,23 +36,23 @@ import {
   Settings2Icon,
   TimerIcon,
   XIcon,
-} from 'lucide-react'
-import type { Selection } from 'react-aria-components'
-import * as AutocompletePrimitive from 'react-aria-components/Autocomplete'
-import type { SortDescriptor } from 'react-aria-components/Table'
+} from "lucide-react"
+import type { Selection } from "react-aria-components"
+import * as AutocompletePrimitive from "react-aria-components/Autocomplete"
+import type { SortDescriptor } from "react-aria-components/Table"
 
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
-import { Input } from '@/registry/ui/input'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { SearchField } from '@/registry/ui/search-field'
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
+import { Input } from "@/registry/ui/input"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { SearchField } from "@/registry/ui/search-field"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
+} from "@/registry/ui/select"
 import {
   Table,
   TableBody,
@@ -61,277 +61,277 @@ import {
   TableContainer,
   TableHeader,
   TableRow,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
 const labels = [
-  { value: 'bug', label: 'Bug' },
-  { value: 'feature', label: 'Feature' },
-  { value: 'documentation', label: 'Documentation' },
+  { value: "bug", label: "Bug" },
+  { value: "feature", label: "Feature" },
+  { value: "documentation", label: "Documentation" },
 ] as const
 
 const statuses = [
   {
-    value: 'backlog',
-    label: 'Backlog',
+    value: "backlog",
+    label: "Backlog",
     icon: HelpCircleIcon,
-    variant: 'neutral',
+    variant: "neutral",
   },
-  { value: 'todo', label: 'Todo', icon: CircleIcon, variant: 'info' },
+  { value: "todo", label: "Todo", icon: CircleIcon, variant: "info" },
   {
-    value: 'in progress',
-    label: 'In Progress',
+    value: "in progress",
+    label: "In Progress",
     icon: TimerIcon,
-    variant: 'warning',
+    variant: "warning",
   },
-  { value: 'done', label: 'Done', icon: CheckCircleIcon, variant: 'success' },
+  { value: "done", label: "Done", icon: CheckCircleIcon, variant: "success" },
   {
-    value: 'canceled',
-    label: 'Canceled',
+    value: "canceled",
+    label: "Canceled",
     icon: CircleOffIcon,
-    variant: 'danger',
+    variant: "danger",
   },
 ] as const
 
 const priorities = [
-  { value: 'low', label: 'Low', icon: ArrowDownIcon },
-  { value: 'medium', label: 'Medium', icon: ArrowRightIcon },
-  { value: 'high', label: 'High', icon: ArrowUpIcon },
+  { value: "low", label: "Low", icon: ArrowDownIcon },
+  { value: "medium", label: "Medium", icon: ArrowRightIcon },
+  { value: "high", label: "High", icon: ArrowUpIcon },
 ] as const
 
 const tasks: Task[] = [
   {
-    id: 'TASK-8782',
+    id: "TASK-8782",
     title:
       "You can't compress the program without quantifying the open-source SSD pixel!",
-    status: 'in progress',
-    label: 'documentation',
-    priority: 'medium',
+    status: "in progress",
+    label: "documentation",
+    priority: "medium",
   },
   {
-    id: 'TASK-7878',
+    id: "TASK-7878",
     title:
-      'Try to calculate the EXE feed, maybe it will index the multi-byte pixel!',
-    status: 'backlog',
-    label: 'documentation',
-    priority: 'medium',
+      "Try to calculate the EXE feed, maybe it will index the multi-byte pixel!",
+    status: "backlog",
+    label: "documentation",
+    priority: "medium",
   },
   {
-    id: 'TASK-7839',
-    title: 'We need to bypass the neural TCP card!',
-    status: 'todo',
-    label: 'bug',
-    priority: 'high',
+    id: "TASK-7839",
+    title: "We need to bypass the neural TCP card!",
+    status: "todo",
+    label: "bug",
+    priority: "high",
   },
   {
-    id: 'TASK-5562',
+    id: "TASK-5562",
     title:
-      'The SAS interface is down, bypass the open-source pixel so we can back up the PNG bandwidth!',
-    status: 'backlog',
-    label: 'feature',
-    priority: 'medium',
+      "The SAS interface is down, bypass the open-source pixel so we can back up the PNG bandwidth!",
+    status: "backlog",
+    label: "feature",
+    priority: "medium",
   },
   {
-    id: 'TASK-8686',
+    id: "TASK-8686",
     title:
       "I'll parse the wireless SSL protocol, that should driver the API panel!",
-    status: 'canceled',
-    label: 'feature',
-    priority: 'medium',
+    status: "canceled",
+    label: "feature",
+    priority: "medium",
   },
   {
-    id: 'TASK-1280',
+    id: "TASK-1280",
     title:
-      'Use the digital TLS panel, then you can transmit the haptic system!',
-    status: 'done',
-    label: 'bug',
-    priority: 'high',
+      "Use the digital TLS panel, then you can transmit the haptic system!",
+    status: "done",
+    label: "bug",
+    priority: "high",
   },
   {
-    id: 'TASK-7262',
+    id: "TASK-7262",
     title:
-      'The UTF8 application is down, parse the neural bandwidth so we can back up the PNG firewall!',
-    status: 'done',
-    label: 'feature',
-    priority: 'high',
+      "The UTF8 application is down, parse the neural bandwidth so we can back up the PNG firewall!",
+    status: "done",
+    label: "feature",
+    priority: "high",
   },
   {
-    id: 'TASK-1138',
+    id: "TASK-1138",
     title:
       "Generating the driver won't do anything, we need to quantify the 1080p SMTP bandwidth!",
-    status: 'in progress',
-    label: 'feature',
-    priority: 'medium',
+    status: "in progress",
+    label: "feature",
+    priority: "medium",
   },
   {
-    id: 'TASK-7184',
-    title: 'We need to program the back-end THX pixel!',
-    status: 'todo',
-    label: 'feature',
-    priority: 'low',
+    id: "TASK-7184",
+    title: "We need to program the back-end THX pixel!",
+    status: "todo",
+    label: "feature",
+    priority: "low",
   },
   {
-    id: 'TASK-5160',
+    id: "TASK-5160",
     title:
       "Calculating the bus won't do anything, we need to navigate the back-end JSON protocol!",
-    status: 'in progress',
-    label: 'documentation',
-    priority: 'high',
+    status: "in progress",
+    label: "documentation",
+    priority: "high",
   },
   {
-    id: 'TASK-5618',
+    id: "TASK-5618",
     title:
       "Generating the driver won't do anything, we need to index the online SSL application!",
-    status: 'done',
-    label: 'documentation',
-    priority: 'medium',
+    status: "done",
+    label: "documentation",
+    priority: "medium",
   },
   {
-    id: 'TASK-6699',
+    id: "TASK-6699",
     title:
       "I'll transmit the wireless JBOD capacitor, that should hard drive the SSD feed!",
-    status: 'backlog',
-    label: 'documentation',
-    priority: 'medium',
+    status: "backlog",
+    label: "documentation",
+    priority: "medium",
   },
   {
-    id: 'TASK-2858',
-    title: 'We need to override the online UDP bus!',
-    status: 'backlog',
-    label: 'bug',
-    priority: 'medium',
+    id: "TASK-2858",
+    title: "We need to override the online UDP bus!",
+    status: "backlog",
+    label: "bug",
+    priority: "medium",
   },
   {
-    id: 'TASK-9864',
+    id: "TASK-9864",
     title:
       "I'll reboot the 1080p FTP panel, that should matrix the HEX hard drive!",
-    status: 'done',
-    label: 'bug',
-    priority: 'high',
+    status: "done",
+    label: "bug",
+    priority: "high",
   },
   {
-    id: 'TASK-8404',
-    title: 'We need to generate the virtual HEX alarm!',
-    status: 'in progress',
-    label: 'bug',
-    priority: 'low',
+    id: "TASK-8404",
+    title: "We need to generate the virtual HEX alarm!",
+    status: "in progress",
+    label: "bug",
+    priority: "low",
   },
   {
-    id: 'TASK-5365',
+    id: "TASK-5365",
     title:
       "Backing up the pixel won't do anything, we need to transmit the primary IB array!",
-    status: 'in progress',
-    label: 'documentation',
-    priority: 'low',
+    status: "in progress",
+    label: "documentation",
+    priority: "low",
   },
   {
-    id: 'TASK-1780',
+    id: "TASK-1780",
     title:
-      'The CSS feed is down, index the bluetooth transmitter so we can compress the CLI protocol!',
-    status: 'todo',
-    label: 'documentation',
-    priority: 'high',
+      "The CSS feed is down, index the bluetooth transmitter so we can compress the CLI protocol!",
+    status: "todo",
+    label: "documentation",
+    priority: "high",
   },
   {
-    id: 'TASK-6938',
+    id: "TASK-6938",
     title:
-      'Use the redundant SCSI application, then you can hack the optical alarm!',
-    status: 'todo',
-    label: 'documentation',
-    priority: 'high',
+      "Use the redundant SCSI application, then you can hack the optical alarm!",
+    status: "todo",
+    label: "documentation",
+    priority: "high",
   },
   {
-    id: 'TASK-9885',
-    title: 'We need to compress the auxiliary VGA driver!',
-    status: 'backlog',
-    label: 'bug',
-    priority: 'high',
+    id: "TASK-9885",
+    title: "We need to compress the auxiliary VGA driver!",
+    status: "backlog",
+    label: "bug",
+    priority: "high",
   },
   {
-    id: 'TASK-3216',
+    id: "TASK-3216",
     title:
       "Transmitting the transmitter won't do anything, we need to compress the virtual HDD sensor!",
-    status: 'backlog',
-    label: 'documentation',
-    priority: 'medium',
+    status: "backlog",
+    label: "documentation",
+    priority: "medium",
   },
   {
-    id: 'TASK-9285',
+    id: "TASK-9285",
     title:
-      'The IP monitor is down, copy the haptic alarm so we can generate the HTTP transmitter!',
-    status: 'todo',
-    label: 'bug',
-    priority: 'high',
+      "The IP monitor is down, copy the haptic alarm so we can generate the HTTP transmitter!",
+    status: "todo",
+    label: "bug",
+    priority: "high",
   },
   {
-    id: 'TASK-1024',
+    id: "TASK-1024",
     title:
       "Overriding the microchip won't do anything, we need to transmit the digital OCR transmitter!",
-    status: 'in progress',
-    label: 'documentation',
-    priority: 'low',
+    status: "in progress",
+    label: "documentation",
+    priority: "low",
   },
   {
-    id: 'TASK-7068',
+    id: "TASK-7068",
     title:
       "You can't generate the capacitor without indexing the wireless HEX pixel!",
-    status: 'canceled',
-    label: 'bug',
-    priority: 'low',
+    status: "canceled",
+    label: "bug",
+    priority: "low",
   },
   {
-    id: 'TASK-6502',
+    id: "TASK-6502",
     title:
       "Navigating the microchip won't do anything, we need to bypass the back-end SQL bus!",
-    status: 'todo',
-    label: 'bug',
-    priority: 'high',
+    status: "todo",
+    label: "bug",
+    priority: "high",
   },
   {
-    id: 'TASK-5326',
-    title: 'We need to hack the redundant UTF8 transmitter!',
-    status: 'todo',
-    label: 'bug',
-    priority: 'low',
+    id: "TASK-5326",
+    title: "We need to hack the redundant UTF8 transmitter!",
+    status: "todo",
+    label: "bug",
+    priority: "low",
   },
   {
-    id: 'TASK-6274',
+    id: "TASK-6274",
     title:
-      'Use the virtual PCI circuit, then you can parse the bluetooth alarm!',
-    status: 'canceled',
-    label: 'documentation',
-    priority: 'low',
+      "Use the virtual PCI circuit, then you can parse the bluetooth alarm!",
+    status: "canceled",
+    label: "documentation",
+    priority: "low",
   },
   {
-    id: 'TASK-1571',
+    id: "TASK-1571",
     title:
       "I'll input the neural DRAM circuit, that should protocol the SMTP interface!",
-    status: 'in progress',
-    label: 'feature',
-    priority: 'medium',
+    status: "in progress",
+    label: "feature",
+    priority: "medium",
   },
   {
-    id: 'TASK-9518',
+    id: "TASK-9518",
     title:
       "Compressing the interface won't do anything, we need to compress the online SDD matrix!",
-    status: 'canceled',
-    label: 'documentation',
-    priority: 'medium',
+    status: "canceled",
+    label: "documentation",
+    priority: "medium",
   },
   {
-    id: 'TASK-5581',
+    id: "TASK-5581",
     title:
       "I'll synthesize the digital COM pixel, that should transmitter the UTF8 protocol!",
-    status: 'backlog',
-    label: 'documentation',
-    priority: 'high',
+    status: "backlog",
+    label: "documentation",
+    priority: "high",
   },
   {
-    id: 'TASK-2197',
+    id: "TASK-2197",
     title:
       "Parsing the feed won't do anything, we need to copy the bluetooth DRAM bus!",
-    status: 'todo',
-    label: 'documentation',
-    priority: 'low',
+    status: "todo",
+    label: "documentation",
+    priority: "low",
   },
 ]
 
@@ -359,27 +359,27 @@ const selectedOptionsFilter: FilterFn<Task> = (row, columnId, filterValue) => {
 
 const taskColumns: ColumnDef<Task>[] = [
   {
-    id: 'id',
-    accessorKey: 'id',
-    header: 'Task',
+    id: "id",
+    accessorKey: "id",
+    header: "Task",
     enableHiding: false,
     enableGlobalFilter: true,
     meta: {
-      name: 'Task',
+      name: "Task",
       width: 120,
-      cellClassName: 'font-mono text-xs text-fg-muted',
+      cellClassName: "font-mono text-xs text-fg-muted",
     } satisfies TaskColumnMeta,
     cell: ({ row }) => row.original.id,
   },
   {
-    id: 'title',
-    accessorKey: 'title',
-    header: 'Title',
+    id: "title",
+    accessorKey: "title",
+    header: "Title",
     enableGlobalFilter: true,
     meta: {
-      name: 'Title',
+      name: "Title",
       minWidth: 420,
-      cellClassName: 'min-w-[26rem]',
+      cellClassName: "min-w-[26rem]",
     } satisfies TaskColumnMeta,
     cell: ({ row }) => (
       <div className="flex min-w-0 items-center gap-2">
@@ -391,9 +391,9 @@ const taskColumns: ColumnDef<Task>[] = [
     ),
   },
   {
-    id: 'status',
-    accessorKey: 'status',
-    header: 'Status',
+    id: "status",
+    accessorKey: "status",
+    header: "Status",
     enableGlobalFilter: false,
     filterFn: selectedOptionsFilter,
     sortingFn: (a, b, columnId) => {
@@ -404,7 +404,7 @@ const taskColumns: ColumnDef<Task>[] = [
       )
     },
     meta: {
-      name: 'Status',
+      name: "Status",
       width: 150,
     } satisfies TaskColumnMeta,
     cell: ({ row }) => {
@@ -420,9 +420,9 @@ const taskColumns: ColumnDef<Task>[] = [
     },
   },
   {
-    id: 'priority',
-    accessorKey: 'priority',
-    header: 'Priority',
+    id: "priority",
+    accessorKey: "priority",
+    header: "Priority",
     enableGlobalFilter: false,
     filterFn: selectedOptionsFilter,
     sortingFn: (a, b, columnId) => {
@@ -433,7 +433,7 @@ const taskColumns: ColumnDef<Task>[] = [
       )
     },
     meta: {
-      name: 'Priority',
+      name: "Priority",
       width: 120,
     } satisfies TaskColumnMeta,
     cell: ({ row }) => {
@@ -449,16 +449,16 @@ const taskColumns: ColumnDef<Task>[] = [
     },
   },
   {
-    id: 'actions',
-    header: 'Actions',
+    id: "actions",
+    header: "Actions",
     enableHiding: false,
     enableSorting: false,
     enableGlobalFilter: false,
     meta: {
-      name: 'Actions',
+      name: "Actions",
       width: 48,
-      className: 'w-10',
-      cellClassName: 'text-right',
+      className: "w-10",
+      cellClassName: "text-right",
     } satisfies TaskColumnMeta,
     cell: ({ row }) => (
       <Menu>
@@ -485,10 +485,10 @@ const taskColumns: ColumnDef<Task>[] = [
 
 export default function Demo() {
   const { contains } = AutocompletePrimitive.useFilter({
-    sensitivity: 'base',
+    sensitivity: "base",
     ignorePunctuation: true,
   })
-  const [globalFilter, setGlobalFilter] = React.useState('')
+  const [globalFilter, setGlobalFilter] = React.useState("")
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   )
@@ -496,13 +496,13 @@ export default function Demo() {
     React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({})
   const [sorting, setSorting] = React.useState<SortingState>([
-    { id: 'id', desc: false },
+    { id: "id", desc: false },
   ])
 
   const taskSearchFilter = React.useCallback<FilterFn<Task>>(
     (row, columnId, filterValue) => {
-      const query = String(filterValue ?? '').trim()
-      return !query || contains(String(row.getValue(columnId) ?? ''), query)
+      const query = String(filterValue ?? "").trim()
+      return !query || contains(String(row.getValue(columnId) ?? ""), query)
     },
     [contains],
   )
@@ -541,7 +541,7 @@ export default function Demo() {
   const headerGroup = table.getHeaderGroups()[0]
   const tableHeaders = headerGroup?.headers ?? []
   const currentRows = table.getRowModel().rows
-  const visibleColumnKey = tableHeaders.map((header) => header.id).join(':')
+  const visibleColumnKey = tableHeaders.map((header) => header.id).join(":")
   const columnDependencies = React.useMemo(
     () => [visibleColumnKey],
     [visibleColumnKey],
@@ -554,8 +554,8 @@ export default function Demo() {
     () => toSortDescriptor(sorting),
     [sorting],
   )
-  const statusColumn = table.getColumn('status')
-  const priorityColumn = table.getColumn('priority')
+  const statusColumn = table.getColumn("status")
+  const priorityColumn = table.getColumn("priority")
   const statusFilter = getColumnFilterSet(statusColumn)
   const priorityFilter = getColumnFilterSet(priorityColumn)
   const pageIndex = table.getState().pagination.pageIndex
@@ -590,7 +590,7 @@ export default function Demo() {
   )
   const resetFilters = React.useCallback(() => {
     table.resetColumnFilters()
-    table.setGlobalFilter('')
+    table.setGlobalFilter("")
     table.setPageIndex(0)
   }, [table])
   const updateSelection = React.useCallback(
@@ -677,13 +677,13 @@ export default function Demo() {
               return (
                 <TableColumn
                   id={header.column.id}
-                  isRowHeader={header.column.id === 'title'}
+                  isRowHeader={header.column.id === "title"}
                   allowsSorting={header.column.getCanSort()}
                   width={meta.width}
                   minWidth={meta.minWidth}
                   className={meta.className}
                 >
-                  {header.column.id === 'actions' ? (
+                  {header.column.id === "actions" ? (
                     <span className="sr-only">{meta.name}</span>
                   ) : (
                     flexRender(
@@ -698,7 +698,7 @@ export default function Demo() {
           <TableBody
             items={currentRows}
             dependencies={columnDependencies}
-            renderEmptyState={() => 'No results.'}
+            renderEmptyState={() => "No results."}
           >
             {(row) => (
               <TableRow
@@ -874,7 +874,7 @@ function ViewOptions({
           selectedKeys={selectedKeys}
           onSelectionChange={(keys) => {
             const nextVisibleIds =
-              keys === 'all'
+              keys === "all"
                 ? new Set(hideableColumns.map((column) => column.id))
                 : new Set(Array.from(keys).map(String))
 
@@ -900,7 +900,7 @@ function selectionToFilterValue(
   options: readonly FilterOption[],
 ) {
   const values =
-    selection === 'all'
+    selection === "all"
       ? options.map((option) => option.value)
       : Array.from(selection).map(String)
   return values.length > 0 ? values : undefined
@@ -933,7 +933,7 @@ function selectionToRowSelection(
     }
   }
 
-  if (selection === 'all') {
+  if (selection === "all") {
     for (const row of rows) {
       nextSelection[row.id] = true
     }
@@ -954,7 +954,7 @@ function getTaskTextValue(task: Task) {
     labelByValue[task.label].label,
     statusByValue[task.status].label,
     priorityByValue[task.priority].label,
-  ].join(' ')
+  ].join(" ")
 }
 
 function toSortDescriptor(sorting: SortingState): SortDescriptor | undefined {
@@ -963,7 +963,7 @@ function toSortDescriptor(sorting: SortingState): SortDescriptor | undefined {
 
   return {
     column: firstSort.id,
-    direction: firstSort.desc ? 'descending' : 'ascending',
+    direction: firstSort.desc ? "descending" : "ascending",
   }
 }
 
@@ -971,7 +971,7 @@ function toSortingState(descriptor: SortDescriptor): SortingState {
   return [
     {
       id: String(descriptor.column),
-      desc: descriptor.direction === 'descending',
+      desc: descriptor.direction === "descending",
     },
   ]
 }
@@ -988,9 +988,9 @@ interface TaskColumnMeta {
   cellClassName?: string
 }
 
-type LabelValue = (typeof labels)[number]['value']
-type StatusValue = (typeof statuses)[number]['value']
-type PriorityValue = (typeof priorities)[number]['value']
+type LabelValue = (typeof labels)[number]["value"]
+type StatusValue = (typeof statuses)[number]["value"]
+type PriorityValue = (typeof priorities)[number]["value"]
 
 interface Task {
   id: string

@@ -1,36 +1,36 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import * as ButtonPrimitives from 'react-aria-components/Button'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as HeaderPrimitives from 'react-aria-components/Header'
-import * as HeadingPrimitives from 'react-aria-components/Heading'
-import * as LinkPrimitives from 'react-aria-components/Link'
-import { Provider } from 'react-aria-components/slots'
-import { useSlotId } from 'react-aria/private/utils/useId'
-import { useControlledState } from 'react-stately/useControlledState'
+import * as React from "react"
+import * as ButtonPrimitives from "react-aria-components/Button"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as HeaderPrimitives from "react-aria-components/Header"
+import * as HeadingPrimitives from "react-aria-components/Heading"
+import * as LinkPrimitives from "react-aria-components/Link"
+import { Provider } from "react-aria-components/slots"
+import { useSlotId } from "react-aria/private/utils/useId"
+import { useControlledState } from "react-stately/useControlledState"
 
-import { useIsMobile } from '@/registry/hooks/use-mobile'
-import { PanelLeftIcon } from '@/registry/icons'
-import { createContext } from '@/registry/lib/context'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { Drawer } from '@/registry/ui/drawer'
-import { Separator } from '@/registry/ui/separator'
-import { Skeleton } from '@/registry/ui/skeleton'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
-import type { TooltipContentProps } from '@/registry/ui/tooltip'
+import { useIsMobile } from "@/registry/hooks/use-mobile"
+import { PanelLeftIcon } from "@/registry/icons"
+import { createContext } from "@/registry/lib/context"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { Drawer } from "@/registry/ui/drawer"
+import { Separator } from "@/registry/ui/separator"
+import { Skeleton } from "@/registry/ui/skeleton"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import type { TooltipContentProps } from "@/registry/ui/tooltip"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: sidebarStyles
 
-const SIDEBAR_WIDTH = '16rem'
-const SIDEBAR_WIDTH_ICON = '3rem'
-const SIDEBAR_WIDTH_MOBILE = '18rem'
-const SIDEBAR_KEYBOARD_SHORTCUT = 'b'
+const SIDEBAR_WIDTH = "16rem"
+const SIDEBAR_WIDTH_ICON = "3rem"
+const SIDEBAR_WIDTH_MOBILE = "18rem"
+const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 
-type SidebarState = 'expanded' | 'collapsed'
+type SidebarState = "expanded" | "collapsed"
 
 interface SidebarContextValue {
   state: SidebarState
@@ -43,18 +43,18 @@ interface SidebarContextValue {
 }
 
 const [SidebarContext, useSidebarContext] = createContext<SidebarContextValue>({
-  name: 'SidebarProvider',
+  name: "SidebarProvider",
   strict: true,
 })
 
 /** Access the sidebar's open/collapsed state and toggles from any descendant. */
 function useSidebar(): SidebarContextValue {
-  return useSidebarContext('useSidebar')
+  return useSidebarContext("useSidebar")
 }
 
 // MARK: Separator
 
-interface SidebarProviderProps extends React.ComponentProps<'div'> {
+interface SidebarProviderProps extends React.ComponentProps<"div"> {
   defaultOpen?: boolean
   isOpen?: boolean
   onOpenChange?: (open: boolean) => void
@@ -99,11 +99,11 @@ function SidebarProvider({
         toggleSidebar()
       }
     }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
   }, [toggleSidebar])
 
-  const state: SidebarState = isOpen ? 'expanded' : 'collapsed'
+  const state: SidebarState = isOpen ? "expanded" : "collapsed"
 
   const value = React.useMemo<SidebarContextValue>(
     () => ({
@@ -124,8 +124,8 @@ function SidebarProvider({
         data-slot="sidebar-wrapper"
         style={
           {
-            '--sidebar-width': SIDEBAR_WIDTH,
-            '--sidebar-width-icon': SIDEBAR_WIDTH_ICON,
+            "--sidebar-width": SIDEBAR_WIDTH,
+            "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
             ...style,
           } as React.CSSProperties
         }
@@ -140,14 +140,14 @@ function SidebarProvider({
 
 // MARK: Separator
 
-type SidebarCollapsible = 'offcanvas' | 'icon' | 'none'
+type SidebarCollapsible = "offcanvas" | "icon" | "none"
 
 // Exposes the owning Sidebar's `collapsible` mode to descendants (e.g. so menu
 // buttons only show their collapsed tooltip when the sidebar actually shrinks to
 // icons, not for offcanvas/none).
 const SidebarItemContext = React.createContext<{
   collapsible: SidebarCollapsible
-}>({ collapsible: 'offcanvas' })
+}>({ collapsible: "offcanvas" })
 
 /**
  * Wraps the sidebar's children so a `<Heading>` (e.g. in `SidebarHeader`) labels
@@ -174,20 +174,20 @@ function SidebarNav({
   )
 }
 
-interface SidebarProps extends React.ComponentProps<'nav'> {
-  side?: 'left' | 'right'
+interface SidebarProps extends React.ComponentProps<"nav"> {
+  side?: "left" | "right"
   /**
    * The visual style of the sidebar. `inset` is designed for `side="left"`.
    * @default 'sidebar'
    */
-  variant?: 'sidebar' | 'floating' | 'inset'
+  variant?: "sidebar" | "floating" | "inset"
   collapsible?: SidebarCollapsible
 }
 
 function Sidebar({
-  side = 'left',
-  variant = 'sidebar',
-  collapsible = 'offcanvas',
+  side = "left",
+  variant = "sidebar",
+  collapsible = "offcanvas",
   className,
   children,
   ...props
@@ -196,13 +196,13 @@ function Sidebar({
   const { root, gap, container, inner, mobile } = useStyles()()
   const headingId = useSlotId()
 
-  if (collapsible === 'none') {
+  if (collapsible === "none") {
     return (
       <nav
         data-slot="sidebar"
         aria-label="Sidebar"
         aria-labelledby={headingId}
-        className={inner({ className: cn('w-(--sidebar-width)', className) })}
+        className={inner({ className: cn("w-(--sidebar-width)", className) })}
         {...props}
       >
         <SidebarNav headingId={headingId} collapsible={collapsible}>
@@ -220,7 +220,7 @@ function Sidebar({
         placement={side}
         className="w-(--sidebar-width) max-w-(--sidebar-width) border-0"
         style={
-          { '--sidebar-width': SIDEBAR_WIDTH_MOBILE } as React.CSSProperties
+          { "--sidebar-width": SIDEBAR_WIDTH_MOBILE } as React.CSSProperties
         }
       >
         <nav
@@ -244,7 +244,7 @@ function Sidebar({
       className={root()}
       data-slot="sidebar"
       data-state={state}
-      data-collapsible={state === 'collapsed' ? collapsible : ''}
+      data-collapsible={state === "collapsed" ? collapsible : ""}
       data-variant={variant}
       data-side={side}
     >
@@ -268,7 +268,7 @@ function Sidebar({
 
 // MARK: Separator
 
-interface SidebarInsetProps extends React.ComponentProps<'main'> {}
+interface SidebarInsetProps extends React.ComponentProps<"main"> {}
 
 function SidebarInset({ className, ...props }: SidebarInsetProps) {
   const { inset } = useStyles()()
@@ -298,7 +298,7 @@ function SidebarTrigger({
       size="sm"
       isIconOnly
       aria-label="Toggle Sidebar"
-      className={cn('size-7', className)}
+      className={cn("size-7", className)}
       onPress={(event) => {
         onPress?.(event)
         toggleSidebar()
@@ -349,7 +349,7 @@ function SidebarHeader({ className, ...props }: SidebarHeaderProps) {
 
 // MARK: Separator
 
-interface SidebarFooterProps extends React.ComponentProps<'div'> {}
+interface SidebarFooterProps extends React.ComponentProps<"div"> {}
 
 function SidebarFooter({ className, ...props }: SidebarFooterProps) {
   const { footer } = useStyles()()
@@ -366,7 +366,7 @@ function SidebarFooter({ className, ...props }: SidebarFooterProps) {
 
 // MARK: Separator
 
-interface SidebarContentProps extends React.ComponentProps<'div'> {}
+interface SidebarContentProps extends React.ComponentProps<"div"> {}
 
 function SidebarContent({ className, ...props }: SidebarContentProps) {
   const { content } = useStyles()()
@@ -394,7 +394,7 @@ function SidebarSeparator({ className, ...props }: SidebarSeparatorProps) {
 
 // MARK: Separator
 
-interface SidebarGroupProps extends React.ComponentProps<'div'> {}
+interface SidebarGroupProps extends React.ComponentProps<"div"> {}
 
 function SidebarGroup({ className, ...props }: SidebarGroupProps) {
   const { group } = useStyles()()
@@ -450,7 +450,7 @@ function SidebarGroupAction({ className, ...props }: SidebarGroupActionProps) {
 
 // MARK: Separator
 
-interface SidebarGroupContentProps extends React.ComponentProps<'div'> {}
+interface SidebarGroupContentProps extends React.ComponentProps<"div"> {}
 
 function SidebarGroupContent({
   className,
@@ -468,7 +468,7 @@ function SidebarGroupContent({
 
 // MARK: Separator
 
-interface SidebarMenuProps extends React.ComponentProps<'ul'> {}
+interface SidebarMenuProps extends React.ComponentProps<"ul"> {}
 
 function SidebarMenu({ className, ...props }: SidebarMenuProps) {
   const { menu } = useStyles()()
@@ -479,7 +479,7 @@ function SidebarMenu({ className, ...props }: SidebarMenuProps) {
 
 // MARK: Separator
 
-interface SidebarMenuItemProps extends React.ComponentProps<'li'> {}
+interface SidebarMenuItemProps extends React.ComponentProps<"li"> {}
 
 function SidebarMenuItem({ className, ...props }: SidebarMenuItemProps) {
   const { menuItem } = useStyles()()
@@ -496,28 +496,28 @@ function SidebarMenuItem({ className, ...props }: SidebarMenuItemProps) {
 
 interface SidebarMenuButtonProps extends Omit<
   React.ComponentProps<typeof ButtonPrimitives.Button>,
-  'className' | 'render' | 'children'
+  "className" | "render" | "children"
 > {
   /** Marks the item as the active page (highlighted, `aria-current` on links). */
   isActive?: boolean
   /** Control height/font. @default 'md' */
-  size?: 'sm' | 'md' | 'lg'
+  size?: "sm" | "md" | "lg"
   /** Visual style. @default 'default' */
-  variant?: 'default' | 'outline'
+  variant?: "default" | "outline"
   /** Label shown in a tooltip when the sidebar is collapsed to icons. */
   tooltip?: React.ReactNode | TooltipContentProps
   /** Render as a link to this destination instead of a button. */
   href?: string
   /** Escape hatch to render the link with a custom element (e.g. a router link). */
-  render?: LinkPrimitives.LinkProps['render']
+  render?: LinkPrimitives.LinkProps["render"]
   className?: string
   children?: React.ReactNode
 }
 
 function SidebarMenuButton({
   isActive = false,
-  size = 'md',
-  variant = 'default',
+  size = "md",
+  variant = "default",
   tooltip,
   href,
   render,
@@ -530,10 +530,10 @@ function SidebarMenuButton({
   const { menuButton } = useStyles()()
 
   const sharedProps = {
-    'data-slot': 'sidebar-menu-button',
-    'data-size': size,
-    'data-variant': variant,
-    'data-active': isActive || undefined,
+    "data-slot": "sidebar-menu-button",
+    "data-size": size,
+    "data-variant": variant,
+    "data-active": isActive || undefined,
     className: menuButton({ className }),
   }
 
@@ -542,7 +542,7 @@ function SidebarMenuButton({
       <LinkPrimitives.Link
         href={href}
         render={render}
-        aria-current={isActive ? 'page' : undefined}
+        aria-current={isActive ? "page" : undefined}
         {...sharedProps}
         {...(props as Record<string, unknown>)}
       >
@@ -560,7 +560,7 @@ function SidebarMenuButton({
 
   const tooltipContentProps: TooltipContentProps =
     tooltip != null &&
-    typeof tooltip === 'object' &&
+    typeof tooltip === "object" &&
     !React.isValidElement(tooltip) &&
     !Array.isArray(tooltip)
       ? (tooltip as TooltipContentProps)
@@ -569,7 +569,7 @@ function SidebarMenuButton({
   // Only surface the tooltip when the sidebar is actually shrunk to icons —
   // not for `offcanvas` (whole panel hidden) or `none` (labels still visible).
   const showTooltip =
-    state === 'collapsed' && collapsible === 'icon' && !isMobile
+    state === "collapsed" && collapsible === "icon" && !isMobile
 
   return (
     <Tooltip isDisabled={!showTooltip} delay={0}>
@@ -608,7 +608,7 @@ function SidebarMenuAction({
 
 // MARK: Separator
 
-interface SidebarMenuBadgeProps extends React.ComponentProps<'div'> {}
+interface SidebarMenuBadgeProps extends React.ComponentProps<"div"> {}
 
 function SidebarMenuBadge({ className, ...props }: SidebarMenuBadgeProps) {
   const { menuBadge } = useStyles()()
@@ -623,7 +623,7 @@ function SidebarMenuBadge({ className, ...props }: SidebarMenuBadgeProps) {
 
 // MARK: Separator
 
-interface SidebarMenuSkeletonProps extends React.ComponentProps<'div'> {
+interface SidebarMenuSkeletonProps extends React.ComponentProps<"div"> {
   /** Render a leading icon-sized placeholder. */
   showIcon?: boolean
 }
@@ -655,7 +655,7 @@ function SidebarMenuSkeleton({
       {showIcon && <Skeleton className={menuSkeletonIcon()} />}
       <Skeleton
         className={menuSkeletonText()}
-        style={{ '--skeleton-width': width } as React.CSSProperties}
+        style={{ "--skeleton-width": width } as React.CSSProperties}
       />
     </div>
   )
@@ -663,7 +663,7 @@ function SidebarMenuSkeleton({
 
 // MARK: Separator
 
-interface SidebarMenuSubProps extends React.ComponentProps<'ul'> {}
+interface SidebarMenuSubProps extends React.ComponentProps<"ul"> {}
 
 function SidebarMenuSub({ className, ...props }: SidebarMenuSubProps) {
   const { menuSub } = useStyles()()
@@ -678,7 +678,7 @@ function SidebarMenuSub({ className, ...props }: SidebarMenuSubProps) {
 
 // MARK: Separator
 
-interface SidebarMenuSubItemProps extends React.ComponentProps<'li'> {}
+interface SidebarMenuSubItemProps extends React.ComponentProps<"li"> {}
 
 function SidebarMenuSubItem({ className, ...props }: SidebarMenuSubItemProps) {
   const { menuSubItem } = useStyles()()
@@ -695,23 +695,23 @@ function SidebarMenuSubItem({ className, ...props }: SidebarMenuSubItemProps) {
 
 interface SidebarMenuSubButtonProps extends Omit<
   React.ComponentProps<typeof ButtonPrimitives.Button>,
-  'className' | 'render' | 'children'
+  "className" | "render" | "children"
 > {
   /** Marks the item as the active page (highlighted, `aria-current` on links). */
   isActive?: boolean
   /** Control font size. @default 'md' */
-  size?: 'sm' | 'md'
+  size?: "sm" | "md"
   /** Render as a link to this destination instead of a button. */
   href?: string
   /** Escape hatch to render the link with a custom element (e.g. a router link). */
-  render?: LinkPrimitives.LinkProps['render']
+  render?: LinkPrimitives.LinkProps["render"]
   className?: string
   children?: React.ReactNode
 }
 
 function SidebarMenuSubButton({
   isActive = false,
-  size = 'md',
+  size = "md",
   href,
   render,
   className,
@@ -721,10 +721,10 @@ function SidebarMenuSubButton({
   const { menuSubButton } = useStyles()()
 
   const sharedProps = {
-    'data-slot': 'sidebar-menu-sub-button',
-    'data-sidebar': 'menu-sub-button',
-    'data-size': size,
-    'data-active': isActive || undefined,
+    "data-slot": "sidebar-menu-sub-button",
+    "data-sidebar": "menu-sub-button",
+    "data-size": size,
+    "data-active": isActive || undefined,
     className: menuSubButton({ className }),
   }
 
@@ -733,7 +733,7 @@ function SidebarMenuSubButton({
       <LinkPrimitives.Link
         href={href}
         render={render}
-        aria-current={isActive ? 'page' : undefined}
+        aria-current={isActive ? "page" : undefined}
         {...sharedProps}
         {...(props as Record<string, unknown>)}
       >

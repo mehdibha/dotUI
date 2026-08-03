@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Button } from '@/registry/ui/button'
-import { Description, FieldError, Label } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
-import { OTPField } from '@/registry/ui/otp-field'
+import { Button } from "@/registry/ui/button"
+import { Description, FieldError, Label } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
+import { OTPField } from "@/registry/ui/otp-field"
 
 export default function Form() {
-  const [value, setValue] = React.useState('')
+  const [value, setValue] = React.useState("")
   const [submitted, setSubmitted] = React.useState(false)
   const isInvalid = submitted && value.length !== 6
 

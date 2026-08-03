@@ -5,18 +5,18 @@
 
 /** D1 — the 12 job slots, in ladder order. */
 export const STEPS = [
-  '25',
-  '50',
-  '100',
-  '200',
-  '300',
-  '400',
-  '500',
-  '600',
-  '700',
-  '800',
-  '900',
-  '950',
+  "25",
+  "50",
+  "100",
+  "200",
+  "300",
+  "400",
+  "500",
+  "600",
+  "700",
+  "800",
+  "900",
+  "950",
 ] as const
 export type StepName = (typeof STEPS)[number]
 
@@ -163,10 +163,10 @@ export const SOLID_POLE_LC_THRESHOLD = 40
 
 /** D10 — status seed defaults (identity-preserving CVD search winners). */
 export const STATUS_SEEDS = {
-  success: '#6ac48c',
-  warning: '#eab308',
-  danger: '#ef4444',
-  info: '#4862ff',
+  success: "#6ac48c",
+  warning: "#eab308",
+  danger: "#ef4444",
+  info: "#4862ff",
 } as const
 export type StatusName = keyof typeof STATUS_SEEDS
 
@@ -201,11 +201,11 @@ export const LIGHT_BG_LSTAR = 99.0
  */
 export const TEXT_TARGETS = {
   light: {
-    '900': { chromatic: 44, neutral: 42 },
-    '950': { chromatic: 24, neutral: 12 },
+    "900": { chromatic: 44, neutral: 42 },
+    "950": { chromatic: 24, neutral: 12 },
   },
   dark: {
-    '900': { chromatic: 64, neutral: 72 },
-    '950': { chromatic: 88, neutral: 95 },
+    "900": { chromatic: 64, neutral: 72 },
+    "950": { chromatic: 88, neutral: 95 },
   },
 } as const

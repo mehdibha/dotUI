@@ -1,8 +1,8 @@
-import { Button } from '@/registry/ui/button'
-import { Description, Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { Skeleton } from '@/registry/ui/skeleton'
-import { TextField } from '@/registry/ui/text-field'
+import { Button } from "@/registry/ui/button"
+import { Description, Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { Skeleton } from "@/registry/ui/skeleton"
+import { TextField } from "@/registry/ui/text-field"
 
 export function SkeletonDemo() {
   return (

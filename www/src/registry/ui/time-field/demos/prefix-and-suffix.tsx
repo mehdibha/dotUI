@@ -1,6 +1,6 @@
-import { TimerIcon } from '@/registry/__generated__/icons'
-import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { TimeField } from '@/registry/ui/time-field'
+import { TimerIcon } from "@/registry/__generated__/icons"
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { TimeField } from "@/registry/ui/time-field"
 
 export default function Demo() {
   return (

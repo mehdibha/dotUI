@@ -4,23 +4,23 @@ import {
   Fieldset,
   Label,
   Legend,
-} from '@/registry/ui/field'
-import { Switch, SwitchControl, SwitchIndicator } from '@/registry/ui/switch'
+} from "@/registry/ui/field"
+import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
 
 const channels = [
   {
-    label: 'Email',
-    description: 'Updates sent to your inbox.',
+    label: "Email",
+    description: "Updates sent to your inbox.",
     defaultSelected: true,
   },
   {
-    label: 'Push',
-    description: 'Alerts on your devices.',
+    label: "Push",
+    description: "Alerts on your devices.",
     defaultSelected: true,
   },
   {
-    label: 'SMS',
-    description: 'Text messages for urgent items.',
+    label: "SMS",
+    description: "Text messages for urgent items.",
     defaultSelected: false,
   },
 ]

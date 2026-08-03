@@ -1,5 +1,5 @@
-import { AlertTriangleIcon } from '@/registry/__generated__/icons'
-import { Alert, AlertDescription, AlertTitle } from '@/registry/ui/alert'
+import { AlertTriangleIcon } from "@/registry/__generated__/icons"
+import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert"
 
 export default function Demo() {
   return (

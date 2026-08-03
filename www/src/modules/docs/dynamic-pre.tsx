@@ -1,14 +1,14 @@
-import { useDeferredValue, useMemo } from 'react'
-import { Fragment, jsx, jsxs } from 'react/jsx-runtime'
-import { toJsxRuntime } from 'hast-util-to-jsx-runtime'
+import { useDeferredValue, useMemo } from "react"
+import { Fragment, jsx, jsxs } from "react/jsx-runtime"
+import { toJsxRuntime } from "hast-util-to-jsx-runtime"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
-import { Pre } from './code-block'
-import { highlightTsx } from './highlight'
+import { Pre } from "./code-block"
+import { highlightTsx } from "./highlight"
 
 export interface DynamicPreProps {
-  lang: 'tsx'
+  lang: "tsx"
   children: string
   className?: string
 }

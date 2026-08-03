@@ -7,7 +7,7 @@ description: >-
   and code split groupings.
 type: core
 library: tanstack-router
-library_version: '1.166.2'
+library_version: "1.166.2"
 sources:
   - TanStack/router:packages/router-plugin/src
   - TanStack/router:docs/router/routing/file-based-routing.md
@@ -32,15 +32,15 @@ npm install -D @tanstack/router-plugin
 
 ```ts
 // vite.config.ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { tanstackRouter } from '@tanstack/router-plugin/vite'
+import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
+import { tanstackRouter } from "@tanstack/router-plugin/vite"
 
 export default defineConfig({
   plugins: [
     // MUST come before react()
     tanstackRouter({
-      target: 'react',
+      target: "react",
       autoCodeSplitting: true,
     }),
     react(),
@@ -52,12 +52,12 @@ export default defineConfig({
 
 ```ts
 // webpack.config.js
-const { tanstackRouter } = require('@tanstack/router-plugin/webpack')
+const { tanstackRouter } = require("@tanstack/router-plugin/webpack")
 
 module.exports = {
   plugins: [
     tanstackRouter({
-      target: 'react',
+      target: "react",
       autoCodeSplitting: true,
     }),
   ],
@@ -68,12 +68,12 @@ module.exports = {
 
 ```ts
 // rspack.config.js
-const { tanstackRouter } = require('@tanstack/router-plugin/rspack')
+const { tanstackRouter } = require("@tanstack/router-plugin/rspack")
 
 module.exports = {
   plugins: [
     tanstackRouter({
-      target: 'react',
+      target: "react",
       autoCodeSplitting: true,
     }),
   ],
@@ -83,13 +83,13 @@ module.exports = {
 ### esbuild
 
 ```ts
-import { tanstackRouter } from '@tanstack/router-plugin/esbuild'
-import esbuild from 'esbuild'
+import { tanstackRouter } from "@tanstack/router-plugin/esbuild"
+import esbuild from "esbuild"
 
 esbuild.build({
   plugins: [
     tanstackRouter({
-      target: 'react',
+      target: "react",
       autoCodeSplitting: true,
     }),
   ],
@@ -122,17 +122,17 @@ esbuild.build({
 
 ```ts
 tanstackRouter({
-  target: 'react',
+  target: "react",
   autoCodeSplitting: true,
   codeSplittingOptions: {
     // Default groupings for all routes
-    defaultBehavior: [['component'], ['errorComponent'], ['notFoundComponent']],
+    defaultBehavior: [["component"], ["errorComponent"], ["notFoundComponent"]],
 
     // Per-route custom splitting
     splitBehavior: ({ routeId }) => {
-      if (routeId === '/dashboard') {
+      if (routeId === "/dashboard") {
         // Keep loader and component together for dashboard
-        return [['loader', 'component'], ['errorComponent']]
+        return [["loader", "component"], ["errorComponent"]]
       }
       // Return undefined to use defaultBehavior
     },
@@ -155,10 +155,10 @@ tanstackRouter({
 ### Virtual Route Config
 
 ```ts
-import { routes } from './routes'
+import { routes } from "./routes"
 
 tanstackRouter({
-  target: 'react',
+  target: "react",
   virtualRouteConfig: routes, // or './routes.ts'
 })
 ```
@@ -182,7 +182,7 @@ import {
   tanstackRouterGenerator, // Generator only
   tanStackRouterCodeSplitter, // Code splitter only
   tanstackRouterAutoImport, // Auto-import only
-} from '@tanstack/router-plugin/vite'
+} from "@tanstack/router-plugin/vite"
 ```
 
 ## Common Mistakes
@@ -193,10 +193,10 @@ The router plugin must come before the framework plugin. Otherwise, route genera
 
 ```ts
 // WRONG — react() before tanstackRouter()
-plugins: [react(), tanstackRouter({ target: 'react' })]
+plugins: [react(), tanstackRouter({ target: "react" })]
 
 // CORRECT — tanstackRouter() first
-plugins: [tanstackRouter({ target: 'react' }), react()]
+plugins: [tanstackRouter({ target: "react" }), react()]
 ```
 
 ### 2. HIGH: Missing target option for non-React frameworks
@@ -208,7 +208,7 @@ The `target` defaults to `'react'`. For Solid or Vue, you must set it explicitly
 tanstackRouter({ autoCodeSplitting: true })
 
 // CORRECT for Solid
-tanstackRouter({ target: 'solid', autoCodeSplitting: true })
+tanstackRouter({ target: "solid", autoCodeSplitting: true })
 ```
 
 ### 3. MEDIUM: Confusing autoCodeSplitting with manual lazy routes
@@ -217,11 +217,11 @@ When `autoCodeSplitting` is enabled, the plugin handles splitting automatically.
 
 ```tsx
 // WRONG — manual lazy loading with autoCodeSplitting enabled
-const LazyAbout = lazyRouteComponent(() => import('./about'))
+const LazyAbout = lazyRouteComponent(() => import("./about"))
 
 // CORRECT — just write normal route files, plugin handles splitting
 // src/routes/about.tsx
-export const Route = createFileRoute('/about')({
+export const Route = createFileRoute("/about")({
   component: AboutPage,
 })
 

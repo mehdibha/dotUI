@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import * as AutocompletePrimitive from 'react-aria-components/Autocomplete'
+import * as AutocompletePrimitive from "react-aria-components/Autocomplete"
 
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { SearchField } from '@/registry/ui/search-field'
+} from "@/registry/ui/list-box"
+import { SearchField } from "@/registry/ui/search-field"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: commandStyles
 
@@ -18,8 +18,8 @@ import { useStyles } from './styles'
 
 interface CommandProps<T extends object>
   extends
-    Omit<AutocompletePrimitive.AutocompleteProps<T>, 'children' | 'filter'>,
-    Omit<React.ComponentProps<'div'>, 'slot'> {
+    Omit<AutocompletePrimitive.AutocompleteProps<T>, "children" | "filter">,
+    Omit<React.ComponentProps<"div">, "slot"> {
   filter?: Intl.CollatorOptions
 }
 
@@ -31,7 +31,7 @@ function Command<T extends object>({
 }: CommandProps<T>) {
   const styles = useStyles()
   const { contains } = AutocompletePrimitive.useFilter({
-    sensitivity: 'base',
+    sensitivity: "base",
     ignorePunctuation: true,
     ...filter,
   })

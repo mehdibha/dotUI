@@ -1,8 +1,8 @@
-import { ArrowRightIcon, BadgeCheckIcon } from '@/registry/icons'
-import { Badge } from '@/registry/ui/badge'
-import { Loader } from '@/registry/ui/loader'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { ArrowRightIcon, BadgeCheckIcon } from "@/registry/icons"
+import { Badge } from "@/registry/ui/badge"
+import { Loader } from "@/registry/ui/loader"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function BadgeExample() {
   return (
@@ -20,21 +20,21 @@ export default function BadgeExample() {
 function BadgeVariants() {
   return (
     <Example title="Variants">
-      {(['solid', 'subtle'] as const).map((appearance) => (
+      {(["solid", "subtle"] as const).map((appearance) => (
         <div key={appearance} className="flex flex-wrap gap-2">
           {(
             [
-              'neutral',
-              'accent',
-              'danger',
-              'success',
-              'warning',
-              'info',
+              "neutral",
+              "accent",
+              "danger",
+              "success",
+              "warning",
+              "info",
             ] as const
           ).map((variant) => (
             <Badge key={variant} appearance={appearance} variant={variant}>
               {variant}
-              {appearance === 'solid' ? '' : '-subtle'}
+              {appearance === "solid" ? "" : "-subtle"}
             </Badge>
           ))}
         </div>
@@ -48,7 +48,7 @@ function BadgeWithIconLeft() {
     <Example title="Icon Left" className="max-w-fit">
       <div className="flex flex-wrap gap-2">
         {(
-          ['neutral', 'accent', 'danger', 'success', 'warning', 'info'] as const
+          ["neutral", "accent", "danger", "success", "warning", "info"] as const
         ).map((variant) => (
           <Badge key={variant} variant={variant}>
             <BadgeCheckIcon data-icon="inline-start" />
@@ -65,7 +65,7 @@ function BadgeWithIconRight() {
     <Example title="Icon Right" className="max-w-fit">
       <div className="flex flex-wrap gap-2">
         {(
-          ['neutral', 'accent', 'danger', 'success', 'warning', 'info'] as const
+          ["neutral", "accent", "danger", "success", "warning", "info"] as const
         ).map((variant) => (
           <Badge key={variant} variant={variant}>
             {variant}
@@ -82,7 +82,7 @@ function BadgeWithSpinner() {
     <Example title="With Spinner" className="max-w-fit">
       <div className="flex flex-wrap gap-2">
         {(
-          ['neutral', 'accent', 'danger', 'success', 'warning', 'info'] as const
+          ["neutral", "accent", "danger", "success", "warning", "info"] as const
         ).map((variant) => (
           <Badge key={variant} variant={variant}>
             <Loader />

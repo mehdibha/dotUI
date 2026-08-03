@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import type * as MenuPrimitives from 'react-aria-components/Menu'
+import * as React from "react"
+import type * as MenuPrimitives from "react-aria-components/Menu"
 
-import { InfoIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
+import { InfoIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import {
   Dialog,
   DialogBody,
@@ -14,7 +14,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
+} from "@/registry/ui/dialog"
 import {
   Description,
   Field,
@@ -23,75 +23,75 @@ import {
   Fieldset,
   Label,
   Legend,
-} from '@/registry/ui/field'
+} from "@/registry/ui/field"
 import {
   Input,
   InputGroup,
   InputGroupAddon,
   TextArea,
-} from '@/registry/ui/input'
-import { Kbd } from '@/registry/ui/kbd'
-import { Modal } from '@/registry/ui/modal'
+} from "@/registry/ui/input"
+import { Kbd } from "@/registry/ui/kbd"
+import { Modal } from "@/registry/ui/modal"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { Switch, SwitchControl } from '@/registry/ui/switch'
-import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
-import { TextField } from '@/registry/ui/text-field'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+} from "@/registry/ui/select"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
+import { TextField } from "@/registry/ui/text-field"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 const spokenLanguages = [
-  { label: 'Auto', value: 'auto' },
-  { label: 'English', value: 'en' },
-  { label: 'Spanish', value: 'es' },
-  { label: 'French', value: 'fr' },
-  { label: 'German', value: 'de' },
-  { label: 'Italian', value: 'it' },
-  { label: 'Portuguese', value: 'pt' },
-  { label: 'Russian', value: 'ru' },
-  { label: 'Chinese', value: 'zh' },
-  { label: 'Japanese', value: 'ja' },
-  { label: 'Korean', value: 'ko' },
-  { label: 'Arabic', value: 'ar' },
-  { label: 'Hindi', value: 'hi' },
-  { label: 'Bengali', value: 'bn' },
-  { label: 'Telugu', value: 'te' },
-  { label: 'Marathi', value: 'mr' },
-  { label: 'Kannada', value: 'kn' },
-  { label: 'Malayalam', value: 'ml' },
+  { label: "Auto", value: "auto" },
+  { label: "English", value: "en" },
+  { label: "Spanish", value: "es" },
+  { label: "French", value: "fr" },
+  { label: "German", value: "de" },
+  { label: "Italian", value: "it" },
+  { label: "Portuguese", value: "pt" },
+  { label: "Russian", value: "ru" },
+  { label: "Chinese", value: "zh" },
+  { label: "Japanese", value: "ja" },
+  { label: "Korean", value: "ko" },
+  { label: "Arabic", value: "ar" },
+  { label: "Hindi", value: "hi" },
+  { label: "Bengali", value: "bn" },
+  { label: "Telugu", value: "te" },
+  { label: "Marathi", value: "mr" },
+  { label: "Kannada", value: "kn" },
+  { label: "Malayalam", value: "ml" },
 ]
 
 const voices = [
-  { label: 'Samantha', value: 'samantha' },
-  { label: 'Alex', value: 'alex' },
-  { label: 'Fred', value: 'fred' },
-  { label: 'Victoria', value: 'victoria' },
-  { label: 'Tom', value: 'tom' },
-  { label: 'Karen', value: 'karen' },
-  { label: 'Sam', value: 'sam' },
-  { label: 'Daniel', value: 'daniel' },
+  { label: "Samantha", value: "samantha" },
+  { label: "Alex", value: "alex" },
+  { label: "Fred", value: "fred" },
+  { label: "Victoria", value: "victoria" },
+  { label: "Tom", value: "tom" },
+  { label: "Karen", value: "karen" },
+  { label: "Sam", value: "sam" },
+  { label: "Daniel", value: "daniel" },
 ]
 
 const themes = [
-  { label: 'Light', value: 'light' },
-  { label: 'Dark', value: 'dark' },
-  { label: 'System', value: 'system' },
+  { label: "Light", value: "light" },
+  { label: "Dark", value: "dark" },
+  { label: "System", value: "system" },
 ]
 
 const accents = [
-  { label: 'Default', value: 'default' },
-  { label: 'Red', value: 'red' },
-  { label: 'Blue', value: 'blue' },
-  { label: 'Green', value: 'green' },
-  { label: 'Purple', value: 'purple' },
-  { label: 'Pink', value: 'pink' },
+  { label: "Default", value: "default" },
+  { label: "Red", value: "red" },
+  { label: "Blue", value: "blue" },
+  { label: "Green", value: "green" },
+  { label: "Purple", value: "purple" },
+  { label: "Pink", value: "pink" },
 ]
 
 export default function Demo() {
-  const [tab, setTab] = React.useState<MenuPrimitives.Key>('general')
+  const [tab, setTab] = React.useState<MenuPrimitives.Key>("general")
 
   return (
     <Dialog>

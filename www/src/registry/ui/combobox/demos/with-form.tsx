@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import { ChevronDownIcon } from 'lucide-react'
-import * as FormPrimitives from 'react-aria-components/Form'
+import { ChevronDownIcon } from "lucide-react"
+import * as FormPrimitives from "react-aria-components/Form"
 
-import { Button } from '@/registry/ui/button'
-import { Card, CardContent, CardFooter } from '@/registry/ui/card'
-import { Combobox } from '@/registry/ui/combobox'
-import { Label } from '@/registry/ui/field'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
+import { Button } from "@/registry/ui/button"
+import { Card, CardContent, CardFooter } from "@/registry/ui/card"
+import { Combobox } from "@/registry/ui/combobox"
+import { Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
 
-const frameworks = ['Next.js', 'SvelteKit', 'Nuxt.js', 'Remix', 'Astro']
+const frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"]
 
 export default function Demo() {
   return (
@@ -23,7 +23,7 @@ export default function Demo() {
           onSubmit={(e) => {
             e.preventDefault()
             const data = new FormData(e.currentTarget)
-            alert(`You selected ${data.get('framework')} as your framework.`)
+            alert(`You selected ${data.get("framework")} as your framework.`)
           }}
         >
           <Combobox name="framework" isRequired>

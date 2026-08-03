@@ -1,30 +1,30 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const menuMeta = {
-  name: 'menu',
-  type: 'registry:ui',
-  group: 'menus-lists',
+  name: "menu",
+  type: "registry:ui",
+  group: "menus-lists",
   files: [
     {
-      type: 'registry:ui',
-      path: 'ui/menu/base.tsx',
-      target: 'ui/menu.tsx',
+      type: "registry:ui",
+      path: "ui/menu/base.tsx",
+      target: "ui/menu.tsx",
     },
   ],
   registryDependencies: [
-    'kbd',
-    'responsive',
-    'modal',
-    'drawer',
-    'popover',
-    'text',
+    "kbd",
+    "responsive",
+    "modal",
+    "drawer",
+    "popover",
+    "text",
   ],
   params: {
     highlight: {
-      kind: 'enum',
-      default: 'subtle',
-      values: ['subtle', 'accent'] as const,
-      description: 'How focused/active items are highlighted.',
+      kind: "enum",
+      default: "subtle",
+      values: ["subtle", "accent"] as const,
+      description: "How focused/active items are highlighted.",
     },
   },
 } satisfies RegistryItem

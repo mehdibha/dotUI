@@ -1,6 +1,6 @@
-import { registryUi } from '@/registry/ui/registry'
+import { registryUi } from "@/registry/ui/registry"
 
-import type { DesignSystem } from './types'
+import type { DesignSystem } from "./types"
 
 function deriveDefaults(): DesignSystem {
   const componentParams: Record<string, Record<string, string>> = {}
@@ -14,7 +14,7 @@ function deriveDefaults(): DesignSystem {
     if (Object.keys(entries).length > 0) componentParams[item.name] = entries
   }
 
-  return { componentParams, tokens: {}, density: 'default' }
+  return { componentParams, tokens: {}, density: "default" }
 }
 
 export const DEFAULTS: DesignSystem = deriveDefaults()

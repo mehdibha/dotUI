@@ -11,30 +11,30 @@
  * `name` must match a generated publishable. Missing names return 404.
  */
 
-import { createFileRoute } from '@tanstack/react-router'
-import { format } from 'oxfmt'
+import { createFileRoute } from "@tanstack/react-router"
+import { format } from "oxfmt"
 
 import {
   publishables,
   PUBLISHABLE_NAMES,
-} from '@/registry/__generated__/publishables'
+} from "@/registry/__generated__/publishables"
 import {
   publish,
   selectPublishable,
   setDotuiDepResolver,
   setKnownDotuiNames,
-} from '@/publisher/publish'
+} from "@/publisher/publish"
 
 // Prime the dep rewriter with every component name we ship. Lives at
 // module scope so it runs once per route bundle load.
 setKnownDotuiNames(PUBLISHABLE_NAMES)
 
-import { resolveRequestPreset } from '@/lib/registry-preset'
+import { resolveRequestPreset } from "@/lib/registry-preset"
 
 const JSON_HEADERS = {
-  'Content-Type': 'application/json; charset=utf-8',
-  'Cache-Control':
-    'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
+  "Content-Type": "application/json; charset=utf-8",
+  "Cache-Control":
+    "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
 }
 
 // A fixed, conventional baseline — the consumer reformats with their own
@@ -42,18 +42,18 @@ const JSON_HEADERS = {
 // Only meant to keep the shipped + previewed source readable.
 const OUTPUT_FORMAT = { printWidth: 80 } as const
 
-export const Route = createFileRoute('/r/$name')({
+export const Route = createFileRoute("/r/$name")({
   server: {
     handlers: {
       GET: async ({ request, params }) => {
         const name = params.name
         const loader = publishables[name]
         if (!loader) {
-          return Response.json({ error: 'Not found' }, { status: 404 })
+          return Response.json({ error: "Not found" }, { status: 404 })
         }
 
         const url = new URL(request.url)
-        const encodedPreset = url.searchParams.get('preset') ?? undefined
+        const encodedPreset = url.searchParams.get("preset") ?? undefined
         const preset = await resolveRequestPreset(encodedPreset)
 
         // Configure how transitive deps get rewritten — they become absolute
@@ -61,7 +61,7 @@ export const Route = createFileRoute('/r/$name')({
         // `shadcn add` can follow them without a registry mapping in the
         // consumer's components.json.
         const origin = `${url.protocol}//${url.host}`
-        const depQuery = encodedPreset ? `?preset=${encodedPreset}` : ''
+        const depQuery = encodedPreset ? `?preset=${encodedPreset}` : ""
         setDotuiDepResolver(origin, depQuery)
 
         const mod = await loader()
@@ -78,8 +78,8 @@ export const Route = createFileRoute('/r/$name')({
             item.files.map(async (file) => {
               try {
                 const result = await format(
-                  file.target ?? 'ui.tsx',
-                  file.content ?? '',
+                  file.target ?? "ui.tsx",
+                  file.content ?? "",
                   OUTPUT_FORMAT,
                 )
                 return { ...file, content: result.code }

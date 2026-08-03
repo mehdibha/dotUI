@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { MinusIcon, PlusIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Field, FieldGroup, Label } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { MinusIcon, PlusIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Field, FieldGroup, Label } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 
 export default function Demo() {
   return (

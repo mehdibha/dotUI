@@ -1,25 +1,25 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import * as ButtonPrimitives from 'react-aria-components/Button'
-import * as CollectionPrimitives from 'react-aria-components/Collection'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as TablePrimitives from 'react-aria-components/Table'
-import * as DragAndDropPrimitives from 'react-aria-components/useDragAndDrop'
-import * as VirtualizerPrimitives from 'react-aria-components/Virtualizer'
-import type { GridNode } from 'react-stately/private/grid/GridCollection'
-import type { LayoutNode } from 'react-stately/useVirtualizerState'
+import * as React from "react"
+import * as ButtonPrimitives from "react-aria-components/Button"
+import * as CollectionPrimitives from "react-aria-components/Collection"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as TablePrimitives from "react-aria-components/Table"
+import * as DragAndDropPrimitives from "react-aria-components/useDragAndDrop"
+import * as VirtualizerPrimitives from "react-aria-components/Virtualizer"
+import type { GridNode } from "react-stately/private/grid/GridCollection"
+import type { LayoutNode } from "react-stately/useVirtualizerState"
 
 import {
   ArrowUpIcon,
   ChevronRightIcon,
   GripVerticalIcon,
-} from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
-import { Checkbox } from '@/registry/ui/checkbox'
-import { Loader } from '@/registry/ui/loader'
+} from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Checkbox } from "@/registry/ui/checkbox"
+import { Loader } from "@/registry/ui/loader"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: tableStyles
 
@@ -49,7 +49,7 @@ class TableLayout<T> extends VirtualizerPrimitives.TableLayout<T> {
 
 interface TableVirtualizerProps<T extends object> extends Omit<
   VirtualizerPrimitives.VirtualizerProps<T>,
-  'layout'
+  "layout"
 > {
   rowHeight?: number
   headingHeight?: number
@@ -144,7 +144,7 @@ const TableContainer = React.forwardRef<HTMLDivElement, TableContainerProps>(
     )
   },
 )
-TableContainer.displayName = 'TableContainer'
+TableContainer.displayName = "TableContainer"
 
 // MARK: Separator
 
@@ -200,12 +200,12 @@ const TableHeader = <T extends object>({
       {allowsDragging && (
         <TableChromeColumn className="w-8 min-w-8" {...dragColumnSize} />
       )}
-      {selectionBehavior === 'toggle' && (
+      {selectionBehavior === "toggle" && (
         <TableChromeColumn
           className={selectionColumn()}
           {...selectionColumnSize}
         >
-          {selectionMode === 'multiple' && <Checkbox slot="selection" />}
+          {selectionMode === "multiple" && <Checkbox slot="selection" />}
         </TableChromeColumn>
       )}
       <CollectionPrimitives.Collection
@@ -278,7 +278,7 @@ const TableColumn = ({
                 aria-hidden
                 className={sortIndicator({
                   className:
-                    sortDirection === 'descending' ? 'rotate-180' : undefined,
+                    sortDirection === "descending" ? "rotate-180" : undefined,
                 })}
               />
             )}
@@ -302,7 +302,7 @@ interface TableBodyProps<
 }
 
 const TableBody = <T extends object>({
-  renderEmptyState = () => 'No results found.',
+  renderEmptyState = () => "No results found.",
   children,
   className,
   items,
@@ -394,7 +394,7 @@ function TableRow<T extends object>({
             className: cn(
               className,
               isFocusVisibleWithin &&
-                'bg-accent-muted/70 hover:bg-accent-muted/70 selected:bg-accent-muted',
+                "bg-accent-muted/70 hover:bg-accent-muted/70 selected:bg-accent-muted",
             ),
           }),
       )}
@@ -408,7 +408,7 @@ function TableRow<T extends object>({
           </ButtonPrimitives.Button>
         </TableCell>
       )}
-      {selectionBehavior === 'toggle' && (
+      {selectionBehavior === "toggle" && (
         <TableCell className={selectionCell()}>
           <Checkbox slot="selection" />
         </TableCell>
@@ -459,12 +459,12 @@ const TableCell = ({
               <ButtonPrimitives.Button
                 slot="chevron"
                 className={expandButton({
-                  className: isDisabled ? 'opacity-50' : undefined,
+                  className: isDisabled ? "opacity-50" : undefined,
                 })}
               >
                 <ChevronRightIcon
                   aria-hidden
-                  className={cn(expandIcon(), isExpanded && 'rotate-90')}
+                  className={cn(expandIcon(), isExpanded && "rotate-90")}
                 />
               </ButtonPrimitives.Button>
             )}
@@ -500,7 +500,7 @@ const TableDropIndicator = ({
           <span
             aria-hidden
             className={dropIndicatorLine({
-              className: isDropTarget ? 'opacity-100' : undefined,
+              className: isDropTarget ? "opacity-100" : undefined,
             })}
           />
           {children}

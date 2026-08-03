@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { PinIcon } from '@/registry/__generated__/icons'
-import { ToggleButton } from '@/registry/ui/toggle-button'
+import { PinIcon } from "@/registry/__generated__/icons"
+import { ToggleButton } from "@/registry/ui/toggle-button"
 
 export default function Demo() {
   const [isSelected, setSelected] = React.useState(true)
@@ -18,7 +18,7 @@ export default function Demo() {
         <PinIcon className="rotate-45" />
       </ToggleButton>
       <span className="text-sm text-fg-muted">
-        state: {isSelected ? 'on' : 'off'}
+        state: {isSelected ? "on" : "off"}
       </span>
     </>
   )

@@ -1,7 +1,7 @@
-import { useEffect, useState, type ReactNode } from 'react'
-import { createPortal } from 'react-dom'
+import { useEffect, useState, type ReactNode } from "react"
+import { createPortal } from "react-dom"
 
-const SLOT_ID = 'header-actions'
+const SLOT_ID = "header-actions"
 
 /** Portal target in the global header's right cluster. */
 export function HeaderActionsSlot() {

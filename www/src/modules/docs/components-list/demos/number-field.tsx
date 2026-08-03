@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import { Label } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
+import { Label } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
 import {
   NumberField,
   NumberFieldDecrement,
   NumberFieldIncrement,
-} from '@/registry/ui/number-field'
+} from "@/registry/ui/number-field"
 
-import { DemoPress, useStepAutoplay } from '../autoplay'
+import { DemoPress, useStepAutoplay } from "../autoplay"
 
 export function NumberFieldDemo() {
   const { index, pressing } = useStepAutoplay(5, { initial: 0, dwell: 950 })

@@ -1,14 +1,14 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Alphanumeric from './demos/alphanumeric'
-import Basic from './demos/basic'
-import Controlled from './demos/controlled'
-import Disabled from './demos/disabled'
-import ErrorMessage from './demos/error-message'
-import Form from './demos/form'
-import FourDigits from './demos/four-digits'
-import Separator from './demos/separator'
+import Alphanumeric from "./demos/alphanumeric"
+import Basic from "./demos/basic"
+import Controlled from "./demos/controlled"
+import Disabled from "./demos/disabled"
+import ErrorMessage from "./demos/error-message"
+import Form from "./demos/form"
+import FourDigits from "./demos/four-digits"
+import Separator from "./demos/separator"
 
 export default function OTPFieldExamples() {
   return (

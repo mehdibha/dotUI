@@ -1,5 +1,5 @@
-import type React from 'react'
-import type * as TimeFieldPrimitive from 'react-aria-components/TimeField'
+import type React from "react"
+import type * as TimeFieldPrimitive from "react-aria-components/TimeField"
 
 /**
  * A time picker combines a TimeField and a scrollable time-column popover to
@@ -7,7 +7,7 @@ import type * as TimeFieldPrimitive from 'react-aria-components/TimeField'
  */
 export interface TimePickerProps<
   T extends TimeFieldPrimitive.TimeValue,
-> extends Omit<TimeFieldPrimitive.TimeFieldProps<T>, 'className' | 'children'> {
+> extends Omit<TimeFieldPrimitive.TimeFieldProps<T>, "className" | "children"> {
   className?: string
   children?: React.ReactNode
   /** Whether the popover is open by default (uncontrolled). */
@@ -22,4 +22,4 @@ export interface TimePickerProps<
  * The scrollable hour / minute / second / day-period columns rendered inside a
  * TimePicker popover. Reads and writes the value from the enclosing TimePicker.
  */
-export interface TimePickerColumnsProps extends React.ComponentProps<'div'> {}
+export interface TimePickerColumnsProps extends React.ComponentProps<"div"> {}

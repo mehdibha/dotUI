@@ -2,23 +2,23 @@ import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
 const faqs = [
   {
-    question: 'How do I reset my password?',
+    question: "How do I reset my password?",
     answer:
       'Go to Settings, then Security, and select "Reset password". We will email you a secure link that stays valid for 30 minutes.',
   },
   {
-    question: 'Can I change my plan later?',
+    question: "Can I change my plan later?",
     answer:
-      'Yes. You can upgrade or downgrade at any time from the Billing page. Changes are prorated and take effect immediately.',
+      "Yes. You can upgrade or downgrade at any time from the Billing page. Changes are prorated and take effect immediately.",
   },
   {
-    question: 'Do you offer refunds?',
+    question: "Do you offer refunds?",
     answer:
-      'We offer a full refund within 14 days of purchase, no questions asked. Reach out to support and we will process it right away.',
+      "We offer a full refund within 14 days of purchase, no questions asked. Reach out to support and we will process it right away.",
   },
 ]
 

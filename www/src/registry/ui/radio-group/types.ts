@@ -1,4 +1,4 @@
-import type * as RadioGroupPrimitives from 'react-aria-components/RadioGroup'
+import type * as RadioGroupPrimitives from "react-aria-components/RadioGroup"
 
 /**
  * A radio group allows a user to select a single item from a list of mutually exclusive options.
@@ -22,4 +22,4 @@ export interface RadioControlProps extends React.ComponentProps<
 /**
  * The visual selected state indicator for a radio control.
  */
-export interface RadioIndicatorProps extends React.ComponentProps<'span'> {}
+export interface RadioIndicatorProps extends React.ComponentProps<"span"> {}

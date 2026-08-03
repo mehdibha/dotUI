@@ -1,7 +1,7 @@
-import { ArrowLeftIcon, ArrowRightIcon } from '@/registry/icons'
-import { Button } from '@/registry/ui/button'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { ArrowLeftIcon, ArrowRightIcon } from "@/registry/icons"
+import { Button } from "@/registry/ui/button"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function ButtonExamples() {
   return (
@@ -14,8 +14,8 @@ export default function ButtonExamples() {
   )
 }
 
-const sizes = ['xs', 'sm', 'md', 'lg'] as const
-const variants = ['primary', 'secondary', 'link', 'danger', 'quiet'] as const
+const sizes = ["xs", "sm", "md", "lg"] as const
+const variants = ["primary", "secondary", "link", "danger", "quiet"] as const
 
 const ButtonVariantsAndSizes = () => {
   return (

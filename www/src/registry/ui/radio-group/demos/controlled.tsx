@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { FieldGroup, Label } from '@/registry/ui/field'
-import { Radio, RadioControl, RadioGroup } from '@/registry/ui/radio-group'
+import { FieldGroup, Label } from "@/registry/ui/field"
+import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group"
 
 export default function Demo() {
-  const [framework, setFramework] = React.useState('nextjs')
+  const [framework, setFramework] = React.useState("nextjs")
   return (
     <div className="flex flex-col items-center gap-4">
       <RadioGroup value={framework} onChange={setFramework}>

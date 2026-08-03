@@ -1,26 +1,26 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as SelectionIndicatorPrimitives from 'react-aria-components/SelectionIndicator'
-import * as TabsPrimitives from 'react-aria-components/Tabs'
+import type * as React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator"
+import * as TabsPrimitives from "react-aria-components/Tabs"
 
-import { createContext } from '@/registry/lib/context'
+import { createContext } from "@/registry/lib/context"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: tabsStyles
 
-type TabsVariant = 'default' | 'line'
+type TabsVariant = "default" | "line"
 
 // MARK: Separator
 
-const [TabsProvider, useTabsContext] = createContext<TabsProps['orientation']>({
-  name: 'TabsContext',
+const [TabsProvider, useTabsContext] = createContext<TabsProps["orientation"]>({
+  name: "TabsContext",
 })
 
 const [TabListProvider, useTabListContext] = createContext<TabsVariant>({
-  name: 'TabListContext',
+  name: "TabListContext",
 })
 
 // MARK: Separator
@@ -53,7 +53,7 @@ interface TabListProps extends React.ComponentProps<
 
 const TabList = ({
   className,
-  variant = 'default',
+  variant = "default",
   ...props
 }: TabListProps) => {
   const { list } = useStyles()()
@@ -75,8 +75,8 @@ interface TabProps extends React.ComponentProps<typeof TabsPrimitives.Tab> {}
 
 const Tab = ({ className, ...props }: TabProps) => {
   const { tab } = useStyles()()
-  const orientation = useTabsContext('Tab')
-  const variant = useTabListContext('Tab')
+  const orientation = useTabsContext("Tab")
+  const variant = useTabListContext("Tab")
   return (
     <TabsPrimitives.Tab
       data-tab=""
@@ -108,8 +108,8 @@ interface TabIndicatorProps extends React.ComponentProps<
 
 const TabIndicator = ({ className, ...props }: TabIndicatorProps) => {
   const { selectionIndicator } = useStyles()()
-  const orientation = useTabsContext('TabIndicator')
-  const variant = useTabListContext('TabIndicator')
+  const orientation = useTabsContext("TabIndicator")
+  const variant = useTabListContext("TabIndicator")
   return (
     <SelectionIndicatorPrimitives.SelectionIndicator
       data-tab-indicator=""

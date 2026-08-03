@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
 /* The lab's design-system state: one store per mounted panel. Design only —
    local state in, callback out, nothing wired into the real /create. */
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState } from "react"
 
-import { DEFAULTS } from './data'
-import type { Lab, LabState } from './data'
+import { DEFAULTS } from "./data"
+import type { Lab, LabState } from "./data"
 
 export function useLab(): Lab {
   const [state, setState] = useState<LabState>(DEFAULTS)

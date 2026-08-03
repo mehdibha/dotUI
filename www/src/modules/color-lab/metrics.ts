@@ -3,14 +3,14 @@
    contrast, dark symmetry, CVD distinguishability) so the scorecard ranks
    systems on the same axes the engine rewrite will be judged on. */
 
-import { simulateCvd, rgbToOklch, type CvdType } from './color'
+import { simulateCvd, rgbToOklch, type CvdType } from "./color"
 import {
   mappingFor,
   scaleByRole,
   type ColorSystem,
   type Step,
   type UiRole,
-} from './data'
+} from "./data"
 
 export interface ScaleMetrics {
   /** Lightness moves in one direction across the scale. */
@@ -83,7 +83,7 @@ export function computeScaleMetrics(
         at: index / Math.max(1, steps.length - 1),
       }
   })
-  const at = (role: 'text' | 'textSubtle' | 'solid') => {
+  const at = (role: "text" | "textSubtle" | "solid") => {
     const index = mapping[role]
     return index === null || index === undefined ? undefined : steps[index]
   }
@@ -93,16 +93,16 @@ export function computeScaleMetrics(
     maxDeltaL: Math.max(0, ...abs),
     chromaPeak,
     hueDrift: circularHueStats(steps),
-    textContrast: at('text')?.vsBg.wcag ?? null,
-    subtleTextContrast: at('textSubtle')?.vsBg.wcag ?? null,
-    solidFgContrast: at('solid')?.asBg.wcag ?? null,
+    textContrast: at("text")?.vsBg.wcag ?? null,
+    subtleTextContrast: at("textSubtle")?.vsBg.wcag ?? null,
+    solidFgContrast: at("solid")?.asBg.wcag ?? null,
   }
 }
 
 function statusCvdSeparation(system: ColorSystem, cvd: CvdType): number | null {
   const solidIndex = system.roleMapping.solid
   if (solidIndex === null || solidIndex === undefined) return null
-  const solids = (['danger', 'success', 'warning'] as const)
+  const solids = (["danger", "success", "warning"] as const)
     .map((role) => scaleByRole(system, role)?.light[solidIndex])
     .filter((s): s is Step => Boolean(s))
   if (solids.length < 2) return null
@@ -124,14 +124,14 @@ function statusCvdSeparation(system: ColorSystem, cvd: CvdType): number | null {
 }
 
 export function computeSystemMetrics(system: ColorSystem): SystemMetrics {
-  const light: SystemMetrics['light'] = {}
-  const dark: SystemMetrics['dark'] = {}
+  const light: SystemMetrics["light"] = {}
+  const dark: SystemMetrics["dark"] = {}
   for (const scale of system.scales) {
     const mapping = mappingFor(system, scale)
     light[scale.id] = computeScaleMetrics(mapping, scale.light)
     if (scale.dark) dark[scale.id] = computeScaleMetrics(mapping, scale.dark)
   }
-  const neutral = system.scales.find((s) => s.role === 'neutral')
+  const neutral = system.scales.find((s) => s.role === "neutral")
   let darkSymmetry: number | null = null
   if (neutral?.dark) {
     const pairs = neutral.light.map((s, index) => ({
@@ -150,6 +150,6 @@ export function computeSystemMetrics(system: ColorSystem): SystemMetrics {
     light,
     dark,
     darkSymmetry,
-    statusCvdSeparation: statusCvdSeparation(system, 'deuteranopia'),
+    statusCvdSeparation: statusCvdSeparation(system, "deuteranopia"),
   }
 }

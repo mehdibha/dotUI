@@ -1,11 +1,11 @@
-import type * as React from 'react'
+import type * as React from "react"
 
 /**
  * A context menu opens a menu at the pointer position when the trigger element receives a contextmenu event.
  */
 export interface ContextMenuProps extends Omit<
-  React.ComponentProps<'div'>,
-  'onContextMenu'
+  React.ComponentProps<"div">,
+  "onContextMenu"
 > {
   /**
    * The trigger content.
@@ -40,5 +40,5 @@ export interface ContextMenuProps extends Omit<
   /**
    * An accessibility label for the menu.
    */
-  'aria-label'?: string
+  "aria-label"?: string
 }

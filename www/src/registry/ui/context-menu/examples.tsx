@@ -1,12 +1,12 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Basic from './demos/basic'
-import Controlled from './demos/controlled'
-import Disabled from './demos/disabled'
-import Nested from './demos/nested'
-import WithIcons from './demos/with-icons'
-import WithSubmenu from './demos/with-submenu'
+import Basic from "./demos/basic"
+import Controlled from "./demos/controlled"
+import Disabled from "./demos/disabled"
+import Nested from "./demos/nested"
+import WithIcons from "./demos/with-icons"
+import WithSubmenu from "./demos/with-submenu"
 
 export default function ContextMenuExamples() {
   return (

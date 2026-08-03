@@ -1,13 +1,13 @@
-import { createStyles } from '@/lib/styles'
+import { createStyles } from "@/lib/styles"
 
-import colorThumbMeta from './meta'
+import colorThumbMeta from "./meta"
 
 const { useStyles, styles } = createStyles(colorThumbMeta, {
   base: {
     base: [
-      'focus-reset focus-visible:focus-ring',
-      'z-30 size-6 rounded-full border-2 border-thumb ring-1 ring-overlay/40 disabled:border-border-disabled disabled:bg-disabled!',
-      'group-orientation-horizontal/color-slider:top-1/2 group-orientation-vertical/color-slider:left-1/2',
+      "focus-reset focus-visible:focus-ring",
+      "z-30 size-6 rounded-full border-2 border-thumb ring-1 ring-overlay/40 disabled:border-border-disabled disabled:bg-disabled!",
+      "group-orientation-horizontal/color-slider:top-1/2 group-orientation-vertical/color-slider:left-1/2",
     ],
   },
   density: {

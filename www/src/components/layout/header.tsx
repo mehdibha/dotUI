@@ -1,19 +1,19 @@
-import { Link as RouterLink, useLocation } from '@tanstack/react-router'
-import type * as PageTree from 'fumadocs-core/page-tree'
-import { SearchIcon } from 'lucide-react'
+import { Link as RouterLink, useLocation } from "@tanstack/react-router"
+import type * as PageTree from "fumadocs-core/page-tree"
+import { SearchIcon } from "lucide-react"
 
-import { navItems, siteConfig } from '@/config/site'
-import { cn } from '@/registry/lib/utils'
-import { Button, buttonStyles } from '@/registry/ui/button'
-import { Separator } from '@/registry/ui/separator'
-import { GitHubIcon } from '@/components/icons/github'
-import { HeaderActionsSlot } from '@/components/layout/header-slot'
-import { Logo } from '@/components/layout/logo'
-import { MobileNav } from '@/components/layout/mobile-nav'
-import { ProgressiveBlur } from '@/components/progressive-blur'
-import { SearchCommand } from '@/components/search-command'
-import { ThemeToggle } from '@/components/theme-toggle'
-import { DocsTocSelect } from '@/modules/docs/docs-toc-select'
+import { navItems, siteConfig } from "@/config/site"
+import { cn } from "@/registry/lib/utils"
+import { Button, buttonStyles } from "@/registry/ui/button"
+import { Separator } from "@/registry/ui/separator"
+import { GitHubIcon } from "@/components/icons/github"
+import { HeaderActionsSlot } from "@/components/layout/header-slot"
+import { Logo } from "@/components/layout/logo"
+import { MobileNav } from "@/components/layout/mobile-nav"
+import { ProgressiveBlur } from "@/components/progressive-blur"
+import { SearchCommand } from "@/components/search-command"
+import { ThemeToggle } from "@/components/theme-toggle"
+import { DocsTocSelect } from "@/modules/docs/docs-toc-select"
 
 interface HeaderProps {
   className?: string
@@ -34,7 +34,7 @@ export function Header({ className, items = [] }: HeaderProps) {
   return (
     <header
       className={cn(
-        'sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between blur-reveal-fallback pr-3 pl-4 md:pr-4 md:pl-6',
+        "sticky top-0 z-30 flex h-(--header-height) w-full items-center justify-between blur-reveal-fallback pr-3 pl-4 md:pr-4 md:pl-6",
         className,
       )}
     >
@@ -74,8 +74,8 @@ export function Header({ className, items = [] }: HeaderProps) {
                 params={item.params}
                 activeOptions={{ exact: true }}
                 className={cn(
-                  'px-0.5 transition-colors hover:text-fg',
-                  isActive ? 'text-fg' : 'text-fg-muted',
+                  "px-0.5 transition-colors hover:text-fg",
+                  isActive ? "text-fg" : "text-fg-muted",
                 )}
               >
                 {item.name}
@@ -96,7 +96,7 @@ export function Header({ className, items = [] }: HeaderProps) {
           target="_blank"
           rel="noopener noreferrer"
           data-icon-only=""
-          className={buttonStyles({ variant: 'quiet', isIconOnly: true })}
+          className={buttonStyles({ variant: "quiet", isIconOnly: true })}
         >
           <GitHubIcon />
         </a>

@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
 import {
   Pagination,
@@ -10,7 +10,7 @@ import {
   PaginationList,
   PaginationNext,
   PaginationPrevious,
-} from '@/registry/ui/pagination'
+} from "@/registry/ui/pagination"
 
 const TOTAL_PAGES = 10
 
@@ -27,7 +27,7 @@ export default function Demo() {
           />
         </PaginationItem>
         {getPageRange(page, TOTAL_PAGES).map((p, i) =>
-          p === 'ellipsis' ? (
+          p === "ellipsis" ? (
             <PaginationItem key={`ellipsis-${i}`}>
               <PaginationEllipsis />
             </PaginationItem>
@@ -56,17 +56,17 @@ export default function Demo() {
 
 // Always keep the first, last, current, and neighbouring pages; collapse the
 // rest into ellipses.
-function getPageRange(current: number, total: number): (number | 'ellipsis')[] {
+function getPageRange(current: number, total: number): (number | "ellipsis")[] {
   const shown = new Set(
     [1, total, current, current - 1, current + 1].filter(
       (p) => p >= 1 && p <= total,
     ),
   )
   const sorted = [...shown].sort((a, b) => a - b)
-  const range: (number | 'ellipsis')[] = []
+  const range: (number | "ellipsis")[] = []
   let previous = 0
   for (const p of sorted) {
-    if (p - previous > 1) range.push('ellipsis')
+    if (p - previous > 1) range.push("ellipsis")
     range.push(p)
     previous = p
   }

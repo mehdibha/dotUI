@@ -1,7 +1,7 @@
-import type * as React from 'react'
-import type { Drawer as DrawerPrimitive } from '@base-ui/react/drawer'
+import type * as React from "react"
+import type { Drawer as DrawerPrimitive } from "@base-ui/react/drawer"
 
-export type DrawerPlacement = 'top' | 'bottom' | 'left' | 'right'
+export type DrawerPlacement = "top" | "bottom" | "left" | "right"
 
 /**
  * A React Aria compatible drawer overlay powered by Base UI's Drawer overlay
@@ -31,15 +31,15 @@ export interface DrawerProps {
   isDismissable?: boolean
   /** Whether pressing Escape is suppressed. @default false */
   isKeyboardDismissDisabled?: boolean
-  className?: DrawerPrimitive.Popup.Props['className']
-  style?: DrawerPrimitive.Popup.Props['style']
+  className?: DrawerPrimitive.Popup.Props["className"]
+  style?: DrawerPrimitive.Popup.Props["style"]
 
   /** The content of the drawer. */
   children?: React.ReactNode
 }
 
 /** A visible drag affordance. */
-export interface DrawerHandleProps extends React.ComponentProps<'div'> {}
+export interface DrawerHandleProps extends React.ComponentProps<"div"> {}
 
 /** An edge region that can open the drawer by swiping. */
 export interface DrawerSwipeAreaProps extends DrawerPrimitive.SwipeArea.Props {}

@@ -6,18 +6,18 @@ import {
   TableContainer,
   TableHeader,
   TableRow,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
 const columns = [
-  { name: 'Name', id: 'name', isRowHeader: true },
-  { name: 'Role', id: 'role' },
-  { name: 'Status', id: 'status' },
+  { name: "Name", id: "name", isRowHeader: true },
+  { name: "Role", id: "role" },
+  { name: "Status", id: "status" },
 ]
 
 const data = [
-  { id: 1, name: 'John Doe', role: 'Developer', status: 'Active' },
-  { id: 2, name: 'Jane Smith', role: 'Designer', status: 'Active' },
-  { id: 3, name: 'Bob Johnson', role: 'Manager', status: 'Away' },
+  { id: 1, name: "John Doe", role: "Developer", status: "Active" },
+  { id: 2, name: "Jane Smith", role: "Designer", status: "Active" },
+  { id: 3, name: "Bob Johnson", role: "Manager", status: "Away" },
 ]
 
 export function TableDemo() {

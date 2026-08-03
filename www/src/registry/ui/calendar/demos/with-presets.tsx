@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { getLocalTimeZone, today } from '@internationalized/date'
-import type * as CalendarPrimitives from 'react-aria-components/Calendar'
+import React from "react"
+import { getLocalTimeZone, today } from "@internationalized/date"
+import type * as CalendarPrimitives from "react-aria-components/Calendar"
 
-import { Button } from '@/registry/ui/button'
-import { Calendar } from '@/registry/ui/calendar'
-import { Card, CardContent, CardFooter } from '@/registry/ui/card'
+import { Button } from "@/registry/ui/button"
+import { Calendar } from "@/registry/ui/calendar"
+import { Card, CardContent, CardFooter } from "@/registry/ui/card"
 
 export default function Demo() {
   const [date, setDate] = React.useState<CalendarPrimitives.DateValue | null>(
@@ -17,11 +17,11 @@ export default function Demo() {
   )
 
   const presets = [
-    { label: 'Today', days: 0 },
-    { label: 'Tomorrow', days: 1 },
-    { label: 'In 3 days', days: 3 },
-    { label: 'In a week', days: 7 },
-    { label: 'In 2 weeks', days: 14 },
+    { label: "Today", days: 0 },
+    { label: "Tomorrow", days: 1 },
+    { label: "In 3 days", days: 3 },
+    { label: "In a week", days: 7 },
+    { label: "In 2 weeks", days: 14 },
   ]
 
   return (

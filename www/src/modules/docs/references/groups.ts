@@ -2,122 +2,122 @@
  * Prop grouping logic for API reference tables
  */
 
-import type { GroupedProps, PropDefinition } from './types'
+import type { GroupedProps, PropDefinition } from "./types"
 
 /**
  * Group definitions for organizing props by category
  */
 export const GROUPS: Record<string, (string | RegExp)[]> = {
   Content: [
-    'children',
-    'items',
-    'defaultItems',
-    'columns',
-    'loadingState',
-    'onLoadMore',
-    'renderEmptyState',
-    'dependencies',
+    "children",
+    "items",
+    "defaultItems",
+    "columns",
+    "loadingState",
+    "onLoadMore",
+    "renderEmptyState",
+    "dependencies",
   ],
   Selection: [
-    'selectionMode',
-    'selectionBehavior',
-    'selectedKeys',
-    'defaultSelectedKeys',
-    'selectedKey',
-    'defaultSelectedKey',
-    'onSelectionChange',
-    'disabledKeys',
-    'disabledBehavior',
-    'disallowEmptySelection',
-    'shouldSelectOnPressUp',
-    'shouldFocusWrap',
-    'shouldFocusOnHover',
-    'escapeKeyBehavior',
+    "selectionMode",
+    "selectionBehavior",
+    "selectedKeys",
+    "defaultSelectedKeys",
+    "selectedKey",
+    "defaultSelectedKey",
+    "onSelectionChange",
+    "disabledKeys",
+    "disabledBehavior",
+    "disallowEmptySelection",
+    "shouldSelectOnPressUp",
+    "shouldFocusWrap",
+    "shouldFocusOnHover",
+    "escapeKeyBehavior",
   ],
   Value: [
-    'value',
-    'defaultValue',
-    'onChange',
-    'onChangeEnd',
-    'inputValue',
-    'defaultInputValue',
-    'onInputChange',
-    'formatOptions',
+    "value",
+    "defaultValue",
+    "onChange",
+    "onChangeEnd",
+    "inputValue",
+    "defaultInputValue",
+    "onInputChange",
+    "formatOptions",
   ],
-  Labeling: ['label', 'labelPosition', 'labelAlign', 'contextualHelp'],
+  Labeling: ["label", "labelPosition", "labelAlign", "contextualHelp"],
   Validation: [
-    'minValue',
-    'maxValue',
-    'step',
-    'minLength',
-    'maxLength',
-    'pattern',
-    'isRequired',
-    'isInvalid',
-    'validate',
-    'validationBehavior',
-    'validationErrors',
-    'necessityIndicator',
-    'description',
-    'errorMessage',
+    "minValue",
+    "maxValue",
+    "step",
+    "minLength",
+    "maxLength",
+    "pattern",
+    "isRequired",
+    "isInvalid",
+    "validate",
+    "validationBehavior",
+    "validationErrors",
+    "necessityIndicator",
+    "description",
+    "errorMessage",
   ],
   Overlay: [
-    'isOpen',
-    'defaultOpen',
-    'onOpenChange',
-    'shouldCloseOnSelect',
-    'placement',
-    'direction',
-    'align',
-    'shouldFlip',
-    'offset',
-    'crossOffset',
-    'containerPadding',
-    'menuWidth',
+    "isOpen",
+    "defaultOpen",
+    "onOpenChange",
+    "shouldCloseOnSelect",
+    "placement",
+    "direction",
+    "align",
+    "shouldFlip",
+    "offset",
+    "crossOffset",
+    "containerPadding",
+    "menuWidth",
   ],
   Events: [/^on[A-Z]/],
   Links: [
-    'href',
-    'hrefLang',
-    'target',
-    'rel',
-    'download',
-    'ping',
-    'referrerPolicy',
-    'routerOptions',
+    "href",
+    "hrefLang",
+    "target",
+    "rel",
+    "download",
+    "ping",
+    "referrerPolicy",
+    "routerOptions",
   ],
-  Styling: ['style', 'className'],
+  Styling: ["style", "className"],
   Forms: [
-    'name',
-    'startName',
-    'endName',
-    'value',
-    'formValue',
-    'type',
-    'autoComplete',
-    'form',
-    'formTarget',
-    'formNoValidate',
-    'formMethod',
-    'formEncType',
-    'formAction',
+    "name",
+    "startName",
+    "endName",
+    "value",
+    "formValue",
+    "type",
+    "autoComplete",
+    "form",
+    "formTarget",
+    "formNoValidate",
+    "formMethod",
+    "formEncType",
+    "formAction",
   ],
   Accessibility: [
-    'autoFocus',
-    'role',
-    'id',
-    'tabIndex',
-    'excludeFromTabOrder',
-    'preventFocusOnPress',
+    "autoFocus",
+    "role",
+    "id",
+    "tabIndex",
+    "excludeFromTabOrder",
+    "preventFocusOnPress",
     /^aria-/,
   ],
-  Advanced: ['render', 'UNSAFE_className', 'UNSAFE_style', 'slot'],
+  Advanced: ["render", "UNSAFE_className", "UNSAFE_style", "slot"],
 }
 
 /**
  * Groups that should be expanded by default in the UI
  */
-export const DEFAULT_EXPANDED = new Set(['Content', 'Selection', 'Value'])
+export const DEFAULT_EXPANDED = new Set(["Content", "Selection", "Value"])
 
 /**
  * Group props into categories based on GROUPS definition
@@ -179,42 +179,42 @@ function shouldSkipProp(
   if (!prop) return true
 
   // "id" should only go to Accessibility if type is "string"
-  if (propName === 'id' && groupName === 'Accessibility') {
-    return prop.typeAst?.type !== 'string'
+  if (propName === "id" && groupName === "Accessibility") {
+    return prop.typeAst?.type !== "string"
   }
 
   // "value" in Value group: only if defaultValue exists
   // "value" in Forms group: only if type is "string"
-  if (propName === 'value') {
-    if (groupName === 'Value' && !props.defaultValue) {
+  if (propName === "value") {
+    if (groupName === "Value" && !props.defaultValue) {
       return true
     }
-    if (groupName === 'Forms' && prop.typeAst?.type !== 'string') {
+    if (groupName === "Forms" && prop.typeAst?.type !== "string") {
       return true
     }
   }
 
   // "type" in Forms group: only if description mentions form
-  if (propName === 'type' && groupName === 'Forms') {
-    return !prop.description?.toLowerCase().includes('form')
+  if (propName === "type" && groupName === "Forms") {
+    return !prop.description?.toLowerCase().includes("form")
   }
 
   // "children" in Content group: only if items or columns exist
-  if (propName === 'children' && groupName === 'Content') {
+  if (propName === "children" && groupName === "Content") {
     return !props.items && !props.columns
   }
 
   // "target" in Links: check for identifier type
-  if (propName === 'target' && groupName === 'Links') {
+  if (propName === "target" && groupName === "Links") {
     const ast = prop.typeAst
     if (!ast) return true
 
-    if (ast.type === 'identifier') return false
+    if (ast.type === "identifier") return false
 
-    if (ast.type === 'union' && 'elements' in ast) {
+    if (ast.type === "union" && "elements" in ast) {
       const elements = ast.elements as Array<{ type: string }>
       const hasNonNullishType = elements.some(
-        (el) => el.type !== 'undefined' && el.type !== 'null',
+        (el) => el.type !== "undefined" && el.type !== "null",
       )
       return !hasNonNullishType
     }
@@ -223,12 +223,12 @@ function shouldSkipProp(
   }
 
   // "placement" in Overlay: only if it's a union with exactly 22 elements
-  if (propName === 'placement' && groupName === 'Overlay') {
-    if (prop.typeAst?.type !== 'union') {
+  if (propName === "placement" && groupName === "Overlay") {
+    if (prop.typeAst?.type !== "union") {
       return true
     }
     const elements =
-      'elements' in prop.typeAst ? prop.typeAst.elements : undefined
+      "elements" in prop.typeAst ? prop.typeAst.elements : undefined
     return !elements || elements.length !== 22
   }
 

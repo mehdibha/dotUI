@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { BoldIcon, ItalicIcon, UnderlineIcon } from 'lucide-react'
+import { useState } from "react"
+import { BoldIcon, ItalicIcon, UnderlineIcon } from "lucide-react"
 
-import { ToggleButton } from '@/registry/ui/toggle-button'
+import { ToggleButton } from "@/registry/ui/toggle-button"
 
 export default function Demo() {
-  const [formats, setFormats] = useState<string[]>(['bold'])
+  const [formats, setFormats] = useState<string[]>(["bold"])
 
   const toggle = (format: string) => (isSelected: boolean) =>
     setFormats((prev) =>
@@ -18,8 +18,8 @@ export default function Demo() {
       <ToggleButton
         variant="quiet"
         isIconOnly
-        isSelected={formats.includes('bold')}
-        onChange={toggle('bold')}
+        isSelected={formats.includes("bold")}
+        onChange={toggle("bold")}
         aria-label="Bold"
       >
         <BoldIcon />
@@ -27,8 +27,8 @@ export default function Demo() {
       <ToggleButton
         variant="quiet"
         isIconOnly
-        isSelected={formats.includes('italic')}
-        onChange={toggle('italic')}
+        isSelected={formats.includes("italic")}
+        onChange={toggle("italic")}
         aria-label="Italic"
       >
         <ItalicIcon />
@@ -36,8 +36,8 @@ export default function Demo() {
       <ToggleButton
         variant="quiet"
         isIconOnly
-        isSelected={formats.includes('underline')}
-        onChange={toggle('underline')}
+        isSelected={formats.includes("underline")}
+        onChange={toggle("underline")}
         aria-label="Underline"
       >
         <UnderlineIcon />

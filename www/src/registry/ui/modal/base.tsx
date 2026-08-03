@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as ModalPrimitives from 'react-aria-components/Modal'
-import { useIsHidden } from 'react-aria/private/collections/Hidden'
+import type * as React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as ModalPrimitives from "react-aria-components/Modal"
+import { useIsHidden } from "react-aria/private/collections/Hidden"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: modalStyles
 
@@ -75,13 +75,13 @@ const ModalPanel = ({ children, className, ...props }: ModalPanelProps) => {
   )
 }
 
-interface ModalBackdropProps extends React.ComponentProps<'div'> {}
+interface ModalBackdropProps extends React.ComponentProps<"div"> {}
 const ModalBackdrop = ({ className, ...props }: ModalBackdropProps) => {
   const { backdrop } = useStyles()()
   return <div className={backdrop({ className })} {...props} />
 }
 
-interface ModalViewportProps extends React.ComponentProps<'div'> {}
+interface ModalViewportProps extends React.ComponentProps<"div"> {}
 const ModalViewport = ({ className, ...props }: ModalViewportProps) => {
   const { viewport } = useStyles()()
   return (

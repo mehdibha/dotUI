@@ -1,6 +1,6 @@
-import type * as React from 'react'
+import type * as React from "react"
 
-import type { ChartConfig } from './base'
+import type { ChartConfig } from "./base"
 
 export type { ChartConfig }
 
@@ -8,7 +8,7 @@ export type { ChartConfig }
  * Wraps a Recharts chart with theming and a responsive container. Pass your
  * `config` (series → label / color / icon) and a single Recharts chart child.
  */
-export interface ChartContainerProps extends React.ComponentProps<'div'> {
+export interface ChartContainerProps extends React.ComponentProps<"div"> {
   /**
    * Series metadata keyed by `dataKey`: a `label`, a `color` (or a per-theme
    * `theme` map), and an optional `icon`. Drives tooltips, legends, and the
@@ -28,12 +28,12 @@ export interface ChartContainerProps extends React.ComponentProps<'div'> {
 /**
  * Styled content for a chart tooltip. Use inside `<ChartTooltip content={...} />`.
  */
-export interface ChartTooltipContentProps extends React.ComponentProps<'div'> {
+export interface ChartTooltipContentProps extends React.ComponentProps<"div"> {
   /**
    * Shape of the color indicator shown next to each series.
    * @default "dot"
    */
-  indicator?: 'line' | 'dot' | 'dashed'
+  indicator?: "line" | "dot" | "dashed"
 
   /**
    * Hide the tooltip label (the row header).
@@ -57,7 +57,7 @@ export interface ChartTooltipContentProps extends React.ComponentProps<'div'> {
 /**
  * Styled content for a chart legend. Use inside `<ChartLegend content={...} />`.
  */
-export interface ChartLegendContentProps extends React.ComponentProps<'div'> {
+export interface ChartLegendContentProps extends React.ComponentProps<"div"> {
   /**
    * Hide the per-series icon/swatch.
    * @default false
@@ -71,7 +71,7 @@ export interface ChartLegendContentProps extends React.ComponentProps<'div'> {
    * Legend position relative to the chart, used for spacing.
    * @default "bottom"
    */
-  verticalAlign?: 'top' | 'bottom'
+  verticalAlign?: "top" | "bottom"
 }
 
 /**
@@ -81,7 +81,7 @@ export interface ChartLegendContentProps extends React.ComponentProps<'div'> {
  * (bar/line/area/radar) gets one column per series; long-format (pie/radial) gets
  * a two-column category/value table.
  */
-export interface ChartDataTableProps extends React.ComponentProps<'table'> {
+export interface ChartDataTableProps extends React.ComponentProps<"table"> {
   /** The same data array passed to the chart. */
   data: Record<string, unknown>[]
 

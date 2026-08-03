@@ -5,7 +5,7 @@
  * (144/144 hex-exact) — see research/alpha-parity.mjs.
  */
 
-import { type Oklch, toSrgb8 } from './space'
+import { type Oklch, toSrgb8 } from "./space"
 
 const PRECISION = 255
 

@@ -1,6 +1,6 @@
-import { IconFolderCode } from '@tabler/icons-react'
+import { IconFolderCode } from "@tabler/icons-react"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Empty,
   EmptyContent,
@@ -8,7 +8,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from '@/registry/ui/empty'
+} from "@/registry/ui/empty"
 
 export function EmptyDemo() {
   return (

@@ -1,12 +1,12 @@
-import { ArrowUpRightIcon } from '@/registry/__generated__/icons'
-import { Button, LinkButton } from '@/registry/ui/button'
+import { ArrowUpRightIcon } from "@/registry/__generated__/icons"
+import { Button, LinkButton } from "@/registry/ui/button"
 import {
   Empty,
   EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyTitle,
-} from '@/registry/ui/empty'
+} from "@/registry/ui/empty"
 
 export default function Demo() {
   return (

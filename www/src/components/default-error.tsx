@@ -1,4 +1,4 @@
-import { useRouter } from '@tanstack/react-router'
+import { useRouter } from "@tanstack/react-router"
 
 // Router-wide error boundary. notFound() throws are handled by the router's
 // defaultNotFoundComponent; this catches any other loader/render error so it

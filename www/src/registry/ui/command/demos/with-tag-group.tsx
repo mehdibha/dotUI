@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { SearchIcon } from 'lucide-react'
+import { SearchIcon } from "lucide-react"
 
-import { Command } from '@/registry/ui/command'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { SearchField } from '@/registry/ui/search-field'
-import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
+import { Command } from "@/registry/ui/command"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { SearchField } from "@/registry/ui/search-field"
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 
 export default function Demo() {
   return (

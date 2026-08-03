@@ -1,4 +1,4 @@
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -6,8 +6,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Modal } from '@/registry/ui/modal'
+} from "@/registry/ui/dialog"
+import { Modal } from "@/registry/ui/modal"
 
 export default function Demo() {
   return (

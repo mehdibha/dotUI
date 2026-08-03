@@ -20,15 +20,15 @@ npx shadcn@latest add @dotui/date-picker
 Use date pickers to allow users to select a date using a field and a calendar popover.
 
 ```tsx
-import { CalendarIcon } from 'lucide-react'
+import { CalendarIcon } from "lucide-react"
 
-import { Button } from '@/ui/button'
-import { Calendar } from '@/ui/calendar'
-import { DatePicker } from '@/ui/date-picker'
-import { DialogContent } from '@/ui/dialog'
-import { Label } from '@/ui/field'
-import { DateInput, InputGroup, InputGroupAddon } from '@/ui/input'
-import { Popover } from '@/ui/popover'
+import { Button } from "@/ui/button"
+import { Calendar } from "@/ui/calendar"
+import { DatePicker } from "@/ui/date-picker"
+import { DialogContent } from "@/ui/dialog"
+import { Label } from "@/ui/field"
+import { DateInput, InputGroup, InputGroupAddon } from "@/ui/input"
+import { Popover } from "@/ui/popover"
 ```
 
 ```tsx
@@ -55,13 +55,13 @@ import { Popover } from '@/ui/popover'
 A date picker assembles a date field and a calendar overlay. The `InputGroup` holds the `DateInput` and a trigger `Button`; the `Popover` reveals a `Calendar`. `Label`, `Description`, and `FieldError` are optional field parts.
 
 ```tsx
-import { Button } from '@/ui/button'
-import { Calendar } from '@/ui/calendar'
-import { DatePicker } from '@/ui/date-picker'
-import { DialogContent } from '@/ui/dialog'
-import { Description, FieldError, Label } from '@/ui/field'
-import { DateInput, InputGroup, InputGroupAddon } from '@/ui/input'
-import { Popover } from '@/ui/popover'
+import { Button } from "@/ui/button"
+import { Calendar } from "@/ui/calendar"
+import { DatePicker } from "@/ui/date-picker"
+import { DialogContent } from "@/ui/dialog"
+import { Description, FieldError, Label } from "@/ui/field"
+import { DateInput, InputGroup, InputGroupAddon } from "@/ui/input"
+import { Popover } from "@/ui/popover"
 ```
 
 ```tsx
@@ -88,13 +88,13 @@ import { Popover } from '@/ui/popover'
 The value is an [`@internationalized/date`](https://react-spectrum.adobe.com/internationalized/date/) object. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it. `granularity` (`"day"`, `"hour"`, `"minute"`, `"second"`) sets the smallest editable unit, and `minValue`/`maxValue` bound the selectable range.
 
 ```tsx
-import { parseDate } from '@internationalized/date'
+import { parseDate } from "@internationalized/date"
 ```
 
 ```tsx
 <DatePicker
-  defaultValue={parseDate('2020-02-03')}
-  minValue={parseDate('2020-01-01')}
+  defaultValue={parseDate("2020-02-03")}
+  minValue={parseDate("2020-01-01")}
 />
 ```
 
@@ -103,17 +103,17 @@ import { parseDate } from '@internationalized/date'
 `DateRangePicker` selects a start and end date as a `{ start, end }` value. Use two `DateInput`s with `slot="start"` and `slot="end"`, and a `RangeCalendar` in the popover.
 
 ```tsx
-import { parseDate } from '@internationalized/date'
+import { parseDate } from "@internationalized/date"
 
-import { RangeCalendar } from '@/ui/calendar'
-import { DateRangePicker } from '@/ui/date-picker'
+import { RangeCalendar } from "@/ui/calendar"
+import { DateRangePicker } from "@/ui/date-picker"
 ```
 
 ```tsx
 <DateRangePicker
   defaultValue={{
-    start: parseDate('2020-02-03'),
-    end: parseDate('2020-02-12'),
+    start: parseDate("2020-02-03"),
+    end: parseDate("2020-02-12"),
   }}
 >
   <InputGroup>

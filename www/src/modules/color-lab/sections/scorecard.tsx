@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
+import { useMemo } from "react"
 
-import type { ColorSystem } from '../data'
-import { computeSystemMetrics, type ScaleMetrics } from '../metrics'
-import type { Mode } from '../page'
+import type { ColorSystem } from "../data"
+import { computeSystemMetrics, type ScaleMetrics } from "../metrics"
+import type { Mode } from "../page"
 
 interface Row {
   id: string
@@ -33,7 +33,7 @@ export function ScorecardSection({
         .map((system) => {
           const metrics = computeSystemMetrics(system)
           const perScale = Object.values(
-            mode === 'dark' && Object.keys(metrics.dark).length
+            mode === "dark" && Object.keys(metrics.dark).length
               ? metrics.dark
               : metrics.light,
           ).filter((m): m is ScaleMetrics => Boolean(m))

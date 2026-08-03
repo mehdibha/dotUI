@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react'
+import type { SVGProps } from "react"
 
 // Official Base UI (base-ui.com) logo mark, via svgl. Monochrome — forced to the
 // foreground color so it matches the adjacent label (mirrors ShadcnIcon's `stroke-fg`).

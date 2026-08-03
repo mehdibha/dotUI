@@ -3,8 +3,8 @@ import {
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/ui/list-box"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

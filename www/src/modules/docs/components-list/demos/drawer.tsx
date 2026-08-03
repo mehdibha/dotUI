@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
-import { DialogHeader, DialogTitle } from '@/registry/ui/dialog'
+import { Button } from "@/registry/ui/button"
+import { DialogHeader, DialogTitle } from "@/registry/ui/dialog"
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene, useOpenAutoplay } from "../autoplay"
 
 export function DrawerDemo() {
   const { phase } = useOpenAutoplay()

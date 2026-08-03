@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as ToggleButtonGroupPrimitives from 'react-aria-components/ToggleButtonGroup'
-import type { VariantProps } from 'tailwind-variants'
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
+import type { VariantProps } from "tailwind-variants"
 
-import { ToggleButtonProvider } from '@/registry/ui/toggle-button'
-import type { toggleButtonStyles } from '@/registry/ui/toggle-button'
+import { ToggleButtonProvider } from "@/registry/ui/toggle-button"
+import type { toggleButtonStyles } from "@/registry/ui/toggle-button"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: toggleGroupStyles
 
@@ -22,7 +22,7 @@ const ToggleButtonGroup = ({
   variant,
   size,
   isIconOnly,
-  orientation = 'horizontal',
+  orientation = "horizontal",
   className,
   ...props
 }: ToggleButtonGroupProps) => {

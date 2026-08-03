@@ -1,7 +1,7 @@
-import { FieldError, Label } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
-import { OTPField } from '@/registry/ui/otp-field'
+import { FieldError, Label } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
+import { OTPField } from "@/registry/ui/otp-field"
 
 export default function ErrorMessage() {
   return (

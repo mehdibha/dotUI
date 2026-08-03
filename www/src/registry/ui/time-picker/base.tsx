@@ -1,32 +1,32 @@
-'use client'
+"use client"
 
-import React from 'react'
-import type { Time } from '@internationalized/date'
-import { ButtonContext } from 'react-aria-components/Button'
+import React from "react"
+import type { Time } from "@internationalized/date"
+import { ButtonContext } from "react-aria-components/Button"
 import {
   DialogContext,
   OverlayTriggerStateContext,
-} from 'react-aria-components/Dialog'
-import { FieldErrorContext } from 'react-aria-components/FieldError'
-import { GroupContext } from 'react-aria-components/Group'
-import { useLocale } from 'react-aria-components/I18nProvider'
-import { InputContext } from 'react-aria-components/Input'
-import { LabelContext } from 'react-aria-components/Label'
-import * as ListBoxPrimitive from 'react-aria-components/ListBox'
-import { PopoverContext } from 'react-aria-components/Popover'
-import { Provider } from 'react-aria-components/slots'
-import { TextContext } from 'react-aria-components/Text'
-import { TimeFieldStateContext } from 'react-aria-components/TimeField'
-import type * as TimeFieldPrimitive from 'react-aria-components/TimeField'
-import { useFocusRing } from 'react-aria/useFocusRing'
-import { useOverlayTrigger } from 'react-aria/useOverlayTrigger'
-import { useTimeField } from 'react-aria/useTimeField'
-import { useOverlayTriggerState } from 'react-stately/useOverlayTriggerState'
-import { useTimeFieldState } from 'react-stately/useTimeFieldState'
+} from "react-aria-components/Dialog"
+import { FieldErrorContext } from "react-aria-components/FieldError"
+import { GroupContext } from "react-aria-components/Group"
+import { useLocale } from "react-aria-components/I18nProvider"
+import { InputContext } from "react-aria-components/Input"
+import { LabelContext } from "react-aria-components/Label"
+import * as ListBoxPrimitive from "react-aria-components/ListBox"
+import { PopoverContext } from "react-aria-components/Popover"
+import { Provider } from "react-aria-components/slots"
+import { TextContext } from "react-aria-components/Text"
+import { TimeFieldStateContext } from "react-aria-components/TimeField"
+import type * as TimeFieldPrimitive from "react-aria-components/TimeField"
+import { useFocusRing } from "react-aria/useFocusRing"
+import { useOverlayTrigger } from "react-aria/useOverlayTrigger"
+import { useTimeField } from "react-aria/useTimeField"
+import { useOverlayTriggerState } from "react-stately/useOverlayTriggerState"
+import { useTimeFieldState } from "react-stately/useTimeFieldState"
 
-import { useStyles as useFieldStyles } from '@/registry/ui/field/styles'
+import { useStyles as useFieldStyles } from "@/registry/ui/field/styles"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 /**
  * A time picker combines a TimeField and a scrollable time-column popover to
@@ -34,7 +34,7 @@ import { useStyles } from './styles'
  */
 interface TimePickerProps<T extends TimeFieldPrimitive.TimeValue> extends Omit<
   TimeFieldPrimitive.TimeFieldProps<T>,
-  'className' | 'children'
+  "className" | "children"
 > {
   className?: string
   children?: React.ReactNode
@@ -50,7 +50,7 @@ interface TimePickerProps<T extends TimeFieldPrimitive.TimeValue> extends Omit<
  * The scrollable hour / minute / second / day-period columns rendered inside a
  * TimePicker popover. Reads and writes the value from the enclosing TimePicker.
  */
-interface TimePickerColumnsProps extends React.ComponentProps<'div'> {}
+interface TimePickerColumnsProps extends React.ComponentProps<"div"> {}
 
 // MARK: timePickerStyles
 
@@ -96,7 +96,7 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
   const groupRef = React.useRef<HTMLDivElement>(null)
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [labelRef, label] = useSlot(
-    !props['aria-label'] && !props['aria-labelledby'],
+    !props["aria-label"] && !props["aria-labelledby"],
   )
 
   const {
@@ -109,7 +109,7 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
   } = useTimeField({ ...props, label, inputRef }, state, groupRef)
 
   const { triggerProps, overlayProps } = useOverlayTrigger(
-    { type: 'dialog' },
+    { type: "dialog" },
     overlayState,
     groupRef,
   )
@@ -140,14 +140,14 @@ const TimePicker = <T extends TimeFieldPrimitive.TimeValue>({
             isPressed: overlayState.isOpen,
           },
         ],
-        [LabelContext, { ...labelProps, ref: labelRef, elementType: 'span' }],
+        [LabelContext, { ...labelProps, ref: labelRef, elementType: "span" }],
         [OverlayTriggerStateContext, overlayState],
         [
           PopoverContext,
           {
-            trigger: 'TimePicker',
+            trigger: "TimePicker",
             triggerRef: groupRef,
-            placement: 'bottom start',
+            placement: "bottom start",
             clearContexts: CLEAR_CONTEXTS,
           },
         ],
@@ -192,7 +192,7 @@ interface TimeColumnOption {
 const range = (length: number, offset = 0): number[] =>
   Array.from({ length }, (_, i) => i + offset)
 
-const pad = (value: number): string => String(value).padStart(2, '0')
+const pad = (value: number): string => String(value).padStart(2, "0")
 
 const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
   const state = React.useContext(TimeFieldStateContext)
@@ -201,10 +201,10 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
   if (!state) return null
 
   const time = state.timeValue
-  const use12Hour = state.segments.some((s) => s.type === 'dayPeriod')
+  const use12Hour = state.segments.some((s) => s.type === "dayPeriod")
   const showMinutes =
-    state.granularity === 'minute' || state.granularity === 'second'
-  const showSeconds = state.granularity === 'second'
+    state.granularity === "minute" || state.granularity === "second"
+  const showSeconds = state.granularity === "second"
 
   const isImmutable = state.isDisabled || state.isReadOnly
   const update = (fields: {
@@ -220,7 +220,7 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
     state.setValue(base.set(fields) as never)
   }
 
-  const period = time.hour >= 12 ? 'PM' : 'AM'
+  const period = time.hour >= 12 ? "PM" : "AM"
   const displayHour = time.hour % 12 === 0 ? 12 : time.hour % 12
 
   const hourOptions: TimeColumnOption[] = use12Hour
@@ -242,7 +242,7 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
         onSelect={(id) => {
           const value = Number(id)
           update({
-            hour: use12Hour ? (value % 12) + (period === 'PM' ? 12 : 0) : value,
+            hour: use12Hour ? (value % 12) + (period === "PM" ? 12 : 0) : value,
           })
         }}
       />
@@ -266,13 +266,13 @@ const TimePickerColumns = ({ className, ...props }: TimePickerColumnsProps) => {
         <TimeColumn
           label="AM/PM"
           options={[
-            { id: 'AM', label: 'AM' },
-            { id: 'PM', label: 'PM' },
+            { id: "AM", label: "AM" },
+            { id: "PM", label: "PM" },
           ]}
           selectedKey={period}
           onSelect={(id) => {
-            if (id === 'AM' && time.hour >= 12) update({ hour: time.hour - 12 })
-            if (id === 'PM' && time.hour < 12) update({ hour: time.hour + 12 })
+            if (id === "AM" && time.hour >= 12) update({ hour: time.hour - 12 })
+            if (id === "PM" && time.hour < 12) update({ hour: time.hour + 12 })
           }}
         />
       )}
@@ -325,7 +325,7 @@ const TimeColumn = ({
       shouldFocusWrap
       selectedKeys={[selectedKey]}
       onSelectionChange={(keys) => {
-        if (keys === 'all') return
+        if (keys === "all") return
         const id = [...keys][0]
         if (id != null) onSelect(String(id))
       }}

@@ -1,22 +1,22 @@
-'use client'
+"use client"
 
-import { use } from 'react'
-import type React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as ListBoxPrimitive from 'react-aria-components/ListBox'
-import type * as TextPrimitive from 'react-aria-components/Text'
-import * as VirtualizerPrimitive from 'react-aria-components/Virtualizer'
-import type { VariantProps } from 'tailwind-variants'
+import { use } from "react"
+import type React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as ListBoxPrimitive from "react-aria-components/ListBox"
+import type * as TextPrimitive from "react-aria-components/Text"
+import * as VirtualizerPrimitive from "react-aria-components/Virtualizer"
+import type { VariantProps } from "tailwind-variants"
 
-import { CheckIcon } from '@/registry/icons'
-import { Loader } from '@/registry/ui/loader'
+import { CheckIcon } from "@/registry/icons"
+import { Loader } from "@/registry/ui/loader"
 
-import { useStyles } from './styles'
-import type { ListBoxStyles } from './styles'
+import { useStyles } from "./styles"
+import type { ListBoxStyles } from "./styles"
 
 interface ListBoxProps<T> extends ListBoxPrimitive.ListBoxProps<T> {
-  isLoading?: ListBoxPrimitive.ListBoxLoadMoreItemProps['isLoading']
-  onLoadMore?: ListBoxPrimitive.ListBoxLoadMoreItemProps['onLoadMore']
+  isLoading?: ListBoxPrimitive.ListBoxLoadMoreItemProps["isLoading"]
+  onLoadMore?: ListBoxPrimitive.ListBoxLoadMoreItemProps["onLoadMore"]
 }
 const ListBox = <T extends object>({
   className,
@@ -65,7 +65,7 @@ const ListBoxItem = <T extends object>({
   const { item, indicator } = useStyles()()
   const textValue =
     textValueProp ||
-    (typeof props.children === 'string' ? props.children : undefined)
+    (typeof props.children === "string" ? props.children : undefined)
 
   return (
     <ListBoxPrimitive.ListBoxItem
@@ -80,12 +80,12 @@ const ListBoxItem = <T extends object>({
         props.children,
         (children, { selectionMode, isSelected }) => (
           <>
-            {typeof children === 'string' ? (
+            {typeof children === "string" ? (
               <ListBoxItemLabel>{children}</ListBoxItemLabel>
             ) : (
               children
             )}
-            {selectionMode !== 'none' && (
+            {selectionMode !== "none" && (
               <span data-listbox-item-indicator="" className={indicator()}>
                 {isSelected && <CheckIcon />}
               </span>
@@ -174,7 +174,7 @@ const ListBoxSectionHeader = ({
 
 interface ListBoxVirtualizerProps<T> extends Omit<
   VirtualizerPrimitive.VirtualizerProps<T>,
-  'layout'
+  "layout"
 > {}
 const ListBoxVirtualizer = <T extends object>({
   ...props

@@ -1,7 +1,7 @@
-import { ChevronDownIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Disclosure, DisclosurePanel } from '@/registry/ui/disclosure'
-import { Heading } from '@/registry/ui/heading'
+import { ChevronDownIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Disclosure, DisclosurePanel } from "@/registry/ui/disclosure"
+import { Heading } from "@/registry/ui/heading"
 
 export default function Demo() {
   return (

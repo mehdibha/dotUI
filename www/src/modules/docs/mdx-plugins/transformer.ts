@@ -1,5 +1,5 @@
-import { Node, Project, ScriptKind, SyntaxKind } from 'ts-morph'
-import type { FunctionDeclaration, SourceFile } from 'ts-morph'
+import { Node, Project, ScriptKind, SyntaxKind } from "ts-morph"
+import type { FunctionDeclaration, SourceFile } from "ts-morph"
 
 // ============================================================================
 // Types
@@ -43,7 +43,7 @@ export function transformDemo(rawContent: string): TransformResult {
   // Build full source (just path replacements + tabs to spaces)
   const source = tabsToSpaces(
     transformPaths(rawContent)
-      .replace('export default function', 'export function')
+      .replace("export default function", "export function")
       .trim(),
   )
 
@@ -66,17 +66,17 @@ function buildPreview(sourceFile: SourceFile): string {
   // 1. Get top-level declarations (outside function) as placeholders
   const topLevelDeclarations = getTopLevelDeclarations(sourceFile)
   if (topLevelDeclarations.length > 0) {
-    parts.push(topLevelDeclarations.map((d) => d.placeholder).join('\n'))
+    parts.push(topLevelDeclarations.map((d) => d.placeholder).join("\n"))
   }
 
   // 2. Get the function body (everything inside, including local vars)
   const functionBody = getFunctionBody(sourceFile)
   if (functionBody) {
-    if (parts.length > 0) parts.push('') // Empty line separator
+    if (parts.length > 0) parts.push("") // Empty line separator
     parts.push(transformPaths(dedent(functionBody)))
   }
 
-  return parts.join('\n')
+  return parts.join("\n")
 }
 
 // ============================================================================
@@ -160,15 +160,15 @@ function findExportFunction(
  */
 function transformPaths(code: string): string {
   return code
-    .replace(/@\/registry\/ui\//g, '@/ui/')
-    .replace(/@\/registry\//g, '@/')
+    .replace(/@\/registry\/ui\//g, "@/ui/")
+    .replace(/@\/registry\//g, "@/")
 }
 
 /**
  * Convert tabs to spaces (2 spaces per tab) for consistent code display
  */
 function tabsToSpaces(code: string): string {
-  return code.replace(/\t/g, '  ')
+  return code.replace(/\t/g, "  ")
 }
 
 /**
@@ -188,7 +188,7 @@ function tabsToSpaces(code: string): string {
  *   </div>"
  */
 function dedent(code: string): string {
-  const lines = code.split('\n')
+  const lines = code.split("\n")
 
   if (lines.length <= 1) {
     return code
@@ -198,7 +198,7 @@ function dedent(code: string): string {
   // Line 1 is already at column 0 from ts-morph extraction
   const minIndent = lines.slice(1).reduce((min, line) => {
     // Skip empty lines
-    if (line.trim() === '') return min
+    if (line.trim() === "") return min
 
     const leadingWhitespace = line.match(/^(\s*)/)
     const indent = leadingWhitespace?.[1]?.length ?? 0
@@ -214,8 +214,8 @@ function dedent(code: string): string {
   return lines
     .map((line, index) => {
       if (index === 0) return line // First line stays as-is
-      if (line.trim() === '') return '' // Empty lines stay empty
+      if (line.trim() === "") return "" // Empty lines stay empty
       return line.slice(minIndent)
     })
-    .join('\n')
+    .join("\n")
 }

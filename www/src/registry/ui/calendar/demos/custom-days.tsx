@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { getLocalTimeZone, isWeekend, today } from '@internationalized/date'
-import type * as CalendarPrimitives from 'react-aria-components/Calendar'
-import * as I18nProviderPrimitives from 'react-aria-components/I18nProvider'
-import type * as RangeCalendarPrimitives from 'react-aria-components/RangeCalendar'
+import React from "react"
+import { getLocalTimeZone, isWeekend, today } from "@internationalized/date"
+import type * as CalendarPrimitives from "react-aria-components/Calendar"
+import * as I18nProviderPrimitives from "react-aria-components/I18nProvider"
+import type * as RangeCalendarPrimitives from "react-aria-components/RangeCalendar"
 
 import {
   CalendarCell,
@@ -14,8 +14,8 @@ import {
   CalendarHeader,
   CalendarHeaderCell,
   RangeCalendar,
-} from '@/registry/ui/calendar'
-import { Card, CardContent } from '@/registry/ui/card'
+} from "@/registry/ui/calendar"
+import { Card, CardContent } from "@/registry/ui/card"
 
 export default function Demo() {
   const { locale } = I18nProviderPrimitives.useLocale()
@@ -26,8 +26,8 @@ export default function Demo() {
     })
 
   const getPrice = (d: CalendarPrimitives.DateValue) => {
-    if (isWeekend(d, locale)) return '$120'
-    return '$100'
+    if (isWeekend(d, locale)) return "$120"
+    return "$100"
   }
 
   return (

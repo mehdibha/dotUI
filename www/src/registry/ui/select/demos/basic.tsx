@@ -1,40 +1,40 @@
-import { Label } from '@/registry/ui/field'
+import { Label } from "@/registry/ui/field"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
+} from "@/registry/ui/select"
 
 interface DemoProps {
   label?: string
   placeholder?: string
-  selectionMode?: 'single' | 'multiple'
+  selectionMode?: "single" | "multiple"
   isDisabled?: boolean
 }
 
 export default function Demo({
   label,
   placeholder,
-  selectionMode = 'single',
+  selectionMode = "single",
   isDisabled = false,
 }: DemoProps = {}) {
   const trimmedLabel =
-    typeof label === 'string' ? label.trim() : (label ?? undefined)
+    typeof label === "string" ? label.trim() : (label ?? undefined)
   const trimmedPlaceholder =
-    typeof placeholder === 'string' ? placeholder.trim() : undefined
+    typeof placeholder === "string" ? placeholder.trim() : undefined
 
   return (
     <Select
       className="w-52"
-      aria-label={trimmedLabel ? undefined : 'Provider'}
+      aria-label={trimmedLabel ? undefined : "Provider"}
       placeholder={trimmedPlaceholder || undefined}
       isDisabled={isDisabled}
     >
       {trimmedLabel ? <Label>{trimmedLabel}</Label> : null}
       <SelectTrigger />
       <SelectContent
-        selectionMode={selectionMode === 'multiple' ? 'multiple' : undefined}
+        selectionMode={selectionMode === "multiple" ? "multiple" : undefined}
       >
         <SelectItem id="perplexity">Perplexity</SelectItem>
         <SelectItem id="replicate">Replicate</SelectItem>

@@ -16,19 +16,19 @@
  *
  * Build-time only (imports oxfmt + ts-morph, both `www` deps).
  */
-import { format } from 'oxfmt'
-import { Node, Project, ScriptKind, SyntaxKind } from 'ts-morph'
+import { format } from "oxfmt"
+import { Node, Project, ScriptKind, SyntaxKind } from "ts-morph"
 import type {
   FunctionDeclaration,
   JsxAttribute,
   JsxElement,
   JsxSelfClosingElement,
   SourceFile,
-} from 'ts-morph'
+} from "ts-morph"
 
 // NOTE: relative (not `@/`) — this module is loaded by the rehype plugin at vite
 // config-load time, before the `@/` alias is registered.
-import { rewriteImportPath } from '../../../publisher/build-time/transform-base'
+import { rewriteImportPath } from "../../../publisher/build-time/transform-base"
 import type {
   AttrPart,
   ChildPart,
@@ -38,7 +38,7 @@ import type {
   SerializedDefault,
   TemplateElement,
   ValueKind,
-} from './code-template'
+} from "./code-template"
 
 // The style contract for GENERATED demo code: oxfmt defaults (semicolons,
 // double quotes) at printWidth 120, 2-space indent. SPACES because Shiki/
@@ -69,7 +69,7 @@ export interface OverlayInput {
 export class OverlayError extends Error {
   constructor(message: string) {
     super(message)
-    this.name = 'OverlayError'
+    this.name = "OverlayError"
   }
 }
 
@@ -100,7 +100,7 @@ export async function buildSourceOverlay(
 
     const templated = sf
       .getFullText()
-      .replace(/export default function/, 'export function')
+      .replace(/export default function/, "export function")
     const formatted = await formatOrThrow(templated, input)
 
     // Lift the FORMATTED file into the template tree.
@@ -173,7 +173,7 @@ function rewriteImports(sf: SourceFile): void {
     const rewritten =
       rewriteImportPath(imp.getModuleSpecifierValue()) ??
       imp.getModuleSpecifierValue()
-    imp.setModuleSpecifier(rewritten.replace(/^@\/components\/ui\//, '@/ui/'))
+    imp.setModuleSpecifier(rewritten.replace(/^@\/components\/ui\//, "@/ui/"))
   }
 }
 
@@ -237,13 +237,13 @@ class TreeBuilder {
         )
       }
       const attrName = attr.getNameNode().getText()
-      if (attrName === 'data-control-target') continue
+      if (attrName === "data-control-target") continue
       const control = this.byName.get(attrName)
       const derived = readDerivedMarker(attr)
       if (control && (holesAllowed || derived)) {
         this.resolved.add(attrName)
         attrs.push({
-          part: 'attr',
+          part: "attr",
           control: attrName,
           attrName,
           kind: control.kind,
@@ -255,12 +255,12 @@ class TreeBuilder {
         continue
       }
       const text = attr.getText()
-      if (text.includes('\n')) {
+      if (text.includes("\n")) {
         throw new OverlayError(
           `Multiline attribute "${attrName}" on dynamic <${tag}> is unsupported${named(this.input)}`,
         )
       }
-      attrs.push({ part: 'static', text })
+      attrs.push({ part: "static", text })
     }
 
     const children: ChildPart[] = []
@@ -275,8 +275,8 @@ class TreeBuilder {
 
   private buildChild(child: Node): ChildPart | null {
     if (Node.isJsxText(child)) {
-      const text = child.getText().replace(/\s+/g, ' ').trim()
-      return text === '' ? null : { part: 'static-text', text }
+      const text = child.getText().replace(/\s+/g, " ").trim()
+      return text === "" ? null : { part: "static-text", text }
     }
 
     if (Node.isJsxExpression(child)) {
@@ -287,12 +287,12 @@ class TreeBuilder {
         const control = this.byName.get(expr.getText())
         if (!control) return null
         this.resolved.add(control.name)
-        return { part: 'text', control: control.name, kind: control.kind }
+        return { part: "text", control: control.name, kind: control.kind }
       }
 
       if (
         Node.isBinaryExpression(expr) &&
-        expr.getOperatorToken().getText() === '&&' &&
+        expr.getOperatorToken().getText() === "&&" &&
         this.byName.has(expr.getLeft().getText())
       ) {
         const control = expr.getLeft().getText()
@@ -305,13 +305,13 @@ class TreeBuilder {
         }
         this.resolved.add(control)
         return {
-          part: 'element',
+          part: "element",
           el: this.buildElement(right, { holesAllowed: false }),
           showWhen: control,
         }
       }
 
-      return { part: 'static', lines: nodeLines(child) }
+      return { part: "static", lines: nodeLines(child) }
     }
 
     if (Node.isJsxElement(child) || Node.isJsxSelfClosingElement(child)) {
@@ -320,11 +320,11 @@ class TreeBuilder {
           ? child.getOpeningElement()
           : child
         return {
-          part: 'element',
+          part: "element",
           el: this.buildElement(child, { holesAllowed: hasMarker(opening) }),
         }
       }
-      return { part: 'static', lines: nodeLines(child) }
+      return { part: "static", lines: nodeLines(child) }
     }
 
     throw new OverlayError(
@@ -337,7 +337,7 @@ class TreeBuilder {
     const openings: Node[] = [node, ...node.getDescendants()]
     for (const n of openings) {
       if (Node.isJsxAttribute(n)) {
-        if (n.getNameNode().getText() === 'data-control-target') return true
+        if (n.getNameNode().getText() === "data-control-target") return true
         if (readDerivedMarker(n)) return true
       }
       if (Node.isJsxExpression(n)) {
@@ -347,7 +347,7 @@ class TreeBuilder {
           return true
         if (
           Node.isBinaryExpression(expr) &&
-          expr.getOperatorToken().getText() === '&&' &&
+          expr.getOperatorToken().getText() === "&&" &&
           this.byName.has(expr.getLeft().getText())
         )
           return true
@@ -363,7 +363,7 @@ function hasMarker(opening: { getAttributes(): Node[] }): boolean {
     .some(
       (a) =>
         Node.isJsxAttribute(a) &&
-        a.getNameNode().getText() === 'data-control-target',
+        a.getNameNode().getText() === "data-control-target",
     )
 }
 
@@ -378,8 +378,8 @@ function readDerivedMarker(attr: JsxAttribute): { dropWhen?: string } | null {
 /** A static node's formatted lines, dedented so its first column is 0. */
 function nodeLines(node: Node): string[] {
   const column = node.getStart() - node.getStartLinePos()
-  const [first = '', ...rest] = node.getText().split('\n')
-  return [first, ...rest.map((l) => (l.trim() === '' ? '' : l.slice(column)))]
+  const [first = "", ...rest] = node.getText().split("\n")
+  return [first, ...rest.map((l) => (l.trim() === "" ? "" : l.slice(column)))]
 }
 
 // ---------------------------------------------------------------------------
@@ -394,7 +394,7 @@ function collectImports(sf: SourceFile): ImportDecl[] {
         source: d.getModuleSpecifierValue(),
         text: d.getText(),
         symbols: [{ name: def.getText() }],
-        kind: 'default' as const,
+        kind: "default" as const,
       }
     }
     return {
@@ -404,7 +404,7 @@ function collectImports(sf: SourceFile): ImportDecl[] {
         name: n.getName(),
         local: n.getAliasNode()?.getText(),
       })),
-      kind: 'named' as const,
+      kind: "named" as const,
     }
   })
 }
@@ -428,15 +428,15 @@ async function formatOrThrow(
   code: string,
   input: OverlayInput,
 ): Promise<string> {
-  const r = await format('demo.tsx', code, OXFMT_OPTIONS)
+  const r = await format("demo.tsx", code, OXFMT_OPTIONS)
   if (r.errors.length > 0) {
     throw new OverlayError(
-      `oxfmt failed${named(input)}: ${r.errors[0]?.message}\n${r.errors[0]?.codeframe ?? ''}`,
+      `oxfmt failed${named(input)}: ${r.errors[0]?.message}\n${r.errors[0]?.codeframe ?? ""}`,
     )
   }
   return r.code
 }
 
 function named(i: OverlayInput): string {
-  return i.componentName ? ` (${i.componentName})` : ''
+  return i.componentName ? ` (${i.componentName})` : ""
 }

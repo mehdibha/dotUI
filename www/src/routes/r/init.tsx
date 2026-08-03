@@ -7,24 +7,24 @@
  * /r/$name endpoint with the same preset attached.
  */
 
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-import { resolveRequestPreset } from '@/lib/registry-preset'
-import { baseRegistryCss } from '@/registry/__generated__/base-css'
-import { emitInitItem } from '@/publisher/emit-theme'
+import { resolveRequestPreset } from "@/lib/registry-preset"
+import { baseRegistryCss } from "@/registry/__generated__/base-css"
+import { emitInitItem } from "@/publisher/emit-theme"
 
 const JSON_HEADERS = {
-  'Content-Type': 'application/json; charset=utf-8',
-  'Cache-Control':
-    'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
+  "Content-Type": "application/json; charset=utf-8",
+  "Cache-Control":
+    "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
 }
 
-export const Route = createFileRoute('/r/init')({
+export const Route = createFileRoute("/r/init")({
   server: {
     handlers: {
       GET: async ({ request }) => {
         const url = new URL(request.url)
-        const encodedPreset = url.searchParams.get('preset') ?? undefined
+        const encodedPreset = url.searchParams.get("preset") ?? undefined
         const preset = await resolveRequestPreset(encodedPreset)
 
         const item = emitInitItem({

@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
-import { CheckboxGroup } from '@/registry/ui/checkbox-group'
-import { FieldGroup, Label } from '@/registry/ui/field'
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import { CheckboxGroup } from "@/registry/ui/checkbox-group"
+import { FieldGroup, Label } from "@/registry/ui/field"
 
 export default function Demo() {
-  const [frameworks, setFrameworks] = React.useState(['nextjs'])
+  const [frameworks, setFrameworks] = React.useState(["nextjs"])
   return (
     <div className="flex flex-col items-center gap-4">
       <CheckboxGroup value={frameworks} onChange={setFrameworks}>
@@ -30,7 +30,7 @@ export default function Demo() {
       <p className="text-xs text-fg-muted">
         {frameworks.length === 0
           ? "You haven't selected any frameworks."
-          : `You selected ${frameworks.join(', ')}.`}
+          : `You selected ${frameworks.join(", ")}.`}
       </p>
     </div>
   )

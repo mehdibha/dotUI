@@ -1,24 +1,24 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const colorPickerMeta = {
-  name: 'color-picker',
-  type: 'registry:ui',
-  group: 'pickers',
+  name: "color-picker",
+  type: "registry:ui",
+  group: "pickers",
   files: [
     {
-      type: 'registry:ui',
-      path: 'ui/color-picker/base.tsx',
-      target: 'ui/color-picker.tsx',
+      type: "registry:ui",
+      path: "ui/color-picker/base.tsx",
+      target: "ui/color-picker.tsx",
     },
   ],
   registryDependencies: [
-    'button',
-    'color-area',
-    'color-field',
-    'color-slider',
-    'color-swatch',
-    'dialog',
-    'select',
+    "button",
+    "color-area",
+    "color-field",
+    "color-slider",
+    "color-swatch",
+    "dialog",
+    "select",
   ],
 } satisfies RegistryItem
 

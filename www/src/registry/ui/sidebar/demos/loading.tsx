@@ -9,7 +9,7 @@ import {
   SidebarMenuSkeleton,
   SidebarProvider,
   SidebarTrigger,
-} from '@/registry/ui/sidebar'
+} from "@/registry/ui/sidebar"
 
 export default function Demo() {
   return (

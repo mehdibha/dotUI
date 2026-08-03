@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import { ColorSlider, ColorSliderControl } from '@/registry/ui/color-slider'
-import { Label } from '@/registry/ui/field'
+import { ColorSlider, ColorSliderControl } from "@/registry/ui/color-slider"
+import { Label } from "@/registry/ui/field"
 
 export default function Demo({
-  channel = 'hue',
-  orientation = 'horizontal',
+  channel = "hue",
+  orientation = "horizontal",
   isDisabled = false,
 }: {
-  channel?: 'hue' | 'saturation' | 'lightness' | 'alpha'
-  orientation?: 'horizontal' | 'vertical'
+  channel?: "hue" | "saturation" | "lightness" | "alpha"
+  orientation?: "horizontal" | "vertical"
   isDisabled?: boolean
 } = {}) {
   return (

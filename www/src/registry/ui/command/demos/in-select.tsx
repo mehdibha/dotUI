@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import { ChevronDownIcon, SearchIcon, XIcon } from 'lucide-react'
+import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Command } from '@/registry/ui/command'
-import { Label } from '@/registry/ui/field'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { Button } from "@/registry/ui/button"
+import { Command } from "@/registry/ui/command"
+import { Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { SearchField } from '@/registry/ui/search-field'
-import { Select, SelectValue } from '@/registry/ui/select'
+} from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { SearchField } from "@/registry/ui/search-field"
+import { Select, SelectValue } from "@/registry/ui/select"
 
 export default function Demo() {
   return (

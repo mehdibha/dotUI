@@ -1,38 +1,38 @@
-'use client'
+"use client"
 
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { getRouteApi } from '@tanstack/react-router'
-import { BoxSelectIcon, ChevronsUpDownIcon } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState } from "react"
+import { getRouteApi } from "@tanstack/react-router"
+import { BoxSelectIcon, ChevronsUpDownIcon } from "lucide-react"
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { PresetPicker } from '@/modules/presets/preset-picker'
-import { PRESETS, type Preset } from '@/modules/presets/presets-data'
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { PresetPicker } from "@/modules/presets/preset-picker"
+import { PRESETS, type Preset } from "@/modules/presets/presets-data"
 
-import { ExamplesIndex } from '../__generated__/examples'
-import { ExportDialog } from '../export'
+import { ExamplesIndex } from "../__generated__/examples"
+import { ExportDialog } from "../export"
 import {
   decodePreset,
   encodePreset,
   useInspectMessages,
   useMyPresets,
-} from '../preset'
-import { saveDesignSystemName, useDesignSystemName } from '../preset/storage'
-import { SavePresetDialog } from '../save-preset-dialog'
-import { SavedPresetActions } from '../saved-preset-actions'
-import { UnsavedChangesDialog } from '../unsaved-changes-dialog'
-import { ComponentsSection } from './components-section'
-import { ChapterHeading, ControlRow } from './primitives'
-import { SECTIONS, useSectionStatus } from './schema'
-import { PanelSearch } from './search'
-import type { CommandTarget } from './search'
-import type { Section } from './types'
+} from "../preset"
+import { saveDesignSystemName, useDesignSystemName } from "../preset/storage"
+import { SavePresetDialog } from "../save-preset-dialog"
+import { SavedPresetActions } from "../saved-preset-actions"
+import { UnsavedChangesDialog } from "../unsaved-changes-dialog"
+import { ComponentsSection } from "./components-section"
+import { ChapterHeading, ControlRow } from "./primitives"
+import { SECTIONS, useSectionStatus } from "./schema"
+import { PanelSearch } from "./search"
+import type { CommandTarget } from "./search"
+import type { Section } from "./types"
 
-const routeApi = getRouteApi('/_app/create')
+const routeApi = getRouteApi("/_app/create")
 
 /** Card chrome shared by every chapter of the story scroll. */
 const CHAPTER_CARD =
-  'scroll-mt-14 rounded-xl border border-border/45 bg-card p-3'
+  "scroll-mt-14 rounded-xl border border-border/45 bg-card p-3"
 
 /** Gap of the card stack (matches the body's `gap-3`) — also sets the resting
  * space between the floating bars and the first/last card. */
@@ -71,7 +71,7 @@ function ComponentsChapter({
   expanded: string | undefined
   onToggle: (name: string | undefined) => void
 }) {
-  const { modified, reset } = useSectionStatus('components')
+  const { modified, reset } = useSectionStatus("components")
   return (
     <section data-section="components" className={CHAPTER_CARD}>
       <ChapterHeading
@@ -92,7 +92,7 @@ export function CreatePanel({ className }: { className?: string }) {
 
   // `?panel=` deep-links a chapter of the scroll (`components.<name>` expands a
   // component's params). It's read on arrival and by ⌘P; scrolling never writes it.
-  const [linkedSection, expandedComponent] = panel?.split('.') ?? []
+  const [linkedSection, expandedComponent] = panel?.split(".") ?? []
 
   const [saveOpen, setSaveOpen] = useState(false)
   // Preset pick held back by the unsaved-changes guard, awaiting save/discard.
@@ -131,13 +131,13 @@ export function CreatePanel({ className }: { className?: string }) {
   // Built-in presets are re-loadable from the gallery, so a freshly applied one
   // isn't unsaved work — only edits past it (or past a saved snapshot) are.
   const builtInStates = useMemo(
-    () => new Set(PRESETS.map((p) => encodePreset(p.designSystem) ?? '')),
+    () => new Set(PRESETS.map((p) => encodePreset(p.designSystem) ?? "")),
     [],
   )
-  const currentState = preset ?? ''
+  const currentState = preset ?? ""
   const isDirty = activeSaved
     ? activeSaved.state !== currentState
-    : currentState !== '' && !builtInStates.has(currentState)
+    : currentState !== "" && !builtInStates.has(currentState)
 
   // Expanding a component also switches the live preview to it so param edits
   // are visible immediately; collapsing leaves the preview where it is.
@@ -145,7 +145,7 @@ export function CreatePanel({ className }: { className?: string }) {
     navigate({
       search: (prev) => ({
         ...prev,
-        panel: name ? `components.${name}` : 'components',
+        panel: name ? `components.${name}` : "components",
         ...(name && name in ExamplesIndex ? { preview: name } : {}),
       }),
     })
@@ -159,16 +159,16 @@ export function CreatePanel({ className }: { className?: string }) {
       )
       if (!el) return
       const reduced = window.matchMedia(
-        '(prefers-reduced-motion: reduce)',
+        "(prefers-reduced-motion: reduce)",
       ).matches
       el.scrollIntoView({
-        block: anchor.startsWith('component-') || flash ? 'center' : 'start',
-        behavior: reduced ? 'auto' : 'smooth',
+        block: anchor.startsWith("component-") || flash ? "center" : "start",
+        behavior: reduced ? "auto" : "smooth",
       })
       if (flash)
         el.animate([{ opacity: 1 }, { opacity: 0.35 }, { opacity: 1 }], {
           duration: reduced ? 0 : 700,
-          easing: 'ease-in-out',
+          easing: "ease-in-out",
         })
     })
   }
@@ -176,7 +176,7 @@ export function CreatePanel({ className }: { className?: string }) {
   // Search jump: controls just scroll (every chapter is always in the DOM);
   // components first expand via `?panel=`, then scroll once rendered.
   function jump(target: CommandTarget) {
-    if (target.kind === 'component') {
+    if (target.kind === "component") {
       pendingJumpRef.current = `component-${target.id}`
       toggleComponent(target.id)
     } else {
@@ -241,8 +241,8 @@ export function CreatePanel({ className }: { className?: string }) {
   // Saved presets decode to full design systems for the picker's mini previews.
   const pickerSections = useMemo(() => {
     const mine = {
-      id: 'mine',
-      title: 'My presets',
+      id: "mine",
+      title: "My presets",
       items: presets.map((saved) => ({
         id: saved.id,
         name: saved.name,
@@ -250,8 +250,8 @@ export function CreatePanel({ className }: { className?: string }) {
       })),
     }
     const builtIn = {
-      id: 'built-in',
-      title: 'Built-in',
+      id: "built-in",
+      title: "Built-in",
       items: PRESETS.map((p) => ({
         id: p.id,
         name: p.name,
@@ -290,7 +290,7 @@ export function CreatePanel({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'relative flex w-full flex-1 flex-col lg:w-80 lg:flex-none lg:shrink-0',
+        "relative flex w-full flex-1 flex-col lg:w-80 lg:flex-none lg:shrink-0",
         className,
       )}
     >

@@ -1,5 +1,5 @@
-import { Description, FieldContent, Label } from '@/registry/ui/field'
-import { Switch, SwitchControl, SwitchIndicator } from '@/registry/ui/switch'
+import { Description, FieldContent, Label } from "@/registry/ui/field"
+import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
 
 export default function Demo() {
   return (

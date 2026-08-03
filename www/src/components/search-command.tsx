@@ -1,9 +1,9 @@
-import React from 'react'
-import type { ToOptions } from '@tanstack/react-router'
-import type * as PageTree from 'fumadocs-core/page-tree'
-import type { SortedResult } from 'fumadocs-core/search'
-import { useDocsSearch } from 'fumadocs-core/search/client'
-import { oramaStaticClient } from 'fumadocs-core/search/client/orama-static'
+import React from "react"
+import type { ToOptions } from "@tanstack/react-router"
+import type * as PageTree from "fumadocs-core/page-tree"
+import type { SortedResult } from "fumadocs-core/search"
+import { useDocsSearch } from "fumadocs-core/search/client"
+import { oramaStaticClient } from "fumadocs-core/search/client/orama-static"
 import {
   ArrowRightIcon,
   CircleDashedIcon,
@@ -14,38 +14,38 @@ import {
   SearchIcon,
   SunIcon,
   TextIcon,
-} from 'lucide-react'
-import { Autocomplete, useFilter } from 'react-aria-components/Autocomplete'
-import { useTheme } from 'starter-themes'
+} from "lucide-react"
+import { Autocomplete, useFilter } from "react-aria-components/Autocomplete"
+import { useTheme } from "starter-themes"
 
-import { navItems, siteConfig } from '@/config/site'
-import { Responsive } from '@/registry/lib/responsive'
-import { useStyles as useCommandStyles } from '@/registry/ui/command/styles'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { navItems, siteConfig } from "@/config/site"
+import { Responsive } from "@/registry/lib/responsive"
+import { useStyles as useCommandStyles } from "@/registry/ui/command/styles"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   MenuContent,
   MenuItem,
   MenuItemLabel,
   MenuSection,
   MenuSectionHeader,
-} from '@/registry/ui/menu'
+} from "@/registry/ui/menu"
 import {
   ModalBackdrop,
   ModalOverlay,
   ModalPanel,
   ModalViewport,
-} from '@/registry/ui/modal'
-import { SearchField } from '@/registry/ui/search-field'
-import { GitHubIcon } from '@/components/icons/github'
+} from "@/registry/ui/modal"
+import { SearchField } from "@/registry/ui/search-field"
+import { GitHubIcon } from "@/components/icons/github"
 
 // Module-level so the downloaded index and Orama db survive dialog re-opens —
 // the index is fetched from /api/search once per page load, every query after
 // that runs fully client-side.
-const searchClient = oramaStaticClient({ from: '/api/search' })
+const searchClient = oramaStaticClient({ from: "/api/search" })
 
-const RECENT_KEY = 'dotui.search.recent'
+const RECENT_KEY = "dotui.search.recent"
 const RECENT_LIMIT = 5
 
 interface RecentEntry {
@@ -55,15 +55,15 @@ interface RecentEntry {
 
 function readRecents(): RecentEntry[] {
   try {
-    const parsed: unknown = JSON.parse(localStorage.getItem(RECENT_KEY) ?? '[]')
+    const parsed: unknown = JSON.parse(localStorage.getItem(RECENT_KEY) ?? "[]")
     if (!Array.isArray(parsed)) return []
     return parsed
       .filter(
         (entry): entry is RecentEntry =>
-          typeof entry === 'object' &&
+          typeof entry === "object" &&
           entry !== null &&
-          typeof (entry as RecentEntry).title === 'string' &&
-          typeof (entry as RecentEntry).url === 'string',
+          typeof (entry as RecentEntry).title === "string" &&
+          typeof (entry as RecentEntry).url === "string",
       )
       .slice(0, RECENT_LIMIT)
   } catch {
@@ -86,27 +86,27 @@ function pushRecent(entry: RecentEntry) {
 /** Search result URLs are `/docs/...#anchor` strings; route them through the
  *  docs splat route so navigation stays client-side. */
 function docsHref(url: string): string | ToOptions {
-  const [path = '', hash] = url.split('#')
-  if (path !== '/docs' && !path.startsWith('/docs/')) return url
+  const [path = "", hash] = url.split("#")
+  if (path !== "/docs" && !path.startsWith("/docs/")) return url
   return {
-    to: '/docs/$',
-    params: { _splat: path.slice('/docs/'.length) },
+    to: "/docs/$",
+    params: { _splat: path.slice("/docs/".length) },
     hash,
   }
 }
 
 const stripMarks = (content: string) =>
   content
-    .replace(/<\/?mark>/g, '')
-    .replaceAll('`', '')
-    .replaceAll('**', '')
+    .replace(/<\/?mark>/g, "")
+    .replaceAll("`", "")
+    .replaceAll("**", "")
 
 /** Result content arrives as text with `<mark>` around matched terms and
  *  occasional markdown syntax (inline-code backticks, bold markers). */
 function Highlight({ text }: { text: string }) {
   const parts = text
-    .replaceAll('`', '')
-    .replaceAll('**', '')
+    .replaceAll("`", "")
+    .replaceAll("**", "")
     .split(/<mark>(.*?)<\/mark>/)
   if (parts.length === 1) return parts[0]
   return parts.map((part, index) =>
@@ -130,7 +130,7 @@ interface ResultGroup {
 function groupResults(results: SortedResult[]): ResultGroup[] {
   const groups: ResultGroup[] = []
   for (const result of results) {
-    if (result.type === 'page') groups.push({ page: result, children: [] })
+    if (result.type === "page") groups.push({ page: result, children: [] })
     else groups.at(-1)?.children.push(result)
   }
   return groups
@@ -153,7 +153,7 @@ export function SearchCommand({
     if (!keyboardShortcut) return
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || e.key === '/') {
+      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
         const target = e.target
         if (
           (target instanceof HTMLElement && target.isContentEditable) ||
@@ -169,8 +169,8 @@ export function SearchCommand({
       }
     }
 
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
   }, [keyboardShortcut])
 
   return (
@@ -223,7 +223,7 @@ function SearchDialog({
 
   React.useEffect(() => {
     // Warm the index (download + build) while the user starts typing.
-    void Promise.resolve(searchClient.search('')).catch(() => {})
+    void Promise.resolve(searchClient.search("")).catch(() => {})
   }, [])
 
   // Typing filters the default sections like a regular command palette. The
@@ -231,7 +231,7 @@ function SearchDialog({
   // section — nested matches (headings, body text) only, since page-level
   // hits duplicate the pages already listed in the default sections.
   const { contains } = useFilter({
-    sensitivity: 'base',
+    sensitivity: "base",
     ignorePunctuation: true,
   })
   const term = search.trim()
@@ -251,7 +251,7 @@ function SearchDialog({
     const pageTitle = stripMarks(page.content)
     pushRecent({
       title:
-        child.type === 'heading'
+        child.type === "heading"
           ? `${pageTitle} › ${stripMarks(child.content)}`
           : pageTitle,
       url: child.url,
@@ -263,7 +263,7 @@ function SearchDialog({
     <Autocomplete inputValue={search} onInputChange={setSearch}>
       <div
         data-command=""
-        className={commandStyles({ className: 'gap-0 overflow-y-hidden p-0' })}
+        className={commandStyles({ className: "gap-0 overflow-y-hidden p-0" })}
       >
         <SearchField autoFocus aria-label="Search" className="px-1.5 pt-1.5">
           {/* Radius stays concentric with the modal (2xl − 6px inset); the
@@ -289,9 +289,9 @@ function SearchDialog({
           renderEmptyState={() => (
             <div className="py-8 text-center text-sm text-fg-muted">
               {query.error
-                ? 'Search is unavailable right now.'
+                ? "Search is unavailable right now."
                 : query.isLoading
-                  ? 'Searching…'
+                  ? "Searching…"
                   : `No results for “${search.trim()}”`}
             </div>
           )}
@@ -332,10 +332,10 @@ function SearchDialog({
               </MenuSection>
             ),
             ...items.map((group, index) => {
-              if (group.type !== 'folder') return null
+              if (group.type !== "folder") return null
               const pages = group.children.filter(
                 (item): item is PageTree.Item =>
-                  item.type === 'page' && matches(item.name as string),
+                  item.type === "page" && matches(item.name as string),
               )
               if (pages.length === 0) return null
               return (
@@ -348,7 +348,7 @@ function SearchDialog({
                       href={item.url}
                       textValue={item.name as string}
                     >
-                      {group.name === 'Components' ? (
+                      {group.name === "Components" ? (
                         <CircleDashedIcon className="text-fg-muted!" />
                       ) : (
                         <FileTextIcon className="text-fg-muted!" />
@@ -359,14 +359,14 @@ function SearchDialog({
                 </MenuSection>
               )
             }),
-            (matches('Toggle theme') || matches('GitHub')) && (
+            (matches("Toggle theme") || matches("GitHub")) && (
               <MenuSection key="general">
                 <MenuSectionHeader>General</MenuSectionHeader>
-                {matches('Toggle theme') && (
+                {matches("Toggle theme") && (
                   <MenuItem
                     textValue="Toggle theme"
                     onAction={() => {
-                      setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
+                      setTheme(resolvedTheme === "dark" ? "light" : "dark")
                       onClose()
                     }}
                   >
@@ -375,7 +375,7 @@ function SearchDialog({
                     Toggle theme
                   </MenuItem>
                 )}
-                {matches('GitHub') && (
+                {matches("GitHub") && (
                   <MenuItem
                     href={siteConfig.links.github}
                     target="_blank"
@@ -397,7 +397,7 @@ function SearchDialog({
                     textValue={stripMarks(child.content)}
                     onAction={() => rememberChild(page, child)}
                   >
-                    {child.type === 'heading' ? (
+                    {child.type === "heading" ? (
                       <HashIcon className="text-fg-muted!" />
                     ) : (
                       <TextIcon className="text-fg-muted!" />

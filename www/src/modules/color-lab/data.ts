@@ -10,23 +10,23 @@ import {
   wcagContrast,
   type Oklch,
   type Rgb,
-} from './color'
+} from "./color"
 
-export type ScaleRole = 'neutral' | 'accent' | 'danger' | 'success' | 'warning'
+export type ScaleRole = "neutral" | "accent" | "danger" | "success" | "warning"
 
 export const UI_ROLES = [
-  'appBg',
-  'subtleBg',
-  'uiBg',
-  'uiBgHover',
-  'uiBgActive',
-  'borderSubtle',
-  'border',
-  'borderStrong',
-  'solid',
-  'solidHover',
-  'textSubtle',
-  'text',
+  "appBg",
+  "subtleBg",
+  "uiBg",
+  "uiBgHover",
+  "uiBgActive",
+  "borderSubtle",
+  "border",
+  "borderStrong",
+  "solid",
+  "solidHover",
+  "textSubtle",
+  "text",
 ] as const
 
 export type UiRole = (typeof UI_ROLES)[number]
@@ -67,7 +67,7 @@ export interface Step {
   /** WCAG ratio + APCA Lc of this color against the scale's step-1 background. */
   vsBg: { wcag: number; apca: number }
   /** WCAG ratio + APCA Lc of white/black text over this color, whichever is stronger. */
-  asBg: { wcag: number; apca: number; fg: 'white' | 'black' }
+  asBg: { wcag: number; apca: number; fg: "white" | "black" }
 }
 
 export interface Scale {
@@ -114,8 +114,8 @@ function buildStep(name: string, raw: string, bg: Rgb): Step {
   // mid-blues where every shipping system uses white.
   const fg =
     Math.abs(apcaContrast(WHITE, rgb)) >= Math.abs(apcaContrast(BLACK, rgb))
-      ? 'white'
-      : 'black'
+      ? "white"
+      : "black"
   return {
     name,
     raw,
@@ -124,8 +124,8 @@ function buildStep(name: string, raw: string, bg: Rgb): Step {
     oklch: rgbToOklch(rgb),
     vsBg: { wcag: wcagContrast(rgb, bg), apca: apcaContrast(rgb, bg) },
     asBg: {
-      wcag: wcagContrast(fg === 'white' ? WHITE : BLACK, rgb),
-      apca: apcaContrast(fg === 'white' ? WHITE : BLACK, rgb),
+      wcag: wcagContrast(fg === "white" ? WHITE : BLACK, rgb),
+      apca: apcaContrast(fg === "white" ? WHITE : BLACK, rgb),
       fg,
     },
   }
@@ -133,12 +133,12 @@ function buildStep(name: string, raw: string, bg: Rgb): Step {
 
 function buildSteps(
   steps: { name: string; value: string }[],
-  mode: 'light' | 'dark',
+  mode: "light" | "dark",
 ): Step[] {
   // Contrast-vs-background uses the scale's own first step (app background);
   // in single-palette systems the darkest/lightest end plays that role.
   const first = steps[0] && parseColor(steps[0].value)
-  const bg = first ?? (mode === 'light' ? WHITE : BLACK)
+  const bg = first ?? (mode === "light" ? WHITE : BLACK)
   return steps.map((s) => buildStep(s.name, s.value, bg))
 }
 
@@ -154,12 +154,12 @@ export function buildColorSystem(file: SystemFile): ColorSystem {
       on: scale.on,
       light: buildSteps(
         scale.steps.map((s) => ({ name: s.name, value: s.light })),
-        'light',
+        "light",
       ),
       dark: scale.steps.every((s) => s.dark !== null)
         ? buildSteps(
             scale.steps.map((s) => ({ name: s.name, value: s.dark as string })),
-            'dark',
+            "dark",
           )
         : null,
     })),
@@ -170,9 +170,9 @@ export function buildColorSystem(file: SystemFile): ColorSystem {
 export function resolveRoles(
   system: ColorSystem,
   scale: Scale,
-  mode: 'light' | 'dark',
+  mode: "light" | "dark",
 ): Partial<Record<UiRole, Step>> {
-  const steps = mode === 'dark' && scale.dark ? scale.dark : scale.light
+  const steps = mode === "dark" && scale.dark ? scale.dark : scale.light
   const mapping = mappingFor(system, scale)
   const out: Partial<Record<UiRole, Step>> = {}
   for (const role of UI_ROLES) {
@@ -194,26 +194,26 @@ export function scaleByRole(
 /** The slot the engine rewrite will fill. Kept first so every comparison view
     renders the empty state prominently — the lab exists to receive it. */
 export const ENGINE_SLOT: ColorSystem = {
-  id: 'dotui',
-  name: 'dotUI Engine',
-  website: 'https://dotui.org',
+  id: "dotui",
+  name: "dotUI Engine",
+  website: "https://dotui.org",
   sources: [],
   description:
-    'Output of the rewritten dotUI color engine. Not plugged in yet.',
+    "Output of the rewritten dotUI color engine. Not plugged in yet.",
   philosophy:
-    'To be written by the rewrite: an OKLCH-native engine generating full semantic scales from a seed color.',
+    "To be written by the rewrite: an OKLCH-native engine generating full semantic scales from a seed color.",
   stepCount: 12,
   stepNames: Array.from({ length: 12 }, (_, index) => String(index + 1)),
   scales: [],
   roleMapping: {},
-  solidForeground: '',
-  notes: '',
+  solidForeground: "",
+  notes: "",
   empty: true,
 }
 
-const files = import.meta.glob<SystemFile>('./data/*.json', {
+const files = import.meta.glob<SystemFile>("./data/*.json", {
   eager: true,
-  import: 'default',
+  import: "default",
 })
 
 export const referenceSystems: ColorSystem[] = Object.values(files)

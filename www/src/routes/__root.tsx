@@ -1,30 +1,30 @@
 /// <reference types="vite/client" />
 
-import { lazy, Suspense, useEffect } from 'react'
+import { lazy, Suspense, useEffect } from "react"
 import {
   ClientOnly,
   createRootRoute,
   HeadContent,
   Outlet,
   Scripts,
-} from '@tanstack/react-router'
-import { ThemeProvider } from 'starter-themes'
+} from "@tanstack/react-router"
+import { ThemeProvider } from "starter-themes"
 
-import { siteConfig } from '@/config/site'
-import { truncateOnWord } from '@/lib/text'
-import { ToastProvider } from '@/registry/ui/toast'
-import { usePreviewForcedTheme } from '@/modules/create/preset'
+import { siteConfig } from "@/config/site"
+import { truncateOnWord } from "@/lib/text"
+import { ToastProvider } from "@/registry/ui/toast"
+import { usePreviewForcedTheme } from "@/modules/create/preset"
 
-import appCss from '@/styles.css?url'
+import appCss from "@/styles.css?url"
 
 // Floating panel for live design/layout exploration (see src/dev/tweaker).
 // Dev + Vercel previews; the !SSR guard keeps the chunk out of the server
 // bundle so build-time prerendering never evaluates it.
 const DevTweaker =
   !import.meta.env.SSR &&
-  (import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview')
+  (import.meta.env.DEV || import.meta.env.VERCEL_ENV === "preview")
     ? lazy(() =>
-        import('@/dev/tweaker').then((m) => ({ default: m.DevTweaker })),
+        import("@/dev/tweaker").then((m) => ({ default: m.DevTweaker })),
       )
     : null
 
@@ -33,9 +33,9 @@ const DevTweaker =
 // `window` at module scope, which crashes build-time prerendering.
 const RouterDevtools =
   !import.meta.env.SSR &&
-  (import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview')
+  (import.meta.env.DEV || import.meta.env.VERCEL_ENV === "preview")
     ? lazy(() =>
-        import('@tanstack/react-router-devtools').then((m) => ({
+        import("@tanstack/react-router-devtools").then((m) => ({
           default: m.TanStackRouterDevtoolsInProd,
         })),
       )
@@ -49,40 +49,40 @@ export const Route = createRootRoute({
 
     return {
       meta: [
-        { charSet: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
         { title },
-        { name: 'description', content: description },
-        { name: 'keywords', content: siteConfig.keywords.join(', ') },
-        { name: 'author', content: siteConfig.creator },
-        { property: 'og:type', content: 'website' },
-        { property: 'og:locale', content: 'en_US' },
-        { property: 'og:url', content: siteConfig.url },
-        { property: 'og:title', content: title },
-        { property: 'og:description', content: description },
-        { property: 'og:site_name', content: siteConfig.name },
-        { property: 'og:image', content: ogImageUrl },
-        { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: title },
-        { name: 'twitter:description', content: description },
-        { name: 'twitter:image', content: ogImageUrl },
-        { name: 'twitter:creator', content: siteConfig.twitter.creator },
+        { name: "description", content: description },
+        { name: "keywords", content: siteConfig.keywords.join(", ") },
+        { name: "author", content: siteConfig.creator },
+        { property: "og:type", content: "website" },
+        { property: "og:locale", content: "en_US" },
+        { property: "og:url", content: siteConfig.url },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:site_name", content: siteConfig.name },
+        { property: "og:image", content: ogImageUrl },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: ogImageUrl },
+        { name: "twitter:creator", content: siteConfig.twitter.creator },
       ],
       links: [
-        { rel: 'stylesheet', href: appCss },
+        { rel: "stylesheet", href: appCss },
         {
-          rel: 'alternate icon',
-          type: 'image/png',
-          href: '/favicon-96x96.png',
-          sizes: '96x96',
+          rel: "alternate icon",
+          type: "image/png",
+          href: "/favicon-96x96.png",
+          sizes: "96x96",
         },
-        { rel: 'shortcut icon', href: '/favicon.ico' },
+        { rel: "shortcut icon", href: "/favicon.ico" },
         {
-          rel: 'apple-touch-icon',
-          href: '/apple-touch-icon.png',
-          sizes: '180x180',
+          rel: "apple-touch-icon",
+          href: "/apple-touch-icon.png",
+          sizes: "180x180",
         },
-        { rel: 'manifest', href: '/site.webmanifest' },
+        { rel: "manifest", href: "/site.webmanifest" },
       ],
     }
   },
@@ -92,7 +92,7 @@ export const Route = createRootRoute({
 function RootComponent() {
   useEffect(() => {
     if (import.meta.env.DEV) {
-      void import('react-grab')
+      void import("react-grab")
     }
   }, [])
 

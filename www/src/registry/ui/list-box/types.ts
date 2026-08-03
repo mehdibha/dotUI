@@ -1,6 +1,6 @@
-import type * as HeaderPrimitives from 'react-aria-components/Header'
-import type * as ListBoxPrimitives from 'react-aria-components/ListBox'
-import type * as VirtualizerPrimitives from 'react-aria-components/Virtualizer'
+import type * as HeaderPrimitives from "react-aria-components/Header"
+import type * as ListBoxPrimitives from "react-aria-components/ListBox"
+import type * as VirtualizerPrimitives from "react-aria-components/Virtualizer"
 
 /**
  * A listbox displays a list of options and allows a user to select one or more of them.
@@ -23,7 +23,7 @@ export interface ListBoxItemProps<
    * The color treatment of the list box item.
    * @default 'default'
    */
-  variant?: 'default' | 'danger'
+  variant?: "default" | "danger"
 }
 
 /**
@@ -43,7 +43,7 @@ export interface ListBoxSectionHeaderProps extends React.ComponentProps<
 /**
  * Loader strip rendered below the items collection.
  */
-export interface ListBoxLoaderProps extends React.ComponentProps<'div'> {}
+export interface ListBoxLoaderProps extends React.ComponentProps<"div"> {}
 
 /**
  * A Virtualizer renders a scrollable collection of data using customizable layouts.
@@ -51,5 +51,5 @@ export interface ListBoxLoaderProps extends React.ComponentProps<'div'> {}
  */
 export interface ListBoxVirtualizerProps<T> extends Omit<
   VirtualizerPrimitives.VirtualizerProps<T>,
-  'layout'
+  "layout"
 > {}

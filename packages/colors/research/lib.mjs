@@ -2,21 +2,21 @@
 // APCA via the official apca-w3 meter; WCAG 2 via the standard relative-
 // luminance formula. Lab numbers use culori lab65 (D65, matching WCAG).
 
-import { APCAcontrast, sRGBtoY } from 'apca-w3'
-import { converter } from 'culori'
+import { APCAcontrast, sRGBtoY } from "apca-w3"
+import { converter } from "culori"
 
-export const toOklch = converter('oklch')
-export const toLab65 = converter('lab65')
-export const toRgb = converter('rgb')
+export const toOklch = converter("oklch")
+export const toLab65 = converter("lab65")
+export const toRgb = converter("rgb")
 
 export function hexToRgb255(hex) {
-  const h = hex.replace('#', '')
+  const h = hex.replace("#", "")
   const full =
     h.length === 3
       ? h
-          .split('')
+          .split("")
           .map((c) => c + c)
-          .join('')
+          .join("")
       : h
   return [
     parseInt(full.slice(0, 2), 16),
@@ -59,39 +59,39 @@ export function median(values) {
 }
 
 // Radix scale names (25 accents + 6 grays = 31 light + 31 dark).
-export const RADIX_GRAYS = ['gray', 'mauve', 'slate', 'sage', 'olive', 'sand']
+export const RADIX_GRAYS = ["gray", "mauve", "slate", "sage", "olive", "sand"]
 export const RADIX_ACCENTS = [
-  'tomato',
-  'red',
-  'ruby',
-  'crimson',
-  'pink',
-  'plum',
-  'purple',
-  'violet',
-  'iris',
-  'indigo',
-  'blue',
-  'cyan',
-  'teal',
-  'jade',
-  'green',
-  'grass',
-  'bronze',
-  'gold',
-  'brown',
-  'orange',
-  'amber',
-  'yellow',
-  'lime',
-  'mint',
-  'sky',
+  "tomato",
+  "red",
+  "ruby",
+  "crimson",
+  "pink",
+  "plum",
+  "purple",
+  "violet",
+  "iris",
+  "indigo",
+  "blue",
+  "cyan",
+  "teal",
+  "jade",
+  "green",
+  "grass",
+  "bronze",
+  "gold",
+  "brown",
+  "orange",
+  "amber",
+  "yellow",
+  "lime",
+  "mint",
+  "sky",
 ]
 export const RADIX_ALL = [...RADIX_GRAYS, ...RADIX_ACCENTS]
 
 // Extract steps 1..12 as hex from a Radix scale object like { blue1: "#..", ... }.
 export function radixSteps(scaleObj) {
-  const key = Object.keys(scaleObj)[0].replace(/\d+$/, '')
+  const key = Object.keys(scaleObj)[0].replace(/\d+$/, "")
   const steps = {}
   for (let i = 1; i <= 12; i++) steps[i] = scaleObj[`${key}${i}`]
   return steps

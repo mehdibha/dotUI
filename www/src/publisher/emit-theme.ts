@@ -13,18 +13,18 @@ import {
   FONT_TOKEN_VARS,
   fontFamiliesFromTokens,
   googleFontsUrl,
-} from '@/lib/fonts'
+} from "@/lib/fonts"
 import {
   resolveColorConfig,
   resolveTarget,
   resolveTokenValue,
   semanticsFor,
-} from '@/registry/theme'
-import type { Density, RegistryItem } from '@/registry/types'
+} from "@/registry/theme"
+import type { Density, RegistryItem } from "@/registry/types"
 
-import type { PublishPreset } from './types'
+import type { PublishPreset } from "./types"
 
-type RegistryCssFields = Pick<RegistryItem, 'css' | 'cssVars'>
+type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
 
 export interface EmitThemeInput {
   /** Structured shadcn registry CSS fields generated from base/*.css. */
@@ -38,13 +38,13 @@ export interface EmitThemeInput {
 }
 
 export const DEFAULT_DEPENDENCIES = [
-  'tailwind-variants',
-  'react-aria-components',
-  'tailwindcss-react-aria-components',
-  'tw-animate-css',
+  "tailwind-variants",
+  "react-aria-components",
+  "tailwindcss-react-aria-components",
+  "tw-animate-css",
   // The init css emits `@plugin 'tailwindcss-with'` — without the package the
   // consumer's first Tailwind build fails.
-  'tailwindcss-with',
+  "tailwindcss-with",
 ]
 
 export const CN_UTILS_TS = `import { cn as cnBase } from "tailwind-variants";
@@ -59,7 +59,7 @@ export const cn = (...classes: Parameters<typeof cnBase>): string =>
  * is `default`, so an empty value omits the declaration.
  */
 function densityRootValue(density: Density): string | undefined {
-  if (density === 'default') return undefined
+  if (density === "default") return undefined
   return density
 }
 
@@ -67,13 +67,13 @@ function densityRootValue(density: Density): string | undefined {
  *  Distinct from the imported `resolveTokenValue`, which resolves a
  *  `SemanticToken`; this takes a raw token string. */
 function resolveCssValue(value: string): string {
-  return value.startsWith('--') ? `var(${value})` : value
+  return value.startsWith("--") ? `var(${value})` : value
 }
 
 function emitPresetLightVars(preset: PublishPreset): Record<string, string> {
   const vars: Record<string, string> = {}
   const density = densityRootValue(preset.density)
-  if (density) vars['--dotui-density'] = preset.density
+  if (density) vars["--dotui-density"] = preset.density
   // Global tokens (radius factor, cursors, …) land on `:root`, same as the
   // live provider. `componentParams` are inlined into component classes at
   // build, so they're not written here. Font tokens are excluded: the shipped
@@ -83,7 +83,7 @@ function emitPresetLightVars(preset: PublishPreset): Record<string, string> {
   const fontVars = new Set<string>(FONT_TOKEN_VARS)
   for (const [key, value] of Object.entries(preset.tokens ?? {})) {
     if (fontVars.has(key)) continue
-    vars[key.startsWith('--') ? key : `--${key}`] = resolveCssValue(value)
+    vars[key.startsWith("--") ? key : `--${key}`] = resolveCssValue(value)
   }
   return vars
 }
@@ -105,28 +105,28 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
   //   we don't rely on it: per-component `registryDependencies` are emitted
   //   as absolute URLs by the per-component publisher.
   const config = {
-    style: 'default',
+    style: "default",
     tailwind: {
       cssVariables: true,
     },
     aliases: {
-      components: '@/components',
-      ui: '@/components/ui',
-      utils: '@/lib/utils',
-      lib: '@/lib',
-      hooks: '@/hooks',
+      components: "@/components",
+      ui: "@/components/ui",
+      utils: "@/lib/utils",
+      lib: "@/lib",
+      hooks: "@/hooks",
     },
     registries: {
-      '@dotui': registryConfigUrl(registryRoot, encodedPreset),
+      "@dotui": registryConfigUrl(registryRoot, encodedPreset),
     },
   }
 
   const item = {
-    name: 'dotui',
+    name: "dotui",
     // `registry:base` is the init payload type shadcn uses for project
     // config updates such as `components.json.registries`.
-    type: 'registry:base',
-    extends: 'none',
+    type: "registry:base",
+    extends: "none",
     dependencies: DEFAULT_DEPENDENCIES,
     // shadcn's `cn` utils sit in a 4xx-gated path under v4 Tailwind, so we ship our own copy
     // in `files[]` rather than declaring a registry dependency.
@@ -135,9 +135,9 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
     ...(cssVars ? { cssVars } : {}),
     files: [
       {
-        type: 'registry:lib',
-        path: 'lib/utils.ts',
-        target: 'src/lib/utils.ts',
+        type: "registry:lib",
+        path: "lib/utils.ts",
+        target: "src/lib/utils.ts",
         content: CN_UTILS_TS,
       },
     ],
@@ -151,14 +151,14 @@ function registryConfigUrl(
   registryRoot: string,
   encodedPreset: string | undefined,
 ): string {
-  return `${registryRoot}/r/{name}?preset=${encodedPreset ?? ''}`
+  return `${registryRoot}/r/{name}?preset=${encodedPreset ?? ""}`
 }
 
 type EngineTheme = ReturnType<typeof resolveColorConfig>
 
 /** Flatten one engine mode into primitive var entries, mirroring
  *  `emitPrimitivesCss` naming: ramp steps, alpha twins, solved on-* labels. */
-function modeToVars(mode: EngineTheme['light']): Record<string, string> {
+function modeToVars(mode: EngineTheme["light"]): Record<string, string> {
   const vars: Record<string, string> = {}
   for (const [palette, scale] of Object.entries(mode.scales)) {
     for (const [step, value] of Object.entries(scale)) {
@@ -171,14 +171,14 @@ function modeToVars(mode: EngineTheme['light']): Record<string, string> {
     }
   }
   for (const [palette, on] of Object.entries(mode.on)) {
-    vars[`--on-${palette}-700`] = on['700']
-    vars[`--on-${palette}-800`] = on['800']
+    vars[`--on-${palette}-700`] = on["700"]
+    vars[`--on-${palette}-800`] = on["800"]
   }
   return vars
 }
 
 function chartVars(
-  set: EngineTheme['charts']['light'],
+  set: EngineTheme["charts"]["light"],
 ): Record<string, string> {
   const vars: Record<string, string> = {}
   set.categorical.forEach((color, i) => {
@@ -192,8 +192,8 @@ export function mergePresetCssFields(
   preset: PublishPreset,
 ): RegistryCssFields {
   const css = cloneRecord(base.css) ?? {}
-  mergeCssVarsIntoCssRule(css, ':root', base.cssVars?.light)
-  mergeCssVarsIntoCssRule(css, '.dark', base.cssVars?.dark)
+  mergeCssVarsIntoCssRule(css, ":root", base.cssVars?.light)
+  mergeCssVarsIntoCssRule(css, ".dark", base.cssVars?.dark)
 
   const cssVars = cloneThemeCssVars(base.cssVars)
 
@@ -202,13 +202,13 @@ export function mergePresetCssFields(
   // palette in :root (light) and .dark (an independent engine pass).
   if (preset.color) {
     const theme = resolveColorConfig(preset.color)
-    css[':root'] = {
-      ...(isPlainCssObject(css[':root']) ? css[':root'] : {}),
+    css[":root"] = {
+      ...(isPlainCssObject(css[":root"]) ? css[":root"] : {}),
       ...modeToVars(theme.light),
       ...chartVars(theme.charts.light),
     }
-    css['.dark'] = {
-      ...(isPlainCssObject(css['.dark']) ? css['.dark'] : {}),
+    css[".dark"] = {
+      ...(isPlainCssObject(css[".dark"]) ? css[".dark"] : {}),
       ...modeToVars(theme.dark),
       ...chartVars(theme.charts.dark),
     }
@@ -222,20 +222,20 @@ export function mergePresetCssFields(
   const darkRepoints: Record<string, string> = {}
   for (const [name, token] of Object.entries(semanticsFor(preset.color))) {
     themeVars[`--${name}`] = resolveTokenValue(token)
-    if ('light' in token.target)
+    if ("light" in token.target)
       darkRepoints[`--${name}`] = resolveTarget(token.target.dark)
   }
   if (Object.keys(darkRepoints).length > 0) {
-    css['.dark'] = {
-      ...(isPlainCssObject(css['.dark']) ? css['.dark'] : {}),
+    css[".dark"] = {
+      ...(isPlainCssObject(css[".dark"]) ? css[".dark"] : {}),
       ...darkRepoints,
     }
   }
 
   const lightVars = emitPresetLightVars(preset)
   if (Object.keys(lightVars).length > 0) {
-    css[':root'] = {
-      ...(isPlainCssObject(css[':root']) ? css[':root'] : {}),
+    css[":root"] = {
+      ...(isPlainCssObject(css[":root"]) ? css[":root"] : {}),
       ...lightVars,
     }
   }
@@ -261,15 +261,15 @@ export function mergePresetCssFields(
 }
 
 function cloneThemeCssVars(
-  cssVars: RegistryCssFields['cssVars'],
-): NonNullable<RegistryCssFields['cssVars']> {
+  cssVars: RegistryCssFields["cssVars"],
+): NonNullable<RegistryCssFields["cssVars"]> {
   return {
     ...(cssVars?.theme ? { theme: { ...cssVars.theme } } : {}),
   }
 }
 
 function mergeCssVarsIntoCssRule(
-  css: NonNullable<RegistryCssFields['css']>,
+  css: NonNullable<RegistryCssFields["css"]>,
   selector: string,
   vars: Record<string, string> | undefined,
 ): void {
@@ -277,7 +277,7 @@ function mergeCssVarsIntoCssRule(
 
   const target = isPlainCssObject(css[selector]) ? css[selector] : {}
   for (const [key, value] of Object.entries(vars)) {
-    target[key.startsWith('--') ? key : `--${key}`] = value
+    target[key.startsWith("--") ? key : `--${key}`] = value
   }
   css[selector] = target
 }
@@ -288,6 +288,6 @@ function cloneRecord<T>(value: T): T {
 
 function isPlainCssObject(
   value: unknown,
-): value is NonNullable<RegistryItem['css']> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
+): value is NonNullable<RegistryItem["css"]> {
+  return typeof value === "object" && value !== null && !Array.isArray(value)
 }

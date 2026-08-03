@@ -1,15 +1,15 @@
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Modal } from '@/registry/ui/modal'
-import { Popover } from '@/registry/ui/popover'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Modal } from "@/registry/ui/modal"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (

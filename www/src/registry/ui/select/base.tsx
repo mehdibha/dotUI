@@ -1,36 +1,36 @@
-'use client'
+"use client"
 
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as SelectPrimitives from 'react-aria-components/Select'
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as SelectPrimitives from "react-aria-components/Select"
 
-import { ChevronDownIcon } from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import type { ButtonProps } from '@/registry/ui/button'
-import { useStyles } from '@/registry/ui/field/styles'
+import { ChevronDownIcon } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import type { ButtonProps } from "@/registry/ui/button"
+import { useStyles } from "@/registry/ui/field/styles"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
   ListBoxVirtualizer,
-} from '@/registry/ui/list-box'
-import type { ListBoxProps } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import type { PopoverProps } from '@/registry/ui/popover'
+} from "@/registry/ui/list-box"
+import type { ListBoxProps } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import type { PopoverProps } from "@/registry/ui/popover"
 
 // MARK: selectStyles
 
 // MARK: Separator
 
-type SelectSelectionMode = 'single' | 'multiple'
+type SelectSelectionMode = "single" | "multiple"
 
 interface SelectProps<
   T extends object,
-  M extends SelectSelectionMode = 'single',
+  M extends SelectSelectionMode = "single",
 > extends SelectPrimitives.SelectProps<T, M> {}
 
-const Select = <T extends object, M extends SelectSelectionMode = 'single'>({
+const Select = <T extends object, M extends SelectSelectionMode = "single">({
   className,
   ...props
 }: SelectProps<T, M>) => {
@@ -80,7 +80,7 @@ const SelectValue = <T extends object>({
       data-slot="select-value"
       className={composeRenderProps(className, (className) =>
         cn(
-          'flex-1 truncate text-left placeholder-shown:text-fg-muted',
+          "flex-1 truncate text-left placeholder-shown:text-fg-muted",
           className,
         ),
       )}
@@ -103,22 +103,22 @@ interface SelectContentProps<T extends object>
     ListBoxProps<T>,
     Pick<
       PopoverProps,
-      'placement' | 'defaultOpen' | 'isOpen' | 'onOpenChange'
+      "placement" | "defaultOpen" | "isOpen" | "onOpenChange"
     > {
-  placement?: PopoverProps['placement']
+  placement?: PopoverProps["placement"]
   virtulized?: boolean
 }
 
 const SelectContent = <T extends object>({
   virtulized,
-  placement = 'bottom',
+  placement = "bottom",
   defaultOpen,
   isOpen,
   onOpenChange,
   ...props
 }: SelectContentProps<T>) => {
   const listBoxClassName = composeRenderProps(props.className, (className) =>
-    cn('max-h-[inherit] overflow-auto overscroll-contain', className),
+    cn("max-h-[inherit] overflow-auto overscroll-contain", className),
   )
 
   if (virtulized) {

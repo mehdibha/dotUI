@@ -10,26 +10,26 @@
  * see `@/publisher/emit-v0` for the why and the item shape.
  */
 
-import { createFileRoute } from '@tanstack/react-router'
-import { format } from 'oxfmt'
+import { createFileRoute } from "@tanstack/react-router"
+import { format } from "oxfmt"
 
-import { resolveRequestPreset } from '@/lib/registry-preset'
-import { baseRegistryCss } from '@/registry/__generated__/base-css'
-import { publishables } from '@/registry/__generated__/publishables'
-import useImageLoadingStatusSource from '@/registry/hooks/use-image-loading-status.ts?raw'
-import useMobileSource from '@/registry/hooks/use-mobile.ts?raw'
-import contextSource from '@/registry/lib/context/index.tsx?raw'
-import textareaCaretSource from '@/registry/lib/textarea-caret/index.ts?raw'
-import utilsSource from '@/registry/lib/utils/index.ts?raw'
-import type { RegistryItem } from '@/registry/types'
-import { mergePresetCssFields } from '@/publisher/emit-theme'
-import { buildV0Item, rewriteRegistryImports } from '@/publisher/emit-v0'
-import { publish, selectPublishable } from '@/publisher/publish'
+import { resolveRequestPreset } from "@/lib/registry-preset"
+import { baseRegistryCss } from "@/registry/__generated__/base-css"
+import { publishables } from "@/registry/__generated__/publishables"
+import useImageLoadingStatusSource from "@/registry/hooks/use-image-loading-status.ts?raw"
+import useMobileSource from "@/registry/hooks/use-mobile.ts?raw"
+import contextSource from "@/registry/lib/context/index.tsx?raw"
+import textareaCaretSource from "@/registry/lib/textarea-caret/index.ts?raw"
+import utilsSource from "@/registry/lib/utils/index.ts?raw"
+import type { RegistryItem } from "@/registry/types"
+import { mergePresetCssFields } from "@/publisher/emit-theme"
+import { buildV0Item, rewriteRegistryImports } from "@/publisher/emit-v0"
+import { publish, selectPublishable } from "@/publisher/publish"
 
 const JSON_HEADERS = {
-  'Content-Type': 'application/json; charset=utf-8',
-  'Cache-Control':
-    'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
+  "Content-Type": "application/json; charset=utf-8",
+  "Cache-Control":
+    "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
 }
 
 /**
@@ -39,20 +39,20 @@ const JSON_HEADERS = {
  */
 const SUPPORT_FILES: Record<string, string> = Object.fromEntries(
   Object.entries({
-    'lib/utils.ts': utilsSource,
-    'lib/context.tsx': contextSource,
-    'lib/textarea-caret.ts': textareaCaretSource,
-    'hooks/use-image-loading-status.ts': useImageLoadingStatusSource,
-    'hooks/use-mobile.ts': useMobileSource,
+    "lib/utils.ts": utilsSource,
+    "lib/context.tsx": contextSource,
+    "lib/textarea-caret.ts": textareaCaretSource,
+    "hooks/use-image-loading-status.ts": useImageLoadingStatusSource,
+    "hooks/use-mobile.ts": useMobileSource,
   }).map(([target, source]) => [target, rewriteRegistryImports(source)]),
 )
 
-export const Route = createFileRoute('/r/v0')({
+export const Route = createFileRoute("/r/v0")({
   server: {
     handlers: {
       GET: async ({ request }) => {
         const url = new URL(request.url)
-        const encodedPreset = url.searchParams.get('preset') ?? undefined
+        const encodedPreset = url.searchParams.get("preset") ?? undefined
         const preset = await resolveRequestPreset(encodedPreset)
 
         const items = await Promise.all(
@@ -72,10 +72,10 @@ export const Route = createFileRoute('/r/v0')({
         // Same courtesy as /r/$name: users read this code in v0, so run the
         // TS files through oxfmt. Formatter failures keep the raw content.
         item.files = await Promise.all(
-          (item.files as RegistryItem['files'])!.map(async (file) => {
-            if (!/\.(tsx?)$/.test(file.target ?? '')) return file
+          (item.files as RegistryItem["files"])!.map(async (file) => {
+            if (!/\.(tsx?)$/.test(file.target ?? "")) return file
             try {
-              const result = await format(file.target!, file.content ?? '', {
+              const result = await format(file.target!, file.content ?? "", {
                 printWidth: 80,
               })
               return { ...file, content: result.code }

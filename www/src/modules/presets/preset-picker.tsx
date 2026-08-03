@@ -1,44 +1,44 @@
-'use client'
+"use client"
 
-import { useCallback, useEffect, useRef, useState } from 'react'
-import type { ReactNode } from 'react'
-import { CheckIcon, SearchIcon } from 'lucide-react'
-import type { Key } from 'react-aria-components'
-import { useFilter } from 'react-aria-components/Autocomplete'
+import { useCallback, useEffect, useRef, useState } from "react"
+import type { ReactNode } from "react"
+import { CheckIcon, SearchIcon } from "lucide-react"
+import type { Key } from "react-aria-components"
+import { useFilter } from "react-aria-components/Autocomplete"
 
 import {
   DEFAULT_BODY_FAMILY,
   familyFromStack,
   FONT_HEADING_VAR,
   FONT_SANS_VAR,
-} from '@/lib/fonts'
-import { DesignSystemProvider } from '@/lib/styles'
+} from "@/lib/fonts"
+import { DesignSystemProvider } from "@/lib/styles"
 import {
   ArrowRightIcon,
   SearchIcon as PresetSearchIcon,
-} from '@/registry/__generated__/icons'
-import { Responsive } from '@/registry/lib/responsive'
-import { cn } from '@/registry/lib/utils'
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
-import { Checkbox } from '@/registry/ui/checkbox'
+} from "@/registry/__generated__/icons"
+import { Responsive } from "@/registry/lib/responsive"
+import { cn } from "@/registry/lib/utils"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
+import { Checkbox } from "@/registry/ui/checkbox"
 import {
   Command,
   CommandContent,
   CommandItem,
   CommandSection,
   CommandSectionHeader,
-} from '@/registry/ui/command'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Popover } from '@/registry/ui/popover'
-import type { PopoverProps } from '@/registry/ui/popover'
-import { SearchField } from '@/registry/ui/search-field'
-import { Switch } from '@/registry/ui/switch'
-import { Controls } from '@/components/showcase/controls'
-import { DEFAULT_RADIUS, RADIUS_VAR } from '@/modules/create/layout'
-import type { DesignSystem } from '@/modules/create/preset'
+} from "@/registry/ui/command"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Popover } from "@/registry/ui/popover"
+import type { PopoverProps } from "@/registry/ui/popover"
+import { SearchField } from "@/registry/ui/search-field"
+import { Switch } from "@/registry/ui/switch"
+import { Controls } from "@/components/showcase/controls"
+import { DEFAULT_RADIUS, RADIUS_VAR } from "@/modules/create/layout"
+import type { DesignSystem } from "@/modules/create/preset"
 
 interface PresetPickerItem {
   id: string
@@ -63,9 +63,9 @@ interface PresetPickerProps {
   isOpen?: boolean
   onOpenChange?: (open: boolean) => void
   /** Desktop popover placement. */
-  placement?: PopoverProps['placement']
+  placement?: PopoverProps["placement"]
   /** Pin the previews to one mode (docs previews pin light/dark). */
-  previewMode?: 'light' | 'dark'
+  previewMode?: "light" | "dark"
   /**
    * Show the live vignettes: a hover flyout beside the popover on desktop,
    * inline on each drawer row. Off by default.
@@ -96,12 +96,12 @@ export function PresetPicker({
   onPick,
   isOpen,
   onOpenChange,
-  placement = 'bottom start',
+  placement = "bottom start",
   previewMode,
   withPreview = false,
   renderItemActions,
 }: PresetPickerProps) {
-  const content = (surface: 'popover' | 'drawer') => (
+  const content = (surface: "popover" | "drawer") => (
     <DialogContent
       aria-label="Presets"
       className="flex flex-col gap-0 rounded-[inherit] p-0"
@@ -127,11 +127,11 @@ export function PresetPicker({
       <Responsive
         render={(isMobile) =>
           isMobile ? (
-            <Drawer>{content('drawer')}</Drawer>
+            <Drawer>{content("drawer")}</Drawer>
           ) : (
             // The popover always sizes to the list column — the preview, when
             // on, floats outside it as a detached flyout.
-            <Popover placement={placement}>{content('popover')}</Popover>
+            <Popover placement={placement}>{content("popover")}</Popover>
           )
         }
       />
@@ -153,8 +153,8 @@ function PresetPickerContent({
   selectedId?: string
   onPick: (item: PresetPickerItem) => void
   close: () => void
-  surface: 'popover' | 'drawer'
-  previewMode?: 'light' | 'dark'
+  surface: "popover" | "drawer"
+  previewMode?: "light" | "dark"
   withPreview: boolean
   renderItemActions?: (item: PresetPickerItem) => ReactNode
 }) {
@@ -162,9 +162,9 @@ function PresetPickerContent({
   // section counts honest and to drop a section whose matches all filtered out
   // (its header is our child, so the collection can't hide it for us). Reading
   // it off `onInput` leaves the value under Autocomplete's control.
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState("")
   const { contains } = useFilter({
-    sensitivity: 'base',
+    sensitivity: "base",
     ignorePunctuation: true,
   })
   // Which preset the pane previews: the last row the pointer entered or the
@@ -193,8 +193,8 @@ function PresetPickerContent({
     },
     [],
   )
-  const showPreview = useCallback((id: string, via: 'hover' | 'focus') => {
-    if (via === 'focus' && !navigatedRef.current) return
+  const showPreview = useCallback((id: string, via: "hover" | "focus") => {
+    if (via === "focus" && !navigatedRef.current) return
     activeRowRef.current = id
     setPreviewId(id)
     if (closeTimerRef.current != null) {
@@ -231,7 +231,7 @@ function PresetPickerContent({
   const allItems = sections.flatMap((section) => section.items)
   const previewItem =
     allItems.find((item) => item.id === previewId) ?? allItems[0]
-  const flyout = surface === 'popover' && withPreview
+  const flyout = surface === "popover" && withPreview
 
   function pick(key: Key) {
     const item = allItems.find((candidate) => candidate.id === key)
@@ -244,7 +244,7 @@ function PresetPickerContent({
     <>
       <SearchField
         // No search autofocus on mobile — the keyboard would cover the list.
-        autoFocus={surface === 'popover'}
+        autoFocus={surface === "popover"}
         aria-label="Search design systems"
         className="shrink-0 p-2"
       >
@@ -273,12 +273,12 @@ function PresetPickerContent({
         // and `overflow-visible` on us through descendant selectors that any
         // class of ours would lose to.
         style={{
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
           gap: 4,
-          padding: '0 8px 8px',
-          maxHeight: surface === 'popover' ? 420 : '60vh',
-          overflowY: 'auto',
+          padding: "0 8px 8px",
+          maxHeight: surface === "popover" ? 420 : "60vh",
+          overflowY: "auto",
           scrollPaddingBlock: 8,
         }}
         renderEmptyState={() => (
@@ -319,11 +319,11 @@ function PresetPickerContent({
                     isFocused={isFocusVisible}
                     isHovered={isHovered}
                     isActive={
-                      surface === 'popover' && item.id === previewItem?.id
+                      surface === "popover" && item.id === previewItem?.id
                     }
-                    withVignette={surface === 'drawer' && withPreview}
-                    onShow={surface === 'popover' ? showPreview : undefined}
-                    onHide={surface === 'popover' ? hidePreview : undefined}
+                    withVignette={surface === "drawer" && withPreview}
+                    onShow={surface === "popover" ? showPreview : undefined}
+                    onHide={surface === "popover" ? hidePreview : undefined}
                     forcedMode={previewMode}
                     actions={renderItemActions?.(item)}
                   />
@@ -336,7 +336,7 @@ function PresetPickerContent({
     </>
   )
 
-  if (surface === 'drawer')
+  if (surface === "drawer")
     return <Command className="gap-0 p-0">{list}</Command>
 
   return (
@@ -344,7 +344,7 @@ function PresetPickerContent({
       <Command
         className="gap-0 overflow-hidden p-0"
         onKeyDownCapture={(e) => {
-          if (e.key.startsWith('Arrow')) navigatedRef.current = true
+          if (e.key.startsWith("Arrow")) navigatedRef.current = true
         }}
       >
         <div className="flex w-[260px] shrink-0 flex-col">{list}</div>
@@ -361,16 +361,16 @@ function PresetPickerContent({
 }
 
 /** The palette roles the row's dots sample — the ones two systems disagree on first. */
-const DOT_ROLES = ['bg-primary', 'bg-accent', 'bg-neutral'] as const
+const DOT_ROLES = ["bg-primary", "bg-accent", "bg-neutral"] as const
 
 /** The vignette's swatch strip: the semantic vocabulary, not one ramp. */
 const SWATCH_ROLES = [
-  'bg-primary',
-  'bg-accent',
-  'bg-success',
-  'bg-warning',
-  'bg-danger',
-  'bg-neutral',
+  "bg-primary",
+  "bg-accent",
+  "bg-success",
+  "bg-warning",
+  "bg-danger",
+  "bg-neutral",
 ] as const
 
 /** The families behind the preset's heading/body tokens, resolved to names. */
@@ -387,7 +387,7 @@ function fontPair(designSystem: DesignSystem) {
 function radiusLabel(designSystem: DesignSystem) {
   const raw = designSystem.tokens[RADIUS_VAR] ?? DEFAULT_RADIUS
   const parsed = Number.parseFloat(raw)
-  const px = raw.trim().endsWith('rem') ? parsed * 16 : parsed
+  const px = raw.trim().endsWith("rem") ? parsed * 16 : parsed
   return `${Math.round((Number.isFinite(px) ? px : 10) * 0.75)}px`
 }
 
@@ -421,9 +421,9 @@ function PresetOptionRow({
   isHovered: boolean
   isActive: boolean
   withVignette: boolean
-  onShow?: (id: string, via: 'hover' | 'focus') => void
+  onShow?: (id: string, via: "hover" | "focus") => void
   onHide?: (id: string) => void
-  forcedMode?: 'light' | 'dark'
+  forcedMode?: "light" | "dark"
   actions?: ReactNode
 }) {
   const { designSystem } = item
@@ -433,8 +433,8 @@ function PresetOptionRow({
   // land here, and whichever spoke last wins. Losing both signals the flyout
   // to close — unless another row claims it first.
   useEffect(() => {
-    if (isHovered) onShow?.(item.id, 'hover')
-    else if (isFocused) onShow?.(item.id, 'focus')
+    if (isHovered) onShow?.(item.id, "hover")
+    else if (isFocused) onShow?.(item.id, "focus")
     else onHide?.(item.id)
   }, [isHovered, isFocused, item.id, onShow, onHide])
 
@@ -451,14 +451,14 @@ function PresetOptionRow({
       >
         <div
           className={cn(
-            'overflow-hidden rounded-lg border bg-bg',
-            isSelected && 'ring-1 ring-accent',
+            "overflow-hidden rounded-lg border bg-bg",
+            isSelected && "ring-1 ring-accent",
           )}
         >
           <div
             className={cn(
-              'flex items-center gap-3 p-3',
-              actions ? 'pr-10' : undefined,
+              "flex items-center gap-3 p-3",
+              actions ? "pr-10" : undefined,
             )}
           >
             <div className="min-w-0 flex-1">
@@ -466,7 +466,7 @@ function PresetOptionRow({
                 {item.name}
               </p>
               <p className="mt-1 truncate text-[11px] leading-none text-fg-muted">
-                {heading === body ? body : `${heading} / ${body}`} ·{' '}
+                {heading === body ? body : `${heading} / ${body}`} ·{" "}
                 {radiusLabel(designSystem)} · {designSystem.density}
               </p>
             </div>
@@ -477,7 +477,7 @@ function PresetOptionRow({
                   // The hairline keeps a near-white or near-black role from
                   // vanishing into the row it sits on.
                   className={cn(
-                    'size-2.5 rounded-full ring-1 ring-fg/10 ring-inset',
+                    "size-2.5 rounded-full ring-1 ring-fg/10 ring-inset",
                     role,
                   )}
                 />
@@ -517,8 +517,8 @@ function PresetOptionRow({
       <div
         aria-hidden
         className={cn(
-          'pointer-events-none absolute inset-0 rounded-lg bg-fg transition-opacity',
-          isActive ? 'opacity-5' : 'opacity-0',
+          "pointer-events-none absolute inset-0 rounded-lg bg-fg transition-opacity",
+          isActive ? "opacity-5" : "opacity-0",
         )}
       />
     </div>
@@ -542,7 +542,7 @@ function PresetPreviewFlyout({
 }: {
   item?: PresetPickerItem
   isVisible: boolean
-  forcedMode?: 'light' | 'dark'
+  forcedMode?: "light" | "dark"
 }) {
   if (!item) return null
 
@@ -564,11 +564,11 @@ function PresetPreviewFlyout({
         className={cn(
           // The Controls card *is* the surface: the shell borrows its bg and
           // sizes to it, so the flyout may run taller than the popover.
-          'pointer-events-none absolute top-0 left-full ml-3 flex w-[340px] flex-col overflow-hidden rounded-xl border bg-card shadow-lg',
-          'origin-left transition-[opacity,transform,scale] ease-out will-change-[transform,opacity] motion-reduce:transition-none',
+          "pointer-events-none absolute top-0 left-full ml-3 flex w-[340px] flex-col overflow-hidden rounded-xl border bg-card shadow-lg",
+          "origin-left transition-[opacity,transform,scale] ease-out will-change-[transform,opacity] motion-reduce:transition-none",
           isVisible
-            ? 'scale-100 opacity-100 duration-200'
-            : '-translate-x-1 scale-97 opacity-0 duration-150',
+            ? "scale-100 opacity-100 duration-200"
+            : "-translate-x-1 scale-97 opacity-0 duration-150",
         )}
       >
         <div className="flex shrink-0 items-center gap-3 border-b p-3.5">
@@ -577,7 +577,7 @@ function PresetPreviewFlyout({
               {item.name}
             </p>
             <p className="mt-1 truncate text-[11px] leading-none text-fg-muted">
-              {heading === body ? body : `${heading} / ${body}`} ·{' '}
+              {heading === body ? body : `${heading} / ${body}`} ·{" "}
               {radiusLabel(designSystem)} · {designSystem.density}
             </p>
           </div>
@@ -586,7 +586,7 @@ function PresetPreviewFlyout({
               <span
                 key={role}
                 className={cn(
-                  'size-2.5 rounded-full ring-1 ring-fg/10 ring-inset',
+                  "size-2.5 rounded-full ring-1 ring-fg/10 ring-inset",
                   role,
                 )}
               />
@@ -650,7 +650,7 @@ function PresetVignette() {
           <span
             key={role}
             className={cn(
-              'h-2.5 flex-1 rounded-[2px] ring-1 ring-fg/10 ring-inset',
+              "h-2.5 flex-1 rounded-[2px] ring-1 ring-fg/10 ring-inset",
               role,
             )}
           />

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   Table,
@@ -9,9 +9,9 @@ import {
   TableHeader,
   TableRow,
   type TableProps,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
-export default function Demo({ selectionMode = 'none' }: TableProps = {}) {
+export default function Demo({ selectionMode = "none" }: TableProps = {}) {
   return (
     <TableContainer>
       <Table

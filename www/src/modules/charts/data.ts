@@ -1,4 +1,4 @@
-import { DemosIndex } from '@/registry/__generated__/demos'
+import { DemosIndex } from "@/registry/__generated__/demos"
 
 /**
  * Data layer for the `/docs/charts` showcase. Live demo components come
@@ -12,12 +12,12 @@ export function getDemoComponent(key: string) {
 }
 
 /** Package managers offered in the install section, in display order. */
-export const PACKAGE_MANAGERS = ['npm', 'pnpm', 'yarn', 'bun'] as const
+export const PACKAGE_MANAGERS = ["npm", "pnpm", "yarn", "bun"] as const
 export type PackageManager = (typeof PACKAGE_MANAGERS)[number]
 
 /** Family id from a demo key: `chart-bar/demos/multiple` → `chart-bar`. */
 export function familyOf(demoKey: string): string {
-  return demoKey.slice(0, demoKey.indexOf('/'))
+  return demoKey.slice(0, demoKey.indexOf("/"))
 }
 
 /**
@@ -34,7 +34,7 @@ export function installItems(demoKey: string, source: string | null): string[] {
     const name = match[1]
     // Skip the chart primitive and sibling chart families — installing the
     // family item already pulls those in.
-    if (name && name !== 'chart' && !name.startsWith('chart-')) {
+    if (name && name !== "chart" && !name.startsWith("chart-")) {
       extras.add(name)
     }
   }
@@ -45,7 +45,7 @@ export function installItems(demoKey: string, source: string | null): string[] {
 export function installCommands(
   items: string[],
 ): Record<PackageManager, string> {
-  const arg = `shadcn@latest add ${items.map((i) => `@dotui/${i}`).join(' ')}`
+  const arg = `shadcn@latest add ${items.map((i) => `@dotui/${i}`).join(" ")}`
   return {
     npm: `npx ${arg}`,
     pnpm: `pnpm dlx ${arg}`,
@@ -57,8 +57,8 @@ export function installCommands(
 // Raw demo sources, lazily loaded per variant — only the opened variant's
 // source is fetched. Keyed by file path; matched to a demo key by suffix.
 const rawDemoSources = import.meta.glob(
-  '../../registry/ui/chart-*/demos/*.tsx',
-  { query: '?raw', import: 'default' },
+  "../../registry/ui/chart-*/demos/*.tsx",
+  { query: "?raw", import: "default" },
 ) as Record<string, () => Promise<string>>
 
 /**
@@ -69,10 +69,10 @@ const rawDemoSources = import.meta.glob(
  */
 function toDisplaySource(raw: string): string {
   return raw
-    .replace(/@\/registry\/ui\//g, '@/ui/')
-    .replace(/@\/registry\//g, '@/')
-    .replace('export default function', 'export function')
-    .replace(/\t/g, '  ')
+    .replace(/@\/registry\/ui\//g, "@/ui/")
+    .replace(/@\/registry\//g, "@/")
+    .replace("export default function", "export function")
+    .replace(/\t/g, "  ")
     .trim()
 }
 
@@ -101,9 +101,9 @@ export function demoSource(demoKey: string): Promise<string | null> {
  * card branches its sizing on this set.
  */
 export const POLAR_FAMILIES = new Set([
-  'chart-pie',
-  'chart-radar',
-  'chart-radial',
+  "chart-pie",
+  "chart-radar",
+  "chart-radial",
 ])
 
 export interface ChartFamily {
@@ -114,12 +114,12 @@ export interface ChartFamily {
 }
 
 export const CHART_FAMILIES = [
-  { id: 'chart-bar', name: 'Bar' },
-  { id: 'chart-line', name: 'Line' },
-  { id: 'chart-area', name: 'Area' },
-  { id: 'chart-pie', name: 'Pie' },
-  { id: 'chart-radar', name: 'Radar' },
-  { id: 'chart-radial', name: 'Radial' },
+  { id: "chart-bar", name: "Bar" },
+  { id: "chart-line", name: "Line" },
+  { id: "chart-area", name: "Area" },
+  { id: "chart-pie", name: "Pie" },
+  { id: "chart-radar", name: "Radar" },
+  { id: "chart-radial", name: "Radial" },
 ] as const satisfies readonly ChartFamily[]
 
 /** Variant entries for a family, derived from the demo index (always in sync). */
@@ -131,7 +131,7 @@ export function variantsFor(
     .filter((key) => key.startsWith(prefix))
     .map((key) => ({
       key,
-      label: key.slice(prefix.length).replace(/-/g, ' '),
+      label: key.slice(prefix.length).replace(/-/g, " "),
     }))
     .sort((a, b) => a.label.localeCompare(b.label))
 }

@@ -1,16 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 import {
   Dialog,
   DialogTrigger,
   Modal,
   ModalOverlay,
-} from 'react-aria-components/Modal'
+} from "react-aria-components/Modal"
 
-import { Button } from '@/registry/ui/button'
-import { Input } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
+import { Button } from "@/registry/ui/button"
+import { Input } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
 
-export const Route = createFileRoute('/playground')({
+export const Route = createFileRoute("/playground")({
   component: RouteComponent,
 })
 

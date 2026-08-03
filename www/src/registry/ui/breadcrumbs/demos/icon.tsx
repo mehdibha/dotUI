@@ -1,10 +1,10 @@
-import { HomeIcon } from '@/registry/__generated__/icons'
+import { HomeIcon } from "@/registry/__generated__/icons"
 import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbSeparator,
   Breadcrumbs,
-} from '@/registry/ui/breadcrumbs'
+} from "@/registry/ui/breadcrumbs"
 
 export default function Demo() {
   return (

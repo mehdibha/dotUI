@@ -1,14 +1,14 @@
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
 import {
   CheckIcon,
   ChevronDownIcon,
   CopyIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Group } from '@/registry/ui/group'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { getBaseUrl } from '@/modules/docs/url'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Group } from "@/registry/ui/group"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { getBaseUrl } from "@/modules/docs/url"
 
 function getPromptUrl(baseURL: string, url: string) {
   return `${baseURL}?q=${encodeURIComponent(
@@ -24,7 +24,7 @@ const options: {
   icon: React.ReactNode
 }[] = [
   {
-    name: 'View as Markdown',
+    name: "View as Markdown",
     href: (url) => `${url}.md`,
     icon: (
       <svg strokeLinejoin="round" viewBox="0 0 22 16">
@@ -39,8 +39,8 @@ const options: {
     ),
   },
   {
-    name: 'Open in v0',
-    href: (url) => getPromptUrl('https://v0.dev', url),
+    name: "Open in v0",
+    href: (url) => getPromptUrl("https://v0.dev", url),
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -54,8 +54,8 @@ const options: {
     ),
   },
   {
-    name: 'Open in ChatGPT',
-    href: (url) => getPromptUrl('https://chatgpt.com', url),
+    name: "Open in ChatGPT",
+    href: (url) => getPromptUrl("https://chatgpt.com", url),
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <title>Open in ChatGPT</title>
@@ -67,8 +67,8 @@ const options: {
     ),
   },
   {
-    name: 'Open in Claude',
-    href: (url) => getPromptUrl('https://claude.ai/new', url),
+    name: "Open in Claude",
+    href: (url) => getPromptUrl("https://claude.ai/new", url),
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <title>Open in Claude</title>
@@ -97,7 +97,7 @@ export function DocsCopyPage({
           <CheckIcon data-icon-start="" />
         ) : (
           <CopyIcon data-icon-start="" />
-        )}{' '}
+        )}{" "}
         Copy page
       </Button>
       <Menu>

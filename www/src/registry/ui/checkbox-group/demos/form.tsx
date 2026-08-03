@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import * as FormPrimitives from 'react-aria-components/Form'
+import * as FormPrimitives from "react-aria-components/Form"
 
-import { Button } from '@/registry/ui/button'
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
-import { CheckboxGroup } from '@/registry/ui/checkbox-group'
-import { Description, FieldGroup, Label } from '@/registry/ui/field'
+import { Button } from "@/registry/ui/button"
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import { CheckboxGroup } from "@/registry/ui/checkbox-group"
+import { Description, FieldGroup, Label } from "@/registry/ui/field"
 
 export default function Demo() {
   return (
@@ -34,7 +34,7 @@ export default function Demo() {
           </Checkbox>
         </FieldGroup>
       </CheckboxGroup>
-      <CheckboxGroup name="activities" defaultValue={['workshop']}>
+      <CheckboxGroup name="activities" defaultValue={["workshop"]}>
         <Label>Activities</Label>
         <FieldGroup>
           <Checkbox value="workshop">

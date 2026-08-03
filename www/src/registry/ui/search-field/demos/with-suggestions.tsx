@@ -1,23 +1,23 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
-import { Input } from '@/registry/ui/input'
-import { SearchField } from '@/registry/ui/search-field'
+import { Input } from "@/registry/ui/input"
+import { SearchField } from "@/registry/ui/search-field"
 
 const cities = [
-  'San Francisco',
-  'San Diego',
-  'San Jose',
-  'Sacramento',
-  'Seattle',
-  'Austin',
-  'Boston',
-  'Denver',
+  "San Francisco",
+  "San Diego",
+  "San Jose",
+  "Sacramento",
+  "Seattle",
+  "Austin",
+  "Boston",
+  "Denver",
 ]
 
 export default function Demo() {
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState("")
 
   const suggestions = query
     ? cities.filter((city) => city.toLowerCase().includes(query.toLowerCase()))

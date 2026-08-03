@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import { useMemo } from 'react'
-import { ChevronDownIcon } from 'lucide-react'
+import { useMemo } from "react"
+import { ChevronDownIcon } from "lucide-react"
 
-import { type Theme, toOklch, wcag2 } from '@dotui/colors'
+import { type Theme, toOklch, wcag2 } from "@dotui/colors"
 
-import { resolveColorConfigCached } from '@/lib/resolve-color'
-import { type ColorConfig, DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
-import { Label } from '@/registry/ui/field'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { Select, SelectValue } from '@/registry/ui/select'
-import { Slider, SliderControl, SliderOutput } from '@/registry/ui/slider'
-import { Switch } from '@/registry/ui/switch'
+import { resolveColorConfigCached } from "@/lib/resolve-color"
+import { type ColorConfig, DEFAULT_COLOR_CONFIG } from "@/registry/theme"
+import { Button } from "@/registry/ui/button"
+import { Label } from "@/registry/ui/field"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { Select, SelectValue } from "@/registry/ui/select"
+import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider"
+import { Switch } from "@/registry/ui/switch"
 
-import { useDesignSystem } from '../preset'
+import { useDesignSystem } from "../preset"
 
 const DEFAULT_LIGHT_BG = 99
 const DEFAULT_DARK_BG = 6
@@ -51,7 +51,7 @@ function AxisSlider({
       maxValue={maxValue}
       step={step}
       onChange={(v) => {
-        const next = typeof v === 'number' ? v : (v[0] ?? defaultValue)
+        const next = typeof v === "number" ? v : (v[0] ?? defaultValue)
         onChange(next === defaultValue ? undefined : next)
       }}
     >
@@ -105,33 +105,33 @@ export function ColorBackgroundControls({
         step={0.5}
         swatch={lightSwatch}
         formatValue={(v) => `L* ${v}`}
-        onChange={(v) => setColorBackground('light', v)}
+        onChange={(v) => setColorBackground("light", v)}
       />
       <AxisSlider
         label="Dark background"
-        value={dark === 'oled' ? 0 : (dark ?? DEFAULT_DARK_BG)}
+        value={dark === "oled" ? 0 : (dark ?? DEFAULT_DARK_BG)}
         defaultValue={DEFAULT_DARK_BG}
         minValue={0}
         maxValue={20}
         step={0.5}
         swatch={darkSwatch}
-        formatValue={(v) => (v === 0 ? 'OLED black' : `L* ${v}`)}
-        onChange={(v) => setColorBackground('dark', v)}
+        formatValue={(v) => (v === 0 ? "OLED black" : `L* ${v}`)}
+        onChange={(v) => setColorBackground("dark", v)}
       />
     </div>
   )
 }
 
 const GUARANTEE_POLICIES = [
-  { id: 'default', label: 'Default' },
-  { id: 'relaxed', label: 'Relaxed — border floors become warnings' },
-  { id: 'strict', label: 'Strict — AA text on solid buttons' },
+  { id: "default", label: "Default" },
+  { id: "relaxed", label: "Relaxed — border floors become warnings" },
+  { id: "strict", label: "Strict — AA text on solid buttons" },
 ] as const
 
 const BORDER_JOBS = [
-  { job: '400', label: 'Border · subtle', maxValue: 3 },
-  { job: '500', label: 'Border · interactive', maxValue: 4 },
-  { job: '600', label: 'Border · emphasized', maxValue: 8 },
+  { job: "400", label: "Border · subtle", maxValue: 3 },
+  { job: "500", label: "Border · interactive", maxValue: 4 },
+  { job: "600", label: "Border · emphasized", maxValue: 8 },
 ] as const
 
 /**
@@ -139,18 +139,18 @@ const BORDER_JOBS = [
  * background — the sliders' stable zero point, measured with any border
  * targets stripped so it never tracks the sliders themselves.
  */
-export type BorderSeeds = Record<'400' | '500' | '600', number>
+export type BorderSeeds = Record<"400" | "500" | "600", number>
 
 export function useBorderSeeds(config: ColorConfig, theme: Theme): BorderSeeds {
   return useMemo(() => {
     const { borders: _drop, ...rest } = config
     const baseline = config.borders ? resolveColorConfigCached(rest) : theme
     const bg = toOklch(baseline.light.background)
-    const ratio = (step: '400' | '500' | '600') =>
+    const ratio = (step: "400" | "500" | "600") =>
       Math.round(
         wcag2(toOklch(baseline.light.scales.neutral![step]), bg) * 100,
       ) / 100
-    return { '400': ratio('400'), '500': ratio('500'), '600': ratio('600') }
+    return { "400": ratio("400"), "500": ratio("500"), "600": ratio("600") }
   }, [config, theme])
 }
 
@@ -178,7 +178,7 @@ export function ColorFineTuneControls({
   const preserveSeed = config.preserveSeed ?? false
   // The simple tier drives the all-palette (`'*'`) targets; per-palette
   // entries stay a preset/config-level affair.
-  const sharedBorders = config.borders?.['*']
+  const sharedBorders = config.borders?.["*"]
 
   return (
     <div className="flex flex-col gap-3">
@@ -190,7 +190,7 @@ export function ColorFineTuneControls({
         maxValue={2}
         step={0.05}
         formatValue={(v) => `${v.toFixed(2)}×`}
-        onChange={(v) => setColorAxis('vividness', v)}
+        onChange={(v) => setColorAxis("vividness", v)}
       />
       <AxisSlider
         label="Hue shift"
@@ -200,14 +200,14 @@ export function ColorFineTuneControls({
         maxValue={3}
         step={0.1}
         formatValue={(v) => `${v.toFixed(1)}×`}
-        onChange={(v) => setColorAxis('hueShift', v)}
+        onChange={(v) => setColorAxis("hueShift", v)}
       />
       <Select
         className="w-full"
-        selectedKey={config.guaranteePolicy ?? 'default'}
+        selectedKey={config.guaranteePolicy ?? "default"}
         onSelectionChange={(key) =>
           setColorGuaranteePolicy(
-            key === 'relaxed' || key === 'strict' ? key : undefined,
+            key === "relaxed" || key === "strict" ? key : undefined,
           )
         }
       >
@@ -244,7 +244,7 @@ export function ColorFineTuneControls({
             <AxisSlider
               key={job}
               label={label}
-              value={typeof target === 'number' ? target : borderSeeds[job]}
+              value={typeof target === "number" ? target : borderSeeds[job]}
               defaultValue={borderSeeds[job]}
               minValue={1.05}
               maxValue={maxValue}

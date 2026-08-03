@@ -1,16 +1,16 @@
-import { Button } from '@/registry/ui/button'
-import { Description, Field, FieldGroup, Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
+import { Button } from "@/registry/ui/button"
+import { Description, Field, FieldGroup, Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/registry/ui/select'
-import { TextField } from '@/registry/ui/text-field'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+} from "@/registry/ui/select"
+import { TextField } from "@/registry/ui/text-field"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function InputExamples() {
   return (

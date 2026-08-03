@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
-import { ContextMenu } from '@/registry/ui/context-menu'
-import { MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
+import { ContextMenu } from "@/registry/ui/context-menu"
+import { MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   const [isOpen, setOpen] = React.useState(false)
@@ -26,7 +26,7 @@ export default function Demo() {
         </Popover>
       </ContextMenu>
       <p className="text-sm text-fg-muted">
-        state: {isOpen ? 'open' : 'closed'}
+        state: {isOpen ? "open" : "closed"}
       </p>
     </div>
   )

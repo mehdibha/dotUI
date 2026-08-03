@@ -11,9 +11,9 @@ wip: true
   name="color-swatch"
   controls={[
     {
-      type: 'string',
-      name: 'color',
-      defaultValue: '#ff0000',
+      type: "string",
+      name: "color",
+      defaultValue: "#ff0000",
     },
   ]}
 />
@@ -29,7 +29,7 @@ npx shadcn@latest add @dotui/color-swatch
 Use color swatches to display a color sample.
 
 ```tsx
-import { ColorSwatch } from '@/ui/color-swatch'
+import { ColorSwatch } from "@/ui/color-swatch"
 ```
 
 ```tsx
@@ -41,11 +41,11 @@ import { ColorSwatch } from '@/ui/color-swatch'
 The `color` prop accepts a hex or CSS color string, or a `Color` object from `parseColor`. Translucent colors render over a checkerboard so their transparency shows through.
 
 ```tsx
-import { parseColor } from 'react-aria-components'
+import { parseColor } from "react-aria-components"
 ```
 
 ```tsx
-<ColorSwatch color={parseColor('#7f0000aa')} />
+<ColorSwatch color={parseColor("#7f0000aa")} />
 ```
 
 ## Examples

@@ -1,18 +1,18 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { MoreHorizontalIcon } from 'lucide-react'
+import { useState } from "react"
+import { MoreHorizontalIcon } from "lucide-react"
 
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
-import { Button } from '@/registry/ui/button'
-import { DialogContent, DialogTitle } from '@/registry/ui/dialog'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Modal } from '@/registry/ui/modal'
-import { Popover } from '@/registry/ui/popover'
-import { TextField } from '@/registry/ui/text-field'
-import type { SavedPreset } from '@/modules/create/preset'
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
+import { Button } from "@/registry/ui/button"
+import { DialogContent, DialogTitle } from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Modal } from "@/registry/ui/modal"
+import { Popover } from "@/registry/ui/popover"
+import { TextField } from "@/registry/ui/text-field"
+import type { SavedPreset } from "@/modules/create/preset"
 
 /**
  * The actions menu on a saved preset's picker row: rename / duplicate / copy
@@ -34,11 +34,11 @@ export function SavedPresetActions({
   const [renameOpen, setRenameOpen] = useState(false)
 
   function onAction(key: string) {
-    if (key === 'rename') setRenameOpen(true)
-    else if (key === 'duplicate') onDuplicate()
-    else if (key === 'copy') {
+    if (key === "rename") setRenameOpen(true)
+    else if (key === "duplicate") onDuplicate()
+    else if (key === "copy") {
       copyToClipboard(`${window.location.origin}/create?preset=${saved.state}`)
-    } else if (key === 'delete') onDelete()
+    } else if (key === "delete") onDelete()
   }
 
   return (

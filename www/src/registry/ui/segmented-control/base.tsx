@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as SelectionIndicatorPrimitives from 'react-aria-components/SelectionIndicator'
-import * as ToggleButtonPrimitives from 'react-aria-components/ToggleButton'
-import * as ToggleButtonGroupPrimitives from 'react-aria-components/ToggleButtonGroup'
+import type * as React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator"
+import * as ToggleButtonPrimitives from "react-aria-components/ToggleButton"
+import * as ToggleButtonGroupPrimitives from "react-aria-components/ToggleButtonGroup"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: segmentedControlStyles
 
@@ -14,7 +14,7 @@ import { useStyles } from './styles'
 
 interface SegmentedControlProps extends Omit<
   React.ComponentProps<typeof ToggleButtonGroupPrimitives.ToggleButtonGroup>,
-  'selectionMode'
+  "selectionMode"
 > {}
 
 const SegmentedControl = ({ className, ...props }: SegmentedControlProps) => {

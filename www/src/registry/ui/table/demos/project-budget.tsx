@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Badge } from '@/registry/ui/badge'
+import { Badge } from "@/registry/ui/badge"
 import {
   Table,
   TableContainer,
@@ -10,13 +10,13 @@ import {
   TableFooter,
   TableHeader,
   TableRow,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
 const statusVariant = {
-  Failed: 'danger',
-  Paid: 'success',
-  Pending: 'warning',
-  Unpaid: 'neutral',
+  Failed: "danger",
+  Paid: "success",
+  Pending: "warning",
+  Unpaid: "neutral",
 } as const
 
 type ProjectStatus = keyof typeof statusVariant
@@ -28,43 +28,43 @@ const projects: Array<{
   team: string
 }> = [
   {
-    project: 'Website Redesign',
-    status: 'Paid',
-    team: 'Frontend Team',
+    project: "Website Redesign",
+    status: "Paid",
+    team: "Frontend Team",
     budget: 12500,
   },
   {
-    project: 'Mobile App',
-    status: 'Unpaid',
-    team: 'Mobile Team',
+    project: "Mobile App",
+    status: "Unpaid",
+    team: "Mobile Team",
     budget: 8750,
   },
   {
-    project: 'API Integration',
-    status: 'Pending',
-    team: 'Backend Team',
+    project: "API Integration",
+    status: "Pending",
+    team: "Backend Team",
     budget: 5200,
   },
   {
-    project: 'Database Migration',
-    status: 'Paid',
-    team: 'DevOps Team',
+    project: "Database Migration",
+    status: "Paid",
+    team: "DevOps Team",
     budget: 3800,
   },
-  { project: 'User Dashboard', status: 'Paid', team: 'UX Team', budget: 7200 },
+  { project: "User Dashboard", status: "Paid", team: "UX Team", budget: 7200 },
   {
-    project: 'Security Audit',
-    status: 'Failed',
-    team: 'Security Team',
+    project: "Security Audit",
+    status: "Failed",
+    team: "Security Team",
     budget: 2100,
   },
 ]
 
 const formatCurrency = (amount: number) =>
-  new Intl.NumberFormat('en-US', {
-    currency: 'USD',
+  new Intl.NumberFormat("en-US", {
+    currency: "USD",
     maximumFractionDigits: 0,
-    style: 'currency',
+    style: "currency",
   }).format(amount)
 
 export default function Demo() {

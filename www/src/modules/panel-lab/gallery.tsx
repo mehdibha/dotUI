@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
 /* /internal/panel-lab — the section index: the row vocabulary the panel is
    built from, then every panel version as a live preview. Click a preview to
    open that version full size. */
 
-import { Link } from '@tanstack/react-router'
-import { ArrowUpRightIcon } from 'lucide-react'
+import { Link } from "@tanstack/react-router"
+import { ArrowUpRightIcon } from "lucide-react"
 
-import { InternalShell } from '@/modules/internal/shell'
+import { InternalShell } from "@/modules/internal/shell"
 
-import { DRAFTS, draftChapters } from './drafts'
-import type { Draft } from './drafts'
-import { useStaticLab } from './use-lab'
-import { PanelFrame } from './variants/panel'
-import { PANEL_VERSIONS } from './versions'
-import type { PanelVersion } from './versions'
+import { DRAFTS, draftChapters } from "./drafts"
+import type { Draft } from "./drafts"
+import { useStaticLab } from "./use-lab"
+import { PanelFrame } from "./variants/panel"
+import { PANEL_VERSIONS } from "./versions"
+import type { PanelVersion } from "./versions"
 
 /* The panel is 360×720; the preview window shows it scaled, top-anchored,
    clipped with a fade — enough to recognize the version at a glance. */
@@ -23,7 +23,7 @@ const PANEL_W = 360
 const PANEL_H = 720
 
 /** The scaled, inert panel shared by version and draft cards. */
-function PanelPreview({ chapters }: { chapters: PanelVersion['chapters'] }) {
+function PanelPreview({ chapters }: { chapters: PanelVersion["chapters"] }) {
   const lab = useStaticLab()
   return (
     <div
@@ -38,7 +38,7 @@ function PanelPreview({ chapters }: { chapters: PanelVersion['chapters'] }) {
           width: PANEL_W,
           height: PANEL_H,
           transform: `translateX(-50%) scale(${PREVIEW_SCALE})`,
-          transformOrigin: 'top center',
+          transformOrigin: "top center",
         }}
       >
         <PanelFrame chapters={chapters} lab={lab} />
@@ -103,7 +103,7 @@ function VersionCard({ version }: { version: PanelVersion }) {
 export function PanelLabGallery() {
   return (
     <InternalShell
-      crumbs={[{ label: 'Panel Lab' }]}
+      crumbs={[{ label: "Panel Lab" }]}
       title="Panel Lab"
       description="The /create control panel, rebuilt in the row language. Each version is the whole panel — open one to work in it, or compare them here."
     >

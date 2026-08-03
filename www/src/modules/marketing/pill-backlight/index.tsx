@@ -1,17 +1,17 @@
-import { useEffect, useRef } from 'react'
-import type { RefObject } from 'react'
+import { useEffect, useRef } from "react"
+import type { RefObject } from "react"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
-import { FRAGMENT_SHADER, VERTEX_SHADER } from './fragment'
+import { FRAGMENT_SHADER, VERTEX_SHADER } from "./fragment"
 import {
   buildStrip,
   LED_COUNT,
   packStrip,
   stadiumPointPx,
   WAVE_SPEED,
-} from './strip'
-import type { Led } from './strip'
+} from "./strip"
+import type { Led } from "./strip"
 
 // Laps of the pill perimeter per second — a full circuit takes about 11s.
 const DRIFT_RATE = 0.09
@@ -45,8 +45,8 @@ let probe: CanvasRenderingContext2D | null = null
  *  `null` resolves to the pill's current text color. */
 function parseColor(raw: string | null, el: HTMLElement): Rgb {
   probe ??= document
-    .createElement('canvas')
-    .getContext('2d', { willReadFrequently: true })
+    .createElement("canvas")
+    .getContext("2d", { willReadFrequently: true })
   if (!probe) return [1, 1, 1]
   probe.clearRect(0, 0, 1, 1)
   probe.fillStyle = raw ?? getComputedStyle(el).color
@@ -61,7 +61,7 @@ function compile(gl: WebGL2RenderingContext, type: number, source: string) {
   gl.shaderSource(shader, source)
   gl.compileShader(shader)
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    console.error('pill-backlight:', gl.getShaderInfoLog(shader))
+    console.error("pill-backlight:", gl.getShaderInfoLog(shader))
     gl.deleteShader(shader)
     return null
   }
@@ -82,7 +82,7 @@ function createProgram(gl: WebGL2RenderingContext) {
   gl.deleteShader(frag)
 
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    console.error('pill-backlight:', gl.getProgramInfoLog(program))
+    console.error("pill-backlight:", gl.getProgramInfoLog(program))
     gl.deleteProgram(program)
     return null
   }
@@ -128,11 +128,11 @@ export function PillBacklight({
     const pill = pillRef.current
     if (!canvas || !pill) return
 
-    const gl = canvas.getContext('webgl2', {
+    const gl = canvas.getContext("webgl2", {
       antialias: false,
       depth: false,
       stencil: false,
-      powerPreference: 'low-power',
+      powerPreference: "low-power",
     })
     if (!gl) return
 
@@ -140,20 +140,20 @@ export function PillBacklight({
     if (!program) return
 
     gl.useProgram(program)
-    const uResolution = gl.getUniformLocation(program, 'uResolution')
-    const uSeed = gl.getUniformLocation(program, 'uSeed')
-    const uTint = gl.getUniformLocation(program, 'uTint')
-    const uPanel = gl.getUniformLocation(program, 'uPanel')
-    const uCluster = gl.getUniformLocation(program, 'uCluster')
-    const uHover = gl.getUniformLocation(program, 'uHover')
-    const uPhase = gl.getUniformLocation(program, 'uPhase')
-    const uLed = gl.getUniformLocation(program, 'uLed')
+    const uResolution = gl.getUniformLocation(program, "uResolution")
+    const uSeed = gl.getUniformLocation(program, "uSeed")
+    const uTint = gl.getUniformLocation(program, "uTint")
+    const uPanel = gl.getUniformLocation(program, "uPanel")
+    const uCluster = gl.getUniformLocation(program, "uCluster")
+    const uHover = gl.getUniformLocation(program, "uHover")
+    const uPhase = gl.getUniformLocation(program, "uPhase")
+    const uLed = gl.getUniformLocation(program, "uLed")
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)")
     const packed = new Float32Array(LED_COUNT * 4)
     const cursor = { x: 0, y: 0, active: false }
     let strip: Led[] = []
-    let geomKey = ''
+    let geomKey = ""
     let stillS = 0 // top-centre of the perimeter, the reduced-motion park spot
     let cluster = -1 // drift phase along the perimeter, parked at stillS
     let hover = 0 // eased whole-rim blend, 1 with the cursor on the pill
@@ -251,9 +251,9 @@ export function PillBacklight({
       gl.drawArrays(gl.TRIANGLES, 0, 3)
 
       // The CSS ring glow rides the drifting cluster and brightens on hover.
-      pill.style.setProperty('--cta-glow-x', `${posX}px`)
-      pill.style.setProperty('--cta-glow-y', `${posY}px`)
-      pill.style.setProperty('--cta-glow-boost', hover.toFixed(3))
+      pill.style.setProperty("--cta-glow-x", `${posX}px`)
+      pill.style.setProperty("--cta-glow-y", `${posY}px`)
+      pill.style.setProperty("--cta-glow-boost", hover.toFixed(3))
     }
 
     const loop = (now: number) => {
@@ -304,10 +304,10 @@ export function PillBacklight({
     })
     intersectionObserver.observe(canvas)
 
-    window.addEventListener('pointermove', onPointerMove, { passive: true })
-    document.documentElement.addEventListener('pointerleave', onPointerLeave)
-    document.addEventListener('visibilitychange', sync)
-    reduced.addEventListener('change', sync)
+    window.addEventListener("pointermove", onPointerMove, { passive: true })
+    document.documentElement.addEventListener("pointerleave", onPointerLeave)
+    document.addEventListener("visibilitychange", sync)
+    reduced.addEventListener("change", sync)
 
     draw()
     sync()
@@ -317,13 +317,13 @@ export function PillBacklight({
       cancelAnimationFrame(frame)
       resizeObserver.disconnect()
       intersectionObserver.disconnect()
-      window.removeEventListener('pointermove', onPointerMove)
+      window.removeEventListener("pointermove", onPointerMove)
       document.documentElement.removeEventListener(
-        'pointerleave',
+        "pointerleave",
         onPointerLeave,
       )
-      document.removeEventListener('visibilitychange', sync)
-      reduced.removeEventListener('change', sync)
+      document.removeEventListener("visibilitychange", sync)
+      reduced.removeEventListener("change", sync)
       gl.deleteProgram(program)
       // Deliberately no WEBGL_lose_context here: a lost context sticks to the
       // canvas element, and this effect re-runs on the same element under
@@ -334,7 +334,7 @@ export function PillBacklight({
   // The wrapper takes the inset box; the canvas is a replaced element, so on
   // its own `width: auto` would keep the intrinsic 300×150 instead of filling.
   return (
-    <div aria-hidden className={cn('pointer-events-none absolute', className)}>
+    <div aria-hidden className={cn("pointer-events-none absolute", className)}>
       <canvas ref={canvasRef} className="size-full" />
     </div>
   )

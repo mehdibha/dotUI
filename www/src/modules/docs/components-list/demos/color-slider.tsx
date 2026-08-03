@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import * as ColorAreaPrimitives from 'react-aria-components/ColorArea'
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 
 import {
   ColorSlider,
   ColorSliderControl,
   ColorSliderOutput,
-} from '@/registry/ui/color-slider'
-import { Description, Label } from '@/registry/ui/field'
+} from "@/registry/ui/color-slider"
+import { Description, Label } from "@/registry/ui/field"
 
-import { useValueAutoplay } from '../autoplay'
+import { useValueAutoplay } from "../autoplay"
 
 // Step the hue through a few stops; the thumb (ColorThumb, positioned via
 // `left`) CSS-transitions between them. We rebuild the Color from the numeric

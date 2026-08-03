@@ -4,12 +4,12 @@ import {
   PencilIcon,
   StarIcon,
   TrashIcon,
-} from '@/registry/__generated__/icons'
-import { ContextMenu } from '@/registry/ui/context-menu'
-import { Kbd } from '@/registry/ui/kbd'
-import { MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/__generated__/icons"
+import { ContextMenu } from "@/registry/ui/context-menu"
+import { Kbd } from "@/registry/ui/kbd"
+import { MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

@@ -18,15 +18,15 @@
  * Build-time only. Imports ts-morph.
  */
 
-import path from 'node:path'
-import { tv } from 'tailwind-variants'
-import { Node, Project, SyntaxKind } from 'ts-morph'
-import type { CallExpression, Expression, SourceFile } from 'ts-morph'
+import path from "node:path"
+import { tv } from "tailwind-variants"
+import { Node, Project, SyntaxKind } from "ts-morph"
+import type { CallExpression, Expression, SourceFile } from "ts-morph"
 
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
-import { flatten } from '../flatten'
-import type { StylesConfig } from '../types'
+import { flatten } from "../flatten"
+import type { StylesConfig } from "../types"
 
 /**
  * Threaded through `exprToValue` so runtime helpers used in `styles.ts` values
@@ -80,7 +80,7 @@ function exprToValue(expr: Expression, ctx: ExtractCtx): unknown {
   if (node.isKind(SyntaxKind.FalseKeyword)) return false
   if (node.isKind(SyntaxKind.NullKeyword)) return null
   if (node.isKind(SyntaxKind.Identifier)) {
-    if (node.getText() === 'undefined') return undefined
+    if (node.getText() === "undefined") return undefined
     // Module-level `const x = <literal>` reference (e.g. input's `compactText`).
     return exprToValue(resolveLocalConst(node.getText(), ctx), ctx)
   }
@@ -92,11 +92,11 @@ function exprToValue(expr: Expression, ctx: ExtractCtx): unknown {
   if (node.isKind(SyntaxKind.PrefixUnaryExpression)) {
     const text = node.getText()
     // Allow e.g. `-1`
-    if (text.startsWith('-') || text.startsWith('+')) {
+    if (text.startsWith("-") || text.startsWith("+")) {
       const inner = node.getOperand()
       const innerVal = exprToValue(inner, ctx)
-      if (typeof innerVal === 'number')
-        return text.startsWith('-') ? -innerVal : innerVal
+      if (typeof innerVal === "number")
+        return text.startsWith("-") ? -innerVal : innerVal
     }
     throw new Error(
       `[publisher/extract] unsupported unary expression in ${filePath}: ${text}`,
@@ -218,7 +218,7 @@ function evaluateCall(call: CallExpression, ctx: ExtractCtx): string {
     const stylesFn = resolveImportedStyles(factoryId.getText(), ctx)
     const slots = stylesFn() as Record<string, (...a: unknown[]) => string>
     const slotFn = slots[slotName]
-    if (typeof slotFn !== 'function') {
+    if (typeof slotFn !== "function") {
       throw new Error(
         `[publisher/extract] "${factoryId.getText()}().${slotName}()" — no such slot (${ctx.filePath})`,
       )
@@ -242,7 +242,7 @@ function asClassString(
   call: CallExpression,
   ctx: ExtractCtx,
 ): string {
-  if (typeof value !== 'string') {
+  if (typeof value !== "string") {
     throw new Error(
       `[publisher/extract] call "${call.getText()}" did not resolve to a class string (${ctx.filePath})`,
     )
@@ -258,7 +258,7 @@ function resolveLocalTvFactory(
   const init = resolveLocalConst(name, ctx)
   if (
     !init.isKind(SyntaxKind.CallExpression) ||
-    init.getExpression().getText() !== 'tv'
+    init.getExpression().getText() !== "tv"
   ) {
     throw new Error(
       `[publisher/extract] "${name}" is not a tv() factory in ${ctx.filePath}`,
@@ -295,7 +295,7 @@ function resolveImportedStyles(name: string, ctx: ExtractCtx): () => unknown {
   const stylesTsPath = path.join(
     registryUiDirOf(ctx.filePath),
     componentName,
-    'styles.ts',
+    "styles.ts",
   )
   const cached = importedStylesCache.get(stylesTsPath)
   if (cached) return cached
@@ -313,10 +313,10 @@ function resolveImportedStyles(name: string, ctx: ExtractCtx): () => unknown {
     stylesConfig: config,
     meta: {
       name: componentName,
-      type: 'registry:ui',
+      type: "registry:ui",
       params: {},
     } as RegistryItem,
-    density: 'default',
+    density: "default",
     paramSelections: {},
   })
   const stylesFn = () => tv(layer as Parameters<typeof tv>[0])()
@@ -350,7 +350,7 @@ function extractFromSourceFile(sourceFile: SourceFile): StylesConfig {
   const target = calls.find((call) => {
     const expr = call.getExpression()
     return (
-      expr.isKind(SyntaxKind.Identifier) && expr.getText() === 'createStyles'
+      expr.isKind(SyntaxKind.Identifier) && expr.getText() === "createStyles"
     )
   })
 
@@ -375,7 +375,7 @@ function extractFromSourceFile(sourceFile: SourceFile): StylesConfig {
   }
 
   const value = exprToValue(configArg, { sourceFile, filePath })
-  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new Error(
       `[publisher/extract] createStyles() config must be an object literal in ${filePath}`,
     )

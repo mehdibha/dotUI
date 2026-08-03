@@ -1,4 +1,4 @@
-import type { RootClosure } from './root-closure'
+import type { RootClosure } from "./root-closure"
 
 /**
  * Placeholder swapped by the `dotui-root-closure` plugin (vite.config.ts): in

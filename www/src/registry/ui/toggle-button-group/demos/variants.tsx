@@ -2,11 +2,11 @@ import {
   BoldIcon,
   ItalicIcon,
   UnderlineIcon,
-} from '@/registry/__generated__/icons'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+} from "@/registry/__generated__/icons"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 
-const variants = ['primary', 'secondary', 'quiet'] as const
+const variants = ["primary", "secondary", "quiet"] as const
 
 export default function Demo() {
   return (

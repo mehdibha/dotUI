@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as SearchFieldPrimitives from 'react-aria-components/SearchField'
+import type * as React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as SearchFieldPrimitives from "react-aria-components/SearchField"
 
-import { SearchIcon } from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
-import { useStyles } from '@/registry/ui/field/styles'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { SearchIcon } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { useStyles } from "@/registry/ui/field/styles"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 
 // MARK: searchFieldStyles
 
@@ -32,7 +32,7 @@ const SearchField = ({
       className={composeRenderProps(className, (className) =>
         cn(
           fieldStyles.field({ className }),
-          'group/search-field empty:**:data-input-group-addon:*:data-button:not-[[slot]]:hidden **:data-input:[&::-webkit-search-cancel-button]:appearance-none **:data-input:[&::-webkit-search-decoration]:appearance-none',
+          "group/search-field empty:**:data-input-group-addon:*:data-button:not-[[slot]]:hidden **:data-input:[&::-webkit-search-cancel-button]:appearance-none **:data-input:[&::-webkit-search-decoration]:appearance-none",
         ),
       )}
       {...props}

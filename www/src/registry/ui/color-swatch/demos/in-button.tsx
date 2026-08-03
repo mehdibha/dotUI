@@ -1,7 +1,7 @@
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
+import { Button } from "@/registry/ui/button"
+import { ColorSwatch } from "@/registry/ui/color-swatch"
 
 export default function Demo() {
   return (

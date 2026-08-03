@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { createContext, Suspense, use } from 'react'
-import type * as React from 'react'
+import { createContext, Suspense, use } from "react"
+import type * as React from "react"
 
-import { createIconLoader } from './create-icon-loader'
-import type { IconLibraryName, PhosphorWeight } from './icon-map'
+import { createIconLoader } from "./create-icon-loader"
+import type { IconLibraryName, PhosphorWeight } from "./icon-map"
 
 interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {
   className?: string
@@ -18,8 +18,8 @@ interface CommonIconProps extends React.RefAttributes<SVGSVGElement> {
   onClick?: (event: React.MouseEvent<SVGSVGElement>) => void
   onMouseEnter?: (event: React.MouseEvent<SVGSVGElement>) => void
   onMouseLeave?: (event: React.MouseEvent<SVGSVGElement>) => void
-  'aria-label'?: string
-  'aria-hidden'?: React.AriaAttributes['aria-hidden']
+  "aria-label"?: string
+  "aria-hidden"?: React.AriaAttributes["aria-hidden"]
   role?: string
 }
 
@@ -38,7 +38,7 @@ type IconNames = {
  * provides the user's choice (through `DesignSystemProvider`) so every registry
  * icon swaps at runtime.
  */
-const IconLibraryContext = createContext<IconLibraryName>('lucide')
+const IconLibraryContext = createContext<IconLibraryName>("lucide")
 
 /**
  * The icon weight axis — meaningful for libraries whose components take a
@@ -49,10 +49,10 @@ const IconWeightContext = createContext<PhosphorWeight | undefined>(undefined)
 // One lazy loader per non-default library — the library chunk only ever loads
 // when a design system selects it.
 const loaders = {
-  remix: createIconLoader('remix'),
-  tabler: createIconLoader('tabler'),
-  hugeicons: createIconLoader('hugeicons'),
-  phosphor: createIconLoader('phosphor'),
+  remix: createIconLoader("remix"),
+  tabler: createIconLoader("tabler"),
+  hugeicons: createIconLoader("hugeicons"),
+  phosphor: createIconLoader("phosphor"),
 } as const
 
 export type { CommonIconProps }
@@ -65,12 +65,12 @@ export function createIcon(
   function Icon(props: CommonIconProps) {
     const library = use(IconLibraryContext)
     const weight = use(IconWeightContext)
-    if (library === 'lucide') return <LucideIcon {...props} />
+    if (library === "lucide") return <LucideIcon {...props} />
     const IconLoader = loaders[library]
     // `weight` is a component prop, not a DOM attribute — only pass it to the
     // library that understands it.
     const weightProps =
-      library === 'phosphor' && weight ? { weight } : undefined
+      library === "phosphor" && weight ? { weight } : undefined
     // While the library chunk loads (and if the name is missing from it), keep
     // showing the lucide equivalent — same footprint, no flash.
     return (

@@ -1,12 +1,12 @@
-import { CaptionsIcon } from '@/registry/__generated__/icons'
+import { CaptionsIcon } from "@/registry/__generated__/icons"
 import {
   Avatar,
   AvatarFallback,
   AvatarGroup,
   AvatarGroupCount,
   AvatarImage,
-} from '@/registry/ui/avatar'
-import { Button } from '@/registry/ui/button'
+} from "@/registry/ui/avatar"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardAction,
@@ -15,7 +15,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
+} from "@/registry/ui/card"
 
 export default function Demo() {
   return (

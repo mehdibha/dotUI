@@ -3,8 +3,8 @@
 // highlighted file) and participating elements skip hit-testing, so even a
 // transition scoped to the block reads as a frozen page.
 export function toggleCodeBlock(target: Element, update: () => void) {
-  const block = target.closest('figure')
-  if (!block || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const block = target.closest("figure")
+  if (!block || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     update()
     return
   }
@@ -19,14 +19,14 @@ export function toggleCodeBlock(target: Element, update: () => void) {
     ro.disconnect()
     clearTimeout(bail)
     for (const animation of block.getAnimations()) animation.cancel()
-    block.style.overflow = 'hidden'
+    block.style.overflow = "hidden"
     block
       .animate([{ height: `${from}px` }, { height: `${to}px` }], {
         duration: 250,
-        easing: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
+        easing: "cubic-bezier(0.215, 0.61, 0.355, 1)",
       })
       .finished.finally(() => {
-        block.style.overflow = ''
+        block.style.overflow = ""
       })
   })
   ro.observe(block)

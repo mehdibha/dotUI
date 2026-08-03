@@ -1,6 +1,6 @@
-import { FolderCodeIcon } from 'lucide-react'
+import { FolderCodeIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Empty,
   EmptyContent,
@@ -8,7 +8,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from '@/registry/ui/empty'
+} from "@/registry/ui/empty"
 
 export default function EmptyProjects() {
   return (

@@ -1,12 +1,12 @@
-import type * as React from 'react'
-import type { OTPFieldPreview as OTPFieldPrimitive } from '@base-ui/react/otp-field'
+import type * as React from "react"
+import type { OTPFieldPreview as OTPFieldPrimitive } from "@base-ui/react/otp-field"
 
 /**
  * An OTP field lets users enter a one-time passcode across multiple single-character inputs.
  */
 export interface OTPFieldProps extends Omit<
   OTPFieldPrimitive.Root.Props,
-  'disabled' | 'readOnly' | 'required' | 'onValueChange'
+  "disabled" | "readOnly" | "required" | "onValueChange"
 > {
   /** Whether the field is disabled. */
   isDisabled?: boolean

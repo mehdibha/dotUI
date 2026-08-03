@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react"
 import {
   CalculatorIcon,
   CalendarIcon,
@@ -10,27 +10,27 @@ import {
   SmileIcon,
   UserIcon,
   XIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
-import { Card } from '@/registry/ui/card'
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
-import { Command } from '@/registry/ui/command'
-import { Label } from '@/registry/ui/field'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Kbd } from '@/registry/ui/kbd'
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
+import { Card } from "@/registry/ui/card"
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import { Command } from "@/registry/ui/command"
+import { Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Kbd } from "@/registry/ui/kbd"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { SearchField } from '@/registry/ui/search-field'
-import { Separator } from '@/registry/ui/separator'
-import { Switch, SwitchControl } from '@/registry/ui/switch'
-import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+} from "@/registry/ui/list-box"
+import { SearchField } from "@/registry/ui/search-field"
+import { Separator } from "@/registry/ui/separator"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 /**
  * A live, static spread per audited component — the widest representative slice
@@ -195,6 +195,6 @@ export const componentRenders: Record<string, () => ReactNode> = {
 /** Captions shown beneath the live cell (outside the themed canvas) for renders
  *  whose full behavior can't be judged from a static frame. */
 export const renderCaptions: Record<string, string> = {
-  input: 'Focus ring needs an interactive audit.',
-  tooltip: 'Overlay only mounts on hover/focus — needs an interactive audit.',
+  input: "Focus ring needs an interactive audit.",
+  tooltip: "Overlay only mounts on hover/focus — needs an interactive audit.",
 }

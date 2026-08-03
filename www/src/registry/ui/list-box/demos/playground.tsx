@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import { ListBox, ListBoxItem, type ListBoxProps } from '@/registry/ui/list-box'
+import { ListBox, ListBoxItem, type ListBoxProps } from "@/registry/ui/list-box"
 
 export default function Demo({
-  orientation = 'vertical',
-  selectionMode = 'single',
+  orientation = "vertical",
+  selectionMode = "single",
 }: {
-  orientation?: ListBoxProps<object>['orientation']
-  selectionMode?: ListBoxProps<object>['selectionMode']
+  orientation?: ListBoxProps<object>["orientation"]
+  selectionMode?: ListBoxProps<object>["selectionMode"]
 } = {}) {
   return (
     <ListBox

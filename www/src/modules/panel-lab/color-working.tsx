@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* The WORKING color section — the enhancement frame's body, forked from
    color-ideal.tsx (v1, frozen) per the lab's fork rule.
@@ -11,7 +11,7 @@
    active mode; the Modes row manages the set. Still engine-real: each mode
    resolves through @dotui/colors with its own background/guarantee settings. */
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState } from "react"
 import {
   CheckIcon,
   MoonIcon,
@@ -20,30 +20,30 @@ import {
   SunIcon,
   TriangleAlertIcon,
   XIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
-import { STEPS, toHex, toOklch, wcag2 } from '@dotui/colors'
-import type { StepName, Theme } from '@dotui/colors'
+import { STEPS, toHex, toOklch, wcag2 } from "@dotui/colors"
+import type { StepName, Theme } from "@dotui/colors"
 
-import { resolveColorConfigCached } from '@/lib/resolve-color'
-import { cn } from '@/registry/lib/utils'
-import type { ColorConfig } from '@/registry/theme'
-import { Button } from '@/registry/ui/button'
-import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
+import { resolveColorConfigCached } from "@/lib/resolve-color"
+import { cn } from "@/registry/lib/utils"
+import type { ColorConfig } from "@/registry/theme"
+import { Button } from "@/registry/ui/button"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import { ColorSwatch } from "@/registry/ui/color-swatch"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
 import {
   SegmentedControl,
   SegmentedControlItem,
-} from '@/registry/ui/segmented-control'
+} from "@/registry/ui/segmented-control"
 import {
   Slider,
   SliderControl,
   SliderFill,
   SliderThumb,
   SliderTrack,
-} from '@/registry/ui/slider'
+} from "@/registry/ui/slider"
 import {
   ColorPickerRow,
   ControlGroup,
@@ -54,38 +54,38 @@ import {
   ROW,
   ROW_LABEL,
   ROW_VALUE,
-} from '@/modules/control-lab/rows'
+} from "@/modules/control-lab/rows"
 
-import { DEFAULTS, PRIMARY_OPTIONS } from './data'
-import type { Lab, LabMode, LabState } from './data'
+import { DEFAULTS, PRIMARY_OPTIONS } from "./data"
+import type { Lab, LabMode, LabState } from "./data"
 import {
   DetailRow,
   PickerPopoverContent,
   SegmentedControlRow,
   SwatchDots,
-} from './patterns'
+} from "./patterns"
 
 /* ------------------------------ Config bridge ------------------------------ */
 
 /** The color-global slice of lab state that every mode shares. */
 const SHARED_KEYS = [
-  'brand',
-  'primary',
-  'graySeed',
-  'successSeed',
-  'warningSeed',
-  'dangerSeed',
-  'infoSeed',
-  'selectionSeed',
-  'vividness',
-  'hueShift',
-  'grayTintAmount',
-  'preserveSeed',
-  'guarantees',
-  'borderContrast',
-  'border400',
-  'border500',
-  'border600',
+  "brand",
+  "primary",
+  "graySeed",
+  "successSeed",
+  "warningSeed",
+  "dangerSeed",
+  "infoSeed",
+  "selectionSeed",
+  "vividness",
+  "hueShift",
+  "grayTintAmount",
+  "preserveSeed",
+  "guarantees",
+  "borderContrast",
+  "border400",
+  "border500",
+  "border600",
 ] as const
 type SharedColorState = Pick<LabState, (typeof SHARED_KEYS)[number]>
 
@@ -114,7 +114,7 @@ function buildModeConfig(state: SharedColorState, mode: LabMode): ColorConfig {
     border500,
     border600,
   } = state
-  const high = mode.contrast === 'high'
+  const high = mode.contrast === "high"
   return {
     v: 2,
     seeds: {
@@ -127,27 +127,27 @@ function buildModeConfig(state: SharedColorState, mode: LabMode): ColorConfig {
       selection: selectionSeed || undefined,
     },
     background:
-      mode.polarity === 'light'
+      mode.polarity === "light"
         ? { light: Math.min(100, Math.max(90, mode.bg)) }
-        : { dark: mode.bg === 0 ? 'oled' : Math.min(20, mode.bg) },
+        : { dark: mode.bg === 0 ? "oled" : Math.min(20, mode.bg) },
     vividness: vividness === 1 ? undefined : vividness,
     hueShift: hueShift === 1 ? undefined : hueShift,
     neutralTint: grayTintAmount === 1 ? undefined : grayTintAmount,
     preserveSeed: preserveSeed || undefined,
     guaranteePolicy: high
-      ? 'strict'
-      : guarantees === 'relaxed' || guarantees === 'strict'
+      ? "strict"
+      : guarantees === "relaxed" || guarantees === "strict"
         ? guarantees
         : undefined,
-    primary: primary === 'accent' ? 'accent' : undefined,
+    primary: primary === "accent" ? "accent" : undefined,
     borders: high
-      ? { '*': { '400': 2, '500': 3, '600': 4.5 } }
+      ? { "*": { "400": 2, "500": 3, "600": 4.5 } }
       : borderContrast
         ? {
-            '*': {
-              '400': border400 > 0 ? border400 : undefined,
-              '500': border500 > 0 ? border500 : undefined,
-              '600': border600 > 0 ? border600 : undefined,
+            "*": {
+              "400": border400 > 0 ? border400 : undefined,
+              "500": border500 > 0 ? border500 : undefined,
+              "600": border600 > 0 ? border600 : undefined,
             },
           }
         : undefined,
@@ -161,11 +161,11 @@ function useBorderSeeds(config: ColorConfig) {
     const { borders: _drop, ...rest } = config
     const baseline = resolveColorConfigCached(config.borders ? rest : config)
     const bg = toOklch(baseline.light.background)
-    const ratio = (step: '400' | '500' | '600') => {
+    const ratio = (step: "400" | "500" | "600") => {
       const color = baseline.light.scales.neutral?.[step]
       return color ? Math.round(wcag2(toOklch(color), bg) * 100) / 100 : 1.05
     }
-    return { '400': ratio('400'), '500': ratio('500'), '600': ratio('600') }
+    return { "400": ratio("400"), "500": ratio("500"), "600": ratio("600") }
   }, [config])
 }
 
@@ -186,37 +186,37 @@ function modeBgCss(mode: LabMode): string {
 const MODE_ARCHETYPES: {
   key: string
   note: string
-  mode: Omit<LabMode, 'id'>
+  mode: Omit<LabMode, "id">
 }[] = [
   {
-    key: 'light',
-    note: 'White canvas',
-    mode: { name: 'Light', polarity: 'light', bg: 99, contrast: 'default' },
+    key: "light",
+    note: "White canvas",
+    mode: { name: "Light", polarity: "light", bg: 99, contrast: "default" },
   },
   {
-    key: 'dark',
-    note: 'Near-black canvas',
-    mode: { name: 'Dark', polarity: 'dark', bg: 2, contrast: 'default' },
+    key: "dark",
+    note: "Near-black canvas",
+    mode: { name: "Dark", polarity: "dark", bg: 2, contrast: "default" },
   },
   {
-    key: 'dim',
-    note: 'Lifted dark, easy on OLED smear',
-    mode: { name: 'Dim', polarity: 'dark', bg: 15, contrast: 'default' },
+    key: "dim",
+    note: "Lifted dark, easy on OLED smear",
+    mode: { name: "Dim", polarity: "dark", bg: 15, contrast: "default" },
   },
   {
-    key: 'oled',
-    note: 'Pure black canvas',
-    mode: { name: 'OLED', polarity: 'dark', bg: 0, contrast: 'default' },
+    key: "oled",
+    note: "Pure black canvas",
+    mode: { name: "OLED", polarity: "dark", bg: 0, contrast: "default" },
   },
   {
-    key: 'light-hc',
-    note: 'AA text everywhere, strong borders',
-    mode: { name: 'Light HC', polarity: 'light', bg: 100, contrast: 'high' },
+    key: "light-hc",
+    note: "AA text everywhere, strong borders",
+    mode: { name: "Light HC", polarity: "light", bg: 100, contrast: "high" },
   },
   {
-    key: 'dark-hc',
-    note: 'AA text everywhere, strong borders',
-    mode: { name: 'Dark HC', polarity: 'dark', bg: 0, contrast: 'high' },
+    key: "dark-hc",
+    note: "AA text everywhere, strong borders",
+    mode: { name: "Dark HC", polarity: "dark", bg: 0, contrast: "high" },
   },
 ]
 
@@ -224,7 +224,7 @@ const MAX_MODES = 6
 
 /** Unique id + display name for an added archetype ("Dark", "Dark 2", …). */
 function instantiate(
-  archetype: Omit<LabMode, 'id'>,
+  archetype: Omit<LabMode, "id">,
   existing: LabMode[],
 ): LabMode {
   let name = archetype.name
@@ -233,14 +233,14 @@ function instantiate(
     name = `${archetype.name} ${n}`
     n += 1
   }
-  let id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+  let id = name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
   while (existing.some((mode) => mode.id === id)) id = `${id}-x`
   return { ...archetype, id, name }
 }
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-const HERO_PALETTES = ['accent', 'neutral'] as const
+const HERO_PALETTES = ["accent", "neutral"] as const
 
 /** Real engine output for the ACTIVE mode: ramps, tappable steps, the
  *  report's verdict, the seed's snap price. The mode chips replace v1's
@@ -275,7 +275,7 @@ function EngineHero({
       <div className="flex items-center justify-between gap-3">
         <span
           className="flex min-w-0 items-center gap-1.5 text-xs text-fg-muted"
-          title={theme.report.warnings.join('\n') || undefined}
+          title={theme.report.warnings.join("\n") || undefined}
         >
           {warnings === 0 ? (
             <CheckIcon className="size-3 shrink-0" />
@@ -284,8 +284,8 @@ function EngineHero({
           )}
           <span className="truncate">
             {warnings === 0
-              ? 'Contrast guarantees pass'
-              : `${warnings} contrast warning${warnings === 1 ? '' : 's'}`}
+              ? "Contrast guarantees pass"
+              : `${warnings} contrast warning${warnings === 1 ? "" : "s"}`}
           </span>
         </span>
         {modes.length > 1 && (
@@ -323,8 +323,8 @@ function EngineHero({
                 aria-label={`Inspect ${palette} ${step}`}
                 aria-pressed={selected}
                 className={cn(
-                  'flex-1 cursor-interactive focus-reset focus-visible:z-10 focus-visible:focus-ring',
-                  selected && 'z-10 rounded-[3px] ring-2 ring-bg ring-inset',
+                  "flex-1 cursor-interactive focus-reset focus-visible:z-10 focus-visible:focus-ring",
+                  selected && "z-10 rounded-[3px] ring-2 ring-bg ring-inset",
                 )}
                 style={{ backgroundColor: m.scales[palette]?.[step] }}
                 onClick={() => setInspect(selected ? null : { palette, step })}
@@ -359,7 +359,7 @@ function EngineHero({
             size="xs"
             variant="quiet"
             className="shrink-0"
-            onPress={() => set('preserveSeed')(true)}
+            onPress={() => set("preserveSeed")(true)}
           >
             Pin exact
           </Button>
@@ -388,8 +388,8 @@ function ModeEditor({
   onMakeDefault: () => void
   onRemove: () => void
 }) {
-  const PolarityIcon = mode.polarity === 'light' ? SunIcon : MoonIcon
-  const light = mode.polarity === 'light'
+  const PolarityIcon = mode.polarity === "light" ? SunIcon : MoonIcon
+  const light = mode.polarity === "light"
   return (
     <div className="flex flex-col border-t border-bg/50 pt-1 first:border-t-0 first:pt-0">
       <div className="flex h-9 items-center gap-2 px-2">
@@ -432,14 +432,14 @@ function ModeEditor({
         minValue={light ? 90 : 0}
         maxValue={light ? 100 : 20}
         step={0.5}
-        format={(v) => (!light && v === 0 ? 'OLED' : `L* ${v.toFixed(1)}`)}
+        format={(v) => (!light && v === 0 ? "OLED" : `L* ${v.toFixed(1)}`)}
       />
       <ParamRow label="High contrast">
         <MiniSwitch
           ariaLabel={`High contrast for ${mode.name}`}
-          value={mode.contrast === 'high'}
+          value={mode.contrast === "high"}
           onChange={(on) =>
-            onChange({ ...mode, contrast: on ? 'high' : 'default' })
+            onChange({ ...mode, contrast: on ? "high" : "default" })
           }
         />
       </ParamRow>
@@ -453,7 +453,7 @@ function AddModeRow({
   onAdd,
 }: {
   disabled: boolean
-  onAdd: (archetype: Omit<LabMode, 'id'>) => void
+  onAdd: (archetype: Omit<LabMode, "id">) => void
 }) {
   return (
     <div className="border-t border-bg/50 pt-1">
@@ -465,7 +465,7 @@ function AddModeRow({
           className="w-full justify-start gap-2 px-2 text-xs font-normal text-fg-muted"
         >
           <PlusIcon className="size-3.5" />
-          {disabled ? `Up to ${MAX_MODES} modes` : 'Add mode'}
+          {disabled ? `Up to ${MAX_MODES} modes` : "Add mode"}
         </Button>
         <Popover placement="right top">
           <MenuContent>
@@ -517,12 +517,12 @@ function AutoColorRow({
   return (
     <ColorPicker
       value={value || cssToHex(derived)}
-      onChange={(c) => onChange(c.toString('hex'))}
+      onChange={(c) => onChange(c.toString("hex"))}
     >
       {({ color }) => (
         <div
           data-row=""
-          className={cn(ROW, 'flex items-center gap-0.5 pr-1.5')}
+          className={cn(ROW, "flex items-center gap-0.5 pr-1.5")}
         >
           <Button
             variant="quiet"
@@ -530,13 +530,13 @@ function AutoColorRow({
           >
             <span className={ROW_LABEL}>{label}</span>
             <span className="flex shrink-0 items-center gap-2.5">
-              <span className={cn(ROW_VALUE, value && 'font-mono uppercase')}>
-                {value ? color.toString('hex') : 'Auto'}
+              <span className={cn(ROW_VALUE, value && "font-mono uppercase")}>
+                {value ? color.toString("hex") : "Auto"}
               </span>
               <ColorSwatch className="size-5 rounded-full" />
             </span>
           </Button>
-          {value !== '' && (
+          {value !== "" && (
             <Button
               size="xs"
               variant="quiet"
@@ -572,7 +572,7 @@ function MiniAutoColorRow({
   return (
     <ColorPicker
       value={value || cssToHex(derived)}
-      onChange={(c) => onChange(c.toString('hex'))}
+      onChange={(c) => onChange(c.toString("hex"))}
     >
       {({ color }) => (
         <div className="flex items-center gap-0.5">
@@ -583,12 +583,12 @@ function MiniAutoColorRow({
             <span className="truncate text-xs text-fg-muted">{label}</span>
             <span className="flex shrink-0 items-center gap-2">
               <span className="font-mono text-xs text-fg-muted uppercase">
-                {value ? color.toString('hex') : 'Auto'}
+                {value ? color.toString("hex") : "Auto"}
               </span>
               <ColorSwatch className="size-4 rounded-full" />
             </span>
           </Button>
-          {value !== '' && (
+          {value !== "" && (
             <Button
               size="xs"
               variant="quiet"
@@ -659,31 +659,31 @@ function MiniSliderRow({
 /* --------------------------------- Section --------------------------------- */
 
 const GUARANTEE_OPTIONS = [
-  { value: 'default', label: 'Default' },
-  { value: 'relaxed', label: 'Relaxed' },
-  { value: 'strict', label: 'Strict' },
+  { value: "default", label: "Default" },
+  { value: "relaxed", label: "Relaxed" },
+  { value: "strict", label: "Strict" },
 ]
 
 const FINE_KEYS = [
-  'vividness',
-  'hueShift',
-  'grayTintAmount',
-  'preserveSeed',
-  'guarantees',
-  'borderContrast',
+  "vividness",
+  "hueShift",
+  "grayTintAmount",
+  "preserveSeed",
+  "guarantees",
+  "borderContrast",
 ] as const
 
 const SEMANTIC_SEEDS = [
-  { key: 'successSeed', palette: 'success', label: 'Success' },
-  { key: 'warningSeed', palette: 'warning', label: 'Warning' },
-  { key: 'dangerSeed', palette: 'danger', label: 'Danger' },
-  { key: 'infoSeed', palette: 'info', label: 'Info' },
+  { key: "successSeed", palette: "success", label: "Success" },
+  { key: "warningSeed", palette: "warning", label: "Warning" },
+  { key: "dangerSeed", palette: "danger", label: "Danger" },
+  { key: "infoSeed", palette: "info", label: "Info" },
 ] as const
 
 const BORDER_JOBS = [
-  { key: 'border400', job: '400', label: 'Border · subtle', maxValue: 3 },
-  { key: 'border500', job: '500', label: 'Border · interactive', maxValue: 4 },
-  { key: 'border600', job: '600', label: 'Border · emphasized', maxValue: 8 },
+  { key: "border400", job: "400", label: "Border · subtle", maxValue: 3 },
+  { key: "border500", job: "500", label: "Border · interactive", maxValue: 4 },
+  { key: "border600", job: "600", label: "Border · emphasized", maxValue: 8 },
 ] as const
 
 export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
@@ -718,20 +718,20 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
   if (!active || !theme) return null
   const m = theme[active.polarity]
 
-  const solid = (palette: string) => m.scales[palette]?.['700'] ?? m.background
+  const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
   const selectionDerived =
-    m.scales.selection?.['700'] ??
-    (state.primary === 'accent' ? solid('accent') : solid('neutral'))
+    m.scales.selection?.["700"] ??
+    (state.primary === "accent" ? solid("accent") : solid("neutral"))
 
   const semanticModified =
-    SEMANTIC_SEEDS.some(({ key }) => state[key] !== '') ||
-    state.selectionSeed !== ''
+    SEMANTIC_SEEDS.some(({ key }) => state[key] !== "") ||
+    state.selectionSeed !== ""
   const fineModified = FINE_KEYS.some((key) => state[key] !== DEFAULTS[key])
 
-  const setModes = set('modes')
+  const setModes = set("modes")
   const updateMode = (next: LabMode) =>
     setModes(modes.map((mode) => (mode.id === next.id ? next : mode)))
-  const addMode = (archetype: Omit<LabMode, 'id'>) => {
+  const addMode = (archetype: Omit<LabMode, "id">) => {
     const mode = instantiate(archetype, modes)
     setModes([...modes, mode])
     setActiveId(mode.id)
@@ -739,12 +739,12 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
   const removeMode = (id: string) => {
     const rest = modes.filter((mode) => mode.id !== id)
     setModes(rest)
-    if (state.defaultMode === id && rest[0]) set('defaultMode')(rest[0].id)
+    if (state.defaultMode === id && rest[0]) set("defaultMode")(rest[0].id)
     if (activeId === id) setActiveId(null)
   }
 
   const setBorderContrast = (on: boolean) => {
-    set('borderContrast')(on)
+    set("borderContrast")(on)
     for (const { key, job } of BORDER_JOBS) set(key)(on ? borderSeeds[job] : 0)
   }
 
@@ -761,19 +761,19 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
         <ColorPickerRow
           label="Brand"
           value={state.brand}
-          onChange={set('brand')}
+          onChange={set("brand")}
         />
         <AutoColorRow
           label="Gray"
           value={state.graySeed}
-          derived={m.scales.neutral?.['500'] ?? m.background}
-          onChange={set('graySeed')}
-          onReset={() => set('graySeed')('')}
+          derived={m.scales.neutral?.["500"] ?? m.background}
+          onChange={set("graySeed")}
+          onReset={() => set("graySeed")("")}
         />
         <SegmentedControlRow
           label="Primary"
           value={state.primary}
-          onChange={set('primary')}
+          onChange={set("primary")}
           options={PRIMARY_OPTIONS}
         />
       </ControlGroup>
@@ -789,7 +789,7 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
               <span className={ROW_VALUE}>{modes.length} modes</span>
             ) : (
               <span className={ROW_VALUE}>
-                {modes.map((mode) => mode.name).join(' · ')}
+                {modes.map((mode) => mode.name).join(" · ")}
               </span>
             )}
             <SwatchDots colors={modes.map(modeBgCss)} />
@@ -803,7 +803,7 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
             isDefault={state.defaultMode === mode.id}
             removable={modes.length > 1}
             onChange={updateMode}
-            onMakeDefault={() => set('defaultMode')(mode.id)}
+            onMakeDefault={() => set("defaultMode")(mode.id)}
             onRemove={() => removeMode(mode.id)}
           />
         ))}
@@ -827,25 +827,25 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
             value={state[key]}
             derived={solid(palette)}
             onChange={set(key)}
-            onReset={() => set(key)('')}
+            onReset={() => set(key)("")}
           />
         ))}
         <MiniAutoColorRow
           label="Selection"
           value={state.selectionSeed}
           derived={selectionDerived}
-          onChange={set('selectionSeed')}
-          onReset={() => set('selectionSeed')('')}
+          onChange={set("selectionSeed")}
+          onReset={() => set("selectionSeed")("")}
         />
       </DetailRow>
       <DetailRow
         label="Fine-tune"
-        summary={fineModified ? 'Custom' : 'Default'}
+        summary={fineModified ? "Custom" : "Default"}
       >
         <MiniSliderRow
           label="Vividness"
           value={state.vividness}
-          onChange={set('vividness')}
+          onChange={set("vividness")}
           minValue={0}
           maxValue={2}
           step={0.05}
@@ -854,7 +854,7 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
         <MiniSliderRow
           label="Hue shift"
           value={state.hueShift}
-          onChange={set('hueShift')}
+          onChange={set("hueShift")}
           minValue={0}
           maxValue={3}
           step={0.1}
@@ -863,17 +863,17 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
         <MiniSliderRow
           label="Gray tint"
           value={state.grayTintAmount}
-          onChange={set('grayTintAmount')}
+          onChange={set("grayTintAmount")}
           minValue={0}
           maxValue={4}
           step={0.1}
-          format={(v) => (v === 0 ? 'Pure' : `${v.toFixed(1)}×`)}
+          format={(v) => (v === 0 ? "Pure" : `${v.toFixed(1)}×`)}
         />
         <ParamRow label="Guarantees">
           <MiniSegmented
             ariaLabel="Contrast guarantees"
             value={state.guarantees}
-            onChange={set('guarantees')}
+            onChange={set("guarantees")}
             options={GUARANTEE_OPTIONS}
           />
         </ParamRow>
@@ -881,7 +881,7 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
           <MiniSwitch
             ariaLabel="Pin exact brand color"
             value={state.preserveSeed}
-            onChange={set('preserveSeed')}
+            onChange={set("preserveSeed")}
           />
         </ParamRow>
         <ParamRow label="Custom borders">

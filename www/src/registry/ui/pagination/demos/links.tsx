@@ -6,7 +6,7 @@ import {
   PaginationList,
   PaginationNext,
   PaginationPrevious,
-} from '@/registry/ui/pagination'
+} from "@/registry/ui/pagination"
 
 export default function Demo() {
   return (

@@ -1,24 +1,24 @@
-'use client'
+"use client"
 
 import {
   CalculatorIcon,
   CalendarIcon,
   SearchIcon,
   SmileIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
-import { Card } from '@/registry/ui/card'
-import { Command } from '@/registry/ui/command'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { Card } from "@/registry/ui/card"
+import { Command } from "@/registry/ui/command"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { SearchField } from '@/registry/ui/search-field'
+} from "@/registry/ui/list-box"
+import { SearchField } from "@/registry/ui/search-field"
 
-export default function Demo({ placeholder = 'Type a command...' } = {}) {
+export default function Demo({ placeholder = "Type a command..." } = {}) {
   return (
     <Card className="w-[300px] p-0">
       <Command aria-label="Command menu">
@@ -32,7 +32,7 @@ export default function Demo({ placeholder = 'Type a command...' } = {}) {
         </SearchField>
         <ListBox
           aria-label="Suggestions"
-          onAction={() => console.log('action')}
+          onAction={() => console.log("action")}
         >
           <ListBoxSection>
             <ListBoxSectionHeader>Suggestions</ListBoxSectionHeader>
