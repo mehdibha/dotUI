@@ -96,21 +96,25 @@ export async function buildPublishables({
 async function renderStyleVarDefaults(registryDir: string): Promise<string> {
   const uiDir = path.join(registryDir, 'ui')
   const defaults: Record<string, string> = {}
-  const dirs = (await fs.readdir(uiDir, { withFileTypes: true }))
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .sort()
-  for (const dir of dirs) {
-    const stylesCssPath = path.join(uiDir, dir, 'styles.css')
-    if (!existsSync(stylesCssPath)) continue
-    const fields = cssToRegistryFields(await fs.readFile(stylesCssPath, 'utf8'))
+  const collectRootVars = async (cssPath: string) => {
+    if (!existsSync(cssPath)) return
+    const fields = cssToRegistryFields(await fs.readFile(cssPath, 'utf8'))
     const root = fields.css?.[':root']
-    if (typeof root !== 'object' || root === null) continue
+    if (typeof root !== 'object' || root === null) return
     for (const [prop, value] of Object.entries(root)) {
       if (prop.startsWith('--') && typeof value === 'string') {
         defaults[prop] = value
       }
     }
+  }
+  // Radius roles — the chain hop between component vars and ladder rungs.
+  await collectRootVars(path.join(registryDir, 'roles.css'))
+  const dirs = (await fs.readdir(uiDir, { withFileTypes: true }))
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort()
+  for (const dir of dirs) {
+    await collectRootVars(path.join(uiDir, dir, 'styles.css'))
   }
 
   const sorted = Object.fromEntries(
