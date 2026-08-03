@@ -88,6 +88,7 @@
 	--color-fg-on-neutral: var(--neutral-950);
 	--color-border: var(--neutral-400);
 	--color-border-muted: var(--neutral-200);
+	--color-border-elevated: var(--neutral-a200);
 	--color-border-hover: var(--neutral-500);
 	--color-border-active: var(--neutral-600);
 	--color-border-field: var(--neutral-500);
@@ -106,6 +107,7 @@
 }
 
 .dark {
+	--color-border-elevated: var(--neutral-a100);
 	--color-popover: color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100));
 }
 /* END AUTO-GENERATED */
