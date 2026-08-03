@@ -73,11 +73,15 @@ Use `defaultValue` for uncontrolled checkbox groups, or `value` and `onChange` f
 ```
 
 ```tsx
-const [frameworks, setFrameworks] = useState<string[]>(['nextjs'])
+function Example() {
+  const [frameworks, setFrameworks] = useState<string[]>(['nextjs'])
 
-;<CheckboxGroup value={frameworks} onChange={setFrameworks}>
-  {/* ... */}
-</CheckboxGroup>
+  return (
+    <CheckboxGroup value={frameworks} onChange={setFrameworks}>
+      {/* ... */}
+    </CheckboxGroup>
+  )
+}
 ```
 
 ## Validation
@@ -87,7 +91,10 @@ Set `isRequired` to require a selection, or drive `isInvalid` yourself. Render e
 ```tsx
 import { CheckboxGroup } from '@/ui/checkbox-group'
 import { FieldError, FieldGroup, Label } from '@/ui/field'
-;<CheckboxGroup isRequired>
+```
+
+```tsx
+<CheckboxGroup isRequired>
   <Label>React frameworks</Label>
   <FieldGroup>{/* ... */}</FieldGroup>
   <FieldError>Please select a framework.</FieldError>
