@@ -3,7 +3,7 @@ title: Token Field
 description: Token field lets users enter text with inline tokens such as mentions, tags, or object references.
 links:
   - label: Docs
-    href: https://github.com/adobe/react-spectrum/pull/10318
+    href: https://react-aria.adobe.com/TokenField
 wip: true
 ---
 
@@ -31,7 +31,7 @@ npx shadcn@latest add @dotui/token-field
 
 ## About
 
-`TokenField` is built on the TokenField primitive from React Aria's upcoming release ([adobe/react-spectrum#10318](https://github.com/adobe/react-spectrum/pull/10318)), vendored until it ships in `react-aria-components`. The primitive handles content-editable editing, IME composition, undo/redo, token-aware clipboard and drag behaviour, and screen-reader announcements.
+`TokenField` is built on the [TokenField](https://react-aria.adobe.com/TokenField) primitive from `react-aria-components`. The primitive handles content-editable editing, IME composition, undo/redo, token-aware clipboard and drag behaviour, and screen-reader announcements.
 
 ## Usage
 
@@ -68,12 +68,14 @@ import { TokenField, TokenInput } from '@/ui/token-field'
 
 ## Value
 
-The value is a `TokenSegmentList` — a list of plain-text and token segments. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it; `toString()` joins the segments back into plain text.
+The value is a `TokenFieldValue` — a list of plain-text and token segments, imported from `react-aria-components`. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it; `toString()` joins the segments back into plain text.
 
 ```tsx
+import { TokenFieldValue } from 'react-aria-components'
+
 const [value, setValue] = React.useState(
   () =>
-    new TokenSegmentList([
+    new TokenFieldValue([
       { type: 'text', text: 'Hello ' },
       { type: 'token', text: '@sarahjones' },
     ]),
@@ -86,10 +88,10 @@ const [value, setValue] = React.useState(
 
 ## Tokenization
 
-Subclass `TokenSegmentList` and override `tokenize` to convert typed text into tokens automatically — for hashtags, tag inputs, or structured search filters. `tokenize` receives the text of an edited region and returns the segments it should become.
+Subclass `TokenFieldValue` and override `tokenize` to convert typed text into tokens automatically — for hashtags, tag inputs, or structured search filters. `tokenize` receives the text of an edited region and returns the segments it should become.
 
 ```tsx
-class TagSegmentList extends TokenSegmentList {
+class TagFieldValue extends TokenFieldValue {
   protected tokenize(text: string): TokenFieldSegment[] {
     // split on commas/spaces and return text + token segments
   }

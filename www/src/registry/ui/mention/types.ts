@@ -11,7 +11,7 @@ import type { TokenFieldProps } from '@/registry/ui/token-field'
  * `Mention` wires the behaviour onto the [TokenField](/docs/components/token-field)
  * component — a `TokenInput` for the editable area, a `Popover` +
  * `Menu`/`MenuItem` for the suggestions — by injecting their props through
- * context. The value is a `TokenSegmentList` of text and token segments.
+ * context. The value is a `TokenFieldValue` of text and token segments.
  */
 export interface MentionProps extends Omit<
   TokenFieldProps,

@@ -1,18 +1,16 @@
 'use client'
 
+import { TokenFieldValue } from 'react-aria-components/TokenField'
+
 import { Label } from '@/registry/ui/field'
-import {
-  TokenField,
-  TokenInput,
-  TokenSegmentList,
-} from '@/registry/ui/token-field'
+import { TokenField, TokenInput } from '@/registry/ui/token-field'
 
 export default function Demo() {
   return (
     <TokenField
       allowsNewlines
       defaultValue={
-        new TokenSegmentList([
+        new TokenFieldValue([
           { type: 'text', text: 'Ping ' },
           { type: 'token', text: '@alexmiller' },
           { type: 'text', text: ' about the ' },

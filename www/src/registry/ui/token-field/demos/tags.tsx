@@ -1,12 +1,13 @@
 'use client'
 
-import { TokenSegmentList } from '@/registry/lib/react-aria-token-field'
-import type { TokenFieldSegment } from '@/registry/lib/react-aria-token-field'
+import { TokenFieldValue } from 'react-aria-components/TokenField'
+import type { TokenFieldSegment } from 'react-aria-components/TokenField'
+
 import { Label } from '@/registry/ui/field'
 import { TokenField, TokenInput } from '@/registry/ui/token-field'
 
 // A tag input: comma, space, or newline turns the preceding text into a tag.
-class TagSegmentList extends TokenSegmentList {
+class TagFieldValue extends TokenFieldValue {
   protected tokenize(text: string): TokenFieldSegment[] {
     const parts = text.split(/[, \n]/)
     const segments: TokenFieldSegment[] = parts.map((part, i) => {
@@ -28,7 +29,7 @@ export default function Demo() {
   return (
     <TokenField
       defaultValue={
-        new TagSegmentList([
+        new TagFieldValue([
           { type: 'token', text: 'Design' },
           { type: 'token', text: 'Engineering' },
           { type: 'token', text: 'Marketing' },

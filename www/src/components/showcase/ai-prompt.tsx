@@ -2,6 +2,7 @@
 
 import React from 'react'
 import type { Selection } from 'react-aria-components'
+import { TokenFieldValue } from 'react-aria-components/TokenField'
 
 import {
   AudioLinesIcon,
@@ -41,7 +42,7 @@ import {
 import { Popover } from '@/registry/ui/popover'
 import { Separator } from '@/registry/ui/separator'
 import { Switch, SwitchControl } from '@/registry/ui/switch'
-import { TokenInput, TokenSegmentList } from '@/registry/ui/token-field'
+import { TokenInput } from '@/registry/ui/token-field'
 
 // Models offered by the model picker. The first four fill the menu; `legacy`
 // ones live behind the "More models" submenu. `name` is what the toolbar shows.
@@ -118,7 +119,7 @@ const COMMANDS: Suggestion[] = [
 
 // The prompt the card starts with: a `/goal` command plus `@`-mentioned files,
 // all rendered as inline tokens.
-const DEFAULT_PROMPT = new TokenSegmentList([
+const DEFAULT_PROMPT = new TokenFieldValue([
   { type: 'token', text: '/goal' },
   { type: 'text', text: ' Ship dark mode — generate the neutral scale in ' },
   { type: 'token', text: '@theme.css' },

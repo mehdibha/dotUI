@@ -1,18 +1,16 @@
 'use client'
 
 import * as React from 'react'
-
 import {
   Token as TokenPrimitive,
   TokenField as TokenFieldPrimitive,
   TokenInput as TokenInputPrimitive,
-  TokenSegmentList,
-} from '@/registry/lib/react-aria-token-field'
+} from 'react-aria-components/TokenField'
 import type {
   TokenFieldProps as TokenFieldPrimitiveProps,
   TokenInputProps as TokenInputPrimitiveProps,
   TokenProps as TokenPrimitiveProps,
-} from '@/registry/lib/react-aria-token-field'
+} from 'react-aria-components/TokenField'
 
 import { useStyles } from './styles'
 
@@ -93,4 +91,4 @@ function Token({ className, ...props }: TokenProps) {
 // MARK: exports
 
 export type { TokenFieldProps, TokenInputProps, TokenProps }
-export { Token, TokenField, TokenInput, TokenSegmentList }
+export { Token, TokenField, TokenInput }

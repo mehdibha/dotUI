@@ -229,6 +229,25 @@
       },
       "description": "The currently expanded keys in the collection (controlled)."
     },
+    "keyboardNavigationBehavior": {
+      "type": "\"arrow\" | \"tab\"",
+      "detailedType": "'arrow' | 'tab' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "arrow"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tab"
+          }
+        ]
+      },
+      "description": "Whether keyboard navigation to focusable elements within the cells is\nvia the left/right arrow keys or the tab key.",
+      "default": "'arrow'"
+    },
     "onExpandedChange": {
       "type": "((keys: Set<Key>) => any)",
       "detailedType": "((keys: Set<Key>) => any) | undefined",
