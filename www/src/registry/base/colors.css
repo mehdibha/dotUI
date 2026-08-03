@@ -2,7 +2,7 @@
 /* Primitive ramps generated from DEFAULT_COLOR_CONFIG (see @/registry/theme). */
 
 :root {
-	--radius-factor: 1;
+	--radius: 0.625rem;
 
 	--neutral-25: oklch(0.9921 0.0021 251.06);
 	--neutral-50: oklch(0.9829 0.003 251.06);

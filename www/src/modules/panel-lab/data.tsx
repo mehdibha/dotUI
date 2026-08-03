@@ -54,6 +54,109 @@ export const DENSITY_OPTIONS = [
   { value: 'comfortable', label: 'Cozy' },
 ]
 
+// CSS corner-shape values (progressive enhancement; unsupported → round).
+export const CORNER_SHAPE_OPTIONS = [
+  { value: 'round', label: 'Round' },
+  { value: 'squircle', label: 'Squircle' },
+  { value: 'bevel', label: 'Bevel' },
+]
+
+/* Shape roles — the second radius lever. The shadcn-styles study (Aug 2026)
+   showed a style's shape identity is a role→rung vector over stable component
+   groups; the base --radius only scales it. Rung ratios = the #575 ladder. */
+export const SHAPE_RUNGS = [
+  { id: 'none', label: 'None', ratio: 0 },
+  { id: 'xs', label: 'xs', ratio: 0.25 },
+  { id: 'sm', label: 'sm', ratio: 0.5 },
+  { id: 'md', label: 'md', ratio: 0.75 },
+  { id: 'lg', label: 'lg', ratio: 1 },
+  { id: 'xl', label: 'xl', ratio: 1.5 },
+  { id: '2xl', label: '2xl', ratio: 2 },
+  { id: '3xl', label: '3xl', ratio: 3 },
+  { id: 'full', label: 'Pill', ratio: Infinity },
+]
+
+export const SHAPE_ROLES = [
+  { key: 'rolePanel', label: 'Panels', example: 'dialog · card' },
+  { key: 'roleSurface', label: 'Surfaces', example: 'popover · menu' },
+  { key: 'roleControl', label: 'Controls', example: 'button · input' },
+  { key: 'roleItem', label: 'Items', example: 'menu item' },
+] as const
+
+export type ShapeRoleKey = (typeof SHAPE_ROLES)[number]['key']
+
+/* Curated role vectors — the 80% path. Each maps to a family from the study
+   (at a 10px base): Square ≈ lyra/sera, Crisp ≈ mira/vega, Standard = dotUI
+   today (nova puts controls one rung up), Soft ≈ rhea, Round ≈ luma/maia.
+   Items default to 'auto' = one rung below Surfaces — true of every rounded
+   shadcn style without exception. */
+export const SHAPE_CHARACTERS: Array<{
+  id: string
+  label: string
+  vector: Record<ShapeRoleKey, string>
+}> = [
+  {
+    id: 'square',
+    label: 'Square',
+    vector: {
+      roleControl: 'none',
+      roleItem: 'none',
+      roleSurface: 'none',
+      rolePanel: 'none',
+    },
+  },
+  {
+    id: 'crisp',
+    label: 'Crisp',
+    vector: {
+      roleControl: 'md',
+      roleItem: 'auto',
+      roleSurface: 'md',
+      rolePanel: 'xl',
+    },
+  },
+  {
+    id: 'standard',
+    label: 'Standard',
+    vector: {
+      roleControl: 'md',
+      roleItem: 'auto',
+      roleSurface: 'lg',
+      rolePanel: 'xl',
+    },
+  },
+  {
+    id: 'soft',
+    label: 'Soft',
+    vector: {
+      roleControl: '2xl',
+      roleItem: 'auto',
+      roleSurface: '2xl',
+      rolePanel: '2xl',
+    },
+  },
+  {
+    id: 'round',
+    label: 'Round',
+    vector: {
+      roleControl: '3xl',
+      roleItem: 'auto',
+      roleSurface: '3xl',
+      rolePanel: '3xl',
+    },
+  },
+  {
+    id: 'pill',
+    label: 'Pill',
+    vector: {
+      roleControl: 'full',
+      roleItem: 'auto',
+      roleSurface: 'lg',
+      rolePanel: 'xl',
+    },
+  },
+]
+
 export const CURSOR_OPTIONS = [
   'default',
   'pointer',
@@ -323,6 +426,14 @@ export const DEFAULTS = {
   iconWeight: 'regular',
   // Shape
   radius: 1,
+  // v2: the #575 model — radius is a length (the base, = a card's radius) —
+  // plus the role vector from the shadcn study (Standard = dotUI today).
+  radiusPx: 10,
+  cornerShape: 'round',
+  roleControl: 'md',
+  roleItem: 'auto',
+  roleSurface: 'lg',
+  rolePanel: 'xl',
   density: 'default',
   // Effects
   shadows: 'soft',
@@ -412,6 +523,15 @@ export const ICON_KEYS: (keyof LabState)[] = [
   'iconWeight',
 ]
 export const SHAPE_KEYS: (keyof LabState)[] = ['radius', 'density']
+export const SHAPE_KEYS_V2: (keyof LabState)[] = [
+  'radiusPx',
+  'cornerShape',
+  'roleControl',
+  'roleItem',
+  'roleSurface',
+  'rolePanel',
+]
+export const SPACE_KEYS_V2: (keyof LabState)[] = ['density']
 export const EFFECT_KEYS: (keyof LabState)[] = [
   'shadows',
   'cursorInteractive',

@@ -15,6 +15,7 @@ import {
   ShapesIcon,
   SlidersHorizontalIcon,
   SmileIcon,
+  StretchVerticalIcon,
   TypeIcon,
 } from 'lucide-react'
 
@@ -26,6 +27,8 @@ import {
   EFFECT_KEYS,
   ICON_KEYS,
   SHAPE_KEYS,
+  SHAPE_KEYS_V2,
+  SPACE_KEYS_V2,
   TYPE_KEYS,
   WORKING_COLOR_KEYS,
 } from './data'
@@ -34,6 +37,8 @@ import {
   EffectsSectionBody,
   IconsSectionBody,
   ShapeSectionBody,
+  ShapeSectionBodyV2,
+  SpaceSectionBody,
   TypographySectionBody,
 } from './sections'
 import type { Chapter } from './variants/chapter'
@@ -106,7 +111,7 @@ export const PANEL_VERSIONS: PanelVersion[] = [
     id: 'v2',
     label: 'v2 (wip)',
     summary:
-      'Color modes become a user-defined set — one to many, with archetypes and per-mode contrast.',
+      'Color modes become a user-defined set — one to many, with archetypes and per-mode contrast. Shape and Space split; radius speaks px (#575) with a nested-corner preview and a corner-shape axis.',
     chapters: [
       {
         id: 'color',
@@ -115,7 +120,26 @@ export const PANEL_VERSIONS: PanelVersion[] = [
         keys: WORKING_COLOR_KEYS,
         Body: WorkingColorSectionBody,
       },
-      ...SHARED_CHAPTERS,
+      ...SHARED_CHAPTERS.flatMap((chapter) =>
+        chapter.id === 'shape'
+          ? [
+              {
+                id: 'shape',
+                label: 'Shape',
+                icon: ShapesIcon,
+                keys: SHAPE_KEYS_V2,
+                Body: ShapeSectionBodyV2,
+              },
+              {
+                id: 'space',
+                label: 'Space',
+                icon: StretchVerticalIcon,
+                keys: SPACE_KEYS_V2,
+                Body: SpaceSectionBody,
+              },
+            ]
+          : [chapter],
+      ),
     ],
   },
 ]

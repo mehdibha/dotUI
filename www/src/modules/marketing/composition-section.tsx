@@ -77,8 +77,7 @@ export function CompositionSection() {
   }
 
   return (
-    // Width mirrors the cards strip: 1500px grid + 8rem rail gutters.
-    <section className="mx-auto w-full max-w-[calc(1500px+16rem)] px-4 sm:px-6 lg:px-32">
+    <section>
       <CompositionTransitionStyles />
       <StepTimer player={player} />
       <div

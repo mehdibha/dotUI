@@ -1,2 +1,3 @@
-export const RADIUS_FACTOR_VAR = '--radius-factor'
-export const DEFAULT_RADIUS_FACTOR = '1'
+export const RADIUS_VAR = '--radius'
+/** Base radius length (= --radius-lg); the whole ladder derives from it. */
+export const DEFAULT_RADIUS = '0.625rem'

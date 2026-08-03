@@ -61,7 +61,7 @@ export interface EmitPrimitivesOptions {
    * Selector for the light-mode block (default `:root`). Pass a subtree
    * selector (e.g. `[data-dotui-scope="x"]`) to override the primitives on a
    * scope rather than globally. The default `:root` also carries the
-   * `base/colors.css` banner + `--radius-factor: 1` reset; a custom selector
+   * `base/colors.css` banner + `--radius: 0.625rem` base; a custom selector
    * omits both.
    */
   lightSelector?: string
@@ -134,7 +134,7 @@ export function emitPrimitivesCss(
     })
   }
   out.push(`${lightSelector} {`)
-  if (isRoot) out.push('\t--radius-factor: 1;', '')
+  if (isRoot) out.push('\t--radius: 0.625rem;', '')
   emitModeBlock(out, theme.light, names, alphas)
   if (charts) emitCharts(theme.charts.light)
   out.push('}', '', `${darkSelector} {`)
