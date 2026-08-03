@@ -69,7 +69,7 @@ export const CURSOR_OPTIONS = [
 function ShadowTile({ boxShadow }: { boxShadow?: string }) {
   return (
     <span
-      className="h-9 w-14 rounded-md bg-highlight"
+      className="h-9 w-full max-w-14 rounded-md bg-highlight"
       style={boxShadow ? { boxShadow } : undefined}
     />
   )
@@ -94,11 +94,13 @@ export const SHADOW_OPTIONS: OptionGridItem[] = [
   },
 ]
 
-/* Mini specimens for the component style grids. */
+/* Mini specimens for the component style grids — the real components at
+   their default size (density default, size md), as spans: a button can't
+   nest in the card's toggle button. */
 function MiniButton({ className }: { className: string }) {
   return (
     <span
-      className={`flex h-7 items-center rounded-full px-3.5 text-xs font-medium ${className}`}
+      className={`flex h-8 items-center rounded-(--btn-radius) px-2.5 text-sm font-medium ${className}`}
     >
       Button
     </span>
@@ -108,7 +110,7 @@ function MiniButton({ className }: { className: string }) {
 function MiniInput({ className }: { className: string }) {
   return (
     <span
-      className={`flex h-7 w-24 items-center px-2.5 text-xs text-fg-muted ${className}`}
+      className={`flex h-8 w-full min-w-0 items-center px-2.5 text-sm text-fg-muted ${className}`}
     >
       Value
     </span>
@@ -139,7 +141,9 @@ export const INPUT_STYLES: OptionGridItem[] = [
   {
     id: 'outline',
     label: 'Outline',
-    preview: <MiniInput className="rounded-lg border border-border-field" />,
+    preview: (
+      <MiniInput className="rounded-(--input-radius) border border-border-field bg-field" />
+    ),
   },
   {
     id: 'line',
@@ -150,13 +154,13 @@ export const INPUT_STYLES: OptionGridItem[] = [
     id: 'filled-line-bottom',
     label: 'Filled line',
     preview: (
-      <MiniInput className="rounded-t-lg border-b border-border-field bg-neutral" />
+      <MiniInput className="rounded-t-(--input-radius) border-b border-border-field bg-neutral" />
     ),
   },
   {
     id: 'filled',
     label: 'Filled',
-    preview: <MiniInput className="rounded-lg bg-neutral" />,
+    preview: <MiniInput className="rounded-(--input-radius) bg-neutral" />,
   },
 ]
 

@@ -57,10 +57,13 @@ import type { NeutralValue, SegmentedRowOption, OptionGridItem } from './rows'
 
 /* ------------------------------ Mini specimens ----------------------------- */
 
+/* Specimens mirror the real components at their default size (density
+   default, size md) — spans, not real controls: a button can't nest in the
+   card's toggle button. */
 function MiniButton({ className }: { className: string }) {
   return (
     <span
-      className={`flex h-7 items-center rounded-full px-3.5 text-xs font-medium ${className}`}
+      className={`flex h-8 items-center rounded-(--btn-radius) px-2.5 text-sm font-medium ${className}`}
     >
       Button
     </span>
@@ -70,7 +73,7 @@ function MiniButton({ className }: { className: string }) {
 function MiniInput({ className }: { className: string }) {
   return (
     <span
-      className={`flex h-7 w-24 items-center px-2.5 text-xs text-fg-muted ${className}`}
+      className={`flex h-8 w-full min-w-0 items-center px-2.5 text-sm text-fg-muted ${className}`}
     >
       Value
     </span>
@@ -100,7 +103,9 @@ const INPUT_STYLES: OptionGridItem[] = [
   {
     id: 'outline',
     label: 'Outline',
-    preview: <MiniInput className="rounded-lg border border-border-field" />,
+    preview: (
+      <MiniInput className="rounded-(--input-radius) border border-border-field bg-field" />
+    ),
   },
   {
     id: 'line',
@@ -110,13 +115,13 @@ const INPUT_STYLES: OptionGridItem[] = [
   {
     id: 'filled',
     label: 'Filled',
-    preview: <MiniInput className="rounded-lg bg-neutral" />,
+    preview: <MiniInput className="rounded-(--input-radius) bg-neutral" />,
   },
   {
     id: 'filled-line',
     label: 'Filled line',
     preview: (
-      <MiniInput className="rounded-t-lg border-b border-border-field bg-neutral" />
+      <MiniInput className="rounded-t-(--input-radius) border-b border-border-field bg-neutral" />
     ),
   },
 ]
@@ -402,10 +407,10 @@ function OptionGridDemo({
   columns: number
   described?: boolean
 }) {
-  const [value, setValue] = useState(columns === 4 ? 'solid' : 'outline')
+  const [value, setValue] = useState(columns === 1 ? 'outline' : 'solid')
   return (
     <OptionGridRow
-      label={columns === 4 ? 'Button' : 'Input'}
+      label={columns === 1 ? 'Input' : 'Button'}
       description={
         described
           ? 'Pick by look: each card renders the style itself.'
@@ -413,7 +418,7 @@ function OptionGridDemo({
       }
       value={value}
       onChange={setValue}
-      options={columns === 4 ? BUTTON_STYLES : INPUT_STYLES}
+      options={columns === 1 ? INPUT_STYLES : BUTTON_STYLES}
       columns={columns}
     />
   )
@@ -444,7 +449,7 @@ function ComponentRowDemo({
         value={style}
         onChange={setStyle}
         options={BUTTON_STYLES}
-        columns={4}
+        columns={2}
         defaultExpanded={withParams}
       >
         {withParams && (
@@ -668,11 +673,11 @@ const GROUPS: Group[] = [
         description:
           'A row whose body is a grid of selectable cards, each rendering its option as a mini specimen — pick by look, not by name. Nothing style-specific about it: shadows, densities and loaders use the same grid.',
         variants: [
+          { label: '1 column', render: <OptionGridDemo columns={1} /> },
           { label: '2 columns', render: <OptionGridDemo columns={2} /> },
-          { label: '4 columns', render: <OptionGridDemo columns={4} /> },
           {
             label: 'With description',
-            render: <OptionGridDemo columns={4} described />,
+            render: <OptionGridDemo columns={2} described />,
           },
         ],
       },

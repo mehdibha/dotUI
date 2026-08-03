@@ -984,9 +984,12 @@ function OptionGrid({
           key={option.id}
           id={option.id}
           aria-label={option.label}
-          className="flex h-14 cursor-interactive items-center justify-center rounded-lg bg-bg/50 focus-reset transition-[background-color,transform] hover:bg-bg/75 focus-visible:focus-ring motion-safe:pressed:scale-[0.97] selected:bg-bg selected:inset-ring-2 selected:inset-ring-accent"
+          className="relative isolate flex min-w-0 cursor-interactive items-center justify-center rounded-lg bg-bg/50 p-4 focus-reset transition-[background-color,transform] hover:bg-bg/75 focus-visible:focus-ring motion-safe:pressed:scale-[0.98]"
         >
-          {option.preview}
+          <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-lg bg-bg inset-ring inset-ring-accent duration-200 ease-out motion-safe:transition-[translate,width,height]" />
+          <span className="relative z-10 flex w-full min-w-0 items-center justify-center">
+            {option.preview}
+          </span>
         </RacToggleButton>
       ))}
     </RacToggleButtonGroup>
@@ -1018,7 +1021,7 @@ export function OptionGridRow({
       <div
         className={cn(
           'flex h-8 items-center justify-between gap-3 px-2',
-          description && 'h-auto py-1.5',
+          description && 'h-auto pt-1.5 pb-2',
         )}
       >
         <RowLabel label={label} description={description} />
