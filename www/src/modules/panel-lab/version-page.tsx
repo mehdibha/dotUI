@@ -55,6 +55,7 @@ export function PanelDraftPage({ draft }: { draft: Draft }) {
   const base = PANEL_VERSIONS[PANEL_VERSIONS.length - 1]
   if (!base) return null
   const chapters = draftChapters(base.chapters, draft)
+  const Frame = draft.Frame ?? PanelFrame
 
   return (
     <InternalShell
@@ -79,11 +80,14 @@ export function PanelDraftPage({ draft }: { draft: Draft }) {
       <div className="flex flex-col gap-3">
         <p className="max-w-lg text-xs/relaxed text-pretty text-fg-muted">
           An open draft, shown on top of{" "}
-          <span className="text-fg">{base.label}</span> — only the{" "}
-          {draft.section} section differs. Not merged; one of several takes.
+          <span className="text-fg">{base.label}</span> —{" "}
+          {draft.Frame
+            ? "only the frame differs; hover a control."
+            : `only the ${draft.section} section differs.`}{" "}
+          Not merged; one of several takes.
         </p>
         <div className="flex h-[720px] w-[360px] shrink-0 flex-col">
-          <PanelFrame chapters={chapters} lab={lab} />
+          <Frame chapters={chapters} lab={lab} />
         </div>
       </div>
     </InternalShell>
