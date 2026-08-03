@@ -368,32 +368,62 @@ const COLOR_PRESETS = [
 export function ColorPickerRow({
   label,
   description,
+  layout = 'row',
   value,
   onChange,
 }: {
   label: string
   description?: string
+  /** `tile` trades the row's width for height: the swatch becomes the face of
+   *  the control, big enough to judge the color rather than identify it. */
+  layout?: 'row' | 'tile'
   value: string
   onChange: (hex: string) => void
 }) {
+  const tile = layout === 'tile'
   return (
     <ColorPicker value={value} onChange={(c) => onChange(c.toString('hex'))}>
       {({ color }) => (
         <>
-          <Button
-            variant="quiet"
-            data-row=""
-            className={cn(ROW_TRIGGER, description && ROW_DESCRIBED)}
-          >
-            <RowLabel label={label} description={description} />
-            <span className="flex shrink-0 items-center gap-2.5">
-              <span className={cn(ROW_VALUE, 'font-mono uppercase')}>
-                {color.toString('hex')}
+          {tile ? (
+            <Button
+              variant="quiet"
+              className="flex h-auto w-full flex-col items-stretch gap-2 rounded-xl bg-muted p-2 text-left hover:bg-highlight pressed:bg-highlight"
+            >
+              <ColorSwatch className="h-14 w-full rounded-lg" />
+              <span className="flex flex-col gap-0.5 px-1 pb-0.5">
+                <span className={ROW_LABEL}>{label}</span>
+                <span className={cn(ROW_VALUE, 'font-mono text-xs uppercase')}>
+                  {color.toString('hex')}
+                </span>
+                {description && (
+                  <span className="text-xs/snug text-pretty text-fg-muted">
+                    {description}
+                  </span>
+                )}
               </span>
-              <ColorSwatch className="size-5 rounded-full" />
-            </span>
-          </Button>
-          <Popover placement="right top" className="w-64 min-w-0">
+            </Button>
+          ) : (
+            <Button
+              variant="quiet"
+              data-row=""
+              className={cn(ROW_TRIGGER, description && ROW_DESCRIBED)}
+            >
+              <RowLabel label={label} description={description} />
+              <span className="flex shrink-0 items-center gap-2.5">
+                <span className={cn(ROW_VALUE, 'font-mono uppercase')}>
+                  {color.toString('hex')}
+                </span>
+                <ColorSwatch className="size-5 rounded-full" />
+              </span>
+            </Button>
+          )}
+          <Popover
+            // A tile is as wide as the picker, so opening below it keeps the
+            // two edges aligned; a row has no width to align to.
+            placement={tile ? 'bottom start' : 'right top'}
+            className="w-64 min-w-0"
+          >
             <DialogContent className="flex flex-col gap-3 p-3">
               <ColorSwatchPicker className="justify-between gap-0">
                 {COLOR_PRESETS.map((preset) => (

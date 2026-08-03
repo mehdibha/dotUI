@@ -238,6 +238,27 @@ function ColorDemo({ described }: { described?: boolean }) {
   )
 }
 
+function ColorTilesDemo() {
+  const [brand, setBrand] = useState('#635BFF')
+  const [danger, setDanger] = useState('#E5484D')
+  return (
+    <div className="grid grid-cols-2 gap-2">
+      <ColorPickerRow
+        layout="tile"
+        label="Brand"
+        value={brand}
+        onChange={setBrand}
+      />
+      <ColorPickerRow
+        layout="tile"
+        label="Danger"
+        value={danger}
+        onChange={setDanger}
+      />
+    </div>
+  )
+}
+
 const DEMO_BRAND = '#635BFF'
 
 function NeutralDemo() {
@@ -627,6 +648,7 @@ const GROUPS: Group[] = [
           { label: 'Brand', render: <ColorDemo /> },
           { label: 'Neutral', render: <NeutralDemo /> },
           { label: 'With description', render: <ColorDemo described /> },
+          { label: 'Tiles, two up', render: <ColorTilesDemo /> },
         ],
       },
       {
