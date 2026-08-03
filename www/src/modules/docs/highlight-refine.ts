@@ -59,27 +59,12 @@ const PRIMITIVES = new Set([
   'void',
 ])
 
-// Globals shiki colors blue (support.*) in value position.
-const BUILTIN_GLOBALS = new Set([
-  'Promise',
-  'Array',
-  'Object',
-  'JSON',
-  'Math',
-  'Number',
-  'String',
-  'Boolean',
-  'Date',
-  'RegExp',
-  'Map',
-  'Set',
-  'Symbol',
-  'Reflect',
-  'Intl',
-])
+// Globals shiki colors blue in value position. Only `Promise` has a support
+// scope in the TS grammar — `Array`, `Object` etc. render plain.
+const BUILTIN_GLOBALS = new Set(['Promise'])
 
 const IDENT = /[A-Za-z_$][A-Za-z0-9_$]*/y
-const OPERATOR = /\.\.\.|=>|\|\||&&|===|!==|==|!=|\?\?|[|&!?:=]/y
+const OPERATOR = /\.\.\.|=>|\|\||&&|===|!==|==|!=|\?\?|>=|<=|[|&!?:=]/y
 
 type Ctx = {
   code: string
@@ -108,6 +93,13 @@ function wordEndingAt(code: string, i: number): string {
 /** Line up to `at` (for cheap statement-shape checks). */
 function lineBefore(code: string, at: number): string {
   return code.slice(code.lastIndexOf('\n', at - 1) + 1, at)
+}
+
+/** Inside an import clause (possibly multiline) — specifiers are values. */
+function inImportClause(code: string, at: number): boolean {
+  const from = code.lastIndexOf('import', at)
+  if (from === -1 || at - from > 500) return false
+  return !/[;=)]|\bfrom\s+['"]/.test(code.slice(from, at))
 }
 
 /**
@@ -177,11 +169,11 @@ function callsWithGenerics(code: string, at: number): boolean {
 }
 
 /**
- * Parameter or argument position (shiki paints both orange): inside `( … )`
- * or `({ … })` that either closes into `=>` (parameters) or opens after an
- * identifier (call arguments).
+ * Arrow-function parameter position (shiki's orange): inside `( … )` or
+ * `({ … })` whose closing paren is followed by `=>`. Call arguments stay
+ * plain — shiki only colors declarations.
  */
-function isParamOrArg(code: string, at: number): boolean {
+function isArrowParam(code: string, at: number): boolean {
   // Back to an opening `(` over parameter-list characters.
   let j = at - 1
   let brace = 0
@@ -200,9 +192,13 @@ function isParamOrArg(code: string, at: number): boolean {
     else if (!/[\w\s,.$'"[\]:?=>!/@#*%+-]/.test(ch)) return false
   }
   if (code[j] !== '(') return false
-  // Call arguments: `(` opened right after an identifier.
-  if (/[\w$]/.test(code[j - 1] ?? '')) return true
-  // Otherwise require `=>` after the matching `)` (arrow parameters).
+  // `function name(` / `load(` method heads take params; `if (`/`for (` and
+  // plain calls don't.
+  const headWord = /[A-Za-z]/.test(code[j - 1] ?? '')
+    ? wordEndingAt(code, j - 1)
+    : ''
+  if (/^(?:if|for|while|switch|catch|return)$/.test(headWord)) return false
+  // Require `=>` (arrow) or `{` (function/method body) after the matching `)`.
   let depth = 0
   for (let k = j; k < code.length && k - j < 600; k++) {
     const ch = code[k]!
@@ -216,11 +212,79 @@ function isParamOrArg(code: string, at: number): boolean {
           const arrow = code.indexOf('=>', m.i)
           return arrow !== -1 && arrow - m.i < 200
         }
-        return code.slice(m.i, m.i + 2) === '=>'
+        if (code.slice(m.i, m.i + 2) === '=>') return true
+        // A body brace right after: function declaration or object method —
+        // but only when the head is a named function, not a call result.
+        return m.ch === '{' && headWord !== ''
+          ? isFunctionHead(code, j - headWord.length)
+          : false
       }
     }
   }
   return false
+}
+
+/** `function name(` / `async name(` / `name(` as an object-method head. */
+function isFunctionHead(code: string, nameStart: number): boolean {
+  const before = prevNonWs(code, nameStart)
+  if (/[A-Za-z]/.test(before.ch)) {
+    const w = wordEndingAt(code, before.i)
+    if (w === 'function' || w === 'async' || w === 'get' || w === 'set')
+      return true
+  }
+  // Object-literal method shorthand: `{ load({ … }) { … } }`.
+  return before.ch === '{' || before.ch === ','
+}
+
+/** Nearest unmatched `(` or `{` opener before `at` (up to a `;`). */
+function nearestOpener(code: string, at: number): { ch: string; i: number } {
+  let paren = 0
+  let brace = 0
+  for (let j = at - 1; j >= 0 && at - j < 600; j--) {
+    const ch = code[j]!
+    if (ch === ')') paren++
+    else if (ch === '(') {
+      if (paren === 0) return { ch, i: j }
+      paren--
+    } else if (ch === '}') brace++
+    else if (ch === '{') {
+      if (brace === 0) return { ch, i: j }
+      brace--
+    } else if (ch === ';') break
+  }
+  return { ch: '', i: -1 }
+}
+
+/**
+ * `{` that opens a type literal: `type X = {`, `interface X {`, `key?: {`,
+ * or the `> {` line closing a multiline interface heritage clause. A bare
+ * `key: {` stays a value object — `chartConfig = { desktop: { … } }`.
+ */
+function isTypeLiteralOpener(code: string, at: number): boolean {
+  // `}: {` / `): {` — a destructured-parameter type annotation — also opens
+  // a type literal; a bare `key: {` after a word stays a value object.
+  return /(?:\btype\s+[\w$]+\s*=|\binterface\s+[\w$]+[^{]*|\?:|[})]\s*:|^\s*>)\s*$/.test(
+    lineBefore(code, at),
+  )
+}
+
+/**
+ * A `:` in annotation position — return type (`): T`), `const x: T`, or
+ * enclosed by a parameter list / type-literal brace. Object-literal values
+ * fail all of these.
+ */
+function annotationContext(code: string, at: number): boolean {
+  if (prevNonWs(code, at).ch === ')') return true
+  if (
+    /^\s*(?:export\s+)?(?:const|let|var)\s+[\w$]+\s*$/.test(
+      lineBefore(code, at),
+    )
+  ) {
+    return true
+  }
+  const opener = nearestOpener(code, at)
+  if (opener.ch === '(') return true
+  return opener.ch === '{' && isTypeLiteralOpener(code, opener.i)
 }
 
 /**
@@ -246,20 +310,6 @@ function inJsxTagAttrs(code: string, at: number): boolean {
   return false
 }
 
-/**
- * Key of an object literal passed directly to a call (`add({ months: 1 })`)
- * or written inline in a JSX expression (`value={{ start: … }}`) — shiki
- * paints these purple, unlike assignment-object keys.
- */
-function directObjectArgKey(code: string, at: number): boolean {
-  let j = at - 1
-  while (j >= 0 && at - j < 200 && /[\w\s,:$'"[\]().-]/.test(code[j]!)) j--
-  if (code[j] !== '{') return false
-  const open = prevNonWs(code, j)
-  if (open.ch === '(' && /[\w$]/.test(code[open.i - 1] ?? '')) return true
-  return open.ch === '{' && code[open.i - 1] === '='
-}
-
 function classifyIdentifier(
   id: string,
   s: number,
@@ -274,6 +324,16 @@ function classifyIdentifier(
   // A JSX open the tokenizer missed (multiline tags): `<a\n  href=…`.
   if (pnw.ch === '<' && !/[\w$]/.test(code[pnw.i - 1] ?? '')) {
     return /[a-z]/.test(id[0] ?? '') ? 'selector' : 'tag'
+  }
+  // Class declaration name: `class TagSegmentList extends …` (the body/heritage
+  // requirement keeps prose like “a border-t class applied” plain).
+  if (
+    /[A-Za-z]/.test(pnw.ch) &&
+    wordEndingAt(code, pnw.i) === 'class' &&
+    (nnw.ch === '{' ||
+      /^(?:extends|implements)\b/.test(code.slice(nnw.i, nnw.i + 10)))
+  ) {
+    return 'function'
   }
   // JSX attribute written as `name={…}` / `name="…"` (no space before `=`).
   if (
@@ -293,31 +353,23 @@ function classifyIdentifier(
   if (ctx.typeBias && nnw.ch === ':' && (pnw.ch === '(' || pnw.ch === ',')) {
     return 'variable'
   }
-  // Annotated parameter in tsx: `(text: string)` — the annotation after `:`
-  // (a type name) disambiguates from object keys.
-  if (
-    !ctx.typeBias &&
-    nnw.ch === ':' &&
-    (pnw.ch === '(' || pnw.ch === ',') &&
-    /^:\s*[A-Z]|^:\s*(?:string|number|boolean|object|symbol|bigint|any|unknown|never|void)\b/.test(
-      code.slice(nnw.i, nnw.i + 12),
-    )
-  ) {
-    return 'variable'
-  }
   // `const name =` — blue, or purple when it binds a function.
   if (inBindingPosition(code, s)) {
     return bindsFunction(code, e) ? 'function' : 'literal'
   }
-  // Parameters and call arguments: shiki's orange. Object keys (`{ x: 1 }`)
-  // and member-access bases (`date.toDate`) stay plain — except keys of an
-  // object passed directly as an argument (`add({ months: 1 })`), which shiki
-  // paints purple.
-  if (!ctx.typeBias && nx !== '.' && isParamOrArg(code, s)) {
-    if (nnw.ch !== ':') return 'variable'
-    if (directObjectArgKey(code, s)) return 'function'
-    return undefined
+  // Names before `:` — annotated parameters and type-literal members get
+  // shiki's orange, function-valued keys (`onClick: () => …`) get method
+  // purple, plain object-literal keys stay plain.
+  if (!ctx.typeBias && nnw.ch === ':') {
+    if (/ \? /.test(lineBefore(code, s))) return undefined // ternary branch
+    const after = code.slice(nnw.i + 1, nnw.i + 40)
+    if (/^\s*(?:async\s*)?\(/.test(after) && after.includes('=>'))
+      return 'function'
+    return annotationContext(code, s) ? 'variable' : undefined
   }
+  // Destructured/plain arrow parameters: shiki's orange. Member-access bases
+  // (`date.toDate`) and call arguments stay plain.
+  if (!ctx.typeBias && nx !== '.' && isArrowParam(code, s)) return 'variable'
   // Valueless boolean JSX attribute: `<BarChart accessibilityLayer …>`.
   if (!ctx.typeBias && nx !== ':' && inJsxTagAttrs(code, s)) return 'attr'
   if (BUILTIN_GLOBALS.has(id)) return 'type'
@@ -337,7 +389,17 @@ function classifyOperator(
     const pnw = prevNonWs(ctx.code, s)
     if (['}', ')', '?'].includes(pnw.ch)) return 'operator'
     // Ternary branch separator: a ` ? ` earlier on the same line.
-    return / \? /.test(lineBefore(ctx.code, s)) ? 'operator' : undefined
+    if (/ \? /.test(lineBefore(ctx.code, s))) return 'operator'
+    // Parameter/type-member annotation: `(text: string)`, `{ id: string }`.
+    return annotationContext(ctx.code, s) ? 'operator' : undefined
+  }
+  if (op === '?') {
+    // Optional (`?:`), ternary (` ? `), optional chain (`?.`) — but not
+    // question marks in JSX prose.
+    if (ctx.typeBias) return 'operator'
+    const nx = ctx.code[s + 1] ?? ''
+    const isTernary = ctx.code[s - 1] === ' ' && nx === ' '
+    return nx === ':' || nx === '.' || isTernary ? 'operator' : undefined
   }
   return 'operator'
 }
@@ -350,16 +412,21 @@ function refineTypeToken(
 ): HighlightTokenClass | undefined {
   const { code, typeBias } = ctx
   const pnw = prevNonWs(code, s)
-  // Import lines reference values, not types: `import { Link as RouterLink }`.
-  if (!typeBias && /^\s*import\b/.test(lineBefore(code, s))) {
+  // Import clauses reference values, not types: `import { type ChartConfig }`.
+  if (!typeBias && inImportClause(code, s)) {
     return classifyIdentifier(value, s, e, ctx)
   }
-  const keepChars = typeBias
-    ? [':', '<', '|', '&', '.', '(', ',', '>']
-    : [':', '<', '|', '&', '.']
+  // `.` keeps a type only when directly adjacent (`React.Ref`), not across a
+  // sentence period in JSX prose (`source. You`).
+  const dotQualified = code[s - 1] === '.'
+  const keepChars = typeBias ? ['<', '|', '&', '(', ',', '>'] : ['<', '|', '&']
   let keep =
     (typeBias && pnw.i === -1) ||
+    dotQualified ||
     keepChars.includes(pnw.ch) ||
+    // After a `:` only in annotation position (`d: DateValue`), not after an
+    // object key (`icon: MonitorIcon` references a value).
+    (pnw.ch === ':' && (typeBias || annotationContext(code, pnw.i))) ||
     (/[A-Za-z]/.test(pnw.ch) && TYPE_KEEP_WORDS.has(wordEndingAt(code, pnw.i)))
   // In tsx, `>` before an identifier is JSX text unless it closes an arrow.
   if (!typeBias && pnw.ch === '>' && code[pnw.i - 1] === '=') keep = true
@@ -387,10 +454,9 @@ function splitPlain(value: string, start: number, ctx: Ctx): HighlightToken[] {
     if (/[A-Za-z_$]/.test(ch)) {
       IDENT.lastIndex = i
       match = IDENT.exec(value)?.[0]
-      // `aria-label=` — dashed attribute names classify as one unit.
-      const dashed = /^[A-Za-z_$][\w$]*(?:-[\w$]+)+(?==)/.exec(
-        value.slice(i),
-      )?.[0]
+      // `aria-label=` / bare `data-control-target` — dashed attribute names
+      // classify as one unit (only adopted when they classify as attributes).
+      const dashed = /^[A-Za-z_$][\w$]*(?:-[\w$]+)+/.exec(value.slice(i))?.[0]
       if (
         dashed &&
         classifyIdentifier(
@@ -418,6 +484,15 @@ function splitPlain(value: string, start: number, ctx: Ctx): HighlightToken[] {
         match = undefined
       }
     } else if (
+      (ch === '-' || ch === '+') &&
+      value[i - 1] === ' ' &&
+      value[i + 1] === ' ' &&
+      !inJsxText(ctx.code, start + i)
+    ) {
+      // Spaced binary arithmetic (`page - 1`) — red, unless it's JSX prose.
+      match = ch
+      className = 'operator'
+    } else if (
       ch === "'" &&
       ['(', ',', '[', '{', '<', '=', ':'].includes(
         prevNonWs(ctx.code, start + i).ch,
@@ -426,7 +501,11 @@ function splitPlain(value: string, start: number, ctx: Ctx): HighlightToken[] {
       // A quoted literal the tokenizer missed (mis-parsed regions).
       match = /^'[^'\n]*'/.exec(value.slice(i))?.[0]
       if (match) className = 'string'
-    } else if (/[|&!?:=.]/.test(ch)) {
+    } else if (ch === '*' && inImportClause(ctx.code, start + i)) {
+      // Namespace import star: `import * as X` — shiki's blue.
+      match = '*'
+      className = 'type'
+    } else if (/[|&!?:=.<>]/.test(ch)) {
       OPERATOR.lastIndex = i
       match = OPERATOR.exec(value)?.[0]
       if (match) className = classifyOperator(match, start + i, ctx)
