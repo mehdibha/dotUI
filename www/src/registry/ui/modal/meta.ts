@@ -42,7 +42,7 @@ const modalMeta = {
       kind: 'scalar',
       type: 'radius',
       cssVar: '--modal-radius',
-      default: '--radius-lg',
+      default: '--radius-xl',
     },
   },
 } satisfies RegistryItem

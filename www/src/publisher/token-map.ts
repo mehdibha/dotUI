@@ -35,6 +35,7 @@ export interface TokenOption {
 
 export const RADIUS_OPTIONS: readonly TokenOption[] = [
   { label: 'none', value: '0', suffix: 'none' },
+  { label: 'xs', value: '--radius-xs', suffix: 'xs' },
   { label: 'sm', value: '--radius-sm', suffix: 'sm' },
   { label: 'md', value: '--radius-md', suffix: 'md' },
   { label: 'lg', value: '--radius-lg', suffix: 'lg' },
