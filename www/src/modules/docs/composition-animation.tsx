@@ -1826,11 +1826,14 @@ function lockTagPunctuation(from: KeyedTokensInfo, to: KeyedTokensInfo) {
 const EMPTY_TOKENS = toKeyedTokens('', [])
 
 // Bridges @tanstack/highlight's flat token stream to magic-move's keyed-token
-// model: per-line {content, offset} runs whose colors ride on th-* classes
+// model: per-line {content, offset} runs colored via `color: var(--th-*)`
 // (highlight.css), so a theme switch is pure CSS — no re-tokenize, no re-key.
+// Colors must ride on `color`, not `htmlClass`: the renderer re-assigns
+// className on moved elements after reflow, which would strip the
+// shiki-magic-move-move class and snap the move instead of animating it.
 function codeToKeyedTokens(code: string): KeyedTokensInfo {
   const { tokens } = highlighter.tokenize(code, { lang: 'tsx' })
-  type LineToken = { content: string; offset: number; htmlClass?: string }
+  type LineToken = { content: string; offset: number; color?: string }
   const lines: LineToken[][] = []
   let line: LineToken[] = []
   lines.push(line)
@@ -1848,9 +1851,7 @@ function codeToKeyedTokens(code: string): KeyedTokensInfo {
       line.push({
         content,
         offset,
-        ...(token.className
-          ? { htmlClass: `th-token th-${token.className}` }
-          : {}),
+        ...(token.className ? { color: `var(--th-${token.className})` } : {}),
       })
       offset += content.length
     }

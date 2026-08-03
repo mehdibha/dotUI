@@ -1,57 +1,58 @@
-/* Token colors for @tanstack/highlight — the github-light/github-dark palettes
-   from @tanstack/highlight/themes, inlined as inherited CSS variables so
-   [data-mode] preview subtrees override them naturally (nearest ancestor wins).
-   Highlighted markup carries semantic classes (th-keyword, th-string, …); one
-   HTML tree serves both themes. */
+/* Token colors for @tanstack/highlight, matching the shiki github-light /
+   github-dark palette the site rendered before the migration (derived by
+   tokenizing the same corpus with both engines and aligning by offset).
+   Inherited CSS variables so [data-mode] preview subtrees override them
+   naturally (nearest ancestor wins). Highlighted markup carries semantic
+   classes (th-keyword, th-string, …); one HTML tree serves both themes. */
 
 :root,
 [data-mode='light'] {
-  --th-token: #24292f;
-  --th-attr: #0550ae;
-  --th-code-inline: #953800;
-  --th-command: #8250df;
-  --th-comment: #6e7781;
-  --th-deleted: #cf222e;
-  --th-function: #8250df;
-  --th-heading: #0550ae;
-  --th-inserted: #1a7f37;
-  --th-keyword: #cf222e;
-  --th-link: #0969da;
-  --th-literal: #0550ae;
-  --th-meta: #57606a;
-  --th-number: #0550ae;
-  --th-operator: #8250df;
-  --th-property: #0550ae;
-  --th-selector: #116329;
-  --th-string: #0a7f64;
-  --th-tag: #116329;
-  --th-type: #953800;
-  --th-variable: #953800;
+  --th-token: #24292e;
+  --th-attr: #6f42c1;
+  --th-code-inline: #005cc5;
+  --th-command: #6f42c1;
+  --th-comment: #6a737d;
+  --th-deleted: #b31d28;
+  --th-function: #6f42c1;
+  --th-heading: #005cc5;
+  --th-inserted: #22863a;
+  --th-keyword: #d73a49;
+  --th-link: #032f62;
+  --th-literal: #005cc5;
+  --th-meta: #6a737d;
+  --th-number: #005cc5;
+  --th-operator: #d73a49;
+  --th-property: #005cc5;
+  --th-selector: #22863a;
+  --th-string: #032f62;
+  --th-tag: #005cc5;
+  --th-type: #005cc5;
+  --th-variable: #e36209;
 }
 
 .dark,
 [data-mode='dark'] {
-  --th-token: #c9d1d9;
-  --th-attr: #79c0ff;
-  --th-code-inline: #ffa657;
-  --th-command: #d2a8ff;
-  --th-comment: #8b949e;
-  --th-deleted: #ff7b72;
-  --th-function: #d2a8ff;
-  --th-heading: #79c0ff;
-  --th-inserted: #7ee787;
-  --th-keyword: #ff7b72;
-  --th-link: #58a6ff;
-  --th-literal: #79c0ff;
-  --th-meta: #8b949e;
-  --th-number: #79c0ff;
-  --th-operator: #d2a8ff;
-  --th-property: #79c0ff;
-  --th-selector: #7ee787;
-  --th-string: #a5d6ff;
-  --th-tag: #7ee787;
-  --th-type: #ffa657;
-  --th-variable: #ffa657;
+  --th-token: #e1e4e8;
+  --th-attr: #b392f0;
+  --th-code-inline: #79b8ff;
+  --th-command: #b392f0;
+  --th-comment: #6a737d;
+  --th-deleted: #fdaeb7;
+  --th-function: #b392f0;
+  --th-heading: #79b8ff;
+  --th-inserted: #85e89d;
+  --th-keyword: #f97583;
+  --th-link: #9ecbff;
+  --th-literal: #79b8ff;
+  --th-meta: #6a737d;
+  --th-number: #79b8ff;
+  --th-operator: #f97583;
+  --th-property: #79b8ff;
+  --th-selector: #85e89d;
+  --th-string: #9ecbff;
+  --th-tag: #79b8ff;
+  --th-type: #79b8ff;
+  --th-variable: #ffab70;
 }
 
 .th-token {
