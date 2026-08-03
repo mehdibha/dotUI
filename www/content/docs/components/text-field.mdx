@@ -11,35 +11,35 @@ wip: true
   name="text-field"
   controls={[
     {
-      type: 'string',
-      name: 'label',
-      defaultValue: 'Email',
+      type: "string",
+      name: "label",
+      defaultValue: "Email",
     },
     {
-      type: 'string',
-      name: 'description',
-      defaultValue: '',
-      placeholder: 'Helper text',
+      type: "string",
+      name: "description",
+      defaultValue: "",
+      placeholder: "Helper text",
     },
     {
-      type: 'string',
-      name: 'errorMessage',
-      defaultValue: '',
-      placeholder: 'Error text',
+      type: "string",
+      name: "errorMessage",
+      defaultValue: "",
+      placeholder: "Error text",
     },
     {
-      type: 'boolean',
-      name: 'isDisabled',
+      type: "boolean",
+      name: "isDisabled",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isReadOnly',
+      type: "boolean",
+      name: "isReadOnly",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isInvalid',
+      type: "boolean",
+      name: "isInvalid",
       defaultValue: false,
     },
   ]}
@@ -56,9 +56,9 @@ npx shadcn@latest add @dotui/text-field
 Use a `TextField` to allow users to input custom text entries with a keyboard.
 
 ```tsx
-import { TextField } from '@/ui/text-field'
-import { Input } from '@/ui/input'
-import { Label } from '@/ui/field'
+import { TextField } from "@/ui/text-field"
+import { Input } from "@/ui/input"
+import { Label } from "@/ui/field"
 ```
 
 ```tsx
@@ -73,9 +73,9 @@ import { Label } from '@/ui/field'
 A `TextField` wraps a `Label`, an `Input`, and optional `Description` and `FieldError`. Wrap the `Input` in an `InputGroup` with `InputGroupAddon` to render a prefix or suffix inside the field.
 
 ```tsx
-import { TextField } from '@/ui/text-field'
-import { Label, Description, FieldError } from '@/ui/field'
-import { Input, InputGroup, InputGroupAddon } from '@/ui/input'
+import { TextField } from "@/ui/text-field"
+import { Label, Description, FieldError } from "@/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/ui/input"
 ```
 
 ```tsx
@@ -110,7 +110,7 @@ Mark a field with `isRequired`, and supply a custom `validate` function that ret
 ```tsx
 <TextField
   isRequired
-  validate={(value) => (value.includes('@') ? null : 'Enter a valid email')}
+  validate={(value) => (value.includes("@") ? null : "Enter a valid email")}
 >
   <Label>Email</Label>
   <Input />

@@ -14,26 +14,26 @@ It is **not** a product feature and **not** a `/create` design-system axis. It's
 ## API
 
 ```tsx
-import { useTweak } from '@/dev/tweaker'
+import { useTweak } from "@/dev/tweaker"
 
 function Hero() {
-  const layout = useTweak('Layout', {
-    type: 'select',
-    options: ['centered', 'split', 'fullbleed'],
-    default: 'centered',
-    group: 'Hero',
+  const layout = useTweak("Layout", {
+    type: "select",
+    options: ["centered", "split", "fullbleed"],
+    default: "centered",
+    group: "Hero",
   }) // typed: 'centered' | 'split' | 'fullbleed'
 
-  const gap = useTweak('Gap', {
-    type: 'number',
+  const gap = useTweak("Gap", {
+    type: "number",
     min: 0,
     max: 64,
     step: 4,
     default: 16,
-    group: 'Hero',
+    group: "Hero",
   })
 
-  return layout === 'split' ? (
+  return layout === "split" ? (
     <SplitHero style={{ gap }} />
   ) : (
     <CenteredHero style={{ gap }} />
@@ -53,11 +53,11 @@ useEffect(() => {
   if (px !== last.current.px) {
     const next = toUnits(px)
     last.current = { px, units: next }
-    setTweak('Size (units)', next, group)
+    setTweak("Size (units)", next, group)
   } else if (units !== last.current.units) {
     const next = toPx(units)
     last.current = { px: next, units }
-    setTweak('Size', next, group)
+    setTweak("Size", next, group)
   }
 }, [px, units])
 ```
@@ -80,17 +80,17 @@ Every config needs a `default` — and it **must match the current design** so n
 
 - **Structural** (the main use): branch JSX on a `select`/`boolean`.
   ```tsx
-  const density = useTweak('Density', {
-    type: 'select',
-    options: ['compact', 'cozy'],
-    default: 'cozy',
+  const density = useTweak("Density", {
+    type: "select",
+    options: ["compact", "cozy"],
+    default: "cozy",
   })
   return <List density={density} />
   ```
 - **Style values**: feed a `number`/`color` straight into `style`, a class, or a CSS variable.
   ```tsx
-  const radius = useTweak('Radius', {
-    type: 'number',
+  const radius = useTweak("Radius", {
+    type: "number",
     min: 0,
     max: 24,
     default: 8,

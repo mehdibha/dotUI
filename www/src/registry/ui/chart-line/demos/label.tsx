@@ -1,28 +1,28 @@
-'use client'
+"use client"
 
-import { CartesianGrid, LabelList, Line, LineChart, XAxis } from 'recharts'
+import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts"
 
-import type { ChartConfig } from '@/registry/ui/chart'
+import type { ChartConfig } from "@/registry/ui/chart"
 import {
   ChartContainer,
   ChartDataTable,
   ChartTooltip,
   ChartTooltipContent,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
+  { month: "April", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "June", desktop: 214 },
 ]
 
 const chartConfig = {
   desktop: {
-    label: 'Desktop',
-    color: 'var(--chart-1)',
+    label: "Desktop",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 
@@ -52,7 +52,7 @@ export default function ChartLineLabel() {
             type="natural"
             stroke="var(--color-desktop)"
             strokeWidth={2}
-            dot={{ fill: 'var(--color-desktop)' }}
+            dot={{ fill: "var(--color-desktop)" }}
             activeDot={{ r: 6 }}
           >
             <LabelList

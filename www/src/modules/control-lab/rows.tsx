@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* Control Lab rows — one visual language (compact row, label left, value +
    control right) applied to every interaction model the panel needs: triggers,
@@ -6,7 +6,7 @@
    the grouped-list container that fuses rows into cards.
    Prototype only: local state in, callback out, no design-system wiring. */
 
-import { useState } from 'react'
+import { createContext, useContext, useState } from "react"
 import {
   ChevronDownIcon,
   ChevronRightIcon,
@@ -14,69 +14,75 @@ import {
   RotateCcwIcon,
   SearchIcon,
   XIcon,
-} from 'lucide-react'
+} from "lucide-react"
 import {
   Button as RacButton,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
-} from 'react-aria-components'
+} from "react-aria-components"
 
-import { FONT_CATALOG, fontStack } from '@/lib/fonts'
-import type { FontCategory } from '@/lib/fonts'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { ColorArea } from '@/registry/ui/color-area'
-import { ColorField } from '@/registry/ui/color-field'
-import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSlider, ColorSliderControl } from '@/registry/ui/color-slider'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
+import { FONT_CATALOG, fontStack } from "@/lib/fonts"
+import type { FontCategory } from "@/lib/fonts"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { ColorArea } from "@/registry/ui/color-area"
+import { ColorField } from "@/registry/ui/color-field"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import { ColorSlider, ColorSliderControl } from "@/registry/ui/color-slider"
+import { ColorSwatch } from "@/registry/ui/color-swatch"
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from '@/registry/ui/color-swatch-picker'
-import { Command } from '@/registry/ui/command'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Disclosure, DisclosurePanel } from '@/registry/ui/disclosure'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+} from "@/registry/ui/color-swatch-picker"
+import { Command } from "@/registry/ui/command"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Disclosure, DisclosurePanel } from "@/registry/ui/disclosure"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
+} from "@/registry/ui/list-box"
 import {
   NumberField,
   NumberFieldDecrement,
   NumberFieldIncrement,
-} from '@/registry/ui/number-field'
-import { Popover } from '@/registry/ui/popover'
-import { SearchField } from '@/registry/ui/search-field'
-import { Select, SelectValue } from '@/registry/ui/select'
+} from "@/registry/ui/number-field"
+import { Popover } from "@/registry/ui/popover"
+import { SearchField } from "@/registry/ui/search-field"
+import { Select, SelectValue } from "@/registry/ui/select"
 import {
   Slider,
   SliderControl,
   SliderFill,
   SliderThumb,
   SliderTrack,
-} from '@/registry/ui/slider'
-import { Switch, SwitchControl, SwitchIndicator } from '@/registry/ui/switch'
+} from "@/registry/ui/slider"
+import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
 import {
   useLazyFontPreviews,
   useLoadedFamilies,
-} from '@/modules/create/typography'
+} from "@/modules/create/typography"
 
 /* -------------------------------- Shared shell --------------------------- */
 
-export const ROW = 'h-11 w-full rounded-xl bg-muted transition-colors'
+export const ROW = "h-11 w-full rounded-xl bg-muted transition-colors"
 export const ROW_TRIGGER = cn(
   ROW,
-  'flex items-center justify-between gap-3 px-4 text-left hover:bg-highlight pressed:bg-highlight',
+  "flex items-center justify-between gap-3 px-4 text-left hover:bg-highlight pressed:bg-highlight",
 )
-export const ROW_LABEL = 'truncate text-[0.8125rem] font-medium text-fg'
-export const ROW_VALUE = 'truncate text-[0.8125rem] text-fg-muted'
+export const ROW_LABEL = "truncate text-[0.8125rem] font-medium text-fg"
+export const ROW_VALUE = "truncate text-[0.8125rem] text-fg-muted"
 /** What a fixed-height row becomes once it carries a description. */
-export const ROW_DESCRIBED = 'h-auto py-2.5'
+export const ROW_DESCRIBED = "h-auto py-2.5"
+
+/* Where row-attached overlays (pickers, selects, menus) open. Panel-lab's
+   preview-rail draft overrides it to explore preview/popover combos. */
+export type RowOverlayPlacement = "right top" | "left top" | "bottom start"
+export const RowOverlayPlacementContext =
+  createContext<RowOverlayPlacement>("right top")
 
 /** The left column of a row: the label, and the line under it that says what
  *  the axis actually changes. Rows stay one line until a description arrives.
@@ -144,7 +150,7 @@ export function SectionHeader({
   return (
     <div
       className={cn(
-        'mt-3 flex h-7 items-center gap-1.5 px-1 first:mt-0',
+        "mt-3 flex h-7 items-center gap-1.5 px-1 first:mt-0",
         className,
       )}
     >
@@ -193,8 +199,8 @@ export function ActionRow({
       onPress={onPress}
       className={cn(
         ROW,
-        'flex cursor-interactive items-center justify-center px-4 text-[0.8125rem] font-medium focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight',
-        destructive ? 'text-danger' : 'text-accent',
+        "flex cursor-interactive items-center justify-center px-4 text-[0.8125rem] font-medium focus-reset hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight",
+        destructive ? "text-danger" : "text-accent",
       )}
     >
       {label}
@@ -223,7 +229,7 @@ export function DrillInRow({
       onPress={onPress}
       className={cn(
         ROW_TRIGGER,
-        'cursor-interactive focus-reset focus-visible:focus-ring',
+        "cursor-interactive focus-reset focus-visible:focus-ring",
         description && ROW_DESCRIBED,
       )}
     >
@@ -266,11 +272,11 @@ export function DisclosureRow({
       id={label}
       defaultExpanded={defaultExpanded}
       className={cn(
-        'w-full rounded-xl bg-muted',
+        "w-full rounded-xl bg-muted",
         // The root owns the recessed surface; the header keeps its own row
         // fill and reads as raised on it, content rows clear theirs below.
         inset &&
-          'bg-[color-mix(in_oklab,var(--color-card),var(--color-muted))]',
+          "bg-[color-mix(in_oklab,var(--color-card),var(--color-muted))]",
       )}
     >
       <RacButton
@@ -278,7 +284,7 @@ export function DisclosureRow({
         data-row=""
         className={cn(
           ROW_TRIGGER,
-          'cursor-interactive focus-reset focus-visible:focus-ring',
+          "cursor-interactive focus-reset focus-visible:focus-ring",
           description && ROW_DESCRIBED,
         )}
       >
@@ -295,10 +301,10 @@ export function DisclosureRow({
             so content shares the header's text edges on both sides. */}
         <div
           className={cn(
-            'flex flex-col pb-2',
+            "flex flex-col pb-2",
             // Symmetric padding: the raised header needs the same breathing
             // room above the content as below it.
-            inset && 'pt-2 **:data-row:bg-transparent',
+            inset && "pt-2 **:data-row:bg-transparent",
           )}
         >
           {children}
@@ -351,11 +357,14 @@ export function SelectRow({
               {selected.icon}
             </span>
           )}
-          <SelectValue className={cn(ROW_VALUE, 'text-right')} />
+          <SelectValue className={cn(ROW_VALUE, "text-right")} />
           <ChevronsUpDownIcon className="size-3.5 text-fg-muted" />
         </span>
       </Button>
-      <Popover className="w-(--trigger-width)" placement="right top">
+      <Popover
+        className="w-(--trigger-width)"
+        placement={useContext(RowOverlayPlacementContext)}
+      >
         <ListBox>
           {options.map((opt) => (
             <ListBoxItem key={opt.value} id={opt.value} textValue={opt.label}>
@@ -375,22 +384,22 @@ export function SelectRow({
 
 /** Hue-spaced seeds: one tap to a plausible brand before touching the area. */
 const COLOR_PRESETS = [
-  '#EF4444',
-  '#F97316',
-  '#EAB308',
-  '#22C55E',
-  '#14B8A6',
-  '#3B82F6',
-  '#8B5CF6',
-  '#EC4899',
-  '#F43F5E',
+  "#EF4444",
+  "#F97316",
+  "#EAB308",
+  "#22C55E",
+  "#14B8A6",
+  "#3B82F6",
+  "#8B5CF6",
+  "#EC4899",
+  "#F43F5E",
 ]
 
 /** A color-picker trigger shaped as a settings row: label left, hex + swatch right. */
 export function ColorPickerRow({
   label,
   description,
-  layout = 'row',
+  layout = "row",
   value,
   onChange,
 }: {
@@ -398,13 +407,14 @@ export function ColorPickerRow({
   description?: string
   /** `tile` trades the row's width for height: the swatch becomes the face of
    *  the control, big enough to judge the color rather than identify it. */
-  layout?: 'row' | 'tile'
+  layout?: "row" | "tile"
   value: string
   onChange: (hex: string) => void
 }) {
-  const tile = layout === 'tile'
+  const tile = layout === "tile"
+  const rowPlacement = useContext(RowOverlayPlacementContext)
   return (
-    <ColorPicker value={value} onChange={(c) => onChange(c.toString('hex'))}>
+    <ColorPicker value={value} onChange={(c) => onChange(c.toString("hex"))}>
       {({ color }) => (
         <>
           {tile ? (
@@ -414,8 +424,8 @@ export function ColorPickerRow({
             >
               <span className="flex min-w-0 flex-col gap-0.5">
                 <span className={ROW_LABEL}>{label}</span>
-                <span className={cn(ROW_VALUE, 'font-mono text-xs uppercase')}>
-                  {color.toString('hex')}
+                <span className={cn(ROW_VALUE, "font-mono text-xs uppercase")}>
+                  {color.toString("hex")}
                 </span>
                 {description && (
                   <span className="text-xs/snug text-pretty text-fg-muted">
@@ -433,8 +443,8 @@ export function ColorPickerRow({
             >
               <RowLabel label={label} description={description} />
               <span className="flex shrink-0 items-center gap-2.5">
-                <span className={cn(ROW_VALUE, 'font-mono uppercase')}>
-                  {color.toString('hex')}
+                <span className={cn(ROW_VALUE, "font-mono uppercase")}>
+                  {color.toString("hex")}
                 </span>
                 <ColorSwatch className="size-5 rounded-full" />
               </span>
@@ -443,7 +453,7 @@ export function ColorPickerRow({
           <Popover
             // A tile is as wide as the picker, so opening below it keeps the
             // two edges aligned; a row has no width to align to.
-            placement={tile ? 'bottom start' : 'right top'}
+            placement={tile ? "bottom start" : rowPlacement}
             className="w-64 min-w-0"
           >
             <DialogContent className="flex flex-col gap-3 p-3">
@@ -504,7 +514,7 @@ export interface NeutralValue {
 const MAX_TINT = 2
 
 /** The untinted gray — an option with a name, not the absence of one. */
-const PURE_GRAY = { id: 'neutral', label: 'Neutral' }
+const PURE_GRAY = { id: "neutral", label: "Neutral" }
 
 /**
  * The named gray families, in hue order: the swatch row, and the vocabulary
@@ -513,12 +523,12 @@ const PURE_GRAY = { id: 'neutral', label: 'Neutral' }
  * Radix mauve lands on 293°, on top of zinc, so it takes the 320° it reads as.
  */
 const NEUTRAL_FAMILIES = [
-  { id: 'taupe', label: 'Taupe', hue: 30 },
-  { id: 'stone', label: 'Stone', hue: 60 },
-  { id: 'olive', label: 'Olive', hue: 130 },
-  { id: 'mist', label: 'Mist', hue: 250 },
-  { id: 'zinc', label: 'Zinc', hue: 286 },
-  { id: 'mauve', label: 'Mauve', hue: 320 },
+  { id: "taupe", label: "Taupe", hue: 30 },
+  { id: "stone", label: "Stone", hue: 60 },
+  { id: "olive", label: "Olive", hue: 130 },
+  { id: "mist", label: "Mist", hue: 250 },
+  { id: "zinc", label: "Zinc", hue: 286 },
+  { id: "mauve", label: "Mauve", hue: 320 },
 ]
 
 /* A real neutral peaks around 0.016 chroma — invisible in a 20px dot or a
@@ -531,7 +541,7 @@ const sample = (hue: number, tint = MAX_TINT) =>
 const HUE_TRACK = `linear-gradient(to right, ${Array.from(
   { length: 13 },
   (_, i) => sample(i * 30),
-).join(', ')})`
+).join(", ")})`
 
 const circularDelta = (a: number, b: number) => {
   const d = Math.abs(a - b) % 360
@@ -547,7 +557,7 @@ const nearestFamilyName = (hue: number) =>
   ).label
 
 const GROUP_LABEL =
-  'text-[11px] font-medium tracking-wider text-fg-muted uppercase'
+  "text-[11px] font-medium tracking-wider text-fg-muted uppercase"
 
 /** A slider painted with the neutrals it selects between — the track is the
  *  swatch set, so nothing has to be named to be understood. */
@@ -612,7 +622,7 @@ const TRIGGER_STEPS = [1, 3, 5, 7, 9]
 /** The neutral as a row: its scale on the right, opening the two axes that
  *  produce it. The preview is the resolved scale, not a restatement of inputs. */
 export function NeutralPickerRow({
-  label = 'Neutral',
+  label = "Neutral",
   description,
   value,
   onChange,
@@ -636,13 +646,13 @@ export function NeutralPickerRow({
     value.tint === 0
       ? PURE_GRAY.label
       : value.hue === null
-        ? 'From brand'
+        ? "From brand"
         : nearestFamilyName(value.hue)
   const preset =
     value.tint === 0
       ? PURE_GRAY.id
       : value.hue === null
-        ? 'brand'
+        ? "brand"
         : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
     <Dialog>
@@ -667,7 +677,10 @@ export function NeutralPickerRow({
           </span>
         </span>
       </Button>
-      <Popover placement="right top" className="w-64 min-w-0">
+      <Popover
+        placement={useContext(RowOverlayPlacementContext)}
+        className="w-64 min-w-0"
+      >
         <DialogContent className="flex flex-col gap-3 p-3">
           {/* Seeds, same as the brand picker: one tap to a known gray family,
               then the sliders for anything between them. Tapping while flat
@@ -694,7 +707,7 @@ export function NeutralPickerRow({
                 and a gray that quietly tracks another color has to say so. */}
             <RacToggleButton
               id="brand"
-              onHoverStart={() => setHovered('From brand')}
+              onHoverStart={() => setHovered("From brand")}
               onHoverEnd={() => setHovered(null)}
               className="flex h-5 cursor-interactive items-center gap-1.5 rounded-full bg-bg/50 pr-2 pl-0.5 text-[11px] text-fg-muted focus-reset hover:text-fg focus-visible:focus-ring selected:text-fg selected:inset-ring-1 selected:inset-ring-accent"
             >
@@ -772,7 +785,7 @@ export function FontListPopover({
   return (
     <Popover
       className="w-(--trigger-width) outline-hidden"
-      placement="right top"
+      placement={useContext(RowOverlayPlacementContext)}
     >
       <Command>
         <SearchField autoFocus aria-label="Search fonts">
@@ -853,7 +866,7 @@ export function FontPickerRow({
         <RowLabel label={label} description={description} />
         <span className="flex min-w-0 items-center gap-1.5">
           <SelectValue
-            className={cn(ROW_VALUE, 'text-right')}
+            className={cn(ROW_VALUE, "text-right")}
             style={{ fontFamily: fontStack(selectedKey) }}
           />
           <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
@@ -910,7 +923,7 @@ export function SliderRow({
         <SliderControl>
           <SliderTrack
             data-row=""
-            className={cn(ROW, 'relative overflow-hidden')}
+            className={cn(ROW, "relative overflow-hidden")}
             style={trackStyle}
           >
             <SliderFill className="absolute inset-y-0 left-0 bg-highlight" />
@@ -928,7 +941,7 @@ export function SliderRow({
         </SliderControl>
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-between px-4">
           <span className={ROW_LABEL}>{label}</span>
-          <span className={cn(ROW_VALUE, 'font-mono tabular-nums')}>
+          <span className={cn(ROW_VALUE, "font-mono tabular-nums")}>
             {format(value)}
           </span>
         </div>
@@ -968,7 +981,7 @@ export function SwitchRow({
     >
       <SwitchControl
         data-row=""
-        className={cn(ROW_TRIGGER, 'border-0', description && ROW_DESCRIBED)}
+        className={cn(ROW_TRIGGER, "border-0", description && ROW_DESCRIBED)}
       >
         <RowLabel label={label} description={description} />
         <SwitchIndicator className="bg-highlight selected:bg-accent" />
@@ -993,7 +1006,7 @@ function OptionGrid({
   onChange,
   options,
   columns = 2,
-  variant = 'card',
+  variant = "card",
 }: {
   ariaLabel: string
   value: string
@@ -1001,7 +1014,7 @@ function OptionGrid({
   options: OptionGridItem[]
   columns?: number
   /** `plain` drops the card surface: specimens sit right on the panel. */
-  variant?: 'card' | 'plain'
+  variant?: "card" | "plain"
 }) {
   return (
     <RacToggleButtonGroup
@@ -1022,10 +1035,10 @@ function OptionGrid({
           id={option.id}
           aria-label={option.label}
           className={cn(
-            'relative flex min-w-0 cursor-interactive items-center justify-center rounded-lg p-4 focus-reset transition-transform after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:bg-white/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 focus-visible:focus-ring motion-safe:pressed:scale-[0.98]',
-            variant === 'card'
-              ? 'bg-bg selected:inset-ring selected:inset-ring-accent'
-              : 'border border-border transition-[background-color,transform] selected:bg-white/10',
+            "relative flex min-w-0 cursor-interactive items-center justify-center rounded-lg p-4 focus-reset transition-transform after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:bg-white/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 focus-visible:focus-ring motion-safe:pressed:scale-[0.98]",
+            variant === "card"
+              ? "bg-bg selected:inset-ring selected:inset-ring-accent"
+              : "border border-border transition-[background-color,transform] selected:bg-white/10",
           )}
         >
           <span className="flex w-full min-w-0 items-center justify-center">
@@ -1057,15 +1070,15 @@ export function OptionGridRow({
   options: OptionGridItem[]
   columns?: number
   /** `plain` drops the card surface: specimens sit right on the panel. */
-  variant?: 'card' | 'plain'
+  variant?: "card" | "plain"
 }) {
   const selected = options.find((o) => o.id === value)
   return (
     <div className="w-full rounded-xl bg-muted p-2">
       <div
         className={cn(
-          'flex h-8 items-center justify-between gap-3 px-2',
-          description && 'h-auto pt-1.5 pb-2',
+          "flex h-8 items-center justify-between gap-3 px-2",
+          description && "h-auto pt-1.5 pb-2",
         )}
       >
         <RowLabel label={label} description={description} />
@@ -1111,7 +1124,7 @@ export function SegmentedRow({
       data-row=""
       className={cn(
         ROW,
-        'flex items-center justify-between gap-3 px-4',
+        "flex items-center justify-between gap-3 px-4",
         description && ROW_DESCRIBED,
       )}
     >
@@ -1181,7 +1194,7 @@ export function StepperRow({
         data-row=""
         className={cn(
           ROW,
-          'flex items-center justify-between gap-3 px-4',
+          "flex items-center justify-between gap-3 px-4",
           description && ROW_DESCRIBED,
         )}
       >
@@ -1196,7 +1209,7 @@ export function StepperRow({
               so without it the suffix would touch the increment button. */}
           <div className="flex items-baseline px-1.5">
             <Input className="h-7 w-8 border-0 bg-transparent p-0 text-center text-[0.8125rem] tabular-nums" />
-            {unit && <span className={cn(ROW_VALUE, 'text-xs')}>{unit}</span>}
+            {unit && <span className={cn(ROW_VALUE, "text-xs")}>{unit}</span>}
           </div>
           <NumberFieldIncrement
             variant="quiet"

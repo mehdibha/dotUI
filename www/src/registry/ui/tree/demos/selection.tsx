@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import type { Selection } from 'react-aria-components'
+import { useState } from "react"
+import type { Selection } from "react-aria-components"
 
-import { Tree, TreeItem, TreeItemContent } from '@/registry/ui/tree'
+import { Tree, TreeItem, TreeItemContent } from "@/registry/ui/tree"
 
 export default function Demo() {
   const [selectedKeys, setSelectedKeys] = useState<Selection>(
-    new Set(['report', 'mountains']),
+    new Set(["report", "mountains"]),
   )
 
   return (
@@ -16,7 +16,7 @@ export default function Demo() {
       selectionMode="multiple"
       selectedKeys={selectedKeys}
       onSelectionChange={setSelectedKeys}
-      defaultExpandedKeys={['documents', 'project', 'photos']}
+      defaultExpandedKeys={["documents", "project", "photos"]}
       className="w-72"
     >
       <TreeItem id="documents" textValue="Documents">

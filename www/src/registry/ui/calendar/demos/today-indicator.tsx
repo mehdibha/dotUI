@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   Calendar,
@@ -8,7 +8,7 @@ import {
   CalendarGridHeader,
   CalendarHeader,
   CalendarHeaderCell,
-} from '@/registry/ui/calendar'
+} from "@/registry/ui/calendar"
 
 export default function Demo() {
   return (

@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Addons from './demos/addons'
-import Basic from './demos/basic'
-import Buttons from './demos/buttons'
-import DateDemo from './demos/date'
-import InCard from './demos/in-card'
-import KbdDemo from './demos/kbd'
-import Sizes from './demos/sizes'
-import TextareaDemo from './demos/textarea'
-import TooltipDropdownPopover from './demos/tooltip-dropdown-popover'
+import Addons from "./demos/addons"
+import Basic from "./demos/basic"
+import Buttons from "./demos/buttons"
+import DateDemo from "./demos/date"
+import InCard from "./demos/in-card"
+import KbdDemo from "./demos/kbd"
+import Sizes from "./demos/sizes"
+import TextareaDemo from "./demos/textarea"
+import TooltipDropdownPopover from "./demos/tooltip-dropdown-popover"
 
 export default function InputGroupExamples() {
   return (

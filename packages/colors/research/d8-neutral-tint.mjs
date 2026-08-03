@@ -1,17 +1,17 @@
 // D8 (neutral tinting) measurement — Radix grays + Tailwind v4 neutrals.
 // Deterministic. Run from packages/colors: node research/d8-neutral-tint.mjs
 // Writes research/data/radix-grays.json and research/data/neutral-tint-rule.json
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import * as radix from '@radix-ui/colors'
-import { converter } from 'culori'
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import { dirname, join } from "node:path"
+import { fileURLToPath } from "node:url"
+import * as radix from "@radix-ui/colors"
+import { converter } from "culori"
 
 const here = dirname(fileURLToPath(import.meta.url))
-const dataDir = join(here, 'data')
+const dataDir = join(here, "data")
 mkdirSync(dataDir, { recursive: true })
 
-const toOklch = converter('oklch')
+const toOklch = converter("oklch")
 const round = (x, d = 4) => (x == null ? null : Number(x.toFixed(d)))
 
 function scaleToSteps(scaleObj) {
@@ -57,7 +57,7 @@ const hueDiff = (a, b) => {
 }
 
 // ---------- Radix grays ----------
-const grayFamilies = ['gray', 'mauve', 'slate', 'sage', 'olive', 'sand']
+const grayFamilies = ["gray", "mauve", "slate", "sage", "olive", "sand"]
 const radixGrays = {}
 for (const fam of grayFamilies) {
   radixGrays[fam] = {
@@ -69,23 +69,23 @@ for (const fam of grayFamilies) {
 // Radix's own documented pairings (from radix-ui.com/colors docs)
 const pairings = {
   mauve: [
-    'tomato',
-    'red',
-    'ruby',
-    'crimson',
-    'pink',
-    'plum',
-    'purple',
-    'violet',
+    "tomato",
+    "red",
+    "ruby",
+    "crimson",
+    "pink",
+    "plum",
+    "purple",
+    "violet",
   ],
-  slate: ['iris', 'indigo', 'blue', 'sky', 'cyan'],
-  sage: ['mint', 'teal', 'jade', 'green'],
-  olive: ['grass', 'lime'],
-  sand: ['yellow', 'amber', 'orange', 'brown'],
+  slate: ["iris", "indigo", "blue", "sky", "cyan"],
+  sage: ["mint", "teal", "jade", "green"],
+  olive: ["grass", "lime"],
+  sand: ["yellow", "amber", "orange", "brown"],
 }
 
 function accentHues(name, mode) {
-  const scale = radix[mode === 'dark' ? `${name}Dark` : name]
+  const scale = radix[mode === "dark" ? `${name}Dark` : name]
   const steps = scaleToSteps(scale)
   return {
     step9: steps[8].H, // solid — the seed-defining step
@@ -96,7 +96,7 @@ function accentHues(name, mode) {
 const summaries = {}
 for (const fam of grayFamilies) {
   summaries[fam] = {}
-  for (const mode of ['light', 'dark']) {
+  for (const mode of ["light", "dark"]) {
     const steps = radixGrays[fam][mode]
     const Cs = steps.map((s) => s.C)
     const peakIdx = Cs.indexOf(Math.max(...Cs))
@@ -112,7 +112,7 @@ for (const fam of grayFamilies) {
 const pairingAnalysis = {}
 for (const [fam, accents] of Object.entries(pairings)) {
   pairingAnalysis[fam] = {}
-  for (const mode of ['light', 'dark']) {
+  for (const mode of ["light", "dark"]) {
     const grayHue = summaries[fam][mode].hue.mean
     pairingAnalysis[fam][mode] = {
       grayHue,
@@ -134,9 +134,9 @@ for (const [fam, accents] of Object.entries(pairings)) {
 const twTheme = readFileSync(
   join(
     here,
-    '../../../node_modules/.pnpm/tailwindcss@4.3.0/node_modules/tailwindcss/theme.css',
+    "../../../node_modules/.pnpm/tailwindcss@4.3.0/node_modules/tailwindcss/theme.css",
   ),
-  'utf8',
+  "utf8",
 )
 const twFamilies = {}
 for (const m of twTheme.matchAll(
@@ -147,12 +147,12 @@ for (const m of twTheme.matchAll(
     step: Number(step),
     L: round(Number(L) / 100),
     C: Number(C),
-    H: H === 'none' || Number(C) < 1e-4 ? null : Number(H),
+    H: H === "none" || Number(C) < 1e-4 ? null : Number(H),
   })
 }
 for (const fam of Object.values(twFamilies)) fam.sort((a, b) => a.step - b.step)
 
-const twNeutralNames = ['slate', 'gray', 'zinc', 'neutral', 'stone']
+const twNeutralNames = ["slate", "gray", "zinc", "neutral", "stone"]
 const twNeutrals = {}
 for (const fam of twNeutralNames) {
   const steps = twFamilies[fam]
@@ -168,10 +168,10 @@ for (const fam of twNeutralNames) {
 
 // Tailwind neutral↔accent hue relations (hypothesized pairings by hue proximity)
 const twPairings = {
-  slate: ['blue', 'indigo', 'sky'],
-  gray: ['blue', 'indigo'],
-  zinc: ['violet', 'purple'],
-  stone: ['orange', 'amber', 'yellow', 'red'],
+  slate: ["blue", "indigo", "sky"],
+  gray: ["blue", "indigo"],
+  zinc: ["violet", "purple"],
+  stone: ["orange", "amber", "yellow", "red"],
 }
 const twPairingAnalysis = {}
 for (const [fam, accents] of Object.entries(twPairings)) {
@@ -194,11 +194,11 @@ for (const [fam, accents] of Object.entries(twPairings)) {
 }
 
 // ---------- Aggregates ----------
-const tinted = ['mauve', 'slate', 'sage', 'olive', 'sand']
+const tinted = ["mauve", "slate", "sage", "olive", "sand"]
 let whisperCeiling = 0
 let ceilingAt = null
 for (const fam of tinted)
-  for (const mode of ['light', 'dark']) {
+  for (const mode of ["light", "dark"]) {
     const { maxC, peakStep } = summaries[fam][mode]
     if (maxC > whisperCeiling) {
       whisperCeiling = maxC
@@ -208,7 +208,7 @@ for (const fam of tinted)
 
 // normalized C(step) curve, averaged over tinted families, per mode
 const normCurve = {}
-for (const mode of ['light', 'dark']) {
+for (const mode of ["light", "dark"]) {
   const curves = tinted.map((fam) => {
     const Cs = summaries[fam][mode].C
     const max = Math.max(...Cs)
@@ -220,7 +220,7 @@ for (const mode of ['light', 'dark']) {
 }
 
 writeFileSync(
-  join(dataDir, 'radix-grays.json'),
+  join(dataDir, "radix-grays.json"),
   JSON.stringify(
     {
       note: "OKLCH via culori converter('oklch'); H null when C < 1e-4. Hue stats C-weighted circular mean over steps with C >= 0.002.",
@@ -234,10 +234,10 @@ writeFileSync(
 )
 
 writeFileSync(
-  join(dataDir, 'neutral-tint-rule.json'),
+  join(dataDir, "neutral-tint-rule.json"),
   JSON.stringify(
     {
-      note: 'Aggregated D8 outputs: whisper ceiling, normalized C(step) tint curve, gray-hue-from-accent-hue rule, plus Tailwind v4 neutrals.',
+      note: "Aggregated D8 outputs: whisper ceiling, normalized C(step) tint curve, gray-hue-from-accent-hue rule, plus Tailwind v4 neutrals.",
       whisperCeiling: { maxC: whisperCeiling, at: ceilingAt },
       perFamilyMaxC: Object.fromEntries(
         tinted.map((f) => [
@@ -272,17 +272,17 @@ writeFileSync(
   ),
 )
 
-console.log('whisper ceiling:', whisperCeiling, ceilingAt)
-console.log('norm curve light:', normCurve.light.join(' '))
-console.log('norm curve dark: ', normCurve.dark.join(' '))
+console.log("whisper ceiling:", whisperCeiling, ceilingAt)
+console.log("norm curve light:", normCurve.light.join(" "))
+console.log("norm curve dark: ", normCurve.dark.join(" "))
 for (const fam of tinted) {
   console.log(
     fam,
-    'hueL',
+    "hueL",
     summaries[fam].light.hue,
-    'hueD',
+    "hueD",
     summaries[fam].dark.hue,
-    'maxC L/D',
+    "maxC L/D",
     summaries[fam].light.maxC,
     summaries[fam].dark.maxC,
   )

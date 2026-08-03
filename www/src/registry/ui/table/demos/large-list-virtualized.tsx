@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Badge } from '@/registry/ui/badge'
+import { Badge } from "@/registry/ui/badge"
 import {
   Table,
   TableBody,
@@ -10,32 +10,32 @@ import {
   TableHeader,
   TableRow,
   TableVirtualizer,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
-const statuses = ['Ready', 'Building', 'Queued', 'Error'] as const
+const statuses = ["Ready", "Building", "Queued", "Error"] as const
 const statusVariant = {
-  Building: 'info',
-  Error: 'danger',
-  Queued: 'warning',
-  Ready: 'success',
+  Building: "info",
+  Error: "danger",
+  Queued: "warning",
+  Ready: "success",
 } as const
 
 const services = [
-  'web',
-  'api',
-  'worker',
-  'cron',
-  'admin',
-  'storefront',
+  "web",
+  "api",
+  "worker",
+  "cron",
+  "admin",
+  "storefront",
 ] as const
-const regions = ['iad1', 'sfo1', 'fra1', 'hnd1'] as const
+const regions = ["iad1", "sfo1", "fra1", "hnd1"] as const
 
 const columns: Column[] = [
-  { id: 'deployment', name: 'Deployment', isRowHeader: true },
-  { id: 'service', name: 'Service' },
-  { id: 'status', name: 'Status' },
-  { id: 'region', name: 'Region' },
-  { id: 'duration', name: 'Duration' },
+  { id: "deployment", name: "Deployment", isRowHeader: true },
+  { id: "service", name: "Service" },
+  { id: "status", name: "Status" },
+  { id: "region", name: "Region" },
+  { id: "duration", name: "Duration" },
 ]
 
 const deployments: Deployment[] = Array.from({ length: 2500 }, (_, index) => {
@@ -43,8 +43,8 @@ const deployments: Deployment[] = Array.from({ length: 2500 }, (_, index) => {
 
   return {
     id: `deploy-${id}`,
-    deployment: `release-${String(id).padStart(4, '0')}`,
-    duration: `${(index % 9) + 1}m ${String((index * 7) % 60).padStart(2, '0')}s`,
+    deployment: `release-${String(id).padStart(4, "0")}`,
+    duration: `${(index % 9) + 1}m ${String((index * 7) % 60).padStart(2, "0")}s`,
     region: regions[index % regions.length] ?? regions[0],
     service: services[index % services.length] ?? services[0],
     status: statuses[index % statuses.length] ?? statuses[0],
@@ -67,7 +67,7 @@ export default function Demo() {
             {(item) => (
               <TableRow
                 columns={columns}
-                style={{ height: 'inherit', width: 'inherit' }}
+                style={{ height: "inherit", width: "inherit" }}
               >
                 {(column) => (
                   <TableCell>
@@ -84,7 +84,7 @@ export default function Demo() {
 }
 
 function CellValue({ item, column }: { item: Deployment; column: Column }) {
-  if (column.id === 'status') {
+  if (column.id === "status") {
     return (
       <Badge appearance="subtle" variant={statusVariant[item.status]}>
         {item.status}
@@ -92,7 +92,7 @@ function CellValue({ item, column }: { item: Deployment; column: Column }) {
     )
   }
 
-  if (column.id === 'deployment') {
+  if (column.id === "deployment") {
     return <span className="font-medium">{item.deployment}</span>
   }
 
@@ -109,7 +109,7 @@ interface Deployment {
 }
 
 interface Column {
-  id: keyof Omit<Deployment, 'id'>
+  id: keyof Omit<Deployment, "id">
   name: string
   isRowHeader?: boolean
 }

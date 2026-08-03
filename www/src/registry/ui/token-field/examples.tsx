@@ -1,10 +1,10 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Basic from './demos/basic'
-import Controlled from './demos/controlled'
-import Hashtags from './demos/hashtags'
-import Tags from './demos/tags'
+import Basic from "./demos/basic"
+import Controlled from "./demos/controlled"
+import Hashtags from "./demos/hashtags"
+import Tags from "./demos/tags"
 
 export default function TokenFieldExamples() {
   return (

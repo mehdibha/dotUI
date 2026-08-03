@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Input } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
+import { Input } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
-  const [inputValue, setInputValue] = React.useState('Hello world!')
+  const [inputValue, setInputValue] = React.useState("Hello world!")
   return (
     <div className="flex w-full max-w-xs flex-col gap-6">
       <TextField

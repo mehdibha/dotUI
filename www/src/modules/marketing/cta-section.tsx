@@ -1,32 +1,32 @@
-import { startTransition, useEffect, useRef, useState } from 'react'
-import type { CSSProperties } from 'react'
+import { startTransition, useEffect, useRef, useState } from "react"
+import type { CSSProperties } from "react"
 import {
   ArrowRightIcon,
   CheckIcon,
   ChevronDownIcon,
   CopyIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
-import { siteConfig } from '@/config/site'
-import { DesignSystemProvider } from '@/lib/styles'
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
-import { Button, LinkButton } from '@/registry/ui/button'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { DEFAULTS } from '@/modules/create/preset'
+import { siteConfig } from "@/config/site"
+import { DesignSystemProvider } from "@/lib/styles"
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
+import { Button, LinkButton } from "@/registry/ui/button"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { DEFAULTS } from "@/modules/create/preset"
 import {
   buildInitCommands,
   PACKAGE_MANAGERS,
   packageManagerStore,
-} from '@/modules/docs/install-commands'
-import type { PackageManager } from '@/modules/docs/install-commands'
-import { PillBacklight } from '@/modules/marketing/pill-backlight'
+} from "@/modules/docs/install-commands"
+import type { PackageManager } from "@/modules/docs/install-commands"
+import { PillBacklight } from "@/modules/marketing/pill-backlight"
 import {
   presetLabelStack,
   usePresetLabelFonts,
-} from '@/modules/marketing/preset-fonts'
-import { PRESETS } from '@/modules/presets/presets-data'
-import type { Preset } from '@/modules/presets/presets-data'
+} from "@/modules/marketing/preset-fonts"
+import { PRESETS } from "@/modules/presets/presets-data"
+import type { Preset } from "@/modules/presets/presets-data"
 
 /**
  * Closing CTA: the whole pitch reduced to one headline and one command. The
@@ -35,7 +35,7 @@ import type { Preset } from '@/modules/presets/presets-data'
  * the copied `init` URL. The editor is the quiet second path underneath.
  */
 export function CtaSection() {
-  const [presetId, setPresetId] = useState<string | null>('origin')
+  const [presetId, setPresetId] = useState<string | null>("origin")
   const preset = PRESETS.find((p) => p.id === presetId) ?? null
   const ds = preset?.designSystem ?? DEFAULTS
 
@@ -109,12 +109,12 @@ function InstallCommand({
   // Widest command the slot can show (`yarn dlx` prefix + truncated preset) —
   // an invisible sizer keeps the pill from shifting on preset/pm switches.
   const sizerCommand = buildInitCommands(
-    `${baseUrl}?preset=${'M'.repeat(BLOB_PREVIEW_CHARS)}…`,
+    `${baseUrl}?preset=${"M".repeat(BLOB_PREVIEW_CHARS)}…`,
   ).yarn
 
   // Async so a copy racing the codec load still gets the full URL.
   const copyCommand = async () => {
-    const enc = preset ? await encodePresetCached(preset) : ''
+    const enc = preset ? await encodePresetCached(preset) : ""
     const url = enc ? `${baseUrl}?preset=${enc}` : baseUrl
     copyToClipboard(buildInitCommands(url)[packageManager])
   }
@@ -125,7 +125,7 @@ function InstallCommand({
       className="relative flex max-w-full items-center gap-1 rounded-full border bg-card p-2 shadow-xs motion-safe:transition-[--cta-glow-color] motion-safe:duration-700"
       style={
         {
-          '--cta-glow-color': preset ? preset.swatch : 'var(--color-fg)',
+          "--cta-glow-color": preset ? preset.swatch : "var(--color-fg)",
         } as CSSProperties
       }
     >
@@ -163,10 +163,10 @@ function InstallCommand({
             selectionMode="single"
             selectedKeys={preset ? [preset.id] : []}
             onSelectionChange={(keys) => {
-              if (keys === 'all') return
+              if (keys === "all") return
               // Re-selecting the active preset clears it back to plain dotUI.
               const next = keys.values().next().value
-              onSelectPreset(typeof next === 'string' ? next : null)
+              onSelectPreset(typeof next === "string" ? next : null)
             }}
           >
             {PRESETS.map((p) => (
@@ -199,9 +199,9 @@ function InstallCommand({
             selectionMode="single"
             selectedKeys={[packageManager]}
             onSelectionChange={(keys) => {
-              if (keys === 'all') return
+              if (keys === "all") return
               const next = keys.values().next().value
-              if (typeof next === 'string') {
+              if (typeof next === "string") {
                 packageManagerStore.set(next as PackageManager)
               }
             }}
@@ -241,13 +241,13 @@ function InstallCommand({
 }
 
 /** Glow position on the pill border, set by PillBacklight (border-box px). */
-const GLOW_X = 'var(--cta-glow-x, 50%)'
-const GLOW_Y = 'var(--cta-glow-y, 0px)'
+const GLOW_X = "var(--cta-glow-x, 50%)"
+const GLOW_Y = "var(--cta-glow-y, 0px)"
 /** Only the border ring: two full-cover mask layers, content-box excluded. */
 const RING_MASK: CSSProperties = {
-  maskImage: 'linear-gradient(#000 0 0), linear-gradient(#000 0 0)',
-  maskClip: 'content-box, border-box',
-  maskComposite: 'exclude',
+  maskImage: "linear-gradient(#000 0 0), linear-gradient(#000 0 0)",
+  maskClip: "content-box, border-box",
+  maskComposite: "exclude",
 }
 
 /**
@@ -264,7 +264,7 @@ function PillGlow() {
         style={{
           ...RING_MASK,
           background: `radial-gradient(4rem circle at ${GLOW_X} ${GLOW_Y}, var(--cta-glow-color), transparent 70%), radial-gradient(9rem circle at ${GLOW_X} ${GLOW_Y}, color-mix(in oklab, var(--cta-glow-color) 55%, transparent), transparent 70%)`,
-          opacity: 'calc(0.8 + 0.2 * var(--cta-glow-boost, 0))',
+          opacity: "calc(0.8 + 0.2 * var(--cta-glow-boost, 0))",
         }}
       />
       <div
@@ -273,7 +273,7 @@ function PillGlow() {
         style={{
           ...RING_MASK,
           background: `radial-gradient(5rem circle at calc(${GLOW_X} + 3px) calc(${GLOW_Y} + 3px), color-mix(in oklab, var(--cta-glow-color) 45%, transparent), transparent 70%)`,
-          opacity: 'calc(0.5 + 0.4 * var(--cta-glow-boost, 0))',
+          opacity: "calc(0.5 + 0.4 * var(--cta-glow-boost, 0))",
         }}
       />
     </>
@@ -300,9 +300,9 @@ const encodedCache = new Map<string, string>()
 async function encodePresetCached(preset: Preset): Promise<string> {
   const cached = encodedCache.get(preset.id)
   if (cached !== undefined) return cached
-  const { encodePreset } = await import('@/modules/create/preset/codec')
+  const { encodePreset } = await import("@/modules/create/preset/codec")
   // `undefined` means the preset matches the builder defaults — no param needed.
-  const encoded = encodePreset(preset.designSystem) ?? ''
+  const encoded = encodePreset(preset.designSystem) ?? ""
   encodedCache.set(preset.id, encoded)
   return encoded
 }

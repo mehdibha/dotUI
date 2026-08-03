@@ -1,7 +1,7 @@
-import { renderNodesToHtml, renderTokens } from '@tanstack/highlight/core'
-import { tsx } from '@tanstack/highlight/languages/tsx'
+import { renderNodesToHtml, renderTokens } from "@tanstack/highlight/core"
+import { tsx } from "@tanstack/highlight/languages/tsx"
 
-import { createRefinedHighlighter } from './highlight-refine'
+import { createRefinedHighlighter } from "./highlight-refine"
 
 /**
  * Synchronous TSX highlighter for code the client generates at runtime
@@ -19,6 +19,6 @@ export const highlighter = createRefinedHighlighter({ languages: [tsx] })
 
 /** Highlight TSX to inner `<code>` markup (escaped token spans). */
 export function highlightTsxHtml(code: string): string {
-  const { tokens } = highlighter.tokenize(code, { lang: 'tsx' })
+  const { tokens } = highlighter.tokenize(code, { lang: "tsx" })
   return renderNodesToHtml(renderTokens(tokens))
 }

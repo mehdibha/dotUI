@@ -1,20 +1,20 @@
-import type * as LinkPrimitives from 'react-aria-components/Link'
+import type * as LinkPrimitives from "react-aria-components/Link"
 
 /**
  * Pagination lets users navigate through large sets of content split across
  * multiple pages. It renders a `nav` landmark labelled "pagination".
  */
-export interface PaginationProps extends React.ComponentProps<'nav'> {}
+export interface PaginationProps extends React.ComponentProps<"nav"> {}
 
 /**
  * The list that holds the pagination items.
  */
-export interface PaginationListProps extends React.ComponentProps<'ul'> {}
+export interface PaginationListProps extends React.ComponentProps<"ul"> {}
 
 /**
  * A single item in the pagination list.
  */
-export interface PaginationItemProps extends React.ComponentProps<'li'> {}
+export interface PaginationItemProps extends React.ComponentProps<"li"> {}
 
 /**
  * A pagination link. Provide an `href` to navigate, or an `onPress` handler to
@@ -34,13 +34,13 @@ export interface PaginationLinkProps extends React.ComponentProps<
    * The visual style of the link.
    * @default isActive ? 'secondary' : 'quiet'
    */
-  variant?: 'primary' | 'secondary' | 'quiet' | 'link' | 'warning' | 'danger'
+  variant?: "primary" | "secondary" | "quiet" | "link" | "warning" | "danger"
 
   /**
    * The size of the link.
    * @default "md"
    */
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: "xs" | "sm" | "md" | "lg"
 
   /**
    * Render the link as a square cell sized like an icon button. Page numbers
@@ -56,7 +56,7 @@ export interface PaginationLinkProps extends React.ComponentProps<
  */
 export interface PaginationPreviousProps extends Omit<
   PaginationLinkProps,
-  'children'
+  "children"
 > {
   /** Overrides the default "Previous" label. */
   children?: React.ReactNode
@@ -68,7 +68,7 @@ export interface PaginationPreviousProps extends Omit<
  */
 export interface PaginationNextProps extends Omit<
   PaginationLinkProps,
-  'children'
+  "children"
 > {
   /** Overrides the default "Next" label. */
   children?: React.ReactNode
@@ -77,4 +77,4 @@ export interface PaginationNextProps extends Omit<
 /**
  * A non-interactive indicator for a gap of skipped pages.
  */
-export interface PaginationEllipsisProps extends React.ComponentProps<'span'> {}
+export interface PaginationEllipsisProps extends React.ComponentProps<"span"> {}

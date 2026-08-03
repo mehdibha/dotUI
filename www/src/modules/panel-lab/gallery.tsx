@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
 /* /internal/panel-lab — the section index: the row vocabulary the panel is
    built from, then every panel version as a live preview. Click a preview to
    open that version full size. */
 
-import { Link } from '@tanstack/react-router'
-import { ArrowUpRightIcon } from 'lucide-react'
+import { Link } from "@tanstack/react-router"
+import { ArrowUpRightIcon } from "lucide-react"
 
-import { InternalShell } from '@/modules/internal/shell'
+import { InternalShell } from "@/modules/internal/shell"
 
-import { DRAFTS, draftChapters } from './drafts'
-import type { Draft } from './drafts'
-import { useStaticLab } from './use-lab'
-import { PanelFrame } from './variants/panel'
-import { PANEL_VERSIONS } from './versions'
-import type { PanelVersion } from './versions'
+import { DRAFTS, draftChapters } from "./drafts"
+import type { Draft } from "./drafts"
+import { useStaticLab } from "./use-lab"
+import { PanelFrame } from "./variants/panel"
+import { PANEL_VERSIONS } from "./versions"
+import type { PanelVersion } from "./versions"
 
 /* The panel is 360×720; the preview window shows it scaled, top-anchored,
    clipped with a fade — enough to recognize the version at a glance. */
@@ -23,7 +23,13 @@ const PANEL_W = 360
 const PANEL_H = 720
 
 /** The scaled, inert panel shared by version and draft cards. */
-function PanelPreview({ chapters }: { chapters: PanelVersion['chapters'] }) {
+function PanelPreview({
+  chapters,
+  Frame = PanelFrame,
+}: {
+  chapters: PanelVersion["chapters"]
+  Frame?: NonNullable<Draft["Frame"]>
+}) {
   const lab = useStaticLab()
   return (
     <div
@@ -38,10 +44,10 @@ function PanelPreview({ chapters }: { chapters: PanelVersion['chapters'] }) {
           width: PANEL_W,
           height: PANEL_H,
           transform: `translateX(-50%) scale(${PREVIEW_SCALE})`,
-          transformOrigin: 'top center',
+          transformOrigin: "top center",
         }}
       >
-        <PanelFrame chapters={chapters} lab={lab} />
+        <Frame chapters={chapters} lab={lab} />
       </div>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card to-transparent" />
     </div>
@@ -57,7 +63,10 @@ function DraftCard({ draft }: { draft: Draft }) {
       params={{ draft: draft.id }}
       className="group/draft flex cursor-interactive flex-col gap-3 rounded-2xl border border-border/45 bg-card p-3 focus-reset transition-colors hover:border-border focus-visible:focus-ring"
     >
-      <PanelPreview chapters={draftChapters(base.chapters, draft)} />
+      <PanelPreview
+        chapters={draftChapters(base.chapters, draft)}
+        Frame={draft.Frame}
+      />
       <div className="flex flex-col gap-1 px-1 pb-1">
         <span className="flex items-center gap-1.5">
           <span className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[11px] text-fg-muted">
@@ -103,7 +112,7 @@ function VersionCard({ version }: { version: PanelVersion }) {
 export function PanelLabGallery() {
   return (
     <InternalShell
-      crumbs={[{ label: 'Panel Lab' }]}
+      crumbs={[{ label: "Panel Lab" }]}
       title="Panel Lab"
       description="The /create control panel, rebuilt in the row language. Each version is the whole panel — open one to work in it, or compare them here."
     >

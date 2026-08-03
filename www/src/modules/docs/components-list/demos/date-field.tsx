@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { parseDate } from '@internationalized/date'
+import { parseDate } from "@internationalized/date"
 
-import { DateField } from '@/registry/ui/date-field'
-import { Label } from '@/registry/ui/field'
-import { DateInput } from '@/registry/ui/input'
+import { DateField } from "@/registry/ui/date-field"
+import { Label } from "@/registry/ui/field"
+import { DateInput } from "@/registry/ui/input"
 
-import { DemoFocus, useCardHover } from '../autoplay'
+import { DemoFocus, useCardHover } from "../autoplay"
 
 // Shows a real date and lights up its real focus ring while the card is hovered.
 // We only set `data-focused` on the field (no real `:focus`), so it never steals
@@ -15,7 +15,7 @@ export function DateFieldDemo() {
   const active = useCardHover()
   return (
     <DateField
-      defaultValue={parseDate('2024-06-12')}
+      defaultValue={parseDate("2024-06-12")}
       className="w-full max-w-[11.5rem]"
     >
       <Label>Meeting date</Label>

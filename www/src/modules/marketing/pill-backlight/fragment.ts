@@ -1,4 +1,4 @@
-import { LED_COUNT, WAVE_AMP, WAVE_BASE, WAVE_COUNT } from './strip'
+import { LED_COUNT, WAVE_AMP, WAVE_BASE, WAVE_COUNT } from "./strip"
 
 /**
  * Backlit pill — an LED strip runs behind the perimeter of the CTA pill, and a

@@ -3,7 +3,7 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
   Breadcrumbs,
-} from '@/registry/ui/breadcrumbs'
+} from "@/registry/ui/breadcrumbs"
 
 // The card itself is an <a>; an href here would render nested anchors. Omitting
 // it makes RAC render spans (same breadcrumb-link styles), which is correct for

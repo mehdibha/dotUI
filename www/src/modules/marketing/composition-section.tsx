@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from "react"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 import {
   CompositionCode,
   CompositionTransitionStyles,
@@ -9,13 +9,13 @@ import {
   StepDots,
   StepTimer,
   useCompositionPlayer,
-} from '@/modules/docs/composition-animation'
+} from "@/modules/docs/composition-animation"
 
 // The right panel at its tallest step: the play/pause row (h-7 + mb-3) + the
 // preview area (min-h-56) + the code pane at its ceiling (max-h-86) + the card's
 // own y-borders. Reserving it on the panel's container keeps the animating card
 // from ever moving the page.
-const panelMaxHeight = 'calc(2.5rem + 14rem + 21.5rem + 2px)'
+const panelMaxHeight = "calc(2.5rem + 14rem + 21.5rem + 2px)"
 
 export function CompositionSection() {
   const player = useCompositionPlayer({ compactBelowLg: true })
@@ -35,13 +35,13 @@ export function CompositionSection() {
   const railRef = useRef<HTMLOListElement>(null)
   useEffect(() => {
     const rail = railRef.current
-    const active = rail?.querySelectorAll('li')[activePaginated] as
+    const active = rail?.querySelectorAll("li")[activePaginated] as
       | HTMLElement
       | undefined
     if (!rail || !active) return
     rail.scrollTo({
       top: active.offsetTop - rail.clientHeight / 2 + active.offsetHeight / 2,
-      behavior: reducedMotion ? 'auto' : 'smooth',
+      behavior: reducedMotion ? "auto" : "smooth",
     })
   }, [activePaginated, reducedMotion])
 
@@ -56,7 +56,7 @@ export function CompositionSection() {
   useEffect(() => {
     const el = codeInnerRef.current
     if (!el || !mounted) return
-    const lines = current.code.split('\n').length
+    const lines = current.code.split("\n").length
     if (!codeMetrics.current) {
       const style = getComputedStyle(el)
       const pad = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
@@ -110,31 +110,31 @@ export function CompositionSection() {
               className="absolute top-5 left-0 z-10 h-8 w-px bg-fg transition-transform ease-[cubic-bezier(0.645,0.045,0.355,1)] motion-reduce:transition-none"
               style={{
                 transform: `translateY(${activePaginated * 2}rem)`,
-                transitionDuration: '450ms',
+                transitionDuration: "450ms",
               }}
             />
             {paginated.map((p, pos) => (
               <li key={p.title}>
                 <button
                   type="button"
-                  aria-current={pos === activePaginated ? 'step' : undefined}
+                  aria-current={pos === activePaginated ? "step" : undefined}
                   onClick={() => goToStep(p.index)}
                   className={cn(
-                    'relative flex h-8 w-full cursor-pointer items-center gap-3 border-l pl-4 text-left text-sm transition-colors',
+                    "relative flex h-8 w-full cursor-pointer items-center gap-3 border-l pl-4 text-left text-sm transition-colors",
                     pos === activePaginated
-                      ? 'text-fg'
-                      : 'text-fg-muted hover:text-fg',
+                      ? "text-fg"
+                      : "text-fg-muted hover:text-fg",
                   )}
                 >
                   <span
                     className={cn(
-                      'font-mono text-xs tabular-nums transition-colors',
+                      "font-mono text-xs tabular-nums transition-colors",
                       pos === activePaginated
-                        ? 'text-fg-muted'
-                        : 'text-fg-muted/50',
+                        ? "text-fg-muted"
+                        : "text-fg-muted/50",
                     )}
                   >
-                    {String(pos + 1).padStart(2, '0')}
+                    {String(pos + 1).padStart(2, "0")}
                   </span>
                   {p.title}
                 </button>
@@ -150,7 +150,7 @@ export function CompositionSection() {
             column past the viewport instead of scrolling inside the card. */}
         <div
           className="min-w-0 lg:min-h-(--panel-max)"
-          style={{ '--panel-max': panelMaxHeight } as React.CSSProperties}
+          style={{ "--panel-max": panelMaxHeight } as React.CSSProperties}
         >
           {/* Title and dots stand in for the step rail, which is desktop-only.
               The play/pause button stays at both sizes, and sits outside the
@@ -189,8 +189,8 @@ export function CompositionSection() {
             <div
               className="no-scrollbar scroll-fade-y overflow-x-hidden overflow-y-auto overscroll-contain border-t transition-[height] ease-in-out scroll-fade-6 motion-reduce:transition-none max-lg:max-h-62 max-lg:min-h-62 lg:max-h-86 lg:min-h-51"
               style={{
-                height: codeHeight ?? 'auto',
-                transitionDuration: '500ms',
+                height: codeHeight ?? "auto",
+                transitionDuration: "500ms",
               }}
             >
               <div
@@ -208,10 +208,10 @@ export function CompositionSection() {
                   // Carries the gutter too, so hydration doesn't shift the
                   // snippet sideways.
                   <pre className="whitespace-pre">
-                    {current.code.split('\n').map((line, i) => (
+                    {current.code.split("\n").map((line, i) => (
                       <span key={i}>
                         <span className="opacity-30">
-                          {`${String(i + 1).padStart(lineNumberWidth, ' ')}  `}
+                          {`${String(i + 1).padStart(lineNumberWidth, " ")}  `}
                         </span>
                         {`${line}\n`}
                       </span>

@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { Suspense, use } from 'react'
+import { Suspense, use } from "react"
 
-import { DialogTitle } from '@/registry/ui/dialog'
-import { CodeBlock } from '@/modules/docs/code-block'
+import { DialogTitle } from "@/registry/ui/dialog"
+import { CodeBlock } from "@/modules/docs/code-block"
 import {
   CodeBlockTab,
   CodeBlockTabs,
   CodeBlockTabsList,
   CodeBlockTabsTrigger,
-} from '@/modules/docs/code-block-tabs'
-import { DynamicPre } from '@/modules/docs/dynamic-pre'
+} from "@/modules/docs/code-block-tabs"
+import { DynamicPre } from "@/modules/docs/dynamic-pre"
 
 import {
   demoSource,
@@ -18,7 +18,7 @@ import {
   installCommands,
   installItems,
   PACKAGE_MANAGERS,
-} from './data'
+} from "./data"
 
 interface ChartCodeModalContentProps {
   /** Demo key, e.g. `chart-bar/demos/multiple`. */
@@ -87,7 +87,7 @@ export default function ChartCodeModalContent({
       <div className="flex min-h-0 min-w-0 flex-1 flex-col border-t bg-card md:border-t-0">
         {source ? (
           <CodeBlock
-            title={`${demoKey.split('/').pop()}.tsx`}
+            title={`${demoKey.split("/").pop()}.tsx`}
             className="flex min-h-0 flex-1 flex-col rounded-none border-0 bg-transparent"
             contentClassName="no-scrollbar min-h-0 flex-1 scroll-fade-y overflow-y-auto"
           >

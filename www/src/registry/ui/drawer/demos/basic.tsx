@@ -1,12 +1,12 @@
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogBody,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer, DrawerHandle } from '@/registry/ui/drawer'
+} from "@/registry/ui/dialog"
+import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 
 export default function Demo() {
   return (

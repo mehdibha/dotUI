@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* Color v2 — the working Colors frame, forked from color-ideal (v1's frozen
    body). What changed and why:
@@ -14,7 +14,7 @@
    - Deliberately no token-overrides view: re-pointing semantic tokens is an
      expert/export-layer concern, not part of choosing colors. */
 
-import { useState } from 'react'
+import { useState } from "react"
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -23,25 +23,25 @@ import {
   RotateCcwIcon,
   SunIcon,
   TriangleAlertIcon,
-} from 'lucide-react'
-import { Button as RacButton } from 'react-aria-components'
+} from "lucide-react"
+import { Button as RacButton } from "react-aria-components"
 
-import { STEPS, toOklch, wcag2 } from '@dotui/colors'
-import type { StepName, Theme } from '@dotui/colors'
+import { STEPS, toOklch, wcag2 } from "@dotui/colors"
+import type { StepName, Theme } from "@dotui/colors"
 
-import { resolveColorConfigCached } from '@/lib/resolve-color'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
+import { resolveColorConfigCached } from "@/lib/resolve-color"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import { ColorSwatch } from "@/registry/ui/color-swatch"
 import {
   Slider,
   SliderControl,
   SliderFill,
   SliderThumb,
   SliderTrack,
-} from '@/registry/ui/slider'
-import { Switch, SwitchControl } from '@/registry/ui/switch'
+} from "@/registry/ui/slider"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 import {
   ColorPickerRow,
   ControlGroup,
@@ -52,19 +52,19 @@ import {
   ROW,
   ROW_LABEL,
   ROW_VALUE,
-} from '@/modules/control-lab/rows'
+} from "@/modules/control-lab/rows"
 
-import { ACCENT_POOL, DEFAULTS, PRIMARY_OPTIONS } from '../data'
-import type { Lab, LabState } from '../data'
+import { ACCENT_POOL, DEFAULTS, PRIMARY_OPTIONS } from "../data"
+import type { Lab, LabState } from "../data"
 import {
   DetailRow,
   PickerPopoverContent,
   SegmentedControlRow,
   SwatchDots,
-} from '../patterns'
-import { cssToHex, useBorderSeeds, useLabConfig } from './engine-562'
+} from "../patterns"
+import { cssToHex, useBorderSeeds, useLabConfig } from "./engine-562"
 
-type Mode = 'light' | 'dark'
+type Mode = "light" | "dark"
 
 /* ---------------------------------- Hero ----------------------------------- */
 
@@ -77,34 +77,34 @@ function ModeSwitch({
   mode: Mode
   onChange: (mode: Mode) => void
 }) {
-  const isDark = mode === 'dark'
+  const isDark = mode === "dark"
   return (
     <Switch
       aria-label="Ramp preview mode"
       isSelected={isDark}
-      onChange={(selected) => onChange(selected ? 'dark' : 'light')}
+      onChange={(selected) => onChange(selected ? "dark" : "light")}
     >
       <SwitchControl className="h-7 shrink-0 cursor-interactive gap-0 rounded-md bg-bg/50 p-0.5">
         <span className="relative flex h-6 items-center gap-0.5">
           <span
             aria-hidden
             className={cn(
-              'absolute inset-y-0 left-0 w-7 rounded-[5px] bg-highlight transition-transform duration-200 ease-out',
-              isDark && 'translate-x-[calc(100%+0.125rem)]',
+              "absolute inset-y-0 left-0 w-7 rounded-[5px] bg-highlight transition-transform duration-200 ease-out",
+              isDark && "translate-x-[calc(100%+0.125rem)]",
             )}
           />
           <span
             className={cn(
-              'relative z-10 flex h-6 w-7 items-center justify-center',
-              isDark ? 'text-fg-muted' : 'text-fg',
+              "relative z-10 flex h-6 w-7 items-center justify-center",
+              isDark ? "text-fg-muted" : "text-fg",
             )}
           >
             <SunIcon className="size-3" />
           </span>
           <span
             className={cn(
-              'relative z-10 flex h-6 w-7 items-center justify-center',
-              isDark ? 'text-fg' : 'text-fg-muted',
+              "relative z-10 flex h-6 w-7 items-center justify-center",
+              isDark ? "text-fg" : "text-fg-muted",
             )}
           >
             <MoonIcon className="size-3" />
@@ -115,7 +115,7 @@ function ModeSwitch({
   )
 }
 
-const HERO_PALETTES = ['accent', 'neutral'] as const
+const HERO_PALETTES = ["accent", "neutral"] as const
 
 /** The engine's output as the opening visual — v2 adds an expandable warning
  *  list (tap the verdict) and one-tap hex copy on the inspected step. */
@@ -166,12 +166,12 @@ function EngineHero({
             <TriangleAlertIcon className="size-3 shrink-0 text-fg-warning" />
             <span className="truncate">
               {warnings.length} contrast warning
-              {warnings.length === 1 ? '' : 's'}
+              {warnings.length === 1 ? "" : "s"}
             </span>
             <ChevronDownIcon
               className={cn(
-                'size-3 shrink-0 transition-transform duration-200',
-                showWarnings && 'rotate-180',
+                "size-3 shrink-0 transition-transform duration-200",
+                showWarnings && "rotate-180",
               )}
             />
           </RacButton>
@@ -201,8 +201,8 @@ function EngineHero({
                 aria-label={`Inspect ${palette} ${step}`}
                 aria-pressed={selected}
                 className={cn(
-                  'flex-1 cursor-interactive focus-reset focus-visible:z-10 focus-visible:focus-ring',
-                  selected && 'z-10 rounded-[3px] ring-2 ring-bg ring-inset',
+                  "flex-1 cursor-interactive focus-reset focus-visible:z-10 focus-visible:focus-ring",
+                  selected && "z-10 rounded-[3px] ring-2 ring-bg ring-inset",
                 )}
                 style={{ backgroundColor: m.scales[palette]?.[step] }}
                 onClick={() => {
@@ -251,7 +251,7 @@ function EngineHero({
             size="xs"
             variant="quiet"
             className="shrink-0"
-            onPress={() => set('preserveSeed')(true)}
+            onPress={() => set("preserveSeed")(true)}
           >
             Pin exact
           </Button>
@@ -275,7 +275,7 @@ function SwatchRow({
   return (
     <div
       data-row=""
-      className={cn(ROW, 'flex items-center justify-between gap-3 px-4')}
+      className={cn(ROW, "flex items-center justify-between gap-3 px-4")}
     >
       <span className={ROW_LABEL}>Swatches</span>
       <span className="flex shrink-0 items-center gap-2">
@@ -288,8 +288,8 @@ function SwatchRow({
               aria-label={`Use ${hex} as the brand color`}
               aria-pressed={active}
               className={cn(
-                'size-5 cursor-interactive rounded-full focus-reset transition-shadow focus-visible:focus-ring',
-                active && 'ring-2 ring-fg/50 ring-offset-2 ring-offset-muted',
+                "size-5 cursor-interactive rounded-full focus-reset transition-shadow focus-visible:focus-ring",
+                active && "ring-2 ring-fg/50 ring-offset-2 ring-offset-muted",
               )}
               style={{ backgroundColor: hex }}
               onClick={() => onChange(hex)}
@@ -323,7 +323,7 @@ function MiniAutoColorRow({
   return (
     <ColorPicker
       value={value || cssToHex(derived)}
-      onChange={(c) => onChange(c.toString('hex'))}
+      onChange={(c) => onChange(c.toString("hex"))}
     >
       {({ color }) => (
         <div className="flex items-center gap-0.5">
@@ -334,12 +334,12 @@ function MiniAutoColorRow({
             <span className="truncate text-xs text-fg-muted">{label}</span>
             <span className="flex shrink-0 items-center gap-2">
               <span className="font-mono text-xs text-fg-muted uppercase">
-                {value ? color.toString('hex') : 'Auto'}
+                {value ? color.toString("hex") : "Auto"}
               </span>
               <ColorSwatch className="size-4 rounded-full" />
             </span>
           </Button>
-          {value !== '' && (
+          {value !== "" && (
             <Button
               size="xs"
               variant="quiet"
@@ -408,69 +408,69 @@ function MiniSliderRow({
 /* --------------------------------- Section --------------------------------- */
 
 const GUARANTEE_OPTIONS = [
-  { value: 'default', label: 'Default' },
-  { value: 'relaxed', label: 'Relaxed' },
-  { value: 'strict', label: 'Strict' },
+  { value: "default", label: "Default" },
+  { value: "relaxed", label: "Relaxed" },
+  { value: "strict", label: "Strict" },
 ]
 
 const GRAY_MODE_OPTIONS = [
-  { value: 'auto', label: 'Auto' },
-  { value: 'custom', label: 'Custom' },
+  { value: "auto", label: "Auto" },
+  { value: "custom", label: "Custom" },
 ]
 
 const FINE_KEYS = [
-  'vividness',
-  'hueShift',
-  'preserveSeed',
-  'guarantees',
-  'borderContrast',
+  "vividness",
+  "hueShift",
+  "preserveSeed",
+  "guarantees",
+  "borderContrast",
 ] as const satisfies readonly (keyof LabState)[]
 
 const SEMANTIC_SEEDS = [
-  { key: 'successSeed', palette: 'success', label: 'Success' },
-  { key: 'warningSeed', palette: 'warning', label: 'Warning' },
-  { key: 'dangerSeed', palette: 'danger', label: 'Danger' },
-  { key: 'infoSeed', palette: 'info', label: 'Info' },
+  { key: "successSeed", palette: "success", label: "Success" },
+  { key: "warningSeed", palette: "warning", label: "Warning" },
+  { key: "dangerSeed", palette: "danger", label: "Danger" },
+  { key: "infoSeed", palette: "info", label: "Info" },
 ] as const
 
 const BORDER_JOBS = [
-  { key: 'border400', job: '400', label: 'Border · subtle', maxValue: 3 },
-  { key: 'border500', job: '500', label: 'Border · interactive', maxValue: 4 },
-  { key: 'border600', job: '600', label: 'Border · emphasized', maxValue: 8 },
+  { key: "border400", job: "400", label: "Border · subtle", maxValue: 3 },
+  { key: "border500", job: "500", label: "Border · interactive", maxValue: 4 },
+  { key: "border600", job: "600", label: "Border · emphasized", maxValue: 8 },
 ] as const
 
 export function ColorSectionV2Body({ lab }: { lab: Lab }) {
   const { state, set } = lab
-  const [mode, setMode] = useState<Mode>('light')
+  const [mode, setMode] = useState<Mode>("light")
 
   const config = useLabConfig(state)
   const theme = resolveColorConfigCached(config)
   const borderSeeds = useBorderSeeds(config)
   const m = theme[mode]
 
-  const solid = (palette: string) => m.scales[palette]?.['700'] ?? m.background
-  const gray500 = m.scales.neutral?.['500'] ?? m.background
+  const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
+  const gray500 = m.scales.neutral?.["500"] ?? m.background
   const selectionDerived =
-    m.scales.selection?.['700'] ??
-    (state.primary === 'accent' ? solid('accent') : solid('neutral'))
+    m.scales.selection?.["700"] ??
+    (state.primary === "accent" ? solid("accent") : solid("neutral"))
 
-  const grayMode = state.graySeed ? 'custom' : 'auto'
+  const grayMode = state.graySeed ? "custom" : "auto"
   const grayLabel = state.graySeed
-    ? 'Custom'
+    ? "Custom"
     : state.grayTintAmount === 0
-      ? 'Pure'
-      : 'Auto'
+      ? "Pure"
+      : "Auto"
 
   const semanticModified =
-    SEMANTIC_SEEDS.some(({ key }) => state[key] !== '') ||
-    state.selectionSeed !== ''
+    SEMANTIC_SEEDS.some(({ key }) => state[key] !== "") ||
+    state.selectionSeed !== ""
   const fineModified = FINE_KEYS.some((key) => state[key] !== DEFAULTS[key])
 
   const setGrayMode = (next: string) =>
-    set('graySeed')(next === 'custom' ? cssToHex(gray500) : '')
+    set("graySeed")(next === "custom" ? cssToHex(gray500) : "")
 
   const setBorderContrast = (on: boolean) => {
-    set('borderContrast')(on)
+    set("borderContrast")(on)
     for (const { key, job } of BORDER_JOBS) set(key)(on ? borderSeeds[job] : 0)
   }
 
@@ -481,13 +481,13 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
         <ColorPickerRow
           label="Brand"
           value={state.brand}
-          onChange={set('brand')}
+          onChange={set("brand")}
         />
-        <SwatchRow value={state.brand} onChange={set('brand')} />
+        <SwatchRow value={state.brand} onChange={set("brand")} />
         <SegmentedControlRow
           label="Primary"
           value={state.primary}
-          onChange={set('primary')}
+          onChange={set("primary")}
           options={PRIMARY_OPTIONS}
         />
       </ControlGroup>
@@ -512,23 +512,23 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
             options={GRAY_MODE_OPTIONS}
           />
         </ParamRow>
-        {grayMode === 'auto' ? (
+        {grayMode === "auto" ? (
           <MiniSliderRow
             label="Brand tint"
             value={state.grayTintAmount}
-            onChange={set('grayTintAmount')}
+            onChange={set("grayTintAmount")}
             minValue={0}
             maxValue={4}
             step={0.1}
-            format={(v) => (v === 0 ? 'Pure' : `${v.toFixed(1)}×`)}
+            format={(v) => (v === 0 ? "Pure" : `${v.toFixed(1)}×`)}
           />
         ) : (
           <MiniAutoColorRow
             label="Seed color"
             value={state.graySeed}
             derived={gray500}
-            onChange={set('graySeed')}
-            onReset={() => set('graySeed')('')}
+            onChange={set("graySeed")}
+            onReset={() => set("graySeed")("")}
           />
         )}
       </DetailRow>
@@ -550,25 +550,25 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
             value={state[key]}
             derived={solid(palette)}
             onChange={set(key)}
-            onReset={() => set(key)('')}
+            onReset={() => set(key)("")}
           />
         ))}
         <MiniAutoColorRow
           label="Selection"
           value={state.selectionSeed}
           derived={selectionDerived}
-          onChange={set('selectionSeed')}
-          onReset={() => set('selectionSeed')('')}
+          onChange={set("selectionSeed")}
+          onReset={() => set("selectionSeed")("")}
         />
       </DetailRow>
       <DetailRow
         label="Fine-tune"
-        summary={fineModified ? 'Custom' : 'Default'}
+        summary={fineModified ? "Custom" : "Default"}
       >
         <MiniSliderRow
           label="Vividness"
           value={state.vividness}
-          onChange={set('vividness')}
+          onChange={set("vividness")}
           minValue={0}
           maxValue={2}
           step={0.05}
@@ -577,7 +577,7 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
         <MiniSliderRow
           label="Hue shift"
           value={state.hueShift}
-          onChange={set('hueShift')}
+          onChange={set("hueShift")}
           minValue={0}
           maxValue={3}
           step={0.1}
@@ -587,7 +587,7 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
           <MiniSegmented
             ariaLabel="Contrast guarantees"
             value={state.guarantees}
-            onChange={set('guarantees')}
+            onChange={set("guarantees")}
             options={GUARANTEE_OPTIONS}
           />
         </ParamRow>
@@ -595,7 +595,7 @@ export function ColorSectionV2Body({ lab }: { lab: Lab }) {
           <MiniSwitch
             ariaLabel="Pin exact brand color"
             value={state.preserveSeed}
-            onChange={set('preserveSeed')}
+            onChange={set("preserveSeed")}
           />
         </ParamRow>
         <ParamRow label="Custom borders">

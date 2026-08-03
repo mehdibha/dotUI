@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Tree, TreeItem, TreeItemContent } from '@/registry/ui/tree'
+import { Tree, TreeItem, TreeItemContent } from "@/registry/ui/tree"
 
 export default function Demo() {
   return (
@@ -8,7 +8,7 @@ export default function Demo() {
       aria-label="Files"
       selectionMode="single"
       selectionBehavior="replace"
-      defaultExpandedKeys={['documents']}
+      defaultExpandedKeys={["documents"]}
       className="w-72"
     >
       <TreeItem id="documents" textValue="Documents">

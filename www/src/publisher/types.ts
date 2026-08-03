@@ -7,11 +7,11 @@
  * a flat `tv` config, then serialized.
  */
 
-import type { IconLibraryName } from '@/registry/icons/icon-map'
-import type { ColorConfig } from '@/registry/theme'
-import type { Density, RegistryItem, RegistryItemFile } from '@/registry/types'
+import type { IconLibraryName } from "@/registry/icons/icon-map"
+import type { ColorConfig } from "@/registry/theme"
+import type { Density, RegistryItem, RegistryItemFile } from "@/registry/types"
 
-import type { CodeOptions } from './code-options'
+import type { CodeOptions } from "./code-options"
 
 /**
  * A class value in a `tv` config. `tv` accepts more shapes (booleans, conditionals)

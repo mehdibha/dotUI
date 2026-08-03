@@ -1,14 +1,14 @@
-import type * as SelectPrimitives from 'react-aria-components/Select'
+import type * as SelectPrimitives from "react-aria-components/Select"
 
-import type { ListBoxProps } from '@/registry/ui/list-box'
-import type { PopoverProps } from '@/registry/ui/popover'
+import type { ListBoxProps } from "@/registry/ui/list-box"
+import type { PopoverProps } from "@/registry/ui/popover"
 
 /**
  * A select displays a collapsible list of options and allows a user to select one of them.
  */
 export interface SelectProps<
   T extends object,
-  M extends 'single' | 'multiple' = 'single',
+  M extends "single" | "multiple" = "single",
 > extends SelectPrimitives.SelectProps<T, M> {}
 
 /**
@@ -27,9 +27,9 @@ export interface SelectContentProps<T extends object>
     ListBoxProps<T>,
     Pick<
       PopoverProps,
-      'placement' | 'defaultOpen' | 'isOpen' | 'onOpenChange'
+      "placement" | "defaultOpen" | "isOpen" | "onOpenChange"
     > {
-  placement?: PopoverProps['placement']
+  placement?: PopoverProps["placement"]
 
   /**
    * Whether to use virtualization for large lists.

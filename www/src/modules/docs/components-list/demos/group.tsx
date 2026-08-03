@@ -1,19 +1,19 @@
-'use client'
+"use client"
 
-import { EllipsisIcon } from 'lucide-react'
+import { EllipsisIcon } from "lucide-react"
 
-import { SearchIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
+import { SearchIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
 
-import { DemoPress, useAutoplay } from '../autoplay'
+import { DemoPress, useAutoplay } from "../autoplay"
 
 export function GroupDemo() {
   const { phase } = useAutoplay([
-    { name: 'idle', duration: 900 },
-    { name: 'hover', duration: 540 },
-    { name: 'press', duration: 260 },
+    { name: "idle", duration: 900 },
+    { name: "hover", duration: 540 },
+    { name: "press", duration: 260 },
   ])
   return (
     <div className="flex flex-col items-center gap-4">

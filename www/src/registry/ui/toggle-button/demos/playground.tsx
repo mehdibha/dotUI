@@ -1,19 +1,19 @@
-'use client'
+"use client"
 
-import { PinIcon } from 'lucide-react'
+import { PinIcon } from "lucide-react"
 
-import { ToggleButton } from '@/registry/ui/toggle-button'
+import { ToggleButton } from "@/registry/ui/toggle-button"
 
 export default function Demo({
-  children = 'Pin',
-  variant = 'secondary',
-  size = 'md',
+  children = "Pin",
+  variant = "secondary",
+  size = "md",
   isIconOnly = false,
   isDisabled = false,
 }: {
   children?: string
-  variant?: 'primary' | 'secondary' | 'quiet'
-  size?: 'lg' | 'md' | 'sm' | 'xs'
+  variant?: "primary" | "secondary" | "quiet"
+  size?: "lg" | "md" | "sm" | "xs"
   isIconOnly?: boolean
   isDisabled?: boolean
 } = {}) {

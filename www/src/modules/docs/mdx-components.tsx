@@ -1,41 +1,41 @@
-import { ArrowUpRightIcon } from 'lucide-react'
-import type { MDXComponents } from 'mdx/types'
+import { ArrowUpRightIcon } from "lucide-react"
+import type { MDXComponents } from "mdx/types"
 
-import { cn } from '@/registry/lib/utils'
-import { Alert, type AlertProps } from '@/registry/ui/alert'
-import { Link } from '@/registry/ui/link'
-import { ChartFamilyGrid } from '@/modules/charts/chart-family-grid'
-import { CodeBlock, Pre } from '@/modules/docs/code-block'
+import { cn } from "@/registry/lib/utils"
+import { Alert, type AlertProps } from "@/registry/ui/alert"
+import { Link } from "@/registry/ui/link"
+import { ChartFamilyGrid } from "@/modules/charts/chart-family-grid"
+import { CodeBlock, Pre } from "@/modules/docs/code-block"
 import {
   CodeBlockTab,
   CodeBlockTabs,
   CodeBlockTabsList,
   CodeBlockTabsTrigger,
-} from '@/modules/docs/code-block-tabs'
-import { ComponentsGrid } from '@/modules/docs/components-list/components-grid'
-import { CompositionAnimation } from '@/modules/docs/composition-animation'
+} from "@/modules/docs/code-block-tabs"
+import { ComponentsGrid } from "@/modules/docs/components-list/components-grid"
+import { CompositionAnimation } from "@/modules/docs/composition-animation"
 import {
   Demo,
   DemoCode,
   DemoCodePreview,
   type DemoProps,
-} from '@/modules/docs/demo'
-import { Example } from '@/modules/docs/example'
-import { Examples, type ExamplesProps } from '@/modules/docs/examples'
-import { InteractiveDemo } from '@/modules/docs/interactive-demo'
-import { Reference, type ReferenceProps } from '@/modules/docs/reference'
+} from "@/modules/docs/demo"
+import { Example } from "@/modules/docs/example"
+import { Examples, type ExamplesProps } from "@/modules/docs/examples"
+import { InteractiveDemo } from "@/modules/docs/interactive-demo"
+import { Reference, type ReferenceProps } from "@/modules/docs/reference"
 
 export const mdxComponents: MDXComponents = {
   h1: ({ className, ...props }) => (
     <h1
-      className={cn('mt-2 scroll-m-20 text-4xl font-bold', className)}
+      className={cn("mt-2 scroll-m-20 text-4xl font-bold", className)}
       {...props}
     />
   ),
   h2: ({ className, ...props }) => (
     <h2
       className={cn(
-        'mt-12 scroll-m-20 text-xl font-semibold tracking-tight first:mt-0',
+        "mt-12 scroll-m-20 text-xl font-semibold tracking-tight first:mt-0",
         className,
       )}
       {...props}
@@ -44,7 +44,7 @@ export const mdxComponents: MDXComponents = {
   h3: ({ className, ...props }) => (
     <h3
       className={cn(
-        'mt-8 scroll-m-20 text-lg font-semibold tracking-tight',
+        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
         className,
       )}
       {...props}
@@ -53,7 +53,7 @@ export const mdxComponents: MDXComponents = {
   h4: ({ className, ...props }) => (
     <h4
       className={cn(
-        'mt-8 scroll-m-20 text-base font-medium tracking-tight',
+        "mt-8 scroll-m-20 text-base font-medium tracking-tight",
         className,
       )}
       {...props}
@@ -62,7 +62,7 @@ export const mdxComponents: MDXComponents = {
   h5: ({ className, ...props }) => (
     <h5
       className={cn(
-        'mt-8 scroll-m-20 text-base font-medium tracking-tight',
+        "mt-8 scroll-m-20 text-base font-medium tracking-tight",
         className,
       )}
       {...props}
@@ -71,7 +71,7 @@ export const mdxComponents: MDXComponents = {
   h6: ({ className, ...props }) => (
     <h6
       className={cn(
-        'mt-8 scroll-m-20 text-base font-medium tracking-tight',
+        "mt-8 scroll-m-20 text-base font-medium tracking-tight",
         className,
       )}
       {...props}
@@ -79,18 +79,18 @@ export const mdxComponents: MDXComponents = {
   ),
   p: ({ className, ...props }) => (
     <p
-      className={cn('text-[0.9375rem] leading-7 not-first:mt-4', className)}
+      className={cn("text-[0.9375rem] leading-7 not-first:mt-4", className)}
       {...props}
     />
   ),
-  a: ({ className, children, href, ...props }): React.ComponentProps<'a'> => {
-    const isInternal = href?.startsWith('/') ?? false
+  a: ({ className, children, href, ...props }): React.ComponentProps<"a"> => {
+    const isInternal = href?.startsWith("/") ?? false
     return (
       <Link
-        href={href ?? '#'}
-        target={isInternal ? '_self' : '_blank'}
-        rel={isInternal ? undefined : 'noopener noreferrer'}
-        className={cn('inline', className)}
+        href={href ?? "#"}
+        target={isInternal ? "_self" : "_blank"}
+        rel={isInternal ? undefined : "noopener noreferrer"}
+        className={cn("inline", className)}
         {...props}
       >
         {children}
@@ -103,23 +103,23 @@ export const mdxComponents: MDXComponents = {
     )
   },
   ul: ({ className, ...props }) => (
-    <ul className={cn('my-6 ml-6 list-disc', className)} {...props} />
+    <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />
   ),
   ol: ({ className, ...props }) => (
-    <ol className={cn('my-6 ml-6 list-decimal', className)} {...props} />
+    <ol className={cn("my-6 ml-6 list-decimal", className)} {...props} />
   ),
   li: ({ className, ...props }) => (
-    <li className={cn('mt-2', className)} {...props} />
+    <li className={cn("mt-2", className)} {...props} />
   ),
   blockquote: ({ className, ...props }) => (
     <blockquote
-      className={cn('mt-6 border-l-2 pl-6 italic *:text-fg-muted', className)}
+      className={cn("mt-6 border-l-2 pl-6 italic *:text-fg-muted", className)}
       {...props}
     />
   ),
   img: ({ className, alt, src, ...props }) => (
     <img
-      className={cn('mx-auto max-w-md rounded-md border', className)}
+      className={cn("mx-auto max-w-md rounded-md border", className)}
       alt={alt}
       src={src}
       {...props}
@@ -135,7 +135,7 @@ export const mdxComponents: MDXComponents = {
     <div className="my-6 no-scrollbar w-full overflow-y-auto rounded-xl border">
       <table
         className={cn(
-          'relative w-full overflow-hidden border-none text-sm [&_tbody_tr:last-child]:border-b-0',
+          "relative w-full overflow-hidden border-none text-sm [&_tbody_tr:last-child]:border-b-0",
           className,
         )}
         {...props}
@@ -143,12 +143,12 @@ export const mdxComponents: MDXComponents = {
     </div>
   ),
   tr: ({ className, ...props }) => (
-    <tr className={cn('m-0 border-b', className)} {...props} />
+    <tr className={cn("m-0 border-b", className)} {...props} />
   ),
   th: ({ className, ...props }) => (
     <th
       className={cn(
-        'px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right',
+        "px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
         className,
       )}
       {...props}
@@ -157,7 +157,7 @@ export const mdxComponents: MDXComponents = {
   td: ({ className, ...props }) => (
     <td
       className={cn(
-        'px-4 py-2 text-left whitespace-nowrap [&[align=center]]:text-center [&[align=right]]:text-right',
+        "px-4 py-2 text-left whitespace-nowrap [&[align=center]]:text-center [&[align=right]]:text-right",
         className,
       )}
       {...props}
@@ -165,9 +165,9 @@ export const mdxComponents: MDXComponents = {
   ),
   pre: ({
     className,
-    'data-raw': dataRaw,
-    'data-title': title,
-    'data-language': language,
+    "data-raw": dataRaw,
+    "data-title": title,
+    "data-language": language,
     ...props
   }) => {
     if (dataRaw) {
@@ -186,7 +186,7 @@ export const mdxComponents: MDXComponents = {
     />
   ),
   Alert: ({ className, ...props }: AlertProps) => (
-    <Alert className={cn('mt-4', className)} {...props} />
+    <Alert className={cn("mt-4", className)} {...props} />
   ),
   Steps: (props) => (
     <div
@@ -199,22 +199,22 @@ export const mdxComponents: MDXComponents = {
   CodeBlockTabsTrigger,
   CodeBlockTab,
   Demo: ({ className, ...props }: DemoProps) => (
-    <Demo className={cn('not-first:mt-4', className)} {...props} />
+    <Demo className={cn("not-first:mt-4", className)} {...props} />
   ),
   DemoCode,
   DemoCodePreview,
   Examples: ({ className, ...props }: ExamplesProps) => (
-    <Examples className={cn('not-first:mt-4', className)} {...props} />
+    <Examples className={cn("not-first:mt-4", className)} {...props} />
   ),
   Example,
   InteractiveDemo: ({
     className,
     ...props
   }: React.ComponentProps<typeof InteractiveDemo>) => (
-    <InteractiveDemo className={cn('not-first:mt-4', className)} {...props} />
+    <InteractiveDemo className={cn("not-first:mt-4", className)} {...props} />
   ),
   Reference: ({ className, ...props }: ReferenceProps) => (
-    <Reference className={cn('mt-4', className)} {...props} />
+    <Reference className={cn("mt-4", className)} {...props} />
   ),
   ComponentsGrid,
   ChartFamilyGrid,
@@ -223,7 +223,7 @@ export const mdxComponents: MDXComponents = {
     ...props
   }: React.ComponentProps<typeof CompositionAnimation>) => (
     <CompositionAnimation
-      className={cn('not-first:mt-6', className)}
+      className={cn("not-first:mt-6", className)}
       {...props}
     />
   ),

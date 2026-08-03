@@ -1,5 +1,5 @@
-import { Label } from '@/registry/ui/field'
-import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
+import { Label } from "@/registry/ui/field"
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 
 export default function Demo() {
   return (
@@ -7,7 +7,7 @@ export default function Demo() {
       <Label>Filters</Label>
       <TagList<{ id: string; name: string }>
         items={[]}
-        renderEmptyState={() => 'No filters applied.'}
+        renderEmptyState={() => "No filters applied."}
       >
         {(item) => <Tag>{item.name}</Tag>}
       </TagList>

@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { MenuIcon } from 'lucide-react'
+import { MenuIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
+import { Button } from "@/registry/ui/button"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene, useOpenAutoplay } from "../autoplay"
 
 export function MenuDemo() {
   const { phase } = useOpenAutoplay()

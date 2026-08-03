@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as PopoverPrimitives from 'react-aria-components/Popover'
-import * as TooltipPrimitives from 'react-aria-components/Tooltip'
-import type { VariantProps } from 'tailwind-variants'
+import type * as React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as PopoverPrimitives from "react-aria-components/Popover"
+import * as TooltipPrimitives from "react-aria-components/Tooltip"
+import type { VariantProps } from "tailwind-variants"
 
-import { useStyles } from './styles'
-import type { TooltipStyles } from './styles'
+import { useStyles } from "./styles"
+import type { TooltipStyles } from "./styles"
 
 // MARK: tooltipStyles
 
@@ -61,7 +61,7 @@ function TooltipContent({
 
 // MARK: Separator
 
-interface TooltipArrowProps extends React.ComponentProps<'svg'> {}
+interface TooltipArrowProps extends React.ComponentProps<"svg"> {}
 
 function TooltipArrow({ className }: TooltipArrowProps) {
   const { arrow } = useStyles()()

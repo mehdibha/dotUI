@@ -1,7 +1,7 @@
-import { Button } from '@/registry/ui/button'
-import { toastManager } from '@/registry/ui/toast'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Button } from "@/registry/ui/button"
+import { toastManager } from "@/registry/ui/toast"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function ToastExamples() {
   return (
@@ -19,7 +19,7 @@ function ToastBasic() {
     <Example title="Basic">
       <Button
         onPress={() =>
-          toastManager.add({ title: 'Your message has been sent.' })
+          toastManager.add({ title: "Your message has been sent." })
         }
       >
         Show toast
@@ -35,9 +35,9 @@ function ToastVariants() {
         <Button
           onPress={() =>
             toastManager.add({
-              title: 'Changes saved',
-              description: 'Your update is live.',
-              type: 'success',
+              title: "Changes saved",
+              description: "Your update is live.",
+              type: "success",
             })
           }
         >
@@ -46,9 +46,9 @@ function ToastVariants() {
         <Button
           onPress={() =>
             toastManager.add({
-              title: 'New comment',
-              description: 'Maya left a note on this project.',
-              type: 'info',
+              title: "New comment",
+              description: "Maya left a note on this project.",
+              type: "info",
             })
           }
         >
@@ -57,9 +57,9 @@ function ToastVariants() {
         <Button
           onPress={() =>
             toastManager.add({
-              title: 'Storage almost full',
-              description: 'Upgrade or clear space soon.',
-              type: 'warning',
+              title: "Storage almost full",
+              description: "Upgrade or clear space soon.",
+              type: "warning",
             })
           }
         >
@@ -68,9 +68,9 @@ function ToastVariants() {
         <Button
           onPress={() =>
             toastManager.add({
-              title: 'Upload failed',
-              description: 'Check your connection and try again.',
-              type: 'error',
+              title: "Upload failed",
+              description: "Check your connection and try again.",
+              type: "error",
             })
           }
         >
@@ -91,14 +91,14 @@ function ToastWithAction() {
 
 function showActionToast() {
   const id = toastManager.add({
-    title: 'Message archived',
-    description: 'The conversation was moved out of your inbox.',
-    type: 'info',
+    title: "Message archived",
+    description: "The conversation was moved out of your inbox.",
+    type: "info",
     actionProps: {
-      children: 'Undo',
+      children: "Undo",
       onClick: () => {
         toastManager.close(id)
-        toastManager.add({ title: 'Message restored', type: 'success' })
+        toastManager.add({ title: "Message restored", type: "success" })
       },
     },
   })
@@ -111,18 +111,18 @@ function ToastPromise() {
         onPress={() => {
           void toastManager.promise(wait(1200), {
             loading: {
-              title: 'Publishing changes',
-              type: 'loading',
+              title: "Publishing changes",
+              type: "loading",
             },
             success: {
-              title: 'Published',
-              description: 'The latest version is now live.',
-              type: 'success',
+              title: "Published",
+              description: "The latest version is now live.",
+              type: "success",
             },
             error: {
-              title: 'Publish failed',
-              description: 'Something went wrong while publishing.',
-              type: 'error',
+              title: "Publish failed",
+              description: "Something went wrong while publishing.",
+              type: "error",
             },
           })
         }}

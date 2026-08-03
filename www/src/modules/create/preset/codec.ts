@@ -1,32 +1,32 @@
-import { deflateRaw, inflateRaw } from 'pako'
+import { deflateRaw, inflateRaw } from "pako"
 
-import { iconLibraries } from '@/registry/icons/icon-map'
-import type { IconLibraryName } from '@/registry/icons/icon-map'
+import { iconLibraries } from "@/registry/icons/icon-map"
+import type { IconLibraryName } from "@/registry/icons/icon-map"
 import {
   DEFAULT_COLOR_CONFIG,
   migrateColorConfig,
   type ColorConfig,
-} from '@/registry/theme'
+} from "@/registry/theme"
 import {
   DEFAULT_CODE_OPTIONS,
   sanitizeCodeOptions,
-} from '@/publisher/code-options'
+} from "@/publisher/code-options"
 
-import { DEFAULTS } from './defaults'
-import { fromCompact } from './types'
-import type { DesignSystem, DesignSystemState } from './types'
+import { DEFAULTS } from "./defaults"
+import { fromCompact } from "./types"
+import type { DesignSystem, DesignSystemState } from "./types"
 
 /* ----------------------------- base64url helpers ----------------------------- */
 
 function toBase64Url(bytes: Uint8Array): string {
   const binary = String.fromCharCode(...bytes)
-  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")
 }
 
 function fromBase64Url(str: string): Uint8Array {
   const padded =
-    str.replace(/-/g, '+').replace(/_/g, '/') +
-    '=='.slice(0, (4 - (str.length % 4)) % 4)
+    str.replace(/-/g, "+").replace(/_/g, "/") +
+    "==".slice(0, (4 - (str.length % 4)) % 4)
   const binary = atob(padded)
   return Uint8Array.from(binary, (c) => c.charCodeAt(0))
 }
@@ -111,7 +111,7 @@ export function encodePreset(ds: DesignSystem): string | undefined {
   )
     compact.o = ds.codeOptions
 
-  if (ds.icons && ds.icons !== 'lucide') compact.i = ds.icons
+  if (ds.icons && ds.icons !== "lucide") compact.i = ds.icons
 
   if (
     !compact.p &&
@@ -149,7 +149,7 @@ function sanitizeColor(
 function sanitizeIcons(
   icons: IconLibraryName | undefined,
 ): IconLibraryName | undefined {
-  if (!icons || icons === 'lucide') return undefined
+  if (!icons || icons === "lucide") return undefined
   return iconLibraries.some((lib) => lib.name === icons) ? icons : undefined
 }
 
@@ -160,7 +160,7 @@ function sanitizeIcons(
 export function decodePreset(encoded: string): DesignSystem {
   try {
     const bytes = fromBase64Url(encoded)
-    const json = inflateRaw(bytes, { to: 'string' })
+    const json = inflateRaw(bytes, { to: "string" })
     const partial: DesignSystemState = JSON.parse(json)
     const ds = fromCompact(partial)
     return {

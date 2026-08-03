@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -9,9 +9,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Modal } from '@/registry/ui/modal'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Modal } from "@/registry/ui/modal"
 
 export default function Demo() {
   return (

@@ -1,24 +1,24 @@
-'use client'
+"use client"
 
-import { ChevronDownIcon } from 'lucide-react'
-import * as FormPrimitives from 'react-aria-components/Form'
+import { ChevronDownIcon } from "lucide-react"
+import * as FormPrimitives from "react-aria-components/Form"
 
-import { Button } from '@/registry/ui/button'
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
-import { Combobox } from '@/registry/ui/combobox'
-import { DatePicker } from '@/registry/ui/date-picker'
-import { FieldGroup, Label } from '@/registry/ui/field'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { Radio, RadioControl, RadioGroup } from '@/registry/ui/radio-group'
+import { Button } from "@/registry/ui/button"
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import { Combobox } from "@/registry/ui/combobox"
+import { DatePicker } from "@/registry/ui/date-picker"
+import { FieldGroup, Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/select"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   return (
@@ -102,13 +102,13 @@ export default function Demo() {
 }
 
 const languages = [
-  { label: 'English', value: 'en' },
-  { label: 'French', value: 'fr' },
-  { label: 'German', value: 'de' },
-  { label: 'Spanish', value: 'es' },
-  { label: 'Portuguese', value: 'pt' },
-  { label: 'Russian', value: 'ru' },
-  { label: 'Japanese', value: 'ja' },
-  { label: 'Korean', value: 'ko' },
-  { label: 'Chinese', value: 'zh' },
+  { label: "English", value: "en" },
+  { label: "French", value: "fr" },
+  { label: "German", value: "de" },
+  { label: "Spanish", value: "es" },
+  { label: "Portuguese", value: "pt" },
+  { label: "Russian", value: "ru" },
+  { label: "Japanese", value: "ja" },
+  { label: "Korean", value: "ko" },
+  { label: "Chinese", value: "zh" },
 ] as const

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   CartesianGrid,
@@ -7,33 +7,33 @@ import {
   LineChart,
   XAxis,
   YAxis,
-} from 'recharts'
+} from "recharts"
 
-import type { ChartConfig } from '@/registry/ui/chart'
+import type { ChartConfig } from "@/registry/ui/chart"
 import {
   ChartContainer,
   ChartDataTable,
   ChartTooltip,
   ChartTooltipContent,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 const chartData = [
-  { month: 'January', desktop: 186, mobile: 80 },
-  { month: 'February', desktop: 305, mobile: 200 },
-  { month: 'March', desktop: 237, mobile: 120 },
-  { month: 'April', desktop: 73, mobile: 190 },
-  { month: 'May', desktop: 209, mobile: 130 },
-  { month: 'June', desktop: 214, mobile: 140 },
+  { month: "January", desktop: 186, mobile: 80 },
+  { month: "February", desktop: 305, mobile: 200 },
+  { month: "March", desktop: 237, mobile: 120 },
+  { month: "April", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "June", desktop: 214, mobile: 140 },
 ]
 
 const chartConfig = {
   desktop: {
-    label: 'Desktop',
-    color: 'var(--chart-1)',
+    label: "Desktop",
+    color: "var(--chart-1)",
   },
   mobile: {
-    label: 'Mobile',
-    color: 'var(--chart-2)',
+    label: "Mobile",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig
 
@@ -54,7 +54,7 @@ export default function ChartLineLabelCustom() {
             tickMargin={8}
             tickFormatter={(value) => value.slice(0, 3)}
           />
-          <YAxis hide domain={['dataMin - 40', 'dataMax + 40']} />
+          <YAxis hide domain={["dataMin - 40", "dataMax + 40"]} />
           <ChartTooltip
             cursor={false}
             content={
@@ -70,7 +70,7 @@ export default function ChartLineLabelCustom() {
             type="natural"
             stroke="var(--color-desktop)"
             strokeWidth={2}
-            dot={{ fill: 'var(--color-desktop)' }}
+            dot={{ fill: "var(--color-desktop)" }}
             activeDot={{ r: 6 }}
           >
             <LabelList
@@ -80,7 +80,7 @@ export default function ChartLineLabelCustom() {
               className="fill-fg"
               fontSize={12}
               formatter={(value: unknown) =>
-                typeof value === 'string' ? value.slice(0, 3) : String(value)
+                typeof value === "string" ? value.slice(0, 3) : String(value)
               }
             />
           </Line>

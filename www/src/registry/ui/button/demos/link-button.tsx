@@ -1,5 +1,5 @@
-import { LogInIcon } from '@/registry/__generated__/icons'
-import { LinkButton } from '@/registry/ui/button'
+import { LogInIcon } from "@/registry/__generated__/icons"
+import { LinkButton } from "@/registry/ui/button"
 
 export default function Demo() {
   return (

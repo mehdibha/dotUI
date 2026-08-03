@@ -1,11 +1,11 @@
-import { Label } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
+import { Label } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
 import {
   NumberField,
   NumberFieldDecrement,
   NumberFieldIncrement,
-} from '@/registry/ui/number-field'
+} from "@/registry/ui/number-field"
 
 export default function Demo() {
   return (
@@ -13,7 +13,7 @@ export default function Demo() {
       <NumberField
         defaultValue={0}
         formatOptions={{
-          signDisplay: 'exceptZero',
+          signDisplay: "exceptZero",
           minimumFractionDigits: 1,
           maximumFractionDigits: 2,
         }}
@@ -29,7 +29,7 @@ export default function Demo() {
       <NumberField
         defaultValue={0.05}
         formatOptions={{
-          style: 'percent',
+          style: "percent",
         }}
       >
         <Label>Percentage</Label>
@@ -43,10 +43,10 @@ export default function Demo() {
       <NumberField
         defaultValue={45}
         formatOptions={{
-          style: 'currency',
-          currency: 'EUR',
-          currencyDisplay: 'code',
-          currencySign: 'accounting',
+          style: "currency",
+          currency: "EUR",
+          currencyDisplay: "code",
+          currencySign: "accounting",
         }}
       >
         <Label>Currency</Label>
@@ -60,9 +60,9 @@ export default function Demo() {
       <NumberField
         defaultValue={4}
         formatOptions={{
-          style: 'unit',
-          unit: 'inch',
-          unitDisplay: 'long',
+          style: "unit",
+          unit: "inch",
+          unitDisplay: "long",
         }}
       >
         <Label>Unit</Label>

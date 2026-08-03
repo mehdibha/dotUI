@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { Collection } from 'react-aria-components/Collection'
-import { useAsyncList } from 'react-stately'
+import { Collection } from "react-aria-components/Collection"
+import { useAsyncList } from "react-stately"
 
-import { Loader } from '@/registry/ui/loader'
+import { Loader } from "@/registry/ui/loader"
 import {
   Table,
   TableBody,
@@ -13,17 +13,17 @@ import {
   TableHeader,
   TableLoadMore,
   TableRow,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
 export default function Demo() {
   const list = useAsyncList<Character>({
     async load({ cursor, signal }) {
       if (cursor) {
-        cursor = cursor.replace(/^http:\/\//i, 'https://')
+        cursor = cursor.replace(/^http:\/\//i, "https://")
       }
 
       const response = await fetch(
-        cursor || 'https://swapi.py4e.com/api/people/?search=',
+        cursor || "https://swapi.py4e.com/api/people/?search=",
         { signal },
       )
       const json = (await response.json()) as CharacterResponse
@@ -65,7 +65,7 @@ export default function Demo() {
           </Collection>
           <TableLoadMore
             onLoadMore={list.loadMore}
-            isLoading={list.loadingState === 'loadingMore'}
+            isLoading={list.loadingState === "loadingMore"}
           />
         </TableBody>
       </Table>

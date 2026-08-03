@@ -1,10 +1,10 @@
-import { CalendarIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { RangeCalendar } from '@/registry/ui/calendar'
-import { DateRangePicker } from '@/registry/ui/date-picker'
-import { DialogContent } from '@/registry/ui/dialog'
-import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Modal } from '@/registry/ui/modal'
+import { CalendarIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { RangeCalendar } from "@/registry/ui/calendar"
+import { DateRangePicker } from "@/registry/ui/date-picker"
+import { DialogContent } from "@/registry/ui/dialog"
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Modal } from "@/registry/ui/modal"
 
 export default function Demo() {
   return (

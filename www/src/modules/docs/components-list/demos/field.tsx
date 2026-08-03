@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { Description, Field, Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
+import { Description, Field, Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
 
-import { DemoFocus, useTypewriter } from '../autoplay'
+import { DemoFocus, useTypewriter } from "../autoplay"
 
 export function FieldDemo() {
-  const { value, active } = useTypewriter('john_doe')
+  const { value, active } = useTypewriter("john_doe")
   return (
     <Field className="w-full max-w-[11.5rem]">
       <Label>Username</Label>

@@ -1,10 +1,10 @@
-import { ZapIcon } from 'lucide-react'
+import { ZapIcon } from "lucide-react"
 
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
 export default function Demo() {
   return (

@@ -1,8 +1,8 @@
-import { ContextMenu } from '@/registry/ui/context-menu'
-import { Kbd } from '@/registry/ui/kbd'
-import { MenuContent, MenuItem, MenuSub } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { Separator } from '@/registry/ui/separator'
+import { ContextMenu } from "@/registry/ui/context-menu"
+import { Kbd } from "@/registry/ui/kbd"
+import { MenuContent, MenuItem, MenuSub } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

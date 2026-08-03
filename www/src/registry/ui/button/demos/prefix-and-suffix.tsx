@@ -1,5 +1,5 @@
-import { UploadIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
+import { UploadIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
 
 export default function Demo() {
   return (

@@ -7,8 +7,8 @@ export function truncateOnWord(
   let truncated = text.substring(0, maxLength)
   truncated = truncated.substring(
     0,
-    Math.min(truncated.length, truncated.lastIndexOf(' ')),
+    Math.min(truncated.length, truncated.lastIndexOf(" ")),
   )
-  if (ellipsis) truncated += '...'
+  if (ellipsis) truncated += "..."
   return truncated
 }

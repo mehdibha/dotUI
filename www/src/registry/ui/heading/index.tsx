@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import * as HeadingPrimitives from 'react-aria-components/Heading'
+import * as HeadingPrimitives from "react-aria-components/Heading"
 
 interface HeadingProps extends React.ComponentProps<
   typeof HeadingPrimitives.Heading

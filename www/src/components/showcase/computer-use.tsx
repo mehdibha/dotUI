@@ -1,18 +1,18 @@
-'use client'
+"use client"
 
-import { ChevronDownIcon } from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
+import { ChevronDownIcon } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Separator } from '@/registry/ui/separator'
-import { Switch, SwitchControl } from '@/registry/ui/switch'
+} from "@/registry/ui/card"
+import { Separator } from "@/registry/ui/separator"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 
 function SettingRow({
   title,
@@ -43,7 +43,7 @@ function SettingRow({
 export function ComputerUse({
   className,
   ...props
-}: React.ComponentProps<'div'>) {
+}: React.ComponentProps<"div">) {
   return (
     <Card className={cn(className)} {...props}>
       <CardHeader>

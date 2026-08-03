@@ -1,11 +1,11 @@
-import { PlusIcon } from 'lucide-react'
+import { PlusIcon } from "lucide-react"
 
 import {
   Avatar,
   AvatarBadge,
   AvatarFallback,
   AvatarImage,
-} from '@/registry/ui/avatar'
+} from "@/registry/ui/avatar"
 
 export default function Demo() {
   return (

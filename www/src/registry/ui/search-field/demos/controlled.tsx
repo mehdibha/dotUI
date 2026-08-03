@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Input } from '@/registry/ui/input'
-import { SearchField } from '@/registry/ui/search-field'
+import { Input } from "@/registry/ui/input"
+import { SearchField } from "@/registry/ui/search-field"
 
 export default function Demo() {
   const [inputValue, setInputValue] = React.useState(
-    'Is dotUI the next-gen ui lib?',
+    "Is dotUI the next-gen ui lib?",
   )
   return (
     <div className="flex max-w-xs flex-col items-center gap-4">

@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { mergeProps } from 'react-aria'
-import { useSlottedContext } from 'react-aria-components/slots'
-import type { ContextValue, SlotProps } from 'react-aria-components/slots'
+import * as React from "react"
+import { mergeProps } from "react-aria"
+import { useSlottedContext } from "react-aria-components/slots"
+import type { ContextValue, SlotProps } from "react-aria-components/slots"
 
 export interface CreateContextOptions {
   strict?: boolean
@@ -34,7 +34,7 @@ export function createContext<ContextType>(options: CreateContextOptions = {}) {
         `\`${consumerName}\` must be used within \`${name}\``,
       )
 
-      error.name = 'ContextError'
+      error.name = "ContextError"
       throw error
     }
 
@@ -110,7 +110,7 @@ export function createVariantsContext<
     const variantKeys = Object.keys(props).filter((key) => {
       // This is a simple heuristic - you might want to pass variant keys explicitly
       // For now, we assume all props that aren't standard HTML/React props are variants
-      return !['children', 'value'].includes(key)
+      return !["children", "value"].includes(key)
     })
 
     const variantProps: Partial<TVariants> = {}

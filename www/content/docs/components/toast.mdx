@@ -13,7 +13,7 @@ npx shadcn@latest add @dotui/toast
 ## Usage
 
 ```tsx
-import { ToastProvider, toastManager } from '@/ui/toast'
+import { ToastProvider, toastManager } from "@/ui/toast"
 ```
 
 ```tsx
@@ -22,13 +22,13 @@ import { ToastProvider, toastManager } from '@/ui/toast'
 
 ```tsx
 toastManager.add({
-  title: 'Your message has been sent.',
+  title: "Your message has been sent.",
 })
 
 toastManager.add({
-  title: 'Changes saved',
-  description: 'Your update is live.',
-  type: 'success',
+  title: "Changes saved",
+  description: "Your update is live.",
+  type: "success",
 })
 ```
 
@@ -37,7 +37,7 @@ toastManager.add({
 Toasts aren't rendered as JSX. Mount `<ToastProvider />` once at your app root, then push notifications imperatively with `toastManager`. `add` returns an id you can pass to `close`.
 
 ```tsx
-import { ToastProvider, toastManager } from '@/ui/toast'
+import { ToastProvider, toastManager } from "@/ui/toast"
 ```
 
 ```tsx
@@ -45,7 +45,7 @@ import { ToastProvider, toastManager } from '@/ui/toast'
 ```
 
 ```tsx
-const id = toastManager.add({ title: 'Your message has been sent.' })
+const id = toastManager.add({ title: "Your message has been sent." })
 toastManager.close(id)
 ```
 
@@ -55,9 +55,9 @@ Pass `type` to `add` to select a semantic variant, each with its own icon and co
 
 ```tsx
 toastManager.add({
-  title: 'Changes saved',
-  description: 'Your update is live.',
-  type: 'success',
+  title: "Changes saved",
+  description: "Your update is live.",
+  type: "success",
 })
 ```
 
@@ -67,10 +67,10 @@ Pass `actionProps` to render an action button inside the toast, typically to und
 
 ```tsx
 const id = toastManager.add({
-  title: 'Message archived',
-  type: 'info',
+  title: "Message archived",
+  type: "info",
   actionProps: {
-    children: 'Undo',
+    children: "Undo",
     onClick: () => toastManager.close(id),
   },
 })
@@ -82,9 +82,9 @@ Use `toastManager.promise` to drive loading, success, and error states from a pr
 
 ```tsx
 toastManager.promise(publish(), {
-  loading: { title: 'Publishing changes', type: 'loading' },
-  success: { title: 'Published', type: 'success' },
-  error: { title: 'Publish failed', type: 'error' },
+  loading: { title: "Publishing changes", type: "loading" },
+  success: { title: "Published", type: "success" },
+  error: { title: "Publish failed", type: "error" },
 })
 ```
 

@@ -1,23 +1,23 @@
-import * as React from 'react'
-import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react'
+import * as React from "react"
+import { ChevronDownIcon, ChevronRightIcon } from "lucide-react"
 
 import {
   Type,
   TypeRendererProvider,
-} from '@/modules/docs/references/components/type-renderer'
+} from "@/modules/docs/references/components/type-renderer"
 import type {
   TransformedProp,
   TransformedPropsData,
   TransformedReference,
-} from '@/modules/docs/references/transform'
+} from "@/modules/docs/references/transform"
 
 const GRID_LAYOUT =
-  'grid grid-cols-[minmax(120px,1fr)_1fr_2.5rem] md:grid-cols-[5fr_7fr_4.5fr_2.5rem]'
+  "grid grid-cols-[minmax(120px,1fr)_1fr_2.5rem] md:grid-cols-[5fr_7fr_4.5fr_2.5rem]"
 
 const PANEL_GRID_LAYOUT =
-  'flex flex-col gap-3 sm:grid sm:grid-cols-[minmax(120px,1fr)_1fr_2.5rem] sm:gap-x-4 sm:gap-y-2 md:grid-cols-[5fr_11.5fr_2.5rem]'
+  "flex flex-col gap-3 sm:grid sm:grid-cols-[minmax(120px,1fr)_1fr_2.5rem] sm:gap-x-4 sm:gap-y-2 md:grid-cols-[5fr_11.5fr_2.5rem]"
 
-export interface ReferenceProps extends React.ComponentProps<'div'> {
+export interface ReferenceProps extends React.ComponentProps<"div"> {
   data: TransformedReference
 }
 
@@ -32,15 +32,15 @@ export function Reference({ data, ...props }: ReferenceProps) {
         )}
         {data.extendsElement && (
           <p className="mb-4 text-fg-muted">
-            Supports all{' '}
+            Supports all{" "}
             <a
               href={getHtmlElementLink(data.extendsElement)}
               target="_blank"
               rel="noopener noreferrer"
               className="text-fg-accent hover:underline"
             >
-              {data.extendsElement === 'html' ? 'HTML' : data.extendsElement}
-            </a>{' '}
+              {data.extendsElement === "html" ? "HTML" : data.extendsElement}
+            </a>{" "}
             attributes.
           </p>
         )}
@@ -55,8 +55,8 @@ export function Reference({ data, ...props }: ReferenceProps) {
 }
 
 function getHtmlElementLink(element: string) {
-  if (element === 'html') {
-    return 'https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes'
+  if (element === "html") {
+    return "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes"
   }
   return `https://developer.mozilla.org/en-US/docs/Web/HTML/Element/${element}#attributes`
 }
@@ -187,7 +187,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 
         <td className="px-3 py-2.5 text-center">
           <ChevronDownIcon
-            className={`inline-block size-4 text-fg-muted transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+            className={`inline-block size-4 text-fg-muted transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
           />
         </td>
       </tr>
@@ -248,7 +248,7 @@ function DescriptionItem({
 }: DescriptionItemProps) {
   return (
     <div
-      className={`sm:col-span-2 sm:grid sm:grid-cols-subgrid ${hasSeparator ? 'border-t border-border/50 pt-2 sm:border-t-0 sm:pt-0' : ''}`}
+      className={`sm:col-span-2 sm:grid sm:grid-cols-subgrid ${hasSeparator ? "border-t border-border/50 pt-2 sm:border-t-0 sm:pt-0" : ""}`}
     >
       <dt className="mb-1 font-medium text-fg-muted sm:mb-0 sm:py-1">
         {label}
@@ -279,10 +279,10 @@ function DisclosureGroup({
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
             aria-expanded={isExpanded}
-            className={`focus-visible:ring-ring flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-sm font-medium transition-colors outline-none hover:bg-card/50 focus-visible:ring-2 focus-visible:ring-offset-1 ${isExpanded ? 'bg-card/30' : ''}`}
+            className={`focus-visible:ring-ring flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-sm font-medium transition-colors outline-none hover:bg-card/50 focus-visible:ring-2 focus-visible:ring-offset-1 ${isExpanded ? "bg-card/30" : ""}`}
           >
             <ChevronRightIcon
-              className={`size-4 text-fg-muted transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}
+              className={`size-4 text-fg-muted transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
             />
             {title}
           </button>

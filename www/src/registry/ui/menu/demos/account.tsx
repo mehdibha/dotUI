@@ -1,13 +1,13 @@
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Menu,
   MenuContent,
   MenuItem,
   MenuSection,
   MenuSectionHeader,
-} from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

@@ -1,22 +1,22 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import BookedDatesDemo from './demos/booked-dates'
-import CustomDaysDemo from './demos/custom-days'
-import DisabledDemo from './demos/disabled-example'
-import InternationalDemo from './demos/international'
-import InvalidDemo from './demos/invalid'
-import MinMaxDemo from './demos/min-max'
-import RangeDemo from './demos/range'
-import RangeMultipleMonthsDemo from './demos/range-multiple-months'
-import SchedulerDemo from './demos/scheduler'
-import ShortWeekdaysDemo from './demos/short-weekdays'
-import SingleDemo from './demos/single'
-import TodayIndicatorDemo from './demos/today-indicator'
-import UnavailableWeekendsDemo from './demos/unavailable-weekends'
-import WithDropdownsDemo from './demos/with-dropdowns'
-import WithPresetsDemo from './demos/with-presets'
-import WithTimeDemo from './demos/with-time'
+import BookedDatesDemo from "./demos/booked-dates"
+import CustomDaysDemo from "./demos/custom-days"
+import DisabledDemo from "./demos/disabled-example"
+import InternationalDemo from "./demos/international"
+import InvalidDemo from "./demos/invalid"
+import MinMaxDemo from "./demos/min-max"
+import RangeDemo from "./demos/range"
+import RangeMultipleMonthsDemo from "./demos/range-multiple-months"
+import SchedulerDemo from "./demos/scheduler"
+import ShortWeekdaysDemo from "./demos/short-weekdays"
+import SingleDemo from "./demos/single"
+import TodayIndicatorDemo from "./demos/today-indicator"
+import UnavailableWeekendsDemo from "./demos/unavailable-weekends"
+import WithDropdownsDemo from "./demos/with-dropdowns"
+import WithPresetsDemo from "./demos/with-presets"
+import WithTimeDemo from "./demos/with-time"
 
 export default function CalendarExamples() {
   return (

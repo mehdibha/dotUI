@@ -3,9 +3,9 @@
  * Controls are enriched at build time and passed as props to the client component.
  */
 
-import type { MdxJsxFlowElementHast } from 'mdast-util-mdx-jsx'
+import type { MdxJsxFlowElementHast } from "mdast-util-mdx-jsx"
 
-import type { CodeTemplate } from '../codegen/code-template'
+import type { CodeTemplate } from "../codegen/code-template"
 
 // ============================================================================
 // Base Control Types (used for building controls)
@@ -26,18 +26,18 @@ export interface BaseControl {
 }
 
 export interface BooleanControl extends BaseControl {
-  type: 'boolean'
+  type: "boolean"
   defaultValue?: boolean
 }
 
 export interface StringControl extends BaseControl {
-  type: 'string'
+  type: "string"
   defaultValue?: string
   placeholder?: string
 }
 
 export interface NumberControl extends BaseControl {
-  type: 'number'
+  type: "number"
   defaultValue?: number
   min?: number
   max?: number
@@ -45,13 +45,13 @@ export interface NumberControl extends BaseControl {
 }
 
 export interface EnumControl extends BaseControl {
-  type: 'enum'
+  type: "enum"
   options: string[]
   defaultValue?: string
 }
 
 export interface IconControl extends BaseControl {
-  type: 'icon'
+  type: "icon"
   /** Key of `availableIcons`; the picker's initial selection. */
   defaultValue?: string
 }
@@ -71,7 +71,7 @@ export type ControlValues = Record<string, unknown>
  */
 export type ControlInput =
   | string
-  | (Partial<Omit<Control, 'name'>> & { name: string })
+  | (Partial<Omit<Control, "name">> & { name: string })
 
 /**
  * Serializable prop reference (HTML strings instead of ReactNode).
@@ -98,18 +98,18 @@ export interface SerializableBaseControl {
 }
 
 export interface SerializableBooleanControl extends SerializableBaseControl {
-  type: 'boolean'
+  type: "boolean"
   defaultValue?: boolean
 }
 
 export interface SerializableStringControl extends SerializableBaseControl {
-  type: 'string'
+  type: "string"
   defaultValue?: string
   placeholder?: string
 }
 
 export interface SerializableNumberControl extends SerializableBaseControl {
-  type: 'number'
+  type: "number"
   defaultValue?: number
   min?: number
   max?: number
@@ -117,13 +117,13 @@ export interface SerializableNumberControl extends SerializableBaseControl {
 }
 
 export interface SerializableEnumControl extends SerializableBaseControl {
-  type: 'enum'
+  type: "enum"
   options: string[]
   defaultValue?: string
 }
 
 export interface SerializableIconControl extends SerializableBaseControl {
-  type: 'icon'
+  type: "icon"
   defaultValue?: string
 }
 

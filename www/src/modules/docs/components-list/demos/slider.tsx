@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { Label } from '@/registry/ui/field'
-import { Slider, SliderControl, SliderOutput } from '@/registry/ui/slider'
+import { Label } from "@/registry/ui/field"
+import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider"
 
-import { useValueAutoplay } from '../autoplay'
+import { useValueAutoplay } from "../autoplay"
 
 // Discrete waypoints; the CSS transitions on the thumb/fill (added via the
 // className below) glide between them — cheaper and more reliable than a

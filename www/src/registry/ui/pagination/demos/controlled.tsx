@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
 import {
   Pagination,
@@ -9,7 +9,7 @@ import {
   PaginationList,
   PaginationNext,
   PaginationPrevious,
-} from '@/registry/ui/pagination'
+} from "@/registry/ui/pagination"
 
 const PAGES = [1, 2, 3, 4, 5]
 

@@ -1,9 +1,9 @@
-import { createFileRoute, notFound } from '@tanstack/react-router'
+import { createFileRoute, notFound } from "@tanstack/react-router"
 
-import { PanelVersionPage } from '@/modules/panel-lab/version-page'
-import { findVersion } from '@/modules/panel-lab/versions'
+import { PanelVersionPage } from "@/modules/panel-lab/version-page"
+import { findVersion } from "@/modules/panel-lab/versions"
 
-export const Route = createFileRoute('/internal/panel-lab/$version')({
+export const Route = createFileRoute("/internal/panel-lab/$version")({
   loader: ({ params }) => {
     const version = findVersion(params.version)
     if (!version) throw notFound()
@@ -13,7 +13,7 @@ export const Route = createFileRoute('/internal/panel-lab/$version')({
   },
   component: RouteComponent,
   head: ({ loaderData }) => ({
-    meta: [{ title: `Panel ${loaderData?.label ?? ''} · dotUI` }],
+    meta: [{ title: `Panel ${loaderData?.label ?? ""} · dotUI` }],
   }),
 })
 

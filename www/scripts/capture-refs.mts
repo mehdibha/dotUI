@@ -8,12 +8,12 @@
  *
  * Usage:  tsx scripts/capture-refs.mts [system] [component]   (run from www/; args filter)
  */
-import { mkdir } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import puppeteer, { type Browser, type Page } from 'puppeteer'
+import { mkdir } from "node:fs/promises"
+import { dirname, resolve } from "node:path"
+import { fileURLToPath } from "node:url"
+import puppeteer, { type Browser, type Page } from "puppeteer"
 
-type Theme = 'light' | 'dark'
+type Theme = "light" | "dark"
 type RefEntry = {
   system: string
   component: string
@@ -29,18 +29,18 @@ type RefEntry = {
 
 const REFS_DIR = resolve(
   dirname(fileURLToPath(import.meta.url)),
-  '../src/modules/preset-lab/refs',
+  "../src/modules/preset-lab/refs",
 )
 const VIEWPORT = { width: 1280, height: 900, deviceScaleFactor: 2 }
 
 // Geist docs render each example as a bordered card; the first card is the primary showcase.
-const GEIST_CARD = 'div.rounded-lg.border.bg-background-100'
+const GEIST_CARD = "div.rounded-lg.border.bg-background-100"
 const geist = (
   component: string,
   slug = component,
   extra: Partial<RefEntry> = {},
 ): RefEntry => ({
-  system: 'vercel',
+  system: "vercel",
   component,
   url: `https://vercel.com/geist/${slug}`,
   selector: GEIST_CARD,
@@ -48,23 +48,23 @@ const geist = (
 })
 
 const manifest: RefEntry[] = [
-  geist('button'),
-  geist('input'),
-  geist('tabs'),
+  geist("button"),
+  geist("input"),
+  geist("tabs"),
   // Geist's boolean switch is "Toggle" (/geist/switch is their segmented control).
-  geist('switch', 'toggle'),
-  geist('badge'),
-  geist('checkbox'),
-  geist('tooltip'),
+  geist("switch", "toggle"),
+  geist("badge"),
+  geist("checkbox"),
+  geist("tooltip"),
   // Command menu is an overlay, not static: open it, then capture the dialog panel.
-  geist('command', 'button', {
-    selector: '[cmdk-dialog]',
+  geist("command", "button", {
+    selector: "[cmdk-dialog]",
     ready: GEIST_CARD,
     action: async (page) => {
-      await page.keyboard.down('Meta')
-      await page.keyboard.press('KeyK')
-      await page.keyboard.up('Meta')
-      await page.waitForSelector('[cmdk-dialog]', { timeout: 5000 })
+      await page.keyboard.down("Meta")
+      await page.keyboard.press("KeyK")
+      await page.keyboard.up("Meta")
+      await page.waitForSelector("[cmdk-dialog]", { timeout: 5000 })
       await sleep(400)
     },
   }),
@@ -81,7 +81,7 @@ async function gotoWithRetry(
   for (let attempt = 1; ; attempt++) {
     try {
       const resp = await page.goto(url, {
-        waitUntil: 'domcontentloaded',
+        waitUntil: "domcontentloaded",
         timeout: 30000,
       })
       const status = resp?.status() ?? 0
@@ -99,7 +99,7 @@ async function gotoWithRetry(
 async function setTheme(page: Page, theme: Theme): Promise<void> {
   await page.evaluate((t: Theme) => {
     const html = document.documentElement
-    html.classList.remove('light-theme', 'dark-theme')
+    html.classList.remove("light-theme", "dark-theme")
     html.classList.add(`${t}-theme`)
     html.style.colorScheme = t
   }, theme)
@@ -114,7 +114,7 @@ async function capture(
   const page = await browser.newPage()
   try {
     await page.emulateMediaFeatures([
-      { name: 'prefers-reduced-motion', value: 'reduce' },
+      { name: "prefers-reduced-motion", value: "reduce" },
     ])
     await page.setViewport(VIEWPORT)
     await gotoWithRetry(page, entry.url, entry.ready ?? entry.selector)
@@ -149,18 +149,18 @@ const entries = manifest.filter(
 // `headless: 'shell'` composites reliably; the new headless mode hangs screenshotting
 // vercel.com's continuously-animated background (Page.captureScreenshot never returns).
 const browser = await puppeteer.launch({
-  headless: 'shell',
+  headless: "shell",
   protocolTimeout: 60000,
   args: [
-    '--disable-gpu',
-    '--hide-scrollbars',
-    '--run-all-compositor-stages-before-draw',
+    "--disable-gpu",
+    "--hide-scrollbars",
+    "--run-all-compositor-stages-before-draw",
   ],
 })
 const failures: string[] = []
 try {
   for (const entry of entries) {
-    for (const theme of ['light', 'dark'] as const) {
+    for (const theme of ["light", "dark"] as const) {
       try {
         await capture(browser, entry, theme)
       } catch (err) {

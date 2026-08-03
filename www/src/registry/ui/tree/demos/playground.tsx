@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import { Tree, TreeItem, TreeItemContent } from '@/registry/ui/tree'
-import type { TreeProps } from '@/registry/ui/tree'
+import { Tree, TreeItem, TreeItemContent } from "@/registry/ui/tree"
+import type { TreeProps } from "@/registry/ui/tree"
 
 export default function Demo({
-  selectionMode = 'multiple',
-  selectionBehavior = 'toggle',
+  selectionMode = "multiple",
+  selectionBehavior = "toggle",
 }: {
-  selectionMode?: TreeProps<object>['selectionMode']
-  selectionBehavior?: TreeProps<object>['selectionBehavior']
+  selectionMode?: TreeProps<object>["selectionMode"]
+  selectionBehavior?: TreeProps<object>["selectionBehavior"]
 } = {}) {
   return (
     <Tree
       aria-label="Files"
       selectionMode={selectionMode}
       selectionBehavior={selectionBehavior}
-      defaultExpandedKeys={['documents', 'photos']}
+      defaultExpandedKeys={["documents", "photos"]}
       className="w-72"
     >
       <TreeItem id="documents" textValue="Documents">

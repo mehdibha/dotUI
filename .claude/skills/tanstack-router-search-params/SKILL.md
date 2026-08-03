@@ -7,7 +7,7 @@ description: >-
   inheritance, loaderDeps for cache keys, reading and writing search params.
 type: sub-skill
 library: tanstack-router
-library_version: '1.166.2'
+library_version: "1.166.2"
 requires:
   - router-core
 sources:
@@ -34,16 +34,16 @@ npm install zod @tanstack/zod-adapter
 
 ```tsx
 // src/routes/products.tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { z } from 'zod'
+import { createFileRoute } from "@tanstack/react-router"
+import { z } from "zod"
 
 const productSearchSchema = z.object({
   page: z.number().default(1).catch(1),
-  filter: z.string().default(''),
-  sort: z.enum(['newest', 'oldest', 'price']).default('newest').catch('newest'),
+  filter: z.string().default(""),
+  sort: z.enum(["newest", "oldest", "price"]).default("newest").catch("newest"),
 })
 
-export const Route = createFileRoute('/products')({
+export const Route = createFileRoute("/products")({
   validateSearch: productSearchSchema,
   component: ProductsPage,
 })
@@ -77,9 +77,9 @@ function ProductsPage() {
 ### In Code-Split Components: `getRouteApi()`
 
 ```tsx
-import { getRouteApi } from '@tanstack/react-router'
+import { getRouteApi } from "@tanstack/react-router"
 
-const routeApi = getRouteApi('/products')
+const routeApi = getRouteApi("/products")
 
 function ProductFilters() {
   const { sort } = routeApi.useSearch()
@@ -90,10 +90,10 @@ function ProductFilters() {
 ### From Any Component: `useSearch({ from })`
 
 ```tsx
-import { useSearch } from '@tanstack/react-router'
+import { useSearch } from "@tanstack/react-router"
 
 function SortIndicator() {
-  const { sort } = useSearch({ from: '/products' })
+  const { sort } = useSearch({ from: "/products" })
   return <span>Sorted by: {sort}</span>
 }
 ```
@@ -113,7 +113,7 @@ function GenericPaginator() {
 ### Link with Function Form (Preserves Existing Params)
 
 ```tsx
-import { Link } from '@tanstack/react-router'
+import { Link } from "@tanstack/react-router"
 
 function Pagination() {
   return (
@@ -130,7 +130,7 @@ function Pagination() {
 ### Link with Object Form (Replaces All Params)
 
 ```tsx
-<Link to="/products" search={{ page: 1, filter: '', sort: 'newest' }}>
+<Link to="/products" search={{ page: 1, filter: "", sort: "newest" }}>
   Reset
 </Link>
 ```
@@ -138,10 +138,10 @@ function Pagination() {
 ### Programmatic: `useNavigate()`
 
 ```tsx
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate } from "@tanstack/react-router"
 
 function SortDropdown() {
-  const navigate = useNavigate({ from: '/products' })
+  const navigate = useNavigate({ from: "/products" })
 
   return (
     <select
@@ -164,23 +164,23 @@ Parent route search params are automatically merged into child routes:
 
 ```tsx
 // src/routes/shop.tsx — parent defines shared params
-import { createFileRoute } from '@tanstack/react-router'
-import { z } from 'zod'
+import { createFileRoute } from "@tanstack/react-router"
+import { z } from "zod"
 
 const shopSearchSchema = z.object({
-  currency: z.enum(['USD', 'EUR']).default('USD').catch('USD'),
+  currency: z.enum(["USD", "EUR"]).default("USD").catch("USD"),
 })
 
-export const Route = createFileRoute('/shop')({
+export const Route = createFileRoute("/shop")({
   validateSearch: shopSearchSchema,
 })
 ```
 
 ```tsx
 // src/routes/shop/products.tsx — child inherits currency
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/shop/products')({
+export const Route = createFileRoute("/shop/products")({
   component: ShopProducts,
 })
 
@@ -196,8 +196,8 @@ function ShopProducts() {
 ### `retainSearchParams` — Keep Params Across Navigation
 
 ```tsx
-import { createRootRoute, retainSearchParams } from '@tanstack/react-router'
-import { z } from 'zod'
+import { createRootRoute, retainSearchParams } from "@tanstack/react-router"
+import { z } from "zod"
 
 const rootSearchSchema = z.object({
   debug: z.boolean().optional(),
@@ -206,7 +206,7 @@ const rootSearchSchema = z.object({
 export const Route = createRootRoute({
   validateSearch: rootSearchSchema,
   search: {
-    middlewares: [retainSearchParams(['debug'])],
+    middlewares: [retainSearchParams(["debug"])],
   },
 })
 ```
@@ -214,17 +214,17 @@ export const Route = createRootRoute({
 ### `stripSearchParams` — Remove Default Values from URL
 
 ```tsx
-import { createFileRoute, stripSearchParams } from '@tanstack/react-router'
-import { z } from 'zod'
+import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
+import { z } from "zod"
 
-const defaults = { sort: 'newest', page: 1 }
+const defaults = { sort: "newest", page: 1 }
 
 const searchSchema = z.object({
   sort: z.string().default(defaults.sort),
   page: z.number().default(defaults.page),
 })
 
-export const Route = createFileRoute('/items')({
+export const Route = createFileRoute("/items")({
   validateSearch: searchSchema,
   search: {
     middlewares: [stripSearchParams(defaults)],
@@ -235,16 +235,16 @@ export const Route = createFileRoute('/items')({
 ### Chaining Middlewares
 
 ```tsx
-export const Route = createFileRoute('/search')({
+export const Route = createFileRoute("/search")({
   validateSearch: z.object({
     retainMe: z.string().optional(),
-    arrayWithDefaults: z.string().array().default(['foo', 'bar']),
+    arrayWithDefaults: z.string().array().default(["foo", "bar"]),
     required: z.string(),
   }),
   search: {
     middlewares: [
-      retainSearchParams(['retainMe']),
-      stripSearchParams({ arrayWithDefaults: ['foo', 'bar'] }),
+      retainSearchParams(["retainMe"]),
+      stripSearchParams({ arrayWithDefaults: ["foo", "bar"] }),
     ],
   },
 })
@@ -259,7 +259,7 @@ import {
   createRouter,
   parseSearchWith,
   stringifySearchWith,
-} from '@tanstack/react-router'
+} from "@tanstack/react-router"
 
 const router = createRouter({
   routeTree,
@@ -272,7 +272,7 @@ const router = createRouter({
 ## Using Search Params in Loaders via `loaderDeps`
 
 ```tsx
-export const Route = createFileRoute('/products')({
+export const Route = createFileRoute("/products")({
   validateSearch: productSearchSchema,
   // Pick ONLY the params the loader needs — not the entire search object
   loaderDeps: ({ search }) => ({ page: search.page }),
@@ -292,7 +292,7 @@ const schema = z.object({ page: z.number().catch(1) })
 validateSearch: zodValidator(schema) // page is typed as unknown!
 
 // CORRECT — fallback() preserves the inferred type
-import { fallback } from '@tanstack/zod-adapter'
+import { fallback } from "@tanstack/zod-adapter"
 const schema = z.object({ page: fallback(z.number(), 1) })
 ```
 

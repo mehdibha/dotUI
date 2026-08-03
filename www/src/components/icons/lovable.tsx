@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react'
+import type { SVGProps } from "react"
 
 // Official Lovable (lovable.dev) wordmark — heart in the brand gradient, "Lovable"
 // in `currentColor` so the text follows the surrounding color.

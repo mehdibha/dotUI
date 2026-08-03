@@ -1,24 +1,24 @@
-'use client'
+"use client"
 
-import { useSyncExternalStore } from 'react'
-import { type Color, parseColor } from 'react-aria-components/ColorField'
+import { useSyncExternalStore } from "react"
+import { type Color, parseColor } from "react-aria-components/ColorField"
 
-import { ColorField } from '@/registry/ui/color-field'
-import { Input } from '@/registry/ui/input'
-import { NumberField } from '@/registry/ui/number-field'
+import { ColorField } from "@/registry/ui/color-field"
+import { Input } from "@/registry/ui/input"
+import { NumberField } from "@/registry/ui/number-field"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { Slider, SliderControl, SliderOutput } from '@/registry/ui/slider'
-import { Switch } from '@/registry/ui/switch'
-import { TextField } from '@/registry/ui/text-field'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+} from "@/registry/ui/select"
+import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider"
+import { Switch } from "@/registry/ui/switch"
+import { TextField } from "@/registry/ui/text-field"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 
-import { getValue, setValue, subscribe } from './store'
+import { getValue, setValue, subscribe } from "./store"
 import type {
   BooleanTweakConfig,
   ColorTweakConfig,
@@ -26,7 +26,7 @@ import type {
   RegisteredControl,
   SelectTweakConfig,
   TextTweakConfig,
-} from './types'
+} from "./types"
 
 /** Subscribe a single row to its own value (only the changed row re-renders). */
 function useControlValue<T>(id: string, fallback: T): T {
@@ -60,15 +60,15 @@ function isSegmented(options: readonly string[]): boolean {
 export function ControlRow({ control }: { control: RegisteredControl }) {
   const { config } = control
   switch (config.type) {
-    case 'boolean':
+    case "boolean":
       return <BooleanRow control={control} config={config} />
-    case 'select':
+    case "select":
       return <SelectRow control={control} config={config} />
-    case 'number':
+    case "number":
       return <NumberRow control={control} config={config} />
-    case 'color':
+    case "color":
       return <ColorRow control={control} config={config} />
-    case 'text':
+    case "text":
       return <TextRow control={control} config={config} />
     default:
       return null
@@ -229,7 +229,7 @@ function ColorRow({
         <ColorField
           aria-label={control.label}
           value={color}
-          onChange={(c) => c && setValue(control.id, c.toString('hex'))}
+          onChange={(c) => c && setValue(control.id, c.toString("hex"))}
           className="w-full"
         >
           <Input size="sm" />

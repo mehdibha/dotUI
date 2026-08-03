@@ -1,31 +1,31 @@
-import { FileIcon } from 'lucide-react'
+import { FileIcon } from "lucide-react"
 
-import { ProgressBar } from '@/registry/ui/progress-bar'
+import { ProgressBar } from "@/registry/ui/progress-bar"
 
 const files = [
   {
-    id: '1',
-    name: 'document.pdf',
+    id: "1",
+    name: "document.pdf",
     progress: 45,
-    timeRemaining: '2m 30s',
+    timeRemaining: "2m 30s",
   },
   {
-    id: '2',
-    name: 'presentation.pptx',
+    id: "2",
+    name: "presentation.pptx",
     progress: 78,
-    timeRemaining: '45s',
+    timeRemaining: "45s",
   },
   {
-    id: '3',
-    name: 'spreadsheet.xlsx',
+    id: "3",
+    name: "spreadsheet.xlsx",
     progress: 12,
-    timeRemaining: '5m 12s',
+    timeRemaining: "5m 12s",
   },
   {
-    id: '4',
-    name: 'image.jpg',
+    id: "4",
+    name: "image.jpg",
     progress: 100,
-    timeRemaining: 'Complete',
+    timeRemaining: "Complete",
   },
 ] as const
 

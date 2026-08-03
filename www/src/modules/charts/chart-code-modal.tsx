@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import { lazy, Suspense } from 'react'
-import { CodeIcon, LoaderCircleIcon, XIcon } from 'lucide-react'
+import { lazy, Suspense } from "react"
+import { CodeIcon, LoaderCircleIcon, XIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Modal } from '@/registry/ui/modal'
+import { Button } from "@/registry/ui/button"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Modal } from "@/registry/ui/modal"
 
 // Code-split the body: it pulls in the syntax highlighter, which shouldn't ship
 // in the charts route until someone actually opens a modal.
-const ChartCodeModalContent = lazy(() => import('./chart-code-modal-content'))
+const ChartCodeModalContent = lazy(() => import("./chart-code-modal-content"))
 
 interface ChartCodeModalProps {
   /** Demo key, e.g. `chart-bar/demos/multiple`. */

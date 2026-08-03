@@ -6,7 +6,7 @@
    classes (th-keyword, th-string, …); one HTML tree serves both themes. */
 
 :root,
-[data-mode='light'] {
+[data-mode="light"] {
   --th-token: #24292e;
   --th-attr: #6f42c1;
   --th-code-inline: #005cc5;
@@ -31,7 +31,7 @@
 }
 
 .dark,
-[data-mode='dark'] {
+[data-mode="dark"] {
   --th-token: #e1e4e8;
   --th-attr: #b392f0;
   --th-code-inline: #79b8ff;

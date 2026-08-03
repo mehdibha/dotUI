@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
-import { Input } from '@/registry/ui/input'
-import { SearchField } from '@/registry/ui/search-field'
+import { Input } from "@/registry/ui/input"
+import { SearchField } from "@/registry/ui/search-field"
 
 const members = [
-  { name: 'Olivia Martin', email: 'olivia.martin@email.com', role: 'Owner' },
-  { name: 'Jackson Lee', email: 'jackson.lee@email.com', role: 'Member' },
-  { name: 'Isabella Nguyen', email: 'isabella.n@email.com', role: 'Member' },
-  { name: 'William Kim', email: 'will.kim@email.com', role: 'Admin' },
-  { name: 'Sofia Davis', email: 'sofia.davis@email.com', role: 'Member' },
+  { name: "Olivia Martin", email: "olivia.martin@email.com", role: "Owner" },
+  { name: "Jackson Lee", email: "jackson.lee@email.com", role: "Member" },
+  { name: "Isabella Nguyen", email: "isabella.n@email.com", role: "Member" },
+  { name: "William Kim", email: "will.kim@email.com", role: "Admin" },
+  { name: "Sofia Davis", email: "sofia.davis@email.com", role: "Member" },
 ]
 
 export default function Demo() {
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState("")
 
   const results = members.filter((member) =>
     `${member.name} ${member.email}`

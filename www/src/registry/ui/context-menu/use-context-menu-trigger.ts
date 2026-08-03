@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import { mergeProps } from 'react-aria/mergeProps'
+import * as React from "react"
+import { mergeProps } from "react-aria/mergeProps"
 
 const LONG_PRESS_DELAY = 500
 const TOUCH_MOVE_THRESHOLD = 10
-const CONTEXT_MENU_OPEN_EVENT = 'dotui-context-menu-open'
+const CONTEXT_MENU_OPEN_EVENT = "dotui-context-menu-open"
 
 interface ContextMenuTriggerState {
   isOpen: boolean
-  open: (focusStrategy?: 'first' | 'last' | null) => void
+  open: (focusStrategy?: "first" | "last" | null) => void
   close: () => void
 }
 
@@ -24,7 +24,7 @@ interface UseContextMenuTriggerProps {
   state: ContextMenuTriggerState
   isDisabled?: boolean
   onContextMenu?: React.MouseEventHandler<HTMLDivElement>
-  triggerProps?: Omit<React.ComponentProps<'div'>, 'onContextMenu'>
+  triggerProps?: Omit<React.ComponentProps<"div">, "onContextMenu">
 }
 
 interface ContextMenuOpenEventDetail {
@@ -44,7 +44,7 @@ function containsPoint(element: HTMLElement, x: number, y: number) {
 
 function findContextMenuTriggerAtPoint(doc: Document, x: number, y: number) {
   const triggers = Array.from(
-    doc.querySelectorAll<HTMLElement>('[data-context-menu]'),
+    doc.querySelectorAll<HTMLElement>("[data-context-menu]"),
   ).filter((trigger) => containsPoint(trigger, x, y))
 
   return triggers.sort((a, b) => {
@@ -107,7 +107,7 @@ function useContextMenuTrigger({
         return nextAnchor
       })
       allowMouseUpRef.current = false
-      state.open('first')
+      state.open("first")
 
       clearAllowMouseUpTimeout()
       allowMouseUpTimeoutRef.current = setTimeout(() => {
@@ -174,7 +174,7 @@ function useContextMenuTrigger({
         return
       }
 
-      if (target instanceof Element && target.closest('[data-popover]')) {
+      if (target instanceof Element && target.closest("[data-popover]")) {
         event.preventDefault()
         return
       }
@@ -186,7 +186,7 @@ function useContextMenuTrigger({
           event.clientY,
         )
 
-        if (contextMenuTrigger?.hasAttribute('data-disabled')) {
+        if (contextMenuTrigger?.hasAttribute("data-disabled")) {
           state.close()
           return
         }
@@ -213,10 +213,10 @@ function useContextMenuTrigger({
       }
     }
 
-    doc.addEventListener('contextmenu', handleDocumentContextMenu, true)
+    doc.addEventListener("contextmenu", handleDocumentContextMenu, true)
 
     return () => {
-      doc.removeEventListener('contextmenu', handleDocumentContextMenu, true)
+      doc.removeEventListener("contextmenu", handleDocumentContextMenu, true)
     }
     // oxlint-disable-next-line react/exhaustive-deps -- state members are listed explicitly
   }, [isDisabled, openAtPoint, state.close, state.isOpen])
@@ -241,7 +241,7 @@ function useContextMenuTrigger({
 
       const doc = event.currentTarget.ownerDocument
       doc.addEventListener(
-        'mouseup',
+        "mouseup",
         (mouseEvent) => {
           if (!allowMouseUpRef.current) {
             mouseEvent.preventDefault()
@@ -320,7 +320,7 @@ function useContextMenuTrigger({
     },
     style: {
       ...triggerProps?.style,
-      WebkitTouchCallout: 'none',
+      WebkitTouchCallout: "none",
     },
   })
 

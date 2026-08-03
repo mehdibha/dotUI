@@ -9,9 +9,9 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 import {
   createContext,
   forwardRef,
@@ -21,42 +21,42 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react'
+} from "react"
 import type {
   ForwardedRef,
   HTMLAttributes,
   RefCallback,
   RefObject,
-} from 'react'
-import { FieldInputContext } from 'react-aria-components/Autocomplete'
-import { LabelContext } from 'react-aria-components/Label'
+} from "react"
+import { FieldInputContext } from "react-aria-components/Autocomplete"
+import { LabelContext } from "react-aria-components/Label"
 import {
   Provider,
   useContextProps,
   useSlottedContext,
-} from 'react-aria-components/slots'
-import type { ContextValue, SlotProps } from 'react-aria-components/slots'
-import { TextContext } from 'react-aria-components/Text'
-import { useRenderProps } from 'react-aria-components/useRenderProps'
+} from "react-aria-components/slots"
+import type { ContextValue, SlotProps } from "react-aria-components/slots"
+import { TextContext } from "react-aria-components/Text"
+import { useRenderProps } from "react-aria-components/useRenderProps"
 import type {
   RenderProps,
   StyleRenderProps,
-} from 'react-aria-components/useRenderProps'
-import { filterDOMProps } from 'react-aria/filterDOMProps'
-import { mergeProps } from 'react-aria/mergeProps'
-import { mergeRefs } from 'react-aria/mergeRefs'
-import { createHideableComponent } from 'react-aria/private/collections/Hidden'
-import { useLayoutEffect } from 'react-aria/private/utils/useLayoutEffect'
-import { useFocusRing } from 'react-aria/useFocusRing'
-import { useHover } from 'react-aria/useHover'
-import type { HoverProps } from 'react-aria/useHover'
-import { useObjectRef } from 'react-aria/useObjectRef'
+} from "react-aria-components/useRenderProps"
+import { filterDOMProps } from "react-aria/filterDOMProps"
+import { mergeProps } from "react-aria/mergeProps"
+import { mergeRefs } from "react-aria/mergeRefs"
+import { createHideableComponent } from "react-aria/private/collections/Hidden"
+import { useLayoutEffect } from "react-aria/private/utils/useLayoutEffect"
+import { useFocusRing } from "react-aria/useFocusRing"
+import { useHover } from "react-aria/useHover"
+import type { HoverProps } from "react-aria/useHover"
+import { useObjectRef } from "react-aria/useObjectRef"
 
-import type { TokenSegment, TokenSegmentList } from './segment-list'
-import { useTokenFieldState } from './state'
-import type { TokenFieldState } from './state'
-import { useToken, useTokenField } from './use-token-field'
-import type { AriaTokenFieldProps } from './use-token-field'
+import type { TokenSegment, TokenSegmentList } from "./segment-list"
+import { useTokenFieldState } from "./state"
+import type { TokenFieldState } from "./state"
+import { useToken, useTokenField } from "./use-token-field"
+import type { AriaTokenFieldProps } from "./use-token-field"
 
 // Generic-preserving forwardRef, mirroring RAC's internal forwardRefType.
 type forwardRefType = <T, P = object>(
@@ -177,7 +177,7 @@ export const TokenField = /*#__PURE__*/ createHideableComponent(
       TokenFieldContext,
     ) as unknown as [TokenFieldProps<T>, ForwardedRef<HTMLDivElement>]
     let [labelRef, label] = useSlot(
-      !props['aria-label'] && !props['aria-labelledby'],
+      !props["aria-label"] && !props["aria-labelledby"],
     )
 
     let fieldCtx = useSlottedContext(FieldInputContext, props.slot)
@@ -211,8 +211,8 @@ export const TokenField = /*#__PURE__*/ createHideableComponent(
         label,
         role:
           props.role ||
-          (autocompleteProps.role as TokenFieldProps['role']) ||
-          'textbox',
+          (autocompleteProps.role as TokenFieldProps["role"]) ||
+          "textbox",
       },
       state,
       inputRef,
@@ -224,7 +224,7 @@ export const TokenField = /*#__PURE__*/ createHideableComponent(
         isDisabled,
         isReadOnly,
       },
-      defaultClassName: 'react-aria-TokenField',
+      defaultClassName: "react-aria-TokenField",
     })
 
     let DOMProps = filterDOMProps(
@@ -247,7 +247,7 @@ export const TokenField = /*#__PURE__*/ createHideableComponent(
           values={[
             [
               LabelContext,
-              { ...labelProps, elementType: 'span', ref: labelRef },
+              { ...labelProps, elementType: "span", ref: labelRef },
             ],
             [
               TextContext,
@@ -307,7 +307,7 @@ export const TokenInput = /*#__PURE__*/ (forwardRef as forwardRefType)(
 
     let renderProps = useRenderProps({
       ...domProps,
-      defaultClassName: 'react-aria-TokenInput',
+      defaultClassName: "react-aria-TokenInput",
       values: {
         isHovered,
         isFocused,
@@ -344,7 +344,7 @@ export const TokenInput = /*#__PURE__*/ (forwardRef as forwardRefType)(
         <CompositionRenderBlocker isComposing={state.isComposing}>
           {state.value.segments.map((v, i) => {
             switch (v.type) {
-              case 'token': {
+              case "token": {
                 let token = children(
                   v as TokenSegment<
                     T extends TokenSegmentList<infer V> ? V : never
@@ -353,18 +353,18 @@ export const TokenInput = /*#__PURE__*/ (forwardRef as forwardRefType)(
                 return (
                   // Wrap tokens in zero-width spaces so the cursor is placed correctly.
                   <span key={i}>
-                    {'\u200b'}
+                    {"\u200b"}
                     {token}
-                    {'\u200b'}
+                    {"\u200b"}
                   </span>
                 )
               }
-              case 'text':
+              case "text":
                 return v.text
             }
           })}
           {/* Force cursor to the next line if the last segment ends with a newline. */}
-          {state.value.segments.at(-1)?.text.endsWith('\n') && <br />}
+          {state.value.segments.at(-1)?.text.endsWith("\n") && <br />}
         </CompositionRenderBlocker>
       </div>
     )
@@ -403,7 +403,7 @@ export const Token = forwardRef(function Token(
 
   let renderProps = useRenderProps({
     ...props,
-    defaultClassName: 'react-aria-Token',
+    defaultClassName: "react-aria-Token",
     values: {
       isSelected,
       isDisabled,

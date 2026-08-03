@@ -1,35 +1,35 @@
-'use client'
+"use client"
 
-import React from 'react'
-import type * as MenuPrimitives from 'react-aria-components/Menu'
+import React from "react"
+import type * as MenuPrimitives from "react-aria-components/Menu"
 
-import { InfoIcon } from '@/registry/__generated__/icons'
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
+import { InfoIcon } from "@/registry/__generated__/icons"
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Label } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
-import { NumberField } from '@/registry/ui/number-field'
-import { Popover } from '@/registry/ui/popover'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Label } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
+import { NumberField } from "@/registry/ui/number-field"
+import { Popover } from "@/registry/ui/popover"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { Switch, SwitchControl } from '@/registry/ui/switch'
+} from "@/registry/ui/select"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 
 export default function Demo() {
   const [placement, setPlacement] = React.useState<MenuPrimitives.Key | null>(
-    'top',
+    "top",
   )
   const [offset, setOffset] = React.useState<number>(0)
   const [crossOffset, setCrossOffset] = React.useState<number>(0)

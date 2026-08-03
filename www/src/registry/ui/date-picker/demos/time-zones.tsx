@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import { parseAbsoluteToLocal } from '@internationalized/date'
+import { parseAbsoluteToLocal } from "@internationalized/date"
 
-import { CalendarIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Calendar } from '@/registry/ui/calendar'
-import { DatePicker } from '@/registry/ui/date-picker'
-import { DialogContent } from '@/registry/ui/dialog'
-import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Popover } from '@/registry/ui/popover'
+import { CalendarIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Calendar } from "@/registry/ui/calendar"
+import { DatePicker } from "@/registry/ui/date-picker"
+import { DialogContent } from "@/registry/ui/dialog"
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (
     <DatePicker
       className="w-52"
       aria-label="Date picker with time zones"
-      defaultValue={parseAbsoluteToLocal('2021-11-07T07:45:00Z')}
+      defaultValue={parseAbsoluteToLocal("2021-11-07T07:45:00Z")}
     >
       <InputGroup>
         <DateInput />

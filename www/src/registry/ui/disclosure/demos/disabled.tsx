@@ -2,7 +2,7 @@ import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
 export default function Demo() {
   return (

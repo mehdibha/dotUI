@@ -1,8 +1,8 @@
-import { Description, Label } from '@/registry/ui/field'
-import { TextArea } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Description, Label } from "@/registry/ui/field"
+import { TextArea } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function TextAreaExamples() {
   return (

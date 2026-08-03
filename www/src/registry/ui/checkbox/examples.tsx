@@ -1,14 +1,14 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import BasicDemo from './demos/basic'
-import CardDemo from './demos/card'
-import DescriptionDemo from './demos/description'
-import DisabledDemo from './demos/disabled'
-import IndeterminateDemo from './demos/indeterminate'
-import InvalidDemo from './demos/invalid'
-import ReadOnlyDemo from './demos/read-only'
-import StandaloneDemo from './demos/standalone'
+import BasicDemo from "./demos/basic"
+import CardDemo from "./demos/card"
+import DescriptionDemo from "./demos/description"
+import DisabledDemo from "./demos/disabled"
+import IndeterminateDemo from "./demos/indeterminate"
+import InvalidDemo from "./demos/invalid"
+import ReadOnlyDemo from "./demos/read-only"
+import StandaloneDemo from "./demos/standalone"
 
 export default function CheckboxExamples() {
   return (

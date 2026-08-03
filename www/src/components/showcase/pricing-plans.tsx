@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
-import { cn } from '@/registry/lib/utils'
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
+import { cn } from "@/registry/lib/utils"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
@@ -12,47 +12,47 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
+} from "@/registry/ui/card"
 import {
   Description,
   FieldContent,
   FieldGroup,
   Label,
-} from '@/registry/ui/field'
+} from "@/registry/ui/field"
 import {
   Radio,
   RadioControl,
   RadioGroup,
   RadioIndicator,
-} from '@/registry/ui/radio-group'
+} from "@/registry/ui/radio-group"
 
 const tiers = [
   {
-    id: 'starter',
-    name: 'Starter',
-    price: '$0',
-    description: 'For side projects.',
+    id: "starter",
+    name: "Starter",
+    price: "$0",
+    description: "For side projects.",
   },
   {
-    id: 'pro',
-    name: 'Pro',
-    price: '$19',
-    description: 'For growing teams.',
+    id: "pro",
+    name: "Pro",
+    price: "$19",
+    description: "For growing teams.",
     popular: true,
   },
   {
-    id: 'team',
-    name: 'Team',
-    price: '$49',
-    description: 'For whole orgs.',
+    id: "team",
+    name: "Team",
+    price: "$49",
+    description: "For whole orgs.",
   },
 ]
 
 export function PricingPlans({
   className,
   ...props
-}: React.ComponentProps<'div'>) {
-  const [plan, setPlan] = useState('pro')
+}: React.ComponentProps<"div">) {
+  const [plan, setPlan] = useState("pro")
 
   return (
     <Card className={cn(className)} {...props}>

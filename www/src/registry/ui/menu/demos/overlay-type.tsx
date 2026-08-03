@@ -1,18 +1,18 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { MenuIcon } from '@/registry/__generated__/icons'
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
-import { Drawer } from '@/registry/ui/drawer'
-import { FieldGroup, Label } from '@/registry/ui/field'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Modal } from '@/registry/ui/modal'
-import { Popover } from '@/registry/ui/popover'
-import { Radio, RadioGroup } from '@/registry/ui/radio-group'
+import { MenuIcon } from "@/registry/__generated__/icons"
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
+import { Drawer } from "@/registry/ui/drawer"
+import { FieldGroup, Label } from "@/registry/ui/field"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Modal } from "@/registry/ui/modal"
+import { Popover } from "@/registry/ui/popover"
+import { Radio, RadioGroup } from "@/registry/ui/radio-group"
 
-type Type = 'modal' | 'drawer' | 'popover'
+type Type = "modal" | "drawer" | "popover"
 
 const OVERLAYS: Record<
   Type,
@@ -24,8 +24,8 @@ const OVERLAYS: Record<
 }
 
 export default function Demo() {
-  const [type, setType] = React.useState<Type>('popover')
-  const [mobileType, setMobileType] = React.useState<Type>('drawer')
+  const [type, setType] = React.useState<Type>("popover")
+  const [mobileType, setMobileType] = React.useState<Type>("drawer")
   return (
     <div className="flex items-center gap-14">
       <Menu>

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* The ideal Type section — three layers of commitment: pairings apply a
    curated heading+body in one tap, the face rows pick each role (heading can
@@ -6,34 +6,34 @@
    the heading voice and the size ramp. Everything renders live in the
    specimen, including fonts merely hovered in a picker. */
 
-import { useRef, useState } from 'react'
+import { useRef, useState } from "react"
 import {
   ChevronsUpDownIcon,
   RefreshCcwIcon,
   SearchIcon,
   XIcon,
-} from 'lucide-react'
+} from "lucide-react"
 import {
   Button as RacButton,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
-} from 'react-aria-components'
+} from "react-aria-components"
 
-import { ensureFontStylesheets, FONT_CATALOG, fontStack } from '@/lib/fonts'
-import type { FontCategory } from '@/lib/fonts'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { Command } from '@/registry/ui/command'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { ensureFontStylesheets, FONT_CATALOG, fontStack } from "@/lib/fonts"
+import type { FontCategory } from "@/lib/fonts"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { Command } from "@/registry/ui/command"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { SearchField } from '@/registry/ui/search-field'
-import { Select } from '@/registry/ui/select'
+} from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { SearchField } from "@/registry/ui/search-field"
+import { Select } from "@/registry/ui/select"
 import {
   ControlGroup,
   GroupCaption,
@@ -42,55 +42,55 @@ import {
   ROW_LABEL,
   ROW_TRIGGER,
   ROW_VALUE,
-} from '@/modules/control-lab/rows'
+} from "@/modules/control-lab/rows"
 import {
   useLazyFontPreviews,
   useLoadedFamilies,
-} from '@/modules/create/typography'
+} from "@/modules/create/typography"
 
-import type { Lab } from '../data'
-import { DetailRow } from '../patterns'
+import type { Lab } from "../data"
+import { DetailRow } from "../patterns"
 
 /* --------------------------------- Options --------------------------------- */
 
 const CATEGORY_LABELS: Record<FontCategory, string> = {
-  'sans-serif': 'Sans serif',
-  serif: 'Serif',
-  display: 'Display',
-  handwriting: 'Handwriting',
-  mono: 'Monospace',
+  "sans-serif": "Sans serif",
+  serif: "Serif",
+  display: "Display",
+  handwriting: "Handwriting",
+  mono: "Monospace",
 }
 
-const WEIGHT_OPTIONS = ['400', '500', '600', '700'].map((w) => ({
+const WEIGHT_OPTIONS = ["400", "500", "600", "700"].map((w) => ({
   value: w,
   label: w,
 }))
 
 const WEIGHT_LABELS: Record<string, string> = {
-  '400': 'Regular',
-  '500': 'Medium',
-  '600': 'Semibold',
-  '700': 'Bold',
+  "400": "Regular",
+  "500": "Medium",
+  "600": "Semibold",
+  "700": "Bold",
 }
 
 const TRACKING_OPTIONS = [
-  { value: 'tight', label: 'Tight' },
-  { value: 'normal', label: 'Normal' },
-  { value: 'wide', label: 'Wide' },
+  { value: "tight", label: "Tight" },
+  { value: "normal", label: "Normal" },
+  { value: "wide", label: "Wide" },
 ]
 
 const TRACKING_EM: Record<string, string> = {
-  tight: '-0.02em',
-  normal: '0em',
-  wide: '0.04em',
+  tight: "-0.02em",
+  normal: "0em",
+  wide: "0.04em",
 }
 
-const BASE_OPTIONS = ['14', '15', '16', '17', '18'].map((s) => ({
+const BASE_OPTIONS = ["14", "15", "16", "17", "18"].map((s) => ({
   value: s,
   label: s,
 }))
 
-const RATIO_OPTIONS = ['1.125', '1.2', '1.25', '1.333'].map((r) => ({
+const RATIO_OPTIONS = ["1.125", "1.2", "1.25", "1.333"].map((r) => ({
   value: r,
   label: r,
 }))
@@ -98,39 +98,39 @@ const RATIO_OPTIONS = ['1.125', '1.2', '1.25', '1.333'].map((r) => ({
 /* Sample texts the specimen cycles through — different voices to judge a face. */
 const SAMPLES = [
   {
-    heading: 'Almost before we knew it',
-    body: 'We had left the ground and the city fell away beneath us.',
-    code: 'npx shadcn add button',
+    heading: "Almost before we knew it",
+    body: "We had left the ground and the city fell away beneath us.",
+    code: "npx shadcn add button",
   },
   {
-    heading: 'A design system in an afternoon',
-    body: 'Colors, type and components — exported as code you own.',
-    code: 'pnpm dlx dotui init',
+    heading: "A design system in an afternoon",
+    body: "Colors, type and components — exported as code you own.",
+    code: "pnpm dlx dotui init",
   },
   {
-    heading: 'Sphinx of black quartz',
-    body: 'Judge my vow: 26 letters, 10 digits & a fistful of glyphs.',
-    code: 'const ratio = 1.25',
+    heading: "Sphinx of black quartz",
+    body: "Judge my vow: 26 letters, 10 digits & a fistful of glyphs.",
+    code: "const ratio = 1.25",
   },
 ]
 
 /* Curated heading+body pairings — '' heading means it follows the body. */
 const PAIRINGS = [
-  { id: 'geist', name: 'Geist', heading: '', body: 'Geist' },
-  { id: 'grotesk', name: 'Grotesk', heading: 'Space Grotesk', body: 'Inter' },
+  { id: "geist", name: "Geist", heading: "", body: "Geist" },
+  { id: "grotesk", name: "Grotesk", heading: "Space Grotesk", body: "Inter" },
   {
-    id: 'editorial',
-    name: 'Editorial',
-    heading: 'Playfair Display',
-    body: 'Source Sans 3',
+    id: "editorial",
+    name: "Editorial",
+    heading: "Playfair Display",
+    body: "Source Sans 3",
   },
-  { id: 'warm', name: 'Warm', heading: 'Fraunces', body: 'Nunito Sans' },
-  { id: 'plex', name: 'Plex', heading: '', body: 'IBM Plex Sans' },
+  { id: "warm", name: "Warm", heading: "Fraunces", body: "Nunito Sans" },
+  { id: "plex", name: "Plex", heading: "", body: "IBM Plex Sans" },
   {
-    id: 'display',
-    name: 'Display',
-    heading: 'Bricolage Grotesque',
-    body: 'Figtree',
+    id: "display",
+    name: "Display",
+    heading: "Bricolage Grotesque",
+    body: "Figtree",
   },
 ]
 
@@ -162,8 +162,8 @@ function Specimen({
   return (
     <div
       className={cn(
-        'group relative flex flex-col gap-2.5 rounded-xl bg-muted px-4 pt-4 pb-3.5',
-        trying && 'inset-ring-1 inset-ring-accent/40',
+        "group relative flex flex-col gap-2.5 rounded-xl bg-muted px-4 pt-4 pb-3.5",
+        trying && "inset-ring-1 inset-ring-accent/40",
       )}
     >
       <RacButton
@@ -223,7 +223,7 @@ function PairingRow({
     <div className="w-full rounded-xl bg-muted p-2">
       <div className="flex h-8 items-center justify-between px-2">
         <span className={ROW_LABEL}>Pairing</span>
-        <span className={ROW_VALUE}>{active?.name ?? 'Custom'}</span>
+        <span className={ROW_VALUE}>{active?.name ?? "Custom"}</span>
       </div>
       <RacToggleButtonGroup
         aria-label="Font pairing"
@@ -233,8 +233,8 @@ function PairingRow({
           const next = keys.values().next().value
           const pairing = PAIRINGS.find((p) => p.id === next)
           if (pairing) {
-            set('headingFont')(pairing.heading)
-            set('bodyFont')(pairing.body)
+            set("headingFont")(pairing.heading)
+            set("bodyFont")(pairing.body)
           }
         }}
         className="grid grid-cols-3 gap-1.5"
@@ -276,7 +276,7 @@ function PairingRow({
 
 /* --------------------------------- Face row -------------------------------- */
 
-const AUTO_KEY = '__auto__'
+const AUTO_KEY = "__auto__"
 
 /**
  * A font row that browses live: hovering a family in the list previews it in
@@ -300,8 +300,8 @@ function FaceRow({
   onPreview: (family: string | null) => void
 }) {
   const listRef = useLazyFontPreviews()
-  const isAuto = autoFamily !== undefined && value === ''
-  const family = value || autoFamily || ''
+  const isAuto = autoFamily !== undefined && value === ""
+  const family = value || autoFamily || ""
   useLoadedFamilies([family])
   return (
     <Select
@@ -309,7 +309,7 @@ function FaceRow({
       selectedKey={isAuto ? AUTO_KEY : value}
       onSelectionChange={(key) => {
         onPreview(null)
-        onChange(key === AUTO_KEY ? '' : (key as string))
+        onChange(key === AUTO_KEY ? "" : (key as string))
       }}
       onOpenChange={(open) => {
         if (!open) onPreview(null)
@@ -325,7 +325,7 @@ function FaceRow({
             </span>
           )}
           <span
-            className={cn(ROW_VALUE, 'text-right')}
+            className={cn(ROW_VALUE, "text-right")}
             style={{ fontFamily: fontStack(family) }}
           >
             {family}
@@ -481,28 +481,28 @@ export function IdealTypeSectionBody({ lab }: { lab: Lab }) {
       <ControlGroup>
         <FaceRow
           label="Heading"
-          categories={['sans-serif', 'serif', 'display', 'handwriting']}
+          categories={["sans-serif", "serif", "display", "handwriting"]}
           value={state.headingFont}
           autoFamily={state.bodyFont}
-          onChange={(f) => set('headingFont')(f === state.bodyFont ? '' : f)}
+          onChange={(f) => set("headingFont")(f === state.bodyFont ? "" : f)}
           onPreview={(f) => preview(f ? { heading: f } : null)}
         />
         <FaceRow
           label="Body"
-          categories={['sans-serif', 'serif']}
+          categories={["sans-serif", "serif"]}
           value={state.bodyFont}
-          onChange={set('bodyFont')}
+          onChange={set("bodyFont")}
           onPreview={(f) => preview(f ? { body: f } : null)}
         />
         <FaceRow
           label="Mono"
-          categories={['mono']}
+          categories={["mono"]}
           value={state.monoFont}
-          onChange={set('monoFont')}
+          onChange={set("monoFont")}
           onPreview={(f) => preview(f ? { mono: f } : null)}
         />
       </ControlGroup>
-      {state.headingFont === '' && (
+      {state.headingFont === "" && (
         <GroupCaption>
           Headings follow the body font — pick a heading face to split them.
         </GroupCaption>
@@ -512,16 +512,16 @@ export function IdealTypeSectionBody({ lab }: { lab: Lab }) {
         label="Headings"
         summary={
           WEIGHT_LABELS[state.headingWeight] +
-          (state.headingTracking === 'normal'
-            ? ''
-            : ` · ${state.headingTracking === 'tight' ? 'Tight' : 'Wide'}`)
+          (state.headingTracking === "normal"
+            ? ""
+            : ` · ${state.headingTracking === "tight" ? "Tight" : "Wide"}`)
         }
       >
         <ParamRow label="Weight">
           <MiniSegmented
             ariaLabel="Heading weight"
             value={state.headingWeight}
-            onChange={set('headingWeight')}
+            onChange={set("headingWeight")}
             options={WEIGHT_OPTIONS}
           />
         </ParamRow>
@@ -529,7 +529,7 @@ export function IdealTypeSectionBody({ lab }: { lab: Lab }) {
           <MiniSegmented
             ariaLabel="Heading tracking"
             value={state.headingTracking}
-            onChange={set('headingTracking')}
+            onChange={set("headingTracking")}
             options={TRACKING_OPTIONS}
           />
         </ParamRow>
@@ -543,7 +543,7 @@ export function IdealTypeSectionBody({ lab }: { lab: Lab }) {
           <MiniSegmented
             ariaLabel="Base size"
             value={String(state.baseSize)}
-            onChange={(v) => set('baseSize')(Number(v))}
+            onChange={(v) => set("baseSize")(Number(v))}
             options={BASE_OPTIONS}
           />
         </ParamRow>
@@ -551,7 +551,7 @@ export function IdealTypeSectionBody({ lab }: { lab: Lab }) {
           <MiniSegmented
             ariaLabel="Scale ratio"
             value={state.typeScale}
-            onChange={set('typeScale')}
+            onChange={set("typeScale")}
             options={RATIO_OPTIONS}
           />
         </ParamRow>

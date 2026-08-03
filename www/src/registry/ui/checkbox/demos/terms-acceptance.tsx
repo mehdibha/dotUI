@@ -2,14 +2,14 @@ import {
   Checkbox,
   CheckboxControl,
   CheckboxIndicator,
-} from '@/registry/ui/checkbox'
+} from "@/registry/ui/checkbox"
 import {
   Description,
   FieldContent,
   Fieldset,
   Label,
   Legend,
-} from '@/registry/ui/field'
+} from "@/registry/ui/field"
 
 export default function Demo() {
   return (

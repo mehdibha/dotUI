@@ -1,5 +1,5 @@
-import { Link } from '@/registry/ui/link'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { Link } from "@/registry/ui/link"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 export default function Demo() {
   return (

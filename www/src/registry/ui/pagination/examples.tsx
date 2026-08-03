@@ -1,11 +1,11 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Compact from './demos/compact'
-import Controlled from './demos/controlled'
-import Default from './demos/default'
-import Links from './demos/links'
-import Sizes from './demos/sizes'
+import Compact from "./demos/compact"
+import Controlled from "./demos/controlled"
+import Default from "./demos/default"
+import Links from "./demos/links"
+import Sizes from "./demos/sizes"
 
 export default function PaginationExamples() {
   return (

@@ -20,50 +20,50 @@ export interface Rgb {
 
 export function parseColor(input: string): Rgb | null {
   const str = input.trim().toLowerCase()
-  if (str.startsWith('#')) return parseHex(str)
+  if (str.startsWith("#")) return parseHex(str)
   const fn = str.match(/^([a-z-]+)\(([^)]*)\)$/)
   if (!fn?.[1] || fn[2] === undefined) return null
   const name = fn[1]
   const args = fn[2]
-    .replace(/\//g, ' ')
-    .replace(/,/g, ' ')
+    .replace(/\//g, " ")
+    .replace(/,/g, " ")
     .split(/\s+/)
     .filter(Boolean)
-  const isColorFn = name === 'color'
+  const isColorFn = name === "color"
   const [a0, a1, a2, a3] = isColorFn ? args.slice(1) : args
   if (a0 === undefined || a1 === undefined || a2 === undefined) return null
   const alpha = a3 === undefined ? 1 : channel(a3, 1)
   switch (name) {
-    case 'rgb':
-    case 'rgba':
+    case "rgb":
+    case "rgba":
       return {
         r: channel(a0, 255),
         g: channel(a1, 255),
         b: channel(a2, 255),
         alpha,
       }
-    case 'hsl':
-    case 'hsla':
+    case "hsl":
+    case "hsla":
       return {
         ...hslToRgb(parseFloat(a0), channel(a1, 100), channel(a2, 100)),
         alpha,
       }
-    case 'oklch': {
-      const c = a1.endsWith('%') ? (parseFloat(a1) / 100) * 0.4 : parseFloat(a1)
+    case "oklch": {
+      const c = a1.endsWith("%") ? (parseFloat(a1) / 100) * 0.4 : parseFloat(a1)
       return oklchToRgb({
         l: channel(a0, 1),
         c,
-        h: a2 === 'none' ? 0 : parseFloat(a2),
+        h: a2 === "none" ? 0 : parseFloat(a2),
         alpha,
       })
     }
-    case 'oklab':
+    case "oklab":
       return oklabToRgb(channel(a0, 1), parseFloat(a1), parseFloat(a2), alpha)
-    case 'color': {
+    case "color": {
       // color(display-p3 r g b) — approximate by treating channels as sRGB;
       // close enough for comparison strips.
       const space = args[0]
-      if (space !== 'display-p3' && space !== 'srgb') return null
+      if (space !== "display-p3" && space !== "srgb") return null
       return { r: channel(a0, 1), g: channel(a1, 1), b: channel(a2, 1), alpha }
     }
     default:
@@ -72,13 +72,13 @@ export function parseColor(input: string): Rgb | null {
 }
 
 function channel(value: string, scale: number): number {
-  if (value.endsWith('%')) return parseFloat(value) / 100
+  if (value.endsWith("%")) return parseFloat(value) / 100
   return parseFloat(value) / scale
 }
 
 function parseHex(hex: string): Rgb | null {
   const h = hex.slice(1)
-  const expand = (s = 'f') => parseInt(s.length === 1 ? s + s : s, 16) / 255
+  const expand = (s = "f") => parseInt(s.length === 1 ? s + s : s, 16) / 255
   if (h.length === 3 || h.length === 4) {
     return {
       r: expand(h[0]),
@@ -98,7 +98,7 @@ function parseHex(hex: string): Rgb | null {
   return null
 }
 
-function hslToRgb(h: number, s: number, l: number): Omit<Rgb, 'alpha'> {
+function hslToRgb(h: number, s: number, l: number): Omit<Rgb, "alpha"> {
   const hue = ((h % 360) + 360) % 360
   const a = s * Math.min(l, 1 - l)
   const f = (n: number) => {
@@ -158,7 +158,7 @@ export function rgbToHex(rgb: Rgb): string {
   const to = (v: number) =>
     Math.round(Math.min(1, Math.max(0, v)) * 255)
       .toString(16)
-      .padStart(2, '0')
+      .padStart(2, "0")
   return `#${to(rgb.r)}${to(rgb.g)}${to(rgb.b)}`
 }
 
@@ -205,7 +205,7 @@ export function apcaContrast(text: Rgb, bg: Rgb): number {
 
 // --- color-vision-deficiency simulation ------------------------------------
 
-export type CvdType = 'protanopia' | 'deuteranopia' | 'tritanopia'
+export type CvdType = "protanopia" | "deuteranopia" | "tritanopia"
 
 // Machado, Oliveira & Fernandes (2009), severity 1.0, applied in linear RGB.
 type Mat3 = [

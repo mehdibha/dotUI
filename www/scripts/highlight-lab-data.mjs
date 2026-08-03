@@ -9,28 +9,28 @@
  * Run: node www/scripts/highlight-lab-data.mjs
  * Output: www/src/modules/dev/highlight-lab/data.json
  */
-import fs from 'node:fs'
-import { createRequire } from 'node:module'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import fs from "node:fs"
+import { createRequire } from "node:module"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
 
-const WWW = fileURLToPath(new URL('..', import.meta.url))
-const requireWww = createRequire(path.join(WWW, 'package.json'))
+const WWW = fileURLToPath(new URL("..", import.meta.url))
+const requireWww = createRequire(path.join(WWW, "package.json"))
 const requireFuma = createRequire(
-  requireWww.resolve('fumadocs-core/package.json'),
+  requireWww.resolve("fumadocs-core/package.json"),
 )
 
 const { createHighlighter: createShiki } = await import(
-  requireFuma.resolve('shiki')
+  requireFuma.resolve("shiki")
 )
 const { createHighlighter: createTs } = await import(
-  requireWww.resolve('@tanstack/highlight/core')
+  requireWww.resolve("@tanstack/highlight/core")
 )
 const { refineTokens } = await import(
-  path.join(WWW, 'src/modules/docs/highlight-refine.ts')
+  path.join(WWW, "src/modules/docs/highlight-refine.ts")
 )
 
-const TS_LANGS = ['ts', 'tsx', 'js', 'jsx', 'json', 'shell', 'css', 'html']
+const TS_LANGS = ["ts", "tsx", "js", "jsx", "json", "shell", "css", "html"]
 const tsLangDefs = []
 for (const l of TS_LANGS) {
   const m = await import(
@@ -40,33 +40,33 @@ for (const l of TS_LANGS) {
 }
 const tsHl = createTs({ languages: tsLangDefs })
 const shiki = await createShiki({
-  themes: ['github-light', 'github-dark'],
-  langs: ['ts', 'tsx', 'js', 'jsx', 'json', 'bash', 'css', 'html'],
+  themes: ["github-light", "github-dark"],
+  langs: ["ts", "tsx", "js", "jsx", "json", "bash", "css", "html"],
 })
 
 // Mirror of highlight.css (light|dark per class); 'plain' = unclassed text.
 const PALETTE = {
-  plain: '#24292E|#E1E4E8',
-  attr: '#6F42C1|#B392F0',
-  'code-inline': '#005CC5|#79B8FF',
-  command: '#6F42C1|#B392F0',
-  comment: '#6A737D|#6A737D',
-  deleted: '#B31D28|#FDAEB7',
-  function: '#6F42C1|#B392F0',
-  heading: '#005CC5|#79B8FF',
-  inserted: '#22863A|#85E89D',
-  keyword: '#D73A49|#F97583',
-  link: '#032F62|#9ECBFF',
-  literal: '#005CC5|#79B8FF',
-  meta: '#6A737D|#6A737D',
-  number: '#005CC5|#79B8FF',
-  operator: '#D73A49|#F97583',
-  property: '#005CC5|#79B8FF',
-  selector: '#22863A|#85E89D',
-  string: '#032F62|#9ECBFF',
-  tag: '#005CC5|#79B8FF',
-  type: '#005CC5|#79B8FF',
-  variable: '#E36209|#FFAB70',
+  plain: "#24292E|#E1E4E8",
+  attr: "#6F42C1|#B392F0",
+  "code-inline": "#005CC5|#79B8FF",
+  command: "#6F42C1|#B392F0",
+  comment: "#6A737D|#6A737D",
+  deleted: "#B31D28|#FDAEB7",
+  function: "#6F42C1|#B392F0",
+  heading: "#005CC5|#79B8FF",
+  inserted: "#22863A|#85E89D",
+  keyword: "#D73A49|#F97583",
+  link: "#032F62|#9ECBFF",
+  literal: "#005CC5|#79B8FF",
+  meta: "#6A737D|#6A737D",
+  number: "#005CC5|#79B8FF",
+  operator: "#D73A49|#F97583",
+  property: "#005CC5|#79B8FF",
+  selector: "#22863A|#85E89D",
+  string: "#032F62|#9ECBFF",
+  tag: "#005CC5|#79B8FF",
+  type: "#005CC5|#79B8FF",
+  variable: "#E36209|#FFAB70",
 }
 
 // ---------------------------------------------------------------------------
@@ -83,40 +83,40 @@ const walk = (dir, ext, out = []) => {
   return out
 }
 
-for (const file of walk(path.join(WWW, 'content/docs'), '.mdx')) {
-  const src = fs.readFileSync(file, 'utf8')
+for (const file of walk(path.join(WWW, "content/docs"), ".mdx")) {
+  const src = fs.readFileSync(file, "utf8")
   let i = 0
   for (const m of src.matchAll(/```(\w+)?[^\n]*\n([\s\S]*?)```/g)) {
-    const lang = m[1] === 'npm' ? 'shell' : (m[1] ?? 'plaintext')
+    const lang = m[1] === "npm" ? "shell" : (m[1] ?? "plaintext")
     corpus.push({
       id: `${path.relative(WWW, file)}#${i++}`,
       lang,
-      code: m[2].replace(/\n$/, ''),
+      code: m[2].replace(/\n$/, ""),
     })
   }
 }
-for (const file of walk(path.join(WWW, 'src/registry/ui'), '.tsx')) {
-  if (!file.includes('/demos/')) continue
+for (const file of walk(path.join(WWW, "src/registry/ui"), ".tsx")) {
+  if (!file.includes("/demos/")) continue
   corpus.push({
     id: path.relative(WWW, file),
-    lang: 'tsx',
-    code: fs.readFileSync(file, 'utf8').replace(/\n$/, ''),
+    lang: "tsx",
+    code: fs.readFileSync(file, "utf8").replace(/\n$/, ""),
   })
 }
-const refsDir = path.join(WWW, 'src/modules/docs/references/generated')
-for (const file of fs.readdirSync(refsDir).filter((f) => f.endsWith('.json'))) {
-  const data = JSON.parse(fs.readFileSync(path.join(refsDir, file), 'utf8'))
+const refsDir = path.join(WWW, "src/modules/docs/references/generated")
+for (const file of fs.readdirSync(refsDir).filter((f) => f.endsWith(".json"))) {
+  const data = JSON.parse(fs.readFileSync(path.join(refsDir, file), "utf8"))
   for (const [name, prop] of Object.entries(data.props ?? {})) {
     for (const [kind, code] of [
-      ['type', prop.detailedType ?? prop.type],
-      ['default', prop.default],
+      ["type", prop.detailedType ?? prop.type],
+      ["default", prop.default],
     ]) {
       if (code) {
         corpus.push({
           id: `ref:${data.name}.${name}.${kind}`,
-          lang: 'ts',
+          lang: "ts",
           code,
-          typePosition: kind === 'type',
+          typePosition: kind === "type",
         })
       }
     }
@@ -126,25 +126,25 @@ for (const file of fs.readdirSync(refsDir).filter((f) => f.endsWith('.json'))) {
 // ---------------------------------------------------------------------------
 // Per-char color pairs for each engine
 // ---------------------------------------------------------------------------
-const TYPE_PREFIX = 'type _ =\n'
+const TYPE_PREFIX = "type _ =\n"
 const shikiColorsAt = (code, lang, typePosition) => {
   const input = typePosition ? TYPE_PREFIX + code : code
   const skip = typePosition ? TYPE_PREFIX.length : 0
   const arr = new Array(code.length).fill(PALETTE.plain)
-  for (const theme of ['github-light', 'github-dark']) {
+  for (const theme of ["github-light", "github-dark"]) {
     const { tokens } = shiki.codeToTokens(input, {
-      lang: lang === 'shell' ? 'bash' : lang,
+      lang: lang === "shell" ? "bash" : lang,
       theme,
     })
-    const idx = theme === 'github-light' ? 0 : 1
+    const idx = theme === "github-light" ? 0 : 1
     for (const line of tokens) {
       for (const t of line) {
         for (let i = 0; i < t.content.length; i++) {
           const at = t.offset + i - skip
           if (at < 0) continue
-          const prev = arr[at].split('|')
-          prev[idx] = (t.color ?? '').toUpperCase()
-          arr[at] = prev.join('|')
+          const prev = arr[at].split("|")
+          prev[idx] = (t.color ?? "").toUpperCase()
+          arr[at] = prev.join("|")
         }
       }
     }
@@ -179,7 +179,7 @@ const toSegments = (code, colors, diffAt) => {
       colors[i] !== colors[from] ||
       diffAt[i] !== diffAt[from]
     ) {
-      const [light, dark] = colors[from].split('|')
+      const [light, dark] = colors[from].split("|")
       segments.push([code.slice(from, i), light, dark, diffAt[from] ? 1 : 0])
       from = i
     }
@@ -198,7 +198,7 @@ let refinedMismatch = 0
 let rawMismatch = 0
 
 for (const { id, lang, code, typePosition } of corpus) {
-  if (!TS_LANGS.includes(lang) || lang === 'plaintext') continue
+  if (!TS_LANGS.includes(lang) || lang === "plaintext") continue
   let sk
   try {
     sk = shikiColorsAt(code, lang, typePosition)
@@ -242,7 +242,7 @@ for (const { id, lang, code, typePosition } of corpus) {
   // most blocks are long demo files with a couple of differing characters.
   const lineStarts = [0]
   for (let i = 0; i < code.length; i++) {
-    if (code[i] === '\n') lineStarts.push(i + 1)
+    if (code[i] === "\n") lineStarts.push(i + 1)
   }
   const lineOf = (i) => {
     let lo = 0
@@ -327,7 +327,7 @@ const out = {
   blocks: kept,
 }
 
-const outPath = path.join(WWW, 'src/modules/dev/highlight-lab/data.json')
+const outPath = path.join(WWW, "src/modules/dev/highlight-lab/data.json")
 fs.mkdirSync(path.dirname(outPath), { recursive: true })
 fs.writeFileSync(outPath, JSON.stringify(out))
 console.log(

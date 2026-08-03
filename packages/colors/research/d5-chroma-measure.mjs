@@ -2,19 +2,19 @@
 // Measures C(step) in OKLCH, each family's sRGB gamut cusp, and whether
 // cusp-relative chroma C_rel = C / Cmax(L, H) collapses to a shared curve.
 // Deterministic; run: node research/d5-chroma-measure.mjs
-import { readFileSync, writeFileSync } from 'node:fs'
-import { createRequire } from 'node:module'
-import { converter } from 'culori'
+import { readFileSync, writeFileSync } from "node:fs"
+import { createRequire } from "node:module"
+import { converter } from "culori"
 
 const require = createRequire(import.meta.url)
-const radix = require('@radix-ui/colors')
+const radix = require("@radix-ui/colors")
 
-const toOklch = converter('oklch')
-const toRgb = converter('rgb')
+const toOklch = converter("oklch")
+const toRgb = converter("rgb")
 
 const EPS = 1e-6
 function inSrgb(l, c, h) {
-  const { r, g, b } = toRgb({ mode: 'oklch', l, c, h })
+  const { r, g, b } = toRgb({ mode: "oklch", l, c, h })
   return (
     r >= -EPS &&
     r <= 1 + EPS &&
@@ -66,7 +66,7 @@ function cusp(h) {
 const round = (x, d = 4) => Number(x.toFixed(d))
 
 // ---------- Radix light chromatic scales ----------
-const RADIX_GRAYS = new Set(['gray', 'mauve', 'slate', 'sage', 'olive', 'sand'])
+const RADIX_GRAYS = new Set(["gray", "mauve", "slate", "sage", "olive", "sand"])
 const radixFamilies = Object.keys(radix).filter(
   (k) =>
     !/Dark|A$|P3/.test(k) && !RADIX_GRAYS.has(k) && !/^(black|white)/.test(k),
@@ -107,10 +107,10 @@ const radixData = radixFamilies.map((fam) =>
 // ---------- Tailwind v4 chromatic + neutral scales ----------
 const twCss = readFileSync(
   new URL(
-    '../../../node_modules/.pnpm/tailwindcss@4.3.0/node_modules/tailwindcss/theme.css',
+    "../../../node_modules/.pnpm/tailwindcss@4.3.0/node_modules/tailwindcss/theme.css",
     import.meta.url,
   ),
-  'utf8',
+  "utf8",
 )
 const twScales = {}
 for (const m of twCss.matchAll(
@@ -182,13 +182,13 @@ function collapseStats(data, nSteps) {
     round(stats.reduce((a, b) => a + b[key].cv, 0) / stats.length, 3)
   return {
     perStep: stats,
-    meanCV: { absC: avg('absC'), cNorm: avg('cNorm'), cRel: avg('cRel') },
+    meanCV: { absC: avg("absC"), cNorm: avg("cNorm"), cRel: avg("cRel") },
   }
 }
 
 // Vivid subset: exclude the deliberately muted Radix metals/browns — they run
 // at a lower fraction of gamut by design and are reported separately.
-const MUTED = new Set(['bronze', 'gold', 'brown'])
+const MUTED = new Set(["bronze", "gold", "brown"])
 const radixVivid = radixData.filter((f) => !MUTED.has(f.name))
 
 const radixStats = collapseStats(radixData, 12)
@@ -214,10 +214,10 @@ function solidsVsCusp(data, solidSteps) {
 
 const out = {
   meta: {
-    generated: 'd5-chroma-measure.mjs',
-    space: 'OKLCH via culori; gamut = sRGB (displayable, eps 1e-6)',
-    radixVersion: require('@radix-ui/colors/package.json').version,
-    tailwindVersion: '4.3.0',
+    generated: "d5-chroma-measure.mjs",
+    space: "OKLCH via culori; gamut = sRGB (displayable, eps 1e-6)",
+    radixVersion: require("@radix-ui/colors/package.json").version,
+    tailwindVersion: "4.3.0",
     note: "cRel = C / maxChroma(L,H) at the step's own L and H; cusp = argmax_L maxChroma(L, H_peakStep)",
   },
   radix: radixData,
@@ -231,35 +231,35 @@ const out = {
 }
 
 writeFileSync(
-  new URL('./data/radix-light-chroma.json', import.meta.url),
+  new URL("./data/radix-light-chroma.json", import.meta.url),
   JSON.stringify(out, null, 2),
 )
 
 // ---------- console summary ----------
-console.log('Radix peak-chroma step per family:')
+console.log("Radix peak-chroma step per family:")
 for (const f of radixData)
   console.log(
     `  ${f.name.padEnd(8)} peak@${String(f.peakStep).padStart(2)} C=${f.peakC} H=${f.peakH}  cusp L=${f.cusp.l} C=${f.cusp.c}  C9/cusp=${round(f.steps[8].c / f.cusp.c, 3)} L9-Lcusp=${round(f.steps[8].l - f.cusp.l, 3)}`,
   )
-console.log('\nRadix mean CV (all 25):', radixStats.meanCV)
-console.log('Radix mean CV (vivid only):', radixVividStats.meanCV)
-console.log('\nRadix vivid per-step cRel mean/sd:')
+console.log("\nRadix mean CV (all 25):", radixStats.meanCV)
+console.log("Radix mean CV (vivid only):", radixVividStats.meanCV)
+console.log("\nRadix vivid per-step cRel mean/sd:")
 for (const s of radixVividStats.perStep)
   console.log(
     `  step ${String(s.step).padStart(2)}: cRel ${s.cRel.mean} ± ${s.cRel.sd} (cv ${s.cRel.cv}) | cNorm ${s.cNorm.mean} ± ${s.cNorm.sd} (cv ${s.cNorm.cv})`,
   )
 
 console.log(
-  '\nTailwind neutrals excluded:',
-  twNeutrals.map((f) => f.name).join(' '),
+  "\nTailwind neutrals excluded:",
+  twNeutrals.map((f) => f.name).join(" "),
 )
-console.log('Tailwind peak-chroma step per family:')
+console.log("Tailwind peak-chroma step per family:")
 for (const f of twData)
   console.log(
     `  ${f.name.padEnd(8)} peak@${String(f.peakStep).padStart(3)} C=${f.peakC} H=${f.peakH}  cusp L=${f.cusp.l} C=${f.cusp.c}  outOfSrgbSteps=${f.outOfSrgbSteps}`,
   )
-console.log('\nTailwind mean CV:', twStats.meanCV)
-console.log('\nTailwind per-step cRel mean/sd:')
+console.log("\nTailwind mean CV:", twStats.meanCV)
+console.log("\nTailwind per-step cRel mean/sd:")
 for (const s of twStats.perStep)
   console.log(
     `  idx ${String(s.step).padStart(2)}: cRel ${s.cRel.mean} ± ${s.cRel.sd} (cv ${s.cRel.cv}) | cNorm ${s.cNorm.mean} ± ${s.cNorm.sd} (cv ${s.cNorm.cv})`,

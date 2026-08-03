@@ -1,25 +1,25 @@
-'use client'
+"use client"
 
-import React from 'react'
-import * as ColorAreaPrimitives from 'react-aria-components/ColorArea'
+import React from "react"
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 
-import { Button } from '@/registry/ui/button'
-import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSlider, ColorSliderControl } from '@/registry/ui/color-slider'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Label } from '@/registry/ui/field'
-import { Popover } from '@/registry/ui/popover'
+import { Button } from "@/registry/ui/button"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import { ColorSlider, ColorSliderControl } from "@/registry/ui/color-slider"
+import { ColorSwatch } from "@/registry/ui/color-swatch"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
+import { Popover } from "@/registry/ui/popover"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
+} from "@/registry/ui/select"
 
 export default function Demo() {
   const [space, setSpace] =
-    React.useState<ColorAreaPrimitives.ColorSpace>('rgb')
+    React.useState<ColorAreaPrimitives.ColorSpace>("rgb")
   return (
     <ColorPicker defaultValue="#5100FF">
       <Button aria-label="Pick a color" isIconOnly>

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* Control Lab — the catalog of the row language: every primitive in rows.tsx
    on its own, with the variants that matter, read top to bottom. The panel
@@ -9,7 +9,7 @@
    panel-width card, because that's the only context these rows are designed
    for — a 360px column. */
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState } from "react"
 import {
   AlignCenterIcon,
   AlignLeftIcon,
@@ -17,20 +17,20 @@ import {
   MonitorIcon,
   MoonIcon,
   SunIcon,
-} from 'lucide-react'
-import { useTheme } from 'starter-themes'
+} from "lucide-react"
+import { useTheme } from "starter-themes"
 
-import { createTheme, STEPS, toOklch } from '@dotui/colors'
+import { createTheme, STEPS, toOklch } from "@dotui/colors"
 
-import { DEFAULT_BODY_FAMILY } from '@/lib/fonts'
-import { cn } from '@/registry/lib/utils'
+import { DEFAULT_BODY_FAMILY } from "@/lib/fonts"
+import { cn } from "@/registry/lib/utils"
 import {
   SegmentedControl,
   SegmentedControlItem,
-} from '@/registry/ui/segmented-control'
-import { TOCItems, TOCProvider } from '@/modules/docs/toc'
-import type { TOCItemType } from '@/modules/docs/toc'
-import { InternalHeader } from '@/modules/internal/shell'
+} from "@/registry/ui/segmented-control"
+import { TOCItems, TOCProvider } from "@/modules/docs/toc"
+import type { TOCItemType } from "@/modules/docs/toc"
+import { InternalHeader } from "@/modules/internal/shell"
 
 import {
   ActionRow,
@@ -52,8 +52,8 @@ import {
   StepperRow,
   OptionGridRow,
   SwitchRow,
-} from './rows'
-import type { NeutralValue, SegmentedRowOption, OptionGridItem } from './rows'
+} from "./rows"
+import type { NeutralValue, SegmentedRowOption, OptionGridItem } from "./rows"
 
 /* ------------------------------ Mini specimens ----------------------------- */
 
@@ -82,44 +82,44 @@ function MiniInput({ className }: { className: string }) {
 
 const BUTTON_STYLES: OptionGridItem[] = [
   {
-    id: 'solid',
-    label: 'Solid',
+    id: "solid",
+    label: "Solid",
     preview: <MiniButton className="bg-primary text-fg-on-primary" />,
   },
   {
-    id: 'soft',
-    label: 'Soft',
+    id: "soft",
+    label: "Soft",
     preview: <MiniButton className="bg-neutral text-fg-on-neutral" />,
   },
   {
-    id: 'outline',
-    label: 'Outline',
+    id: "outline",
+    label: "Outline",
     preview: <MiniButton className="border border-border-field text-fg" />,
   },
-  { id: 'quiet', label: 'Quiet', preview: <MiniButton className="text-fg" /> },
+  { id: "quiet", label: "Quiet", preview: <MiniButton className="text-fg" /> },
 ]
 
 const INPUT_STYLES: OptionGridItem[] = [
   {
-    id: 'outline',
-    label: 'Outline',
+    id: "outline",
+    label: "Outline",
     preview: (
       <MiniInput className="rounded-(--input-radius) border border-border-field bg-field" />
     ),
   },
   {
-    id: 'line',
-    label: 'Line',
+    id: "line",
+    label: "Line",
     preview: <MiniInput className="border-b border-border-field" />,
   },
   {
-    id: 'filled',
-    label: 'Filled',
+    id: "filled",
+    label: "Filled",
     preview: <MiniInput className="rounded-(--input-radius) bg-neutral" />,
   },
   {
-    id: 'filled-line',
-    label: 'Filled line',
+    id: "filled-line",
+    label: "Filled line",
     preview: (
       <MiniInput className="rounded-t-(--input-radius) border-b border-border-field bg-neutral" />
     ),
@@ -127,30 +127,30 @@ const INPUT_STYLES: OptionGridItem[] = [
 ]
 
 const RADIUS_OPTIONS: SegmentedRowOption[] = [
-  { value: 'sharp', label: 'Sharp' },
-  { value: 'md', label: 'Md' },
-  { value: 'pill', label: 'Pill' },
+  { value: "sharp", label: "Sharp" },
+  { value: "md", label: "Md" },
+  { value: "pill", label: "Pill" },
 ]
 
 const ALIGN_OPTIONS: SegmentedRowOption[] = [
-  { value: 'left', label: <AlignLeftIcon />, ariaLabel: 'Align left' },
-  { value: 'center', label: <AlignCenterIcon />, ariaLabel: 'Align center' },
-  { value: 'right', label: <AlignRightIcon />, ariaLabel: 'Align right' },
+  { value: "left", label: <AlignLeftIcon />, ariaLabel: "Align left" },
+  { value: "center", label: <AlignCenterIcon />, ariaLabel: "Align center" },
+  { value: "right", label: <AlignRightIcon />, ariaLabel: "Align right" },
 ]
 
 const TRACKING_OPTIONS: SegmentedRowOption[] = [
-  { value: 'tight', label: 'Tight' },
-  { value: 'normal', label: 'Normal' },
-  { value: 'wide', label: 'Wide' },
+  { value: "tight", label: "Tight" },
+  { value: "normal", label: "Normal" },
+  { value: "wide", label: "Wide" },
 ]
 
 const THEME_OPTIONS = [
-  { value: 'light', label: 'Light', icon: <SunIcon /> },
-  { value: 'dark', label: 'Dark', icon: <MoonIcon /> },
-  { value: 'system', label: 'System', icon: <MonitorIcon /> },
+  { value: "light", label: "Light", icon: <SunIcon /> },
+  { value: "dark", label: "Dark", icon: <MoonIcon /> },
+  { value: "system", label: "System", icon: <MonitorIcon /> },
 ]
 
-const CURSOR_OPTIONS = ['default', 'pointer', 'grab', 'text'].map((c) => ({
+const CURSOR_OPTIONS = ["default", "pointer", "grab", "text"].map((c) => ({
   value: c,
   label: c,
 }))
@@ -178,12 +178,12 @@ interface Group {
  * to judge the control alone, and `wide` stretches it past the panel column,
  * which is where a row that only works at 360px gives itself away.
  */
-type PreviewMode = 'card' | 'bare' | 'wide'
+type PreviewMode = "card" | "bare" | "wide"
 
 const PREVIEW_MODES: SegmentedRowOption[] = [
-  { value: 'card', label: 'Card' },
-  { value: 'bare', label: 'Bare' },
-  { value: 'wide', label: 'Wide' },
+  { value: "card", label: "Card" },
+  { value: "bare", label: "Bare" },
+  { value: "wide", label: "Wide" },
 ]
 
 function Stage({
@@ -196,9 +196,9 @@ function Stage({
   return (
     <div
       className={cn(
-        'flex flex-col gap-1.5',
-        mode === 'wide' ? 'w-full min-w-[360px]' : 'w-[360px] shrink-0',
-        mode === 'card' && 'rounded-xl border border-border/45 bg-card p-3',
+        "flex flex-col gap-1.5",
+        mode === "wide" ? "w-full min-w-[360px]" : "w-[360px] shrink-0",
+        mode === "card" && "rounded-xl border border-border/45 bg-card p-3",
       )}
     >
       {children}
@@ -213,12 +213,12 @@ function SelectDemo({
   withIcons?: boolean
   described?: boolean
 }) {
-  const [value, setValue] = useState(withIcons ? 'system' : 'pointer')
+  const [value, setValue] = useState(withIcons ? "system" : "pointer")
   return (
     <SelectRow
-      label={withIcons ? 'Theme' : 'Cursor'}
+      label={withIcons ? "Theme" : "Cursor"}
       description={
-        described ? 'The pointer shown over anything interactive.' : undefined
+        described ? "The pointer shown over anything interactive." : undefined
       }
       value={value}
       onChange={setValue}
@@ -228,13 +228,13 @@ function SelectDemo({
 }
 
 function ColorDemo({ described }: { described?: boolean }) {
-  const [value, setValue] = useState('#635BFF')
+  const [value, setValue] = useState("#635BFF")
   return (
     <ColorPickerRow
       label="Brand"
       description={
         described
-          ? 'Seeds the accent scale and every solid built on it.'
+          ? "Seeds the accent scale and every solid built on it."
           : undefined
       }
       value={value}
@@ -244,8 +244,8 @@ function ColorDemo({ described }: { described?: boolean }) {
 }
 
 function ColorTilesDemo() {
-  const [brand, setBrand] = useState('#635BFF')
-  const [danger, setDanger] = useState('#E5484D')
+  const [brand, setBrand] = useState("#635BFF")
+  const [danger, setDanger] = useState("#E5484D")
   return (
     <div className="grid grid-cols-2 gap-2">
       <ColorPickerRow
@@ -264,7 +264,7 @@ function ColorTilesDemo() {
   )
 }
 
-const DEMO_BRAND = '#635BFF'
+const DEMO_BRAND = "#635BFF"
 
 function NeutralDemo() {
   const { resolvedTheme } = useTheme()
@@ -278,7 +278,7 @@ function NeutralDemo() {
       neutralHue: value.hue ?? undefined,
       neutralTint: value.tint,
     })
-    const mode = resolvedTheme === 'dark' ? theme.dark : theme.light
+    const mode = resolvedTheme === "dark" ? theme.dark : theme.light
     return STEPS.map((step) => mode.scales.neutral?.[step] ?? mode.background)
   }, [value, resolvedTheme])
 
@@ -299,16 +299,16 @@ function FontDemo({
   mono?: boolean
   described?: boolean
 }) {
-  const [value, setValue] = useState(mono ? 'Geist Mono' : DEFAULT_BODY_FAMILY)
+  const [value, setValue] = useState(mono ? "Geist Mono" : DEFAULT_BODY_FAMILY)
   return (
     <FontPickerRow
-      label={mono ? 'Mono' : 'Body'}
+      label={mono ? "Mono" : "Body"}
       description={
         described
-          ? 'Used for body copy, labels and every UI string.'
+          ? "Used for body copy, labels and every UI string."
           : undefined
       }
-      categories={mono ? ['mono'] : ['sans-serif', 'serif']}
+      categories={mono ? ["mono"] : ["sans-serif", "serif"]}
       selectedKey={value}
       onChange={setValue}
     />
@@ -338,7 +338,7 @@ function SliderDemo({
     <SliderRow
       label="Opacity"
       description={
-        described ? 'How see-through disabled controls look.' : undefined
+        described ? "How see-through disabled controls look." : undefined
       }
       value={value}
       onChange={setValue}
@@ -353,7 +353,7 @@ function SwitchDemo({ described }: { described?: boolean }) {
       label="Translucent menus"
       description={
         described
-          ? 'Menus, popovers and dropdowns blur whatever sits behind them.'
+          ? "Menus, popovers and dropdowns blur whatever sits behind them."
           : undefined
       }
       value={value}
@@ -369,12 +369,12 @@ function SegmentedDemo({
   icons?: boolean
   described?: boolean
 }) {
-  const [value, setValue] = useState(icons ? 'center' : 'md')
+  const [value, setValue] = useState(icons ? "center" : "md")
   return (
     <SegmentedRow
-      label={icons ? 'Align' : 'Radius'}
+      label={icons ? "Align" : "Radius"}
       description={
-        described ? 'Applies to buttons, inputs, cards and menus.' : undefined
+        described ? "Applies to buttons, inputs, cards and menus." : undefined
       }
       value={value}
       onChange={setValue}
@@ -389,7 +389,7 @@ function StepperDemo({ described }: { described?: boolean }) {
     <StepperRow
       label="Base size"
       description={
-        described ? 'Every other size scales from this one.' : undefined
+        described ? "Every other size scales from this one." : undefined
       }
       value={value}
       onChange={setValue}
@@ -409,20 +409,20 @@ function OptionGridDemo({
   described?: boolean
   plain?: boolean
 }) {
-  const [value, setValue] = useState(columns === 1 ? 'outline' : 'solid')
+  const [value, setValue] = useState(columns === 1 ? "outline" : "solid")
   return (
     <OptionGridRow
-      label={columns === 1 ? 'Input' : 'Button'}
+      label={columns === 1 ? "Input" : "Button"}
       description={
         described
-          ? 'Pick by look: each card renders the style itself.'
+          ? "Pick by look: each card renders the style itself."
           : undefined
       }
       value={value}
       onChange={setValue}
       options={columns === 1 ? INPUT_STYLES : BUTTON_STYLES}
       columns={columns}
-      variant={plain ? 'plain' : undefined}
+      variant={plain ? "plain" : undefined}
     />
   )
 }
@@ -434,8 +434,8 @@ function ComponentRowDemo({
   withParams?: boolean
   described?: boolean
 }) {
-  const [style, setStyle] = useState('solid')
-  const [radius, setRadius] = useState('md')
+  const [style, setStyle] = useState("solid")
+  const [radius, setRadius] = useState("md")
   const [lift, setLift] = useState(true)
   return (
     // No DisclosureGroup: the group owns expansion state, so `defaultExpanded`
@@ -446,7 +446,7 @@ function ComponentRowDemo({
         name="Button"
         description={
           described
-            ? 'Shared with ToggleButton — the pair stays in sync.'
+            ? "Shared with ToggleButton — the pair stays in sync."
             : undefined
         }
         value={style}
@@ -488,15 +488,15 @@ function DisclosureDemo({
   described?: boolean
   inset?: boolean
 }) {
-  const [tracking, setTracking] = useState('normal')
+  const [tracking, setTracking] = useState("normal")
   const [size, setSize] = useState(16)
   return (
     <DisclosureRow
       label="Body text"
       description={
-        described ? 'Every UI string that isn’t a heading.' : undefined
+        described ? "Every UI string that isn’t a heading." : undefined
       }
-      value={withValue ? 'Inter' : undefined}
+      value={withValue ? "Inter" : undefined}
       inset={inset}
       defaultExpanded
     >
@@ -519,8 +519,8 @@ function DisclosureDemo({
 }
 
 function GroupDemo({ caption }: { caption?: boolean }) {
-  const [brand, setBrand] = useState('#635BFF')
-  const [radius, setRadius] = useState('md')
+  const [brand, setBrand] = useState("#635BFF")
+  const [radius, setRadius] = useState("md")
   const [translucent, setTranslucent] = useState(false)
   return (
     <>
@@ -549,7 +549,7 @@ function GroupDemo({ caption }: { caption?: boolean }) {
 
 function HeaderDemo({ modified }: { modified?: boolean }) {
   const [isModified, setModified] = useState(Boolean(modified))
-  const [value, setValue] = useState(modified ? 'pill' : 'md')
+  const [value, setValue] = useState(modified ? "pill" : "md")
   return (
     <>
       <SectionHeader
@@ -557,7 +557,7 @@ function HeaderDemo({ modified }: { modified?: boolean }) {
         modified={isModified}
         onReset={() => {
           setModified(false)
-          setValue('md')
+          setValue("md")
         }}
       />
       <SegmentedRow
@@ -574,7 +574,7 @@ function HeaderDemo({ modified }: { modified?: boolean }) {
 }
 
 function ParamRowDemo() {
-  const [radius, setRadius] = useState('md')
+  const [radius, setRadius] = useState("md")
   const [on, setOn] = useState(true)
   return (
     <div className="rounded-xl bg-muted py-1">
@@ -598,114 +598,114 @@ function ParamRowDemo() {
    containers — they only make sense once there are rows to put in them. */
 const GROUPS: Group[] = [
   {
-    id: 'primitives',
-    title: 'Primitives',
+    id: "primitives",
+    title: "Primitives",
     blurb:
-      'One control each, in the row shape the whole panel is built from: label left, control right, sized for a 360px column.',
+      "One control each, in the row shape the whole panel is built from: label left, control right, sized for a 360px column.",
     entries: [
       {
-        id: 'switch-row',
-        name: 'SwitchRow',
+        id: "switch-row",
+        name: "SwitchRow",
         description:
-          'A switch shaped as a row: the whole pill toggles. An optional description carries the axes whose name isn’t enough — the row grows to fit it.',
+          "A switch shaped as a row: the whole pill toggles. An optional description carries the axes whose name isn’t enough — the row grows to fit it.",
         variants: [
-          { label: 'Default', render: <SwitchDemo /> },
-          { label: 'With description', render: <SwitchDemo described /> },
+          { label: "Default", render: <SwitchDemo /> },
+          { label: "With description", render: <SwitchDemo described /> },
         ],
       },
       {
-        id: 'segmented-row',
-        name: 'SegmentedRow',
+        id: "segmented-row",
+        name: "SegmentedRow",
         description:
-          'Joined pills for a small, mutually exclusive set. Icon-only segments must carry an ariaLabel.',
+          "Joined pills for a small, mutually exclusive set. Icon-only segments must carry an ariaLabel.",
         variants: [
-          { label: 'Text', render: <SegmentedDemo /> },
-          { label: 'Icons', render: <SegmentedDemo icons /> },
-          { label: 'With description', render: <SegmentedDemo described /> },
+          { label: "Text", render: <SegmentedDemo /> },
+          { label: "Icons", render: <SegmentedDemo icons /> },
+          { label: "With description", render: <SegmentedDemo described /> },
         ],
       },
       {
-        id: 'select-row',
-        name: 'SelectRow',
+        id: "select-row",
+        name: "SelectRow",
         description:
-          'A listbox trigger shaped as a settings row: label left, value and chevrons right. Options may carry a glyph, shown in both trigger and list.',
+          "A listbox trigger shaped as a settings row: label left, value and chevrons right. Options may carry a glyph, shown in both trigger and list.",
         variants: [
-          { label: 'Default', render: <SelectDemo /> },
-          { label: 'With icons', render: <SelectDemo withIcons /> },
-          { label: 'With description', render: <SelectDemo described /> },
+          { label: "Default", render: <SelectDemo /> },
+          { label: "With icons", render: <SelectDemo withIcons /> },
+          { label: "With description", render: <SelectDemo described /> },
         ],
       },
       {
-        id: 'slider-row',
-        name: 'SliderRow',
+        id: "slider-row",
+        name: "SliderRow",
         description:
-          'A full-bleed slider: the entire pill is the drag surface, label and value float on top, and the fill reads as row progress.',
+          "A full-bleed slider: the entire pill is the drag surface, label and value float on top, and the fill reads as row progress.",
         variants: [
-          { label: 'Default', render: <SliderDemo /> },
-          { label: 'Self-demoing track', render: <SliderDemo selfDemo /> },
-          { label: 'With description', render: <SliderDemo described /> },
+          { label: "Default", render: <SliderDemo /> },
+          { label: "Self-demoing track", render: <SliderDemo selfDemo /> },
+          { label: "With description", render: <SliderDemo described /> },
         ],
       },
       {
-        id: 'stepper-row',
-        name: 'StepperRow',
+        id: "stepper-row",
+        name: "StepperRow",
         description:
-          'A numeric stepper as a row: label left, − value + right, with an optional unit.',
+          "A numeric stepper as a row: label left, − value + right, with an optional unit.",
         variants: [
-          { label: 'Default', render: <StepperDemo /> },
-          { label: 'With description', render: <StepperDemo described /> },
+          { label: "Default", render: <StepperDemo /> },
+          { label: "With description", render: <StepperDemo described /> },
         ],
       },
       {
-        id: 'color-picker-row',
-        name: 'ColorPickerRow',
+        id: "color-picker-row",
+        name: "ColorPickerRow",
         description:
-          'A color seed as a row: hex on the right beside its swatch, opening a picker anchored to the trigger — preset seeds, area, hue, hex. The neutral gets its own picker: a gray is a direction and an amount, not a point in a spectrum, so it offers those two axes and previews the scale they resolve to.',
+          "A color seed as a row: hex on the right beside its swatch, opening a picker anchored to the trigger — preset seeds, area, hue, hex. The neutral gets its own picker: a gray is a direction and an amount, not a point in a spectrum, so it offers those two axes and previews the scale they resolve to.",
         variants: [
-          { label: 'Brand', render: <ColorDemo /> },
-          { label: 'Neutral', render: <NeutralDemo /> },
-          { label: 'With description', render: <ColorDemo described /> },
-          { label: 'Tiles, two up', render: <ColorTilesDemo /> },
+          { label: "Brand", render: <ColorDemo /> },
+          { label: "Neutral", render: <NeutralDemo /> },
+          { label: "With description", render: <ColorDemo described /> },
+          { label: "Tiles, two up", render: <ColorTilesDemo /> },
         ],
       },
       {
-        id: 'font-picker-row',
-        name: 'FontPickerRow',
+        id: "font-picker-row",
+        name: "FontPickerRow",
         description:
-          'A searchable font trigger — the family is set in its own typeface on the right, so the row doubles as a specimen.',
+          "A searchable font trigger — the family is set in its own typeface on the right, so the row doubles as a specimen.",
         variants: [
-          { label: 'Body', render: <FontDemo /> },
-          { label: 'Mono', render: <FontDemo mono /> },
-          { label: 'With description', render: <FontDemo described /> },
+          { label: "Body", render: <FontDemo /> },
+          { label: "Mono", render: <FontDemo mono /> },
+          { label: "With description", render: <FontDemo described /> },
         ],
       },
       {
-        id: 'option-grid-row',
-        name: 'OptionGridRow',
+        id: "option-grid-row",
+        name: "OptionGridRow",
         description:
-          'A row whose body is a grid of selectable cards, each rendering its option as a mini specimen — pick by look, not by name. Nothing style-specific about it: shadows, densities and loaders use the same grid.',
+          "A row whose body is a grid of selectable cards, each rendering its option as a mini specimen — pick by look, not by name. Nothing style-specific about it: shadows, densities and loaders use the same grid.",
         variants: [
-          { label: '1 column', render: <OptionGridDemo columns={1} /> },
-          { label: '2 columns', render: <OptionGridDemo columns={2} /> },
-          { label: 'Plain', render: <OptionGridDemo columns={2} plain /> },
+          { label: "1 column", render: <OptionGridDemo columns={1} /> },
+          { label: "2 columns", render: <OptionGridDemo columns={2} /> },
+          { label: "Plain", render: <OptionGridDemo columns={2} plain /> },
           {
-            label: 'With description',
+            label: "With description",
             render: <OptionGridDemo columns={2} described />,
           },
         ],
       },
       {
-        id: 'action-row',
-        name: 'ActionRow',
+        id: "action-row",
+        name: "ActionRow",
         description:
-          'A verb as a row: centered label, accent for actions, danger for destructive.',
+          "A verb as a row: centered label, accent for actions, danger for destructive.",
         variants: [
           {
-            label: 'Default',
+            label: "Default",
             render: <ActionRow label="Add color" onPress={() => {}} />,
           },
           {
-            label: 'Destructive',
+            label: "Destructive",
             render: (
               <ActionRow label="Delete system" destructive onPress={() => {}} />
             ),
@@ -713,13 +713,13 @@ const GROUPS: Group[] = [
         ],
       },
       {
-        id: 'drill-in-row',
-        name: 'DrillInRow',
+        id: "drill-in-row",
+        name: "DrillInRow",
         description:
-          'A navigation row: label left, current value and chevron right, pushing a sub-panel. Depth lives here; the accordion handles breadth.',
+          "A navigation row: label left, current value and chevron right, pushing a sub-panel. Depth lives here; the accordion handles breadth.",
         variants: [
           {
-            label: 'Default',
+            label: "Default",
             render: (
               <ControlGroup>
                 <DrillInRow
@@ -732,7 +732,7 @@ const GROUPS: Group[] = [
             ),
           },
           {
-            label: 'With description',
+            label: "With description",
             render: (
               <ControlGroup>
                 <DrillInRow
@@ -753,65 +753,65 @@ const GROUPS: Group[] = [
         ],
       },
       {
-        id: 'disclosure-row',
-        name: 'DisclosureRow',
+        id: "disclosure-row",
+        name: "DisclosureRow",
         description:
-          'A row that opens in place: label left, current value and chevron right, its own rows inside. Where DrillInRow pushes a sub-panel, this one unfolds — depth without leaving the page.',
+          "A row that opens in place: label left, current value and chevron right, its own rows inside. Where DrillInRow pushes a sub-panel, this one unfolds — depth without leaving the page.",
         variants: [
-          { label: 'Default', render: <DisclosureDemo /> },
-          { label: 'With value', render: <DisclosureDemo withValue /> },
-          { label: 'With description', render: <DisclosureDemo described /> },
-          { label: 'Inset', render: <DisclosureDemo withValue inset /> },
+          { label: "Default", render: <DisclosureDemo /> },
+          { label: "With value", render: <DisclosureDemo withValue /> },
+          { label: "With description", render: <DisclosureDemo described /> },
+          { label: "Inset", render: <DisclosureDemo withValue inset /> },
         ],
       },
       {
-        id: 'section-header',
-        name: 'SectionHeader',
+        id: "section-header",
+        name: "SectionHeader",
         description:
-          'A section marker: quiet uppercase label, a dot once the section is touched, and reset on the right. Change the radius below to see it arm.',
+          "A section marker: quiet uppercase label, a dot once the section is touched, and reset on the right. Change the radius below to see it arm.",
         variants: [
-          { label: 'Default', render: <HeaderDemo /> },
-          { label: 'Modified', render: <HeaderDemo modified /> },
+          { label: "Default", render: <HeaderDemo /> },
+          { label: "Modified", render: <HeaderDemo modified /> },
         ],
       },
       {
-        id: 'control-group',
-        name: 'ControlGroup',
+        id: "control-group",
+        name: "ControlGroup",
         description:
-          'Fuses adjacent rows into one card: shared surface, hairline separators, only the group’s corners round. Rows opt in by carrying data-row.',
+          "Fuses adjacent rows into one card: shared surface, hairline separators, only the group’s corners round. Rows opt in by carrying data-row.",
         variants: [
-          { label: 'Default', render: <GroupDemo /> },
-          { label: 'With caption', render: <GroupDemo caption /> },
+          { label: "Default", render: <GroupDemo /> },
+          { label: "With caption", render: <GroupDemo caption /> },
         ],
       },
     ],
   },
   {
-    id: 'compositions',
-    title: 'Compositions',
+    id: "compositions",
+    title: "Compositions",
     blurb:
-      'Not new controls — primitives assembled into the shapes the panel actually ships: a grid inside a disclosure, mini controls inside a sub-row.',
+      "Not new controls — primitives assembled into the shapes the panel actually ships: a grid inside a disclosure, mini controls inside a sub-row.",
     entries: [
       {
-        id: 'component-row',
-        name: 'ComponentRow',
+        id: "component-row",
+        name: "ComponentRow",
         description:
-          'A component’s entry in the panel: a collapsed pill showing its current style, expanding in place to the grid plus its params. The answer to “inline grid vs popover” at 20+ components.',
+          "A component’s entry in the panel: a collapsed pill showing its current style, expanding in place to the grid plus its params. The answer to “inline grid vs popover” at 20+ components.",
         variants: [
-          { label: 'Collapsed', render: <ComponentRowDemo /> },
+          { label: "Collapsed", render: <ComponentRowDemo /> },
           {
-            label: 'Expanded, with params',
+            label: "Expanded, with params",
             render: <ComponentRowDemo withParams />,
           },
-          { label: 'With description', render: <ComponentRowDemo described /> },
+          { label: "With description", render: <ComponentRowDemo described /> },
         ],
       },
       {
-        id: 'param-row',
-        name: 'ParamRow',
+        id: "param-row",
+        name: "ParamRow",
         description:
-          'A quiet sub-row for inside an expanded component: label left, a mini control right. Pairs with MiniSegmented and MiniSwitch.',
-        variants: [{ label: 'Default', render: <ParamRowDemo /> }],
+          "A quiet sub-row for inside an expanded component: label left, a mini control right. Pairs with MiniSegmented and MiniSwitch.",
+        variants: [{ label: "Default", render: <ParamRowDemo /> }],
       },
     ],
   },
@@ -829,15 +829,15 @@ const TOC_ITEMS: TOCItemType[] = GROUPS.flatMap((group) => [
 ])
 
 export function ControlLab() {
-  const [preview, setPreview] = useState<PreviewMode>('card')
+  const [preview, setPreview] = useState<PreviewMode>("card")
 
   return (
     <TOCProvider toc={TOC_ITEMS}>
       <div className="flex min-h-svh flex-col gap-8 px-8 py-10">
         <InternalHeader
           crumbs={[
-            { label: 'Panel Lab', href: '/internal/panel-lab' },
-            { label: 'Control Lab' },
+            { label: "Panel Lab", href: "/internal/panel-lab" },
+            { label: "Control Lab" },
           ]}
           title="Control Lab"
           description="The row language the panel is built from — one visual grammar (compact row, label left, control right) applied to every interaction model. Each control on its own, with the variants that matter."
@@ -873,17 +873,17 @@ export function ControlLab() {
                     </div>
                     <div
                       className={cn(
-                        'flex items-start gap-5',
+                        "flex items-start gap-5",
                         // Wide gives each variant the full column, so they stack.
-                        preview === 'wide' ? 'flex-col' : 'flex-wrap',
+                        preview === "wide" ? "flex-col" : "flex-wrap",
                       )}
                     >
                       {entry.variants.map((variant) => (
                         <div
                           key={variant.label}
                           className={cn(
-                            'flex flex-col gap-1.5',
-                            preview === 'wide' && 'w-full',
+                            "flex flex-col gap-1.5",
+                            preview === "wide" && "w-full",
                           )}
                         >
                           <span className="text-[11px] text-fg-muted">

@@ -6,7 +6,7 @@
 
 export type Seg = [text: string, light: string, dark: string, diff: 0 | 1]
 
-export type PaneKey = 'shiki' | 'refined' | 'raw'
+export type PaneKey = "shiki" | "refined" | "raw"
 
 export interface Snippet {
   /** 1-based first line of this snippet inside the original block. */
@@ -52,12 +52,12 @@ export interface LabData {
 }
 
 export function loadLabData(): Promise<LabData> {
-  const modules = import.meta.glob<LabData>('./data.json', {
-    import: 'default',
+  const modules = import.meta.glob<LabData>("./data.json", {
+    import: "default",
   })
-  const load = modules['./data.json']
+  const load = modules["./data.json"]
   if (!load) {
-    throw new Error('highlight-lab: data.json is missing')
+    throw new Error("highlight-lab: data.json is missing")
   }
   return load()
 }

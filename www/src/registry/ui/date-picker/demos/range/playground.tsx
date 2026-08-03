@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import { CalendarIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { RangeCalendar } from '@/registry/ui/calendar'
-import { DateRangePicker } from '@/registry/ui/date-picker'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Label } from '@/registry/ui/field'
-import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Popover } from '@/registry/ui/popover'
+import { CalendarIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { RangeCalendar } from "@/registry/ui/calendar"
+import { DateRangePicker } from "@/registry/ui/date-picker"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Popover } from "@/registry/ui/popover"
 
 interface DateRangePickerPlaygroundProps {
   label?: string
@@ -16,7 +16,7 @@ interface DateRangePickerPlaygroundProps {
 }
 
 export function DateRangePickerPlayground({
-  label = 'Date range',
+  label = "Date range",
   isDisabled = false,
   isReadOnly = false,
 }: DateRangePickerPlaygroundProps) {

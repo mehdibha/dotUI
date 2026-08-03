@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
 import {
   CheckIcon,
   InfoIcon,
   SearchIcon,
   SparklesIcon,
-} from '@/registry/__generated__/icons'
-import { Description, Label } from '@/registry/ui/field'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Kbd, KbdGroup } from '@/registry/ui/kbd'
-import { Loader } from '@/registry/ui/loader'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/__generated__/icons"
+import { Description, Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Kbd, KbdGroup } from "@/registry/ui/kbd"
+import { Loader } from "@/registry/ui/loader"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   return (

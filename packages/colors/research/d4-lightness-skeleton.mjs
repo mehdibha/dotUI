@@ -7,20 +7,20 @@
 // Outputs: research/data/radix-light-Lstar.json, research/data/skeleton-proposal.json,
 //          research/data/tailwind-light-Lstar.json
 
-import fs from 'node:fs'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import radixNs from '@radix-ui/colors'
+import fs from "node:fs"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+import radixNs from "@radix-ui/colors"
 const radix = radixNs.default ?? radixNs
-import { converter, formatHex, clampChroma } from 'culori'
+import { converter, formatHex, clampChroma } from "culori"
 
 const here = path.dirname(fileURLToPath(import.meta.url))
-const dataDir = path.join(here, 'data')
+const dataDir = path.join(here, "data")
 fs.mkdirSync(dataDir, { recursive: true })
 
-const toLab65 = converter('lab65')
-const toRgb = converter('rgb')
-const toOklch = converter('oklch')
+const toLab65 = converter("lab65")
+const toRgb = converter("rgb")
+const toOklch = converter("oklch")
 
 const round = (x, d = 2) => Math.round(x * 10 ** d) / 10 ** d
 
@@ -48,10 +48,10 @@ function wcag(fg, bg) {
 const Lstar = (color) => toLab65(color).l
 
 // ---------- 1. Radix light scales ----------
-const GRAYS = ['gray', 'mauve', 'slate', 'sage', 'olive', 'sand']
+const GRAYS = ["gray", "mauve", "slate", "sage", "olive", "sand"]
 const lightScaleNames = Object.keys(radix)
   .filter((k) => !/Dark|A$|P3/.test(k))
-  .filter((k) => !['blackA', 'whiteA'].includes(k))
+  .filter((k) => !["blackA", "whiteA"].includes(k))
   .sort()
 const chromaticNames = lightScaleNames.filter((n) => !GRAYS.includes(n))
 
@@ -67,7 +67,7 @@ function measureScale(name) {
 
 const radixLstar = {
   meta: {
-    source: '@radix-ui/colors (light scales, hex)',
+    source: "@radix-ui/colors (light scales, hex)",
     labSpace: "CIELAB D65 (culori 'lab65')",
     chromaticCount: chromaticNames.length,
     grayCount: GRAYS.length,
@@ -116,25 +116,25 @@ radixLstar.stats = {
 }
 
 fs.writeFileSync(
-  path.join(dataDir, 'radix-light-Lstar.json'),
+  path.join(dataDir, "radix-light-Lstar.json"),
   JSON.stringify(radixLstar, null, 2),
 )
 
 // ---------- 3. Tailwind v4 palette L* ----------
 const twThemePath = path.resolve(
   here,
-  '../../../node_modules/.pnpm/tailwindcss@4.3.0/node_modules/tailwindcss/theme.css',
+  "../../../node_modules/.pnpm/tailwindcss@4.3.0/node_modules/tailwindcss/theme.css",
 )
-const twCss = fs.readFileSync(twThemePath, 'utf8')
+const twCss = fs.readFileSync(twThemePath, "utf8")
 const twRe =
   /--color-([a-z]+)-(\d+):\s*oklch\(([\d.]+)%\s+([\d.]+)\s+([\d.]+)\)/g
 const twFamilies = {}
 for (const m of twCss.matchAll(twRe)) {
   const [, family, step, l, c, h] = m
-  const color = { mode: 'oklch', l: +l / 100, c: +c, h: +h }
+  const color = { mode: "oklch", l: +l / 100, c: +c, h: +h }
   ;(twFamilies[family] ??= {})[step] = round(Lstar(color), 2)
 }
-const TW_STEPS = ['50', '100', '200', '300', '400', '500', '600', '700']
+const TW_STEPS = ["50", "100", "200", "300", "400", "500", "600", "700"]
 const twStats = {}
 for (const s of TW_STEPS) {
   twStats[s] = stats(
@@ -144,11 +144,11 @@ for (const s of TW_STEPS) {
   )
 }
 fs.writeFileSync(
-  path.join(dataDir, 'tailwind-light-Lstar.json'),
+  path.join(dataDir, "tailwind-light-Lstar.json"),
   JSON.stringify(
     {
       meta: {
-        source: 'tailwindcss@4.3.0 theme.css oklch literals',
+        source: "tailwindcss@4.3.0 theme.css oklch literals",
         labSpace: "CIELAB D65 (culori 'lab65')",
         families: Object.keys(twFamilies).length,
       },
@@ -164,14 +164,14 @@ fs.writeFileSync(
 // Jobs 1-8: app-bg, subtle-bg, ui-rest, ui-hover, ui-active,
 //           border-subtle, border-interactive, border-emphasized.
 const JOB_NAMES = [
-  'app-bg',
-  'subtle-bg',
-  'ui-rest',
-  'ui-hover',
-  'ui-active',
-  'border-subtle',
-  'border-interactive',
-  'border-emphasized',
+  "app-bg",
+  "subtle-bg",
+  "ui-rest",
+  "ui-hover",
+  "ui-active",
+  "border-subtle",
+  "border-interactive",
+  "border-emphasized",
 ]
 const chromMedians = JOB_NAMES.map(
   (_, i) => radixLstar.stats.chromaticSteps1to12[i + 1].median,
@@ -195,11 +195,11 @@ const overallRms = round(
 // ---------- 5. L*-bridge verification ----------
 // White text WCAG across 36 hues (every 10 deg), C = 0.15, gamut-mapped by
 // constant-L/H chroma reduction (culori clampChroma in oklch).
-const WHITE = { mode: 'rgb', r: 1, g: 1, b: 1 }
+const WHITE = { mode: "rgb", r: 1, g: 1, b: 1 }
 const HUES = Array.from({ length: 36 }, (_, i) => i * 10)
 
 function mapped(l, c, h) {
-  return clampChroma({ mode: 'oklch', l, c, h }, 'oklch')
+  return clampChroma({ mode: "oklch", l, c, h }, "oklch")
 }
 
 // Fixed OKLCH L: pick the L whose neutral gray has L* = 50 (solid region),
@@ -209,7 +209,7 @@ function oklchLforLstarGray(targetLstar) {
     hi = 1
   for (let i = 0; i < 60; i++) {
     const mid = (lo + hi) / 2
-    if (Lstar({ mode: 'oklch', l: mid, c: 0, h: 0 }) < targetLstar) lo = mid
+    if (Lstar({ mode: "oklch", l: mid, c: 0, h: 0 }) < targetLstar) lo = mid
     else hi = mid
   }
   return (lo + hi) / 2
@@ -264,7 +264,7 @@ function driftReport(rows) {
 
 const bridge = {
   method:
-    'White-text WCAG2 ratio across 36 hues (every 10deg), C=0.15 gamut-mapped by constant-L/H chroma reduction (culori clampChroma oklch). Fixed OKLCH L chosen so neutral gray hits L*=50; fixed-L* pass solves OKLCH L per hue for CIELAB-D65 L*=50.',
+    "White-text WCAG2 ratio across 36 hues (every 10deg), C=0.15 gamut-mapped by constant-L/H chroma reduction (culori clampChroma oklch). Fixed OKLCH L chosen so neutral gray hits L*=50; fixed-L* pass solves OKLCH L per hue for CIELAB-D65 L*=50.",
   fixedOklchL: {
     value: round(FIXED_OKLCH_L, 4),
     ...driftReport(fixedOklch),
@@ -279,15 +279,15 @@ const bridge = {
 
 const skeletonProposal = {
   meta: {
-    decision: 'D4',
+    decision: "D4",
     labSpace: "CIELAB D65 (culori 'lab65')",
     fitSource:
-      'median L* of the 25 @radix-ui/colors light chromatic scales, steps 1-8, rounded to 0.5 L*',
+      "median L* of the 25 @radix-ui/colors light chromatic scales, steps 1-8, rounded to 0.5 L*",
   },
   jobs: JOB_NAMES.map((name, i) => ({
     job: name,
     step: i + 1,
-    tailwindName: ['25', '50', '100', '200', '300', '400', '500', '600'][i],
+    tailwindName: ["25", "50", "100", "200", "300", "400", "500", "600"][i],
     proposedLstar: proposal[i],
     radixChromaticMedian: chromMedians[i],
     radixChromaticSpread: radixLstar.stats.chromaticSteps1to12[i + 1].spread,
@@ -303,13 +303,13 @@ const skeletonProposal = {
 }
 
 fs.writeFileSync(
-  path.join(dataDir, 'skeleton-proposal.json'),
+  path.join(dataDir, "skeleton-proposal.json"),
   JSON.stringify(skeletonProposal, null, 2),
 )
 
 // ---------- console summary ----------
-console.log('Radix light chromatic scales:', chromaticNames.length)
-console.log('\nPer-step L* (chromatic median | mean | spread | gray median):')
+console.log("Radix light chromatic scales:", chromaticNames.length)
+console.log("\nPer-step L* (chromatic median | mean | spread | gray median):")
 for (let i = 1; i <= 8; i++) {
   const c = radixLstar.stats.chromaticSteps1to12[i]
   const g = radixLstar.stats.graysSteps1to12[i]
@@ -317,18 +317,18 @@ for (let i = 1; i <= 8; i++) {
     `  step ${i}: ${c.median} | ${c.mean} | ${c.spread} | gray ${g.median}`,
   )
 }
-console.log('\nTailwind steps 50-700 (median | mean | spread):')
+console.log("\nTailwind steps 50-700 (median | mean | spread):")
 for (const s of TW_STEPS) {
   const t = twStats[s]
   console.log(`  ${s}: ${t.median} | ${t.mean} | ${t.spread}`)
 }
-console.log('\nProposed skeleton (jobs 1-8):', proposal.join(', '))
+console.log("\nProposed skeleton (jobs 1-8):", proposal.join(", "))
 console.log(
-  'Residual vs median (max abs):',
+  "Residual vs median (max abs):",
   Math.max(...residuals.map(Math.abs)),
 )
-console.log('Overall per-scale RMS vs proposal:', overallRms)
-console.log('\nL* bridge:')
+console.log("Overall per-scale RMS vs proposal:", overallRms)
+console.log("\nL* bridge:")
 console.log(
   `  fixed OKLCH L=${round(FIXED_OKLCH_L, 4)}: WCAG white ${bridge.fixedOklchL.min}-${bridge.fixedOklchL.max} (drift ${bridge.fixedOklchL.driftPct}%)`,
 )

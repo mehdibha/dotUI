@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { HeartIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Group } from '@/registry/ui/group'
+import { HeartIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Group } from "@/registry/ui/group"
 
 export default function Demo() {
   return (

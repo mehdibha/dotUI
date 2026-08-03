@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
 /* Panel Lab sections — each schema section rendered in the grouped-row
    language, composed by the frames in variants/. The Color section lives in
    color-ideal.tsx (engine-true, its own state slice). */
 
-import { useState } from 'react'
-import type { CSSProperties } from 'react'
+import { useState } from "react"
+import type { CSSProperties } from "react"
 import {
   BellIcon,
   CalendarIcon,
@@ -20,10 +20,10 @@ import {
   SettingsIcon,
   StarIcon,
   UserIcon,
-} from 'lucide-react'
-import { DisclosureGroup } from 'react-aria-components'
+} from "lucide-react"
+import { DisclosureGroup } from "react-aria-components"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 import {
   ControlGroup,
   FontPickerRow,
@@ -31,7 +31,7 @@ import {
   SelectRow,
   SliderRow,
   OptionGridRow,
-} from '@/modules/control-lab/rows'
+} from "@/modules/control-lab/rows"
 
 import {
   CLUSTERS,
@@ -44,15 +44,15 @@ import {
   SHAPE_CHARACTERS,
   SHAPE_ROLES,
   SHAPE_RUNGS,
-} from './data'
-import type { Lab, ShapeRoleKey } from './data'
+} from "./data"
+import type { Lab, ShapeRoleKey } from "./data"
 import {
   ClusterHeader,
   DetailRow,
   FilterRow,
   SegmentedControlRow,
   TypeSpecimen,
-} from './patterns'
+} from "./patterns"
 
 export function TypographySectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
@@ -62,21 +62,21 @@ export function TypographySectionBody({ lab }: { lab: Lab }) {
       <ControlGroup>
         <FontPickerRow
           label="Heading"
-          categories={['sans-serif', 'serif', 'display', 'handwriting']}
+          categories={["sans-serif", "serif", "display", "handwriting"]}
           selectedKey={state.headingFont}
-          onChange={set('headingFont')}
+          onChange={set("headingFont")}
         />
         <FontPickerRow
           label="Body"
-          categories={['sans-serif', 'serif']}
+          categories={["sans-serif", "serif"]}
           selectedKey={state.bodyFont}
-          onChange={set('bodyFont')}
+          onChange={set("bodyFont")}
         />
         <FontPickerRow
           label="Mono"
-          categories={['mono']}
+          categories={["mono"]}
           selectedKey={state.monoFont}
-          onChange={set('monoFont')}
+          onChange={set("monoFont")}
         />
       </ControlGroup>
     </>
@@ -122,23 +122,23 @@ export function IconsSectionBody({ lab }: { lab: Lab }) {
         <SelectRow
           label="Library"
           value={state.iconLibrary}
-          onChange={set('iconLibrary')}
+          onChange={set("iconLibrary")}
           options={ICON_LIBRARY_OPTIONS}
         />
         <SliderRow
           label="Stroke"
           value={state.iconStroke}
-          onChange={set('iconStroke')}
+          onChange={set("iconStroke")}
           minValue={1}
           maxValue={3}
           step={0.25}
           format={(v) => v.toFixed(2)}
         />
-        {state.iconLibrary === 'phosphor' && (
+        {state.iconLibrary === "phosphor" && (
           <SelectRow
             label="Weight"
             value={state.iconWeight}
-            onChange={set('iconWeight')}
+            onChange={set("iconWeight")}
             options={ICON_WEIGHT_OPTIONS}
           />
         )}
@@ -156,7 +156,7 @@ export function ShapeSectionBody({ lab }: { lab: Lab }) {
         <SliderRow
           label="Radius"
           value={state.radius}
-          onChange={set('radius')}
+          onChange={set("radius")}
           minValue={0}
           maxValue={2}
           step={0.05}
@@ -166,7 +166,7 @@ export function ShapeSectionBody({ lab }: { lab: Lab }) {
         <SegmentedControlRow
           label="Density"
           value={state.density}
-          onChange={set('density')}
+          onChange={set("density")}
           options={DENSITY_OPTIONS}
         />
       </div>
@@ -176,7 +176,7 @@ export function ShapeSectionBody({ lab }: { lab: Lab }) {
 
 /* corner-shape is progressive enhancement — unsupported browsers render round. */
 const cornerShapeStyle = (shape: string): CSSProperties =>
-  shape === 'round' ? {} : ({ cornerShape: shape } as CSSProperties)
+  shape === "round" ? {} : ({ cornerShape: shape } as CSSProperties)
 
 /* --- Shape roles (the shadcn-study model: base scales, roles shape) --- */
 
@@ -184,9 +184,9 @@ const rungIndex = (id: string) => SHAPE_RUNGS.findIndex((r) => r.id === id)
 
 /** A role's ratio of the base. Items on 'auto' ride one rung below Surfaces —
  *  the invariant every rounded shadcn style follows. */
-function roleRatio(state: Lab['state'], key: ShapeRoleKey): number {
+function roleRatio(state: Lab["state"], key: ShapeRoleKey): number {
   const id = state[key]
-  if (id === 'auto') {
+  if (id === "auto") {
     const below = Math.max(0, rungIndex(state.roleSurface) - 1)
     return SHAPE_RUNGS[below]?.ratio ?? 0
   }
@@ -194,7 +194,7 @@ function roleRatio(state: Lab['state'], key: ShapeRoleKey): number {
 }
 
 function rolePxLabel(px: number, ratio: number): string {
-  if (ratio === Infinity) return 'pill'
+  if (ratio === Infinity) return "pill"
   return `${Math.round(px * ratio * 10) / 10}px`
 }
 
@@ -203,10 +203,10 @@ const ROLE_ARCS: Record<
   ShapeRoleKey,
   { size: number; arc: string; dot: string }
 > = {
-  rolePanel: { size: 64, arc: 'border-fg/25', dot: 'bg-fg/25' },
-  roleSurface: { size: 50, arc: 'border-fg/40', dot: 'bg-fg/40' },
-  roleControl: { size: 36, arc: 'border-fg/80', dot: 'bg-fg/80' },
-  roleItem: { size: 22, arc: 'border-fg/55', dot: 'bg-fg/55' },
+  rolePanel: { size: 64, arc: "border-fg/25", dot: "bg-fg/25" },
+  roleSurface: { size: 50, arc: "border-fg/40", dot: "bg-fg/40" },
+  roleControl: { size: 36, arc: "border-fg/80", dot: "bg-fg/80" },
+  roleItem: { size: 22, arc: "border-fg/55", dot: "bg-fg/55" },
 }
 
 function CornerPreview({ lab }: { lab: Lab }) {
@@ -222,7 +222,7 @@ function CornerPreview({ lab }: { lab: Lab }) {
           return (
             <div
               key={key}
-              className={cn('absolute top-0 left-0 border-t-2 border-l-2', arc)}
+              className={cn("absolute top-0 left-0 border-t-2 border-l-2", arc)}
               style={{
                 width: size,
                 height: size,
@@ -238,7 +238,7 @@ function CornerPreview({ lab }: { lab: Lab }) {
           <span key={key} className="flex items-baseline gap-2">
             <span
               className={cn(
-                'size-1.5 shrink-0 self-center rounded-full',
+                "size-1.5 shrink-0 self-center rounded-full",
                 ROLE_ARCS[key].dot,
               )}
             />
@@ -284,11 +284,11 @@ const CHARACTER_OPTIONS = SHAPE_CHARACTERS.map((character) => ({
 }))
 
 /** The character whose vector matches the current roles, if any. */
-function activeCharacter(state: Lab['state']): string {
+function activeCharacter(state: Lab["state"]): string {
   const match = SHAPE_CHARACTERS.find((character) =>
     SHAPE_ROLES.every(({ key }) => character.vector[key] === state[key]),
   )
-  return match?.id ?? ''
+  return match?.id ?? ""
 }
 
 /* v2: both radius levers from the shadcn study. The base slider scales the
@@ -303,7 +303,7 @@ export function ShapeSectionBodyV2({ lab }: { lab: Lab }) {
     ...(allowAuto
       ? [
           {
-            value: 'auto',
+            value: "auto",
             label: `Auto · ${rolePxLabel(state.radiusPx, autoRatio)}`,
           },
         ]
@@ -321,7 +321,7 @@ export function ShapeSectionBodyV2({ lab }: { lab: Lab }) {
         <SliderRow
           label="Radius"
           value={state.radiusPx}
-          onChange={set('radiusPx')}
+          onChange={set("radiusPx")}
           minValue={0}
           maxValue={16}
           step={0.5}
@@ -347,7 +347,7 @@ export function ShapeSectionBodyV2({ lab }: { lab: Lab }) {
           label="Roles"
           summary={SHAPE_ROLES.map(({ key }) =>
             rolePxLabel(state.radiusPx, roleRatio(state, key)),
-          ).join(' · ')}
+          ).join(" · ")}
         >
           {SHAPE_ROLES.map(({ key, label }) => (
             <SelectRow
@@ -355,14 +355,14 @@ export function ShapeSectionBodyV2({ lab }: { lab: Lab }) {
               label={label}
               value={state[key]}
               onChange={set(key)}
-              options={rungOptions(key === 'roleItem')}
+              options={rungOptions(key === "roleItem")}
             />
           ))}
         </DetailRow>
         <SegmentedControlRow
           label="Corners"
           value={state.cornerShape}
-          onChange={set('cornerShape')}
+          onChange={set("cornerShape")}
           options={CORNER_SHAPE_OPTIONS}
         />
       </div>
@@ -377,7 +377,7 @@ export function SpaceSectionBody({ lab }: { lab: Lab }) {
       <SegmentedControlRow
         label="Density"
         value={state.density}
-        onChange={set('density')}
+        onChange={set("density")}
         options={DENSITY_OPTIONS}
       />
     </ControlGroup>
@@ -391,7 +391,7 @@ export function EffectsSectionBody({ lab }: { lab: Lab }) {
       <OptionGridRow
         label="Shadows"
         value={state.shadows}
-        onChange={set('shadows')}
+        onChange={set("shadows")}
         options={SHADOW_OPTIONS}
         columns={4}
       />
@@ -402,13 +402,13 @@ export function EffectsSectionBody({ lab }: { lab: Lab }) {
         <SelectRow
           label="Cursor"
           value={state.cursorInteractive}
-          onChange={set('cursorInteractive')}
+          onChange={set("cursorInteractive")}
           options={CURSOR_OPTIONS}
         />
         <SelectRow
           label="Disabled cursor"
           value={state.cursorDisabled}
-          onChange={set('cursorDisabled')}
+          onChange={set("cursorDisabled")}
           options={CURSOR_OPTIONS}
         />
       </ControlGroup>
@@ -417,7 +417,7 @@ export function EffectsSectionBody({ lab }: { lab: Lab }) {
 }
 
 export function ComponentsSectionBody({ lab }: { lab: Lab }) {
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState("")
   const q = query.trim().toLowerCase()
   const clusters = CLUSTERS.map((cluster) => ({
     ...cluster,

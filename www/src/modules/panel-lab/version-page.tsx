@@ -1,18 +1,18 @@
-'use client'
+"use client"
 
 /* One version of the panel, full size and live, on the internal shell. */
 
-import { Link } from '@tanstack/react-router'
-import { ArrowUpRightIcon } from 'lucide-react'
+import { Link } from "@tanstack/react-router"
+import { ArrowUpRightIcon } from "lucide-react"
 
-import { InternalShell } from '@/modules/internal/shell'
+import { InternalShell } from "@/modules/internal/shell"
 
-import { draftChapters, draftUrl } from './drafts'
-import type { Draft } from './drafts'
-import { useLab } from './use-lab'
-import { PanelFrame } from './variants/panel'
-import { PANEL_VERSIONS } from './versions'
-import type { PanelVersion } from './versions'
+import { draftChapters, draftUrl } from "./drafts"
+import type { Draft } from "./drafts"
+import { useLab } from "./use-lab"
+import { PanelFrame } from "./variants/panel"
+import { PANEL_VERSIONS } from "./versions"
+import type { PanelVersion } from "./versions"
 
 export function PanelVersionPage({ version }: { version: PanelVersion }) {
   const lab = useLab()
@@ -20,7 +20,7 @@ export function PanelVersionPage({ version }: { version: PanelVersion }) {
   return (
     <InternalShell
       crumbs={[
-        { label: 'Panel Lab', href: '/internal/panel-lab' },
+        { label: "Panel Lab", href: "/internal/panel-lab" },
         { label: version.label },
       ]}
       title={`Panel ${version.label}`}
@@ -32,7 +32,7 @@ export function PanelVersionPage({ version }: { version: PanelVersion }) {
               key={entry.id}
               to="/internal/panel-lab/$version"
               params={{ version: entry.id }}
-              aria-current={entry.id === version.id ? 'page' : undefined}
+              aria-current={entry.id === version.id ? "page" : undefined}
               className="rounded-lg px-2.5 py-1 text-[0.8125rem] text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring aria-[current=page]:bg-muted aria-[current=page]:text-fg"
             >
               {entry.label}
@@ -55,11 +55,12 @@ export function PanelDraftPage({ draft }: { draft: Draft }) {
   const base = PANEL_VERSIONS[PANEL_VERSIONS.length - 1]
   if (!base) return null
   const chapters = draftChapters(base.chapters, draft)
+  const Frame = draft.Frame ?? PanelFrame
 
   return (
     <InternalShell
       crumbs={[
-        { label: 'Panel Lab', href: '/internal/panel-lab' },
+        { label: "Panel Lab", href: "/internal/panel-lab" },
         { label: `#${draft.pr}` },
       ]}
       title={draft.title}
@@ -78,12 +79,15 @@ export function PanelDraftPage({ draft }: { draft: Draft }) {
     >
       <div className="flex flex-col gap-3">
         <p className="max-w-lg text-xs/relaxed text-pretty text-fg-muted">
-          An open draft, shown on top of{' '}
-          <span className="text-fg">{base.label}</span> — only the{' '}
-          {draft.section} section differs. Not merged; one of several takes.
+          An open draft, shown on top of{" "}
+          <span className="text-fg">{base.label}</span> —{" "}
+          {draft.Frame
+            ? "only the frame differs; hover a control."
+            : `only the ${draft.section} section differs.`}{" "}
+          Not merged; one of several takes.
         </p>
         <div className="flex h-[720px] w-[360px] shrink-0 flex-col">
-          <PanelFrame chapters={chapters} lab={lab} />
+          <Frame chapters={chapters} lab={lab} />
         </div>
       </div>
     </InternalShell>

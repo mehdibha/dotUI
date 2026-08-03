@@ -1,7 +1,7 @@
-import type * as PageTree from 'fumadocs-core/page-tree'
-import { loader } from 'fumadocs-core/source'
+import type * as PageTree from "fumadocs-core/page-tree"
+import { loader } from "fumadocs-core/source"
 
-import { docs } from '@/.source/server'
+import { docs } from "@/.source/server"
 
 export interface DocsPageItem extends PageTree.Item {
   wip?: boolean
@@ -9,20 +9,20 @@ export interface DocsPageItem extends PageTree.Item {
 
 // Serialized page tree types (ReactNode replaced with string for JSON serialization)
 export interface SerializedItem {
-  type: 'page'
+  type: "page"
   name: string
   url: string
   wip?: boolean
 }
 
 export interface SerializedFolder {
-  type: 'folder'
+  type: "folder"
   name: string
   children: SerializedNode[]
 }
 
 export interface SerializedSeparator {
-  type: 'separator'
+  type: "separator"
   name: string
 }
 
@@ -36,7 +36,7 @@ export interface SerializedPageTree {
 }
 
 export const docsSource = loader({
-  baseUrl: '/docs',
+  baseUrl: "/docs",
   source: docs.toFumadocsSource(),
   pageTree: {
     transformers: [
@@ -44,7 +44,7 @@ export const docsSource = loader({
         file(node, filePath) {
           if (!filePath) return node
           const file = this.storage.read(filePath)
-          if (!file || file.format !== 'page') return node
+          if (!file || file.format !== "page") return node
 
           return {
             ...node,

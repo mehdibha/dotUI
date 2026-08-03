@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef } from 'react'
-import { ChevronDownIcon, SearchIcon, XIcon } from 'lucide-react'
+import { useCallback, useEffect, useRef } from "react"
+import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
 
 import {
   DEFAULT_BODY_FAMILY,
@@ -12,36 +12,36 @@ import {
   FONT_SANS_VAR,
   fontStack,
   loadFontPreview,
-} from '@/lib/fonts'
-import type { FontCategory } from '@/lib/fonts'
-import { Button } from '@/registry/ui/button'
-import { Command } from '@/registry/ui/command'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+} from "@/lib/fonts"
+import type { FontCategory } from "@/lib/fonts"
+import { Button } from "@/registry/ui/button"
+import { Command } from "@/registry/ui/command"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { SearchField } from '@/registry/ui/search-field'
-import { Select, SelectValue } from '@/registry/ui/select'
+} from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { SearchField } from "@/registry/ui/search-field"
+import { Select, SelectValue } from "@/registry/ui/select"
 
-import { useDesignSystem } from '../preset'
+import { useDesignSystem } from "../preset"
 
 const CATEGORY_LABELS: Record<FontCategory, string> = {
-  'sans-serif': 'Sans serif',
-  serif: 'Serif',
-  display: 'Display',
-  handwriting: 'Handwriting',
-  mono: 'Monospace',
+  "sans-serif": "Sans serif",
+  serif: "Serif",
+  display: "Display",
+  handwriting: "Handwriting",
+  mono: "Monospace",
 }
 
 /** Load families into THIS document (the panel page, not the preview iframe). */
 export function useLoadedFamilies(families: (string | null)[]) {
-  const key = families.filter(Boolean).join('\n')
+  const key = families.filter(Boolean).join("\n")
   useEffect(() => {
-    if (key) ensureFontStylesheets(document, key.split('\n'))
+    if (key) ensureFontStylesheets(document, key.split("\n"))
   }, [key])
 }
 
@@ -102,7 +102,7 @@ export function useLazyFontPreviews() {
     const loadVisible = () => {
       const box = root.getBoundingClientRect()
       for (const el of root.querySelectorAll<HTMLElement>(
-        '[data-preview-family]',
+        "[data-preview-family]",
       )) {
         const r = el.getBoundingClientRect()
         if (r.top > box.bottom + 200) break // rows below the window; stop
@@ -121,12 +121,12 @@ export function useLazyFontPreviews() {
       }, 100)
     }
     loadVisible()
-    root.addEventListener('scroll', schedule, { passive: true })
+    root.addEventListener("scroll", schedule, { passive: true })
     // Filtering rewrites the rows, changing what's at the top; rescan then too.
     const mo = new MutationObserver(schedule)
     mo.observe(root, { childList: true, subtree: true })
     cleanupRef.current = () => {
-      root.removeEventListener('scroll', schedule)
+      root.removeEventListener("scroll", schedule)
       mo.disconnect()
       clearTimeout(timer)
     }

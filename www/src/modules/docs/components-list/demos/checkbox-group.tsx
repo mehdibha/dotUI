@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
-import { CheckboxGroup } from '@/registry/ui/checkbox-group'
-import { FieldGroup, Label } from '@/registry/ui/field'
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import { CheckboxGroup } from "@/registry/ui/checkbox-group"
+import { FieldGroup, Label } from "@/registry/ui/field"
 
-import { useCycle } from '../autoplay'
+import { useCycle } from "../autoplay"
 
-const KEYS = ['nextjs', 'remix', 'astro']
+const KEYS = ["nextjs", "remix", "astro"]
 
 export function CheckboxGroupDemo() {
   const { item } = useCycle(KEYS, { dwell: 1300 })

@@ -1,4 +1,4 @@
-import { QRCode } from '@/registry/ui/qr-code'
+import { QRCode } from "@/registry/ui/qr-code"
 
 export default function Sizes() {
   return (

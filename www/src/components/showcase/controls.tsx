@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   ArrowRightIcon,
@@ -7,48 +7,48 @@ import {
   ItalicIcon,
   SearchIcon,
   UnderlineIcon,
-} from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
+} from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
 import {
   Avatar,
   AvatarFallback,
   AvatarGroup,
   AvatarGroupCount,
-} from '@/registry/ui/avatar'
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
-import { Card, CardContent } from '@/registry/ui/card'
-import { Checkbox } from '@/registry/ui/checkbox'
-import { Group } from '@/registry/ui/group'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Kbd } from '@/registry/ui/kbd'
-import { Link } from '@/registry/ui/link'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
+} from "@/registry/ui/avatar"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
+import { Card, CardContent } from "@/registry/ui/card"
+import { Checkbox } from "@/registry/ui/checkbox"
+import { Group } from "@/registry/ui/group"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Kbd } from "@/registry/ui/kbd"
+import { Link } from "@/registry/ui/link"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import {
   NumberField,
   NumberFieldDecrement,
   NumberFieldIncrement,
-} from '@/registry/ui/number-field'
-import { Popover } from '@/registry/ui/popover'
-import { Radio, RadioGroup } from '@/registry/ui/radio-group'
-import { SearchField } from '@/registry/ui/search-field'
+} from "@/registry/ui/number-field"
+import { Popover } from "@/registry/ui/popover"
+import { Radio, RadioGroup } from "@/registry/ui/radio-group"
+import { SearchField } from "@/registry/ui/search-field"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { Separator } from '@/registry/ui/separator'
-import { Slider, SliderControl, SliderOutput } from '@/registry/ui/slider'
-import { Switch } from '@/registry/ui/switch'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+} from "@/registry/ui/select"
+import { Separator } from "@/registry/ui/separator"
+import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider"
+import { Switch } from "@/registry/ui/switch"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 
 // A sampler of the core design-system controls: buttons, fields, badges,
 // selection controls, toggles, slider and a split-button menu.
-export function Controls({ className, ...props }: React.ComponentProps<'div'>) {
+export function Controls({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <Card className={cn('', className)} {...props}>
+    <Card className={cn("", className)} {...props}>
       <CardContent className="space-y-4">
         <div className="flex flex-wrap items-center gap-2">
           <Button variant="primary">
@@ -115,7 +115,7 @@ export function Controls({ className, ...props }: React.ComponentProps<'div'>) {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <ToggleButtonGroup
             aria-label="Text formatting"
-            defaultSelectedKeys={['bold']}
+            defaultSelectedKeys={["bold"]}
           >
             <ToggleButton id="bold" isIconOnly aria-label="Bold">
               <BoldIcon />

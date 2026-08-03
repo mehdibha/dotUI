@@ -1,10 +1,10 @@
-import { useDeferredValue, useMemo } from 'react'
+import { useDeferredValue, useMemo } from "react"
 
-import { Pre } from './code-block'
-import { highlightTsxHtml } from './highlight'
+import { Pre } from "./code-block"
+import { highlightTsxHtml } from "./highlight"
 
 export interface DynamicPreProps {
-  lang: 'tsx'
+  lang: "tsx"
   children: string
   className?: string
 }

@@ -1,6 +1,6 @@
-import type * as DialogPrimitives from 'react-aria-components/Dialog'
-import type * as HeadingPrimitives from 'react-aria-components/Heading'
-import type * as TextPrimitives from 'react-aria-components/Text'
+import type * as DialogPrimitives from "react-aria-components/Dialog"
+import type * as HeadingPrimitives from "react-aria-components/Heading"
+import type * as TextPrimitives from "react-aria-components/Text"
 
 /**
  * A DialogTrigger opens a dialog when a trigger element is pressed.
@@ -19,7 +19,7 @@ export interface DialogContentProps extends React.ComponentProps<
 /**
  * The header of the dialog. Contains the title and description.
  */
-export interface DialogHeaderProps extends React.ComponentProps<'header'> {}
+export interface DialogHeaderProps extends React.ComponentProps<"header"> {}
 
 /**
  * The heading that labels the dialog.
@@ -33,15 +33,15 @@ export interface DialogTitleProps extends React.ComponentProps<
  */
 export interface DialogDescriptionProps extends Omit<
   React.ComponentProps<typeof TextPrimitives.Text>,
-  'slot'
+  "slot"
 > {}
 
 /**
  * The main content area of the dialog.
  */
-export interface DialogBodyProps extends React.ComponentProps<'div'> {}
+export interface DialogBodyProps extends React.ComponentProps<"div"> {}
 
 /**
  * The footer of the dialog. Contains the dialog's actions.
  */
-export interface DialogFooterProps extends React.ComponentProps<'footer'> {}
+export interface DialogFooterProps extends React.ComponentProps<"footer"> {}

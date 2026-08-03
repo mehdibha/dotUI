@@ -1,16 +1,16 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Basic from './demos/basic'
-import Description from './demos/description'
-import Disabled from './demos/disabled'
-import ErrorMessage from './demos/error-message'
-import FormatOptions from './demos/format-options'
-import Label from './demos/label'
-import ReadOnly from './demos/read-only'
-import Required from './demos/required'
-import Sizes from './demos/sizes'
-import WithInputGroup from './demos/with-input-group'
+import Basic from "./demos/basic"
+import Description from "./demos/description"
+import Disabled from "./demos/disabled"
+import ErrorMessage from "./demos/error-message"
+import FormatOptions from "./demos/format-options"
+import Label from "./demos/label"
+import ReadOnly from "./demos/read-only"
+import Required from "./demos/required"
+import Sizes from "./demos/sizes"
+import WithInputGroup from "./demos/with-input-group"
 
 export default function NumberFieldExamples() {
   return (

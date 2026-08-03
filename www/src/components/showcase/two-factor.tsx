@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { ShieldCheckIcon } from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
+import { ShieldCheckIcon } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
@@ -10,17 +10,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
-import { OTPField, OTPFieldSeparator } from '@/registry/ui/otp-field'
+} from "@/registry/ui/card"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
+import { OTPField, OTPFieldSeparator } from "@/registry/ui/otp-field"
 
 export function TwoFactor({
   className,
   ...props
-}: React.ComponentProps<'div'>) {
+}: React.ComponentProps<"div">) {
   return (
-    <Card className={cn('', className)} {...props}>
+    <Card className={cn("", className)} {...props}>
       <CardHeader>
         <CardTitle>Two-factor authentication</CardTitle>
         <CardDescription>

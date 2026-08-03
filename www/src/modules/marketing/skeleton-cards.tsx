@@ -1,8 +1,8 @@
-import { memo } from 'react'
+import { memo } from "react"
 
-import { cn } from '@/registry/lib/utils'
-import { Card, CardContent, CardFooter, CardHeader } from '@/registry/ui/card'
-import { Skeleton } from '@/registry/ui/skeleton'
+import { cn } from "@/registry/lib/utils"
+import { Card, CardContent, CardFooter, CardHeader } from "@/registry/ui/card"
+import { Skeleton } from "@/registry/ui/skeleton"
 
 /*
  * Decorative skeleton-card rails that flank the real showcase grid on large
@@ -18,13 +18,13 @@ import { Skeleton } from '@/registry/ui/skeleton'
 // <Skeleton isLoading> wrapper, which paints it muted and animates it.
 function Bar({ className }: { className?: string }) {
   return (
-    <div data-skeleton="block" className={cn('h-3 rounded-md', className)} />
+    <div data-skeleton="block" className={cn("h-3 rounded-md", className)} />
   )
 }
 
 function Dot({ className }: { className?: string }) {
   return (
-    <div data-skeleton="circle" className={cn('size-8 shrink-0', className)} />
+    <div data-skeleton="circle" className={cn("size-8 shrink-0", className)} />
   )
 }
 
@@ -164,10 +164,10 @@ function RailColumn({
 export const SkeletonRail = memo(function SkeletonRail({
   side,
 }: {
-  side: 'left' | 'right'
+  side: "left" | "right"
 }) {
   const [colA, colB] =
-    side === 'left'
+    side === "left"
       ? ([RAIL_COLUMNS[0], RAIL_COLUMNS[1]] as const)
       : ([RAIL_COLUMNS[2], RAIL_COLUMNS[3]] as const)
   return (
@@ -175,11 +175,11 @@ export const SkeletonRail = memo(function SkeletonRail({
       isLoading
       aria-hidden="true"
       className={cn(
-        'absolute inset-y-0 hidden w-(--rail-w) overflow-hidden opacity-70 lg:block',
-        '[--rail-col:18rem] [--rail-w:calc(var(--rail-col)*2+var(--rail-gap))]',
-        side === 'left'
-          ? 'right-full mr-(--rail-gap) [mask-image:linear-gradient(to_left,black_92%,transparent)]'
-          : 'left-full ml-(--rail-gap) [mask-image:linear-gradient(to_right,black_92%,transparent)]',
+        "absolute inset-y-0 hidden w-(--rail-w) overflow-hidden opacity-70 lg:block",
+        "[--rail-col:18rem] [--rail-w:calc(var(--rail-col)*2+var(--rail-gap))]",
+        side === "left"
+          ? "right-full mr-(--rail-gap) [mask-image:linear-gradient(to_left,black_92%,transparent)]"
+          : "left-full ml-(--rail-gap) [mask-image:linear-gradient(to_right,black_92%,transparent)]",
       )}
     >
       {/* Same bottom fade as the grid, sized by the rail (not the taller,

@@ -1,5 +1,5 @@
-import { FieldError, FieldGroup, Label } from '@/registry/ui/field'
-import { Radio, RadioControl, RadioGroup } from '@/registry/ui/radio-group'
+import { FieldError, FieldGroup, Label } from "@/registry/ui/field"
+import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group"
 
 export default function Demo() {
   return (

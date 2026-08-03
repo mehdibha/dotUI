@@ -1,12 +1,12 @@
-import React from 'react'
+import React from "react"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
-import { DemoCode, getSlotContent } from './demo'
-import { DemoPreset } from './demo-preset'
-import { ExampleCodeModal } from './example-code-modal'
+import { DemoCode, getSlotContent } from "./demo"
+import { DemoPreset } from "./demo-preset"
+import { ExampleCodeModal } from "./example-code-modal"
 
-export interface ExampleProps extends React.ComponentProps<'div'> {
+export interface ExampleProps extends React.ComponentProps<"div"> {
   component: React.ComponentType
   title?: string
   /** Registry items to install, injected by the rehype transform. */
@@ -41,8 +41,8 @@ export function Example({
   return (
     <div
       className={cn(
-        'flex flex-col gap-2',
-        '[&_h3]:mt-0 [&_h3]:truncate [&_h3]:text-sm [&_h3]:font-normal [&_h3]:tracking-normal [&_h3]:text-fg-muted',
+        "flex flex-col gap-2",
+        "[&_h3]:mt-0 [&_h3]:truncate [&_h3]:text-sm [&_h3]:font-normal [&_h3]:tracking-normal [&_h3]:text-fg-muted",
         className,
       )}
       {...props}
@@ -52,7 +52,7 @@ export function Example({
         <div className="min-w-0">{heading}</div>
         {code ? (
           <ExampleCodeModal
-            title={title ?? 'Example'}
+            title={title ?? "Example"}
             component={Component}
             code={code}
             file={file}

@@ -1,21 +1,21 @@
-import { Button } from '@/registry/ui/button'
-import { Description, FieldContent, Label } from '@/registry/ui/field'
-import { Switch, SwitchControl, SwitchIndicator } from '@/registry/ui/switch'
+import { Button } from "@/registry/ui/button"
+import { Description, FieldContent, Label } from "@/registry/ui/field"
+import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
 
 const settings = [
   {
-    label: 'Email digest',
-    description: 'Receive a weekly summary of your activity.',
+    label: "Email digest",
+    description: "Receive a weekly summary of your activity.",
     defaultSelected: true,
   },
   {
-    label: 'Two-factor auth',
-    description: 'Require a code at sign-in for extra security.',
+    label: "Two-factor auth",
+    description: "Require a code at sign-in for extra security.",
     defaultSelected: true,
   },
   {
-    label: 'Public profile',
-    description: 'Let anyone view your profile and activity.',
+    label: "Public profile",
+    description: "Let anyone view your profile and activity.",
     defaultSelected: false,
   },
 ]

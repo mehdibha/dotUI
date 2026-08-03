@@ -1,18 +1,18 @@
-import { Link } from 'react-aria-components'
+import { Link } from "react-aria-components"
 
-import { LinkButton } from '@/registry/ui/button'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
-import { BaseUiIcon } from '@/components/icons/base-ui'
-import { ReactAriaIcon } from '@/components/icons/react-aria'
-import { ReactJsIcon } from '@/components/icons/react-js'
-import { ShadcnIcon } from '@/components/icons/shadcn'
-import { TailwindWordmark } from '@/components/icons/tailwind-wordmark'
-import { TypeScriptIcon } from '@/components/icons/typescript'
-import { Footer } from '@/components/layout/footer'
-import Cards from '@/modules/marketing/cards'
-import { CompositionSection } from '@/modules/marketing/composition-section'
-import { CtaSection } from '@/modules/marketing/cta-section'
-import { ExportSection } from '@/modules/marketing/export-section'
+import { LinkButton } from "@/registry/ui/button"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { BaseUiIcon } from "@/components/icons/base-ui"
+import { ReactAriaIcon } from "@/components/icons/react-aria"
+import { ReactJsIcon } from "@/components/icons/react-js"
+import { ShadcnIcon } from "@/components/icons/shadcn"
+import { TailwindWordmark } from "@/components/icons/tailwind-wordmark"
+import { TypeScriptIcon } from "@/components/icons/typescript"
+import { Footer } from "@/components/layout/footer"
+import Cards from "@/modules/marketing/cards"
+import { CompositionSection } from "@/modules/marketing/composition-section"
+import { CtaSection } from "@/modules/marketing/cta-section"
+import { ExportSection } from "@/modules/marketing/export-section"
 
 export function HomePage() {
   return (
@@ -105,33 +105,33 @@ export function HomePage() {
 
 const tools = [
   {
-    label: 'Shadcn CLI',
+    label: "Shadcn CLI",
     icon: <ShadcnIcon className="size-7 sm:size-9" />,
-    href: 'https://ui.shadcn.com/docs/cli',
+    href: "https://ui.shadcn.com/docs/cli",
   },
   {
-    label: 'React 19',
+    label: "React 19",
     icon: <ReactJsIcon className="size-7 sm:size-9" />,
-    href: 'https://react.dev',
+    href: "https://react.dev",
   },
   {
-    label: 'React Aria',
+    label: "React Aria",
     icon: <ReactAriaIcon className="size-7 sm:size-9" />,
-    href: 'https://react-spectrum.adobe.com/react-aria/index.html',
+    href: "https://react-spectrum.adobe.com/react-aria/index.html",
   },
   {
-    label: 'Base UI',
+    label: "Base UI",
     icon: <BaseUiIcon className="h-7 w-auto sm:h-9" />,
-    href: 'https://base-ui.com',
+    href: "https://base-ui.com",
   },
   {
-    label: 'TypeScript 5',
+    label: "TypeScript 5",
     icon: <TypeScriptIcon className="size-7 sm:size-9" />,
-    href: 'https://www.typescriptlang.org/',
+    href: "https://www.typescriptlang.org/",
   },
   {
-    label: 'Tailwind CSS v4',
+    label: "Tailwind CSS v4",
     icon: <TailwindWordmark className="h-5 sm:h-7" />,
-    href: 'https://tailwindcss.com',
+    href: "https://tailwindcss.com",
   },
 ]

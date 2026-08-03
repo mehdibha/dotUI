@@ -9,11 +9,11 @@
  * Run: `npx tsc --noEmit` (this file is included via the project's TS glob).
  */
 
-import { expect, test } from 'vitest'
+import { expect, test } from "vitest"
 
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
-import { createStyles } from './styles'
+import { createStyles } from "./styles"
 
 /* -------------------------------------------------------------------------- *
  * Fixture: a meta with both enum and scalar params, plus base with slots
@@ -21,46 +21,46 @@ import { createStyles } from './styles'
  * -------------------------------------------------------------------------- */
 
 const fixtureMeta = {
-  name: 'fixture',
-  type: 'registry:ui',
-  files: [{ type: 'registry:ui', path: 'fake.tsx', target: 'fake.tsx' }],
+  name: "fixture",
+  type: "registry:ui",
+  files: [{ type: "registry:ui", path: "fake.tsx", target: "fake.tsx" }],
   params: {
     style: {
-      kind: 'enum',
-      default: 'default',
-      values: ['default', 'alt'] as const,
+      kind: "enum",
+      default: "default",
+      values: ["default", "alt"] as const,
     },
     highlight: {
-      kind: 'enum',
-      default: 'subtle',
-      values: ['subtle', 'accent'] as const,
+      kind: "enum",
+      default: "subtle",
+      values: ["subtle", "accent"] as const,
     },
     radius: {
-      kind: 'scalar',
-      type: 'radius',
-      cssVar: '--fixture-radius',
-      default: '--radius-md',
+      kind: "scalar",
+      type: "radius",
+      cssVar: "--fixture-radius",
+      default: "--radius-md",
     },
   },
 } satisfies RegistryItem
 
 const baseConfig = {
   base: {
-    base: 'block',
+    base: "block",
     slots: {
-      root: 'rounded',
-      item: 'px-2',
+      root: "rounded",
+      item: "px-2",
     },
     variants: {
-      variant: { default: '', danger: '' },
-      size: { sm: '', md: '', lg: '' },
+      variant: { default: "", danger: "" },
+      size: { sm: "", md: "", lg: "" },
     },
-    defaultVariants: { variant: 'default', size: 'md' },
+    defaultVariants: { variant: "default", size: "md" },
   },
 } as const
 
-test('loads createStyles compile-time fixtures', () => {
-  expect(fixtureMeta.name).toBe('fixture')
+test("loads createStyles compile-time fixtures", () => {
+  expect(fixtureMeta.name).toBe("fixture")
 })
 
 /* -------------------------------------------------------------------------- *
@@ -71,25 +71,25 @@ createStyles(fixtureMeta, {
   base: baseConfig.base,
   density: {
     compact: {
-      base: 'text-xs',
-      variants: { size: { sm: 'h-6', md: 'h-7', lg: 'h-8' } },
+      base: "text-xs",
+      variants: { size: { sm: "h-6", md: "h-7", lg: "h-8" } },
     },
     default: {},
     comfortable: {
-      slots: { root: 'text-sm' },
+      slots: { root: "text-sm" },
     },
   },
   params: {
     style: {
-      default: { slots: { root: 'border' } },
+      default: { slots: { root: "border" } },
       alt: {
-        slots: { item: 'italic' },
-        vars: { '--fixture-bg': 'var(--neutral-100)' },
+        slots: { item: "italic" },
+        vars: { "--fixture-bg": "var(--neutral-100)" },
       },
     },
     highlight: {
-      subtle: { slots: { item: 'bg-neutral' } },
-      accent: { slots: { item: 'bg-accent' } },
+      subtle: { slots: { item: "bg-neutral" } },
+      accent: { slots: { item: "bg-accent" } },
     },
   },
 })
@@ -104,7 +104,7 @@ createStyles(fixtureMeta, {
   density: {
     compact: {
       // @ts-expect-error — "footer" is not a slot in base
-      slots: { footer: 'h-2' },
+      slots: { footer: "h-2" },
     },
     default: {},
     comfortable: {},
@@ -117,7 +117,7 @@ createStyles(fixtureMeta, {
   density: {
     compact: {
       // @ts-expect-error — "tone" is not a variant in base
-      variants: { tone: { soft: 'bg-soft' } },
+      variants: { tone: { soft: "bg-soft" } },
     },
     default: {},
     comfortable: {},
@@ -131,7 +131,7 @@ createStyles(fixtureMeta, {
     compact: {
       variants: {
         // @ts-expect-error — "xl" is not a value of base.variants.size
-        size: { xl: 'h-10' },
+        size: { xl: "h-10" },
       },
     },
     default: {},
@@ -145,7 +145,7 @@ createStyles(fixtureMeta, {
   density: {
     compact: {
       // @ts-expect-error — "tone" is not a variant in base
-      defaultVariants: { tone: 'soft' },
+      defaultVariants: { tone: "soft" },
     },
     default: {},
     comfortable: {},
@@ -159,7 +159,7 @@ createStyles(fixtureMeta, {
     compact: {
       defaultVariants: {
         // @ts-expect-error — "xl" is not a value of size
-        size: 'xl',
+        size: "xl",
       },
     },
     default: {},
@@ -182,7 +182,7 @@ createStyles(fixtureMeta, {
   base: baseConfig.base,
   params: {
     // @ts-expect-error — "unknown" isn't a param in meta
-    unknown: { foo: { slots: { root: 'x' } } },
+    unknown: { foo: { slots: { root: "x" } } },
   },
 })
 
@@ -192,7 +192,7 @@ createStyles(fixtureMeta, {
   params: {
     style: {
       // @ts-expect-error — "neon" isn't in style.values
-      neon: { slots: { root: 'border' } },
+      neon: { slots: { root: "border" } },
     },
   },
 })
@@ -204,7 +204,7 @@ createStyles(fixtureMeta, {
     style: {
       default: {
         // @ts-expect-error — "footer" is not a base slot
-        slots: { footer: 'p-2' },
+        slots: { footer: "p-2" },
       },
     },
   },
@@ -218,7 +218,7 @@ createStyles(fixtureMeta, {
       subtle: {
         variants: {
           // @ts-expect-error — "warning" not in base.variants.variant
-          variant: { warning: 'bg-warning' },
+          variant: { warning: "bg-warning" },
         },
       },
     },
@@ -232,7 +232,7 @@ createStyles(fixtureMeta, {
     style: {
       alt: {
         // @ts-expect-error — vars values must be strings
-        vars: { '--x': 12 },
+        vars: { "--x": 12 },
       },
     },
   },
@@ -245,7 +245,7 @@ createStyles(fixtureMeta, {
     style: {
       default: {
         // @ts-expect-error — `tv` is not a valid key on a param value
-        tv: { slots: { root: 'border' } },
+        tv: { slots: { root: "border" } },
       },
     },
   },
@@ -255,7 +255,7 @@ createStyles(fixtureMeta, {
 createStyles(fixtureMeta, {
   base: baseConfig.base,
   // @ts-expect-error — `styles` is no longer a valid top-level field
-  styles: { default: { slots: { root: 'x' } } },
+  styles: { default: { slots: { root: "x" } } },
 })
 
 /* 14) defaultVariants on a param value: variant key not in base */
@@ -265,7 +265,7 @@ createStyles(fixtureMeta, {
     style: {
       default: {
         // @ts-expect-error — "tone" is not a base variant
-        defaultVariants: { tone: 'soft' },
+        defaultVariants: { tone: "soft" },
       },
     },
   },
@@ -277,39 +277,39 @@ createStyles(fixtureMeta, {
 
 /* 15) Enum param missing required `values` */
 const _missingValues = {
-  name: 'x',
-  type: 'registry:ui',
-  files: [{ type: 'registry:ui', path: 'f.ts', target: 'f.ts' }],
+  name: "x",
+  type: "registry:ui",
+  files: [{ type: "registry:ui", path: "f.ts", target: "f.ts" }],
   params: {
     // @ts-expect-error — values is required for enum params
-    style: { kind: 'enum', default: 'default' },
+    style: { kind: "enum", default: "default" },
   },
 } satisfies RegistryItem
 
 /* 16) Scalar param: `cssVar` must be a `--<string>` template literal */
 const _badCssVar = {
-  name: 'x',
-  type: 'registry:ui',
-  files: [{ type: 'registry:ui', path: 'f.ts', target: 'f.ts' }],
+  name: "x",
+  type: "registry:ui",
+  files: [{ type: "registry:ui", path: "f.ts", target: "f.ts" }],
   params: {
     radius: {
-      kind: 'scalar',
-      type: 'radius',
+      kind: "scalar",
+      type: "radius",
       // @ts-expect-error — cssVar must start with "--"
-      cssVar: 'alert-radius',
-      default: '--radius-md',
+      cssVar: "alert-radius",
+      default: "--radius-md",
     },
   },
 } satisfies RegistryItem
 
 /* 17) Scalar param: `type` must be a known TokenType */
 const _badType = {
-  name: 'x',
-  type: 'registry:ui',
-  files: [{ type: 'registry:ui', path: 'f.ts', target: 'f.ts' }],
+  name: "x",
+  type: "registry:ui",
+  files: [{ type: "registry:ui", path: "f.ts", target: "f.ts" }],
   params: {
     // @ts-expect-error — "weight" isn't a TokenType
-    w: { kind: 'scalar', type: 'weight', cssVar: '--w', default: '100' },
+    w: { kind: "scalar", type: "weight", cssVar: "--w", default: "100" },
   },
 } satisfies RegistryItem
 

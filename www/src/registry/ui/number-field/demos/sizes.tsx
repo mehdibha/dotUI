@@ -1,10 +1,10 @@
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
 import {
   NumberField,
   NumberFieldDecrement,
   NumberFieldIncrement,
-} from '@/registry/ui/number-field'
+} from "@/registry/ui/number-field"
 
 export default function Demo() {
   return (

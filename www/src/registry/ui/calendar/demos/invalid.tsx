@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { getLocalTimeZone, today } from '@internationalized/date'
+import { getLocalTimeZone, today } from "@internationalized/date"
 
-import { Calendar } from '@/registry/ui/calendar'
-import { Card, CardContent } from '@/registry/ui/card'
+import { Calendar } from "@/registry/ui/calendar"
+import { Card, CardContent } from "@/registry/ui/card"
 
 export default function Demo() {
   return (

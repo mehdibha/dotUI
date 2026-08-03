@@ -7,7 +7,7 @@ description: >-
   i18n locale patterns.
 type: sub-skill
 library: tanstack-router
-library_version: '1.166.2'
+library_version: "1.166.2"
 requires:
   - router-core
 sources:
@@ -30,9 +30,9 @@ A segment prefixed with `$` captures text until the next `/`.
 
 ```tsx
 // src/routes/posts.$postId.tsx
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   loader: async ({ params }) => {
     // params.postId is string — fully inferred, do not annotate
     return fetchPost(params.postId)
@@ -55,7 +55,7 @@ Multiple dynamic segments work across path levels:
 
 ```tsx
 // src/routes/teams.$teamId.members.$memberId.tsx
-export const Route = createFileRoute('/teams/$teamId/members/$memberId')({
+export const Route = createFileRoute("/teams/$teamId/members/$memberId")({
   component: MemberComponent,
 })
 
@@ -75,9 +75,9 @@ A route with a path ending in `$` (bare dollar sign) captures everything after i
 
 ```tsx
 // src/routes/files.$.tsx
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/files/$')({
+export const Route = createFileRoute("/files/$")({
   component: FileViewer,
 })
 
@@ -94,9 +94,9 @@ Optional params use `{-$paramName}` syntax. The segment may or may not be presen
 
 ```tsx
 // src/routes/posts.{-$category}.tsx
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/posts/{-$category}')({
+export const Route = createFileRoute("/posts/{-$category}")({
   component: PostsComponent,
 })
 
@@ -104,7 +104,7 @@ function PostsComponent() {
   const { category } = Route.useParams()
   // URL: /posts → category is undefined
   // URL: /posts/tech → category is "tech"
-  return <div>{category ? `Posts in ${category}` : 'All Posts'}</div>
+  return <div>{category ? `Posts in ${category}` : "All Posts"}</div>
 }
 ```
 
@@ -112,7 +112,7 @@ Multiple optional params:
 
 ```tsx
 // Matches: /posts, /posts/tech, /posts/tech/hello-world
-export const Route = createFileRoute('/posts/{-$category}/{-$slug}')({
+export const Route = createFileRoute("/posts/{-$category}/{-$slug}")({
   component: PostComponent,
 })
 ```
@@ -121,16 +121,16 @@ export const Route = createFileRoute('/posts/{-$category}/{-$slug}')({
 
 ```tsx
 // src/routes/{-$locale}/about.tsx
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/{-$locale}/about')({
+export const Route = createFileRoute("/{-$locale}/about")({
   component: AboutComponent,
 })
 
 function AboutComponent() {
   const { locale } = Route.useParams()
-  const currentLocale = locale || 'en'
-  return <h1>{currentLocale === 'fr' ? 'À Propos' : 'About Us'}</h1>
+  const currentLocale = locale || "en"
+  return <h1>{currentLocale === "fr" ? "À Propos" : "About Us"}</h1>
 }
 // Matches: /about, /en/about, /fr/about
 ```
@@ -143,9 +143,9 @@ Curly braces `{}` around `$paramName` allow text before or after the dynamic par
 
 ```tsx
 // src/routes/posts/post-{$postId}.tsx
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/posts/post-{$postId}')({
+export const Route = createFileRoute("/posts/post-{$postId}")({
   component: PostComponent,
 })
 
@@ -160,9 +160,9 @@ function PostComponent() {
 
 ```tsx
 // src/routes/files/{$fileName}[.]txt.tsx
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/files/{$fileName}.txt')({
+export const Route = createFileRoute("/files/{$fileName}.txt")({
   component: FileComponent,
 })
 
@@ -177,7 +177,7 @@ function FileComponent() {
 
 ```tsx
 // URL: /users/user-456.json → userId = "456"
-export const Route = createFileRoute('/users/user-{$userId}.json')({
+export const Route = createFileRoute("/users/user-{$userId}.json")({
   component: UserComponent,
 })
 
@@ -192,7 +192,7 @@ function UserComponent() {
 ### Object Form
 
 ```tsx
-import { Link } from '@tanstack/react-router'
+import { Link } from "@tanstack/react-router"
 
 function PostLink({ postId }: { postId: string }) {
   return (
@@ -218,7 +218,7 @@ function PostLink({ postId }: { postId: string }) {
 ### Programmatic Navigation
 
 ```tsx
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate } from "@tanstack/react-router"
 
 function GoToPost({ postId }: { postId: string }) {
   const navigate = useNavigate()
@@ -226,7 +226,7 @@ function GoToPost({ postId }: { postId: string }) {
   return (
     <button
       onClick={() => {
-        navigate({ to: '/posts/$postId', params: { postId } })
+        navigate({ to: "/posts/$postId", params: { postId } })
       }}
     >
       Go to Post
@@ -254,10 +254,10 @@ function GoToPost({ postId }: { postId: string }) {
 ### `useParams` with `from`
 
 ```tsx
-import { useParams } from '@tanstack/react-router'
+import { useParams } from "@tanstack/react-router"
 
 function PostHeader() {
-  const { postId } = useParams({ from: '/posts/$postId' })
+  const { postId } = useParams({ from: "/posts/$postId" })
   return <h2>Post {postId}</h2>
 }
 ```
@@ -268,18 +268,18 @@ function PostHeader() {
 function GenericBreadcrumb() {
   const params = useParams({ strict: false })
   // params is a union of all possible route params
-  return <span>{params.postId ?? 'Home'}</span>
+  return <span>{params.postId ?? "Home"}</span>
 }
 ```
 
 ## Params in Loaders and `beforeLoad`
 
 ```tsx
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   beforeLoad: async ({ params }) => {
     // params.postId available here
     const canView = await checkPermission(params.postId)
-    if (!canView) throw redirect({ to: '/unauthorized' })
+    if (!canView) throw redirect({ to: "/unauthorized" })
   },
   loader: async ({ params }) => {
     return fetchPost(params.postId)
@@ -292,11 +292,11 @@ export const Route = createFileRoute('/posts/$postId')({
 By default, params are encoded with `encodeURIComponent`. Allow extra characters via router config:
 
 ```tsx
-import { createRouter } from '@tanstack/react-router'
+import { createRouter } from "@tanstack/react-router"
 
 const router = createRouter({
   routeTree,
-  pathParamsAllowedCharacters: ['@', '+'],
+  pathParamsAllowedCharacters: ["@", "+"],
 })
 ```
 
@@ -324,7 +324,7 @@ TanStack Router uses `$` for splat routes. The captured value is under `_splat`,
 
 // CORRECT (TanStack Router)
 // File: src/routes/files.$.tsx
-export const Route = createFileRoute('/files/$')({
+export const Route = createFileRoute("/files/$")({
   component: () => {
     const { _splat } = Route.useParams()
     return <div>{_splat}</div>
@@ -340,16 +340,16 @@ Curly braces are ONLY for prefix/suffix patterns and optional params. Basic dyna
 
 ```tsx
 // WRONG — braces not needed for basic params
-createFileRoute('/posts/{$postId}')
+createFileRoute("/posts/{$postId}")
 
 // CORRECT — bare $ for basic dynamic segments
-createFileRoute('/posts/$postId')
+createFileRoute("/posts/$postId")
 
 // CORRECT — braces for prefix pattern
-createFileRoute('/posts/post-{$postId}')
+createFileRoute("/posts/post-{$postId}")
 
 // CORRECT — braces for optional param
-createFileRoute('/posts/{-$category}')
+createFileRoute("/posts/{-$category}")
 ```
 
 ### 4. Params are always strings
@@ -357,7 +357,7 @@ createFileRoute('/posts/{-$category}')
 Path params are always parsed as strings. If you need a number, parse in the loader or component:
 
 ```tsx
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   loader: async ({ params }) => {
     const id = parseInt(params.postId, 10)
     if (isNaN(id)) throw notFound()
@@ -369,7 +369,7 @@ export const Route = createFileRoute('/posts/$postId')({
 You can also use `params.parse` and `params.stringify` on the route for bidirectional transformation:
 
 ```tsx
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   params: {
     parse: (raw) => ({ postId: parseInt(raw.postId, 10) }),
     stringify: (parsed) => ({ postId: String(parsed.postId) }),

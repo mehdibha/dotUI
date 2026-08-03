@@ -97,9 +97,9 @@ interface ColorConfig2 {
   hueShift?: number // scalar on the family bend table (engine D6)
   neutralTint?: number // whisper-tint amount (engine D8)
   preserveSeed?: boolean // exact-seed pin, prints its ΔEok price (engine D7)
-  guaranteePolicy?: 'relaxed' | 'strict' // border misses → warnings / AA on solids (engine D2)
+  guaranteePolicy?: "relaxed" | "strict" // border misses → warnings / AA on solids (engine D2)
   borders?: Record<string, BorderTargets> // per-palette border placement targets (engine D2)
-  primary?: 'accent' // role mapping; absent = neutral
+  primary?: "accent" // role mapping; absent = neutral
   overrides?: Record<string, { palette: string; job: string }> // per-token remap (advanced)
 }
 ```

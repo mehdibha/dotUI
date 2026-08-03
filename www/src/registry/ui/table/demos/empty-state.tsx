@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   Table,
@@ -6,7 +6,7 @@ import {
   TableBody,
   TableColumn,
   TableHeader,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
 export default function Demo() {
   return (

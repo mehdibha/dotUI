@@ -4,11 +4,11 @@ import {
   PencilIcon,
   ShareIcon,
   TrashIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Modal } from '@/registry/ui/modal'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Modal } from "@/registry/ui/modal"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

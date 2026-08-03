@@ -15,7 +15,7 @@
 const IDENT_RE = /^[A-Za-z_$][A-Za-z0-9_$]*$/
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
+  return typeof value === "object" && value !== null && !Array.isArray(value)
 }
 
 function quoteKey(key: string): string {
@@ -23,10 +23,10 @@ function quoteKey(key: string): string {
 }
 
 function serializeValue(value: unknown, indent: number): string {
-  if (value === null) return 'null'
-  if (value === undefined) return 'undefined'
-  if (typeof value === 'string') return JSON.stringify(value)
-  if (typeof value === 'number' || typeof value === 'boolean')
+  if (value === null) return "null"
+  if (value === undefined) return "undefined"
+  if (typeof value === "string") return JSON.stringify(value)
+  if (typeof value === "number" || typeof value === "boolean")
     return String(value)
 
   if (Array.isArray(value)) return serializeArray(value, indent)
@@ -36,13 +36,13 @@ function serializeValue(value: unknown, indent: number): string {
 }
 
 function serializeArray(value: unknown[], indent: number): string {
-  if (value.length === 0) return '[]'
-  const pad = '\t'.repeat(indent + 1)
-  const close = '\t'.repeat(indent)
+  if (value.length === 0) return "[]"
+  const pad = "\t".repeat(indent + 1)
+  const close = "\t".repeat(indent)
   const items = value.map(
     (item) => `${pad}${serializeValue(item, indent + 1)},`,
   )
-  return `[\n${items.join('\n')}\n${close}]`
+  return `[\n${items.join("\n")}\n${close}]`
 }
 
 function serializeObject(
@@ -50,13 +50,13 @@ function serializeObject(
   indent: number,
 ): string {
   const entries = Object.entries(value).filter(([, v]) => v !== undefined)
-  if (entries.length === 0) return '{}'
-  const pad = '\t'.repeat(indent + 1)
-  const close = '\t'.repeat(indent)
+  if (entries.length === 0) return "{}"
+  const pad = "\t".repeat(indent + 1)
+  const close = "\t".repeat(indent)
   const items = entries.map(
     ([k, v]) => `${pad}${quoteKey(k)}: ${serializeValue(v, indent + 1)},`,
   )
-  return `{\n${items.join('\n')}\n${close}}`
+  return `{\n${items.join("\n")}\n${close}}`
 }
 
 export function serializeTvConfig(value: unknown): string {

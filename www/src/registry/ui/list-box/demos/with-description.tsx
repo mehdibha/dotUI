@@ -3,14 +3,14 @@ import {
   GlobeIcon,
   ShieldCheckIcon,
   UserIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
 import {
   ListBox,
   ListBoxItem,
   ListBoxItemDescription,
   ListBoxItemLabel,
-} from '@/registry/ui/list-box'
+} from "@/registry/ui/list-box"
 
 export default function Demo() {
   return (
@@ -18,7 +18,7 @@ export default function Demo() {
       <ListBox
         aria-label="Permissions"
         selectionMode="single"
-        defaultSelectedKeys={['read']}
+        defaultSelectedKeys={["read"]}
       >
         <ListBoxItem id="read" textValue="Read">
           <UserIcon />

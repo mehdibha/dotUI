@@ -19,26 +19,26 @@ import {
   UploadIcon,
   UserIcon,
   XIcon,
-} from 'lucide-react'
-import * as ButtonPrimitives from 'react-aria-components/Button'
-import { useIsHidden } from 'react-aria/private/collections/Hidden'
+} from "lucide-react"
+import * as ButtonPrimitives from "react-aria-components/Button"
+import { useIsHidden } from "react-aria/private/collections/Hidden"
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Field, Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { Popover } from '@/registry/ui/popover'
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Field, Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { Popover } from "@/registry/ui/popover"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { Switch } from '@/registry/ui/switch'
-import { TextField } from '@/registry/ui/text-field'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+} from "@/registry/ui/select"
+import { Switch } from "@/registry/ui/switch"
+import { TextField } from "@/registry/ui/text-field"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 
 import type {
   ControlValues,
@@ -49,7 +49,7 @@ import type {
   SerializableNumberControl,
   SerializablePropReference,
   SerializableStringControl,
-} from './types'
+} from "./types"
 
 /**
  * Available icons for the icon picker.
@@ -147,7 +147,7 @@ function ControlLabel({
  * Control components for the interactive demo.
  */
 
-type ControlsLayout = 'horizontal' | 'vertical'
+type ControlsLayout = "horizontal" | "vertical"
 
 interface ControlRendererProps {
   control: SerializableControl
@@ -163,7 +163,7 @@ export function ControlRenderer({
   layout,
 }: ControlRendererProps) {
   switch (control.type) {
-    case 'boolean':
+    case "boolean":
       return (
         <BooleanControlRenderer
           control={control}
@@ -172,7 +172,7 @@ export function ControlRenderer({
           layout={layout}
         />
       )
-    case 'string':
+    case "string":
       return (
         <StringControlRenderer
           control={control}
@@ -180,7 +180,7 @@ export function ControlRenderer({
           onChange={onChange}
         />
       )
-    case 'number':
+    case "number":
       return (
         <NumberControlRenderer
           control={control}
@@ -188,7 +188,7 @@ export function ControlRenderer({
           onChange={onChange}
         />
       )
-    case 'enum':
+    case "enum":
       return (
         <EnumControlRenderer
           control={control}
@@ -196,7 +196,7 @@ export function ControlRenderer({
           onChange={onChange}
         />
       )
-    case 'icon':
+    case "icon":
       return (
         <IconControlRenderer
           control={control}
@@ -228,14 +228,14 @@ function BooleanControlRenderer({
   onChange,
   layout,
 }: BooleanControlRendererProps) {
-  const horizontal = layout === 'horizontal'
+  const horizontal = layout === "horizontal"
   return (
     <Field
       orientation="vertical"
       className={cn(
-        'w-auto',
+        "w-auto",
         horizontal &&
-          'md:w-full md:flex-row md:items-center md:justify-between',
+          "md:w-full md:flex-row md:items-center md:justify-between",
       )}
     >
       <ControlLabel name={control.name} reference={control.reference} />
@@ -400,9 +400,9 @@ function IconControlRenderer({
 
   return (
     <Select
-      selectedKey={value || '__none__'}
+      selectedKey={value || "__none__"}
       onSelectionChange={(key) =>
-        onChange(control.name, key === '__none__' ? null : key)
+        onChange(control.name, key === "__none__" ? null : key)
       }
       className="w-full"
     >
@@ -419,7 +419,7 @@ function IconControlRenderer({
             <SelectItem key={iconName} id={iconName} textValue={iconName}>
               <span className="flex items-center gap-2">
                 <IconComponent className="size-4" />
-                <span>{iconName.replace('Icon', '')}</span>
+                <span>{iconName.replace("Icon", "")}</span>
               </span>
             </SelectItem>
           )
@@ -442,17 +442,17 @@ export function Controls({
   onChange,
   layout,
 }: ControlsProps) {
-  const horizontal = layout === 'horizontal'
+  const horizontal = layout === "horizontal"
   return (
     <>
       {controls.map((control) => {
         // Beneath the preview (the default, and on small screens) controls sit in a wrapping row, so
         // text/select controls get a fixed width and booleans size to content. The horizontal layout
         // fills the column instead at md+ — switched purely via a md: variant, no JS.
-        const base = control.type === 'boolean' ? 'w-auto' : 'w-44'
-        const wrapperWidth = horizontal ? cn(base, 'md:w-full') : base
+        const base = control.type === "boolean" ? "w-auto" : "w-44"
+        const wrapperWidth = horizontal ? cn(base, "md:w-full") : base
         return (
-          <div key={control.name} className={cn('shrink-0', wrapperWidth)}>
+          <div key={control.name} className={cn("shrink-0", wrapperWidth)}>
             <ControlRenderer
               control={control}
               value={values[control.name]}

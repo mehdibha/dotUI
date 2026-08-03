@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { Label } from '@/registry/ui/field'
-import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
+import { Label } from "@/registry/ui/field"
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 
-import { useCycle } from '../autoplay'
+import { useCycle } from "../autoplay"
 
-const KEYS = ['react', 'typescript', 'nextjs']
+const KEYS = ["react", "typescript", "nextjs"]
 
 export function TagGroupDemo() {
   const { item } = useCycle(KEYS, { dwell: 1300 })

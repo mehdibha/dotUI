@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { PenSquareIcon } from '@/registry/__generated__/icons'
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
+import { PenSquareIcon } from "@/registry/__generated__/icons"
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogBody,
@@ -13,16 +13,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { FieldGroup, Label } from '@/registry/ui/field'
-import { Input, TextArea } from '@/registry/ui/input'
-import { Modal } from '@/registry/ui/modal'
-import { Popover } from '@/registry/ui/popover'
-import { Radio, RadioGroup } from '@/registry/ui/radio-group'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { FieldGroup, Label } from "@/registry/ui/field"
+import { Input, TextArea } from "@/registry/ui/input"
+import { Modal } from "@/registry/ui/modal"
+import { Popover } from "@/registry/ui/popover"
+import { Radio, RadioGroup } from "@/registry/ui/radio-group"
+import { TextField } from "@/registry/ui/text-field"
 
-type Type = 'modal' | 'drawer' | 'popover'
+type Type = "modal" | "drawer" | "popover"
 
 const OVERLAYS: Record<
   Type,
@@ -34,8 +34,8 @@ const OVERLAYS: Record<
 }
 
 export default function Demo() {
-  const [type, setType] = React.useState<Type>('modal')
-  const [mobileType, setMobileType] = React.useState<Type>('drawer')
+  const [type, setType] = React.useState<Type>("modal")
+  const [mobileType, setMobileType] = React.useState<Type>("drawer")
   return (
     <div className="flex w-full items-center gap-8">
       <Dialog>

@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogBody,
@@ -9,8 +9,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Modal, type ModalProps } from '@/registry/ui/modal'
+} from "@/registry/ui/dialog"
+import { Modal, type ModalProps } from "@/registry/ui/modal"
 
 export default function Demo({ isDismissable = true }: ModalProps = {}) {
   return (

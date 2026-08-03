@@ -1,21 +1,21 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 /* Shared shadcn utilities (no-scrollbar, scroll-fade-*, shimmer) — replaces the
    scroll-fade port we used to maintain inline here. App-only: registry items must
    not rely on these; the shipped base.css doesn't include them. */
-@import 'shadcn/tailwind.css';
-@import '@fontsource-variable/josefin-sans';
-@import '@fontsource-variable/geist';
-@import '@fontsource/geist-mono';
-@import './registry/styles.css';
-@import './modules/docs/highlight.css';
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/josefin-sans";
+@import "@fontsource-variable/geist";
+@import "@fontsource/geist-mono";
+@import "./registry/styles.css";
+@import "./modules/docs/highlight.css";
 
 @theme {
   --font-sans:
-    'Geist Variable', 'Geist Variable Fallback', ui-sans-serif, system-ui,
+    "Geist Variable", "Geist Variable Fallback", ui-sans-serif, system-ui,
     sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, monospace;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
   --font-josefin:
-    'Josefin Sans Variable', 'Josefin Sans Variable Fallback', ui-sans-serif,
+    "Josefin Sans Variable", "Josefin Sans Variable Fallback", ui-sans-serif,
     system-ui, sans-serif;
 
   --breakpoint-xs: 30rem;
@@ -81,7 +81,7 @@
    unsupported the blur stays at 0 and the bar falls back to a solid background
    (blur-reveal-fallback). */
 @property --blur-progress {
-  syntax: '<number>';
+  syntax: "<number>";
   inherits: true;
   initial-value: 0;
 }
@@ -154,7 +154,7 @@
    background wash can tween the preset's --color-bg when the selected preset
    switches; browsers without @property just swap instantly. */
 @property --preset-wash-bg {
-  syntax: '<color>';
+  syntax: "<color>";
   inherits: false;
   initial-value: transparent;
 }
@@ -163,7 +163,7 @@
    preset accents on switch; inherits so the glow layers inside the pill read
    the transitioning value. */
 @property --cta-glow-color {
-  syntax: '<color>';
+  syntax: "<color>";
   inherits: true;
   initial-value: transparent;
 }

@@ -10,8 +10,8 @@ links:
   name="breadcrumbs"
   controls={[
     {
-      type: 'boolean',
-      name: 'isDisabled',
+      type: "boolean",
+      name: "isDisabled",
       defaultValue: false,
     },
   ]}
@@ -33,7 +33,7 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
   Breadcrumbs,
-} from '@/ui/breadcrumbs'
+} from "@/ui/breadcrumbs"
 ```
 
 ```tsx
@@ -107,14 +107,14 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
 
 ```tsx title="ui/breadcrumbs.tsx"
 // [!code highlight:2]
-import { Link as RouterLink } from '@tanstack/react-router'
-import type { ToOptions } from '@tanstack/react-router'
+import { Link as RouterLink } from "@tanstack/react-router"
+import type { ToOptions } from "@tanstack/react-router"
 
 // ..
 
 interface BreadcrumbLinkProps extends Omit<
   React.ComponentProps<typeof AriaLink>,
-  'href'
+  "href"
 > {
   href?: string | ToOptions // [!code highlight]
 }
@@ -122,9 +122,9 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
   return (
     <AriaLink
       // [!code highlight:10]
-      href={typeof href === 'object' ? href.to : href}
+      href={typeof href === "object" ? href.to : href}
       render={({ ref, ...domProps }) => {
-        if (typeof href === 'object') {
+        if (typeof href === "object") {
           return (
             <RouterLink
               ref={ref as React.Ref<HTMLAnchorElement>}
@@ -133,7 +133,7 @@ const BreadcrumbLink = ({ className, ...props }: BreadcrumbLinkProps) => {
             />
           )
         }
-        if (typeof href === 'string') {
+        if (typeof href === "string") {
           return (
             <a
               ref={ref as React.Ref<HTMLAnchorElement>}

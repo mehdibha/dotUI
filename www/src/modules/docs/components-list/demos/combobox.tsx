@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
+import { Button } from "@/registry/ui/button"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene, useOpenAutoplay } from "../autoplay"
 
 export function ComboboxDemo() {
   const { phase } = useOpenAutoplay()
@@ -31,7 +31,7 @@ export function ComboboxDemo() {
       <ListBox
         aria-label="Country"
         selectionMode="single"
-        selectedKeys={['france']}
+        selectedKeys={["france"]}
         className="border-0 bg-transparent shadow-none"
       >
         <ListBoxItem id="canada">Canada</ListBoxItem>

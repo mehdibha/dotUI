@@ -1,13 +1,13 @@
-import { metaSchema, pageSchema } from 'fumadocs-core/source/schema'
-import { defineConfig, defineDocs } from 'fumadocs-mdx/config'
-import lastModified from 'fumadocs-mdx/plugins/last-modified'
-import { z } from 'zod'
+import { metaSchema, pageSchema } from "fumadocs-core/source/schema"
+import { defineConfig, defineDocs } from "fumadocs-mdx/config"
+import lastModified from "fumadocs-mdx/plugins/last-modified"
+import { z } from "zod"
 
-import rehypeHighlight from './src/modules/docs/mdx-plugins/rehype-highlight'
-import rehypeTransform from './src/modules/docs/mdx-plugins/rehype-transform'
+import rehypeHighlight from "./src/modules/docs/mdx-plugins/rehype-highlight"
+import rehypeTransform from "./src/modules/docs/mdx-plugins/rehype-transform"
 
 export const docs = defineDocs({
-  dir: 'content/docs',
+  dir: "content/docs",
   docs: {
     async: true, // Load files asynchronously to avoid bundling all at once
     schema: pageSchema.extend({

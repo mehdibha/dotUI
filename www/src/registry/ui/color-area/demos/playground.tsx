@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { ColorArea, type ColorAreaProps } from '@/registry/ui/color-area'
-import { ColorThumb } from '@/registry/ui/color-thumb'
+import { ColorArea, type ColorAreaProps } from "@/registry/ui/color-area"
+import { ColorThumb } from "@/registry/ui/color-thumb"
 
 export default function Demo({ isDisabled = false }: ColorAreaProps = {}) {
   return (

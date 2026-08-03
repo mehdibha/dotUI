@@ -1,5 +1,5 @@
-import { ColorSlider, ColorSliderControl } from '@/registry/ui/color-slider'
-import { Label } from '@/registry/ui/field'
+import { ColorSlider, ColorSliderControl } from "@/registry/ui/color-slider"
+import { Label } from "@/registry/ui/field"
 
 export default function Demo() {
   return (

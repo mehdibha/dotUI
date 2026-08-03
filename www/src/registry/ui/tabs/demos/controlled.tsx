@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import React from 'react'
-import type * as MenuPrimitives from 'react-aria-components/Menu'
+import React from "react"
+import type * as MenuPrimitives from "react-aria-components/Menu"
 
-import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 
 export default function Demo() {
   const [selectedTab, setSelectedTab] =
-    React.useState<MenuPrimitives.Key>('overview')
+    React.useState<MenuPrimitives.Key>("overview")
   return (
     <div className="flex flex-col items-center gap-6">
       <Tabs selectedKey={selectedTab} onSelectionChange={setSelectedTab}>

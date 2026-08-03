@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react'
+import type { SVGProps } from "react"
 
 // Official bolt.new wordmark (extracted from bolt.new). Monochrome — tints with
 // `currentColor`.

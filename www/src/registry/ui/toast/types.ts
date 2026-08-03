@@ -1,24 +1,24 @@
 import type {
   ToastManagerAddOptions,
   Toast as ToastPrimitive,
-} from '@base-ui/react/toast'
+} from "@base-ui/react/toast"
 
 export type ToastVariant =
-  | 'neutral'
-  | 'success'
-  | 'error'
-  | 'danger'
-  | 'warning'
-  | 'info'
-  | 'loading'
+  | "neutral"
+  | "success"
+  | "error"
+  | "danger"
+  | "warning"
+  | "info"
+  | "loading"
 
 export type ToastPosition =
-  | 'top-left'
-  | 'top-center'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-center'
-  | 'bottom-right'
+  | "top-left"
+  | "top-center"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-center"
+  | "bottom-right"
 
 export interface ToastData {
   /**
@@ -26,7 +26,7 @@ export interface ToastData {
    */
   rootProps?: Omit<
     ToastPrimitive.Root.Props,
-    'children' | 'className' | 'swipeDirection' | 'toast'
+    "children" | "className" | "swipeDirection" | "toast"
   >
 }
 

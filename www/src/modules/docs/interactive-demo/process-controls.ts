@@ -3,12 +3,12 @@
  * Builds and enriches controls from API reference at build time.
  */
 
-import { Node, Project, ScriptKind } from 'ts-morph'
+import { Node, Project, ScriptKind } from "ts-morph"
 
-import type { ControlSelection } from '../codegen/source-overlay'
-import { highlightTsHtml } from '../mdx-plugins/highlighter'
-import { loadApiReference } from '../references/loader'
-import type { PropDefinition, TType } from '../references/types'
+import type { ControlSelection } from "../codegen/source-overlay"
+import { highlightTsHtml } from "../mdx-plugins/highlighter"
+import { loadApiReference } from "../references/loader"
+import type { PropDefinition, TType } from "../references/types"
 import type {
   BooleanControl,
   Control,
@@ -18,7 +18,7 @@ import type {
   NumberControl,
   SerializableControl,
   StringControl,
-} from './types'
+} from "./types"
 
 // ============================================================================
 // Build Controls from Reference
@@ -42,13 +42,13 @@ export async function buildControlsFromReference(
   const controls: Control[] = []
 
   for (const input of controlInputs) {
-    const propName = typeof input === 'string' ? input : input.name
-    const overrides = typeof input === 'string' ? {} : input
+    const propName = typeof input === "string" ? input : input.name
+    const overrides = typeof input === "string" ? {} : input
 
     const prop = reference.props[propName]
     if (!prop) {
       // If prop not in reference, use overrides directly (for custom controls like icons)
-      if (typeof input !== 'string' && input.type) {
+      if (typeof input !== "string" && input.type) {
         controls.push(input as Control)
         continue
       }
@@ -78,7 +78,7 @@ export function toControlSelections(controls: Control[]): ControlSelection[] {
     name: c.name,
     kind: c.type,
     default:
-      c.type === 'icon'
+      c.type === "icon"
         ? null
         : (((c as { defaultValue?: unknown }).defaultValue as never) ?? null),
   }))
@@ -120,7 +120,7 @@ function applyParamDefaults(
   paramDefaults: Record<string, string>,
 ): void {
   for (const c of controls) {
-    if (c.type === 'icon') continue
+    if (c.type === "icon") continue
     const pd = paramDefaults[c.name]
     if (pd === undefined) continue
     const parsed = parseParamDefault(pd, c.type)
@@ -129,7 +129,7 @@ function applyParamDefaults(
   }
 }
 
-function parseParamDefault(src: string, type: Control['type']): unknown {
+function parseParamDefault(src: string, type: Control["type"]): unknown {
   let v: unknown
   try {
     // oxlint-disable-next-line no-new-func -- build-time eval of a trusted authored literal
@@ -137,9 +137,9 @@ function parseParamDefault(src: string, type: Control['type']): unknown {
   } catch {
     return undefined
   }
-  if (type === 'number') return typeof v === 'number' ? v : undefined
-  if (type === 'boolean') return typeof v === 'boolean' ? v : undefined
-  return typeof v === 'string' ? v : undefined
+  if (type === "number") return typeof v === "number" ? v : undefined
+  if (type === "boolean") return typeof v === "boolean" ? v : undefined
+  return typeof v === "string" ? v : undefined
 }
 
 /**
@@ -148,7 +148,7 @@ function parseParamDefault(src: string, type: Control['type']): unknown {
 function inferControlFromProp(
   name: string,
   prop: PropDefinition,
-  overrides: Partial<Omit<Control, 'name'>>,
+  overrides: Partial<Omit<Control, "name">>,
 ): Control {
   // If type is explicitly provided in overrides, use it
   if (overrides.type) {
@@ -171,9 +171,9 @@ function inferControlFromProp(
 
   // Final fallback to string control
   return {
-    type: 'string',
+    type: "string",
     name,
-    defaultValue: parseDefaultValue(prop.default, 'string') as string,
+    defaultValue: parseDefaultValue(prop.default, "string") as string,
     ...overrides,
   } as StringControl
 }
@@ -187,75 +187,75 @@ function inferFromTypeAst(
   prop: PropDefinition,
 ): Control | null {
   // Handle union types
-  if (typeAst.type === 'union') {
+  if (typeAst.type === "union") {
     // Filter out undefined from union elements (optional props)
     const nonUndefinedElements = typeAst.elements.filter(
-      (el) => el.type !== 'undefined',
+      (el) => el.type !== "undefined",
     )
 
     // Check if it's a union of string literals → enum
     const stringLiterals = nonUndefinedElements
-      .filter((el) => el.type === 'stringLiteral')
-      .map((el) => (el as { type: 'stringLiteral'; value: string }).value)
+      .filter((el) => el.type === "stringLiteral")
+      .map((el) => (el as { type: "stringLiteral"; value: string }).value)
 
     if (
       stringLiterals.length > 0 &&
       stringLiterals.length === nonUndefinedElements.length
     ) {
       return {
-        type: 'enum',
+        type: "enum",
         name,
         options: stringLiterals,
         defaultValue:
-          (parseDefaultValue(prop.default, 'enum') as string) ??
+          (parseDefaultValue(prop.default, "enum") as string) ??
           stringLiterals[0],
       } as EnumControl
     }
 
     // Check if it's a boolean union (true | false | undefined)
     const hasBooleanLiteral = nonUndefinedElements.some(
-      (el) => el.type === 'booleanLiteral',
+      (el) => el.type === "booleanLiteral",
     )
-    const hasBoolean = nonUndefinedElements.some((el) => el.type === 'boolean')
+    const hasBoolean = nonUndefinedElements.some((el) => el.type === "boolean")
 
     if (
       (hasBooleanLiteral || hasBoolean) &&
       nonUndefinedElements.every(
-        (el) => el.type === 'boolean' || el.type === 'booleanLiteral',
+        (el) => el.type === "boolean" || el.type === "booleanLiteral",
       )
     ) {
       return {
-        type: 'boolean',
+        type: "boolean",
         name,
         defaultValue:
-          (parseDefaultValue(prop.default, 'boolean') as boolean) ?? false,
+          (parseDefaultValue(prop.default, "boolean") as boolean) ?? false,
       } as BooleanControl
     }
   }
 
   // Handle primitive keyword types
-  if (typeAst.type === 'boolean') {
+  if (typeAst.type === "boolean") {
     return {
-      type: 'boolean',
+      type: "boolean",
       name,
       defaultValue:
-        (parseDefaultValue(prop.default, 'boolean') as boolean) ?? false,
+        (parseDefaultValue(prop.default, "boolean") as boolean) ?? false,
     } as BooleanControl
   }
 
-  if (typeAst.type === 'string') {
+  if (typeAst.type === "string") {
     return {
-      type: 'string',
+      type: "string",
       name,
-      defaultValue: (parseDefaultValue(prop.default, 'string') as string) ?? '',
+      defaultValue: (parseDefaultValue(prop.default, "string") as string) ?? "",
     } as StringControl
   }
 
-  if (typeAst.type === 'number') {
+  if (typeAst.type === "number") {
     return {
-      type: 'number',
+      type: "number",
       name,
-      defaultValue: (parseDefaultValue(prop.default, 'number') as number) ?? 0,
+      defaultValue: (parseDefaultValue(prop.default, "number") as number) ?? 0,
     } as NumberControl
   }
 
@@ -271,28 +271,28 @@ function inferFromTypeString(
 ): Control | null {
   const type = prop.type
 
-  if (type === 'boolean') {
+  if (type === "boolean") {
     return {
-      type: 'boolean',
+      type: "boolean",
       name,
       defaultValue:
-        (parseDefaultValue(prop.default, 'boolean') as boolean) ?? false,
+        (parseDefaultValue(prop.default, "boolean") as boolean) ?? false,
     } as BooleanControl
   }
 
-  if (type === 'string') {
+  if (type === "string") {
     return {
-      type: 'string',
+      type: "string",
       name,
-      defaultValue: (parseDefaultValue(prop.default, 'string') as string) ?? '',
+      defaultValue: (parseDefaultValue(prop.default, "string") as string) ?? "",
     } as StringControl
   }
 
-  if (type === 'number') {
+  if (type === "number") {
     return {
-      type: 'number',
+      type: "number",
       name,
-      defaultValue: (parseDefaultValue(prop.default, 'number') as number) ?? 0,
+      defaultValue: (parseDefaultValue(prop.default, "number") as number) ?? 0,
     } as NumberControl
   }
 
@@ -300,17 +300,17 @@ function inferFromTypeString(
   const stringLiteralMatch = type.match(/^"[^"]+"/)
   if (stringLiteralMatch) {
     const options = type
-      .split('|')
-      .map((s) => s.trim().replace(/^"|"$/g, ''))
-      .filter((s) => s && !s.includes(' '))
+      .split("|")
+      .map((s) => s.trim().replace(/^"|"$/g, ""))
+      .filter((s) => s && !s.includes(" "))
 
     if (options.length > 0) {
       return {
-        type: 'enum',
+        type: "enum",
         name,
         options,
         defaultValue:
-          (parseDefaultValue(prop.default, 'enum') as string) ?? options[0],
+          (parseDefaultValue(prop.default, "enum") as string) ?? options[0],
       } as EnumControl
     }
   }
@@ -324,67 +324,67 @@ function inferFromTypeString(
 function buildControlWithOverrides(
   name: string,
   prop: PropDefinition,
-  overrides: Partial<Omit<Control, 'name'>>,
+  overrides: Partial<Omit<Control, "name">>,
 ): Control {
   const type = overrides.type as NonNullable<typeof overrides.type>
 
   switch (type) {
-    case 'boolean':
+    case "boolean":
       return {
-        type: 'boolean',
+        type: "boolean",
         name,
         defaultValue:
           (overrides as Partial<BooleanControl>).defaultValue ??
-          (parseDefaultValue(prop.default, 'boolean') as boolean) ??
+          (parseDefaultValue(prop.default, "boolean") as boolean) ??
           false,
         ...overrides,
       } as BooleanControl
 
-    case 'string':
+    case "string":
       return {
-        type: 'string',
+        type: "string",
         name,
         defaultValue:
           (overrides as Partial<StringControl>).defaultValue ??
-          (parseDefaultValue(prop.default, 'string') as string) ??
-          '',
+          (parseDefaultValue(prop.default, "string") as string) ??
+          "",
         ...overrides,
       } as StringControl
 
-    case 'number':
+    case "number":
       return {
-        type: 'number',
+        type: "number",
         name,
         defaultValue:
           (overrides as Partial<NumberControl>).defaultValue ??
-          (parseDefaultValue(prop.default, 'number') as number) ??
+          (parseDefaultValue(prop.default, "number") as number) ??
           0,
         ...overrides,
       } as NumberControl
 
-    case 'enum': {
+    case "enum": {
       let options = (overrides as Partial<EnumControl>).options
-      if (!options && prop.typeAst?.type === 'union') {
+      if (!options && prop.typeAst?.type === "union") {
         options = prop.typeAst.elements
-          .filter((el) => el.type === 'stringLiteral')
-          .map((el) => (el as { type: 'stringLiteral'; value: string }).value)
+          .filter((el) => el.type === "stringLiteral")
+          .map((el) => (el as { type: "stringLiteral"; value: string }).value)
       }
       return {
-        type: 'enum',
+        type: "enum",
         name,
         options: options ?? [],
         defaultValue:
           (overrides as Partial<EnumControl>).defaultValue ??
-          (parseDefaultValue(prop.default, 'enum') as string) ??
+          (parseDefaultValue(prop.default, "enum") as string) ??
           options?.[0] ??
-          '',
+          "",
         ...overrides,
       } as EnumControl
     }
 
-    case 'icon':
+    case "icon":
       return {
-        type: 'icon',
+        type: "icon",
         name,
         alwaysShow: overrides.alwaysShow,
         defaultValue: (overrides as Partial<IconControl>).defaultValue,
@@ -392,10 +392,10 @@ function buildControlWithOverrides(
 
     default:
       return {
-        type: 'string',
+        type: "string",
         name,
         defaultValue:
-          (parseDefaultValue(prop.default, 'string') as string) ?? '',
+          (parseDefaultValue(prop.default, "string") as string) ?? "",
         ...overrides,
       } as StringControl
   }
@@ -406,7 +406,7 @@ function buildControlWithOverrides(
  */
 function applyOverrides(
   control: Control,
-  overrides: Partial<Omit<Control, 'name'>>,
+  overrides: Partial<Omit<Control, "name">>,
 ): Control {
   return { ...control, ...overrides } as Control
 }
@@ -416,20 +416,20 @@ function applyOverrides(
  */
 function parseDefaultValue(
   defaultStr: string | undefined,
-  type: 'string' | 'number' | 'boolean' | 'enum',
+  type: "string" | "number" | "boolean" | "enum",
 ): string | number | boolean | undefined {
   if (!defaultStr) return undefined
 
   // Remove quotes from string defaults like "'default'" or "\"md\""
-  const cleaned = defaultStr.replace(/^['"]|['"]$/g, '')
+  const cleaned = defaultStr.replace(/^['"]|['"]$/g, "")
 
   switch (type) {
-    case 'boolean':
-      return cleaned === 'true'
-    case 'number':
+    case "boolean":
+      return cleaned === "true"
+    case "number":
       return Number(cleaned) || 0
-    case 'string':
-    case 'enum':
+    case "string":
+    case "enum":
       return cleaned
     default:
       return cleaned
@@ -503,7 +503,7 @@ export async function enrichControlsForSerialization(
  */
 export function toPascalCase(str: string): string {
   return str
-    .split('-')
+    .split("-")
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join('')
+    .join("")
 }

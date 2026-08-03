@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import React from 'react'
-import type { Selection } from 'react-aria-components'
+import React from "react"
+import type { Selection } from "react-aria-components"
 
 import {
   AudioLinesIcon,
@@ -22,14 +22,14 @@ import {
   SlashSquareIcon,
   TelescopeIcon,
   TriangleAlertIcon,
-} from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Label } from '@/registry/ui/field'
-import { Kbd } from '@/registry/ui/kbd'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Mention } from '@/registry/ui/mention'
+} from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
+import { Kbd } from "@/registry/ui/kbd"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Mention } from "@/registry/ui/mention"
 import {
   Menu,
   MenuContent,
@@ -37,11 +37,11 @@ import {
   MenuSection,
   MenuSectionHeader,
   MenuSub,
-} from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { Separator } from '@/registry/ui/separator'
-import { Switch, SwitchControl } from '@/registry/ui/switch'
-import { TokenInput, TokenSegmentList } from '@/registry/ui/token-field'
+} from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { Separator } from "@/registry/ui/separator"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
+import { TokenInput, TokenSegmentList } from "@/registry/ui/token-field"
 
 // Models offered by the model picker. The first four fill the menu; `legacy`
 // ones live behind the "More models" submenu. `name` is what the toolbar shows.
@@ -54,42 +54,42 @@ type ModelOption = {
 
 const MODELS: ModelOption[] = [
   {
-    id: 'fable',
-    name: 'Fable 5',
-    description: 'For your toughest challenges',
+    id: "fable",
+    name: "Fable 5",
+    description: "For your toughest challenges",
   },
-  { id: 'opus', name: 'Opus 4.8', description: 'For complex tasks' },
+  { id: "opus", name: "Opus 4.8", description: "For complex tasks" },
   {
-    id: 'sonnet',
-    name: 'Sonnet 4.6',
-    description: 'Most efficient for everyday tasks',
+    id: "sonnet",
+    name: "Sonnet 4.6",
+    description: "Most efficient for everyday tasks",
   },
-  { id: 'haiku', name: 'Haiku 4.5', description: 'Fastest for quick answers' },
+  { id: "haiku", name: "Haiku 4.5", description: "Fastest for quick answers" },
   {
-    id: 'opus-4-6',
-    name: 'Opus 4.6',
-    description: 'Previous generation',
+    id: "opus-4-6",
+    name: "Opus 4.6",
+    description: "Previous generation",
     legacy: true,
   },
   {
-    id: 'sonnet-4-4',
-    name: 'Sonnet 4.4',
-    description: 'Previous generation',
+    id: "sonnet-4-4",
+    name: "Sonnet 4.4",
+    description: "Previous generation",
     legacy: true,
   },
 ]
 
 const EFFORTS = [
-  { id: 'high', name: 'High' },
-  { id: 'medium', name: 'Medium' },
-  { id: 'low', name: 'Low' },
+  { id: "high", name: "High" },
+  { id: "medium", name: "Medium" },
+  { id: "low", name: "Low" },
 ] as const
 
 const DEVICES = [
-  { id: 'macbook', name: 'MacBook Pro Microphone (Built-in)' },
-  { id: 'iphone', name: "mehdibha's iPhone Microphone" },
-  { id: 'airpods-default', name: 'Default - AirPods' },
-  { id: 'airpods', name: 'AirPods' },
+  { id: "macbook", name: "MacBook Pro Microphone (Built-in)" },
+  { id: "iphone", name: "mehdibha's iPhone Microphone" },
+  { id: "airpods-default", name: "Default - AirPods" },
+  { id: "airpods", name: "AirPods" },
 ] as const
 
 // `@` browses project files, `/` lists commands — both open the Mention
@@ -100,31 +100,31 @@ interface Suggestion {
 }
 
 const FILES: Suggestion[] = [
-  { id: 'theme.css' },
-  { id: 'button.tsx' },
-  { id: 'menu.tsx' },
-  { id: 'popover.tsx' },
-  { id: 'tokens.ts' },
-  { id: 'chart.tsx' },
+  { id: "theme.css" },
+  { id: "button.tsx" },
+  { id: "menu.tsx" },
+  { id: "popover.tsx" },
+  { id: "tokens.ts" },
+  { id: "chart.tsx" },
 ]
 
 const COMMANDS: Suggestion[] = [
-  { id: 'goal', description: 'Set a goal for the session' },
-  { id: 'plan', description: 'Draft a plan before coding' },
-  { id: 'review', description: 'Review the current diff' },
-  { id: 'test', description: 'Run the test suite' },
-  { id: 'ship', description: 'Open a pull request' },
+  { id: "goal", description: "Set a goal for the session" },
+  { id: "plan", description: "Draft a plan before coding" },
+  { id: "review", description: "Review the current diff" },
+  { id: "test", description: "Run the test suite" },
+  { id: "ship", description: "Open a pull request" },
 ]
 
 // The prompt the card starts with: a `/goal` command plus `@`-mentioned files,
 // all rendered as inline tokens.
 const DEFAULT_PROMPT = new TokenSegmentList([
-  { type: 'token', text: '/goal' },
-  { type: 'text', text: ' Ship dark mode — generate the neutral scale in ' },
-  { type: 'token', text: '@theme.css' },
-  { type: 'text', text: ' and swap the hardcoded colors in ' },
-  { type: 'token', text: '@button.tsx' },
-  { type: 'text', text: ' ' },
+  { type: "token", text: "/goal" },
+  { type: "text", text: " Ship dark mode — generate the neutral scale in " },
+  { type: "token", text: "@theme.css" },
+  { type: "text", text: " and swap the hardcoded colors in " },
+  { type: "token", text: "@button.tsx" },
+  { type: "text", text: " " },
 ])
 
 // The showcase's lead card: an AI prompt composer — a text input with a toolbar
@@ -136,21 +136,21 @@ const DEFAULT_PROMPT = new TokenSegmentList([
 // every toolbar action is a live, themed overlay — the "+" tools menu, the model
 // and effort pickers, and the microphone popover — so the card doubles as a
 // playground for the menu, popover, list-box and switch primitives.
-export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
-  const [model, setModel] = React.useState('fable')
-  const [effort, setEffort] = React.useState<string>('high')
+export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
+  const [model, setModel] = React.useState("fable")
+  const [effort, setEffort] = React.useState<string>("high")
   const [webSearch, setWebSearch] = React.useState(true)
-  const [device, setDevice] = React.useState('macbook')
+  const [device, setDevice] = React.useState("macbook")
   const [holdToRecord, setHoldToRecord] = React.useState(true)
   const [voiceMode, setVoiceMode] = React.useState(false)
 
-  const modelName = MODELS.find((m) => m.id === model)?.name ?? 'Fable 5'
-  const effortName = EFFORTS.find((e) => e.id === effort)?.name ?? 'High'
+  const modelName = MODELS.find((m) => m.id === model)?.name ?? "Fable 5"
+  const effortName = EFFORTS.find((e) => e.id === effort)?.name ?? "High"
 
   return (
     <div
       className={cn(
-        'flex flex-col rounded-(--card-radius) border bg-card p-2 shadow-sm',
+        "flex flex-col rounded-(--card-radius) border bg-card p-2 shadow-sm",
         className,
       )}
       {...props}
@@ -167,12 +167,12 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
             />
             <Popover className="min-w-56">
               <MenuContent
-                items={trigger === '/' ? COMMANDS : FILES}
-                renderEmptyState={() => 'No results found.'}
+                items={trigger === "/" ? COMMANDS : FILES}
+                renderEmptyState={() => "No results found."}
               >
                 {(item) => (
                   <MenuItem id={item.id} textValue={item.id}>
-                    {trigger === '/' ? <SlashSquareIcon /> : <FileIcon />}
+                    {trigger === "/" ? <SlashSquareIcon /> : <FileIcon />}
                     {item.description ? (
                       <div className="flex flex-col">
                         <span>/{item.id}</span>
@@ -296,8 +296,8 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
           <div
             inert={voiceMode || undefined}
             className={cn(
-              'flex items-center gap-0.5 transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none',
-              voiceMode && 'scale-95 opacity-0',
+              "flex items-center gap-0.5 transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none",
+              voiceMode && "scale-95 opacity-0",
             )}
           >
             {/* Model + effort — one menu, two labelled sections. */}
@@ -393,7 +393,7 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
                     disallowEmptySelection
                     selectedKeys={[device]}
                     onSelectionChange={(keys: Selection) => {
-                      if (keys === 'all') return
+                      if (keys === "all") return
                       const next = [...keys][0]
                       if (next != null) setDevice(String(next))
                     }}
@@ -437,8 +437,8 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<'div'>) {
           <div
             inert={!voiceMode || undefined}
             className={cn(
-              'absolute inset-y-0 right-0 flex items-center transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none',
-              voiceMode ? 'opacity-100' : 'scale-95 opacity-0',
+              "absolute inset-y-0 right-0 flex items-center transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none",
+              voiceMode ? "opacity-100" : "scale-95 opacity-0",
             )}
           >
             <Button

@@ -6,17 +6,17 @@
  * @tanstack/highlight).
  */
 
-import { useEffect, useMemo, useState } from 'react'
-import { CheckIcon, CopyIcon } from 'lucide-react'
+import { useEffect, useMemo, useState } from "react"
+import { CheckIcon, CopyIcon } from "lucide-react"
 
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
-import { Button } from '@/registry/ui/button'
-import { DynamicPre } from '@/modules/docs/dynamic-pre'
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
+import { Button } from "@/registry/ui/button"
+import { DynamicPre } from "@/modules/docs/dynamic-pre"
 
-import { useDesignSystem } from '../preset'
-import { encodePreset } from '../preset/codec'
+import { useDesignSystem } from "../preset"
+import { encodePreset } from "../preset/codec"
 
-const PREVIEW_FILE = 'components/ui/button.tsx'
+const PREVIEW_FILE = "components/ui/button.tsx"
 
 export function CodeOptionsPreview() {
   const { designSystem } = useDesignSystem()
@@ -29,18 +29,18 @@ export function CodeOptionsPreview() {
     return () => window.clearTimeout(t)
   }, [encoded])
 
-  const [code, setCode] = useState('')
+  const [code, setCode] = useState("")
   const [error, setError] = useState(false)
 
   useEffect(() => {
     const controller = new AbortController()
     // Same-origin fetch — works on localhost and on the deployed site. The
     // endpoint runs the real publisher + oxfmt for the current preset.
-    const url = debounced ? `/r/button?preset=${debounced}` : '/r/button'
+    const url = debounced ? `/r/button?preset=${debounced}` : "/r/button"
     fetch(url, { signal: controller.signal })
       .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`${r.status}`))))
       .then((json) => {
-        setCode(json?.files?.[0]?.content ?? '')
+        setCode(json?.files?.[0]?.content ?? "")
         setError(false)
       })
       .catch(() => {
@@ -63,7 +63,7 @@ export function CodeOptionsPreview() {
           isIconOnly
           isDisabled={!code}
           onPress={() => code && copyToClipboard(code)}
-          aria-label={isCopied ? 'Copied!' : 'Copy code'}
+          aria-label={isCopied ? "Copied!" : "Copy code"}
         >
           {isCopied ? <CheckIcon /> : <CopyIcon />}
         </Button>
@@ -73,7 +73,7 @@ export function CodeOptionsPreview() {
           <DynamicPre lang="tsx">{code}</DynamicPre>
         ) : (
           <div className="p-4 font-mono text-xs text-fg-muted">
-            {error ? "Couldn't load the preview." : 'Generating preview…'}
+            {error ? "Couldn't load the preview." : "Generating preview…"}
           </div>
         )}
       </div>

@@ -1,24 +1,24 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Description, FieldContent, Label } from '@/registry/ui/field'
+} from "@/registry/ui/card"
+import { Description, FieldContent, Label } from "@/registry/ui/field"
 import {
   SegmentedControl,
   SegmentedControlItem,
-} from '@/registry/ui/segmented-control'
-import { Slider, SliderControl, SliderOutput } from '@/registry/ui/slider'
-import { Switch, SwitchControl, SwitchIndicator } from '@/registry/ui/switch'
-import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
+} from "@/registry/ui/segmented-control"
+import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider"
+import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 
 const PRICE_MAX = 2000
 // Nightly prices cluster in a mid-market hump with a long tail.
@@ -29,11 +29,11 @@ const PRICE_BUCKETS = [
 const BUCKET_SIZE = PRICE_MAX / PRICE_BUCKETS.length
 const BUCKET_PEAK = Math.max(...PRICE_BUCKETS)
 
-export function Filters({ className, ...props }: React.ComponentProps<'div'>) {
+export function Filters({ className, ...props }: React.ComponentProps<"div">) {
   const [priceRange, setPriceRange] = useState<[number, number]>([200, 800])
 
   return (
-    <Card className={cn('', className)} {...props}>
+    <Card className={cn("", className)} {...props}>
       <CardHeader>
         <CardTitle>Filters</CardTitle>
       </CardHeader>
@@ -42,7 +42,7 @@ export function Filters({ className, ...props }: React.ComponentProps<'div'>) {
           <Label id="type-of-place">Type of place</Label>
           <SegmentedControl
             aria-labelledby="type-of-place"
-            defaultSelectedKeys={['any-type']}
+            defaultSelectedKeys={["any-type"]}
             className="grid w-full grid-cols-3"
           >
             <SegmentedControlItem id="any-type">Any type</SegmentedControlItem>
@@ -58,8 +58,8 @@ export function Filters({ className, ...props }: React.ComponentProps<'div'>) {
           minValue={0}
           maxValue={PRICE_MAX}
           formatOptions={{
-            style: 'currency',
-            currency: 'USD',
+            style: "currency",
+            currency: "USD",
             maximumFractionDigits: 0,
           }}
           className="w-full"
@@ -77,8 +77,8 @@ export function Filters({ className, ...props }: React.ComponentProps<'div'>) {
                   key={index}
                   style={{ height: `${(count / BUCKET_PEAK) * 100}%` }}
                   className={cn(
-                    'min-h-0.5 flex-1 rounded-xs transition-colors',
-                    inRange ? 'bg-(--slider-fill-color)' : 'bg-neutral',
+                    "min-h-0.5 flex-1 rounded-xs transition-colors",
+                    inRange ? "bg-(--slider-fill-color)" : "bg-neutral",
                   )}
                 />
               )
@@ -89,7 +89,7 @@ export function Filters({ className, ...props }: React.ComponentProps<'div'>) {
         </Slider>
         <TagGroup
           selectionMode="multiple"
-          defaultSelectedKeys={['wifi', 'kitchen']}
+          defaultSelectedKeys={["wifi", "kitchen"]}
         >
           <Label>Amenities</Label>
           <TagList>

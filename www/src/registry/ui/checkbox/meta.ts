@@ -1,23 +1,23 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const checkboxMeta = {
-  name: 'checkbox',
-  type: 'registry:ui',
-  group: 'selection-controls',
+  name: "checkbox",
+  type: "registry:ui",
+  group: "selection-controls",
   files: [
     {
-      type: 'registry:ui',
-      path: 'ui/checkbox/base.tsx',
-      target: 'ui/checkbox.tsx',
+      type: "registry:ui",
+      path: "ui/checkbox/base.tsx",
+      target: "ui/checkbox.tsx",
     },
   ],
-  registryDependencies: ['focus-styles', 'field'],
+  registryDependencies: ["focus-styles", "field"],
   params: {
     radius: {
-      kind: 'scalar',
-      type: 'radius',
-      cssVar: '--checkbox-radius',
-      default: '--radius-sm',
+      kind: "scalar",
+      type: "radius",
+      cssVar: "--checkbox-radius",
+      default: "--radius-sm",
     },
   },
 } satisfies RegistryItem

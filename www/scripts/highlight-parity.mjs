@@ -10,29 +10,29 @@
  * shiki is not a www dependency anymore; it is resolved through fumadocs-core
  * (which still depends on it) — acceptable for a throwaway diagnostic.
  */
-import fs from 'node:fs'
-import { createRequire } from 'node:module'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import fs from "node:fs"
+import { createRequire } from "node:module"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
 
-const WWW = fileURLToPath(new URL('..', import.meta.url))
-const requireWww = createRequire(path.join(WWW, 'package.json'))
+const WWW = fileURLToPath(new URL("..", import.meta.url))
+const requireWww = createRequire(path.join(WWW, "package.json"))
 const requireFuma = createRequire(
-  requireWww.resolve('fumadocs-core/package.json'),
+  requireWww.resolve("fumadocs-core/package.json"),
 )
 
 const { createHighlighter: createShiki } = await import(
-  requireFuma.resolve('shiki')
+  requireFuma.resolve("shiki")
 )
 const { createHighlighter: createTs } = await import(
-  requireWww.resolve('@tanstack/highlight/core')
+  requireWww.resolve("@tanstack/highlight/core")
 )
 // Node 23.6+ strips types, so the real refinement pass runs here.
 const { refineTokens } = await import(
-  path.join(WWW, 'src/modules/docs/highlight-refine.ts')
+  path.join(WWW, "src/modules/docs/highlight-refine.ts")
 )
 
-const TS_LANGS = ['ts', 'tsx', 'js', 'jsx', 'json', 'shell', 'css', 'html']
+const TS_LANGS = ["ts", "tsx", "js", "jsx", "json", "shell", "css", "html"]
 const tsLangDefs = []
 for (const l of TS_LANGS) {
   const m = await import(
@@ -42,33 +42,33 @@ for (const l of TS_LANGS) {
 }
 const tsHl = createTs({ languages: tsLangDefs })
 const shiki = await createShiki({
-  themes: ['github-light', 'github-dark'],
-  langs: ['ts', 'tsx', 'js', 'jsx', 'json', 'bash', 'css', 'html'],
+  themes: ["github-light", "github-dark"],
+  langs: ["ts", "tsx", "js", "jsx", "json", "bash", "css", "html"],
 })
 
 // Mirror of highlight.css (light|dark per class); 'plain' = unclassed text.
 const PALETTE = {
-  plain: '#24292E|#E1E4E8',
-  attr: '#6F42C1|#B392F0',
-  'code-inline': '#005CC5|#79B8FF',
-  command: '#6F42C1|#B392F0',
-  comment: '#6A737D|#6A737D',
-  deleted: '#B31D28|#FDAEB7',
-  function: '#6F42C1|#B392F0',
-  heading: '#005CC5|#79B8FF',
-  inserted: '#22863A|#85E89D',
-  keyword: '#D73A49|#F97583',
-  link: '#032F62|#9ECBFF',
-  literal: '#005CC5|#79B8FF',
-  meta: '#6A737D|#6A737D',
-  number: '#005CC5|#79B8FF',
-  operator: '#D73A49|#F97583',
-  property: '#005CC5|#79B8FF',
-  selector: '#22863A|#85E89D',
-  string: '#032F62|#9ECBFF',
-  tag: '#005CC5|#79B8FF',
-  type: '#005CC5|#79B8FF',
-  variable: '#E36209|#FFAB70',
+  plain: "#24292E|#E1E4E8",
+  attr: "#6F42C1|#B392F0",
+  "code-inline": "#005CC5|#79B8FF",
+  command: "#6F42C1|#B392F0",
+  comment: "#6A737D|#6A737D",
+  deleted: "#B31D28|#FDAEB7",
+  function: "#6F42C1|#B392F0",
+  heading: "#005CC5|#79B8FF",
+  inserted: "#22863A|#85E89D",
+  keyword: "#D73A49|#F97583",
+  link: "#032F62|#9ECBFF",
+  literal: "#005CC5|#79B8FF",
+  meta: "#6A737D|#6A737D",
+  number: "#005CC5|#79B8FF",
+  operator: "#D73A49|#F97583",
+  property: "#005CC5|#79B8FF",
+  selector: "#22863A|#85E89D",
+  string: "#032F62|#9ECBFF",
+  tag: "#005CC5|#79B8FF",
+  type: "#005CC5|#79B8FF",
+  variable: "#E36209|#FFAB70",
 }
 
 // ---------------------------------------------------------------------------
@@ -86,46 +86,46 @@ const walk = (dir, ext, out = []) => {
 }
 
 // 1. All mdx code fences
-for (const file of walk(path.join(WWW, 'content/docs'), '.mdx')) {
-  const src = fs.readFileSync(file, 'utf8')
+for (const file of walk(path.join(WWW, "content/docs"), ".mdx")) {
+  const src = fs.readFileSync(file, "utf8")
   let i = 0
   for (const m of src.matchAll(/```(\w+)?[^\n]*\n([\s\S]*?)```/g)) {
-    const lang = m[1] === 'npm' ? 'shell' : (m[1] ?? 'plaintext')
+    const lang = m[1] === "npm" ? "shell" : (m[1] ?? "plaintext")
     corpus.push({
       id: `${path.relative(WWW, file)}#fence${i++}`,
       lang,
-      code: m[2].replace(/\n$/, ''),
+      code: m[2].replace(/\n$/, ""),
     })
   }
 }
 
 // 2. All registry demo sources (what rehype-transform highlights)
-for (const file of walk(path.join(WWW, 'src/registry/ui'), '.tsx')) {
-  if (!file.includes('/demos/')) continue
+for (const file of walk(path.join(WWW, "src/registry/ui"), ".tsx")) {
+  if (!file.includes("/demos/")) continue
   corpus.push({
     id: path.relative(WWW, file),
-    lang: 'tsx',
-    code: fs.readFileSync(file, 'utf8').replace(/\n$/, ''),
+    lang: "tsx",
+    code: fs.readFileSync(file, "utf8").replace(/\n$/, ""),
   })
 }
 
 // 3. API-reference type strings + defaults (highlighted as ts)
-const refsDir = path.join(WWW, 'src/modules/docs/references/generated')
-for (const file of fs.readdirSync(refsDir).filter((f) => f.endsWith('.json'))) {
-  const data = JSON.parse(fs.readFileSync(path.join(refsDir, file), 'utf8'))
+const refsDir = path.join(WWW, "src/modules/docs/references/generated")
+for (const file of fs.readdirSync(refsDir).filter((f) => f.endsWith(".json"))) {
+  const data = JSON.parse(fs.readFileSync(path.join(refsDir, file), "utf8"))
   for (const [name, prop] of Object.entries(data.props ?? {})) {
     for (const [kind, code] of [
-      ['type', prop.detailedType ?? prop.type],
-      ['default', prop.default],
+      ["type", prop.detailedType ?? prop.type],
+      ["default", prop.default],
     ]) {
       if (code) {
         corpus.push({
           id: `ref:${data.name}.${name}.${kind}`,
-          lang: 'ts',
+          lang: "ts",
           code,
           // The old pipeline highlighted type strings behind a `type _ =`
           // prefix so shiki tokenized them in type position — mirror that.
-          typePosition: kind === 'type',
+          typePosition: kind === "type",
         })
       }
     }
@@ -135,25 +135,25 @@ for (const file of fs.readdirSync(refsDir).filter((f) => f.endsWith('.json'))) {
 // ---------------------------------------------------------------------------
 // Compare
 // ---------------------------------------------------------------------------
-const TYPE_PREFIX = 'type _ =\n'
+const TYPE_PREFIX = "type _ =\n"
 const shikiColorsAt = (code, lang, typePosition) => {
   const input = typePosition ? TYPE_PREFIX + code : code
   const skip = typePosition ? TYPE_PREFIX.length : 0
   const arr = new Array(code.length).fill(PALETTE.plain)
-  for (const theme of ['github-light', 'github-dark']) {
+  for (const theme of ["github-light", "github-dark"]) {
     const { tokens } = shiki.codeToTokens(input, {
-      lang: lang === 'shell' ? 'bash' : lang,
+      lang: lang === "shell" ? "bash" : lang,
       theme,
     })
-    const idx = theme === 'github-light' ? 0 : 1
+    const idx = theme === "github-light" ? 0 : 1
     for (const line of tokens) {
       for (const t of line) {
         for (let i = 0; i < t.content.length; i++) {
           const at = t.offset + i - skip
           if (at < 0) continue
-          const prev = arr[at].split('|')
-          prev[idx] = (t.color ?? '').toUpperCase()
-          arr[at] = prev.join('|')
+          const prev = arr[at].split("|")
+          prev[idx] = (t.color ?? "").toUpperCase()
+          arr[at] = prev.join("|")
         }
       }
     }
@@ -162,7 +162,7 @@ const shikiColorsAt = (code, lang, typePosition) => {
 }
 
 const tsClassesAt = (code, lang) => {
-  const arr = new Array(code.length).fill('plain')
+  const arr = new Array(code.length).fill("plain")
   const result = tsHl.tokenize(code, { lang })
   const tokens = refineTokens(result.tokens, code, result.lang)
   let off = 0
@@ -174,7 +174,7 @@ const tsClassesAt = (code, lang) => {
   return arr
 }
 
-const examplesFlag = process.argv.indexOf('--examples')
+const examplesFlag = process.argv.indexOf("--examples")
 const MAX_EXAMPLES =
   examplesFlag === -1 ? 4 : Number(process.argv[examplesFlag + 1]) || 4
 const groups = new Map() // key -> { count, blocks:Set, examples:Set }
@@ -183,7 +183,7 @@ let mismatched = 0
 const skipped = new Set()
 
 for (const { id, lang, code, typePosition } of corpus) {
-  if (lang === 'plaintext') continue
+  if (lang === "plaintext") continue
   if (!TS_LANGS.includes(lang)) {
     skipped.add(lang)
     continue
@@ -205,22 +205,22 @@ for (const { id, lang, code, typePosition } of corpus) {
     let j = i
     while (
       j < code.length &&
-      code[j] !== '\n' &&
+      code[j] !== "\n" &&
       tc[j] === tc[i] &&
       sk[j] === sk[i]
     ) {
       j++
     }
-    const runChars = code.slice(i, j).replace(/\s/g, '').length
+    const runChars = code.slice(i, j).replace(/\s/g, "").length
     total += runChars - 1
     mismatched += runChars
     const snippet =
       code.slice(Math.max(0, i - 18), i) +
-      '⟦' +
+      "⟦" +
       code.slice(i, j) +
-      '⟧' +
+      "⟧" +
       code.slice(j, Math.min(code.length, j + 14))
-    const key = `${lang}  shiki ${sk[i]}  ->  th-${tc[i]} (${PALETTE[tc[i]] ?? '?'})`
+    const key = `${lang}  shiki ${sk[i]}  ->  th-${tc[i]} (${PALETTE[tc[i]] ?? "?"})`
     const g = groups.get(key) ?? {
       count: 0,
       blocks: new Set(),
@@ -229,7 +229,7 @@ for (const { id, lang, code, typePosition } of corpus) {
     g.count += runChars
     g.blocks.add(id)
     if (g.examples.size < MAX_EXAMPLES)
-      g.examples.add(snippet.replace(/\n/g, '⏎'))
+      g.examples.add(snippet.replace(/\n/g, "⏎"))
     groups.set(key, g)
     i = j - 1
   }
@@ -242,8 +242,8 @@ console.log(`corpus: ${corpus.length} blocks; compared ${total} chars`)
 console.log(
   `mismatched: ${mismatched} chars (${((mismatched / total) * 100).toFixed(2)}%)`,
 )
-if (skipped.size) console.log(`skipped langs: ${[...skipped].join(', ')}`)
-console.log('')
+if (skipped.size) console.log(`skipped langs: ${[...skipped].join(", ")}`)
+console.log("")
 const sorted = [...groups.entries()].sort((a, b) => b[1].count - a[1].count)
 for (const [key, g] of sorted) {
   console.log(`■ ${key}`)
@@ -251,5 +251,5 @@ for (const [key, g] of sorted) {
   for (const ex of [...g.examples].slice(0, MAX_EXAMPLES)) {
     console.log(`    ${ex}`)
   }
-  console.log('')
+  console.log("")
 }

@@ -1,4 +1,4 @@
-import { CheckIcon, PlusIcon } from '@/registry/icons'
+import { CheckIcon, PlusIcon } from "@/registry/icons"
 import {
   Avatar,
   AvatarBadge,
@@ -6,8 +6,8 @@ import {
   AvatarGroup,
   AvatarGroupCount,
   AvatarImage,
-} from '@/registry/ui/avatar'
-import { Button } from '@/registry/ui/button'
+} from "@/registry/ui/avatar"
+import { Button } from "@/registry/ui/button"
 import {
   Empty,
   EmptyContent,
@@ -15,9 +15,9 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from '@/registry/ui/empty'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+} from "@/registry/ui/empty"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function AvatarExample() {
   return (

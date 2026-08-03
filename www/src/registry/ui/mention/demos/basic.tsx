@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import { Mention } from '@/registry/ui/mention'
-import { MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { TokenInput } from '@/registry/ui/token-field'
+import { Mention } from "@/registry/ui/mention"
+import { MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { TokenInput } from "@/registry/ui/token-field"
 
 const usernames = [
-  'alexmiller',
-  'sarahjones',
-  'davidkim',
-  'emmawatson',
-  'oliverliu',
-  'ellagreen',
-  'lucasbrown',
-  'amandarivera',
-  'masonlee',
-  'nataliasmith',
+  "alexmiller",
+  "sarahjones",
+  "davidkim",
+  "emmawatson",
+  "oliverliu",
+  "ellagreen",
+  "lucasbrown",
+  "amandarivera",
+  "masonlee",
+  "nataliasmith",
 ].map((id) => ({ id }))
 
 // A bare TokenInput — no visible label. Use `aria-label` for the accessible
@@ -30,7 +30,7 @@ export default function Demo() {
       <Popover>
         <MenuContent
           items={usernames}
-          renderEmptyState={() => 'No results found.'}
+          renderEmptyState={() => "No results found."}
         >
           {(item) => (
             <MenuItem id={item.id} textValue={item.id}>

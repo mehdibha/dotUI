@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { PenSquareIcon } from '@/registry/__generated__/icons'
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
+import { PenSquareIcon } from "@/registry/__generated__/icons"
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogBody,
@@ -13,12 +13,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Input, TextArea } from '@/registry/ui/input'
-import { Modal } from '@/registry/ui/modal'
-import { Switch } from '@/registry/ui/switch'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Input, TextArea } from "@/registry/ui/input"
+import { Modal } from "@/registry/ui/modal"
+import { Switch } from "@/registry/ui/switch"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   const [isDismissable, setDismissable] = React.useState(false)

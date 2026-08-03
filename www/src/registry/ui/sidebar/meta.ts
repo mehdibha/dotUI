@@ -1,24 +1,24 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const sidebarMeta = {
-  name: 'sidebar',
-  type: 'registry:ui',
-  group: 'navigation',
+  name: "sidebar",
+  type: "registry:ui",
+  group: "navigation",
   files: [
     {
-      type: 'registry:ui',
-      path: 'ui/sidebar/base.tsx',
-      target: 'ui/sidebar.tsx',
+      type: "registry:ui",
+      path: "ui/sidebar/base.tsx",
+      target: "ui/sidebar.tsx",
     },
   ],
   registryDependencies: [
-    'button',
-    'context',
-    'drawer',
-    'separator',
-    'skeleton',
-    'tooltip',
-    'use-mobile',
+    "button",
+    "context",
+    "drawer",
+    "separator",
+    "skeleton",
+    "tooltip",
+    "use-mobile",
   ],
 } satisfies RegistryItem
 

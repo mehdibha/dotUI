@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { useEffect, useId, useSyncExternalStore } from 'react'
+import { useEffect, useId, useSyncExternalStore } from "react"
 
 import {
   getValue,
@@ -8,8 +8,8 @@ import {
   setValue,
   subscribe,
   unregisterControl,
-} from './store'
-import type { TweakConfig, TweakValue } from './types'
+} from "./store"
+import type { TweakConfig, TweakValue } from "./types"
 
 type UseTweak = <const C extends TweakConfig>(
   label: string,
@@ -21,7 +21,7 @@ function useTweakDev<const C extends TweakConfig>(
   config: C,
 ): TweakValue<C> {
   const ownerToken = useId()
-  const group = config.group ?? 'default'
+  const group = config.group ?? "default"
   const id = `${group}::${label}`
   // Inline config literals change identity every render; key the register effect by
   // a stable hash so it doesn't re-register (and churn the panel) on every render.
@@ -71,7 +71,7 @@ function useTweakNoop<const C extends TweakConfig>(
  * // → typed 'centered' | 'split' | 'fullbleed'
  */
 export const useTweak: UseTweak =
-  import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'
+  import.meta.env.DEV || import.meta.env.VERCEL_ENV === "preview"
     ? useTweakDev
     : useTweakNoop
 
@@ -81,6 +81,6 @@ export const useTweak: UseTweak =
  * either has to update the other. Same dev/no-op split as `useTweak`.
  */
 export const setTweak: (label: string, value: unknown, group?: string) => void =
-  import.meta.env.DEV || import.meta.env.VERCEL_ENV === 'preview'
-    ? (label, value, group = 'default') => setValue(`${group}::${label}`, value)
+  import.meta.env.DEV || import.meta.env.VERCEL_ENV === "preview"
+    ? (label, value, group = "default") => setValue(`${group}::${label}`, value)
     : () => {}

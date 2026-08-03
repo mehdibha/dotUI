@@ -1,6 +1,6 @@
-import type * as TablePrimitives from 'react-aria-components/Table'
-import type * as DragAndDropPrimitives from 'react-aria-components/useDragAndDrop'
-import type * as VirtualizerPrimitives from 'react-aria-components/Virtualizer'
+import type * as TablePrimitives from "react-aria-components/Table"
+import type * as DragAndDropPrimitives from "react-aria-components/useDragAndDrop"
+import type * as VirtualizerPrimitives from "react-aria-components/Virtualizer"
 
 /**
  * The scrollable container for a Table. Set `resizable` to opt into React Aria's resizable table layout.
@@ -99,7 +99,7 @@ export interface TableLoadMoreProps extends React.ComponentProps<
  */
 export interface TableVirtualizerProps<T extends object> extends Omit<
   VirtualizerPrimitives.VirtualizerProps<T>,
-  'layout'
+  "layout"
 > {
   /**
    * The fixed height of a row in pixels.

@@ -14,7 +14,7 @@
  * component file.
  */
 
-import type { Density, EnumParamDef, RegistryItem } from '@/registry/types'
+import type { Density, EnumParamDef, RegistryItem } from "@/registry/types"
 
 import type {
   ClassValue,
@@ -22,14 +22,14 @@ import type {
   StylesConfig,
   TvLayer,
   VariantSliceValue,
-} from './types'
+} from "./types"
 
 /* -------------------------------- class merge -------------------------------- */
 
 function toClassArray(value: ClassValue | undefined): string[] {
   if (value == null || value === false) return []
   if (Array.isArray(value)) return value.flatMap(toClassArray)
-  if (typeof value === 'string') return value === '' ? [] : [value]
+  if (typeof value === "string") return value === "" ? [] : [value]
   return []
 }
 
@@ -47,7 +47,7 @@ function mergeClass(
 function isSlotMap(
   value: VariantSliceValue | undefined,
 ): value is Record<string, ClassValue> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
+  return typeof value === "object" && value !== null && !Array.isArray(value)
 }
 
 function mergeVariantSlice(
@@ -69,7 +69,7 @@ function mergeVariantSlice(
   // loudly so the build catches it.
   if (aIsSlot !== bIsSlot) {
     throw new Error(
-      '[publisher] cannot merge slot-map and flat-class variant value',
+      "[publisher] cannot merge slot-map and flat-class variant value",
     )
   }
 
@@ -104,17 +104,17 @@ function mergeSlots(
     // when its merged class list is empty ('') — the shipped base file
     // destructures and calls every declared slot, and a dropped key becomes an
     // undefined slot function at runtime (e.g. field's `fieldset` / `legend`).
-    result[key] = mergeClass(a?.[key], b?.[key]) ?? ''
+    result[key] = mergeClass(a?.[key], b?.[key]) ?? ""
   }
   return Object.keys(result).length > 0 ? result : undefined
 }
 
 function mergeVariants(
-  a: TvLayer['variants'],
-  b: TvLayer['variants'],
-): TvLayer['variants'] | undefined {
+  a: TvLayer["variants"],
+  b: TvLayer["variants"],
+): TvLayer["variants"] | undefined {
   if (!a && !b) return undefined
-  const result: NonNullable<TvLayer['variants']> = {}
+  const result: NonNullable<TvLayer["variants"]> = {}
   const variantNames = new Set<string>([
     ...Object.keys(a ?? {}),
     ...Object.keys(b ?? {}),
@@ -204,7 +204,7 @@ export function flatten({
     EnumParamDef | { kind: string; default: string }
   >
   for (const [paramName, def] of Object.entries(params)) {
-    if (def.kind !== 'enum') continue
+    if (def.kind !== "enum") continue
     const selectedValue = paramSelections[paramName] ?? def.default
     const overrideLayer = stylesConfig.params?.[paramName]?.[selectedValue]
     if (!overrideLayer) continue

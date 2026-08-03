@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 
-import { DemoFocus, useTypewriter } from '../autoplay'
+import { DemoFocus, useTypewriter } from "../autoplay"
 
 export function InputGroupDemo() {
-  const { value, active } = useTypewriter('john_doe')
+  const { value, active } = useTypewriter("john_doe")
   return (
     <InputGroup className="w-full max-w-[11.5rem]">
       <InputGroupAddon>@</InputGroupAddon>

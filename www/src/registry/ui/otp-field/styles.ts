@@ -1,16 +1,16 @@
-import { createStyles } from '@/lib/styles'
-import { fieldStyles } from '@/registry/ui/field/styles'
+import { createStyles } from "@/lib/styles"
+import { fieldStyles } from "@/registry/ui/field/styles"
 
-import otpFieldMeta from './meta'
+import otpFieldMeta from "./meta"
 
 const { useStyles, styles } = createStyles(otpFieldMeta, {
   base: {
     slots: {
       root: [
-        fieldStyles().field({ className: 'group/otp-field' }),
-        '**:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums',
+        fieldStyles().field({ className: "group/otp-field" }),
+        "**:data-input:w-9 **:data-input:flex-none **:data-input:px-0 **:data-input:text-center **:data-input:font-mono **:data-input:tabular-nums",
       ],
-      separator: '',
+      separator: "",
     },
   },
 })

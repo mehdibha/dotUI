@@ -1,30 +1,30 @@
 // Box + text metrics copied from the textarea onto the measuring mirror so its
 // text wraps and lays out identically.
 const CARET_MIRROR_PROPS = [
-  'box-sizing',
-  'padding-top',
-  'padding-right',
-  'padding-bottom',
-  'padding-left',
-  'border-top-width',
-  'border-right-width',
-  'border-bottom-width',
-  'border-left-width',
-  'font-family',
-  'font-size',
-  'font-weight',
-  'font-style',
-  'font-variant',
-  'font-stretch',
-  'line-height',
-  'letter-spacing',
-  'word-spacing',
-  'text-align',
-  'text-indent',
-  'text-transform',
-  'tab-size',
-  'word-break',
-  'overflow-wrap',
+  "box-sizing",
+  "padding-top",
+  "padding-right",
+  "padding-bottom",
+  "padding-left",
+  "border-top-width",
+  "border-right-width",
+  "border-bottom-width",
+  "border-left-width",
+  "font-family",
+  "font-size",
+  "font-weight",
+  "font-style",
+  "font-variant",
+  "font-stretch",
+  "line-height",
+  "letter-spacing",
+  "word-spacing",
+  "text-align",
+  "text-indent",
+  "text-transform",
+  "tab-size",
+  "word-break",
+  "overflow-wrap",
 ]
 
 /**
@@ -43,29 +43,29 @@ export function getCaretRect(
   const doc = input.ownerDocument
   const win = doc.defaultView ?? window
   const computed = win.getComputedStyle(input)
-  const isInput = input.nodeName === 'INPUT'
+  const isInput = input.nodeName === "INPUT"
 
-  const mirror = doc.createElement('div')
+  const mirror = doc.createElement("div")
   const { style } = mirror
-  style.position = 'absolute'
-  style.top = '0'
-  style.left = '-9999px'
-  style.visibility = 'hidden'
+  style.position = "absolute"
+  style.top = "0"
+  style.left = "-9999px"
+  style.visibility = "hidden"
   // A textarea wraps; an input is a single non-wrapping line.
-  style.whiteSpace = isInput ? 'pre' : 'pre-wrap'
-  style.overflowWrap = 'break-word'
+  style.whiteSpace = isInput ? "pre" : "pre-wrap"
+  style.overflowWrap = "break-word"
   for (const prop of CARET_MIRROR_PROPS) {
     style.setProperty(prop, computed.getPropertyValue(prop))
   }
   // Match the textarea's content-box width so line breaks fall in the same
   // places; an input never wraps, so let the mirror size to its content.
-  style.width = isInput ? 'auto' : `${input.clientWidth}px`
-  style.height = 'auto'
+  style.width = isInput ? "auto" : `${input.clientWidth}px`
+  style.height = "auto"
 
   mirror.textContent = input.value.slice(0, index)
-  const marker = doc.createElement('span')
+  const marker = doc.createElement("span")
   // A non-empty marker keeps a measurable box even at the start of a line.
-  marker.textContent = input.value.slice(index) || '.'
+  marker.textContent = input.value.slice(index) || "."
   mirror.appendChild(marker)
   doc.body.appendChild(mirror)
 

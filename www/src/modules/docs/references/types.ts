@@ -2,7 +2,7 @@
  * Type definitions for API reference data
  */
 
-import type { TType, TypeLinksRegistry } from './types/type-ast'
+import type { TType, TypeLinksRegistry } from "./types/type-ast"
 
 /**
  * A single property definition in the API reference
@@ -61,4 +61,4 @@ export interface GroupedProps {
 }
 
 // Re-export type-ast types
-export type { TType, TypeLinksRegistry } from './types/type-ast'
+export type { TType, TypeLinksRegistry } from "./types/type-ast"

@@ -32,13 +32,13 @@
  * Exit 0 if everything passes; non-zero with a per-failure report otherwise.
  */
 
-const DEFAULT_ORIGIN = 'https://dotui.org'
+const DEFAULT_ORIGIN = "https://dotui.org"
 const CONCURRENCY = 6
 // Hard per-request ceiling so a slow/blackholing host can't stretch the run
 // past undici's ~300s default headers timeout (× retries).
 const REQUEST_TIMEOUT_MS = 15_000
 // Extra names to probe that don't appear in registry.json's items list.
-const EXTRA_NAMES = ['init']
+const EXTRA_NAMES = ["init"]
 
 interface Failure {
   name: string
@@ -47,20 +47,20 @@ interface Failure {
 }
 
 function parseOrigin(argv: string[]): string {
-  const i = argv.indexOf('--origin')
+  const i = argv.indexOf("--origin")
   const raw =
     i !== -1 ? argv[i + 1] : (process.env.PROBE_ORIGIN ?? DEFAULT_ORIGIN)
   if (!raw) {
-    console.error('error: --origin given without a value')
+    console.error("error: --origin given without a value")
     process.exit(2)
   }
   // Strip a trailing slash so `${origin}/r/x` never doubles up.
-  return raw.replace(/\/+$/, '')
+  return raw.replace(/\/+$/, "")
 }
 
 /** Append a unique param so the CDN can't answer from a stale cached copy. */
 function bust(url: string): string {
-  const sep = url.includes('?') ? '&' : '?'
+  const sep = url.includes("?") ? "&" : "?"
   return `${url}${sep}_cb=${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`
 }
 
@@ -70,13 +70,13 @@ async function fetchJson(
   let res: Response
   try {
     res = await fetch(bust(url), {
-      headers: { accept: 'application/json' },
+      headers: { accept: "application/json" },
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     })
   } catch (err) {
     const e = err as Error
     const reason =
-      e.name === 'TimeoutError'
+      e.name === "TimeoutError"
         ? `timed out after ${REQUEST_TIMEOUT_MS}ms`
         : `network error: ${e.message}`
     return { error: reason }
@@ -84,15 +84,15 @@ async function fetchJson(
   if (res.status !== 200) {
     return { error: `HTTP ${res.status} ${res.statusText}` }
   }
-  const contentType = res.headers.get('content-type') ?? ''
+  const contentType = res.headers.get("content-type") ?? ""
   const body = await res.text()
-  if (!contentType.includes('application/json')) {
-    return { error: `non-JSON content-type: ${contentType || '(none)'}` }
+  if (!contentType.includes("application/json")) {
+    return { error: `non-JSON content-type: ${contentType || "(none)"}` }
   }
   try {
     return { json: JSON.parse(body) }
   } catch {
-    return { error: 'body did not parse as JSON' }
+    return { error: "body did not parse as JSON" }
   }
 }
 
@@ -128,8 +128,8 @@ function classifyDep(dep: string, origin: string): string | undefined {
       ? undefined
       : `foreign URL dep (not ${origin}): ${dep}`
   }
-  if (dep.startsWith('@')) {
-    return dep.startsWith('@dotui/')
+  if (dep.startsWith("@")) {
+    return dep.startsWith("@dotui/")
       ? undefined
       : `non-dotui namespaced dep: ${dep}`
   }
@@ -146,15 +146,15 @@ function checkDeps(
   const deps = (item as { registryDependencies?: unknown }).registryDependencies
   if (deps === undefined) return []
   if (!Array.isArray(deps)) {
-    return [{ name, url, reason: 'registryDependencies is not an array' }]
+    return [{ name, url, reason: "registryDependencies is not an array" }]
   }
   const bad = deps
     .map((d) =>
-      typeof d === 'string' ? classifyDep(d, origin) : `non-string dep: ${d}`,
+      typeof d === "string" ? classifyDep(d, origin) : `non-string dep: ${d}`,
     )
     .filter((r): r is string => r !== undefined)
   if (bad.length === 0) return []
-  return [{ name, url, reason: `bad registryDependencies: ${bad.join('; ')}` }]
+  return [{ name, url, reason: `bad registryDependencies: ${bad.join("; ")}` }]
 }
 
 /**
@@ -164,18 +164,18 @@ function checkDeps(
 function checkFieldShape(origin: string, item: unknown): Failure[] {
   const url = `${origin}/r/field`
   const files = (item as { files?: Array<{ content?: string }> }).files
-  const content = files?.map((f) => f.content ?? '').join('\n') ?? ''
+  const content = files?.map((f) => f.content ?? "").join("\n") ?? ""
   if (!content) {
-    return [{ name: 'field', url, reason: 'no file content to spot-check' }]
+    return [{ name: "field", url, reason: "no file content to spot-check" }]
   }
 
   const slotsBlock = content.match(/slots:\s*\{([\s\S]*?)\n\s*\}/)
   if (!slotsBlock) {
     return [
       {
-        name: 'field',
+        name: "field",
         url,
-        reason: 'no slots:{} block found in emitted source',
+        reason: "no slots:{} block found in emitted source",
       },
     ]
   }
@@ -189,7 +189,7 @@ function checkFieldShape(origin: string, item: unknown): Failure[] {
 
   if (destructured.length === 0) {
     return [
-      { name: 'field', url, reason: 'no fieldVariants() slot usage found' },
+      { name: "field", url, reason: "no fieldVariants() slot usage found" },
     ]
   }
 
@@ -197,9 +197,9 @@ function checkFieldShape(origin: string, item: unknown): Failure[] {
   if (undeclared.length === 0) return []
   return [
     {
-      name: 'field',
+      name: "field",
       url,
-      reason: `code destructures slots not declared in slots:{}: ${undeclared.join(', ')}`,
+      reason: `code destructures slots not declared in slots:{}: ${undeclared.join(", ")}`,
     },
   ]
 }
@@ -213,8 +213,8 @@ async function main(): Promise<void> {
   const indexUrl = `${origin}/r/registry.json`
   const index = await fetchJson(indexUrl)
   if (index.error || !index.json) {
-    console.error(`FAIL  ${indexUrl}  ${index.error ?? 'no body'}`)
-    console.error('\ncannot determine component list; aborting')
+    console.error(`FAIL  ${indexUrl}  ${index.error ?? "no body"}`)
+    console.error("\ncannot determine component list; aborting")
     process.exit(1)
   }
   const items = (index.json as { items?: Array<{ name?: string }> }).items
@@ -226,7 +226,7 @@ async function main(): Promise<void> {
     ...new Set(
       items
         .map((it) => it.name)
-        .filter((n): n is string => typeof n === 'string' && n.length > 0),
+        .filter((n): n is string => typeof n === "string" && n.length > 0),
     ),
     ...EXTRA_NAMES,
   ]
@@ -240,9 +240,9 @@ async function main(): Promise<void> {
     const url = `${origin}/r/${name}`
     const res = await fetchJson(url)
     if (res.error || !res.json) {
-      return [{ name, url, reason: res.error ?? 'no body' }]
+      return [{ name, url, reason: res.error ?? "no body" }]
     }
-    if (name === 'field') fieldItem = res.json
+    if (name === "field") fieldItem = res.json
     return checkDeps(name, url, res.json, origin)
   })
 

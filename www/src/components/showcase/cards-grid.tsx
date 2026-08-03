@@ -1,28 +1,28 @@
-import { memo } from 'react'
+import { memo } from "react"
 
-import { cn } from '@/registry/lib/utils'
-import { AccountMenu } from '@/components/showcase/account-menu'
-import { AiPrompt } from '@/components/showcase/ai-prompt'
-import { Appearance } from '@/components/showcase/appearance'
-import { Booking } from '@/components/showcase/booking'
-import { ColorEditorCard } from '@/components/showcase/color-editor'
-import { CommandMenu } from '@/components/showcase/command-menu'
-import { ComputerUse } from '@/components/showcase/computer-use'
-import { Controls } from '@/components/showcase/controls'
-import { CookiePreferences } from '@/components/showcase/cookie-preferences'
-import { DisplaySettings } from '@/components/showcase/display-settings'
-import { Faq } from '@/components/showcase/faq'
-import { Filters } from '@/components/showcase/filters'
-import { InviteMembers } from '@/components/showcase/invite-members'
-import { LoginForm } from '@/components/showcase/login-form'
-import { Metrics } from '@/components/showcase/metrics'
-import { Notifications } from '@/components/showcase/notifications'
-import { Payment } from '@/components/showcase/payment'
-import { PricingPlans } from '@/components/showcase/pricing-plans'
-import { Storage } from '@/components/showcase/storage'
-import { TeamName } from '@/components/showcase/team-name'
-import { TwoFactor } from '@/components/showcase/two-factor'
-import { UploadAvatar } from '@/components/showcase/upload-avatar'
+import { cn } from "@/registry/lib/utils"
+import { AccountMenu } from "@/components/showcase/account-menu"
+import { AiPrompt } from "@/components/showcase/ai-prompt"
+import { Appearance } from "@/components/showcase/appearance"
+import { Booking } from "@/components/showcase/booking"
+import { ColorEditorCard } from "@/components/showcase/color-editor"
+import { CommandMenu } from "@/components/showcase/command-menu"
+import { ComputerUse } from "@/components/showcase/computer-use"
+import { Controls } from "@/components/showcase/controls"
+import { CookiePreferences } from "@/components/showcase/cookie-preferences"
+import { DisplaySettings } from "@/components/showcase/display-settings"
+import { Faq } from "@/components/showcase/faq"
+import { Filters } from "@/components/showcase/filters"
+import { InviteMembers } from "@/components/showcase/invite-members"
+import { LoginForm } from "@/components/showcase/login-form"
+import { Metrics } from "@/components/showcase/metrics"
+import { Notifications } from "@/components/showcase/notifications"
+import { Payment } from "@/components/showcase/payment"
+import { PricingPlans } from "@/components/showcase/pricing-plans"
+import { Storage } from "@/components/showcase/storage"
+import { TeamName } from "@/components/showcase/team-name"
+import { TwoFactor } from "@/components/showcase/two-factor"
+import { UploadAvatar } from "@/components/showcase/upload-avatar"
 
 // Every showcase card in one place — the single source of truth for what the
 // landing grid and the /create preview masonry render.
@@ -61,33 +61,33 @@ type CardKey = keyof typeof CARDS
 // hiding it elsewhere leaves the remaining three columns balanced on their
 // own.
 const RAIL: CardKey[] = [
-  'controls',
-  'twoFactor',
-  'filters',
-  'accountMenu',
-  'inviteMembers',
+  "controls",
+  "twoFactor",
+  "filters",
+  "accountMenu",
+  "inviteMembers",
 ]
 const MAIN_LEFT: CardKey[] = [
-  'commandMenu',
-  'payment',
-  'storage',
-  'loginForm',
-  'metrics',
+  "commandMenu",
+  "payment",
+  "storage",
+  "loginForm",
+  "metrics",
 ]
 const MAIN_RIGHT: CardKey[] = [
-  'booking',
-  'uploadAvatar',
-  'pricingPlans',
-  'appearance',
-  'colorEditor',
+  "booking",
+  "uploadAvatar",
+  "pricingPlans",
+  "appearance",
+  "colorEditor",
 ]
 const SIDE: CardKey[] = [
-  'computerUse',
-  'notifications',
-  'faq',
-  'displaySettings',
-  'cookiePreferences',
-  'teamName',
+  "computerUse",
+  "notifications",
+  "faq",
+  "displaySettings",
+  "cookiePreferences",
+  "teamName",
 ]
 
 // A fixed flex column of cards. Fixed columns (rather than CSS `columns`) keep
@@ -103,7 +103,7 @@ function CardColumn({
   className?: string
 }) {
   return (
-    <div className={cn('flex min-w-0 flex-1 flex-col gap-5', className)}>
+    <div className={cn("flex min-w-0 flex-1 flex-col gap-5", className)}>
       {cards.map((key) => (
         <div
           key={key}
@@ -128,7 +128,7 @@ export const CardsGrid = memo(function CardsGrid({
   return (
     <div
       className={cn(
-        'grid grid-cols-3 items-start gap-5 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4',
+        "grid grid-cols-3 items-start gap-5 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4",
         className,
       )}
     >
@@ -150,7 +150,7 @@ export const CardsGrid = memo(function CardsGrid({
 // re-flow cost doesn't apply here.
 export function CardsMasonry({ className }: { className?: string }) {
   return (
-    <div className={cn('flex flex-col gap-4', className)}>
+    <div className={cn("flex flex-col gap-4", className)}>
       <AiPrompt />
       <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
         {[...RAIL, ...MAIN_LEFT, ...MAIN_RIGHT, ...SIDE].map((key) => (

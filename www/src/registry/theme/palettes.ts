@@ -7,15 +7,15 @@
 
 /** Emission + display order for every palette dotUI generates. */
 export const PALETTE_ORDER = [
-  'neutral',
-  'accent',
-  'success',
-  'warning',
-  'danger',
-  'info',
+  "neutral",
+  "accent",
+  "success",
+  "warning",
+  "danger",
+  "info",
 ] as const
 
 /** The optional status palettes (everything but the neutral backbone + brand accent). */
-export const STATUS_PALETTES = ['success', 'warning', 'danger', 'info'] as const
+export const STATUS_PALETTES = ["success", "warning", "danger", "info"] as const
 
 export type PaletteName = (typeof PALETTE_ORDER)[number]

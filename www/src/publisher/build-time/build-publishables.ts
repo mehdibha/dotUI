@@ -8,18 +8,18 @@
  * extract / transform modules) — never imported from a route bundle.
  */
 
-import { existsSync, promises as fs } from 'node:fs'
-import path from 'node:path'
-import { format } from 'oxfmt'
+import { existsSync, promises as fs } from "node:fs"
+import path from "node:path"
+import { format } from "oxfmt"
 
-import type { RegistryItem, RegistryItemFile } from '@/registry/types'
+import type { RegistryItem, RegistryItemFile } from "@/registry/types"
 
-import type { StylesConfig } from '../types'
-import { cssToRegistryFields } from './css-to-registry-fields'
-import { extractStylesConfig } from './extract-config'
-import { transformBase, TV_CONFIG_PLACEHOLDER } from './transform-base'
+import type { StylesConfig } from "../types"
+import { cssToRegistryFields } from "./css-to-registry-fields"
+import { extractStylesConfig } from "./extract-config"
+import { transformBase, TV_CONFIG_PLACEHOLDER } from "./transform-base"
 
-type RegistryCssFields = Pick<RegistryItem, 'css' | 'cssVars'>
+type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
 
 interface BuildPublishablesOptions {
   /** Absolute path to `www/src/registry`. */
@@ -37,7 +37,7 @@ export async function buildPublishables({
   registryDir,
   items,
 }: BuildPublishablesOptions): Promise<BuildPublishablesResult> {
-  const outDir = path.join(registryDir, '__generated__/publishables')
+  const outDir = path.join(registryDir, "__generated__/publishables")
   await fs.mkdir(outDir, { recursive: true })
 
   const written: string[] = []
@@ -46,9 +46,9 @@ export async function buildPublishables({
   for (const meta of items) {
     try {
       const result = await buildOne({ meta, registryDir, outDir })
-      if (result === 'skipped') {
-        skipped.push({ name: meta.name, reason: 'no base.tsx in meta.files' })
-      } else if (typeof result === 'string') {
+      if (result === "skipped") {
+        skipped.push({ name: meta.name, reason: "no base.tsx in meta.files" })
+      } else if (typeof result === "string") {
         written.push(result)
       }
     } catch (err) {
@@ -59,18 +59,18 @@ export async function buildPublishables({
 
   // Emit the runtime lookup index so the route handler can resolve a
   // component name without dynamically constructing import paths.
-  const indexPath = path.join(outDir, 'index.ts')
-  await fs.writeFile(indexPath, renderIndex(written, outDir), 'utf8')
+  const indexPath = path.join(outDir, "index.ts")
+  await fs.writeFile(indexPath, renderIndex(written, outDir), "utf8")
   written.push(indexPath)
 
   // Convert the base CSS sources into shadcn registry fields so the init
   // endpoint can update the consumer's CSS file without shipping an extra file.
-  const bundlePath = path.join(registryDir, '__generated__', 'base-css.ts')
+  const bundlePath = path.join(registryDir, "__generated__", "base-css.ts")
   await fs.mkdir(path.dirname(bundlePath), { recursive: true })
   await fs.writeFile(
     bundlePath,
     await renderBaseRegistryCss(registryDir),
-    'utf8',
+    "utf8",
   )
   written.push(bundlePath)
 
@@ -80,13 +80,13 @@ export async function buildPublishables({
   // cross-component refs like toggle-button's `rounded-(--btn-radius)`.
   const defaultsPath = path.join(
     registryDir,
-    '__generated__',
-    'style-var-defaults.ts',
+    "__generated__",
+    "style-var-defaults.ts",
   )
   await fs.writeFile(
     defaultsPath,
     await renderStyleVarDefaults(registryDir),
-    'utf8',
+    "utf8",
   )
   written.push(defaultsPath)
 
@@ -94,27 +94,27 @@ export async function buildPublishables({
 }
 
 async function renderStyleVarDefaults(registryDir: string): Promise<string> {
-  const uiDir = path.join(registryDir, 'ui')
+  const uiDir = path.join(registryDir, "ui")
   const defaults: Record<string, string> = {}
   const collectRootVars = async (cssPath: string) => {
     if (!existsSync(cssPath)) return
-    const fields = cssToRegistryFields(await fs.readFile(cssPath, 'utf8'))
-    const root = fields.css?.[':root']
-    if (typeof root !== 'object' || root === null) return
+    const fields = cssToRegistryFields(await fs.readFile(cssPath, "utf8"))
+    const root = fields.css?.[":root"]
+    if (typeof root !== "object" || root === null) return
     for (const [prop, value] of Object.entries(root)) {
-      if (prop.startsWith('--') && typeof value === 'string') {
+      if (prop.startsWith("--") && typeof value === "string") {
         defaults[prop] = value
       }
     }
   }
   // Radius roles — the chain hop between component vars and ladder rungs.
-  await collectRootVars(path.join(registryDir, 'roles.css'))
+  await collectRootVars(path.join(registryDir, "roles.css"))
   const dirs = (await fs.readdir(uiDir, { withFileTypes: true }))
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
     .sort()
   for (const dir of dirs) {
-    await collectRootVars(path.join(uiDir, dir, 'styles.css'))
+    await collectRootVars(path.join(uiDir, dir, "styles.css"))
   }
 
   const sorted = Object.fromEntries(
@@ -127,10 +127,10 @@ async function renderStyleVarDefaults(registryDir: string): Promise<string> {
     ``,
     `export const STYLE_VAR_DEFAULTS: Record<string, string> = ${JSON.stringify(sorted, null, 2)};`,
     ``,
-  ].join('\n')
+  ].join("\n")
 
   try {
-    const { code } = await format('style-var-defaults.ts', raw, {
+    const { code } = await format("style-var-defaults.ts", raw, {
       printWidth: 120,
       useTabs: true,
     })
@@ -142,8 +142,8 @@ async function renderStyleVarDefaults(registryDir: string): Promise<string> {
 
 function renderIndex(writtenPaths: string[], outDir: string): string {
   const names = writtenPaths
-    .filter((p) => p.endsWith('.ts') && !p.endsWith('/index.ts'))
-    .map((p) => path.basename(p, '.ts'))
+    .filter((p) => p.endsWith(".ts") && !p.endsWith("/index.ts"))
+    .map((p) => path.basename(p, ".ts"))
     .sort()
 
   const lines: string[] = []
@@ -169,28 +169,28 @@ function renderIndex(writtenPaths: string[], outDir: string): string {
   lines.push(``)
   // Silence the unused warning for callers that only use `publishables`.
   void outDir
-  return lines.join('\n')
+  return lines.join("\n")
 }
 
 async function renderBaseRegistryCss(registryDir: string): Promise<string> {
   // Order matches `www/src/registry/styles.css`.
   const candidates = [
-    path.join(registryDir, 'base', 'base.css'),
-    path.join(registryDir, 'base', 'colors.css'),
-    path.join(registryDir, 'base', 'theme.css'),
-    path.join(registryDir, 'base', 'fonts.css'),
+    path.join(registryDir, "base", "base.css"),
+    path.join(registryDir, "base", "colors.css"),
+    path.join(registryDir, "base", "theme.css"),
+    path.join(registryDir, "base", "fonts.css"),
   ]
   const parts: string[] = []
   for (const file of candidates) {
     try {
-      const css = await fs.readFile(file, 'utf8')
+      const css = await fs.readFile(file, "utf8")
       parts.push(`/* ===== ${path.basename(file)} ===== */`)
       parts.push(css.trimEnd())
     } catch {
       // Missing source file — skip silently.
     }
   }
-  const bundle = parts.join('\n\n')
+  const bundle = parts.join("\n\n")
   const fields = cssToRegistryFields(bundle)
 
   const raw = [
@@ -201,10 +201,10 @@ async function renderBaseRegistryCss(registryDir: string): Promise<string> {
     ``,
     `export const baseRegistryCss = ${JSON.stringify(fields, null, 2)} as const satisfies Pick<RegistryItem, "css" | "cssVars">;`,
     ``,
-  ].join('\n')
+  ].join("\n")
 
   try {
-    const { code } = await format('base-css.ts', raw, {
+    const { code } = await format("base-css.ts", raw, {
       printWidth: 120,
       useTabs: true,
     })
@@ -229,15 +229,15 @@ async function buildOne({
   meta,
   registryDir,
   outDir,
-}: BuildOneInput): Promise<string | 'skipped'> {
+}: BuildOneInput): Promise<string | "skipped"> {
   const baseFiles = collectBaseFiles(meta)
   if (baseFiles.length === 0) {
     return buildStylelessPublishable({ meta, registryDir, outDir })
   }
 
   // Extract the styles config once per component (it's shared across enum-file variants).
-  const componentDir = path.join(registryDir, 'ui', meta.name)
-  const stylesTsPath = path.join(componentDir, 'styles.ts')
+  const componentDir = path.join(registryDir, "ui", meta.name)
+  const stylesTsPath = path.join(componentDir, "styles.ts")
   const hasStyles = existsSync(stylesTsPath)
   const stylesConfig: StylesConfig = hasStyles
     ? extractStylesConfig(stylesTsPath)
@@ -278,7 +278,7 @@ async function buildOne({
     templates,
     extraFiles,
   })
-  await fs.writeFile(outPath, source, 'utf8')
+  await fs.writeFile(outPath, source, "utf8")
   return outPath
 }
 
@@ -291,9 +291,9 @@ async function buildStylelessPublishable({
   meta,
   registryDir,
   outDir,
-}: BuildOneInput): Promise<string | 'skipped'> {
+}: BuildOneInput): Promise<string | "skipped"> {
   const files = meta.files ?? []
-  if (files.length === 0) return 'skipped'
+  if (files.length === 0) return "skipped"
 
   const extraFiles: Record<string, string> = {}
   for (const file of files) {
@@ -305,7 +305,7 @@ async function buildStylelessPublishable({
 
   const outPath = path.join(outDir, `${meta.name}.ts`)
   const source = await renderStylelessPublishableSource({ meta, extraFiles })
-  await fs.writeFile(outPath, source, 'utf8')
+  await fs.writeFile(outPath, source, "utf8")
   return outPath
 }
 
@@ -318,23 +318,23 @@ async function transformExtraFile(
   absPath: string,
   componentName: string,
 ): Promise<string> {
-  if (absPath.endsWith('.ts') || absPath.endsWith('.tsx')) {
+  if (absPath.endsWith(".ts") || absPath.endsWith(".tsx")) {
     return transformBase({
       baseTsxPath: absPath,
       componentName,
       hasStylesConfig: false,
     }).template
   }
-  return fs.readFile(absPath, 'utf8')
+  return fs.readFile(absPath, "utf8")
 }
 
 async function readComponentCssFields(
   componentDir: string,
 ): Promise<RegistryCssFields> {
-  const stylesCssPath = path.join(componentDir, 'styles.css')
+  const stylesCssPath = path.join(componentDir, "styles.css")
   if (!existsSync(stylesCssPath)) return {}
 
-  return cssToRegistryFields(await fs.readFile(stylesCssPath, 'utf8'))
+  return cssToRegistryFields(await fs.readFile(stylesCssPath, "utf8"))
 }
 
 function withComponentCssFields(
@@ -352,17 +352,17 @@ function withComponentCssFields(
 }
 
 function mergeCss(
-  base: RegistryCssFields['css'],
-  extra: RegistryCssFields['css'],
-): RegistryCssFields['css'] | undefined {
+  base: RegistryCssFields["css"],
+  extra: RegistryCssFields["css"],
+): RegistryCssFields["css"] | undefined {
   const merged = { ...(base ?? {}), ...(extra ?? {}) }
   return Object.keys(merged).length > 0 ? merged : undefined
 }
 
 function mergeCssVars(
-  base: RegistryCssFields['cssVars'],
-  extra: RegistryCssFields['cssVars'],
-): RegistryCssFields['cssVars'] | undefined {
+  base: RegistryCssFields["cssVars"],
+  extra: RegistryCssFields["cssVars"],
+): RegistryCssFields["cssVars"] | undefined {
   const merged = {
     ...(base?.theme || extra?.theme
       ? { theme: { ...(base?.theme ?? {}), ...(extra?.theme ?? {}) } }
@@ -391,7 +391,7 @@ export function collectBaseFiles(meta: RegistryItem): RegistryItemFile[] {
     if (isBaseFile(file, meta.name)) byKey.set(file.path, file)
   }
   for (const def of Object.values(meta.params ?? {})) {
-    if (def.kind !== 'enum' || !def.files) continue
+    if (def.kind !== "enum" || !def.files) continue
     for (const fileList of Object.values(def.files)) {
       for (const file of fileList) {
         if (isBaseFile(file, meta.name)) byKey.set(file.path, file)
@@ -404,13 +404,13 @@ export function collectBaseFiles(meta: RegistryItem): RegistryItemFile[] {
 function isBaseFile(file: RegistryItemFile, componentName: string): boolean {
   // We treat any tsx whose source path lives under `ui/<name>/` and starts with
   // `base` as a base file.
-  const segments = file.path.split('/')
-  const last = segments.at(-1) ?? ''
+  const segments = file.path.split("/")
+  const last = segments.at(-1) ?? ""
   return (
-    segments[0] === 'ui' &&
+    segments[0] === "ui" &&
     segments[1] === componentName &&
-    last.startsWith('base') &&
-    last.endsWith('.tsx')
+    last.startsWith("base") &&
+    last.endsWith(".tsx")
   )
 }
 
@@ -453,9 +453,9 @@ async function renderStylelessPublishableSource({
     ``,
   ]
 
-  const raw = lines.join('\n')
+  const raw = lines.join("\n")
   try {
-    const { code } = await format('publishable.ts', raw, {
+    const { code } = await format("publishable.ts", raw, {
       printWidth: 120,
       useTabs: true,
     })
@@ -538,9 +538,9 @@ async function renderPublishableSource({
 
   lines.push(``)
 
-  const raw = lines.join('\n')
+  const raw = lines.join("\n")
   try {
-    const { code } = await format('publishable.ts', raw, {
+    const { code } = await format("publishable.ts", raw, {
       printWidth: 120,
       useTabs: true,
     })
@@ -555,21 +555,21 @@ function renderExtraFilesLiteral(
   extraFiles: Record<string, string>,
   depth: number,
 ): string {
-  const indent = '\t'.repeat(depth + 1)
-  const closeIndent = '\t'.repeat(depth)
+  const indent = "\t".repeat(depth + 1)
+  const closeIndent = "\t".repeat(depth)
   const entries = Object.entries(extraFiles).map(
     ([filePath, content]) =>
       `${indent}${JSON.stringify(filePath)}: ${templateLiteral(content)},`,
   )
-  return `{\n${entries.join('\n')}\n${closeIndent}}`
+  return `{\n${entries.join("\n")}\n${closeIndent}}`
 }
 
 function templateLiteral(template: string): string {
   // Use backtick template literal but escape backslashes, backticks, and ${.
   const escaped = template
-    .replace(/\\/g, '\\\\')
-    .replace(/`/g, '\\`')
-    .replace(/\$\{/g, '\\${')
+    .replace(/\\/g, "\\\\")
+    .replace(/`/g, "\\`")
+    .replace(/\$\{/g, "\\${")
   return `\`${escaped}\``
 }
 

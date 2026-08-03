@@ -1,34 +1,34 @@
-import { codeFenceToHast } from '@tanstack/highlight/markdown'
-import fs from 'node:fs/promises'
-import path from 'node:path'
-import type { Element, ElementContent, Root, RootContent } from 'hast'
+import { codeFenceToHast } from "@tanstack/highlight/markdown"
+import fs from "node:fs/promises"
+import path from "node:path"
+import type { Element, ElementContent, Root, RootContent } from "hast"
 import type {
   MdxJsxAttribute,
   MdxJsxAttributeValueExpression,
   MdxJsxFlowElementHast,
-} from 'mdast-util-mdx-jsx'
-import type { Plugin } from 'unified'
-import { visit } from 'unist-util-visit'
+} from "mdast-util-mdx-jsx"
+import type { Plugin } from "unified"
+import { visit } from "unist-util-visit"
 
-import { buildSourceOverlay } from '../codegen/source-overlay'
+import { buildSourceOverlay } from "../codegen/source-overlay"
 import {
   buildControlsFromReference,
   enrichControlsForSerialization,
   toControlSelections,
   toPascalCase,
-} from '../interactive-demo/process-controls'
+} from "../interactive-demo/process-controls"
 import type {
   ControlInput,
   InteractiveDemoNodeInfo,
   ProcessedInteractiveDemo,
-} from '../interactive-demo/types'
-import { loadApiReference } from '../references/loader'
+} from "../interactive-demo/types"
+import { loadApiReference } from "../references/loader"
 import {
   type TransformedReference,
   transformReference,
-} from '../references/transform'
-import { highlighter } from './highlighter'
-import { transformDemo } from './transformer'
+} from "../references/transform"
+import { highlighter } from "./highlighter"
+import { transformDemo } from "./transformer"
 
 // ============================================================================
 // Types
@@ -42,7 +42,7 @@ interface RehypeTransformOptions {
 interface DemoNodeInfo {
   node: MdxJsxFlowElementHast
   name: string
-  type: 'Demo' | 'Example'
+  type: "Demo" | "Example"
   title?: string
   titleId?: string
 }
@@ -81,7 +81,7 @@ interface ImportInfo {
 const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (
   options = {},
 ) => {
-  const { registryBasePath = 'src/registry' } = options
+  const { registryBasePath = "src/registry" } = options
 
   return async (tree) => {
     const demoNodes: DemoNodeInfo[] = []
@@ -94,8 +94,8 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (
         text
           .toLowerCase()
           .trim()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-+|-+$/g, '') || 'example'
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "") || "example"
       let candidate = base
       let i = 1
       while (usedSlugs.has(candidate)) {
@@ -107,17 +107,17 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (
     }
 
     // Step 1: Collect all Demo/Example/Reference/InteractiveDemo nodes
-    visit(tree, 'mdxJsxFlowElement', (node: MdxJsxFlowElementHast) => {
-      if (node.name === 'Demo' || node.name === 'Example') {
+    visit(tree, "mdxJsxFlowElement", (node: MdxJsxFlowElementHast) => {
+      if (node.name === "Demo" || node.name === "Example") {
         const name = extractNameAttribute(node)
         if (name) {
           const info: DemoNodeInfo = {
             node,
             name,
-            type: node.name as 'Demo' | 'Example',
+            type: node.name as "Demo" | "Example",
           }
-          if (node.name === 'Example') {
-            const title = extractStringAttribute(node, 'title')
+          if (node.name === "Example") {
+            const title = extractStringAttribute(node, "title")
             if (title) {
               info.title = title
               info.titleId = slugify(title)
@@ -125,15 +125,15 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (
           }
           demoNodes.push(info)
         }
-      } else if (node.name === 'Reference') {
+      } else if (node.name === "Reference") {
         const name = extractNameAttribute(node)
         if (name) {
           referenceNodes.push({ node, name })
         }
-      } else if (node.name === 'InteractiveDemo') {
+      } else if (node.name === "InteractiveDemo") {
         const name = extractNameAttribute(node)
         const controls = extractControlsAttribute(node)
-        const file = extractStringAttribute(node, 'file') ?? undefined
+        const file = extractStringAttribute(node, "file") ?? undefined
         if (name && controls) {
           interactiveDemoNodes.push({ node, name, controls, file })
         }
@@ -234,7 +234,7 @@ async function processDemoNode(
     const importPath = `@/registry/ui/${info.name}`
 
     // Read source file
-    const rawSource = await fs.readFile(filePath, 'utf-8')
+    const rawSource = await fs.readFile(filePath, "utf-8")
 
     // Transform using the transformer
     const { source, preview } = transformDemo(rawSource)
@@ -265,8 +265,8 @@ async function processDemoNode(
  * mdx-components pre override hands it through unwrapped.
  */
 function highlightTsxPre(code: string): Element {
-  const pre = codeFenceToHast({ code, lang: 'tsx' }, highlighter)
-  pre.properties = { ...pre.properties, 'data-raw': true }
+  const pre = codeFenceToHast({ code, lang: "tsx" }, highlighter)
+  pre.properties = { ...pre.properties, "data-raw": true }
   return pre as Element
 }
 
@@ -277,7 +277,7 @@ function highlightTsxPre(code: string): Element {
 function resolveDemoPath(demoName: string, registryBasePath: string): string {
   // demoName is like "button/demos/default"
   // File path is like "../packages/registry/src/ui/button/demos/default.tsx"
-  return path.join(process.cwd(), registryBasePath, 'ui', `${demoName}.tsx`)
+  return path.join(process.cwd(), registryBasePath, "ui", `${demoName}.tsx`)
 }
 
 function generateImportName(demoName: string): string {
@@ -285,7 +285,7 @@ function generateImportName(demoName: string): string {
   return demoName
     .split(/[/-]/)
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join('')
+    .join("")
 }
 
 /**
@@ -295,7 +295,7 @@ function generateImportName(demoName: string): string {
  * the chart gallery's `installItems`.
  */
 function computeInstallItems(demoName: string, source: string): string[] {
-  const pageItem = demoName.slice(0, demoName.indexOf('/')) || demoName
+  const pageItem = demoName.slice(0, demoName.indexOf("/")) || demoName
   const extras = new Set<string>()
   for (const match of source.matchAll(/@\/registry\/ui\/([a-z0-9-]+)/g)) {
     const name = match[1]
@@ -309,7 +309,7 @@ function computeInstallItems(demoName: string, source: string): string[] {
 // ============================================================================
 
 function extractNameAttribute(node: MdxJsxFlowElementHast): string | null {
-  return extractStringAttribute(node, 'name')
+  return extractStringAttribute(node, "name")
 }
 
 function extractStringAttribute(
@@ -318,10 +318,10 @@ function extractStringAttribute(
 ): string | null {
   const attr = node.attributes.find(
     (a): a is MdxJsxAttribute =>
-      a.type === 'mdxJsxAttribute' && a.name === attrName,
+      a.type === "mdxJsxAttribute" && a.name === attrName,
   )
 
-  if (attr && typeof attr.value === 'string') {
+  if (attr && typeof attr.value === "string") {
     return attr.value
   }
 
@@ -333,10 +333,10 @@ function extractControlsAttribute(
 ): ControlInput[] | null {
   const controlsAttr = node.attributes.find(
     (attr): attr is MdxJsxAttribute =>
-      attr.type === 'mdxJsxAttribute' && attr.name === 'controls',
+      attr.type === "mdxJsxAttribute" && attr.name === "controls",
   )
 
-  if (!controlsAttr || typeof controlsAttr.value === 'string') {
+  if (!controlsAttr || typeof controlsAttr.value === "string") {
     return null
   }
 
@@ -348,9 +348,9 @@ function extractControlsAttribute(
     | MdxJsxAttributeValueExpression
     | undefined
   const source = exprValue?.value
-  if (!source || typeof source !== 'string') {
+  if (!source || typeof source !== "string") {
     throw new Error(
-      '[rehype-transform] <InteractiveDemo> controls={…} has no source expression',
+      "[rehype-transform] <InteractiveDemo> controls={…} has no source expression",
     )
   }
 
@@ -397,33 +397,33 @@ function generateImportsNode(imports: ImportInfo[]): object {
       for (const info of infosMap.values()) {
         if (info.isDefault) {
           specifiers.push({
-            type: 'ImportDefaultSpecifier',
-            local: { type: 'Identifier', name: info.importName },
+            type: "ImportDefaultSpecifier",
+            local: { type: "Identifier", name: info.importName },
           })
         } else if (info.namedExport) {
           specifiers.push({
-            type: 'ImportSpecifier',
-            imported: { type: 'Identifier', name: info.namedExport },
-            local: { type: 'Identifier', name: info.importName },
+            type: "ImportSpecifier",
+            imported: { type: "Identifier", name: info.namedExport },
+            local: { type: "Identifier", name: info.importName },
           })
         }
       }
 
       return {
-        type: 'ImportDeclaration',
+        type: "ImportDeclaration",
         specifiers,
-        source: { type: 'Literal', value: importPath },
+        source: { type: "Literal", value: importPath },
       }
     },
   )
 
   return {
-    type: 'mdxjsEsm',
-    value: '',
+    type: "mdxjsEsm",
+    value: "",
     data: {
       estree: {
-        type: 'Program',
-        sourceType: 'module',
+        type: "Program",
+        sourceType: "module",
         body: importDeclarations,
       },
     },
@@ -439,24 +439,24 @@ function transformDemoNode(processed: ProcessedDemo): void {
 
   // Remove the name attribute
   node.attributes = node.attributes.filter(
-    (attr) => !(attr.type === 'mdxJsxAttribute' && attr.name === 'name'),
+    (attr) => !(attr.type === "mdxJsxAttribute" && attr.name === "name"),
   )
 
   // Add component attribute: component={ImportedComponent}
   const componentAttr: MdxJsxAttribute = {
-    type: 'mdxJsxAttribute',
-    name: 'component',
+    type: "mdxJsxAttribute",
+    name: "component",
     value: {
-      type: 'mdxJsxAttributeValueExpression',
+      type: "mdxJsxAttributeValueExpression",
       value: processed.importName,
       data: {
         estree: {
-          type: 'Program',
-          sourceType: 'module',
+          type: "Program",
+          sourceType: "module",
           body: [
             {
-              type: 'ExpressionStatement',
-              expression: { type: 'Identifier', name: processed.importName },
+              type: "ExpressionStatement",
+              expression: { type: "Identifier", name: processed.importName },
             },
           ],
         },
@@ -467,8 +467,8 @@ function transformDemoNode(processed: ProcessedDemo): void {
 
   // Create DemoCode wrapper with the highlighted <pre> element
   const demoCodeElement: MdxJsxFlowElementHast = {
-    type: 'mdxJsxFlowElement',
-    name: 'DemoCode',
+    type: "mdxJsxFlowElement",
+    name: "DemoCode",
     attributes: [],
     children: [processed.sourcePre],
   }
@@ -478,25 +478,25 @@ function transformDemoNode(processed: ProcessedDemo): void {
   // up in the TOC (the `title` prop is kept too, for the modal heading), the
   // install items and demo file name for the modal, and the highlighted source
   // as a DemoCode slot the card routes into the modal.
-  if (processed.nodeInfo.type === 'Example') {
+  if (processed.nodeInfo.type === "Example") {
     const { title, titleId } = processed.nodeInfo
     const existing = (node.children ?? []) as ElementContent[]
 
     node.attributes.push(
-      makeJsonParseAttr('install', JSON.stringify(processed.install)),
+      makeJsonParseAttr("install", JSON.stringify(processed.install)),
     )
     node.attributes.push({
-      type: 'mdxJsxAttribute',
-      name: 'file',
-      value: `${processed.nodeInfo.name.split('/').pop()}.tsx`,
+      type: "mdxJsxAttribute",
+      name: "file",
+      value: `${processed.nodeInfo.name.split("/").pop()}.tsx`,
     })
 
     if (title && titleId) {
       const heading: Element = {
-        type: 'element',
-        tagName: 'h3',
+        type: "element",
+        tagName: "h3",
         properties: { id: titleId },
-        children: [{ type: 'text', value: title }],
+        children: [{ type: "text", value: title }],
       }
       node.children = [heading, ...existing, demoCodeElement]
     } else {
@@ -507,8 +507,8 @@ function transformDemoNode(processed: ProcessedDemo): void {
 
   // Create DemoCodePreview wrapper with the highlighted preview <pre>
   const demoCodePreviewElement: MdxJsxFlowElementHast = {
-    type: 'mdxJsxFlowElement',
-    name: 'DemoCodePreview',
+    type: "mdxJsxFlowElement",
+    name: "DemoCodePreview",
     attributes: [],
     children: [processed.previewPre],
   }
@@ -559,37 +559,37 @@ function transformReferenceNode(processed: ProcessedReference): void {
 
   // Remove the name attribute
   node.attributes = node.attributes.filter(
-    (attr) => !(attr.type === 'mdxJsxAttribute' && attr.name === 'name'),
+    (attr) => !(attr.type === "mdxJsxAttribute" && attr.name === "name"),
   )
 
   // Add data attribute with the transformed reference data as JSON
   // We use JSON.parse() in the JSX expression to convert the string back to an object
   const jsonString = JSON.stringify(processed.data)
   const dataAttr: MdxJsxAttribute = {
-    type: 'mdxJsxAttribute',
-    name: 'data',
+    type: "mdxJsxAttribute",
+    name: "data",
     value: {
-      type: 'mdxJsxAttributeValueExpression',
+      type: "mdxJsxAttributeValueExpression",
       value: `JSON.parse(${JSON.stringify(jsonString)})`,
       data: {
         estree: {
-          type: 'Program',
-          sourceType: 'module',
+          type: "Program",
+          sourceType: "module",
           body: [
             {
-              type: 'ExpressionStatement',
+              type: "ExpressionStatement",
               expression: {
-                type: 'CallExpression',
+                type: "CallExpression",
                 callee: {
-                  type: 'MemberExpression',
-                  object: { type: 'Identifier', name: 'JSON' },
-                  property: { type: 'Identifier', name: 'parse' },
+                  type: "MemberExpression",
+                  object: { type: "Identifier", name: "JSON" },
+                  property: { type: "Identifier", name: "parse" },
                   computed: false,
                   optional: false,
                 },
                 arguments: [
                   {
-                    type: 'Literal',
+                    type: "Literal",
                     value: jsonString,
                     raw: JSON.stringify(jsonString),
                   },
@@ -614,7 +614,7 @@ async function processInteractiveDemoNode(
   registryBasePath: string,
 ): Promise<ProcessedInteractiveDemo | null> {
   try {
-    const fileSlug = info.file ?? 'playground'
+    const fileSlug = info.file ?? "playground"
 
     // The real demo source drives everything: defaults come from its param
     // signature and the displayed code is generated by overlaying control
@@ -622,12 +622,12 @@ async function processInteractiveDemoNode(
     const demoPath = path.join(
       process.cwd(),
       registryBasePath,
-      'ui',
+      "ui",
       info.name,
-      'demos',
+      "demos",
       `${fileSlug}.tsx`,
     )
-    const rawSource = await fs.readFile(demoPath, 'utf-8')
+    const rawSource = await fs.readFile(demoPath, "utf-8")
 
     // 1. Build controls from API reference + param defaults
     const controls = await buildControlsFromReference(
@@ -674,26 +674,26 @@ function transformInteractiveDemoNode(
   node.attributes = node.attributes.filter(
     (attr) =>
       !(
-        attr.type === 'mdxJsxAttribute' &&
-        ['name', 'controls', 'engine', 'file', 'fallback'].includes(attr.name)
+        attr.type === "mdxJsxAttribute" &&
+        ["name", "controls", "engine", "file", "fallback"].includes(attr.name)
       ),
   )
 
   // component={ButtonPlayground}
   const componentAttr: MdxJsxAttribute = {
-    type: 'mdxJsxAttribute',
-    name: 'component',
+    type: "mdxJsxAttribute",
+    name: "component",
     value: {
-      type: 'mdxJsxAttributeValueExpression',
+      type: "mdxJsxAttributeValueExpression",
       value: processed.importName,
       data: {
         estree: {
-          type: 'Program',
-          sourceType: 'module',
+          type: "Program",
+          sourceType: "module",
           body: [
             {
-              type: 'ExpressionStatement',
-              expression: { type: 'Identifier', name: processed.importName },
+              type: "ExpressionStatement",
+              expression: { type: "Identifier", name: processed.importName },
             },
           ],
         },
@@ -704,42 +704,42 @@ function transformInteractiveDemoNode(
 
   // controls={JSON.parse("…")}
   node.attributes.push(
-    makeJsonParseAttr('controls', JSON.stringify(processed.controls)),
+    makeJsonParseAttr("controls", JSON.stringify(processed.controls)),
   )
 
   // codeTemplate={JSON.parse("…")}
   node.attributes.push(
-    makeJsonParseAttr('codeTemplate', JSON.stringify(processed.codeTemplate)),
+    makeJsonParseAttr("codeTemplate", JSON.stringify(processed.codeTemplate)),
   )
 }
 
 /** Build a `name={JSON.parse("…")}` MDX attribute that revives JSON at render time. */
 function makeJsonParseAttr(name: string, jsonString: string): MdxJsxAttribute {
   return {
-    type: 'mdxJsxAttribute',
+    type: "mdxJsxAttribute",
     name,
     value: {
-      type: 'mdxJsxAttributeValueExpression',
+      type: "mdxJsxAttributeValueExpression",
       value: `JSON.parse(${JSON.stringify(jsonString)})`,
       data: {
         estree: {
-          type: 'Program',
-          sourceType: 'module',
+          type: "Program",
+          sourceType: "module",
           body: [
             {
-              type: 'ExpressionStatement',
+              type: "ExpressionStatement",
               expression: {
-                type: 'CallExpression',
+                type: "CallExpression",
                 callee: {
-                  type: 'MemberExpression',
-                  object: { type: 'Identifier', name: 'JSON' },
-                  property: { type: 'Identifier', name: 'parse' },
+                  type: "MemberExpression",
+                  object: { type: "Identifier", name: "JSON" },
+                  property: { type: "Identifier", name: "parse" },
                   computed: false,
                   optional: false,
                 },
                 arguments: [
                   {
-                    type: 'Literal',
+                    type: "Literal",
                     value: jsonString,
                     raw: JSON.stringify(jsonString),
                   },

@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 
 export default function Demo() {
   const [isPending, setPending] = React.useState(false)

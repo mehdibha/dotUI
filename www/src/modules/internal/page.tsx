@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
 /* /internal — the index of every internal tool, so the labs are navigable
    instead of URLs you have to remember. */
 
-import { Link } from '@tanstack/react-router'
-import { ArrowUpRightIcon } from 'lucide-react'
+import { Link } from "@tanstack/react-router"
+import { ArrowUpRightIcon } from "lucide-react"
 
-import { INTERNAL_TOOLS } from './registry'
-import { InternalShell } from './shell'
+import { INTERNAL_TOOLS } from "./registry"
+import { InternalShell } from "./shell"
 
 export function InternalIndex() {
   return (

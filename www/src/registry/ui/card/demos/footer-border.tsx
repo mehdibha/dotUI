@@ -1,5 +1,5 @@
-import { Button } from '@/registry/ui/button'
-import { Card, CardContent, CardFooter } from '@/registry/ui/card'
+import { Button } from "@/registry/ui/button"
+import { Card, CardContent, CardFooter } from "@/registry/ui/card"
 
 export default function Demo() {
   return (

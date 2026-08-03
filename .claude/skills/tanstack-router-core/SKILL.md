@@ -7,7 +7,7 @@ description: >-
   file naming conventions. Entry point for all router skills.
 type: core
 library: tanstack-router
-library_version: '1.166.2'
+library_version: "1.166.2"
 ---
 
 # TanStack Router Core
@@ -70,7 +70,7 @@ Need server-side rendering?
 
 ```tsx
 // src/routes/__root.tsx
-import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { createRootRoute, Outlet } from "@tanstack/react-router"
 
 export const Route = createRootRoute({
   component: () => <Outlet />,
@@ -79,22 +79,22 @@ export const Route = createRootRoute({
 
 ```tsx
 // src/routes/index.tsx
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: () => <h1>Home</h1>,
 })
 ```
 
 ```tsx
 // src/router.tsx
-import { createRouter } from '@tanstack/react-router'
-import { routeTree } from './routeTree.gen'
+import { createRouter } from "@tanstack/react-router"
+import { routeTree } from "./routeTree.gen"
 
 const router = createRouter({ routeTree })
 
 // REQUIRED for type safety — without this, Link/useNavigate have no autocomplete
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router
   }
@@ -105,8 +105,8 @@ export default router
 
 ```tsx
 // src/main.tsx
-import { RouterProvider } from '@tanstack/react-router'
-import router from './router'
+import { RouterProvider } from "@tanstack/react-router"
+import router from "./router"
 
 function App() {
   return <RouterProvider router={router} />
@@ -121,12 +121,12 @@ The Vite plugin manages the path string in `createFileRoute`. Do not change it m
 
 ```tsx
 // File: src/routes/posts/$postId.tsx
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   // ✅ matches file path
   component: PostPage,
 })
 
-export const Route = createFileRoute('/post/$postId')({
+export const Route = createFileRoute("/post/$postId")({
   // ❌ silent mismatch
   component: PostPage,
 })

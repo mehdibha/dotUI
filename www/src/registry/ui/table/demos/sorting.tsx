@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import React from 'react'
-import type * as TablePrimitives from 'react-aria-components/Table'
+import React from "react"
+import type * as TablePrimitives from "react-aria-components/Table"
 
 import {
   Table,
@@ -11,26 +11,26 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
 const columns: Column[] = [
-  { name: 'Name', id: 'name', isRowHeader: true },
-  { name: 'Type', id: 'type' },
-  { name: 'Date Modified', id: 'date' },
+  { name: "Name", id: "name", isRowHeader: true },
+  { name: "Type", id: "type" },
+  { name: "Date Modified", id: "date" },
 ]
 
 const items: Item[] = [
-  { id: 1, name: 'Games', date: '6/7/2020', type: 'File folder' },
-  { id: 2, name: 'Program Files', date: '4/7/2021', type: 'File folder' },
-  { id: 3, name: 'bootmgr', date: '11/20/2010', type: 'System file' },
-  { id: 4, name: 'log.txt', date: '1/18/2016', type: 'Text Document' },
+  { id: 1, name: "Games", date: "6/7/2020", type: "File folder" },
+  { id: 2, name: "Program Files", date: "4/7/2021", type: "File folder" },
+  { id: 3, name: "bootmgr", date: "11/20/2010", type: "System file" },
+  { id: 4, name: "log.txt", date: "1/18/2016", type: "Text Document" },
 ]
 
 export default function Demo() {
   const [sortDescriptor, setSortDescriptor] =
     React.useState<TablePrimitives.SortDescriptor>({
-      column: 'name',
-      direction: 'ascending',
+      column: "name",
+      direction: "ascending",
     })
 
   const sortedItems = React.useMemo(() => {
@@ -38,7 +38,7 @@ export default function Demo() {
       const first = a[sortDescriptor.column as keyof Item] as string
       const second = b[sortDescriptor.column as keyof Item] as string
       let cmp = first.localeCompare(second)
-      if (sortDescriptor.direction === 'descending') {
+      if (sortDescriptor.direction === "descending") {
         cmp *= -1
       }
       return cmp
@@ -81,7 +81,7 @@ interface Item {
 }
 
 interface Column {
-  id: keyof Omit<Item, 'id'>
+  id: keyof Omit<Item, "id">
   name: string
   isRowHeader?: boolean
 }

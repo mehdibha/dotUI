@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Label } from '@/registry/ui/field'
-import { Slider, SliderControl } from '@/registry/ui/slider'
+import { Label } from "@/registry/ui/field"
+import { Slider, SliderControl } from "@/registry/ui/slider"
 
 export default function Demo() {
   const [value, setValue] = React.useState(50)

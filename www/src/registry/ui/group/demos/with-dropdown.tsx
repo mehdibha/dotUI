@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   AlertTriangleIcon,
@@ -8,12 +8,12 @@ import {
   ShareIcon,
   TrashIcon,
   UserRoundXIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Group } from '@/registry/ui/group'
-import { Menu, MenuContent, MenuItem, MenuSection } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Group } from "@/registry/ui/group"
+import { Menu, MenuContent, MenuItem, MenuSection } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

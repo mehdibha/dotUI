@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { SquarePenIcon } from 'lucide-react'
+import { SquarePenIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Kbd } from '@/registry/ui/kbd'
+import { Button } from "@/registry/ui/button"
+import { Kbd } from "@/registry/ui/kbd"
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene, useOpenAutoplay } from "../autoplay"
 
 export function TooltipDemo() {
   const { phase } = useOpenAutoplay()

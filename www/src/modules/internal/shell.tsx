@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* Shared chrome for every /internal page: breadcrumbs back up the tree, then
    the page's own title and description. Keeps the labs navigable instead of
@@ -9,13 +9,13 @@
    bring their own canvas (the color/preset benches deliberately sit on a
    neutral, un-themed background so they don't bias what they measure). */
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbSeparator,
   Breadcrumbs,
-} from '@/registry/ui/breadcrumbs'
+} from "@/registry/ui/breadcrumbs"
 
 export interface Crumb {
   label: string
@@ -40,11 +40,11 @@ export function InternalHeader({
   // On /internal itself there's nothing below it, so the root crumb is the
   // current page and shouldn't link to where you already are.
   const trail: Crumb[] = [
-    { label: 'Internal', href: crumbs.length > 0 ? '/internal' : undefined },
+    { label: "Internal", href: crumbs.length > 0 ? "/internal" : undefined },
     ...crumbs,
   ]
   return (
-    <div className={cn('flex flex-col gap-4', className)}>
+    <div className={cn("flex flex-col gap-4", className)}>
       <Breadcrumbs>
         {trail.map((crumb, i) => (
           <BreadcrumbItem key={`${crumb.label}-${i}`}>

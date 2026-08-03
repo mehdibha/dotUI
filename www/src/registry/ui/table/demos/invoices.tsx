@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Badge } from '@/registry/ui/badge'
+import { Badge } from "@/registry/ui/badge"
 import {
   Table,
   TableContainer,
@@ -10,9 +10,9 @@ import {
   TableFooter,
   TableHeader,
   TableRow,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
-type InvoiceStatus = 'Paid' | 'Pending' | 'Unpaid'
+type InvoiceStatus = "Paid" | "Pending" | "Unpaid"
 
 const invoices: Array<{
   id: string
@@ -20,25 +20,25 @@ const invoices: Array<{
   amount: number
   method: string
 }> = [
-  { id: 'INV001', status: 'Paid', amount: 250, method: 'Credit Card' },
-  { id: 'INV002', status: 'Pending', amount: 150, method: 'PayPal' },
-  { id: 'INV003', status: 'Unpaid', amount: 350, method: 'Bank Transfer' },
-  { id: 'INV004', status: 'Paid', amount: 450, method: 'Credit Card' },
-  { id: 'INV005', status: 'Paid', amount: 550, method: 'PayPal' },
-  { id: 'INV006', status: 'Pending', amount: 200, method: 'Bank Transfer' },
-  { id: 'INV007', status: 'Unpaid', amount: 300, method: 'Credit Card' },
+  { id: "INV001", status: "Paid", amount: 250, method: "Credit Card" },
+  { id: "INV002", status: "Pending", amount: 150, method: "PayPal" },
+  { id: "INV003", status: "Unpaid", amount: 350, method: "Bank Transfer" },
+  { id: "INV004", status: "Paid", amount: 450, method: "Credit Card" },
+  { id: "INV005", status: "Paid", amount: 550, method: "PayPal" },
+  { id: "INV006", status: "Pending", amount: 200, method: "Bank Transfer" },
+  { id: "INV007", status: "Unpaid", amount: 300, method: "Credit Card" },
 ]
 
 const statusVariant = {
-  Paid: 'success',
-  Pending: 'warning',
-  Unpaid: 'neutral',
+  Paid: "success",
+  Pending: "warning",
+  Unpaid: "neutral",
 } as const
 
 const formatCurrency = (amount: number) =>
-  new Intl.NumberFormat('en-US', {
-    currency: 'USD',
-    style: 'currency',
+  new Intl.NumberFormat("en-US", {
+    currency: "USD",
+    style: "currency",
   }).format(amount)
 
 export default function Demo() {

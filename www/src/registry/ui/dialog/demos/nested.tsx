@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { FieldGroup, Label } from '@/registry/ui/field'
-import { Modal } from '@/registry/ui/modal'
-import { Popover } from '@/registry/ui/popover'
-import { Radio, RadioGroup } from '@/registry/ui/radio-group'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { FieldGroup, Label } from "@/registry/ui/field"
+import { Modal } from "@/registry/ui/modal"
+import { Popover } from "@/registry/ui/popover"
+import { Radio, RadioGroup } from "@/registry/ui/radio-group"
 
-type Type = 'modal' | 'drawer' | 'popover'
+type Type = "modal" | "drawer" | "popover"
 
 const OVERLAYS: Record<
   Type,
@@ -27,7 +27,7 @@ const OVERLAYS: Record<
 }
 
 export default function Demo() {
-  const [type, setType] = React.useState<Type>('modal')
+  const [type, setType] = React.useState<Type>("modal")
   const Overlay = OVERLAYS[type]
   return (
     <div className="flex w-full items-center gap-8">

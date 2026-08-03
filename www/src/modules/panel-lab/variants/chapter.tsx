@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
 /* The chapter card — the real /create panel's section chrome (control-panel.tsx),
    shared by the v1 frame and the per-section frames so a section looks identical
    whether it's read in the full panel or on its own. */
 
-import { RotateCcwIcon } from 'lucide-react'
+import { RotateCcwIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 
-import type { Lab, LabState } from '../data'
+import type { Lab, LabState } from "../data"
 
 export interface Chapter {
   id: string

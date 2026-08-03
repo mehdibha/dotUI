@@ -1,4 +1,4 @@
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
 /**
  * The macOS-style arrow shared by the component-gallery autoplay cursors. It dips
@@ -21,13 +21,13 @@ export function Pointer({
       width={size}
       height={size}
       className={cn(
-        'relative drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]',
+        "relative drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]",
         className,
       )}
       style={{
-        transform: pressed ? 'scale(0.82)' : 'scale(1)',
-        transformOrigin: '5px 4px',
-        transition: 'transform 130ms cubic-bezier(0.32, 0.72, 0, 1)',
+        transform: pressed ? "scale(0.82)" : "scale(1)",
+        transformOrigin: "5px 4px",
+        transition: "transform 130ms cubic-bezier(0.32, 0.72, 0, 1)",
       }}
     >
       <path

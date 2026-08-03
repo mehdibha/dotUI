@@ -1,14 +1,14 @@
-import { createContext, useContext, useRef } from 'react'
-import { CheckIcon, CopyIcon, FileIcon } from 'lucide-react'
+import { createContext, useContext, useRef } from "react"
+import { CheckIcon, CopyIcon, FileIcon } from "lucide-react"
 
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 
 const CodeBlockContext =
   createContext<React.RefObject<HTMLElement | null> | null>(null)
 
-export interface CodeBlockProps extends React.ComponentProps<'figure'> {
+export interface CodeBlockProps extends React.ComponentProps<"figure"> {
   title?: string
   actions?: React.ReactNode
   /** Language of the code inside, for the title-bar icon. */
@@ -19,7 +19,7 @@ export interface CodeBlockProps extends React.ComponentProps<'figure'> {
 
 export function CodeBlock({
   title,
-  language = 'tsx',
+  language = "tsx",
   actions: actionsProp,
   children,
   className,
@@ -39,7 +39,7 @@ export function CodeBlock({
     <CodeBlockContext.Provider value={containerRef}>
       <figure
         ref={containerRef}
-        className={cn('rounded-md border bg-card', className)}
+        className={cn("rounded-md border bg-card", className)}
         {...props}
       >
         {title && (
@@ -50,20 +50,20 @@ export function CodeBlock({
             </figcaption>
             <div
               className={cn(
-                'flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5',
+                "flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
               )}
             >
               {actions}
             </div>
           </div>
         )}
-        <div className={cn('relative overflow-auto', contentClassName)}>
+        <div className={cn("relative overflow-auto", contentClassName)}>
           <section className="overflow-auto">{children}</section>
           {!title && (
             <div
               className={cn(
-                'absolute top-1.75 right-1.75 flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5',
-                'backdrop-blur-[1px] **:data-button:bg-card/60 **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))] **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))]',
+                "absolute top-1.75 right-1.75 flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
+                "backdrop-blur-[1px] **:data-button:bg-card/60 **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))] **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))]",
               )}
             >
               {actions}
@@ -79,25 +79,25 @@ export function Pre({
   children,
   className,
   ...props
-}: React.ComponentProps<'pre'>) {
+}: React.ComponentProps<"pre">) {
   // Markup is @tanstack/highlight's: token spans carry th-* color classes
   // (colored globally by highlight.css); lines are wrapped in .th-line spans
   // only when a block has line decorations or line numbers.
   return (
     <pre
       className={cn(
-        'w-max min-w-full py-3 [tab-size:2]',
+        "w-max min-w-full py-3 [tab-size:2]",
         // code
-        '*:[code]:block *:[code]:w-max *:[code]:min-w-full *:[code]:px-4 *:[code]:text-[0.8125rem]',
+        "*:[code]:block *:[code]:w-max *:[code]:min-w-full *:[code]:px-4 *:[code]:text-[0.8125rem]",
         // line (full-bleed rows so decoration backgrounds span the padding)
-        '**:[.th-line]:relative **:[.th-line]:-mx-4 **:[.th-line]:block **:[.th-line]:min-h-lh **:[.th-line]:px-4',
+        "**:[.th-line]:relative **:[.th-line]:-mx-4 **:[.th-line]:block **:[.th-line]:min-h-lh **:[.th-line]:px-4",
         // highlight
         "**:[.th-line--highlighted]:bg-selected/70! **:[.th-line--highlighted]:before:absolute **:[.th-line--highlighted]:before:inset-y-0 **:[.th-line--highlighted]:before:left-0 **:[.th-line--highlighted]:before:w-0.5 **:[.th-line--highlighted]:before:bg-fg/40 **:[.th-line--highlighted]:before:content-['']",
         // diff
         "**:[.th-line--inserted]:bg-success/15 **:[.th-line--inserted]:before:absolute **:[.th-line--inserted]:before:inset-y-0 **:[.th-line--inserted]:before:left-0.5 **:[.th-line--inserted]:before:text-success **:[.th-line--inserted]:before:content-['+']",
         "**:[.th-line--deleted]:bg-danger/20 **:[.th-line--deleted]:before:absolute **:[.th-line--deleted]:before:inset-y-0 **:[.th-line--deleted]:before:left-0.5 **:[.th-line--deleted]:before:text-danger **:[.th-line--deleted]:before:content-['-']",
         // line numbers (data-line comes from the highlighter)
-        '[&.th-code--line-numbers_.th-line]:pl-9! [&.th-code--line-numbers_.th-line]:after:absolute [&.th-code--line-numbers_.th-line]:after:left-2 [&.th-code--line-numbers_.th-line]:after:text-fg-muted [&.th-code--line-numbers_.th-line]:after:content-[attr(data-line)]',
+        "[&.th-code--line-numbers_.th-line]:pl-9! [&.th-code--line-numbers_.th-line]:after:absolute [&.th-code--line-numbers_.th-line]:after:left-2 [&.th-code--line-numbers_.th-line]:after:text-fg-muted [&.th-code--line-numbers_.th-line]:after:content-[attr(data-line)]",
         className,
       )}
       {...props}
@@ -112,12 +112,12 @@ function CopyButton() {
   const containerRef = useContext(CodeBlockContext)
 
   const handleCopy = () => {
-    const pre = containerRef?.current?.getElementsByTagName('pre').item(0)
+    const pre = containerRef?.current?.getElementsByTagName("pre").item(0)
     if (!pre) return
 
     // Diff signs and line numbers are pseudo-element content, so plain
     // textContent is already the clean copy text.
-    const text = pre.textContent ?? ''
+    const text = pre.textContent ?? ""
     if (text) {
       copyToClipboard(text)
     }
@@ -129,7 +129,7 @@ function CopyButton() {
       size="xs"
       isIconOnly
       onPress={handleCopy}
-      aria-label={isCopied ? 'Copied!' : 'Copy code'}
+      aria-label={isCopied ? "Copied!" : "Copy code"}
     >
       {isCopied ? <CheckIcon /> : <CopyIcon />}
     </Button>
@@ -170,17 +170,17 @@ const Icons = {
 
 export function getIconForLanguageExtension(language: string) {
   switch (language) {
-    case 'json':
+    case "json":
       return <Icons.json />
-    case 'css':
+    case "css":
       return <Icons.css className="fill-fg-muted" />
-    case 'ts':
-    case 'tsx':
-    case 'typescript':
+    case "ts":
+    case "tsx":
+    case "typescript":
       return <Icons.ts className="fill-fg-muted" />
-    case 'bash':
-    case 'sh':
-    case 'shell':
+    case "bash":
+    case "sh":
+    case "shell":
       return <Icons.bash className="fill-fg-muted" />
     default:
       return <FileIcon />

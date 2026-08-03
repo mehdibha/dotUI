@@ -7,28 +7,28 @@
  * nothing in the color section of `base/theme.css` is hand-authored.
  */
 
-import type { SemanticTarget, SemanticToken, SemanticVocabulary } from './types'
+import type { SemanticTarget, SemanticToken, SemanticVocabulary } from "./types"
 
 /** Resolve a single {@link SemanticTarget} to its CSS value string. */
 export function resolveTarget(target: SemanticTarget): string {
-  if ('ref' in target) return `var(--${target.ref.palette}-${target.ref.step})`
-  if ('alpha' in target)
+  if ("ref" in target) return `var(--${target.ref.palette}-${target.ref.step})`
+  if ("alpha" in target)
     return `var(--${target.alpha.palette}-a${target.alpha.step})`
-  if ('on' in target) return `var(--on-${target.on.palette}-${target.on.step})`
-  if ('value' in target) return target.value
+  if ("on" in target) return `var(--on-${target.on.palette}-${target.on.step})`
+  if ("value" in target) return target.value
   const { space, stops } = target.mix
   const [a, weight, b] = stops
   return `color-mix(in ${space}, ${resolveTarget(a)} ${weight}%, ${resolveTarget(b)})`
 }
 
 function isPerMode(
-  target: SemanticToken['target'],
+  target: SemanticToken["target"],
 ): target is { light: SemanticTarget; dark: SemanticTarget } {
-  return 'light' in target && 'dark' in target
+  return "light" in target && "dark" in target
 }
 
 /** Pick the base (light) target of a token. */
-function baseTarget(target: SemanticToken['target']): SemanticTarget {
+function baseTarget(target: SemanticToken["target"]): SemanticTarget {
   return isPerMode(target) ? target.light : target
 }
 
@@ -53,14 +53,14 @@ export function emitCss(
   vocab: SemanticVocabulary,
   options: EmitCssOptions = {},
 ): string {
-  const indent = options.indent ?? '\t'
-  const selector = options.selector ?? '@theme'
+  const indent = options.indent ?? "\t"
+  const selector = options.selector ?? "@theme"
   const lines: string[] = [`${selector} {`]
   for (const [name, token] of Object.entries(vocab)) {
     lines.push(`${indent}--${name}: ${resolveTokenValue(token)};`)
   }
-  lines.push('}')
-  return `${lines.join('\n')}\n`
+  lines.push("}")
+  return `${lines.join("\n")}\n`
 }
 
 /**
@@ -72,13 +72,13 @@ export function emitDarkOverridesCss(
   vocab: SemanticVocabulary,
   options: EmitCssOptions = {},
 ): string {
-  const indent = options.indent ?? '\t'
-  const selector = options.selector ?? '.dark'
+  const indent = options.indent ?? "\t"
+  const selector = options.selector ?? ".dark"
   const lines: string[] = []
   for (const [name, token] of Object.entries(vocab)) {
     if (!isPerMode(token.target)) continue
     lines.push(`${indent}--${name}: ${resolveTarget(token.target.dark)};`)
   }
-  if (lines.length === 0) return ''
-  return `${selector} {\n${lines.join('\n')}\n}\n`
+  if (lines.length === 0) return ""
+  return `${selector} {\n${lines.join("\n")}\n}\n`
 }

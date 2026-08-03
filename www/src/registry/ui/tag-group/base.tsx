@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as TagGroupPrimitives from 'react-aria-components/TagGroup'
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as TagGroupPrimitives from "react-aria-components/TagGroup"
 
-import { XIcon } from '@/registry/icons'
-import { Button } from '@/registry/ui/button'
+import { XIcon } from "@/registry/icons"
+import { Button } from "@/registry/ui/button"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: Separator
 
 interface TagGroupProps extends TagGroupPrimitives.TagGroupProps {
-  size?: 'sm' | 'md' | 'lg'
+  size?: "sm" | "md" | "lg"
 }
 
-function TagGroup({ className, size = 'md', ...props }: TagGroupProps) {
+function TagGroup({ className, size = "md", ...props }: TagGroupProps) {
   const { tagGroup } = useStyles()()
   return (
     <TagGroupPrimitives.TagGroup
@@ -50,7 +50,7 @@ interface TagProps extends TagGroupPrimitives.TagProps {}
 function Tag({ className, ...props }: TagProps) {
   const { tag } = useStyles()()
   const textValue =
-    typeof props.children === 'string' ? props.children : undefined
+    typeof props.children === "string" ? props.children : undefined
 
   return (
     <TagGroupPrimitives.Tag

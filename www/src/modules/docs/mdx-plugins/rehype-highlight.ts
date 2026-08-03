@@ -1,9 +1,9 @@
-import { codeFenceToHast } from '@tanstack/highlight/markdown'
-import type { Element, Root } from 'hast'
-import type { Plugin } from 'unified'
-import { visit } from 'unist-util-visit'
+import { codeFenceToHast } from "@tanstack/highlight/markdown"
+import type { Element, Root } from "hast"
+import type { Plugin } from "unified"
+import { visit } from "unist-util-visit"
 
-import { highlighter } from './highlighter'
+import { highlighter } from "./highlighter"
 
 /**
  * Replaces `<pre><code class="language-x">` blocks with @tanstack/highlight
@@ -14,11 +14,11 @@ import { highlighter } from './highlighter'
  */
 const rehypeHighlight: Plugin<[], Root> = () => {
   return (tree) => {
-    visit(tree, 'element', (node: Element, index, parent) => {
-      if (node.tagName !== 'pre' || index === undefined || !parent) return
+    visit(tree, "element", (node: Element, index, parent) => {
+      if (node.tagName !== "pre" || index === undefined || !parent) return
       const code = node.children.find(
         (child): child is Element =>
-          child.type === 'element' && child.tagName === 'code',
+          child.type === "element" && child.tagName === "code",
       )
       if (!code) return
 
@@ -29,7 +29,7 @@ const rehypeHighlight: Plugin<[], Root> = () => {
         highlighter,
       )
       parent.children[index] = highlighted as unknown as Element
-      return 'skip'
+      return "skip"
     })
   }
 }
@@ -40,14 +40,14 @@ function getLanguage(code: Element): string | undefined {
   const className = code.properties?.className
   const classes = Array.isArray(className) ? className : []
   return classes
-    .find((value) => typeof value === 'string' && value.startsWith('language-'))
+    .find((value) => typeof value === "string" && value.startsWith("language-"))
     ?.toString()
-    .slice('language-'.length)
+    .slice("language-".length)
 }
 
 function collectText(node: Element): string {
-  let text = ''
-  visit(node, 'text', (child: { value: string }) => {
+  let text = ""
+  visit(node, "text", (child: { value: string }) => {
     text += child.value
   })
   return text

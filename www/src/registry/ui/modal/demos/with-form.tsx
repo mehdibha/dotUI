@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogBody,
@@ -9,11 +9,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { Modal } from '@/registry/ui/modal'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { Modal } from "@/registry/ui/modal"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   return (

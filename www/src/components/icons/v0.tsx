@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react'
+import type { SVGProps } from "react"
 
 // Official v0 (v0.dev / Vercel) wordmark, via svgl. Single-path, tints with `currentColor`.
 export function V0Icon(props: SVGProps<SVGSVGElement>) {

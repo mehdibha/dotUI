@@ -1,23 +1,23 @@
-'use client'
+"use client"
 
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react"
 
 import {
   Alert,
   AlertDescription,
   AlertTitle,
   type AlertProps,
-} from '@/registry/ui/alert'
+} from "@/registry/ui/alert"
 
 export default function Demo({
-  title = 'Update available',
-  description = 'A new version is ready to install. Restart the app to apply it.',
-  variant = 'neutral',
+  title = "Update available",
+  description = "A new version is ready to install. Restart the app to apply it.",
+  variant = "neutral",
   icon,
 }: {
   title?: string
   description?: string
-  variant?: AlertProps['variant']
+  variant?: AlertProps["variant"]
   icon?: ReactNode
 } = {}) {
   return (
