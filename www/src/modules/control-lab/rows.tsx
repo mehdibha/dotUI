@@ -388,10 +388,9 @@ export function ColorPickerRow({
           {tile ? (
             <Button
               variant="quiet"
-              className="flex h-auto w-full flex-col items-stretch gap-2 rounded-xl bg-muted p-2 text-left hover:bg-highlight pressed:bg-highlight"
+              className="flex h-auto w-full items-center justify-between gap-3 rounded-xl bg-muted p-3 text-left hover:bg-highlight pressed:bg-highlight"
             >
-              <ColorSwatch className="h-14 w-full rounded-lg" />
-              <span className="flex flex-col gap-0.5 px-1 pb-0.5">
+              <span className="flex min-w-0 flex-col gap-0.5">
                 <span className={ROW_LABEL}>{label}</span>
                 <span className={cn(ROW_VALUE, 'font-mono text-xs uppercase')}>
                   {color.toString('hex')}
@@ -402,6 +401,7 @@ export function ColorPickerRow({
                   </span>
                 )}
               </span>
+              <ColorSwatch className="size-5 shrink-0 rounded-full" />
             </Button>
           ) : (
             <Button
