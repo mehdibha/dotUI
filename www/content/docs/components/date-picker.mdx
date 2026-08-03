@@ -62,7 +62,10 @@ import { DialogContent } from '@/ui/dialog'
 import { Description, FieldError, Label } from '@/ui/field'
 import { DateInput, InputGroup, InputGroupAddon } from '@/ui/input'
 import { Popover } from '@/ui/popover'
-;<DatePicker>
+```
+
+```tsx
+<DatePicker>
   <Label />
   <InputGroup>
     <DateInput />
@@ -86,7 +89,10 @@ The value is an [`@internationalized/date`](https://react-spectrum.adobe.com/int
 
 ```tsx
 import { parseDate } from '@internationalized/date'
-;<DatePicker
+```
+
+```tsx
+<DatePicker
   defaultValue={parseDate('2020-02-03')}
   minValue={parseDate('2020-01-01')}
 />
@@ -101,7 +107,10 @@ import { parseDate } from '@internationalized/date'
 
 import { RangeCalendar } from '@/ui/calendar'
 import { DateRangePicker } from '@/ui/date-picker'
-;<DateRangePicker
+```
+
+```tsx
+<DateRangePicker
   defaultValue={{
     start: parseDate('2020-02-03'),
     end: parseDate('2020-02-12'),

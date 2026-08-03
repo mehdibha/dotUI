@@ -17,8 +17,10 @@ import { ToastProvider, toastManager } from '@/ui/toast'
 ```
 
 ```tsx
-;<ToastProvider />
+<ToastProvider />
+```
 
+```tsx
 toastManager.add({
   title: 'Your message has been sent.',
 })
@@ -36,8 +38,13 @@ Toasts aren't rendered as JSX. Mount `<ToastProvider />` once at your app root, 
 
 ```tsx
 import { ToastProvider, toastManager } from '@/ui/toast'
-;<ToastProvider />
+```
 
+```tsx
+<ToastProvider />
+```
+
+```tsx
 const id = toastManager.add({ title: 'Your message has been sent.' })
 toastManager.close(id)
 ```

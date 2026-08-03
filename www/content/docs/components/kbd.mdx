@@ -17,7 +17,7 @@ import { Kbd } from '@/ui/kbd'
 ```
 
 ```tsx
-;<Kbd>⌘</Kbd> + <Kbd>K</Kbd>
+<Kbd>⌘K</Kbd>
 ```
 
 ## Anatomy
@@ -26,7 +26,10 @@ Use `Kbd` for a single key. Wrap several in `KbdGroup` to present a key combinat
 
 ```tsx
 import { Kbd, KbdGroup } from '@/ui/kbd'
-;<KbdGroup>
+```
+
+```tsx
+<KbdGroup>
   <Kbd>⌘</Kbd>
   <Kbd>K</Kbd>
 </KbdGroup>

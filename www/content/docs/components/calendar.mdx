@@ -100,7 +100,10 @@ Calendar values use [`@internationalized/date`](https://react-spectrum.adobe.com
 
 ```tsx
 import { parseDate } from '@internationalized/date'
-;<Calendar defaultValue={parseDate('2020-02-03')} />
+```
+
+```tsx
+<Calendar defaultValue={parseDate('2020-02-03')} />
 ```
 
 ```tsx
@@ -108,9 +111,11 @@ import { useState } from 'react'
 import { parseDate } from '@internationalized/date'
 import type { DateValue } from 'react-aria-components'
 
-const [value, setValue] = useState<DateValue>(parseDate('2020-02-03'))
+function Example() {
+  const [value, setValue] = useState<DateValue>(parseDate('2020-02-03'))
 
-;<Calendar value={value} onChange={setValue} />
+  return <Calendar value={value} onChange={setValue} />
+}
 ```
 
 ## Date availability
@@ -121,8 +126,10 @@ Constrain the selectable range with `minValue` and `maxValue`, or disable indivi
 import { getLocalTimeZone, today } from '@internationalized/date'
 
 const now = today(getLocalTimeZone())
+```
 
-;<Calendar
+```tsx
+<Calendar
   minValue={now}
   maxValue={now.add({ months: 1 })}
   isDateUnavailable={(date) =>
