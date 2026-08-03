@@ -6,7 +6,7 @@
    the grouped-list container that fuses rows into cards.
    Prototype only: local state in, callback out, no design-system wiring. */
 
-import { useState } from "react"
+import { createContext, useContext, useState } from "react"
 import {
   ChevronDownIcon,
   ChevronRightIcon,
@@ -77,6 +77,12 @@ export const ROW_LABEL = "truncate text-[0.8125rem] font-medium text-fg"
 export const ROW_VALUE = "truncate text-[0.8125rem] text-fg-muted"
 /** What a fixed-height row becomes once it carries a description. */
 export const ROW_DESCRIBED = "h-auto py-2.5"
+
+/* Where row-attached overlays (pickers, selects, menus) open. Panel-lab's
+   preview-rail draft overrides it to explore preview/popover combos. */
+export type RowOverlayPlacement = "right top" | "left top" | "bottom start"
+export const RowOverlayPlacementContext =
+  createContext<RowOverlayPlacement>("right top")
 
 /** The left column of a row: the label, and the line under it that says what
  *  the axis actually changes. Rows stay one line until a description arrives.
@@ -355,7 +361,10 @@ export function SelectRow({
           <ChevronsUpDownIcon className="size-3.5 text-fg-muted" />
         </span>
       </Button>
-      <Popover className="w-(--trigger-width)" placement="right top">
+      <Popover
+        className="w-(--trigger-width)"
+        placement={useContext(RowOverlayPlacementContext)}
+      >
         <ListBox>
           {options.map((opt) => (
             <ListBoxItem key={opt.value} id={opt.value} textValue={opt.label}>
@@ -403,6 +412,7 @@ export function ColorPickerRow({
   onChange: (hex: string) => void
 }) {
   const tile = layout === "tile"
+  const rowPlacement = useContext(RowOverlayPlacementContext)
   return (
     <ColorPicker value={value} onChange={(c) => onChange(c.toString("hex"))}>
       {({ color }) => (
@@ -443,7 +453,7 @@ export function ColorPickerRow({
           <Popover
             // A tile is as wide as the picker, so opening below it keeps the
             // two edges aligned; a row has no width to align to.
-            placement={tile ? "bottom start" : "right top"}
+            placement={tile ? "bottom start" : rowPlacement}
             className="w-64 min-w-0"
           >
             <DialogContent className="flex flex-col gap-3 p-3">
@@ -667,7 +677,10 @@ export function NeutralPickerRow({
           </span>
         </span>
       </Button>
-      <Popover placement="right top" className="w-64 min-w-0">
+      <Popover
+        placement={useContext(RowOverlayPlacementContext)}
+        className="w-64 min-w-0"
+      >
         <DialogContent className="flex flex-col gap-3 p-3">
           {/* Seeds, same as the brand picker: one tap to a known gray family,
               then the sliders for anything between them. Tapping while flat
@@ -772,7 +785,7 @@ export function FontListPopover({
   return (
     <Popover
       className="w-(--trigger-width) outline-hidden"
-      placement="right top"
+      placement={useContext(RowOverlayPlacementContext)}
     >
       <Command>
         <SearchField autoFocus aria-label="Search fonts">

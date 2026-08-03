@@ -11,7 +11,7 @@
    active mode; the Modes row manages the set. Still engine-real: each mode
    resolves through @dotui/colors with its own background/guarantee settings. */
 
-import { useMemo, useState } from "react"
+import { useContext, useMemo, useState } from "react"
 import {
   CheckIcon,
   MoonIcon,
@@ -54,6 +54,7 @@ import {
   ROW,
   ROW_LABEL,
   ROW_VALUE,
+  RowOverlayPlacementContext,
 } from "@/modules/control-lab/rows"
 
 import { DEFAULTS, PRIMARY_OPTIONS } from "./data"
@@ -467,7 +468,7 @@ function AddModeRow({
           <PlusIcon className="size-3.5" />
           {disabled ? `Up to ${MAX_MODES} modes` : "Add mode"}
         </Button>
-        <Popover placement="right top">
+        <Popover placement={useContext(RowOverlayPlacementContext)}>
           <MenuContent>
             {MODE_ARCHETYPES.map(({ key, note, mode }) => (
               <MenuItem

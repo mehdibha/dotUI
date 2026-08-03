@@ -13,7 +13,13 @@
 
 import { LayersIcon, PaletteIcon, SmileIcon, TypeIcon } from "lucide-react"
 
-import { ICON_KEYS, TYPE_KEYS, WORKING_COLOR_KEYS, type LabState } from "./data"
+import {
+  ICON_KEYS,
+  TYPE_KEYS,
+  WORKING_COLOR_KEYS,
+  type Lab,
+  type LabState,
+} from "./data"
 import {
   ColorSectionV2Body as Color560,
   SurfacesSectionBody as Surfaces560,
@@ -24,6 +30,7 @@ import {
 } from "./drafts/color-561"
 import { ColorSectionV2Body as Color562 } from "./drafts/color-562"
 import { IdealIconsSectionBody as Icons564 } from "./drafts/icons-564"
+import { HoverPreviewFrame } from "./drafts/preview-594"
 import { SurfacesSectionBody as Surfaces562 } from "./drafts/surfaces-562"
 import { IdealTypeSectionBody as Type563 } from "./drafts/type-563"
 import { IdealTypeSectionBody as Type565 } from "./drafts/type-565"
@@ -82,6 +89,8 @@ export interface Draft {
   section: string
   /** Chapters replacing (by id) or extending the base version's list. */
   overrides: Chapter[]
+  /** Replaces the shared panel chrome — for drafts exploring the frame. */
+  Frame?: React.ComponentType<{ chapters: Chapter[]; lab: Lab }>
 }
 
 export const DRAFTS: Draft[] = [
@@ -145,6 +154,16 @@ export const DRAFTS: Draft[] = [
         Body: Type565,
       },
     ],
+  },
+  {
+    id: "pr-594",
+    pr: 594,
+    section: "Frame",
+    title: "Hover preview rail",
+    summary:
+      "A frame take, sections untouched: hovering, focusing or opening a control floats its live preview beside the panel — one shared container that glides between rows and morphs its content.",
+    overrides: [],
+    Frame: HoverPreviewFrame,
   },
   {
     id: "pr-564",

@@ -4,6 +4,7 @@
    on the control-lab row language. If one earns its keep it graduates into
    control-lab/rows.tsx. Prototype only: local state in, callback out. */
 
+import { useContext } from "react"
 import { ChevronDownIcon, SearchIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
@@ -21,7 +22,12 @@ import {
   SegmentedControl,
   SegmentedControlItem,
 } from "@/registry/ui/segmented-control"
-import { ROW, ROW_LABEL, ROW_VALUE } from "@/modules/control-lab/rows"
+import {
+  ROW,
+  ROW_LABEL,
+  ROW_VALUE,
+  RowOverlayPlacementContext,
+} from "@/modules/control-lab/rows"
 import { useLoadedFamilies } from "@/modules/create/typography"
 
 /* -------------------------------- Detail row ------------------------------- */
@@ -143,7 +149,7 @@ export function SwatchDots({ colors }: { colors: string[] }) {
 /** Shared picker popover body (area + hue + hex). */
 export function PickerPopoverContent() {
   return (
-    <Popover placement="right top">
+    <Popover placement={useContext(RowOverlayPlacementContext)}>
       <DialogContent className="flex flex-col gap-2">
         <div className="flex gap-2">
           <ColorArea
