@@ -81,7 +81,7 @@ export interface PublishPreset {
   density: Density
   /** Per-component param selections: { button: { variant: "primary", ... } } */
   componentParams: Record<string, Record<string, string>>
-  /** Global theme tokens (radius factor, cursors, …): { "--radius-factor": "0.5" } */
+  /** Global theme tokens (base radius, cursors, …): { "--radius": "0.5rem" } */
   tokens?: Record<string, string>
   /** Generative color recipe; when present, its ramps override the static base palette. */
   color?: ColorConfig

@@ -9,7 +9,7 @@ import { V0Icon } from '@/components/icons/v0'
 
 export function ExportSection() {
   return (
-    <section className="mx-auto w-full max-w-[calc(1500px+16rem)] px-4 sm:px-6 lg:px-32">
+    <section>
       <div className="flex flex-col items-start gap-4">
         <h2 className="font-mono text-sm tracking-wide text-fg-muted">
           Export

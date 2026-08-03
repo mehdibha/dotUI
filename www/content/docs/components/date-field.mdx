@@ -64,7 +64,10 @@ import { Label } from '@/ui/field'
 import { DateField } from '@/ui/date-field'
 import { DateInput } from '@/ui/input'
 import { Description, FieldError, Label } from '@/ui/field'
-;<DateField>
+```
+
+```tsx
+<DateField>
   <Label />
   <DateInput />
   <Description />
@@ -78,7 +81,10 @@ Values are [`@internationalized/date`](https://react-spectrum.adobe.com/internat
 
 ```tsx
 import { parseDate } from '@internationalized/date'
-;<DateField defaultValue={parseDate('2020-02-03')}>
+```
+
+```tsx
+<DateField defaultValue={parseDate('2020-02-03')}>
   <Label>Date</Label>
   <DateInput />
 </DateField>

@@ -22,6 +22,8 @@ import {
 } from './publish'
 import {
   buildScalarVarMap,
+  buildStyleVarMap,
+  pruneResolvedCssVars,
   resolveClasses,
   rewriteClassString,
 } from './resolve-classes'
@@ -189,6 +191,90 @@ describe('resolve-classes', () => {
     const out = resolveClasses(layer, map)
     expect(out.slots?.root).toEqual(['px-4', 'rounded-lg'])
   })
+
+  test('buildStyleVarMap resolves bare var refs across token pools', () => {
+    const map = buildStyleVarMap({
+      '--popover-radius': 'var(--radius-md)',
+      '--slider-track-radius': 'var(--radius-full)',
+      '--slider-cursor': 'var(--cursor-interactive)',
+      '--modal-backdrop-blur': 'var(--blur-sm)',
+      // literals and calc chains must NOT resolve
+      '--checkbox-radius': '4px',
+      '--switch-radius': '9999px',
+      '--modal-backdrop-opacity': '40%',
+      '--slider-thumb-size': 'calc(var(--spacing) * 3)',
+      // var refs outside the static pools must NOT resolve
+      '--modal-background': 'var(--color-popover)',
+      '--btn-font-weight': 'var(--font-weight-medium)',
+    })
+    expect(map.get('--popover-radius')).toBe('md')
+    expect(map.get('--slider-track-radius')).toBe('full')
+    expect(map.get('--slider-cursor')).toBe('interactive')
+    expect(map.get('--modal-backdrop-blur')).toBe('sm')
+    expect(map.size).toBe(4)
+  })
+})
+
+/* ============================================================ */
+/* pruneResolvedCssVars                                          */
+/* ============================================================ */
+
+describe('pruneResolvedCssVars', () => {
+  test('drops a resolved declaration nothing references', () => {
+    const out = pruneResolvedCssVars(
+      { ':root': { '--popover-radius': 'var(--radius-md)' } },
+      new Set(['--popover-radius']),
+      'className="rounded-md"',
+    )
+    expect(out).toBeUndefined()
+  })
+
+  test('keeps a resolved declaration still referenced in file content', () => {
+    // input: the shorthand resolved, but calc() chains still read the var.
+    const out = pruneResolvedCssVars(
+      { ':root': { '--input-radius': 'var(--radius-md)' } },
+      new Set(['--input-radius']),
+      'rounded-md rounded-[calc(var(--input-radius)-1px)]',
+    )
+    expect(out).toEqual({ ':root': { '--input-radius': 'var(--radius-md)' } })
+  })
+
+  test('never touches unresolved declarations', () => {
+    const css = {
+      ':root': { '--btn-font-weight': 'var(--font-weight-medium)' },
+    }
+    const out = pruneResolvedCssVars(css, new Set(['--btn-radius']), '')
+    expect(out).toEqual(css)
+  })
+
+  test('prunes chains to fixpoint and drops the emptied selector', () => {
+    // --a references --b; once --a drops, --b has no referent either.
+    const out = pruneResolvedCssVars(
+      {
+        ':root': { '--a': 'var(--b)', '--b': 'var(--radius-md)' },
+        '@utility skeleton': { position: 'relative' },
+      },
+      new Set(['--a', '--b']),
+      'rounded-md',
+    )
+    expect(out).toEqual({ '@utility skeleton': { position: 'relative' } })
+  })
+
+  test('var-name prefixes do not count as references', () => {
+    // `--btn-radius-sm` in content must not keep `--btn-radius` alive.
+    const out = pruneResolvedCssVars(
+      { ':root': { '--btn-radius': 'var(--radius-md)' } },
+      new Set(['--btn-radius']),
+      'rounded-(--btn-radius-sm)',
+    )
+    expect(out).toBeUndefined()
+  })
+
+  test('keeps originally-empty objects (@plugin statements)', () => {
+    const css = { '@plugin "tailwindcss-foo"': {} }
+    const out = pruneResolvedCssVars(css, new Set(['--x']), '')
+    expect(out).toEqual(css)
+  })
 })
 
 /* ============================================================ */
@@ -311,6 +397,90 @@ describe('publish', () => {
     })
     // alert.radius default is "--radius-lg" → suffix "lg".
     expect(rawContent).toContain('rounded-lg')
+  })
+
+  test('styles.css defaults resolve vars with no meta param, and the shipped declaration is pruned', () => {
+    const { item, rawContent } = publish({
+      publishable: {
+        template: `const s = ${TV_CONFIG_PLACEHOLDER};`,
+        stylesConfig: { base: { base: 'rounded-(--popover-radius) border' } },
+        meta: {
+          name: 'popover',
+          type: 'registry:ui',
+          css: { ':root': { '--popover-radius': 'var(--radius-md)' } },
+          files: [
+            {
+              type: 'registry:ui',
+              path: 'ui/popover/base.tsx',
+              target: 'ui/popover.tsx',
+            },
+          ],
+        },
+      },
+      preset: { density: 'default', componentParams: {} },
+      styleVarDefaults: { '--popover-radius': 'var(--radius-md)' },
+    })
+    expect(rawContent).toContain('rounded-md')
+    expect(rawContent).not.toContain('--popover-radius')
+    expect(item.css).toBeUndefined()
+  })
+
+  test('cross-item refs resolve from the registry-wide defaults (toggle-button ← button)', () => {
+    const { rawContent } = publish({
+      publishable: {
+        template: `const s = ${TV_CONFIG_PLACEHOLDER};`,
+        stylesConfig: { base: { base: 'rounded-(--btn-radius)' } },
+        meta: {
+          name: 'toggle-button',
+          type: 'registry:ui',
+          files: [
+            {
+              type: 'registry:ui',
+              path: 'ui/toggle-button/base.tsx',
+              target: 'ui/toggle-button.tsx',
+            },
+          ],
+        },
+      },
+      preset: { density: 'default', componentParams: {} },
+      // Declared by button/styles.css, not by toggle-button.
+      styleVarDefaults: { '--btn-radius': 'var(--radius-md)' },
+    })
+    expect(rawContent).toContain('rounded-md')
+  })
+
+  test('scalar-param selection overrides the styles.css default', () => {
+    const map = buildStyleVarMap({ '--alert-radius': 'var(--radius-lg)' })
+    for (const [k, v] of buildScalarVarMap(alertPublishable.meta, {
+      radius: '--radius-sm',
+    })) {
+      map.set(k, v)
+    }
+    expect(map.get('--alert-radius')).toBe('sm')
+  })
+
+  test('surface-var refs in template markup (outside the tv config) resolve too', () => {
+    const { rawContent } = publish({
+      publishable: {
+        template: `const s = ${TV_CONFIG_PLACEHOLDER};\nconst el = <div className="rounded-(--color-swatch-radius)" />;`,
+        stylesConfig: { base: {} },
+        meta: {
+          name: 'color-swatch',
+          type: 'registry:ui',
+          files: [
+            {
+              type: 'registry:ui',
+              path: 'ui/color-swatch/base.tsx',
+              target: 'ui/color-swatch.tsx',
+            },
+          ],
+        },
+      },
+      preset: { density: 'default', componentParams: {} },
+      styleVarDefaults: { '--color-swatch-radius': 'var(--radius-sm)' },
+    })
+    expect(rawContent).toContain('rounded-sm')
+    expect(rawContent).not.toContain('--color-swatch-radius')
   })
 
   test('alert: published item drops dotui-only fields (params, group)', () => {

@@ -45,7 +45,7 @@
 }
 
 @utility container {
-  @apply mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10 3xl:max-w-screen-2xl;
+  @apply mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10;
 }
 
 @utility step {

@@ -59,7 +59,10 @@ Read dropped data in `onDrop` from `e.items`, filtering by `kind` and `types`, a
 
 ```tsx
 import type { TextDropItem } from 'react-aria-components'
-;<DropZone
+```
+
+```tsx
+<DropZone
   onDrop={async (e) => {
     const items = await Promise.all(
       e.items

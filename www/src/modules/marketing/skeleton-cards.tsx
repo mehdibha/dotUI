@@ -6,11 +6,12 @@ import { Skeleton } from '@/registry/ui/skeleton'
 
 /*
  * Decorative skeleton-card rails that flank the real showcase grid on large
- * screens — the same idea as shadcn's homepage `CardsSkeletonRails`. They live
- * in the gutters beside the centered real grid and are clipped by the parent's
- * `overflow-hidden`, so they peek in from both edges and reveal more as the
- * viewport widens. Purely decorative: wrapped in a single <Skeleton isLoading>
- * (which adds `inert` + shimmer) and `aria-hidden`.
+ * screens — the same idea as shadcn's homepage `CardsSkeletonRails`. Each rail
+ * hangs absolutely off its side of the grid, overflowing the landing container;
+ * the page root's `overflow-x-clip` crops it at the viewport, so it peeks in
+ * from the edge and reveals more as the viewport widens. Purely decorative:
+ * wrapped in a single <Skeleton isLoading> (which adds `inert` + shimmer) and
+ * `aria-hidden`.
  */
 
 // A single shimmering block. `data-skeleton` is picked up by the parent
@@ -174,21 +175,20 @@ export const SkeletonRail = memo(function SkeletonRail({
       isLoading
       aria-hidden="true"
       className={cn(
-        'relative hidden shrink-0 grow basis-(--rail-peek) overflow-hidden opacity-70 lg:block',
+        'absolute inset-y-0 hidden w-(--rail-w) overflow-hidden opacity-70 lg:block',
         '[--rail-col:18rem] [--rail-w:calc(var(--rail-col)*2+var(--rail-gap))]',
         side === 'left'
-          ? '[mask-image:linear-gradient(to_left,black_92%,transparent)]'
-          : '[mask-image:linear-gradient(to_right,black_92%,transparent)]',
+          ? 'right-full mr-(--rail-gap) [mask-image:linear-gradient(to_left,black_92%,transparent)]'
+          : 'left-full ml-(--rail-gap) [mask-image:linear-gradient(to_right,black_92%,transparent)]',
       )}
     >
-      <div
-        className={cn(
-          'absolute top-0 grid w-(--rail-w) grid-cols-2 gap-(--rail-gap) opacity-45',
-          side === 'left' ? 'right-0' : 'left-0',
-        )}
-      >
-        <RailColumn cards={colA} />
-        <RailColumn cards={colB} />
+      {/* Same bottom fade as the grid, sized by the rail (not the taller,
+          clipped column) so both fade in lockstep. */}
+      <div className="absolute inset-0 [mask-image:linear-gradient(to_bottom,black_calc(100%_-_var(--mask-solid)),transparent_calc(100%_-_var(--mask-clear)))]">
+        <div className="absolute inset-x-0 top-0 grid grid-cols-2 gap-(--rail-gap) opacity-45">
+          <RailColumn cards={colA} />
+          <RailColumn cards={colB} />
+        </div>
       </div>
     </Skeleton>
   )

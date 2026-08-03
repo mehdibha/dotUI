@@ -5,20 +5,53 @@
  *   "rounded-(--alert-radius)"        — Tailwind v4 shorthand for arbitrary CSS var
  *   "bg-(--alert-bg) text-fg"         — multiple utilities, only one is a param ref
  *
- * Given the component's `meta.params` and the user's selections, we build a
- * map `cssVar → tailwindSuffix` (e.g. `--alert-radius → md` when the preset
- * binds `alert.radius = "--radius-md"`) and rewrite matching class tokens to
- * `rounded-md` etc. References to vars NOT owned by a scalar param in this
- * component's meta are left alone — they either come from the registry's base
- * CSS or are shipped alongside as a separate file.
+ * The map `cssVar → tailwindSuffix` is seeded from the registry-wide
+ * styles.css defaults (`buildStyleVarMap`) and overridden by the component's
+ * scalar-param selections (`buildScalarVarMap`), then matching class tokens
+ * rewrite to `rounded-md` etc. Vars that don't resolve (literals, calc
+ * chains, tokens outside the static pools) are left alone and keep shipping
+ * as declarations — `pruneResolvedCssVars` drops only the ones the rewrite
+ * made dead.
  */
 
 import type { RegistryItem, ScalarParamDef } from '@/registry/types'
 
-import { tokenValueToSuffix } from './token-map'
+import { tokenRefToSuffix, tokenValueToSuffix } from './token-map'
 import type { ClassValue, TvLayer, VariantSliceValue } from './types'
 
 /* ---------------------------- var → suffix map ---------------------------- */
+
+/**
+ * Seed a var → suffix map from the registry-wide styles.css defaults
+ * (`--popover-radius: var(--radius-md)` → `md`). Per-surface vars are
+ * builder-only indirection — exported code gets the resolved utility class.
+ * Only single bare `var(--token)` values resolve; literals and calc() chains
+ * are left alone and keep shipping as vars.
+ */
+export function buildStyleVarMap(
+  defaults: Record<string, string>,
+): Map<string, string> {
+  const map = new Map<string, string>()
+  const bareRef = (value: string) =>
+    /^var\((--[\w-]+)\)$/.exec(value.trim())?.[1]
+  // Follows role hops (--btn-radius → --radius-control → --radius-md) until a
+  // real token or a dead end; depth-capped so a cycle can't hang the build.
+  const refToSuffix = (ref: string, depth = 0): string | undefined => {
+    const direct = tokenRefToSuffix(ref)
+    if (direct !== undefined) return direct
+    if (depth >= 4) return undefined
+    const next = defaults[ref]
+    const nextRef = next === undefined ? undefined : bareRef(next)
+    return nextRef === undefined ? undefined : refToSuffix(nextRef, depth + 1)
+  }
+  for (const [cssVar, value] of Object.entries(defaults)) {
+    const ref = bareRef(value)
+    if (!ref) continue
+    const suffix = refToSuffix(ref)
+    if (suffix !== undefined) map.set(cssVar, suffix)
+  }
+  return map
+}
 
 /**
  * Build the cssVar → suffix lookup for one component's scalar params, given
@@ -102,6 +135,102 @@ function rewriteVariantSlice(
     return result
   }
   return rewriteClassValue(value, varMap)
+}
+
+/* ----------------------------- css var pruning ---------------------------- */
+
+type CssValue = string | CssObject
+interface CssObject {
+  [key: string]: CssValue
+}
+
+function isReferenced(cssVar: string, corpus: string): boolean {
+  return new RegExp(`${escapeRegex(cssVar)}(?![\\w-])`).test(corpus)
+}
+
+/** Serialize a css object for reference checking, skipping one declaration. */
+function corpusWithout(css: CssObject, skipPath: readonly string[]): string {
+  const parts: string[] = []
+  const walk = (node: CssObject, path: readonly string[]): void => {
+    for (const [key, value] of Object.entries(node)) {
+      const here = [...path, key]
+      if (typeof value === 'string') {
+        const skipped =
+          here.length === skipPath.length &&
+          here.every((seg, i) => seg === skipPath[i])
+        if (!skipped) parts.push(key, value)
+      } else {
+        parts.push(key)
+        walk(value, here)
+      }
+    }
+  }
+  walk(css, [])
+  return parts.join('\n')
+}
+
+/**
+ * Drop styles.css declarations whose var was resolved away by the class
+ * rewriter. A declaration ships only while something still references it —
+ * shipped file contents (calc() chains, non-shorthand var() reads) or another
+ * surviving css value. Runs to fixpoint so chains (`--a: var(--b)`) prune
+ * fully. Vars outside `resolved` are never touched.
+ */
+export function pruneResolvedCssVars(
+  css: RegistryItem['css'],
+  resolved: ReadonlySet<string>,
+  externalCorpus: string,
+): RegistryItem['css'] | undefined {
+  if (!css) return css
+  const work = structuredClone(css) as CssObject
+
+  let changed = true
+  while (changed) {
+    changed = false
+    const visit = (node: CssObject, path: readonly string[]): void => {
+      for (const [key, value] of Object.entries(node)) {
+        const here = [...path, key]
+        if (typeof value !== 'string') {
+          visit(value, here)
+          continue
+        }
+        if (!key.startsWith('--') || !resolved.has(key)) continue
+        const corpus = externalCorpus + '\n' + corpusWithout(work, here)
+        if (!isReferenced(key, corpus)) {
+          delete node[key]
+          changed = true
+        }
+      }
+    }
+    visit(work, [])
+  }
+
+  const compact = (
+    node: CssObject,
+    original: CssObject,
+  ): CssObject | undefined => {
+    const out: CssObject = {}
+    for (const [key, value] of Object.entries(node)) {
+      if (typeof value === 'string') {
+        out[key] = value
+        continue
+      }
+      const originalChild = original[key]
+      const child = compact(
+        value,
+        typeof originalChild === 'object' ? originalChild : {},
+      )
+      // Keep originally-empty objects (`@plugin` statements); drop selectors
+      // that pruning emptied out.
+      const wasEmpty =
+        typeof originalChild === 'object' &&
+        Object.keys(originalChild).length === 0
+      if (child !== undefined || wasEmpty) out[key] = child ?? {}
+    }
+    return Object.keys(out).length > 0 ? out : undefined
+  }
+
+  return compact(work, css as CssObject) as RegistryItem['css'] | undefined
 }
 
 /**

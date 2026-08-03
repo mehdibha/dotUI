@@ -64,7 +64,10 @@ import { Label } from '@/ui/field'
 import { TimeField } from '@/ui/time-field'
 import { DateInput } from '@/ui/input'
 import { Label, Description, FieldError } from '@/ui/field'
-;<TimeField>
+```
+
+```tsx
+<TimeField>
   <Label />
   <DateInput />
   <Description />
@@ -78,7 +81,10 @@ Values are `Time` objects from `@internationalized/date`. Use `defaultValue` for
 
 ```tsx
 import { Time } from '@internationalized/date'
-;<TimeField defaultValue={new Time(11, 45)}>
+```
+
+```tsx
+<TimeField defaultValue={new Time(11, 45)}>
   <Label>Time</Label>
   <DateInput />
 </TimeField>

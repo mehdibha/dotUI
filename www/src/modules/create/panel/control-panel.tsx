@@ -305,6 +305,7 @@ export function CreatePanel({ className }: { className?: string }) {
           sections={pickerSections}
           selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}
           onPick={(item) => requestPick(item.id)}
+          withPreview
           renderItemActions={(item) => {
             const saved = presets.find((p) => p.id === item.id)
             if (!saved) return null

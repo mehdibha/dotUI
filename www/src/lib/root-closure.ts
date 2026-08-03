@@ -52,16 +52,16 @@ const SEMANTIC_COLOR_PROPS = new Set(
 )
 
 /**
- * Excluded from the closure: non-custom props; `--radius-factor` (rides inline
- * on the scope element so the cloned radius scale recomputes there); and the
- * semantic vocabulary (emitted from `DEFAULT_SEMANTICS` instead — it's the
- * typed source of truth, and its targets may be authored as `color-mix()`,
- * whose CSSOM read-back is unreliable).
+ * Excluded from the closure: non-custom props; `--radius` (the base length
+ * rides inline on the scope element so the cloned radius scale recomputes
+ * there); and the semantic vocabulary (emitted from `DEFAULT_SEMANTICS`
+ * instead — it's the typed source of truth, and its targets may be authored
+ * as `color-mix()`, whose CSSOM read-back is unreliable).
  */
 export function isHarvestedProp(prop: string): boolean {
   return (
     prop.startsWith('--') &&
-    prop !== '--radius-factor' &&
+    prop !== '--radius' &&
     !SEMANTIC_COLOR_PROPS.has(prop)
   )
 }
