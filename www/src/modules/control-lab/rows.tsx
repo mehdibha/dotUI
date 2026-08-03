@@ -6,7 +6,7 @@
    the grouped-list container that fuses rows into cards.
    Prototype only: local state in, callback out, no design-system wiring. */
 
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState } from "react"
 import {
   ChevronDownIcon,
   ChevronRightIcon,
@@ -80,9 +80,9 @@ export const ROW_DESCRIBED = "h-auto py-2.5"
 
 /* Where row-attached overlays (pickers, selects, menus) open. Panel-lab's
    preview-rail draft overrides it to explore preview/popover combos. */
-export type RowOverlayPlacement = 'right top' | 'left top' | 'bottom start'
+export type RowOverlayPlacement = "right top" | "left top" | "bottom start"
 export const RowOverlayPlacementContext =
-  createContext<RowOverlayPlacement>('right top')
+  createContext<RowOverlayPlacement>("right top")
 
 /** The left column of a row: the label, and the line under it that says what
  *  the axis actually changes. Rows stay one line until a description arrives.
@@ -411,7 +411,7 @@ export function ColorPickerRow({
   value: string
   onChange: (hex: string) => void
 }) {
-  const tile = layout === 'tile'
+  const tile = layout === "tile"
   const rowPlacement = useContext(RowOverlayPlacementContext)
   return (
     <ColorPicker value={value} onChange={(c) => onChange(c.toString("hex"))}>
@@ -453,7 +453,7 @@ export function ColorPickerRow({
           <Popover
             // A tile is as wide as the picker, so opening below it keeps the
             // two edges aligned; a row has no width to align to.
-            placement={tile ? 'bottom start' : rowPlacement}
+            placement={tile ? "bottom start" : rowPlacement}
             className="w-64 min-w-0"
           >
             <DialogContent className="flex flex-col gap-3 p-3">

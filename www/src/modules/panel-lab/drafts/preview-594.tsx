@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 /* Draft #594 — the hover preview rail. A FRAME experiment, not a section one:
    the panel chrome is the v2 frame verbatim, but interacting with the panel
@@ -27,7 +27,7 @@
    while an overlay is open, where row overlays open (threaded to the shared
    rows via RowOverlayPlacementContext), and the disable affordance. */
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from "react"
 import {
   BellIcon,
   CalendarIcon,
@@ -46,27 +46,27 @@ import {
   SettingsIcon,
   StarIcon,
   TrashIcon,
-} from 'lucide-react'
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
+} from "lucide-react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 
-import { fontStack } from '@/lib/fonts'
-import { Button } from '@/registry/ui/button'
-import { RowOverlayPlacementContext } from '@/modules/control-lab/rows'
-import type { RowOverlayPlacement } from '@/modules/control-lab/rows'
-import { useLoadedFamilies } from '@/modules/create/typography'
-import { useTweak } from '@/dev/tweaker'
+import { fontStack } from "@/lib/fonts"
+import { Button } from "@/registry/ui/button"
+import { RowOverlayPlacementContext } from "@/modules/control-lab/rows"
+import type { RowOverlayPlacement } from "@/modules/control-lab/rows"
+import { useLoadedFamilies } from "@/modules/create/typography"
+import { useTweak } from "@/dev/tweaker"
 
-import { SHAPE_RUNGS } from '../data'
-import type { Lab } from '../data'
-import { ChapterCard } from '../variants/chapter'
-import type { Chapter } from '../variants/chapter'
+import { SHAPE_RUNGS } from "../data"
+import type { Lab } from "../data"
+import { ChapterCard } from "../variants/chapter"
+import type { Chapter } from "../variants/chapter"
 
 const PREVIEW_W = 300
 /* The page mounts the panel at this fixed height (version-page.tsx). */
 const FRAME_H = 720
 const EASE_OUT = [0.215, 0.61, 0.355, 1] as const
 const GLIDE = {
-  type: 'spring',
+  type: "spring",
   stiffness: 500,
   damping: 46,
   mass: 0.8,
@@ -89,8 +89,8 @@ interface Target {
 /** Row label: the ROW_LABEL span, else the element's own aria-label. */
 function labelOf(el: Element): string | null {
   return (
-    el.querySelector('.font-medium.truncate')?.textContent?.trim() ??
-    el.getAttribute('aria-label')?.trim() ??
+    el.querySelector(".font-medium.truncate")?.textContent?.trim() ??
+    el.getAttribute("aria-label")?.trim() ??
     null
   )
 }
@@ -101,9 +101,9 @@ function labelOf(el: Element): string | null {
 function resolveTarget(
   start: Element,
 ): { sectionId: string; control: string; anchor: Element } | null {
-  const section = start.closest('[data-chapter]')
+  const section = start.closest("[data-chapter]")
   if (!section) return null
-  const sectionId = section.getAttribute('data-chapter') ?? ''
+  const sectionId = section.getAttribute("data-chapter") ?? ""
   const registry = CONTROL_PREVIEWS[sectionId]
 
   let node: Element | null = start
@@ -138,45 +138,45 @@ export function HoverPreviewFrame({
   const [contentH, setContentH] = useState(0)
   const [enabled, setEnabled] = useState(true)
 
-  const side = useTweak('Preview side', {
-    type: 'select',
-    options: ['right', 'right far', 'left'],
-    default: 'right',
-    group: 'Preview rail',
+  const side = useTweak("Preview side", {
+    type: "select",
+    options: ["right", "right far", "left"],
+    default: "right",
+    group: "Preview rail",
   })
-  const whileOpen = useTweak('While overlay open', {
-    type: 'select',
-    options: ['show', 'hide'],
-    default: 'show',
-    group: 'Preview rail',
+  const whileOpen = useTweak("While overlay open", {
+    type: "select",
+    options: ["show", "hide"],
+    default: "show",
+    group: "Preview rail",
   })
-  const overlayPlacement = useTweak('Overlay placement', {
-    type: 'select',
-    options: ['right top', 'left top', 'bottom start'],
-    default: 'right top',
-    group: 'Preview rail',
+  const overlayPlacement = useTweak("Overlay placement", {
+    type: "select",
+    options: ["right top", "left top", "bottom start"],
+    default: "right top",
+    group: "Preview rail",
   })
-  const affordance = useTweak('Disable affordance', {
-    type: 'select',
-    options: ['none', 'header eye', 'press P'],
-    default: 'none',
-    group: 'Preview rail',
+  const affordance = useTweak("Disable affordance", {
+    type: "select",
+    options: ["none", "header eye", "press P"],
+    default: "none",
+    group: "Preview rail",
   })
 
   useEffect(() => () => clearTimeout(leaveTimer.current), [])
   useEffect(() => {
-    if (affordance === 'none') setEnabled(true)
+    if (affordance === "none") setEnabled(true)
   }, [affordance])
   useEffect(() => {
-    if (affordance !== 'press P') return
+    if (affordance !== "press P") return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== 'p' && e.key !== 'P') return
+      if (e.key !== "p" && e.key !== "P") return
       const el = e.target as HTMLElement | null
-      if (el?.closest('input, textarea, [contenteditable]')) return
+      if (el?.closest("input, textarea, [contenteditable]")) return
       setEnabled((v) => !v)
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
   }, [affordance])
 
   const toTarget = useCallback(
@@ -213,7 +213,7 @@ export function HoverPreviewFrame({
     observer.observe(frame, {
       subtree: true,
       attributes: true,
-      attributeFilter: ['aria-expanded'],
+      attributeFilter: ["aria-expanded"],
     })
     return () => observer.disconnect()
   }, [toTarget])
@@ -268,7 +268,7 @@ export function HoverPreviewFrame({
 
   const display = !enabled
     ? null
-    : openT && whileOpen === 'hide'
+    : openT && whileOpen === "hide"
       ? null
       : (openT ?? hoverT ?? focusT)
   const chapter = display && chapters.find((c) => c.id === display.sectionId)
@@ -295,7 +295,7 @@ export function HoverPreviewFrame({
       // "left" keeps the page usable: the panel slides over so the preview
       // lands where the panel was, and row overlays open into free space.
       style={
-        side === 'left'
+        side === "left"
           ? { transform: `translateX(${PREVIEW_W + 16}px)` }
           : undefined
       }
@@ -311,14 +311,14 @@ export function HoverPreviewFrame({
           <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
         </Button>
         <div className="flex shrink-0 items-center">
-          {affordance === 'header eye' && (
+          {affordance === "header eye" && (
             <Button
               size="sm"
               variant="quiet"
               isIconOnly
-              aria-label={enabled ? 'Hide previews' : 'Show previews'}
+              aria-label={enabled ? "Hide previews" : "Show previews"}
               onPress={() => setEnabled((v) => !v)}
-              className={enabled ? undefined : 'text-fg-muted'}
+              className={enabled ? undefined : "text-fg-muted"}
             >
               {enabled ? <EyeIcon /> : <EyeOffIcon />}
             </Button>
@@ -372,11 +372,11 @@ export function HoverPreviewFrame({
             key="preview"
             aria-hidden
             className={`pointer-events-none absolute top-0 z-30 overflow-hidden rounded-2xl border border-border/45 bg-card shadow-[0_12px_32px_-8px_rgb(0_0_0/0.24),0_4px_12px_-4px_rgb(0_0_0/0.12)] select-none ${
-              side === 'left'
-                ? 'right-full mr-4 origin-right'
-                : side === 'right far'
-                  ? 'left-full ml-[352px] origin-left'
-                  : 'left-full ml-4 origin-left'
+              side === "left"
+                ? "right-full mr-4 origin-right"
+                : side === "right far"
+                  ? "left-full ml-[352px] origin-left"
+                  : "left-full ml-4 origin-left"
             }`}
             style={{ width: PREVIEW_W }}
             initial={{ opacity: 0, scale: reduce ? 1 : 0.96, y: previewTop }}
@@ -384,7 +384,7 @@ export function HoverPreviewFrame({
               opacity: 1,
               scale: 1,
               y: previewTop,
-              height: contentH || 'auto',
+              height: contentH || "auto",
             }}
             exit={{
               opacity: 0,
@@ -415,7 +415,7 @@ export function HoverPreviewFrame({
                     <span className="text-[0.8125rem] font-medium text-fg">
                       {chapter.label}
                       <span className="text-fg-muted">
-                        {' · '}
+                        {" · "}
                         {display.control}
                       </span>
                     </span>
@@ -442,13 +442,13 @@ const contentVariants = {
   enter: (dir: number) => ({
     opacity: 0,
     y: 14 * dir,
-    filter: 'blur(4px)',
+    filter: "blur(4px)",
   }),
-  center: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  center: { opacity: 1, y: 0, filter: "blur(0px)" },
   exit: (dir: number) => ({
     opacity: 0,
     y: -10 * dir,
-    filter: 'blur(4px)',
+    filter: "blur(4px)",
   }),
 }
 
@@ -477,7 +477,7 @@ function Caption({ children }: { children: React.ReactNode }) {
 
 function Panel({
   children,
-  className = 'gap-2.5',
+  className = "gap-2.5",
 }: {
   children: React.ReactNode
   className?: string
@@ -555,9 +555,9 @@ function GrayPreview({ lab }: { lab: Lab }) {
         </span>
       </Panel>
       <Caption>
-        Seed:{' '}
-        {lab.state.graySeed === ''
-          ? 'Auto (derived from brand)'
+        Seed:{" "}
+        {lab.state.graySeed === ""
+          ? "Auto (derived from brand)"
           : lab.state.graySeed}
       </Caption>
     </div>
@@ -572,9 +572,9 @@ function PrimaryPreview({ lab }: { lab: Lab }) {
       <div className="flex items-center gap-2">
         <span
           className={`flex h-8 items-center rounded-lg px-3 text-xs font-medium ${
-            primary === 'neutral'
-              ? 'bg-neutral text-fg-on-neutral'
-              : 'bg-accent text-white'
+            primary === "neutral"
+              ? "bg-neutral text-fg-on-neutral"
+              : "bg-accent text-white"
           }`}
         >
           Primary action
@@ -584,7 +584,7 @@ function PrimaryPreview({ lab }: { lab: Lab }) {
         </span>
       </div>
       <Caption>
-        Primary buttons use the {primary === 'neutral' ? 'neutral' : 'accent'}{' '}
+        Primary buttons use the {primary === "neutral" ? "neutral" : "accent"}{" "}
         scale
       </Caption>
     </div>
@@ -601,12 +601,12 @@ function ModesPreview({ lab }: { lab: Lab }) {
             className="flex items-center justify-between rounded-lg border border-border/45 px-3 py-2 text-xs"
             style={{
               backgroundColor: `oklch(${mode.bg}% 0 0)`,
-              color: mode.polarity === 'light' ? 'black' : 'white',
+              color: mode.polarity === "light" ? "black" : "white",
             }}
           >
             <span className="font-medium">{mode.name}</span>
             <span className="flex items-center gap-1.5 text-[10px] opacity-70">
-              {mode.contrast === 'high' && <span>HC</span>}
+              {mode.contrast === "high" && <span>HC</span>}
               <span>L* {mode.bg}</span>
               {mode.id === lab.state.defaultMode && <span>· default</span>}
             </span>
@@ -614,10 +614,10 @@ function ModesPreview({ lab }: { lab: Lab }) {
         ))}
       </div>
       <Caption>
-        {lab.state.modes.length}{' '}
-        {lab.state.modes.length === 1 ? 'mode' : 'modes'} · users land on{' '}
+        {lab.state.modes.length}{" "}
+        {lab.state.modes.length === 1 ? "mode" : "modes"} · users land on{" "}
         {lab.state.modes.find((m) => m.id === lab.state.defaultMode)?.name ??
-          'the default'}
+          "the default"}
       </Caption>
     </div>
   )
@@ -627,17 +627,17 @@ function ModesPreview({ lab }: { lab: Lab }) {
 function SemanticPreview({ lab }: { lab: Lab }) {
   const rows = [
     {
-      label: 'Payment received',
-      dot: 'bg-success',
+      label: "Payment received",
+      dot: "bg-success",
       seed: lab.state.successSeed,
     },
     {
-      label: 'Storage almost full',
-      dot: 'bg-warning',
+      label: "Storage almost full",
+      dot: "bg-warning",
       seed: lab.state.warningSeed,
     },
-    { label: 'Build failed', dot: 'bg-danger', seed: lab.state.dangerSeed },
-    { label: 'Update available', dot: 'bg-info', seed: lab.state.infoSeed },
+    { label: "Build failed", dot: "bg-danger", seed: lab.state.dangerSeed },
+    { label: "Update available", dot: "bg-info", seed: lab.state.infoSeed },
   ]
   return (
     <div className="flex flex-col gap-2.5">
@@ -648,12 +648,12 @@ function SemanticPreview({ lab }: { lab: Lab }) {
             className="flex items-center gap-2 rounded-lg border border-border/45 bg-bg px-2.5 py-1.5 text-xs text-fg"
           >
             <span
-              className={`size-2 rounded-full ${row.seed ? '' : row.dot}`}
+              className={`size-2 rounded-full ${row.seed ? "" : row.dot}`}
               style={row.seed ? { backgroundColor: row.seed } : undefined}
             />
             {row.label}
             <span className="ml-auto font-mono text-[10px] text-fg-muted uppercase">
-              {row.seed || 'Auto'}
+              {row.seed || "Auto"}
             </span>
           </span>
         ))}
@@ -670,14 +670,14 @@ function FontPreview({
   role,
 }: {
   family: string
-  role: 'heading' | 'body' | 'mono'
+  role: "heading" | "body" | "mono"
 }) {
   useLoadedFamilies([family])
   const stack = fontStack(family)
   return (
     <div className="flex flex-col gap-2.5">
       <Panel className="gap-1.5">
-        {role === 'heading' && (
+        {role === "heading" && (
           <>
             <span
               className="text-xl/tight font-semibold text-fg"
@@ -693,7 +693,7 @@ function FontPreview({
             </span>
           </>
         )}
-        {role === 'body' && (
+        {role === "body" && (
           <span
             className="text-xs/relaxed text-fg"
             style={{ fontFamily: stack }}
@@ -702,12 +702,12 @@ function FontPreview({
             small sizes, through long paragraphs, in both modes.
           </span>
         )}
-        {role === 'mono' && (
+        {role === "mono" && (
           <span
             className="text-[11px]/relaxed whitespace-pre text-fg"
             style={{ fontFamily: stack }}
           >
-            {'const theme = createTheme({\n  radius: 10,\n})'}
+            {"const theme = createTheme({\n  radius: 10,\n})"}
           </span>
         )}
       </Panel>
@@ -777,14 +777,14 @@ function StrokePreview({ lab }: { lab: Lab }) {
 /* --------------------------------- Shape ---------------------------------- */
 
 const SHAPE_ROLE_DEMOS = [
-  { label: 'Control', ratio: 0.75 },
-  { label: 'Surface', ratio: 1 },
-  { label: 'Panel', ratio: 1.5 },
+  { label: "Control", ratio: 0.75 },
+  { label: "Surface", ratio: 1 },
+  { label: "Panel", ratio: 1.5 },
 ]
 
 /* corner-shape is progressive enhancement — unsupported browsers render round. */
 const cornerShapeStyle = (shape: string): React.CSSProperties =>
-  shape === 'round' ? {} : ({ cornerShape: shape } as React.CSSProperties)
+  shape === "round" ? {} : ({ cornerShape: shape } as React.CSSProperties)
 
 function RadiusPreview({ lab }: { lab: Lab }) {
   return (
@@ -823,7 +823,7 @@ function RolesPreview({ lab }: { lab: Lab }) {
     return ratio === Infinity ? 999 : radiusPx * ratio
   }
   const label = (name: string, role: string) =>
-    `${name} · ${rungRatio(role) === Infinity ? 'pill' : `${Math.round(px(role))}px`}`
+    `${name} · ${rungRatio(role) === Infinity ? "pill" : `${Math.round(px(role))}px`}`
   return (
     <div className="flex flex-col gap-1.5">
       <div
@@ -831,27 +831,27 @@ function RolesPreview({ lab }: { lab: Lab }) {
         style={{ borderRadius: px(rolePanel) }}
       >
         <span className="text-[10px] text-fg-muted">
-          {label('Panel', rolePanel)}
+          {label("Panel", rolePanel)}
         </span>
         <div
           className="flex flex-col gap-2 border border-border/60 bg-card p-2.5"
           style={{ borderRadius: px(roleSurface) }}
         >
           <span className="text-[10px] text-fg-muted">
-            {label('Surface', roleSurface)}
+            {label("Surface", roleSurface)}
           </span>
           <span
             className="flex h-7 items-center justify-center bg-primary text-[11px] font-medium text-fg-on-primary"
             style={{ borderRadius: px(roleControl) }}
           >
-            {label('Control', roleControl)}
+            {label("Control", roleControl)}
           </span>
         </div>
       </div>
       <Caption>
-        Items:{' '}
-        {lab.state.roleItem === 'auto'
-          ? 'auto (one rung below surfaces)'
+        Items:{" "}
+        {lab.state.roleItem === "auto"
+          ? "auto (one rung below surfaces)"
           : lab.state.roleItem}
       </Caption>
     </div>
@@ -862,13 +862,13 @@ function CornersPreview({ lab }: { lab: Lab }) {
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex gap-1.5">
-        {['round', 'squircle', 'bevel'].map((shape) => (
+        {["round", "squircle", "bevel"].map((shape) => (
           <div key={shape} className="flex flex-1 flex-col gap-1">
             <span
               className={`h-14 border bg-bg ${
                 shape === lab.state.cornerShape
-                  ? 'border-accent'
-                  : 'border-border'
+                  ? "border-accent"
+                  : "border-border"
               }`}
               style={{
                 borderRadius: Math.max(lab.state.radiusPx * 1.5, 8),
@@ -889,18 +889,18 @@ function CornersPreview({ lab }: { lab: Lab }) {
 /* --------------------------------- Space ---------------------------------- */
 
 const DENSITY_PADDING: Record<string, string> = {
-  compact: 'py-1',
-  default: 'py-1.5',
-  comfortable: 'py-2.5',
+  compact: "py-1",
+  default: "py-1.5",
+  comfortable: "py-2.5",
 }
 
 function DensityPreview({ lab }: { lab: Lab }) {
   const padding = DENSITY_PADDING[lab.state.density] ?? DENSITY_PADDING.default
   const rows = [
-    { icon: MousePointerClickIcon, label: 'Select all' },
-    { icon: SendIcon, label: 'Share…' },
-    { icon: SettingsIcon, label: 'Preferences' },
-    { icon: TrashIcon, label: 'Delete' },
+    { icon: MousePointerClickIcon, label: "Select all" },
+    { icon: SendIcon, label: "Share…" },
+    { icon: SettingsIcon, label: "Preferences" },
+    { icon: TrashIcon, label: "Delete" },
   ]
   return (
     <div className="flex flex-col gap-1.5">
@@ -923,9 +923,9 @@ function DensityPreview({ lab }: { lab: Lab }) {
 /* -------------------------------- Details --------------------------------- */
 
 const SHADOW_DEMOS = [
-  { label: 'Card', className: 'shadow-sm' },
-  { label: 'Popover', className: 'shadow-md' },
-  { label: 'Modal', className: 'shadow-xl' },
+  { label: "Card", className: "shadow-sm" },
+  { label: "Popover", className: "shadow-md" },
+  { label: "Modal", className: "shadow-xl" },
 ]
 
 function ShadowsPreview({ lab }: { lab: Lab }) {
@@ -935,7 +935,7 @@ function ShadowsPreview({ lab }: { lab: Lab }) {
         {SHADOW_DEMOS.map((demo) => (
           <span
             key={demo.label}
-            className={`flex h-12 flex-1 items-center justify-center rounded-lg border border-border/45 bg-card text-[10px] text-fg-muted ${lab.state.shadows === 'none' ? '' : demo.className}`}
+            className={`flex h-12 flex-1 items-center justify-center rounded-lg border border-border/45 bg-card text-[10px] text-fg-muted ${lab.state.shadows === "none" ? "" : demo.className}`}
           >
             {demo.label}
           </span>
@@ -971,17 +971,17 @@ function CursorPreview({ lab }: { lab: Lab }) {
 /* ------------------------------- Components ------------------------------- */
 
 const BUTTON_STYLE_CLASSES: Record<string, string> = {
-  solid: 'bg-primary text-fg-on-primary',
-  soft: 'bg-neutral text-fg-on-neutral',
-  outline: 'border border-border-field text-fg',
-  quiet: 'text-fg',
+  solid: "bg-primary text-fg-on-primary",
+  soft: "bg-neutral text-fg-on-neutral",
+  outline: "border border-border-field text-fg",
+  quiet: "text-fg",
 }
 
 function buttonRadius(lab: Lab): number {
   const { buttonRadius: r, radiusPx } = lab.state
-  if (r === 'sharp') return 0
-  if (r === 'pill') return 999
-  if (r === 'round') return Math.max(radiusPx, 8)
+  if (r === "sharp") return 0
+  if (r === "pill") return 999
+  if (r === "round") return Math.max(radiusPx, 8)
   return radiusPx * 0.75
 }
 
@@ -1012,7 +1012,7 @@ function ButtonPreview({ lab }: { lab: Lab }) {
         </span>
       </div>
       <Caption>
-        {lab.state.buttonStyle} · radius {lab.state.buttonRadius} · hover{' '}
+        {lab.state.buttonStyle} · radius {lab.state.buttonRadius} · hover{" "}
         {lab.state.buttonHover}
       </Caption>
     </div>
@@ -1020,10 +1020,10 @@ function ButtonPreview({ lab }: { lab: Lab }) {
 }
 
 const INPUT_STYLE_CLASSES: Record<string, string> = {
-  outline: 'rounded-lg border border-border-field bg-bg',
-  line: 'border-b border-border-field',
-  'filled-line-bottom': 'rounded-t-lg border-b border-border-field bg-neutral',
-  filled: 'rounded-lg bg-neutral',
+  outline: "rounded-lg border border-border-field bg-bg",
+  line: "border-b border-border-field",
+  "filled-line-bottom": "rounded-t-lg border-b border-border-field bg-neutral",
+  filled: "rounded-lg bg-neutral",
 }
 
 function InputPreview({ lab }: { lab: Lab }) {
@@ -1069,8 +1069,8 @@ function CheckboxPreview({ lab }: { lab: Lab }) {
     <div className="flex flex-col gap-2.5">
       <div className="flex flex-col gap-1.5">
         {[
-          { label: 'Email me product updates', checked: true },
-          { label: 'Share usage analytics', checked: false },
+          { label: "Email me product updates", checked: true },
+          { label: "Share usage analytics", checked: false },
         ].map((row) => (
           <span
             key={row.label}
@@ -1079,8 +1079,8 @@ function CheckboxPreview({ lab }: { lab: Lab }) {
             <span
               className={`flex size-4 items-center justify-center ${
                 row.checked
-                  ? 'bg-primary text-fg-on-primary'
-                  : 'border border-border-field'
+                  ? "bg-primary text-fg-on-primary"
+                  : "border border-border-field"
               }`}
               style={{ borderRadius: radius }}
             >
@@ -1096,14 +1096,14 @@ function CheckboxPreview({ lab }: { lab: Lab }) {
 }
 
 function CardPreview({ lab }: { lab: Lab }) {
-  const tasnim = lab.state.cardStyle === 'tasnim'
+  const tasnim = lab.state.cardStyle === "tasnim"
   return (
     <div className="flex flex-col gap-2.5">
       <div
         className={`flex flex-col gap-1 p-3 ${
           tasnim
-            ? 'bg-muted shadow-[0_6px_16px_rgb(0_0_0/0.45)]'
-            : 'border border-border bg-card'
+            ? "bg-muted shadow-[0_6px_16px_rgb(0_0_0/0.45)]"
+            : "border border-border bg-card"
         }`}
         style={{ borderRadius: lab.state.radiusPx }}
       >
@@ -1146,9 +1146,9 @@ function BadgePreview({ lab }: { lab: Lab }) {
 }
 
 const MODAL_BLUR: Record<string, string> = {
-  none: '',
-  sm: 'backdrop-blur-[2px]',
-  md: 'backdrop-blur-[6px]',
+  none: "",
+  sm: "backdrop-blur-[2px]",
+  md: "backdrop-blur-[6px]",
 }
 
 function ModalPreview({ lab }: { lab: Lab }) {
@@ -1163,7 +1163,7 @@ function ModalPreview({ lab }: { lab: Lab }) {
           <span className="h-2 w-2/3 rounded-sm bg-muted" />
         </div>
         <div
-          className={`absolute inset-0 flex items-center justify-center bg-black ${MODAL_BLUR[modalBlur] ?? ''}`}
+          className={`absolute inset-0 flex items-center justify-center bg-black ${MODAL_BLUR[modalBlur] ?? ""}`}
           style={{
             backgroundColor: `rgb(0 0 0 / ${Number(modalBackdrop) / 100})`,
           }}
@@ -1178,7 +1178,7 @@ function ModalPreview({ lab }: { lab: Lab }) {
             </span>
             <div
               className={`-m-3 mt-0 flex justify-end gap-1.5 p-2 ${
-                modalStyle === 'muted' ? 'bg-muted' : ''
+                modalStyle === "muted" ? "bg-muted" : ""
               }`}
             >
               <span className="rounded-md px-2 py-1 text-[10px] text-fg">
@@ -1199,13 +1199,13 @@ function ModalPreview({ lab }: { lab: Lab }) {
 }
 
 function TooltipPreview({ lab }: { lab: Lab }) {
-  const translucid = lab.state.tooltipSurface === 'translucid'
+  const translucid = lab.state.tooltipSurface === "translucid"
   return (
     <div className="flex flex-col gap-2.5">
       <div className="flex h-24 flex-col items-center justify-center gap-1.5 rounded-lg border border-border/45 bg-bg">
         <span
           className={`px-2 py-1 text-[10px] font-medium ${
-            translucid ? 'bg-fg/75 text-bg backdrop-blur-sm' : 'bg-fg text-bg'
+            translucid ? "bg-fg/75 text-bg backdrop-blur-sm" : "bg-fg text-bg"
           }`}
           style={{
             borderRadius: Math.min(
@@ -1228,8 +1228,8 @@ function TooltipPreview({ lab }: { lab: Lab }) {
 }
 
 function MenuPreview({ lab }: { lab: Lab }) {
-  const accent = lab.state.menuHighlight === 'accent'
-  const rows = ['Rename', 'Duplicate', 'Move to…', 'Delete']
+  const accent = lab.state.menuHighlight === "accent"
+  const rows = ["Rename", "Duplicate", "Move to…", "Delete"]
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex flex-col rounded-lg border border-border/45 bg-bg p-1">
@@ -1239,9 +1239,9 @@ function MenuPreview({ lab }: { lab: Lab }) {
             className={`rounded-md px-2 py-1.5 text-xs ${
               index === 1
                 ? accent
-                  ? 'bg-primary text-fg-on-primary'
-                  : 'bg-muted text-fg'
-                : 'text-fg'
+                  ? "bg-primary text-fg-on-primary"
+                  : "bg-muted text-fg"
+                : "text-fg"
             }`}
           >
             {row}
@@ -1254,7 +1254,7 @@ function MenuPreview({ lab }: { lab: Lab }) {
 }
 
 function LoaderPreview({ lab }: { lab: Lab }) {
-  const Icon = lab.state.loaderStyle === 'ring' ? LoaderCircleIcon : LoaderIcon
+  const Icon = lab.state.loaderStyle === "ring" ? LoaderCircleIcon : LoaderIcon
   return (
     <div className="flex flex-col gap-2.5">
       <div className="flex h-16 items-center justify-center gap-3 rounded-lg border border-border/45 bg-bg">
@@ -1276,7 +1276,7 @@ const CONTROL_PREVIEWS: Record<string, Record<string, Preview>> = {
     Gray: GrayPreview,
     Primary: PrimaryPreview,
     Modes: ModesPreview,
-    'Semantic colors': SemanticPreview,
+    "Semantic colors": SemanticPreview,
   },
   typography: {
     Heading: ({ lab }) => (
@@ -1302,7 +1302,7 @@ const CONTROL_PREVIEWS: Record<string, Record<string, Preview>> = {
   details: {
     Shadows: ShadowsPreview,
     Cursor: CursorPreview,
-    'Disabled cursor': CursorPreview,
+    "Disabled cursor": CursorPreview,
   },
   components: {
     Button: ButtonPreview,

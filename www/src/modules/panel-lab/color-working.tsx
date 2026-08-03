@@ -11,7 +11,7 @@
    active mode; the Modes row manages the set. Still engine-real: each mode
    resolves through @dotui/colors with its own background/guarantee settings. */
 
-import { useContext, useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from "react"
 import {
   CheckIcon,
   MoonIcon,
@@ -55,7 +55,7 @@ import {
   ROW_LABEL,
   ROW_VALUE,
   RowOverlayPlacementContext,
-} from '@/modules/control-lab/rows'
+} from "@/modules/control-lab/rows"
 
 import { DEFAULTS, PRIMARY_OPTIONS } from "./data"
 import type { Lab, LabMode, LabState } from "./data"

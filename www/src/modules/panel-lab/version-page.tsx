@@ -79,11 +79,11 @@ export function PanelDraftPage({ draft }: { draft: Draft }) {
     >
       <div className="flex flex-col gap-3">
         <p className="max-w-lg text-xs/relaxed text-pretty text-fg-muted">
-          An open draft, shown on top of{' '}
-          <span className="text-fg">{base.label}</span> —{' '}
+          An open draft, shown on top of{" "}
+          <span className="text-fg">{base.label}</span> —{" "}
           {draft.Frame
-            ? 'only the frame differs; hover a control.'
-            : `only the ${draft.section} section differs.`}{' '}
+            ? "only the frame differs; hover a control."
+            : `only the ${draft.section} section differs.`}{" "}
           Not merged; one of several takes.
         </p>
         <div className="flex h-[720px] w-[360px] shrink-0 flex-col">

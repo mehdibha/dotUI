@@ -27,8 +27,8 @@ function PanelPreview({
   chapters,
   Frame = PanelFrame,
 }: {
-  chapters: PanelVersion['chapters']
-  Frame?: NonNullable<Draft['Frame']>
+  chapters: PanelVersion["chapters"]
+  Frame?: NonNullable<Draft["Frame"]>
 }) {
   const lab = useStaticLab()
   return (
