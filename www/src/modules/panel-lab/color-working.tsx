@@ -21,7 +21,7 @@ import {
   XIcon,
 } from "lucide-react"
 
-import { STEPS, toHex, toOklch, wcag2 } from "@dotui/colors"
+import { toHex, toOklch, wcag2 } from "@dotui/colors"
 
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import { cn } from "@/registry/lib/utils"
@@ -31,10 +31,6 @@ import { ColorPicker } from "@/registry/ui/color-picker"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
-import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from "@/registry/ui/segmented-control"
 import {
   Slider,
   SliderControl,
@@ -299,46 +295,6 @@ function ContrastWarnings({
   )
 }
 
-/** Which mode the section's ramps and Auto rows resolve against — the hero's
- *  chips as a plain row, absent entirely on single-mode systems. */
-function PreviewModeRow({
-  modes,
-  activeId,
-  onChange,
-}: {
-  modes: LabMode[]
-  activeId: string
-  onChange: (id: string) => void
-}) {
-  return (
-    <div
-      data-row=""
-      className={cn(ROW, "flex items-center justify-between gap-3 pr-1.5 pl-4")}
-    >
-      <span className={ROW_LABEL}>Preview</span>
-      <SegmentedControl
-        aria-label="Preview mode"
-        selectedKeys={[activeId]}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next) onChange(next as string)
-        }}
-        className="no-scrollbar min-w-0 shrink overflow-x-auto bg-bg/50 p-0.5"
-      >
-        {modes.map((entry) => (
-          <SegmentedControlItem
-            key={entry.id}
-            id={entry.id}
-            className="text-xs whitespace-nowrap"
-          >
-            {entry.name}
-          </SegmentedControlItem>
-        ))}
-      </SegmentedControl>
-    </div>
-  )
-}
-
 /* -------------------------------- Mode editor ------------------------------- */
 
 /** One mode's block inside the Modes panel: identity row (polarity glyph,
@@ -468,14 +424,11 @@ function AddModeRow({
 /* -------------------------------- Auto rows -------------------------------- */
 
 /** A seed row that reads “Auto” (showing the engine's derived color) until
- *  overridden — the panel face of absent-means-default, with the resolved
- *  scale in the trigger (ColorPickerRow's palette layout). Reset returns to
- *  Auto. */
+ *  overridden — the panel face of absent-means-default. Reset returns to Auto. */
 function AutoColorRow({
   label,
   value,
   derived,
-  ramp,
   onChange,
   onReset,
 }: {
@@ -484,8 +437,6 @@ function AutoColorRow({
   value: string
   /** The engine's derived color while Auto (any CSS color). */
   derived: string
-  /** The resolved scale the seed produces, lightest step first. */
-  ramp: string[]
   onChange: (hex: string) => void
   onReset: () => void
 }) {
@@ -495,31 +446,20 @@ function AutoColorRow({
       onChange={(c) => onChange(c.toString("hex"))}
     >
       {({ color }) => (
-        <div data-row="" className={cn(ROW, "relative flex h-auto flex-col")}>
+        <div
+          data-row=""
+          className={cn(ROW, "flex items-center gap-0.5 pr-1.5")}
+        >
           <Button
             variant="quiet"
-            className="flex h-auto w-full flex-col items-stretch gap-2.5 rounded-none px-4 py-3 text-left font-normal"
+            className="flex h-full min-w-0 flex-1 items-center justify-between gap-3 rounded-none px-4 font-normal"
           >
-            <span className="flex items-center justify-between gap-3">
-              <span className={ROW_LABEL}>{label}</span>
-              <span
-                className={cn(
-                  "flex shrink-0 items-center gap-2.5",
-                  value && "pr-7",
-                )}
-              >
-                <span className={cn(ROW_VALUE, value && "font-mono uppercase")}>
-                  {value ? color.toString("hex") : "Auto"}
-                </span>
-                <ColorSwatch className="size-5 rounded-full" />
+            <span className={ROW_LABEL}>{label}</span>
+            <span className="flex shrink-0 items-center gap-2.5">
+              <span className={cn(ROW_VALUE, value && "font-mono uppercase")}>
+                {value ? color.toString("hex") : "Auto"}
               </span>
-            </span>
-            {/* Hairline: the near-white end would otherwise dissolve into
-                the row and the scale would look short. */}
-            <span className="flex h-5 overflow-hidden rounded-full inset-ring-1 inset-ring-border/60">
-              {ramp.map((step, i) => (
-                <span key={i} className="flex-1" style={{ background: step }} />
-              ))}
+              <ColorSwatch className="size-5 rounded-full" />
             </span>
           </Button>
           {value !== "" && (
@@ -529,7 +469,7 @@ function AutoColorRow({
               isIconOnly
               aria-label={`Reset ${label} to auto`}
               onPress={onReset}
-              className="absolute top-2.5 right-2 shrink-0 text-fg-muted"
+              className="shrink-0 text-fg-muted"
             >
               <RotateCcwIcon />
             </Button>
@@ -734,24 +674,18 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
     for (const { key, job } of BORDER_JOBS) set(key)(on ? borderSeeds[job] : 0)
   }
 
-  const rampOf = (palette: string) =>
-    STEPS.map((step) => m.scales[palette]?.[step] ?? m.background)
-
   return (
     <>
       <ControlGroup>
         <ColorPickerRow
           label="Brand"
-          layout="palette"
           value={state.brand}
           onChange={set("brand")}
-          ramp={rampOf("accent")}
         />
         <AutoColorRow
           label="Gray"
           value={state.graySeed}
           derived={m.scales.neutral?.["500"] ?? m.background}
-          ramp={rampOf("neutral")}
           onChange={set("graySeed")}
           onReset={() => set("graySeed")("")}
         />
@@ -773,13 +707,6 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
           pinned={state.preserveSeed}
         />
       </div>
-      {modes.length > 1 && (
-        <PreviewModeRow
-          modes={modes}
-          activeId={active.id}
-          onChange={setActiveId}
-        />
-      )}
       <DetailRow
         label="Modes"
         summary={
