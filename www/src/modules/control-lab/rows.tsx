@@ -17,6 +17,8 @@ import {
 } from "lucide-react"
 import {
   Button as RacButton,
+  ListBox as RacListBox,
+  ListBoxItem as RacListBoxItem,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -1017,12 +1019,16 @@ function OptionGrid({
   variant?: "card" | "plain"
 }) {
   return (
-    <RacToggleButtonGroup
+    // A listbox, not a toggle group: grid layout gives the cards 2-D arrow-key
+    // navigation, which a ToggleButtonGroup (1-D) can't.
+    <RacListBox
       aria-label={ariaLabel}
+      layout="grid"
       selectionMode="single"
       disallowEmptySelection
       selectedKeys={[value]}
       onSelectionChange={(keys) => {
+        if (keys === "all") return
         const next = keys.values().next().value
         if (next) onChange(next as string)
       }}
@@ -1030,10 +1036,11 @@ function OptionGrid({
       style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
     >
       {options.map((option) => (
-        <RacToggleButton
+        <RacListBoxItem
           key={option.id}
           id={option.id}
           aria-label={option.label}
+          textValue={option.label}
           className={cn(
             "relative flex min-w-0 cursor-interactive items-center justify-center rounded-lg p-4 focus-reset transition-transform after:pointer-events-none after:absolute after:inset-0 after:rounded-lg after:bg-white/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 focus-visible:focus-ring motion-safe:pressed:scale-[0.98]",
             variant === "card"
@@ -1044,9 +1051,9 @@ function OptionGrid({
           <span className="flex w-full min-w-0 items-center justify-center">
             {option.preview}
           </span>
-        </RacToggleButton>
+        </RacListBoxItem>
       ))}
-    </RacToggleButtonGroup>
+    </RacListBox>
   )
 }
 
