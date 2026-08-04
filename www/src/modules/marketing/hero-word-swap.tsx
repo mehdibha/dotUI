@@ -1,109 +1,79 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useId, useMemo, useState } from "react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 
-// "humans" and "agents" are both 6 letters ending in "s" — the swap can be
-// layout-stable apart from a small width tween between the two words.
 const WORDS = ["humans", "agents"] as const
-
-const EASE = "cubic-bezier(0.77, 0, 0.175, 1)" // ease-in-out-quart
-const DURATION_MS = 600
 const DWELL_MS = 4000
-const STAGGER_MS = 35
 
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false)
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
-    setReduced(mq.matches)
-    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches)
-    mq.addEventListener("change", onChange)
-    return () => mq.removeEventListener("change", onChange)
-  }, [])
-  return reduced
-}
+const TRANSITION = {
+  type: "spring",
+  stiffness: 280,
+  damping: 18,
+  mass: 0.3,
+} as const
+
+const VARIANTS = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+} as const
 
 export function HeroWordSwap() {
-  const reduced = usePrefersReducedMotion()
-  const [swapped, setSwapped] = useState(false)
+  const reduced = useReducedMotion()
+  const [index, setIndex] = useState(0)
+  const word = WORDS[index]!
+  const uid = useId()
 
   useEffect(() => {
     if (reduced) return
-    const id = setInterval(() => setSwapped((s) => !s), DWELL_MS)
+    const id = setInterval(
+      () => setIndex((i) => (i + 1) % WORDS.length),
+      DWELL_MS,
+    )
     return () => clearInterval(id)
   }, [reduced])
 
-  // The words differ in width (~30px at hero size), so the container tracks the
-  // active word's measured width and the centered line gently re-centers.
-  const wordRefs = useRef<(HTMLSpanElement | null)[]>([null, null])
-  const [widths, setWidths] = useState<[number, number] | null>(null)
-  useEffect(() => {
-    if (reduced) return
-    const measure = () => {
-      const [a, b] = wordRefs.current.map(
-        (el) => el?.getBoundingClientRect().width,
-      )
-      if (a && b) setWidths([a, b])
-    }
-    measure()
-    // Re-measures on font swap and on the vw-clamped font-size changing.
-    const ro = new ResizeObserver(measure)
-    for (const el of wordRefs.current) if (el) ro.observe(el)
-    return () => ro.disconnect()
-  }, [reduced])
+  // Per-occurrence character ids: letters both words share (a, n, s) keep their
+  // identity across the swap, so they slide to their new position instead of
+  // fading out and back in. The rest cross-fade.
+  const characters = useMemo(() => {
+    const counts: Record<string, number> = {}
+    return word.split("").map((char) => {
+      counts[char] = (counts[char] ?? 0) + 1
+      return { id: `${uid}-${char}${counts[char]}`, label: char }
+    })
+  }, [word, uid])
 
   if (reduced) {
     return <span>humans</span>
   }
 
-  const transition = `transform ${DURATION_MS}ms ${EASE}, opacity ${DURATION_MS}ms ${EASE}`
-
   return (
     <>
       <span className="sr-only">humans and agents</span>
-      <span
-        aria-hidden
-        className="relative inline-block [clip-path:inset(-0.15em_-0.4em)]"
-        style={{
-          width: widths ? widths[swapped ? 1 : 0] : undefined,
-          transition: `width ${DURATION_MS}ms ${EASE}`,
-        }}
-      >
-        {/* Invisible in-flow anchor: establishes the baseline and the initial
-            (pre-measurement) width, while the visible word rows sit absolutely
-            on top so the wider word can't inflate the animated width. */}
-        <span className="invisible">{WORDS[0]}</span>
-        {WORDS.map((word, wi) => {
-          const active = (wi === 1) === swapped
-          // Each word keeps its natural letter widths; the letters flip
-          // individually with a left-to-right stagger.
-          return (
-            <span
-              key={word}
-              ref={(el) => {
-                wordRefs.current[wi] = el
-              }}
-              className="absolute top-0 left-1/2 inline-flex -translate-x-1/2 whitespace-nowrap"
-            >
-              {word.split("").map((ch, i) => (
-                <span
-                  key={i}
-                  style={{
-                    transition,
-                    transitionDelay: `${i * STAGGER_MS}ms`,
-                    transform: active
-                      ? "translateY(0)"
-                      : `translateY(${wi === 0 ? "-100%" : "100%"})`,
-                    opacity: active ? 1 : 0,
-                    willChange: "transform",
-                  }}
-                >
-                  {ch}
-                </span>
-              ))}
-            </span>
-          )
-        })}
+      {/* Sized to the wider of the two words so the swap never reflows the line:
+          "for" stays put and the morph is the only thing moving. */}
+      <span aria-hidden className="relative inline-block">
+        <span className="invisible">humans</span>
+        <span className="absolute top-0 left-0 whitespace-nowrap">
+          <AnimatePresence mode="popLayout" initial={false}>
+            {characters.map((character) => (
+              <motion.span
+                key={character.id}
+                layoutId={character.id}
+                className="inline-block"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={VARIANTS}
+                transition={TRANSITION}
+              >
+                {character.label}
+              </motion.span>
+            ))}
+          </AnimatePresence>
+        </span>
       </span>
     </>
   )
