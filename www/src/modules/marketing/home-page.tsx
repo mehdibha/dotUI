@@ -25,7 +25,7 @@ export function HomePage() {
         {/* Hero section */}
         <section className="flex flex-col pt-14 sm:pt-18 md:pt-26">
           <div className="flex flex-col items-center text-center">
-            <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-none">
+            <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-[4rem]">
               The Design System Studio
               <br />
               <span className="text-fg-muted">
