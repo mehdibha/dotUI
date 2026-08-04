@@ -138,8 +138,8 @@ export const PANEL_VERSIONS: PanelVersion[] = [
               Body: SurfacesSectionBody,
             },
             {
-              id: "details",
-              label: "Details",
+              id: "cursor",
+              label: "Cursor",
               keys: EFFECT_KEYS_V2,
               Body: EffectsSectionBodyV2,
             },

@@ -31,6 +31,7 @@ import {
 } from "@/registry/icons/create-icon"
 import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
 import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   ControlGroup,
   FontPickerRow,
@@ -48,6 +49,8 @@ import { useLoadedFamilies } from "@/modules/create/typography"
 import {
   CLUSTERS,
   CORNER_SHAPE_OPTIONS,
+  CURSOR_DISABLED_OPTIONS,
+  CURSOR_INTERACTIVE_OPTIONS,
   CURSOR_OPTIONS,
   DENSITY_OPTIONS,
   ICON_LIBRARY_OPTIONS,
@@ -128,7 +131,7 @@ function TypeHeroV2({ state }: { state: LabState }) {
   const probeClass = (id: TypeProbeId) =>
     cn(
       "-mx-1 cursor-interactive rounded-md px-1 text-left focus-reset transition-colors focus-visible:focus-ring",
-      pinned === id && "bg-bg/50",
+      pinned === id && "bg-muted",
     )
   const role = inspected ? TYPE_ROLES[inspected] : null
 
@@ -204,7 +207,7 @@ function TypeHeroV2({ state }: { state: LabState }) {
           className={cn(probeClass("code"), "ml-auto shrink-0")}
         >
           <span
-            className="flex h-6 items-center rounded-md bg-bg/50 px-2 text-fg-muted"
+            className="flex h-6 items-center rounded-md bg-muted px-2 text-fg-muted"
             style={{
               fontFamily: fontStack(state.monoFont),
               fontSize: TYPE_ROLES.code.px,
@@ -742,25 +745,75 @@ export function EffectsSectionBody({ lab }: { lab: Lab }) {
   )
 }
 
+/* Two real buttons — one enabled, one disabled — each wearing the cursor the
+   current selection maps to. Hovering them shows the real thing; the drawn
+   cursor keeps the answer visible without a mouse. */
+function CursorHeroV2({ state }: { state: LabState }) {
+  const specimens = [
+    {
+      label: "Interactive",
+      cursor: state.cursorInteractive,
+      glyph: CURSOR_INTERACTIVE_OPTIONS.find(
+        (o) => o.value === state.cursorInteractive,
+      )?.illustration,
+      isDisabled: false,
+    },
+    {
+      label: "Disabled",
+      cursor: state.cursorDisabled,
+      glyph: CURSOR_DISABLED_OPTIONS.find(
+        (o) => o.value === state.cursorDisabled,
+      )?.illustration,
+      isDisabled: true,
+    },
+  ]
+  return (
+    <Hero className="flex-row items-center justify-evenly py-6">
+      {specimens.map(({ label, cursor, glyph, isDisabled }) => (
+        <div key={label} className="relative" style={{ cursor }}>
+          <Button
+            variant="secondary"
+            isDisabled={isDisabled}
+            style={{ cursor }}
+          >
+            Button
+          </Button>
+          <span
+            aria-hidden
+            className="pointer-events-none absolute right-0 bottom-0 translate-x-1/3 translate-y-1/3 **:[svg]:size-5"
+          >
+            {glyph}
+          </span>
+        </div>
+      ))}
+    </Hero>
+  )
+}
+
 /* v2: shadows moved into Surfaces — the recipe and the shadow family are one
-   decision there. Details keeps only the cursors. */
+   decision there. The Cursor section keeps only the cursors. */
 export function EffectsSectionBodyV2({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
-    <ControlGroup>
-      <SelectRow
-        label="Cursor"
-        value={state.cursorInteractive}
-        onChange={set("cursorInteractive")}
-        options={CURSOR_OPTIONS}
-      />
-      <SelectRow
-        label="Disabled cursor"
-        value={state.cursorDisabled}
-        onChange={set("cursorDisabled")}
-        options={CURSOR_OPTIONS}
-      />
-    </ControlGroup>
+    <>
+      <CursorHeroV2 state={state} />
+      <ControlGroup>
+        <SelectRow
+          label="Interactive"
+          value={state.cursorInteractive}
+          onChange={set("cursorInteractive")}
+          options={CURSOR_INTERACTIVE_OPTIONS}
+          layout="grid"
+        />
+        <SelectRow
+          label="Disabled"
+          value={state.cursorDisabled}
+          onChange={set("cursorDisabled")}
+          options={CURSOR_DISABLED_OPTIONS}
+          layout="grid"
+        />
+      </ControlGroup>
+    </>
   )
 }
 

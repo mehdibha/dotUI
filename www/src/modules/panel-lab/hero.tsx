@@ -31,7 +31,9 @@ export function Hero({
   return (
     <div
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-xl bg-muted",
+        // The app background, not panel chrome — specimens read as product
+        // surface, matching the OptionGrid card treatment.
+        "flex w-full flex-col overflow-hidden rounded-xl border border-border/45 bg-bg",
         inset && "gap-2.5 p-3",
         className,
       )}
@@ -62,7 +64,7 @@ export function HeroInspector({
     <div
       className={cn(
         "flex items-center justify-between gap-3 text-xs text-fg-muted",
-        bar && "h-11 border-t border-bg/50 px-4",
+        bar && "h-11 border-t border-border/45 px-4",
       )}
     >
       <span className="flex min-w-0 items-center gap-2">{label}</span>

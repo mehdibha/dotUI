@@ -8,6 +8,7 @@
 
 import { createContext, useContext, useState } from "react"
 import {
+  CheckIcon,
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -387,12 +388,19 @@ export function SelectRow({
                 key={opt.value}
                 id={opt.value}
                 textValue={opt.label}
-                className="flex min-w-0 cursor-interactive flex-col items-center gap-2 rounded-lg bg-muted p-4 text-fg-muted outline-hidden transition-transform select-none focus:bg-highlight focus:text-fg-on-highlight motion-safe:pressed:scale-[0.98] selected:text-fg selected:inset-ring selected:inset-ring-accent"
+                className="relative flex min-w-0 cursor-interactive flex-col items-center gap-2 rounded-lg bg-muted p-4 text-fg-muted outline-hidden transition-transform select-none focus:bg-highlight focus:text-fg-on-highlight motion-safe:pressed:scale-[0.98] selected:text-fg"
               >
-                <span className="flex h-9 items-center justify-center text-fg **:[svg]:size-6">
-                  {opt.illustration ?? opt.icon}
-                </span>
-                <span className="truncate text-xs">{opt.label}</span>
+                {({ isSelected }) => (
+                  <>
+                    {isSelected && (
+                      <CheckIcon className="absolute top-2 right-2 size-3.5" />
+                    )}
+                    <span className="flex h-9 items-center justify-center text-fg **:[svg]:size-6">
+                      {opt.illustration ?? opt.icon}
+                    </span>
+                    <span className="truncate text-xs">{opt.label}</span>
+                  </>
+                )}
               </RacListBoxItem>
             ))}
           </RacListBox>

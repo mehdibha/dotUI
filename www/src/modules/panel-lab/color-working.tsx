@@ -322,7 +322,7 @@ function EngineHero({
               const next = keys.values().next().value
               if (next) onModeChange(next as string)
             }}
-            className="no-scrollbar min-w-0 shrink overflow-x-auto bg-bg/50 p-0.5"
+            className="no-scrollbar min-w-0 shrink overflow-x-auto bg-muted p-0.5"
           >
             {modes.map((entry) => (
               <SegmentedControlItem
