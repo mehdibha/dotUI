@@ -1,80 +1,111 @@
 "use client"
 
-import { useEffect, useId, useMemo, useState } from "react"
+/**
+ * Rotating hero word, modeled on the x.ai hero swap. The word resolves in and out
+ * of focus — `{opacity, blur(6px)}` with no vertical travel — rather than sliding,
+ * and the slot springs to the incoming word's measured width so the "for" before it
+ * never snaps.
+ */
+
+import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 
 const WORDS = ["humans", "agents"] as const
-const DWELL_MS = 4000
+const INTERVAL_MS = 4200
 
-const TRANSITION = {
-  type: "spring",
-  stiffness: 280,
-  damping: 18,
-  mass: 0.3,
-} as const
+const DURATION = 0.3
+const EXIT_DURATION = 0.22
+const EASE = [0.16, 1, 0.3, 1] as const
+const BLUR = "blur(6px)"
+const WIDTH_SPRING = { type: "spring", stiffness: 260, damping: 30 } as const
 
+// The peak blur lands at opacity 0, so you never see sharp-but-blurred text. Exit
+// carries its own faster transition so the swap doesn't drag.
 const VARIANTS = {
+  initial: { opacity: 0, filter: BLUR },
+  animate: { opacity: 1, filter: "blur(0px)" },
+  exit: {
+    opacity: 0,
+    filter: BLUR,
+    transition: { duration: EXIT_DURATION, ease: EASE },
+  },
+}
+
+/** Crossfade only — no blur, and the slot width snaps — under prefers-reduced-motion. */
+const REDUCED_VARIANTS = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   exit: { opacity: 0 },
-} as const
+}
 
 export function HeroWordSwap() {
-  const reduced = useReducedMotion()
+  const reduce = useReducedMotion() ?? false
   const [index, setIndex] = useState(0)
-  const word = WORDS[index]!
-  const uid = useId()
+  const word = WORDS[index] ?? WORDS[0]
 
   useEffect(() => {
-    if (reduced) return
-    const id = setInterval(
+    const id = window.setInterval(
       () => setIndex((i) => (i + 1) % WORDS.length),
-      DWELL_MS,
+      INTERVAL_MS,
     )
-    return () => clearInterval(id)
-  }, [reduced])
+    return () => window.clearInterval(id)
+  }, [])
 
-  // Per-occurrence character ids: letters both words share (a, n, s) keep their
-  // identity across the swap, so they slide to their new position instead of
-  // fading out and back in. The rest cross-fade.
-  const characters = useMemo(() => {
-    const counts: Record<string, number> = {}
-    return word.split("").map((char) => {
-      counts[char] = (counts[char] ?? 0) + 1
-      return { id: `${uid}-${char}${counts[char]}`, label: char }
-    })
-  }, [word, uid])
+  // Measure the active word from the invisible sizer, then animate the slot to it.
+  // Animating the real `width` (not a transform) is what keeps the line from
+  // snapping. The ResizeObserver catches width changes without a word change: the
+  // webfont swapping in, or the fluid headline font-size crossing a breakpoint.
+  const sizerRef = useRef<HTMLSpanElement | null>(null)
+  const [width, setWidth] = useState<number | undefined>(undefined)
+  useEffect(() => {
+    const el = sizerRef.current
+    if (!el) return
+    const measure = () => {
+      const next = Math.round(el.scrollWidth)
+      setWidth((prev) => (prev === next ? prev : next))
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [word])
 
-  if (reduced) {
-    return <span>humans</span>
-  }
+  const variants = reduce ? REDUCED_VARIANTS : VARIANTS
 
   return (
     <>
       <span className="sr-only">humans and agents</span>
-      {/* Sized to the wider of the two words so the swap never reflows the line:
-          "for" stays put and the morph is the only thing moving. */}
-      <span aria-hidden className="relative inline-block">
-        <span className="invisible">humans</span>
-        <span className="absolute top-0 left-0 whitespace-nowrap">
-          <AnimatePresence mode="popLayout" initial={false}>
-            {characters.map((character) => (
-              <motion.span
-                key={character.id}
-                layoutId={character.id}
-                className="inline-block"
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={VARIANTS}
-                transition={TRANSITION}
-              >
-                {character.label}
-              </motion.span>
-            ))}
+      <motion.span
+        aria-hidden
+        className="inline-grid items-baseline align-baseline"
+        animate={width != null ? { width } : undefined}
+        transition={{ width: reduce ? { duration: 0 } : WIDTH_SPRING }}
+      >
+        {/* Sizer: invisibly holds the current word so the slot keeps a baseline and
+            a measurable width through the swap, and never collapses between words. */}
+        <span
+          ref={sizerRef}
+          className="invisible col-start-1 row-start-1 justify-self-start whitespace-nowrap"
+        >
+          {word}
+        </span>
+        {/* Visible word, swapped sequentially over the sizer (mode="wait").
+            `initial={false}` so the first word shows statically on load. */}
+        <span className="col-start-1 row-start-1 justify-self-start whitespace-nowrap">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={word}
+              className="inline-block"
+              initial={variants.initial}
+              animate={variants.animate}
+              exit={variants.exit}
+              transition={{ duration: DURATION, ease: EASE }}
+            >
+              {word}
+            </motion.span>
           </AnimatePresence>
         </span>
-      </span>
+      </motion.span>
     </>
   )
 }
