@@ -40,15 +40,17 @@ import {
   EffectsSectionBody,
   EffectsSectionBodyV2,
   IconsSectionBody,
+  IconsSectionBodyV2,
   ShapeSectionBody,
   ShapeSectionBodyV2,
   SpaceSectionBody,
   TypographySectionBody,
+  TypographySectionBodyV2,
 } from "./sections"
 import { SurfacesSectionBody } from "./surfaces"
 import type { Chapter } from "./variants/chapter"
 
-/* The chapters every version shares so far — only Color has diverged. */
+/* The v1 chapter list; v2 swaps bodies per section below. */
 const SHARED_CHAPTERS: Chapter[] = [
   {
     id: "typography",
@@ -116,7 +118,7 @@ export const PANEL_VERSIONS: PanelVersion[] = [
     id: "v2",
     label: "v2 (wip)",
     summary:
-      "Color modes become a user-defined set — one to many, with archetypes and per-mode contrast. Shape and Space split; radius speaks px (#575) with a nested-corner preview and a corner-shape axis. Surfaces lands as its own chapter (#590): a delineation recipe (hairline · adaptive · shadow · outline) that absorbs shadows and the overlay material.",
+      "Color modes become a user-defined set — one to many, with archetypes and per-mode contrast. Shape and Space split; radius speaks px (#575) with a nested-corner preview and a corner-shape axis. Surfaces lands as its own chapter (#590): a delineation recipe (hairline · adaptive · shadow · outline) that absorbs shadows and the overlay material. Every section opens on a hero following one contract (hero.tsx): shared stage, hover-peek/click-pin inspection, mono readout — Type gains a live role specimen, Icons a real-registry grid.",
     chapters: [
       {
         id: "color",
@@ -126,6 +128,10 @@ export const PANEL_VERSIONS: PanelVersion[] = [
         Body: WorkingColorSectionBody,
       },
       ...SHARED_CHAPTERS.flatMap((chapter) => {
+        if (chapter.id === "typography")
+          return [{ ...chapter, Body: TypographySectionBodyV2 }]
+        if (chapter.id === "icons")
+          return [{ ...chapter, Body: IconsSectionBodyV2 }]
         if (chapter.id === "shape")
           return [
             {

@@ -59,6 +59,7 @@ import {
 
 import { DEFAULTS, PRIMARY_OPTIONS } from "./data"
 import type { Lab, LabMode, LabState } from "./data"
+import { Hero, HeroInspector, useInspect } from "./hero"
 import {
   DetailRow,
   PickerPopoverContent,
@@ -280,19 +281,23 @@ function EngineHero({
   onModeChange: (id: string) => void
 }) {
   const { state, set } = lab
-  const [inspect, setInspect] = useState<{
-    palette: string
-    step: StepName
-  } | null>(null)
+  const { inspected: inspectId, pinned, probeProps } = useInspect<string>()
 
   const m = theme[mode.polarity]
   const bg = toOklch(m.background)
   const warnings = theme.report.warnings.length
   const delta = theme.report.seedDelta.accent ?? 0
-  const inspected = inspect ? m.scales[inspect.palette]?.[inspect.step] : null
+  const [inspectPalette, inspectStep] = (inspectId?.split(":") ?? []) as [
+    string?,
+    StepName?,
+  ]
+  const inspected =
+    inspectPalette && inspectStep
+      ? m.scales[inspectPalette]?.[inspectStep]
+      : null
 
   return (
-    <div className="flex flex-col gap-2 rounded-xl bg-muted p-3">
+    <Hero className="gap-2">
       <div className="flex items-center justify-between gap-3">
         <span
           className="flex min-w-0 items-center gap-1.5 text-xs text-fg-muted"
@@ -335,36 +340,35 @@ function EngineHero({
       {HERO_PALETTES.map((palette) => (
         <div key={palette} className="flex h-5 overflow-hidden rounded-md">
           {STEPS.map((step) => {
-            const selected =
-              inspect?.palette === palette && inspect.step === step
+            const id = `${palette}:${step}`
             return (
               <button
                 key={step}
                 type="button"
                 aria-label={`Inspect ${palette} ${step}`}
-                aria-pressed={selected}
+                {...probeProps(id)}
                 className={cn(
                   "flex-1 cursor-interactive focus-reset focus-visible:z-10 focus-visible:focus-ring",
-                  selected && "z-10 rounded-[3px] ring-2 ring-bg ring-inset",
+                  pinned === id &&
+                    "z-10 rounded-[3px] ring-2 ring-bg ring-inset",
                 )}
                 style={{ backgroundColor: m.scales[palette]?.[step] }}
-                onClick={() => setInspect(selected ? null : { palette, step })}
               />
             )
           })}
         </div>
       ))}
 
-      {inspect && inspected && (
-        <div className="flex items-center justify-between gap-3 font-mono text-xs text-fg-muted tabular-nums">
-          <span>
-            {inspect.palette} · {inspect.step}
-          </span>
-          <span className="flex items-center gap-3">
-            <span className="uppercase">{cssToHex(inspected)}</span>
-            <span>{wcag2(toOklch(inspected), bg).toFixed(2)}:1 vs bg</span>
-          </span>
-        </div>
+      {inspected && (
+        <HeroInspector
+          label={`${inspectPalette} · ${inspectStep}`}
+          detail={
+            <span className="flex items-center gap-3">
+              <span className="uppercase">{cssToHex(inspected)}</span>
+              <span>{wcag2(toOklch(inspected), bg).toFixed(2)}:1 vs bg</span>
+            </span>
+          }
+        />
       )}
 
       {state.preserveSeed ? (
@@ -386,7 +390,7 @@ function EngineHero({
           </Button>
         </div>
       ) : null}
-    </div>
+    </Hero>
   )
 }
 

@@ -23,6 +23,13 @@ import {
 } from "lucide-react"
 import { DisclosureGroup } from "react-aria-components"
 
+import { fontStack } from "@/lib/fonts"
+import * as registryIcons from "@/registry/icons"
+import {
+  IconLibraryContext,
+  IconWeightContext,
+} from "@/registry/icons/create-icon"
+import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
 import { cn } from "@/registry/lib/utils"
 import {
   ControlGroup,
@@ -32,6 +39,11 @@ import {
   SliderRow,
   OptionGridRow,
 } from "@/modules/control-lab/rows"
+import {
+  ICON_STROKE_WIDTH_VAR,
+  STROKE_DEFAULTS,
+} from "@/modules/create/iconography"
+import { useLoadedFamilies } from "@/modules/create/typography"
 
 import {
   CLUSTERS,
@@ -45,7 +57,8 @@ import {
   SHAPE_ROLES,
   SHAPE_RUNGS,
 } from "./data"
-import type { Lab, ShapeRoleKey } from "./data"
+import type { Lab, LabState, ShapeRoleKey } from "./data"
+import { Hero, HeroInspector, useInspect } from "./hero"
 import {
   ClusterHeader,
   DetailRow,
@@ -59,6 +72,163 @@ export function TypographySectionBody({ lab }: { lab: Lab }) {
   return (
     <>
       <TypeSpecimen heading={state.headingFont} body={state.bodyFont} />
+      <ControlGroup>
+        <FontPickerRow
+          label="Heading"
+          categories={["sans-serif", "serif", "display", "handwriting"]}
+          selectedKey={state.headingFont}
+          onChange={set("headingFont")}
+        />
+        <FontPickerRow
+          label="Body"
+          categories={["sans-serif", "serif"]}
+          selectedKey={state.bodyFont}
+          onChange={set("bodyFont")}
+        />
+        <FontPickerRow
+          label="Mono"
+          categories={["mono"]}
+          selectedKey={state.monoFont}
+          onChange={set("monoFont")}
+        />
+      </ControlGroup>
+    </>
+  )
+}
+
+/* ------------------------------- Type (v2) -------------------------------- */
+
+type TypeProbeId = "heading" | "body" | "ui" | "code"
+
+/* Fixed rhythm: v2's type axes are the three families — sizes and weights are
+   the hero's constants until rhythm axes land (drafts #563/#565). */
+const TYPE_ROLES: Record<
+  TypeProbeId,
+  { label: string; px: number; weight: number }
+> = {
+  heading: { label: "Heading", px: 24, weight: 600 },
+  body: { label: "Body", px: 15, weight: 400 },
+  ui: { label: "UI label", px: 13, weight: 500 },
+  code: { label: "Code", px: 12, weight: 400 },
+}
+
+/** Every text role the system ships, live in the chosen faces — heading, body,
+ *  UI labels and code. Probes follow the hero contract: hover peeks a role's
+ *  recipe, click pins it. */
+function TypeHeroV2({ state }: { state: LabState }) {
+  const { inspected, pinned, probeProps } = useInspect<TypeProbeId>()
+  useLoadedFamilies([state.headingFont, state.bodyFont, state.monoFont])
+
+  const family = (id: TypeProbeId) =>
+    id === "heading"
+      ? state.headingFont
+      : id === "code"
+        ? state.monoFont
+        : state.bodyFont
+  const probeClass = (id: TypeProbeId) =>
+    cn(
+      "-mx-1 cursor-interactive rounded-md px-1 text-left focus-reset transition-colors focus-visible:focus-ring",
+      pinned === id && "bg-bg/50",
+    )
+  const role = inspected ? TYPE_ROLES[inspected] : null
+
+  return (
+    <Hero>
+      <button
+        type="button"
+        aria-label="Inspect heading"
+        {...probeProps("heading")}
+        className={probeClass("heading")}
+      >
+        <span
+          className="block text-balance text-fg"
+          style={{
+            fontFamily: fontStack(state.headingFont),
+            fontSize: TYPE_ROLES.heading.px,
+            fontWeight: TYPE_ROLES.heading.weight,
+            lineHeight: 1.15,
+          }}
+        >
+          Before we knew it
+        </span>
+      </button>
+      <button
+        type="button"
+        aria-label="Inspect body"
+        {...probeProps("body")}
+        className={probeClass("body")}
+      >
+        <span
+          className="block text-pretty text-fg-muted"
+          style={{
+            fontFamily: fontStack(state.bodyFont),
+            fontSize: TYPE_ROLES.body.px,
+            lineHeight: 1.6,
+          }}
+        >
+          We had left the ground, and the city lights fell away beneath us.
+        </span>
+      </button>
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          aria-label="Inspect UI label"
+          {...probeProps("ui")}
+          className={cn(probeClass("ui"), "shrink-0")}
+        >
+          <span
+            className="flex h-7 items-center rounded-full bg-primary px-3.5 text-fg-on-primary"
+            style={{
+              fontFamily: fontStack(state.bodyFont),
+              fontSize: TYPE_ROLES.ui.px,
+              fontWeight: TYPE_ROLES.ui.weight,
+            }}
+          >
+            Get started
+          </span>
+        </button>
+        <span
+          className="flex h-7 shrink-0 items-center rounded-full border border-border-field px-3.5 text-fg"
+          style={{
+            fontFamily: fontStack(state.bodyFont),
+            fontSize: TYPE_ROLES.ui.px,
+            fontWeight: TYPE_ROLES.ui.weight,
+          }}
+        >
+          Learn more
+        </span>
+        <button
+          type="button"
+          aria-label="Inspect code"
+          {...probeProps("code")}
+          className={cn(probeClass("code"), "ml-auto shrink-0")}
+        >
+          <span
+            className="flex h-6 items-center rounded-md bg-bg/50 px-2 text-fg-muted"
+            style={{
+              fontFamily: fontStack(state.monoFont),
+              fontSize: TYPE_ROLES.code.px,
+            }}
+          >
+            v2.4.0
+          </span>
+        </button>
+      </div>
+      {inspected && role && (
+        <HeroInspector
+          label={role.label}
+          detail={`${family(inspected)} · ${role.px}px · ${role.weight}`}
+        />
+      )}
+    </Hero>
+  )
+}
+
+export function TypographySectionBodyV2({ lab }: { lab: Lab }) {
+  const { state, set } = lab
+  return (
+    <>
+      <TypeHeroV2 state={state} />
       <ControlGroup>
         <FontPickerRow
           label="Heading"
@@ -147,6 +317,162 @@ export function IconsSectionBody({ lab }: { lab: Lab }) {
   )
 }
 
+/* ------------------------------- Icons (v2) ------------------------------- */
+
+/** Renders children as real icons of a library: context + stroke var in one. */
+function IconScope({
+  library,
+  weight,
+  stroke,
+  className,
+  children,
+}: {
+  library: IconLibraryName
+  weight?: PhosphorWeight
+  stroke?: number
+  className?: string
+  children: React.ReactNode
+}) {
+  return (
+    <IconLibraryContext.Provider value={library}>
+      <IconWeightContext.Provider value={weight}>
+        <span
+          className={className}
+          style={
+            stroke !== undefined
+              ? ({
+                  [ICON_STROKE_WIDTH_VAR]: String(stroke),
+                } as CSSProperties)
+              : undefined
+          }
+        >
+          {children}
+        </span>
+      </IconWeightContext.Provider>
+    </IconLibraryContext.Provider>
+  )
+}
+
+const SPECIMEN = [
+  ["Home", registryIcons.HomeIcon],
+  ["Search", registryIcons.SearchIcon],
+  ["Heart", registryIcons.HeartIcon],
+  ["Star", registryIcons.StarIcon],
+  ["Bell", registryIcons.BellIcon],
+  ["Mail", registryIcons.MailIcon],
+  ["Calendar", registryIcons.CalendarIcon],
+  ["Settings", registryIcons.SettingsIcon],
+  ["User", registryIcons.UserIcon],
+  ["Folder", registryIcons.FolderIcon],
+  ["Camera", registryIcons.CameraIcon],
+  ["Image", registryIcons.ImageIcon],
+  ["Trash", registryIcons.TrashIcon],
+  ["Pencil", registryIcons.PencilIcon],
+  ["Share", registryIcons.ShareIcon],
+  ["Download", registryIcons.DownloadIcon],
+] as const
+
+/** The Icons hero: a grid of real registry icons in the current library,
+ *  stroke and weight, with the shared inspect verb — hover peeks a glyph,
+ *  click pins it; the footer reads it at the four sizes components use. */
+function IconSpecimen({ state }: { state: LabState }) {
+  const library = state.iconLibrary as IconLibraryName
+  const stroke = state.iconStroke
+  const weight =
+    library === "phosphor" ? (state.iconWeight as PhosphorWeight) : undefined
+  // Star, not Search — a magnifier next to a name reads as a search field.
+  const { inspected, probeProps } = useInspect<string>("Star")
+  const [name, InspectedIcon] =
+    SPECIMEN.find(([label]) => label === (inspected ?? "Star")) ?? SPECIMEN[3]
+
+  return (
+    <Hero inset={false}>
+      <IconScope
+        library={library}
+        weight={weight}
+        stroke={stroke}
+        className="flex w-full flex-col"
+      >
+        <div className="grid grid-cols-8 gap-0.5 p-2">
+          {SPECIMEN.map(([label, Icon]) => (
+            <button
+              key={label}
+              type="button"
+              aria-label={label}
+              {...probeProps(label)}
+              className={cn(
+                "flex aspect-square cursor-interactive items-center justify-center rounded-lg text-fg-muted focus-reset transition-colors focus-visible:focus-ring",
+                label === (inspected ?? "Star")
+                  ? "bg-highlight text-fg"
+                  : "hover:bg-highlight/60 hover:text-fg",
+              )}
+            >
+              <Icon size={16} />
+            </button>
+          ))}
+        </div>
+        <HeroInspector
+          bar
+          label={
+            <>
+              <InspectedIcon size={16} className="shrink-0 text-fg" />
+              <span className="truncate text-xs font-medium text-fg">
+                {name}
+              </span>
+            </>
+          }
+          detail={
+            /* The four sizes components actually use — 12 / 16 / 20 / 24. */
+            <span className="flex items-center gap-3">
+              {[12, 16, 20, 24].map((size) => (
+                <InspectedIcon key={size} size={size} />
+              ))}
+            </span>
+          }
+        />
+      </IconScope>
+    </Hero>
+  )
+}
+
+export function IconsSectionBodyV2({ lab }: { lab: Lab }) {
+  const { state, set } = lab
+  return (
+    <>
+      <IconSpecimen state={state} />
+      <ControlGroup>
+        <SelectRow
+          label="Library"
+          value={state.iconLibrary}
+          onChange={set("iconLibrary")}
+          options={ICON_LIBRARY_OPTIONS}
+        />
+        {/* Stroke only exists on line-based sets; Phosphor swaps it for weight. */}
+        {STROKE_DEFAULTS[state.iconLibrary as IconLibraryName] !==
+          undefined && (
+          <SliderRow
+            label="Stroke"
+            value={state.iconStroke}
+            onChange={set("iconStroke")}
+            minValue={1}
+            maxValue={3}
+            step={0.25}
+            format={(v) => v.toFixed(2)}
+          />
+        )}
+        {state.iconLibrary === "phosphor" && (
+          <SelectRow
+            label="Weight"
+            value={state.iconWeight}
+            onChange={set("iconWeight")}
+            options={ICON_WEIGHT_OPTIONS}
+          />
+        )}
+      </ControlGroup>
+    </>
+  )
+}
+
 export function ShapeSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
@@ -212,7 +538,7 @@ const ROLE_ARCS: Record<
 function CornerPreview({ lab }: { lab: Lab }) {
   const { state } = lab
   return (
-    <div className="flex items-center gap-5 px-4 py-1.5">
+    <Hero className="flex-row items-center gap-5">
       <div className="relative size-16 shrink-0">
         {SHAPE_ROLES.map(({ key }) => {
           const { size, arc } = ROLE_ARCS[key]
@@ -252,7 +578,7 @@ function CornerPreview({ lab }: { lab: Lab }) {
           </span>
         ))}
       </div>
-    </div>
+    </Hero>
   )
 }
 
