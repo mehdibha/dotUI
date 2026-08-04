@@ -433,16 +433,22 @@ export function ColorPickerRow({
   layout = "row",
   value,
   onChange,
+  ramp,
 }: {
   label: string
   description?: string
   /** `tile` trades the row's width for height: the swatch becomes the face of
-   *  the control, big enough to judge the color rather than identify it. */
-  layout?: "row" | "tile"
+   *  the control, big enough to judge the color rather than identify it.
+   *  `palette` keeps the row line and adds the resolved scale under it —
+   *  the seed and what it becomes, in one trigger. Requires `ramp`. */
+  layout?: "row" | "tile" | "palette"
   value: string
   onChange: (hex: string) => void
+  /** The resolved scale the seed produces, lightest step first (`palette`). */
+  ramp?: string[]
 }) {
   const tile = layout === "tile"
+  const palette = layout === "palette"
   const rowPlacement = useContext(RowOverlayPlacementContext)
   return (
     <ColorPicker value={value} onChange={(c) => onChange(c.toString("hex"))}>
@@ -465,6 +471,36 @@ export function ColorPickerRow({
                 )}
               </span>
               <ColorSwatch className="size-5 shrink-0 rounded-full" />
+            </Button>
+          ) : palette ? (
+            <Button
+              variant="quiet"
+              data-row=""
+              className={cn(
+                ROW,
+                "flex h-auto flex-col items-stretch gap-2.5 px-4 py-3 text-left hover:bg-highlight pressed:bg-highlight",
+              )}
+            >
+              <span className="flex items-center justify-between gap-3">
+                <RowLabel label={label} description={description} />
+                <span className="flex shrink-0 items-center gap-2.5">
+                  <span className={cn(ROW_VALUE, "font-mono uppercase")}>
+                    {color.toString("hex")}
+                  </span>
+                  <ColorSwatch className="size-5 rounded-full" />
+                </span>
+              </span>
+              {/* Hairline: the near-white end would otherwise dissolve into
+                  the row and the scale would look short. */}
+              <span className="flex h-5 overflow-hidden rounded-full inset-ring-1 inset-ring-border/60">
+                {ramp?.map((step, i) => (
+                  <span
+                    key={i}
+                    className="flex-1"
+                    style={{ background: step }}
+                  />
+                ))}
+              </span>
             </Button>
           ) : (
             <Button
