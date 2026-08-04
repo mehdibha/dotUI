@@ -13,7 +13,6 @@
 
 import { useContext, useMemo, useState } from "react"
 import {
-  CheckIcon,
   MoonIcon,
   PlusIcon,
   RotateCcwIcon,
@@ -23,7 +22,6 @@ import {
 } from "lucide-react"
 
 import { STEPS, toHex, toOklch, wcag2 } from "@dotui/colors"
-import type { StepName, Theme } from "@dotui/colors"
 
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import { cn } from "@/registry/lib/utils"
@@ -44,6 +42,7 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@/registry/ui/slider"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import {
   ColorPickerRow,
   ControlGroup,
@@ -59,7 +58,6 @@ import {
 
 import { DEFAULTS, PRIMARY_OPTIONS } from "./data"
 import type { Lab, LabMode, LabState } from "./data"
-import { Hero, HeroInspector, useInspect } from "./hero"
 import {
   DetailRow,
   PickerPopoverContent,
@@ -260,137 +258,84 @@ function instantiate(
   return { ...archetype, id, name }
 }
 
-/* ---------------------------------- Hero ----------------------------------- */
+/* ----------------------------- Contrast status ----------------------------- */
 
-const HERO_PALETTES = ["accent", "neutral"] as const
-
-/** Real engine output for the ACTIVE mode: ramps, tappable steps, the
- *  report's verdict, the seed's snap price. The mode chips replace v1's
- *  sun/moon switch — and disappear entirely when the system has one mode. */
-function EngineHero({
-  lab,
-  theme,
-  mode,
-  modes,
-  onModeChange,
+/** The report as a passive indicator: nothing when guarantees pass, a warning
+ *  glyph opening the details on hover when they don't. Diagnostics, not
+ *  content — the section leads with the controls. */
+function ContrastWarnings({
+  warnings,
+  delta,
+  pinned,
 }: {
-  lab: Lab
-  theme: Theme
-  mode: LabMode
-  modes: LabMode[]
-  onModeChange: (id: string) => void
+  warnings: string[]
+  /** The brand seed's snap price (ΔE), context for why steps moved. */
+  delta: number
+  pinned: boolean
 }) {
-  const { state, set } = lab
-  const { inspected: inspectId, pinned, probeProps } = useInspect<string>()
-
-  const m = theme[mode.polarity]
-  const bg = toOklch(m.background)
-  const warnings = theme.report.warnings.length
-  const delta = theme.report.seedDelta.accent ?? 0
-  const [inspectPalette, inspectStep] = (inspectId?.split(":") ?? []) as [
-    string?,
-    StepName?,
-  ]
-  const inspected =
-    inspectPalette && inspectStep
-      ? m.scales[inspectPalette]?.[inspectStep]
-      : null
-
+  if (warnings.length === 0) return null
   return (
-    <Hero className="gap-2">
-      <div className="flex items-center justify-between gap-3">
-        <span
-          className="flex min-w-0 items-center gap-1.5 text-xs text-fg-muted"
-          title={theme.report.warnings.join("\n") || undefined}
-        >
-          {warnings === 0 ? (
-            <CheckIcon className="size-3 shrink-0" />
-          ) : (
-            <TriangleAlertIcon className="size-3 shrink-0 text-fg-warning" />
+    <Tooltip delay={150} closeDelay={100}>
+      <Button
+        size="xs"
+        variant="quiet"
+        isIconOnly
+        aria-label={`${warnings.length} contrast warning${warnings.length === 1 ? "" : "s"}`}
+        className="shrink-0 text-fg-warning hover:text-fg-warning"
+      >
+        <TriangleAlertIcon />
+      </Button>
+      <TooltipContent className="max-w-64">
+        <div className="flex flex-col gap-1">
+          {warnings.map((warning, i) => (
+            <p key={i}>{warning}</p>
+          ))}
+          {!pinned && delta >= 0.005 && (
+            <p>Brand snapped ΔE {delta.toFixed(3)} for contrast.</p>
           )}
-          <span className="truncate">
-            {warnings === 0
-              ? "Contrast guarantees pass"
-              : `${warnings} contrast warning${warnings === 1 ? "" : "s"}`}
-          </span>
-        </span>
-        {modes.length > 1 && (
-          <SegmentedControl
-            aria-label="Preview mode"
-            selectedKeys={[mode.id]}
-            onSelectionChange={(keys) => {
-              const next = keys.values().next().value
-              if (next) onModeChange(next as string)
-            }}
-            className="no-scrollbar min-w-0 shrink overflow-x-auto bg-muted p-0.5"
-          >
-            {modes.map((entry) => (
-              <SegmentedControlItem
-                key={entry.id}
-                id={entry.id}
-                className="text-xs whitespace-nowrap"
-              >
-                {entry.name}
-              </SegmentedControlItem>
-            ))}
-          </SegmentedControl>
-        )}
-      </div>
-
-      {HERO_PALETTES.map((palette) => (
-        <div key={palette} className="flex h-5 overflow-hidden rounded-md">
-          {STEPS.map((step) => {
-            const id = `${palette}:${step}`
-            return (
-              <button
-                key={step}
-                type="button"
-                aria-label={`Inspect ${palette} ${step}`}
-                {...probeProps(id)}
-                className={cn(
-                  "flex-1 cursor-interactive focus-reset focus-visible:z-10 focus-visible:focus-ring",
-                  pinned === id &&
-                    "z-10 rounded-[3px] ring-2 ring-bg ring-inset",
-                )}
-                style={{ backgroundColor: m.scales[palette]?.[step] }}
-              />
-            )
-          })}
         </div>
-      ))}
+      </TooltipContent>
+    </Tooltip>
+  )
+}
 
-      {inspected && (
-        <HeroInspector
-          label={`${inspectPalette} · ${inspectStep}`}
-          detail={
-            <span className="flex items-center gap-3">
-              <span className="uppercase">{cssToHex(inspected)}</span>
-              <span>{wcag2(toOklch(inspected), bg).toFixed(2)}:1 vs bg</span>
-            </span>
-          }
-        />
-      )}
-
-      {state.preserveSeed ? (
-        <p className="text-xs text-fg-muted">
-          Brand pinned verbatim — any contrast cost is priced in the report.
-        </p>
-      ) : delta >= 0.005 ? (
-        <div className="flex items-center justify-between gap-3 text-xs text-fg-muted">
-          <span className="truncate">
-            Brand snapped ΔE {delta.toFixed(3)} for contrast
-          </span>
-          <Button
-            size="xs"
-            variant="quiet"
-            className="shrink-0"
-            onPress={() => set("preserveSeed")(true)}
+/** Which mode the section's ramps and Auto rows resolve against — the hero's
+ *  chips as a plain row, absent entirely on single-mode systems. */
+function PreviewModeRow({
+  modes,
+  activeId,
+  onChange,
+}: {
+  modes: LabMode[]
+  activeId: string
+  onChange: (id: string) => void
+}) {
+  return (
+    <div
+      data-row=""
+      className={cn(ROW, "flex items-center justify-between gap-3 pr-1.5 pl-4")}
+    >
+      <span className={ROW_LABEL}>Preview</span>
+      <SegmentedControl
+        aria-label="Preview mode"
+        selectedKeys={[activeId]}
+        onSelectionChange={(keys) => {
+          const next = keys.values().next().value
+          if (next) onChange(next as string)
+        }}
+        className="no-scrollbar min-w-0 shrink overflow-x-auto bg-bg/50 p-0.5"
+      >
+        {modes.map((entry) => (
+          <SegmentedControlItem
+            key={entry.id}
+            id={entry.id}
+            className="text-xs whitespace-nowrap"
           >
-            Pin exact
-          </Button>
-        </div>
-      ) : null}
-    </Hero>
+            {entry.name}
+          </SegmentedControlItem>
+        ))}
+      </SegmentedControl>
+    </div>
   )
 }
 
@@ -523,11 +468,14 @@ function AddModeRow({
 /* -------------------------------- Auto rows -------------------------------- */
 
 /** A seed row that reads “Auto” (showing the engine's derived color) until
- *  overridden — the panel face of absent-means-default. Reset returns to Auto. */
+ *  overridden — the panel face of absent-means-default, with the resolved
+ *  scale in the trigger (ColorPickerRow's palette layout). Reset returns to
+ *  Auto. */
 function AutoColorRow({
   label,
   value,
   derived,
+  ramp,
   onChange,
   onReset,
 }: {
@@ -536,6 +484,8 @@ function AutoColorRow({
   value: string
   /** The engine's derived color while Auto (any CSS color). */
   derived: string
+  /** The resolved scale the seed produces, lightest step first. */
+  ramp: string[]
   onChange: (hex: string) => void
   onReset: () => void
 }) {
@@ -545,20 +495,31 @@ function AutoColorRow({
       onChange={(c) => onChange(c.toString("hex"))}
     >
       {({ color }) => (
-        <div
-          data-row=""
-          className={cn(ROW, "flex items-center gap-0.5 pr-1.5")}
-        >
+        <div data-row="" className={cn(ROW, "relative flex h-auto flex-col")}>
           <Button
             variant="quiet"
-            className="flex h-full min-w-0 flex-1 items-center justify-between gap-3 rounded-none px-4 font-normal"
+            className="flex h-auto w-full flex-col items-stretch gap-2.5 rounded-none px-4 py-3 text-left font-normal"
           >
-            <span className={ROW_LABEL}>{label}</span>
-            <span className="flex shrink-0 items-center gap-2.5">
-              <span className={cn(ROW_VALUE, value && "font-mono uppercase")}>
-                {value ? color.toString("hex") : "Auto"}
+            <span className="flex items-center justify-between gap-3">
+              <span className={ROW_LABEL}>{label}</span>
+              <span
+                className={cn(
+                  "flex shrink-0 items-center gap-2.5",
+                  value && "pr-7",
+                )}
+              >
+                <span className={cn(ROW_VALUE, value && "font-mono uppercase")}>
+                  {value ? color.toString("hex") : "Auto"}
+                </span>
+                <ColorSwatch className="size-5 rounded-full" />
               </span>
-              <ColorSwatch className="size-5 rounded-full" />
+            </span>
+            {/* Hairline: the near-white end would otherwise dissolve into
+                the row and the scale would look short. */}
+            <span className="flex h-5 overflow-hidden rounded-full inset-ring-1 inset-ring-border/60">
+              {ramp.map((step, i) => (
+                <span key={i} className="flex-1" style={{ background: step }} />
+              ))}
             </span>
           </Button>
           {value !== "" && (
@@ -568,7 +529,7 @@ function AutoColorRow({
               isIconOnly
               aria-label={`Reset ${label} to auto`}
               onPress={onReset}
-              className="shrink-0 text-fg-muted"
+              className="absolute top-2.5 right-2 shrink-0 text-fg-muted"
             >
               <RotateCcwIcon />
             </Button>
@@ -773,25 +734,24 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
     for (const { key, job } of BORDER_JOBS) set(key)(on ? borderSeeds[job] : 0)
   }
 
+  const rampOf = (palette: string) =>
+    STEPS.map((step) => m.scales[palette]?.[step] ?? m.background)
+
   return (
     <>
-      <EngineHero
-        lab={lab}
-        theme={theme}
-        mode={active}
-        modes={modes}
-        onModeChange={setActiveId}
-      />
       <ControlGroup>
         <ColorPickerRow
           label="Brand"
+          layout="palette"
           value={state.brand}
           onChange={set("brand")}
+          ramp={rampOf("accent")}
         />
         <AutoColorRow
           label="Gray"
           value={state.graySeed}
           derived={m.scales.neutral?.["500"] ?? m.background}
+          ramp={rampOf("neutral")}
           onChange={set("graySeed")}
           onReset={() => set("graySeed")("")}
         />
@@ -802,10 +762,24 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
           options={PRIMARY_OPTIONS}
         />
       </ControlGroup>
-      <GroupCaption>
-        One required seed. Every Auto row derives from it — override any, reset
-        back anytime.
-      </GroupCaption>
+      <div className="flex items-start justify-between gap-2 pr-2">
+        <GroupCaption>
+          One required seed. Every Auto row derives from it — override any,
+          reset back anytime.
+        </GroupCaption>
+        <ContrastWarnings
+          warnings={theme.report.warnings}
+          delta={theme.report.seedDelta.accent ?? 0}
+          pinned={state.preserveSeed}
+        />
+      </div>
+      {modes.length > 1 && (
+        <PreviewModeRow
+          modes={modes}
+          activeId={active.id}
+          onChange={setActiveId}
+        />
+      )}
       <DetailRow
         label="Modes"
         summary={
