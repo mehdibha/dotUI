@@ -481,8 +481,9 @@ function AutoColorRow({
   )
 }
 
-/** AutoColorRow at sub-row scale, for the semantic seeds inside a DetailRow. */
-function MiniAutoColorRow({
+/** AutoColorRow on the tile geometry (ColorPickerRow's tile layout) — for the
+ *  semantic seeds, two up. Reset appears in the corner once overridden. */
+function AutoColorTile({
   label,
   value,
   derived,
@@ -501,18 +502,24 @@ function MiniAutoColorRow({
       onChange={(c) => onChange(c.toString("hex"))}
     >
       {({ color }) => (
-        <div className="flex items-center gap-0.5">
+        <div className="relative">
           <Button
             variant="quiet"
-            className="flex h-9 min-w-0 flex-1 items-center justify-between gap-3 rounded-lg px-2 font-normal"
+            className="flex h-auto w-full items-center justify-between gap-3 rounded-xl bg-muted p-3 text-left font-normal hover:bg-highlight pressed:bg-highlight"
           >
-            <span className="truncate text-xs text-fg-muted">{label}</span>
-            <span className="flex shrink-0 items-center gap-2">
-              <span className="font-mono text-xs text-fg-muted uppercase">
+            <span className="flex min-w-0 flex-col gap-0.5">
+              <span className={ROW_LABEL}>{label}</span>
+              <span
+                className={cn(
+                  ROW_VALUE,
+                  "text-xs",
+                  value && "font-mono uppercase",
+                )}
+              >
                 {value ? color.toString("hex") : "Auto"}
               </span>
-              <ColorSwatch className="size-4 rounded-full" />
             </span>
+            <ColorSwatch className="size-5 shrink-0 rounded-full" />
           </Button>
           {value !== "" && (
             <Button
@@ -521,7 +528,7 @@ function MiniAutoColorRow({
               isIconOnly
               aria-label={`Reset ${label} to auto`}
               onPress={onReset}
-              className="shrink-0 text-fg-muted"
+              className="absolute top-1 right-1 text-fg-muted"
             >
               <RotateCcwIcon />
             </Button>
@@ -649,9 +656,6 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
     m.scales.selection?.["700"] ??
     (state.primary === "accent" ? solid("accent") : solid("neutral"))
 
-  const semanticModified =
-    SEMANTIC_SEEDS.some(({ key }) => state[key] !== "") ||
-    state.selectionSeed !== ""
   const fineModified = FINE_KEYS.some((key) => state[key] !== DEFAULTS[key])
 
   const setModes = set("modes")
@@ -676,6 +680,7 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
 
   return (
     <>
+      {/* Palette first: the base seeds, then the semantic set two up. */}
       <ControlGroup>
         <ColorPickerRow
           label="Brand"
@@ -689,16 +694,22 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
           onChange={set("graySeed")}
           onReset={() => set("graySeed")("")}
         />
-        <SegmentedControlRow
-          label="Primary"
-          value={state.primary}
-          onChange={set("primary")}
-          options={PRIMARY_OPTIONS}
-        />
       </ControlGroup>
+      <div className="grid grid-cols-2 gap-1.5">
+        {SEMANTIC_SEEDS.map(({ key, palette, label }) => (
+          <AutoColorTile
+            key={key}
+            label={label}
+            value={state[key]}
+            derived={solid(palette)}
+            onChange={set(key)}
+            onReset={() => set(key)("")}
+          />
+        ))}
+      </div>
       <div className="flex items-start justify-between gap-2 pr-2">
         <GroupCaption>
-          One required seed. Every Auto row derives from it — override any,
+          One required seed. Every Auto color derives from it — override any,
           reset back anytime.
         </GroupCaption>
         <ContrastWarnings
@@ -707,6 +718,22 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
           pinned={state.preserveSeed}
         />
       </div>
+      {/* Then the role decisions the palette feeds. */}
+      <ControlGroup>
+        <SegmentedControlRow
+          label="Primary"
+          value={state.primary}
+          onChange={set("primary")}
+          options={PRIMARY_OPTIONS}
+        />
+        <AutoColorRow
+          label="Selection"
+          value={state.selectionSeed}
+          derived={selectionDerived}
+          onChange={set("selectionSeed")}
+          onReset={() => set("selectionSeed")("")}
+        />
+      </ControlGroup>
       <DetailRow
         label="Modes"
         summary={
@@ -734,35 +761,6 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
           />
         ))}
         <AddModeRow disabled={modes.length >= MAX_MODES} onAdd={addMode} />
-      </DetailRow>
-      <DetailRow
-        label="Semantic colors"
-        summary={
-          <span className="flex items-center gap-1.5">
-            {semanticModified ? null : <span className={ROW_VALUE}>Auto</span>}
-            <SwatchDots
-              colors={SEMANTIC_SEEDS.map(({ palette }) => solid(palette))}
-            />
-          </span>
-        }
-      >
-        {SEMANTIC_SEEDS.map(({ key, palette, label }) => (
-          <MiniAutoColorRow
-            key={key}
-            label={label}
-            value={state[key]}
-            derived={solid(palette)}
-            onChange={set(key)}
-            onReset={() => set(key)("")}
-          />
-        ))}
-        <MiniAutoColorRow
-          label="Selection"
-          value={state.selectionSeed}
-          derived={selectionDerived}
-          onChange={set("selectionSeed")}
-          onReset={() => set("selectionSeed")("")}
-        />
       </DetailRow>
       <DetailRow
         label="Fine-tune"
