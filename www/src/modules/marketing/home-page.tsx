@@ -13,8 +13,16 @@ import Cards from "@/modules/marketing/cards"
 import { CompositionSection } from "@/modules/marketing/composition-section"
 import { CtaSection } from "@/modules/marketing/cta-section"
 import { ExportSection } from "@/modules/marketing/export-section"
+import { HeroWordSwap } from "@/modules/marketing/hero-word-swap"
+import { useTweak } from "@/dev/tweaker"
 
 export function HomePage() {
+  const headline = useTweak("Headline", {
+    type: "select",
+    options: ["humans ⇄ agents", "for the Web"],
+    default: "humans ⇄ agents",
+    group: "Hero swap",
+  })
   return (
     // One container for the whole landing; every section aligns to its 1440px
     // content box. Decorations that bleed past it (cards rails, full-bleed
@@ -27,7 +35,15 @@ export function HomePage() {
             <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-none">
               The Design System Studio
               <br />
-              <span className="text-fg-muted">for the Web</span>
+              <span className="text-fg-muted">
+                {headline === "for the Web" ? (
+                  "for the Web"
+                ) : (
+                  <>
+                    for <HeroWordSwap />
+                  </>
+                )}
+              </span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
               Every design decision is yours, previewed live on real components.
