@@ -9,17 +9,6 @@
    older version still names, or that version moves with the experiment and
    stops being a reference. */
 
-import {
-  BoxSelectIcon,
-  LayersIcon,
-  PaletteIcon,
-  ShapesIcon,
-  SlidersHorizontalIcon,
-  SmileIcon,
-  StretchVerticalIcon,
-  TypeIcon,
-} from "lucide-react"
-
 import { IdealColorSectionBody } from "./color-ideal"
 import { WorkingColorSectionBody } from "./color-working"
 import {
@@ -55,35 +44,30 @@ const SHARED_CHAPTERS: Chapter[] = [
   {
     id: "typography",
     label: "Type",
-    icon: TypeIcon,
     keys: TYPE_KEYS,
     Body: TypographySectionBody,
   },
   {
     id: "icons",
     label: "Icons",
-    icon: SmileIcon,
     keys: ICON_KEYS,
     Body: IconsSectionBody,
   },
   {
     id: "shape",
     label: "Shape & space",
-    icon: ShapesIcon,
     keys: SHAPE_KEYS,
     Body: ShapeSectionBody,
   },
   {
     id: "details",
     label: "Details",
-    icon: SlidersHorizontalIcon,
     keys: EFFECT_KEYS,
     Body: EffectsSectionBody,
   },
   {
     id: "components",
     label: "Components",
-    icon: BoxSelectIcon,
     keys: COMPONENT_KEYS,
     Body: ComponentsSectionBody,
   },
@@ -107,7 +91,6 @@ export const PANEL_VERSIONS: PanelVersion[] = [
       {
         id: "color",
         label: "Color",
-        icon: PaletteIcon,
         keys: COLOR_KEYS,
         Body: IdealColorSectionBody,
       },
@@ -123,7 +106,6 @@ export const PANEL_VERSIONS: PanelVersion[] = [
       {
         id: "color",
         label: "Color",
-        icon: PaletteIcon,
         keys: WORKING_COLOR_KEYS,
         Body: WorkingColorSectionBody,
       },
@@ -137,14 +119,12 @@ export const PANEL_VERSIONS: PanelVersion[] = [
             {
               id: "shape",
               label: "Shape",
-              icon: ShapesIcon,
               keys: SHAPE_KEYS_V2,
               Body: ShapeSectionBodyV2,
             },
             {
               id: "space",
               label: "Space",
-              icon: StretchVerticalIcon,
               keys: SPACE_KEYS_V2,
               Body: SpaceSectionBody,
             },
@@ -154,14 +134,12 @@ export const PANEL_VERSIONS: PanelVersion[] = [
             {
               id: "surfaces",
               label: "Surfaces",
-              icon: LayersIcon,
               keys: SURFACE_KEYS_V2,
               Body: SurfacesSectionBody,
             },
             {
               id: "details",
               label: "Details",
-              icon: SlidersHorizontalIcon,
               keys: EFFECT_KEYS_V2,
               Body: EffectsSectionBodyV2,
             },
