@@ -11,7 +11,8 @@ import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 
 const WORDS = ["humans", "agents"] as const
-const INTERVAL_MS = 4200
+/** Includes the 460ms swap, so each word holds still for ~2.5s. */
+const INTERVAL_MS = 3000
 
 const ENTER_DURATION = 0.28
 const EXIT_DURATION = 0.18
