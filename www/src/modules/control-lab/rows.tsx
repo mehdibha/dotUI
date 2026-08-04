@@ -9,12 +9,14 @@
 import { createContext, useContext, useState } from "react"
 import {
   ChevronDownIcon,
+  ChevronLeftIcon,
   ChevronRightIcon,
   ChevronsUpDownIcon,
   RotateCcwIcon,
   SearchIcon,
   XIcon,
 } from "lucide-react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import {
   Button as RacButton,
   ListBox as RacListBox,
@@ -1147,10 +1149,12 @@ export function OptionGridRow({
   const selected = options.find((o) => o.id === value)
   return (
     <div className="w-full rounded-xl bg-muted p-2">
+      {/* mb-1 + the h-8 line box's slack ≈ the 10px header-to-content gap the
+          palette row sets with gap-2.5; the described padding lands there too. */}
       <div
         className={cn(
-          "flex h-8 items-center justify-between gap-3 px-2",
-          description && "h-auto pt-1.5 pb-2",
+          "mb-1 flex h-8 items-center justify-between gap-3 px-2",
+          description && "h-auto py-1.5",
         )}
       >
         <RowLabel label={label} description={description} />
@@ -1164,6 +1168,117 @@ export function OptionGridRow({
         columns={columns}
         variant={variant}
       />
+    </div>
+  )
+}
+
+/* ------------------------------ Option pager ------------------------------- */
+
+/** The step chevron shared by both arrow placements. */
+function PagerArrowButton({
+  direction,
+  onPress,
+}: {
+  direction: -1 | 1
+  onPress: () => void
+}) {
+  const Icon = direction === 1 ? ChevronRightIcon : ChevronLeftIcon
+  return (
+    <RacButton
+      aria-label={direction === 1 ? "Next option" : "Previous option"}
+      onPress={onPress}
+      className="flex size-7 shrink-0 cursor-interactive items-center justify-center rounded-md text-fg-muted focus-reset transition-colors hover:bg-white/5 hover:text-fg focus-visible:focus-ring pressed:bg-white/10"
+    >
+      <Icon className="size-3.5" />
+    </RacButton>
+  )
+}
+
+/**
+ * OptionGridRow's purpose in a single card: one option's specimen at a time,
+ * chevrons stepping through the rest. Stepping is selecting — landing on an
+ * option picks it — and the ends wrap. For sets too long for a grid.
+ */
+export function OptionPagerRow({
+  label,
+  description,
+  value,
+  onChange,
+  options,
+}: {
+  label: string
+  description?: string
+  value: string
+  onChange: (id: string) => void
+  options: OptionGridItem[]
+}) {
+  const index = Math.max(
+    0,
+    options.findIndex((option) => option.id === value),
+  )
+  const selected = options[index]
+  // The chevron pressed decides which side the incoming specimen enters from.
+  const [direction, setDirection] = useState(1)
+  const reducedMotion = useReducedMotion()
+  const offset = reducedMotion ? 0 : direction * 60
+  const step = (delta: number) => {
+    const next = options[(index + delta + options.length) % options.length]
+    if (next) {
+      setDirection(delta)
+      onChange(next.id)
+    }
+  }
+  return (
+    <div className="w-full rounded-xl bg-muted p-2">
+      {/* Same 10px header-to-content rhythm as OptionGridRow. */}
+      <div
+        className={cn(
+          "mb-1 flex h-8 items-center justify-between gap-3 px-2",
+          description && "h-auto py-1.5",
+        )}
+      >
+        <RowLabel label={label} description={description} />
+        <span aria-live="polite" className={ROW_VALUE}>
+          {selected?.label}
+        </span>
+      </div>
+      <div className="flex items-center gap-1">
+        <PagerArrowButton direction={-1} onPress={() => step(-1)} />
+        {/* The frame is the constant — specimens slide through it from the
+            side of the chevron pressed; the accent dot below marks selection. */}
+        <div className="relative min-w-0 flex-1 overflow-hidden rounded-lg bg-bg p-4">
+          <AnimatePresence initial={false} custom={offset} mode="popLayout">
+            <motion.span
+              key={selected?.id}
+              custom={offset}
+              variants={{
+                enter: (o: number) => ({ x: `${o}%`, opacity: 0 }),
+                center: { x: "0%", opacity: 1 },
+                exit: (o: number) => ({ x: `${-o}%`, opacity: 0 }),
+              }}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.25, ease: [0.25, 1, 0.5, 1] }}
+              className="flex w-full min-w-0 items-center justify-center"
+            >
+              {selected?.preview}
+            </motion.span>
+          </AnimatePresence>
+        </div>
+        <PagerArrowButton direction={1} onPress={() => step(1)} />
+      </div>
+      <div className="flex items-center justify-center gap-1.5 pt-2 pb-1">
+        {options.map((option) => (
+          <span
+            key={option.id}
+            className={cn(
+              "h-1.5 rounded-full transition-[width,background-color] duration-200 ease-out",
+              option.id === value ? "w-3 bg-accent" : "w-1.5 bg-fg/20",
+            )}
+          />
+        ))}
+      </div>
     </div>
   )
 }

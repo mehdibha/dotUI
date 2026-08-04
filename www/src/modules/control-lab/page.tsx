@@ -55,6 +55,7 @@ import {
   SliderRow,
   StepperRow,
   OptionGridRow,
+  OptionPagerRow,
   SwitchRow,
 } from "./rows"
 import type {
@@ -481,6 +482,21 @@ function OptionGridDemo({
   )
 }
 
+function OptionPagerDemo({ described }: { described?: boolean }) {
+  const [value, setValue] = useState("solid")
+  return (
+    <OptionPagerRow
+      label="Button"
+      description={
+        described ? "Step through the styles; each renders itself." : undefined
+      }
+      value={value}
+      onChange={setValue}
+      options={BUTTON_STYLES}
+    />
+  )
+}
+
 function ComponentRowDemo({
   withParams,
   described,
@@ -748,6 +764,16 @@ const GROUPS: Group[] = [
             label: "With description",
             render: <OptionGridDemo columns={2} described />,
           },
+        ],
+      },
+      {
+        id: "option-pager-row",
+        name: "OptionPagerRow",
+        description:
+          "OptionGridRow's purpose in a single card: one option's specimen at a time, chevrons stepping through the rest — stepping is selecting, ends wrap. For option sets too long for a grid.",
+        variants: [
+          { label: "Default", render: <OptionPagerDemo /> },
+          { label: "With description", render: <OptionPagerDemo described /> },
         ],
       },
       {
