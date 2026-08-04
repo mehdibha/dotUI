@@ -17,6 +17,8 @@ import {
 } from "lucide-react"
 import {
   Button as RacButton,
+  ListBox as RacListBox,
+  ListBoxItem as RacListBoxItem,
   SelectionIndicator,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -321,6 +323,8 @@ export interface SelectRowOption {
   label: string
   /** Optional glyph shown before the label in the list and in the trigger. */
   icon?: React.ReactNode
+  /** Grid layout only: the artwork drawn on the card. Falls back to `icon`. */
+  illustration?: React.ReactNode
 }
 
 /** A listbox trigger shaped as a settings row: label left, value + chevrons right. */
@@ -330,12 +334,16 @@ export function SelectRow({
   value,
   onChange,
   options,
+  layout = "list",
 }: {
   label: string
   description?: string
   value: string
   onChange: (value: string) => void
   options: SelectRowOption[]
+  /** `grid` swaps the dropdown list for illustrated cards — artwork on top,
+   *  label below — with 2D arrow-key navigation. Pick by look, in a popover. */
+  layout?: "list" | "grid"
 }) {
   const selected = options.find((o) => o.value === value)
   return (
@@ -365,16 +373,39 @@ export function SelectRow({
         className="w-(--trigger-width)"
         placement={useContext(RowOverlayPlacementContext)}
       >
-        <ListBox>
-          {options.map((opt) => (
-            <ListBoxItem key={opt.value} id={opt.value} textValue={opt.label}>
-              <span className="flex items-center gap-2 **:[svg]:size-4">
-                {opt.icon}
-                {opt.label}
-              </span>
-            </ListBoxItem>
-          ))}
-        </ListBox>
+        {layout === "grid" ? (
+          /* Raw RAC listbox: Select wires it up through context, and
+             layout="grid" gives the cards real 2D arrow-key navigation. */
+          <RacListBox
+            layout="grid"
+            className="grid max-h-[inherit] grid-cols-2 gap-2 overflow-auto p-2 outline-hidden"
+          >
+            {options.map((opt) => (
+              <RacListBoxItem
+                key={opt.value}
+                id={opt.value}
+                textValue={opt.label}
+                className="flex min-w-0 cursor-interactive flex-col items-center gap-2 rounded-lg bg-muted p-4 text-fg-muted outline-hidden transition-transform select-none focus:bg-highlight focus:text-fg-on-highlight motion-safe:pressed:scale-[0.98] selected:text-fg selected:inset-ring selected:inset-ring-accent"
+              >
+                <span className="flex h-9 items-center justify-center text-fg **:[svg]:size-6">
+                  {opt.illustration ?? opt.icon}
+                </span>
+                <span className="truncate text-xs">{opt.label}</span>
+              </RacListBoxItem>
+            ))}
+          </RacListBox>
+        ) : (
+          <ListBox>
+            {options.map((opt) => (
+              <ListBoxItem key={opt.value} id={opt.value} textValue={opt.label}>
+                <span className="flex items-center gap-2 **:[svg]:size-4">
+                  {opt.icon}
+                  {opt.label}
+                </span>
+              </ListBoxItem>
+            ))}
+          </ListBox>
+        )}
       </Popover>
     </Select>
   )

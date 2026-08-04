@@ -14,9 +14,13 @@ import {
   AlignCenterIcon,
   AlignLeftIcon,
   AlignRightIcon,
+  GrabIcon,
   MonitorIcon,
   MoonIcon,
+  MousePointer2Icon,
+  PointerIcon,
   SunIcon,
+  TextCursorIcon,
 } from "lucide-react"
 import { useTheme } from "starter-themes"
 
@@ -53,7 +57,12 @@ import {
   OptionGridRow,
   SwitchRow,
 } from "./rows"
-import type { NeutralValue, SegmentedRowOption, OptionGridItem } from "./rows"
+import type {
+  NeutralValue,
+  SegmentedRowOption,
+  OptionGridItem,
+  SelectRowOption,
+} from "./rows"
 
 /* ------------------------------ Mini specimens ----------------------------- */
 
@@ -155,6 +164,15 @@ const CURSOR_OPTIONS = ["default", "pointer", "grab", "text"].map((c) => ({
   label: c,
 }))
 
+/* The grid layout earns its keep when the option is a look, not a name: each
+   card draws the cursor it stands for. */
+const CURSOR_GRID_OPTIONS: SelectRowOption[] = [
+  { value: "default", label: "Default", icon: <MousePointer2Icon /> },
+  { value: "pointer", label: "Pointer", icon: <PointerIcon /> },
+  { value: "grab", label: "Grab", icon: <GrabIcon /> },
+  { value: "text", label: "Text", icon: <TextCursorIcon /> },
+]
+
 /* --------------------------------- Catalog --------------------------------- */
 
 interface Entry {
@@ -223,6 +241,19 @@ function SelectDemo({
       value={value}
       onChange={setValue}
       options={withIcons ? THEME_OPTIONS : CURSOR_OPTIONS}
+    />
+  )
+}
+
+function SelectGridDemo() {
+  const [value, setValue] = useState("default")
+  return (
+    <SelectRow
+      label="Cursor"
+      value={value}
+      onChange={setValue}
+      options={CURSOR_GRID_OPTIONS}
+      layout="grid"
     />
   )
 }
@@ -628,11 +659,12 @@ const GROUPS: Group[] = [
         id: "select-row",
         name: "SelectRow",
         description:
-          "A listbox trigger shaped as a settings row: label left, value and chevrons right. Options may carry a glyph, shown in both trigger and list.",
+          "A listbox trigger shaped as a settings row: label left, value and chevrons right. Options may carry a glyph, shown in both trigger and list. The grid layout swaps the list for illustrated cards — artwork on top, label below — for options that are looks rather than names.",
         variants: [
           { label: "Default", render: <SelectDemo /> },
           { label: "With icons", render: <SelectDemo withIcons /> },
           { label: "With description", render: <SelectDemo described /> },
+          { label: "Grid, illustrated", render: <SelectGridDemo /> },
         ],
       },
       {
