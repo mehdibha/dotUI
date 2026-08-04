@@ -10,6 +10,7 @@ import {
   BellIcon,
   CalendarIcon,
   CameraIcon,
+  ChevronDownIcon,
   CloudIcon,
   FolderIcon,
   HeartIcon,
@@ -47,14 +48,18 @@ import {
 import { useLoadedFamilies } from "@/modules/create/typography"
 
 import {
+  BUTTON_STYLES,
   CLUSTERS,
   CORNER_SHAPE_OPTIONS,
   CURSOR_DISABLED_OPTIONS,
   CURSOR_INTERACTIVE_OPTIONS,
   CURSOR_OPTIONS,
   DENSITY_OPTIONS,
+  HOVER_PARAM_OPTIONS,
   ICON_LIBRARY_OPTIONS,
   ICON_WEIGHT_OPTIONS,
+  INPUT_STYLES,
+  RADIUS_PARAM_OPTIONS,
   SHADOW_OPTIONS,
   SHAPE_CHARACTERS,
   SHAPE_ROLES,
@@ -813,6 +818,217 @@ export function EffectsSectionBodyV2({ lab }: { lab: Lab }) {
           layout="grid"
         />
       </ControlGroup>
+    </>
+  )
+}
+
+/* --------------------------- Buttons / Inputs (v2) -------------------------- */
+
+/* v2: Components splits into per-family sections. Each section owns one synced
+   group's axes and opens on live specimens — real hover, real focus — with the
+   control radius read from the Shape section's role system. */
+
+/** The Controls role's resolved radius — what 'auto' means for a control. */
+function controlRadiusPx(state: LabState): number {
+  const ratio = roleRatio(state, "roleControl")
+  return ratio === Infinity ? 999 : state.radiusPx * ratio
+}
+
+function buttonRadiusPx(state: LabState): number {
+  switch (state.buttonRadius) {
+    case "sharp":
+      return 0
+    case "round":
+      return state.radiusPx
+    case "pill":
+      return 999
+    default:
+      return controlRadiusPx(state)
+  }
+}
+
+/** Style → surface classes; `dim` is the style's own read of the dim hover. */
+const BUTTON_LOOKS = {
+  solid: { base: "bg-primary text-fg-on-primary", dim: "hover:brightness-90" },
+  soft: { base: "bg-neutral text-fg-on-neutral", dim: "hover:brightness-90" },
+  outline: {
+    base: "border border-border-field text-fg",
+    dim: "hover:bg-highlight",
+  },
+  quiet: { base: "text-fg", dim: "hover:bg-highlight" },
+} as const
+
+const buttonLook = (state: LabState) =>
+  BUTTON_LOOKS[state.buttonStyle as keyof typeof BUTTON_LOOKS] ??
+  BUTTON_LOOKS.solid
+
+function buttonHoverFx(state: LabState): string {
+  if (state.buttonHover === "dim") return buttonLook(state).dim
+  if (state.buttonHover === "lift")
+    return "hover:-translate-y-px hover:shadow-md"
+  return ""
+}
+
+/** Live specimens of the synced group — a Button and a working Toggle Button
+ *  pair wearing one style. Hovering demos the hover axis for real. */
+function ButtonsHero({ state }: { state: LabState }) {
+  const [view, setView] = useState<"list" | "grid">("list")
+  const look = buttonLook(state)
+  const radius = buttonRadiusPx(state)
+  const segRadius = radius >= 999 ? 999 : Math.max(radius - 3, 0)
+  const fx = buttonHoverFx(state)
+  // Quiet's base has no surface, so its selected toggle segment needs one.
+  const selectedSegment =
+    state.buttonStyle === "quiet" ? "bg-highlight text-fg" : look.base
+
+  return (
+    <Hero>
+      <div className="flex items-center justify-center gap-3 py-4">
+        <button
+          type="button"
+          className={cn(
+            "flex h-8 cursor-interactive items-center px-3.5 text-[0.8125rem] font-medium focus-reset transition-[background-color,filter,translate,box-shadow] duration-150 focus-visible:focus-ring",
+            look.base,
+            fx,
+          )}
+          style={{ borderRadius: radius }}
+        >
+          Get started
+        </button>
+        <div
+          className="flex items-center gap-0.5 bg-muted p-0.5"
+          style={{ borderRadius: radius >= 999 ? 999 : radius }}
+        >
+          {(["list", "grid"] as const).map((v) => (
+            <button
+              key={v}
+              type="button"
+              aria-pressed={view === v}
+              onClick={() => setView(v)}
+              className={cn(
+                "flex h-7 cursor-interactive items-center px-3 text-xs font-medium focus-reset transition-[background-color,filter,color] duration-150 focus-visible:focus-ring",
+                view === v
+                  ? cn(selectedSegment, fx)
+                  : "text-fg-muted hover:text-fg",
+              )}
+              style={{ borderRadius: segRadius }}
+            >
+              {v === "list" ? "List" : "Grid"}
+            </button>
+          ))}
+        </div>
+      </div>
+    </Hero>
+  )
+}
+
+export function ButtonsSectionBody({ lab }: { lab: Lab }) {
+  const { state, set } = lab
+  return (
+    <>
+      <ButtonsHero state={state} />
+      <OptionGridRow
+        label="Style"
+        value={state.buttonStyle}
+        onChange={set("buttonStyle")}
+        options={BUTTON_STYLES}
+      />
+      <ControlGroup>
+        <SegmentedControlRow
+          label="Radius"
+          value={state.buttonRadius}
+          onChange={set("buttonRadius")}
+          options={RADIUS_PARAM_OPTIONS}
+        />
+        <SegmentedControlRow
+          label="Hover"
+          value={state.buttonHover}
+          onChange={set("buttonHover")}
+          options={HOVER_PARAM_OPTIONS}
+        />
+      </ControlGroup>
+    </>
+  )
+}
+
+/** Style → what the field paints. Radius only where the style rounds. */
+function inputLook(
+  styleId: string,
+  radius: number,
+): { className: string; style: CSSProperties } {
+  switch (styleId) {
+    case "line":
+      return { className: "border-b border-border-field", style: {} }
+    case "filled-line-bottom":
+      return {
+        className: "border-b border-border-field bg-neutral",
+        style: {
+          borderTopLeftRadius: radius,
+          borderTopRightRadius: radius,
+        },
+      }
+    case "filled":
+      return { className: "bg-neutral", style: { borderRadius: radius } }
+    default:
+      return {
+        className: "border border-border-field bg-field",
+        style: { borderRadius: radius },
+      }
+  }
+}
+
+const INPUT_FIELD =
+  "flex h-8 w-full min-w-0 items-center gap-2 px-2.5 text-[0.8125rem] transition-colors outline-none focus-visible:focus-ring"
+
+/** A working mini form in the chosen style — a real input plus a select
+ *  trigger, because the style is a family decision, not one component's. */
+function InputsHero({ state }: { state: LabState }) {
+  const radius = controlRadiusPx(state)
+  const look = inputLook(state.inputStyle, radius)
+
+  return (
+    <Hero>
+      <label className="flex flex-col gap-1">
+        <span className="text-xs font-medium text-fg">Email</span>
+        <input
+          type="text"
+          placeholder="you@example.com"
+          className={cn(
+            INPUT_FIELD,
+            look.className,
+            "placeholder:text-fg-muted",
+          )}
+          style={look.style}
+        />
+      </label>
+      <div className="flex flex-col gap-1">
+        <span className="text-xs font-medium text-fg">Role</span>
+        <button
+          type="button"
+          className={cn(INPUT_FIELD, look.className, "cursor-interactive")}
+          style={look.style}
+        >
+          <span className="flex-1 truncate text-left text-fg">
+            Product designer
+          </span>
+          <ChevronDownIcon className="size-3.5 shrink-0 text-fg-muted" />
+        </button>
+      </div>
+    </Hero>
+  )
+}
+
+export function InputsSectionBody({ lab }: { lab: Lab }) {
+  const { state, set } = lab
+  return (
+    <>
+      <InputsHero state={state} />
+      <OptionGridRow
+        label="Style"
+        value={state.inputStyle}
+        onChange={set("inputStyle")}
+        options={INPUT_STYLES}
+      />
     </>
   )
 }

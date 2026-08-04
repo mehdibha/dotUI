@@ -707,6 +707,14 @@ export const EFFECT_KEYS_V2: (keyof LabState)[] = [
   "cursorInteractive",
   "cursorDisabled",
 ]
+/* v2: the Components section splits into per-family sections, each owning the
+   keys its synced group reads. Buttons and Inputs first; more follow. */
+export const BUTTON_KEYS_V2: (keyof LabState)[] = [
+  "buttonStyle",
+  "buttonRadius",
+  "buttonHover",
+]
+export const INPUT_KEYS_V2: (keyof LabState)[] = ["inputStyle"]
 export const COMPONENT_KEYS: (keyof LabState)[] = [
   "buttonStyle",
   "buttonRadius",
