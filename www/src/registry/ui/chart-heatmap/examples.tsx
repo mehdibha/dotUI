@@ -1,10 +1,10 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import CalendarMonthsDemo from './demos/calendar-months'
-import DiscreteScaleDemo from './demos/discrete-scale'
-import MatrixDemo from './demos/matrix'
-import WithValuesDemo from './demos/with-values'
+import CalendarMonthsDemo from "./demos/calendar-months"
+import DiscreteScaleDemo from "./demos/discrete-scale"
+import MatrixDemo from "./demos/matrix"
+import WithValuesDemo from "./demos/with-values"
 
 export default function ChartHeatmapExamples() {
   return (

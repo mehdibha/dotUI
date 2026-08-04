@@ -1,30 +1,31 @@
-'use client'
+"use client"
 
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from "react"
 
-import { DesignSystemProvider } from '@/lib/styles'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
-import type { DesignSystem } from '@/modules/create/preset'
-import { PRESETS } from '@/modules/presets/presets-data'
+import { DesignSystemProvider } from "@/lib/styles"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
+import type { DesignSystem } from "@/modules/create/preset"
+import { InternalHeader } from "@/modules/internal/shell"
+import { PRESETS } from "@/modules/presets/presets-data"
 
-import { airbnbAudit } from './data/airbnb'
-import { claudeAudit } from './data/claude'
-import { githubAudit } from './data/github'
-import { linearAudit } from './data/linear'
-import { notionAudit } from './data/notion'
-import { spotifyAudit } from './data/spotify'
-import { stripeAudit } from './data/stripe'
-import { supabaseAudit } from './data/supabase'
-import { vercelAudit } from './data/vercel'
-import { componentRenders, renderCaptions } from './renders'
+import { airbnbAudit } from "./data/airbnb"
+import { claudeAudit } from "./data/claude"
+import { githubAudit } from "./data/github"
+import { linearAudit } from "./data/linear"
+import { notionAudit } from "./data/notion"
+import { spotifyAudit } from "./data/spotify"
+import { stripeAudit } from "./data/stripe"
+import { supabaseAudit } from "./data/supabase"
+import { vercelAudit } from "./data/vercel"
+import { componentRenders, renderCaptions } from "./renders"
 import {
   MAX_SCORE,
   passes,
   RUBRIC_CRITERIA,
   totalScore,
   type AuditEntry,
-} from './rubric'
+} from "./rubric"
 
 type System = {
   id: string
@@ -43,28 +44,28 @@ function presetSystem(
 }
 
 const SYSTEMS: System[] = [
-  presetSystem('vercel', 'Vercel', vercelAudit),
-  presetSystem('linear', 'Linear', linearAudit),
-  presetSystem('supabase', 'Supabase', supabaseAudit),
-  presetSystem('stripe', 'Stripe', stripeAudit),
-  presetSystem('claude', 'Claude', claudeAudit),
-  presetSystem('github', 'GitHub', githubAudit),
-  presetSystem('notion', 'Notion', notionAudit),
-  presetSystem('airbnb', 'Airbnb', airbnbAudit),
-  presetSystem('spotify', 'Spotify', spotifyAudit),
+  presetSystem("vercel", "Vercel", vercelAudit),
+  presetSystem("linear", "Linear", linearAudit),
+  presetSystem("supabase", "Supabase", supabaseAudit),
+  presetSystem("stripe", "Stripe", stripeAudit),
+  presetSystem("claude", "Claude", claudeAudit),
+  presetSystem("github", "GitHub", githubAudit),
+  presetSystem("notion", "Notion", notionAudit),
+  presetSystem("airbnb", "Airbnb", airbnbAudit),
+  presetSystem("spotify", "Spotify", spotifyAudit),
 ].filter((s): s is System => s !== null)
 
 // refs/<system>/<component>-<light|dark>.png
-const refImages = import.meta.glob('./refs/*/**.png', {
+const refImages = import.meta.glob("./refs/*/**.png", {
   eager: true,
-  query: '?url',
-  import: 'default',
+  query: "?url",
+  import: "default",
 }) as Record<string, string>
 
 function refUrl(
   system: string,
   component: string,
-  mode: 'light' | 'dark',
+  mode: "light" | "dark",
 ): string | undefined {
   return refImages[`./refs/${system}/${component}-${mode}.png`]
 }
@@ -72,8 +73,8 @@ function refUrl(
 export function PresetLab() {
   const [systemId, setSystemId] = useState(
     () =>
-      new URLSearchParams(globalThis.location?.search).get('system') ??
-      'vercel',
+      new URLSearchParams(globalThis.location?.search).get("system") ??
+      "vercel",
   )
   const [mounted, setMounted] = useState(false)
 
@@ -86,19 +87,12 @@ export function PresetLab() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100">
-      <header className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-        <p className="font-mono text-[11px] tracking-widest text-neutral-400 uppercase dark:text-neutral-500">
-          internal / preset-lab
-        </p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight">
-          Preset Lab
-        </h1>
-        <p className="mt-3 max-w-xl text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
-          Every audited component rendered live under a preset, side by side
-          with a reference capture of the real system, scored against the
-          fidelity rubric.
-        </p>
-      </header>
+      <InternalHeader
+        className="mx-auto max-w-6xl px-6 pt-10 pb-10"
+        crumbs={[{ label: "Preset Lab" }]}
+        title="Preset Lab"
+        description="Every audited component rendered live under a preset, side by side with a reference capture of the real system, scored against the fidelity rubric."
+      />
 
       <nav className="sticky top-0 z-40 border-y border-neutral-200 bg-white/85 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/85">
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-2.5">
@@ -163,10 +157,10 @@ function CoverageMatrix({ system }: { system: System }) {
               const scores = entry.scores
               const total = scores ? totalScore(scores) : null
               const status = !scores
-                ? 'unscored'
+                ? "unscored"
                 : passes(scores)
-                  ? 'pass'
-                  : 'fail'
+                  ? "pass"
+                  : "fail"
               return (
                 <tr
                   key={entry.component}
@@ -176,7 +170,7 @@ function CoverageMatrix({ system }: { system: System }) {
                     {entry.component}
                   </td>
                   <td className="px-4 py-2.5 font-mono text-neutral-500 tabular-nums dark:text-neutral-400">
-                    {total === null ? '—' : `${total} / ${MAX_SCORE}`}
+                    {total === null ? "—" : `${total} / ${MAX_SCORE}`}
                   </td>
                   <td className="px-4 py-2.5">
                     <StatusPill status={status} />
@@ -191,14 +185,14 @@ function CoverageMatrix({ system }: { system: System }) {
   )
 }
 
-function StatusPill({ status }: { status: 'pass' | 'fail' | 'unscored' }) {
+function StatusPill({ status }: { status: "pass" | "fail" | "unscored" }) {
   const styles = {
-    pass: 'bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-400',
-    fail: 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-400',
+    pass: "bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-400",
+    fail: "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-400",
     unscored:
-      'bg-neutral-100 text-neutral-500 dark:bg-neutral-900 dark:text-neutral-400',
+      "bg-neutral-100 text-neutral-500 dark:bg-neutral-900 dark:text-neutral-400",
   }[status]
-  const label = { pass: 'Pass', fail: 'Fail', unscored: 'Unscored' }[status]
+  const label = { pass: "Pass", fail: "Fail", unscored: "Unscored" }[status]
   return (
     <span
       className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${styles}`}
@@ -285,7 +279,7 @@ function Panel({ label, children }: { label: string; children: ReactNode }) {
   )
 }
 
-function ModeTag({ mode }: { mode: 'light' | 'dark' }) {
+function ModeTag({ mode }: { mode: "light" | "dark" }) {
   return (
     <p className="mb-1.5 text-[11px] text-neutral-400 capitalize dark:text-neutral-600">
       {mode}
@@ -301,7 +295,7 @@ function OurCell({
 }: {
   system: System
   entry: AuditEntry
-  mode: 'light' | 'dark'
+  mode: "light" | "dark"
   mounted: boolean
 }) {
   const render = componentRenders[entry.component]
@@ -342,7 +336,7 @@ function RefCell({
 }: {
   system: string
   component: string
-  mode: 'light' | 'dark'
+  mode: "light" | "dark"
 }) {
   const url = refUrl(system, component, mode)
   return (
@@ -388,7 +382,7 @@ function RubricRow({ entry }: { entry: AuditEntry }) {
               {c.label}
             </span>
             <span className="font-mono text-xs text-neutral-900 tabular-nums dark:text-neutral-100">
-              {score === null ? '—' : `${score}/2`}
+              {score === null ? "—" : `${score}/2`}
             </span>
           </div>
         )

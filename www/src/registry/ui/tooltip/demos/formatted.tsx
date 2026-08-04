@@ -1,5 +1,5 @@
-import { Button } from '@/registry/ui/button'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { Button } from "@/registry/ui/button"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 export default function Demo() {
   return (

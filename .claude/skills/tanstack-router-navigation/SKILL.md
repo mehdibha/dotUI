@@ -8,7 +8,7 @@ description: >-
   linkOptions helper, scroll restoration, MatchRoute.
 type: sub-skill
 library: tanstack-router
-library_version: '1.166.2'
+library_version: "1.166.2"
 requires:
   - router-core
 sources:
@@ -27,7 +27,7 @@ sources:
 Basic type-safe `Link` with `to` and `params`:
 
 ```tsx
-import { Link } from '@tanstack/react-router'
+import { Link } from "@tanstack/react-router"
 
 function PostLink({ postId }: { postId: string }) {
   return (
@@ -43,14 +43,14 @@ function PostLink({ postId }: { postId: string }) {
 ### Link with Active States
 
 ```tsx
-import { Link } from '@tanstack/react-router'
+import { Link } from "@tanstack/react-router"
 
 function NavLink() {
   return (
     <Link
       to="/posts"
-      activeProps={{ className: 'font-bold' }}
-      inactiveProps={{ className: 'text-gray-500' }}
+      activeProps={{ className: "font-bold" }}
+      inactiveProps={{ className: "text-gray-500" }}
       activeOptions={{ exact: true }}
     >
       Posts
@@ -71,7 +71,7 @@ Children can receive `isActive` as a render function:
 
 ```tsx
 <Link to="/posts">
-  {({ isActive }) => <span className={isActive ? 'font-bold' : ''}>Posts</span>}
+  {({ isActive }) => <span className={isActive ? "font-bold" : ""}>Posts</span>}
 </Link>
 ```
 
@@ -80,9 +80,9 @@ Children can receive `isActive` as a render function:
 Without `from`, navigation resolves from root `/`. To use relative paths like `..`, provide `from`:
 
 ```tsx
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   component: PostComponent,
 })
 
@@ -108,18 +108,18 @@ function PostComponent() {
 Use `useNavigate` only for side-effect-driven navigation (e.g., after a form submission). For anything the user clicks, prefer `Link`.
 
 ```tsx
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate } from "@tanstack/react-router"
 
 function CreatePostForm() {
-  const navigate = useNavigate({ from: '/posts' })
+  const navigate = useNavigate({ from: "/posts" })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const response = await fetch('/api/posts', { method: 'POST', body: '...' })
+    const response = await fetch("/api/posts", { method: "POST", body: "..." })
     const { id: postId } = await response.json()
 
     if (response.ok) {
-      navigate({ to: '/posts/$postId', params: { postId } })
+      navigate({ to: "/posts/$postId", params: { postId } })
     }
   }
 
@@ -130,10 +130,10 @@ function CreatePostForm() {
 The `Navigate` component performs an immediate client-side navigation on mount:
 
 ```tsx
-import { Navigate } from '@tanstack/react-router'
+import { Navigate } from "@tanstack/react-router"
 
 function LegacyRedirect() {
-  return <Navigate to="/posts/$postId" params={{ postId: 'my-first-post' }} />
+  return <Navigate to="/posts/$postId" params={{ postId: "my-first-post" }} />
 }
 ```
 
@@ -146,11 +146,11 @@ Strategies: `intent` (hover/touchstart), `viewport` (intersection observer), `re
 Set globally:
 
 ```tsx
-import { createRouter } from '@tanstack/react-router'
+import { createRouter } from "@tanstack/react-router"
 
 const router = createRouter({
   routeTree,
-  defaultPreload: 'intent',
+  defaultPreload: "intent",
   defaultPreloadDelay: 50, // ms, default is 50
 })
 ```
@@ -173,13 +173,13 @@ Preloaded data stays fresh for 30 seconds by default (`defaultPreloadStaleTime: 
 Manual preloading via the router instance:
 
 ```tsx
-import { useRouter } from '@tanstack/react-router'
+import { useRouter } from "@tanstack/react-router"
 
 function Component() {
   const router = useRouter()
 
   useEffect(() => {
-    router.preloadRoute({ to: '/posts/$postId', params: { postId: '1' } })
+    router.preloadRoute({ to: "/posts/$postId", params: { postId: "1" } })
   }, [router])
 
   return <div />
@@ -191,8 +191,8 @@ function Component() {
 Use `useBlocker` to prevent navigation when a form has unsaved changes:
 
 ```tsx
-import { useBlocker } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useBlocker } from "@tanstack/react-router"
+import { useState } from "react"
 
 function EditForm() {
   const [formIsDirty, setFormIsDirty] = useState(false)
@@ -200,7 +200,7 @@ function EditForm() {
   useBlocker({
     shouldBlockFn: () => {
       if (!formIsDirty) return false
-      const shouldLeave = confirm('Are you sure you want to leave?')
+      const shouldLeave = confirm("Are you sure you want to leave?")
       return !shouldLeave
     },
   })
@@ -212,8 +212,8 @@ function EditForm() {
 With custom UI using `withResolver`:
 
 ```tsx
-import { useBlocker } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useBlocker } from "@tanstack/react-router"
+import { useState } from "react"
 
 function EditForm() {
   const [formIsDirty, setFormIsDirty] = useState(false)
@@ -226,7 +226,7 @@ function EditForm() {
   return (
     <>
       <form>{/* ... */}</form>
-      {status === 'blocked' && (
+      {status === "blocked" && (
         <div>
           <p>Are you sure you want to leave?</p>
           <button onClick={proceed}>Yes</button>
@@ -257,11 +257,11 @@ import {
   Link,
   useNavigate,
   redirect,
-} from '@tanstack/react-router'
+} from "@tanstack/react-router"
 
 const dashboardLinkOptions = linkOptions({
-  to: '/dashboard',
-  search: { search: '' },
+  to: "/dashboard",
+  search: { search: "" },
 })
 
 // Use anywhere: Link, navigate, redirect
@@ -278,9 +278,9 @@ function Nav() {
 
 // Also works in an array for navigation bars
 const navOptions = linkOptions([
-  { to: '/dashboard', label: 'Summary', activeOptions: { exact: true } },
-  { to: '/dashboard/invoices', label: 'Invoices' },
-  { to: '/dashboard/users', label: 'Users' },
+  { to: "/dashboard", label: "Summary", activeOptions: { exact: true } },
+  { to: "/dashboard/invoices", label: "Invoices" },
+  { to: "/dashboard/users", label: "Users" },
 ])
 
 function NavBar() {
@@ -290,7 +290,7 @@ function NavBar() {
         <Link
           {...option}
           key={option.to}
-          activeProps={{ className: 'font-bold' }}
+          activeProps={{ className: "font-bold" }}
         >
           {option.label}
         </Link>
@@ -305,8 +305,8 @@ function NavBar() {
 Wraps any component with TanStack Router's type-safe navigation:
 
 ```tsx
-import * as React from 'react'
-import { createLink, LinkComponent } from '@tanstack/react-router'
+import * as React from "react"
+import { createLink, LinkComponent } from "@tanstack/react-router"
 
 interface BasicLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {}
 
@@ -346,7 +346,7 @@ For nested scrollable areas:
 const router = createRouter({
   routeTree,
   scrollRestoration: true,
-  scrollToTopSelectors: ['#main-scrollable-area'],
+  scrollToTopSelectors: ["#main-scrollable-area"],
 })
 ```
 
@@ -371,7 +371,7 @@ Prevent scroll reset for a specific navigation:
 ### MatchRoute for Pending UI
 
 ```tsx
-import { Link, MatchRoute } from '@tanstack/react-router'
+import { Link, MatchRoute } from "@tanstack/react-router"
 
 function Nav() {
   return (
@@ -405,7 +405,7 @@ Dynamic segments are declared with `$` in the route path. Always pass them via `
 // WRONG — no href, no cmd+click, no preloading, no accessibility
 function BadNav() {
   const navigate = useNavigate()
-  return <button onClick={() => navigate({ to: '/posts' })}>Posts</button>
+  return <button onClick={() => navigate({ to: "/posts" })}>Posts</button>
 }
 
 // CORRECT — real <a> tag with href, accessible, preloadable

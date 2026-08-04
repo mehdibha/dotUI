@@ -1,13 +1,13 @@
-import type * as React from 'react'
-import type { VariantProps } from 'tailwind-variants'
+import type * as React from "react"
+import type { VariantProps } from "tailwind-variants"
 
-import { useStyles } from './styles'
-import type { BadgeStyles } from './styles'
+import { useStyles } from "./styles"
+import type { BadgeStyles } from "./styles"
 
 // MARK: badgeStyles
 
 interface BadgeProps
-  extends React.ComponentProps<'span'>, VariantProps<BadgeStyles> {}
+  extends React.ComponentProps<"span">, VariantProps<BadgeStyles> {}
 const Badge = ({
   className,
   appearance,

@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   DialogContent,
   DialogDescription,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { Modal } from '@/registry/ui/modal'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { Modal } from "@/registry/ui/modal"
+import { TextField } from "@/registry/ui/text-field"
 
-import { encodePreset, useDesignSystem, useMyPresets } from './preset'
-import { useDesignSystemName } from './preset/storage'
+import { encodePreset, useDesignSystem, useMyPresets } from "./preset"
+import { useDesignSystemName } from "./preset/storage"
 
 /**
  * Snapshots the current design system to a named localStorage preset ("Save as").
@@ -31,11 +31,11 @@ export function SavePresetDialog({
   const { presets, activeId, save, update } = useMyPresets()
   const storedName = useDesignSystemName()
 
-  const currentState = encodePreset(designSystem) ?? ''
+  const currentState = encodePreset(designSystem) ?? ""
   const active = presets.find((p) => p.id === activeId)
   const isDirty = active ? active.state !== currentState : false
 
-  const [name, setName] = useState('')
+  const [name, setName] = useState("")
   useEffect(() => {
     if (isOpen) setName(active?.name ?? storedName)
   }, [isOpen, active?.name, storedName])

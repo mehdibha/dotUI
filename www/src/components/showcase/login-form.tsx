@@ -1,22 +1,22 @@
-'use client'
+"use client"
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { Link } from '@/registry/ui/link'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/card"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { Link } from "@/registry/ui/link"
+import { TextField } from "@/registry/ui/text-field"
 
-export function LoginForm(props: React.ComponentProps<'div'>) {
+export function LoginForm(props: React.ComponentProps<"div">) {
   return (
-    <Card {...props} className={cn('w-full max-w-xs', props.className)}>
+    <Card {...props} className={cn("w-full max-w-xs", props.className)}>
       <CardHeader>
         <CardTitle className="text-xl">Login to your account</CardTitle>
         <CardDescription>
@@ -73,7 +73,7 @@ export function LoginForm(props: React.ComponentProps<'div'>) {
         </Button>
         <p className="mt-4 text-sm text-fg-muted">
           {/* TODO */}
-          Don&apos;t have an account?{' '}
+          Don&apos;t have an account?{" "}
           <Link href="#" variant="quiet">
             register
           </Link>

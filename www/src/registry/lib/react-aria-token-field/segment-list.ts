@@ -10,12 +10,12 @@
 export type TokenFieldSegment<T = any> = TextSegment | TokenSegment<T>
 
 export interface TextSegment {
-  type: 'text'
+  type: "text"
   text: string
 }
 
 export interface TokenSegment<T = any> {
-  type: 'token'
+  type: "token"
   text: string
   /** An arbitrary value associated with the token. */
   value?: T
@@ -89,11 +89,11 @@ export class TokenSegmentList<T = any> {
     offset: number,
   ): [TokenFieldSegment | null, TokenFieldSegment | null] {
     if (!segment) {
-      let empty = this.createTextSegment('')
+      let empty = this.createTextSegment("")
       return [offset > 0 ? empty : null, offset > 0 ? null : empty]
     }
 
-    if (segment.type === 'token') {
+    if (segment.type === "token") {
       return [
         offset > 0 ? { ...segment } : null,
         offset > 0 ? null : { ...segment },
@@ -101,7 +101,7 @@ export class TokenSegmentList<T = any> {
     }
 
     return [
-      offset > 0 ? { type: 'text', text: segment.text.slice(0, offset) } : null,
+      offset > 0 ? { type: "text", text: segment.text.slice(0, offset) } : null,
       offset < segment.text.length
         ? this.createTextSegment(segment.text.slice(offset))
         : null,
@@ -109,7 +109,7 @@ export class TokenSegmentList<T = any> {
   }
 
   private createTextSegment(text: string): TextSegment {
-    return { type: 'text', text }
+    return { type: "text", text }
   }
 
   protected tokenize(text: string): TokenFieldSegment<T>[] {
@@ -170,7 +170,7 @@ export class TokenSegmentList<T = any> {
 
     let lastSegment = newSegments[newSegments.length - 1]
     let caret =
-      lastSegment && lastSegment.type === 'text'
+      lastSegment && lastSegment.type === "text"
         ? { index: newSegments.length - 1, offset: lastSegment.text.length }
         : { index: newSegments.length, offset: 0 }
 
@@ -208,7 +208,7 @@ export class TokenSegmentList<T = any> {
     ) {
       let segment = this.segments[i]!
       switch (segment.type) {
-        case 'token':
+        case "token":
           if (
             i !== position.index ||
             (direction === Direction.Backward
@@ -225,7 +225,7 @@ export class TokenSegmentList<T = any> {
             }
           }
           continue
-        case 'text': {
+        case "text": {
           let offset =
             direction === Direction.Backward ? segment.text.length : 0
           if (i === position.index) {
@@ -263,7 +263,7 @@ export class TokenSegmentList<T = any> {
 
   /** Find a line boundary before or after a position. */
   findLineBoundary(position: Position, direction: Direction): Position | null {
-    let res = this.findText(position, direction, '\n')
+    let res = this.findText(position, direction, "\n")
     if (res) {
       return res
     }
@@ -291,7 +291,7 @@ export class TokenSegmentList<T = any> {
       i += direction
     ) {
       let segment = this.segments[i]!
-      if (segment.type !== 'text') {
+      if (segment.type !== "text") {
         continue
       }
       let offset = findInText(
@@ -327,7 +327,7 @@ export class TokenSegmentList<T = any> {
       return this.replaceRange(
         direction === Direction.Backward ? boundary : position,
         direction === Direction.Backward ? position : boundary,
-        '',
+        "",
         coalesce,
       )
     }
@@ -347,7 +347,7 @@ export class TokenSegmentList<T = any> {
       return this.replaceRange(
         direction === Direction.Backward ? boundary : position,
         direction === Direction.Backward ? position : boundary,
-        '',
+        "",
         coalesce,
       )
     }
@@ -364,9 +364,9 @@ export class TokenSegmentList<T = any> {
     }
     if (start.index === end.index) {
       let segment = this.segments[start.index]!
-      if (segment.type === 'text') {
+      if (segment.type === "text") {
         return this.createSegmentList([
-          { type: 'text', text: segment.text.slice(start.offset, end.offset) },
+          { type: "text", text: segment.text.slice(start.offset, end.offset) },
         ])
       }
       return this.createSegmentList([segment])
@@ -389,7 +389,7 @@ export class TokenSegmentList<T = any> {
 
   /** Convert the list to a string. */
   toString(): string {
-    return this.segments.map((seg) => seg.text).join('')
+    return this.segments.map((seg) => seg.text).join("")
   }
 
   /** Returns the previous list in the undo history. */
@@ -414,7 +414,7 @@ function findInText(
   direction: Direction,
   fromOffset?: number,
 ): number {
-  if (typeof search === 'string') {
+  if (typeof search === "string") {
     if (direction === Direction.Backward) {
       return text.lastIndexOf(
         search,
@@ -435,9 +435,9 @@ function findInText(
     return -1
   }
 
-  let re = search.flags.includes('g')
+  let re = search.flags.includes("g")
     ? search
-    : new RegExp(search.source, search.flags + 'g')
+    : new RegExp(search.source, search.flags + "g")
   let matches = Array.from(text.slice(0, limit).matchAll(re))
   return matches.at(-1)?.index ?? -1
 }
@@ -448,22 +448,22 @@ function appendSegments(
   tokenize?: (text: string) => TokenFieldSegment[],
 ): TokenFieldSegment[] {
   for (let segment of insert) {
-    if (segment.type === 'text' && segment.text.length === 0) {
+    if (segment.type === "text" && segment.text.length === 0) {
       continue
     }
 
     let last = segments[segments.length - 1]
-    if (last && last.type === 'text' && segment.type === 'text') {
+    if (last && last.type === "text" && segment.type === "text") {
       if (tokenize) {
         let tokenized = tokenize(last.text + segment.text)
         segments.splice(segments.length - 1, 1, ...tokenized)
       } else {
         segments[segments.length - 1] = {
-          type: 'text',
+          type: "text",
           text: last.text + segment.text,
         }
       }
-    } else if (tokenize && segment.type === 'text') {
+    } else if (tokenize && segment.type === "text") {
       let tokenized = tokenize(segment.text)
       segments.push(...tokenized)
     } else {

@@ -11,23 +11,23 @@ wip: true
   name="time-field"
   controls={[
     {
-      type: 'string',
-      name: 'label',
-      defaultValue: 'Time',
+      type: "string",
+      name: "label",
+      defaultValue: "Time",
     },
     {
-      type: 'boolean',
-      name: 'isDisabled',
+      type: "boolean",
+      name: "isDisabled",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isReadOnly',
+      type: "boolean",
+      name: "isReadOnly",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isInvalid',
+      type: "boolean",
+      name: "isInvalid",
       defaultValue: false,
     },
   ]}
@@ -44,9 +44,9 @@ npx shadcn@latest add @dotui/time-field
 Use `TimeField` to allow users to enter and edit time values using a keyboard.
 
 ```tsx
-import { TimeField } from '@/ui/time-field'
-import { DateInput } from '@/ui/input'
-import { Label } from '@/ui/field'
+import { TimeField } from "@/ui/time-field"
+import { DateInput } from "@/ui/input"
+import { Label } from "@/ui/field"
 ```
 
 ```tsx
@@ -61,10 +61,13 @@ import { Label } from '@/ui/field'
 `TimeField` wraps a `Label`, the `DateInput` that holds the editable time segments, and an optional `Description` or `FieldError`.
 
 ```tsx
-import { TimeField } from '@/ui/time-field'
-import { DateInput } from '@/ui/input'
-import { Label, Description, FieldError } from '@/ui/field'
-;<TimeField>
+import { TimeField } from "@/ui/time-field"
+import { DateInput } from "@/ui/input"
+import { Label, Description, FieldError } from "@/ui/field"
+```
+
+```tsx
+<TimeField>
   <Label />
   <DateInput />
   <Description />
@@ -77,8 +80,11 @@ import { Label, Description, FieldError } from '@/ui/field'
 Values are `Time` objects from `@internationalized/date`. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it. Parse a string with `parseTime`.
 
 ```tsx
-import { Time } from '@internationalized/date'
-;<TimeField defaultValue={new Time(11, 45)}>
+import { Time } from "@internationalized/date"
+```
+
+```tsx
+<TimeField defaultValue={new Time(11, 45)}>
   <Label>Time</Label>
   <DateInput />
 </TimeField>

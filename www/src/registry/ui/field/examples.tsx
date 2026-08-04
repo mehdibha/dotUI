@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { Badge } from '@/registry/ui/badge'
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
+import { Badge } from "@/registry/ui/badge"
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import {
   Description,
   Field,
@@ -11,25 +11,25 @@ import {
   Fieldset,
   Label,
   Legend,
-} from '@/registry/ui/field'
-import { Input, TextArea } from '@/registry/ui/input'
+} from "@/registry/ui/field"
+import { Input, TextArea } from "@/registry/ui/input"
 import {
   Radio,
   RadioControl,
   RadioGroup,
   RadioIndicator,
-} from '@/registry/ui/radio-group'
+} from "@/registry/ui/radio-group"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { Slider, SliderControl } from '@/registry/ui/slider'
-import { Switch, SwitchControl } from '@/registry/ui/switch'
-import { TextField } from '@/registry/ui/text-field'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+} from "@/registry/ui/select"
+import { Slider, SliderControl } from "@/registry/ui/slider"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
+import { TextField } from "@/registry/ui/text-field"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function FieldExamples() {
   return (

@@ -1,12 +1,12 @@
-import { AlertCircleIcon } from 'lucide-react'
+import { AlertCircleIcon } from "lucide-react"
 
 import {
   Alert,
   AlertAction,
   AlertDescription,
   AlertTitle,
-} from '@/registry/ui/alert'
-import { Button } from '@/registry/ui/button'
+} from "@/registry/ui/alert"
+import { Button } from "@/registry/ui/button"
 
 export default function Demo() {
   return (

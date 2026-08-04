@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
@@ -9,22 +9,22 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Label } from '@/registry/ui/field'
+} from "@/registry/ui/card"
+import { Label } from "@/registry/ui/field"
 import {
   ProgressBar,
   ProgressBarControl,
   ProgressBarFill,
   ProgressBarOutput,
-} from '@/registry/ui/progress-bar'
+} from "@/registry/ui/progress-bar"
 
 const breakdown = [
-  { label: 'Documents', size: '3.1 GB', className: 'bg-primary' },
-  { label: 'Photos', size: '2.8 GB', className: 'bg-accent' },
-  { label: 'Videos', size: '2.3 GB', className: 'bg-success' },
+  { label: "Documents", size: "3.1 GB", className: "bg-primary" },
+  { label: "Photos", size: "2.8 GB", className: "bg-accent" },
+  { label: "Videos", size: "2.3 GB", className: "bg-success" },
 ]
 
-export function Storage({ className, ...props }: React.ComponentProps<'div'>) {
+export function Storage({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <Card className={cn(className)} {...props}>
       <CardHeader>
@@ -45,7 +45,7 @@ export function Storage({ className, ...props }: React.ComponentProps<'div'>) {
           {breakdown.map((item) => (
             <li key={item.label} className="flex items-center gap-2 text-sm">
               <span
-                className={cn('size-2 shrink-0 rounded-full', item.className)}
+                className={cn("size-2 shrink-0 rounded-full", item.className)}
                 aria-hidden="true"
               />
               <span className="min-w-0 flex-1 truncate">{item.label}</span>

@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import type { ChartValue } from '@tanstack/charts'
+import type { ChartValue } from "@tanstack/charts"
 
-import { AreaChart } from '@/registry/ui/chart-area'
+import { AreaChart } from "@/registry/ui/chart-area"
 
 const data = [
-  { month: 'January', desktop: 18600 },
-  { month: 'February', desktop: 30500 },
-  { month: 'March', desktop: 23700 },
-  { month: 'April', desktop: 7300 },
-  { month: 'May', desktop: 20900 },
-  { month: 'June', desktop: 21400 },
+  { month: "January", desktop: 18600 },
+  { month: "February", desktop: 30500 },
+  { month: "March", desktop: 23700 },
+  { month: "April", desktop: 7300 },
+  { month: "May", desktop: 20900 },
+  { month: "June", desktop: 21400 },
 ]
 
 /* Module scope: a formatter defined in render would rebuild the scene every
@@ -23,10 +23,10 @@ export default function ChartAreaAxes() {
       data={data}
       x="month"
       y="desktop"
-      labels={{ desktop: 'Desktop' }}
+      labels={{ desktop: "Desktop" }}
       legend={false}
       formatX={shortMonth}
-      formatY={{ locale: 'en-US', number: { notation: 'compact' } }}
+      formatY={{ locale: "en-US", number: { notation: "compact" } }}
       ariaLabel="Desktop visitors, January through June"
     />
   )

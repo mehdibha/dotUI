@@ -8,25 +8,25 @@
  *   pnpm build:references
  */
 
-import * as fs from 'node:fs'
-import * as path from 'node:path'
-import { kebabCase } from 'es-toolkit/string'
-import { globby } from 'globby'
-import ts from 'typescript'
-import * as tae from 'typescript-api-extractor'
-import yargs, { type Argv } from 'yargs'
-import { hideBin } from 'yargs/helpers'
+import * as fs from "node:fs"
+import * as path from "node:path"
+import { kebabCase } from "es-toolkit/string"
+import { globby } from "globby"
+import ts from "typescript"
+import * as tae from "typescript-api-extractor"
+import yargs, { type Argv } from "yargs"
+import { hideBin } from "yargs/helpers"
 
 import {
   formatComponentData,
   isPublicPropsType,
   type ParserContext,
-} from './componentHandler'
+} from "./componentHandler"
 
-const CONFIG_PATH = path.join(process.cwd(), 'tsconfig.references.json')
+const CONFIG_PATH = path.join(process.cwd(), "tsconfig.references.json")
 const OUTPUT_DIR = path.join(
   process.cwd(),
-  'src/modules/docs/references/generated',
+  "src/modules/docs/references/generated",
 )
 
 interface RunOptions {
@@ -34,7 +34,7 @@ interface RunOptions {
 }
 
 async function run(options: RunOptions) {
-  console.log('🔧 API Docs Builder\n')
+  console.log("🔧 API Docs Builder\n")
 
   // Ensure output directory exists
   if (!fs.existsSync(OUTPUT_DIR)) {
@@ -74,7 +74,7 @@ async function run(options: RunOptions) {
       const ast = tae.parseFromProgram(file, program)
       if (ast.exports.length > 0) {
         console.log(
-          `  Found ${ast.exports.length} exports: ${ast.exports.map((e) => e.name).join(', ')}`,
+          `  Found ${ast.exports.length} exports: ${ast.exports.map((e) => e.name).join(", ")}`,
         )
       }
       allExports.push(...ast.exports)
@@ -100,7 +100,7 @@ async function run(options: RunOptions) {
       const json = `${JSON.stringify(componentRef, null, 2)}\n`
 
       // Remove "Props" suffix for filename
-      const baseName = exportNode.name.replace(/Props$/, '')
+      const baseName = exportNode.name.replace(/Props$/, "")
       const fileName = `${kebabCase(baseName)}.json`
       const outputPath = path.join(OUTPUT_DIR, fileName)
 
@@ -122,11 +122,11 @@ async function run(options: RunOptions) {
   // Skipped when errors occurred so a failed generation can't delete valid docs.
   if (!options.files?.length) {
     if (errorCount > 0) {
-      console.log('⚠️  Skipping prune of stale files because of errors above')
+      console.log("⚠️  Skipping prune of stale files because of errors above")
     } else {
       const staleFiles = fs
         .readdirSync(OUTPUT_DIR)
-        .filter((file) => file.endsWith('.json') && !writtenFiles.has(file))
+        .filter((file) => file.endsWith(".json") && !writtenFiles.has(file))
       for (const file of staleFiles) {
         fs.unlinkSync(path.join(OUTPUT_DIR, file))
         console.log(`  Pruned: ${file}`)
@@ -157,7 +157,7 @@ async function getFilesToProcess(
     })
 
     if (files.length === 0) {
-      console.error('No files found matching the provided patterns.')
+      console.error("No files found matching the provided patterns.")
       process.exit(1)
     }
 
@@ -165,8 +165,8 @@ async function getFilesToProcess(
   }
 
   // Default: find all types.ts files in ui folder
-  const uiDir = path.join(configDir, 'src/registry/ui')
-  const files = await globby('**/types.ts', {
+  const uiDir = path.join(configDir, "src/registry/ui")
+  const files = await globby("**/types.ts", {
     cwd: uiDir,
     absolute: true,
     onlyFiles: true,
@@ -177,15 +177,15 @@ async function getFilesToProcess(
 
 yargs(hideBin(process.argv))
   .command<RunOptions>(
-    '$0',
-    'Extracts API documentation from TypeScript source files',
+    "$0",
+    "Extracts API documentation from TypeScript source files",
     (command: Argv) => {
-      return command.option('files', {
-        alias: 'f',
-        type: 'array',
+      return command.option("files", {
+        alias: "f",
+        type: "array",
         demandOption: false,
         description:
-          'Glob patterns for files to process. If not provided, all types.ts files are used.',
+          "Glob patterns for files to process. If not provided, all types.ts files are used.",
       })
     },
     run,

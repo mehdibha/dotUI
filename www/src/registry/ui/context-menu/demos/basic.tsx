@@ -1,6 +1,6 @@
-import { ContextMenu } from '@/registry/ui/context-menu'
-import { MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
+import { ContextMenu } from "@/registry/ui/context-menu"
+import { MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (

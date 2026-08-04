@@ -1,8 +1,8 @@
-import { Star } from 'lucide-react'
+import { Star } from "lucide-react"
 
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
-import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 
 export default function Demo() {
   return (

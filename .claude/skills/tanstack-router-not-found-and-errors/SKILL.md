@@ -7,7 +7,7 @@ description: >-
   masking (mask option, createRouteMask, unmaskOnReload).
 type: sub-skill
 library: tanstack-router
-library_version: '1.166.2'
+library_version: "1.166.2"
 requires:
   - router-core
 sources:
@@ -28,7 +28,7 @@ TanStack Router handles two categories of "not found": unmatched URL paths (auto
 
 ```tsx
 // src/routes/__root.tsx
-import { createRootRoute, Outlet, Link } from '@tanstack/react-router'
+import { createRootRoute, Outlet, Link } from "@tanstack/react-router"
 
 export const Route = createRootRoute({
   component: () => <Outlet />,
@@ -47,8 +47,8 @@ export const Route = createRootRoute({
 
 ```tsx
 // src/router.tsx
-import { createRouter } from '@tanstack/react-router'
-import { routeTree } from './routeTree.gen'
+import { createRouter } from "@tanstack/react-router"
+import { routeTree } from "./routeTree.gen"
 
 const router = createRouter({
   routeTree,
@@ -69,10 +69,10 @@ Throw `notFound()` in `loader` or `beforeLoad` when a resource doesn't exist. It
 
 ```tsx
 // src/routes/posts.$postId.tsx
-import { createFileRoute, notFound } from '@tanstack/react-router'
-import { getPost } from '../api'
+import { createFileRoute, notFound } from "@tanstack/react-router"
+import { getPost } from "../api"
 
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   loader: async ({ params: { postId } }) => {
     const post = await getPost(postId)
     if (!post) throw notFound()
@@ -97,12 +97,12 @@ You can force a specific parent route to handle the not-found error:
 
 ```tsx
 // src/routes/_layout/posts.$postId.tsx
-import { createFileRoute, notFound } from '@tanstack/react-router'
+import { createFileRoute, notFound } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/_layout/posts/$postId')({
+export const Route = createFileRoute("/_layout/posts/$postId")({
   loader: async ({ params: { postId } }) => {
     const post = await getPost(postId)
-    if (!post) throw notFound({ routeId: '/_layout' })
+    if (!post) throw notFound({ routeId: "/_layout" })
     return { post }
   },
 })
@@ -111,9 +111,9 @@ export const Route = createFileRoute('/_layout/posts/$postId')({
 ### Targeting Root Route with `rootRouteId`
 
 ```tsx
-import { createFileRoute, notFound, rootRouteId } from '@tanstack/react-router'
+import { createFileRoute, notFound, rootRouteId } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   loader: async ({ params: { postId } }) => {
     const post = await getPost(postId)
     if (!post) throw notFound({ routeId: rootRouteId })
@@ -141,7 +141,7 @@ All not-found errors go to the root route's `notFoundComponent`, regardless of m
 ```tsx
 const router = createRouter({
   routeTree,
-  notFoundMode: 'root',
+  notFoundMode: "root",
 })
 ```
 
@@ -153,12 +153,12 @@ const router = createRouter({
 
 ```tsx
 // src/routes/posts.$postId.tsx
-import { createFileRoute, useRouter } from '@tanstack/react-router'
+import { createFileRoute, useRouter } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   loader: async ({ params: { postId } }) => {
     const res = await fetch(`/api/posts/${postId}`)
-    if (!res.ok) throw new Error('Failed to load post')
+    if (!res.ok) throw new Error("Failed to load post")
     return res.json()
   },
   component: PostComponent,
@@ -260,7 +260,7 @@ Route masking shows a different URL in the browser bar than the actual route bei
 ### Imperative Masking on `<Link>`
 
 ```tsx
-import { Link } from '@tanstack/react-router'
+import { Link } from "@tanstack/react-router"
 
 function PhotoGrid({ photoId }: { photoId: string }) {
   return (
@@ -268,7 +268,7 @@ function PhotoGrid({ photoId }: { photoId: string }) {
       to="/photos/$photoId/modal"
       params={{ photoId }}
       mask={{
-        to: '/photos/$photoId',
+        to: "/photos/$photoId",
         params: { photoId },
       }}
     >
@@ -281,7 +281,7 @@ function PhotoGrid({ photoId }: { photoId: string }) {
 ### Imperative Masking with `useNavigate`
 
 ```tsx
-import { useNavigate } from '@tanstack/react-router'
+import { useNavigate } from "@tanstack/react-router"
 
 function OpenPhotoButton({ photoId }: { photoId: string }) {
   const navigate = useNavigate()
@@ -290,10 +290,10 @@ function OpenPhotoButton({ photoId }: { photoId: string }) {
     <button
       onClick={() =>
         navigate({
-          to: '/photos/$photoId/modal',
+          to: "/photos/$photoId/modal",
           params: { photoId },
           mask: {
-            to: '/photos/$photoId',
+            to: "/photos/$photoId",
             params: { photoId },
           },
         })
@@ -308,13 +308,13 @@ function OpenPhotoButton({ photoId }: { photoId: string }) {
 ### Declarative Masking with `createRouteMask`
 
 ```tsx
-import { createRouter, createRouteMask } from '@tanstack/react-router'
-import { routeTree } from './routeTree.gen'
+import { createRouter, createRouteMask } from "@tanstack/react-router"
+import { routeTree } from "./routeTree.gen"
 
 const photoModalMask = createRouteMask({
   routeTree,
-  from: '/photos/$photoId/modal',
-  to: '/photos/$photoId',
+  from: "/photos/$photoId/modal",
+  to: "/photos/$photoId",
   params: (prev) => ({ photoId: prev.photoId }),
 })
 
@@ -361,7 +361,7 @@ const router = createRouter({
 
 ```tsx
 // WRONG — NotFoundRoute blocks notFound() and notFoundComponent from working
-import { NotFoundRoute } from '@tanstack/react-router'
+import { NotFoundRoute } from "@tanstack/react-router"
 const notFoundRoute = new NotFoundRoute({ component: () => <p>404</p> })
 const router = createRouter({ routeTree, notFoundRoute })
 
@@ -395,7 +395,7 @@ Only routes with children (and therefore an `<Outlet>`) can render `notFoundComp
 ```tsx
 // This route has NO children — notFoundComponent here will not catch
 // unmatched child paths (there are no child paths to unmatch)
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   // notFoundComponent here only works for notFound() thrown in THIS route's loader
   // It does NOT catch path-based not-founds
   notFoundComponent: () => <p>Not found</p>,

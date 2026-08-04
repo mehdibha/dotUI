@@ -18,16 +18,16 @@ It brings the [`chart`](/docs/components/chart) core — the host, the palette, 
 ## Usage
 
 ```tsx
-import { ScatterChart } from '@/ui/chart-scatter'
+import { ScatterChart } from "@/ui/chart-scatter"
 ```
 
 Give it your rows and the two numeric fields to position them by. `ariaLabel` is required — a chart is a figure, not decoration.
 
 ```tsx
 const routes = [
-  { route: '/', size: 118, load: 0.8 },
-  { route: '/docs', size: 212, load: 1.4 },
-  { route: '/editor', size: 476, load: 3.2 },
+  { route: "/", size: 118, load: 0.8 },
+  { route: "/docs", size: 212, load: 1.4 },
+  { route: "/editor", size: 476, load: 3.2 },
 ]
 
 export function Example() {
@@ -73,8 +73,8 @@ Bubbles overlap by nature; `fillOpacity` keeps the ones underneath readable. Wit
   x="seats"
   y="spend"
   series="plan"
-  seriesOrder={['starter', 'growth', 'scale']}
-  labels={{ starter: 'Starter', growth: 'Growth', scale: 'Scale' }}
+  seriesOrder={["starter", "growth", "scale"]}
+  labels={{ starter: "Starter", growth: "Growth", scale: "Scale" }}
   ariaLabel="Monthly spend by seat count, grouped by plan"
 />
 ```

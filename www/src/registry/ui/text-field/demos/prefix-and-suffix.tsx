@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { XCircleIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Label } from '@/registry/ui/field'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+import { XCircleIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 export default function Demo() {
-  const [inputValue, setInputValue] = React.useState('Hello world!')
+  const [inputValue, setInputValue] = React.useState("Hello world!")
   const inputRef = React.useRef<HTMLInputElement>(null)
   return (
     <div className="max-w-xs space-y-2">
@@ -41,7 +41,7 @@ export default function Demo() {
                 variant="quiet"
                 isIconOnly
                 onPress={() => {
-                  setInputValue('')
+                  setInputValue("")
                   inputRef.current?.focus()
                 }}
               >

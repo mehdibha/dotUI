@@ -1,26 +1,26 @@
-'use client'
+"use client"
 
-import { useEffect, useRef, useState } from 'react'
-import { SearchIcon, XIcon } from 'lucide-react'
-import * as AutocompletePrimitive from 'react-aria-components/Autocomplete'
+import { useEffect, useRef, useState } from "react"
+import { SearchIcon, XIcon } from "lucide-react"
+import * as AutocompletePrimitive from "react-aria-components/Autocomplete"
 
-import { Button } from '@/registry/ui/button'
-import { Input } from '@/registry/ui/input'
+import { Button } from "@/registry/ui/button"
+import { Input } from "@/registry/ui/input"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { SearchField } from '@/registry/ui/search-field'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+} from "@/registry/ui/list-box"
+import { SearchField } from "@/registry/ui/search-field"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-import { getComponentDisplayName, paramComponents } from '../components'
-import { SECTIONS } from './schema'
+import { getComponentDisplayName, paramComponents } from "../components"
+import { SECTIONS } from "./schema"
 
 /** A search jump target: a section control or a component's param editors. */
 export interface CommandTarget {
-  kind: 'control' | 'component'
+  kind: "control" | "component"
   sectionId: string
   /** Control id, or component name for `kind: 'component'`. */
   id: string
@@ -48,7 +48,7 @@ export function PanelSearch({
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   const { contains } = AutocompletePrimitive.useFilter({
-    sensitivity: 'base',
+    sensitivity: "base",
     ignorePunctuation: true,
   })
 
@@ -58,13 +58,13 @@ export function PanelSearch({
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.repeat) return
-      if (event.key === 'p' && (event.metaKey || event.ctrlKey)) {
+      if (event.key === "p" && (event.metaKey || event.ctrlKey)) {
         event.preventDefault()
         setOpen((open) => !open)
       }
     }
-    window.addEventListener('keydown', onKeyDown)
-    return () => window.removeEventListener('keydown', onKeyDown)
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
   }, [])
 
   // Click/tap anywhere outside dismisses — without stealing focus back.
@@ -73,9 +73,9 @@ export function PanelSearch({
     const onPointerDown = (event: PointerEvent) => {
       if (!wrapperRef.current?.contains(event.target as Node)) setOpen(false)
     }
-    document.addEventListener('pointerdown', onPointerDown, true)
+    document.addEventListener("pointerdown", onPointerDown, true)
     return () =>
-      document.removeEventListener('pointerdown', onPointerDown, true)
+      document.removeEventListener("pointerdown", onPointerDown, true)
   }, [isOpen])
 
   // Keyboard-initiated closes hand focus back to the trigger.
@@ -111,7 +111,7 @@ export function PanelSearch({
           onKeyDown={(event) => {
             // SearchField preventDefaults Escape while it has text (to clear);
             // an unprevented Escape means the input was already empty — close.
-            if (event.key === 'Escape' && !event.defaultPrevented) close()
+            if (event.key === "Escape" && !event.defaultPrevented) close()
           }}
           onBlur={(event) => {
             // Tab-away closes; a null relatedTarget (scrollbar clicks) doesn't.
@@ -175,10 +175,10 @@ export function PanelSearch({
                           control.label,
                           section.label,
                           ...(control.keywords ?? []),
-                        ].join(' ')}
+                        ].join(" ")}
                         onAction={() =>
                           jump({
-                            kind: 'control',
+                            kind: "control",
                             sectionId: section.id,
                             id: control.id,
                           })
@@ -198,8 +198,8 @@ export function PanelSearch({
                       textValue={`${getComponentDisplayName(comp.name)} component`}
                       onAction={() =>
                         jump({
-                          kind: 'component',
-                          sectionId: 'components',
+                          kind: "component",
+                          sectionId: "components",
                           id: comp.name,
                         })
                       }

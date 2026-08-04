@@ -4,29 +4,29 @@ import {
   useMemo,
   useState,
   type ComponentType,
-} from 'react'
+} from "react"
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   SlidersHorizontalIcon,
   XIcon,
-} from 'lucide-react'
-import type { PressEvent } from 'react-aria-components'
+} from "lucide-react"
+import type { PressEvent } from "react-aria-components"
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
-import { CodeBlock } from '@/modules/docs/code-block'
-import { renderCode } from '@/modules/docs/codegen/code-template'
-import type { CodeTemplate } from '@/modules/docs/codegen/code-template'
-import { DemoPreset } from '@/modules/docs/demo-preset'
-import { DynamicPre } from '@/modules/docs/dynamic-pre'
-import { PreviewControls, PreviewPanel } from '@/modules/docs/preview-controls'
-import { toggleCodeBlock } from '@/modules/docs/toggle-code-block'
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { CodeBlock } from "@/modules/docs/code-block"
+import { renderCode } from "@/modules/docs/codegen/code-template"
+import type { CodeTemplate } from "@/modules/docs/codegen/code-template"
+import { DemoPreset } from "@/modules/docs/demo-preset"
+import { DynamicPre } from "@/modules/docs/dynamic-pre"
+import { PreviewControls, PreviewPanel } from "@/modules/docs/preview-controls"
+import { toggleCodeBlock } from "@/modules/docs/toggle-code-block"
 
-import { defaultControlValues } from './control-defaults'
-import { availableIcons, Controls } from './controls'
-import type { ControlValues, SerializableControl } from './types'
+import { defaultControlValues } from "./control-defaults"
+import { availableIcons, Controls } from "./controls"
+import type { ControlValues, SerializableControl } from "./types"
 
 /**
  * Interactive demo component.
@@ -76,11 +76,11 @@ export function InteractiveDemo({
     const props: Record<string, unknown> = { ...values }
 
     for (const control of controls) {
-      if (control.type === 'icon') {
+      if (control.type === "icon") {
         const iconName = values[control.name] as string | null
         if (iconName && availableIcons[iconName]) {
           props[control.name] = createElement(availableIcons[iconName], {
-            className: 'size-4',
+            className: "size-4",
           })
         } else {
           props[control.name] = null
@@ -107,7 +107,7 @@ export function InteractiveDemo({
   }
 
   return (
-    <div className={cn('overflow-hidden rounded-lg border', className)}>
+    <div className={cn("overflow-hidden rounded-lg border", className)}>
       <div className="flex flex-col md:flex-row">
         {/* PreviewPanel pins the whole preview column (toolbar + trigger
             included) to the preview mode; the preset only themes the canvas.
@@ -125,8 +125,8 @@ export function InteractiveDemo({
                 isIconOnly
                 aria-label="Controls"
                 className={cn(
-                  'absolute top-2 right-2 z-10 text-fg-muted transition-[opacity,scale] duration-300 ease-fluid-out motion-reduce:transition-none',
-                  controlsOpen && 'scale-50 opacity-0',
+                  "absolute top-2 right-2 z-10 text-fg-muted transition-[opacity,scale] duration-300 ease-fluid-out motion-reduce:transition-none",
+                  controlsOpen && "scale-50 opacity-0",
                 )}
                 onPress={() => setControlsOpen(true)}
               >
@@ -137,8 +137,8 @@ export function InteractiveDemo({
           </span>
           <PreviewControls
             className={cn(
-              'transition-[padding] duration-300 ease-fluid-out motion-reduce:transition-none',
-              !controlsOpen && 'pr-11',
+              "transition-[padding] duration-300 ease-fluid-out motion-reduce:transition-none",
+              !controlsOpen && "pr-11",
             )}
           />
           <DemoPreset>
@@ -154,11 +154,11 @@ export function InteractiveDemo({
             always fills the panel — no gap while the height animates. */}
         <div
           className={cn(
-            'overflow-hidden border-t bg-card transition-[width,opacity,display] transition-discrete duration-300 ease-fluid-out motion-reduce:transition-none md:shrink-0 md:border-t-0 md:border-l',
-            'starting:opacity-0 md:starting:w-0',
+            "overflow-hidden border-t bg-card transition-[width,opacity,display] transition-discrete duration-300 ease-fluid-out motion-reduce:transition-none md:shrink-0 md:border-t-0 md:border-l",
+            "starting:opacity-0 md:starting:w-0",
             controlsOpen
-              ? 'block w-full opacity-100 md:w-56'
-              : 'hidden w-full opacity-0 md:w-0',
+              ? "block w-full opacity-100 md:w-56"
+              : "hidden w-full opacity-0 md:w-0",
           )}
         >
           {/* Inner wrapper animates its height from the closed row height (h-56,
@@ -167,9 +167,9 @@ export function InteractiveDemo({
               grows in lock-step with the width — same start, duration, and easing. */}
           <div
             className={cn(
-              '**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted',
-              'w-full overflow-hidden transition-[height] duration-300 ease-fluid-out [interpolate-size:allow-keywords] motion-reduce:transition-none md:w-56 starting:h-56',
-              controlsOpen ? 'h-auto' : 'h-56',
+              "**:data-field:gap-1 **:data-label:text-[0.8125rem] **:data-label:text-fg-muted",
+              "w-full overflow-hidden transition-[height] duration-300 ease-fluid-out [interpolate-size:allow-keywords] motion-reduce:transition-none md:w-56 starting:h-56",
+              controlsOpen ? "h-auto" : "h-56",
             )}
           >
             <div className="flex flex-col gap-4 px-5 pt-3 pb-5">

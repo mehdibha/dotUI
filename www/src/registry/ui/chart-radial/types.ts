@@ -1,6 +1,6 @@
-import type * as React from 'react'
+import type * as React from "react"
 
-import type { PolarMarkLayer } from './base'
+import type { PolarMarkLayer } from "./base"
 
 export type { PolarMarkLayer }
 

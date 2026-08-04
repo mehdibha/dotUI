@@ -11,46 +11,46 @@
  *
  * Usage:  tsx scripts/check-playground.mts <component> [fileSlug]
  */
-import { readFileSync } from 'node:fs'
+import { readFileSync } from "node:fs"
 
-import { renderCode } from '../src/modules/docs/codegen/code-template.ts'
+import { renderCode } from "../src/modules/docs/codegen/code-template.ts"
 import {
   buildSourceOverlay,
   type ControlSelection,
-} from '../src/modules/docs/codegen/source-overlay.ts'
-import { buildControlsFromReference } from '../src/modules/docs/interactive-demo/process-controls.ts'
+} from "../src/modules/docs/codegen/source-overlay.ts"
+import { buildControlsFromReference } from "../src/modules/docs/interactive-demo/process-controls.ts"
 
 const name = process.argv[2]
-const fileSlug = process.argv[3] ?? 'playground'
+const fileSlug = process.argv[3] ?? "playground"
 if (!name) {
   console.error(
-    'usage: tsx scripts/check-playground.mts <component> [fileSlug]',
+    "usage: tsx scripts/check-playground.mts <component> [fileSlug]",
   )
   process.exit(2)
 }
 
 const demoPath = `src/registry/ui/${name}/demos/${fileSlug}.tsx`
 const mdxPath = `content/docs/components/${name}.mdx`
-const demoSource = readFileSync(demoPath, 'utf8')
-const mdx = readFileSync(mdxPath, 'utf8')
+const demoSource = readFileSync(demoPath, "utf8")
+const mdx = readFileSync(mdxPath, "utf8")
 
 /** Extract the `controls={ … }` expression source from the <InteractiveDemo> tag (brace-matched). */
 function extractControls(src: string): string {
-  const tag = src.indexOf('<InteractiveDemo')
-  if (tag < 0) throw new Error('no <InteractiveDemo> in MDX')
-  const at = src.indexOf('controls={', tag)
-  if (at < 0) throw new Error('no controls={…} on <InteractiveDemo>')
-  let i = at + 'controls='.length // points at '{'
+  const tag = src.indexOf("<InteractiveDemo")
+  if (tag < 0) throw new Error("no <InteractiveDemo> in MDX")
+  const at = src.indexOf("controls={", tag)
+  if (at < 0) throw new Error("no controls={…} on <InteractiveDemo>")
+  let i = at + "controls=".length // points at '{'
   let depth = 0
   const start = i
   for (; i < src.length; i++) {
-    if (src[i] === '{') depth++
-    else if (src[i] === '}') {
+    if (src[i] === "{") depth++
+    else if (src[i] === "}") {
       depth--
       if (depth === 0) return src.slice(start + 1, i) // inside the outer braces
     }
   }
-  throw new Error('unbalanced controls={…}')
+  throw new Error("unbalanced controls={…}")
 }
 
 const controlsSrc = extractControls(mdx)
@@ -66,7 +66,7 @@ const selections: ControlSelection[] = controls.map((c) => ({
   name: c.name,
   kind: c.type,
   default:
-    c.type === 'icon'
+    c.type === "icon"
       ? null
       : (((c as { defaultValue?: unknown }).defaultValue as never) ?? null),
 }))
@@ -79,14 +79,14 @@ const template = await buildSourceOverlay({
 const values = Object.fromEntries(
   controls.map((c) => [
     c.name,
-    c.type === 'icon' ? null : (c as { defaultValue?: unknown }).defaultValue,
+    c.type === "icon" ? null : (c as { defaultValue?: unknown }).defaultValue,
   ]),
 )
 
 console.log(
   `✓ ${name}: overlay OK (${controls.length} controls, ${template.holes.length} holes)`,
 )
-console.log('---------- COLLAPSED ----------')
+console.log("---------- COLLAPSED ----------")
 console.log(renderCode(template, values, { expanded: false }))
-console.log('---------- EXPANDED ----------')
+console.log("---------- EXPANDED ----------")
 console.log(renderCode(template, values, { expanded: true }))

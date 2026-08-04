@@ -1,9 +1,9 @@
-import { Suspense } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { Suspense } from "react"
+import { createFileRoute } from "@tanstack/react-router"
 
-import { DemosIndex } from '@/registry/__generated__/demos'
+import { DemosIndex } from "@/registry/__generated__/demos"
 
-export const Route = createFileRoute('/demos/$slug')({
+export const Route = createFileRoute("/demos/$slug")({
   component: DemoPage,
 })
 
@@ -12,7 +12,7 @@ function getDemosForComponent(slug: string) {
   return Object.entries(DemosIndex)
     .filter(([key]) => key.startsWith(prefix))
     .map(([key, entry]) => ({
-      name: key.replace(prefix, ''),
+      name: key.replace(prefix, ""),
       component: entry.component,
     }))
 }
@@ -39,7 +39,7 @@ function DemoPage() {
             className="mx-auto flex w-full max-w-lg min-w-0 flex-col gap-1 self-stretch lg:max-w-none"
           >
             <h3 className="px-1.5 py-2 text-xs font-medium text-fg-muted">
-              {demo.name.replace(/-/g, ' ')}
+              {demo.name.replace(/-/g, " ")}
             </h3>
             <div className="flex min-w-0 flex-1 flex-col items-start gap-6 rounded-xl bg-card p-12 text-fg *:[div:not([class*='w-'])]:w-full">
               <Suspense fallback={null}>

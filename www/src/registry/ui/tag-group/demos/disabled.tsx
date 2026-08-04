@@ -1,9 +1,9 @@
-import { Label } from '@/registry/ui/field'
-import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
+import { Label } from "@/registry/ui/field"
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 
 export default function Demo() {
   return (
-    <TagGroup selectionMode="multiple" disabledKeys={['gaming']}>
+    <TagGroup selectionMode="multiple" disabledKeys={["gaming"]}>
       <Label>Categories</Label>
       <TagList>
         <Tag id="news">News</Tag>

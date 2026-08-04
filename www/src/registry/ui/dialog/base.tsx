@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as DialogPrimitive from 'react-aria-components/Dialog'
-import * as TextPrimitives from 'react-aria-components/Text'
+import type * as React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as DialogPrimitive from "react-aria-components/Dialog"
+import * as TextPrimitives from "react-aria-components/Text"
 
-import { XIcon } from '@/registry/icons'
-import { Button } from '@/registry/ui/button'
+import { XIcon } from "@/registry/icons"
+import { Button } from "@/registry/ui/button"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: dialogStyles
 
@@ -66,7 +66,7 @@ const DialogContent = ({
 
 // MARK: Separator
 
-interface DialogHeaderProps extends React.ComponentProps<'header'> {}
+interface DialogHeaderProps extends React.ComponentProps<"header"> {}
 
 const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
   const { header } = useStyles()()
@@ -101,7 +101,7 @@ const DialogTitle = ({ className, ...props }: DialogTitleProps) => {
 
 interface DialogDescriptionProps extends Omit<
   React.ComponentProps<typeof TextPrimitives.Text>,
-  'slot'
+  "slot"
 > {}
 
 const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
@@ -117,7 +117,7 @@ const DialogDescription = ({ className, ...props }: DialogDescriptionProps) => {
 
 // MARK: Separator
 
-interface DialogBodyProps extends React.ComponentProps<'div'> {}
+interface DialogBodyProps extends React.ComponentProps<"div"> {}
 
 const DialogBody = ({ className, ...props }: DialogBodyProps) => {
   const { body } = useStyles()()
@@ -129,7 +129,7 @@ const DialogBody = ({ className, ...props }: DialogBodyProps) => {
 
 // MARK: Separator
 
-type DialogInsetProps = React.ComponentProps<'div'>
+type DialogInsetProps = React.ComponentProps<"div">
 
 const DialogInset = (props: DialogInsetProps) => {
   return <div data-slot="dialog-inset" {...props} />
@@ -137,7 +137,7 @@ const DialogInset = (props: DialogInsetProps) => {
 
 // MARK: Separator
 
-type DialogFooterProps = React.ComponentProps<'footer'>
+type DialogFooterProps = React.ComponentProps<"footer">
 
 const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
   const { footer } = useStyles()()

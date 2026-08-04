@@ -40,13 +40,13 @@ Each family is an independent item with its own curated set of variants. Browse 
 A family component owns the whole chart: give it rows and the names of the fields to read.
 
 ```tsx
-import { AreaChart } from '@/ui/chart-area'
+import { AreaChart } from "@/ui/chart-area"
 ```
 
 The core is what you import when you need the host, the defaults, or a helper:
 
 ```tsx
-import { Chart, chartDefaults, stackY } from '@/ui/chart'
+import { Chart, chartDefaults, stackY } from "@/ui/chart"
 ```
 
 ## The host
@@ -77,8 +77,8 @@ Two row shapes draw the same chart, and every cartesian family accepts both.
 
 ```tsx
 const data = [
-  { month: 'Jan', desktop: 186, mobile: 80 },
-  { month: 'Feb', desktop: 305, mobile: 200 },
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
 ]
 ```
 
@@ -86,8 +86,8 @@ const data = [
 <AreaChart
   data={data}
   x="month"
-  y={['desktop', 'mobile']}
-  labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
+  y={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
   ariaLabel="Visitors by device"
 />
 ```
@@ -96,8 +96,8 @@ const data = [
 
 ```tsx
 const data = [
-  { month: 'Jan', device: 'desktop', visitors: 186 },
-  { month: 'Jan', device: 'mobile', visitors: 80 },
+  { month: "Jan", device: "desktop", visitors: 186 },
+  { month: "Jan", device: "mobile", visitors: 80 },
 ]
 ```
 
@@ -107,8 +107,8 @@ const data = [
   x="month"
   y="visitors"
   series="device"
-  seriesOrder={['desktop', 'mobile']}
-  labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
+  seriesOrder={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
   ariaLabel="Visitors by device"
 />
 ```
@@ -120,11 +120,11 @@ const data = [
 Stacking is a data transform, not a chart flag. `stackY` takes wide rows and returns one long row per band, carrying the interval to draw (`base`, `top`) plus the row's own `value` for tooltips and labels:
 
 ```tsx
-import { stackY } from '@/ui/chart'
+import { stackY } from "@/ui/chart"
 
 const stacked = stackY(data, {
-  x: 'month',
-  y: ['desktop', 'mobile', 'other'],
+  x: "month",
+  y: ["desktop", "mobile", "other"],
 })
 ```
 
@@ -135,7 +135,7 @@ const stacked = stackY(data, {
   y="top"
   y1="base"
   series="series"
-  seriesOrder={['desktop', 'mobile', 'other']}
+  seriesOrder={["desktop", "mobile", "other"]}
   ariaLabel="Visitors by device, stacked"
 />
 ```
@@ -147,7 +147,7 @@ Pass `normalize` to divide each group by its own total for a 100% stack. A null 
 `chartDefaults` holds every house decision in one object — height, curve, stroke width, fill opacity, dot and bar radii, padding, focus mode, tooltip anchor, animation:
 
 ```tsx
-import { chartDefaults } from '@/ui/chart'
+import { chartDefaults } from "@/ui/chart"
 
 chartDefaults.height // 256
 chartDefaults.curve // 'natural'
@@ -162,16 +162,16 @@ Read from it instead of repeating a literal, and change it there when you want a
 `marks` and `marksBefore` take raw [TanStack Charts](https://tanstack.com/charts) mark layers, painted over and under the family's own marks on the same scales. This is the escape hatch for anything the family props don't cover — a target rule, an end dot, value labels:
 
 ```tsx
-import { text } from '@tanstack/charts/text'
+import { text } from "@tanstack/charts/text"
 
 // Same `z` as the bars, so grouped focus keeps one tooltip row per month.
 const labels = [
   text(data, {
-    x: 'month',
-    y: 'desktop',
-    text: 'desktop',
-    z: () => 'Desktop',
-    fill: 'var(--color-fg-muted)',
+    x: "month",
+    y: "desktop",
+    text: "desktop",
+    z: () => "Desktop",
+    fill: "var(--color-fg-muted)",
     fontSize: 12,
     dy: -10,
   }),
@@ -189,14 +189,14 @@ Build mark arrays at module scope — they are compared by identity, so an inlin
 Each family also exports its spec builder — `areaChartSpec`, `barChartSpec`, `pieChartSpec`, and so on. A builder returns the chart spec the family would have rendered, so you can pass it to `defineChart` yourself and keep full control of the definition:
 
 ```tsx
-import { defineChart } from '@tanstack/charts'
+import { defineChart } from "@tanstack/charts"
 
-import { Chart } from '@/ui/chart'
-import { barChartSpec } from '@/ui/chart-bar'
+import { Chart } from "@/ui/chart"
+import { barChartSpec } from "@/ui/chart-bar"
 
 const definition = defineChart({
-  chart: (ctx) => barChartSpec({ data, x: 'month', y: 'desktop' }, ctx),
-  focus: 'nearest',
+  chart: (ctx) => barChartSpec({ data, x: "month", y: "desktop" }, ctx),
+  focus: "nearest",
 })
 ```
 
@@ -213,7 +213,7 @@ Series colors come from a categorical palette of eight slots, `--chart-1` throug
 Series are assigned slots in order, so `seriesOrder` decides which series gets which color. To reach a slot yourself — a mark's fill, a stat card's accent — use the variable directly, or `paletteColor`, which wraps around the eight slots:
 
 ```tsx
-import { paletteColor } from '@/ui/chart'
+import { paletteColor } from "@/ui/chart"
 
 paletteColor(0) // 'var(--chart-1)'
 paletteColor(8) // 'var(--chart-1)'

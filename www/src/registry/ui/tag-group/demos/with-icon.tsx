@@ -1,7 +1,7 @@
-import { BookmarkIcon, FlameIcon, SparklesIcon, TagIcon } from 'lucide-react'
+import { BookmarkIcon, FlameIcon, SparklesIcon, TagIcon } from "lucide-react"
 
-import { Label } from '@/registry/ui/field'
-import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
+import { Label } from "@/registry/ui/field"
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 
 export default function Demo() {
   return (

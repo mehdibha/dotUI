@@ -1,6 +1,6 @@
-import type * as React from 'react'
+import type * as React from "react"
 
-import type { ChartCurve, ChartMarkLayer } from '@/registry/ui/chart'
+import type { ChartCurve, ChartMarkLayer } from "@/registry/ui/chart"
 
 export type { ChartCurve }
 
@@ -24,7 +24,7 @@ export interface SparklineProps {
    * Draw the series as a line, or as a filled area under the line.
    * @default "line"
    */
-  mode?: 'line' | 'area'
+  mode?: "line" | "area"
 
   /**
    * Line interpolation.
@@ -44,7 +44,7 @@ export interface SparklineProps {
    * in line mode.
    * @default 0.2
    */
-  fill?: number | 'gradient'
+  fill?: number | "gradient"
 
   /**
    * Line thickness in pixels.

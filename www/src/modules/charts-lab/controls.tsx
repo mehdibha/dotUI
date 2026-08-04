@@ -1,14 +1,14 @@
-import type { ReactNode } from 'react'
-import type { Key } from 'react-aria-components'
+import type { ReactNode } from "react"
+import type { Key } from "react-aria-components"
 
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
+} from "@/registry/ui/select"
 
-import { CHART_SLOTS, slotVar, type ChartSlot } from './data'
+import { CHART_SLOTS, slotVar, type ChartSlot } from "./data"
 
 export function PanelSection({
   title,
@@ -57,7 +57,7 @@ export function SlotSelect({
         aria-label={label}
         selectedKey={value}
         onSelectionChange={(key: Key | null) => {
-          if (typeof key === 'number') onChange(key as ChartSlot)
+          if (typeof key === "number") onChange(key as ChartSlot)
         }}
         className="w-36"
       >

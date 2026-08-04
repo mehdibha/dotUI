@@ -1,4 +1,4 @@
-import { FrameIcon, HomeIcon } from '@/registry/__generated__/icons'
+import { FrameIcon, HomeIcon } from "@/registry/__generated__/icons"
 import {
   Sidebar,
   SidebarContent,
@@ -12,7 +12,7 @@ import {
   SidebarMenuSubItem,
   SidebarProvider,
   SidebarTrigger,
-} from '@/registry/ui/sidebar'
+} from "@/registry/ui/sidebar"
 
 export default function Demo() {
   return (

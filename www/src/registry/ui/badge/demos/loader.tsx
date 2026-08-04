@@ -1,5 +1,5 @@
-import { Badge } from '@/registry/ui/badge'
-import { Loader } from '@/registry/ui/loader'
+import { Badge } from "@/registry/ui/badge"
+import { Loader } from "@/registry/ui/loader"
 
 export default function Demo() {
   return (

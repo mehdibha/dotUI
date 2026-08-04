@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   Table,
@@ -8,7 +8,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
 export default function Demo() {
   return (
@@ -16,7 +16,7 @@ export default function Demo() {
       <Table
         aria-label="Project files"
         treeColumn="name"
-        defaultExpandedKeys={['documents', 'project']}
+        defaultExpandedKeys={["documents", "project"]}
       >
         <TableHeader>
           <TableColumn id="name" isRowHeader>

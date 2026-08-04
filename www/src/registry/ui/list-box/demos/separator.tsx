@@ -1,7 +1,7 @@
-import { FileIcon, PrinterIcon, SaveIcon, SettingsIcon } from 'lucide-react'
+import { FileIcon, PrinterIcon, SaveIcon, SettingsIcon } from "lucide-react"
 
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Separator } from '@/registry/ui/separator'
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

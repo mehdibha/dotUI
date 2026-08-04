@@ -1,6 +1,6 @@
-import { ArrowRight, BookOpen, ExternalLink } from 'lucide-react'
+import { ArrowRight, BookOpen, ExternalLink } from "lucide-react"
 
-import { Link } from '@/registry/ui/link'
+import { Link } from "@/registry/ui/link"
 
 export default function Demo() {
   return (

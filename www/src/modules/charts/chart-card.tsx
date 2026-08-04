@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import { Suspense, useState } from 'react'
-import { RotateCcwIcon } from 'lucide-react'
+import { Suspense, useState } from "react"
+import { RotateCcwIcon } from "lucide-react"
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { ShowcaseCard } from '@/components/showcase-card'
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { ShowcaseCard } from "@/components/showcase-card"
 
-import { ChartCodeModal } from './chart-code-modal'
-import { getDemoComponent, POLAR_FAMILIES } from './data'
+import { ChartCodeModal } from "./chart-code-modal"
+import { getDemoComponent, POLAR_FAMILIES } from "./data"
 
 interface ChartCardProps {
   /** Family id, e.g. `chart-bar` — decides polar vs cartesian sizing. */
@@ -66,9 +66,9 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
       <Suspense fallback={<div className="size-full animate-pulse bg-muted" />}>
         <div
           className={cn(
-            'flex size-full items-center justify-center overflow-hidden p-6 [&_*]:pointer-events-none',
+            "flex size-full items-center justify-center overflow-hidden p-6 [&_*]:pointer-events-none",
             isPolar &&
-              '[&_.ts-chart-host]:mx-auto! [&_.ts-chart-host]:max-w-[250px]!',
+              "[&_.ts-chart-host]:mx-auto! [&_.ts-chart-host]:max-w-[250px]!",
           )}
         >
           <Component key={replayKey} />

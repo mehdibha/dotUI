@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
-export type ImageLoadingStatus = 'idle' | 'loading' | 'loaded' | 'error'
+export type ImageLoadingStatus = "idle" | "loading" | "loaded" | "error"
 
 interface UseImageLoadingStatusOptions {
   referrerPolicy?: React.HTMLAttributeReferrerPolicy
-  crossOrigin?: React.ImgHTMLAttributes<HTMLImageElement>['crossOrigin']
+  crossOrigin?: React.ImgHTMLAttributes<HTMLImageElement>["crossOrigin"]
 }
 
 export function useImageLoadingStatus(
@@ -14,11 +14,11 @@ export function useImageLoadingStatus(
   { referrerPolicy, crossOrigin }: UseImageLoadingStatusOptions,
 ): ImageLoadingStatus {
   const [loadingStatus, setLoadingStatus] =
-    React.useState<ImageLoadingStatus>('idle')
+    React.useState<ImageLoadingStatus>("idle")
 
   React.useLayoutEffect(() => {
     if (!src) {
-      setLoadingStatus('error')
+      setLoadingStatus("error")
       return
     }
 
@@ -33,9 +33,9 @@ export function useImageLoadingStatus(
       setLoadingStatus(status)
     }
 
-    setLoadingStatus('loading')
-    image.onload = updateStatus('loaded')
-    image.onerror = updateStatus('error')
+    setLoadingStatus("loading")
+    image.onload = updateStatus("loaded")
+    image.onerror = updateStatus("error")
     if (referrerPolicy) {
       image.referrerPolicy = referrerPolicy
     }

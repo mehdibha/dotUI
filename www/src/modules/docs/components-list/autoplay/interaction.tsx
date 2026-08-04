@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { type ReactNode, useEffect, useLayoutEffect, useRef } from 'react'
+import { type ReactNode, useEffect, useLayoutEffect, useRef } from "react"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
 /**
  * Exact-fidelity state simulation for the preview cards.
@@ -20,7 +20,7 @@ import { cn } from '@/registry/lib/utils'
 
 // useLayoutEffect on the client, no-op useEffect on the server (avoids the SSR warning).
 const useIsoLayoutEffect =
-  typeof window === 'undefined' ? useEffect : useLayoutEffect
+  typeof window === "undefined" ? useEffect : useLayoutEffect
 
 export interface DemoStateFlags {
   hovered?: boolean
@@ -35,23 +35,23 @@ export interface DemoStateFlags {
 }
 
 const FLAG_ATTRS: [keyof DemoStateFlags, string][] = [
-  ['hovered', 'data-hovered'],
-  ['pressed', 'data-pressed'],
-  ['selected', 'data-selected'],
-  ['open', 'data-open'],
-  ['current', 'data-current'],
+  ["hovered", "data-hovered"],
+  ["pressed", "data-pressed"],
+  ["selected", "data-selected"],
+  ["open", "data-open"],
+  ["current", "data-current"],
 ]
 
 export function applyDemoState(el: HTMLElement, flags: DemoStateFlags): void {
   for (const [key, attr] of FLAG_ATTRS) {
-    if (flags[key]) el.setAttribute(attr, '')
+    if (flags[key]) el.setAttribute(attr, "")
     else el.removeAttribute(attr)
   }
   const focused = flags.focused || flags.focusVisible
-  if (focused) el.setAttribute('data-focused', '')
-  else el.removeAttribute('data-focused')
-  if (flags.focusVisible) el.setAttribute('data-focus-visible', '')
-  else el.removeAttribute('data-focus-visible')
+  if (focused) el.setAttribute("data-focused", "")
+  else el.removeAttribute("data-focused")
+  if (flags.focusVisible) el.setAttribute("data-focus-visible", "")
+  else el.removeAttribute("data-focus-visible")
 }
 
 /**
@@ -62,11 +62,11 @@ export function applyDemoState(el: HTMLElement, flags: DemoStateFlags): void {
  */
 export function DemoState({
   flags,
-  target = 'first',
+  target = "first",
   children,
 }: {
   flags: DemoStateFlags
-  target?: 'first' | 'last' | 'all'
+  target?: "first" | "last" | "all"
   children: ReactNode
 }) {
   const ref = useRef<HTMLSpanElement>(null)
@@ -75,9 +75,9 @@ export function DemoState({
     const host = ref.current
     if (!host) return
     const targets =
-      target === 'all'
+      target === "all"
         ? Array.from(host.children)
-        : target === 'last'
+        : target === "last"
           ? [host.lastElementChild]
           : [host.firstElementChild]
     for (const el of targets) {
@@ -86,7 +86,7 @@ export function DemoState({
   })
 
   return (
-    <span ref={ref} style={{ display: 'contents' }}>
+    <span ref={ref} style={{ display: "contents" }}>
       {children}
     </span>
   )
@@ -112,11 +112,11 @@ export function DemoPress({
    * element (e.g. ToggleButton), where the real `data-selected` would otherwise
    * be stripped on re-apply. */
   selected?: boolean
-  target?: 'first' | 'last' | 'all'
+  target?: "first" | "last" | "all"
   children: ReactNode
 }) {
-  const isPressed = pressing || phase === 'press'
-  const isHovered = isPressed || hovering || phase === 'hover'
+  const isPressed = pressing || phase === "press"
+  const isHovered = isPressed || hovering || phase === "hover"
   return (
     <DemoState
       flags={{ hovered: isHovered, pressed: isPressed, selected }}
@@ -137,7 +137,7 @@ export function DemoFocus({
   children,
 }: {
   active: boolean
-  target?: 'first' | 'last' | 'all'
+  target?: "first" | "last" | "all"
   children: ReactNode
 }) {
   return (
@@ -163,7 +163,7 @@ export function DemoCaret({
     <span
       aria-hidden="true"
       className={cn(
-        'inline-block h-[1.1em] w-px translate-y-[0.15em] animate-caret-blink bg-fg',
+        "inline-block h-[1.1em] w-px translate-y-[0.15em] animate-caret-blink bg-fg",
         className,
       )}
     />

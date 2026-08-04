@@ -11,20 +11,20 @@ wip: true
   name="color-slider"
   controls={[
     {
-      type: 'enum',
-      name: 'channel',
-      options: ['hue', 'saturation', 'lightness', 'alpha'],
-      defaultValue: 'hue',
+      type: "enum",
+      name: "channel",
+      options: ["hue", "saturation", "lightness", "alpha"],
+      defaultValue: "hue",
     },
     {
-      type: 'enum',
-      name: 'orientation',
-      options: ['horizontal', 'vertical'],
-      defaultValue: 'horizontal',
+      type: "enum",
+      name: "orientation",
+      options: ["horizontal", "vertical"],
+      defaultValue: "horizontal",
     },
     {
-      type: 'boolean',
-      name: 'isDisabled',
+      type: "boolean",
+      name: "isDisabled",
       defaultValue: false,
     },
   ]}
@@ -41,8 +41,8 @@ npx shadcn@latest add @dotui/color-slider
 Use color sliders to allow users to adjust an individual channel of a color value.
 
 ```tsx
-import { ColorSlider, ColorSliderControl } from '@/ui/color-slider'
-import { Label } from '@/ui/field'
+import { ColorSlider, ColorSliderControl } from "@/ui/color-slider"
+import { Label } from "@/ui/field"
 ```
 
 ```tsx
@@ -61,8 +61,8 @@ import {
   ColorSlider,
   ColorSliderControl,
   ColorSliderOutput,
-} from '@/ui/color-slider'
-import { Label } from '@/ui/field'
+} from "@/ui/color-slider"
+import { Label } from "@/ui/field"
 ```
 
 ```tsx

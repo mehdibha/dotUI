@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { useSyncExternalStore } from 'react'
+import { useSyncExternalStore } from "react"
 
 interface PersistedStoreCodec<T> {
   decode: (raw: string) => T
@@ -36,7 +36,7 @@ export function createPersistedStore<T>(
   }
 
   function get(): T {
-    if (!initialized && typeof window !== 'undefined') {
+    if (!initialized && typeof window !== "undefined") {
       value = read()
       initialized = true
     }
@@ -63,10 +63,10 @@ export function createPersistedStore<T>(
       initialized = true
       onChange()
     }
-    window.addEventListener('storage', onStorage)
+    window.addEventListener("storage", onStorage)
     window.addEventListener(changeEvent, onChange)
     return () => {
-      window.removeEventListener('storage', onStorage)
+      window.removeEventListener("storage", onStorage)
       window.removeEventListener(changeEvent, onChange)
     }
   }

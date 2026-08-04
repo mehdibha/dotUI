@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { MenuIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Label } from '@/registry/ui/field'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover, type PopoverProps } from '@/registry/ui/popover'
-import { Select, SelectContent, SelectItem } from '@/registry/ui/select'
+import { MenuIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Label } from "@/registry/ui/field"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover, type PopoverProps } from "@/registry/ui/popover"
+import { Select, SelectContent, SelectItem } from "@/registry/ui/select"
 
 export default function Demo() {
   const [placement, setPlacement] =
-    React.useState<PopoverProps['placement']>('top')
+    React.useState<PopoverProps["placement"]>("top")
   return (
     <div className="flex items-center gap-10">
       <Menu>
@@ -28,7 +28,7 @@ export default function Demo() {
       </Menu>
       <Select
         defaultValue={placement}
-        onChange={(key) => setPlacement(key as PopoverProps['placement'])}
+        onChange={(key) => setPlacement(key as PopoverProps["placement"])}
       >
         <Label>Placement</Label>
         <SelectContent items={placements}>
@@ -40,26 +40,26 @@ export default function Demo() {
 }
 
 const placements = [
-  'bottom',
-  'bottom left',
-  'bottom right',
-  'bottom start',
-  'bottom end',
-  'top',
-  'top left',
-  'top right',
-  'top start',
-  'top end',
-  'left',
-  'left top',
-  'left bottom',
-  'start',
-  'start top',
-  'start bottom',
-  'right',
-  'right top',
-  'right bottom',
-  'end',
-  'end top',
-  'end bottom',
+  "bottom",
+  "bottom left",
+  "bottom right",
+  "bottom start",
+  "bottom end",
+  "top",
+  "top left",
+  "top right",
+  "top start",
+  "top end",
+  "left",
+  "left top",
+  "left bottom",
+  "start",
+  "start top",
+  "start bottom",
+  "right",
+  "right top",
+  "right bottom",
+  "end",
+  "end top",
+  "end bottom",
 ].map((pos) => ({ id: pos, label: pos }))

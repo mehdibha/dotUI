@@ -1,5 +1,5 @@
-import { Volume1Icon, Volume2Icon } from '@/registry/__generated__/icons'
-import { Description, Label } from '@/registry/ui/field'
+import { Volume1Icon, Volume2Icon } from "@/registry/__generated__/icons"
+import { Description, Label } from "@/registry/ui/field"
 import {
   Slider,
   SliderControl,
@@ -7,7 +7,7 @@ import {
   SliderFill,
   SliderOutput,
   SliderThumb,
-} from '@/registry/ui/slider'
+} from "@/registry/ui/slider"
 
 export default function Demo() {
   return (

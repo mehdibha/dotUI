@@ -1,20 +1,20 @@
-import { stackY } from '@/registry/ui/chart'
-import { BarChart } from '@/registry/ui/chart-bar'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { stackY } from "@/registry/ui/chart"
+import { BarChart } from "@/registry/ui/chart-bar"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 const rows = [
-  { month: 'Jan', desktop: 186, mobile: 80 },
-  { month: 'Feb', desktop: 305, mobile: 200 },
-  { month: 'Mar', desktop: 237, mobile: 120 },
-  { month: 'Apr', desktop: 73, mobile: 190 },
-  { month: 'May', desktop: 209, mobile: 130 },
-  { month: 'Jun', desktop: 214, mobile: 140 },
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
+  { month: "Mar", desktop: 237, mobile: 120 },
+  { month: "Apr", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const stacked = stackY(rows, { x: 'month', y: ['desktop', 'mobile'] })
+const stacked = stackY(rows, { x: "month", y: ["desktop", "mobile"] })
 
-const labels = { desktop: 'Desktop', mobile: 'Mobile' }
+const labels = { desktop: "Desktop", mobile: "Mobile" }
 
 export default function ChartBarExamples() {
   return (
@@ -23,7 +23,7 @@ export default function ChartBarExamples() {
         <BarChart
           data={rows}
           x="month"
-          y={['desktop', 'mobile']}
+          y={["desktop", "mobile"]}
           labels={labels}
           ariaLabel="Desktop and mobile visitors per month"
         />
@@ -35,7 +35,7 @@ export default function ChartBarExamples() {
           y="top"
           y1="base"
           series="series"
-          seriesOrder={['desktop', 'mobile']}
+          seriesOrder={["desktop", "mobile"]}
           labels={labels}
           radius={2}
           ariaLabel="Visitors per month by device, stacked"

@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { CheckCircle2Icon, XIcon } from 'lucide-react'
+import { useState } from "react"
+import { CheckCircle2Icon, XIcon } from "lucide-react"
 
 import {
   Alert,
   AlertAction,
   AlertDescription,
   AlertTitle,
-} from '@/registry/ui/alert'
-import { Button } from '@/registry/ui/button'
+} from "@/registry/ui/alert"
+import { Button } from "@/registry/ui/button"
 
 export default function Demo() {
   const [isVisible, setIsVisible] = useState(true)

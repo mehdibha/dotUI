@@ -3,7 +3,7 @@ import {
   AvatarFallback,
   AvatarGroup,
   AvatarImage,
-} from '@/registry/ui/avatar'
+} from "@/registry/ui/avatar"
 
 export function AvatarDemo() {
   return (

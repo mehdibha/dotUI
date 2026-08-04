@@ -23,15 +23,15 @@
  * deployment (prod, preview, local) without hardcoding a domain.
  */
 
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-import { PUBLISHABLE_NAMES } from '@/registry/__generated__/publishables'
-import { registryUi } from '@/registry/__generated__/registry-items'
+import { PUBLISHABLE_NAMES } from "@/registry/__generated__/publishables"
+import { registryUi } from "@/registry/__generated__/registry-items"
 
 const JSON_HEADERS = {
-  'Content-Type': 'application/json; charset=utf-8',
-  'Cache-Control':
-    'public, max-age=60, s-maxage=3600, stale-while-revalidate=86400',
+  "Content-Type": "application/json; charset=utf-8",
+  "Cache-Control":
+    "public, max-age=60, s-maxage=3600, stale-while-revalidate=86400",
 }
 
 const META_BY_NAME = new Map(registryUi.map((item) => [item.name, item]))
@@ -39,7 +39,7 @@ const META_BY_NAME = new Map(registryUi.map((item) => [item.name, item]))
 /** Identity + dependency fields a discovery client needs; everything resolved per-item lives at /r/{name}. */
 function toIndexItem(name: string) {
   const item = META_BY_NAME.get(name)
-  if (!item) return { name, type: 'registry:ui' }
+  if (!item) return { name, type: "registry:ui" }
   return {
     name: item.name,
     type: item.type,
@@ -55,7 +55,7 @@ function toIndexItem(name: string) {
   }
 }
 
-export const Route = createFileRoute('/r/registry.json')({
+export const Route = createFileRoute("/r/registry.json")({
   server: {
     handlers: {
       GET: ({ request }) => {
@@ -67,8 +67,8 @@ export const Route = createFileRoute('/r/registry.json')({
           .map(toIndexItem)
 
         const registry = {
-          $schema: 'https://ui.shadcn.com/schema/registry.json',
-          name: 'dotui',
+          $schema: "https://ui.shadcn.com/schema/registry.json",
+          name: "dotui",
           homepage,
           items,
         }

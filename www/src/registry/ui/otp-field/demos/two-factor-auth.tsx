@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { ShieldCheck } from 'lucide-react'
+import React from "react"
+import { ShieldCheck } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { FieldError, Label } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
-import { OTPField } from '@/registry/ui/otp-field'
+import { Button } from "@/registry/ui/button"
+import { FieldError, Label } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
+import { OTPField } from "@/registry/ui/otp-field"
 
 export default function Demo() {
-  const [value, setValue] = React.useState('')
+  const [value, setValue] = React.useState("")
   const [submitted, setSubmitted] = React.useState(false)
   const [seconds, setSeconds] = React.useState(30)
   const isInvalid = submitted && value.length !== 6
@@ -68,11 +68,11 @@ export default function Demo() {
         isDisabled={seconds > 0}
         onPress={() => {
           setSeconds(30)
-          setValue('')
+          setValue("")
           setSubmitted(false)
         }}
       >
-        {seconds > 0 ? `Resend code in ${seconds}s` : 'Resend code'}
+        {seconds > 0 ? `Resend code in ${seconds}s` : "Resend code"}
       </Button>
     </form>
   )

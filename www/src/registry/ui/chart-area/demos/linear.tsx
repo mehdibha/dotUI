@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import { AreaChart } from '@/registry/ui/chart-area'
+import { AreaChart } from "@/registry/ui/chart-area"
 
 const data = [
-  { month: 'Jan', desktop: 186 },
-  { month: 'Feb', desktop: 305 },
-  { month: 'Mar', desktop: 237 },
-  { month: 'Apr', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'Jun', desktop: 214 },
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
 ]
 
 export default function ChartAreaLinear() {
@@ -17,7 +17,7 @@ export default function ChartAreaLinear() {
       data={data}
       x="month"
       y="desktop"
-      labels={{ desktop: 'Desktop' }}
+      labels={{ desktop: "Desktop" }}
       legend={false}
       curve="linear"
       ariaLabel="Desktop visitors, January through June"

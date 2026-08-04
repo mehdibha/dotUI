@@ -11,9 +11,9 @@ wip: true
   name="command"
   controls={[
     {
-      type: 'string',
-      name: 'placeholder',
-      defaultValue: 'Type a command...',
+      type: "string",
+      name: "placeholder",
+      defaultValue: "Type a command...",
     },
   ]}
 />
@@ -29,12 +29,12 @@ npx shadcn@latest add @dotui/command
 `Command` is a thin wrapper around React Aria's [Autocomplete](https://react-spectrum.adobe.com/react-aria/Autocomplete.html). It ships no input or list of its own — you compose it from primitives you already have: a [`SearchField`](/docs/components/search-field) for the query and a [`ListBox`](/docs/components/list-box) for the commands. As the user types, the list is filtered down to the items whose text matches the query.
 
 ```tsx
-import { SearchIcon } from 'lucide-react'
+import { SearchIcon } from "lucide-react"
 
-import { Command } from '@/ui/command'
-import { Input, InputGroup, InputGroupAddon } from '@/ui/input'
-import { ListBox, ListBoxItem } from '@/ui/list-box'
-import { SearchField } from '@/ui/search-field'
+import { Command } from "@/ui/command"
+import { Input, InputGroup, InputGroupAddon } from "@/ui/input"
+import { ListBox, ListBoxItem } from "@/ui/list-box"
+import { SearchField } from "@/ui/search-field"
 ```
 
 ```tsx
@@ -71,8 +71,11 @@ import {
   CommandItem,
   CommandSection,
   CommandSectionHeader,
-} from '@/ui/command'
-;<Command>
+} from "@/ui/command"
+```
+
+```tsx
+<Command>
   <CommandInput />
   <CommandContent>
     <CommandSection>
@@ -88,7 +91,7 @@ import {
 Matching is case- and punctuation-insensitive by default (`sensitivity: 'base'`, `ignorePunctuation: true`). Pass `filter` with any [`Intl.CollatorOptions`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator/Collator#options) to tune it — for example make matching accent-sensitive.
 
 ```tsx
-<Command filter={{ sensitivity: 'accent' }}>{/* … */}</Command>
+<Command filter={{ sensitivity: "accent" }}>{/* … */}</Command>
 ```
 
 ## Examples

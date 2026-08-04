@@ -1,48 +1,48 @@
-'use client'
+"use client"
 
-import React from 'react'
-import * as ColorAreaPrimitives from 'react-aria-components/ColorArea'
-import * as ColorPickerPrimitives from 'react-aria-components/ColorPicker'
-import { useControlledState } from 'react-stately/useControlledState'
+import React from "react"
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
+import * as ColorPickerPrimitives from "react-aria-components/ColorPicker"
+import { useControlledState } from "react-stately/useControlledState"
 
-import { cn } from '@/registry/lib/utils'
-import { ColorArea } from '@/registry/ui/color-area'
-import { ColorField } from '@/registry/ui/color-field'
-import { ColorSlider } from '@/registry/ui/color-slider'
-import { Input } from '@/registry/ui/input'
+import { cn } from "@/registry/lib/utils"
+import { ColorArea } from "@/registry/ui/color-area"
+import { ColorField } from "@/registry/ui/color-field"
+import { ColorSlider } from "@/registry/ui/color-slider"
+import { Input } from "@/registry/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
+} from "@/registry/ui/select"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: colorEditorStyles
 
 // MARK: Separator
 
-type ColorFormat = 'hex' | 'rgb' | 'hsl' | 'hsb'
+type ColorFormat = "hex" | "rgb" | "hsl" | "hsb"
 
 interface ColorEditorProps extends Omit<
-  React.ComponentProps<'div'>,
-  'defaultValue' | 'onChange' | 'color'
+  React.ComponentProps<"div">,
+  "defaultValue" | "onChange" | "color"
 > {
   defaultFormat?: ColorFormat
   showAlphaChannel?: boolean
   showFormatSelector?: boolean
-  value?: ColorPickerPrimitives.ColorPickerProps['value']
-  defaultValue?: ColorPickerPrimitives.ColorPickerProps['defaultValue']
-  onChange?: ColorPickerPrimitives.ColorPickerProps['onChange']
+  value?: ColorPickerPrimitives.ColorPickerProps["value"]
+  defaultValue?: ColorPickerPrimitives.ColorPickerProps["defaultValue"]
+  onChange?: ColorPickerPrimitives.ColorPickerProps["onChange"]
 }
 
 const ColorEditor = ({
-  defaultFormat = 'hex',
+  defaultFormat = "hex",
   showAlphaChannel = false,
   showFormatSelector = true,
   value,
-  defaultValue = '#6366F1',
+  defaultValue = "#6366F1",
   onChange,
   className,
   children,
@@ -79,7 +79,7 @@ const ColorEditor = ({
 
 // MARK: Separator
 
-interface ColorEditorAreaProps extends React.ComponentProps<'div'> {
+interface ColorEditorAreaProps extends React.ComponentProps<"div"> {
   showAlphaChannel?: boolean
 }
 
@@ -127,8 +127,8 @@ const ColorEditorArea = ({
 // MARK: Separator
 
 interface ColorEditorFieldsProps extends Omit<
-  React.ComponentProps<'div'>,
-  'onChange'
+  React.ComponentProps<"div">,
+  "onChange"
 > {
   format?: ColorFormat
   defaultFormat?: ColorFormat
@@ -138,7 +138,7 @@ interface ColorEditorFieldsProps extends Omit<
 
 const ColorEditorFields = ({
   format: formatProp,
-  defaultFormat = 'hex',
+  defaultFormat = "hex",
   onFormatChange,
   showFormatSelector = true,
   className,
@@ -153,7 +153,7 @@ const ColorEditorFields = ({
   return (
     <div
       className={fields({
-        className: cn(format === 'hex' && 'flex-row', className),
+        className: cn(format === "hex" && "flex-row", className),
       })}
       {...props}
     >
@@ -162,7 +162,7 @@ const ColorEditorFields = ({
           aria-label="Color format"
           value={format}
           onChange={(key) => setFormat(key as ColorFormat)}
-          className={cn('w-auto', format === 'hex' && 'flex-1')}
+          className={cn("w-auto", format === "hex" && "flex-1")}
         >
           <SelectTrigger size="sm" className="w-full" />
           <SelectContent>
@@ -174,7 +174,7 @@ const ColorEditorFields = ({
         </Select>
       )}
       <div className={fieldGroup()}>
-        {format === 'hex' ? (
+        {format === "hex" ? (
           <ColorField aria-label="Hex" className="w-10 flex-1">
             <Input size="sm" className="w-full" />
           </ColorField>

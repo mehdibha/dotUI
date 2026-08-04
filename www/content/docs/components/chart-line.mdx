@@ -18,14 +18,14 @@ It brings the [`chart`](/docs/components/chart) core — the host, the palette, 
 ## Usage
 
 ```tsx
-import { LineChart } from '@/ui/chart-line'
+import { LineChart } from "@/ui/chart-line"
 ```
 
 ```tsx
 const chartData = [
-  { month: 'Jan', desktop: 186 },
-  { month: 'Feb', desktop: 305 },
-  { month: 'Mar', desktop: 237 },
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
 ]
 
 export function Example() {
@@ -34,7 +34,7 @@ export function Example() {
       data={chartData}
       x="month"
       y="desktop"
-      labels={{ desktop: 'Desktop' }}
+      labels={{ desktop: "Desktop" }}
       legend={false}
       ariaLabel="Desktop visitors, January through March"
     />
@@ -49,7 +49,7 @@ export function Example() {
 Two data shapes, one component. **Wide** rows carry one field per series:
 
 ```tsx
-<LineChart data={rows} x="month" y={['desktop', 'mobile']} />
+<LineChart data={rows} x="month" y={["desktop", "mobile"]} />
 ```
 
 **Long** rows repeat the x value and name their series in a field:
@@ -75,13 +75,13 @@ Interpolation only changes how the line travels between observations — it does
 `marks` paints extra layers over the lines, `marksBefore` under them. Both take marks straight from `@tanstack/charts`, so labels, reference rules, and custom dots compose with the same scales:
 
 ```tsx
-import { text } from '@tanstack/charts/text'
+import { text } from "@tanstack/charts/text"
 
 const labels = text(chartData, {
-  x: 'month',
-  y: 'desktop',
-  text: 'desktop',
-  z: () => 'Desktop',
+  x: "month",
+  y: "desktop",
+  text: "desktop",
+  z: () => "Desktop",
   dy: -12,
 })
 ```

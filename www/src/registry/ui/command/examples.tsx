@@ -1,10 +1,10 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Basic from './demos/basic'
-import InModal from './demos/in-modal'
-import InSelect from './demos/in-select'
-import WithTagGroup from './demos/with-tag-group'
+import Basic from "./demos/basic"
+import InModal from "./demos/in-modal"
+import InSelect from "./demos/in-select"
+import WithTagGroup from "./demos/with-tag-group"
 
 export default function CommandExamples() {
   return (

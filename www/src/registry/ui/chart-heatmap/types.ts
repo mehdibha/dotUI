@@ -1,4 +1,4 @@
-import type { ChartFormat, ChartMarkLayer } from '@/registry/ui/chart'
+import type { ChartFormat, ChartMarkLayer } from "@/registry/ui/chart"
 
 export type { ChartFormat }
 

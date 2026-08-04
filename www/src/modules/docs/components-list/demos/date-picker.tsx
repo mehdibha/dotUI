@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { parseDate } from '@internationalized/date'
+import { parseDate } from "@internationalized/date"
 
-import { CalendarIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Calendar } from '@/registry/ui/calendar'
-import { DateField } from '@/registry/ui/date-field'
-import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { CalendarIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Calendar } from "@/registry/ui/calendar"
+import { DateField } from "@/registry/ui/date-field"
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene, useOpenAutoplay } from "../autoplay"
 
-const VALUE = parseDate('2024-06-12')
+const VALUE = parseDate("2024-06-12")
 
 // Trigger → hover → click → the calendar popover unfolds and the scene zooms out.
 // The trigger is the real closed input group; the surface is the real Calendar,

@@ -1,4 +1,4 @@
-import { ColorSlider, ColorSliderControl } from '@/registry/ui/color-slider'
+import { ColorSlider, ColorSliderControl } from "@/registry/ui/color-slider"
 
 export default function Demo() {
   return (

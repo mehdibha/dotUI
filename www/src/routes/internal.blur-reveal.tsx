@@ -1,8 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-import { ProgressiveBlur } from '@/components/progressive-blur'
+import { ProgressiveBlur } from "@/components/progressive-blur"
+import { InternalHeader } from "@/modules/internal/shell"
 
-export const Route = createFileRoute('/internal/blur-reveal')({
+export const Route = createFileRoute("/internal/blur-reveal")({
   component: BlurRevealDemo,
 })
 
@@ -13,6 +14,12 @@ export const Route = createFileRoute('/internal/blur-reveal')({
 function BlurRevealDemo() {
   return (
     <div className="min-h-screen bg-bg text-fg">
+      <InternalHeader
+        className="px-6 pt-10 pb-8"
+        crumbs={[{ label: "Blur reveal" }]}
+        title="Blur reveal"
+        description="The blur-reveal utilities paired with ProgressiveBlur: the root-scroll driver on a page header, and the nearest-scroller driver with a custom range on a sticky bar inside an overflow-auto card."
+      />
       {/* Root-scroll driver — same anatomy as the app header: the utility rides
           the mask-free wrapper, the fallback rides the bar itself. */}
       <header className="sticky top-0 z-10 flex h-14 items-center blur-reveal-fallback px-6">
@@ -39,8 +46,8 @@ function BlurRevealDemo() {
             <div
               key={i}
               className={
-                ['bg-primary', 'bg-accent-muted', 'bg-muted'][i % 3] +
-                ' h-28 rounded-lg'
+                ["bg-primary", "bg-accent-muted", "bg-muted"][i % 3] +
+                " h-28 rounded-lg"
               }
             />
           ))}
@@ -67,8 +74,8 @@ function BlurRevealDemo() {
                 <div
                   key={i}
                   className={
-                    (i % 4 === 0 ? 'bg-primary/60' : 'bg-muted') +
-                    ' h-9 rounded-md'
+                    (i % 4 === 0 ? "bg-primary/60" : "bg-muted") +
+                    " h-9 rounded-md"
                   }
                 />
               ))}

@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import { getLocalTimeZone, today } from '@internationalized/date'
+import { getLocalTimeZone, today } from "@internationalized/date"
 
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Calendar, CalendarGrid, CalendarHeader } from '@/registry/ui/calendar'
-import { Card, CardContent } from '@/registry/ui/card'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Calendar, CalendarGrid, CalendarHeader } from "@/registry/ui/calendar"
+import { Card, CardContent } from "@/registry/ui/card"
 
 export default function Demo() {
   return (

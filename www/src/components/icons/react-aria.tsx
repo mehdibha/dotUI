@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react'
+import type { SVGProps } from "react"
 
 // Official React Aria (react-spectrum.adobe.com/react-aria) logo mark, from the
 // project's own favicon. Brand purple, with a lighter dark-mode variant — the site's

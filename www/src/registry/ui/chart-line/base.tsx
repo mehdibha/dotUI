@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import type { ChartBuildContext } from '@tanstack/charts'
-import { d3Curve } from '@tanstack/charts/d3/shape'
-import { lineY } from '@tanstack/charts/line'
-import { curveMonotoneX, curveNatural, curveStepAfter } from 'd3-shape'
+import type { ChartBuildContext } from "@tanstack/charts"
+import { d3Curve } from "@tanstack/charts/d3/shape"
+import { lineY } from "@tanstack/charts/line"
+import { curveMonotoneX, curveNatural, curveStepAfter } from "d3-shape"
 
 import type {
   ChartComponentProps,
@@ -12,14 +12,14 @@ import type {
   ChartXField,
   ChartXValueOf,
   XYChartSpecOptions,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 import {
   Chart,
   chartDefaults,
   chartFrame,
   planChart,
   useChartDefinition,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 /* Curves live in the families that draw paths, so a bar or heatmap chart never
    pulls d3-shape into the bundle. */
@@ -34,7 +34,7 @@ export interface LineChartSpecOptions<
   TDatum,
   TXField extends ChartXField<TDatum>,
   // `lineY` has no lower-baseline channel, so `y1` would be silently dropped.
-> extends Omit<XYChartSpecOptions<TDatum, TXField>, 'y1'> {
+> extends Omit<XYChartSpecOptions<TDatum, TXField>, "y1"> {
   /** Path interpolation between points. */
   curve?: ChartCurve
   strokeWidth?: number

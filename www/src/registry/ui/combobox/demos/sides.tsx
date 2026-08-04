@@ -3,34 +3,34 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronUpIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Combobox } from '@/registry/ui/combobox'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
+import { Button } from "@/registry/ui/button"
+import { Combobox } from "@/registry/ui/combobox"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
 
 const placements = [
   {
-    placement: 'top',
+    placement: "top",
     icon: <ChevronUpIcon />,
   },
   {
-    placement: 'bottom',
+    placement: "bottom",
     icon: <ChevronDownIcon />,
   },
   {
-    placement: 'left',
+    placement: "left",
     icon: <ChevronLeftIcon />,
   },
   {
-    placement: 'right',
+    placement: "right",
     icon: <ChevronRightIcon />,
   },
 ] as const
 
-const frameworks = ['Next.js', 'SvelteKit', 'Nuxt.js', 'Remix', 'Astro']
+const frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"]
 
 export default function Demo() {
   return (

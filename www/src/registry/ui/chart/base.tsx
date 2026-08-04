@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import type { ReactNode } from 'react'
-import { useId, useRef } from 'react'
+import type { ReactNode } from "react"
+import { useId, useRef } from "react"
 import type {
   Channel,
   ChannelField,
@@ -18,15 +18,15 @@ import type {
   ChartTheme,
   ChartValue,
   VisualChannel,
-} from '@tanstack/charts'
-import { defineChart } from '@tanstack/charts'
-import { colorLegend } from '@tanstack/charts/legend'
-import { renderChartSvgWithResources } from '@tanstack/charts/svg/resources'
-import type { ChartCommonProps } from '@tanstack/react-charts'
-import { Chart as TanChart } from '@tanstack/react-charts'
-import { scaleBand, scaleLinear, scalePoint } from 'd3-scale'
+} from "@tanstack/charts"
+import { defineChart } from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import { renderChartSvgWithResources } from "@tanstack/charts/svg/resources"
+import type { ChartCommonProps } from "@tanstack/react-charts"
+import { Chart as TanChart } from "@tanstack/react-charts"
+import { scaleBand, scaleLinear, scalePoint } from "d3-scale"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
 /* Chart core: the host, the house defaults, and the frame every chart family
    composes. No mark is imported here — families own theirs, so a bar chart
@@ -38,7 +38,7 @@ import { cn } from '@/registry/lib/utils'
 export const chartDefaults = {
   height: 256,
   sparklineHeight: 40,
-  curve: 'natural',
+  curve: "natural",
   strokeWidth: 2.25,
   fill: 0.2,
   points: false,
@@ -53,8 +53,8 @@ export const chartDefaults = {
   grid: true,
   axes: true,
   legend: true,
-  focus: 'group-x',
-  tooltipAnchor: 'group-center',
+  focus: "group-x",
+  tooltipAnchor: "group-center",
   tooltipSticky: true,
   animate: { duration: 240, respectReducedMotion: true },
   animateMaxPoints: 800,
@@ -68,14 +68,14 @@ export const chartDefaults = {
    generates --chart-1..8; the library's own default theme has only six, so
    never rely on --ts-chart-* remapping to carry them. */
 export const CHART_PALETTE = [
-  'var(--chart-1)',
-  'var(--chart-2)',
-  'var(--chart-3)',
-  'var(--chart-4)',
-  'var(--chart-5)',
-  'var(--chart-6)',
-  'var(--chart-7)',
-  'var(--chart-8)',
+  "var(--chart-1)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-4)",
+  "var(--chart-5)",
+  "var(--chart-6)",
+  "var(--chart-7)",
+  "var(--chart-8)",
 ] as const
 
 export const CHART_THEME: Partial<ChartTheme> = { palette: CHART_PALETTE }
@@ -88,14 +88,14 @@ export function paletteColor(index: number): string {
 /* Shared types                                                        */
 /* ------------------------------------------------------------------ */
 
-export type ChartCurve = 'linear' | 'natural' | 'monotone' | 'step'
+export type ChartCurve = "linear" | "natural" | "monotone" | "step"
 export type ChartFocus =
-  | 'nearest'
-  | 'nearest-x'
-  | 'nearest-y'
-  | 'group-x'
-  | 'group-y'
-export type ChartTooltipAnchor = 'point' | 'pointer' | 'group-center'
+  | "nearest"
+  | "nearest-x"
+  | "nearest-y"
+  | "group-x"
+  | "group-y"
+export type ChartTooltipAnchor = "point" | "pointer" | "group-center"
 
 /* The library's own public mark constraint: annotation layers rarely share
    the series row type. */
@@ -217,8 +217,8 @@ export function resolveFormat(
   format: ChartFormat | undefined,
 ): ((value: ChartValue) => string) | undefined {
   if (format === undefined) return undefined
-  if (typeof format === 'function') return format
-  if ('number' in format) {
+  if (typeof format === "function") return format
+  if ("number" in format) {
     const formatter = new Intl.NumberFormat(format.locale, format.number)
     return (value) => formatter.format(Number(value))
   }
@@ -254,7 +254,7 @@ export interface ChartPlan<TDatum, TXField extends ChartXField<TDatum>> {
 function toFields<T>(value: T | readonly T[]): readonly [T, ...T[]] {
   const fields = Array.isArray(value) ? value : [value]
   if (fields.length === 0)
-    throw new Error('charts: `y` needs at least one field')
+    throw new Error("charts: `y` needs at least one field")
   return fields as readonly [T, ...T[]]
 }
 
@@ -323,8 +323,8 @@ export function planChart<TDatum, TXField extends ChartXField<TDatum>>(
 /* Frame                                                               */
 /* ------------------------------------------------------------------ */
 
-export type ChartScaleKind = 'band' | 'point' | 'linear'
-type ChartScaleOption = ChartAxisOptions['scale']
+export type ChartScaleKind = "band" | "point" | "linear"
+type ChartScaleOption = ChartAxisOptions["scale"]
 
 const SCALES: Record<ChartScaleKind, () => ChartScaleOption> = {
   band: () => scaleBand().padding(chartDefaults.bandPadding),
@@ -339,7 +339,7 @@ export interface ChartFrameSpec {
   x?: ChartScaleKind | Partial<ChartAxisOptions>
   y?: ChartScaleKind | Partial<ChartAxisOptions>
   /** Axis carrying the grid. */
-  grid?: 'x' | 'y' | 'both' | 'none'
+  grid?: "x" | "y" | "both" | "none"
   /** Merged over the categorical default — a sequential scale goes here. */
   color?: ChartColorOptions
 }
@@ -354,13 +354,13 @@ export interface ChartFrame {
 function frameAxis(
   spec: ChartScaleKind | Partial<ChartAxisOptions> | undefined,
   fallback: ChartScaleKind,
-  base: Omit<ChartAxisOptions, 'scale'>,
+  base: Omit<ChartAxisOptions, "scale">,
 ): ChartAxisOptions {
-  const kind = typeof spec === 'string' ? spec : fallback
-  const overrides = typeof spec === 'string' || spec === undefined ? null : spec
+  const kind = typeof spec === "string" ? spec : fallback
+  const overrides = typeof spec === "string" || spec === undefined ? null : spec
   return {
     scale: SCALES[kind],
-    nice: kind === 'linear',
+    nice: kind === "linear",
     ...base,
     ...overrides,
   }
@@ -376,23 +376,23 @@ export function chartFrame(
 ): ChartFrame {
   const guide = options.axes ?? chartDefaults.axes
   const grid = options.grid ?? chartDefaults.grid
-  const where = spec.grid ?? 'y'
+  const where = spec.grid ?? "y"
   const legend =
     (options.legend ?? chartDefaults.legend) ? colorLegend() : undefined
   const order = spec.order ?? []
   return {
-    x: frameAxis(spec.x, 'point', {
+    x: frameAxis(spec.x, "point", {
       guide,
-      grid: grid && (where === 'x' || where === 'both'),
+      grid: grid && (where === "x" || where === "both"),
       format: resolveFormat(options.formatX),
       ticks:
         ctx.width < chartDefaults.axisTickMinWidth
           ? chartDefaults.axisTickCountNarrow
           : undefined,
     }),
-    y: frameAxis(spec.y, 'linear', {
+    y: frameAxis(spec.y, "linear", {
       guide,
-      grid: grid && (where === 'y' || where === 'both'),
+      grid: grid && (where === "y" || where === "both"),
       format: resolveFormat(options.formatY),
     }),
     color: {
@@ -414,7 +414,7 @@ export function gradientPrefix(
   idPrefix: string | undefined,
   family: string,
 ): string {
-  return `${idPrefix ?? 'dotui'}-${family}`
+  return `${idPrefix ?? "dotui"}-${family}`
 }
 
 /** One fade-to-transparent gradient per palette slot, `${prefix}-${index}`. */
@@ -458,7 +458,7 @@ export interface StackYOptions<TDatum, TXField extends ChartXField<TDatum>> {
 }
 
 function finiteOrNull(value: unknown): number | null {
-  return typeof value === 'number' && Number.isFinite(value) ? value : null
+  return typeof value === "number" && Number.isFinite(value) ? value : null
 }
 
 /* Wide rows in, long rows out: `top`/`base` carry the interval the mark draws,
@@ -509,8 +509,8 @@ function safeShare(value: number, total: number): number {
    render for no gain — the named easings cover the design space. */
 export type ChartAnimate =
   | boolean
-  | (Omit<ChartAnimationOptions, 'easing'> & {
-      easing?: Extract<ChartAnimationOptions['easing'], string>
+  | (Omit<ChartAnimationOptions, "easing"> & {
+      easing?: Extract<ChartAnimationOptions["easing"], string>
     })
 
 export interface ChartBehaviorProps {
@@ -529,7 +529,7 @@ export interface ChartBehaviorProps {
    is strictly worse than a scene rebuild. The host owns them. */
 export type ChartHostProps<TDatum, TXValue extends ChartValue> = Omit<
   ChartCommonProps<TDatum, TXValue, number>,
-  'renderSvg' | 'measureText'
+  "renderSvg" | "measureText"
 >
 
 export type ChartProps<TDatum, TXValue extends ChartValue> = ChartHostProps<
@@ -545,7 +545,7 @@ export type ChartComponentProps<
   TOptions,
   TDatum,
   TXValue extends ChartValue,
-> = Omit<TOptions, 'gradientIdPrefix'> &
+> = Omit<TOptions, "gradientIdPrefix"> &
   ChartBehaviorProps &
   ChartHostProps<TDatum, TXValue> & { children?: ReactNode }
 
@@ -560,7 +560,7 @@ export function Chart<TDatum, TXValue extends ChartValue>({
   ...props
 }: ChartProps<TDatum, TXValue>) {
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn("relative", className)}>
       <TanChart
         height={
           props.aspectRatio === undefined ? chartDefaults.height : undefined
@@ -568,7 +568,7 @@ export function Chart<TDatum, TXValue extends ChartValue>({
         {...props}
         renderSvg={renderChartSvgWithResources}
       />
-      {children == null || typeof children === 'boolean' ? null : (
+      {children == null || typeof children === "boolean" ? null : (
         <div className="pointer-events-none absolute inset-0">{children}</div>
       )}
     </div>
@@ -580,35 +580,35 @@ export function Chart<TDatum, TXValue extends ChartValue>({
 /* ------------------------------------------------------------------ */
 
 const HOST_PROP_NAMES = new Set([
-  'ariaLabel',
-  'ariaDescription',
-  'height',
-  'aspectRatio',
-  'width',
-  'initialWidth',
-  'className',
-  'style',
-  'tabIndex',
-  'idPrefix',
-  'onFocusChange',
-  'onFocusGroupChange',
-  'onSelect',
-  'onRender',
-  'renderTooltipBody',
+  "ariaLabel",
+  "ariaDescription",
+  "height",
+  "aspectRatio",
+  "width",
+  "initialWidth",
+  "className",
+  "style",
+  "tabIndex",
+  "idPrefix",
+  "onFocusChange",
+  "onFocusGroupChange",
+  "onSelect",
+  "onRender",
+  "renderTooltipBody",
 ])
 
 const BEHAVIOR_PROP_NAMES = new Set([
-  'focus',
-  'maxFocusDistance',
-  'tooltip',
-  'tooltipAnchor',
-  'tooltipSticky',
-  'animate',
+  "focus",
+  "maxFocusDistance",
+  "tooltip",
+  "tooltipAnchor",
+  "tooltipSticky",
+  "animate",
 ])
 
 /* Props that stay identity-compared — the React list contract everyone
    already knows. Everything else is serialized. */
-const REFERENCE_PROP_NAMES = new Set(['data', 'marks', 'marksBefore'])
+const REFERENCE_PROP_NAMES = new Set(["data", "marks", "marksBefore"])
 
 function splitChartProps(props: object): {
   host: Record<string, unknown>
@@ -621,7 +621,7 @@ function splitChartProps(props: object): {
   const spec: Record<string, unknown> = {}
   for (const name of Object.keys(source)) {
     const value = source[name]
-    if (value === undefined || name === 'children') continue
+    if (value === undefined || name === "children") continue
     if (HOST_PROP_NAMES.has(name)) host[name] = value
     else if (BEHAVIOR_PROP_NAMES.has(name)) behavior[name] = value
     else spec[name] = value
@@ -636,8 +636,8 @@ const functionIds = new WeakMap<object, number>()
 let nextFunctionId = 0
 
 function serialize(value: unknown): string {
-  if (value === null) return 'null'
-  if (typeof value === 'function') {
+  if (value === null) return "null"
+  if (typeof value === "function") {
     let id = functionIds.get(value)
     if (id === undefined) {
       id = nextFunctionId++
@@ -646,15 +646,15 @@ function serialize(value: unknown): string {
     return `fn#${id}`
   }
   if (value instanceof Date) return `date#${value.getTime()}`
-  if (Array.isArray(value)) return `[${value.map(serialize).join(',')}]`
-  if (typeof value === 'object') {
+  if (Array.isArray(value)) return `[${value.map(serialize).join(",")}]`
+  if (typeof value === "object") {
     const record = value as Record<string, unknown>
     return `{${Object.keys(record)
       .sort()
       .map((name) => `${name}:${serialize(record[name])}`)
-      .join(',')}}`
+      .join(",")}}`
   }
-  return typeof value === 'string' ? JSON.stringify(value) : String(value)
+  return typeof value === "string" ? JSON.stringify(value) : String(value)
 }
 
 /* Total by construction: the prop types are structurally flat, so nothing can
@@ -662,7 +662,7 @@ function serialize(value: unknown): string {
    turn a loud over-render into a silent stale-render. */
 function chartKey(source: object): string {
   const record = source as Record<string, unknown>
-  let key = ''
+  let key = ""
   for (const name of Object.keys(record).sort()) {
     if (REFERENCE_PROP_NAMES.has(name)) continue
     key += `${name}=${serialize(record[name])};`
@@ -755,7 +755,7 @@ export function useChartDefinition<
   host: ChartHostProps<TDatum, TXValue>
   children: ReactNode
 } {
-  const gradientIdPrefix = useId().replace(/[^a-zA-Z0-9_-]/g, '')
+  const gradientIdPrefix = useId().replace(/[^a-zA-Z0-9_-]/g, "")
   const { host, behavior, spec } = splitChartProps(props)
   const options = { ...spec, gradientIdPrefix } as TOptions
   const degrade = countPoints(spec) > chartDefaults.animateMaxPoints

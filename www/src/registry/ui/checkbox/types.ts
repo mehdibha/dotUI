@@ -1,4 +1,4 @@
-import type * as CheckboxPrimitive from 'react-aria-components/Checkbox'
+import type * as CheckboxPrimitive from "react-aria-components/Checkbox"
 
 /**
  * A checkbox allows a user to select multiple items from a list of individual items,
@@ -18,4 +18,4 @@ export interface CheckboxControlProps extends React.ComponentProps<
 /**
  * The visual indicator of a checkbox (the box with check/minus icon).
  */
-export interface CheckboxIndicatorProps extends React.ComponentProps<'span'> {}
+export interface CheckboxIndicatorProps extends React.ComponentProps<"span"> {}

@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { SearchIcon } from 'lucide-react'
+import { useState } from "react"
+import { SearchIcon } from "lucide-react"
 
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Loader } from '@/registry/ui/loader'
-import { TextField } from '@/registry/ui/text-field'
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Loader } from "@/registry/ui/loader"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState("")
   const [isSearching, setIsSearching] = useState(false)
   return (
     <TextField

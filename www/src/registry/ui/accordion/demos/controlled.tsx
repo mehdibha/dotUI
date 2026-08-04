@@ -1,23 +1,23 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
-import { Accordion } from '@/registry/ui/accordion'
+import { Accordion } from "@/registry/ui/accordion"
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
 export default function Demo() {
   const [expandedKeys, setExpandedKeys] = useState<Set<string>>(
-    new Set(['getting-started']),
+    new Set(["getting-started"]),
   )
 
   return (
     <div className="max-w-xs space-y-4">
       <p className="text-sm text-fg-muted">
-        Expanded: {[...expandedKeys].join(', ') || 'none'}
+        Expanded: {[...expandedKeys].join(", ") || "none"}
       </p>
       <Accordion
         expandedKeys={expandedKeys}

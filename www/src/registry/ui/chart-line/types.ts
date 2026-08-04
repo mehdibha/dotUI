@@ -1,10 +1,10 @@
-import type * as React from 'react'
+import type * as React from "react"
 
 import type {
   ChartCurve,
   ChartFormat,
   ChartMarkLayer,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 export type { ChartCurve, ChartFormat }
 

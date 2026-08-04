@@ -1,6 +1,6 @@
-import { PenSquareIcon } from '@/registry/__generated__/icons'
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
+import { PenSquareIcon } from "@/registry/__generated__/icons"
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogBody,
@@ -10,9 +10,9 @@ import {
   DialogHeader,
   DialogInset,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Modal } from '@/registry/ui/modal'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Modal } from "@/registry/ui/modal"
 
 export default function Demo() {
   return (

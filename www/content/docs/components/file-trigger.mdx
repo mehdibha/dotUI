@@ -11,8 +11,8 @@ wip: true
   name="file-trigger"
   controls={[
     {
-      type: 'boolean',
-      name: 'allowsMultiple',
+      type: "boolean",
+      name: "allowsMultiple",
       defaultValue: false,
     },
   ]}
@@ -29,8 +29,8 @@ npx shadcn@latest add @dotui/file-trigger
 Use file triggers to allow users to upload files using any pressable element.
 
 ```tsx
-import { Button } from '@/ui/button'
-import { FileTrigger } from '@/ui/file-trigger'
+import { Button } from "@/ui/button"
+import { FileTrigger } from "@/ui/file-trigger"
 ```
 
 ```tsx
@@ -45,7 +45,7 @@ import { FileTrigger } from '@/ui/file-trigger'
 
 ```tsx
 <FileTrigger
-  acceptedFileTypes={['image/*']}
+  acceptedFileTypes={["image/*"]}
   allowsMultiple
   onSelect={(e) => {
     if (e) console.log(Array.from(e).map((file) => file.name))

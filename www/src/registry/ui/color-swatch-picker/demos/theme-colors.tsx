@@ -1,19 +1,19 @@
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from '@/registry/ui/color-swatch-picker'
-import { Description, Label } from '@/registry/ui/field'
+} from "@/registry/ui/color-swatch-picker"
+import { Description, Label } from "@/registry/ui/field"
 
 const accents = [
-  '#18181b',
-  '#dc2626',
-  '#ea580c',
-  '#ca8a04',
-  '#16a34a',
-  '#0d9488',
-  '#2563eb',
-  '#7c3aed',
-  '#db2777',
+  "#18181b",
+  "#dc2626",
+  "#ea580c",
+  "#ca8a04",
+  "#16a34a",
+  "#0d9488",
+  "#2563eb",
+  "#7c3aed",
+  "#db2777",
 ]
 
 export default function Demo() {

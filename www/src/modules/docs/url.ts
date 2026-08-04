@@ -1,11 +1,11 @@
 export function getBaseUrl() {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     return window.location.origin
   }
-  if (process.env.VERCEL_ENV === 'production') {
+  if (process.env.VERCEL_ENV === "production") {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   }
-  if (process.env.VERCEL_ENV === 'preview') {
+  if (process.env.VERCEL_ENV === "preview") {
     return `https://${process.env.VERCEL_URL}`
   }
 

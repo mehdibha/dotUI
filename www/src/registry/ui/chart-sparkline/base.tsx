@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import type { ChartBuildContext, ChartLinearGradient } from '@tanstack/charts'
-import { areaY } from '@tanstack/charts/area'
-import { d3Curve } from '@tanstack/charts/d3/shape'
-import { lineY } from '@tanstack/charts/line'
-import { scalePoint } from 'd3-scale'
-import { curveMonotoneX, curveNatural, curveStepAfter } from 'd3-shape'
+import type { ChartBuildContext, ChartLinearGradient } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { d3Curve } from "@tanstack/charts/d3/shape"
+import { lineY } from "@tanstack/charts/line"
+import { scalePoint } from "d3-scale"
+import { curveMonotoneX, curveNatural, curveStepAfter } from "d3-shape"
 
 import type {
   ChartBaseSpecOptions,
@@ -16,7 +16,7 @@ import type {
   ChartXField,
   ChartXValueOf,
   ChartYField,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 import {
   Chart,
   chartDefaults,
@@ -24,7 +24,7 @@ import {
   gradientPrefix,
   paletteColor,
   useChartDefinition,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 /* Curves live in the families that draw paths, so a bar or heatmap chart never
    pulls d3-shape into the bundle. */
@@ -45,12 +45,12 @@ export interface SparklineSpecOptions<
   x: TXField
   /** Field holding the value. */
   y: ChartYField<TDatum>
-  mode?: 'line' | 'area'
+  mode?: "line" | "area"
   curve?: ChartCurve
   /** Any CSS color. Defaults to the first palette slot. */
   color?: string
   /** Area fill opacity, or `'gradient'` to fade it out downward. */
-  fill?: number | 'gradient'
+  fill?: number | "gradient"
   strokeWidth?: number
 }
 
@@ -75,8 +75,8 @@ export function sparklineSpec<TDatum, TXField extends ChartXField<TDatum>>(
   const curve = CURVES[options.curve ?? chartDefaults.curve]
   const strokeWidth = options.strokeWidth ?? chartDefaults.strokeWidth
   const fill = options.fill ?? chartDefaults.fill
-  const gradient = fill === 'gradient'
-  const fillId = `${gradientPrefix(options.gradientIdPrefix, 'sparkline')}-fill`
+  const gradient = fill === "gradient"
+  const fillId = `${gradientPrefix(options.gradientIdPrefix, "sparkline")}-fill`
   const channels = { x: options.x, y: options.y, key: options.rowKey }
   return {
     ...chartFrame({ axes: false, grid: false, legend: false }, ctx, {
@@ -90,7 +90,7 @@ export function sparklineSpec<TDatum, TXField extends ChartXField<TDatum>>(
     margin: Math.ceil(strokeWidth / 2),
     marks: [
       ...(options.marksBefore ?? []),
-      ...(options.mode === 'area'
+      ...(options.mode === "area"
         ? [
             areaY(options.data, {
               ...channels,
@@ -113,7 +113,7 @@ export type SparklineProps<TDatum, TXField extends ChartXField<TDatum>> = Omit<
     TDatum,
     ChartXValueOf<TDatum, TXField>
   >,
-  'tooltip'
+  "tooltip"
 > & {
   /** Sparklines are read at a glance, so the tooltip is opt-in. */
   tooltip?: boolean

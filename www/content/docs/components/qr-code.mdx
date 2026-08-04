@@ -7,15 +7,15 @@ description: A QR code encodes a value, such as a URL, as a scannable matrix bar
   name="qr-code"
   controls={[
     {
-      type: 'string',
-      name: 'value',
-      defaultValue: 'https://dotui.org',
+      type: "string",
+      name: "value",
+      defaultValue: "https://dotui.org",
     },
     {
-      type: 'enum',
-      name: 'errorCorrection',
-      options: ['L', 'M', 'Q', 'H'],
-      defaultValue: 'M',
+      type: "enum",
+      name: "errorCorrection",
+      options: ["L", "M", "Q", "H"],
+      defaultValue: "M",
     },
   ]}
 />
@@ -29,8 +29,11 @@ npx shadcn@latest add @dotui/qr-code
 ## Usage
 
 ```tsx
-import { QRCode } from '@/ui/qr-code'
-;<QRCode value="https://dotui.org" aria-label="dotUI website" />
+import { QRCode } from "@/ui/qr-code"
+```
+
+```tsx
+<QRCode value="https://dotui.org" aria-label="dotUI website" />
 ```
 
 Pass an `aria-label` describing the destination — to a screen reader, an unlabeled QR code is meaningless.

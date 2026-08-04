@@ -1,4 +1,4 @@
-import { ListBox } from '@/registry/ui/list-box'
+import { ListBox } from "@/registry/ui/list-box"
 
 export default function Demo() {
   return (

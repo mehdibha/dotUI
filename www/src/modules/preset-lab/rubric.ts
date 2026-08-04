@@ -1,21 +1,21 @@
 export const RUBRIC_CRITERIA = [
-  { id: 'silhouette', label: 'Silhouette', hint: 'Shape, size, proportions' },
-  { id: 'surface', label: 'Surface', hint: 'Background, border, shadow' },
-  { id: 'color', label: 'Color', hint: 'Token colors match the reference' },
+  { id: "silhouette", label: "Silhouette", hint: "Shape, size, proportions" },
+  { id: "surface", label: "Surface", hint: "Background, border, shadow" },
+  { id: "color", label: "Color", hint: "Token colors match the reference" },
   {
-    id: 'typography',
-    label: 'Typography',
-    hint: 'Family, size, weight, tracking',
+    id: "typography",
+    label: "Typography",
+    hint: "Family, size, weight, tracking",
   },
   {
-    id: 'states',
-    label: 'States',
-    hint: 'Hover, focus, active, disabled, selected',
+    id: "states",
+    label: "States",
+    hint: "Hover, focus, active, disabled, selected",
   },
-  { id: 'spacing', label: 'Spacing', hint: 'Padding, gaps, density' },
+  { id: "spacing", label: "Spacing", hint: "Padding, gaps, density" },
 ] as const
 
-export type CriterionId = (typeof RUBRIC_CRITERIA)[number]['id']
+export type CriterionId = (typeof RUBRIC_CRITERIA)[number]["id"]
 
 /** Per-criterion score: 0 = off, 1 = close, 2 = matches. */
 export type Score = 0 | 1 | 2

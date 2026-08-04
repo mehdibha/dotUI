@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import {
   CheckIcon,
   ChevronsDownUpIcon,
@@ -9,14 +9,14 @@ import {
   RotateCcwIcon,
   SlidersHorizontalIcon,
   XIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { Kbd } from '@/registry/ui/kbd'
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { Kbd } from "@/registry/ui/kbd"
 
-import { ControlRow } from './controls'
+import { ControlRow } from "./controls"
 import {
   getControls,
   getServerControls,
@@ -26,8 +26,8 @@ import {
   resetAll,
   setUiState,
   subscribe,
-} from './store'
-import type { RegisteredControl } from './types'
+} from "./store"
+import type { RegisteredControl } from "./types"
 
 const TRIGGER_SIZE = 40 // px (size-10)
 const EDGE_GAP = 12 // px between the trigger and the screen edge
@@ -50,7 +50,7 @@ const PANEL_OFFSET = EDGE_GAP + TRIGGER_SIZE + 8 // edge → panel's near side
  * Overlays need no opt-in of their own; keep this on both the trigger and the
  * panel, and keep the z-index above every registry layer.
  */
-const TOP_LAYER = { 'data-react-aria-top-layer': true } as const
+const TOP_LAYER = { "data-react-aria-top-layer": true } as const
 
 const noopSubscribe = () => () => {}
 
@@ -80,10 +80,10 @@ function buildCopyText(): string {
   const lines = getControls().map((c) => {
     const raw = getValue(c.id)
     const chosen = raw === undefined ? c.config.default : raw
-    const prefix = c.group === 'default' ? '' : `${c.group} / `
+    const prefix = c.group === "default" ? "" : `${c.group} / `
     return `- ${prefix}${c.label} (${c.config.type}): ${JSON.stringify(chosen)}  [default ${JSON.stringify(c.config.default)}]`
   })
-  return `Tweaker selections:\n${lines.join('\n') || '(none)'}`
+  return `Tweaker selections:\n${lines.join("\n") || "(none)"}`
 }
 
 export function DevTweaker() {
@@ -93,7 +93,7 @@ export function DevTweaker() {
   const { isCopied, copyToClipboard } = useCopyToClipboard()
 
   const [viewport, setViewport] = useState(() =>
-    typeof window === 'undefined'
+    typeof window === "undefined"
       ? { w: 1280, h: 800 }
       : { w: window.innerWidth, h: window.innerHeight },
   )
@@ -105,22 +105,22 @@ export function DevTweaker() {
   useEffect(() => {
     const onResize = () =>
       setViewport({ w: window.innerWidth, h: window.innerHeight })
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
+    window.addEventListener("resize", onResize)
+    return () => window.removeEventListener("resize", onResize)
   }, [])
 
   // ⌘. / Ctrl+. toggles the popover; Escape closes it.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === '.') {
+      if ((e.metaKey || e.ctrlKey) && e.key === ".") {
         e.preventDefault()
         setUiState({ open: !getUiState().open })
-      } else if (e.key === 'Escape' && getUiState().open) {
+      } else if (e.key === "Escape" && getUiState().open) {
         setUiState({ open: false })
       }
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
   }, [])
 
   // No outside-click dismissal: the panel is a tool palette, and the page must
@@ -161,7 +161,7 @@ export function DevTweaker() {
     setDrag(null)
     if (moved.current) {
       // Snap to the nearest edge, keeping the vertical position it was dropped at.
-      const side = e.clientX < window.innerWidth / 2 ? 'left' : 'right'
+      const side = e.clientX < window.innerWidth / 2 ? "left" : "right"
       const y = clamp(e.clientY / window.innerHeight, 0.06, 0.94)
       setUiState({ side, y })
     } else {
@@ -172,7 +172,7 @@ export function DevTweaker() {
   /* ----------------------------- geometry ----------------------------- */
 
   const dockedCx =
-    ui.side === 'left'
+    ui.side === "left"
       ? EDGE_GAP + TRIGGER_SIZE / 2
       : viewport.w - EDGE_GAP - TRIGGER_SIZE / 2
   const triggerStyle: React.CSSProperties = drag
@@ -180,7 +180,7 @@ export function DevTweaker() {
     : { left: dockedCx, top: ui.y * viewport.h }
 
   const panelSideStyle: React.CSSProperties =
-    ui.side === 'left' ? { left: PANEL_OFFSET } : { right: PANEL_OFFSET }
+    ui.side === "left" ? { left: PANEL_OFFSET } : { right: PANEL_OFFSET }
   // Centre the panel on the trigger, but clamp so it always stays fully on screen.
   const panelTop = clamp(ui.y, 0.36, 0.64) * viewport.h
 
@@ -204,9 +204,9 @@ export function DevTweaker() {
         onPointerUp={onPointerUp}
         style={triggerStyle}
         className={cn(
-          'hover:bg-bg-muted fixed z-110 flex size-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer touch-none items-center justify-center rounded-full border border-border bg-bg text-fg shadow-lg',
-          !drag && 'transition-[left,top] duration-200 ease-out',
-          ui.open && 'bg-bg-muted',
+          "hover:bg-bg-muted fixed z-110 flex size-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer touch-none items-center justify-center rounded-full border border-border bg-bg text-fg shadow-lg",
+          !drag && "transition-[left,top] duration-200 ease-out",
+          ui.open && "bg-bg-muted",
         )}
       >
         <SlidersHorizontalIcon className="size-4 text-fg-muted" />
@@ -253,7 +253,7 @@ export function DevTweaker() {
                 size="sm"
                 variant="quiet"
                 isIconOnly
-                aria-label={ui.minimized ? 'Expand' : 'Minimize'}
+                aria-label={ui.minimized ? "Expand" : "Minimize"}
                 onPress={() => setUiState({ minimized: !ui.minimized })}
               >
                 {ui.minimized ? <ChevronsUpDownIcon /> : <ChevronsDownUpIcon />}
@@ -303,7 +303,7 @@ function GroupedControls({ controls }: { controls: RegisteredControl[] }) {
     <div className="flex flex-col gap-4">
       {groups.map(([group, items]) => (
         <div key={group} className="flex flex-col gap-3">
-          {group !== 'default' && (
+          {group !== "default" && (
             <div className="text-[10px] font-semibold tracking-wide text-fg-muted uppercase">
               {group}
             </div>

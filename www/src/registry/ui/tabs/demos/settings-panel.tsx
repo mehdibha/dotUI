@@ -1,13 +1,13 @@
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
-import { Description, FieldContent, Label } from '@/registry/ui/field'
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import { Description, FieldContent, Label } from "@/registry/ui/field"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { Switch, SwitchControl, SwitchIndicator } from '@/registry/ui/switch'
-import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
+} from "@/registry/ui/select"
+import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 
 export default function Demo() {
   return (

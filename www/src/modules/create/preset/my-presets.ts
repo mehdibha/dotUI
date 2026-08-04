@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { createPersistedStore } from '@/lib/persisted-store'
+import { createPersistedStore } from "@/lib/persisted-store"
 
 /** A named design-system snapshot the user saved from /create. */
 export interface SavedPreset {
@@ -13,7 +13,7 @@ export interface SavedPreset {
 }
 
 const presetsStore = createPersistedStore<SavedPreset[]>(
-  'dotui:my-presets',
+  "dotui:my-presets",
   [],
   {
     decode: (raw) => {
@@ -30,7 +30,7 @@ const presetsStore = createPersistedStore<SavedPreset[]>(
 
 /** The preset last saved or applied — highlighted in the gallery, targeted by Save's update path. */
 const activeStore = createPersistedStore<string | undefined>(
-  'dotui:active-saved-preset',
+  "dotui:active-saved-preset",
   undefined,
   {
     decode: (raw) => raw || undefined,

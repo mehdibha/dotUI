@@ -11,19 +11,19 @@ wip: true
   name="slider"
   controls={[
     {
-      type: 'string',
-      name: 'label',
-      defaultValue: 'Volume',
+      type: "string",
+      name: "label",
+      defaultValue: "Volume",
     },
     {
-      type: 'enum',
-      name: 'orientation',
-      options: ['horizontal', 'vertical'],
-      defaultValue: 'horizontal',
+      type: "enum",
+      name: "orientation",
+      options: ["horizontal", "vertical"],
+      defaultValue: "horizontal",
     },
     {
-      type: 'boolean',
-      name: 'isDisabled',
+      type: "boolean",
+      name: "isDisabled",
       defaultValue: false,
     },
   ]}
@@ -40,7 +40,7 @@ npx shadcn@latest add @dotui/slider
 Use slider to allow users to select a value from within a given range.
 
 ```tsx
-import { Slider, SliderControl } from '@/ui/slider'
+import { Slider, SliderControl } from "@/ui/slider"
 ```
 
 ```tsx
@@ -61,8 +61,11 @@ import {
   SliderFill,
   SliderThumb,
   SliderOutput,
-} from '@/ui/slider'
-;<Slider>
+} from "@/ui/slider"
+```
+
+```tsx
+<Slider>
   <SliderOutput />
   <SliderControl>
     <SliderTrack>
@@ -99,7 +102,7 @@ A single number renders a standard slider; a `number[]` renders a multi-thumb ra
 
 ```tsx
 <Slider
-  formatOptions={{ style: 'currency', currency: 'JPY' }}
+  formatOptions={{ style: "currency", currency: "JPY" }}
   defaultValue={60}
 >
   <SliderOutput />

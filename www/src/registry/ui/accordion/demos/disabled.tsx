@@ -1,15 +1,15 @@
-import { Accordion } from '@/registry/ui/accordion'
+import { Accordion } from "@/registry/ui/accordion"
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
 export default function Demo() {
   return (
     <Accordion
       className="max-w-xs"
-      defaultExpandedKeys={['getting-started']}
+      defaultExpandedKeys={["getting-started"]}
       isDisabled
     >
       <Disclosure id="getting-started">

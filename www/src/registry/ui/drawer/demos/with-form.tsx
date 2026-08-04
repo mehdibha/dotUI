@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogBody,
@@ -9,11 +9,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer, DrawerHandle } from '@/registry/ui/drawer'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/dialog"
+import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
 
 /**
  * Drawer with form inputs. Pointerdown on inputs / textarea / select doesn't

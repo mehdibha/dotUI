@@ -1,7 +1,7 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Card from './demos/card'
+import Card from "./demos/card"
 
 export default function SkeletonExamples() {
   return (

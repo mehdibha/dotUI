@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
-import { Dialog, DialogContent, DialogTitle } from '@/registry/ui/dialog'
-import { Popover, type PopoverProps } from '@/registry/ui/popover'
+import { Button } from "@/registry/ui/button"
+import { Dialog, DialogContent, DialogTitle } from "@/registry/ui/dialog"
+import { Popover, type PopoverProps } from "@/registry/ui/popover"
 
-export default function Demo({ placement = 'bottom' }: PopoverProps = {}) {
+export default function Demo({ placement = "bottom" }: PopoverProps = {}) {
   return (
     <Dialog>
       <Button>Open Popover</Button>

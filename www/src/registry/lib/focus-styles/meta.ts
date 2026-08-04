@@ -1,13 +1,13 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const focusStylesMeta = {
-  name: 'focus-styles',
-  type: 'registry:lib',
+  name: "focus-styles",
+  type: "registry:lib",
   files: [
     {
-      path: 'lib/focus-styles/basic.ts',
-      type: 'registry:lib',
-      target: 'lib/focus-styles.ts',
+      path: "lib/focus-styles/basic.ts",
+      type: "registry:lib",
+      target: "lib/focus-styles.ts",
     },
   ],
 } satisfies RegistryItem

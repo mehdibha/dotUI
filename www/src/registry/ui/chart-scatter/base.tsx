@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import type { Channel, ChartBuildContext, ChartKey } from '@tanstack/charts'
-import { dot } from '@tanstack/charts/dot'
-import { scaleSqrt } from 'd3-scale'
+import type { Channel, ChartBuildContext, ChartKey } from "@tanstack/charts"
+import { dot } from "@tanstack/charts/dot"
+import { scaleSqrt } from "d3-scale"
 
 import type {
   ChartBaseSpecOptions,
@@ -11,13 +11,13 @@ import type {
   ChartSpecOf,
   ChartXField,
   ChartYField,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 import {
   Chart,
   chartDefaults,
   chartFrame,
   useChartDefinition,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 /* Scatter has no series plan: both axes are quantitative, so there is one dot
    layer over the raw rows, optionally split by color and sized by `r`. */
@@ -84,7 +84,7 @@ export function scatterChartSpec<TDatum>(
     ...chartFrame(
       { ...options, legend: options.legend ?? order.length > 0 },
       ctx,
-      { order, x: 'linear', y: 'linear', grid: 'both' },
+      { order, x: "linear", y: "linear", grid: "both" },
     ),
     marks: [
       ...(options.marksBefore ?? []),
@@ -123,8 +123,8 @@ export function ScatterChart<TDatum>(props: ScatterChartProps<TDatum>) {
   >(
     {
       ...props,
-      focus: props.focus ?? 'nearest',
-      tooltipAnchor: props.tooltipAnchor ?? 'point',
+      focus: props.focus ?? "nearest",
+      tooltipAnchor: props.tooltipAnchor ?? "point",
     },
     scatterChartSpec,
   )

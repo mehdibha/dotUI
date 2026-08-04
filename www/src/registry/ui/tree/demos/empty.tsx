@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Tree } from '@/registry/ui/tree'
+import { Tree } from "@/registry/ui/tree"
 
 export default function Demo() {
   return (

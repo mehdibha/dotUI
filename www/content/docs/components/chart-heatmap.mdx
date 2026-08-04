@@ -18,16 +18,16 @@ It brings the [`chart`](/docs/components/chart) core — the host, the palette, 
 ## Usage
 
 ```tsx
-import { HeatmapChart } from '@/ui/chart-heatmap'
+import { HeatmapChart } from "@/ui/chart-heatmap"
 ```
 
 A heatmap reads long rows: one row per cell, with the column field, the row field, and the value. `ariaLabel` is required — a chart is a figure, not decoration.
 
 ```tsx
 const sessions = [
-  { day: 'Mon', hour: '09', sessions: 32 },
-  { day: 'Mon', hour: '10', sessions: 58 },
-  { day: 'Tue', hour: '09', sessions: 30 },
+  { day: "Mon", hour: "09", sessions: 32 },
+  { day: "Mon", hour: "10", sessions: 58 },
+  { day: "Tue", hour: "09", sessions: 30 },
 ]
 
 export function Example() {
@@ -51,7 +51,7 @@ Both axes are band scales, so the categories appear in the order the rows first 
 Color is the whole reading, so it is binned rather than continuous: each bin is a distinct step, and the legend prints the boundaries between them. `colors` is the ramp, low to high, and its length is the number of bins.
 
 ```tsx
-import { heatmapColors, HeatmapChart } from '@/ui/chart-heatmap'
+import { heatmapColors, HeatmapChart } from "@/ui/chart-heatmap"
 ```
 
 ```tsx
@@ -60,7 +60,7 @@ import { heatmapColors, HeatmapChart } from '@/ui/chart-heatmap'
   x="hour"
   y="day"
   value="count"
-  colors={heatmapColors('var(--chart-4)', 6)}
+  colors={heatmapColors("var(--chart-4)", 6)}
   ariaLabel="Sessions by hour and weekday"
 />
 ```
@@ -76,7 +76,7 @@ Without `thresholds`, the bins split the observed extent evenly. Pass `threshold
   y="service"
   value="incidents"
   thresholds={[1, 4, 10]}
-  colors={heatmapColors('var(--chart-4)', 4)}
+  colors={heatmapColors("var(--chart-4)", 4)}
   label="Incidents"
   ariaLabel="Incidents per service and week"
 />
@@ -95,7 +95,7 @@ There is always one more color than cut.
   y="region"
   value="share"
   values
-  formatValue={{ locale: 'en-US', number: { style: 'percent' } }}
+  formatValue={{ locale: "en-US", number: { style: "percent" } }}
   ariaLabel="Feature adoption by region and quarter"
 />
 ```

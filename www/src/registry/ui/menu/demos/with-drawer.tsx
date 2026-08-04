@@ -4,17 +4,17 @@ import {
   LogOutIcon,
   SettingsIcon,
   UserIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Drawer, DrawerHandle } from '@/registry/ui/drawer'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import {
   Menu,
   MenuContent,
   MenuItem,
   MenuSection,
   MenuSectionHeader,
-} from '@/registry/ui/menu'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/ui/menu"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

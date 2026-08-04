@@ -1,39 +1,39 @@
-import { Accordion } from '@/registry/ui/accordion'
+import { Accordion } from "@/registry/ui/accordion"
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
-import { Description, FieldContent, Label } from '@/registry/ui/field'
-import { Switch, SwitchControl, SwitchIndicator } from '@/registry/ui/switch'
+} from "@/registry/ui/disclosure"
+import { Description, FieldContent, Label } from "@/registry/ui/field"
+import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
 
 const sections = [
   {
-    name: 'Notifications',
+    name: "Notifications",
     settings: [
       {
-        label: 'Email digests',
-        description: 'A weekly summary of your activity.',
+        label: "Email digests",
+        description: "A weekly summary of your activity.",
         defaultSelected: true,
       },
       {
-        label: 'Push notifications',
-        description: 'Alerts on your devices in real time.',
+        label: "Push notifications",
+        description: "Alerts on your devices in real time.",
         defaultSelected: false,
       },
     ],
   },
   {
-    name: 'Privacy',
+    name: "Privacy",
     settings: [
       {
-        label: 'Public profile',
-        description: 'Let anyone view your profile page.',
+        label: "Public profile",
+        description: "Let anyone view your profile page.",
         defaultSelected: false,
       },
       {
-        label: 'Show activity status',
-        description: 'Display when you were last online.',
+        label: "Show activity status",
+        description: "Display when you were last online.",
         defaultSelected: true,
       },
     ],
@@ -44,7 +44,7 @@ export default function Demo() {
   return (
     <Accordion
       className="w-full max-w-xs"
-      defaultExpandedKeys={['Notifications']}
+      defaultExpandedKeys={["Notifications"]}
     >
       {sections.map((section) => (
         <Disclosure key={section.name} id={section.name}>

@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 
-import { useStepAutoplay } from '../autoplay'
+import { useStepAutoplay } from "../autoplay"
 
-const KEYS = ['overview', 'usage', 'settings']
+const KEYS = ["overview", "usage", "settings"]
 
 export function TabsDemo() {
   const { index } = useStepAutoplay(KEYS.length, { dwell: 1300 })

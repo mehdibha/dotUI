@@ -1,19 +1,19 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const chartLineMeta = {
-  name: 'chart-line',
-  type: 'registry:ui',
-  group: 'charts',
+  name: "chart-line",
+  type: "registry:ui",
+  group: "charts",
   files: [
     {
-      type: 'registry:ui',
-      path: 'ui/chart-line/base.tsx',
-      target: 'ui/chart-line.tsx',
+      type: "registry:ui",
+      path: "ui/chart-line/base.tsx",
+      target: "ui/chart-line.tsx",
     },
   ],
-  dependencies: ['@tanstack/charts@0.0.2', 'd3-shape'],
-  devDependencies: ['@types/d3-shape'],
-  registryDependencies: ['chart'],
+  dependencies: ["@tanstack/charts@0.0.2", "d3-shape"],
+  devDependencies: ["@types/d3-shape"],
+  registryDependencies: ["chart"],
 } satisfies RegistryItem
 
 export default chartLineMeta

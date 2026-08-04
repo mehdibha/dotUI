@@ -1,4 +1,4 @@
-import { Kbd, KbdGroup } from '@/registry/ui/kbd'
+import { Kbd, KbdGroup } from "@/registry/ui/kbd"
 
 export default function Demo() {
   return (

@@ -11,16 +11,16 @@ wip: true
   name="list-box"
   controls={[
     {
-      type: 'enum',
-      name: 'selectionMode',
-      options: ['none', 'single', 'multiple'],
-      defaultValue: 'single',
+      type: "enum",
+      name: "selectionMode",
+      options: ["none", "single", "multiple"],
+      defaultValue: "single",
     },
     {
-      type: 'enum',
-      name: 'orientation',
-      options: ['horizontal', 'vertical'],
-      defaultValue: 'vertical',
+      type: "enum",
+      name: "orientation",
+      options: ["horizontal", "vertical"],
+      defaultValue: "vertical",
     },
   ]}
 />
@@ -36,7 +36,7 @@ npx shadcn@latest add @dotui/list-box
 Use list boxes to display a list of options and allow users to select one or more of them.
 
 ```tsx
-import { ListBox, ListBoxItem } from '@/ui/list-box'
+import { ListBox, ListBoxItem } from "@/ui/list-box"
 ```
 
 ```tsx
@@ -57,7 +57,7 @@ import {
   ListBoxItemDescription,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/ui/list-box'
+} from "@/ui/list-box"
 ```
 
 ```tsx
@@ -105,7 +105,7 @@ Pass items statically as children, or dynamically via `items` plus a render func
 Disable individual options by passing their keys to `disabledKeys` — the rest of the list stays interactive.
 
 ```tsx
-<ListBox aria-label="Options" disabledKeys={['b']}>
+<ListBox aria-label="Options" disabledKeys={["b"]}>
   <ListBoxItem id="a">Option A</ListBoxItem>
   <ListBoxItem id="b">Option B</ListBoxItem>
 </ListBox>

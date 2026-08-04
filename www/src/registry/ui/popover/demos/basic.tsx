@@ -1,12 +1,12 @@
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Popover } from '@/registry/ui/popover'
+} from "@/registry/ui/dialog"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (

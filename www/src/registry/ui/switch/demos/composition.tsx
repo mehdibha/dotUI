@@ -1,10 +1,10 @@
-import { Label } from '@/registry/ui/field'
+import { Label } from "@/registry/ui/field"
 import {
   Switch,
   SwitchControl,
   SwitchIndicator,
   SwitchThumb,
-} from '@/registry/ui/switch'
+} from "@/registry/ui/switch"
 
 export default function Demo() {
   return (

@@ -21,38 +21,38 @@ export const RESOLVABLE_TYPE_PATTERNS = [
  */
 export const SKIP_RESOLVE_TYPES = new Set([
   // DOM types
-  'Window',
-  'Document',
-  'Element',
-  'HTMLElement',
-  'SVGElement',
-  'Node',
-  'EventTarget',
-  'Navigator',
+  "Window",
+  "Document",
+  "Element",
+  "HTMLElement",
+  "SVGElement",
+  "Node",
+  "EventTarget",
+  "Navigator",
   // DOM Events (native)
-  'Event',
-  'MouseEvent',
-  'KeyboardEvent',
-  'FocusEvent',
-  'PointerEvent',
-  'TouchEvent',
-  'DragEvent',
+  "Event",
+  "MouseEvent",
+  "KeyboardEvent",
+  "FocusEvent",
+  "PointerEvent",
+  "TouchEvent",
+  "DragEvent",
   // React types
-  'ReactNode',
-  'ReactElement',
-  'CSSProperties',
-  'RefObject',
-  'Ref',
+  "ReactNode",
+  "ReactElement",
+  "CSSProperties",
+  "RefObject",
+  "Ref",
   // Primitives
-  'string',
-  'number',
-  'boolean',
-  'null',
-  'undefined',
-  'void',
-  'any',
-  'unknown',
-  'never',
+  "string",
+  "number",
+  "boolean",
+  "null",
+  "undefined",
+  "void",
+  "any",
+  "unknown",
+  "never",
 ])
 
 /**
@@ -60,9 +60,9 @@ export const SKIP_RESOLVE_TYPES = new Set([
  * These are custom utility types where the expanded form is more readable.
  */
 export const ALWAYS_EXPAND_TYPES = new Set([
-  'ChildrenOrFunction',
-  'ClassNameOrFunction',
-  'StyleOrFunction',
+  "ChildrenOrFunction",
+  "ClassNameOrFunction",
+  "StyleOrFunction",
 ])
 
 /**
@@ -72,21 +72,21 @@ export const ALWAYS_EXPAND_TYPES = new Set([
  */
 export const REACT_ARIA_EVENT_ORDER = [
   // Press events (from PressEvents)
-  'onPress',
-  'onPressStart',
-  'onPressEnd',
-  'onPressChange',
-  'onPressUp',
-  'onClick',
+  "onPress",
+  "onPressStart",
+  "onPressEnd",
+  "onPressChange",
+  "onPressUp",
+  "onClick",
   // Focus events (from FocusableProps -> FocusEvents)
-  'onFocus',
-  'onBlur',
-  'onFocusChange',
+  "onFocus",
+  "onBlur",
+  "onFocusChange",
   // Keyboard events (from KeyboardEvents)
-  'onKeyDown',
-  'onKeyUp',
+  "onKeyDown",
+  "onKeyUp",
   // Hover events (from HoverEvents)
-  'onHoverStart',
-  'onHoverEnd',
-  'onHoverChange',
+  "onHoverStart",
+  "onHoverEnd",
+  "onHoverChange",
 ]

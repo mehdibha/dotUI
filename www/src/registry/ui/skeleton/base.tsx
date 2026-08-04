@@ -1,57 +1,57 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
-type SkeletonAnimation = 'shimmer' | 'pulse' | 'none'
+type SkeletonAnimation = "shimmer" | "pulse" | "none"
 
 export type SkeletonProps = React.HTMLAttributes<HTMLDivElement> & {
   isLoading?: boolean
 }
 
 const skeletonSelector = [
-  '.skeleton',
-  '[data-skeleton]',
-  '[data-text]',
-  '[data-label]',
-  '[data-description]',
-  '[data-card-title]',
-  '[data-card-description]',
-  '[data-menu-item-label]',
-  '[data-menu-item-description]',
-  '[data-listbox-item-label]',
-  '[data-listbox-item-description]',
-  '[data-button]',
-  '[data-input-control]',
-  '[data-badge]',
-  '[data-tag]',
-  '[data-kbd]',
-  '[data-combobox-value]',
-  '[data-avatar]',
-  '[data-avatar-group-count]',
-  'h1',
-  'h2',
-  'h3',
-  'h4',
-  'h5',
-  'h6',
-  'p',
-  'small',
-  'strong',
-  'em',
-  'code',
-  'kbd',
-  'samp',
-  'figcaption',
-  'legend',
-].join(',')
+  ".skeleton",
+  "[data-skeleton]",
+  "[data-text]",
+  "[data-label]",
+  "[data-description]",
+  "[data-card-title]",
+  "[data-card-description]",
+  "[data-menu-item-label]",
+  "[data-menu-item-description]",
+  "[data-listbox-item-label]",
+  "[data-listbox-item-description]",
+  "[data-button]",
+  "[data-input-control]",
+  "[data-badge]",
+  "[data-tag]",
+  "[data-kbd]",
+  "[data-combobox-value]",
+  "[data-avatar]",
+  "[data-avatar-group-count]",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "p",
+  "small",
+  "strong",
+  "em",
+  "code",
+  "kbd",
+  "samp",
+  "figcaption",
+  "legend",
+].join(",")
 
 const shimmerKeyframes: Keyframe[] = [
-  { backgroundPosition: '100%' },
-  { backgroundPosition: '0%' },
+  { backgroundPosition: "100%" },
+  { backgroundPosition: "0%" },
 ]
 const pulseKeyframes: Keyframe[] = [
   { opacity: 1 },
@@ -62,16 +62,16 @@ const pulseKeyframes: Keyframe[] = [
 const animationOptions: KeyframeAnimationOptions = {
   duration: 2000,
   iterations: Infinity,
-  easing: 'ease-in-out',
+  easing: "ease-in-out",
 }
 
 const useIsomorphicLayoutEffect =
-  typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
+  typeof window === "undefined" ? React.useEffect : React.useLayoutEffect
 
 function getAnimation(className: string): SkeletonAnimation {
-  if (className.includes('skeleton--pulse')) return 'pulse'
-  if (className.includes('skeleton--none')) return 'none'
-  return 'shimmer'
+  if (className.includes("skeleton--pulse")) return "pulse"
+  if (className.includes("skeleton--none")) return "none"
+  return "shimmer"
 }
 
 function getSkeletonElements(root: HTMLElement): HTMLElement[] {
@@ -91,14 +91,14 @@ function useSyncedSkeletonAnimation(
     if (
       !root ||
       !isLoading ||
-      animation === 'none' ||
-      typeof root.animate !== 'function' ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      animation === "none" ||
+      typeof root.animate !== "function" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
       return
     }
 
-    const keyframes = animation === 'pulse' ? pulseKeyframes : shimmerKeyframes
+    const keyframes = animation === "pulse" ? pulseKeyframes : shimmerKeyframes
     const animations = new Map<HTMLElement, Animation>()
 
     const startAnimation = (element: HTMLElement) => {
@@ -167,12 +167,12 @@ export function Skeleton({
   const rootClassName = shouldShowSkeleton
     ? root({
         className: cn(
-          !hasChildren && 'skeleton block h-6 rounded-md',
+          !hasChildren && "skeleton block h-6 rounded-md",
           className,
         ),
       })
     : className
-  const animation = getAnimation(rootClassName ?? '')
+  const animation = getAnimation(rootClassName ?? "")
 
   useSyncedSkeletonAnimation(ref, shouldShowSkeleton, animation)
 
@@ -181,8 +181,8 @@ export function Skeleton({
   return (
     <div
       ref={ref}
-      data-skeleton-loading={shouldShowSkeleton ? '' : undefined}
-      aria-busy={shouldShowSkeleton ? 'true' : undefined}
+      data-skeleton-loading={shouldShowSkeleton ? "" : undefined}
+      aria-busy={shouldShowSkeleton ? "true" : undefined}
       inert={shouldShowSkeleton ? true : undefined}
       className={rootClassName}
       {...props}

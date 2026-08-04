@@ -1,7 +1,7 @@
-import { Label } from '@/registry/ui/field'
-import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
+import { Label } from "@/registry/ui/field"
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 
-const tags = ['News', 'Travel', 'Gaming', 'Shopping']
+const tags = ["News", "Travel", "Gaming", "Shopping"]
 
 export default function Demo() {
   return (

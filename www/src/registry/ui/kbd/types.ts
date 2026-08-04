@@ -1,4 +1,4 @@
-import type * as KeyboardPrimitives from 'react-aria-components/Keyboard'
+import type * as KeyboardPrimitives from "react-aria-components/Keyboard"
 
 /**
  * Groups multiple keyboard keys together to represent a key combination.

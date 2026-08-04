@@ -9,11 +9,11 @@ description: >
   Vite ^6 || ^7 only.
 type: core
 library: tanstack-devtools
-library_version: '0.10.12'
+library_version: "0.10.12"
 sources:
-  - 'TanStack/devtools:docs/vite-plugin.md'
-  - 'TanStack/devtools:docs/source-inspector.md'
-  - 'TanStack/devtools:packages/devtools-vite/src/plugin.ts'
+  - "TanStack/devtools:docs/vite-plugin.md"
+  - "TanStack/devtools:docs/source-inspector.md"
+  - "TanStack/devtools:packages/devtools-vite/src/plugin.ts"
 ---
 
 Configure @tanstack/devtools-vite -- the Vite plugin that enhances TanStack Devtools with source inspection, console piping, enhanced logging, a server event bus, production stripping, editor integration, and a plugin marketplace. The plugin returns an array of sub-plugins, all using `enforce: 'pre'`, so it must be the FIRST plugin in the Vite config.
@@ -22,7 +22,7 @@ Configure @tanstack/devtools-vite -- the Vite plugin that enhances TanStack Devt
 
 ```ts
 // vite.config.ts
-import { devtools } from '@tanstack/devtools-vite'
+import { devtools } from "@tanstack/devtools-vite"
 
 export default {
   plugins: [
@@ -41,7 +41,7 @@ pnpm add -D @tanstack/devtools-vite
 There is also a `defineDevtoolsConfig` helper for type-safe config objects:
 
 ```ts
-import { devtools, defineDevtoolsConfig } from '@tanstack/devtools-vite'
+import { devtools, defineDevtoolsConfig } from "@tanstack/devtools-vite"
 
 const config = defineDevtoolsConfig({
   // fully typed options
@@ -99,8 +99,8 @@ devtools({
   injectSource: {
     enabled: true,
     ignore: {
-      files: ['node_modules', /.*\.test\.(js|ts|jsx|tsx)$/],
-      components: ['InternalComponent', /.*Provider$/],
+      files: ["node_modules", /.*\.test\.(js|ts|jsx|tsx)$/],
+      components: ["InternalComponent", /.*Provider$/],
     },
   },
 })
@@ -130,7 +130,7 @@ Bidirectional console piping between client and server. Injects runtime code (II
 devtools({
   consolePiping: {
     enabled: true,
-    levels: ['log', 'warn', 'error', 'info', 'debug'],
+    levels: ["log", "warn", "error", "info", "debug"],
   },
 })
 ```
@@ -207,7 +207,7 @@ Supported editors via launch-editor: VS Code, WebStorm, Sublime Text, Atom, and 
 ```ts
 devtools({
   editor: {
-    name: 'Cursor',
+    name: "Cursor",
     open: async (path, lineNumber, columnNumber) => {
       // Custom editor open logic
       // path is the absolute file path

@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
 import {
   Token as TokenPrimitive,
   TokenField as TokenFieldPrimitive,
   TokenInput as TokenInputPrimitive,
   TokenSegmentList,
-} from '@/registry/lib/react-aria-token-field'
+} from "@/registry/lib/react-aria-token-field"
 import type {
   TokenFieldProps as TokenFieldPrimitiveProps,
   TokenInputProps as TokenInputPrimitiveProps,
   TokenProps as TokenPrimitiveProps,
-} from '@/registry/lib/react-aria-token-field'
+} from "@/registry/lib/react-aria-token-field"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: tokenFieldStyles
 
@@ -22,7 +22,7 @@ import { useStyles } from './styles'
 
 interface TokenFieldProps extends Omit<
   TokenFieldPrimitiveProps,
-  'className' | 'style'
+  "className" | "style"
 > {
   ref?: React.Ref<HTMLDivElement>
   className?: string
@@ -43,7 +43,7 @@ function TokenField({ className, ...props }: TokenFieldProps) {
 
 interface TokenInputProps extends Omit<
   TokenInputPrimitiveProps,
-  'children' | 'className' | 'style'
+  "children" | "className" | "style"
 > {
   /** Text shown while the field is empty. */
   placeholder?: string
@@ -51,7 +51,7 @@ interface TokenInputProps extends Omit<
   /**
    * Renders each inline token. @default a `Token` with the segment's text
    */
-  children?: TokenInputPrimitiveProps['children']
+  children?: TokenInputPrimitiveProps["children"]
 }
 
 /**
@@ -80,7 +80,7 @@ function TokenInput({
 
 // MARK: Token
 
-interface TokenProps extends Omit<TokenPrimitiveProps, 'className' | 'style'> {
+interface TokenProps extends Omit<TokenPrimitiveProps, "className" | "style"> {
   className?: string
 }
 

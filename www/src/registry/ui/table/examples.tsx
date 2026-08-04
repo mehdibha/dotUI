@@ -1,26 +1,26 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import AsyncLoading from './demos/async-loading'
-import Basic from './demos/basic'
-import ColumnResizing from './demos/column-resizing'
-import Controls from './demos/controls'
-import DisabledRows from './demos/disabled-rows'
-import DisallowEmptySelection from './demos/disallow-empty-selection'
-import DynamicCollection from './demos/dynamic-collection'
-import EmptyState from './demos/empty-state'
-import ExpandableRows from './demos/expandable-rows'
-import Invoices from './demos/invoices'
-import IssueGroups from './demos/issue-groups'
-import LargeListVirtualized from './demos/large-list-virtualized'
-import Links from './demos/links'
-import ProjectBudget from './demos/project-budget'
-import Reordable from './demos/reordable'
-import RowAction from './demos/row-action'
-import Selection from './demos/selection'
-import Sorting from './demos/sorting'
-import StaticRowAction from './demos/static-row-action'
-import Tasks from './demos/tasks'
+import AsyncLoading from "./demos/async-loading"
+import Basic from "./demos/basic"
+import ColumnResizing from "./demos/column-resizing"
+import Controls from "./demos/controls"
+import DisabledRows from "./demos/disabled-rows"
+import DisallowEmptySelection from "./demos/disallow-empty-selection"
+import DynamicCollection from "./demos/dynamic-collection"
+import EmptyState from "./demos/empty-state"
+import ExpandableRows from "./demos/expandable-rows"
+import Invoices from "./demos/invoices"
+import IssueGroups from "./demos/issue-groups"
+import LargeListVirtualized from "./demos/large-list-virtualized"
+import Links from "./demos/links"
+import ProjectBudget from "./demos/project-budget"
+import Reordable from "./demos/reordable"
+import RowAction from "./demos/row-action"
+import Selection from "./demos/selection"
+import Sorting from "./demos/sorting"
+import StaticRowAction from "./demos/static-row-action"
+import Tasks from "./demos/tasks"
 
 export default function TableExamples() {
   return (

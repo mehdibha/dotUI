@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { ExternalLinkIcon } from '@/registry/__generated__/icons'
-import { PlusCircleIcon } from '@/registry/icons'
-import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
-import { Button } from '@/registry/ui/button'
+import { ExternalLinkIcon } from "@/registry/__generated__/icons"
+import { PlusCircleIcon } from "@/registry/icons"
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardAction,
@@ -12,40 +12,40 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
+} from "@/registry/ui/card"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { Separator } from '@/registry/ui/separator'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/select"
+import { Separator } from "@/registry/ui/separator"
+import { TextField } from "@/registry/ui/text-field"
 
 const teamMembers = [
   {
-    name: 'shadcn',
-    email: 'shadcn@vercel.com',
-    avatar: 'https://github.com/shadcn.png',
-    role: 'owner',
+    name: "shadcn",
+    email: "shadcn@vercel.com",
+    avatar: "https://github.com/shadcn.png",
+    role: "owner",
   },
   {
-    name: 'rauchg',
-    email: 'rauchg@vercel.com',
-    avatar: 'https://github.com/rauchg.png',
-    role: 'member',
+    name: "rauchg",
+    email: "rauchg@vercel.com",
+    avatar: "https://github.com/rauchg.png",
+    role: "member",
   },
   {
-    name: 'Lee Robinson',
-    email: 'lee@cursor.com',
-    avatar: 'https://github.com/leerob.png',
-    role: 'member',
+    name: "Lee Robinson",
+    email: "lee@cursor.com",
+    avatar: "https://github.com/leerob.png",
+    role: "member",
   },
 ]
 
-export function InviteMembers(props: React.ComponentProps<'div'>) {
+export function InviteMembers(props: React.ComponentProps<"div">) {
   return (
     <Card {...props}>
       <CardHeader>
@@ -121,7 +121,7 @@ export function InviteMembers(props: React.ComponentProps<'div'>) {
       <Separator />
       <CardFooter className="flex items-center justify-between">
         <p className="text-sm text-fg-muted">
-          Learn more about{' '}
+          Learn more about{" "}
           <a href="#" className="text-fg-accent underline underline-offset-4">
             inviting members
           </a>

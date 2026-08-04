@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { dot } from '@tanstack/charts/dot'
+import { dot } from "@tanstack/charts/dot"
 
 import {
   Card,
@@ -8,16 +8,16 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Sparkline } from '@/registry/ui/chart-sparkline'
+} from "@/registry/ui/card"
+import { Sparkline } from "@/registry/ui/chart-sparkline"
 
 const data = [
-  { month: 'Jan', revenue: 18400 },
-  { month: 'Feb', revenue: 21600 },
-  { month: 'Mar', revenue: 19800 },
-  { month: 'Apr', revenue: 24900 },
-  { month: 'May', revenue: 27300 },
-  { month: 'Jun', revenue: 31250 },
+  { month: "Jan", revenue: 18400 },
+  { month: "Feb", revenue: 21600 },
+  { month: "Mar", revenue: 19800 },
+  { month: "Apr", revenue: 24900 },
+  { month: "May", revenue: 27300 },
+  { month: "Jun", revenue: 31250 },
 ]
 
 const current = data.at(-1)?.revenue ?? 0
@@ -28,22 +28,22 @@ const delta = previous === 0 ? 0 : (current - previous) / previous
    the chart on every render. */
 const endDot = [
   dot(data.slice(-1), {
-    x: 'month',
-    y: 'revenue',
+    x: "month",
+    y: "revenue",
     r: 3,
-    fill: 'var(--chart-1)',
+    fill: "var(--chart-1)",
   }),
 ]
 
-const currency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
+const currency = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
   maximumFractionDigits: 0,
 })
-const percent = new Intl.NumberFormat('en-US', {
-  style: 'percent',
+const percent = new Intl.NumberFormat("en-US", {
+  style: "percent",
   maximumFractionDigits: 1,
-  signDisplay: 'exceptZero',
+  signDisplay: "exceptZero",
 })
 
 export default function ChartSparklineStatCard() {
@@ -67,7 +67,7 @@ export default function ChartSparklineStatCard() {
         <p className="text-xs text-fg-muted">
           <span className="font-medium text-fg-success">
             {percent.format(delta)}
-          </span>{' '}
+          </span>{" "}
           vs. last month
         </p>
       </CardContent>

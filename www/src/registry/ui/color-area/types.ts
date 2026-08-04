@@ -1,4 +1,4 @@
-import type * as ColorAreaPrimitives from 'react-aria-components/ColorArea'
+import type * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 
 /**
  * A color area allows users to adjust two channels of an RGB, HSL or HSB color value

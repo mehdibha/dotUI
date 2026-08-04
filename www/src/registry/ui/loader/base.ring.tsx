@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import * as ProgressBarPrimitives from 'react-aria-components/ProgressBar'
+import * as ProgressBarPrimitives from "react-aria-components/ProgressBar"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
 interface LoaderProps extends ProgressBarPrimitives.ProgressBarProps {}
 
@@ -11,7 +11,7 @@ function Loader({ className, ...props }: LoaderProps) {
     <ProgressBarPrimitives.ProgressBar
       data-loader=""
       className={cn(
-        'inline-flex shrink-0 items-center justify-center',
+        "inline-flex shrink-0 items-center justify-center",
         className,
       )}
       aria-label="loading..."

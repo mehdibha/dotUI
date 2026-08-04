@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Skeleton } from '@/registry/ui/skeleton'
+import { Skeleton } from "@/registry/ui/skeleton"
 
 export default function Demo() {
   return (

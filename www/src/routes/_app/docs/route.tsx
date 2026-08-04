@@ -1,13 +1,13 @@
-import { createFileRoute, getRouteApi, Outlet } from '@tanstack/react-router'
-import type * as PageTree from 'fumadocs-core/page-tree'
+import { createFileRoute, getRouteApi, Outlet } from "@tanstack/react-router"
+import type * as PageTree from "fumadocs-core/page-tree"
 
-import { DocsSidebar } from '@/modules/docs/docs-sidebar'
+import { DocsSidebar } from "@/modules/docs/docs-sidebar"
 
-export const Route = createFileRoute('/_app/docs')({
+export const Route = createFileRoute("/_app/docs")({
   component: DocsLayout,
 })
 
-const appRoute = getRouteApi('/_app')
+const appRoute = getRouteApi("/_app")
 
 function DocsLayout() {
   const { pageTree } = appRoute.useLoaderData()

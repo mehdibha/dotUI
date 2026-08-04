@@ -1,6 +1,6 @@
-import type * as React from 'react'
+import type * as React from "react"
 
-import type { ChartFormat, ChartMarkLayer } from '@/registry/ui/chart'
+import type { ChartFormat, ChartMarkLayer } from "@/registry/ui/chart"
 
 /**
  * A bar chart. Field props (`x`, `y`, `series`, …) name keys of your row type

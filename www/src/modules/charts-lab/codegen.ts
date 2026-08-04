@@ -4,15 +4,15 @@
    always shows exactly the definition the chart is rendering — the export
    story in miniature. */
 
-import { desktopAverage, slotVar, visits, type ChartSlot } from './data'
-import { chartDefaults } from './primitive'
-import tanstackPrimitiveRaw from './primitive.tsx?raw'
-import rechartsPrimitiveRaw from './recharts-chart.tsx?raw'
+import { desktopAverage, slotVar, visits, type ChartSlot } from "./data"
+import { chartDefaults } from "./primitive"
+import tanstackPrimitiveRaw from "./primitive.tsx?raw"
+import rechartsPrimitiveRaw from "./recharts-chart.tsx?raw"
 
-export type MarkKind = 'area' | 'line' | 'bar'
-export type CurveKind = 'linear' | 'natural' | 'monotone' | 'step'
-export type FocusMode = 'nearest' | 'nearest-x' | 'group-x'
-export type TooltipAnchor = 'point' | 'pointer' | 'group-center'
+export type MarkKind = "area" | "line" | "bar"
+export type CurveKind = "linear" | "natural" | "monotone" | "step"
+export type FocusMode = "nearest" | "nearest-x" | "group-x"
+export type TooltipAnchor = "point" | "pointer" | "group-center"
 
 export interface TanstackKnobs {
   desktopSlot: ChartSlot
@@ -36,9 +36,9 @@ export interface TanstackKnobs {
 
 function toDisplaySource(raw: string): string {
   return raw
-    .replace(/@\/registry\/ui\//g, '@/ui/')
-    .replace(/@\/registry\//g, '@/')
-    .replace(/\t/g, '  ')
+    .replace(/@\/registry\/ui\//g, "@/ui/")
+    .replace(/@\/registry\//g, "@/")
+    .replace(/\t/g, "  ")
     .trim()
 }
 
@@ -51,7 +51,7 @@ const DATA_ROWS = visits
     (row) =>
       `  { month: '${row.month}', desktop: ${row.desktop}, mobile: ${row.mobile} },`,
   )
-  .join('\n')
+  .join("\n")
 
 const fmt = (value: number) => String(Math.round(value * 1000) / 1000)
 
@@ -122,9 +122,9 @@ export function VisitorsChart() {
 
 function indent(text: string, pad: string): string {
   return text
-    .split('\n')
+    .split("\n")
     .map((line) => (line ? pad + line : line))
-    .join('\n')
+    .join("\n")
 }
 
 /* Component example: a prop appears only when it deviates from
@@ -132,11 +132,11 @@ function indent(text: string, pad: string): string {
    decisions — the codeOptions thesis applied to charts. */
 export function tanstackExampleCode(k: TanstackKnobs): string {
   const component =
-    k.mark === 'bar'
-      ? 'BarChart'
-      : k.mark === 'line'
-        ? 'LineChart'
-        : 'AreaChart'
+    k.mark === "bar"
+      ? "BarChart"
+      : k.mark === "line"
+        ? "LineChart"
+        : "AreaChart"
 
   const props: string[] = [
     `data={visits}`,
@@ -147,7 +147,7 @@ export function tanstackExampleCode(k: TanstackKnobs): string {
   ]
   const push = (line: string) => props.push(line)
 
-  if (k.mark !== 'bar') {
+  if (k.mark !== "bar") {
     if (k.curve !== chartDefaults.curve) push(`curve="${k.curve}"`)
     if (k.strokeWidth !== chartDefaults.strokeWidth) {
       push(`strokeWidth={${fmt(k.strokeWidth)}}`)
@@ -156,13 +156,13 @@ export function tanstackExampleCode(k: TanstackKnobs): string {
       push(k.points ? `points` : `points={false}`)
     }
   }
-  if (k.mark === 'area') {
+  if (k.mark === "area") {
     if (k.gradient) push(`fill="gradient"`)
     else if (k.fillOpacity / 100 !== chartDefaults.fill) {
       push(`fill={${fmt(k.fillOpacity / 100)}}`)
     }
   }
-  if (k.mark === 'bar' && k.barRadius !== chartDefaults.barRadius) {
+  if (k.mark === "bar" && k.barRadius !== chartDefaults.barRadius) {
     push(`radius={${k.barRadius}}`)
   }
   if (k.grid !== chartDefaults.grid) push(`grid={${k.grid}}`)
@@ -180,31 +180,31 @@ export function tanstackExampleCode(k: TanstackKnobs): string {
   push(`ariaLabel="Visitors by month, desktop and mobile"`)
 
   const recolor = k.desktopSlot !== 1 || k.mobileSlot !== 2
-  const element = `<${component}\n${indent(props.join('\n'), '  ')}\n/>`
+  const element = `<${component}\n${indent(props.join("\n"), "  ")}\n/>`
   const body = recolor
     ? [
         `    <div style={{ '--slot-1': '${slotVar(k.desktopSlot)}', '--slot-2': '${slotVar(k.mobileSlot)}' } as CSSProperties}>`,
         `      {/* Series colors are CSS variables. The two levels keep a 1↔2 swap acyclic. */}`,
         `      <div style={{ '--chart-1': 'var(--slot-1)', '--chart-2': 'var(--slot-2)' } as CSSProperties}>`,
-        indent(element, '        '),
+        indent(element, "        "),
         `      </div>`,
         `    </div>`,
-      ].join('\n')
-    : indent(element, '    ')
+      ].join("\n")
+    : indent(element, "    ")
 
   const family =
-    k.mark === 'bar'
-      ? 'chart-bar'
-      : k.mark === 'line'
-        ? 'chart-line'
-        : 'chart-area'
+    k.mark === "bar"
+      ? "chart-bar"
+      : k.mark === "line"
+        ? "chart-line"
+        : "chart-area"
   const imports = [
     recolor ? `import type { CSSProperties } from 'react'` : null,
     k.refLine ? `import { ruleY } from '@tanstack/charts/rule'` : null,
     `import { ${component} } from '@/ui/${family}'`,
   ].filter((line) => line !== null)
 
-  return `${imports.join('\n')}
+  return `${imports.join("\n")}
 
 const visits = [
 ${DATA_ROWS}
@@ -224,7 +224,7 @@ const averageMarks = [
   }),
 ]
 `
-    : ''
+    : ""
 }
 // Only decisions appear; every omitted prop is a house default.
 export function VisitorsChart() {

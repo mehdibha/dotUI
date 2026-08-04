@@ -7,20 +7,20 @@ description: Alerts display a short, important message in a way that attracts th
   name="alert"
   controls={[
     {
-      name: 'title',
-      type: 'string',
-      defaultValue: 'Update available',
+      name: "title",
+      type: "string",
+      defaultValue: "Update available",
       alwaysShow: true,
     },
     {
-      name: 'description',
-      type: 'string',
+      name: "description",
+      type: "string",
       defaultValue:
-        'A new version is ready to install. Restart the app to apply it.',
+        "A new version is ready to install. Restart the app to apply it.",
       alwaysShow: true,
     },
-    'variant',
-    { name: 'icon', type: 'icon', defaultValue: 'InfoIcon' },
+    "variant",
+    { name: "icon", type: "icon", defaultValue: "InfoIcon" },
   ]}
 />
 
@@ -35,7 +35,7 @@ npx shadcn@latest add @dotui/alert
 Use alerts to display important messages that require user attention.
 
 ```tsx
-import { Alert, AlertDescription, AlertTitle } from '@/ui/alert'
+import { Alert, AlertDescription, AlertTitle } from "@/ui/alert"
 ```
 
 ```tsx
@@ -50,8 +50,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/ui/alert'
 An alert composes a title, a description, and an optional action. To add an icon, place an icon element as the alert's first child — styles pick it up positionally, there is no icon prop.
 
 ```tsx
-import { Alert, AlertTitle, AlertDescription, AlertAction } from '@/ui/alert'
-import { CircleAlert } from 'lucide-react'
+import { Alert, AlertTitle, AlertDescription, AlertAction } from "@/ui/alert"
+import { CircleAlert } from "lucide-react"
 ```
 
 ```tsx

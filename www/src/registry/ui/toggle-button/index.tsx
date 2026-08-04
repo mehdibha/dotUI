@@ -1,5 +1,5 @@
-export * from './base'
+export * from "./base"
 export {
   toggleButtonStyles,
   useStyles as useToggleButtonStyles,
-} from './styles'
+} from "./styles"

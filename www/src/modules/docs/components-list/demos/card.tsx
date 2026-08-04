@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { useStyles as useLinkStyles } from '@/registry/ui/link/styles'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/card"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { useStyles as useLinkStyles } from "@/registry/ui/link/styles"
+import { TextField } from "@/registry/ui/text-field"
 
 export function CardDemo() {
   // The card is itself an <a>; render the real link STYLES on a span so the
@@ -74,8 +74,8 @@ export function CardDemo() {
           Continue with email
         </Button>
         <p className="mt-4 text-sm text-fg-muted">
-          Don&apos;t have an account?{' '}
-          <span data-rac="" className={linkStyles({ variant: 'quiet' })}>
+          Don&apos;t have an account?{" "}
+          <span data-rac="" className={linkStyles({ variant: "quiet" })}>
             register
           </span>
         </p>

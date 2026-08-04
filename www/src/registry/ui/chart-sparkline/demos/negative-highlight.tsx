@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Sparkline } from '@/registry/ui/chart-sparkline'
+import { Sparkline } from "@/registry/ui/chart-sparkline"
 
 interface Point {
   month: string
@@ -8,27 +8,27 @@ interface Point {
 }
 
 const signups: Point[] = [
-  { month: 'Jan', value: 142 },
-  { month: 'Feb', value: 168 },
-  { month: 'Mar', value: 155 },
-  { month: 'Apr', value: 194 },
-  { month: 'May', value: 221 },
-  { month: 'Jun', value: 268 },
+  { month: "Jan", value: 142 },
+  { month: "Feb", value: 168 },
+  { month: "Mar", value: 155 },
+  { month: "Apr", value: 194 },
+  { month: "May", value: 221 },
+  { month: "Jun", value: 268 },
 ]
 
 const activeUsers: Point[] = [
-  { month: 'Jan', value: 1840 },
-  { month: 'Feb', value: 1795 },
-  { month: 'Mar', value: 1860 },
-  { month: 'Apr', value: 1620 },
-  { month: 'May', value: 1508 },
-  { month: 'Jun', value: 1372 },
+  { month: "Jan", value: 1840 },
+  { month: "Feb", value: 1795 },
+  { month: "Mar", value: 1860 },
+  { month: "Apr", value: 1620 },
+  { month: "May", value: 1508 },
+  { month: "Jun", value: 1372 },
 ]
 
-const percent = new Intl.NumberFormat('en-US', {
-  style: 'percent',
+const percent = new Intl.NumberFormat("en-US", {
+  style: "percent",
   maximumFractionDigits: 0,
-  signDisplay: 'exceptZero',
+  signDisplay: "exceptZero",
 })
 
 /* One series, colored by its own direction — the whole point of `color`. The
@@ -40,7 +40,7 @@ function trend(series: Point[]) {
   return {
     down,
     delta: percent.format((last - first) / first),
-    color: down ? 'var(--color-danger)' : 'var(--color-success)',
+    color: down ? "var(--color-danger)" : "var(--color-success)",
   }
 }
 
@@ -52,7 +52,7 @@ function Metric({ label, data }: { label: string; data: Point[] }) {
         <span>{label}</span>
         <span
           className={
-            down ? 'font-medium text-fg-danger' : 'font-medium text-fg-success'
+            down ? "font-medium text-fg-danger" : "font-medium text-fg-success"
           }
         >
           {delta}

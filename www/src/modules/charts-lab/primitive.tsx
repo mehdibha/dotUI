@@ -13,10 +13,10 @@
    Every house decision lives in `chartDefaults`. Lab-only; graduating into
    `registry/ui/chart` is a product decision. */
 
-'use client'
+"use client"
 
-import type { ReactNode } from 'react'
-import { useId, useRef } from 'react'
+import type { ReactNode } from "react"
+import { useId, useRef } from "react"
 import type {
   Channel,
   ChannelField,
@@ -32,15 +32,15 @@ import type {
   ChartTheme,
   ChartValue,
   VisualChannel,
-} from '@tanstack/charts'
-import { areaY, barY, defineChart, lineY } from '@tanstack/charts'
-import { d3Curve } from '@tanstack/charts/d3/shape'
-import { colorLegend } from '@tanstack/charts/legend'
-import { renderChartSvgWithResources } from '@tanstack/charts/svg/resources'
-import type { ChartCommonProps } from '@tanstack/react-charts'
-import { Chart as TanChart } from '@tanstack/react-charts'
-import { scaleBand, scaleLinear, scalePoint } from 'd3-scale'
-import { curveMonotoneX, curveNatural, curveStepAfter } from 'd3-shape'
+} from "@tanstack/charts"
+import { areaY, barY, defineChart, lineY } from "@tanstack/charts"
+import { d3Curve } from "@tanstack/charts/d3/shape"
+import { colorLegend } from "@tanstack/charts/legend"
+import { renderChartSvgWithResources } from "@tanstack/charts/svg/resources"
+import type { ChartCommonProps } from "@tanstack/react-charts"
+import { Chart as TanChart } from "@tanstack/react-charts"
+import { scaleBand, scaleLinear, scalePoint } from "d3-scale"
+import { curveMonotoneX, curveNatural, curveStepAfter } from "d3-shape"
 
 /* Every design-system decision the charts make, in one object: the single
    codegen baseline, the single publisher splice target, and the single
@@ -48,7 +48,7 @@ import { curveMonotoneX, curveNatural, curveStepAfter } from 'd3-shape'
    `??` fallback — read it from here. */
 export const chartDefaults = {
   height: 256,
-  curve: 'natural',
+  curve: "natural",
   strokeWidth: 2.25,
   fill: 0.2,
   points: false,
@@ -59,8 +59,8 @@ export const chartDefaults = {
   grid: true,
   axes: true,
   legend: true,
-  focus: 'group-x',
-  tooltipAnchor: 'group-center',
+  focus: "group-x",
+  tooltipAnchor: "group-center",
   tooltipSticky: true,
   animate: { duration: 240, respectReducedMotion: true },
   animateMaxPoints: 800,
@@ -74,14 +74,14 @@ export const chartDefaults = {
    generates --chart-1..8; the library's own default theme has only six, so
    never rely on --ts-chart-* remapping to carry them. */
 const CHART_PALETTE = [
-  'var(--chart-1)',
-  'var(--chart-2)',
-  'var(--chart-3)',
-  'var(--chart-4)',
-  'var(--chart-5)',
-  'var(--chart-6)',
-  'var(--chart-7)',
-  'var(--chart-8)',
+  "var(--chart-1)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-4)",
+  "var(--chart-5)",
+  "var(--chart-6)",
+  "var(--chart-7)",
+  "var(--chart-8)",
 ] as const
 
 const CHART_THEME: Partial<ChartTheme> = { palette: CHART_PALETTE }
@@ -97,8 +97,8 @@ const CURVES = /* @__PURE__ */ {
 } as const
 
 export type ChartCurve = keyof typeof CURVES
-export type ChartFocus = 'nearest' | 'nearest-x' | 'group-x'
-export type ChartTooltipAnchor = 'point' | 'pointer' | 'group-center'
+export type ChartFocus = "nearest" | "nearest-x" | "group-x"
+export type ChartTooltipAnchor = "point" | "pointer" | "group-center"
 
 /* The library's own public mark constraint: annotation layers rarely share
    the series row type. */
@@ -170,7 +170,7 @@ export interface AreaChartSpecOptions<
 > extends XYChartSpecOptions<TDatum, TXField> {
   curve?: ChartCurve
   /** Fill opacity 0–1, or 'gradient' for a fade-to-transparent fill. */
-  fill?: number | 'gradient'
+  fill?: number | "gradient"
   strokeWidth?: number
   points?: boolean
   /** Scopes the declared gradient resources; the components pass `useId()`. */
@@ -216,8 +216,8 @@ function resolveFormat(
   format: ChartFormat | undefined,
 ): ((value: ChartValue) => string) | undefined {
   if (format === undefined) return undefined
-  if (typeof format === 'function') return format
-  if ('number' in format) {
+  if (typeof format === "function") return format
+  if ("number" in format) {
     const formatter = new Intl.NumberFormat(format.locale, format.number)
     return (value) => formatter.format(Number(value))
   }
@@ -296,7 +296,7 @@ function chartFrame<TDatum, TXField extends XField<TDatum>>(
   ctx: ChartBuildContext,
   order: readonly string[],
   band: boolean,
-): Pick<ChartSpecOf<TDatum, ChartValue>, 'x' | 'y' | 'color' | 'theme'> {
+): Pick<ChartSpecOf<TDatum, ChartValue>, "x" | "y" | "color" | "theme"> {
   const axes = options.axes ?? chartDefaults.axes
   const formatX = resolveFormat(options.formatX)
   const formatY = resolveFormat(options.formatY)
@@ -337,8 +337,8 @@ export function areaChartSpec<TDatum, TXField extends XField<TDatum>>(
   const strokeWidth = options.strokeWidth ?? chartDefaults.strokeWidth
   const points = options.points ?? chartDefaults.points
   const fill = options.fill ?? chartDefaults.fill
-  const gradient = fill === 'gradient'
-  const prefix = `${options.gradientIdPrefix ?? 'dotui'}-area`
+  const gradient = fill === "gradient"
+  const prefix = `${options.gradientIdPrefix ?? "dotui"}-area`
   const [from, to] = chartDefaults.gradientStops
   return {
     ...chartFrame(options, ctx, order, false),
@@ -424,8 +424,8 @@ export function barChartSpec<TDatum, TXField extends XField<TDatum>>(
    a closure cannot be keyed — a changed easing function would never rebuild. */
 export type ChartAnimate =
   | boolean
-  | (Omit<ChartAnimationOptions, 'easing'> & {
-      easing?: Extract<ChartAnimationOptions['easing'], string>
+  | (Omit<ChartAnimationOptions, "easing"> & {
+      easing?: Extract<ChartAnimationOptions["easing"], string>
     })
 
 export interface ChartBehaviorProps {
@@ -442,7 +442,7 @@ export interface ChartBehaviorProps {
    is strictly worse than a scene rebuild. The host owns them. */
 export type ChartHostProps<TDatum, TXValue extends ChartValue> = Omit<
   ChartCommonProps<TDatum, TXValue, number>,
-  'renderSvg' | 'measureText'
+  "renderSvg" | "measureText"
 >
 
 export type ChartProps<TDatum, TXValue extends ChartValue> = ChartHostProps<
@@ -477,7 +477,7 @@ export function Chart<TDatum, TXValue extends ChartValue>({
 
 export type AreaChartProps<TDatum, TXField extends XField<TDatum>> = Omit<
   AreaChartSpecOptions<TDatum, TXField>,
-  'gradientIdPrefix'
+  "gradientIdPrefix"
 > &
   ChartBehaviorProps &
   ChartHostProps<TDatum, XValueOf<TDatum, TXField>> & { children?: ReactNode }
@@ -546,34 +546,34 @@ export function BarChart<TDatum, TXField extends XField<TDatum>>(
 /* ------------------------------------------------------------------ */
 
 const HOST_PROP_NAMES = new Set([
-  'ariaLabel',
-  'ariaDescription',
-  'height',
-  'aspectRatio',
-  'width',
-  'initialWidth',
-  'className',
-  'style',
-  'tabIndex',
-  'idPrefix',
-  'onFocusChange',
-  'onFocusGroupChange',
-  'onSelect',
-  'onRender',
-  'renderTooltipBody',
+  "ariaLabel",
+  "ariaDescription",
+  "height",
+  "aspectRatio",
+  "width",
+  "initialWidth",
+  "className",
+  "style",
+  "tabIndex",
+  "idPrefix",
+  "onFocusChange",
+  "onFocusGroupChange",
+  "onSelect",
+  "onRender",
+  "renderTooltipBody",
 ])
 
 const BEHAVIOR_PROP_NAMES = new Set([
-  'focus',
-  'tooltip',
-  'tooltipAnchor',
-  'tooltipSticky',
-  'animate',
+  "focus",
+  "tooltip",
+  "tooltipAnchor",
+  "tooltipSticky",
+  "animate",
 ])
 
 /* Props that stay identity-compared — the React list contract everyone
    already knows. Everything else is serialized. */
-const REFERENCE_PROP_NAMES = new Set(['data', 'marks', 'marksBefore'])
+const REFERENCE_PROP_NAMES = new Set(["data", "marks", "marksBefore"])
 
 function splitChartProps(props: object): {
   host: Record<string, unknown>
@@ -586,7 +586,7 @@ function splitChartProps(props: object): {
   const spec: Record<string, unknown> = {}
   for (const name of Object.keys(source)) {
     const value = source[name]
-    if (value === undefined || name === 'children') continue
+    if (value === undefined || name === "children") continue
     if (HOST_PROP_NAMES.has(name)) host[name] = value
     else if (BEHAVIOR_PROP_NAMES.has(name)) behavior[name] = value
     else spec[name] = value
@@ -595,15 +595,15 @@ function splitChartProps(props: object): {
 }
 
 function serialize(value: unknown): string {
-  if (value === null) return 'null'
-  if (typeof value === 'function') return 'fn'
-  if (Array.isArray(value)) return `[${value.map(serialize).join(',')}]`
-  if (typeof value === 'object') {
+  if (value === null) return "null"
+  if (typeof value === "function") return "fn"
+  if (Array.isArray(value)) return `[${value.map(serialize).join(",")}]`
+  if (typeof value === "object") {
     const record = value as Record<string, unknown>
     return `{${Object.keys(record)
       .sort()
       .map((name) => `${name}:${serialize(record[name])}`)
-      .join(',')}}`
+      .join(",")}}`
   }
   return String(value)
 }
@@ -613,7 +613,7 @@ function serialize(value: unknown): string {
    turn a loud over-render into a silent stale-render. */
 function chartKey(source: object): string {
   const record = source as Record<string, unknown>
-  let key = ''
+  let key = ""
   for (const name of Object.keys(record).sort()) {
     if (REFERENCE_PROP_NAMES.has(name)) continue
     key += `${name}=${serialize(record[name])};`
@@ -626,8 +626,8 @@ function chartReferences(spec: Record<string, unknown>): readonly unknown[] {
     spec.data,
     spec.marks,
     spec.marksBefore,
-    typeof spec.formatX === 'function' ? spec.formatX : null,
-    typeof spec.formatY === 'function' ? spec.formatY : null,
+    typeof spec.formatX === "function" ? spec.formatX : null,
+    typeof spec.formatY === "function" ? spec.formatY : null,
   ]
 }
 
@@ -705,7 +705,7 @@ function useXYChart<TDatum, TXValue extends ChartValue, TOptions>(
   children: ReactNode
 } {
   /* Scopes gradient resources so two charts on one page cannot collide. */
-  const gradientIdPrefix = useId().replace(/[^a-zA-Z0-9_-]/g, '')
+  const gradientIdPrefix = useId().replace(/[^a-zA-Z0-9_-]/g, "")
   const { host, behavior, spec } = splitChartProps(props)
   const options = { ...spec, gradientIdPrefix } as TOptions
   const degrade = countPoints(spec) > chartDefaults.animateMaxPoints

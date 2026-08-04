@@ -1,19 +1,19 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Tooltip,
   TooltipContent,
   type TooltipContentProps,
-} from '@/registry/ui/tooltip'
+} from "@/registry/ui/tooltip"
 
 export default function Demo({
-  content = 'Tooltip content',
-  placement = 'top',
+  content = "Tooltip content",
+  placement = "top",
   hideArrow = false,
 }: {
   content?: string
-  placement?: TooltipContentProps['placement']
+  placement?: TooltipContentProps["placement"]
   hideArrow?: boolean
 } = {}) {
   return (

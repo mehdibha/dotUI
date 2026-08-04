@@ -1,7 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-import { siteConfig } from '@/config/site'
-import { docsSource } from '@/lib/source'
+import { siteConfig } from "@/config/site"
+import { docsSource } from "@/lib/source"
 
 // Serves /llms.txt — the llmstxt.org index: an H1, a blockquote summary, then
 // H2 sections of `[name](url): description` links. The component list is
@@ -25,12 +25,12 @@ function formatList(pages: DocLink[]): string[] {
       const title = page.data.title ?? page.url
       const description = page.data.description
         ? `: ${page.data.description}`
-        : ''
+        : ""
       return `- [${title}](${siteConfig.url}${page.url})${description}`
     })
 }
 
-export const Route = createFileRoute('/llms.txt')({
+export const Route = createFileRoute("/llms.txt")({
   server: {
     handlers: {
       GET: () => {
@@ -38,30 +38,30 @@ export const Route = createFileRoute('/llms.txt')({
         // The components overview lives at /docs/components (no trailing slash);
         // individual component pages live beneath it.
         const isComponent = (url: string) =>
-          url === '/docs/components' || url.startsWith('/docs/components/')
+          url === "/docs/components" || url.startsWith("/docs/components/")
         const gettingStarted = docs.filter((page) => !isComponent(page.url))
         const components = docs.filter((page) => isComponent(page.url))
 
         const body =
           [
-            '# dotUI',
-            '',
+            "# dotUI",
+            "",
             `> ${SUMMARY}`,
-            '',
-            '## Overview',
-            '',
+            "",
+            "## Overview",
+            "",
             ...formatList(gettingStarted),
-            '',
-            '## Components',
-            '',
+            "",
+            "## Components",
+            "",
             ...formatList(components),
-          ].join('\n') + '\n'
+          ].join("\n") + "\n"
 
         return new Response(body, {
           headers: {
-            'Content-Type': 'text/plain; charset=utf-8',
-            'Cache-Control':
-              'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400',
+            "Content-Type": "text/plain; charset=utf-8",
+            "Cache-Control":
+              "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
           },
         })
       },

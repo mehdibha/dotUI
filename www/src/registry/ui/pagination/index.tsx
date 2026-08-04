@@ -9,7 +9,7 @@ export {
   PaginationList,
   PaginationNext,
   PaginationPrevious,
-} from './base'
+} from "./base"
 export type {
   PaginationEllipsisProps,
   PaginationItemProps,
@@ -18,4 +18,4 @@ export type {
   PaginationNextProps,
   PaginationPreviousProps,
   PaginationProps,
-} from './base'
+} from "./base"

@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import type { ChartBuildContext } from '@tanstack/charts'
-import { barX, barY } from '@tanstack/charts/bar'
-import { scaleBand } from 'd3-scale'
+import type { ChartBuildContext } from "@tanstack/charts"
+import { barX, barY } from "@tanstack/charts/bar"
+import { scaleBand } from "d3-scale"
 
 import type {
   ChartComponentProps,
@@ -10,14 +10,14 @@ import type {
   ChartXField,
   ChartXValueOf,
   XYChartSpecOptions,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 import {
   Chart,
   chartDefaults,
   chartFrame,
   planChart,
   useChartDefinition,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 export interface BarChartSpecOptions<
   TDatum,
@@ -58,8 +58,8 @@ export function barChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
       options,
       ctx,
       horizontal
-        ? { order, x: 'linear', y: 'band', grid: 'x' }
-        : { order, x: 'band', grid: 'y' },
+        ? { order, x: "linear", y: "band", grid: "x" }
+        : { order, x: "band", grid: "y" },
     ),
     marks: [
       ...(options.marksBefore ?? []),

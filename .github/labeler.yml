@@ -1,19 +1,19 @@
-'area: www':
+"area: www":
   - changed-files:
-      - any-glob-to-any-file: ['www/**']
+      - any-glob-to-any-file: ["www/**"]
 
-'documentation':
+"documentation":
   - changed-files:
-      - any-glob-to-any-file: ['www/content/**', '**/*.md', '**/*.mdx']
+      - any-glob-to-any-file: ["www/content/**", "**/*.md", "**/*.mdx"]
 
-'area: ci':
+"area: ci":
   - changed-files:
-      - any-glob-to-any-file: ['.github/**']
+      - any-glob-to-any-file: [".github/**"]
 
-'area: registry':
+"area: registry":
   - changed-files:
-      - any-glob-to-any-file: ['www/src/registry/**']
+      - any-glob-to-any-file: ["www/src/registry/**"]
 
-'area: colors':
+"area: colors":
   - changed-files:
-      - any-glob-to-any-file: ['packages/colors/**']
+      - any-glob-to-any-file: ["packages/colors/**"]

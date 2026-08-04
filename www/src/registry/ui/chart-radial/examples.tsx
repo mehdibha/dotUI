@@ -1,24 +1,24 @@
-import { RadialBarChart } from '@/registry/ui/chart-radial'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { RadialBarChart } from "@/registry/ui/chart-radial"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 const data = [
-  { browser: 'chrome', visitors: 275 },
-  { browser: 'safari', visitors: 200 },
-  { browser: 'firefox', visitors: 187 },
-  { browser: 'edge', visitors: 173 },
-  { browser: 'other', visitors: 90 },
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
 ]
 
 const labels = {
-  chrome: 'Chrome',
-  safari: 'Safari',
-  firefox: 'Firefox',
-  edge: 'Edge',
-  other: 'Other',
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
 }
 
-const total = [{ browser: 'safari', visitors: 1260 }]
+const total = [{ browser: "safari", visitors: 1260 }]
 
 export default function ChartRadialExamples() {
   return (
@@ -40,7 +40,7 @@ export default function ChartRadialExamples() {
           data={total}
           value="visitors"
           name="browser"
-          labels={{ safari: 'Safari' }}
+          labels={{ safari: "Safari" }}
           max={1600}
           endAngle={(250 * Math.PI) / 180}
           innerRadius={0.78}

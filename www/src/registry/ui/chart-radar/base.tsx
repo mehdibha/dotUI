@@ -1,18 +1,18 @@
-'use client'
+"use client"
 
-import { useRef, useState } from 'react'
+import { useRef, useState } from "react"
 import type {
   ChartBuildContext,
   ChartPoint,
   ChartValue,
-} from '@tanstack/charts'
-import { colorLegend } from '@tanstack/charts/legend'
+} from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
 import type {
   PolarGuide,
   PolarGuideLabelContext,
   PolarLayoutContext,
   PolarMark,
-} from '@tanstack/charts/polar'
+} from "@tanstack/charts/polar"
 import {
   angleGrid,
   polar,
@@ -20,9 +20,9 @@ import {
   radialDot,
   radialGrid,
   radialLine,
-} from '@tanstack/charts/polar'
-import { scaleLinear, scalePoint } from 'd3-scale'
-import { curveLinearClosed, pointRadial } from 'd3-shape'
+} from "@tanstack/charts/polar"
+import { scaleLinear, scalePoint } from "d3-scale"
+import { curveLinearClosed, pointRadial } from "d3-shape"
 
 import type {
   ChartComponentProps,
@@ -33,7 +33,7 @@ import type {
   ChartXValueOf,
   ChartYField,
   XYChartSpecOptions,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 import {
   CHART_THEME,
   Chart,
@@ -42,7 +42,7 @@ import {
   planChart,
   resolveFormat,
   useChartDefinition,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 /* Radar geometry the shared defaults do not cover — a radar reads as a shape,
    so its fill is far heavier than a cartesian area's. */
@@ -63,10 +63,10 @@ export interface RadarChartSpecOptions<
   TXField extends ChartXField<TDatum>,
 > extends Omit<
   XYChartSpecOptions<TDatum, TXField>,
-  'marks' | 'marksBefore' | 'y1'
+  "marks" | "marksBefore" | "y1"
 > {
   /** Ring shape. */
-  gridShape?: 'circle' | 'polygon'
+  gridShape?: "circle" | "polygon"
   /** Number of rings. */
   gridTicks?: number
   /** Fill opacity of the area inside the outer ring. */
@@ -92,13 +92,13 @@ export interface RadarChartSpecOptions<
 
 function readValue<TDatum>(row: TDatum, field: ChartYField<TDatum>): number {
   const value = row[field as keyof TDatum]
-  return typeof value === 'number' && Number.isFinite(value) ? value : 0
+  return typeof value === "number" && Number.isFinite(value) ? value : 0
 }
 
 /* `radialGrid` hard-codes `fill: 'none'` on every ring, so a filled grid is its
    own guide. Guides paint in order, so it lands under the rings. */
 function gridFillGuide(
-  shape: 'circle' | 'polygon',
+  shape: "circle" | "polygon",
   fill: string,
   fillOpacity: number,
 ): PolarGuide {
@@ -106,8 +106,8 @@ function gridFillGuide(
     render: ({ layout }) => ({
       background: [
         {
-          kind: 'area',
-          key: 'radar-grid-fill',
+          kind: "area",
+          key: "radar-grid-fill",
           points: [],
           path: gridFillPath(layout, shape),
           style: { fill, fillOpacity },
@@ -119,19 +119,19 @@ function gridFillGuide(
 
 function gridFillPath(
   layout: PolarLayoutContext,
-  shape: 'circle' | 'polygon',
+  shape: "circle" | "polygon",
 ): string {
   const radius = layout.radius
   const angle = layout.angle
-  if (shape === 'circle' || angle === undefined || angle.domain.length < 3) {
+  if (shape === "circle" || angle === undefined || angle.domain.length < 3) {
     return `M${radius},0A${radius},${radius} 0 1,1 ${-radius},0A${radius},${radius} 0 1,1 ${radius},0Z`
   }
   const corners = angle.domain.map((value) =>
     pointRadial(angle.map(value), radius),
   )
   const path = corners
-    .map(([x, y], index) => `${index === 0 ? 'M' : 'L'}${x},${y}`)
-    .join('')
+    .map(([x, y], index) => `${index === 0 ? "M" : "L"}${x},${y}`)
+    .join("")
   return `${path}Z`
 }
 
@@ -170,7 +170,7 @@ export function radarChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
   const grid = options.grid ?? chartDefaults.grid
   const spokes = options.spokes ?? grid
   const axes = options.axes ?? chartDefaults.axes
-  const shape = options.gridShape ?? 'polygon'
+  const shape = options.gridShape ?? "polygon"
   const ticks = options.gridTicks ?? radarDefaults.gridTicks
   const fill = options.fill ?? radarDefaults.fill
   const detail = axes && options.axisDetail !== undefined
@@ -209,7 +209,7 @@ export function radarChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
         format: resolveFormat(options.axisDetail),
         labelDx,
         labelDy: labelDy(-radarDefaults.labelLine),
-        labelFill: 'var(--color-fg-muted)',
+        labelFill: "var(--color-fg-muted)",
       }),
     )
   }

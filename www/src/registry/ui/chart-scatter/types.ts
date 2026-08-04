@@ -1,6 +1,6 @@
-import type * as React from 'react'
+import type * as React from "react"
 
-import type { ChartFormat, ChartMarkLayer } from '@/registry/ui/chart'
+import type { ChartFormat, ChartMarkLayer } from "@/registry/ui/chart"
 
 /**
  * A scatter plot: one dot per row, positioned by two quantitative fields, with

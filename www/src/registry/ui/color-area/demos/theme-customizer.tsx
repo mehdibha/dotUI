@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import React from 'react'
-import * as ColorAreaPrimitives from 'react-aria-components/ColorArea'
+import React from "react"
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 
 import {
   Card,
@@ -9,16 +9,16 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { ColorArea } from '@/registry/ui/color-area'
-import { Label } from '@/registry/ui/field'
+} from "@/registry/ui/card"
+import { ColorArea } from "@/registry/ui/color-area"
+import { Label } from "@/registry/ui/field"
 
 export default function Demo() {
   const [primary, setPrimary] = React.useState(
-    ColorAreaPrimitives.parseColor('hsl(217, 91%, 60%)'),
+    ColorAreaPrimitives.parseColor("hsl(217, 91%, 60%)"),
   )
   const [secondary, setSecondary] = React.useState(
-    ColorAreaPrimitives.parseColor('hsl(280, 70%, 60%)'),
+    ColorAreaPrimitives.parseColor("hsl(280, 70%, 60%)"),
   )
   return (
     <div className="flex w-full flex-col gap-6 sm:flex-row">
@@ -33,7 +33,7 @@ export default function Demo() {
             aria-label="Primary color"
           />
           <span className="text-xs text-fg-muted uppercase">
-            {primary.toString('hex')}
+            {primary.toString("hex")}
           </span>
         </div>
         <div className="flex flex-col gap-2">
@@ -46,7 +46,7 @@ export default function Demo() {
             aria-label="Secondary color"
           />
           <span className="text-xs text-fg-muted uppercase">
-            {secondary.toString('hex')}
+            {secondary.toString("hex")}
           </span>
         </div>
       </div>
@@ -59,14 +59,14 @@ export default function Demo() {
           <button
             type="button"
             className="rounded-md px-3 py-2 text-sm font-medium text-white"
-            style={{ backgroundColor: primary.toString('hex') }}
+            style={{ backgroundColor: primary.toString("hex") }}
           >
             Primary button
           </button>
           <button
             type="button"
             className="rounded-md px-3 py-2 text-sm font-medium text-white"
-            style={{ backgroundColor: secondary.toString('hex') }}
+            style={{ backgroundColor: secondary.toString("hex") }}
           >
             Secondary button
           </button>

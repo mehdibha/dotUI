@@ -1,5 +1,5 @@
-import type * as BreadcrumbsPrimitives from 'react-aria-components/Breadcrumbs'
-import type * as LinkPrimitives from 'react-aria-components/Link'
+import type * as BreadcrumbsPrimitives from "react-aria-components/Breadcrumbs"
+import type * as LinkPrimitives from "react-aria-components/Link"
 
 /**
  * Breadcrumbs display a hierarchy of links to the current page or resource in an application.
@@ -27,4 +27,4 @@ export interface BreadcrumbLinkProps extends React.ComponentProps<
 /**
  * A separator visually divides breadcrumb items.
  */
-export interface BreadcrumbSeparatorProps extends React.ComponentProps<'span'> {}
+export interface BreadcrumbSeparatorProps extends React.ComponentProps<"span"> {}

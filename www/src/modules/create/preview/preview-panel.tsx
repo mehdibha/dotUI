@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { getRouteApi } from '@tanstack/react-router'
+import { useEffect, useMemo, useRef, useState } from "react"
+import { getRouteApi } from "@tanstack/react-router"
 import {
   ChevronDownIcon,
   ExternalLinkIcon,
@@ -10,40 +10,40 @@ import {
   SmartphoneIcon,
   SunIcon,
   TabletIcon,
-} from 'lucide-react'
-import { useTheme } from 'starter-themes'
+} from "lucide-react"
+import { useTheme } from "starter-themes"
 
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { Command } from '@/registry/ui/command'
-import { Input } from '@/registry/ui/input'
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { Command } from "@/registry/ui/command"
+import { Input } from "@/registry/ui/input"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { SearchField } from '@/registry/ui/search-field'
-import { Select, SelectValue } from '@/registry/ui/select'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+} from "@/registry/ui/list-box"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { SearchField } from "@/registry/ui/search-field"
+import { Select, SelectValue } from "@/registry/ui/select"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import {
   pingIframe,
   sendPreviewMode,
   sendToIframe,
   useDesignSystem,
-} from '@/modules/create/preset'
-import type { PreviewMode } from '@/modules/create/preset'
-import { componentsData } from '@/modules/docs/components-list/components-data'
+} from "@/modules/create/preset"
+import type { PreviewMode } from "@/modules/create/preset"
+import { componentsData } from "@/modules/docs/components-list/components-data"
 
-type DeviceSize = 'mobile' | 'tablet' | 'desktop'
+type DeviceSize = "mobile" | "tablet" | "desktop"
 
 // Widths the iframe reflows to per device — true responsive previews (changing the
 // iframe's CSS width re-lays-out the content inside). Desktop is unconstrained (fills).
-const DEVICE_WIDTHS: Record<Exclude<DeviceSize, 'desktop'>, number> = {
+const DEVICE_WIDTHS: Record<Exclude<DeviceSize, "desktop">, number> = {
   mobile: 390,
   tablet: 768,
 }
@@ -53,9 +53,9 @@ const SIZE_OPTIONS: {
   label: string
   Icon: typeof MonitorIcon
 }[] = [
-  { id: 'mobile', label: 'Mobile', Icon: SmartphoneIcon },
-  { id: 'tablet', label: 'Tablet', Icon: TabletIcon },
-  { id: 'desktop', label: 'Desktop', Icon: MonitorIcon },
+  { id: "mobile", label: "Mobile", Icon: SmartphoneIcon },
+  { id: "tablet", label: "Tablet", Icon: TabletIcon },
+  { id: "desktop", label: "Desktop", Icon: MonitorIcon },
 ]
 
 // Zoom magnifies the rendered iframe (CSS `zoom`, no reflow) — distinct from device
@@ -65,7 +65,7 @@ const ZOOM_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2]
 const PREVIEW_PING_INTERVAL = 150
 const PREVIEW_READY_TIMEOUT = 8000
 
-const routeApi = getRouteApi('/_app/create')
+const routeApi = getRouteApi("/_app/create")
 
 export function PreviewPanel({ className }: { className?: string }) {
   const { preview, preset } = routeApi.useSearch()
@@ -75,14 +75,14 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   const panelRef = useRef<HTMLDivElement>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const [previewMode, setPreviewMode] = useState<PreviewMode>('light')
-  const [size, setSize] = useState<DeviceSize>('desktop')
+  const [previewMode, setPreviewMode] = useState<PreviewMode>("light")
+  const [size, setSize] = useState<DeviceSize>("desktop")
   const [zoom, setZoom] = useState(1)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
 
   const effectivePreview = preview
-  const constrained = size !== 'desktop'
+  const constrained = size !== "desktop"
 
   // Open the preview in the same light / dark mode the site is currently in. Seeded on
   // mount rather than via the useState initializer: this page is server-rendered and the
@@ -121,13 +121,13 @@ export function PreviewPanel({ className }: { className?: string }) {
       setIsLoaded(true)
       clearInterval(poll)
       clearTimeout(giveUp)
-      window.removeEventListener('message', onReady)
+      window.removeEventListener("message", onReady)
     }
     const onReady = (event: MessageEvent) => {
-      if (event.data?.type === 'preview-ready') settle()
+      if (event.data?.type === "preview-ready") settle()
     }
 
-    window.addEventListener('message', onReady)
+    window.addEventListener("message", onReady)
     const giveUp = setTimeout(settle, PREVIEW_READY_TIMEOUT)
     poll = setInterval(() => pingIframe(iframe), PREVIEW_PING_INTERVAL)
     pingIframe(iframe)
@@ -135,7 +135,7 @@ export function PreviewPanel({ className }: { className?: string }) {
     return () => {
       clearInterval(poll)
       clearTimeout(giveUp)
-      window.removeEventListener('message', onReady)
+      window.removeEventListener("message", onReady)
     }
   }, [iframeSrc])
 
@@ -149,14 +149,14 @@ export function PreviewPanel({ className }: { className?: string }) {
 
     if (iframe.contentWindow) send()
 
-    iframe.addEventListener('load', send)
+    iframe.addEventListener("load", send)
     const onReady = (event: MessageEvent) => {
-      if (event.data?.type === 'preview-ready') send()
+      if (event.data?.type === "preview-ready") send()
     }
-    window.addEventListener('message', onReady)
+    window.addEventListener("message", onReady)
     return () => {
-      iframe.removeEventListener('load', send)
-      window.removeEventListener('message', onReady)
+      iframe.removeEventListener("load", send)
+      window.removeEventListener("message", onReady)
     }
   }, [designSystem])
 
@@ -167,14 +167,14 @@ export function PreviewPanel({ className }: { className?: string }) {
     if (!iframe) return
     const send = () => sendPreviewMode(iframe, previewMode)
     if (iframe.contentWindow) send()
-    iframe.addEventListener('load', send)
+    iframe.addEventListener("load", send)
     const onReady = (event: MessageEvent) => {
-      if (event.data?.type === 'preview-ready') send()
+      if (event.data?.type === "preview-ready") send()
     }
-    window.addEventListener('message', onReady)
+    window.addEventListener("message", onReady)
     return () => {
-      iframe.removeEventListener('load', send)
-      window.removeEventListener('message', onReady)
+      iframe.removeEventListener("load", send)
+      window.removeEventListener("message", onReady)
     }
   }, [previewMode])
 
@@ -183,8 +183,8 @@ export function PreviewPanel({ className }: { className?: string }) {
   useEffect(() => {
     const onChange = () =>
       setIsFullscreen(document.fullscreenElement === panelRef.current)
-    document.addEventListener('fullscreenchange', onChange)
-    return () => document.removeEventListener('fullscreenchange', onChange)
+    document.addEventListener("fullscreenchange", onChange)
+    return () => document.removeEventListener("fullscreenchange", onChange)
   }, [])
 
   function toggleFullscreen() {
@@ -199,7 +199,7 @@ export function PreviewPanel({ className }: { className?: string }) {
     <div
       ref={panelRef}
       className={cn(
-        'relative flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-border/45 bg-neutral shadow-xs',
+        "relative flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-border/45 bg-neutral shadow-xs",
         className,
       )}
     >
@@ -298,7 +298,7 @@ export function PreviewPanel({ className }: { className?: string }) {
                 selectionMode="single"
                 selectedKeys={[String(zoom)]}
                 onSelectionChange={(keys) => {
-                  if (keys === 'all') return
+                  if (keys === "all") return
                   const v = keys.values().next().value
                   if (v != null) setZoom(Number(v))
                 }}
@@ -321,14 +321,14 @@ export function PreviewPanel({ className }: { className?: string }) {
               variant="quiet"
               isIconOnly
               onPress={() =>
-                setPreviewMode((m) => (m === 'dark' ? 'light' : 'dark'))
+                setPreviewMode((m) => (m === "dark" ? "light" : "dark"))
               }
               aria-label="Toggle preview mode"
             >
-              {previewMode === 'dark' ? <SunIcon /> : <MoonIcon />}
+              {previewMode === "dark" ? <SunIcon /> : <MoonIcon />}
             </Button>
             <TooltipContent>
-              {previewMode === 'dark' ? 'Light mode' : 'Dark mode'}
+              {previewMode === "dark" ? "Light mode" : "Dark mode"}
             </TooltipContent>
           </Tooltip>
 
@@ -339,7 +339,7 @@ export function PreviewPanel({ className }: { className?: string }) {
               variant="quiet"
               isIconOnly
               onPress={() =>
-                window.open(iframeSrc, '_blank', 'noopener,noreferrer')
+                window.open(iframeSrc, "_blank", "noopener,noreferrer")
               }
               aria-label="Open preview in new tab"
             >
@@ -360,7 +360,7 @@ export function PreviewPanel({ className }: { className?: string }) {
               {isFullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
             </Button>
             <TooltipContent>
-              {isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+              {isFullscreen ? "Exit fullscreen" : "Fullscreen"}
             </TooltipContent>
           </Tooltip>
         </div>
@@ -372,11 +372,11 @@ export function PreviewPanel({ className }: { className?: string }) {
           stays flush under the toolbar. Radius is the panel's minus the inset. */}
       <div
         className={cn(
-          'relative mx-1 mb-1 min-h-0 flex-1 overflow-auto rounded-lg border border-border/45 bg-bg',
+          "relative mx-1 mb-1 min-h-0 flex-1 overflow-auto rounded-lg border border-border/45 bg-bg",
           // Constrained sizes reveal the stage: a recessed, dot-gridded surface
           // the device "floats" on, so tool chrome and artifact read as layers.
           constrained &&
-            'bg-neutral [background-image:radial-gradient(var(--color-border)_1px,transparent_1px)] [background-size:14px_14px]',
+            "bg-neutral [background-image:radial-gradient(var(--color-border)_1px,transparent_1px)] [background-size:14px_14px]",
         )}
       >
         {/* Centred with `mx-auto`, not `justify-center`: auto margins collapse to
@@ -390,11 +390,11 @@ export function PreviewPanel({ className }: { className?: string }) {
             src={iframeSrc}
             title="preview"
             className={cn(
-              'mx-auto h-full shrink-0 border-0 bg-bg',
-              constrained && 'border-x shadow-md',
+              "mx-auto h-full shrink-0 border-0 bg-bg",
+              constrained && "border-x shadow-md",
             )}
             style={{
-              width: constrained ? DEVICE_WIDTHS[size] : '100%',
+              width: constrained ? DEVICE_WIDTHS[size] : "100%",
               zoom,
             }}
           />
@@ -405,8 +405,8 @@ export function PreviewPanel({ className }: { className?: string }) {
         <div
           aria-hidden
           className={cn(
-            'absolute inset-0 z-10 transition-opacity duration-300',
-            isLoaded && 'pointer-events-none opacity-0',
+            "absolute inset-0 z-10 transition-opacity duration-300",
+            isLoaded && "pointer-events-none opacity-0",
           )}
         >
           {/* The pulse lives on the inner surface: `animate-pulse` drives opacity,

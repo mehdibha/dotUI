@@ -1,13 +1,13 @@
-import { rehypeCodeDefaultOptions } from 'fumadocs-core/mdx-plugins'
-import { metaSchema, pageSchema } from 'fumadocs-core/source/schema'
-import { defineConfig, defineDocs } from 'fumadocs-mdx/config'
-import lastModified from 'fumadocs-mdx/plugins/last-modified'
-import { z } from 'zod'
+import { rehypeCodeDefaultOptions } from "fumadocs-core/mdx-plugins"
+import { metaSchema, pageSchema } from "fumadocs-core/source/schema"
+import { defineConfig, defineDocs } from "fumadocs-mdx/config"
+import lastModified from "fumadocs-mdx/plugins/last-modified"
+import { z } from "zod"
 
-import rehypeTransform from './src/modules/docs/mdx-plugins/rehype-transform'
+import rehypeTransform from "./src/modules/docs/mdx-plugins/rehype-transform"
 
 export const docs = defineDocs({
-  dir: 'content/docs',
+  dir: "content/docs",
   docs: {
     async: true, // Load files asynchronously to avoid bundling all at once
     schema: pageSchema.extend({
@@ -39,12 +39,12 @@ export default defineConfig({
   mdxOptions: {
     rehypeCodeOptions: {
       ...rehypeCodeDefaultOptions,
-      langs: ['ts', 'js', 'html', 'tsx', 'mdx', 'css', 'json', 'bash'],
-      defaultLanguage: 'plaintext',
-      inline: 'tailing-curly-colon',
+      langs: ["ts", "js", "html", "tsx", "mdx", "css", "json", "bash"],
+      defaultLanguage: "plaintext",
+      inline: "tailing-curly-colon",
       themes: {
-        light: 'github-light',
-        dark: 'github-dark',
+        light: "github-light",
+        dark: "github-dark",
       },
       tab: true,
     },

@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { Time } from '@internationalized/date'
+import React from "react"
+import { Time } from "@internationalized/date"
 
-import { ClockIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Label } from '@/registry/ui/field'
-import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Popover } from '@/registry/ui/popover'
-import { TimePicker, TimePickerColumns } from '@/registry/ui/time-picker'
+import { ClockIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Popover } from "@/registry/ui/popover"
+import { TimePicker, TimePickerColumns } from "@/registry/ui/time-picker"
 
 export default function Demo() {
   const [value, setValue] = React.useState<Time | null>(new Time(9, 30))
@@ -37,7 +37,7 @@ export default function Demo() {
         </Popover>
       </TimePicker>
       <p className="text-sm text-fg-muted">
-        selected time: {value?.toString() ?? '—'}
+        selected time: {value?.toString() ?? "—"}
       </p>
     </div>
   )

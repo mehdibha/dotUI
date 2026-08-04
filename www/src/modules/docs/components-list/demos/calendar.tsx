@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { getLocalTimeZone, today } from '@internationalized/date'
+import { getLocalTimeZone, today } from "@internationalized/date"
 
-import { Calendar } from '@/registry/ui/calendar'
+import { Calendar } from "@/registry/ui/calendar"
 
-import { useStepAutoplay } from '../autoplay'
+import { useStepAutoplay } from "../autoplay"
 
 // Mid-month days that exist in every month, so `.set({ day })` always lands on a
 // real cell in the currently shown month without spilling into the next one.

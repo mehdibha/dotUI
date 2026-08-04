@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { RadialBarChart } from '@/registry/ui/chart-radial'
+import { RadialBarChart } from "@/registry/ui/chart-radial"
 
-const data = [{ browser: 'safari', visitors: 1260 }]
+const data = [{ browser: "safari", visitors: 1260 }]
 
 const deg = (value: number) => (value * Math.PI) / 180
 
@@ -12,7 +12,7 @@ export default function ChartRadialShape() {
       data={data}
       value="visitors"
       name="browser"
-      labels={{ safari: 'Safari' }}
+      labels={{ safari: "Safari" }}
       max={1600}
       endAngle={deg(100)}
       innerRadius={0.66}

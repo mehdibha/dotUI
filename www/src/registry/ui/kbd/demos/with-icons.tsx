@@ -2,8 +2,8 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
   CircleDashedIcon,
-} from '@/registry/__generated__/icons'
-import { Kbd, KbdGroup } from '@/registry/ui/kbd'
+} from "@/registry/__generated__/icons"
+import { Kbd, KbdGroup } from "@/registry/ui/kbd"
 
 export default function Demo() {
   return (

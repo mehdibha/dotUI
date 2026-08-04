@@ -1,17 +1,17 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import WithAddons from './demos/addons'
-import Basic from './demos/basic'
-import ColorChannel from './demos/color-channel'
-import Controlled from './demos/controlled'
-import Description from './demos/description'
-import Disabled from './demos/disabled'
-import Invalid from './demos/invalid'
-import Label from './demos/label'
-import ReadOnly from './demos/read-only'
-import Required from './demos/required'
-import Sizes from './demos/sizes'
+import WithAddons from "./demos/addons"
+import Basic from "./demos/basic"
+import ColorChannel from "./demos/color-channel"
+import Controlled from "./demos/controlled"
+import Description from "./demos/description"
+import Disabled from "./demos/disabled"
+import Invalid from "./demos/invalid"
+import Label from "./demos/label"
+import ReadOnly from "./demos/read-only"
+import Required from "./demos/required"
+import Sizes from "./demos/sizes"
 
 export default function ColorFieldExamples() {
   return (

@@ -1,8 +1,8 @@
-import type * as React from 'react'
+import type * as React from "react"
 
-import type { ChartFormat } from '@/registry/ui/chart'
+import type { ChartFormat } from "@/registry/ui/chart"
 
-import type { PolarMarkLayer } from './base'
+import type { PolarMarkLayer } from "./base"
 
 export type { ChartFormat }
 
@@ -66,7 +66,7 @@ export interface RadarChartProps {
    * Ring shape.
    * @default "polygon"
    */
-  gridShape?: 'circle' | 'polygon'
+  gridShape?: "circle" | "polygon"
 
   /**
    * Number of rings.

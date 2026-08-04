@@ -1,13 +1,13 @@
-import { MenuIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
+import { MenuIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
 import {
   Menu,
   MenuContent,
   MenuItem,
   MenuItemDescription,
   MenuItemLabel,
-} from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
+} from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (

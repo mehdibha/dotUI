@@ -1,33 +1,33 @@
-'use client'
+"use client"
 
-import { useMemo, useState } from 'react'
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'
+import { useMemo, useState } from "react"
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 
-import { CodePane, SeatViewBar, type SeatView } from './code-view'
-import { RECHARTS_PRIMITIVE_CODE, rechartsExampleCode } from './codegen'
-import { PanelSection, SlotSelect } from './controls'
-import { slotVar, visits, type ChartSlot } from './data'
-import type { ChartConfig } from './recharts-chart'
+import { CodePane, SeatViewBar, type SeatView } from "./code-view"
+import { RECHARTS_PRIMITIVE_CODE, rechartsExampleCode } from "./codegen"
+import { PanelSection, SlotSelect } from "./controls"
+import { slotVar, visits, type ChartSlot } from "./data"
+import type { ChartConfig } from "./recharts-chart"
 import {
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from './recharts-chart'
+} from "./recharts-chart"
 
 /* The shadcn seat: the chart is frozen JSX, and `ChartConfig` — label, icon,
    color per series — is the entire runtime customization surface. */
 export function RechartsSeat() {
   const [desktopSlot, setDesktopSlot] = useState<ChartSlot>(1)
   const [mobileSlot, setMobileSlot] = useState<ChartSlot>(2)
-  const [view, setView] = useState<SeatView>('preview')
+  const [view, setView] = useState<SeatView>("preview")
 
   const config = useMemo(
     () =>
       ({
-        desktop: { label: 'Desktop', color: slotVar(desktopSlot) },
-        mobile: { label: 'Mobile', color: slotVar(mobileSlot) },
+        desktop: { label: "Desktop", color: slotVar(desktopSlot) },
+        mobile: { label: "Mobile", color: slotVar(mobileSlot) },
       }) satisfies ChartConfig,
     [desktopSlot, mobileSlot],
   )
@@ -35,12 +35,12 @@ export function RechartsSeat() {
   return (
     <div className="flex h-full flex-col">
       <SeatViewBar view={view} onChange={setView} />
-      {view === 'primitive' && (
+      {view === "primitive" && (
         <CodePane title="ui/chart.tsx" code={RECHARTS_PRIMITIVE_CODE} />
       )}
-      {view !== 'primitive' && (
+      {view !== "primitive" && (
         <>
-          {view === 'example' ? (
+          {view === "example" ? (
             <CodePane
               title="visitors-chart.tsx"
               code={rechartsExampleCode(desktopSlot, mobileSlot)}

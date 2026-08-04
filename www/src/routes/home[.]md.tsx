@@ -1,6 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-import { siteConfig } from '@/config/site'
+import { siteConfig } from "@/config/site"
 
 // Serves /home.md — a concise markdown view of the homepage for AI agents,
 // linked from the page <head> as <link rel="alternate" type="text/markdown">.
@@ -32,12 +32,12 @@ dotUI is a design system platform and component registry built on React Aria Com
 - Discord: ${siteConfig.links.discord}
 `
 
-export const Route = createFileRoute('/home.md')({
+export const Route = createFileRoute("/home.md")({
   server: {
     handlers: {
       GET: () =>
         new Response(BODY, {
-          headers: { 'Content-Type': 'text/markdown; charset=utf-8' },
+          headers: { "Content-Type": "text/markdown; charset=utf-8" },
         }),
     },
   },

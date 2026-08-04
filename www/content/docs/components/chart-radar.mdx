@@ -20,16 +20,16 @@ It brings the [`chart`](/docs/components/chart) core — the host, the palette, 
 ## Usage
 
 ```tsx
-import { RadarChart } from '@/ui/chart-radar'
+import { RadarChart } from "@/ui/chart-radar"
 ```
 
 Point `x` at the category field and `y` at the value field — one row per category. A chart is a figure, so `ariaLabel` is required.
 
 ```tsx
 const data = [
-  { month: 'Jan', desktop: 186 },
-  { month: 'Feb', desktop: 305 },
-  { month: 'Mar', desktop: 237 },
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
 ]
 
 export function Example() {
@@ -38,7 +38,7 @@ export function Example() {
       data={data}
       x="month"
       y="desktop"
-      labels={{ desktop: 'Desktop' }}
+      labels={{ desktop: "Desktop" }}
       legend={false}
       ariaLabel="Desktop visitors by month"
     />
@@ -58,8 +58,8 @@ Two shapes work, and both draw the same chart.
 <RadarChart
   data={data}
   x="month"
-  y={['desktop', 'mobile']}
-  labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
+  y={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
   ariaLabel="Visitors by device"
 />
 ```

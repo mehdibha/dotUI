@@ -20,16 +20,16 @@ It brings the [`chart`](/docs/components/chart) core — the host, the palette, 
 ## Usage
 
 ```tsx
-import { RadialBarChart } from '@/ui/chart-radial'
+import { RadialBarChart } from "@/ui/chart-radial"
 ```
 
 Each row becomes one ring, drawn from the outside in. A chart is a figure, so `ariaLabel` is required.
 
 ```tsx
 const data = [
-  { browser: 'chrome', visitors: 275 },
-  { browser: 'safari', visitors: 200 },
-  { browser: 'firefox', visitors: 187 },
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
 ]
 
 export function Example() {
@@ -38,7 +38,7 @@ export function Example() {
       data={data}
       value="visitors"
       name="browser"
-      labels={{ chrome: 'Chrome', safari: 'Safari', firefox: 'Firefox' }}
+      labels={{ chrome: "Chrome", safari: "Safari", firefox: "Firefox" }}
       track
       ariaLabel="Visitors by browser"
     />
@@ -74,10 +74,10 @@ Pass an array of fields as `value` to stack one row's values into a single ring,
 
 ```tsx
 <RadialBarChart
-  data={[{ month: 'january', desktop: 1260, mobile: 570 }]}
-  value={['desktop', 'mobile']}
+  data={[{ month: "january", desktop: 1260, mobile: 570 }]}
+  value={["desktop", "mobile"]}
   name="month"
-  labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
   max={2200}
   ariaLabel="Visitors by device in January"
 />
@@ -106,13 +106,13 @@ The middle of a ring is the place for the number it summarizes. `children` rende
 `polarMarks` and `polarMarksBefore` accept raw [TanStack Charts](https://tanstack.com/charts) polar marks — `radialArc`, `radialText`, `radialRule` — painted over and under the bars, inside the circle's own transform. Cartesian marks would land outside it, so reach for the polar ones here.
 
 ```tsx
-import { radialRule } from '@tanstack/charts/polar'
+import { radialRule } from "@tanstack/charts/polar"
 
 const target = radialRule([{ angle: Math.PI }], {
-  angle: 'angle',
+  angle: "angle",
   radius1: 0,
   radius2: 1,
-  strokeDasharray: '4 4',
+  strokeDasharray: "4 4",
 })
 ```
 

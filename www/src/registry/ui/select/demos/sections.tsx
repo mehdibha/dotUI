@@ -1,4 +1,4 @@
-import { Label } from '@/registry/ui/field'
+import { Label } from "@/registry/ui/field"
 import {
   Select,
   SelectContent,
@@ -6,8 +6,8 @@ import {
   SelectSection,
   SelectSectionHeader,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/ui/select"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (

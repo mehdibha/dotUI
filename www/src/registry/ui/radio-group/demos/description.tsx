@@ -1,5 +1,5 @@
-import { Description, FieldGroup, Label } from '@/registry/ui/field'
-import { Radio, RadioControl, RadioGroup } from '@/registry/ui/radio-group'
+import { Description, FieldGroup, Label } from "@/registry/ui/field"
+import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group"
 
 export default function Demo() {
   return (

@@ -1,30 +1,30 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
-import { TrendingDownIcon, TrendingUpIcon } from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
-import { Badge } from '@/registry/ui/badge'
+import { TrendingDownIcon, TrendingUpIcon } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Badge } from "@/registry/ui/badge"
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+} from "@/registry/ui/card"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 
 // Twelve months of revenue (in $k). Hardcoded snapshot.
 const revenue = [14, 18, 15, 22, 20, 26, 24, 30, 28, 34, 40, 46]
 
 const ranges = [
-  { id: '3m', label: '3M', months: 3 },
-  { id: '6m', label: '6M', months: 6 },
-  { id: '12m', label: '12M', months: 12 },
+  { id: "3m", label: "3M", months: 3 },
+  { id: "6m", label: "6M", months: 6 },
+  { id: "12m", label: "12M", months: 12 },
 ] as const
 
-type RangeId = (typeof ranges)[number]['id']
+type RangeId = (typeof ranges)[number]["id"]
 
 // Build a smooth (Catmull-Rom -> cubic bezier) sparkline path inside the
 // 300x80 viewBox. Returns both the line and the closed area-under-line path.
@@ -80,8 +80,8 @@ function summarize(values: number[]) {
   return { total, delta }
 }
 
-export function Metrics({ className, ...props }: React.ComponentProps<'div'>) {
-  const [range, setRange] = React.useState<RangeId>('12m')
+export function Metrics({ className, ...props }: React.ComponentProps<"div">) {
+  const [range, setRange] = React.useState<RangeId>("12m")
 
   const active = ranges.find((r) => r.id === range) ?? ranges[2]
   const values = revenue.slice(revenue.length - active.months)
@@ -101,7 +101,7 @@ export function Metrics({ className, ...props }: React.ComponentProps<'div'>) {
             selectedKeys={[range]}
             onSelectionChange={(keys) => {
               const next = [...keys][0]
-              if (typeof next === 'string') setRange(next as RangeId)
+              if (typeof next === "string") setRange(next as RangeId)
             }}
             aria-label="Time range"
           >
@@ -121,13 +121,13 @@ export function Metrics({ className, ...props }: React.ComponentProps<'div'>) {
             </p>
             <p className="text-sm text-fg-muted">Last {active.label} revenue</p>
           </div>
-          <Badge variant={isUp ? 'success' : 'danger'}>
+          <Badge variant={isUp ? "success" : "danger"}>
             {isUp ? (
               <TrendingUpIcon aria-hidden />
             ) : (
               <TrendingDownIcon aria-hidden />
             )}
-            {isUp ? '+' : ''}
+            {isUp ? "+" : ""}
             {delta.toFixed(1)}%
           </Badge>
         </div>

@@ -7,11 +7,11 @@
  * a flat `tv` config, then serialized.
  */
 
-import type { IconLibraryName } from '@/registry/icons/icon-map'
-import type { ColorConfig } from '@/registry/theme'
-import type { Density, RegistryItem, RegistryItemFile } from '@/registry/types'
+import type { IconLibraryName } from "@/registry/icons/icon-map"
+import type { ColorConfig } from "@/registry/theme"
+import type { Density, RegistryItem, RegistryItemFile } from "@/registry/types"
 
-import type { CodeOptions } from './code-options'
+import type { CodeOptions } from "./code-options"
 
 /**
  * A class value in a `tv` config. `tv` accepts more shapes (booleans, conditionals)
@@ -81,7 +81,7 @@ export interface PublishPreset {
   density: Density
   /** Per-component param selections: { button: { variant: "primary", ... } } */
   componentParams: Record<string, Record<string, string>>
-  /** Global theme tokens (radius factor, cursors, …): { "--radius-factor": "0.5" } */
+  /** Global theme tokens (base radius, cursors, …): { "--radius": "0.5rem" } */
   tokens?: Record<string, string>
   /** Generative color recipe; when present, its ramps override the static base palette. */
   color?: ColorConfig

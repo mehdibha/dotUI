@@ -1,25 +1,25 @@
-'use client'
+"use client"
 
-import { dot } from '@tanstack/charts/dot'
-import { text } from '@tanstack/charts/text'
+import { dot } from "@tanstack/charts/dot"
+import { text } from "@tanstack/charts/text"
 
-import { chartDefaults } from '@/registry/ui/chart'
-import { LineChart } from '@/registry/ui/chart-line'
+import { chartDefaults } from "@/registry/ui/chart"
+import { LineChart } from "@/registry/ui/chart-line"
 
 interface Row {
   month: string
   desktop: number
 }
 
-const SERIES = 'Desktop'
+const SERIES = "Desktop"
 
 const data: Row[] = [
-  { month: 'Jan', desktop: 186 },
-  { month: 'Feb', desktop: 305 },
-  { month: 'Mar', desktop: 237 },
-  { month: 'Apr', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'Jun', desktop: 214 },
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
 ]
 
 const pick = (rows: readonly Row[], best: (a: Row, b: Row) => boolean) =>
@@ -30,28 +30,28 @@ const pick = (rows: readonly Row[], best: (a: Row, b: Row) => boolean) =>
 const extremes = [
   {
     ...pick(data, (a, b) => a.desktop > b.desktop),
-    label: 'Peak',
+    label: "Peak",
     dy: -16,
   },
-  { ...pick(data, (a, b) => a.desktop < b.desktop), label: 'Low', dy: 22 },
+  { ...pick(data, (a, b) => a.desktop < b.desktop), label: "Low", dy: 22 },
 ]
 
 const markers = dot(extremes, {
-  x: 'month',
-  y: 'desktop',
+  x: "month",
+  y: "desktop",
   z: () => SERIES,
   r: chartDefaults.dotRadius,
 })
 
 const callouts = text(extremes, {
-  x: 'month',
-  y: 'desktop',
+  x: "month",
+  y: "desktop",
   text: (row) => `${row.label} · ${row.desktop}`,
   z: () => SERIES,
   dy: (row) => row.dy,
   fontSize: 12,
   fontWeight: 600,
-  fill: 'var(--color-fg)',
+  fill: "var(--color-fg)",
 })
 
 export default function ChartLineLabelCustom() {

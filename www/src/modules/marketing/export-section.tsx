@@ -1,15 +1,15 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react"
 
-import { cn } from '@/registry/lib/utils'
-import { BoltIcon } from '@/components/icons/bolt'
-import { ClaudeIcon } from '@/components/icons/claude'
-import { LovableIcon } from '@/components/icons/lovable'
-import { ShadcnIcon } from '@/components/icons/shadcn'
-import { V0Icon } from '@/components/icons/v0'
+import { cn } from "@/registry/lib/utils"
+import { BoltIcon } from "@/components/icons/bolt"
+import { ClaudeIcon } from "@/components/icons/claude"
+import { LovableIcon } from "@/components/icons/lovable"
+import { ShadcnIcon } from "@/components/icons/shadcn"
+import { V0Icon } from "@/components/icons/v0"
 
 export function ExportSection() {
   return (
-    <section className="mx-auto w-full max-w-[calc(1500px+16rem)] px-4 sm:px-6 lg:px-32">
+    <section>
       <div className="flex flex-col items-start gap-4">
         <h2 className="font-mono text-sm tracking-wide text-fg-muted">
           Export
@@ -32,10 +32,10 @@ export function ExportSection() {
           <div
             key={name}
             className={cn(
-              'group relative flex flex-col py-6 lg:px-7 lg:py-8',
-              index > 0 && 'border-t lg:border-t-0 lg:border-l',
-              index === 0 && 'lg:pl-0',
-              index === destinations.length - 1 && 'lg:pr-0',
+              "group relative flex flex-col py-6 lg:px-7 lg:py-8",
+              index > 0 && "border-t lg:border-t-0 lg:border-l",
+              index === 0 && "lg:pl-0",
+              index === destinations.length - 1 && "lg:pr-0",
             )}
           >
             <span
@@ -44,15 +44,15 @@ export function ExportSection() {
             />
             <div
               className={cn(
-                'flex h-6 items-center gap-2.5 transition-[opacity,filter] duration-300 motion-reduce:transition-none',
+                "flex h-6 items-center gap-2.5 transition-[opacity,filter] duration-300 motion-reduce:transition-none",
                 !live &&
-                  'opacity-55 grayscale group-hover:opacity-100 group-hover:grayscale-0',
+                  "opacity-55 grayscale group-hover:opacity-100 group-hover:grayscale-0",
               )}
             >
               {mark}
               <h3
                 className={
-                  hideName ? 'sr-only' : 'text-lg leading-none font-semibold'
+                  hideName ? "sr-only" : "text-lg leading-none font-semibold"
                 }
               >
                 {name}
@@ -60,26 +60,26 @@ export function ExportSection() {
             </div>
             <p
               className={cn(
-                'mt-4 text-sm transition-colors duration-200 motion-reduce:transition-none',
-                live ? 'text-fg-muted group-hover:text-fg' : 'text-fg-disabled',
+                "mt-4 text-sm transition-colors duration-200 motion-reduce:transition-none",
+                live ? "text-fg-muted group-hover:text-fg" : "text-fg-disabled",
               )}
             >
               {detail}
             </p>
             <p
               className={cn(
-                'mt-auto flex items-center gap-2 pt-10 font-mono text-[0.625rem] tracking-wider uppercase',
-                live ? 'text-fg-muted' : 'text-fg-disabled',
+                "mt-auto flex items-center gap-2 pt-10 font-mono text-[0.625rem] tracking-wider uppercase",
+                live ? "text-fg-muted" : "text-fg-disabled",
               )}
             >
               <span
                 aria-hidden
                 className={cn(
-                  'size-1.5 shrink-0 rounded-full',
-                  live ? 'bg-success' : 'border',
+                  "size-1.5 shrink-0 rounded-full",
+                  live ? "bg-success" : "border",
                 )}
               />
-              {live ? 'Available' : 'Coming soon'}
+              {live ? "Available" : "Coming soon"}
             </p>
           </div>
         ))}
@@ -115,33 +115,33 @@ interface Destination {
 
 const destinations: Destination[] = [
   {
-    name: 'shadcn CLI',
+    name: "shadcn CLI",
     mark: <ShadcnIcon className="size-4.5 shrink-0" />,
-    detail: 'Installs into your codebase as ordinary files.',
+    detail: "Installs into your codebase as ordinary files.",
     live: true,
   },
   {
-    name: 'v0',
+    name: "v0",
     mark: <V0Icon className="h-4.5 w-auto shrink-0" />,
-    detail: 'Opens fully themed, ready to prompt.',
+    detail: "Opens fully themed, ready to prompt.",
     hideName: true,
     live: true,
   },
   {
-    name: 'Claude',
+    name: "Claude",
     mark: <ClaudeIcon className="size-4.5 shrink-0" />,
-    detail: 'Hand your system straight to Claude as project context.',
+    detail: "Hand your system straight to Claude as project context.",
   },
   {
-    name: 'Lovable',
+    name: "Lovable",
     mark: <LovableIcon className="h-4 w-auto shrink-0" />,
-    detail: 'Import as a starting point for full-stack builds.',
+    detail: "Import as a starting point for full-stack builds.",
     hideName: true,
   },
   {
-    name: 'Bolt',
+    name: "Bolt",
     mark: <BoltIcon className="h-4 w-auto shrink-0" />,
-    detail: 'Scaffold new projects already on-brand.',
+    detail: "Scaffold new projects already on-brand.",
     hideName: true,
   },
 ]

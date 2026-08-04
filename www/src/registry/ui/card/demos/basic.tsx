@@ -1,4 +1,4 @@
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardAction,
@@ -7,10 +7,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/card"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   return (

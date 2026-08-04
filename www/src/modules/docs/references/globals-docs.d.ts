@@ -1,4 +1,4 @@
-declare module 'globals-docs' {
+declare module "globals-docs" {
   /**
    * Get documentation URL for a global type
    * @param name - The type name to look up (e.g., "Element", "Event", "Array")

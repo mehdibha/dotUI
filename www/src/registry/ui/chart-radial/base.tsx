@@ -1,34 +1,34 @@
-'use client'
+"use client"
 
 import type {
   ChannelField,
   ChartBuildContext,
   ChartKey,
-} from '@tanstack/charts'
-import { colorLegend } from '@tanstack/charts/legend'
-import type { PolarGuide, PolarMark } from '@tanstack/charts/polar'
+} from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import type { PolarGuide, PolarMark } from "@tanstack/charts/polar"
 import {
   polar,
   radialArc,
   radialGrid,
   radialText,
-} from '@tanstack/charts/polar'
-import type { ChartTooltipBodyRenderContext } from '@tanstack/react-charts'
-import { scaleLinear } from 'd3-scale'
-import { arc as d3arc } from 'd3-shape'
+} from "@tanstack/charts/polar"
+import type { ChartTooltipBodyRenderContext } from "@tanstack/react-charts"
+import { scaleLinear } from "d3-scale"
+import { arc as d3arc } from "d3-shape"
 
 import type {
   ChartComponentProps,
   ChartMarkLayer,
   ChartSpecOf,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 import {
   Chart,
   CHART_THEME,
   chartDefaults,
   decorative,
   useChartDefinition,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 const TAU = Math.PI * 2
 
@@ -44,7 +44,7 @@ const radialDefaults = {
   barPadding: 0.2,
   stackPadding: 0.04,
   gridTicks: 4,
-  trackFill: 'var(--color-muted)',
+  trackFill: "var(--color-muted)",
   labelFontSize: 11,
 } as const
 
@@ -217,7 +217,7 @@ export function radialBarChartSpec<TDatum>(
     ? [
         radialGrid({
           ticks: options.gridTicks ?? radialDefaults.gridTicks,
-          shape: 'circle',
+          shape: "circle",
           labels: false,
         }),
       ]
@@ -245,7 +245,7 @@ export function radialBarChartSpec<TDatum>(
             ? [
                 decorative(
                   barArc(
-                    'radial-track',
+                    "radial-track",
                     track,
                     corner,
                     options.trackFill ?? radialDefaults.trackFill,
@@ -253,19 +253,19 @@ export function radialBarChartSpec<TDatum>(
                 ),
               ]
             : []),
-          barArc('radial-bar', bars, corner),
+          barArc("radial-bar", bars, corner),
           ...(options.barLabels
             ? [
                 decorative(
                   radialText(bars, {
-                    id: 'radial-bar-label',
-                    angle: 'startAngle',
+                    id: "radial-bar-label",
+                    angle: "startAngle",
                     radius: (bar: RadialBarDatum<TDatum>) =>
                       (bar.inner + bar.outer) / 2,
-                    text: 'name',
-                    anchor: 'start' as const,
+                    text: "name",
+                    anchor: "start" as const,
                     dx: 8,
-                    fill: options.barLabelFill ?? 'var(--color-fg-muted)',
+                    fill: options.barLabelFill ?? "var(--color-fg-muted)",
                     fontSize:
                       options.barLabelFontSize ?? radialDefaults.labelFontSize,
                   }),
@@ -317,8 +317,8 @@ export function RadialBarChart<TDatum>(props: RadialBarChartProps<TDatum>) {
          animation stays off because the `d` tween interpolates the SVG
          large-arc flag: an arc crossing half a turn renders an invalid path
          for the length of the transition. */
-      focus: props.focus ?? 'nearest',
-      tooltipAnchor: props.tooltipAnchor ?? 'point',
+      focus: props.focus ?? "nearest",
+      tooltipAnchor: props.tooltipAnchor ?? "point",
       animate: props.animate ?? false,
       renderTooltipBody: props.renderTooltipBody ?? radialTooltipBody,
       // Ride the identity-compared keys — polar mark arrays serialize alike.

@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
-import { Avatar, AvatarFallback } from '@/registry/ui/avatar'
-import { Button } from '@/registry/ui/button'
+import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
@@ -11,11 +11,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Description, Field, Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { Skeleton } from '@/registry/ui/skeleton'
-import { Switch, SwitchControl } from '@/registry/ui/switch'
+} from "@/registry/ui/card"
+import { Description, Field, Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { Skeleton } from "@/registry/ui/skeleton"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 
 export default function Demo() {
   const [isLoading, setLoading] = useState(true)

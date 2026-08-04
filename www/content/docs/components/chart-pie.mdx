@@ -20,16 +20,16 @@ It brings the [`chart`](/docs/components/chart) core — the host, the palette, 
 ## Usage
 
 ```tsx
-import { PieChart } from '@/ui/chart-pie'
+import { PieChart } from "@/ui/chart-pie"
 ```
 
 One row per slice. `value` names the field holding the magnitude, `name` the field holding the slice key. A chart is a figure, so `ariaLabel` is required.
 
 ```tsx
 const data = [
-  { browser: 'chrome', visitors: 275 },
-  { browser: 'safari', visitors: 200 },
-  { browser: 'firefox', visitors: 187 },
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
 ]
 
 export function Example() {
@@ -38,7 +38,7 @@ export function Example() {
       data={data}
       value="visitors"
       name="browser"
-      labels={{ chrome: 'Chrome', safari: 'Safari', firefox: 'Firefox' }}
+      labels={{ chrome: "Chrome", safari: "Safari", firefox: "Firefox" }}
       ariaLabel="Visitors by browser"
     />
   )
@@ -100,13 +100,13 @@ The hole in a donut is best filled with plain HTML: anything passed as `children
 A second series is a second ring, not a stack. `pieRing` builds one, and `polarMarks` splices it inside the chart's polar container — plain `marks` would land outside the transform. Build it outside your component so it keeps its identity across renders.
 
 ```tsx
-import { pieRing, PieChart } from '@/ui/chart-pie'
+import { pieRing, PieChart } from "@/ui/chart-pie"
 
 const mobileRing = pieRing({
-  id: 'mobile',
+  id: "mobile",
   data: mobile,
-  value: 'mobile',
-  name: 'month',
+  value: "mobile",
+  name: "month",
   innerRadius: 0.7,
   outerRadius: 0.95,
 })

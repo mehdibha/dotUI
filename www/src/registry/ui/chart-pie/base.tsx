@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import type { ChannelField, ChartKey } from '@tanstack/charts'
-import { colorLegend } from '@tanstack/charts/legend'
-import type { PolarMark } from '@tanstack/charts/polar'
-import { polar, radialArc, radialText } from '@tanstack/charts/polar'
-import type { ChartTooltipBodyRenderContext } from '@tanstack/react-charts'
-import { scaleLinear } from 'd3-scale'
-import { arc as d3Arc, pie as d3Pie } from 'd3-shape'
+import type { ChannelField, ChartKey } from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import type { PolarMark } from "@tanstack/charts/polar"
+import { polar, radialArc, radialText } from "@tanstack/charts/polar"
+import type { ChartTooltipBodyRenderContext } from "@tanstack/react-charts"
+import { scaleLinear } from "d3-scale"
+import { arc as d3Arc, pie as d3Pie } from "d3-shape"
 
-import type { ChartComponentProps, ChartSpecOf } from '@/registry/ui/chart'
+import type { ChartComponentProps, ChartSpecOf } from "@/registry/ui/chart"
 import {
   Chart,
   CHART_THEME,
   decorative,
   useChartDefinition,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 const TAU = Math.PI * 2
 
@@ -68,7 +68,7 @@ export interface PieRingOptions<TDatum> {
   /** Index of the slice pushed out of the ring. */
   activeIndex?: number
   activeOffset?: number
-  sliceLabel?: 'none' | 'name' | 'value'
+  sliceLabel?: "none" | "name" | "value"
   sliceLabelRadius?: number
   sliceLabelFill?: string
   sliceLabelFontSize?: number
@@ -111,9 +111,9 @@ export function pieRing<TDatum>(
   const marks: PolarMarkLayer[] = [
     radialArc(slices, {
       id: `${options.id}-arc`,
-      startAngle: 'startAngle',
-      endAngle: 'endAngle',
-      padAngle: 'padAngle',
+      startAngle: "startAngle",
+      endAngle: "endAngle",
+      padAngle: "padAngle",
       cornerRadius: corner,
       color: (slice: PieSlice<TDatum>) => slice.name,
       key: (slice: PieSlice<TDatum>) => `${options.id}:${slice.name}`,
@@ -133,18 +133,18 @@ export function pieRing<TDatum>(
           .cornerRadius(corner),
     }),
   ]
-  const kind = options.sliceLabel ?? 'none'
-  if (kind !== 'none') {
+  const kind = options.sliceLabel ?? "none"
+  if (kind !== "none") {
     const at = options.sliceLabelRadius ?? (inner + outer) / 2
     marks.push(
       decorative(
         radialText(slices, {
           id: `${options.id}-label`,
-          angle: 'midAngle',
+          angle: "midAngle",
           radius: () => at,
           text: (slice: PieSlice<TDatum>) =>
-            kind === 'name' ? slice.name : String(slice.value),
-          fill: options.sliceLabelFill ?? 'var(--color-fg)',
+            kind === "name" ? slice.name : String(slice.value),
+          fill: options.sliceLabelFill ?? "var(--color-fg)",
           fontSize: options.sliceLabelFontSize ?? pieDefaults.labelFontSize,
         }),
       ),
@@ -155,7 +155,7 @@ export function pieRing<TDatum>(
 
 export interface PieChartSpecOptions<TDatum> extends Omit<
   PieRingOptions<TDatum>,
-  'id'
+  "id"
 > {
   /** Show the color legend. */
   legend?: boolean
@@ -206,7 +206,7 @@ export function pieChartSpec<TDatum>(
         inset: options.inset ?? 0,
         radiusRatio: options.radiusRatio ?? pieDefaults.radiusRatio,
         marks: [
-          ...pieRing({ ...options, id: 'pie' }),
+          ...pieRing({ ...options, id: "pie" }),
           ...(options.polarMarks ?? []),
         ],
       }),
@@ -257,7 +257,7 @@ export function PieChart<TDatum>(props: PieChartProps<TDatum>) {
          invalid path whenever a slice crosses half a turn. */
       animate: props.animate ?? false,
       // A slice's x value is its mid-angle in radians; only `nearest` reads right.
-      focus: props.focus ?? 'nearest',
+      focus: props.focus ?? "nearest",
       // Rides on the identity-compared `marks` key — mark arrays serialize alike.
       marks: props.polarMarks,
     },

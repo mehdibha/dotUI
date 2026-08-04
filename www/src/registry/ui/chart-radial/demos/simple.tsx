@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import { RadialBarChart } from '@/registry/ui/chart-radial'
+import { RadialBarChart } from "@/registry/ui/chart-radial"
 
 const data = [
-  { browser: 'chrome', visitors: 275 },
-  { browser: 'safari', visitors: 200 },
-  { browser: 'firefox', visitors: 187 },
-  { browser: 'edge', visitors: 173 },
-  { browser: 'other', visitors: 90 },
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
 ]
 
 const labels = {
-  chrome: 'Chrome',
-  safari: 'Safari',
-  firefox: 'Firefox',
-  edge: 'Edge',
-  other: 'Other',
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
 }
 
 export default function ChartRadialSimple() {

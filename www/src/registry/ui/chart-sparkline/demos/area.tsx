@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import { Sparkline } from '@/registry/ui/chart-sparkline'
+import { Sparkline } from "@/registry/ui/chart-sparkline"
 
 const data = [
-  { day: 'Mon', requests: 1240 },
-  { day: 'Tue', requests: 1810 },
-  { day: 'Wed', requests: 1520 },
-  { day: 'Thu', requests: 2260 },
-  { day: 'Fri', requests: 2040 },
-  { day: 'Sat', requests: 2890 },
-  { day: 'Sun', requests: 3410 },
+  { day: "Mon", requests: 1240 },
+  { day: "Tue", requests: 1810 },
+  { day: "Wed", requests: 1520 },
+  { day: "Thu", requests: 2260 },
+  { day: "Fri", requests: 2040 },
+  { day: "Sat", requests: 2890 },
+  { day: "Sun", requests: 3410 },
 ]
 
 export default function ChartSparklineArea() {

@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy } from "react"
 
 // Lazy, not a static import: this same demo is dynamically imported via the
 // generated DemosIndex (for /docs/charts and the docs). A module imported both
@@ -8,7 +8,7 @@ import { Suspense, lazy } from 'react'
 // dynamic import's default export in production (React #306). Keeping it dynamic
 // here lets Vite code-split it cleanly so both importers resolve it.
 const ChartBarDefault = lazy(
-  () => import('@/registry/ui/chart-bar/demos/default'),
+  () => import("@/registry/ui/chart-bar/demos/default"),
 )
 
 export function ChartBarDemo() {

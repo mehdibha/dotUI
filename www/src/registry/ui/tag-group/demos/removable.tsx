@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
-import { Label } from '@/registry/ui/field'
-import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
+import { Label } from "@/registry/ui/field"
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 
 export default function Demo() {
   const [items, setItems] = React.useState([
-    { id: 1, name: 'News' },
-    { id: 2, name: 'Travel' },
-    { id: 3, name: 'Gaming' },
-    { id: 4, name: 'Shopping' },
+    { id: 1, name: "News" },
+    { id: 2, name: "Travel" },
+    { id: 3, name: "Gaming" },
+    { id: 4, name: "Shopping" },
   ])
 
   return (

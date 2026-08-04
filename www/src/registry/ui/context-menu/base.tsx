@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import { OverlayTriggerStateContext } from 'react-aria-components/Dialog'
+import type * as React from "react"
+import { OverlayTriggerStateContext } from "react-aria-components/Dialog"
 import {
   MenuContext,
   RootMenuTriggerStateContext,
-} from 'react-aria-components/Menu'
-import { PopoverContext } from 'react-aria-components/Popover'
-import { Provider } from 'react-aria-components/slots'
-import { useMenuTriggerState } from 'react-stately/useMenuTriggerState'
+} from "react-aria-components/Menu"
+import { PopoverContext } from "react-aria-components/Popover"
+import { Provider } from "react-aria-components/slots"
+import { useMenuTriggerState } from "react-stately/useMenuTriggerState"
 
-import { useContextMenuTrigger } from './use-context-menu-trigger'
+import { useContextMenuTrigger } from "./use-context-menu-trigger"
 
 interface ContextMenuProps extends Omit<
-  React.ComponentProps<'div'>,
-  'onContextMenu'
+  React.ComponentProps<"div">,
+  "onContextMenu"
 > {
   children: React.ReactNode
   isOpen?: boolean
@@ -22,7 +22,7 @@ interface ContextMenuProps extends Omit<
   onOpenChange?: (isOpen: boolean) => void
   isDisabled?: boolean
   onContextMenu?: React.MouseEventHandler<HTMLDivElement>
-  'aria-label'?: string
+  "aria-label"?: string
 }
 
 function ContextMenu({
@@ -32,7 +32,7 @@ function ContextMenu({
   isDisabled = false,
   onContextMenu,
   onOpenChange,
-  'aria-label': ariaLabel = 'Context menu',
+  "aria-label": ariaLabel = "Context menu",
   ...triggerProps
 }: ContextMenuProps) {
   const state = useMenuTriggerState({ defaultOpen, isOpen, onOpenChange })
@@ -49,7 +49,7 @@ function ContextMenu({
         [
           MenuContext,
           {
-            'aria-label': ariaLabel,
+            "aria-label": ariaLabel,
             autoFocus: state.focusStrategy || true,
             onClose: state.close,
             ref: contextMenu.menuRef,
@@ -60,10 +60,10 @@ function ContextMenu({
         [
           PopoverContext,
           {
-            trigger: 'ContextMenu',
+            trigger: "ContextMenu",
             triggerRef: contextMenu.anchorRef,
             scrollRef: contextMenu.menuRef,
-            placement: 'bottom start',
+            placement: "bottom start",
           },
         ],
       ]}
@@ -71,7 +71,7 @@ function ContextMenu({
       <div
         {...contextMenu.triggerProps}
         data-context-menu=""
-        data-disabled={isDisabled ? '' : undefined}
+        data-disabled={isDisabled ? "" : undefined}
         ref={contextMenu.triggerRef}
       >
         {children}
@@ -81,12 +81,12 @@ function ContextMenu({
         ref={contextMenu.anchorRefCallback}
         aria-hidden="true"
         style={{
-          position: 'fixed',
+          position: "fixed",
           left: 0,
           top: 0,
           width: contextMenu.anchor.size,
           height: contextMenu.anchor.size,
-          pointerEvents: 'none',
+          pointerEvents: "none",
         }}
       />
     </Provider>

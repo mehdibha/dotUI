@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { ImageIcon, UploadIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { FileTrigger } from '@/registry/ui/file-trigger'
+import { ImageIcon, UploadIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { FileTrigger } from "@/registry/ui/file-trigger"
 
 export default function Demo() {
   const [images, setImages] = React.useState<string[]>([])
@@ -20,7 +20,7 @@ export default function Demo() {
           />
         ))}
         <FileTrigger
-          acceptedFileTypes={['image/*']}
+          acceptedFileTypes={["image/*"]}
           allowsMultiple
           onSelect={(e) => {
             if (e) {
@@ -41,7 +41,7 @@ export default function Demo() {
         </FileTrigger>
       </div>
       <FileTrigger
-        acceptedFileTypes={['image/*']}
+        acceptedFileTypes={["image/*"]}
         allowsMultiple
         onSelect={(e) => {
           if (e) {

@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import * as KeyboardPrimitive from 'react-aria-components/Keyboard'
+import * as KeyboardPrimitive from "react-aria-components/Keyboard"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: kbdStyles
 

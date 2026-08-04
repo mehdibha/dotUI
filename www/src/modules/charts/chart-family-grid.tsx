@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from "react"
 
-import { ChartCard } from './chart-card'
-import { CHART_FAMILIES, variantsFor } from './data'
+import { ChartCard } from "./chart-card"
+import { CHART_FAMILIES, variantsFor } from "./data"
 
 /**
  * Mounts its children once they come near the viewport. The page stacks ~70
@@ -25,7 +25,7 @@ function LazyMount({ children }: { children: React.ReactNode }) {
           observer.disconnect()
         }
       },
-      { rootMargin: '600px 0px' },
+      { rootMargin: "600px 0px" },
     )
     observer.observe(el)
     return () => observer.disconnect()

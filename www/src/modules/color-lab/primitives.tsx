@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState } from "react"
 
-import { rgbToHex, simulateCvd, type CvdType } from './color'
-import type { Step } from './data'
+import { rgbToHex, simulateCvd, type CvdType } from "./color"
+import type { Step } from "./data"
 
 export function stepHex(step: Step, cvd: CvdType | null): string {
   return cvd ? rgbToHex(simulateCvd(step.rgb, cvd)) : step.hex
@@ -11,7 +11,7 @@ export function stepHex(step: Step, cvd: CvdType | null): string {
 export function ScaleStrip({
   steps,
   cvd,
-  height = 'h-10',
+  height = "h-10",
   active,
   onStepHover,
 }: {
@@ -36,7 +36,7 @@ export function ScaleStrip({
           onClick={() => navigator.clipboard?.writeText(step.raw)}
           style={{ backgroundColor: stepHex(step, cvd) }}
           className={`min-w-0 flex-1 transition-[flex-grow] duration-150 ${
-            active === index ? 'grow-[1.6]' : ''
+            active === index ? "grow-[1.6]" : ""
           }`}
         />
       ))}
@@ -112,7 +112,7 @@ export function CurvePlot({
         {series.map((s) => (
           <g key={s.id} opacity={s.muted ? 0.18 : 1}>
             <polyline
-              points={s.points.map((p) => `${px(p.x)},${py(p.y)}`).join(' ')}
+              points={s.points.map((p) => `${px(p.x)},${py(p.y)}`).join(" ")}
               fill="none"
               strokeWidth={s.muted ? 1 : 1.5}
               className="stroke-neutral-400 dark:stroke-neutral-600"
@@ -139,8 +139,8 @@ export function CurvePlot({
             {hover.s.label}
           </span>
           <span className="text-neutral-500 dark:text-neutral-400">
-            {' '}
-            · step {hover.index + 1} ·{' '}
+            {" "}
+            · step {hover.index + 1} ·{" "}
             {formatY(hover.s.points[hover.index]?.y ?? 0)}
           </span>
         </div>

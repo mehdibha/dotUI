@@ -1,25 +1,25 @@
-'use client'
+"use client"
 
-import { useMemo, useState } from 'react'
-import { barY } from '@tanstack/charts/bar'
+import { useMemo, useState } from "react"
+import { barY } from "@tanstack/charts/bar"
 
-import { chartDefaults } from '@/registry/ui/chart'
-import { BarChart } from '@/registry/ui/chart-bar'
+import { chartDefaults } from "@/registry/ui/chart"
+import { BarChart } from "@/registry/ui/chart-bar"
 
 const data = [
-  { browser: 'chrome', visitors: 187 },
-  { browser: 'safari', visitors: 200 },
-  { browser: 'firefox', visitors: 275 },
-  { browser: 'edge', visitors: 173 },
-  { browser: 'other', visitors: 90 },
+  { browser: "chrome", visitors: 187 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 275 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
 ]
 
 const LABELS: Record<string, string> = {
-  chrome: 'Chrome',
-  safari: 'Safari',
-  firefox: 'Firefox',
-  edge: 'Edge',
-  other: 'Other',
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
 }
 
 const labelOf = (row: (typeof data)[number]) => LABELS[row.browser]
@@ -37,8 +37,8 @@ export default function ChartBarActive() {
             barY(
               data.filter((row) => row.browser === active),
               {
-                x: 'browser',
-                y: 'visitors',
+                x: "browser",
+                y: "visitors",
                 z: labelOf,
                 color: labelOf,
                 radius: chartDefaults.barRadius,

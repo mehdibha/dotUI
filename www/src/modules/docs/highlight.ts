@@ -1,9 +1,9 @@
-import type { Root } from 'hast'
-import { createHighlighterCoreSync } from 'shiki/core'
-import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
-import tsx from 'shiki/langs/tsx.mjs'
-import githubDark from 'shiki/themes/github-dark.mjs'
-import githubLight from 'shiki/themes/github-light.mjs'
+import type { Root } from "hast"
+import { createHighlighterCoreSync } from "shiki/core"
+import { createJavaScriptRegexEngine } from "shiki/engine/javascript"
+import tsx from "shiki/langs/tsx.mjs"
+import githubDark from "shiki/themes/github-dark.mjs"
+import githubLight from "shiki/themes/github-light.mjs"
 
 /**
  * Synchronous TSX highlighter for code the client generates at runtime
@@ -27,8 +27,8 @@ export { highlighter }
 /** Highlight TSX to HAST with the same dual-theme CSS variables the build uses. */
 export function highlightTsx(code: string): Root {
   return highlighter.codeToHast(code, {
-    lang: 'tsx',
-    themes: { light: 'github-light', dark: 'github-dark' },
+    lang: "tsx",
+    themes: { light: "github-light", dark: "github-dark" },
     defaultColor: false,
   })
 }

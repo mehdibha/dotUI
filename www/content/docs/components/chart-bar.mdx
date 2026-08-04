@@ -18,14 +18,14 @@ It brings the [`chart`](/docs/components/chart) core — the host, the palette, 
 ## Usage
 
 ```tsx
-import { BarChart } from '@/ui/chart-bar'
+import { BarChart } from "@/ui/chart-bar"
 ```
 
 ```tsx
 const data = [
-  { month: 'Jan', desktop: 186, mobile: 80 },
-  { month: 'Feb', desktop: 305, mobile: 200 },
-  { month: 'Mar', desktop: 237, mobile: 120 },
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
+  { month: "Mar", desktop: 237, mobile: 120 },
 ]
 
 export function Example() {
@@ -33,8 +33,8 @@ export function Example() {
     <BarChart
       data={data}
       x="month"
-      y={['desktop', 'mobile']}
-      labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
+      y={["desktop", "mobile"]}
+      labels={{ desktop: "Desktop", mobile: "Mobile" }}
       ariaLabel="Visitors per month"
     />
   )

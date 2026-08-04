@@ -3,18 +3,18 @@
    judged on identical mechanics. No registry components on purpose: the lab
    must not inherit dotUI's own styling opinions. */
 
-import type { CSSProperties } from 'react'
+import type { CSSProperties } from "react"
 
-import { parseColor, rgbToHex, simulateCvd, type CvdType } from './color'
+import { parseColor, rgbToHex, simulateCvd, type CvdType } from "./color"
 import {
   resolveRoles,
   scaleByRole,
   type ColorSystem,
   type Step,
   type UiRole,
-} from './data'
+} from "./data"
 
-type Mode = 'light' | 'dark'
+type Mode = "light" | "dark"
 type Roles = Partial<Record<UiRole, Step>>
 
 function color(
@@ -28,7 +28,7 @@ function color(
     if (!cvd) return step.hex
     return rgbToHex(simulateCvd(step.rgb, cvd))
   }
-  return 'transparent'
+  return "transparent"
 }
 
 export function systemPreviewVars(
@@ -38,33 +38,33 @@ export function systemPreviewVars(
 ): Record<string, string> {
   const vars: Record<string, string> = {}
   const families = [
-    'neutral',
-    'accent',
-    'danger',
-    'success',
-    'warning',
+    "neutral",
+    "accent",
+    "danger",
+    "success",
+    "warning",
   ] as const
   // Systems with no documented app-bg step (Tailwind) assume a plain canvas.
-  const canvas = mode === 'light' ? '#ffffff' : '#0a0a0a'
+  const canvas = mode === "light" ? "#ffffff" : "#0a0a0a"
   for (const family of families) {
     const scale = scaleByRole(system, family)
     if (!scale) continue
     const roles = resolveRoles(system, scale, mode)
     const c = (...chain: [UiRole, ...UiRole[]]) => color(roles, cvd, ...chain)
     const p = `--${family}`
-    const appBg = c('appBg', 'subtleBg')
-    vars[`${p}-app-bg`] = appBg === 'transparent' ? canvas : appBg
-    vars[`${p}-subtle-bg`] = c('subtleBg', 'uiBg', 'appBg')
-    vars[`${p}-ui-bg`] = c('uiBg', 'subtleBg')
-    vars[`${p}-ui-bg-hover`] = c('uiBgHover', 'uiBg')
-    vars[`${p}-ui-bg-active`] = c('uiBgActive', 'uiBgHover', 'uiBg')
-    vars[`${p}-border-subtle`] = c('borderSubtle', 'border')
-    vars[`${p}-border`] = c('border', 'borderSubtle')
-    vars[`${p}-border-strong`] = c('borderStrong', 'border')
-    vars[`${p}-solid`] = c('solid')
-    vars[`${p}-solid-hover`] = c('solidHover', 'solid')
-    vars[`${p}-text-subtle`] = c('textSubtle', 'text')
-    vars[`${p}-text`] = c('text')
+    const appBg = c("appBg", "subtleBg")
+    vars[`${p}-app-bg`] = appBg === "transparent" ? canvas : appBg
+    vars[`${p}-subtle-bg`] = c("subtleBg", "uiBg", "appBg")
+    vars[`${p}-ui-bg`] = c("uiBg", "subtleBg")
+    vars[`${p}-ui-bg-hover`] = c("uiBgHover", "uiBg")
+    vars[`${p}-ui-bg-active`] = c("uiBgActive", "uiBgHover", "uiBg")
+    vars[`${p}-border-subtle`] = c("borderSubtle", "border")
+    vars[`${p}-border`] = c("border", "borderSubtle")
+    vars[`${p}-border-strong`] = c("borderStrong", "border")
+    vars[`${p}-solid`] = c("solid")
+    vars[`${p}-solid-hover`] = c("solidHover", "solid")
+    vars[`${p}-text-subtle`] = c("textSubtle", "text")
+    vars[`${p}-text`] = c("text")
     // A system that declares its own solid foreground (the engine solves
     // them per hue per mode) is rendered with it; otherwise pick by APCA.
     const declared = scale.on?.[mode]
@@ -73,7 +73,7 @@ export function systemPreviewVars(
       ? cvdHex(declared, cvd)
       : solidStep
         ? solidFg(solidStep)
-        : 'transparent'
+        : "transparent"
   }
   return vars
 }
@@ -85,7 +85,7 @@ function cvdHex(raw: string, cvd: CvdType | null): string {
 }
 
 function solidFg(step: Step): string {
-  return step.asBg.fg === 'black' ? '#111111' : '#ffffff'
+  return step.asBg.fg === "black" ? "#111111" : "#ffffff"
 }
 
 export function SystemPreview({
@@ -98,7 +98,7 @@ export function SystemPreview({
   cvd: CvdType | null
 }) {
   if (system.empty) return <EmptyPreview />
-  if (mode === 'dark' && system.scales.some((s) => s.dark === null))
+  if (mode === "dark" && system.scales.some((s) => s.dark === null))
     return (
       <div className="flex min-h-44 items-center justify-center rounded-xl border border-dashed border-neutral-300 dark:border-neutral-700">
         <p className="max-w-52 text-center text-xs text-neutral-400 dark:text-neutral-500">

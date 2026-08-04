@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
+import { Button } from "@/registry/ui/button"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   return (

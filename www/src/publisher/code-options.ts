@@ -23,7 +23,7 @@
  * bundle (the create codec pulls this in transitively).
  */
 
-import type { ClassValue, TvLayer, VariantSliceValue } from './types'
+import type { ClassValue, TvLayer, VariantSliceValue } from "./types"
 
 /* --------------------------------- types --------------------------------- */
 
@@ -56,7 +56,7 @@ export const DEFAULT_CODE_OPTIONS: CodeOptions = {
 /* ------------------------------- validation ------------------------------- */
 
 function pickBool(value: unknown, fallback: boolean): boolean {
-  return typeof value === 'boolean' ? value : fallback
+  return typeof value === "boolean" ? value : fallback
 }
 
 /**
@@ -65,7 +65,7 @@ function pickBool(value: unknown, fallback: boolean): boolean {
  * returns something the publisher can act on.
  */
 export function sanitizeCodeOptions(input: unknown): CodeOptions {
-  if (typeof input !== 'object' || input === null) {
+  if (typeof input !== "object" || input === null) {
     return { ...DEFAULT_CODE_OPTIONS }
   }
   const raw = input as Partial<Record<keyof CodeOptions, unknown>>
@@ -82,15 +82,15 @@ function joinClassValue(value: ClassValue): ClassValue {
   if (!Array.isArray(value)) return value
   const parts: string[] = []
   for (const part of value) {
-    if (typeof part === 'string' && part !== '') parts.push(part)
+    if (typeof part === "string" && part !== "") parts.push(part)
   }
   if (parts.length === 0) return undefined
   if (parts.length === 1) return parts[0]
-  return parts.join(' ')
+  return parts.join(" ")
 }
 
 function joinVariantSlice(value: VariantSliceValue): VariantSliceValue {
-  if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
     const out: Record<string, ClassValue> = {}
     for (const [slot, slotValue] of Object.entries(value)) {
       out[slot] = joinClassValue(slotValue)
@@ -119,7 +119,7 @@ export function flattenClassArrays(layer: TvLayer): TvLayer {
   }
 
   if (layer.variants) {
-    const variants: NonNullable<TvLayer['variants']> = {}
+    const variants: NonNullable<TvLayer["variants"]> = {}
     for (const [variantName, values] of Object.entries(layer.variants)) {
       const valuesOut: Record<string, VariantSliceValue> = {}
       for (const [valueName, slice] of Object.entries(values)) {
@@ -137,7 +137,7 @@ export function flattenClassArrays(layer: TvLayer): TvLayer {
       const result: Record<string, unknown> = {}
       for (const [k, v] of Object.entries(cv)) {
         result[k] =
-          k === 'class' || k === 'className'
+          k === "class" || k === "className"
             ? joinClassValue(v as ClassValue)
             : v
       }
@@ -152,7 +152,7 @@ export function flattenClassArrays(layer: TvLayer): TvLayer {
 
 /** A blank section-divider comment rule (≈ 80 cols). */
 const SEPARATOR =
-  '/* -------------------------------------------------------------------------- */'
+  "/* -------------------------------------------------------------------------- */"
 
 // `// MARK: <name>Styles` only tells the publisher where to inject the resolved
 // `tv()` config — purely internal, never shown to the user.
@@ -169,9 +169,9 @@ const SECTION_MARK_BLOCK_RE = /^[ \t]*\/\/ MARK:.*$\r?\n?/gm
  * blank runs are collapsed; the formatter normalises the rest.
  */
 export function applySectionComments(source: string, enabled: boolean): string {
-  let out = source.replace(STYLES_MARK_RE, '')
+  let out = source.replace(STYLES_MARK_RE, "")
   out = enabled
     ? out.replace(SECTION_MARK_LINE_RE, SEPARATOR)
-    : out.replace(SECTION_MARK_BLOCK_RE, '')
-  return out.replace(/\n{3,}/g, '\n\n')
+    : out.replace(SECTION_MARK_BLOCK_RE, "")
+  return out.replace(/\n{3,}/g, "\n\n")
 }

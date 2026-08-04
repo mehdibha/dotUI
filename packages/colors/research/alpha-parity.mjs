@@ -10,25 +10,25 @@
 //
 // Run: node research/alpha-parity.mjs   (from packages/colors)
 
-import { writeFileSync } from 'node:fs'
-import { createRequire } from 'node:module'
+import { writeFileSync } from "node:fs"
+import { createRequire } from "node:module"
 
 const require = createRequire(import.meta.url)
-const radix = require('@radix-ui/colors')
+const radix = require("@radix-ui/colors")
 
 // ---------- helpers ----------
 
 const hexToRgb = (hex) => {
-  const h = hex.replace('#', '')
+  const h = hex.replace("#", "")
   return [0, 1, 2].map((i) => parseInt(h.slice(i * 2, i * 2 + 2), 16))
 }
 const hexToRgba = (hex) => {
-  const h = hex.replace('#', '')
-  const rgb = hexToRgb('#' + h.slice(0, 6))
+  const h = hex.replace("#", "")
+  const rgb = hexToRgb("#" + h.slice(0, 6))
   const a = h.length === 8 ? parseInt(h.slice(6, 8), 16) / 255 : 1
   return [...rgb, a]
 }
-const byte = (n) => n.toString(16).padStart(2, '0')
+const byte = (n) => n.toString(16).padStart(2, "0")
 const formatRgba = ([r, g, b, a]) => {
   const a255 = Math.round(a * 255)
   return a255 === 255
@@ -92,7 +92,7 @@ function getAlphaColor(targetRgb, backgroundRgb) {
 
 // ---------- measurement ----------
 
-const SCALES = ['blue', 'red', 'green', 'amber', 'purple', 'gray']
+const SCALES = ["blue", "red", "green", "amber", "purple", "gray"]
 const values = (obj) => Object.values(obj)
 
 function measureScale(name, solidHexes, publishedAlphaHexes, bg) {
@@ -132,7 +132,7 @@ function measureScale(name, solidHexes, publishedAlphaHexes, bg) {
   })
   return {
     scale: name,
-    background: '#' + bg.map(byte).join(''),
+    background: "#" + bg.map(byte).join(""),
     exactHexMatches: steps.filter((s) => s.hexMatch).length,
     maxCompositeErrComputed: Math.max(
       ...steps.map((s) => s.compositeErrComputed),
@@ -164,7 +164,7 @@ const darkSolveResults = darkCandidates.map((bg) => {
         matches++
     })
   }
-  return { bg: '#' + bg.map(byte).join(''), matches, total }
+  return { bg: "#" + bg.map(byte).join(""), matches, total }
 })
 darkSolveResults.sort((a, b) => b.matches - a.matches)
 const darkBg = hexToRgb(darkSolveResults[0].bg)
@@ -183,20 +183,20 @@ const dark = SCALES.map((name) =>
 )
 
 const summary = {
-  decision: 'D10-A alpha twins',
+  decision: "D10-A alpha twins",
   algorithm:
-    'Radix getAlphaColor: desired = white if any target channel > bg channel else black; ' +
-    'A = ceil(max_c (t_c-b_c)/(desired-b_c) * 255)/255; channel = ceil(clamp(-(b(1-A)-t)/A)) ' +
-    'with +/-1 correction against round(bg*(1-a))+round(fg*a); pure-gray shortcut returns ' +
-    '(desired, desired, desired, exact alpha).',
+    "Radix getAlphaColor: desired = white if any target channel > bg channel else black; " +
+    "A = ceil(max_c (t_c-b_c)/(desired-b_c) * 255)/255; channel = ceil(clamp(-(b(1-A)-t)/A)) " +
+    "with +/-1 correction against round(bg*(1-a))+round(fg*a); pure-gray shortcut returns " +
+    "(desired, desired, desired, exact alpha).",
   darkBackgroundSolve: {
     method:
-      'brute-force neutral bg #000000..#202020, count exact hex matches of generated vs published *DarkA across 6 scales x 12 steps',
+      "brute-force neutral bg #000000..#202020, count exact hex matches of generated vs published *DarkA across 6 scales x 12 steps",
     top3: darkSolveResults.slice(0, 3),
     conclusion: darkSolveResults[0].bg,
   },
   light: {
-    background: '#ffffff',
+    background: "#ffffff",
     totalSteps: light.length * 12,
     exactHexMatches: light.reduce((n, s) => n + s.exactHexMatches, 0),
     maxCompositeErrComputed: Math.max(
@@ -221,10 +221,10 @@ const summary = {
   },
 }
 
-const out = new URL('./data/alpha-parity.json', import.meta.url)
-writeFileSync(out, JSON.stringify(summary, null, 2) + '\n')
+const out = new URL("./data/alpha-parity.json", import.meta.url)
+writeFileSync(out, JSON.stringify(summary, null, 2) + "\n")
 
-console.log('dark bg solve top3:', darkSolveResults.slice(0, 3))
+console.log("dark bg solve top3:", darkSolveResults.slice(0, 3))
 console.log(
   `light: ${summary.light.exactHexMatches}/${summary.light.totalSteps} exact, maxErr computed=${summary.light.maxCompositeErrComputed} published=${summary.light.maxCompositeErrPublished}`,
 )
@@ -236,5 +236,5 @@ for (const mode of [light, dark])
     for (const st of s.steps)
       if (!st.hexMatch)
         console.log(
-          `  mismatch ${s.scale}${mode === dark ? 'Dark' : ''}[${st.step}]: published=${st.published} computed=${st.computed} (errC=${st.compositeErrComputed}, errP=${st.compositeErrPublished})`,
+          `  mismatch ${s.scale}${mode === dark ? "Dark" : ""}[${st.step}]: published=${st.published} computed=${st.computed} (errC=${st.compositeErrComputed}, errP=${st.compositeErrPublished})`,
         )

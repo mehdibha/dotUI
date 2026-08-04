@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { HeartIcon } from 'lucide-react'
+import { useState } from "react"
+import { HeartIcon } from "lucide-react"
 
-import { ToggleButton } from '@/registry/ui/toggle-button'
+import { ToggleButton } from "@/registry/ui/toggle-button"
 
 export default function Demo() {
   const [isFavorite, setFavorite] = useState(false)
@@ -25,7 +25,7 @@ export default function Demo() {
           aria-label="Add to favorites"
         >
           <HeartIcon
-            className={isFavorite ? 'fill-current text-danger' : undefined}
+            className={isFavorite ? "fill-current text-danger" : undefined}
           />
         </ToggleButton>
       </div>

@@ -1,12 +1,12 @@
-import type * as React from 'react'
+import type * as React from "react"
 import type {
   ChartDefinition,
   ChartPoint,
   ChartRenderContext,
   ChartValue,
-} from '@tanstack/charts'
+} from "@tanstack/charts"
 
-import type { ChartAnimate, ChartFocus, ChartTooltipAnchor } from './base'
+import type { ChartAnimate, ChartFocus, ChartTooltipAnchor } from "./base"
 
 export type { ChartAnimate, ChartFocus, ChartTooltipAnchor }
 

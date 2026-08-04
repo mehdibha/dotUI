@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   DialogContent,
   DialogDescription,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Modal } from '@/registry/ui/modal'
+} from "@/registry/ui/dialog"
+import { Modal } from "@/registry/ui/modal"
 
 /**
  * Guards applying a preset over unsaved work — the one action that would

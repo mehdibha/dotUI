@@ -1,25 +1,25 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { Mail } from 'lucide-react'
+import React from "react"
+import { Mail } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Description, FieldError, Label } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
-import { OTPField } from '@/registry/ui/otp-field'
+import { Button } from "@/registry/ui/button"
+import { Description, FieldError, Label } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
+import { OTPField } from "@/registry/ui/otp-field"
 
-const CORRECT_CODE = '123456'
+const CORRECT_CODE = "123456"
 
 export default function Demo() {
-  const [value, setValue] = React.useState('')
+  const [value, setValue] = React.useState("")
   const [isPending, setIsPending] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
     if (value.length !== 6) {
-      setError('Enter all six digits.')
+      setError("Enter all six digits.")
       return
     }
     setError(null)
@@ -27,7 +27,7 @@ export default function Demo() {
     setTimeout(() => {
       setIsPending(false)
       if (value !== CORRECT_CODE) {
-        setError('That code is incorrect or expired.')
+        setError("That code is incorrect or expired.")
       }
     }, 1200)
   }

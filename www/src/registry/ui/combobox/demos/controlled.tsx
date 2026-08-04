@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { ChevronDownIcon } from 'lucide-react'
-import type * as MenuPrimitives from 'react-aria-components/Menu'
+import React from "react"
+import { ChevronDownIcon } from "lucide-react"
+import type * as MenuPrimitives from "react-aria-components/Menu"
 
-import { Button } from '@/registry/ui/button'
-import { Combobox } from '@/registry/ui/combobox'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
+import { Button } from "@/registry/ui/button"
+import { Combobox } from "@/registry/ui/combobox"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
-  const [country, setCountry] = React.useState<MenuPrimitives.Key | null>('tn')
+  const [country, setCountry] = React.useState<MenuPrimitives.Key | null>("tn")
   return (
     <div className="flex w-52 flex-col items-center gap-6">
       <Combobox
@@ -45,7 +45,7 @@ export default function Demo() {
             You selected: <span className="font-bold text-fg">{country}</span>
           </>
         ) : (
-          'Select a country.'
+          "Select a country."
         )}
       </p>
     </div>

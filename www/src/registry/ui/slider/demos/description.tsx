@@ -1,5 +1,5 @@
-import { Description, Label } from '@/registry/ui/field'
-import { Slider, SliderControl } from '@/registry/ui/slider'
+import { Description, Label } from "@/registry/ui/field"
+import { Slider, SliderControl } from "@/registry/ui/slider"
 
 export default function Demo() {
   return (

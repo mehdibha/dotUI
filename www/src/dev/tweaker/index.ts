@@ -10,6 +10,6 @@
  * - `DevTweaker` — the floating panel; mounted once, dev-gated, in `__root.tsx`.
  */
 
-export { setTweak, useTweak } from './use-tweak'
-export { DevTweaker } from './tweaker'
-export type { TweakConfig } from './types'
+export { setTweak, useTweak } from "./use-tweak"
+export { DevTweaker } from "./tweaker"
+export type { TweakConfig } from "./types"

@@ -1,4 +1,4 @@
-import { Checkbox } from '@/registry/ui/checkbox'
+import { Checkbox } from "@/registry/ui/checkbox"
 
 export default function Demo() {
   return (

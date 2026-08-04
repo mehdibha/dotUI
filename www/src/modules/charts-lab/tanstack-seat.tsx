@@ -1,24 +1,24 @@
-'use client'
+"use client"
 
-import type { CSSProperties, ReactNode } from 'react'
-import { useMemo, useState } from 'react'
-import { ruleY } from '@tanstack/charts'
+import type { CSSProperties, ReactNode } from "react"
+import { useMemo, useState } from "react"
+import { ruleY } from "@tanstack/charts"
 
-import { Label } from '@/registry/ui/field'
+import { Label } from "@/registry/ui/field"
 import {
   SegmentedControl,
   SegmentedControlItem,
-} from '@/registry/ui/segmented-control'
+} from "@/registry/ui/segmented-control"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { Slider, SliderControl } from '@/registry/ui/slider'
-import { Switch, SwitchControl } from '@/registry/ui/switch'
+} from "@/registry/ui/select"
+import { Slider, SliderControl } from "@/registry/ui/slider"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 
-import { CodePane, SeatViewBar, type SeatView } from './code-view'
+import { CodePane, SeatViewBar, type SeatView } from "./code-view"
 import {
   TANSTACK_PRIMITIVE_CODE,
   tanstackExampleCode,
@@ -26,14 +26,14 @@ import {
   type FocusMode,
   type MarkKind,
   type TooltipAnchor,
-} from './codegen'
-import { PanelRow, PanelSection, SlotSelect } from './controls'
-import { desktopAverage, slotVar, visits, type ChartSlot } from './data'
-import { AreaChart, BarChart, LineChart } from './primitive'
+} from "./codegen"
+import { PanelRow, PanelSection, SlotSelect } from "./controls"
+import { desktopAverage, slotVar, visits, type ChartSlot } from "./data"
+import { AreaChart, BarChart, LineChart } from "./primitive"
 
 const monthTick = (value: unknown) => String(value).slice(0, 3)
-const SERIES = ['desktop', 'mobile'] as const
-const LABELS = { desktop: 'Desktop', mobile: 'Mobile' }
+const SERIES = ["desktop", "mobile"] as const
+const LABELS = { desktop: "Desktop", mobile: "Mobile" }
 
 /* Palette slots are plain CSS variables, so recoloring is a repaint and never
    a scene rebuild. The extra level exists because a swap like 1↔2 would form
@@ -75,7 +75,7 @@ function OptionSelect<T extends string>({
         aria-label={label}
         selectedKey={value}
         onSelectionChange={(key) => {
-          if (typeof key === 'string') onChange(key as T)
+          if (typeof key === "string") onChange(key as T)
         }}
         className="w-36"
       >
@@ -158,8 +158,8 @@ function SliderRow({
 export function TanstackSeat() {
   const [desktopSlot, setDesktopSlot] = useState<ChartSlot>(1)
   const [mobileSlot, setMobileSlot] = useState<ChartSlot>(2)
-  const [mark, setMark] = useState<MarkKind>('area')
-  const [curve, setCurve] = useState<CurveKind>('natural')
+  const [mark, setMark] = useState<MarkKind>("area")
+  const [curve, setCurve] = useState<CurveKind>("natural")
   const [fillOpacity, setFillOpacity] = useState(20)
   const [strokeWidth, setStrokeWidth] = useState(2.25)
   const [points, setPoints] = useState(false)
@@ -169,12 +169,12 @@ export function TanstackSeat() {
   const [axes, setAxes] = useState(true)
   const [refLine, setRefLine] = useState(false)
   const [legend, setLegend] = useState(true)
-  const [focusMode, setFocusMode] = useState<FocusMode>('group-x')
-  const [anchor, setAnchor] = useState<TooltipAnchor>('group-center')
+  const [focusMode, setFocusMode] = useState<FocusMode>("group-x")
+  const [anchor, setAnchor] = useState<TooltipAnchor>("group-center")
   const [sticky, setSticky] = useState(true)
   const [animate, setAnimate] = useState(true)
   const [focused, setFocused] = useState<string | null>(null)
-  const [view, setView] = useState<SeatView>('preview')
+  const [view, setView] = useState<SeatView>("preview")
 
   /* Knobs map 1:1 to props on the component layer; the average line rides the
      `marks` escape hatch. Only genuine lists still need memoizing — every
@@ -184,10 +184,10 @@ export function TanstackSeat() {
       refLine
         ? [
             ruleY([desktopAverage], {
-              stroke: 'currentColor',
+              stroke: "currentColor",
               strokeOpacity: 0.35,
               strokeWidth: 1,
-              strokeDasharray: '4 3',
+              strokeDasharray: "4 3",
             }),
           ]
         : undefined,
@@ -195,7 +195,7 @@ export function TanstackSeat() {
   )
   const common = {
     data: visits,
-    x: 'month' as const,
+    x: "month" as const,
     y: SERIES,
     labels: LABELS,
     formatX: monthTick,
@@ -207,18 +207,18 @@ export function TanstackSeat() {
     tooltipSticky: sticky,
     animate,
     marks,
-    ariaLabel: 'Visitors by month, desktop and mobile',
+    ariaLabel: "Visitors by month, desktop and mobile",
   }
 
   return (
     <div className="flex h-full flex-col">
       <SeatViewBar view={view} onChange={setView} />
-      {view === 'primitive' && (
+      {view === "primitive" && (
         <CodePane title="ui/chart.tsx" code={TANSTACK_PRIMITIVE_CODE} />
       )}
-      {view !== 'primitive' && (
+      {view !== "primitive" && (
         <>
-          {view === 'example' ? (
+          {view === "example" ? (
             <CodePane
               title="visitors-chart.tsx"
               code={tanstackExampleCode({
@@ -244,7 +244,7 @@ export function TanstackSeat() {
           ) : (
             <div className="p-4">
               <PaletteScope slots={[desktopSlot, mobileSlot]}>
-                {mark === 'bar' && (
+                {mark === "bar" && (
                   <BarChart
                     {...common}
                     radius={barRadius}
@@ -256,7 +256,7 @@ export function TanstackSeat() {
                     }
                   />
                 )}
-                {mark === 'line' && (
+                {mark === "line" && (
                   <LineChart
                     {...common}
                     curve={curve}
@@ -270,13 +270,13 @@ export function TanstackSeat() {
                     }
                   />
                 )}
-                {mark === 'area' && (
+                {mark === "area" && (
                   <AreaChart
                     {...common}
                     curve={curve}
                     strokeWidth={strokeWidth}
                     points={points}
-                    fill={gradient ? 'gradient' : fillOpacity / 100}
+                    fill={gradient ? "gradient" : fillOpacity / 100}
                     onFocusChange={(point) =>
                       setFocused(
                         point &&
@@ -288,7 +288,7 @@ export function TanstackSeat() {
               </PaletteScope>
               <p className="mt-2 h-4 truncate font-mono text-[11px] text-fg-muted">
                 {focused ??
-                  'Tab into the chart — arrows walk the data, Enter pins the tooltip.'}
+                  "Tab into the chart — arrows walk the data, Enter pins the tooltip."}
               </p>
             </div>
           )}
@@ -312,7 +312,7 @@ export function TanstackSeat() {
                   selectedKeys={[mark]}
                   onSelectionChange={(keys) => {
                     const next = [...keys][0]
-                    if (typeof next === 'string') setMark(next as MarkKind)
+                    if (typeof next === "string") setMark(next as MarkKind)
                   }}
                   className="w-full"
                 >
@@ -326,17 +326,17 @@ export function TanstackSeat() {
                     Bar
                   </SegmentedControlItem>
                 </SegmentedControl>
-                {mark !== 'bar' && (
+                {mark !== "bar" && (
                   <>
                     <OptionSelect
                       label="Curve"
                       value={curve}
                       onChange={setCurve}
                       options={[
-                        { id: 'linear', label: 'Linear' },
-                        { id: 'natural', label: 'Natural' },
-                        { id: 'monotone', label: 'Monotone' },
-                        { id: 'step', label: 'Step' },
+                        { id: "linear", label: "Linear" },
+                        { id: "natural", label: "Natural" },
+                        { id: "monotone", label: "Monotone" },
+                        { id: "step", label: "Step" },
                       ]}
                     />
                     <SliderRow
@@ -354,7 +354,7 @@ export function TanstackSeat() {
                     />
                   </>
                 )}
-                {mark === 'area' && (
+                {mark === "area" && (
                   <>
                     <SwitchRow
                       label="Gradient fill"
@@ -373,7 +373,7 @@ export function TanstackSeat() {
                     )}
                   </>
                 )}
-                {mark === 'bar' && (
+                {mark === "bar" && (
                   <SliderRow
                     label="Corner radius"
                     value={barRadius}
@@ -402,9 +402,9 @@ export function TanstackSeat() {
                   value={focusMode}
                   onChange={setFocusMode}
                   options={[
-                    { id: 'nearest', label: 'Nearest' },
-                    { id: 'nearest-x', label: 'Nearest X' },
-                    { id: 'group-x', label: 'Group X' },
+                    { id: "nearest", label: "Nearest" },
+                    { id: "nearest-x", label: "Nearest X" },
+                    { id: "group-x", label: "Group X" },
                   ]}
                 />
                 <OptionSelect
@@ -412,9 +412,9 @@ export function TanstackSeat() {
                   value={anchor}
                   onChange={setAnchor}
                   options={[
-                    { id: 'point', label: 'Point' },
-                    { id: 'pointer', label: 'Pointer' },
-                    { id: 'group-center', label: 'Group center' },
+                    { id: "point", label: "Point" },
+                    { id: "pointer", label: "Pointer" },
+                    { id: "group-center", label: "Group center" },
                   ]}
                 />
                 <SwitchRow

@@ -3,15 +3,15 @@
  * Transforms raw API reference data for rendering
  */
 
-import type { HighlighterGeneric } from 'shiki'
+import type { HighlighterGeneric } from "shiki"
 
-import { DEFAULT_EXPANDED, groupProps } from './groups'
+import { DEFAULT_EXPANDED, groupProps } from "./groups"
 import type {
   ComponentApiReference,
   PropDefinition,
   TypeLinksRegistry,
-} from './types'
-import type { TType } from './types/type-ast'
+} from "./types"
+import type { TType } from "./types/type-ast"
 
 /**
  * Transformed prop data ready for rendering
@@ -57,30 +57,30 @@ function getShortType(
   type: string | undefined,
   typeAst?: TType,
 ): string {
-  if (!type) return 'unknown'
+  if (!type) return "unknown"
 
   // Event handlers show as "function"
-  if (/^on[A-Z]/.test(name)) return 'function'
+  if (/^on[A-Z]/.test(name)) return "function"
 
   // Function types show as "function": render functions
   // (DOMRenderFunction<"div", T>) and plain callbacks like validate
-  if (/RenderFunction</.test(type)) return 'function'
-  if (typeAst?.type === 'function') return 'function'
+  if (/RenderFunction</.test(type)) return "function"
+  if (typeAst?.type === "function") return "function"
 
   // Render prop patterns
-  if (type.includes('=> ReactNode')) return 'ReactNode | function'
-  if (type.includes('=> string') && type.includes('values:'))
-    return 'string | function'
-  if (type.includes('=> CSSProperties')) return 'CSSProperties | function'
+  if (type.includes("=> ReactNode")) return "ReactNode | function"
+  if (type.includes("=> string") && type.includes("values:"))
+    return "string | function"
+  if (type.includes("=> CSSProperties")) return "CSSProperties | function"
 
   // Simple types
-  if (type === 'boolean' || type === 'string' || type === 'number') return type
+  if (type === "boolean" || type === "string" || type === "number") return type
 
   // Short union types
-  if (!type.includes('|') || (type.split('|').length < 4 && type.length < 50))
+  if (!type.includes("|") || (type.split("|").length < 4 && type.length < 50))
     return type
 
-  return 'union'
+  return "union"
 }
 
 /**
@@ -91,11 +91,11 @@ function highlightCode(
   // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
   highlighter: HighlighterGeneric<any, any>,
 ): string {
-  if (!code) return ''
+  if (!code) return ""
 
   const html = highlighter.codeToHtml(code, {
-    lang: 'ts',
-    themes: { light: 'github-light', dark: 'github-dark' },
+    lang: "ts",
+    themes: { light: "github-light", dark: "github-dark" },
     defaultColor: false,
   })
 
@@ -117,10 +117,10 @@ function highlightTypeCode(
   // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
   highlighter: HighlighterGeneric<any, any>,
 ): string {
-  if (!code) return ''
+  if (!code) return ""
 
   const html = highlightCode(`type _ =\n${code}`, highlighter)
-  const newlineIndex = html.indexOf('\n')
+  const newlineIndex = html.indexOf("\n")
   return newlineIndex === -1 ? html : html.slice(newlineIndex + 1)
 }
 

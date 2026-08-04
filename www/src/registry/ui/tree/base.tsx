@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import * as ButtonPrimitive from 'react-aria-components/Button'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as TreePrimitive from 'react-aria-components/Tree'
+import * as ButtonPrimitive from "react-aria-components/Button"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as TreePrimitive from "react-aria-components/Tree"
 
-import { ChevronRightIcon, GripVerticalIcon } from '@/registry/icons'
-import { Checkbox } from '@/registry/ui/checkbox'
+import { ChevronRightIcon, GripVerticalIcon } from "@/registry/icons"
+import { Checkbox } from "@/registry/ui/checkbox"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: Separator
 
@@ -41,7 +41,7 @@ const TreeItem = <T extends object>({
           className: cn,
           interactive:
             !renderProps.isDisabled &&
-            (renderProps.selectionMode !== 'none' || renderProps.hasChildItems),
+            (renderProps.selectionMode !== "none" || renderProps.hasChildItems),
         }),
       )}
       {...props}
@@ -59,8 +59,8 @@ const TreeItemContent = ({ children, ...props }: TreeItemContentProps) => {
     <TreePrimitive.TreeItemContent {...props}>
       {(renderProps) => {
         const hasSelectionCheckbox =
-          renderProps.selectionBehavior === 'toggle' &&
-          renderProps.selectionMode !== 'none'
+          renderProps.selectionBehavior === "toggle" &&
+          renderProps.selectionMode !== "none"
         // With no selection checkbox, pressing the row toggles the item's
         // expansion — a parent opens on click, not only via the chevron.
         const toggleExpandOnPress =
@@ -86,7 +86,7 @@ const TreeItemContent = ({ children, ...props }: TreeItemContentProps) => {
               <span aria-hidden="true" className={chevronPlaceholder()} />
             )}
             <span className={label()} onClick={toggleExpandOnPress}>
-              {typeof children === 'function'
+              {typeof children === "function"
                 ? children(renderProps)
                 : children}
             </span>

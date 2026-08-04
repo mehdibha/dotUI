@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import type { ChartBuildContext } from '@tanstack/charts'
-import { colorLegend } from '@tanstack/charts/legend'
-import { cell } from '@tanstack/charts/rect'
-import { text } from '@tanstack/charts/text'
-import { scaleBand, scaleQuantize, scaleThreshold } from 'd3-scale'
+import type { ChartBuildContext } from "@tanstack/charts"
+import { colorLegend } from "@tanstack/charts/legend"
+import { cell } from "@tanstack/charts/rect"
+import { text } from "@tanstack/charts/text"
+import { scaleBand, scaleQuantize, scaleThreshold } from "d3-scale"
 
 import type {
   ChartBaseSpecOptions,
@@ -15,7 +15,7 @@ import type {
   ChartXField,
   ChartXValueOf,
   ChartYField,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 import {
   Chart,
   chartDefaults,
@@ -24,7 +24,7 @@ import {
   paletteColor,
   resolveFormat,
   useChartDefinition,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 /* One rectangle per row: two categorical axes, and the value on the color
    scale. Both scales are band scales, so the grid is the chart. */
@@ -40,8 +40,8 @@ export function heatmapColors(
     const t = steps === 1 ? 0.5 : index / (steps - 1)
     const [weight, target] =
       t <= 0.5
-        ? [20 + t * 160, 'var(--color-bg)']
-        : [100 - (t - 0.5) * 136, 'var(--color-fg)']
+        ? [20 + t * 160, "var(--color-bg)"]
+        : [100 - (t - 0.5) * 136, "var(--color-fg)"]
     return `color-mix(in oklab, ${color} ${Math.round(weight)}%, ${target})`
   })
 }
@@ -83,7 +83,7 @@ export interface HeatmapChartSpecOptions<
 function fieldReader<TDatum>(field: string) {
   return (row: TDatum) => {
     const value = (row as Record<string, unknown>)[field]
-    return typeof value === 'number' && Number.isFinite(value) ? value : null
+    return typeof value === "number" && Number.isFinite(value) ? value : null
   }
 }
 
@@ -170,7 +170,7 @@ export function heatmapChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
       // inset above cuts the gutter. `nice` is not a band-scale operation.
       x: { scale: scaleBand, nice: false, label: options.labelX },
       y: { scale: scaleBand, nice: false, label: options.labelY },
-      grid: 'none',
+      grid: "none",
       color: {
         scale: options.thresholds
           ? scaleThreshold<number, string>
@@ -210,8 +210,8 @@ export function HeatmapChart<TDatum, TXField extends ChartXField<TDatum>>(
     {
       ...props,
       // A cell is read on its own, not against its column.
-      focus: props.focus ?? 'nearest',
-      tooltipAnchor: props.tooltipAnchor ?? 'point',
+      focus: props.focus ?? "nearest",
+      tooltipAnchor: props.tooltipAnchor ?? "point",
     },
     heatmapChartSpec,
   )

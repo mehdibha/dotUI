@@ -1,26 +1,26 @@
-'use client'
+"use client"
 
-import type React from 'react'
-import * as CheckboxPrimitives from 'react-aria-components/Checkbox'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as FieldErrorPrimitives from 'react-aria-components/FieldError'
-import * as LabelPrimitives from 'react-aria-components/Label'
-import { Provider } from 'react-aria-components/slots'
-import * as TextPrimitives from 'react-aria-components/Text'
-import { useSlotId } from 'react-aria/private/utils/useId'
-import type { VariantProps } from 'tailwind-variants'
+import type React from "react"
+import * as CheckboxPrimitives from "react-aria-components/Checkbox"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as FieldErrorPrimitives from "react-aria-components/FieldError"
+import * as LabelPrimitives from "react-aria-components/Label"
+import { Provider } from "react-aria-components/slots"
+import * as TextPrimitives from "react-aria-components/Text"
+import { useSlotId } from "react-aria/private/utils/useId"
+import type { VariantProps } from "tailwind-variants"
 
-import { Text } from '@/registry/ui/text'
+import { Text } from "@/registry/ui/text"
 
-import { useStyles } from './styles'
-import type { FieldStyles } from './styles'
+import { useStyles } from "./styles"
+import type { FieldStyles } from "./styles"
 
 // MARK: fieldStyles
-export { fieldStyles } from './styles'
+export { fieldStyles } from "./styles"
 
 // MARK: Fieldset
 
-interface FieldsetProps extends React.ComponentProps<'fieldset'> {}
+interface FieldsetProps extends React.ComponentProps<"fieldset"> {}
 
 function Fieldset({ className, ...props }: FieldsetProps) {
   const { fieldset } = useStyles()()
@@ -35,7 +35,7 @@ function Fieldset({ className, ...props }: FieldsetProps) {
 
 // MARK: Legend
 
-interface LegendProps extends React.ComponentProps<'legend'> {}
+interface LegendProps extends React.ComponentProps<"legend"> {}
 
 function Legend({ className, ...props }: LegendProps) {
   const { legend } = useStyles()()
@@ -46,7 +46,7 @@ function Legend({ className, ...props }: LegendProps) {
 
 // MARK: FieldGroup
 
-interface FieldGroupProps extends React.ComponentProps<'div'> {}
+interface FieldGroupProps extends React.ComponentProps<"div"> {}
 
 function FieldGroup({ className, ...props }: FieldGroupProps) {
   const { fieldGroup } = useStyles()()
@@ -62,7 +62,7 @@ function FieldGroup({ className, ...props }: FieldGroupProps) {
 // MARK: Field
 
 interface FieldProps
-  extends React.ComponentProps<'div'>, VariantProps<FieldStyles> {}
+  extends React.ComponentProps<"div">, VariantProps<FieldStyles> {}
 
 const Field = ({ children, className, orientation, ...props }: FieldProps) => {
   const { field } = useStyles()()
@@ -80,13 +80,13 @@ const Field = ({ children, className, orientation, ...props }: FieldProps) => {
             CheckboxPrimitives.CheckboxContext,
             {
               id: inputId,
-              'aria-describedby': descriptionId,
+              "aria-describedby": descriptionId,
             },
           ],
           [LabelPrimitives.LabelContext, { htmlFor: inputId }],
           [
             TextPrimitives.TextContext,
-            { slot: 'description', id: descriptionId },
+            { slot: "description", id: descriptionId },
           ],
         ]}
       >
@@ -98,7 +98,7 @@ const Field = ({ children, className, orientation, ...props }: FieldProps) => {
 
 // MARK: FieldContent
 
-interface FieldContentProps extends React.ComponentProps<'div'> {}
+interface FieldContentProps extends React.ComponentProps<"div"> {}
 
 const FieldContent = ({ className, ...props }: FieldContentProps) => {
   const { fieldContent } = useStyles()()
@@ -135,7 +135,7 @@ const Label = ({ children, className, ...props }: LabelProps) => {
 
 interface DescriptionProps extends Omit<
   React.ComponentProps<typeof Text>,
-  'slot'
+  "slot"
 > {}
 
 const Description = ({ className, ...props }: DescriptionProps) => {

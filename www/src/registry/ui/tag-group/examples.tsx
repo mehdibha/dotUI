@@ -1,17 +1,17 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Basic from './demos/basic'
-import Disabled from './demos/disabled'
-import Empty from './demos/empty'
-import Links from './demos/links'
-import MultipleSelection from './demos/multiple-selection'
-import Removable from './demos/removable'
-import SingleSelection from './demos/single-selection'
-import Sizes from './demos/sizes'
-import WithCombobox from './demos/with-combobox'
-import WithCombobox2 from './demos/with-combobox-2'
-import WithIcon from './demos/with-icon'
+import Basic from "./demos/basic"
+import Disabled from "./demos/disabled"
+import Empty from "./demos/empty"
+import Links from "./demos/links"
+import MultipleSelection from "./demos/multiple-selection"
+import Removable from "./demos/removable"
+import SingleSelection from "./demos/single-selection"
+import Sizes from "./demos/sizes"
+import WithCombobox from "./demos/with-combobox"
+import WithCombobox2 from "./demos/with-combobox-2"
+import WithIcon from "./demos/with-icon"
 
 export default function TagGroupExamples() {
   return (

@@ -1,9 +1,9 @@
-import type { Theme } from '@dotui/colors'
+import type { Theme } from "@dotui/colors"
 
-import type { CvdType } from '../color'
-import type { ColorSystem } from '../data'
-import type { Mode } from '../page'
-import { ScaleStrip } from '../primitives'
+import type { CvdType } from "../color"
+import type { ColorSystem } from "../data"
+import type { Mode } from "../page"
+import { ScaleStrip } from "../primitives"
 
 export function LineupSection({
   systems,
@@ -12,7 +12,7 @@ export function LineupSection({
   cvd,
 }: {
   systems: ColorSystem[]
-  engineReport: Theme['report'] | null
+  engineReport: Theme["report"] | null
   mode: Mode
   cvd: CvdType | null
 }) {
@@ -27,7 +27,7 @@ export function LineupSection({
             system={system}
             mode={mode}
             cvd={cvd}
-            report={system.id === 'dotui' ? engineReport : null}
+            report={system.id === "dotui" ? engineReport : null}
           />
         ),
       )}
@@ -67,15 +67,15 @@ function SystemCard({
   system: ColorSystem
   mode: Mode
   cvd: CvdType | null
-  report: Theme['report'] | null
+  report: Theme["report"] | null
 }) {
   const singlePalette = system.scales.every((s) => s.dark === null)
   return (
     <div
       className={`flex flex-col rounded-xl border p-5 ${
         report
-          ? 'border-neutral-400 dark:border-neutral-500'
-          : 'border-neutral-200 dark:border-neutral-800'
+          ? "border-neutral-400 dark:border-neutral-500"
+          : "border-neutral-200 dark:border-neutral-800"
       }`}
     >
       <div className="flex items-baseline justify-between gap-2">
@@ -93,7 +93,7 @@ function SystemCard({
           rel="noreferrer"
           className="font-mono text-[10px] text-neutral-400 hover:text-neutral-600 dark:text-neutral-500 dark:hover:text-neutral-300"
         >
-          {system.stepCount} steps{singlePalette ? ' · single palette' : ''} ↗
+          {system.stepCount} steps{singlePalette ? " · single palette" : ""} ↗
         </a>
       </div>
       <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-neutral-500 dark:text-neutral-400">
@@ -103,8 +103,8 @@ function SystemCard({
         <p
           className={`mt-2 text-[11px] leading-relaxed ${
             report.ok
-              ? 'text-emerald-600 dark:text-emerald-400'
-              : 'text-amber-600 dark:text-amber-400'
+              ? "text-emerald-600 dark:text-emerald-400"
+              : "text-amber-600 dark:text-amber-400"
           }`}
         >
           {report.ok
@@ -129,14 +129,14 @@ function SystemCard({
         <ul className="mt-1.5 space-y-0.5">
           {system.sources.slice(0, 3).map((src) => (
             <li key={src} className="truncate">
-              {src.startsWith('http') ? (
+              {src.startsWith("http") ? (
                 <a
                   href={src}
                   target="_blank"
                   rel="noreferrer"
                   className="font-mono text-[10px] underline decoration-neutral-300 underline-offset-2 dark:decoration-neutral-700"
                 >
-                  {src.replace(/^https?:\/\//, '')}
+                  {src.replace(/^https?:\/\//, "")}
                 </a>
               ) : (
                 <span className="font-mono text-[10px]">{src}</span>
@@ -149,7 +149,7 @@ function SystemCard({
         {system.scales.map((scale) => (
           <ScaleStrip
             key={scale.id}
-            steps={mode === 'dark' && scale.dark ? scale.dark : scale.light}
+            steps={mode === "dark" && scale.dark ? scale.dark : scale.light}
             cvd={cvd}
             height="h-4"
           />

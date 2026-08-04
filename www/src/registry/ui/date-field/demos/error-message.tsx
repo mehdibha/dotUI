@@ -1,6 +1,6 @@
-import { DateField } from '@/registry/ui/date-field'
-import { FieldError, Label } from '@/registry/ui/field'
-import { DateInput } from '@/registry/ui/input'
+import { DateField } from "@/registry/ui/date-field"
+import { FieldError, Label } from "@/registry/ui/field"
+import { DateInput } from "@/registry/ui/input"
 
 export default function Demo() {
   return (

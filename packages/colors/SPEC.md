@@ -392,7 +392,7 @@ reference-palette calibration test (Okabe-Ito passes, tab10 fails protan).
 else optional with research-backed defaults.
 
 ```ts
-createTheme({ seed: '#635bff' })
+createTheme({ seed: "#635bff" })
 // → { light, dark } × { accent, neutral, success, danger, warning, info }
 //   × 12 steps + on-* + alpha twins + chart palettes, all guarantees enforced
 ```

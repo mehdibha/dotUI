@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { createPersistedStore } from '@/lib/persisted-store'
+import { createPersistedStore } from "@/lib/persisted-store"
 
-import { decodePreset, encodePreset } from './codec'
-import { DEFAULTS } from './defaults'
-import type { DesignSystem } from './types'
+import { decodePreset, encodePreset } from "./codec"
+import { DEFAULTS } from "./defaults"
+import type { DesignSystem } from "./types"
 
 /**
  * The user's design system, persisted as the same compact string /create uses
@@ -14,7 +14,7 @@ import type { DesignSystem } from './types'
  * clears the key instead of storing an empty diff.
  */
 const presetStore = createPersistedStore<DesignSystem>(
-  'dotui:preset',
+  "dotui:preset",
   DEFAULTS,
   {
     decode: decodePreset,
@@ -27,10 +27,10 @@ export const saveStoredPreset = presetStore.set
 export const useStoredPreset = presetStore.useValue
 
 /** Shown for a design system the user hasn't named. */
-export const DEFAULT_DESIGN_SYSTEM_NAME = 'Untitled'
+export const DEFAULT_DESIGN_SYSTEM_NAME = "Untitled"
 
 const nameStore = createPersistedStore<string>(
-  'dotui:design-system-name',
+  "dotui:design-system-name",
   DEFAULT_DESIGN_SYSTEM_NAME,
   {
     decode: (raw) => raw,

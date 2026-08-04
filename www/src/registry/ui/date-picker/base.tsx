@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as DatePickerPrimitive from 'react-aria-components/DatePicker'
-import * as DateRangePickerPrimitive from 'react-aria-components/DateRangePicker'
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as DatePickerPrimitive from "react-aria-components/DatePicker"
+import * as DateRangePickerPrimitive from "react-aria-components/DateRangePicker"
 
-import { useStyles } from '@/registry/ui/field/styles'
+import { useStyles } from "@/registry/ui/field/styles"
 
 // MARK: DatePicker
 

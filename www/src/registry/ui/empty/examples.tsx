@@ -1,13 +1,13 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Basic from './demos/basic'
-import EmptyProjects from './demos/empty-projects'
-import InCard from './demos/in-card'
-import WithBorder from './demos/with-border'
-import WithIcon from './demos/with-icon'
-import WithMutedBackground from './demos/with-muted-background'
-import WithMutedBackgroundAlt from './demos/with-muted-background-alt'
+import Basic from "./demos/basic"
+import EmptyProjects from "./demos/empty-projects"
+import InCard from "./demos/in-card"
+import WithBorder from "./demos/with-border"
+import WithIcon from "./demos/with-icon"
+import WithMutedBackground from "./demos/with-muted-background"
+import WithMutedBackgroundAlt from "./demos/with-muted-background-alt"
 
 export default function EmptyExamples() {
   return (

@@ -5,47 +5,47 @@
    behavioral decision into a runtime knob. Standalone route; the mode toggle
    drives the html `.dark` class while mounted and restores it on unmount. */
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 
-import { RechartsSeat } from './recharts-seat'
-import { TanstackSeat } from './tanstack-seat'
+import { RechartsSeat } from "./recharts-seat"
+import { TanstackSeat } from "./tanstack-seat"
 
-type Mode = 'light' | 'dark'
+type Mode = "light" | "dark"
 
 const FACTS = [
   {
-    title: 'Primitive',
+    title: "Primitive",
     recharts:
-      '~490 lines patching a runtime (injected styles, rebuilt tooltip)',
+      "~490 lines patching a runtime (injected styles, rebuilt tooltip)",
     tanstack:
-      'Components over spec fragments; one chartDefaults object; raw marks as escape hatch',
+      "Components over spec fragments; one chartDefaults object; raw marks as escape hatch",
   },
   {
-    title: 'Config surface',
-    recharts: '3 fields per series (label, icon, color)',
-    tanstack: 'Every option is a prop; emitted code shows only your decisions',
+    title: "Config surface",
+    recharts: "3 fields per series (label, icon, color)",
+    tanstack: "Every option is a prop; emitted code shows only your decisions",
   },
   {
-    title: 'Accessibility',
-    recharts: 'sr-only data table (our ChartDataTable)',
-    tanstack: 'Keyboard focus, arrow navigation, pinnable native tooltips',
+    title: "Accessibility",
+    recharts: "sr-only data table (our ChartDataTable)",
+    tanstack: "Keyboard focus, arrow navigation, pinnable native tooltips",
   },
 ] as const
 
 export function ChartsLab() {
-  const [mode, setMode] = useState<Mode>('light')
+  const [mode, setMode] = useState<Mode>("light")
 
   useEffect(() => {
     const root = document.documentElement
-    const had = root.classList.contains('dark')
+    const had = root.classList.contains("dark")
     return () => {
-      root.classList.toggle('dark', had)
+      root.classList.toggle("dark", had)
     }
   }, [])
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', mode === 'dark')
+    document.documentElement.classList.toggle("dark", mode === "dark")
   }, [mode])
 
   return (
@@ -71,9 +71,9 @@ export function ChartsLab() {
           <Button
             size="sm"
             variant="secondary"
-            onPress={() => setMode(mode === 'light' ? 'dark' : 'light')}
+            onPress={() => setMode(mode === "light" ? "dark" : "light")}
           >
-            {mode === 'light' ? 'Dark' : 'Light'} mode
+            {mode === "light" ? "Dark" : "Light"} mode
           </Button>
         </div>
       </header>

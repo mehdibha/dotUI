@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
-import type { DesignSystem } from './types'
+import type { DesignSystem } from "./types"
 
 /* --------------------------------- Types --------------------------------- */
 
-export type PreviewMode = 'light' | 'dark'
+export type PreviewMode = "light" | "dark"
 
 type ParentToIframeMessage =
-  | { type: 'design-system'; data: DesignSystem }
-  | { type: 'preview-mode'; mode: PreviewMode }
-  | { type: 'preview-ping' }
+  | { type: "design-system"; data: DesignSystem }
+  | { type: "preview-mode"; mode: PreviewMode }
+  | { type: "preview-ping" }
 
 type IframeToParentMessage =
-  | { type: 'preview-ready' }
-  | { type: 'preview-inspect'; panel: string }
+  | { type: "preview-ready" }
+  | { type: "preview-inspect"; panel: string }
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
@@ -25,8 +25,8 @@ export function sendToIframe(
 ) {
   if (!iframe?.contentWindow) return
   iframe.contentWindow.postMessage(
-    { type: 'design-system', data } satisfies ParentToIframeMessage,
-    '*',
+    { type: "design-system", data } satisfies ParentToIframeMessage,
+    "*",
   )
 }
 
@@ -36,8 +36,8 @@ export function sendPreviewMode(
 ) {
   if (!iframe?.contentWindow) return
   iframe.contentWindow.postMessage(
-    { type: 'preview-mode', mode } satisfies ParentToIframeMessage,
-    '*',
+    { type: "preview-mode", mode } satisfies ParentToIframeMessage,
+    "*",
   )
 }
 
@@ -50,8 +50,8 @@ export function sendPreviewMode(
 export function pingIframe(iframe: HTMLIFrameElement | null) {
   if (!iframe?.contentWindow) return
   iframe.contentWindow.postMessage(
-    { type: 'preview-ping' } satisfies ParentToIframeMessage,
-    '*',
+    { type: "preview-ping" } satisfies ParentToIframeMessage,
+    "*",
   )
 }
 
@@ -78,13 +78,13 @@ export function useIframeMessageListener(
     if (!isInIframe()) return
 
     const handleMessage = (event: MessageEvent) => {
-      if (event.data?.type === 'design-system') {
+      if (event.data?.type === "design-system") {
         onMessageRef.current(event.data.data)
       }
     }
 
-    window.addEventListener('message', handleMessage)
-    return () => window.removeEventListener('message', handleMessage)
+    window.addEventListener("message", handleMessage)
+    return () => window.removeEventListener("message", handleMessage)
   }, [])
 }
 
@@ -102,13 +102,13 @@ export function usePreviewForcedTheme(): PreviewMode | undefined {
     if (!isInIframe()) return
 
     const handleMessage = (event: MessageEvent) => {
-      if (event.data?.type === 'preview-mode') {
-        setMode(event.data.mode === 'dark' ? 'dark' : 'light')
+      if (event.data?.type === "preview-mode") {
+        setMode(event.data.mode === "dark" ? "dark" : "light")
       }
     }
 
-    window.addEventListener('message', handleMessage)
-    return () => window.removeEventListener('message', handleMessage)
+    window.addEventListener("message", handleMessage)
+    return () => window.removeEventListener("message", handleMessage)
   }, [])
 
   return mode
@@ -134,17 +134,17 @@ export function useAnnouncePreviewReady() {
 
     const announce = () =>
       window.parent.postMessage(
-        { type: 'preview-ready' } satisfies IframeToParentMessage,
-        '*',
+        { type: "preview-ready" } satisfies IframeToParentMessage,
+        "*",
       )
 
     const handleMessage = (event: MessageEvent) => {
-      if (event.data?.type === 'preview-ping') announce()
+      if (event.data?.type === "preview-ping") announce()
     }
 
-    window.addEventListener('message', handleMessage)
+    window.addEventListener("message", handleMessage)
     announce()
-    return () => window.removeEventListener('message', handleMessage)
+    return () => window.removeEventListener("message", handleMessage)
   }, [])
 }
 
@@ -161,8 +161,8 @@ export function useIsEmbeddedPreview(): boolean {
 export function sendInspect(panel: string) {
   if (!isInIframe()) return
   window.parent.postMessage(
-    { type: 'preview-inspect', panel } satisfies IframeToParentMessage,
-    '*',
+    { type: "preview-inspect", panel } satisfies IframeToParentMessage,
+    "*",
   )
 }
 
@@ -176,13 +176,13 @@ export function useInspectMessages(onInspect: (panel: string) => void) {
   React.useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (
-        event.data?.type === 'preview-inspect' &&
-        typeof event.data.panel === 'string'
+        event.data?.type === "preview-inspect" &&
+        typeof event.data.panel === "string"
       ) {
         onInspectRef.current(event.data.panel)
       }
     }
-    window.addEventListener('message', handleMessage)
-    return () => window.removeEventListener('message', handleMessage)
+    window.addEventListener("message", handleMessage)
+    return () => window.removeEventListener("message", handleMessage)
   }, [])
 }

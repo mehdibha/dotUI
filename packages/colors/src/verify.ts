@@ -5,16 +5,16 @@
  * error unless the failure was explicitly bought with `preserveSeed`).
  */
 
-import { BARS, STEPS, type StepName } from './data'
-import { apca, cappedLcBar, wcag2 } from './meters'
-import type { BorderTargets, Mode, ScaleColors } from './scale'
-import type { Oklch } from './space'
+import { BARS, STEPS, type StepName } from "./data"
+import { apca, cappedLcBar, wcag2 } from "./meters"
+import type { BorderTargets, Mode, ScaleColors } from "./scale"
+import type { Oklch } from "./space"
 
 export interface GuaranteeResult {
   scale: string
   mode: Mode
   name: string
-  fg: StepName | 'on-700' | 'on-800'
+  fg: StepName | "on-700" | "on-800"
   bg: StepName
   wcag: number
   wcagTarget: number
@@ -40,7 +40,7 @@ export function verifyScale(
 
   const check = (
     label: string,
-    fg: GuaranteeResult['fg'],
+    fg: GuaranteeResult["fg"],
     fgColor: Oklch,
     bg: StepName,
     wcagTarget: number,
@@ -66,40 +66,40 @@ export function verifyScale(
     })
   }
 
-  for (const bg of ['25', '50', '100'] as const)
+  for (const bg of ["25", "50", "100"] as const)
     check(
-      'text-900',
-      '900',
-      step('900'),
+      "text-900",
+      "900",
+      step("900"),
       bg,
       BARS.text900.wcag,
       BARS.text900.lc,
     )
-  for (const bg of ['25', '50'] as const)
+  for (const bg of ["25", "50"] as const)
     check(
-      'text-950',
-      '950',
-      step('950'),
+      "text-950",
+      "950",
+      step("950"),
       bg,
       BARS.text950.wcag,
       BARS.text950.lc,
     )
-  check('text-950', '950', step('950'), '100', BARS.text950.wcag, 0)
+  check("text-950", "950", step("950"), "100", BARS.text950.wcag, 0)
 
   const onBars = strictOnSolid ? BARS.onSolidStrict : BARS.onSolid
-  check('on-solid', 'on-700', scale.on['700'], '700', onBars.wcag, onBars.lc)
-  check('on-solid', 'on-800', scale.on['800'], '800', onBars.wcag, onBars.lc)
+  check("on-solid", "on-700", scale.on["700"], "700", onBars.wcag, onBars.lc)
+  check("on-solid", "on-800", scale.on["800"], "800", onBars.wcag, onBars.lc)
 
   for (const [border, floor] of [
-    ['400', BARS.border400],
-    ['500', BARS.border500],
-    ['600', BARS.border600],
+    ["400", BARS.border400],
+    ["500", BARS.border500],
+    ["600", BARS.border600],
   ] as const) {
     const target = borderTargets?.[border]
     // A placed border's promise is its own target vs the app background; the
     // default promise is the floor vs both backgrounds.
     const backgrounds =
-      target === undefined ? (['25', '50'] as const) : ['25' as const]
+      target === undefined ? (["25", "50"] as const) : ["25" as const]
     for (const bg of backgrounds)
       check(`border-${border}`, border, step(border), bg, target ?? floor, 0)
   }
@@ -125,7 +125,7 @@ export function verifyLadder(
     if (splitAtBorders && i === 5) continue
     const prev = scale.steps[skeletonSteps[i - 1]!]!
     const curr = scale.steps[skeletonSteps[i]!]!
-    const ordered = mode === 'light' ? curr.l < prev.l : curr.l > prev.l
+    const ordered = mode === "light" ? curr.l < prev.l : curr.l > prev.l
     if (!ordered)
       problems.push(
         `${name}/${mode}: steps ${skeletonSteps[i - 1]}→${skeletonSteps[i]} not monotonic`,

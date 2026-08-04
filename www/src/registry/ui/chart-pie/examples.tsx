@@ -1,21 +1,21 @@
-import { PieChart } from '@/registry/ui/chart-pie'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { PieChart } from "@/registry/ui/chart-pie"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 const data = [
-  { browser: 'chrome', visitors: 275 },
-  { browser: 'safari', visitors: 200 },
-  { browser: 'firefox', visitors: 187 },
-  { browser: 'edge', visitors: 173 },
-  { browser: 'other', visitors: 90 },
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
 ]
 
 const labels = {
-  chrome: 'Chrome',
-  safari: 'Safari',
-  firefox: 'Firefox',
-  edge: 'Edge',
-  other: 'Other',
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
 }
 
 export default function ChartPieExamples() {

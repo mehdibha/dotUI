@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import { LineChart } from '@/registry/ui/chart-line'
+import { LineChart } from "@/registry/ui/chart-line"
 
 const data = [
-  { month: 'Jan', desktop: 186 },
-  { month: 'Feb', desktop: 305 },
-  { month: 'Mar', desktop: 237 },
-  { month: 'Apr', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'Jun', desktop: 214 },
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
 ]
 
 export default function ChartLineLinear() {
@@ -18,7 +18,7 @@ export default function ChartLineLinear() {
       x="month"
       y="desktop"
       curve="linear"
-      labels={{ desktop: 'Desktop' }}
+      labels={{ desktop: "Desktop" }}
       legend={false}
       ariaLabel="Desktop visitors, January through June"
     />

@@ -20,16 +20,16 @@ It brings the [`chart`](/docs/components/chart) core — the host, the palette, 
 ## Usage
 
 ```tsx
-import { AreaChart } from '@/ui/chart-area'
+import { AreaChart } from "@/ui/chart-area"
 ```
 
 Point `x` at the category or time field and `y` at the value field. A chart is a figure, so `ariaLabel` is required.
 
 ```tsx
 const data = [
-  { month: 'Jan', desktop: 186 },
-  { month: 'Feb', desktop: 305 },
-  { month: 'Mar', desktop: 237 },
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
 ]
 
 export function Example() {
@@ -38,7 +38,7 @@ export function Example() {
       data={data}
       x="month"
       y="desktop"
-      labels={{ desktop: 'Desktop' }}
+      labels={{ desktop: "Desktop" }}
       legend={false}
       ariaLabel="Desktop visitors by month"
     />
@@ -58,8 +58,8 @@ Two shapes work, and both draw the same chart.
 <AreaChart
   data={data}
   x="month"
-  y={['desktop', 'mobile']}
-  labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
+  y={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
   ariaLabel="Visitors by device"
 />
 ```
@@ -72,8 +72,8 @@ Two shapes work, and both draw the same chart.
   x="month"
   y="visitors"
   series="channel"
-  seriesOrder={['paid_social', 'organic_search']}
-  labels={{ organic_search: 'Organic search', paid_social: 'Paid social' }}
+  seriesOrder={["paid_social", "organic_search"]}
+  labels={{ organic_search: "Organic search", paid_social: "Paid social" }}
   ariaLabel="Visitors by acquisition channel"
 />
 ```
@@ -85,9 +85,9 @@ Series take colors from `--chart-1` through `--chart-8` in order. A `null` value
 Stacking is a data transform, not a chart flag: `stackY` turns wide rows into one long row per band, carrying the `base` and `top` of the band it should fill plus its own `value` for the tooltip. Call it outside your component, then read those fields.
 
 ```tsx
-import { stackY } from '@/ui/chart'
+import { stackY } from "@/ui/chart"
 
-const stacked = stackY(data, { x: 'month', y: ['desktop', 'mobile', 'other'] })
+const stacked = stackY(data, { x: "month", y: ["desktop", "mobile", "other"] })
 ```
 
 ```tsx
@@ -97,7 +97,7 @@ const stacked = stackY(data, { x: 'month', y: ['desktop', 'mobile', 'other'] })
   y="top"
   y1="base"
   series="series"
-  labels={{ desktop: 'Desktop', mobile: 'Mobile', other: 'Other' }}
+  labels={{ desktop: "Desktop", mobile: "Mobile", other: "Other" }}
   ariaLabel="Visitors by device, stacked"
 />
 ```
@@ -115,9 +115,9 @@ Interpolation only changes the path drawn between observations. It does not smoo
 `marks` and `marksBefore` accept raw [TanStack Charts](https://tanstack.com/charts) mark layers, painted over and under the areas on the same scales. Use them for a target rule, a highlighted band, or end labels.
 
 ```tsx
-import { ruleY } from '@tanstack/charts/rule'
+import { ruleY } from "@tanstack/charts/rule"
 
-const target = ruleY([200], { strokeDasharray: '4 4' })
+const target = ruleY([200], { strokeDasharray: "4 4" })
 ```
 
 ```tsx

@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { Skeleton } from '@/registry/ui/skeleton'
-import type { SkeletonProps } from '@/registry/ui/skeleton'
+import { Skeleton } from "@/registry/ui/skeleton"
+import type { SkeletonProps } from "@/registry/ui/skeleton"
 
 export default function Demo({ isLoading = true }: SkeletonProps = {}) {
   return (

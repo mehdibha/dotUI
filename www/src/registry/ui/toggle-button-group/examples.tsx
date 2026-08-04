@@ -1,12 +1,12 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Default from './demos/default'
-import Multiple from './demos/multiple'
-import Sizes from './demos/sizes'
-import Variants from './demos/variants'
-import Vertical from './demos/vertical'
-import WithText from './demos/with-text'
+import Default from "./demos/default"
+import Multiple from "./demos/multiple"
+import Sizes from "./demos/sizes"
+import Variants from "./demos/variants"
+import Vertical from "./demos/vertical"
+import WithText from "./demos/with-text"
 
 export default function ToggleButtonGroupExamples() {
   return (

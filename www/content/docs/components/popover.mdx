@@ -11,10 +11,10 @@ wip: true
   name="popover"
   controls={[
     {
-      type: 'enum',
-      name: 'placement',
-      options: ['bottom', 'top', 'left', 'right'],
-      defaultValue: 'bottom',
+      type: "enum",
+      name: "placement",
+      options: ["bottom", "top", "left", "right"],
+      defaultValue: "bottom",
     },
   ]}
 />
@@ -30,9 +30,9 @@ npx shadcn@latest add @dotui/popover
 Use popovers to display rich content in a floating container that appears above other content.
 
 ```tsx
-import { Button } from '@/ui/button'
-import { Dialog, DialogContent, DialogTitle } from '@/ui/dialog'
-import { Popover } from '@/ui/popover'
+import { Button } from "@/ui/button"
+import { Dialog, DialogContent, DialogTitle } from "@/ui/dialog"
+import { Popover } from "@/ui/popover"
 ```
 
 ```tsx
@@ -52,10 +52,13 @@ import { Popover } from '@/ui/popover'
 A `Dialog` wraps the trigger `Button` and the `Popover`; the popover holds a `DialogContent` with its title and body.
 
 ```tsx
-import { Button } from '@/ui/button'
-import { Dialog, DialogContent, DialogTitle } from '@/ui/dialog'
-import { Popover } from '@/ui/popover'
-;<Dialog>
+import { Button } from "@/ui/button"
+import { Dialog, DialogContent, DialogTitle } from "@/ui/dialog"
+import { Popover } from "@/ui/popover"
+```
+
+```tsx
+<Dialog>
   <Button />
   <Popover>
     <DialogContent>

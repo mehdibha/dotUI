@@ -1,50 +1,50 @@
 import type {
   Registry as ShadcnRegistry,
   RegistryItem as ShadcnRegistryItem,
-} from 'shadcn/schema'
+} from "shadcn/schema"
 
 /**
  * Density tiers a design system can be rendered at. Lives at the registry layer
  * because both the runtime provider and the publish pipeline need it.
  */
-export type Density = 'compact' | 'default' | 'comfortable'
+export type Density = "compact" | "default" | "comfortable"
 
 /**
  * Component groups for style editor UI organization.
  * Components in the same group share the same visual style.
  */
 export type ComponentGroup =
-  | 'buttons'
-  | 'inputs'
-  | 'pickers'
-  | 'selection-controls'
-  | 'overlays'
-  | 'menus-lists'
-  | 'feedback'
-  | 'progress'
-  | 'tags'
-  | 'navigation'
-  | 'disclosure'
-  | 'containers'
-  | 'sliders'
-  | 'color-swatches'
-  | 'calendar'
-  | 'drop-zone'
-  | 'typography'
-  | 'charts'
+  | "buttons"
+  | "inputs"
+  | "pickers"
+  | "selection-controls"
+  | "overlays"
+  | "menus-lists"
+  | "feedback"
+  | "progress"
+  | "tags"
+  | "navigation"
+  | "disclosure"
+  | "containers"
+  | "sliders"
+  | "color-swatches"
+  | "calendar"
+  | "drop-zone"
+  | "typography"
+  | "charts"
 
 /* ------------------------------- Params ------------------------------- */
 
 export type TokenType =
-  | 'radius'
-  | 'color'
-  | 'spacing'
-  | 'font-size'
-  | 'blur'
-  | 'opacity'
-  | 'cursor'
-  | 'shadow'
-export type RegistryItemFile = NonNullable<ShadcnRegistryItem['files']>[number]
+  | "radius"
+  | "color"
+  | "spacing"
+  | "font-size"
+  | "blur"
+  | "opacity"
+  | "cursor"
+  | "shadow"
+export type RegistryItemFile = NonNullable<ShadcnRegistryItem["files"]>[number]
 
 /**
  * An "enum" param: user picks one of a fixed set of named values.
@@ -53,7 +53,7 @@ export type RegistryItemFile = NonNullable<ShadcnRegistryItem['files']>[number]
  * (per-component variants).
  */
 export type EnumParamDef = {
-  kind: 'enum'
+  kind: "enum"
   default: string
   values: readonly string[]
   files?: Record<string, readonly RegistryItemFile[]>
@@ -66,7 +66,7 @@ export type EnumParamDef = {
  * Covers what was previously `meta.tokens`.
  */
 export type ScalarParamDef = {
-  kind: 'scalar'
+  kind: "scalar"
   type: TokenType
   cssVar: `--${string}`
   default: string
@@ -89,6 +89,6 @@ export type RegistryItem = ShadcnRegistryItem & {
   params?: Record<string, ParamDef>
 }
 
-export type Registry = Omit<ShadcnRegistry, 'items'> & {
+export type Registry = Omit<ShadcnRegistry, "items"> & {
   items: RegistryItem[]
 }

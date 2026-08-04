@@ -28,14 +28,14 @@ import type {
   RegisteredControl,
   TweakConfig,
   TweakerUiState,
-} from './types'
+} from "./types"
 
-const STORAGE_KEY = 'dotui:tweaker'
+const STORAGE_KEY = "dotui:tweaker"
 
 const DEFAULT_UI: TweakerUiState = {
   open: false,
   minimized: false,
-  side: 'right',
+  side: "right",
   y: 0.5,
 }
 
@@ -67,29 +67,29 @@ function idFor(label: string, group: string): string {
 /** Validate/repair a stored value against the control's *current* config. */
 export function coerceTweakValue(config: TweakConfig, raw: unknown): unknown {
   switch (config.type) {
-    case 'boolean':
-      return typeof raw === 'boolean' ? raw : config.default
-    case 'number': {
-      if (typeof raw !== 'number' || Number.isNaN(raw)) return config.default
+    case "boolean":
+      return typeof raw === "boolean" ? raw : config.default
+    case "number": {
+      if (typeof raw !== "number" || Number.isNaN(raw)) return config.default
       const min = config.min ?? Number.NEGATIVE_INFINITY
       const max = config.max ?? Number.POSITIVE_INFINITY
       return Math.min(Math.max(raw, min), max) // snap into the current range
     }
-    case 'select':
-      return typeof raw === 'string' && config.options.includes(raw)
+    case "select":
+      return typeof raw === "string" && config.options.includes(raw)
         ? raw
         : config.default
-    case 'color':
-      return typeof raw === 'string' && raw.length > 0 ? raw : config.default
-    case 'text':
-      return typeof raw === 'string' ? raw : config.default
+    case "color":
+      return typeof raw === "string" && raw.length > 0 ? raw : config.default
+    case "text":
+      return typeof raw === "string" ? raw : config.default
     default:
       return (config as TweakConfig).default
   }
 }
 
 function ensureLoaded(): void {
-  if (loaded || typeof window === 'undefined') return
+  if (loaded || typeof window === "undefined") return
   loaded = true
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY)
@@ -109,7 +109,7 @@ function ensureLoaded(): void {
 }
 
 function persist(): void {
-  if (typeof window === 'undefined') return
+  if (typeof window === "undefined") return
   try {
     // Live values win over the on-disk snapshot; orphans (persisted but not mounted
     // this session) are preserved so a choice isn't lost by navigating away.
@@ -142,7 +142,7 @@ export function registerControl(
   ownerToken: string,
 ): string {
   ensureLoaded()
-  const group = config.group ?? 'default'
+  const group = config.group ?? "default"
   const id = idFor(label, group)
   const existing = controls.get(id)
 

@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import type { ChartBuildContext } from '@tanstack/charts'
-import { areaY } from '@tanstack/charts/area'
-import { d3Curve } from '@tanstack/charts/d3/shape'
-import { lineY } from '@tanstack/charts/line'
-import { curveMonotoneX, curveNatural, curveStepAfter } from 'd3-shape'
+import type { ChartBuildContext } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { d3Curve } from "@tanstack/charts/d3/shape"
+import { lineY } from "@tanstack/charts/line"
+import { curveMonotoneX, curveNatural, curveStepAfter } from "d3-shape"
 
 import type {
   ChartComponentProps,
@@ -13,7 +13,7 @@ import type {
   ChartXField,
   ChartXValueOf,
   XYChartSpecOptions,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 import {
   Chart,
   chartDefaults,
@@ -22,7 +22,7 @@ import {
   paletteGradients,
   planChart,
   useChartDefinition,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 /* Curves live in the families that draw paths, so a bar or heatmap chart never
    pulls d3-shape into the bundle. */
@@ -40,7 +40,7 @@ export interface AreaChartSpecOptions<
   /** Path interpolation between points. */
   curve?: ChartCurve
   /** Fill opacity, or `'gradient'` to fade the fill out toward the baseline. */
-  fill?: number | 'gradient'
+  fill?: number | "gradient"
   strokeWidth?: number
   /** Draw a dot at every point. */
   points?: boolean
@@ -56,8 +56,8 @@ export function areaChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
   const { order, layers } = planChart(options)
   const curve = CURVES[options.curve ?? chartDefaults.curve]
   const fill = options.fill ?? chartDefaults.fill
-  const gradient = fill === 'gradient'
-  const prefix = gradientPrefix(options.gradientIdPrefix, 'area')
+  const gradient = fill === "gradient"
+  const prefix = gradientPrefix(options.gradientIdPrefix, "area")
   return {
     ...chartFrame(options, ctx, { order }),
     marks: [

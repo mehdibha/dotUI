@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { ScatterChart } from '@/registry/ui/chart-scatter'
+import { ScatterChart } from "@/registry/ui/chart-scatter"
 
 /* Deterministic sample: server and client must draw the same cloud. */
 function sample(count: number) {
@@ -34,12 +34,12 @@ export default function ChartScatterDense() {
       maxFocusDistance={12}
       ariaLabel="Error rate by response time across 400 requests"
       formatX={{
-        locale: 'en-US',
-        number: { style: 'unit', unit: 'millisecond' },
+        locale: "en-US",
+        number: { style: "unit", unit: "millisecond" },
       }}
       formatY={{
-        locale: 'en-US',
-        number: { style: 'percent', maximumFractionDigits: 1 },
+        locale: "en-US",
+        number: { style: "percent", maximumFractionDigits: 1 },
       }}
     />
   )

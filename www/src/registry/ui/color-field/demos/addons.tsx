@@ -1,7 +1,7 @@
-import { PaletteIcon } from 'lucide-react'
+import { PaletteIcon } from "lucide-react"
 
-import { ColorField } from '@/registry/ui/color-field'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
+import { ColorField } from "@/registry/ui/color-field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 
 export default function Demo() {
   return (

@@ -1,6 +1,6 @@
-import type * as React from 'react'
+import type * as React from "react"
 
-import type { PolarMarkLayer } from './base'
+import type { PolarMarkLayer } from "./base"
 
 /**
  * Pie and donut chart. One row per slice: `value` names the field holding the
@@ -90,7 +90,7 @@ export interface PieChartProps {
    * Text drawn on each slice: its key, its value, or nothing.
    * @default "none"
    */
-  sliceLabel?: 'none' | 'name' | 'value'
+  sliceLabel?: "none" | "name" | "value"
 
   /** Radius the labels sit at, as a ratio. Defaults to the middle of the ring. */
   sliceLabelRadius?: number

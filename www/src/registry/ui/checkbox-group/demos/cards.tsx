@@ -2,18 +2,18 @@ import {
   Checkbox,
   CheckboxControl,
   CheckboxIndicator,
-} from '@/registry/ui/checkbox'
-import { CheckboxGroup } from '@/registry/ui/checkbox-group'
+} from "@/registry/ui/checkbox"
+import { CheckboxGroup } from "@/registry/ui/checkbox-group"
 import {
   Description,
   FieldContent,
   FieldGroup,
   Label,
-} from '@/registry/ui/field'
+} from "@/registry/ui/field"
 
 export default function Demo() {
   return (
-    <CheckboxGroup defaultValue={['nextjs']} className="w-full max-w-xs">
+    <CheckboxGroup defaultValue={["nextjs"]} className="w-full max-w-xs">
       <Label>React frameworks</Label>
       <FieldGroup>
         <Checkbox value="nextjs">

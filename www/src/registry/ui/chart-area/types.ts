@@ -1,10 +1,10 @@
-import type * as React from 'react'
+import type * as React from "react"
 
 import type {
   ChartCurve,
   ChartFormat,
   ChartMarkLayer,
-} from '@/registry/ui/chart'
+} from "@/registry/ui/chart"
 
 export type { ChartCurve, ChartFormat }
 
@@ -52,7 +52,7 @@ export interface AreaChartProps {
    * Fill opacity, or `'gradient'` to fade the fill out toward the baseline.
    * @default 0.2
    */
-  fill?: number | 'gradient'
+  fill?: number | "gradient"
 
   /**
    * Stroke width of the upper edge.

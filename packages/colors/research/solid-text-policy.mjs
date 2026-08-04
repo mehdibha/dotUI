@@ -4,9 +4,9 @@
 // Also measures what the candidate dark-text formula
 // oklch(0.25, max(0.08*C9, 0.04), H9) delivers on those solids.
 
-import { writeFileSync } from 'node:fs'
-import * as radix from '@radix-ui/colors'
-import { clampChroma, formatHex } from 'culori'
+import { writeFileSync } from "node:fs"
+import * as radix from "@radix-ui/colors"
+import { clampChroma, formatHex } from "culori"
 
 import {
   RADIX_ALL,
@@ -15,30 +15,30 @@ import {
   round,
   toOklch,
   wcagRatio,
-} from './lib.mjs'
+} from "./lib.mjs"
 
 // Per Radix docs ("Understanding the scale", step 9/10 usage): these five
 // scales are bright — solid steps take dark text, not white.
-const OFFICIAL_DARK_TEXT = ['sky', 'mint', 'lime', 'yellow', 'amber']
+const OFFICIAL_DARK_TEXT = ["sky", "mint", "lime", "yellow", "amber"]
 const THRESHOLD = 40
 
 function darkTextFor(step9Hex) {
   const { c, h } = toOklch(step9Hex)
   const raw = {
-    mode: 'oklch',
+    mode: "oklch",
     l: 0.25,
     c: Math.max(0.08 * c, 0.04),
     h: h ?? 0,
   }
-  return formatHex(clampChroma(raw, 'oklch'))
+  return formatHex(clampChroma(raw, "oklch"))
 }
 
 const rows = []
-for (const mode of ['light', 'dark']) {
+for (const mode of ["light", "dark"]) {
   for (const name of RADIX_ALL) {
-    const steps = radixSteps(radix[mode === 'dark' ? `${name}Dark` : name])
+    const steps = radixSteps(radix[mode === "dark" ? `${name}Dark` : name])
     const step9 = steps[9]
-    const lcWhite = apcaLc('#ffffff', step9)
+    const lcWhite = apcaLc("#ffffff", step9)
     const official = OFFICIAL_DARK_TEXT.includes(name)
     const predicted = Math.abs(lcWhite) < THRESHOLD
     const row = {
@@ -47,7 +47,7 @@ for (const mode of ['light', 'dark']) {
       step9,
       lcWhiteRaw: round(lcWhite, 2),
       lcWhiteAbs: round(Math.abs(lcWhite), 2),
-      wcagWhite: round(wcagRatio('#ffffff', step9), 3),
+      wcagWhite: round(wcagRatio("#ffffff", step9), 3),
       officialDarkText: official,
       predictedDarkText: predicted,
       match: official === predicted,
@@ -105,17 +105,17 @@ function separation(subset) {
   }
 }
 
-const light = rows.filter((r) => r.mode === 'light')
-const dark = rows.filter((r) => r.mode === 'dark')
+const light = rows.filter((r) => r.mode === "light")
+const dark = rows.filter((r) => r.mode === "dark")
 
 const result = {
   meta: {
-    source: '@radix-ui/colors 3.0.0',
+    source: "@radix-ui/colors 3.0.0",
     officialDarkText: OFFICIAL_DARK_TEXT,
     threshold: `predict dark text iff |Lc(white on step9)| < ${THRESHOLD}`,
     darkTextFormula:
-      'oklch(0.25, max(0.08*C9, 0.04), H9), chroma-clamped to sRGB',
-    note: 'lcWhiteRaw is signed APCA (white text on step9 is negative-polarity)',
+      "oklch(0.25, max(0.08*C9, 0.04), H9), chroma-clamped to sRGB",
+    note: "lcWhiteRaw is signed APCA (white text on step9 is negative-polarity)",
   },
   scales: rows,
   evaluation: {
@@ -126,11 +126,11 @@ const result = {
 }
 
 writeFileSync(
-  new URL('./data/solid-text-policy.json', import.meta.url),
-  JSON.stringify(result, null, 2) + '\n',
+  new URL("./data/solid-text-policy.json", import.meta.url),
+  JSON.stringify(result, null, 2) + "\n",
 )
 
-for (const mode of ['light', 'dark']) {
+for (const mode of ["light", "dark"]) {
   const subset = rows.filter((r) => r.mode === mode)
   console.log(`\n=== ${mode}: |Lc(white on step9)| sorted ===`)
   console.table(
@@ -145,9 +145,9 @@ for (const mode of ['light', 'dark']) {
       })),
   )
 }
-console.log('\n=== evaluation ===')
+console.log("\n=== evaluation ===")
 console.log(JSON.stringify(result.evaluation, null, 2))
-console.log('\n=== dark-text formula on official bright scales ===')
+console.log("\n=== dark-text formula on official bright scales ===")
 console.table(
   rows
     .filter((r) => r.officialDarkText)
