@@ -1,5 +1,7 @@
 import type * as React from 'react'
 
+import type { PolarMarkLayer } from './base'
+
 /**
  * Pie and donut chart. One row per slice: `value` names the field holding the
  * magnitude, `name` the field holding the slice key. Radii are ratios of the
@@ -113,7 +115,7 @@ export interface PieChartProps {
    * Extra polar mark layers, spliced inside the polar container — a second
    * `pieRing`, an annotation arc. Define them outside render.
    */
-  polarMarks?: readonly unknown[]
+  polarMarks?: readonly PolarMarkLayer[]
 
   /** Overlay rendered above the chart surface, ignoring pointer events. */
   children?: React.ReactNode

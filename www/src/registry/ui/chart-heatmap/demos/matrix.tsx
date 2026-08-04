@@ -26,7 +26,7 @@ const days = [
   { day: 'Sun', weight: 0.31 },
 ]
 
-const chartData = days.flatMap(({ day, weight }) =>
+const data = days.flatMap(({ day, weight }) =>
   hours.map(({ hour, base }) => ({
     day,
     hour,
@@ -37,7 +37,7 @@ const chartData = days.flatMap(({ day, weight }) =>
 export default function Demo() {
   return (
     <HeatmapChart
-      data={chartData}
+      data={data}
       x="hour"
       y="day"
       value="sessions"

@@ -1,8 +1,9 @@
 'use client'
 
 import type { ChartBuildContext } from '@tanstack/charts'
-import { areaY, lineY } from '@tanstack/charts'
+import { areaY } from '@tanstack/charts/area'
 import { d3Curve } from '@tanstack/charts/d3/shape'
+import { lineY } from '@tanstack/charts/line'
 import { curveMonotoneX, curveNatural, curveStepAfter } from 'd3-shape'
 
 import type {

@@ -11,7 +11,7 @@ import {
 } from '@/registry/ui/card'
 import { Sparkline } from '@/registry/ui/chart-sparkline'
 
-const chartData = [
+const data = [
   { month: 'Jan', revenue: 18400 },
   { month: 'Feb', revenue: 21600 },
   { month: 'Mar', revenue: 19800 },
@@ -20,14 +20,14 @@ const chartData = [
   { month: 'Jun', revenue: 31250 },
 ]
 
-const current = chartData.at(-1)?.revenue ?? 0
-const previous = chartData.at(-2)?.revenue ?? 0
-const delta = (current - previous) / previous
+const current = data.at(-1)?.revenue ?? 0
+const previous = data.at(-2)?.revenue ?? current
+const delta = previous === 0 ? 0 : (current - previous) / previous
 
 /* Module scope: `marks` is identity-compared, so an inline array would rebuild
    the chart on every render. */
 const endDot = [
-  dot(chartData.slice(-1), {
+  dot(data.slice(-1), {
     x: 'month',
     y: 'revenue',
     r: 3,
@@ -46,7 +46,7 @@ const percent = new Intl.NumberFormat('en-US', {
   signDisplay: 'exceptZero',
 })
 
-export default function Demo() {
+export default function ChartSparklineStatCard() {
   return (
     <Card className="w-full max-w-64">
       <CardHeader>
@@ -55,7 +55,7 @@ export default function Demo() {
       </CardHeader>
       <CardContent className="space-y-2">
         <Sparkline
-          data={chartData}
+          data={data}
           x="month"
           y="revenue"
           mode="area"

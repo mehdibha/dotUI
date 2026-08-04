@@ -1,3 +1,5 @@
+import type * as React from 'react'
+
 import type { ChartFormat, ChartMarkLayer } from '@/registry/ui/chart'
 
 /**
@@ -8,7 +10,7 @@ import type { ChartFormat, ChartMarkLayer } from '@/registry/ui/chart'
  */
 export interface BarChartProps {
   /** The rows to plot. Compared by identity — keep it out of render. */
-  data: readonly Record<string, unknown>[]
+  data: readonly unknown[]
 
   /** Field holding the category. */
   x: string
@@ -69,7 +71,7 @@ export interface BarChartProps {
   axes?: boolean
 
   /**
-   * Color legend, when the chart has more than one series.
+   * Show the color legend. Turn it off for a single series.
    * @default true
    */
   legend?: boolean
@@ -88,4 +90,7 @@ export interface BarChartProps {
 
   /** Accessible name. Required: a chart is a figure, not decoration. */
   ariaLabel: string
+
+  /** Overlay rendered above the chart surface, ignoring pointer events. */
+  children?: React.ReactNode
 }

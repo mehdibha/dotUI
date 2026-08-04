@@ -2,7 +2,7 @@
 
 import { Sparkline } from '@/registry/ui/chart-sparkline'
 
-const chartData = [
+const data = [
   { day: 'Mon', visitors: 186 },
   { day: 'Tue', visitors: 205 },
   { day: 'Wed', visitors: 173 },
@@ -12,11 +12,11 @@ const chartData = [
   { day: 'Sun', visitors: 312 },
 ]
 
-export default function Demo() {
+export default function ChartSparklineDefault() {
   return (
     <div className="w-full max-w-56">
       <Sparkline
-        data={chartData}
+        data={data}
         x="day"
         y="visitors"
         ariaLabel="Visitors over the last seven days"

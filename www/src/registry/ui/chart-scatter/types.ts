@@ -1,3 +1,5 @@
+import type * as React from 'react'
+
 import type { ChartFormat, ChartMarkLayer } from '@/registry/ui/chart'
 
 /**
@@ -83,4 +85,7 @@ export interface ScatterChartProps {
 
   /** Accessible name. Required: a chart is a figure, not decoration. */
   ariaLabel: string
+
+  /** Overlay rendered above the chart surface, ignoring pointer events. */
+  children?: React.ReactNode
 }

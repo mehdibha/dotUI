@@ -33,7 +33,6 @@ export default function ChartScatterDefault() {
         locale: 'en-US',
         number: { style: 'unit', unit: 'second', maximumFractionDigits: 1 },
       }}
-      className="w-full"
     />
   )
 }

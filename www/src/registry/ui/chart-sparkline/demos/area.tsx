@@ -2,7 +2,7 @@
 
 import { Sparkline } from '@/registry/ui/chart-sparkline'
 
-const chartData = [
+const data = [
   { day: 'Mon', requests: 1240 },
   { day: 'Tue', requests: 1810 },
   { day: 'Wed', requests: 1520 },
@@ -12,11 +12,11 @@ const chartData = [
   { day: 'Sun', requests: 3410 },
 ]
 
-export default function Demo() {
+export default function ChartSparklineArea() {
   return (
     <div className="w-full max-w-56">
       <Sparkline
-        data={chartData}
+        data={data}
         x="day"
         y="requests"
         mode="area"

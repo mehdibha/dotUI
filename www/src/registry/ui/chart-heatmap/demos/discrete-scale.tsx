@@ -12,7 +12,7 @@ const services = [
   { service: 'workers', counts: [7, 5, 2, 9, 14, 6, 3, 1] },
 ]
 
-const chartData = services.flatMap(({ service, counts }) =>
+const data = services.flatMap(({ service, counts }) =>
   counts.map((incidents, index) => ({
     service,
     week: `W${index + 1}`,
@@ -23,7 +23,7 @@ const chartData = services.flatMap(({ service, counts }) =>
 export default function Demo() {
   return (
     <HeatmapChart
-      data={chartData}
+      data={data}
       x="week"
       y="service"
       value="incidents"

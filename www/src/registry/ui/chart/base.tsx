@@ -102,6 +102,28 @@ export type ChartTooltipAnchor = 'point' | 'pointer' | 'group-center'
 // oxlint-disable-next-line no-explicit-any
 export type ChartMarkLayer = ChartMark<unknown, any, any>
 
+interface DecorativeMark {
+  initialize: (context: never) => {
+    render: (context: never) => { nodes: readonly unknown[] }
+  }
+}
+
+/* Strips a mark's focus points: it still paints, but never becomes a keyboard
+   stop or tooltip target. For tracks, labels, and other decoration whose datum
+   an interactive mark already carries. Accepts cartesian and polar marks. */
+export function decorative<TMark extends DecorativeMark>(mark: TMark): TMark {
+  const initialize = (context: never) => {
+    const initialized = mark.initialize(context)
+    return {
+      ...initialized,
+      render: (renderContext: never) => ({
+        nodes: initialized.render(renderContext).nodes,
+      }),
+    }
+  }
+  return { ...mark, initialize } as TMark
+}
+
 /* Option-object formatters serialize into the memo key, so the most common
    inline-arrow prop stops rebuilding the scene on every render. `locale` is
    required — an ambient locale differs between Node and the browser and
@@ -230,7 +252,10 @@ export interface ChartPlan<TDatum, TXField extends ChartXField<TDatum>> {
 }
 
 function toFields<T>(value: T | readonly T[]): readonly [T, ...T[]] {
-  return (Array.isArray(value) ? value : [value]) as readonly [T, ...T[]]
+  const fields = Array.isArray(value) ? value : [value]
+  if (fields.length === 0)
+    throw new Error('charts: `y` needs at least one field')
+  return fields as readonly [T, ...T[]]
 }
 
 /* Wide rows become one mark layer per `y` field; long rows become a single
@@ -471,16 +496,17 @@ export function stackY<TDatum, TXField extends ChartXField<TDatum>>(
   return rows
 }
 
-function safeShare(value: number, total: number): number | null {
-  return total === 0 ? null : value / total
+/* An all-zero group normalizes to zero-height bands, not a gap. */
+function safeShare(value: number, total: number): number {
+  return total === 0 ? 0 : value / total
 }
 
 /* ------------------------------------------------------------------ */
 /* Host                                                                */
 /* ------------------------------------------------------------------ */
 
-/* Function easing is excluded: `animate` enters the serialized memo key, and
-   a closure cannot be keyed — a changed easing function would never rebuild. */
+/* Function easing is excluded: an inline easing would rebuild the scene every
+   render for no gain — the named easings cover the design space. */
 export type ChartAnimate =
   | boolean
   | (Omit<ChartAnimationOptions, 'easing'> & {
@@ -536,11 +562,13 @@ export function Chart<TDatum, TXValue extends ChartValue>({
   return (
     <div className={cn('relative', className)}>
       <TanChart
-        height={chartDefaults.height}
+        height={
+          props.aspectRatio === undefined ? chartDefaults.height : undefined
+        }
         {...props}
         renderSvg={renderChartSvgWithResources}
       />
-      {children === undefined ? null : (
+      {children == null || typeof children === 'boolean' ? null : (
         <div className="pointer-events-none absolute inset-0">{children}</div>
       )}
     </div>
@@ -601,9 +629,23 @@ function splitChartProps(props: object): {
   return { host, behavior: behavior as ChartBehaviorProps, spec }
 }
 
+/* Functions are keyed by identity, so any function-valued prop — a family's
+   `formatValue`, `axisDetail` — rebuilds when its reference changes. Inline
+   arrows therefore rebuild every render: the loud failure, never the stale one. */
+const functionIds = new WeakMap<object, number>()
+let nextFunctionId = 0
+
 function serialize(value: unknown): string {
   if (value === null) return 'null'
-  if (typeof value === 'function') return 'fn'
+  if (typeof value === 'function') {
+    let id = functionIds.get(value)
+    if (id === undefined) {
+      id = nextFunctionId++
+      functionIds.set(value, id)
+    }
+    return `fn#${id}`
+  }
+  if (value instanceof Date) return `date#${value.getTime()}`
   if (Array.isArray(value)) return `[${value.map(serialize).join(',')}]`
   if (typeof value === 'object') {
     const record = value as Record<string, unknown>
@@ -612,7 +654,7 @@ function serialize(value: unknown): string {
       .map((name) => `${name}:${serialize(record[name])}`)
       .join(',')}}`
   }
-  return String(value)
+  return typeof value === 'string' ? JSON.stringify(value) : String(value)
 }
 
 /* Total by construction: the prop types are structurally flat, so nothing can
@@ -629,13 +671,7 @@ function chartKey(source: object): string {
 }
 
 function chartReferences(spec: Record<string, unknown>): readonly unknown[] {
-  return [
-    spec.data,
-    spec.marks,
-    spec.marksBefore,
-    typeof spec.formatX === 'function' ? spec.formatX : null,
-    typeof spec.formatY === 'function' ? spec.formatY : null,
-  ]
+  return [spec.data, spec.marks, spec.marksBefore]
 }
 
 function sameReferences(

@@ -26,7 +26,9 @@ import {
   useChartDefinition,
 } from '@/registry/ui/chart'
 
-const CURVES = /* @__PURE__ */ {
+/* Curves live in the families that draw paths, so a bar or heatmap chart never
+   pulls d3-shape into the bundle. */
+const CURVES = {
   linear: undefined,
   natural: /* @__PURE__ */ d3Curve(curveNatural),
   monotone: /* @__PURE__ */ d3Curve(curveMonotoneX),

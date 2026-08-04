@@ -60,12 +60,12 @@ export function ChartsLab() {
               Charts Lab
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-fg-muted">
-              The same six months of visitors, twice. The left seat is our
-              current chart — a shadcn mirror on Recharts, where runtime
-              customization stops at series colors. The right seat rebuilds it
-              on TanStack Charts, where the chart is a declarative definition
-              and every decision becomes a knob. This is the bench for deciding
-              whether charts get the full builder treatment.
+              The same six months of visitors, twice. The left seat is the
+              Recharts era — a shadcn mirror where runtime customization stops
+              at series colors. The right seat is the TanStack Charts engine the
+              registry now ships, where the chart is a declarative definition
+              and every decision becomes a knob. Kept as the historical bench
+              that decided the migration.
             </p>
           </div>
           <Button

@@ -1,6 +1,6 @@
-import type { ChartMark } from '@tanstack/charts'
+import type * as React from 'react'
 
-import type { ChartCurve } from '@/registry/ui/chart'
+import type { ChartCurve, ChartMarkLayer } from '@/registry/ui/chart'
 
 export type { ChartCurve }
 
@@ -71,10 +71,11 @@ export interface SparklineProps {
   rowKey?: string
 
   /** Mark layers painted under the line. */
-  // oxlint-disable-next-line no-explicit-any
-  marksBefore?: readonly ChartMark<unknown, any, any>[]
+  marksBefore?: readonly ChartMarkLayer[]
 
   /** Mark layers painted over the line — reference rules, end dots, labels. */
-  // oxlint-disable-next-line no-explicit-any
-  marks?: readonly ChartMark<unknown, any, any>[]
+  marks?: readonly ChartMarkLayer[]
+
+  /** Overlay rendered above the chart surface, ignoring pointer events. */
+  children?: React.ReactNode
 }

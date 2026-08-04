@@ -54,13 +54,20 @@ export function Example() {
 Pass `mode="area"` to fill under the line, and `fill="gradient"` to fade that fill out downward:
 
 ```tsx
-<Sparkline data={data} x="day" y="visitors" mode="area" fill="gradient" />
+<Sparkline
+  data={data}
+  x="day"
+  y="visitors"
+  mode="area"
+  fill="gradient"
+  ariaLabel="Visitors"
+/>
 ```
 
 The tooltip is off by default, since a sparkline is usually read as a whole rather than point by point. Turn it on with `tooltip`:
 
 ```tsx
-<Sparkline data={data} x="day" y="visitors" tooltip />
+<Sparkline data={data} x="day" y="visitors" tooltip ariaLabel="Visitors" />
 ```
 
 ## Color
@@ -96,7 +103,7 @@ const mean = data.reduce((total, row) => total + row.visitors, 0) / data.length
 const average = [ruleY([mean], { stroke: 'var(--color-border)', strokeDasharray: '3 3' })]
 const latest = [dot(data.slice(-1), { x: 'day', y: 'visitors', r: 3 })]
 
-<Sparkline data={data} x="day" y="visitors" marksBefore={average} marks={latest} />
+<Sparkline data={data} x="day" y="visitors" marksBefore={average} marks={latest} ariaLabel="Visitors" />
 ```
 
 The same rule applies to `data`: keep it stable across renders — defined at module scope, or memoized — and the chart rebuilds only when it actually changes.

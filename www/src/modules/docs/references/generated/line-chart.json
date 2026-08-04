@@ -40,14 +40,6 @@
       "description": "One field per series (wide rows), or a single field paired with `series`\n(long rows).",
       "required": true
     },
-    "y1": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Lower baseline field. Pair it with the `stackY` helper for stacked lines."
-    },
     "series": {
       "type": "string",
       "detailedType": "string | undefined",

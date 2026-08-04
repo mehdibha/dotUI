@@ -1,7 +1,7 @@
 'use client'
 
-import { text } from '@tanstack/charts'
 import { dot } from '@tanstack/charts/dot'
+import { text } from '@tanstack/charts/text'
 
 import { chartDefaults } from '@/registry/ui/chart'
 import { LineChart } from '@/registry/ui/chart-line'
@@ -13,7 +13,7 @@ interface Row {
 
 const SERIES = 'Desktop'
 
-const chartData: Row[] = [
+const data: Row[] = [
   { month: 'Jan', desktop: 186 },
   { month: 'Feb', desktop: 305 },
   { month: 'Mar', desktop: 237 },
@@ -29,11 +29,11 @@ const pick = (rows: readonly Row[], best: (a: Row, b: Row) => boolean) =>
    so the intent stays auditable. */
 const extremes = [
   {
-    ...pick(chartData, (a, b) => a.desktop > b.desktop),
+    ...pick(data, (a, b) => a.desktop > b.desktop),
     label: 'Peak',
     dy: -16,
   },
-  { ...pick(chartData, (a, b) => a.desktop < b.desktop), label: 'Low', dy: 22 },
+  { ...pick(data, (a, b) => a.desktop < b.desktop), label: 'Low', dy: 22 },
 ]
 
 const markers = dot(extremes, {
@@ -56,16 +56,14 @@ const callouts = text(extremes, {
 
 export default function ChartLineLabelCustom() {
   return (
-    <div className="w-full">
-      <LineChart
-        data={chartData}
-        x="month"
-        y="desktop"
-        marks={[markers, callouts]}
-        labels={{ desktop: SERIES }}
-        legend={false}
-        ariaLabel="Desktop visitors, with the peak and low months annotated"
-      />
-    </div>
+    <LineChart
+      data={data}
+      x="month"
+      y="desktop"
+      marks={[markers, callouts]}
+      labels={{ desktop: SERIES }}
+      legend={false}
+      ariaLabel="Desktop visitors, with the peak and low months annotated"
+    />
   )
 }

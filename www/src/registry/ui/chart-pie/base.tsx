@@ -9,7 +9,12 @@ import { scaleLinear } from 'd3-scale'
 import { arc as d3Arc, pie as d3Pie } from 'd3-shape'
 
 import type { ChartComponentProps, ChartSpecOf } from '@/registry/ui/chart'
-import { Chart, CHART_THEME, useChartDefinition } from '@/registry/ui/chart'
+import {
+  Chart,
+  CHART_THEME,
+  decorative,
+  useChartDefinition,
+} from '@/registry/ui/chart'
 
 const TAU = Math.PI * 2
 
@@ -132,15 +137,17 @@ export function pieRing<TDatum>(
   if (kind !== 'none') {
     const at = options.sliceLabelRadius ?? (inner + outer) / 2
     marks.push(
-      radialText(slices, {
-        id: `${options.id}-label`,
-        angle: 'midAngle',
-        radius: () => at,
-        text: (slice: PieSlice<TDatum>) =>
-          kind === 'name' ? slice.name : String(slice.value),
-        fill: options.sliceLabelFill ?? 'var(--color-fg)',
-        fontSize: options.sliceLabelFontSize ?? pieDefaults.labelFontSize,
-      }),
+      decorative(
+        radialText(slices, {
+          id: `${options.id}-label`,
+          angle: 'midAngle',
+          radius: () => at,
+          text: (slice: PieSlice<TDatum>) =>
+            kind === 'name' ? slice.name : String(slice.value),
+          fill: options.sliceLabelFill ?? 'var(--color-fg)',
+          fontSize: options.sliceLabelFontSize ?? pieDefaults.labelFontSize,
+        }),
+      ),
     )
   }
   return marks

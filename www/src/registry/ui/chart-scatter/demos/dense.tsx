@@ -41,7 +41,6 @@ export default function ChartScatterDense() {
         locale: 'en-US',
         number: { style: 'percent', maximumFractionDigits: 1 },
       }}
-      className="w-full"
     />
   )
 }

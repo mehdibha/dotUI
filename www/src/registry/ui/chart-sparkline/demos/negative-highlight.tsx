@@ -34,8 +34,8 @@ const percent = new Intl.NumberFormat('en-US', {
 /* One series, colored by its own direction — the whole point of `color`. The
    delta is printed too, so color is never the only signal. */
 function trend(series: Point[]) {
-  const first = series[0]?.value ?? 0
-  const last = series.at(-1)?.value ?? 0
+  const first = series[0]?.value ?? 1
+  const last = series.at(-1)?.value ?? first
   const down = last < first
   return {
     down,
@@ -70,7 +70,7 @@ function Metric({ label, data }: { label: string; data: Point[] }) {
   )
 }
 
-export default function Demo() {
+export default function ChartSparklineNegativeHighlight() {
   return (
     <div className="grid w-full max-w-sm grid-cols-2 gap-6">
       <Metric label="Signups" data={signups} />

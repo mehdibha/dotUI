@@ -284,6 +284,14 @@
       },
       "description": "Accessible name. Required: a chart is a figure, not decoration.",
       "required": true
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Overlay rendered above the chart surface, ignoring pointer events."
     }
   },
   "typeLinks": {

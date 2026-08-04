@@ -192,10 +192,16 @@ export function tanstackExampleCode(k: TanstackKnobs): string {
       ].join('\n')
     : indent(element, '    ')
 
+  const family =
+    k.mark === 'bar'
+      ? 'chart-bar'
+      : k.mark === 'line'
+        ? 'chart-line'
+        : 'chart-area'
   const imports = [
     recolor ? `import type { CSSProperties } from 'react'` : null,
-    k.refLine ? `import { ruleY } from '@tanstack/charts'` : null,
-    `import { ${component} } from '@/ui/chart'`,
+    k.refLine ? `import { ruleY } from '@tanstack/charts/rule'` : null,
+    `import { ${component} } from '@/ui/${family}'`,
   ].filter((line) => line !== null)
 
   return `${imports.join('\n')}

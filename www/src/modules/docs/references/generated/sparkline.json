@@ -132,8 +132,8 @@
       "description": "Stable row identity, so sorted or filtered data is retained, not respawned."
     },
     "marksBefore": {
-      "type": "readonly ChartMark<unknown, any, any, any, any>[]",
-      "detailedType": "| readonly ChartMark<unknown, any, any, any, any>[]\n| undefined",
+      "type": "readonly ChartMarkLayer[]",
+      "detailedType": "readonly ChartMarkLayer[] | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -173,8 +173,8 @@
       "description": "Mark layers painted under the line."
     },
     "marks": {
-      "type": "readonly ChartMark<unknown, any, any, any, any>[]",
-      "detailedType": "| readonly ChartMark<unknown, any, any, any, any>[]\n| undefined",
+      "type": "readonly ChartMarkLayer[]",
+      "detailedType": "readonly ChartMarkLayer[] | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -212,6 +212,14 @@
         ]
       },
       "description": "Mark layers painted over the line — reference rules, end dots, labels."
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Overlay rendered above the chart surface, ignoring pointer events."
     }
   },
   "typeLinks": {

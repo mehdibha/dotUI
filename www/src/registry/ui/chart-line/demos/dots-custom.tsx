@@ -6,7 +6,7 @@ import { LineChart } from '@/registry/ui/chart-line'
 
 const SERIES = 'Desktop'
 
-const chartData = [
+const data = [
   { month: 'Jan', desktop: 186 },
   { month: 'Feb', desktop: 305 },
   { month: 'Mar', desktop: 237 },
@@ -17,7 +17,7 @@ const chartData = [
 
 /* Ring markers instead of the built-in `points` dots. Reusing the line's `z`
    keeps the pair in one focus group. */
-const rings = dot(chartData, {
+const rings = dot(data, {
   x: 'month',
   y: 'desktop',
   z: () => SERIES,
@@ -29,16 +29,14 @@ const rings = dot(chartData, {
 
 export default function ChartLineDotsCustom() {
   return (
-    <div className="w-full">
-      <LineChart
-        data={chartData}
-        x="month"
-        y="desktop"
-        marks={[rings]}
-        labels={{ desktop: SERIES }}
-        legend={false}
-        ariaLabel="Desktop visitors, January through June"
-      />
-    </div>
+    <LineChart
+      data={data}
+      x="month"
+      y="desktop"
+      marks={[rings]}
+      labels={{ desktop: SERIES }}
+      legend={false}
+      ariaLabel="Desktop visitors, January through June"
+    />
   )
 }

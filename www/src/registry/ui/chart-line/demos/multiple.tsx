@@ -2,7 +2,7 @@
 
 import { LineChart } from '@/registry/ui/chart-line'
 
-const chartData = [
+const data = [
   { month: 'Jan', desktop: 186, mobile: 80 },
   { month: 'Feb', desktop: 305, mobile: 200 },
   { month: 'Mar', desktop: 237, mobile: 120 },
@@ -13,15 +13,13 @@ const chartData = [
 
 export default function ChartLineMultiple() {
   return (
-    <div className="w-full">
-      <LineChart
-        data={chartData}
-        x="month"
-        y={['desktop', 'mobile']}
-        curve="monotone"
-        labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
-        ariaLabel="Desktop and mobile visitors, January through June"
-      />
-    </div>
+    <LineChart
+      data={data}
+      x="month"
+      y={['desktop', 'mobile']}
+      curve="monotone"
+      labels={{ desktop: 'Desktop', mobile: 'Mobile' }}
+      ariaLabel="Desktop and mobile visitors, January through June"
+    />
   )
 }

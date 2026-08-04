@@ -27,9 +27,6 @@ export interface LineChartProps {
    */
   y: string | readonly string[]
 
-  /** Lower baseline field. Pair it with the `stackY` helper for stacked lines. */
-  y1?: string
-
   /** Field splitting rows into series — the long-format alternative to `y`. */
   series?: string
 

@@ -20,6 +20,7 @@ import {
   Chart,
   chartDefaults,
   chartFrame,
+  decorative,
   paletteColor,
   resolveFormat,
   useChartDefinition,
@@ -125,13 +126,15 @@ function valueLabels<TDatum>(
   colors: readonly string[],
 ): ChartMarkLayer {
   const bin = binner(options, read, colors.length)
-  return text(options.data, {
-    x: options.x,
-    y: options.y,
-    text: print,
-    fill: (row: TDatum) => contrastInk(colors[bin(row)] ?? paletteColor(0)),
-    fontSize: 11,
-  })
+  return decorative(
+    text(options.data, {
+      x: options.x,
+      y: options.y,
+      text: print,
+      fill: (row: TDatum) => contrastInk(colors[bin(row)] ?? paletteColor(0)),
+      fontSize: 11,
+    }),
+  )
 }
 
 export function heatmapChartSpec<TDatum, TXField extends ChartXField<TDatum>>(

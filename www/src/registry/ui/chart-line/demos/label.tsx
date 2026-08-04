@@ -1,12 +1,12 @@
 'use client'
 
-import { text } from '@tanstack/charts'
+import { text } from '@tanstack/charts/text'
 
 import { LineChart } from '@/registry/ui/chart-line'
 
 const SERIES = 'Desktop'
 
-const chartData = [
+const data = [
   { month: 'Jan', desktop: 186 },
   { month: 'Feb', desktop: 305 },
   { month: 'Mar', desktop: 237 },
@@ -15,7 +15,7 @@ const chartData = [
   { month: 'Jun', desktop: 214 },
 ]
 
-const labels = text(chartData, {
+const labels = text(data, {
   x: 'month',
   y: 'desktop',
   text: 'desktop',
@@ -27,17 +27,15 @@ const labels = text(chartData, {
 
 export default function ChartLineLabel() {
   return (
-    <div className="w-full">
-      <LineChart
-        data={chartData}
-        x="month"
-        y="desktop"
-        points
-        marks={[labels]}
-        labels={{ desktop: SERIES }}
-        legend={false}
-        ariaLabel="Desktop visitors, January through June"
-      />
-    </div>
+    <LineChart
+      data={data}
+      x="month"
+      y="desktop"
+      points
+      marks={[labels]}
+      labels={{ desktop: SERIES }}
+      legend={false}
+      ariaLabel="Desktop visitors, January through June"
+    />
   )
 }

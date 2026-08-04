@@ -34,7 +34,6 @@ export default function ChartScatterBubble() {
         locale: 'en-US',
         number: { style: 'unit', unit: 'year', maximumFractionDigits: 0 },
       }}
-      className="w-full"
     />
   )
 }

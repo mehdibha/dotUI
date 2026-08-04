@@ -2,7 +2,7 @@
 
 import { LineChart } from '@/registry/ui/chart-line'
 
-const chartData = [
+const data = [
   { month: 'Jan', desktop: 186 },
   { month: 'Feb', desktop: 305 },
   { month: 'Mar', desktop: 237 },
@@ -13,16 +13,14 @@ const chartData = [
 
 export default function ChartLineLinear() {
   return (
-    <div className="w-full">
-      <LineChart
-        data={chartData}
-        x="month"
-        y="desktop"
-        curve="linear"
-        labels={{ desktop: 'Desktop' }}
-        legend={false}
-        ariaLabel="Desktop visitors, January through June"
-      />
-    </div>
+    <LineChart
+      data={data}
+      x="month"
+      y="desktop"
+      curve="linear"
+      labels={{ desktop: 'Desktop' }}
+      legend={false}
+      ariaLabel="Desktop visitors, January through June"
+    />
   )
 }

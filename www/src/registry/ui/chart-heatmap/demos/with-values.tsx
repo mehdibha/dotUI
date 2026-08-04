@@ -9,7 +9,7 @@ const regions = [
   { region: 'APAC', quarters: [0.18, 0.24, 0.33, 0.39] },
 ]
 
-const chartData = regions.flatMap(({ region, quarters }) =>
+const data = regions.flatMap(({ region, quarters }) =>
   quarters.map((share, index) => ({
     region,
     quarter: `Q${index + 1}`,
@@ -20,7 +20,7 @@ const chartData = regions.flatMap(({ region, quarters }) =>
 export default function Demo() {
   return (
     <HeatmapChart
-      data={chartData}
+      data={data}
       x="quarter"
       y="region"
       value="share"

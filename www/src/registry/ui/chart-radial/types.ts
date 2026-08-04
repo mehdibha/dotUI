@@ -55,8 +55,9 @@ export interface RadialBarChartProps {
   outerRadius?: number
 
   /**
-   * Gap between rings, as a share of a ring's thickness.
-   * @default 0.2
+   * Gap between rings, as a share of a ring's thickness. In stacked mode
+   * (array `value`) it becomes a per-segment radial inset instead.
+   * @default 0.2 — 0.04 in stacked mode
    */
   barPadding?: number
 
@@ -68,6 +69,7 @@ export interface RadialBarChartProps {
 
   /**
    * Draw an unfilled arc behind every ring, spanning the whole sweep.
+   * Has no effect in stacked mode (array `value`).
    * @default false
    */
   track?: boolean

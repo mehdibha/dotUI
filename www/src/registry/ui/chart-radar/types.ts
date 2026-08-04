@@ -1,6 +1,8 @@
 import type * as React from 'react'
 
-import type { ChartFormat, ChartMarkLayer } from '@/registry/ui/chart'
+import type { ChartFormat } from '@/registry/ui/chart'
+
+import type { PolarMarkLayer } from './base'
 
 export type { ChartFormat }
 
@@ -121,7 +123,7 @@ export interface RadarChartProps {
   rowKey?: string
 
   /** Extra mark layers spliced into the polar container — cartesian marks would land outside it. */
-  polarMarks?: readonly ChartMarkLayer[]
+  polarMarks?: readonly PolarMarkLayer[]
 
   /** Overlay rendered above the chart surface, ignoring pointer events. */
   children?: React.ReactNode

@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef, useState } from 'react'
 import type {
   ChartBuildContext,
   ChartPoint,
@@ -278,14 +279,16 @@ export function radarChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
   }
 }
 
+interface RadarFormats {
+  category?: (value: ChartValue) => string
+  value?: (value: ChartValue) => string
+}
+
 /* The library's default body prints the raw scale values, which on a polar
-   chart are radians and pixels. */
-function radarTooltip(options: {
-  formatX?: ChartFormat
-  formatY?: ChartFormat
-}) {
-  const formatCategory = resolveFormat(options.formatX)
-  const formatValue = resolveFormat(options.formatY)
+   chart are radians and pixels. The component identity must stay stable — a
+   fresh one would remount the tooltip subtree every render — so the resolved
+   formatters ride a ref. */
+function radarTooltip(formats: { readonly current: RadarFormats }) {
   return function RadarTooltipBody({
     points,
   }: {
@@ -293,10 +296,11 @@ function radarTooltip(options: {
   }) {
     const first = points[0]
     if (first === undefined) return null
+    const { category, value } = formats.current
     return (
       <>
         <div className="mb-1 font-semibold">
-          {formatCategory?.(first.xValue) ?? String(first.xValue)}
+          {category?.(first.xValue) ?? String(first.xValue)}
         </div>
         <div className="grid gap-1">
           {points.map((point) => (
@@ -308,7 +312,7 @@ function radarTooltip(options: {
               />
               <span>{point.groupLabel}</span>
               <span className="ml-3 flex-1 text-right tabular-nums">
-                {formatValue?.(point.yValue) ?? String(point.yValue)}
+                {value?.(point.yValue) ?? String(point.yValue)}
               </span>
             </div>
           ))}
@@ -330,6 +334,12 @@ export type RadarChartProps<
 export function RadarChart<TDatum, TXField extends ChartXField<TDatum>>(
   props: RadarChartProps<TDatum, TXField>,
 ) {
+  const formats = useRef<RadarFormats>({})
+  formats.current = {
+    category: resolveFormat(props.formatX),
+    value: resolveFormat(props.formatY),
+  }
+  const [tooltipBody] = useState(() => radarTooltip(formats))
   const { definition, host, children } = useChartDefinition<
     TDatum,
     ChartXValueOf<TDatum, TXField>,
@@ -346,11 +356,7 @@ export function RadarChart<TDatum, TXField extends ChartXField<TDatum>>(
     radarChartSpec,
   )
   return (
-    <Chart
-      definition={definition}
-      renderTooltipBody={radarTooltip(props)}
-      {...host}
-    >
+    <Chart definition={definition} renderTooltipBody={tooltipBody} {...host}>
       {children}
     </Chart>
   )

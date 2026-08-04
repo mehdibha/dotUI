@@ -2,7 +2,7 @@ import { LineChart } from '@/registry/ui/chart-line'
 import { Example } from '@/modules/create/preview/example'
 import { Examples } from '@/modules/create/preview/examples'
 
-const chartData = [
+const data = [
   { month: 'Jan', desktop: 186, mobile: 80 },
   { month: 'Feb', desktop: 305, mobile: 200 },
   { month: 'Mar', desktop: 237, mobile: 120 },
@@ -17,7 +17,7 @@ export default function ChartLineExamples() {
       <Example title="Line Chart">
         <div className="w-full">
           <LineChart
-            data={chartData}
+            data={data}
             x="month"
             y="desktop"
             points
@@ -30,7 +30,7 @@ export default function ChartLineExamples() {
       <Example title="Multiple Series">
         <div className="w-full">
           <LineChart
-            data={chartData}
+            data={data}
             x="month"
             y={['desktop', 'mobile']}
             curve="monotone"

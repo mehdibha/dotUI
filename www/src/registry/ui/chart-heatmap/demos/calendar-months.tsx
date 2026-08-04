@@ -25,7 +25,7 @@ const years = [
   { year: '2025', weight: 1.05 },
 ]
 
-const chartData = years.flatMap(({ year, weight }) =>
+const data = years.flatMap(({ year, weight }) =>
   months.map(({ month, normal }) => ({
     year,
     month,
@@ -36,7 +36,7 @@ const chartData = years.flatMap(({ year, weight }) =>
 export default function Demo() {
   return (
     <HeatmapChart
-      data={chartData}
+      data={data}
       x="month"
       y="year"
       value="rainfall"

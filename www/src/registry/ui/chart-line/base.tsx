@@ -1,8 +1,8 @@
 'use client'
 
 import type { ChartBuildContext } from '@tanstack/charts'
-import { lineY } from '@tanstack/charts'
 import { d3Curve } from '@tanstack/charts/d3/shape'
+import { lineY } from '@tanstack/charts/line'
 import { curveMonotoneX, curveNatural, curveStepAfter } from 'd3-shape'
 
 import type {
@@ -33,7 +33,8 @@ const CURVES = {
 export interface LineChartSpecOptions<
   TDatum,
   TXField extends ChartXField<TDatum>,
-> extends XYChartSpecOptions<TDatum, TXField> {
+  // `lineY` has no lower-baseline channel, so `y1` would be silently dropped.
+> extends Omit<XYChartSpecOptions<TDatum, TXField>, 'y1'> {
   /** Path interpolation between points. */
   curve?: ChartCurve
   strokeWidth?: number

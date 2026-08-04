@@ -42,8 +42,8 @@
       "typeAst": {
         "type": "number"
       },
-      "description": "Gap between rings, as a share of a ring's thickness.",
-      "default": "0.2"
+      "description": "Gap between rings, as a share of a ring's thickness. In stacked mode\n(array `value`) it becomes a per-segment radial inset instead.",
+      "default": "0.2 — 0.04 in stacked mode"
     },
     "children": {
       "type": "ReactNode",
@@ -282,7 +282,7 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Draw an unfilled arc behind every ring, spanning the whole sweep.",
+      "description": "Draw an unfilled arc behind every ring, spanning the whole sweep.\nHas no effect in stacked mode (array `value`).",
       "default": "false"
     },
     "trackFill": {

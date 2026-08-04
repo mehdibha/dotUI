@@ -70,7 +70,6 @@ export default function ChartScatterWithRegression() {
         locale: 'en-US',
         number: { style: 'currency', currency: 'USD', notation: 'compact' },
       }}
-      className="w-full"
     />
   )
 }

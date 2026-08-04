@@ -3,23 +3,11 @@
   "description": "A bar chart. Field props (`x`, `y`, `series`, …) name keys of your row type\nand are checked against it. Every prop of `Chart` (`ariaLabel`, `height`,\n`className`, `children`, the focus callbacks) and every prop of\n`ChartBehaviorProps` (`focus`, `tooltip`, `animate`, …) is accepted too.",
   "props": {
     "data": {
-      "type": "readonly Record<string, unknown>[]",
+      "type": "readonly unknown[]",
       "typeAst": {
         "type": "array",
         "elementType": {
-          "type": "application",
-          "base": {
-            "type": "identifier",
-            "name": "Record"
-          },
-          "typeParameters": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "unknown"
-            }
-          ]
+          "type": "unknown"
         }
       },
       "description": "The rows to plot. Compared by identity — keep it out of render.",
@@ -199,7 +187,7 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Color legend, when the chart has more than one series.",
+      "description": "Show the color legend. Turn it off for a single series.",
       "default": "true"
     },
     "formatX": {
@@ -309,6 +297,14 @@
       },
       "description": "Accessible name. Required: a chart is a figure, not decoration.",
       "required": true
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Overlay rendered above the chart surface, ignoring pointer events."
     }
   },
   "typeLinks": {

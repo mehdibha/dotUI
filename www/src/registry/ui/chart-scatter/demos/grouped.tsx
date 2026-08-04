@@ -39,7 +39,6 @@ export default function ChartScatterGrouped() {
           maximumFractionDigits: 0,
         },
       }}
-      className="w-full"
     />
   )
 }

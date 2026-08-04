@@ -26,6 +26,7 @@ import {
   Chart,
   CHART_THEME,
   chartDefaults,
+  decorative,
   useChartDefinition,
 } from '@/registry/ui/chart'
 
@@ -129,7 +130,8 @@ function radialBars<TDatum>(
   if (Array.isArray(options.value)) {
     // One ring, cumulative angles — segments stack around the sweep.
     const fields = options.value as readonly string[]
-    const row = options.data[0] as TDatum
+    const row = options.data[0] as TDatum | undefined
+    if (row === undefined) return { bars, track }
     const values = fields.map((field) => read(row, field))
     const max = options.max ?? values.reduce((sum, value) => sum + value, 0)
     const gap =
@@ -241,29 +243,33 @@ export function radialBarChartSpec<TDatum>(
           ...(options.polarMarksBefore ?? []),
           ...(options.track && track.length > 0
             ? [
-                barArc(
-                  'radial-track',
-                  track,
-                  corner,
-                  options.trackFill ?? radialDefaults.trackFill,
+                decorative(
+                  barArc(
+                    'radial-track',
+                    track,
+                    corner,
+                    options.trackFill ?? radialDefaults.trackFill,
+                  ),
                 ),
               ]
             : []),
           barArc('radial-bar', bars, corner),
           ...(options.barLabels
             ? [
-                radialText(bars, {
-                  id: 'radial-bar-label',
-                  angle: 'startAngle',
-                  radius: (bar: RadialBarDatum<TDatum>) =>
-                    (bar.inner + bar.outer) / 2,
-                  text: 'name',
-                  anchor: 'start' as const,
-                  dx: 8,
-                  fill: options.barLabelFill ?? 'var(--color-fg-muted)',
-                  fontSize:
-                    options.barLabelFontSize ?? radialDefaults.labelFontSize,
-                }),
+                decorative(
+                  radialText(bars, {
+                    id: 'radial-bar-label',
+                    angle: 'startAngle',
+                    radius: (bar: RadialBarDatum<TDatum>) =>
+                      (bar.inner + bar.outer) / 2,
+                    text: 'name',
+                    anchor: 'start' as const,
+                    dx: 8,
+                    fill: options.barLabelFill ?? 'var(--color-fg-muted)',
+                    fontSize:
+                      options.barLabelFontSize ?? radialDefaults.labelFontSize,
+                  }),
+                ),
               ]
             : []),
           ...(options.polarMarks ?? []),
@@ -293,17 +299,6 @@ function radialTooltipBody({
   ))
 }
 
-/* Applied under the caller's props. The focus and anchor presets in
-   `chartDefaults` are cartesian, and animation stays off because the `d` tween
-   interpolates the SVG large-arc flag: an arc crossing half a turn renders an
-   invalid path for the length of the transition. */
-const radialBehavior = {
-  focus: 'nearest',
-  tooltipAnchor: 'point',
-  animate: false,
-  renderTooltipBody: radialTooltipBody,
-} as const
-
 export type RadialBarChartProps<TDatum> = ChartComponentProps<
   RadialBarChartSpecOptions<TDatum>,
   RadialBarDatum<TDatum>,
@@ -317,8 +312,15 @@ export function RadialBarChart<TDatum>(props: RadialBarChartProps<TDatum>) {
     RadialBarChartSpecOptions<TDatum>
   >(
     {
-      ...radialBehavior,
       ...props,
+      /* The focus and anchor presets in `chartDefaults` are cartesian, and
+         animation stays off because the `d` tween interpolates the SVG
+         large-arc flag: an arc crossing half a turn renders an invalid path
+         for the length of the transition. */
+      focus: props.focus ?? 'nearest',
+      tooltipAnchor: props.tooltipAnchor ?? 'point',
+      animate: props.animate ?? false,
+      renderTooltipBody: props.renderTooltipBody ?? radialTooltipBody,
       // Ride the identity-compared keys — polar mark arrays serialize alike.
       marks: props.polarMarks,
       marksBefore: props.polarMarksBefore,
