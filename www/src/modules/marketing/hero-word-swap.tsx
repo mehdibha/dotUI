@@ -13,21 +13,27 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 const WORDS = ["humans", "agents"] as const
 const INTERVAL_MS = 4200
 
-const DURATION = 0.3
-const EXIT_DURATION = 0.22
-const EASE = [0.16, 1, 0.3, 1] as const
+const ENTER_DURATION = 0.28
+const EXIT_DURATION = 0.18
+const EASE_OUT = [0.16, 1, 0.3, 1] as const // easeOutExpo — arrival
+const EASE_IN = [0.55, 0.055, 0.675, 0.19] as const // easeInCubic — departure
 const BLUR = "blur(6px)"
+/** Settles in ~310ms, so the slot has finished resizing before the word sharpens. */
 const WIDTH_SPRING = { type: "spring", stiffness: 260, damping: 30 } as const
 
-// The peak blur lands at opacity 0, so you never see sharp-but-blurred text. Exit
-// carries its own faster transition so the swap doesn't drag.
+// The peak blur lands at opacity 0, so you never see sharp-but-blurred text.
+//
+// The exit eases *in* while the enter eases out. mode="wait" hands over only once
+// the exit's full duration has elapsed, so an ease-out exit would spend its whole
+// tail already invisible — 145ms of empty slot on a 220ms easeOutExpo exit. Easing
+// in holds the word, then releases it exactly as the incoming one mounts (9ms).
 const VARIANTS = {
   initial: { opacity: 0, filter: BLUR },
   animate: { opacity: 1, filter: "blur(0px)" },
   exit: {
     opacity: 0,
     filter: BLUR,
-    transition: { duration: EXIT_DURATION, ease: EASE },
+    transition: { duration: EXIT_DURATION, ease: EASE_IN },
   },
 }
 
@@ -99,7 +105,7 @@ export function HeroWordSwap() {
               initial={variants.initial}
               animate={variants.animate}
               exit={variants.exit}
-              transition={{ duration: DURATION, ease: EASE }}
+              transition={{ duration: ENTER_DURATION, ease: EASE_OUT }}
             >
               {word}
             </motion.span>
