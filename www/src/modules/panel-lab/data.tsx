@@ -565,8 +565,6 @@ export const DEFAULTS = {
   typeBase: 16,
   typeRatio: "1.2",
   bodyLeading: 1.5,
-  iconStrokeAuto: true,
-  iconScale: 1,
   // Typography
   headingFont: DEFAULT_BODY_FAMILY,
   bodyFont: DEFAULT_BODY_FAMILY,

@@ -11,13 +11,7 @@
    Their state keys live in data.tsx under "Draft-only state". When a draft
    wins, fold its body into a new version and delete the entry. */
 
-import {
-  ICON_KEYS,
-  TYPE_KEYS,
-  WORKING_COLOR_KEYS,
-  type Lab,
-  type LabState,
-} from "./data"
+import { TYPE_KEYS, WORKING_COLOR_KEYS, type Lab, type LabState } from "./data"
 import {
   ColorSectionV2Body as Color560,
   SurfacesSectionBody as Surfaces560,
@@ -27,7 +21,6 @@ import {
   SurfacesSectionBody as Surfaces561,
 } from "./drafts/color-561"
 import { ColorSectionV2Body as Color562 } from "./drafts/color-562"
-import { IdealIconsSectionBody as Icons564 } from "./drafts/icons-564"
 import { HoverPreviewFrame } from "./drafts/preview-594"
 import { SurfacesSectionBody as Surfaces562 } from "./drafts/surfaces-562"
 import { IdealTypeSectionBody as Type563 } from "./drafts/type-563"
@@ -54,11 +47,6 @@ const TYPE_565_KEYS: (keyof LabState)[] = [
   "typeBase",
   "typeRatio",
   "bodyLeading",
-]
-const ICON_564_KEYS: (keyof LabState)[] = [
-  ...ICON_KEYS,
-  "iconStrokeAuto",
-  "iconScale",
 ]
 
 const colorChapter = (Body: Chapter["Body"]): Chapter => ({
@@ -158,22 +146,6 @@ export const DRAFTS: Draft[] = [
       "A frame take, sections untouched: hovering, focusing or opening a control floats its live preview beside the panel — one shared container that glides between rows and morphs its content.",
     overrides: [],
     Frame: HoverPreviewFrame,
-  },
-  {
-    id: "pr-564",
-    pr: 564,
-    section: "Icons",
-    title: "Ideal Icons section",
-    summary:
-      "The Icons frame rebuilt for real previews from the icon registry and a fuller axis set.",
-    overrides: [
-      {
-        id: "icons",
-        label: "Icons",
-        keys: ICON_564_KEYS,
-        Body: Icons564,
-      },
-    ],
   },
 ]
 
