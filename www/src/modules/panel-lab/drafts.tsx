@@ -11,8 +11,6 @@
    Their state keys live in data.tsx under "Draft-only state". When a draft
    wins, fold its body into a new version and delete the entry. */
 
-import { LayersIcon, PaletteIcon, SmileIcon, TypeIcon } from "lucide-react"
-
 import {
   ICON_KEYS,
   TYPE_KEYS,
@@ -66,7 +64,6 @@ const ICON_564_KEYS: (keyof LabState)[] = [
 const colorChapter = (Body: Chapter["Body"]): Chapter => ({
   id: "color",
   label: "Color",
-  icon: PaletteIcon,
   keys: WORKING_COLOR_KEYS,
   Body,
 })
@@ -74,7 +71,6 @@ const colorChapter = (Body: Chapter["Body"]): Chapter => ({
 const surfacesChapter = (Body: Chapter["Body"]): Chapter => ({
   id: "surfaces",
   label: "Surfaces",
-  icon: LayersIcon,
   keys: SURFACE_KEYS,
   Body,
 })
@@ -132,7 +128,6 @@ export const DRAFTS: Draft[] = [
       {
         id: "typography",
         label: "Type",
-        icon: TypeIcon,
         keys: TYPE_563_KEYS,
         Body: Type563,
       },
@@ -149,7 +144,6 @@ export const DRAFTS: Draft[] = [
       {
         id: "typography",
         label: "Type",
-        icon: TypeIcon,
         keys: TYPE_565_KEYS,
         Body: Type565,
       },
@@ -176,7 +170,6 @@ export const DRAFTS: Draft[] = [
       {
         id: "icons",
         label: "Icons",
-        icon: SmileIcon,
         keys: ICON_564_KEYS,
         Body: Icons564,
       },
