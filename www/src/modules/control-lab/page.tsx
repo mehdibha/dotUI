@@ -55,6 +55,7 @@ import {
   SliderRow,
   StepperRow,
   OptionGridRow,
+  OptionPagerRow,
   SwitchRow,
 } from "./rows"
 import type {
@@ -274,6 +275,29 @@ function ColorDemo({ described }: { described?: boolean }) {
   )
 }
 
+function ColorPaletteDemo() {
+  const { resolvedTheme } = useTheme()
+  const [value, setValue] = useState("#635BFF")
+
+  // The strip is the engine's resolved accent scale for the seed, in the mode
+  // you're looking at — the row never guesses what the color will become.
+  const ramp = useMemo(() => {
+    const theme = createTheme({ seeds: { accent: value } })
+    const mode = resolvedTheme === "dark" ? theme.dark : theme.light
+    return STEPS.map((step) => mode.scales.accent?.[step] ?? mode.background)
+  }, [value, resolvedTheme])
+
+  return (
+    <ColorPickerRow
+      layout="palette"
+      label="Brand"
+      value={value}
+      onChange={setValue}
+      ramp={ramp}
+    />
+  )
+}
+
 function ColorTilesDemo() {
   const [brand, setBrand] = useState("#635BFF")
   const [danger, setDanger] = useState("#E5484D")
@@ -454,6 +478,21 @@ function OptionGridDemo({
       options={columns === 1 ? INPUT_STYLES : BUTTON_STYLES}
       columns={columns}
       variant={plain ? "plain" : undefined}
+    />
+  )
+}
+
+function OptionPagerDemo({ described }: { described?: boolean }) {
+  const [value, setValue] = useState("solid")
+  return (
+    <OptionPagerRow
+      label="Button"
+      description={
+        described ? "Step through the styles; each renders itself." : undefined
+      }
+      value={value}
+      onChange={setValue}
+      options={BUTTON_STYLES}
     />
   )
 }
@@ -692,9 +731,10 @@ const GROUPS: Group[] = [
         id: "color-picker-row",
         name: "ColorPickerRow",
         description:
-          "A color seed as a row: hex on the right beside its swatch, opening a picker anchored to the trigger — preset seeds, area, hue, hex. The neutral gets its own picker: a gray is a direction and an amount, not a point in a spectrum, so it offers those two axes and previews the scale they resolve to.",
+          "A color seed as a row: hex on the right beside its swatch, opening a picker anchored to the trigger — preset seeds, area, hue, hex. The palette layout adds the resolved scale as a second line, so the trigger shows the seed and what it becomes. The neutral gets its own picker: a gray is a direction and an amount, not a point in a spectrum, so it offers those two axes and previews the scale they resolve to.",
         variants: [
           { label: "Brand", render: <ColorDemo /> },
+          { label: "With palette", render: <ColorPaletteDemo /> },
           { label: "Neutral", render: <NeutralDemo /> },
           { label: "With description", render: <ColorDemo described /> },
           { label: "Tiles, two up", render: <ColorTilesDemo /> },
@@ -724,6 +764,16 @@ const GROUPS: Group[] = [
             label: "With description",
             render: <OptionGridDemo columns={2} described />,
           },
+        ],
+      },
+      {
+        id: "option-pager-row",
+        name: "OptionPagerRow",
+        description:
+          "OptionGridRow's purpose in a single card: one option's specimen at a time, chevrons stepping through the rest — stepping is selecting, ends wrap. For option sets too long for a grid.",
+        variants: [
+          { label: "Default", render: <OptionPagerDemo /> },
+          { label: "With description", render: <OptionPagerDemo described /> },
         ],
       },
       {

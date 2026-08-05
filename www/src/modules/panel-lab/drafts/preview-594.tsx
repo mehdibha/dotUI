@@ -411,7 +411,6 @@ export function HoverPreviewFrame({
                   className="flex flex-col gap-3 p-4"
                 >
                   <div className="flex items-center gap-2">
-                    <chapter.icon className="size-3.5 text-fg-muted" />
                     <span className="text-[0.8125rem] font-medium text-fg">
                       {chapter.label}
                       <span className="text-fg-muted">
