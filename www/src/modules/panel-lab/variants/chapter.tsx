@@ -68,7 +68,7 @@ export function ChapterCard({
         modified={status.modified}
         onReset={status.onReset}
       />
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-[var(--lab-gap-control,0.375rem)]">
         <Body lab={lab} />
       </div>
     </section>

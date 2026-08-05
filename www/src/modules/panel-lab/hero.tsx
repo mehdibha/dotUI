@@ -13,9 +13,13 @@
      real registry icons, real engine colors. Live is the bar, not realistic:
      Shape's arc diagram qualifies because it draws the actual radii. */
 
-import { useState } from "react"
+import { createContext, useContext, useState } from "react"
 
 import { cn } from "@/registry/lib/utils"
+
+/** What a section opens on. `none` drops the hero and starts on controls. */
+export type PreviewMode = "none" | "hero"
+export const PreviewModeContext = createContext<PreviewMode>("hero")
 
 /** The stage. `inset` pads content; full-bleed heroes (a grid with a footer
  *  bar) turn it off and manage their own edges. */
@@ -28,6 +32,7 @@ export function Hero({
   className?: string
   children: React.ReactNode
 }) {
+  if (useContext(PreviewModeContext) === "none") return null
   return (
     <div
       className={cn(
@@ -46,6 +51,7 @@ export function Hero({
 /** Side-by-side mode tiles — the stage for mode-differentiated axes, where
  *  "right in light, wrong in dark" is the failure mode being shopped for. */
 export function HeroModes({ children }: { children: React.ReactNode }) {
+  if (useContext(PreviewModeContext) === "none") return null
   return <div className="flex gap-2">{children}</div>
 }
 
