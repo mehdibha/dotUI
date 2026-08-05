@@ -318,6 +318,7 @@ export function createTheme(input: string | ThemeOptions): Theme {
       const results = verifyScale(name, mode, scale, {
         strictOnSolid,
         borderTargets,
+        neutral,
       })
       guarantees.push(...results)
       warnings.push(
