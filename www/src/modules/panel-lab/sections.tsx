@@ -460,7 +460,7 @@ export function ShapeSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-[var(--lab-gap-control,0.375rem)]">
         {/* Self-demo: the row's own corners round with the value. */}
         <SliderRow
           label="Radius"
@@ -625,7 +625,7 @@ export function ShapeSectionBodyV2({ lab }: { lab: Lab }) {
   return (
     <>
       <CornerPreview lab={lab} />
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-[var(--lab-gap-control,0.375rem)]">
         {/* Self-demo: the row's own corners wear the value, 1:1. */}
         <SliderRow
           label="Radius"
@@ -1023,9 +1023,12 @@ export function ComponentsSectionBody({ lab }: { lab: Lab }) {
         onChange={setQuery}
         placeholder="Filter components..."
       />
-      <DisclosureGroup className="flex flex-col gap-1.5">
+      <DisclosureGroup className="flex flex-col gap-[var(--lab-gap-control,0.375rem)]">
         {clusters.map((cluster) => (
-          <div key={cluster.label} className="flex flex-col gap-1.5">
+          <div
+            key={cluster.label}
+            className="flex flex-col gap-[var(--lab-gap-control,0.375rem)]"
+          >
             <ClusterHeader label={cluster.label} />
             {cluster.items.map((item) => (
               <div key={item.name}>{item.render(lab)}</div>
