@@ -416,6 +416,28 @@ export function EffectsSectionBody({ lab }: { lab: Lab }) {
   )
 }
 
+/* v2: shadows moved into Surfaces — the recipe and the shadow family are one
+   decision there. Details keeps only the cursors. */
+export function EffectsSectionBodyV2({ lab }: { lab: Lab }) {
+  const { state, set } = lab
+  return (
+    <ControlGroup>
+      <SelectRow
+        label="Cursor"
+        value={state.cursorInteractive}
+        onChange={set("cursorInteractive")}
+        options={CURSOR_OPTIONS}
+      />
+      <SelectRow
+        label="Disabled cursor"
+        value={state.cursorDisabled}
+        onChange={set("cursorDisabled")}
+        options={CURSOR_OPTIONS}
+      />
+    </ControlGroup>
+  )
+}
+
 export function ComponentsSectionBody({ lab }: { lab: Lab }) {
   const [query, setQuery] = useState("")
   const q = query.trim().toLowerCase()

@@ -155,6 +155,26 @@ function buildModeConfig(state: SharedColorState, mode: LabMode): ColorConfig {
   }
 }
 
+/** Shared slice + one mode, resolved to that mode's engine half — how other
+ *  sections (Surfaces) read the mode set without owning color state. */
+export function useModeTheme(state: LabState, mode?: LabMode) {
+  const sharedKey = JSON.stringify(SHARED_KEYS.map((key) => state[key]))
+  const shared = useMemo(
+    (): SharedColorState =>
+      Object.fromEntries(
+        SHARED_KEYS.map((key) => [key, state[key]]),
+      ) as SharedColorState,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [sharedKey],
+  )
+  const config = useMemo(
+    () => (mode ? buildModeConfig(shared, mode) : null),
+    [shared, mode],
+  )
+  if (!config || !mode) return null
+  return resolveColorConfigCached(config)[mode.polarity]
+}
+
 /** WCAG of the untouched borders vs the app background — the border sliders'
  *  stable zero point, measured with any border targets stripped. */
 function useBorderSeeds(config: ColorConfig) {
