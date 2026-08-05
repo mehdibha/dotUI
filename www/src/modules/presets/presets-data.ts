@@ -91,13 +91,14 @@ export const PRESETS: Preset[] = [
     name: "Origin",
     description: "dotUI blue, the starting point.",
     swatch: SELECTION_BLUE,
-    // Tracks the builder defaults on every axis but the brand blue, which drives
-    // both the accent ramp and — since `primary` stays absent (neutral
-    // black/white actions) — the split selection + focus ramp.
+    // Tracks the builder defaults on every axis but the brand blue, which
+    // drives the accent ramp, the primary-action tokens, and the split
+    // selection + focus ramp.
     designSystem: {
       ...DEFAULTS,
       color: {
         ...DEFAULT_COLOR_CONFIG,
+        primary: "accent",
         seeds: {
           ...DEFAULT_COLOR_CONFIG.seeds,
           accent: SELECTION_BLUE,
