@@ -145,17 +145,8 @@ export const SEED_SNAP_BOUND = 0.03
 
 /** D2 — guarantee bars. */
 export const BARS = {
-  /**
-   * step 900 on worst of 25/50/100, per kind. Chromatic holds Lc 60 (status
-   * text). Neutral sits at the Lc 45 tier so `fg-muted` can recede as far as
-   * peer systems in dark (#464/#603) — below what APCA licenses at 12–14px,
-   * a deliberate fidelity trade. Keeping it under the anchors makes 900
-   * anchor-bound in both modes, so the depth axis works per mode.
-   */
-  text900: {
-    chromatic: { wcag: 4.5, lc: 60 },
-    neutral: { wcag: 4.5, lc: 45 },
-  },
+  /** step 900 on worst of 25/50/100. */
+  text900: { wcag: 4.5, lc: 60 },
   /** step 950 on 25/50 (Lc), and WCAG 7.0 incl. 100. */
   text950: { wcag: 7.0, lc: 90 },
   /** on-700 / on-800 solid labels (Lc 60 + WCAG UI floor; see SPEC tradeoff). */
@@ -207,18 +198,14 @@ export const LIGHT_BG_LSTAR = 99.0
  * these if a bar forces it). Radix-measured: chromatic step-12 sits ~L*
  * 20–25, gray step-12 near 12 (main app text is deeper than the minimal
  * bar); dark-mode text ~62–72 (900) and 86–94 (950).
- *
- * Light neutral 900 departs from the Radix measure at 46: muted text was
- * heavier than peer systems (#464). 46.4 is the ceiling — past it, 900 stops
- * clearing WCAG 4.5 against `bg-muted`, where Kbd/SegmentedControl put it.
  */
 export const TEXT_TARGETS = {
   light: {
-    "900": { chromatic: 44, neutral: 46 },
+    "900": { chromatic: 44, neutral: 42 },
     "950": { chromatic: 24, neutral: 12 },
   },
   dark: {
-    "900": { chromatic: 64, neutral: 66 },
+    "900": { chromatic: 64, neutral: 72 },
     "950": { chromatic: 88, neutral: 95 },
   },
 } as const
