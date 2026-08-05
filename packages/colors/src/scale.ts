@@ -356,7 +356,7 @@ export function buildScale(options: ScaleOptions): ScaleColors {
   const bg100 = steps["100"]!
   const kind = neutral ? "neutral" : "chromatic"
   steps["900"] = solveText(
-    BARS.text900[kind],
+    BARS.text900,
     [bg25, bg50, bg100],
     [bg25, bg50, bg100],
     (l) => chroma.at(l, 10),
