@@ -10,6 +10,7 @@ import {
   BellIcon,
   CalendarIcon,
   CameraIcon,
+  ChevronDownIcon,
   CloudIcon,
   FolderIcon,
   HeartIcon,
@@ -23,7 +24,15 @@ import {
 } from "lucide-react"
 import { DisclosureGroup } from "react-aria-components"
 
+import { fontStack } from "@/lib/fonts"
+import * as registryIcons from "@/registry/icons"
+import {
+  IconLibraryContext,
+  IconWeightContext,
+} from "@/registry/icons/create-icon"
+import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
 import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 import {
   ControlGroup,
   FontPickerRow,
@@ -32,20 +41,32 @@ import {
   SliderRow,
   OptionGridRow,
 } from "@/modules/control-lab/rows"
+import {
+  ICON_STROKE_WIDTH_VAR,
+  STROKE_DEFAULTS,
+} from "@/modules/create/iconography"
+import { useLoadedFamilies } from "@/modules/create/typography"
 
 import {
+  BUTTON_STYLES,
   CLUSTERS,
   CORNER_SHAPE_OPTIONS,
+  CURSOR_DISABLED_OPTIONS,
+  CURSOR_INTERACTIVE_OPTIONS,
   CURSOR_OPTIONS,
   DENSITY_OPTIONS,
+  HOVER_PARAM_OPTIONS,
   ICON_LIBRARY_OPTIONS,
   ICON_WEIGHT_OPTIONS,
+  INPUT_STYLES,
+  RADIUS_PARAM_OPTIONS,
   SHADOW_OPTIONS,
   SHAPE_CHARACTERS,
   SHAPE_ROLES,
   SHAPE_RUNGS,
 } from "./data"
-import type { Lab, ShapeRoleKey } from "./data"
+import type { Lab, LabState, ShapeRoleKey } from "./data"
+import { Hero, HeroInspector, useInspect } from "./hero"
 import {
   ClusterHeader,
   DetailRow,
@@ -59,6 +80,163 @@ export function TypographySectionBody({ lab }: { lab: Lab }) {
   return (
     <>
       <TypeSpecimen heading={state.headingFont} body={state.bodyFont} />
+      <ControlGroup>
+        <FontPickerRow
+          label="Heading"
+          categories={["sans-serif", "serif", "display", "handwriting"]}
+          selectedKey={state.headingFont}
+          onChange={set("headingFont")}
+        />
+        <FontPickerRow
+          label="Body"
+          categories={["sans-serif", "serif"]}
+          selectedKey={state.bodyFont}
+          onChange={set("bodyFont")}
+        />
+        <FontPickerRow
+          label="Mono"
+          categories={["mono"]}
+          selectedKey={state.monoFont}
+          onChange={set("monoFont")}
+        />
+      </ControlGroup>
+    </>
+  )
+}
+
+/* ------------------------------- Type (v2) -------------------------------- */
+
+type TypeProbeId = "heading" | "body" | "ui" | "code"
+
+/* Fixed rhythm: v2's type axes are the three families — sizes and weights are
+   the hero's constants until rhythm axes land (drafts #563/#565). */
+const TYPE_ROLES: Record<
+  TypeProbeId,
+  { label: string; px: number; weight: number }
+> = {
+  heading: { label: "Heading", px: 24, weight: 600 },
+  body: { label: "Body", px: 15, weight: 400 },
+  ui: { label: "UI label", px: 13, weight: 500 },
+  code: { label: "Code", px: 12, weight: 400 },
+}
+
+/** Every text role the system ships, live in the chosen faces — heading, body,
+ *  UI labels and code. Probes follow the hero contract: hover peeks a role's
+ *  recipe, click pins it. */
+function TypeHeroV2({ state }: { state: LabState }) {
+  const { inspected, pinned, probeProps } = useInspect<TypeProbeId>()
+  useLoadedFamilies([state.headingFont, state.bodyFont, state.monoFont])
+
+  const family = (id: TypeProbeId) =>
+    id === "heading"
+      ? state.headingFont
+      : id === "code"
+        ? state.monoFont
+        : state.bodyFont
+  const probeClass = (id: TypeProbeId) =>
+    cn(
+      "-mx-1 cursor-interactive rounded-md px-1 text-left focus-reset transition-colors focus-visible:focus-ring",
+      pinned === id && "bg-muted",
+    )
+  const role = inspected ? TYPE_ROLES[inspected] : null
+
+  return (
+    <Hero>
+      <button
+        type="button"
+        aria-label="Inspect heading"
+        {...probeProps("heading")}
+        className={probeClass("heading")}
+      >
+        <span
+          className="block text-balance text-fg"
+          style={{
+            fontFamily: fontStack(state.headingFont),
+            fontSize: TYPE_ROLES.heading.px,
+            fontWeight: TYPE_ROLES.heading.weight,
+            lineHeight: 1.15,
+          }}
+        >
+          Before we knew it
+        </span>
+      </button>
+      <button
+        type="button"
+        aria-label="Inspect body"
+        {...probeProps("body")}
+        className={probeClass("body")}
+      >
+        <span
+          className="block text-pretty text-fg-muted"
+          style={{
+            fontFamily: fontStack(state.bodyFont),
+            fontSize: TYPE_ROLES.body.px,
+            lineHeight: 1.6,
+          }}
+        >
+          We had left the ground, and the city lights fell away beneath us.
+        </span>
+      </button>
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          aria-label="Inspect UI label"
+          {...probeProps("ui")}
+          className={cn(probeClass("ui"), "shrink-0")}
+        >
+          <span
+            className="flex h-7 items-center rounded-full bg-primary px-3.5 text-fg-on-primary"
+            style={{
+              fontFamily: fontStack(state.bodyFont),
+              fontSize: TYPE_ROLES.ui.px,
+              fontWeight: TYPE_ROLES.ui.weight,
+            }}
+          >
+            Get started
+          </span>
+        </button>
+        <span
+          className="flex h-7 shrink-0 items-center rounded-full border border-border-field px-3.5 text-fg"
+          style={{
+            fontFamily: fontStack(state.bodyFont),
+            fontSize: TYPE_ROLES.ui.px,
+            fontWeight: TYPE_ROLES.ui.weight,
+          }}
+        >
+          Learn more
+        </span>
+        <button
+          type="button"
+          aria-label="Inspect code"
+          {...probeProps("code")}
+          className={cn(probeClass("code"), "ml-auto shrink-0")}
+        >
+          <span
+            className="flex h-6 items-center rounded-md bg-muted px-2 text-fg-muted"
+            style={{
+              fontFamily: fontStack(state.monoFont),
+              fontSize: TYPE_ROLES.code.px,
+            }}
+          >
+            v2.4.0
+          </span>
+        </button>
+      </div>
+      {inspected && role && (
+        <HeroInspector
+          label={role.label}
+          detail={`${family(inspected)} · ${role.px}px · ${role.weight}`}
+        />
+      )}
+    </Hero>
+  )
+}
+
+export function TypographySectionBodyV2({ lab }: { lab: Lab }) {
+  const { state, set } = lab
+  return (
+    <>
+      <TypeHeroV2 state={state} />
       <ControlGroup>
         <FontPickerRow
           label="Heading"
@@ -147,6 +325,162 @@ export function IconsSectionBody({ lab }: { lab: Lab }) {
   )
 }
 
+/* ------------------------------- Icons (v2) ------------------------------- */
+
+/** Renders children as real icons of a library: context + stroke var in one. */
+function IconScope({
+  library,
+  weight,
+  stroke,
+  className,
+  children,
+}: {
+  library: IconLibraryName
+  weight?: PhosphorWeight
+  stroke?: number
+  className?: string
+  children: React.ReactNode
+}) {
+  return (
+    <IconLibraryContext.Provider value={library}>
+      <IconWeightContext.Provider value={weight}>
+        <span
+          className={className}
+          style={
+            stroke !== undefined
+              ? ({
+                  [ICON_STROKE_WIDTH_VAR]: String(stroke),
+                } as CSSProperties)
+              : undefined
+          }
+        >
+          {children}
+        </span>
+      </IconWeightContext.Provider>
+    </IconLibraryContext.Provider>
+  )
+}
+
+const SPECIMEN = [
+  ["Home", registryIcons.HomeIcon],
+  ["Search", registryIcons.SearchIcon],
+  ["Heart", registryIcons.HeartIcon],
+  ["Star", registryIcons.StarIcon],
+  ["Bell", registryIcons.BellIcon],
+  ["Mail", registryIcons.MailIcon],
+  ["Calendar", registryIcons.CalendarIcon],
+  ["Settings", registryIcons.SettingsIcon],
+  ["User", registryIcons.UserIcon],
+  ["Folder", registryIcons.FolderIcon],
+  ["Camera", registryIcons.CameraIcon],
+  ["Image", registryIcons.ImageIcon],
+  ["Trash", registryIcons.TrashIcon],
+  ["Pencil", registryIcons.PencilIcon],
+  ["Share", registryIcons.ShareIcon],
+  ["Download", registryIcons.DownloadIcon],
+] as const
+
+/** The Icons hero: a grid of real registry icons in the current library,
+ *  stroke and weight, with the shared inspect verb — hover peeks a glyph,
+ *  click pins it; the footer reads it at the four sizes components use. */
+function IconSpecimen({ state }: { state: LabState }) {
+  const library = state.iconLibrary as IconLibraryName
+  const stroke = state.iconStroke
+  const weight =
+    library === "phosphor" ? (state.iconWeight as PhosphorWeight) : undefined
+  // Star, not Search — a magnifier next to a name reads as a search field.
+  const { inspected, probeProps } = useInspect<string>("Star")
+  const [name, InspectedIcon] =
+    SPECIMEN.find(([label]) => label === (inspected ?? "Star")) ?? SPECIMEN[3]
+
+  return (
+    <Hero inset={false}>
+      <IconScope
+        library={library}
+        weight={weight}
+        stroke={stroke}
+        className="flex w-full flex-col"
+      >
+        <div className="grid grid-cols-8 gap-0.5 p-2">
+          {SPECIMEN.map(([label, Icon]) => (
+            <button
+              key={label}
+              type="button"
+              aria-label={label}
+              {...probeProps(label)}
+              className={cn(
+                "flex aspect-square cursor-interactive items-center justify-center rounded-lg text-fg-muted focus-reset transition-colors focus-visible:focus-ring",
+                label === (inspected ?? "Star")
+                  ? "bg-highlight text-fg"
+                  : "hover:bg-highlight/60 hover:text-fg",
+              )}
+            >
+              <Icon size={16} />
+            </button>
+          ))}
+        </div>
+        <HeroInspector
+          bar
+          label={
+            <>
+              <InspectedIcon size={16} className="shrink-0 text-fg" />
+              <span className="truncate text-xs font-medium text-fg">
+                {name}
+              </span>
+            </>
+          }
+          detail={
+            /* The four sizes components actually use — 12 / 16 / 20 / 24. */
+            <span className="flex items-center gap-3">
+              {[12, 16, 20, 24].map((size) => (
+                <InspectedIcon key={size} size={size} />
+              ))}
+            </span>
+          }
+        />
+      </IconScope>
+    </Hero>
+  )
+}
+
+export function IconsSectionBodyV2({ lab }: { lab: Lab }) {
+  const { state, set } = lab
+  return (
+    <>
+      <IconSpecimen state={state} />
+      <ControlGroup>
+        <SelectRow
+          label="Library"
+          value={state.iconLibrary}
+          onChange={set("iconLibrary")}
+          options={ICON_LIBRARY_OPTIONS}
+        />
+        {/* Stroke only exists on line-based sets; Phosphor swaps it for weight. */}
+        {STROKE_DEFAULTS[state.iconLibrary as IconLibraryName] !==
+          undefined && (
+          <SliderRow
+            label="Stroke"
+            value={state.iconStroke}
+            onChange={set("iconStroke")}
+            minValue={1}
+            maxValue={3}
+            step={0.25}
+            format={(v) => v.toFixed(2)}
+          />
+        )}
+        {state.iconLibrary === "phosphor" && (
+          <SelectRow
+            label="Weight"
+            value={state.iconWeight}
+            onChange={set("iconWeight")}
+            options={ICON_WEIGHT_OPTIONS}
+          />
+        )}
+      </ControlGroup>
+    </>
+  )
+}
+
 export function ShapeSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
@@ -212,7 +546,7 @@ const ROLE_ARCS: Record<
 function CornerPreview({ lab }: { lab: Lab }) {
   const { state } = lab
   return (
-    <div className="flex items-center gap-5 px-4 py-1.5">
+    <Hero className="flex-row items-center gap-5">
       <div className="relative size-16 shrink-0">
         {SHAPE_ROLES.map(({ key }) => {
           const { size, arc } = ROLE_ARCS[key]
@@ -252,7 +586,7 @@ function CornerPreview({ lab }: { lab: Lab }) {
           </span>
         ))}
       </div>
-    </div>
+    </Hero>
   )
 }
 
@@ -416,25 +750,286 @@ export function EffectsSectionBody({ lab }: { lab: Lab }) {
   )
 }
 
+/* Two real buttons — one enabled, one disabled — each wearing the cursor the
+   current selection maps to. Hovering them shows the real thing; the drawn
+   cursor keeps the answer visible without a mouse. */
+function CursorHeroV2({ state }: { state: LabState }) {
+  const specimens = [
+    {
+      label: "Interactive",
+      cursor: state.cursorInteractive,
+      glyph: CURSOR_INTERACTIVE_OPTIONS.find(
+        (o) => o.value === state.cursorInteractive,
+      )?.illustration,
+      isDisabled: false,
+    },
+    {
+      label: "Disabled",
+      cursor: state.cursorDisabled,
+      glyph: CURSOR_DISABLED_OPTIONS.find(
+        (o) => o.value === state.cursorDisabled,
+      )?.illustration,
+      isDisabled: true,
+    },
+  ]
+  return (
+    <Hero className="flex-row items-center justify-evenly py-6">
+      {specimens.map(({ label, cursor, glyph, isDisabled }) => (
+        <div key={label} className="relative" style={{ cursor }}>
+          <Button
+            variant="secondary"
+            isDisabled={isDisabled}
+            style={{ cursor }}
+          >
+            Button
+          </Button>
+          <span
+            aria-hidden
+            className="pointer-events-none absolute right-0 bottom-0 translate-x-1/3 translate-y-1/3 **:[svg]:size-5"
+          >
+            {glyph}
+          </span>
+        </div>
+      ))}
+    </Hero>
+  )
+}
+
 /* v2: shadows moved into Surfaces — the recipe and the shadow family are one
-   decision there. Details keeps only the cursors. */
+   decision there. The Cursor section keeps only the cursors. */
 export function EffectsSectionBodyV2({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
-    <ControlGroup>
-      <SelectRow
-        label="Cursor"
-        value={state.cursorInteractive}
-        onChange={set("cursorInteractive")}
-        options={CURSOR_OPTIONS}
+    <>
+      <CursorHeroV2 state={state} />
+      <ControlGroup>
+        <SelectRow
+          label="Interactive"
+          value={state.cursorInteractive}
+          onChange={set("cursorInteractive")}
+          options={CURSOR_INTERACTIVE_OPTIONS}
+          layout="grid"
+        />
+        <SelectRow
+          label="Disabled"
+          value={state.cursorDisabled}
+          onChange={set("cursorDisabled")}
+          options={CURSOR_DISABLED_OPTIONS}
+          layout="grid"
+        />
+      </ControlGroup>
+    </>
+  )
+}
+
+/* --------------------------- Buttons / Inputs (v2) -------------------------- */
+
+/* v2: Components splits into per-family sections. Each section owns one synced
+   group's axes and opens on live specimens — real hover, real focus — with the
+   control radius read from the Shape section's role system. */
+
+/** The Controls role's resolved radius — what 'auto' means for a control. */
+function controlRadiusPx(state: LabState): number {
+  const ratio = roleRatio(state, "roleControl")
+  return ratio === Infinity ? 999 : state.radiusPx * ratio
+}
+
+function buttonRadiusPx(state: LabState): number {
+  switch (state.buttonRadius) {
+    case "sharp":
+      return 0
+    case "round":
+      return state.radiusPx
+    case "pill":
+      return 999
+    default:
+      return controlRadiusPx(state)
+  }
+}
+
+/** Style → surface classes; `dim` is the style's own read of the dim hover. */
+const BUTTON_LOOKS = {
+  solid: { base: "bg-primary text-fg-on-primary", dim: "hover:brightness-90" },
+  soft: { base: "bg-neutral text-fg-on-neutral", dim: "hover:brightness-90" },
+  outline: {
+    base: "border border-border-field text-fg",
+    dim: "hover:bg-highlight",
+  },
+  quiet: { base: "text-fg", dim: "hover:bg-highlight" },
+} as const
+
+const buttonLook = (state: LabState) =>
+  BUTTON_LOOKS[state.buttonStyle as keyof typeof BUTTON_LOOKS] ??
+  BUTTON_LOOKS.solid
+
+function buttonHoverFx(state: LabState): string {
+  if (state.buttonHover === "dim") return buttonLook(state).dim
+  if (state.buttonHover === "lift")
+    return "hover:-translate-y-px hover:shadow-md"
+  return ""
+}
+
+/** Live specimens of the synced group — a Button and a working Toggle Button
+ *  pair wearing one style. Hovering demos the hover axis for real. */
+function ButtonsHero({ state }: { state: LabState }) {
+  const [view, setView] = useState<"list" | "grid">("list")
+  const look = buttonLook(state)
+  const radius = buttonRadiusPx(state)
+  const segRadius = radius >= 999 ? 999 : Math.max(radius - 3, 0)
+  const fx = buttonHoverFx(state)
+  // Quiet's base has no surface, so its selected toggle segment needs one.
+  const selectedSegment =
+    state.buttonStyle === "quiet" ? "bg-highlight text-fg" : look.base
+
+  return (
+    <Hero>
+      <div className="flex items-center justify-center gap-3 py-4">
+        <button
+          type="button"
+          className={cn(
+            "flex h-8 cursor-interactive items-center px-3.5 text-[0.8125rem] font-medium focus-reset transition-[background-color,filter,translate,box-shadow] duration-150 focus-visible:focus-ring",
+            look.base,
+            fx,
+          )}
+          style={{ borderRadius: radius }}
+        >
+          Get started
+        </button>
+        <div
+          className="flex items-center gap-0.5 bg-muted p-0.5"
+          style={{ borderRadius: radius >= 999 ? 999 : radius }}
+        >
+          {(["list", "grid"] as const).map((v) => (
+            <button
+              key={v}
+              type="button"
+              aria-pressed={view === v}
+              onClick={() => setView(v)}
+              className={cn(
+                "flex h-7 cursor-interactive items-center px-3 text-xs font-medium focus-reset transition-[background-color,filter,color] duration-150 focus-visible:focus-ring",
+                view === v
+                  ? cn(selectedSegment, fx)
+                  : "text-fg-muted hover:text-fg",
+              )}
+              style={{ borderRadius: segRadius }}
+            >
+              {v === "list" ? "List" : "Grid"}
+            </button>
+          ))}
+        </div>
+      </div>
+    </Hero>
+  )
+}
+
+export function ButtonsSectionBody({ lab }: { lab: Lab }) {
+  const { state, set } = lab
+  return (
+    <>
+      <ButtonsHero state={state} />
+      <OptionGridRow
+        label="Style"
+        value={state.buttonStyle}
+        onChange={set("buttonStyle")}
+        options={BUTTON_STYLES}
       />
-      <SelectRow
-        label="Disabled cursor"
-        value={state.cursorDisabled}
-        onChange={set("cursorDisabled")}
-        options={CURSOR_OPTIONS}
+      <ControlGroup>
+        <SegmentedControlRow
+          label="Radius"
+          value={state.buttonRadius}
+          onChange={set("buttonRadius")}
+          options={RADIUS_PARAM_OPTIONS}
+        />
+        <SegmentedControlRow
+          label="Hover"
+          value={state.buttonHover}
+          onChange={set("buttonHover")}
+          options={HOVER_PARAM_OPTIONS}
+        />
+      </ControlGroup>
+    </>
+  )
+}
+
+/** Style → what the field paints. Radius only where the style rounds. */
+function inputLook(
+  styleId: string,
+  radius: number,
+): { className: string; style: CSSProperties } {
+  switch (styleId) {
+    case "line":
+      return { className: "border-b border-border-field", style: {} }
+    case "filled-line-bottom":
+      return {
+        className: "border-b border-border-field bg-neutral",
+        style: {
+          borderTopLeftRadius: radius,
+          borderTopRightRadius: radius,
+        },
+      }
+    case "filled":
+      return { className: "bg-neutral", style: { borderRadius: radius } }
+    default:
+      return {
+        className: "border border-border-field bg-field",
+        style: { borderRadius: radius },
+      }
+  }
+}
+
+const INPUT_FIELD =
+  "flex h-8 w-full min-w-0 items-center gap-2 px-2.5 text-[0.8125rem] transition-colors outline-none focus-visible:focus-ring"
+
+/** A working mini form in the chosen style — a real input plus a select
+ *  trigger, because the style is a family decision, not one component's. */
+function InputsHero({ state }: { state: LabState }) {
+  const radius = controlRadiusPx(state)
+  const look = inputLook(state.inputStyle, radius)
+
+  return (
+    <Hero>
+      <label className="flex flex-col gap-1">
+        <span className="text-xs font-medium text-fg">Email</span>
+        <input
+          type="text"
+          placeholder="you@example.com"
+          className={cn(
+            INPUT_FIELD,
+            look.className,
+            "placeholder:text-fg-muted",
+          )}
+          style={look.style}
+        />
+      </label>
+      <div className="flex flex-col gap-1">
+        <span className="text-xs font-medium text-fg">Role</span>
+        <button
+          type="button"
+          className={cn(INPUT_FIELD, look.className, "cursor-interactive")}
+          style={look.style}
+        >
+          <span className="flex-1 truncate text-left text-fg">
+            Product designer
+          </span>
+          <ChevronDownIcon className="size-3.5 shrink-0 text-fg-muted" />
+        </button>
+      </div>
+    </Hero>
+  )
+}
+
+export function InputsSectionBody({ lab }: { lab: Lab }) {
+  const { state, set } = lab
+  return (
+    <>
+      <InputsHero state={state} />
+      <OptionGridRow
+        label="Style"
+        value={state.inputStyle}
+        onChange={set("inputStyle")}
+        options={INPUT_STYLES}
       />
-    </ControlGroup>
+    </>
   )
 }
 
