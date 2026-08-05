@@ -14,12 +14,16 @@ import {
  * regressions (verified against shiki over the full docs corpus by
  * scripts/highlight-parity.mjs):
  *
- * - every Capitalized identifier is classed `type`, even imports and JSX text
+ * - every Capitalized identifier is classed `type`, even imports
  * - function calls, JSX expression attributes, and assignment `=` stay plain
  * - member reads and object keys are classed `property` (shiki: plain)
  * - lowercase JSX tags share the component color (shiki: green vs blue)
  * - `const` binding names, parameter names, and type operators stay plain
- * - keywords/numbers/apostrophes inside JSX text get code colors
+ * - bare boolean JSX attributes (`<Chart accessibilityLayer>`) stay plain
+ *
+ * JSX text arrives unclassed since 0.0.10 (TanStack/highlight#5, #6, #7), so
+ * the prose guards here keep our own splitter from re-coloring it rather than
+ * undoing the tokenizer.
  *
  * Rules run only for script languages (+ a string rule for shell); other
  * languages pass through untouched. Class names are reused for their color:
@@ -594,26 +598,8 @@ export function refineTokens(
           out.push({ value: token.value })
           continue
         }
-        // Prose in JSX text: “How do I get started?”
-        if (!ctx.typeBias && inJsxText(code, start)) {
-          out.push({ value: token.value })
-          continue
-        }
         break
       }
-      case "number":
-        if (!ctx.typeBias && inJsxText(code, start)) {
-          out.push({ value: token.value })
-          continue
-        }
-        break
-      case "string":
-        // An apostrophe in JSX text (“We'll…”) is not a string opener.
-        if (!ctx.typeBias && token.value[0] === "'" && inJsxText(code, start)) {
-          out.push({ value: token.value })
-          continue
-        }
-        break
     }
     out.push(token)
   }

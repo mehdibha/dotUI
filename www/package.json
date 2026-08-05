@@ -30,7 +30,7 @@
     "@shikijs/magic-move": "^4.4.1",
     "@tabler/icons-react": "^3.35.0",
     "@tailwindcss/vite": "catalog:",
-    "@tanstack/highlight": "^0.0.9",
+    "@tanstack/highlight": "^0.0.10",
     "@tanstack/react-devtools": "^0.10.5",
     "@tanstack/react-form": "^1.32.0",
     "@tanstack/react-router": "catalog:",
