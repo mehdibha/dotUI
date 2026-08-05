@@ -378,20 +378,24 @@ const SPECIMEN = [
   ["Pencil", registryIcons.PencilIcon],
   ["Share", registryIcons.ShareIcon],
   ["Download", registryIcons.DownloadIcon],
+  ["Clock", registryIcons.ClockIcon],
+  ["Copy", registryIcons.CopyIcon],
+  ["Link", registryIcons.LinkIcon],
+  ["Tag", registryIcons.TagIcon],
+  ["Bookmark", registryIcons.BookmarkIcon],
+  ["Message", registryIcons.MessageSquareIcon],
+  ["Globe", registryIcons.GlobeIcon],
+  ["Layers", registryIcons.LayersIcon],
 ] as const
 
-/** The Icons hero: a grid of real registry icons in the current library,
- *  stroke and weight, with the shared inspect verb — hover peeks a glyph,
- *  click pins it; the footer reads it at the four sizes components use. */
+/** The Icons hero: rows of real registry icons in the current library, stroke
+ *  and weight. No inspect verb — the set itself is the specimen, so the space
+ *  goes to more glyphs instead of a readout. */
 function IconSpecimen({ state }: { state: LabState }) {
   const library = state.iconLibrary as IconLibraryName
   const stroke = state.iconStroke
   const weight =
     library === "phosphor" ? (state.iconWeight as PhosphorWeight) : undefined
-  // Star, not Search — a magnifier next to a name reads as a search field.
-  const { inspected, probeProps } = useInspect<string>("Star")
-  const [name, InspectedIcon] =
-    SPECIMEN.find(([label]) => label === (inspected ?? "Star")) ?? SPECIMEN[3]
 
   return (
     <Hero inset={false}>
@@ -399,45 +403,16 @@ function IconSpecimen({ state }: { state: LabState }) {
         library={library}
         weight={weight}
         stroke={stroke}
-        className="flex w-full flex-col"
+        className="grid w-full grid-cols-8 gap-0.5 p-2"
       >
-        <div className="grid grid-cols-8 gap-0.5 p-2">
-          {SPECIMEN.map(([label, Icon]) => (
-            <button
-              key={label}
-              type="button"
-              aria-label={label}
-              {...probeProps(label)}
-              className={cn(
-                "flex aspect-square cursor-interactive items-center justify-center rounded-lg text-fg-muted focus-reset transition-colors focus-visible:focus-ring",
-                label === (inspected ?? "Star")
-                  ? "bg-highlight text-fg"
-                  : "hover:bg-highlight/60 hover:text-fg",
-              )}
-            >
-              <Icon size={16} />
-            </button>
-          ))}
-        </div>
-        <HeroInspector
-          bar
-          label={
-            <>
-              <InspectedIcon size={16} className="shrink-0 text-fg" />
-              <span className="truncate text-xs font-medium text-fg">
-                {name}
-              </span>
-            </>
-          }
-          detail={
-            /* The four sizes components actually use — 12 / 16 / 20 / 24. */
-            <span className="flex items-center gap-3">
-              {[12, 16, 20, 24].map((size) => (
-                <InspectedIcon key={size} size={size} />
-              ))}
-            </span>
-          }
-        />
+        {SPECIMEN.map(([label, Icon]) => (
+          <span
+            key={label}
+            className="flex aspect-square items-center justify-center rounded-lg text-fg"
+          >
+            <Icon size={16} />
+          </span>
+        ))}
       </IconScope>
     </Hero>
   )
