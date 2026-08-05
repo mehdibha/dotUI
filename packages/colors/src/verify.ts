@@ -27,13 +27,15 @@ export interface VerifyOptions {
   strictOnSolid: boolean
   /** D2 — placed borders verify against their own target, app bg only. */
   borderTargets?: BorderTargets
+  /** Selects the step-900 bar; neutral text sits a tier lower (see BARS). */
+  neutral?: boolean
 }
 
 export function verifyScale(
   name: string,
   mode: Mode,
   scale: ScaleColors,
-  { strictOnSolid, borderTargets }: VerifyOptions,
+  { strictOnSolid, borderTargets, neutral }: VerifyOptions,
 ): GuaranteeResult[] {
   const results: GuaranteeResult[] = []
   const step = (s: StepName) => scale.steps[s]
@@ -66,15 +68,9 @@ export function verifyScale(
     })
   }
 
+  const bars900 = BARS.text900[neutral ? "neutral" : "chromatic"]
   for (const bg of ["25", "50", "100"] as const)
-    check(
-      "text-900",
-      "900",
-      step("900"),
-      bg,
-      BARS.text900.wcag,
-      BARS.text900.lc,
-    )
+    check("text-900", "900", step("900"), bg, bars900.wcag, bars900.lc)
   for (const bg of ["25", "50"] as const)
     check(
       "text-950",

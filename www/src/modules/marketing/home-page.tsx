@@ -13,6 +13,7 @@ import Cards from "@/modules/marketing/cards"
 import { CompositionSection } from "@/modules/marketing/composition-section"
 import { CtaSection } from "@/modules/marketing/cta-section"
 import { ExportSection } from "@/modules/marketing/export-section"
+import { HeroWordSwap } from "@/modules/marketing/hero-word-swap"
 
 export function HomePage() {
   return (
@@ -24,10 +25,12 @@ export function HomePage() {
         {/* Hero section */}
         <section className="flex flex-col pt-14 sm:pt-18 md:pt-26">
           <div className="flex flex-col items-center text-center">
-            <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-none">
+            <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-[4rem]">
               The Design System Studio
               <br />
-              <span className="text-fg-muted">for the Web</span>
+              <span className="text-fg-muted dark:text-fg-muted/85">
+                for <HeroWordSwap />
+              </span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
               Every design decision is yours, previewed live on real components.
