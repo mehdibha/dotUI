@@ -1,9 +1,9 @@
-import { rehypeCodeDefaultOptions } from "fumadocs-core/mdx-plugins"
 import { metaSchema, pageSchema } from "fumadocs-core/source/schema"
 import { defineConfig, defineDocs } from "fumadocs-mdx/config"
 import lastModified from "fumadocs-mdx/plugins/last-modified"
 import { z } from "zod"
 
+import rehypeHighlight from "./src/modules/docs/mdx-plugins/rehype-highlight"
 import rehypeTransform from "./src/modules/docs/mdx-plugins/rehype-transform"
 
 export const docs = defineDocs({
@@ -37,17 +37,8 @@ export const docs = defineDocs({
 export default defineConfig({
   plugins: [lastModified()],
   mdxOptions: {
-    rehypeCodeOptions: {
-      ...rehypeCodeDefaultOptions,
-      langs: ["ts", "js", "html", "tsx", "mdx", "css", "json", "bash"],
-      defaultLanguage: "plaintext",
-      inline: "tailing-curly-colon",
-      themes: {
-        light: "github-light",
-        dark: "github-dark",
-      },
-      tab: true,
-    },
-    rehypePlugins: [rehypeTransform],
+    // Code highlighting is @tanstack/highlight via rehypeHighlight below.
+    rehypeCodeOptions: false,
+    rehypePlugins: [rehypeHighlight, rehypeTransform],
   },
 })

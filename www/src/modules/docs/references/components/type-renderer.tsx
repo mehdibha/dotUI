@@ -25,16 +25,16 @@ import { TypeLink } from "./type-popover"
  * Styles
  * ---------------------------------------------------------------------------------------------*/
 
-// Same palette as the shiki github-light/github-dark themes used for the
+// The @tanstack/highlight theme variables (see highlight.css) used by the
 // collapsed-row type strings, so both surfaces highlight identically
 const styles = {
-  keyword: "text-[#d73a49] dark:text-[#f97583]",
-  primitive: "text-[#005cc5] dark:text-[#79b8ff]",
-  string: "text-[#032f62] dark:text-[#9ecbff]",
-  number: "text-[#005cc5] dark:text-[#79b8ff]",
-  function: "text-[#6f42c1] dark:text-[#b392f0]",
-  variable: "text-[#6f42c1] dark:text-[#b392f0]",
-  attribute: "text-[#e36209] dark:text-[#ffab70]",
+  keyword: "text-(--th-keyword)",
+  primitive: "text-(--th-type)",
+  string: "text-(--th-string)",
+  number: "text-(--th-number)",
+  function: "text-(--th-function)",
+  variable: "text-(--th-function)",
+  attribute: "text-(--th-variable)",
   punctuation: "text-fg-muted",
 }
 

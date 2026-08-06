@@ -3,10 +3,10 @@
  * Builds and enriches controls from API reference at build time.
  */
 
-import type { HighlighterGeneric } from "shiki"
 import { Node, Project, ScriptKind } from "ts-morph"
 
 import type { ControlSelection } from "../codegen/source-overlay"
+import { highlightTsHtml } from "../mdx-plugins/highlighter"
 import { loadApiReference } from "../references/loader"
 import type { PropDefinition, TType } from "../references/types"
 import type {
@@ -442,13 +442,11 @@ function parseDefaultValue(
 
 /**
  * Enrich controls with API reference data.
- * Uses shiki highlighter to produce HTML strings (not React nodes).
+ * Produces highlighted HTML strings (not React nodes) for serialization.
  */
 export async function enrichControlsForSerialization(
   name: string,
   controls: Control[],
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
-  highlighter: HighlighterGeneric<any, any>,
 ): Promise<SerializableControl[]> {
   const reference = await loadApiReference(name)
 
@@ -474,9 +472,9 @@ export async function enrichControlsForSerialization(
     }
 
     // Highlight type and default value as HTML strings
-    const typeHighlighted = highlightToHtml(prop.type, highlighter)
+    const typeHighlighted = highlightTsHtml(prop.type)
     const defaultHighlighted = prop.default
-      ? highlightToHtml(prop.default, highlighter)
+      ? highlightTsHtml(prop.default)
       : undefined
 
     const enrichedControl: SerializableControl = {
@@ -494,28 +492,6 @@ export async function enrichControlsForSerialization(
   }
 
   return enrichedControls
-}
-
-/**
- * Highlight code to HTML string using shiki.
- */
-function highlightToHtml(
-  code: string,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
-  highlighter: HighlighterGeneric<any, any>,
-): string {
-  if (!code) return ""
-
-  const html = highlighter.codeToHtml(code, {
-    lang: "ts",
-    themes: { light: "github-light", dark: "github-dark" },
-    defaultColor: false,
-  })
-
-  // Extract just the inner content from <pre><code>...</code></pre>
-  // We want to inline the highlighted spans, not the full code block
-  const match = html.match(/<code[^>]*>([\s\S]*?)<\/code>/)
-  return match?.[1] ?? code
 }
 
 // ============================================================================

@@ -7,6 +7,7 @@
 @import "@fontsource-variable/geist";
 @import "@fontsource/geist-mono";
 @import "./registry/styles.css";
+@import "./modules/docs/highlight.css";
 
 @theme {
   --font-sans:

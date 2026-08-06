@@ -3,8 +3,7 @@
  * Transforms raw API reference data for rendering
  */
 
-import type { HighlighterGeneric } from "shiki"
-
+import { highlightTsHtml } from "../mdx-plugins/highlighter"
 import { DEFAULT_EXPANDED, groupProps } from "./groups"
 import type {
   ComponentApiReference,
@@ -84,54 +83,11 @@ function getShortType(
 }
 
 /**
- * Highlight code using shiki
- */
-function highlightCode(
-  code: string,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
-  highlighter: HighlighterGeneric<any, any>,
-): string {
-  if (!code) return ""
-
-  const html = highlighter.codeToHtml(code, {
-    lang: "ts",
-    themes: { light: "github-light", dark: "github-dark" },
-    defaultColor: false,
-  })
-
-  // Extract just the code content, removing the pre/code wrapper
-  // The result is like: <pre ...><code>...</code></pre>
-  // We want just the inner spans
-  const match = html.match(/<code[^>]*>([\s\S]*?)<\/code>/)
-  return match?.[1] ?? code
-}
-
-/**
- * Highlight a type string using shiki.
- * Prefixes `type _ =` on its own line so the grammar tokenizes the string in
- * type position (`boolean`, `ReactNode`, … get type colors, matching the AST
- * renderer in the row panel), then drops that first line.
- */
-function highlightTypeCode(
-  code: string,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
-  highlighter: HighlighterGeneric<any, any>,
-): string {
-  if (!code) return ""
-
-  const html = highlightCode(`type _ =\n${code}`, highlighter)
-  const newlineIndex = html.indexOf("\n")
-  return newlineIndex === -1 ? html : html.slice(newlineIndex + 1)
-}
-
-/**
  * Transform a single prop
  */
 function transformProp(
   propName: string,
   prop: PropDefinition,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
-  highlighter: HighlighterGeneric<any, any>,
 ): TransformedProp {
   const shortType = getShortType(propName, prop.type, prop.typeAst)
   const fullType = prop.detailedType ?? prop.type
@@ -139,13 +95,13 @@ function transformProp(
   return {
     name: propName,
     type: fullType,
-    typeHighlighted: highlightTypeCode(fullType, highlighter),
+    typeHighlighted: highlightTsHtml(fullType),
     shortType,
-    shortTypeHighlighted: highlightTypeCode(shortType, highlighter),
+    shortTypeHighlighted: highlightTsHtml(shortType),
     typeAst: prop.typeAst,
     default: prop.default,
     defaultHighlighted: prop.default
-      ? highlightCode(prop.default, highlighter)
+      ? highlightTsHtml(prop.default)
       : undefined,
     description: prop.description,
     required: prop.required,
@@ -157,12 +113,8 @@ function transformProp(
  */
 function transformProps(
   props: Record<string, PropDefinition>,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
-  highlighter: HighlighterGeneric<any, any>,
 ): TransformedProp[] {
-  return Object.entries(props).map(([name, prop]) =>
-    transformProp(name, prop, highlighter),
-  )
+  return Object.entries(props).map(([name, prop]) => transformProp(name, prop))
 }
 
 /**
@@ -170,19 +122,17 @@ function transformProps(
  */
 export function transformReference(
   data: ComponentApiReference,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki types are complex
-  highlighter: HighlighterGeneric<any, any>,
 ): TransformedReference {
   // Group the props
   const { ungrouped, groups } = groupProps(data.props)
 
   // Transform all props with highlighting
   const transformedData: TransformedPropsData = {
-    ungrouped: transformProps(ungrouped, highlighter),
+    ungrouped: transformProps(ungrouped),
     groups: Object.fromEntries(
       Object.entries(groups).map(([groupName, groupProps]) => [
         groupName,
-        transformProps(groupProps, highlighter),
+        transformProps(groupProps),
       ]),
     ),
   }

@@ -113,7 +113,7 @@ function ContextualHelp({
             )}
 
             <code
-              className="font-mono text-[0.8125rem] **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+              className="font-mono text-[0.8125rem]"
               // oxlint-disable-next-line react/no-danger -- highlighted type HTML is generated from local component metadata.
               dangerouslySetInnerHTML={{ __html: reference.typeHighlighted }}
             />

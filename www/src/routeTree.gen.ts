@@ -25,6 +25,7 @@ import { Route as RNameRouteImport } from './routes/r/$name'
 import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as InternalRegistriesRouteImport } from './routes/internal.registries'
 import { Route as InternalPresetLabRouteImport } from './routes/internal.preset-lab'
+import { Route as InternalHighlightLabRouteImport } from './routes/internal.highlight-lab'
 import { Route as InternalColorLabRouteImport } from './routes/internal.color-lab'
 import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-reveal'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
@@ -119,6 +120,11 @@ const InternalRegistriesRoute = InternalRegistriesRouteImport.update({
 const InternalPresetLabRoute = InternalPresetLabRouteImport.update({
   id: '/internal/preset-lab',
   path: '/internal/preset-lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InternalHighlightLabRoute = InternalHighlightLabRouteImport.update({
+  id: '/internal/highlight-lab',
+  path: '/internal/highlight-lab',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InternalColorLabRoute = InternalColorLabRouteImport.update({
@@ -223,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
+  '/internal/highlight-lab': typeof InternalHighlightLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -255,6 +262,7 @@ export interface FileRoutesByTo {
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
+  '/internal/highlight-lab': typeof InternalHighlightLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -290,6 +298,7 @@ export interface FileRoutesById {
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
   '/internal/color-lab': typeof InternalColorLabRoute
+  '/internal/highlight-lab': typeof InternalHighlightLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
   '/preview/$slug': typeof PreviewSlugRoute
@@ -326,6 +335,7 @@ export interface FileRouteTypes {
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
+    | '/internal/highlight-lab'
     | '/internal/preset-lab'
     | '/internal/registries'
     | '/preview/$slug'
@@ -358,6 +368,7 @@ export interface FileRouteTypes {
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
+    | '/internal/highlight-lab'
     | '/internal/preset-lab'
     | '/internal/registries'
     | '/preview/$slug'
@@ -392,6 +403,7 @@ export interface FileRouteTypes {
     | '/demos/$slug'
     | '/internal/blur-reveal'
     | '/internal/color-lab'
+    | '/internal/highlight-lab'
     | '/internal/preset-lab'
     | '/internal/registries'
     | '/preview/$slug'
@@ -422,6 +434,7 @@ export interface RootRouteChildren {
   DemosSlugRoute: typeof DemosSlugRoute
   InternalBlurRevealRoute: typeof InternalBlurRevealRoute
   InternalColorLabRoute: typeof InternalColorLabRoute
+  InternalHighlightLabRoute: typeof InternalHighlightLabRoute
   InternalPresetLabRoute: typeof InternalPresetLabRoute
   InternalRegistriesRoute: typeof InternalRegistriesRoute
   PreviewSlugRoute: typeof PreviewSlugRoute
@@ -548,6 +561,13 @@ declare module '@tanstack/react-router' {
       path: '/internal/preset-lab'
       fullPath: '/internal/preset-lab'
       preLoaderRoute: typeof InternalPresetLabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/internal/highlight-lab': {
+      id: '/internal/highlight-lab'
+      path: '/internal/highlight-lab'
+      fullPath: '/internal/highlight-lab'
+      preLoaderRoute: typeof InternalHighlightLabRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/internal/color-lab': {
@@ -714,6 +734,7 @@ const rootRouteChildren: RootRouteChildren = {
   DemosSlugRoute: DemosSlugRoute,
   InternalBlurRevealRoute: InternalBlurRevealRoute,
   InternalColorLabRoute: InternalColorLabRoute,
+  InternalHighlightLabRoute: InternalHighlightLabRoute,
   InternalPresetLabRoute: InternalPresetLabRoute,
   InternalRegistriesRoute: InternalRegistriesRoute,
   PreviewSlugRoute: PreviewSlugRoute,

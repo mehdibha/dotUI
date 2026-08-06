@@ -1,3 +1,4 @@
+import { codeFenceToHast } from "@tanstack/highlight/markdown"
 import fs from "node:fs/promises"
 import path from "node:path"
 import type { Element, ElementContent, Root, RootContent } from "hast"
@@ -6,7 +7,6 @@ import type {
   MdxJsxAttributeValueExpression,
   MdxJsxFlowElementHast,
 } from "mdast-util-mdx-jsx"
-import { createHighlighter, type HighlighterGeneric } from "shiki"
 import type { Plugin } from "unified"
 import { visit } from "unist-util-visit"
 
@@ -27,24 +27,8 @@ import {
   type TransformedReference,
   transformReference,
 } from "../references/transform"
+import { highlighter } from "./highlighter"
 import { transformDemo } from "./transformer"
-
-// ============================================================================
-// Cached Highlighter (singleton)
-// ============================================================================
-
-// oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
-let highlighterPromise: Promise<HighlighterGeneric<any, any>> | null = null
-
-async function getHighlighter() {
-  if (!highlighterPromise) {
-    highlighterPromise = createHighlighter({
-      themes: ["github-light", "github-dark"],
-      langs: ["tsx", "ts"],
-    })
-  }
-  return highlighterPromise
-}
 
 // ============================================================================
 // Types
@@ -67,8 +51,8 @@ interface ProcessedDemo {
   nodeInfo: DemoNodeInfo
   importName: string
   importPath: string
-  sourceHast: Root
-  previewHast: Root
+  sourcePre: Element
+  previewPre: Element
   /** Registry items to install for this demo (the page component + extra imports). */
   install: string[]
 }
@@ -162,30 +146,21 @@ const rehypeTransform: Plugin<[RehypeTransformOptions?], Root> = (
 
     if (!hasDemos && !hasReferences && !hasInteractiveDemos) return
 
-    // Get the shared highlighter
-    const highlighter = await getHighlighter()
-
     // Step 2: Process all nodes in parallel
     const [processedDemos, processedReferences, processedInteractiveDemos] =
       await Promise.all([
         hasDemos
           ? Promise.all(
-              demoNodes.map((info) =>
-                processDemoNode(info, registryBasePath, highlighter),
-              ),
+              demoNodes.map((info) => processDemoNode(info, registryBasePath)),
             )
           : Promise.resolve([]),
         hasReferences
-          ? Promise.all(
-              referenceNodes.map((info) =>
-                processReferenceNode(info, highlighter),
-              ),
-            )
+          ? Promise.all(referenceNodes.map(processReferenceNode))
           : Promise.resolve([]),
         hasInteractiveDemos
           ? Promise.all(
               interactiveDemoNodes.map((info) =>
-                processInteractiveDemoNode(info, highlighter, registryBasePath),
+                processInteractiveDemoNode(info, registryBasePath),
               ),
             )
           : Promise.resolve([]),
@@ -252,8 +227,6 @@ export default rehypeTransform
 async function processDemoNode(
   info: DemoNodeInfo,
   registryBasePath: string,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
-  highlighter: HighlighterGeneric<any, any>,
 ): Promise<ProcessedDemo | null> {
   try {
     // Resolve file path
@@ -266,32 +239,12 @@ async function processDemoNode(
     // Transform using the transformer
     const { source, preview } = transformDemo(rawSource)
 
-    // Highlight with shiki → HAST
-    // defaultColor: false makes both light/dark use CSS variables instead of inline color
-    const sourceHast = highlighter.codeToHast(source, {
-      lang: "tsx",
-      themes: { light: "github-light", dark: "github-dark" },
-      defaultColor: false,
-    })
-    const previewHast = highlighter.codeToHast(preview, {
-      lang: "tsx",
-      themes: { light: "github-light", dark: "github-dark" },
-      defaultColor: false,
-    })
-
-    // Mark pre elements with data-raw so mdx-components won't wrap them
-    markPreAsRaw(sourceHast)
-    markPreAsRaw(previewHast)
-
-    // Generate unique import name
-    const importName = generateImportName(info.name)
-
     return {
       nodeInfo: info,
-      importName,
+      importName: generateImportName(info.name),
       importPath,
-      sourceHast,
-      previewHast,
+      sourcePre: highlightTsxPre(source),
+      previewPre: highlightTsxPre(preview),
       install: computeInstallItems(info.name, rawSource),
     }
   } catch (error) {
@@ -307,14 +260,14 @@ async function processDemoNode(
 // HAST Helpers
 // ============================================================================
 
-function markPreAsRaw(hast: Root): void {
-  // Find the <pre> element in the HAST and add data-raw attribute
-  visit(hast, "element", (node: Element) => {
-    if (node.tagName === "pre") {
-      node.properties = node.properties || {}
-      node.properties["data-raw"] = true
-    }
-  })
+/**
+ * Highlight demo TSX to a <pre> HAST element, marked data-raw so the
+ * mdx-components pre override hands it through unwrapped.
+ */
+function highlightTsxPre(code: string): Element {
+  const pre = codeFenceToHast({ code, lang: "tsx" }, highlighter)
+  pre.properties = { ...pre.properties, "data-raw": true }
+  return pre as Element
 }
 
 // ============================================================================
@@ -512,13 +465,12 @@ function transformDemoNode(processed: ProcessedDemo): void {
   }
   node.attributes.push(componentAttr)
 
-  // Create DemoCode wrapper with highlighted code HAST
-  // sourceHast.children contains the <pre><code>...</code></pre> structure
+  // Create DemoCode wrapper with the highlighted <pre> element
   const demoCodeElement: MdxJsxFlowElementHast = {
     type: "mdxJsxFlowElement",
     name: "DemoCode",
     attributes: [],
-    children: processed.sourceHast.children as ElementContent[],
+    children: [processed.sourcePre],
   }
 
   // The Example card renders the demo live and exposes its source via a "Show
@@ -553,12 +505,12 @@ function transformDemoNode(processed: ProcessedDemo): void {
     return
   }
 
-  // Create DemoCodePreview wrapper with highlighted preview HAST
+  // Create DemoCodePreview wrapper with the highlighted preview <pre>
   const demoCodePreviewElement: MdxJsxFlowElementHast = {
     type: "mdxJsxFlowElement",
     name: "DemoCodePreview",
     attributes: [],
-    children: processed.previewHast.children as ElementContent[],
+    children: [processed.previewPre],
   }
 
   // Preserve existing children (e.g. MDX-authored headings) and append the code elements
@@ -575,8 +527,6 @@ function transformDemoNode(processed: ProcessedDemo): void {
 
 async function processReferenceNode(
   info: ReferenceNodeInfo,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
-  highlighter: HighlighterGeneric<any, any>,
 ): Promise<ProcessedReference | null> {
   try {
     // Load the reference data
@@ -589,7 +539,7 @@ async function processReferenceNode(
     }
 
     // Transform with highlighting
-    const data = transformReference(rawData, highlighter)
+    const data = transformReference(rawData)
 
     return {
       nodeInfo: info,
@@ -661,8 +611,6 @@ function transformReferenceNode(processed: ProcessedReference): void {
 
 async function processInteractiveDemoNode(
   info: InteractiveDemoNodeInfo,
-  // oxlint-disable-next-line typescript/no-explicit-any -- shiki generic types are complex
-  highlighter: HighlighterGeneric<any, any>,
   registryBasePath: string,
 ): Promise<ProcessedInteractiveDemo | null> {
   try {
@@ -692,7 +640,6 @@ async function processInteractiveDemoNode(
     const enrichedControls = await enrichControlsForSerialization(
       info.name,
       controls,
-      highlighter,
     )
 
     // 3. Build the code template by overlaying control values onto the source.

@@ -163,7 +163,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
 
         <td className="overflow-hidden px-3 py-2.5">
           <code
-            className="font-mono text-[0.8125rem] break-keep whitespace-nowrap text-fg-muted **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+            className="font-mono text-[0.8125rem] break-keep whitespace-nowrap text-fg-muted"
             // oxlint-disable-next-line react/no-danger -- highlighted type HTML is generated from local API metadata.
             dangerouslySetInnerHTML={{ __html: prop.shortTypeHighlighted }}
           />
@@ -172,7 +172,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
         <td className="hidden overflow-hidden px-3 py-2.5 md:table-cell">
           {prop.default !== undefined ? (
             <code
-              className="font-mono text-[0.8125rem] whitespace-nowrap text-fg-muted **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+              className="font-mono text-[0.8125rem] whitespace-nowrap text-fg-muted"
               // oxlint-disable-next-line react/no-danger -- highlighted default HTML is generated from local API metadata.
               dangerouslySetInnerHTML={{
                 __html: prop.defaultHighlighted ?? prop.default,
@@ -219,7 +219,7 @@ function PropRows({ prop, componentName }: PropRowsProps) {
               {prop.default !== undefined && (
                 <DescriptionItem label="Default" hasSeparator>
                   <code
-                    className="font-mono text-[0.8125rem] **:[span]:text-(--shiki-light) dark:**:[span]:text-(--shiki-dark)"
+                    className="font-mono text-[0.8125rem]"
                     // oxlint-disable-next-line react/no-danger -- highlighted default HTML is generated from local API metadata.
                     dangerouslySetInnerHTML={{
                       __html: prop.defaultHighlighted ?? prop.default,

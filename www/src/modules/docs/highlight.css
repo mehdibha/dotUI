@@ -1,0 +1,120 @@
+/* Token colors for @tanstack/highlight, matching the shiki github-light /
+   github-dark palette the site rendered before the migration (derived by
+   tokenizing the same corpus with both engines and aligning by offset).
+   Inherited CSS variables so [data-mode] preview subtrees override them
+   naturally (nearest ancestor wins). Highlighted markup carries semantic
+   classes (th-keyword, th-string, …); one HTML tree serves both themes. */
+
+:root,
+[data-mode="light"] {
+  --th-token: #24292e;
+  --th-attr: #6f42c1;
+  --th-code-inline: #005cc5;
+  --th-command: #6f42c1;
+  --th-comment: #6a737d;
+  --th-deleted: #b31d28;
+  --th-function: #6f42c1;
+  --th-heading: #005cc5;
+  --th-inserted: #22863a;
+  --th-keyword: #d73a49;
+  --th-link: #032f62;
+  --th-literal: #005cc5;
+  --th-meta: #6a737d;
+  --th-number: #005cc5;
+  --th-operator: #d73a49;
+  --th-property: #005cc5;
+  --th-selector: #22863a;
+  --th-string: #032f62;
+  --th-tag: #005cc5;
+  --th-type: #005cc5;
+  --th-variable: #e36209;
+}
+
+.dark,
+[data-mode="dark"] {
+  --th-token: #e1e4e8;
+  --th-attr: #b392f0;
+  --th-code-inline: #79b8ff;
+  --th-command: #b392f0;
+  --th-comment: #6a737d;
+  --th-deleted: #fdaeb7;
+  --th-function: #b392f0;
+  --th-heading: #79b8ff;
+  --th-inserted: #85e89d;
+  --th-keyword: #f97583;
+  --th-link: #9ecbff;
+  --th-literal: #79b8ff;
+  --th-meta: #6a737d;
+  --th-number: #79b8ff;
+  --th-operator: #f97583;
+  --th-property: #79b8ff;
+  --th-selector: #85e89d;
+  --th-string: #9ecbff;
+  --th-tag: #79b8ff;
+  --th-type: #79b8ff;
+  --th-variable: #ffab70;
+}
+
+.th-token {
+  color: var(--th-token);
+}
+.th-attr {
+  color: var(--th-attr);
+}
+.th-code-inline {
+  color: var(--th-code-inline);
+}
+.th-command {
+  color: var(--th-command);
+}
+.th-comment {
+  color: var(--th-comment);
+}
+.th-deleted {
+  color: var(--th-deleted);
+}
+.th-function {
+  color: var(--th-function);
+}
+.th-heading {
+  color: var(--th-heading);
+}
+.th-inserted {
+  color: var(--th-inserted);
+}
+.th-keyword {
+  color: var(--th-keyword);
+}
+.th-link {
+  color: var(--th-link);
+}
+.th-literal {
+  color: var(--th-literal);
+}
+.th-meta {
+  color: var(--th-meta);
+}
+.th-number {
+  color: var(--th-number);
+}
+.th-operator {
+  color: var(--th-operator);
+}
+.th-property {
+  color: var(--th-property);
+}
+.th-selector {
+  color: var(--th-selector);
+}
+.th-string {
+  color: var(--th-string);
+}
+.th-tag {
+  color: var(--th-tag);
+}
+.th-type {
+  color: var(--th-type);
+}
+.th-variable {
+  color: var(--th-variable);
+}
