@@ -41,6 +41,7 @@ import {
   SliderRow,
   OptionGridRow,
 } from "@/modules/control-lab/rows"
+import type { OptionGridItem } from "@/modules/control-lab/rows"
 import {
   ICON_STROKE_WIDTH_VAR,
   STROKE_DEFAULTS,
@@ -56,9 +57,7 @@ import {
   CURSOR_OPTIONS,
   DENSITY_OPTIONS,
   FOCUS_COLOR_OPTIONS,
-  FOCUS_INPUT_OPTIONS,
   FOCUS_OFFSET_OPTIONS,
-  FOCUS_STYLE_OPTIONS,
   FOCUS_WIDTH_OPTIONS,
   HOVER_PARAM_OPTIONS,
   ICON_LIBRARY_OPTIONS,
@@ -804,11 +803,11 @@ export function EffectsSectionBodyV2({ lab }: { lab: Lab }) {
 
 /* -------------------------------- Focus (v2) ------------------------------- */
 
-/* One recipe, three category treatments. The recipe (style · width · offset ·
-   color) is the user's axis; how a category wears it is derived: controls take
-   the keyboard-only ring, fields add an always-on border layer (RAC's
-   isFocusVisible skips mouse-focused inputs, so a ring alone leaves them
-   blank), menu items highlight instead of ringing. */
+/* No hero — the style pickers are the preview: every tile is a focused
+   specimen wearing the live recipe, so width/offset/color changes read in
+   place. Controls and inputs each pick a style (fields rarely wear the
+   control ring, and react to any focus — RAC's isFocusVisible skips
+   mouse-focused inputs); menu items highlight instead of ringing. */
 
 const FOCUS_COLOR_VARS: Record<string, string> = {
   accent: "var(--accent-700)",
@@ -820,13 +819,11 @@ const focusColorVar = (state: LabState) =>
 
 /** The keyboard ring as a box-shadow stack — the gap paints in bg like the
  *  real focus-ring utility (ring-offset-bg), so it follows any radius. */
-function focusRingShadow(state: LabState): string {
+function focusRingShadow(state: LabState, style = state.focusStyle): string {
   const width = Number(state.focusWidth) || 2
   const base = focusColorVar(state)
   const color =
-    state.focusStyle === "halo"
-      ? `color-mix(in oklab, ${base} 45%, transparent)`
-      : base
+    style === "halo" ? `color-mix(in oklab, ${base} 45%, transparent)` : base
   switch (state.focusOffset) {
     case "inset":
       return `inset 0 0 0 ${width}px ${color}`
@@ -837,106 +834,86 @@ function focusRingShadow(state: LabState): string {
   }
 }
 
-/** The field's focus layer: border swap plus the Inputs treatment — the exact
- *  keyboard ring, or a subdued halo of the same color. */
-function focusFieldStyle(state: LabState): CSSProperties {
+/** The field's focus layer: border swap plus the style's shadow — the exact
+ *  keyboard ring, a muted halo of the same color, or the border alone. */
+function focusFieldStyle(
+  state: LabState,
+  style = state.focusInputStyle,
+): CSSProperties {
   const base = focusColorVar(state)
   return {
     borderColor: base,
     boxShadow:
-      state.focusInputs === "match"
+      style === "ring"
         ? focusRingShadow(state)
-        : `0 0 0 2px color-mix(in oklab, ${base} 30%, transparent)`,
+        : style === "halo"
+          ? `0 0 0 2px color-mix(in oklab, ${base} 30%, transparent)`
+          : undefined,
   }
 }
 
-type FocusProbeId = "control" | "field" | "item"
+const CONTROL_FOCUS_STYLES = [
+  { id: "solid", label: "Ring" },
+  { id: "halo", label: "Halo" },
+]
 
-/** The three category treatments worn at once — a focused button, field and
- *  menu item — so one recipe change reads across all of them. */
-function FocusHero({ state }: { state: LabState }) {
-  const { inspected, pinned, probeProps } = useInspect<FocusProbeId>()
+/** Input styles: halo = border + muted halo (dotUI today, Geist/Stripe);
+ *  ring = the exact keyboard ring (Supabase); border = swap alone (Material). */
+const INPUT_FOCUS_STYLES = [
+  { id: "halo", label: "Halo" },
+  { id: "ring", label: "Ring" },
+  { id: "border", label: "Border" },
+]
+
+function focusControlOptions(state: LabState): OptionGridItem[] {
   const radius = controlRadiusPx(state)
-  const probeClass = (id: FocusProbeId) =>
-    cn(
-      "cursor-interactive rounded-lg p-1.5 text-left focus-reset transition-colors focus-visible:focus-ring",
-      pinned === id && "bg-muted",
-    )
-  const readouts: Record<FocusProbeId, { label: string; detail: string }> = {
-    control: {
-      label: "Controls",
-      detail: `${Number(state.focusWidth) || 2}px ${state.focusColor} · ${state.focusOffset} · keyboard only`,
-    },
-    field: {
-      label: "Fields",
-      detail:
-        state.focusInputs === "match"
-          ? "border + keyboard ring · any focus"
-          : "border + muted halo · any focus",
-    },
-    item: { label: "Menu items", detail: "highlight · no ring" },
-  }
-  const readout = inspected ? readouts[inspected] : null
-
-  return (
-    <Hero>
-      <div className="flex items-center justify-between gap-2">
-        <button
-          type="button"
-          aria-label="Inspect control focus"
-          {...probeProps("control")}
-          className={probeClass("control")}
-        >
-          <span
-            className="flex h-8 items-center bg-primary px-3.5 text-[0.8125rem] font-medium text-fg-on-primary"
-            style={{ borderRadius: radius, boxShadow: focusRingShadow(state) }}
-          >
-            Get started
-          </span>
-        </button>
-        <button
-          type="button"
-          aria-label="Inspect menu item focus"
-          {...probeProps("item")}
-          className={cn(probeClass("item"), "min-w-0")}
-        >
-          <span className="flex h-8 items-center rounded-md bg-highlight px-3 text-[0.8125rem] text-fg-on-highlight">
-            Duplicate…
-          </span>
-        </button>
-      </div>
-      <button
-        type="button"
-        aria-label="Inspect field focus"
-        {...probeProps("field")}
-        className={probeClass("field")}
+  return CONTROL_FOCUS_STYLES.map(({ id, label }) => ({
+    id,
+    label,
+    preview: (
+      <span
+        className="flex h-8 items-center bg-primary px-3 text-[0.8125rem] font-medium text-fg-on-primary"
+        style={{ borderRadius: radius, boxShadow: focusRingShadow(state, id) }}
       >
-        <span
-          className="flex h-8 w-full items-center border border-border-field bg-field px-2.5 text-[0.8125rem] text-fg"
-          style={{ borderRadius: radius, ...focusFieldStyle(state) }}
-        >
-          you@example.com
-          <span className="ml-px inline-block h-4 w-px animate-pulse bg-fg" />
-        </span>
-      </button>
-      {readout && (
-        <HeroInspector label={readout.label} detail={readout.detail} />
-      )}
-    </Hero>
-  )
+        Button
+      </span>
+    ),
+  }))
+}
+
+function focusInputOptions(state: LabState): OptionGridItem[] {
+  const radius = controlRadiusPx(state)
+  return INPUT_FOCUS_STYLES.map(({ id, label }) => ({
+    id,
+    label,
+    preview: (
+      <span
+        className="flex h-8 w-full min-w-0 items-center border border-border-field bg-field px-2.5"
+        style={{ borderRadius: radius, ...focusFieldStyle(state, id) }}
+      >
+        <span className="inline-block h-4 w-px animate-pulse bg-fg" />
+      </span>
+    ),
+  }))
 }
 
 export function FocusSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
-      <FocusHero state={state} />
       <OptionGridRow
-        label="Style"
+        label="Controls"
         value={state.focusStyle}
         onChange={set("focusStyle")}
-        options={FOCUS_STYLE_OPTIONS}
+        options={focusControlOptions(state)}
         columns={2}
+      />
+      <OptionGridRow
+        label="Inputs"
+        value={state.focusInputStyle}
+        onChange={set("focusInputStyle")}
+        options={focusInputOptions(state)}
+        columns={3}
       />
       <ControlGroup>
         <SegmentedControlRow
@@ -957,16 +934,10 @@ export function FocusSectionBody({ lab }: { lab: Lab }) {
           onChange={set("focusColor")}
           options={FOCUS_COLOR_OPTIONS}
         />
-        <SegmentedControlRow
-          label="Inputs"
-          value={state.focusInputs}
-          onChange={set("focusInputs")}
-          options={FOCUS_INPUT_OPTIONS}
-        />
       </ControlGroup>
       <GroupCaption>
-        One recipe for every control. Fields react to any focus; menu items
-        highlight instead of ringing.
+        One recipe, previewed in the pickers. Inputs react to any focus; menu
+        items highlight instead of ringing.
       </GroupCaption>
     </>
   )
