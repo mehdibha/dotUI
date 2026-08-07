@@ -64,11 +64,14 @@ import { MiniSliderRow } from "./color-ideal"
 import {
   BUTTON_STYLES,
   CLUSTERS,
+  CONTROL_SIZE_OPTIONS,
+  CONTROL_SIZE_UNITS,
   CORNER_SHAPE_OPTIONS,
   CURSOR_DISABLED_OPTIONS,
   CURSOR_INTERACTIVE_OPTIONS,
   CURSOR_OPTIONS,
   DEFAULTS,
+  DENSITY_FACTORS,
   DENSITY_OPTIONS,
   FOCUS_COLOR_OPTIONS,
   FOCUS_CONTROL_STYLE_OPTIONS,
@@ -879,17 +882,146 @@ export function ShapeSectionBodyV2({ lab }: { lab: Lab }) {
   )
 }
 
+/* -------------------------------- Space (v2) -------------------------------- */
+
+/* v2: Space owns the spatial system, on Shape's base-times-recipe model — the
+   unit scales everything, density picks the gap/inset recipe, control size
+   moves the height ladder. All three resolve in the hero's specimen. */
+
+type SpaceProbeId = "field" | "actions"
+
+const spacePx = (n: number) => Math.round(n * 2) / 2
+
+function spaceRecipe(state: LabState) {
+  const unit = state.spacingUnit
+  const factor = DENSITY_FACTORS[state.density] ?? 1
+  return {
+    unit,
+    controlH: spacePx((CONTROL_SIZE_UNITS[state.controlSize] ?? 8) * unit),
+    padX: spacePx(2.5 * unit * factor),
+    itemGap: spacePx(unit * factor),
+    gap: spacePx(2 * unit * factor),
+    inset: spacePx(3 * unit * factor),
+  }
+}
+
+/** A working mini form wearing the resolved recipe — control heights, the
+ *  stack gap and the card inset all derive from unit × density × size, with
+ *  radii read from Shape's roles. Hover peeks a row's box recipe, click pins;
+ *  at rest the readout is the recipe itself. */
+function SpaceHero({ state }: { state: LabState }) {
+  const { inspected, pinned, probeProps } = useInspect<SpaceProbeId>()
+  const r = spaceRecipe(state)
+  const controlRadius = controlRadiusPx(state)
+  const surfaceRatio = roleRatio(state, "roleSurface")
+  const surfaceRadius =
+    surfaceRatio === Infinity ? 999 : state.radiusPx * surfaceRatio
+  const probeClass = (id: SpaceProbeId) =>
+    cn(
+      "-m-1 cursor-interactive rounded-lg p-1 text-left focus-reset transition-colors focus-visible:focus-ring",
+      pinned === id && "bg-muted",
+    )
+  const readout = inspected
+    ? inspected === "field"
+      ? { label: "Field", detail: `h ${r.controlH}px · pad ${r.padX}px` }
+      : { label: "Actions", detail: `h ${r.controlH}px · gap ${r.itemGap}px` }
+    : {
+        label: DENSITY_OPTIONS.find((o) => o.value === state.density)?.label,
+        detail: `${r.unit}px unit · gap ${r.gap}px · inset ${r.inset}px`,
+      }
+
+  return (
+    <Hero>
+      <div
+        className="flex flex-col border border-border/45 bg-card"
+        style={{ gap: r.gap, padding: r.inset, borderRadius: surfaceRadius }}
+      >
+        <button
+          type="button"
+          aria-label="Inspect field"
+          {...probeProps("field")}
+          className={probeClass("field")}
+        >
+          <span
+            className="flex w-full items-center border border-border-field bg-field text-[0.8125rem] text-fg-muted"
+            style={{
+              height: r.controlH,
+              paddingInline: r.padX,
+              borderRadius: controlRadius,
+            }}
+          >
+            you@example.com
+          </span>
+        </button>
+        <button
+          type="button"
+          aria-label="Inspect actions"
+          {...probeProps("actions")}
+          className={probeClass("actions")}
+        >
+          <span className="flex items-center" style={{ gap: r.itemGap }}>
+            <span
+              className="flex items-center bg-primary text-[0.8125rem] font-medium text-fg-on-primary"
+              style={{
+                height: r.controlH,
+                paddingInline: r.padX,
+                borderRadius: controlRadius,
+              }}
+            >
+              Save
+            </span>
+            <span
+              className="flex items-center text-[0.8125rem] font-medium text-fg-muted"
+              style={{
+                height: r.controlH,
+                paddingInline: r.padX,
+                borderRadius: controlRadius,
+              }}
+            >
+              Cancel
+            </span>
+          </span>
+        </button>
+      </div>
+      <HeroInspector label={readout.label} detail={readout.detail} />
+    </Hero>
+  )
+}
+
 export function SpaceSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
-    <ControlGroup>
-      <SegmentedControlRow
-        label="Density"
-        value={state.density}
-        onChange={set("density")}
-        options={DENSITY_OPTIONS}
+    <>
+      <SpaceHero state={state} />
+      <SliderRow
+        label="Unit"
+        value={state.spacingUnit}
+        onChange={set("spacingUnit")}
+        minValue={3}
+        maxValue={6}
+        step={0.25}
+        ticks={[3.5, 4, 5]}
+        format={(v) => `${v}px`}
       />
-    </ControlGroup>
+      <ControlGroup>
+        <SegmentedControlRow
+          label="Density"
+          value={state.density}
+          onChange={set("density")}
+          options={DENSITY_OPTIONS}
+        />
+        <SegmentedControlRow
+          label="Controls"
+          value={state.controlSize}
+          onChange={set("controlSize")}
+          options={CONTROL_SIZE_OPTIONS}
+        />
+      </ControlGroup>
+      <GroupCaption>
+        Density tightens gaps and insets at the same control size; Controls
+        moves the height ladder. The unit scales both.
+      </GroupCaption>
+    </>
   )
 }
 
