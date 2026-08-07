@@ -179,15 +179,3 @@ export function FilterRow({
     </SearchField>
   )
 }
-
-/* ------------------------------ Cluster header ----------------------------- */
-
-/** A sub-marker inside a section: quieter than SectionHeader, groups a run of
- *  component rows by category (Buttons, Forms, Overlays…). */
-export function ClusterHeader({ label }: { label: string }) {
-  return (
-    <span className="mt-2.5 px-1 text-[11px] font-medium text-fg-muted/80 first:mt-0">
-      {label}
-    </span>
-  )
-}

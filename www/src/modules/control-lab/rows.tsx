@@ -122,18 +122,30 @@ export function RowLabel({
  * Fuses adjacent rows into one card: shared surface, hairline separators,
  * only the group's corners round — the grouped-list look. Rows opt in by
  * carrying `data-row` on their surface element; a `data-preview` stage opts
- * in the same way but keeps its own surface, becoming the specimen the rows
- * below configure.
+ * in the same way but keeps its own surface and border, becoming the framed
+ * specimen the rows below configure. Only its bottom edge squares off — the
+ * top corners keep the group's radius, or the clip would shave the frame.
  */
 export function ControlGroup({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex w-full flex-col divide-y divide-bg/50 overflow-hidden rounded-xl bg-muted **:data-preview:rounded-none **:data-preview:border-0 **:data-row:rounded-none **:data-row:bg-transparent">
+    <div className="flex w-full flex-col divide-y divide-bg/50 overflow-hidden rounded-xl bg-muted **:data-preview:rounded-b-none **:data-row:rounded-none **:data-row:bg-transparent">
       {children}
     </div>
   )
 }
 
-/* ------------------------------ Group caption ----------------------------- */
+/* -------------------------- Group title / caption -------------------------- */
+
+/** The line that opens a group: what the rows under it configure. Quieter
+ *  than the chapter heading above it, heavier than the caption that closes
+ *  it, and bound to its group — the margin sits on top, never between. */
+export function GroupTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="mt-2.5 px-1 text-xs font-medium text-fg-muted first:mt-0">
+      {children}
+    </span>
+  )
+}
 
 /** iOS-style footnote under a group: one sentence of context for the axis. */
 export function GroupCaption({ children }: { children: React.ReactNode }) {
@@ -1497,9 +1509,9 @@ export function MiniSegmented({
           key={option.value}
           id={option.value}
           aria-label={option.ariaLabel}
-          className="relative isolate flex h-6 cursor-interactive items-center rounded-[5px] px-2 text-xs text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring selected:text-fg **:[svg]:size-3"
+          className="relative isolate flex h-6 cursor-interactive items-center rounded-sm px-2 text-xs text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring selected:text-fg **:[svg]:size-3"
         >
-          <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-[5px] bg-highlight duration-150 ease-out motion-safe:transition-[translate,width,height]" />
+          <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-sm bg-highlight duration-150 ease-out motion-safe:transition-[translate,width,height]" />
           <span className="relative z-10 flex items-center">
             {option.label}
           </span>

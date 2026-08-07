@@ -17,6 +17,14 @@ import { PreviewModeContext } from "../hero"
 import { ChapterCard } from "./chapter"
 import type { Chapter } from "./chapter"
 
+const RADIUS_STEPS: Record<string, string> = {
+  none: "0px",
+  sm: "6px",
+  md: "10px",
+  lg: "14px",
+  xl: "20px",
+}
+
 export function PanelFrame({
   chapters,
   lab,
@@ -46,6 +54,17 @@ export function PanelFrame({
     default: "hero",
     group: "Preview",
   })
+  /* Every rounded class in the panel resolves off --radius (xl = ×1.5, sm =
+     ×0.5), so overriding it here rescales the whole ladder at once — cards,
+     rows, groups and the controls nested in them stay in proportion. The
+     steps name the panel's own roundness, not the ladder they drive; `md` is
+     the shipped 10px. */
+  const radius = useTweak("Radius", {
+    type: "select",
+    options: ["none", "sm", "md", "lg", "xl"],
+    default: "md",
+    group: "Shape",
+  })
 
   return (
     <PreviewModeContext.Provider value={preview}>
@@ -55,6 +74,7 @@ export function PanelFrame({
           {
             "--lab-gap-section": `${sectionGap}px`,
             "--lab-gap-control": `${controlGap}px`,
+            "--radius": RADIUS_STEPS[radius] ?? RADIUS_STEPS.md,
           } as CSSProperties
         }
       >

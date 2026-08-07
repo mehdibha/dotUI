@@ -37,6 +37,7 @@ import {
   ControlGroup,
   FontPickerRow,
   GroupCaption,
+  GroupTitle,
   SelectRow,
   SliderRow,
   SPECIMEN_BUTTON,
@@ -75,7 +76,7 @@ import {
 } from "./data"
 import type { Lab, LabState, ShapeRoleKey } from "./data"
 import { Hero, HeroInspector, useInspect } from "./hero"
-import { ClusterHeader, DetailRow, FilterRow, TypeSpecimen } from "./patterns"
+import { DetailRow, FilterRow, TypeSpecimen } from "./patterns"
 
 export function TypographySectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
@@ -892,7 +893,7 @@ export function FocusSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
-      <ClusterHeader label="Controls" />
+      <GroupTitle>Controls</GroupTitle>
       <ControlGroup>
         <ControlFocusHero state={state} />
         <SelectRow
@@ -920,7 +921,7 @@ export function FocusSectionBody({ lab }: { lab: Lab }) {
           options={FOCUS_COLOR_OPTIONS}
         />
       </ControlGroup>
-      <ClusterHeader label="Inputs" />
+      <GroupTitle>Inputs</GroupTitle>
       <ControlGroup>
         <InputFocusHero state={state} />
         <SelectRow
@@ -930,10 +931,6 @@ export function FocusSectionBody({ lab }: { lab: Lab }) {
           options={FOCUS_INPUT_STYLE_OPTIONS}
         />
       </ControlGroup>
-      <GroupCaption>
-        Fields wear the control recipe their own way, and react to any focus —
-        not just the keyboard. Menu items highlight instead of ringing.
-      </GroupCaption>
     </>
   )
 }
@@ -1173,7 +1170,7 @@ export function ComponentsSectionBody({ lab }: { lab: Lab }) {
             key={cluster.label}
             className="flex flex-col gap-[var(--lab-gap-control,0.375rem)]"
           >
-            <ClusterHeader label={cluster.label} />
+            <GroupTitle>{cluster.label}</GroupTitle>
             {cluster.items.map((item) => (
               <div key={item.name}>{item.render(lab)}</div>
             ))}
