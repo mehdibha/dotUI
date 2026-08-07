@@ -449,6 +449,61 @@ export const LOADER_STYLES: OptionGridItem[] = [
   },
 ]
 
+/* Focus axis — the ring recipe (six-system focus audit, Aug 2026). Every
+   surveyed system defines focus once — color + width + offset — and the ones
+   that let components restyle it drift (Primer, Raycast). The axis is the
+   recipe; category rules (fields add a border layer and react to any focus,
+   menu items highlight instead of ringing) stay component-authored. */
+function FocusTile({ boxShadow }: { boxShadow: string }) {
+  return (
+    <span
+      className="h-9 w-full max-w-14 rounded-md bg-highlight"
+      style={{ boxShadow }}
+    />
+  )
+}
+
+export const FOCUS_STYLE_OPTIONS: OptionGridItem[] = [
+  {
+    id: "solid",
+    label: "Ring",
+    preview: (
+      <FocusTile boxShadow="0 0 0 2px var(--color-bg), 0 0 0 4px var(--accent-700)" />
+    ),
+  },
+  {
+    id: "halo",
+    label: "Halo",
+    preview: (
+      <FocusTile boxShadow="0 0 0 3px color-mix(in oklab, var(--accent-700) 45%, transparent)" />
+    ),
+  },
+]
+
+export const FOCUS_WIDTH_OPTIONS: SegmentedRowOption[] = [
+  { value: "1", label: "1px" },
+  { value: "2", label: "2px" },
+  { value: "3", label: "3px" },
+]
+
+export const FOCUS_OFFSET_OPTIONS: SegmentedRowOption[] = [
+  { value: "inset", label: "Inset" },
+  { value: "flush", label: "Flush" },
+  { value: "gap", label: "Gap" },
+]
+
+export const FOCUS_COLOR_OPTIONS: SegmentedRowOption[] = [
+  { value: "accent", label: "Accent" },
+  { value: "neutral", label: "Neutral" },
+]
+
+/** Field treatment: subdued = muted halo of the ring color (dotUI today,
+ *  Geist/Stripe); match = fields wear the exact keyboard ring (Supabase). */
+export const FOCUS_INPUT_OPTIONS: SegmentedRowOption[] = [
+  { value: "subdued", label: "Subdued" },
+  { value: "match", label: "Match" },
+]
+
 export const RADIUS_PARAM_OPTIONS: SegmentedRowOption[] = [
   { value: "auto", label: "Auto" },
   { value: "sharp", label: "Sharp" },
@@ -594,6 +649,13 @@ export const DEFAULTS = {
   shadows: "soft",
   cursorInteractive: "default",
   cursorDisabled: "not-allowed",
+  // Focus (v2) — one recipe for the whole system; defaults mirror the shipped
+  // focus-ring/focus-input utilities (2px accent ring, bg gap, subdued fields).
+  focusStyle: "solid",
+  focusWidth: "2",
+  focusOffset: "gap",
+  focusColor: "accent",
+  focusInputs: "subdued",
   // Components (real registry params where they exist)
   buttonStyle: "solid",
   buttonRadius: "auto",
@@ -704,6 +766,13 @@ export const SURFACE_KEYS_V2: (keyof LabState)[] = [
 export const EFFECT_KEYS_V2: (keyof LabState)[] = [
   "cursorInteractive",
   "cursorDisabled",
+]
+export const FOCUS_KEYS_V2: (keyof LabState)[] = [
+  "focusStyle",
+  "focusWidth",
+  "focusOffset",
+  "focusColor",
+  "focusInputs",
 ]
 /* v2: the Components section splits into per-family sections, each owning the
    keys its synced group reads. Buttons and Inputs first; more follow. */

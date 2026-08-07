@@ -17,6 +17,7 @@ import {
   COMPONENT_KEYS,
   EFFECT_KEYS,
   EFFECT_KEYS_V2,
+  FOCUS_KEYS_V2,
   ICON_KEYS,
   INPUT_KEYS_V2,
   SHAPE_KEYS,
@@ -31,6 +32,7 @@ import {
   ComponentsSectionBody,
   EffectsSectionBody,
   EffectsSectionBodyV2,
+  FocusSectionBody,
   IconsSectionBody,
   IconsSectionBodyV2,
   InputsSectionBody,
@@ -105,7 +107,7 @@ export const PANEL_VERSIONS: PanelVersion[] = [
     id: "v2",
     label: "v2 (wip)",
     summary:
-      "Color modes become a user-defined set — one to many, with archetypes and per-mode contrast. Shape and Space split; radius speaks px (#575) with a nested-corner preview and a corner-shape axis. Surfaces lands as its own chapter (#590): a delineation recipe (hairline · adaptive · shadow · outline) that absorbs shadows and the overlay material. Every section opens on a hero following one contract (hero.tsx): shared stage, hover-peek/click-pin inspection, mono readout — Type gains a live role specimen, Icons a real-registry grid. Components splits into per-family sections — Buttons and Inputs first — each opening on working specimens.",
+      "Color modes become a user-defined set — one to many, with archetypes and per-mode contrast. Shape and Space split; radius speaks px (#575) with a nested-corner preview and a corner-shape axis. Surfaces lands as its own chapter (#590): a delineation recipe (hairline · adaptive · shadow · outline) that absorbs shadows and the overlay material. Every section opens on a hero following one contract (hero.tsx): shared stage, hover-peek/click-pin inspection, mono readout — Type gains a live role specimen, Icons a real-registry grid. Components splits into per-family sections — Buttons and Inputs first — each opening on working specimens. Focus is a dedicated chapter (six-system audit): one ring recipe — style · width · offset · color · field treatment — with category rules (fields, menu items) derived, never per-component.",
     chapters: [
       {
         id: "color",
@@ -140,6 +142,12 @@ export const PANEL_VERSIONS: PanelVersion[] = [
               label: "Surfaces",
               keys: SURFACE_KEYS_V2,
               Body: SurfacesSectionBody,
+            },
+            {
+              id: "focus",
+              label: "Focus",
+              keys: FOCUS_KEYS_V2,
+              Body: FocusSectionBody,
             },
             {
               id: "cursor",
