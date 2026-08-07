@@ -16,6 +16,7 @@ import {
   GroupCaption,
   OptionGridRow,
   SwitchRow,
+  SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 import type { OptionGridItem } from "@/modules/control-lab/rows"
 
@@ -29,7 +30,6 @@ import {
 } from "./data"
 import type { Lab, LabState, SurfaceRecipeId } from "./data"
 import { HeroModes } from "./hero"
-import { SegmentedControlRow } from "./patterns"
 
 /* ------------------------------- Recipe model ------------------------------ */
 

@@ -33,6 +33,7 @@ import {
   ROW,
   ROW_VALUE,
   SliderRow,
+  SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 
 import {
@@ -49,7 +50,7 @@ import {
 } from "../color-ideal"
 import { ACCENT_POOL, DEFAULTS, PRIMARY_OPTIONS } from "../data"
 import type { Lab } from "../data"
-import { DetailRow, SegmentedControlRow, SwatchDots } from "../patterns"
+import { DetailRow, SwatchDots } from "../patterns"
 
 type Mode = "light" | "dark"
 

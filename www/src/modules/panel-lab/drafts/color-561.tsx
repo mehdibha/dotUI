@@ -31,6 +31,7 @@ import {
   ROW,
   ROW_LABEL,
   SliderRow,
+  SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 
 import {
@@ -47,7 +48,7 @@ import {
 import type { Mode } from "../color-ideal"
 import { ACCENT_POOL, DEFAULTS } from "../data"
 import type { Lab } from "../data"
-import { DetailRow, SegmentedControlRow, SwatchDots } from "../patterns"
+import { DetailRow, SwatchDots } from "../patterns"
 
 /* ---------------------------------- Hero ----------------------------------- */
 

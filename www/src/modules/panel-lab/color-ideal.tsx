@@ -42,16 +42,12 @@ import {
   ROW,
   ROW_LABEL,
   ROW_VALUE,
+  SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 
 import { DEFAULTS, PRIMARY_OPTIONS } from "./data"
 import type { Lab, LabState } from "./data"
-import {
-  DetailRow,
-  PickerPopoverContent,
-  SegmentedControlRow,
-  SwatchDots,
-} from "./patterns"
+import { DetailRow, PickerPopoverContent, SwatchDots } from "./patterns"
 
 export type Mode = "light" | "dark"
 

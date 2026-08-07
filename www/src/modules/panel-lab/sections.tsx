@@ -37,9 +37,14 @@ import {
   ControlGroup,
   FontPickerRow,
   GroupCaption,
+  GroupTitle,
   SelectRow,
   SliderRow,
+  StepperRow,
+  SPECIMEN_BUTTON,
+  SPECIMEN_FIELD,
   OptionGridRow,
+  SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 import {
   ICON_STROKE_WIDTH_VAR,
@@ -55,6 +60,10 @@ import {
   CURSOR_INTERACTIVE_OPTIONS,
   CURSOR_OPTIONS,
   DENSITY_OPTIONS,
+  FOCUS_COLOR_OPTIONS,
+  FOCUS_CONTROL_STYLE_OPTIONS,
+  FOCUS_INPUT_STYLE_OPTIONS,
+  FOCUS_OFFSET_OPTIONS,
   HOVER_PARAM_OPTIONS,
   ICON_LIBRARY_OPTIONS,
   ICON_WEIGHT_OPTIONS,
@@ -67,13 +76,7 @@ import {
 } from "./data"
 import type { Lab, LabState, ShapeRoleKey } from "./data"
 import { Hero, HeroInspector, useInspect } from "./hero"
-import {
-  ClusterHeader,
-  DetailRow,
-  FilterRow,
-  SegmentedControlRow,
-  TypeSpecimen,
-} from "./patterns"
+import { DetailRow, FilterRow, TypeSpecimen } from "./patterns"
 
 export function TypographySectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
@@ -797,6 +800,206 @@ export function EffectsSectionBodyV2({ lab }: { lab: Lab }) {
   )
 }
 
+/* -------------------------------- Focus (v2) ------------------------------- */
+
+/* Color sits on its own above both blocks — it's the one axis both categories
+   draw from, so owning it from Controls would have been a lie. Everything
+   below it is per-category, and a row only appears when the chosen style
+   actually reads it: no dead knobs. Fields react to any focus (RAC's
+   isFocusVisible skips mouse-focused inputs, so a keyboard-only ring leaves
+   them blank); menu items highlight, no ring. */
+
+const FOCUS_COLOR_VARS = {
+  accent: "var(--accent-700)",
+  neutral: "var(--neutral-700)",
+} as const
+
+const focusColorVar = (state: LabState): string =>
+  FOCUS_COLOR_VARS[state.focusColor as keyof typeof FOCUS_COLOR_VARS] ??
+  FOCUS_COLOR_VARS.accent
+
+const mix = (base: string, pct: number) =>
+  `color-mix(in oklab, ${base} ${pct}%, transparent)`
+
+/** The keyboard ring as a box-shadow stack — the gap paints in bg like the
+ *  real focus-ring utility (ring-offset-bg), so it follows any radius. */
+function focusRingShadow(state: LabState, style = state.focusStyle): string {
+  const width = state.focusWidth
+  const base = focusColorVar(state)
+  const color = style === "halo" ? mix(base, state.focusHaloStrength) : base
+  switch (state.focusOffset) {
+    case "inset":
+      return `inset 0 0 0 ${width}px ${color}`
+    case "flush":
+      return `0 0 0 ${width}px ${color}`
+    default: {
+      const gap = state.focusGap
+      return `0 0 0 ${gap}px var(--color-bg), 0 0 0 ${gap + width}px ${color}`
+    }
+  }
+}
+
+/** The field's focus layer: border swap plus the style's shadow — the exact
+ *  keyboard ring, a muted halo of the same color, or the border alone. */
+function focusFieldStyle(
+  state: LabState,
+  style = state.focusInputStyle,
+): CSSProperties {
+  const base = focusColorVar(state)
+  return {
+    borderColor: base,
+    borderWidth: style === "border" ? state.focusInputBorderWidth : undefined,
+    boxShadow:
+      style === "ring"
+        ? focusRingShadow(state)
+        : style === "halo"
+          ? `0 0 0 ${state.focusInputSpread}px ${mix(base, state.focusInputStrength)}`
+          : undefined,
+  }
+}
+
+/** One focused specimen per block — the secondary button is the neutral read
+ *  of the ring, where the recipe has to work without a strong fill behind it. */
+function ControlFocusHero({ state }: { state: LabState }) {
+  return (
+    <Hero className="items-center py-5">
+      <span
+        className={cn(SPECIMEN_BUTTON, "border bg-neutral text-fg-on-neutral")}
+        style={{
+          borderRadius: controlRadiusPx(state),
+          boxShadow: focusRingShadow(state),
+        }}
+      >
+        Get started
+      </span>
+    </Hero>
+  )
+}
+
+function InputFocusHero({ state }: { state: LabState }) {
+  return (
+    <Hero className="items-center py-5">
+      <span
+        className={cn(
+          SPECIMEN_FIELD,
+          "max-w-48 border border-border-field bg-field text-fg",
+        )}
+        style={{
+          borderRadius: controlRadiusPx(state),
+          ...focusFieldStyle(state),
+        }}
+      >
+        you@example.com
+        <span className="ml-px inline-block h-4 w-px animate-pulse bg-fg" />
+      </span>
+    </Hero>
+  )
+}
+
+export function FocusSectionBody({ lab }: { lab: Lab }) {
+  const { state, set } = lab
+  return (
+    <>
+      {/* Untitled on purpose: the shared ink opens the chapter, the way a
+          settings panel puts the general row above its named sections. */}
+      <ControlGroup>
+        <SegmentedControlRow
+          label="Color"
+          value={state.focusColor}
+          onChange={set("focusColor")}
+          options={FOCUS_COLOR_OPTIONS}
+        />
+      </ControlGroup>
+      <GroupTitle>Controls</GroupTitle>
+      <ControlGroup>
+        <ControlFocusHero state={state} />
+        <SelectRow
+          label="Style"
+          value={state.focusStyle}
+          onChange={set("focusStyle")}
+          options={FOCUS_CONTROL_STYLE_OPTIONS}
+        />
+        <StepperRow
+          label="Width"
+          value={state.focusWidth}
+          onChange={set("focusWidth")}
+          minValue={1}
+          maxValue={6}
+          unit="px"
+        />
+        {state.focusStyle === "halo" && (
+          <StepperRow
+            label="Strength"
+            value={state.focusHaloStrength}
+            onChange={set("focusHaloStrength")}
+            minValue={10}
+            maxValue={100}
+            step={5}
+            unit="%"
+          />
+        )}
+        <SegmentedControlRow
+          label="Offset"
+          value={state.focusOffset}
+          onChange={set("focusOffset")}
+          options={FOCUS_OFFSET_OPTIONS}
+        />
+        {state.focusOffset === "gap" && (
+          <StepperRow
+            label="Gap"
+            value={state.focusGap}
+            onChange={set("focusGap")}
+            minValue={1}
+            maxValue={6}
+            unit="px"
+          />
+        )}
+      </ControlGroup>
+      <GroupTitle>Inputs</GroupTitle>
+      <ControlGroup>
+        <InputFocusHero state={state} />
+        <SelectRow
+          label="Style"
+          value={state.focusInputStyle}
+          onChange={set("focusInputStyle")}
+          options={FOCUS_INPUT_STYLE_OPTIONS}
+        />
+        {state.focusInputStyle === "halo" && (
+          <>
+            <StepperRow
+              label="Spread"
+              value={state.focusInputSpread}
+              onChange={set("focusInputSpread")}
+              minValue={1}
+              maxValue={8}
+              unit="px"
+            />
+            <StepperRow
+              label="Strength"
+              value={state.focusInputStrength}
+              onChange={set("focusInputStrength")}
+              minValue={10}
+              maxValue={100}
+              step={5}
+              unit="%"
+            />
+          </>
+        )}
+        {state.focusInputStyle === "border" && (
+          <StepperRow
+            label="Width"
+            value={state.focusInputBorderWidth}
+            onChange={set("focusInputBorderWidth")}
+            minValue={1}
+            maxValue={4}
+            unit="px"
+          />
+        )}
+      </ControlGroup>
+    </>
+  )
+}
+
 /* --------------------------- Buttons / Inputs (v2) -------------------------- */
 
 /* v2: Components splits into per-family sections. Each section owns one synced
@@ -862,7 +1065,8 @@ function ButtonsHero({ state }: { state: LabState }) {
         <button
           type="button"
           className={cn(
-            "flex h-8 cursor-interactive items-center px-3.5 text-[0.8125rem] font-medium focus-reset transition-[background-color,filter,translate,box-shadow] duration-150 focus-visible:focus-ring",
+            SPECIMEN_BUTTON,
+            "cursor-interactive focus-reset transition-[background-color,filter,translate,box-shadow] duration-150 focus-visible:focus-ring",
             look.base,
             fx,
           )}
@@ -952,8 +1156,10 @@ function inputLook(
   }
 }
 
-const INPUT_FIELD =
-  "flex h-8 w-full min-w-0 items-center gap-2 px-2.5 text-[0.8125rem] transition-colors outline-none focus-visible:focus-ring"
+const INPUT_FIELD = cn(
+  SPECIMEN_FIELD,
+  "gap-2 transition-colors outline-none focus-visible:focus-ring",
+)
 
 /** A working mini form in the chosen style — a real input plus a select
  *  trigger, because the style is a family decision, not one component's. */
@@ -1029,7 +1235,7 @@ export function ComponentsSectionBody({ lab }: { lab: Lab }) {
             key={cluster.label}
             className="flex flex-col gap-[var(--lab-gap-control,0.375rem)]"
           >
-            <ClusterHeader label={cluster.label} />
+            <GroupTitle>{cluster.label}</GroupTitle>
             {cluster.items.map((item) => (
               <div key={item.name}>{item.render(lab)}</div>
             ))}
