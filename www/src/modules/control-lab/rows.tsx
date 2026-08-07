@@ -1434,28 +1434,36 @@ export function StepperRow({
         data-row=""
         className={cn(
           ROW,
-          "flex items-center justify-between gap-3 px-4",
+          // pr-2 matches the 8px the 28px group leaves above and below it, so
+          // the control sits equally inset on all three sides.
+          "flex items-center justify-between gap-3 pr-2 pl-4",
           description && ROW_DESCRIBED,
         )}
       >
         <RowLabel label={label} description={description} />
-        <div className="flex shrink-0 items-center gap-0.5">
-          <NumberFieldDecrement
-            variant="quiet"
-            size="sm"
-            className="rounded-lg bg-bg/50 hover:bg-bg/75"
-          />
-          {/* Padded, not just gapped: the unit sits at the block's right edge,
-              so without it the suffix would touch the increment button. */}
-          <div className="flex items-baseline px-1.5">
-            <Input className="h-7 w-8 border-0 bg-transparent p-0 text-center text-[0.8125rem] tabular-nums" />
+        {/* Value first, then the pair that nudges it: the number reads as the
+            row's value like any other row, instead of being split by its own
+            controls. */}
+        <div className="flex shrink-0 items-center gap-2">
+          <div className="flex items-baseline gap-0.5">
+            <Input className="h-7 w-8 border-0 bg-transparent p-0 text-right text-[0.8125rem] tabular-nums" />
             {unit && <span className={cn(ROW_VALUE, "text-xs")}>{unit}</span>}
           </div>
-          <NumberFieldIncrement
-            variant="quiet"
-            size="sm"
-            className="rounded-lg bg-bg/50 hover:bg-bg/75"
-          />
+          {/* The surface sits on each button, not on a wrapper, so the 1px gap
+              between them lets the row show through as the hairline. Outer
+              corners round, inner corners square: one widget, two halves. */}
+          <div className="flex items-center gap-px">
+            <NumberFieldDecrement
+              variant="quiet"
+              size="sm"
+              className="size-7 rounded-l-lg rounded-r-none bg-bg/50 hover:bg-bg/75"
+            />
+            <NumberFieldIncrement
+              variant="quiet"
+              size="sm"
+              className="size-7 rounded-l-none rounded-r-lg bg-bg/50 hover:bg-bg/75"
+            />
+          </div>
         </div>
       </div>
     </NumberField>

@@ -448,12 +448,6 @@ export const FOCUS_INPUT_STYLE_OPTIONS: SelectRowOption[] = [
   { value: "border", label: "Border" },
 ]
 
-export const FOCUS_WIDTH_OPTIONS: SegmentedRowOption[] = [
-  { value: "1", label: "1px" },
-  { value: "2", label: "2px" },
-  { value: "3", label: "3px" },
-]
-
 export const FOCUS_OFFSET_OPTIONS: SegmentedRowOption[] = [
   { value: "inset", label: "Inset" },
   { value: "flush", label: "Flush" },
@@ -610,13 +604,20 @@ export const DEFAULTS = {
   shadows: "soft",
   cursorInteractive: "default",
   cursorDisabled: "not-allowed",
-  // Focus (v2) — one recipe for the whole system; defaults mirror the shipped
-  // focus-ring/focus-input utilities (2px accent ring, bg gap, halo fields).
-  focusStyle: "solid",
-  focusInputStyle: "halo",
-  focusWidth: "2",
-  focusOffset: "gap",
+  // Focus (v2) — defaults mirror the shipped focus-ring/focus-input utilities
+  // (2px accent ring, 2px bg gap, halo fields). Color is shared: both
+  // categories draw the same ink. The rest are per-category, and the ones a
+  // style doesn't use stay hidden rather than sitting dead in the panel.
   focusColor: "accent",
+  focusStyle: "solid",
+  focusWidth: 2,
+  focusOffset: "gap",
+  focusGap: 2,
+  focusHaloStrength: 45,
+  focusInputStyle: "halo",
+  focusInputSpread: 2,
+  focusInputStrength: 30,
+  focusInputBorderWidth: 1,
   // Components (real registry params where they exist)
   buttonStyle: "solid",
   buttonRadius: "auto",
@@ -729,11 +730,16 @@ export const EFFECT_KEYS_V2: (keyof LabState)[] = [
   "cursorDisabled",
 ]
 export const FOCUS_KEYS_V2: (keyof LabState)[] = [
+  "focusColor",
   "focusStyle",
-  "focusInputStyle",
   "focusWidth",
   "focusOffset",
-  "focusColor",
+  "focusGap",
+  "focusHaloStrength",
+  "focusInputStyle",
+  "focusInputSpread",
+  "focusInputStrength",
+  "focusInputBorderWidth",
 ]
 /* v2: the Components section splits into per-family sections, each owning the
    keys its synced group reads. Buttons and Inputs first; more follow. */

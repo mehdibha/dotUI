@@ -40,6 +40,7 @@ import {
   GroupTitle,
   SelectRow,
   SliderRow,
+  StepperRow,
   SPECIMEN_BUTTON,
   SPECIMEN_FIELD,
   OptionGridRow,
@@ -63,7 +64,6 @@ import {
   FOCUS_CONTROL_STYLE_OPTIONS,
   FOCUS_INPUT_STYLE_OPTIONS,
   FOCUS_OFFSET_OPTIONS,
-  FOCUS_WIDTH_OPTIONS,
   HOVER_PARAM_OPTIONS,
   ICON_LIBRARY_OPTIONS,
   ICON_WEIGHT_OPTIONS,
@@ -802,34 +802,40 @@ export function EffectsSectionBodyV2({ lab }: { lab: Lab }) {
 
 /* -------------------------------- Focus (v2) ------------------------------- */
 
-/* Two blocks, each preview then its own tweaks: controls define the recipe,
-   inputs pick how they wear it. Every preview pairs a resting specimen with a
-   focused one — a ring only reads as a state next to its own absence. Fields
-   react to any focus (RAC's isFocusVisible skips mouse-focused inputs, so a
-   keyboard-only ring leaves them blank); menu items highlight, no ring. */
+/* Color sits on its own above both blocks — it's the one axis both categories
+   draw from, so owning it from Controls would have been a lie. Everything
+   below it is per-category, and a row only appears when the chosen style
+   actually reads it: no dead knobs. Fields react to any focus (RAC's
+   isFocusVisible skips mouse-focused inputs, so a keyboard-only ring leaves
+   them blank); menu items highlight, no ring. */
 
-const FOCUS_COLOR_VARS: Record<string, string> = {
+const FOCUS_COLOR_VARS = {
   accent: "var(--accent-700)",
   neutral: "var(--neutral-700)",
-}
+} as const
 
-const focusColorVar = (state: LabState) =>
-  FOCUS_COLOR_VARS[state.focusColor] ?? FOCUS_COLOR_VARS.accent
+const focusColorVar = (state: LabState): string =>
+  FOCUS_COLOR_VARS[state.focusColor as keyof typeof FOCUS_COLOR_VARS] ??
+  FOCUS_COLOR_VARS.accent
+
+const mix = (base: string, pct: number) =>
+  `color-mix(in oklab, ${base} ${pct}%, transparent)`
 
 /** The keyboard ring as a box-shadow stack — the gap paints in bg like the
  *  real focus-ring utility (ring-offset-bg), so it follows any radius. */
 function focusRingShadow(state: LabState, style = state.focusStyle): string {
-  const width = Number(state.focusWidth) || 2
+  const width = state.focusWidth
   const base = focusColorVar(state)
-  const color =
-    style === "halo" ? `color-mix(in oklab, ${base} 45%, transparent)` : base
+  const color = style === "halo" ? mix(base, state.focusHaloStrength) : base
   switch (state.focusOffset) {
     case "inset":
       return `inset 0 0 0 ${width}px ${color}`
     case "flush":
       return `0 0 0 ${width}px ${color}`
-    default:
-      return `0 0 0 2px var(--color-bg), 0 0 0 ${2 + width}px ${color}`
+    default: {
+      const gap = state.focusGap
+      return `0 0 0 ${gap}px var(--color-bg), 0 0 0 ${gap + width}px ${color}`
+    }
   }
 }
 
@@ -842,11 +848,12 @@ function focusFieldStyle(
   const base = focusColorVar(state)
   return {
     borderColor: base,
+    borderWidth: style === "border" ? state.focusInputBorderWidth : undefined,
     boxShadow:
       style === "ring"
         ? focusRingShadow(state)
         : style === "halo"
-          ? `0 0 0 2px color-mix(in oklab, ${base} 30%, transparent)`
+          ? `0 0 0 ${state.focusInputSpread}px ${mix(base, state.focusInputStrength)}`
           : undefined,
   }
 }
@@ -893,6 +900,16 @@ export function FocusSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
+      {/* Untitled on purpose: the shared ink opens the chapter, the way a
+          settings panel puts the general row above its named sections. */}
+      <ControlGroup>
+        <SegmentedControlRow
+          label="Color"
+          value={state.focusColor}
+          onChange={set("focusColor")}
+          options={FOCUS_COLOR_OPTIONS}
+        />
+      </ControlGroup>
       <GroupTitle>Controls</GroupTitle>
       <ControlGroup>
         <ControlFocusHero state={state} />
@@ -902,24 +919,41 @@ export function FocusSectionBody({ lab }: { lab: Lab }) {
           onChange={set("focusStyle")}
           options={FOCUS_CONTROL_STYLE_OPTIONS}
         />
-        <SegmentedControlRow
+        <StepperRow
           label="Width"
           value={state.focusWidth}
           onChange={set("focusWidth")}
-          options={FOCUS_WIDTH_OPTIONS}
+          minValue={1}
+          maxValue={6}
+          unit="px"
         />
+        {state.focusStyle === "halo" && (
+          <StepperRow
+            label="Strength"
+            value={state.focusHaloStrength}
+            onChange={set("focusHaloStrength")}
+            minValue={10}
+            maxValue={100}
+            step={5}
+            unit="%"
+          />
+        )}
         <SegmentedControlRow
           label="Offset"
           value={state.focusOffset}
           onChange={set("focusOffset")}
           options={FOCUS_OFFSET_OPTIONS}
         />
-        <SegmentedControlRow
-          label="Color"
-          value={state.focusColor}
-          onChange={set("focusColor")}
-          options={FOCUS_COLOR_OPTIONS}
-        />
+        {state.focusOffset === "gap" && (
+          <StepperRow
+            label="Gap"
+            value={state.focusGap}
+            onChange={set("focusGap")}
+            minValue={1}
+            maxValue={6}
+            unit="px"
+          />
+        )}
       </ControlGroup>
       <GroupTitle>Inputs</GroupTitle>
       <ControlGroup>
@@ -930,6 +964,37 @@ export function FocusSectionBody({ lab }: { lab: Lab }) {
           onChange={set("focusInputStyle")}
           options={FOCUS_INPUT_STYLE_OPTIONS}
         />
+        {state.focusInputStyle === "halo" && (
+          <>
+            <StepperRow
+              label="Spread"
+              value={state.focusInputSpread}
+              onChange={set("focusInputSpread")}
+              minValue={1}
+              maxValue={8}
+              unit="px"
+            />
+            <StepperRow
+              label="Strength"
+              value={state.focusInputStrength}
+              onChange={set("focusInputStrength")}
+              minValue={10}
+              maxValue={100}
+              step={5}
+              unit="%"
+            />
+          </>
+        )}
+        {state.focusInputStyle === "border" && (
+          <StepperRow
+            label="Width"
+            value={state.focusInputBorderWidth}
+            onChange={set("focusInputBorderWidth")}
+            minValue={1}
+            maxValue={4}
+            unit="px"
+          />
+        )}
       </ControlGroup>
     </>
   )
