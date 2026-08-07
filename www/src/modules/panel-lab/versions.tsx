@@ -25,6 +25,7 @@ import {
   SPACE_KEYS_V2,
   SURFACE_KEYS_V2,
   TYPE_KEYS,
+  TYPE_KEYS_V2,
   WORKING_COLOR_KEYS,
 } from "./data"
 import {
@@ -107,7 +108,7 @@ export const PANEL_VERSIONS: PanelVersion[] = [
     id: "v2",
     label: "v2 (wip)",
     summary:
-      "Color modes become a user-defined set — one to many, with archetypes and per-mode contrast. Shape and Space split; radius speaks px (#575) with a nested-corner preview and a corner-shape axis. Surfaces lands as its own chapter (#590): a delineation recipe (hairline · adaptive · shadow · outline) that absorbs shadows and the overlay material. Every section opens on a hero following one contract (hero.tsx): shared stage, hover-peek/click-pin inspection, mono readout — Type gains a live role specimen, Icons a real-registry grid. Components splits into per-family sections — Buttons and Inputs first — each opening on working specimens. Focus is a dedicated chapter (six-system audit): a shared Color both categories draw from, then Controls and Inputs blocks, each opening on a focused specimen that heads its own ControlGroup. Rows appear only when the chosen style reads them — gap size under a gap offset, halo spread and strength, focused border width — so no knob sits dead. Menu items highlight instead of ringing.",
+      "Color modes become a user-defined set — one to many, with archetypes and per-mode contrast. Shape and Space split; radius speaks px (#575) with a nested-corner preview and a corner-shape axis. Surfaces lands as its own chapter (#590): a delineation recipe (hairline · adaptive · shadow · outline) that absorbs shadows and the overlay material. Every section opens on a hero following one contract (hero.tsx): shared stage, hover-peek/click-pin inspection, mono readout — Type gains a live role specimen plus the axes shipped systems actually expose (a hand-tuned ladder with a heading size adjust, heading weight, heading tracking) and an Auto heading that follows the body (#563/#565), Icons a real-registry grid. Components splits into per-family sections — Buttons and Inputs first — each opening on working specimens. Focus is a dedicated chapter (six-system audit): a shared Color both categories draw from, then Controls and Inputs blocks, each opening on a focused specimen that heads its own ControlGroup. Rows appear only when the chosen style reads them — gap size under a gap offset, halo spread and strength, focused border width — so no knob sits dead. Menu items highlight instead of ringing.",
     chapters: [
       {
         id: "color",
@@ -117,7 +118,9 @@ export const PANEL_VERSIONS: PanelVersion[] = [
       },
       ...SHARED_CHAPTERS.flatMap((chapter) => {
         if (chapter.id === "typography")
-          return [{ ...chapter, Body: TypographySectionBodyV2 }]
+          return [
+            { ...chapter, keys: TYPE_KEYS_V2, Body: TypographySectionBodyV2 },
+          ]
         if (chapter.id === "icons")
           return [{ ...chapter, Body: IconsSectionBodyV2 }]
         if (chapter.id === "shape")

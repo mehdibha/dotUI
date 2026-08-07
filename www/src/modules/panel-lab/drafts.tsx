@@ -3,15 +3,15 @@
 /* Drafts — the open PRs reworking a panel section, their actual bodies pulled
    in so each is previewed and usable here, not just linked.
 
-   Several are competing takes on the SAME section (three at Color, two at
-   Type), so this is a menu to choose from, not a changelog. A draft renders
-   the full panel with its body swapped into the matching chapter, so it reads
-   against v1/v2 end to end.
+   Several are competing takes on the SAME section (three at Color), so this
+   is a menu to choose from, not a changelog. A draft renders the full panel
+   with its body swapped into the matching chapter, so it reads against v1/v2
+   end to end.
 
    Their state keys live in data.tsx under "Draft-only state". When a draft
    wins, fold its body into a new version and delete the entry. */
 
-import { TYPE_KEYS, WORKING_COLOR_KEYS, type Lab, type LabState } from "./data"
+import { WORKING_COLOR_KEYS, type Lab, type LabState } from "./data"
 import {
   ColorSectionV2Body as Color560,
   SurfacesSectionBody as Surfaces560,
@@ -23,8 +23,6 @@ import {
 import { ColorSectionV2Body as Color562 } from "./drafts/color-562"
 import { HoverPreviewFrame } from "./drafts/preview-594"
 import { SurfacesSectionBody as Surfaces562 } from "./drafts/surfaces-562"
-import { IdealTypeSectionBody as Type563 } from "./drafts/type-563"
-import { IdealTypeSectionBody as Type565 } from "./drafts/type-565"
 import type { Chapter } from "./variants/chapter"
 
 const SURFACE_KEYS: (keyof LabState)[] = [
@@ -32,21 +30,6 @@ const SURFACE_KEYS: (keyof LabState)[] = [
   "overlayMaterial",
   "modalBlur",
   "modalBackdrop",
-]
-const TYPE_563_KEYS: (keyof LabState)[] = [
-  ...TYPE_KEYS,
-  "headingWeight",
-  "headingTracking",
-  "baseSize",
-  "typeScale",
-]
-const TYPE_565_KEYS: (keyof LabState)[] = [
-  ...TYPE_KEYS,
-  "headingWeight",
-  "headingTrackingEm",
-  "typeBase",
-  "typeRatio",
-  "bodyLeading",
 ]
 
 const colorChapter = (Body: Chapter["Body"]): Chapter => ({
@@ -104,38 +87,6 @@ export const DRAFTS: Draft[] = [
     summary:
       "Keeps the Color body focused on the palette and moves every canvas decision into a dedicated Surfaces frame.",
     overrides: [colorChapter(Color562), surfacesChapter(Surfaces562)],
-  },
-  {
-    id: "pr-563",
-    pr: 563,
-    section: "Type",
-    title: "Ideal Type section",
-    summary:
-      "Replaces the Type body following the lab convention, with a named tracking axis and an explicit type scale.",
-    overrides: [
-      {
-        id: "typography",
-        label: "Type",
-        keys: TYPE_563_KEYS,
-        Body: Type563,
-      },
-    ],
-  },
-  {
-    id: "pr-565",
-    pr: 565,
-    section: "Type",
-    title: "Ideal Type section",
-    summary:
-      "The other Type take: a live hero, absent-means-default state, and depth behind DetailRows — tracking as a continuous em axis.",
-    overrides: [
-      {
-        id: "typography",
-        label: "Type",
-        keys: TYPE_565_KEYS,
-        Body: Type565,
-      },
-    ],
   },
   {
     id: "pr-594",

@@ -1279,7 +1279,10 @@ const CONTROL_PREVIEWS: Record<string, Record<string, Preview>> = {
   },
   typography: {
     Heading: ({ lab }) => (
-      <FontPreview family={lab.state.headingFont} role="heading" />
+      <FontPreview
+        family={lab.state.headingFont || lab.state.bodyFont}
+        role="heading"
+      />
     ),
     Body: ({ lab }) => <FontPreview family={lab.state.bodyFont} role="body" />,
     Mono: ({ lab }) => <FontPreview family={lab.state.monoFont} role="mono" />,
