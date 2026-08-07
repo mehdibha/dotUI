@@ -372,7 +372,9 @@ export const SHADOW_OPTIONS: OptionGridItem[] = [
   },
 ]
 
-export const BUTTON_STYLES: OptionGridItem[] = [
+/* v1's row — the variant enum (button/styles.ts), kept as the frozen v1
+   reference. The style axis below is a different thing: a family look. */
+export const BUTTON_VARIANTS: OptionGridItem[] = [
   {
     id: "solid",
     label: "Solid",
@@ -389,6 +391,38 @@ export const BUTTON_STYLES: OptionGridItem[] = [
     preview: <MiniButton className="border border-border-field text-fg" />,
   },
   { id: "quiet", label: "Quiet", preview: <MiniButton className="text-fg" /> },
+]
+
+/* v2: style is a family look reshaping every fill variant at once — the
+   variant enum stays API. Families from the Aug 2026 survey: flat (Geist),
+   outline (Primer hairline), raised (Radix classic 3D), elevated (Stripe). */
+export const BUTTON_STYLES: OptionGridItem[] = [
+  {
+    id: "flat",
+    label: "Flat",
+    preview: <MiniButton className="bg-primary text-fg-on-primary" />,
+  },
+  {
+    id: "outline",
+    label: "Outline",
+    preview: (
+      <MiniButton className="bg-primary text-fg-on-primary shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.12)]" />
+    ),
+  },
+  {
+    id: "raised",
+    label: "Raised",
+    preview: (
+      <MiniButton className="bg-primary bg-linear-to-b from-white/15 to-black/15 text-fg-on-primary shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]" />
+    ),
+  },
+  {
+    id: "elevated",
+    label: "Elevated",
+    preview: (
+      <MiniButton className="bg-primary text-fg-on-primary shadow-[0_3px_8px_rgb(0_0_0/0.35),0_1px_2px_rgb(0_0_0/0.2)]" />
+    ),
+  },
 ]
 
 /* Real enum: outline | line | filled-line-bottom | filled (input/meta.ts). */
@@ -491,6 +525,48 @@ export const HOVER_PARAM_OPTIONS: SegmentedRowOption[] = [
   { value: "none", label: "None" },
   { value: "dim", label: "Dim" },
   { value: "lift", label: "Lift" },
+]
+
+/* v2 effect axes. Hover: of 16 systems surveyed, 14 dim, 2 lighten (Linear,
+   Ant), zero use none or lift — dim is the default, lighten is the Linear
+   feel. Press is where systems diverge: darker step (8), nothing (5), scale
+   .97 (Linear/HeroUI/Spectrum pressScale), 1px push (shadcn v4 styles). */
+export const BUTTON_HOVER_OPTIONS: SegmentedRowOption[] = [
+  { value: "dim", label: "Dim" },
+  { value: "lighten", label: "Lighten" },
+  { value: "none", label: "None" },
+]
+
+export const BUTTON_PRESS_OPTIONS: SegmentedRowOption[] = [
+  { value: "dim", label: "Dim" },
+  { value: "scale", label: "Scale" },
+  { value: "push", label: "Push" },
+  { value: "none", label: "None" },
+]
+
+export const GROUP_LAYOUT_OPTIONS: SegmentedRowOption[] = [
+  { value: "attached", label: "Attached" },
+  { value: "gapped", label: "Gapped" },
+  { value: "container", label: "Container" },
+]
+
+export const GROUP_SEPARATOR_OPTIONS: SegmentedRowOption[] = [
+  { value: "auto", label: "Auto" },
+  { value: "divider", label: "Divider" },
+  { value: "none", label: "None" },
+]
+
+export const GROUP_SELECTED_OPTIONS: SegmentedRowOption[] = [
+  { value: "fill", label: "Fill" },
+  { value: "chip", label: "Chip" },
+  { value: "inverse", label: "Inverse" },
+]
+
+export const BUTTON_TRANSITION_OPTIONS: SegmentedRowOption[] = [
+  { value: "100", label: "100ms" },
+  { value: "150", label: "150ms" },
+  { value: "200", label: "200ms" },
+  { value: "300", label: "300ms" },
 ]
 
 export const TOKEN_RADIUS_OPTIONS: SegmentedRowOption[] = [
@@ -637,9 +713,15 @@ export const DEFAULTS = {
   focusInputStrength: 30,
   focusInputBorderWidth: 1,
   // Components (real registry params where they exist)
-  buttonStyle: "solid",
+  buttonVariant: "solid",
+  buttonStyle: "flat",
   buttonRadius: "auto",
   buttonHover: "dim",
+  buttonPress: "dim",
+  buttonTransition: "150",
+  groupLayout: "attached",
+  groupSeparator: "auto",
+  groupSelected: "fill",
   inputStyle: "outline",
   checkboxRadius: "sm",
   cardStyle: "default",
@@ -776,10 +858,15 @@ export const BUTTON_KEYS_V2: (keyof LabState)[] = [
   "buttonStyle",
   "buttonRadius",
   "buttonHover",
+  "buttonPress",
+  "buttonTransition",
+  "groupLayout",
+  "groupSeparator",
+  "groupSelected",
 ]
 export const INPUT_KEYS_V2: (keyof LabState)[] = ["inputStyle"]
 export const COMPONENT_KEYS: (keyof LabState)[] = [
-  "buttonStyle",
+  "buttonVariant",
   "buttonRadius",
   "buttonHover",
   "inputStyle",
@@ -819,9 +906,9 @@ export const CLUSTERS: Cluster[] = [
         render: (lab) => (
           <ComponentRow
             name="Button"
-            value={lab.state.buttonStyle}
-            onChange={lab.set("buttonStyle")}
-            options={BUTTON_STYLES}
+            value={lab.state.buttonVariant}
+            onChange={lab.set("buttonVariant")}
+            options={BUTTON_VARIANTS}
           >
             <ParamRow label="Radius">
               <MiniSegmented
