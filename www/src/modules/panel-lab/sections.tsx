@@ -39,9 +39,11 @@ import {
   GroupCaption,
   SelectRow,
   SliderRow,
+  SPECIMEN_BUTTON,
+  SPECIMEN_FIELD,
   OptionGridRow,
+  SegmentedControlRow,
 } from "@/modules/control-lab/rows"
-import type { OptionGridItem } from "@/modules/control-lab/rows"
 import {
   ICON_STROKE_WIDTH_VAR,
   STROKE_DEFAULTS,
@@ -57,6 +59,8 @@ import {
   CURSOR_OPTIONS,
   DENSITY_OPTIONS,
   FOCUS_COLOR_OPTIONS,
+  FOCUS_CONTROL_STYLE_OPTIONS,
+  FOCUS_INPUT_STYLE_OPTIONS,
   FOCUS_OFFSET_OPTIONS,
   FOCUS_WIDTH_OPTIONS,
   HOVER_PARAM_OPTIONS,
@@ -71,13 +75,7 @@ import {
 } from "./data"
 import type { Lab, LabState, ShapeRoleKey } from "./data"
 import { Hero, HeroInspector, useInspect } from "./hero"
-import {
-  ClusterHeader,
-  DetailRow,
-  FilterRow,
-  SegmentedControlRow,
-  TypeSpecimen,
-} from "./patterns"
+import { ClusterHeader, DetailRow, FilterRow, TypeSpecimen } from "./patterns"
 
 export function TypographySectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
@@ -803,11 +801,11 @@ export function EffectsSectionBodyV2({ lab }: { lab: Lab }) {
 
 /* -------------------------------- Focus (v2) ------------------------------- */
 
-/* No hero — the style pickers are the preview: every tile is a focused
-   specimen wearing the live recipe, so width/offset/color changes read in
-   place. Controls and inputs each pick a style (fields rarely wear the
-   control ring, and react to any focus — RAC's isFocusVisible skips
-   mouse-focused inputs); menu items highlight instead of ringing. */
+/* Two blocks, each preview then its own tweaks: controls define the recipe,
+   inputs pick how they wear it. Every preview pairs a resting specimen with a
+   focused one — a ring only reads as a state next to its own absence. Fields
+   react to any focus (RAC's isFocusVisible skips mouse-focused inputs, so a
+   keyboard-only ring leaves them blank); menu items highlight, no ring. */
 
 const FOCUS_COLOR_VARS: Record<string, string> = {
   accent: "var(--accent-700)",
@@ -852,70 +850,57 @@ function focusFieldStyle(
   }
 }
 
-const CONTROL_FOCUS_STYLES = [
-  { id: "solid", label: "Ring" },
-  { id: "halo", label: "Halo" },
-]
-
-/** Input styles: halo = border + muted halo (dotUI today, Geist/Stripe);
- *  ring = the exact keyboard ring (Supabase); border = swap alone (Material). */
-const INPUT_FOCUS_STYLES = [
-  { id: "halo", label: "Halo" },
-  { id: "ring", label: "Ring" },
-  { id: "border", label: "Border" },
-]
-
-function focusControlOptions(state: LabState): OptionGridItem[] {
-  const radius = controlRadiusPx(state)
-  return CONTROL_FOCUS_STYLES.map(({ id, label }) => ({
-    id,
-    label,
-    preview: (
+/** One focused specimen per block — the secondary button is the neutral read
+ *  of the ring, where the recipe has to work without a strong fill behind it. */
+function ControlFocusHero({ state }: { state: LabState }) {
+  return (
+    <Hero className="items-center py-5">
       <span
-        className="flex h-8 items-center bg-primary px-3 text-[0.8125rem] font-medium text-fg-on-primary"
-        style={{ borderRadius: radius, boxShadow: focusRingShadow(state, id) }}
+        className={cn(SPECIMEN_BUTTON, "border bg-neutral text-fg-on-neutral")}
+        style={{
+          borderRadius: controlRadiusPx(state),
+          boxShadow: focusRingShadow(state),
+        }}
       >
-        Button
+        Get started
       </span>
-    ),
-  }))
+    </Hero>
+  )
 }
 
-function focusInputOptions(state: LabState): OptionGridItem[] {
-  const radius = controlRadiusPx(state)
-  return INPUT_FOCUS_STYLES.map(({ id, label }) => ({
-    id,
-    label,
-    preview: (
+function InputFocusHero({ state }: { state: LabState }) {
+  return (
+    <Hero className="items-center py-5">
       <span
-        className="flex h-8 w-full min-w-0 items-center border border-border-field bg-field px-2.5"
-        style={{ borderRadius: radius, ...focusFieldStyle(state, id) }}
+        className={cn(
+          SPECIMEN_FIELD,
+          "max-w-48 border border-border-field bg-field text-fg",
+        )}
+        style={{
+          borderRadius: controlRadiusPx(state),
+          ...focusFieldStyle(state),
+        }}
       >
-        <span className="inline-block h-4 w-px animate-pulse bg-fg" />
+        you@example.com
+        <span className="ml-px inline-block h-4 w-px animate-pulse bg-fg" />
       </span>
-    ),
-  }))
+    </Hero>
+  )
 }
 
 export function FocusSectionBody({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
-      <OptionGridRow
-        label="Controls"
-        value={state.focusStyle}
-        onChange={set("focusStyle")}
-        options={focusControlOptions(state)}
-        columns={2}
-      />
-      <OptionGridRow
-        label="Inputs"
-        value={state.focusInputStyle}
-        onChange={set("focusInputStyle")}
-        options={focusInputOptions(state)}
-        columns={3}
-      />
+      <ClusterHeader label="Controls" />
       <ControlGroup>
+        <ControlFocusHero state={state} />
+        <SelectRow
+          label="Style"
+          value={state.focusStyle}
+          onChange={set("focusStyle")}
+          options={FOCUS_CONTROL_STYLE_OPTIONS}
+        />
         <SegmentedControlRow
           label="Width"
           value={state.focusWidth}
@@ -935,9 +920,19 @@ export function FocusSectionBody({ lab }: { lab: Lab }) {
           options={FOCUS_COLOR_OPTIONS}
         />
       </ControlGroup>
+      <ClusterHeader label="Inputs" />
+      <ControlGroup>
+        <InputFocusHero state={state} />
+        <SelectRow
+          label="Style"
+          value={state.focusInputStyle}
+          onChange={set("focusInputStyle")}
+          options={FOCUS_INPUT_STYLE_OPTIONS}
+        />
+      </ControlGroup>
       <GroupCaption>
-        One recipe, previewed in the pickers. Inputs react to any focus; menu
-        items highlight instead of ringing.
+        Fields wear the control recipe their own way, and react to any focus —
+        not just the keyboard. Menu items highlight instead of ringing.
       </GroupCaption>
     </>
   )
@@ -1008,7 +1003,8 @@ function ButtonsHero({ state }: { state: LabState }) {
         <button
           type="button"
           className={cn(
-            "flex h-8 cursor-interactive items-center px-3.5 text-[0.8125rem] font-medium focus-reset transition-[background-color,filter,translate,box-shadow] duration-150 focus-visible:focus-ring",
+            SPECIMEN_BUTTON,
+            "cursor-interactive focus-reset transition-[background-color,filter,translate,box-shadow] duration-150 focus-visible:focus-ring",
             look.base,
             fx,
           )}
@@ -1098,8 +1094,10 @@ function inputLook(
   }
 }
 
-const INPUT_FIELD =
-  "flex h-8 w-full min-w-0 items-center gap-2 px-2.5 text-[0.8125rem] transition-colors outline-none focus-visible:focus-ring"
+const INPUT_FIELD = cn(
+  SPECIMEN_FIELD,
+  "gap-2 transition-colors outline-none focus-visible:focus-ring",
+)
 
 /** A working mini form in the chosen style — a real input plus a select
  *  trigger, because the style is a family decision, not one component's. */

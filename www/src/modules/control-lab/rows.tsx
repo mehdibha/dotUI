@@ -57,6 +57,10 @@ import {
 } from "@/registry/ui/number-field"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@/registry/ui/segmented-control"
 import { Select, SelectValue } from "@/registry/ui/select"
 import {
   Slider,
@@ -117,11 +121,13 @@ export function RowLabel({
 /**
  * Fuses adjacent rows into one card: shared surface, hairline separators,
  * only the group's corners round — the grouped-list look. Rows opt in by
- * carrying `data-row` on their surface element.
+ * carrying `data-row` on their surface element; a `data-preview` stage opts
+ * in the same way but keeps its own surface, becoming the specimen the rows
+ * below configure.
  */
 export function ControlGroup({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex w-full flex-col divide-y divide-bg/50 overflow-hidden rounded-xl bg-muted **:data-row:rounded-none **:data-row:bg-transparent">
+    <div className="flex w-full flex-col divide-y divide-bg/50 overflow-hidden rounded-xl bg-muted **:data-preview:rounded-none **:data-preview:border-0 **:data-row:rounded-none **:data-row:bg-transparent">
       {children}
     </div>
   )
@@ -1067,6 +1073,34 @@ export function SwitchRow({
   )
 }
 
+/* -------------------------------- Specimens -------------------------------- */
+
+/* The metrics every specimen shares, so the same component reads identically
+   whether it sits in an option card or on a preview stage. Surface and radius
+   stay with the caller — those are what a specimen is there to show. */
+export const SPECIMEN_BUTTON =
+  "flex h-8 items-center px-3.5 text-[0.8125rem] font-medium"
+export const SPECIMEN_FIELD =
+  "flex h-8 w-full min-w-0 items-center px-2.5 text-[0.8125rem]"
+
+/* Spans, not real controls: a button can't nest in the option card's toggle. */
+
+export function MiniButton({ className }: { className: string }) {
+  return (
+    <span className={cn(SPECIMEN_BUTTON, "rounded-(--btn-radius)", className)}>
+      Button
+    </span>
+  )
+}
+
+export function MiniInput({ className }: { className: string }) {
+  return (
+    <span className={cn(SPECIMEN_FIELD, "text-fg-muted", className)}>
+      Value
+    </span>
+  )
+}
+
 /* ------------------------------- Option grid ------------------------------- */
 
 export interface OptionGridItem {
@@ -1300,8 +1334,12 @@ export interface SegmentedRowOption {
   ariaLabel?: string
 }
 
-/** A segmented control shaped as a settings row: label left, joined pills right. */
-export function SegmentedRow({
+/**
+ * A segmented control shaped as a settings row: label left, joined pills
+ * right. Built on the real `ui/segmented-control` rather than a hand-styled
+ * toggle group — one implementation to keep in step with the registry.
+ */
+export function SegmentedControlRow({
   label,
   description,
   value,
@@ -1319,36 +1357,31 @@ export function SegmentedRow({
       data-row=""
       className={cn(
         ROW,
-        "flex items-center justify-between gap-3 px-4",
+        "flex items-center justify-between gap-3 pr-1.5 pl-4",
         description && ROW_DESCRIBED,
       )}
     >
       <RowLabel label={label} description={description} />
-      <RacToggleButtonGroup
+      <SegmentedControl
         aria-label={label}
-        selectionMode="single"
-        disallowEmptySelection
         selectedKeys={[value]}
         onSelectionChange={(keys) => {
           const next = keys.values().next().value
           if (next) onChange(next as string)
         }}
-        className="flex h-8 shrink-0 items-center gap-0.5 rounded-lg bg-bg/50 p-0.5"
+        className="shrink-0 bg-bg/50 p-0.5"
       >
         {options.map((option) => (
-          <RacToggleButton
+          <SegmentedControlItem
             key={option.value}
             id={option.value}
             aria-label={option.ariaLabel}
-            className="relative isolate flex h-7 cursor-interactive items-center rounded-md px-3 text-[0.8125rem] text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring selected:text-fg **:[svg]:size-3.5"
+            className="text-xs"
           >
-            <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-highlight duration-150 ease-out motion-safe:transition-[translate,width,height]" />
-            <span className="relative z-10 flex items-center">
-              {option.label}
-            </span>
-          </RacToggleButton>
+            {option.label}
+          </SegmentedControlItem>
         ))}
-      </RacToggleButtonGroup>
+      </SegmentedControl>
     </div>
   )
 }
