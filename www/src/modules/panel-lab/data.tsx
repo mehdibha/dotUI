@@ -9,6 +9,8 @@ import { LoaderCircleIcon, LoaderIcon } from "lucide-react"
 import { DEFAULT_BODY_FAMILY, DEFAULT_MONO_FAMILY } from "@/lib/fonts"
 import {
   ComponentRow,
+  MiniButton,
+  MiniInput,
   MiniSegmented,
   ParamRow,
 } from "@/modules/control-lab/rows"
@@ -349,29 +351,6 @@ export const SHADOW_OPTIONS: OptionGridItem[] = [
   },
 ]
 
-/* Mini specimens for the component style grids — the real components at
-   their default size (density default, size md), as spans: a button can't
-   nest in the card's toggle button. */
-function MiniButton({ className }: { className: string }) {
-  return (
-    <span
-      className={`flex h-8 items-center rounded-(--btn-radius) px-2.5 text-sm font-medium ${className}`}
-    >
-      Button
-    </span>
-  )
-}
-
-function MiniInput({ className }: { className: string }) {
-  return (
-    <span
-      className={`flex h-8 w-full min-w-0 items-center px-2.5 text-sm text-fg-muted ${className}`}
-    >
-      Value
-    </span>
-  )
-}
-
 export const BUTTON_STYLES: OptionGridItem[] = [
   {
     id: "solid",
@@ -447,6 +426,37 @@ export const LOADER_STYLES: OptionGridItem[] = [
     label: "Ring",
     preview: <LoaderCircleIcon className="size-5 text-fg-muted" />,
   },
+]
+
+/* Focus axes — the ring recipe (six-system focus audit, Aug 2026). Every
+   surveyed system defines focus once — color + width + offset — and the ones
+   that let components restyle it drift (Primer, Raycast). Controls own the
+   recipe; inputs pick how they wear it, because fields rarely take the control
+   ring as-is. Menu items stay component-authored: highlight, no ring. */
+
+export const FOCUS_CONTROL_STYLE_OPTIONS: SelectRowOption[] = [
+  { value: "solid", label: "Ring" },
+  { value: "halo", label: "Halo" },
+]
+
+/** How a field wears the recipe: halo = border + muted halo of the ring color
+ *  (dotUI today, Geist/Stripe); ring = the control ring exactly (Supabase);
+ *  border = the border swap alone (Material). */
+export const FOCUS_INPUT_STYLE_OPTIONS: SelectRowOption[] = [
+  { value: "halo", label: "Halo" },
+  { value: "ring", label: "Ring" },
+  { value: "border", label: "Border" },
+]
+
+export const FOCUS_OFFSET_OPTIONS: SegmentedRowOption[] = [
+  { value: "inset", label: "Inset" },
+  { value: "flush", label: "Flush" },
+  { value: "gap", label: "Gap" },
+]
+
+export const FOCUS_COLOR_OPTIONS: SegmentedRowOption[] = [
+  { value: "accent", label: "Accent" },
+  { value: "neutral", label: "Neutral" },
 ]
 
 export const RADIUS_PARAM_OPTIONS: SegmentedRowOption[] = [
@@ -594,6 +604,20 @@ export const DEFAULTS = {
   shadows: "soft",
   cursorInteractive: "default",
   cursorDisabled: "not-allowed",
+  // Focus (v2) — defaults mirror the shipped focus-ring/focus-input utilities
+  // (2px accent ring, 2px bg gap, halo fields). Color is shared: both
+  // categories draw the same ink. The rest are per-category, and the ones a
+  // style doesn't use stay hidden rather than sitting dead in the panel.
+  focusColor: "accent",
+  focusStyle: "solid",
+  focusWidth: 2,
+  focusOffset: "gap",
+  focusGap: 2,
+  focusHaloStrength: 45,
+  focusInputStyle: "halo",
+  focusInputSpread: 2,
+  focusInputStrength: 30,
+  focusInputBorderWidth: 1,
   // Components (real registry params where they exist)
   buttonStyle: "solid",
   buttonRadius: "auto",
@@ -704,6 +728,18 @@ export const SURFACE_KEYS_V2: (keyof LabState)[] = [
 export const EFFECT_KEYS_V2: (keyof LabState)[] = [
   "cursorInteractive",
   "cursorDisabled",
+]
+export const FOCUS_KEYS_V2: (keyof LabState)[] = [
+  "focusColor",
+  "focusStyle",
+  "focusWidth",
+  "focusOffset",
+  "focusGap",
+  "focusHaloStrength",
+  "focusInputStyle",
+  "focusInputSpread",
+  "focusInputStrength",
+  "focusInputBorderWidth",
 ]
 /* v2: the Components section splits into per-family sections, each owning the
    keys its synced group reads. Buttons and Inputs first; more follow. */

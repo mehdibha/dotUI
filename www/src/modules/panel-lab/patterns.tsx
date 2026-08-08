@@ -19,10 +19,6 @@ import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from "@/registry/ui/segmented-control"
-import {
   ROW,
   ROW_LABEL,
   ROW_VALUE,
@@ -75,55 +71,6 @@ export function DetailRow({
         <div className="flex flex-col px-2 pb-1.5">{children}</div>
       </DisclosurePanel>
     </Disclosure>
-  )
-}
-
-/* --------------------------- Segmented control row -------------------------- */
-
-/**
- * SegmentedRow's layout (label left, joined pills right) on top of the real
- * `ui/segmented-control` instead of a plain toggle-button group — its
- * SelectionIndicator glides between segments instead of the flat instant
- * background swap `MiniSegmented`/`SegmentedRow` do. Default density: this
- * prototype has no `DesignSystemProvider`, which is what density reads from.
- */
-export function SegmentedControlRow({
-  label,
-  value,
-  onChange,
-  options,
-}: {
-  label: string
-  value: string
-  onChange: (value: string) => void
-  options: { value: string; label: React.ReactNode }[]
-}) {
-  return (
-    <div
-      data-row=""
-      className={cn(ROW, "flex items-center justify-between gap-3 pr-1.5 pl-4")}
-    >
-      <span className={ROW_LABEL}>{label}</span>
-      <SegmentedControl
-        aria-label={label}
-        selectedKeys={[value]}
-        onSelectionChange={(keys) => {
-          const next = keys.values().next().value
-          if (next) onChange(next as string)
-        }}
-        className="shrink-0 bg-bg/50 p-0.5"
-      >
-        {options.map((option) => (
-          <SegmentedControlItem
-            key={option.value}
-            id={option.value}
-            className="text-xs"
-          >
-            {option.label}
-          </SegmentedControlItem>
-        ))}
-      </SegmentedControl>
-    </div>
   )
 }
 
@@ -230,17 +177,5 @@ export function FilterRow({
         <Input placeholder={placeholder} className="text-[0.8125rem]" />
       </InputGroup>
     </SearchField>
-  )
-}
-
-/* ------------------------------ Cluster header ----------------------------- */
-
-/** A sub-marker inside a section: quieter than SectionHeader, groups a run of
- *  component rows by category (Buttons, Forms, Overlays…). */
-export function ClusterHeader({ label }: { label: string }) {
-  return (
-    <span className="mt-2.5 px-1 text-[11px] font-medium text-fg-muted/80 first:mt-0">
-      {label}
-    </span>
   )
 }

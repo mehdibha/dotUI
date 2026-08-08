@@ -52,16 +52,12 @@ import {
   ROW,
   ROW_LABEL,
   ROW_VALUE,
+  SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 
 import { ACCENT_POOL, DEFAULTS, PRIMARY_OPTIONS } from "../data"
 import type { Lab, LabState } from "../data"
-import {
-  DetailRow,
-  PickerPopoverContent,
-  SegmentedControlRow,
-  SwatchDots,
-} from "../patterns"
+import { DetailRow, PickerPopoverContent, SwatchDots } from "../patterns"
 import { cssToHex, useBorderSeeds, useLabConfig } from "./engine-562"
 
 type Mode = "light" | "dark"

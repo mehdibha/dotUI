@@ -45,12 +45,14 @@ import {
   DrillInRow,
   FontPickerRow,
   GroupCaption,
+  MiniButton,
+  MiniInput,
   MiniSegmented,
   MiniSwitch,
   NeutralPickerRow,
   ParamRow,
   SectionHeader,
-  SegmentedRow,
+  SegmentedControlRow,
   SelectRow,
   SliderRow,
   StepperRow,
@@ -64,31 +66,6 @@ import type {
   OptionGridItem,
   SelectRowOption,
 } from "./rows"
-
-/* ------------------------------ Mini specimens ----------------------------- */
-
-/* Specimens mirror the real components at their default size (density
-   default, size md) — spans, not real controls: a button can't nest in the
-   card's toggle button. */
-function MiniButton({ className }: { className: string }) {
-  return (
-    <span
-      className={`flex h-8 items-center rounded-(--btn-radius) px-2.5 text-sm font-medium ${className}`}
-    >
-      Button
-    </span>
-  )
-}
-
-function MiniInput({ className }: { className: string }) {
-  return (
-    <span
-      className={`flex h-8 w-full min-w-0 items-center px-2.5 text-sm text-fg-muted ${className}`}
-    >
-      Value
-    </span>
-  )
-}
 
 const BUTTON_STYLES: OptionGridItem[] = [
   {
@@ -426,7 +403,7 @@ function SegmentedDemo({
 }) {
   const [value, setValue] = useState(icons ? "center" : "md")
   return (
-    <SegmentedRow
+    <SegmentedControlRow
       label={icons ? "Align" : "Radius"}
       description={
         described ? "Applies to buttons, inputs, cards and menus." : undefined
@@ -570,7 +547,7 @@ function DisclosureDemo({
       inset={inset}
       defaultExpanded
     >
-      <SegmentedRow
+      <SegmentedControlRow
         label="Tracking"
         value={tracking}
         onChange={setTracking}
@@ -596,7 +573,7 @@ function GroupDemo({ caption }: { caption?: boolean }) {
     <>
       <ControlGroup>
         <ColorPickerRow label="Brand" value={brand} onChange={setBrand} />
-        <SegmentedRow
+        <SegmentedControlRow
           label="Radius"
           value={radius}
           onChange={setRadius}
@@ -630,7 +607,7 @@ function HeaderDemo({ modified }: { modified?: boolean }) {
           setValue("md")
         }}
       />
-      <SegmentedRow
+      <SegmentedControlRow
         label="Radius"
         value={value}
         onChange={(next) => {
@@ -684,8 +661,8 @@ const GROUPS: Group[] = [
         ],
       },
       {
-        id: "segmented-row",
-        name: "SegmentedRow",
+        id: "segmented-control-row",
+        name: "SegmentedControlRow",
         description:
           "Joined pills for a small, mutually exclusive set. Icon-only segments must carry an ariaLabel.",
         variants: [

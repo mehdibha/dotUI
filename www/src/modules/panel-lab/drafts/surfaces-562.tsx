@@ -12,11 +12,11 @@ import {
   ControlGroup,
   GroupCaption,
   SliderRow,
+  SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 
 import { OVERLAY_OPTIONS } from "../data"
 import type { Lab } from "../data"
-import { SegmentedControlRow } from "../patterns"
 import { cssToHex, useLabConfig } from "./engine-562"
 
 /** One mode's surface stack, engine-true: the background carrying a card

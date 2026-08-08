@@ -22,7 +22,10 @@ export type PreviewMode = "none" | "hero"
 export const PreviewModeContext = createContext<PreviewMode>("hero")
 
 /** The stage. `inset` pads content; full-bleed heroes (a grid with a footer
- *  bar) turn it off and manage their own edges. */
+ *  bar) turn it off and manage their own edges. `data-preview` is how a
+ *  ControlGroup recognises the stage as its head cell and strips the card
+ *  chrome — same opt-in shape as `data-row`, so a hero never has to know
+ *  whether it was dropped in a group. */
 export function Hero({
   inset = true,
   className,
@@ -35,6 +38,7 @@ export function Hero({
   if (useContext(PreviewModeContext) === "none") return null
   return (
     <div
+      data-preview=""
       className={cn(
         // The app background, not panel chrome — specimens read as product
         // surface, matching the OptionGrid card treatment.
