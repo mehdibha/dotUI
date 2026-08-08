@@ -13,26 +13,22 @@ import type { Lab, LabState } from "../data"
 export interface Chapter {
   id: string
   label: string
-  icon: React.ComponentType<{ className?: string }>
   keys: (keyof LabState)[]
   Body: React.ComponentType<{ lab: Lab }>
 }
 
-/** Icon, label, modified dot, reset. */
+/** Label, modified dot, reset. */
 function ChapterHeading({
-  icon: Icon,
   label,
   modified,
   onReset,
 }: {
-  icon: React.ComponentType<{ className?: string }>
   label: string
   modified: boolean
   onReset: () => void
 }) {
   return (
     <div className="mb-1.5 flex h-7 items-center gap-2 px-1">
-      <Icon className="size-3.5 text-fg-muted" />
       <span className="text-[0.8125rem] font-medium text-fg">{label}</span>
       {modified && (
         <>
@@ -58,7 +54,7 @@ function ChapterHeading({
 
 /** One section as a bordered card: heading + body. */
 export function ChapterCard({
-  chapter: { label, icon, keys, Body },
+  chapter: { label, keys, Body },
   lab,
 }: {
   chapter: Chapter
@@ -68,12 +64,11 @@ export function ChapterCard({
   return (
     <section className="rounded-xl border border-border/45 bg-card p-3">
       <ChapterHeading
-        icon={icon}
         label={label}
         modified={status.modified}
         onReset={status.onReset}
       />
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-[var(--lab-gap-control,0.375rem)]">
         <Body lab={lab} />
       </div>
     </section>

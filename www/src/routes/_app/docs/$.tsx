@@ -20,6 +20,19 @@ import {
 import { MiniTOC, TOC, TOCProvider } from "@/modules/docs/toc"
 import browserCollections from "@/.source/browser"
 
+/** Section label above the title on the OG card: the docs folder a page sits
+ *  in, or "Docs" for the top-level pages that have no folder. */
+function ogEyebrow(url: string) {
+  const segments = url
+    .replace(/^\/docs\/?/, "")
+    .split("/")
+    .filter(Boolean)
+  if (segments.length < 2) return "Docs"
+  return segments[0]!
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
 export const Route = createFileRoute("/_app/docs/$")({
   component: DocsPage,
   // Docs content only changes with a build/deploy (Vercel purges the CDN cache
@@ -38,7 +51,7 @@ export const Route = createFileRoute("/_app/docs/$")({
       ? truncateOnWord(description, 148, true)
       : undefined
     const url = loaderData?.url ?? "/docs"
-    const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(title)}${truncatedDescription ? `&description=${encodeURIComponent(truncatedDescription)}` : ""}`
+    const ogImageUrl = `${siteConfig.url}/og?title=${encodeURIComponent(title)}${truncatedDescription ? `&description=${encodeURIComponent(truncatedDescription)}` : ""}&eyebrow=${encodeURIComponent(ogEyebrow(url))}`
 
     return {
       meta: [

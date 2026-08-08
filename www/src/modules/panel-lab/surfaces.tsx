@@ -16,6 +16,7 @@ import {
   GroupCaption,
   OptionGridRow,
   SwitchRow,
+  SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 import type { OptionGridItem } from "@/modules/control-lab/rows"
 
@@ -28,7 +29,7 @@ import {
   SURFACE_RECIPES,
 } from "./data"
 import type { Lab, LabState, SurfaceRecipeId } from "./data"
-import { SegmentedControlRow } from "./patterns"
+import { HeroModes } from "./hero"
 
 /* ------------------------------- Recipe model ------------------------------ */
 
@@ -275,7 +276,7 @@ export function SurfacesSectionBody({ lab }: { lab: Lab }) {
 
   return (
     <>
-      <div className="flex gap-2">
+      <HeroModes>
         {light && lightMode && (
           <SurfaceTile
             label={lightMode.name}
@@ -296,7 +297,7 @@ export function SurfacesSectionBody({ lab }: { lab: Lab }) {
             background={darkTheme.background}
           />
         )}
-      </div>
+      </HeroModes>
       <OptionGridRow
         label="Delineation"
         value={state.surfaceDelineation}

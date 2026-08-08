@@ -13,7 +13,6 @@
 
 import { useContext, useMemo, useState } from "react"
 import {
-  CheckIcon,
   MoonIcon,
   PlusIcon,
   RotateCcwIcon,
@@ -22,8 +21,7 @@ import {
   XIcon,
 } from "lucide-react"
 
-import { STEPS, toHex, toOklch, wcag2 } from "@dotui/colors"
-import type { StepName, Theme } from "@dotui/colors"
+import { toHex, toOklch, wcag2 } from "@dotui/colors"
 
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import { cn } from "@/registry/lib/utils"
@@ -34,16 +32,13 @@ import { ColorSwatch } from "@/registry/ui/color-swatch"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from "@/registry/ui/segmented-control"
-import {
   Slider,
   SliderControl,
   SliderFill,
   SliderThumb,
   SliderTrack,
 } from "@/registry/ui/slider"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import {
   ColorPickerRow,
   ControlGroup,
@@ -55,16 +50,12 @@ import {
   ROW_LABEL,
   ROW_VALUE,
   RowOverlayPlacementContext,
+  SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 
 import { DEFAULTS, PRIMARY_OPTIONS } from "./data"
 import type { Lab, LabMode, LabState } from "./data"
-import {
-  DetailRow,
-  PickerPopoverContent,
-  SegmentedControlRow,
-  SwatchDots,
-} from "./patterns"
+import { DetailRow, PickerPopoverContent, SwatchDots } from "./patterns"
 
 /* ------------------------------ Config bridge ------------------------------ */
 
@@ -259,134 +250,44 @@ function instantiate(
   return { ...archetype, id, name }
 }
 
-/* ---------------------------------- Hero ----------------------------------- */
+/* ----------------------------- Contrast status ----------------------------- */
 
-const HERO_PALETTES = ["accent", "neutral"] as const
-
-/** Real engine output for the ACTIVE mode: ramps, tappable steps, the
- *  report's verdict, the seed's snap price. The mode chips replace v1's
- *  sun/moon switch — and disappear entirely when the system has one mode. */
-function EngineHero({
-  lab,
-  theme,
-  mode,
-  modes,
-  onModeChange,
+/** The report as a passive indicator: nothing when guarantees pass, a warning
+ *  glyph opening the details on hover when they don't. Diagnostics, not
+ *  content — the section leads with the controls. */
+function ContrastWarnings({
+  warnings,
+  delta,
+  pinned,
 }: {
-  lab: Lab
-  theme: Theme
-  mode: LabMode
-  modes: LabMode[]
-  onModeChange: (id: string) => void
+  warnings: string[]
+  /** The brand seed's snap price (ΔE), context for why steps moved. */
+  delta: number
+  pinned: boolean
 }) {
-  const { state, set } = lab
-  const [inspect, setInspect] = useState<{
-    palette: string
-    step: StepName
-  } | null>(null)
-
-  const m = theme[mode.polarity]
-  const bg = toOklch(m.background)
-  const warnings = theme.report.warnings.length
-  const delta = theme.report.seedDelta.accent ?? 0
-  const inspected = inspect ? m.scales[inspect.palette]?.[inspect.step] : null
-
+  if (warnings.length === 0) return null
   return (
-    <div className="flex flex-col gap-2 rounded-xl bg-muted p-3">
-      <div className="flex items-center justify-between gap-3">
-        <span
-          className="flex min-w-0 items-center gap-1.5 text-xs text-fg-muted"
-          title={theme.report.warnings.join("\n") || undefined}
-        >
-          {warnings === 0 ? (
-            <CheckIcon className="size-3 shrink-0" />
-          ) : (
-            <TriangleAlertIcon className="size-3 shrink-0 text-fg-warning" />
+    <Tooltip delay={150} closeDelay={100}>
+      <Button
+        size="xs"
+        variant="quiet"
+        isIconOnly
+        aria-label={`${warnings.length} contrast warning${warnings.length === 1 ? "" : "s"}`}
+        className="shrink-0 text-fg-warning hover:text-fg-warning"
+      >
+        <TriangleAlertIcon />
+      </Button>
+      <TooltipContent className="max-w-64">
+        <div className="flex flex-col gap-1">
+          {warnings.map((warning, i) => (
+            <p key={i}>{warning}</p>
+          ))}
+          {!pinned && delta >= 0.005 && (
+            <p>Brand snapped ΔE {delta.toFixed(3)} for contrast.</p>
           )}
-          <span className="truncate">
-            {warnings === 0
-              ? "Contrast guarantees pass"
-              : `${warnings} contrast warning${warnings === 1 ? "" : "s"}`}
-          </span>
-        </span>
-        {modes.length > 1 && (
-          <SegmentedControl
-            aria-label="Preview mode"
-            selectedKeys={[mode.id]}
-            onSelectionChange={(keys) => {
-              const next = keys.values().next().value
-              if (next) onModeChange(next as string)
-            }}
-            className="no-scrollbar min-w-0 shrink overflow-x-auto bg-bg/50 p-0.5"
-          >
-            {modes.map((entry) => (
-              <SegmentedControlItem
-                key={entry.id}
-                id={entry.id}
-                className="text-xs whitespace-nowrap"
-              >
-                {entry.name}
-              </SegmentedControlItem>
-            ))}
-          </SegmentedControl>
-        )}
-      </div>
-
-      {HERO_PALETTES.map((palette) => (
-        <div key={palette} className="flex h-5 overflow-hidden rounded-md">
-          {STEPS.map((step) => {
-            const selected =
-              inspect?.palette === palette && inspect.step === step
-            return (
-              <button
-                key={step}
-                type="button"
-                aria-label={`Inspect ${palette} ${step}`}
-                aria-pressed={selected}
-                className={cn(
-                  "flex-1 cursor-interactive focus-reset focus-visible:z-10 focus-visible:focus-ring",
-                  selected && "z-10 rounded-[3px] ring-2 ring-bg ring-inset",
-                )}
-                style={{ backgroundColor: m.scales[palette]?.[step] }}
-                onClick={() => setInspect(selected ? null : { palette, step })}
-              />
-            )
-          })}
         </div>
-      ))}
-
-      {inspect && inspected && (
-        <div className="flex items-center justify-between gap-3 font-mono text-xs text-fg-muted tabular-nums">
-          <span>
-            {inspect.palette} · {inspect.step}
-          </span>
-          <span className="flex items-center gap-3">
-            <span className="uppercase">{cssToHex(inspected)}</span>
-            <span>{wcag2(toOklch(inspected), bg).toFixed(2)}:1 vs bg</span>
-          </span>
-        </div>
-      )}
-
-      {state.preserveSeed ? (
-        <p className="text-xs text-fg-muted">
-          Brand pinned verbatim — any contrast cost is priced in the report.
-        </p>
-      ) : delta >= 0.005 ? (
-        <div className="flex items-center justify-between gap-3 text-xs text-fg-muted">
-          <span className="truncate">
-            Brand snapped ΔE {delta.toFixed(3)} for contrast
-          </span>
-          <Button
-            size="xs"
-            variant="quiet"
-            className="shrink-0"
-            onPress={() => set("preserveSeed")(true)}
-          >
-            Pin exact
-          </Button>
-        </div>
-      ) : null}
-    </div>
+      </TooltipContent>
+    </Tooltip>
   )
 }
 
@@ -576,8 +477,9 @@ function AutoColorRow({
   )
 }
 
-/** AutoColorRow at sub-row scale, for the semantic seeds inside a DetailRow. */
-function MiniAutoColorRow({
+/** AutoColorRow on the tile geometry (ColorPickerRow's tile layout) — for the
+ *  semantic seeds, two up. Reset appears in the corner once overridden. */
+function AutoColorTile({
   label,
   value,
   derived,
@@ -596,18 +498,24 @@ function MiniAutoColorRow({
       onChange={(c) => onChange(c.toString("hex"))}
     >
       {({ color }) => (
-        <div className="flex items-center gap-0.5">
+        <div className="relative">
           <Button
             variant="quiet"
-            className="flex h-9 min-w-0 flex-1 items-center justify-between gap-3 rounded-lg px-2 font-normal"
+            className="flex h-auto w-full items-center justify-between gap-3 rounded-xl bg-muted p-3 text-left font-normal hover:bg-highlight pressed:bg-highlight"
           >
-            <span className="truncate text-xs text-fg-muted">{label}</span>
-            <span className="flex shrink-0 items-center gap-2">
-              <span className="font-mono text-xs text-fg-muted uppercase">
+            <span className="flex min-w-0 flex-col gap-0.5">
+              <span className={ROW_LABEL}>{label}</span>
+              <span
+                className={cn(
+                  ROW_VALUE,
+                  "text-xs",
+                  value && "font-mono uppercase",
+                )}
+              >
                 {value ? color.toString("hex") : "Auto"}
               </span>
-              <ColorSwatch className="size-4 rounded-full" />
             </span>
+            <ColorSwatch className="size-5 shrink-0 rounded-full" />
           </Button>
           {value !== "" && (
             <Button
@@ -616,7 +524,7 @@ function MiniAutoColorRow({
               isIconOnly
               aria-label={`Reset ${label} to auto`}
               onPress={onReset}
-              className="shrink-0 text-fg-muted"
+              className="absolute top-1 right-1 text-fg-muted"
             >
               <RotateCcwIcon />
             </Button>
@@ -744,9 +652,6 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
     m.scales.selection?.["700"] ??
     (state.primary === "accent" ? solid("accent") : solid("neutral"))
 
-  const semanticModified =
-    SEMANTIC_SEEDS.some(({ key }) => state[key] !== "") ||
-    state.selectionSeed !== ""
   const fineModified = FINE_KEYS.some((key) => state[key] !== DEFAULTS[key])
 
   const setModes = set("modes")
@@ -771,13 +676,7 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
 
   return (
     <>
-      <EngineHero
-        lab={lab}
-        theme={theme}
-        mode={active}
-        modes={modes}
-        onModeChange={setActiveId}
-      />
+      {/* Palette first: the base seeds, then the semantic set two up. */}
       <ControlGroup>
         <ColorPickerRow
           label="Brand"
@@ -791,17 +690,46 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
           onChange={set("graySeed")}
           onReset={() => set("graySeed")("")}
         />
+      </ControlGroup>
+      <div className="grid grid-cols-2 gap-1.5">
+        {SEMANTIC_SEEDS.map(({ key, palette, label }) => (
+          <AutoColorTile
+            key={key}
+            label={label}
+            value={state[key]}
+            derived={solid(palette)}
+            onChange={set(key)}
+            onReset={() => set(key)("")}
+          />
+        ))}
+      </div>
+      <div className="flex items-start justify-between gap-2 pr-2">
+        <GroupCaption>
+          One required seed. Every Auto color derives from it — override any,
+          reset back anytime.
+        </GroupCaption>
+        <ContrastWarnings
+          warnings={theme.report.warnings}
+          delta={theme.report.seedDelta.accent ?? 0}
+          pinned={state.preserveSeed}
+        />
+      </div>
+      {/* Then the role decisions the palette feeds. */}
+      <ControlGroup>
         <SegmentedControlRow
           label="Primary"
           value={state.primary}
           onChange={set("primary")}
           options={PRIMARY_OPTIONS}
         />
+        <AutoColorRow
+          label="Selection"
+          value={state.selectionSeed}
+          derived={selectionDerived}
+          onChange={set("selectionSeed")}
+          onReset={() => set("selectionSeed")("")}
+        />
       </ControlGroup>
-      <GroupCaption>
-        One required seed. Every Auto row derives from it — override any, reset
-        back anytime.
-      </GroupCaption>
       <DetailRow
         label="Modes"
         summary={
@@ -829,35 +757,6 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
           />
         ))}
         <AddModeRow disabled={modes.length >= MAX_MODES} onAdd={addMode} />
-      </DetailRow>
-      <DetailRow
-        label="Semantic colors"
-        summary={
-          <span className="flex items-center gap-1.5">
-            {semanticModified ? null : <span className={ROW_VALUE}>Auto</span>}
-            <SwatchDots
-              colors={SEMANTIC_SEEDS.map(({ palette }) => solid(palette))}
-            />
-          </span>
-        }
-      >
-        {SEMANTIC_SEEDS.map(({ key, palette, label }) => (
-          <MiniAutoColorRow
-            key={key}
-            label={label}
-            value={state[key]}
-            derived={solid(palette)}
-            onChange={set(key)}
-            onReset={() => set(key)("")}
-          />
-        ))}
-        <MiniAutoColorRow
-          label="Selection"
-          value={state.selectionSeed}
-          derived={selectionDerived}
-          onChange={set("selectionSeed")}
-          onReset={() => set("selectionSeed")("")}
-        />
       </DetailRow>
       <DetailRow
         label="Fine-tune"

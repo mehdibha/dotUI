@@ -8,13 +8,16 @@
 
 import { createContext, useContext, useState } from "react"
 import {
+  CheckIcon,
   ChevronDownIcon,
+  ChevronLeftIcon,
   ChevronRightIcon,
   ChevronsUpDownIcon,
   RotateCcwIcon,
   SearchIcon,
   XIcon,
 } from "lucide-react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import {
   Button as RacButton,
   ListBox as RacListBox,
@@ -54,6 +57,10 @@ import {
 } from "@/registry/ui/number-field"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
+import {
+  SegmentedControl,
+  SegmentedControlItem,
+} from "@/registry/ui/segmented-control"
 import { Select, SelectValue } from "@/registry/ui/select"
 import {
   Slider,
@@ -114,17 +121,31 @@ export function RowLabel({
 /**
  * Fuses adjacent rows into one card: shared surface, hairline separators,
  * only the group's corners round — the grouped-list look. Rows opt in by
- * carrying `data-row` on their surface element.
+ * carrying `data-row` on their surface element; a `data-preview` stage opts
+ * in the same way but keeps its own surface and border, becoming the framed
+ * specimen the rows below configure. Only its bottom edge squares off — the
+ * top corners keep the group's radius, or the clip would shave the frame.
  */
 export function ControlGroup({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex w-full flex-col divide-y divide-bg/50 overflow-hidden rounded-xl bg-muted **:data-row:rounded-none **:data-row:bg-transparent">
+    <div className="flex w-full flex-col divide-y divide-bg/50 overflow-hidden rounded-xl bg-muted **:data-preview:rounded-b-none **:data-row:rounded-none **:data-row:bg-transparent">
       {children}
     </div>
   )
 }
 
-/* ------------------------------ Group caption ----------------------------- */
+/* -------------------------- Group title / caption -------------------------- */
+
+/** The line that opens a group: what the rows under it configure. Quieter
+ *  than the chapter heading above it, heavier than the caption that closes
+ *  it, and bound to its group — the margin sits on top, never between. */
+export function GroupTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="mt-2.5 px-1 text-xs font-medium text-fg-muted first:mt-0">
+      {children}
+    </span>
+  )
+}
 
 /** iOS-style footnote under a group: one sentence of context for the axis. */
 export function GroupCaption({ children }: { children: React.ReactNode }) {
@@ -385,12 +406,19 @@ export function SelectRow({
                 key={opt.value}
                 id={opt.value}
                 textValue={opt.label}
-                className="flex min-w-0 cursor-interactive flex-col items-center gap-2 rounded-lg bg-muted p-4 text-fg-muted outline-hidden transition-transform select-none focus:bg-highlight focus:text-fg-on-highlight motion-safe:pressed:scale-[0.98] selected:text-fg selected:inset-ring selected:inset-ring-accent"
+                className="relative flex min-w-0 cursor-interactive flex-col items-center gap-2 rounded-lg bg-muted p-4 text-fg-muted outline-hidden transition-transform select-none focus:bg-highlight focus:text-fg-on-highlight motion-safe:pressed:scale-[0.98] selected:text-fg"
               >
-                <span className="flex h-9 items-center justify-center text-fg **:[svg]:size-6">
-                  {opt.illustration ?? opt.icon}
-                </span>
-                <span className="truncate text-xs">{opt.label}</span>
+                {({ isSelected }) => (
+                  <>
+                    {isSelected && (
+                      <CheckIcon className="absolute top-2 right-2 size-3.5" />
+                    )}
+                    <span className="flex h-9 items-center justify-center text-fg **:[svg]:size-6">
+                      {opt.illustration ?? opt.icon}
+                    </span>
+                    <span className="truncate text-xs">{opt.label}</span>
+                  </>
+                )}
               </RacListBoxItem>
             ))}
           </RacListBox>
@@ -433,16 +461,22 @@ export function ColorPickerRow({
   layout = "row",
   value,
   onChange,
+  ramp,
 }: {
   label: string
   description?: string
   /** `tile` trades the row's width for height: the swatch becomes the face of
-   *  the control, big enough to judge the color rather than identify it. */
-  layout?: "row" | "tile"
+   *  the control, big enough to judge the color rather than identify it.
+   *  `palette` keeps the row line and adds the resolved scale under it —
+   *  the seed and what it becomes, in one trigger. Requires `ramp`. */
+  layout?: "row" | "tile" | "palette"
   value: string
   onChange: (hex: string) => void
+  /** The resolved scale the seed produces, lightest step first (`palette`). */
+  ramp?: string[]
 }) {
   const tile = layout === "tile"
+  const palette = layout === "palette"
   const rowPlacement = useContext(RowOverlayPlacementContext)
   return (
     <ColorPicker value={value} onChange={(c) => onChange(c.toString("hex"))}>
@@ -465,6 +499,36 @@ export function ColorPickerRow({
                 )}
               </span>
               <ColorSwatch className="size-5 shrink-0 rounded-full" />
+            </Button>
+          ) : palette ? (
+            <Button
+              variant="quiet"
+              data-row=""
+              className={cn(
+                ROW,
+                "flex h-auto flex-col items-stretch gap-2.5 px-4 py-3 text-left hover:bg-highlight pressed:bg-highlight",
+              )}
+            >
+              <span className="flex items-center justify-between gap-3">
+                <RowLabel label={label} description={description} />
+                <span className="flex shrink-0 items-center gap-2.5">
+                  <span className={cn(ROW_VALUE, "font-mono uppercase")}>
+                    {color.toString("hex")}
+                  </span>
+                  <ColorSwatch className="size-5 rounded-full" />
+                </span>
+              </span>
+              {/* Hairline: the near-white end would otherwise dissolve into
+                  the row and the scale would look short. */}
+              <span className="flex h-5 overflow-hidden rounded-full inset-ring-1 inset-ring-border/60">
+                {ramp?.map((step, i) => (
+                  <span
+                    key={i}
+                    className="flex-1"
+                    style={{ background: step }}
+                  />
+                ))}
+              </span>
             </Button>
           ) : (
             <Button
@@ -1021,6 +1085,34 @@ export function SwitchRow({
   )
 }
 
+/* -------------------------------- Specimens -------------------------------- */
+
+/* The metrics every specimen shares, so the same component reads identically
+   whether it sits in an option card or on a preview stage. Surface and radius
+   stay with the caller — those are what a specimen is there to show. */
+export const SPECIMEN_BUTTON =
+  "flex h-8 items-center px-3.5 text-[0.8125rem] font-medium"
+export const SPECIMEN_FIELD =
+  "flex h-8 w-full min-w-0 items-center px-2.5 text-[0.8125rem]"
+
+/* Spans, not real controls: a button can't nest in the option card's toggle. */
+
+export function MiniButton({ className }: { className: string }) {
+  return (
+    <span className={cn(SPECIMEN_BUTTON, "rounded-(--btn-radius)", className)}>
+      Button
+    </span>
+  )
+}
+
+export function MiniInput({ className }: { className: string }) {
+  return (
+    <span className={cn(SPECIMEN_FIELD, "text-fg-muted", className)}>
+      Value
+    </span>
+  )
+}
+
 /* ------------------------------- Option grid ------------------------------- */
 
 export interface OptionGridItem {
@@ -1111,10 +1203,12 @@ export function OptionGridRow({
   const selected = options.find((o) => o.id === value)
   return (
     <div className="w-full rounded-xl bg-muted p-2">
+      {/* mb-1 + the h-8 line box's slack ≈ the 10px header-to-content gap the
+          palette row sets with gap-2.5; the described padding lands there too. */}
       <div
         className={cn(
-          "flex h-8 items-center justify-between gap-3 px-2",
-          description && "h-auto pt-1.5 pb-2",
+          "mb-1 flex h-8 items-center justify-between gap-3 px-2",
+          description && "h-auto py-1.5",
         )}
       >
         <RowLabel label={label} description={description} />
@@ -1132,6 +1226,117 @@ export function OptionGridRow({
   )
 }
 
+/* ------------------------------ Option pager ------------------------------- */
+
+/** The step chevron shared by both arrow placements. */
+function PagerArrowButton({
+  direction,
+  onPress,
+}: {
+  direction: -1 | 1
+  onPress: () => void
+}) {
+  const Icon = direction === 1 ? ChevronRightIcon : ChevronLeftIcon
+  return (
+    <RacButton
+      aria-label={direction === 1 ? "Next option" : "Previous option"}
+      onPress={onPress}
+      className="flex size-7 shrink-0 cursor-interactive items-center justify-center rounded-md text-fg-muted focus-reset transition-colors hover:bg-white/5 hover:text-fg focus-visible:focus-ring pressed:bg-white/10"
+    >
+      <Icon className="size-3.5" />
+    </RacButton>
+  )
+}
+
+/**
+ * OptionGridRow's purpose in a single card: one option's specimen at a time,
+ * chevrons stepping through the rest. Stepping is selecting — landing on an
+ * option picks it — and the ends wrap. For sets too long for a grid.
+ */
+export function OptionPagerRow({
+  label,
+  description,
+  value,
+  onChange,
+  options,
+}: {
+  label: string
+  description?: string
+  value: string
+  onChange: (id: string) => void
+  options: OptionGridItem[]
+}) {
+  const index = Math.max(
+    0,
+    options.findIndex((option) => option.id === value),
+  )
+  const selected = options[index]
+  // The chevron pressed decides which side the incoming specimen enters from.
+  const [direction, setDirection] = useState(1)
+  const reducedMotion = useReducedMotion()
+  const offset = reducedMotion ? 0 : direction * 60
+  const step = (delta: number) => {
+    const next = options[(index + delta + options.length) % options.length]
+    if (next) {
+      setDirection(delta)
+      onChange(next.id)
+    }
+  }
+  return (
+    <div className="w-full rounded-xl bg-muted p-2">
+      {/* Same 10px header-to-content rhythm as OptionGridRow. */}
+      <div
+        className={cn(
+          "mb-1 flex h-8 items-center justify-between gap-3 px-2",
+          description && "h-auto py-1.5",
+        )}
+      >
+        <RowLabel label={label} description={description} />
+        <span aria-live="polite" className={ROW_VALUE}>
+          {selected?.label}
+        </span>
+      </div>
+      <div className="flex items-center gap-1">
+        <PagerArrowButton direction={-1} onPress={() => step(-1)} />
+        {/* The frame is the constant — specimens slide through it from the
+            side of the chevron pressed; the accent dot below marks selection. */}
+        <div className="relative min-w-0 flex-1 overflow-hidden rounded-lg bg-bg p-4">
+          <AnimatePresence initial={false} custom={offset} mode="popLayout">
+            <motion.span
+              key={selected?.id}
+              custom={offset}
+              variants={{
+                enter: (o: number) => ({ x: `${o}%`, opacity: 0 }),
+                center: { x: "0%", opacity: 1 },
+                exit: (o: number) => ({ x: `${-o}%`, opacity: 0 }),
+              }}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.25, ease: [0.25, 1, 0.5, 1] }}
+              className="flex w-full min-w-0 items-center justify-center"
+            >
+              {selected?.preview}
+            </motion.span>
+          </AnimatePresence>
+        </div>
+        <PagerArrowButton direction={1} onPress={() => step(1)} />
+      </div>
+      <div className="flex items-center justify-center gap-1.5 pt-2 pb-1">
+        {options.map((option) => (
+          <span
+            key={option.id}
+            className={cn(
+              "h-1.5 rounded-full transition-[width,background-color] duration-200 ease-out",
+              option.id === value ? "w-3 bg-accent" : "w-1.5 bg-fg/20",
+            )}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 /* -------------------------------- Segmented -------------------------------- */
 
 export interface SegmentedRowOption {
@@ -1141,8 +1346,12 @@ export interface SegmentedRowOption {
   ariaLabel?: string
 }
 
-/** A segmented control shaped as a settings row: label left, joined pills right. */
-export function SegmentedRow({
+/**
+ * A segmented control shaped as a settings row: label left, joined pills
+ * right. Built on the real `ui/segmented-control` rather than a hand-styled
+ * toggle group — one implementation to keep in step with the registry.
+ */
+export function SegmentedControlRow({
   label,
   description,
   value,
@@ -1160,36 +1369,31 @@ export function SegmentedRow({
       data-row=""
       className={cn(
         ROW,
-        "flex items-center justify-between gap-3 px-4",
+        "flex items-center justify-between gap-3 pr-1.5 pl-4",
         description && ROW_DESCRIBED,
       )}
     >
       <RowLabel label={label} description={description} />
-      <RacToggleButtonGroup
+      <SegmentedControl
         aria-label={label}
-        selectionMode="single"
-        disallowEmptySelection
         selectedKeys={[value]}
         onSelectionChange={(keys) => {
           const next = keys.values().next().value
           if (next) onChange(next as string)
         }}
-        className="flex h-8 shrink-0 items-center gap-0.5 rounded-lg bg-bg/50 p-0.5"
+        className="shrink-0 bg-bg/50 p-0.5"
       >
         {options.map((option) => (
-          <RacToggleButton
+          <SegmentedControlItem
             key={option.value}
             id={option.value}
             aria-label={option.ariaLabel}
-            className="relative isolate flex h-7 cursor-interactive items-center rounded-md px-3 text-[0.8125rem] text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring selected:text-fg **:[svg]:size-3.5"
+            className="text-xs"
           >
-            <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-md bg-highlight duration-150 ease-out motion-safe:transition-[translate,width,height]" />
-            <span className="relative z-10 flex items-center">
-              {option.label}
-            </span>
-          </RacToggleButton>
+            {option.label}
+          </SegmentedControlItem>
         ))}
-      </RacToggleButtonGroup>
+      </SegmentedControl>
     </div>
   )
 }
@@ -1230,28 +1434,36 @@ export function StepperRow({
         data-row=""
         className={cn(
           ROW,
-          "flex items-center justify-between gap-3 px-4",
+          // pr-2 matches the 8px the 28px group leaves above and below it, so
+          // the control sits equally inset on all three sides.
+          "flex items-center justify-between gap-3 pr-2 pl-4",
           description && ROW_DESCRIBED,
         )}
       >
         <RowLabel label={label} description={description} />
-        <div className="flex shrink-0 items-center gap-0.5">
-          <NumberFieldDecrement
-            variant="quiet"
-            size="sm"
-            className="rounded-lg bg-bg/50 hover:bg-bg/75"
-          />
-          {/* Padded, not just gapped: the unit sits at the block's right edge,
-              so without it the suffix would touch the increment button. */}
-          <div className="flex items-baseline px-1.5">
-            <Input className="h-7 w-8 border-0 bg-transparent p-0 text-center text-[0.8125rem] tabular-nums" />
+        {/* Value first, then the pair that nudges it: the number reads as the
+            row's value like any other row, instead of being split by its own
+            controls. */}
+        <div className="flex shrink-0 items-center gap-2">
+          <div className="flex items-baseline gap-0.5">
+            <Input className="h-7 w-8 border-0 bg-transparent p-0 text-right text-[0.8125rem] tabular-nums" />
             {unit && <span className={cn(ROW_VALUE, "text-xs")}>{unit}</span>}
           </div>
-          <NumberFieldIncrement
-            variant="quiet"
-            size="sm"
-            className="rounded-lg bg-bg/50 hover:bg-bg/75"
-          />
+          {/* The surface sits on each button, not on a wrapper, so the 1px gap
+              between them lets the row show through as the hairline. Outer
+              corners round, inner corners square: one widget, two halves. */}
+          <div className="flex items-center gap-px">
+            <NumberFieldDecrement
+              variant="quiet"
+              size="sm"
+              className="size-7 rounded-l-lg rounded-r-none bg-bg/50 hover:bg-bg/75"
+            />
+            <NumberFieldIncrement
+              variant="quiet"
+              size="sm"
+              className="size-7 rounded-l-none rounded-r-lg bg-bg/50 hover:bg-bg/75"
+            />
+          </div>
         </div>
       </div>
     </NumberField>
@@ -1305,9 +1517,9 @@ export function MiniSegmented({
           key={option.value}
           id={option.value}
           aria-label={option.ariaLabel}
-          className="relative isolate flex h-6 cursor-interactive items-center rounded-[5px] px-2 text-xs text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring selected:text-fg **:[svg]:size-3"
+          className="relative isolate flex h-6 cursor-interactive items-center rounded-sm px-2 text-xs text-fg-muted focus-reset transition-colors hover:text-fg focus-visible:focus-ring selected:text-fg **:[svg]:size-3"
         >
-          <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-[5px] bg-highlight duration-150 ease-out motion-safe:transition-[translate,width,height]" />
+          <SelectionIndicator className="pointer-events-none absolute inset-0 rounded-sm bg-highlight duration-150 ease-out motion-safe:transition-[translate,width,height]" />
           <span className="relative z-10 flex items-center">
             {option.label}
           </span>

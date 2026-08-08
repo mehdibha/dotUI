@@ -3,23 +3,15 @@
 /* Drafts — the open PRs reworking a panel section, their actual bodies pulled
    in so each is previewed and usable here, not just linked.
 
-   Several are competing takes on the SAME section (three at Color, two at
-   Type), so this is a menu to choose from, not a changelog. A draft renders
-   the full panel with its body swapped into the matching chapter, so it reads
-   against v1/v2 end to end.
+   Several are competing takes on the SAME section (three at Color), so this
+   is a menu to choose from, not a changelog. A draft renders the full panel
+   with its body swapped into the matching chapter, so it reads against v1/v2
+   end to end.
 
    Their state keys live in data.tsx under "Draft-only state". When a draft
    wins, fold its body into a new version and delete the entry. */
 
-import { LayersIcon, PaletteIcon, SmileIcon, TypeIcon } from "lucide-react"
-
-import {
-  ICON_KEYS,
-  TYPE_KEYS,
-  WORKING_COLOR_KEYS,
-  type Lab,
-  type LabState,
-} from "./data"
+import { WORKING_COLOR_KEYS, type Lab, type LabState } from "./data"
 import {
   ColorSectionV2Body as Color560,
   SurfacesSectionBody as Surfaces560,
@@ -29,11 +21,8 @@ import {
   SurfacesSectionBody as Surfaces561,
 } from "./drafts/color-561"
 import { ColorSectionV2Body as Color562 } from "./drafts/color-562"
-import { IdealIconsSectionBody as Icons564 } from "./drafts/icons-564"
 import { HoverPreviewFrame } from "./drafts/preview-594"
 import { SurfacesSectionBody as Surfaces562 } from "./drafts/surfaces-562"
-import { IdealTypeSectionBody as Type563 } from "./drafts/type-563"
-import { IdealTypeSectionBody as Type565 } from "./drafts/type-565"
 import type { Chapter } from "./variants/chapter"
 
 const SURFACE_KEYS: (keyof LabState)[] = [
@@ -42,31 +31,10 @@ const SURFACE_KEYS: (keyof LabState)[] = [
   "modalBlur",
   "modalBackdrop",
 ]
-const TYPE_563_KEYS: (keyof LabState)[] = [
-  ...TYPE_KEYS,
-  "headingWeight",
-  "headingTracking",
-  "baseSize",
-  "typeScale",
-]
-const TYPE_565_KEYS: (keyof LabState)[] = [
-  ...TYPE_KEYS,
-  "headingWeight",
-  "headingTrackingEm",
-  "typeBase",
-  "typeRatio",
-  "bodyLeading",
-]
-const ICON_564_KEYS: (keyof LabState)[] = [
-  ...ICON_KEYS,
-  "iconStrokeAuto",
-  "iconScale",
-]
 
 const colorChapter = (Body: Chapter["Body"]): Chapter => ({
   id: "color",
   label: "Color",
-  icon: PaletteIcon,
   keys: WORKING_COLOR_KEYS,
   Body,
 })
@@ -74,7 +42,6 @@ const colorChapter = (Body: Chapter["Body"]): Chapter => ({
 const surfacesChapter = (Body: Chapter["Body"]): Chapter => ({
   id: "surfaces",
   label: "Surfaces",
-  icon: LayersIcon,
   keys: SURFACE_KEYS,
   Body,
 })
@@ -122,40 +89,6 @@ export const DRAFTS: Draft[] = [
     overrides: [colorChapter(Color562), surfacesChapter(Surfaces562)],
   },
   {
-    id: "pr-563",
-    pr: 563,
-    section: "Type",
-    title: "Ideal Type section",
-    summary:
-      "Replaces the Type body following the lab convention, with a named tracking axis and an explicit type scale.",
-    overrides: [
-      {
-        id: "typography",
-        label: "Type",
-        icon: TypeIcon,
-        keys: TYPE_563_KEYS,
-        Body: Type563,
-      },
-    ],
-  },
-  {
-    id: "pr-565",
-    pr: 565,
-    section: "Type",
-    title: "Ideal Type section",
-    summary:
-      "The other Type take: a live hero, absent-means-default state, and depth behind DetailRows — tracking as a continuous em axis.",
-    overrides: [
-      {
-        id: "typography",
-        label: "Type",
-        icon: TypeIcon,
-        keys: TYPE_565_KEYS,
-        Body: Type565,
-      },
-    ],
-  },
-  {
     id: "pr-594",
     pr: 594,
     section: "Frame",
@@ -164,23 +97,6 @@ export const DRAFTS: Draft[] = [
       "A frame take, sections untouched: hovering, focusing or opening a control floats its live preview beside the panel — one shared container that glides between rows and morphs its content.",
     overrides: [],
     Frame: HoverPreviewFrame,
-  },
-  {
-    id: "pr-564",
-    pr: 564,
-    section: "Icons",
-    title: "Ideal Icons section",
-    summary:
-      "The Icons frame rebuilt for real previews from the icon registry and a fuller axis set.",
-    overrides: [
-      {
-        id: "icons",
-        label: "Icons",
-        icon: SmileIcon,
-        keys: ICON_564_KEYS,
-        Body: Icons564,
-      },
-    ],
   },
 ]
 
