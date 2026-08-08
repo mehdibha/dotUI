@@ -60,9 +60,9 @@ export default function ChartLineLabelCustom() {
       data={data}
       x="month"
       y="desktop"
-      marks={[markers, callouts]}
       labels={{ desktop: SERIES }}
       legend={false}
+      marks={[markers, callouts]}
       ariaLabel="Desktop visitors, with the peak and low months annotated"
     />
   )

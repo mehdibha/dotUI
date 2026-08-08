@@ -2,66 +2,6 @@
   "name": "RadialBarChartProps",
   "description": "Radial bar chart. Give it rows, the field holding each value, and the field\nnaming it. Angles are radians and radii are ratios of the circle the chart\nresolves for its box. Interaction and animation props are shared by every\nfamily — see `ChartBehaviorProps` — and the host props (`height`, `width`,\n`className`, callbacks) live on `Chart`.",
   "props": {
-    "ariaLabel": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Accessible name. Required: a chart is a figure, not decoration.",
-      "required": true
-    },
-    "barLabelFill": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Fill of the ring labels."
-    },
-    "barLabelFontSize": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Font size of the ring labels.",
-      "default": "11"
-    },
-    "barLabels": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Print each ring's name at the start of its arc.",
-      "default": "false"
-    },
-    "barPadding": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Gap between rings, as a share of a ring's thickness. In stacked mode\n(array `value`) it becomes a per-segment radial inset instead.",
-      "default": "0.2 — 0.04 in stacked mode"
-    },
-    "children": {
-      "type": "ReactNode",
-      "typeAst": {
-        "type": "identifier",
-        "name": "ReactNode"
-      },
-      "description": "Overlay rendered above the chart surface, ignoring pointer events."
-    },
-    "cornerRadius": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Corner radius of each arc, in pixels. A large value gives pill ends.",
-      "default": "4"
-    },
     "data": {
       "type": "readonly unknown[]",
       "typeAst": {
@@ -73,49 +13,32 @@
       "description": "The rows to plot. Compared by identity — define it outside render.",
       "required": true
     },
-    "endAngle": {
-      "type": "number",
-      "detailedType": "number | undefined",
+    "value": {
+      "type": "readonly string[] | string",
       "typeAst": {
-        "type": "number"
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
       },
-      "description": "End of the angular sweep, in radians.",
-      "default": "Math.PI * 2"
+      "description": "Field holding the value. One field draws a ring per row; an array of\nfields stacks the first row's values into a single ring.",
+      "required": true
     },
-    "grid": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "name": {
+      "type": "string",
       "typeAst": {
-        "type": "boolean"
+        "type": "string"
       },
-      "description": "Draw concentric grid rings behind the bars.",
-      "default": "false"
-    },
-    "gridTicks": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Approximate number of grid rings.",
-      "default": "4"
-    },
-    "innerRadius": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Inner edge of the innermost ring, as a ratio of the radius.",
-      "default": "0.35"
-    },
-    "inset": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Pixel inset applied before `radiusRatio`."
+      "description": "Field naming each ring.",
+      "required": true
     },
     "labels": {
       "type": "Readonly<Record<string, string>>",
@@ -154,30 +77,32 @@
       },
       "description": "Display names for ring keys, used by the legend and the tooltip."
     },
-    "legend": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Show the color legend.",
-      "default": "false"
-    },
-    "max": {
+    "startAngle": {
       "type": "number",
       "detailedType": "number | undefined",
       "typeAst": {
         "type": "number"
       },
-      "description": "Value that fills the whole sweep. Defaults to the largest value."
+      "description": "Start of the angular sweep, in radians, clockwise from twelve o'clock.",
+      "default": "0"
     },
-    "name": {
-      "type": "string",
+    "endAngle": {
+      "type": "number",
+      "detailedType": "number | undefined",
       "typeAst": {
-        "type": "string"
+        "type": "number"
       },
-      "description": "Field naming each ring.",
-      "required": true
+      "description": "End of the angular sweep, in radians.",
+      "default": "Math.PI * 2"
+    },
+    "innerRadius": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Inner edge of the innermost ring, as a ratio of the radius.",
+      "default": "0.35"
     },
     "outerRadius": {
       "type": "number",
@@ -188,76 +113,6 @@
       "description": "Outer edge of the outermost ring, as a ratio of the radius.",
       "default": "1"
     },
-    "polarMarks": {
-      "type": "readonly PolarMarkLayer[]",
-      "detailedType": "readonly PolarMarkLayer[] | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "application",
-              "base": {
-                "type": "link",
-                "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
-                "name": "PolarMark"
-              },
-              "typeParameters": [
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                }
-              ]
-            }
-          }
-        ]
-      },
-      "description": "Polar mark layers painted over the bars, inside the circle's transform."
-    },
-    "polarMarksBefore": {
-      "type": "readonly PolarMarkLayer[]",
-      "detailedType": "readonly PolarMarkLayer[] | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "application",
-              "base": {
-                "type": "link",
-                "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
-                "name": "PolarMark"
-              },
-              "typeParameters": [
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                }
-              ]
-            }
-          }
-        ]
-      },
-      "description": "Polar mark layers painted under the bars, inside the circle's transform."
-    },
     "radiusRatio": {
       "type": "number",
       "detailedType": "number | undefined",
@@ -267,14 +122,31 @@
       "description": "Shrinks the circle inside its box.",
       "default": "1"
     },
-    "startAngle": {
+    "inset": {
       "type": "number",
       "detailedType": "number | undefined",
       "typeAst": {
         "type": "number"
       },
-      "description": "Start of the angular sweep, in radians, clockwise from twelve o'clock.",
-      "default": "0"
+      "description": "Pixel inset applied before `radiusRatio`."
+    },
+    "barPadding": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Gap between rings, as a share of a ring's thickness. In stacked mode\n(array `value`) it becomes a per-segment radial inset instead.",
+      "default": "0.2 — 0.04 in stacked mode"
+    },
+    "cornerRadius": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Corner radius of each arc, in pixels. A large value gives pill ends.",
+      "default": "4"
     },
     "track": {
       "type": "boolean",
@@ -294,30 +166,158 @@
       "description": "Fill of the background track.",
       "default": "\"var(--color-muted)\""
     },
-    "value": {
-      "type": "readonly string[] | string",
+    "max": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Value that fills the whole sweep. Defaults to the largest value."
+    },
+    "barLabels": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Print each ring's name at the start of its arc.",
+      "default": "false"
+    },
+    "barLabelFill": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Fill of the ring labels."
+    },
+    "barLabelFontSize": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Font size of the ring labels.",
+      "default": "11"
+    },
+    "grid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the grid lines — concentric rings behind the bars.",
+      "default": "false"
+    },
+    "gridTicks": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Approximate number of grid rings.",
+      "default": "4"
+    },
+    "legend": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the color legend. Turn it on when several rings share the chart.",
+      "default": "false"
+    },
+    "ariaLabel": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Accessible name. Required: a chart is a figure, not decoration.",
+      "required": true
+    },
+    "polarMarksBefore": {
+      "type": "readonly PolarMarkLayer[]",
+      "detailedType": "readonly PolarMarkLayer[] | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
-            "type": "string"
+            "type": "undefined"
           },
           {
             "type": "array",
             "elementType": {
-              "type": "string"
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark",
+                "name": "PolarMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
             }
           }
         ]
       },
-      "description": "Field holding the value. One field draws a ring per row; an array of\nfields stacks the first row's values into a single ring.",
-      "required": true
+      "description": "Extra polar mark layers painted under the bars."
+    },
+    "polarMarks": {
+      "type": "readonly PolarMarkLayer[]",
+      "detailedType": "readonly PolarMarkLayer[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark",
+                "name": "PolarMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "description": "Extra polar mark layers painted over the bars — annotations, rules, labels."
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Overlay rendered above the chart surface, ignoring pointer events."
     }
   },
   "typeLinks": {
-    "@tanstack/charts/dist/polar.d.ts:PolarMark": {
+    "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark": {
       "type": "interface",
-      "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
+      "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark",
       "name": "PolarMark",
       "extends": [],
       "properties": {
@@ -362,7 +362,7 @@
                 "name": "context",
                 "value": {
                   "type": "link",
-                  "id": "@tanstack/charts/dist/polar.d.ts:PolarMarkInitializeContext",
+                  "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMarkInitializeContext",
                   "name": "PolarMarkInitializeContext"
                 },
                 "optional": false,
@@ -373,7 +373,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "@tanstack/charts/dist/polar.d.ts:InitializedPolarMark",
+                "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:InitializedPolarMark",
                 "name": "InitializedPolarMark"
               },
               "typeParameters": [
@@ -391,6 +391,46 @@
             "typeParameters": []
           },
           "optional": false,
+          "description": ""
+        },
+        "motion": {
+          "type": "property",
+          "name": "motion",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMotionTiming",
+                "name": "ChartMotionTiming"
+              },
+              {
+                "type": "function",
+                "parameters": [
+                  {
+                    "type": "parameter",
+                    "name": "context",
+                    "value": {
+                      "type": "identifier",
+                      "name": "ChartMotionContext<any>"
+                    },
+                    "optional": false,
+                    "rest": false
+                  }
+                ],
+                "return": {
+                  "type": "identifier",
+                  "name": "ChartMotionTiming | undefined"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
           "description": ""
         }
       },

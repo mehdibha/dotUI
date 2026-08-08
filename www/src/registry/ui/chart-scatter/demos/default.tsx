@@ -24,7 +24,6 @@ export default function ChartScatterDefault() {
       x="size"
       y="load"
       rowKey="route"
-      ariaLabel="First load time by JavaScript bundle size, per route"
       formatX={{
         locale: "en-US",
         number: { style: "unit", unit: "kilobyte" },
@@ -33,6 +32,7 @@ export default function ChartScatterDefault() {
         locale: "en-US",
         number: { style: "unit", unit: "second", maximumFractionDigits: 1 },
       }}
+      ariaLabel="First load time by JavaScript bundle size, per route"
     />
   )
 }

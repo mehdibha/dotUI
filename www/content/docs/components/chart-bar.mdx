@@ -51,14 +51,16 @@ Rows come in two shapes, and the chart reads both.
 
 **Wide** rows carry one field per series — pass them as a `y` array, as above.
 
-**Long** rows carry one value and name their own series. Pass a single `y` and a `series` field:
+**Long** rows carry one value and name their own series. Pass a single `y` and a `series` field, and set `seriesOrder` to lead the color slots and the legend — series the data carries but `seriesOrder` omits follow in the order they first appear:
 
 ```tsx
 const data = [
-  { browser: 'chrome', visitors: 275 },
-  { browser: 'safari', visitors: 200 },
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
 ]
+```
 
+```tsx
 <BarChart data={data} x="browser" y="visitors" series="browser" />
 ```
 
@@ -69,47 +71,52 @@ Naming the category field as `series` is also how each bar gets its own color, a
 `stackY` turns wide rows into long rows carrying the interval each segment spans. Feed it the same fields you would have passed to `y`, then plot `top` over `base`:
 
 ```tsx
-import { stackY } from '@/ui/chart'
+import { stackY } from "@/ui/chart"
 
-const data = stackY(rows, { x: 'month', y: ['desktop', 'mobile', 'tablet'] })
+const stacked = stackY(rows, { x: "month", y: ["desktop", "mobile", "tablet"] })
+```
 
+```tsx
 <BarChart
-  data={data}
+  data={stacked}
   x="x"
   y="top"
   y1="base"
   series="series"
-  seriesOrder={['desktop', 'mobile', 'tablet']}
+  seriesOrder={["desktop", "mobile", "tablet"]}
+  ariaLabel="Visitors per month by device, stacked"
 />
 ```
 
-Call `stackY` at module scope — its result is the `data` identity. Add `normalize: true` for a 100% stack, and format the axis as a percentage with `formatY={{ locale: 'en-US', number: { style: 'percent' } }}`.
+Call `stackY` at module scope — its result is the `data` identity. Positive values stack up from zero and negative values down from it, so a mixed-sign group never overlaps itself. Add `normalize: true` for a 100% stack, and format the axis as a percentage with `formatY={{ locale: "en-US", number: { style: "percent" } }}`.
 
 ## Orientation and grouping
 
 `horizontal` moves the categories to the y axis and the values to x, which is what long category names want. The value axis is still `x`, so `formatX` formats the numbers, and `focus="group-y"` groups the tooltip along the categories.
 
-Multi-series wide data is grouped side by side by default. Set `grouped={false}` to let layers share the band, or `grouped` to group long-format series.
+Multi-series wide data is grouped side by side by default. Set `grouped` to group long-format series too. Without grouping, series that land on the same category share the band and stack from zero rather than overlapping — set `y1` (as `stackY` does) when you want to control the interval yourself.
 
 ## Labels and annotations
 
 `marks` paints layers over the bars and `marksBefore` under them — any mark from `@tanstack/charts`, on the same scales:
 
 ```tsx
-import { text } from '@tanstack/charts/text'
+import { text } from "@tanstack/charts/text"
 
 // Same `z` as the bars, so grouped focus keeps one tooltip row per category.
 const labels = [
   text(data, {
-    x: 'month',
-    y: 'desktop',
-    text: 'desktop',
-    z: () => 'Desktop',
-    fill: 'var(--color-fg-muted)',
+    x: "month",
+    y: "desktop",
+    text: "desktop",
+    z: () => "Desktop",
+    fill: "var(--color-fg-muted)",
     dy: -10,
   }),
 ]
+```
 
+```tsx
 <BarChart data={data} x="month" y="desktop" marks={labels} />
 ```
 
@@ -117,11 +124,10 @@ Both props are compared by identity, like `data`. A layer that depends on state 
 
 ## Accessibility
 
-`ariaLabel` is required: a chart is a figure, not decoration. Describe what the bars measure, not the chart type.
-
-The chart surface is keyboard-focusable. `Tab` moves to it, arrow keys walk the bars, `Home` and `End` jump to the ends, and `Enter` or `Space` pins the tooltip and fires `onSelect`. Grouped focus reads one representative per category, so a grouped or stacked chart announces the whole category at once.
-
-Color alone never carries the meaning: pass `labels` so every series has a name in the legend and tooltip, and keep the legend on when a chart has more than one series.
+- `ariaLabel` is required and names the figure: describe what the bars measure, not the chart type. Add `ariaDescription` when the takeaway needs a sentence.
+- The chart surface is in the tab order. Arrow keys walk the bars, `Home` and `End` jump to the ends, `Enter` and Space pin the tooltip and fire `onSelect`, and `Escape` dismisses it. Grouped focus reads one representative per category, so a grouped or stacked chart announces the whole category at once.
+- Color alone never carries the meaning — pass `labels` so every series has a name in the legend and tooltip, and keep the legend on when a chart has more than one series.
+- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
 
 ## Examples
 

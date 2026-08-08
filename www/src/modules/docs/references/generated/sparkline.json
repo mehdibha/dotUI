@@ -1,6 +1,6 @@
 {
   "name": "SparklineProps",
-  "description": "A tiny, chrome-free chart for stat cards and table cells: one series, no\naxes, no grid, no legend, and no tooltip unless you ask for one. Every\ninteraction and host prop of `Chart` also applies — see `ChartBehaviorProps`\nand `ChartProps`.",
+  "description": "Sparkline. A chrome-free single series for stat cards and table cells: give\nit rows plus the `x` and `y` fields to read — there are no axes, no grid and\nno legend to configure. Interaction and animation props are shared by every\nfamily — see `ChartBehaviorProps` — and the host props (`width`, `className`,\ncallbacks) live on `Chart`.",
   "props": {
     "data": {
       "type": "readonly unknown[]",
@@ -10,7 +10,7 @@
           "type": "unknown"
         }
       },
-      "description": "The rows to plot.",
+      "description": "The rows to plot. Compared by identity — define it outside render.",
       "required": true
     },
     "x": {
@@ -28,6 +28,14 @@
       },
       "description": "Field holding the value.",
       "required": true
+    },
+    "rowKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Stable row identity, so filtered rows animate instead of respawning."
     },
     "mode": {
       "type": "\"area\" | \"line\"",
@@ -112,7 +120,7 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Show the tooltip on hover and keyboard focus.",
+      "description": "Show the tooltip on hover and keyboard focus. Off by default, so the focus\nstops have no live region until you turn it on.",
       "default": "false"
     },
     "ariaLabel": {
@@ -122,14 +130,6 @@
       },
       "description": "Accessible name. Required: a chart is a figure, not decoration.",
       "required": true
-    },
-    "rowKey": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Stable row identity, so sorted or filtered data is retained, not respawned."
     },
     "marksBefore": {
       "type": "readonly ChartMarkLayer[]",
@@ -170,7 +170,7 @@
           }
         ]
       },
-      "description": "Mark layers painted under the line."
+      "description": "Extra mark layers painted under the line."
     },
     "marks": {
       "type": "readonly ChartMarkLayer[]",
@@ -211,7 +211,7 @@
           }
         ]
       },
-      "description": "Mark layers painted over the line — reference rules, end dots, labels."
+      "description": "Extra mark layers painted over the line — annotations, rules, labels."
     },
     "children": {
       "type": "ReactNode",
@@ -309,6 +309,46 @@
             "typeParameters": []
           },
           "optional": false,
+          "description": ""
+        },
+        "motion": {
+          "type": "property",
+          "name": "motion",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMotionTiming",
+                "name": "ChartMotionTiming"
+              },
+              {
+                "type": "function",
+                "parameters": [
+                  {
+                    "type": "parameter",
+                    "name": "context",
+                    "value": {
+                      "type": "identifier",
+                      "name": "ChartMotionContext<any>"
+                    },
+                    "optional": false,
+                    "rest": false
+                  }
+                ],
+                "return": {
+                  "type": "identifier",
+                  "name": "ChartMotionTiming | undefined"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
           "description": ""
         }
       },

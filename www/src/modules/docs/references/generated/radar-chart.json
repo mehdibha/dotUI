@@ -2,40 +2,6 @@
   "name": "RadarChartProps",
   "description": "Radar chart. Give it one row per category plus the fields to read: one `y`\nfield per series for wide rows, or a single `y` with `series` for long rows.\nInteraction and animation props are shared by every family — see\n`ChartBehaviorProps` — and the host props (`height`, `width`, `className`,\ncallbacks) live on `Chart`.",
   "props": {
-    "ariaLabel": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Accessible name. Required: a chart is a figure, not decoration.",
-      "required": true
-    },
-    "axes": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Show the circumference labels.",
-      "default": "true"
-    },
-    "axisDetail": {
-      "type": "ChartFormat",
-      "detailedType": "ChartFormat | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "ChartFormat"
-      },
-      "description": "A second, muted label line above each category label — a function, or serializable `Intl` options."
-    },
-    "children": {
-      "type": "ReactNode",
-      "typeAst": {
-        "type": "identifier",
-        "name": "ReactNode"
-      },
-      "description": "Overlay rendered above the chart surface, ignoring pointer events."
-    },
     "data": {
       "type": "readonly unknown[]",
       "typeAst": {
@@ -44,89 +10,62 @@
           "type": "unknown"
         }
       },
-      "description": "The rows to plot, one per category. Compared by identity — define it outside render.",
+      "description": "The rows to plot. Compared by identity — define it outside render.",
       "required": true
     },
-    "fill": {
-      "type": "number",
-      "detailedType": "number | undefined",
+    "x": {
+      "type": "string",
       "typeAst": {
-        "type": "number"
+        "type": "string"
       },
-      "description": "Series fill opacity. `0` draws outlines only.",
-      "default": "0.6"
+      "description": "Field holding the category laid around the circumference.",
+      "required": true
     },
-    "formatX": {
-      "type": "ChartFormat",
-      "detailedType": "ChartFormat | undefined",
+    "y": {
+      "type": "readonly string[] | string",
       "typeAst": {
-        "type": "identifier",
-        "name": "ChartFormat"
+        "type": "union",
+        "elements": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
       },
-      "description": "Formats the circumference labels and the tooltip title."
+      "description": "One field per series (wide rows), or a single field paired with `series`\n(long rows).",
+      "required": true
     },
-    "formatY": {
-      "type": "ChartFormat",
-      "detailedType": "ChartFormat | undefined",
-      "typeAst": {
-        "type": "identifier",
-        "name": "ChartFormat"
-      },
-      "description": "Formats the tooltip values."
-    },
-    "grid": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Show the rings.",
-      "default": "true"
-    },
-    "gridFill": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Fill opacity of the area inside the outer ring. Omitted leaves it unfilled."
-    },
-    "gridFillColor": {
+    "series": {
       "type": "string",
       "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Color of that fill.",
-      "default": "\"var(--chart-1)\""
+      "description": "Field splitting rows into series — the long-format alternative to `y`."
     },
-    "gridShape": {
-      "type": "\"circle\" | \"polygon\"",
-      "detailedType": "'circle' | 'polygon' | undefined",
+    "seriesOrder": {
+      "type": "readonly string[]",
+      "detailedType": "readonly string[] | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
-            "type": "stringLiteral",
-            "value": "circle"
+            "type": "undefined"
           },
           {
-            "type": "stringLiteral",
-            "value": "polygon"
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
           }
         ]
       },
-      "description": "Ring shape.",
-      "default": "\"polygon\""
-    },
-    "gridTicks": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Number of rings.",
-      "default": "4"
+      "description": "Leading series order — drives color-slot assignment and the legend. Series\nthe data carries but this omits follow it."
     },
     "labels": {
       "type": "Readonly<Record<string, string>>",
@@ -165,22 +104,31 @@
       },
       "description": "Display names for series keys, used by the legend and the tooltip."
     },
-    "legend": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "rowKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "string"
       },
-      "description": "Show the color legend. Turn it off for a single series.",
-      "default": "true"
+      "description": "Stable row identity, so filtered rows animate instead of respawning."
     },
-    "max": {
+    "fill": {
       "type": "number",
       "detailedType": "number | undefined",
       "typeAst": {
         "type": "number"
       },
-      "description": "Outer value of the radius scale. Defaults to the largest value, rounded up."
+      "description": "Series fill opacity. `0` draws outlines only.",
+      "default": "0.6"
+    },
+    "strokeWidth": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Stroke width of the outline.",
+      "default": "2.25"
     },
     "points": {
       "type": "boolean",
@@ -190,6 +138,139 @@
       },
       "description": "Draw a dot at every point.",
       "default": "false"
+    },
+    "radiusRatio": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Fraction of the available radius the chart fills.",
+      "default": "0.78"
+    },
+    "max": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Outer value of the radius scale. Defaults to the largest value, rounded up."
+    },
+    "gridShape": {
+      "type": "\"circle\" | \"polygon\"",
+      "detailedType": "'circle' | 'polygon' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "circle"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "polygon"
+          }
+        ]
+      },
+      "description": "Ring shape.",
+      "default": "\"polygon\""
+    },
+    "gridTicks": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Number of rings.",
+      "default": "4"
+    },
+    "gridFill": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Fill opacity of the area inside the outer ring. Omitted leaves it unfilled."
+    },
+    "gridFillColor": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Color of that fill.",
+      "default": "\"var(--chart-1)\""
+    },
+    "spokes": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Draw the spokes running out to each category.",
+      "default": "matches `grid`"
+    },
+    "axisDetail": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "A second, muted label line above each category label — a function, or\nserializable `Intl` options."
+    },
+    "axes": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the circumference labels.",
+      "default": "true"
+    },
+    "grid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the rings.",
+      "default": "true"
+    },
+    "legend": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the color legend. Turn it off for a single series.",
+      "default": "true"
+    },
+    "formatX": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "Formats the circumference labels and the tooltip title — a function, or\nserializable `Intl` options."
+    },
+    "formatY": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "Formats the tooltip values — a function, or serializable `Intl` options."
+    },
+    "ariaLabel": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Accessible name. Required: a chart is a figure, not decoration.",
+      "required": true
     },
     "polarMarks": {
       "type": "readonly PolarMarkLayer[]",
@@ -206,7 +287,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
+                "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark",
                 "name": "PolarMark"
               },
               "typeParameters": [
@@ -224,102 +305,21 @@
           }
         ]
       },
-      "description": "Extra mark layers spliced into the polar container — cartesian marks would land outside it."
+      "description": "Extra polar mark layers painted over the series — annotations, rules, labels."
     },
-    "radiusRatio": {
-      "type": "number",
-      "detailedType": "number | undefined",
+    "children": {
+      "type": "ReactNode",
       "typeAst": {
-        "type": "number"
+        "type": "identifier",
+        "name": "ReactNode"
       },
-      "description": "Fraction of the available radius the chart fills.",
-      "default": "0.78"
-    },
-    "rowKey": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Stable row identity, so filtered rows animate instead of respawning."
-    },
-    "series": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Field splitting rows into series — the long-format alternative to `y`."
-    },
-    "seriesOrder": {
-      "type": "readonly string[]",
-      "detailedType": "readonly string[] | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "description": "Series order. Drives color-slot assignment and the legend."
-    },
-    "spokes": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Draw the spokes running out to each category.",
-      "default": "matches `grid`"
-    },
-    "strokeWidth": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Stroke width of the outline.",
-      "default": "2.25"
-    },
-    "x": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Field holding the category laid around the circumference.",
-      "required": true
-    },
-    "y": {
-      "type": "readonly string[] | string",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "description": "One field per series (wide rows), or a single field paired with `series`\n(long rows).",
-      "required": true
+      "description": "Overlay rendered above the chart surface, ignoring pointer events."
     }
   },
   "typeLinks": {
-    "@tanstack/charts/dist/polar.d.ts:PolarMark": {
+    "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark": {
       "type": "interface",
-      "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
+      "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark",
       "name": "PolarMark",
       "extends": [],
       "properties": {
@@ -364,7 +364,7 @@
                 "name": "context",
                 "value": {
                   "type": "link",
-                  "id": "@tanstack/charts/dist/polar.d.ts:PolarMarkInitializeContext",
+                  "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMarkInitializeContext",
                   "name": "PolarMarkInitializeContext"
                 },
                 "optional": false,
@@ -375,7 +375,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "@tanstack/charts/dist/polar.d.ts:InitializedPolarMark",
+                "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:InitializedPolarMark",
                 "name": "InitializedPolarMark"
               },
               "typeParameters": [
@@ -393,6 +393,46 @@
             "typeParameters": []
           },
           "optional": false,
+          "description": ""
+        },
+        "motion": {
+          "type": "property",
+          "name": "motion",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMotionTiming",
+                "name": "ChartMotionTiming"
+              },
+              {
+                "type": "function",
+                "parameters": [
+                  {
+                    "type": "parameter",
+                    "name": "context",
+                    "value": {
+                      "type": "identifier",
+                      "name": "ChartMotionContext<any>"
+                    },
+                    "optional": false,
+                    "rest": false
+                  }
+                ],
+                "return": {
+                  "type": "identifier",
+                  "name": "ChartMotionTiming | undefined"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
           "description": ""
         }
       },

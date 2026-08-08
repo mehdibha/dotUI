@@ -1,13 +1,14 @@
 "use client"
 
 import type { ReactNode } from "react"
-import { useId, useRef } from "react"
+import { useRef } from "react"
 import type {
   Channel,
   ChannelField,
   ChannelOutput,
   ChartAnimationOptions,
   ChartAxisOptions,
+  ChartAxisPresentationOptions,
   ChartBuildContext,
   ChartColorOptions,
   ChartDefinition,
@@ -21,9 +22,10 @@ import type {
 } from "@tanstack/charts"
 import { defineChart } from "@tanstack/charts"
 import { colorLegend } from "@tanstack/charts/legend"
-import { renderChartSvgWithResources } from "@tanstack/charts/svg/resources"
-import type { ChartCommonProps } from "@tanstack/react-charts"
-import { Chart as TanChart } from "@tanstack/react-charts"
+import { tooltip as tooltipExtension } from "@tanstack/charts/tooltip"
+import { portal as tooltipPortal } from "@tanstack/charts/tooltip/portal"
+import type { ChartCommonProps } from "@tanstack/react-charts/tooltip"
+import { Chart as TanChart } from "@tanstack/react-charts/tooltip"
 import { scaleBand, scaleLinear, scalePoint } from "d3-scale"
 
 import { cn } from "@/registry/lib/utils"
@@ -110,18 +112,54 @@ interface DecorativeMark {
 
 /* Strips a mark's focus points: it still paints, but never becomes a keyboard
    stop or tooltip target. For tracks, labels, and other decoration whose datum
-   an interactive mark already carries. Accepts cartesian and polar marks. */
+   an interactive mark already carries. The library ships its own `decorative`,
+   but it works through `postDomain`, which the polar container never calls —
+   this one accepts cartesian and polar marks alike. */
 export function decorative<TMark extends DecorativeMark>(mark: TMark): TMark {
   const initialize = (context: never) => {
     const initialized = mark.initialize(context)
     return {
       ...initialized,
       render: (renderContext: never) => ({
-        nodes: initialized.render(renderContext).nodes,
+        nodes: initialized.render(renderContext).nodes.map(stripInteraction),
       }),
     }
   }
   return { ...mark, initialize } as TMark
+}
+
+interface SceneNodeLike {
+  kind?: string
+  children?: readonly unknown[]
+  focus?: { retarget?: boolean; candidates?: readonly unknown[] }
+  [key: string]: unknown
+}
+
+/* Dropping the emitted points is not enough: the scene compiler re-collects
+   focus and tooltip points by walking the nodes, so the metadata has to go from
+   every node, at every depth. Mirrors the library's own scene filter. */
+function stripInteraction(node: unknown): unknown {
+  if (node === null || typeof node !== "object") return node
+  const source = node as SceneNodeLike
+  if (source.kind === "group") {
+    const {
+      focus,
+      states: _states,
+      pointOwner: _groupOwner,
+      focusCandidateIndex: _focusCandidateIndex,
+      ...rest
+    } = source
+    // A retargeting group paints through its candidates, not its children.
+    const children =
+      focus?.retarget && focus.candidates ? focus.candidates : source.children
+    return { ...rest, children: (children ?? []).map(stripInteraction) }
+  }
+  if (source.kind === "label") {
+    const { pointOwner: _labelOwner, ...rest } = source
+    return rest
+  }
+  const { interaction: _interaction, pointOwner: _pointOwner, ...rest } = source
+  return rest
 }
 
 /* Option-object formatters serialize into the memo key, so the most common
@@ -187,8 +225,6 @@ export interface ChartBaseSpecOptions<TDatum> extends ChartFrameOptions {
   marksBefore?: readonly ChartMarkLayer[]
   /** Mark layers painted over the built-ins. */
   marks?: readonly ChartMarkLayer[]
-  /** Scopes declared gradient resources; the components pass `useId()`. */
-  gradientIdPrefix?: string
 }
 
 export interface XYChartSpecOptions<
@@ -203,7 +239,7 @@ export interface XYChartSpecOptions<
   y1?: ChartYField<TDatum>
   /** Field splitting rows into series — the long-format alternative to `y`. */
   series?: ChartSeriesField<TDatum>
-  /** Series order — drives color-slot assignment and the legend. */
+  /** Leading series order — drives color-slot assignment and the legend. */
   seriesOrder?: readonly string[]
   /** Display names for series keys. */
   labels?: Readonly<Record<string, string>>
@@ -223,13 +259,51 @@ export function resolveFormat(
     return (value) => formatter.format(Number(value))
   }
   const formatter = new Intl.DateTimeFormat(format.locale, format.date)
-  return (value) =>
-    formatter.format(value instanceof Date ? value : new Date(value))
+  return (value) => {
+    const date = value instanceof Date ? value : new Date(value)
+    // `Intl` throws on an invalid date; an unparseable value prints as itself.
+    return Number.isNaN(date.getTime()) ? String(value) : formatter.format(date)
+  }
 }
 
 /* ------------------------------------------------------------------ */
 /* Series plan                                                         */
 /* ------------------------------------------------------------------ */
+
+export interface ChartSeriesOptions<TDatum> {
+  data: readonly TDatum[]
+  /** Field splitting rows into series. */
+  series: ChartSeriesField<TDatum>
+  /** Leading series order; series the data adds follow it. */
+  seriesOrder?: readonly string[]
+  /** Display names for series keys. */
+  labels?: Readonly<Record<string, string>>
+}
+
+export interface ChartSeriesPlan<TDatum> {
+  /** Series labels, in color-slot and legend order. */
+  order: readonly string[]
+  /** Reads a row's series label — the color and `z` channel. */
+  seriesOf: (row: TDatum) => string
+}
+
+/* `seriesOrder` leads, then any series only the data carries, so the color
+   domain covers every row and the legend never hides one. Order is derived
+   once, from the data as given, so SSR and the client agree. */
+export function planSeries<TDatum>(
+  options: ChartSeriesOptions<TDatum>,
+): ChartSeriesPlan<TDatum> {
+  const field = options.series as keyof TDatum
+  const labelOf = (key: string) => options.labels?.[key] ?? key
+  const seriesOf = (row: TDatum) => labelOf(String(row[field]))
+  const leading = options.seriesOrder?.map(labelOf) ?? []
+  const listed = new Set(leading)
+  const found = [...new Set(options.data.map(seriesOf))]
+  return {
+    order: [...leading, ...found.filter((label) => !listed.has(label))],
+    seriesOf,
+  }
+}
 
 export interface ChartLayer<TDatum, TXField extends ChartXField<TDatum>> {
   /** Spread straight into a mark's options. */
@@ -241,8 +315,8 @@ export interface ChartLayer<TDatum, TXField extends ChartXField<TDatum>> {
     color: Channel<TDatum, ChartKey | null | undefined>
     key?: ChannelField<TDatum, ChartKey>
   }
-  /** Paints this layer with its palette-slot gradient. */
-  gradientFill: (prefix: string) => VisualChannel<TDatum, string>
+  /** Paints this layer with its palette-slot gradient — see `paletteGradients`. */
+  gradientFill: VisualChannel<TDatum, string>
 }
 
 export interface ChartPlan<TDatum, TXField extends ChartXField<TDatum>> {
@@ -259,20 +333,20 @@ function toFields<T>(value: T | readonly T[]): readonly [T, ...T[]] {
 }
 
 /* Wide rows become one mark layer per `y` field; long rows become a single
-   layer split by the `series` channel. Order is always explicit, never
-   derived from a Set over the data, so SSR and the client agree. */
+   layer split by the `series` channel. Either way every series is in `order`,
+   so a color slot and a gradient slot always exist for it. */
 export function planChart<TDatum, TXField extends ChartXField<TDatum>>(
   options: XYChartSpecOptions<TDatum, TXField>,
 ): ChartPlan<TDatum, TXField> {
   const labelOf = (key: string) => options.labels?.[key] ?? key
   const fields = toFields(options.y)
+  const series = options.series
 
-  if (options.series !== undefined) {
-    const field = options.series as keyof TDatum
-    const seriesOf = (row: TDatum) => labelOf(String(row[field]))
-    const order = options.seriesOrder
-      ? options.seriesOrder.map(labelOf)
-      : [...new Set(options.data.map(seriesOf))]
+  if (series !== undefined) {
+    const { order, seriesOf } = planSeries({ ...options, series })
+    const fills = new Map(
+      order.map((label, slot) => [label, gradientUrl(slot)]),
+    )
     return {
       order,
       layers: [
@@ -285,8 +359,10 @@ export function planChart<TDatum, TXField extends ChartXField<TDatum>>(
             color: seriesOf,
             key: options.rowKey,
           },
-          gradientFill: (prefix) => (row: TDatum) =>
-            `url(#${prefix}-${Math.max(0, order.indexOf(seriesOf(row)))})`,
+          // `order` covers every series in the data; a row outside it would get
+          // a flat palette fill rather than another slot's gradient.
+          gradientFill: (row: TDatum) =>
+            fills.get(seriesOf(row)) ?? paletteColor(0),
         },
       ],
     }
@@ -313,7 +389,7 @@ export function planChart<TDatum, TXField extends ChartXField<TDatum>>(
           color: () => label,
           key: options.rowKey,
         },
-        gradientFill: (prefix) => `url(#${prefix}-${index})`,
+        gradientFill: gradientUrl(index),
       }
     }),
   }
@@ -332,12 +408,19 @@ const SCALES: Record<ChartScaleKind, () => ChartScaleOption> = {
   linear: () => scaleLinear(),
 }
 
+/** Axis options merged over the computed axis; `label` is the axis title. */
+export interface ChartAxisOverrides extends Partial<
+  Omit<ChartAxisOptions, "axis">
+> {
+  label?: string
+}
+
 export interface ChartFrameSpec {
   /** Color-scale domain and legend order — usually `planChart().order`. */
   order?: readonly string[]
   /** Scale kind, or axis overrides merged over the computed axis. */
-  x?: ChartScaleKind | Partial<ChartAxisOptions>
-  y?: ChartScaleKind | Partial<ChartAxisOptions>
+  x?: ChartScaleKind | ChartAxisOverrides
+  y?: ChartScaleKind | ChartAxisOverrides
   /** Axis carrying the grid. */
   grid?: "x" | "y" | "both" | "none"
   /** Merged over the categorical default — a sequential scale goes here. */
@@ -352,16 +435,19 @@ export interface ChartFrame {
 }
 
 function frameAxis(
-  spec: ChartScaleKind | Partial<ChartAxisOptions> | undefined,
+  spec: ChartScaleKind | ChartAxisOverrides | undefined,
   fallback: ChartScaleKind,
-  base: Omit<ChartAxisOptions, "scale">,
+  grid: boolean,
+  presentation: false | ChartAxisPresentationOptions,
 ): ChartAxisOptions {
   const kind = typeof spec === "string" ? spec : fallback
-  const overrides = typeof spec === "string" || spec === undefined ? null : spec
+  const { label, ...overrides }: ChartAxisOverrides =
+    typeof spec === "object" ? spec : {}
   return {
     scale: SCALES[kind],
     nice: kind === "linear",
-    ...base,
+    grid,
+    axis: presentation && { ...presentation, label },
     ...overrides,
   }
 }
@@ -374,27 +460,33 @@ export function chartFrame(
   ctx: ChartBuildContext,
   spec: ChartFrameSpec = {},
 ): ChartFrame {
-  const guide = options.axes ?? chartDefaults.axes
+  const axes = options.axes ?? chartDefaults.axes
   const grid = options.grid ?? chartDefaults.grid
   const where = spec.grid ?? "y"
   const legend =
     (options.legend ?? chartDefaults.legend) ? colorLegend() : undefined
   const order = spec.order ?? []
   return {
-    x: frameAxis(spec.x, "point", {
-      guide,
-      grid: grid && (where === "x" || where === "both"),
-      format: resolveFormat(options.formatX),
-      ticks:
-        ctx.width < chartDefaults.axisTickMinWidth
-          ? chartDefaults.axisTickCountNarrow
-          : undefined,
-    }),
-    y: frameAxis(spec.y, "linear", {
-      guide,
-      grid: grid && (where === "y" || where === "both"),
-      format: resolveFormat(options.formatY),
-    }),
+    x: frameAxis(
+      spec.x,
+      "point",
+      grid && (where === "x" || where === "both"),
+      axes && {
+        ticks: {
+          format: resolveFormat(options.formatX),
+          count:
+            ctx.width < chartDefaults.axisTickMinWidth
+              ? chartDefaults.axisTickCountNarrow
+              : undefined,
+        },
+      },
+    ),
+    y: frameAxis(
+      spec.y,
+      "linear",
+      grid && (where === "y" || where === "both"),
+      axes && { ticks: { format: resolveFormat(options.formatY) } },
+    ),
     color: {
       ...(order.length > 0 ? { domain: order } : null),
       legend,
@@ -410,28 +502,35 @@ export function chartFrame(
 /* Gradients                                                           */
 /* ------------------------------------------------------------------ */
 
-export function gradientPrefix(
-  idPrefix: string | undefined,
-  family: string,
-): string {
-  return `${idPrefix ?? "dotui"}-${family}`
+/* One prefix for the whole design system: the host scopes every declared id
+   with its own instance prefix, so two charts on a page cannot collide. */
+const GRADIENT_ID = "dotui-fill"
+
+function gradientUrl(slot: number): string {
+  return `url(#${GRADIENT_ID}-${slot})`
 }
 
-/** One fade-to-transparent gradient per palette slot, `${prefix}-${index}`. */
-export function paletteGradients(
-  prefix: string,
-  count: number,
-): readonly ChartLinearGradient[] {
+/** A vertical fade from `color` down to near-transparent. */
+export function fadeGradient(id: string, color: string): ChartLinearGradient {
   const [from, to] = chartDefaults.gradientStops
-  return Array.from({ length: count }, (_, index) => ({
-    id: `${prefix}-${index}`,
+  return {
+    id,
     y1: 1,
     y2: 0,
     stops: [
-      { offset: 0, color: paletteColor(index), opacity: from },
-      { offset: 1, color: paletteColor(index), opacity: to },
+      { offset: 0, color, opacity: from },
+      { offset: 1, color, opacity: to },
     ],
-  }))
+  }
+}
+
+/** The gradients `ChartLayer.gradientFill` paints with, one per palette slot. */
+export function paletteGradients(
+  count: number,
+): readonly ChartLinearGradient[] {
+  return Array.from({ length: count }, (_, index) =>
+    fadeGradient(`${GRADIENT_ID}-${index}`, paletteColor(index)),
+  )
 }
 
 /* ------------------------------------------------------------------ */
@@ -457,14 +556,18 @@ export interface StackYOptions<TDatum, TXField extends ChartXField<TDatum>> {
   normalize?: boolean
 }
 
-function finiteOrNull(value: unknown): number | null {
+/** The value when it is a finite number, `null` otherwise — a gap, not a zero. */
+export function finiteOrNull(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) ? value : null
 }
 
 /* Wide rows in, long rows out: `top`/`base` carry the interval the mark draws,
-   `value` keeps the original contribution. Null contributions leave a gap
-   instead of a zero-height band. Call it at module scope — the result is
-   identity-compared. */
+   `value` keeps the original contribution. Positives grow up from zero and
+   negatives down from it, so a mixed-sign group never overlaps itself. Null
+   contributions leave a gap instead of a zero-height band. Call it at module
+   scope — the result is identity-compared.
+   Not `@tanstack/charts/transform/stack`: it takes long-format rows and drops
+   non-finite ones, which would erase our null gaps for wide rows. */
 export function stackY<TDatum, TXField extends ChartXField<TDatum>>(
   data: readonly TDatum[],
   options: StackYOptions<TDatum, TXField>,
@@ -476,12 +579,19 @@ export function stackY<TDatum, TXField extends ChartXField<TDatum>>(
       (sum, field) => sum + (finiteOrNull(source[field]) ?? 0),
       0,
     )
-    let base = 0
+    let up = 0
+    let down = 0
     for (const field of options.y) {
       const raw = finiteOrNull(source[field])
       const value =
         raw === null ? null : options.normalize ? safeShare(raw, total) : raw
+      const negative = value !== null && value < 0
+      const base = negative ? down : up
       const top = value === null ? null : base + value
+      if (top !== null) {
+        if (negative) down = top
+        else up = top
+      }
       rows.push({
         ...row,
         x: source[options.x] as ChartValue,
@@ -490,7 +600,6 @@ export function stackY<TDatum, TXField extends ChartXField<TDatum>>(
         base,
         top,
       } as StackedDatum<TDatum>)
-      base = top ?? base
     }
   }
   return rows
@@ -545,15 +654,16 @@ export type ChartComponentProps<
   TOptions,
   TDatum,
   TXValue extends ChartValue,
-> = Omit<TOptions, "gradientIdPrefix"> &
+> = TOptions &
   ChartBehaviorProps &
   ChartHostProps<TDatum, TXValue> & { children?: ReactNode }
 
-/* House chart host: the resource-aware renderer and default height are built
-   in, and `children` renders as an HTML overlay above the surface so hover
-   readouts repaint at pointer speed without touching the definition. The
-   tooltip is portaled, so it always paints above the overlay. `className`
-   lands on the outer box — the one the overlay is positioned against. */
+/* House chart host: the tooltip-capable surface from the library's `tooltip`
+   entry, with the default height built in, and `children` rendered as an HTML
+   overlay above it so hover readouts repaint at pointer speed without touching
+   the definition. The tooltip is portaled, so it always paints above the
+   overlay. `className` lands on the outer box — the one the overlay is
+   positioned against. */
 export function Chart<TDatum, TXValue extends ChartValue>({
   children,
   className,
@@ -566,7 +676,6 @@ export function Chart<TDatum, TXValue extends ChartValue>({
           props.aspectRatio === undefined ? chartDefaults.height : undefined
         }
         {...props}
-        renderSvg={renderChartSvgWithResources}
       />
       {children == null || typeof children === "boolean" ? null : (
         <div className="pointer-events-none absolute inset-0">{children}</div>
@@ -579,6 +688,8 @@ export function Chart<TDatum, TXValue extends ChartValue>({
 /* The memo — one shared path, structurally total                      */
 /* ------------------------------------------------------------------ */
 
+/* Tracks the library's `ChartCommonProps` (the `@tanstack/react-charts/tooltip`
+   entry) minus `renderSvg`/`measureText`, which `ChartHostProps` omits. */
 const HOST_PROP_NAMES = new Set([
   "ariaLabel",
   "ariaDescription",
@@ -632,46 +743,54 @@ function splitChartProps(props: object): {
 /* Functions are keyed by identity, so any function-valued prop — a family's
    `formatValue`, `axisDetail` — rebuilds when its reference changes. Inline
    arrows therefore rebuild every render: the loud failure, never the stale one. */
-const functionIds = new WeakMap<object, number>()
-let nextFunctionId = 0
+const identities = new WeakMap<object, number>()
+let nextIdentity = 0
+
+function identityOf(value: object): string {
+  let id = identities.get(value)
+  if (id === undefined) {
+    id = nextIdentity++
+    identities.set(value, id)
+  }
+  return String(id)
+}
 
 function serialize(value: unknown): string {
   if (value === null) return "null"
-  if (typeof value === "function") {
-    let id = functionIds.get(value)
-    if (id === undefined) {
-      id = nextFunctionId++
-      functionIds.set(value, id)
-    }
-    return `fn#${id}`
-  }
+  if (typeof value === "function") return `fn#${identityOf(value)}`
+  if (typeof value !== "object")
+    return typeof value === "string" ? JSON.stringify(value) : String(value)
   if (value instanceof Date) return `date#${value.getTime()}`
+  if (value instanceof RegExp) return `re#${value.source}#${value.flags}`
   if (Array.isArray(value)) return `[${value.map(serialize).join(",")}]`
-  if (typeof value === "object") {
-    const record = value as Record<string, unknown>
-    return `{${Object.keys(record)
-      .sort()
-      .map((name) => `${name}:${serialize(record[name])}`)
+  if (value instanceof Map)
+    return `map{${[...value]
+      .map(([key, entry]) => `${serialize(key)}:${serialize(entry)}`)
       .join(",")}}`
-  }
-  return typeof value === "string" ? JSON.stringify(value) : String(value)
+  if (value instanceof Set) return `set[${[...value].map(serialize).join(",")}]`
+  const prototype: unknown = Object.getPrototypeOf(value)
+  // A class instance or a configured d3 scale keeps its identity: walking its
+  // enumerable keys would collide two values that behave differently.
+  if (prototype !== null && prototype !== Object.prototype)
+    return `obj#${identityOf(value)}`
+  const record = value as Record<string, unknown>
+  return `{${Object.keys(record)
+    .sort()
+    .map((name) => `${JSON.stringify(name)}:${serialize(record[name])}`)
+    .join(",")}}`
 }
 
-/* Total by construction: the prop types are structurally flat, so nothing can
-   hide behind a nested option object. Keep them flat — a nested option would
-   turn a loud over-render into a silent stale-render. */
+/* The contract: every prop either serializes structurally or is keyed by its
+   identity — nothing is silently collapsed. Keep the props flat, so a value
+   that cannot serialize is a loud over-render rather than a silent stale one. */
 function chartKey(source: object): string {
   const record = source as Record<string, unknown>
   let key = ""
   for (const name of Object.keys(record).sort()) {
     if (REFERENCE_PROP_NAMES.has(name)) continue
-    key += `${name}=${serialize(record[name])};`
+    key += `${JSON.stringify(name)}=${serialize(record[name])};`
   }
   return key
-}
-
-function chartReferences(spec: Record<string, unknown>): readonly unknown[] {
-  return [spec.data, spec.marks, spec.marksBefore]
 }
 
 function sameReferences(
@@ -724,9 +843,10 @@ function resolveBehavior(behavior: ChartBehaviorProps, degrade: boolean) {
       behavior.tooltip === false
         ? (false as const)
         : {
+            use: tooltipExtension,
             anchor: behavior.tooltipAnchor ?? chartDefaults.tooltipAnchor,
             sticky: behavior.tooltipSticky ?? chartDefaults.tooltipSticky,
-            portal: true,
+            portal: tooltipPortal,
           },
     animate: degrade
       ? false
@@ -737,9 +857,14 @@ function resolveBehavior(behavior: ChartBehaviorProps, degrade: boolean) {
   }
 }
 
-/* The one hook every family component calls: splits props, memoizes the
-   definition, and scopes gradient ids so two charts on one page cannot
-   collide. */
+/**
+ * The one hook every family component calls: it splits props and memoizes the
+ * definition.
+ *
+ * `build` is compared by identity along with `data` and the mark arrays, so
+ * declare it at module scope — an inline builder rebuilds the scene on every
+ * render.
+ */
 export function useChartDefinition<
   TDatum,
   TXValue extends ChartValue,
@@ -755,9 +880,8 @@ export function useChartDefinition<
   host: ChartHostProps<TDatum, TXValue>
   children: ReactNode
 } {
-  const gradientIdPrefix = useId().replace(/[^a-zA-Z0-9_-]/g, "")
   const { host, behavior, spec } = splitChartProps(props)
-  const options = { ...spec, gradientIdPrefix } as TOptions
+  const options = spec as TOptions
   const degrade = countPoints(spec) > chartDefaults.animateMaxPoints
   const definition = useStructuralMemo(
     () =>
@@ -766,7 +890,7 @@ export function useChartDefinition<
         ...resolveBehavior(behavior, degrade),
       }),
     `${chartKey(spec)}|${chartKey(behavior)}|${degrade}`,
-    chartReferences(spec),
+    [build, spec.data, spec.marks, spec.marksBefore],
   )
   return {
     definition,
@@ -774,3 +898,6 @@ export function useChartDefinition<
     children: (props as { children?: ReactNode }).children,
   }
 }
+
+/* Internal, exported so the memo can be tested without a renderer. */
+export { chartKey, sameReferences, serialize, splitChartProps }

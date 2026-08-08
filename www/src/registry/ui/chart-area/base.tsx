@@ -18,7 +18,6 @@ import {
   Chart,
   chartDefaults,
   chartFrame,
-  gradientPrefix,
   paletteGradients,
   planChart,
   useChartDefinition,
@@ -57,7 +56,6 @@ export function areaChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
   const curve = CURVES[options.curve ?? chartDefaults.curve]
   const fill = options.fill ?? chartDefaults.fill
   const gradient = fill === "gradient"
-  const prefix = gradientPrefix(options.gradientIdPrefix, "area")
   return {
     ...chartFrame(options, ctx, { order }),
     marks: [
@@ -66,7 +64,7 @@ export function areaChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
         areaY(options.data, {
           ...layer.channels,
           fillOpacity: gradient ? 1 : fill,
-          fill: gradient ? layer.gradientFill(prefix) : undefined,
+          fill: gradient ? layer.gradientFill : undefined,
           curve,
         }),
         lineY(options.data, {
@@ -78,7 +76,7 @@ export function areaChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
       ]),
       ...(options.marks ?? []),
     ],
-    gradients: gradient ? paletteGradients(prefix, order.length) : undefined,
+    gradients: gradient ? paletteGradients(order.length) : undefined,
   }
 }
 

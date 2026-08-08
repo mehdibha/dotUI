@@ -15,9 +15,10 @@ const labels = { desktop: "Desktop", mobile: "Mobile" }
 
 export default function ChartRadarExamples() {
   return (
-    <Examples className="lg:grid-cols-1">
-      <Example title="Radar Chart">
+    <Examples>
+      <Example title="Default">
         <RadarChart
+          className="w-full"
           data={data}
           x="month"
           y="desktop"
@@ -28,6 +29,7 @@ export default function ChartRadarExamples() {
       </Example>
       <Example title="Multiple Series">
         <RadarChart
+          className="w-full"
           data={data}
           x="month"
           y={["desktop", "mobile"]}

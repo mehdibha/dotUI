@@ -34,7 +34,7 @@ const data = days.flatMap(({ day, weight }) =>
   })),
 )
 
-export default function Demo() {
+export default function ChartHeatmapMatrix() {
   return (
     <HeatmapChart
       data={data}

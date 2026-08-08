@@ -54,7 +54,7 @@
           }
         ]
       },
-      "description": "Pass `false` to remove the tooltip entirely."
+      "description": "Pass `false` to remove the tooltip entirely. Keyboard focus stops remain\nbut lose their live region, so screen readers get silent stops — keep the\ntooltip unless the chart is decorative."
     },
     "animate": {
       "type": "ChartAnimate",

@@ -1,6 +1,6 @@
 "use client"
 
-import type { ChartBuildContext, ChartLinearGradient } from "@tanstack/charts"
+import type { ChartBuildContext } from "@tanstack/charts"
 import { areaY } from "@tanstack/charts/area"
 import { d3Curve } from "@tanstack/charts/d3/shape"
 import { lineY } from "@tanstack/charts/line"
@@ -21,7 +21,7 @@ import {
   Chart,
   chartDefaults,
   chartFrame,
-  gradientPrefix,
+  fadeGradient,
   paletteColor,
   useChartDefinition,
 } from "@/registry/ui/chart"
@@ -34,6 +34,10 @@ const CURVES = {
   monotone: /* @__PURE__ */ d3Curve(curveMonotoneX),
   step: /* @__PURE__ */ d3Curve(curveStepAfter),
 } as const satisfies Record<ChartCurve, unknown>
+
+/* The host scopes declared ids with its own instance prefix, so one constant
+   cannot collide across charts. */
+const FILL_ID = "dotui-sparkline-fill"
 
 /* A sparkline is one series, no chrome: the frame props (axes, grid, legend,
    tick formats) are dropped rather than ignored. */
@@ -54,19 +58,6 @@ export interface SparklineSpecOptions<
   strokeWidth?: number
 }
 
-function fadeGradient(id: string, color: string): ChartLinearGradient {
-  const [from, to] = chartDefaults.gradientStops
-  return {
-    id,
-    y1: 1,
-    y2: 0,
-    stops: [
-      { offset: 0, color, opacity: from },
-      { offset: 1, color, opacity: to },
-    ],
-  }
-}
-
 export function sparklineSpec<TDatum, TXField extends ChartXField<TDatum>>(
   options: SparklineSpecOptions<TDatum, TXField>,
   ctx: ChartBuildContext,
@@ -76,7 +67,6 @@ export function sparklineSpec<TDatum, TXField extends ChartXField<TDatum>>(
   const strokeWidth = options.strokeWidth ?? chartDefaults.strokeWidth
   const fill = options.fill ?? chartDefaults.fill
   const gradient = fill === "gradient"
-  const fillId = `${gradientPrefix(options.gradientIdPrefix, "sparkline")}-fill`
   const channels = { x: options.x, y: options.y, key: options.rowKey }
   return {
     ...chartFrame({ axes: false, grid: false, legend: false }, ctx, {
@@ -94,7 +84,7 @@ export function sparklineSpec<TDatum, TXField extends ChartXField<TDatum>>(
         ? [
             areaY(options.data, {
               ...channels,
-              fill: gradient ? `url(#${fillId})` : color,
+              fill: gradient ? `url(#${FILL_ID})` : color,
               fillOpacity: gradient ? 1 : fill,
               curve,
             }),
@@ -103,7 +93,7 @@ export function sparklineSpec<TDatum, TXField extends ChartXField<TDatum>>(
       lineY(options.data, { ...channels, stroke: color, strokeWidth, curve }),
       ...(options.marks ?? []),
     ],
-    gradients: gradient ? [fadeGradient(fillId, color)] : undefined,
+    gradients: gradient ? [fadeGradient(FILL_ID, color)] : undefined,
   }
 }
 

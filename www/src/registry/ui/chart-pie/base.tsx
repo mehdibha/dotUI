@@ -1,10 +1,14 @@
 "use client"
 
-import type { ChannelField, ChartKey } from "@tanstack/charts"
+import type {
+  ChannelField,
+  ChartBuildContext,
+  ChartKey,
+} from "@tanstack/charts"
 import { colorLegend } from "@tanstack/charts/legend"
 import type { PolarMark } from "@tanstack/charts/polar"
 import { polar, radialArc, radialText } from "@tanstack/charts/polar"
-import type { ChartTooltipBodyRenderContext } from "@tanstack/react-charts"
+import type { ChartTooltipBodyRenderContext } from "@tanstack/react-charts/tooltip"
 import { scaleLinear } from "d3-scale"
 import { arc as d3Arc, pie as d3Pie } from "d3-shape"
 
@@ -13,6 +17,7 @@ import {
   Chart,
   CHART_THEME,
   decorative,
+  finiteOrNull,
   useChartDefinition,
 } from "@/registry/ui/chart"
 
@@ -31,8 +36,7 @@ const pieDefaults = {
   labelFontSize: 12,
 } as const
 
-/* The polar container's own mark constraint — an annotation ring rarely shares
-   the series row type. */
+/** Mark layers spliced inside the polar container — cartesian marks would land outside it. */
 // oxlint-disable-next-line no-explicit-any
 export type PolarMarkLayer = PolarMark<any, any, any>
 
@@ -80,7 +84,9 @@ function sliceRows<TDatum>(
   const labelOf = (key: string) => options.labels?.[key] ?? key
   const layout = d3Pie<TDatum>()
     .sort(null)
-    .value((row) => Number(row[options.value as keyof TDatum] ?? 0))
+    /* A non-finite magnitude would poison the whole layout, not just its own
+       slice: d3.pie divides by the total. */
+    .value((row) => finiteOrNull(row[options.value as keyof TDatum]) ?? 0)
     .startAngle(options.startAngle ?? 0)
     .endAngle(options.endAngle ?? TAU)
     .padAngle(options.padAngle ?? pieDefaults.padAngle)
@@ -159,13 +165,13 @@ export interface PieChartSpecOptions<TDatum> extends Omit<
 > {
   /** Show the color legend. */
   legend?: boolean
-  /** Slice order — drives color-slot assignment and the legend. */
+  /** Leading slice order — drives color-slot assignment and the legend. */
   seriesOrder?: readonly string[]
   /** Share of the available radius the ring may use. */
   radiusRatio?: number
   /** Pixel inset applied before `radiusRatio`. */
   inset?: number
-  /** Extra polar marks, spliced inside the polar container. */
+  /** Extra polar mark layers painted over the ring. */
   polarMarks?: readonly PolarMarkLayer[]
 }
 
@@ -180,13 +186,20 @@ function identityScales(startAngle: number, endAngle: number) {
 
 export function pieChartSpec<TDatum>(
   options: PieChartSpecOptions<TDatum>,
+  _ctx: ChartBuildContext,
 ): ChartSpecOf<PieSlice<TDatum>, number> {
   const labelOf = (key: string) => options.labels?.[key] ?? key
-  const order =
-    options.seriesOrder?.map(labelOf) ??
-    options.data.map((row) =>
-      labelOf(String(row[options.name as keyof TDatum])),
-    )
+  const leading = options.seriesOrder?.map(labelOf) ?? []
+  const listed = new Set(leading)
+  const found = options.data.map((row) =>
+    labelOf(String(row[options.name as keyof TDatum])),
+  )
+  /* `seriesOrder` leads; slices it omits follow in data order, so the color
+     domain covers every slice and the legend never hides one. */
+  const order = [
+    ...leading,
+    ...new Set(found.filter((name) => !listed.has(name))),
+  ]
   const startAngle = options.startAngle ?? 0
   const endAngle = options.endAngle ?? TAU
   return {
@@ -214,25 +227,24 @@ export function pieChartSpec<TDatum>(
   }
 }
 
-/* The library's default body prints what the polar scales carry — radians and
-   pixel radii. Print the slice name and its value instead. */
-function renderPieTooltip({
+/* The library's default tooltip body prints the scale values, which on a polar
+   chart are radians and pixel radii — every polar family supplies its own. */
+function pieTooltipBody({
   points,
 }: ChartTooltipBodyRenderContext<PieSlice<unknown>, number, number>) {
   return (
     <div className="grid gap-1">
       {points.map((point) => (
-        <div
-          key={point.key}
-          className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2"
-        >
+        <div key={point.key} className="flex items-center gap-1.5">
           <span
             aria-hidden
-            className="size-2 rounded-[2px]"
+            className="size-2 shrink-0 rounded-xs"
             style={{ background: point.color }}
           />
           <span>{point.datum.name}</span>
-          <span className="text-right tabular-nums">{point.datum.value}</span>
+          <span className="ml-3 flex-1 text-right tabular-nums">
+            {String(point.datum.value)}
+          </span>
         </div>
       ))}
     </div>
@@ -253,22 +265,24 @@ export function PieChart<TDatum>(props: PieChartProps<TDatum>) {
   >(
     {
       ...props,
-      /* Arcs tween their `d`, and the interpolated large-arc flag emits an
-         invalid path whenever a slice crosses half a turn. */
-      animate: props.animate ?? false,
-      // A slice's x value is its mid-angle in radians; only `nearest` reads right.
+      /* The cartesian presets in `chartDefaults` do not fit slices: a slice's
+         x value is its mid-angle in radians, so only `nearest` and a point
+         anchor read right. */
       focus: props.focus ?? "nearest",
-      // Rides on the identity-compared `marks` key — mark arrays serialize alike.
+      tooltipAnchor: props.tooltipAnchor ?? "point",
+      /* Animation is off by default: the 0.7.2 SVG renderer tweens every number
+         in `d`, arc flags included, so arcs crossing 180° break mid-transition. */
+      animate: props.animate ?? false,
+      renderTooltipBody: props.renderTooltipBody ?? pieTooltipBody,
+      /* The polar mark arrays serialize into the structural key — mark objects
+         key by function identity — and alias into the reference-compared
+         `marks` slots. */
       marks: props.polarMarks,
     },
     pieChartSpec,
   )
   return (
-    <Chart
-      definition={definition}
-      renderTooltipBody={renderPieTooltip}
-      {...host}
-    >
+    <Chart definition={definition} {...host}>
       {children}
     </Chart>
   )

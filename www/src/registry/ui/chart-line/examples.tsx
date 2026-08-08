@@ -11,33 +11,33 @@ const data = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
+const labels = { desktop: "Desktop", mobile: "Mobile" }
+
 export default function ChartLineExamples() {
   return (
     <Examples>
-      <Example title="Line Chart">
-        <div className="w-full">
-          <LineChart
-            data={data}
-            x="month"
-            y="desktop"
-            points
-            labels={{ desktop: "Desktop" }}
-            legend={false}
-            ariaLabel="Desktop visitors, January through June"
-          />
-        </div>
+      <Example title="Default">
+        <LineChart
+          className="w-full"
+          data={data}
+          x="month"
+          y="desktop"
+          labels={labels}
+          legend={false}
+          points
+          ariaLabel="Desktop visitors, January through June"
+        />
       </Example>
       <Example title="Multiple Series">
-        <div className="w-full">
-          <LineChart
-            data={data}
-            x="month"
-            y={["desktop", "mobile"]}
-            curve="monotone"
-            labels={{ desktop: "Desktop", mobile: "Mobile" }}
-            ariaLabel="Desktop and mobile visitors, January through June"
-          />
-        </div>
+        <LineChart
+          className="w-full"
+          data={data}
+          x="month"
+          y={["desktop", "mobile"]}
+          labels={labels}
+          curve="monotone"
+          ariaLabel="Desktop and mobile visitors, January through June"
+        />
       </Example>
     </Examples>
   )

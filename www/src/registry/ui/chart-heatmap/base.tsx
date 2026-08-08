@@ -55,10 +55,11 @@ function contrastInk(color: string): string {
   return `oklch(from ${color} calc((0.58 - l) * 100) 0 0)`
 }
 
+/* The cell edges are the grid, so `grid` is dropped rather than ignored. */
 export interface HeatmapChartSpecOptions<
   TDatum,
   TXField extends ChartXField<TDatum>,
-> extends ChartBaseSpecOptions<TDatum> {
+> extends Omit<ChartBaseSpecOptions<TDatum>, "grid"> {
   /** Field holding the column category. */
   x: TXField
   /** Field holding the row category. */

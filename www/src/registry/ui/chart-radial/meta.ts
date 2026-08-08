@@ -12,8 +12,8 @@ const chartRadialMeta = {
     },
   ],
   dependencies: [
-    "@tanstack/charts@0.0.2",
-    "@tanstack/react-charts@0.0.2",
+    "@tanstack/charts@0.7.2",
+    "@tanstack/react-charts@0.7.2",
     "d3-scale",
     "d3-shape",
   ],

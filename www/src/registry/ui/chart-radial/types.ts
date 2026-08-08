@@ -27,9 +27,6 @@ export interface RadialBarChartProps {
   /** Display names for ring keys, used by the legend and the tooltip. */
   labels?: Readonly<Record<string, string>>
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
-
   /**
    * Start of the angular sweep, in radians, clockwise from twelve o'clock.
    * @default 0
@@ -53,6 +50,15 @@ export interface RadialBarChartProps {
    * @default 1
    */
   outerRadius?: number
+
+  /**
+   * Shrinks the circle inside its box.
+   * @default 1
+   */
+  radiusRatio?: number
+
+  /** Pixel inset applied before `radiusRatio`. */
+  inset?: number
 
   /**
    * Gap between rings, as a share of a ring's thickness. In stacked mode
@@ -84,18 +90,6 @@ export interface RadialBarChartProps {
   max?: number
 
   /**
-   * Draw concentric grid rings behind the bars.
-   * @default false
-   */
-  grid?: boolean
-
-  /**
-   * Approximate number of grid rings.
-   * @default 4
-   */
-  gridTicks?: number
-
-  /**
    * Print each ring's name at the start of its arc.
    * @default false
    */
@@ -111,24 +105,30 @@ export interface RadialBarChartProps {
   barLabelFontSize?: number
 
   /**
-   * Show the color legend.
+   * Show the grid lines — concentric rings behind the bars.
+   * @default false
+   */
+  grid?: boolean
+
+  /**
+   * Approximate number of grid rings.
+   * @default 4
+   */
+  gridTicks?: number
+
+  /**
+   * Show the color legend. Turn it on when several rings share the chart.
    * @default false
    */
   legend?: boolean
 
-  /**
-   * Shrinks the circle inside its box.
-   * @default 1
-   */
-  radiusRatio?: number
+  /** Accessible name. Required: a chart is a figure, not decoration. */
+  ariaLabel: string
 
-  /** Pixel inset applied before `radiusRatio`. */
-  inset?: number
-
-  /** Polar mark layers painted under the bars, inside the circle's transform. */
+  /** Extra polar mark layers painted under the bars. */
   polarMarksBefore?: readonly PolarMarkLayer[]
 
-  /** Polar mark layers painted over the bars, inside the circle's transform. */
+  /** Extra polar mark layers painted over the bars — annotations, rules, labels. */
   polarMarks?: readonly PolarMarkLayer[]
 
   /** Overlay rendered above the chart surface, ignoring pointer events. */

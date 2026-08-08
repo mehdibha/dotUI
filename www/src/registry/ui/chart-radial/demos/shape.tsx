@@ -13,13 +13,13 @@ export default function ChartRadialShape() {
       value="visitors"
       name="browser"
       labels={{ safari: "Safari" }}
-      max={1600}
       endAngle={deg(100)}
       innerRadius={0.66}
       outerRadius={0.95}
-      cornerRadius={999}
       radiusRatio={0.9}
+      cornerRadius={999}
       track
+      max={1600}
       grid
       ariaLabel="Safari visitors against a 1,600 target"
     >

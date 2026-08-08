@@ -33,9 +33,9 @@ export default function ChartLineDotsCustom() {
       data={data}
       x="month"
       y="desktop"
-      marks={[rings]}
       labels={{ desktop: SERIES }}
       legend={false}
+      marks={[rings]}
       ariaLabel="Desktop visitors, January through June"
     />
   )

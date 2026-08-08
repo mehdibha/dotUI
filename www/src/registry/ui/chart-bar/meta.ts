@@ -11,7 +11,7 @@ const chartBarMeta = {
       target: "ui/chart-bar.tsx",
     },
   ],
-  dependencies: ["@tanstack/charts@0.0.2", "d3-scale"],
+  dependencies: ["@tanstack/charts@0.7.2", "d3-scale"],
   devDependencies: ["@types/d3-scale"],
   registryDependencies: ["chart"],
 } satisfies RegistryItem

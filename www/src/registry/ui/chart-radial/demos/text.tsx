@@ -13,13 +13,13 @@ export default function ChartRadialText() {
       value="visitors"
       name="browser"
       labels={{ safari: "Safari" }}
-      max={1600}
       endAngle={deg(250)}
       innerRadius={0.78}
       outerRadius={0.95}
-      cornerRadius={999}
       radiusRatio={0.9}
+      cornerRadius={999}
       track
+      max={1600}
       ariaLabel="Safari visitors as a progress ring"
     >
       <div className="flex h-full flex-col items-center justify-center">

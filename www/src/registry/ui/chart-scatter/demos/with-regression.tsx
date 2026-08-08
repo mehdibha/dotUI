@@ -65,11 +65,11 @@ export default function ChartScatterWithRegression() {
       y="signups"
       rowKey="campaign"
       marksBefore={trend}
-      ariaLabel="Signups by campaign spend, with a fitted trend line"
       formatX={{
         locale: "en-US",
         number: { style: "currency", currency: "USD", notation: "compact" },
       }}
+      ariaLabel="Signups by campaign spend, with a fitted trend line"
     />
   )
 }

@@ -1,11 +1,7 @@
 "use client"
 
-import { useRef, useState } from "react"
-import type {
-  ChartBuildContext,
-  ChartPoint,
-  ChartValue,
-} from "@tanstack/charts"
+import { useMemo } from "react"
+import type { ChartBuildContext, ChartValue } from "@tanstack/charts"
 import { colorLegend } from "@tanstack/charts/legend"
 import type {
   PolarGuide,
@@ -21,13 +17,13 @@ import {
   radialGrid,
   radialLine,
 } from "@tanstack/charts/polar"
+import type { ChartTooltipBodyRenderContext } from "@tanstack/react-charts/tooltip"
 import { scaleLinear, scalePoint } from "d3-scale"
 import { curveLinearClosed, pointRadial } from "d3-shape"
 
 import type {
   ChartComponentProps,
   ChartFormat,
-  ChartMarkLayer,
   ChartSpecOf,
   ChartXField,
   ChartXValueOf,
@@ -35,9 +31,10 @@ import type {
   XYChartSpecOptions,
 } from "@/registry/ui/chart"
 import {
-  CHART_THEME,
   Chart,
+  CHART_THEME,
   chartDefaults,
+  finiteOrNull,
   paletteColor,
   planChart,
   resolveFormat,
@@ -54,7 +51,7 @@ const radarDefaults = {
   labelLine: 7,
 } as const
 
-/** Mark layers that live inside the polar container. */
+/** Mark layers spliced inside the polar container — cartesian marks would land outside it. */
 // oxlint-disable-next-line no-explicit-any
 export type PolarMarkLayer = PolarMark<any, any, any>
 
@@ -65,6 +62,15 @@ export interface RadarChartSpecOptions<
   XYChartSpecOptions<TDatum, TXField>,
   "marks" | "marksBefore" | "y1"
 > {
+  /** Series fill opacity — `0` draws outlines only. */
+  fill?: number
+  strokeWidth?: number
+  /** Draw a dot at every point. */
+  points?: boolean
+  /** Fraction of the available radius the chart fills. */
+  radiusRatio?: number
+  /** Outer value of the radius scale. */
+  max?: number
   /** Ring shape. */
   gridShape?: "circle" | "polygon"
   /** Number of rings. */
@@ -77,22 +83,12 @@ export interface RadarChartSpecOptions<
   spokes?: boolean
   /** A second, muted label line above each category label. */
   axisDetail?: ChartFormat
-  /** Series fill opacity — `0` draws outlines only. */
-  fill?: number
-  strokeWidth?: number
-  /** Draw a dot at every point. */
-  points?: boolean
-  /** Fraction of the available radius the chart fills. */
-  radiusRatio?: number
-  /** Outer value of the radius scale. */
-  max?: number
-  /** Mark layers spliced into the polar container. */
+  /** Extra polar mark layers painted over the series. */
   polarMarks?: readonly PolarMarkLayer[]
 }
 
 function readValue<TDatum>(row: TDatum, field: ChartYField<TDatum>): number {
-  const value = row[field as keyof TDatum]
-  return typeof value === "number" && Number.isFinite(value) ? value : 0
+  return finiteOrNull(row[field as keyof TDatum]) ?? 0
 }
 
 /* `radialGrid` hard-codes `fill: 'none'` on every ring, so a filled grid is its
@@ -274,7 +270,7 @@ export function radarChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
         },
         guides,
         marks: [...marks, ...(options.polarMarks ?? [])],
-      }) as ChartMarkLayer,
+      }),
     ],
   }
 }
@@ -284,35 +280,30 @@ interface RadarFormats {
   value?: (value: ChartValue) => string
 }
 
-/* The library's default body prints the raw scale values, which on a polar
-   chart are radians and pixels. The component identity must stay stable — a
-   fresh one would remount the tooltip subtree every render — so the resolved
-   formatters ride a ref. */
-function radarTooltip(formats: { readonly current: RadarFormats }) {
-  return function RadarTooltipBody({
+/* The library's default tooltip body prints the scale values, which on a polar
+   chart are radians and pixel radii — every polar family supplies its own. */
+function radarTooltipBody(formats: RadarFormats) {
+  return ({
     points,
-  }: {
-    points: readonly ChartPoint<unknown, ChartValue, number>[]
-  }) {
+  }: ChartTooltipBodyRenderContext<unknown, ChartValue, number>) => {
     const first = points[0]
     if (first === undefined) return null
-    const { category, value } = formats.current
     return (
       <>
         <div className="mb-1 font-semibold">
-          {category?.(first.xValue) ?? String(first.xValue)}
+          {formats.category?.(first.xValue) ?? String(first.xValue)}
         </div>
         <div className="grid gap-1">
           {points.map((point) => (
             <div key={point.key} className="flex items-center gap-1.5">
               <span
                 aria-hidden
-                className="size-2 shrink-0 rounded-[2px]"
+                className="size-2 shrink-0 rounded-xs"
                 style={{ background: point.color }}
               />
               <span>{point.groupLabel}</span>
               <span className="ml-3 flex-1 text-right tabular-nums">
-                {value?.(point.yValue) ?? String(point.yValue)}
+                {formats.value?.(point.yValue) ?? String(point.yValue)}
               </span>
             </div>
           ))}
@@ -334,12 +325,15 @@ export type RadarChartProps<
 export function RadarChart<TDatum, TXField extends ChartXField<TDatum>>(
   props: RadarChartProps<TDatum, TXField>,
 ) {
-  const formats = useRef<RadarFormats>({})
-  formats.current = {
-    category: resolveFormat(props.formatX),
-    value: resolveFormat(props.formatY),
-  }
-  const [tooltipBody] = useState(() => radarTooltip(formats))
+  const { formatX, formatY } = props
+  const tooltipBody = useMemo(
+    () =>
+      radarTooltipBody({
+        category: resolveFormat(formatX),
+        value: resolveFormat(formatY),
+      }),
+    [formatX, formatY],
+  )
   const { definition, host, children } = useChartDefinition<
     TDatum,
     ChartXValueOf<TDatum, TXField>,
@@ -347,16 +341,19 @@ export function RadarChart<TDatum, TXField extends ChartXField<TDatum>>(
   >(
     {
       ...props,
-      /* Polar paths tween their arc flags into invalid shapes, so every polar
-         family opts in to animation per chart. */
+      /* Animation is off by default: the 0.7.2 SVG renderer tweens every number
+         in `d`, arc flags included, so arcs crossing 180° break mid-transition. */
       animate: props.animate ?? false,
-      // `marks` is the memo's identity-compared slot; polar marks ride it.
+      renderTooltipBody: props.renderTooltipBody ?? tooltipBody,
+      /* The polar mark arrays serialize into the structural key — mark objects
+         key by function identity — and alias into the reference-compared
+         `marks` slots. */
       marks: props.polarMarks,
     },
     radarChartSpec,
   )
   return (
-    <Chart definition={definition} renderTooltipBody={tooltipBody} {...host}>
+    <Chart definition={definition} {...host}>
       {children}
     </Chart>
   )

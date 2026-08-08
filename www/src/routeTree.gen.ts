@@ -26,7 +26,6 @@ import { Route as PreviewSlugRouteImport } from './routes/preview/$slug'
 import { Route as InternalRegistriesRouteImport } from './routes/internal.registries'
 import { Route as InternalPresetLabRouteImport } from './routes/internal.preset-lab'
 import { Route as InternalColorLabRouteImport } from './routes/internal.color-lab'
-import { Route as InternalChartsLabRouteImport } from './routes/internal.charts-lab'
 import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-reveal'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
@@ -127,11 +126,6 @@ const InternalColorLabRoute = InternalColorLabRouteImport.update({
   path: '/internal/color-lab',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InternalChartsLabRoute = InternalChartsLabRouteImport.update({
-  id: '/internal/charts-lab',
-  path: '/internal/charts-lab',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const InternalBlurRevealRoute = InternalBlurRevealRouteImport.update({
   id: '/internal/blur-reveal',
   path: '/internal/blur-reveal',
@@ -228,7 +222,6 @@ export interface FileRoutesByFullPath {
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
-  '/internal/charts-lab': typeof InternalChartsLabRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
@@ -261,7 +254,6 @@ export interface FileRoutesByTo {
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
-  '/internal/charts-lab': typeof InternalChartsLabRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
@@ -297,7 +289,6 @@ export interface FileRoutesById {
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
-  '/internal/charts-lab': typeof InternalChartsLabRoute
   '/internal/color-lab': typeof InternalColorLabRoute
   '/internal/preset-lab': typeof InternalPresetLabRoute
   '/internal/registries': typeof InternalRegistriesRoute
@@ -334,7 +325,6 @@ export interface FileRouteTypes {
     | '/api/search'
     | '/demos/$slug'
     | '/internal/blur-reveal'
-    | '/internal/charts-lab'
     | '/internal/color-lab'
     | '/internal/preset-lab'
     | '/internal/registries'
@@ -367,7 +357,6 @@ export interface FileRouteTypes {
     | '/api/search'
     | '/demos/$slug'
     | '/internal/blur-reveal'
-    | '/internal/charts-lab'
     | '/internal/color-lab'
     | '/internal/preset-lab'
     | '/internal/registries'
@@ -402,7 +391,6 @@ export interface FileRouteTypes {
     | '/api/search'
     | '/demos/$slug'
     | '/internal/blur-reveal'
-    | '/internal/charts-lab'
     | '/internal/color-lab'
     | '/internal/preset-lab'
     | '/internal/registries'
@@ -433,7 +421,6 @@ export interface RootRouteChildren {
   ApiSearchRoute: typeof ApiSearchRoute
   DemosSlugRoute: typeof DemosSlugRoute
   InternalBlurRevealRoute: typeof InternalBlurRevealRoute
-  InternalChartsLabRoute: typeof InternalChartsLabRoute
   InternalColorLabRoute: typeof InternalColorLabRoute
   InternalPresetLabRoute: typeof InternalPresetLabRoute
   InternalRegistriesRoute: typeof InternalRegistriesRoute
@@ -568,13 +555,6 @@ declare module '@tanstack/react-router' {
       path: '/internal/color-lab'
       fullPath: '/internal/color-lab'
       preLoaderRoute: typeof InternalColorLabRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/internal/charts-lab': {
-      id: '/internal/charts-lab'
-      path: '/internal/charts-lab'
-      fullPath: '/internal/charts-lab'
-      preLoaderRoute: typeof InternalChartsLabRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/internal/blur-reveal': {
@@ -733,7 +713,6 @@ const rootRouteChildren: RootRouteChildren = {
   ApiSearchRoute: ApiSearchRoute,
   DemosSlugRoute: DemosSlugRoute,
   InternalBlurRevealRoute: InternalBlurRevealRoute,
-  InternalChartsLabRoute: InternalChartsLabRoute,
   InternalColorLabRoute: InternalColorLabRoute,
   InternalPresetLabRoute: InternalPresetLabRoute,
   InternalRegistriesRoute: InternalRegistriesRoute,

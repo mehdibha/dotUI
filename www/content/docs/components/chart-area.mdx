@@ -64,7 +64,7 @@ Two shapes work, and both draw the same chart.
 />
 ```
 
-**Long** rows carry one row per series per x value, with the series key in its own field. Pass that field as `series`, and set `seriesOrder` to fix color slots and legend order:
+**Long** rows carry one row per series per x value, with the series key in its own field. Pass that field as `series`, and set `seriesOrder` to lead the color slots and the legend — series the data carries but `seriesOrder` omits follow in the order they first appear:
 
 ```tsx
 <AreaChart
@@ -102,7 +102,7 @@ const stacked = stackY(data, { x: "month", y: ["desktop", "mobile", "other"] })
 />
 ```
 
-Add `normalize: true` for a 100% stack — each band is divided by its own x-group total — and format the value axis as a percentage with `formatY`.
+Positive values stack up from zero and negative values down from it, so a mixed-sign group never overlaps itself. Add `normalize: true` for a 100% stack — each band is divided by its own x-group total — and format the value axis as a percentage with `formatY`.
 
 ## Shape
 
@@ -135,6 +135,7 @@ const target = ruleY([200], { strokeDasharray: "4 4" })
 - `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
 - The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
 - Color alone never carries the distinction — the legend, tooltip, and axis labels all name the series.
+- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
 
 ## Examples
 

@@ -25,7 +25,6 @@ export default function ChartScatterBubble() {
       rowKey="country"
       radiusRange={[4, 26]}
       fillOpacity={0.55}
-      ariaLabel="Life expectancy by income per person, sized by population"
       formatX={{
         locale: "en-US",
         number: { style: "currency", currency: "USD", notation: "compact" },
@@ -34,6 +33,7 @@ export default function ChartScatterBubble() {
         locale: "en-US",
         number: { style: "unit", unit: "year", maximumFractionDigits: 0 },
       }}
+      ariaLabel="Life expectancy by income per person, sized by population"
     />
   )
 }

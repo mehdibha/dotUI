@@ -2,16 +2,17 @@ import type * as React from "react"
 
 import type { ChartCurve, ChartMarkLayer } from "@/registry/ui/chart"
 
-export type { ChartCurve }
+export type { ChartCurve, ChartMarkLayer }
 
 /**
- * A tiny, chrome-free chart for stat cards and table cells: one series, no
- * axes, no grid, no legend, and no tooltip unless you ask for one. Every
- * interaction and host prop of `Chart` also applies — see `ChartBehaviorProps`
- * and `ChartProps`.
+ * Sparkline. A chrome-free single series for stat cards and table cells: give
+ * it rows plus the `x` and `y` fields to read — there are no axes, no grid and
+ * no legend to configure. Interaction and animation props are shared by every
+ * family — see `ChartBehaviorProps` — and the host props (`width`, `className`,
+ * callbacks) live on `Chart`.
  */
 export interface SparklineProps {
-  /** The rows to plot. */
+  /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
   /** Field holding the category or time value. */
@@ -19,6 +20,9 @@ export interface SparklineProps {
 
   /** Field holding the value. */
   y: string
+
+  /** Stable row identity, so filtered rows animate instead of respawning. */
+  rowKey?: string
 
   /**
    * Draw the series as a line, or as a filled area under the line.
@@ -59,7 +63,8 @@ export interface SparklineProps {
   height?: number
 
   /**
-   * Show the tooltip on hover and keyboard focus.
+   * Show the tooltip on hover and keyboard focus. Off by default, so the focus
+   * stops have no live region until you turn it on.
    * @default false
    */
   tooltip?: boolean
@@ -67,13 +72,10 @@ export interface SparklineProps {
   /** Accessible name. Required: a chart is a figure, not decoration. */
   ariaLabel: string
 
-  /** Stable row identity, so sorted or filtered data is retained, not respawned. */
-  rowKey?: string
-
-  /** Mark layers painted under the line. */
+  /** Extra mark layers painted under the line. */
   marksBefore?: readonly ChartMarkLayer[]
 
-  /** Mark layers painted over the line — reference rules, end dots, labels. */
+  /** Extra mark layers painted over the line — annotations, rules, labels. */
   marks?: readonly ChartMarkLayer[]
 
   /** Overlay rendered above the chart surface, ignoring pointer events. */

@@ -12,14 +12,14 @@ export default function ChartRadialStacked() {
       value={["desktop", "mobile"]}
       name="month"
       labels={{ desktop: "Desktop", mobile: "Mobile" }}
-      max={2200}
       startAngle={-Math.PI / 2}
       endAngle={Math.PI / 2}
       innerRadius={0.7}
       outerRadius={0.98}
-      cornerRadius={5}
-      barPadding={0.06}
       radiusRatio={0.9}
+      barPadding={0.06}
+      cornerRadius={5}
+      max={2200}
       ariaLabel="Desktop and mobile visitors in January, stacked"
     >
       <div className="flex h-full flex-col items-center justify-center pb-6">

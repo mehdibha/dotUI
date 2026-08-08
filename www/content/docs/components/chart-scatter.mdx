@@ -65,7 +65,7 @@ Bubbles overlap by nature; `fillOpacity` keeps the ones underneath readable. Wit
 
 ## Groups
 
-`series` splits rows into colored groups and turns on the legend. `seriesOrder` fixes color-slot assignment so a group keeps its color when the data changes, and `labels` maps raw keys to display names.
+`series` splits rows into colored groups and turns on the legend. Set `seriesOrder` to lead the color slots and the legend — groups the data carries but `seriesOrder` omits follow in the order they first appear — and `labels` maps raw keys to display names.
 
 ```tsx
 <ScatterChart
@@ -86,18 +86,20 @@ The legend follows `series`: an ungrouped scatter has nothing to name, so it ren
 A trend line is derived data. Fit it in your application, then pass the result as its own mark layer — `marksBefore` paints under the dots, `marks` over them. The chart draws the model; it does not fit it.
 
 ```tsx
-import { lineY } from '@tanstack/charts/line'
+import { lineY } from "@tanstack/charts/line"
 
 // Computed once, outside render: mark layers are compared by identity.
 const trend = [
   lineY(fit, {
-    x: 'spend',
-    y: 'signups',
-    stroke: 'var(--color-fg-muted)',
-    strokeDasharray: '4 4',
+    x: "spend",
+    y: "signups",
+    stroke: "var(--color-fg-muted)",
+    strokeDasharray: "4 4",
   }),
 ]
+```
 
+```tsx
 <ScatterChart
   data={campaigns}
   x="spend"
@@ -129,9 +131,10 @@ Above roughly 800 points, animation turns itself off — the redraw cost stops b
 
 ## Accessibility
 
-The chart surface is focusable and keyboard-navigable: arrow keys move between points, and each focused point is announced with its axis values. `ariaLabel` is required and names the figure; `ariaDescription` adds the longer explanation a sighted reader gets from the surrounding copy.
-
-Color is never the only encoding — position always carries the relationship, and groups stay distinguishable through the legend and the tooltip. When a group's name matters more than its hue, say so in `labels` rather than relying on the palette.
+- `ariaLabel` is required and names the figure; `ariaDescription` adds the longer explanation a sighted reader gets from the surrounding copy.
+- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
+- Color alone never carries the distinction — position carries the relationship, and the legend and tooltip name every group. When a group's name matters more than its hue, say so in `labels`.
+- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
 
 ## Examples
 

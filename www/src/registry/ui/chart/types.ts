@@ -5,6 +5,7 @@ import type {
   ChartRenderContext,
   ChartValue,
 } from "@tanstack/charts"
+import type { ChartTooltipBodyRenderContext } from "@tanstack/react-charts/tooltip"
 
 import type { ChartAnimate, ChartFocus, ChartTooltipAnchor } from "./base"
 
@@ -73,7 +74,9 @@ export interface ChartProps {
   onRender?: (context: ChartRenderContext<unknown, ChartValue, number>) => void
 
   /** Replaces the tooltip body. Receives the default body to wrap or discard. */
-  renderTooltipBody?: (context: unknown) => React.ReactNode
+  renderTooltipBody?: (
+    context: ChartTooltipBodyRenderContext<unknown, ChartValue, number>,
+  ) => React.ReactNode
 
   /** Overlay rendered above the chart surface, ignoring pointer events. */
   children?: React.ReactNode
@@ -109,7 +112,11 @@ export interface ChartBehaviorProps {
    */
   tooltipSticky?: boolean
 
-  /** Pass `false` to remove the tooltip entirely. */
+  /**
+   * Pass `false` to remove the tooltip entirely. Keyboard focus stops remain
+   * but lose their live region, so screen readers get silent stops — keep the
+   * tooltip unless the chart is decorative.
+   */
   tooltip?: false
 
   /**

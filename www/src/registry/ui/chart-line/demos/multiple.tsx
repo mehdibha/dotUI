@@ -17,8 +17,8 @@ export default function ChartLineMultiple() {
       data={data}
       x="month"
       y={["desktop", "mobile"]}
-      curve="monotone"
       labels={{ desktop: "Desktop", mobile: "Mobile" }}
+      curve="monotone"
       ariaLabel="Desktop and mobile visitors, January through June"
     />
   )

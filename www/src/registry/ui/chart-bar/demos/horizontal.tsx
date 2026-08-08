@@ -14,11 +14,11 @@ const data = [
 export default function ChartBarHorizontal() {
   return (
     <BarChart
-      horizontal
       data={data}
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
+      horizontal
       legend={false}
       focus="group-y"
       ariaLabel="Desktop visitors per month, horizontal bars"

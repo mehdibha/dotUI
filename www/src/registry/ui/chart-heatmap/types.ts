@@ -1,14 +1,18 @@
+import type * as React from "react"
+
 import type { ChartFormat, ChartMarkLayer } from "@/registry/ui/chart"
 
-export type { ChartFormat }
+export type { ChartFormat, ChartMarkLayer }
 
 /**
- * A matrix of cells: two categorical axes, and one numeric value per cell
- * carried by color. Every interaction and host prop of `Chart` also applies —
- * see `ChartBehaviorProps` and `ChartProps`.
+ * Heatmap chart. Give it rows plus the fields to read: one row per cell, with
+ * the column field, the row field, and the numeric value color carries.
+ * Interaction and animation props are shared by every family — see
+ * `ChartBehaviorProps` — and the host props (`height`, `width`, `className`,
+ * callbacks) live on `Chart`.
  */
 export interface HeatmapChartProps {
-  /** The rows to plot — one per cell. Compared by identity. */
+  /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
   /** Field holding the column category. */
@@ -19,6 +23,9 @@ export interface HeatmapChartProps {
 
   /** Numeric field the color scale reads. */
   value: string
+
+  /** Stable row identity, so filtered rows animate instead of respawning. */
+  rowKey?: string
 
   /**
    * The color ramp, low to high. Its length is the number of bins.
@@ -50,9 +57,6 @@ export interface HeatmapChartProps {
   /** Row-axis title. It also names the coordinate in the tooltip. */
   labelY?: string
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
-
   /**
    * Show the axes and their tick labels.
    * @default true
@@ -60,24 +64,24 @@ export interface HeatmapChartProps {
   axes?: boolean
 
   /**
-   * Show the color legend.
+   * Show the color legend — the ramp and its bin boundaries.
    * @default true
    */
   legend?: boolean
 
-  /** Formats the column tick labels — a function, or `Intl` options. */
+  /** Formats x tick labels — a function, or serializable `Intl` options. */
   formatX?: ChartFormat
 
-  /** Formats the row tick labels — a function, or `Intl` options. */
+  /** Formats y tick labels — a function, or serializable `Intl` options. */
   formatY?: ChartFormat
 
-  /** Stable row identity, so sorted or filtered data is retained, not respawned. */
-  rowKey?: string
+  /** Accessible name. Required: a chart is a figure, not decoration. */
+  ariaLabel: string
 
-  /** Mark layers painted under the cells. */
+  /** Extra mark layers painted under the cells. */
   marksBefore?: readonly ChartMarkLayer[]
 
-  /** Mark layers painted over the cells — annotations, labels, outlines. */
+  /** Extra mark layers painted over the cells — annotations, rules, labels. */
   marks?: readonly ChartMarkLayer[]
 
   /** Overlay rendered above the chart surface, ignoring pointer events. */

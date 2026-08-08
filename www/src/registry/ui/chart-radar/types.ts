@@ -4,7 +4,7 @@ import type { ChartFormat } from "@/registry/ui/chart"
 
 import type { PolarMarkLayer } from "./base"
 
-export type { ChartFormat }
+export type { ChartFormat, PolarMarkLayer }
 
 /**
  * Radar chart. Give it one row per category plus the fields to read: one `y`
@@ -14,7 +14,7 @@ export type { ChartFormat }
  * callbacks) live on `Chart`.
  */
 export interface RadarChartProps {
-  /** The rows to plot, one per category. Compared by identity — define it outside render. */
+  /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
   /** Field holding the category laid around the circumference. */
@@ -29,14 +29,17 @@ export interface RadarChartProps {
   /** Field splitting rows into series — the long-format alternative to `y`. */
   series?: string
 
-  /** Series order. Drives color-slot assignment and the legend. */
+  /**
+   * Leading series order — drives color-slot assignment and the legend. Series
+   * the data carries but this omits follow it.
+   */
   seriesOrder?: readonly string[]
 
   /** Display names for series keys, used by the legend and the tooltip. */
   labels?: Readonly<Record<string, string>>
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
+  /** Stable row identity, so filtered rows animate instead of respawning. */
+  rowKey?: string
 
   /**
    * Series fill opacity. `0` draws outlines only.
@@ -57,10 +60,13 @@ export interface RadarChartProps {
   points?: boolean
 
   /**
-   * Show the rings.
-   * @default true
+   * Fraction of the available radius the chart fills.
+   * @default 0.78
    */
-  grid?: boolean
+  radiusRatio?: number
+
+  /** Outer value of the radius scale. Defaults to the largest value, rounded up. */
+  max?: number
 
   /**
    * Ring shape.
@@ -90,13 +96,22 @@ export interface RadarChartProps {
   spokes?: boolean
 
   /**
+   * A second, muted label line above each category label — a function, or
+   * serializable `Intl` options.
+   */
+  axisDetail?: ChartFormat
+
+  /**
    * Show the circumference labels.
    * @default true
    */
   axes?: boolean
 
-  /** A second, muted label line above each category label — a function, or serializable `Intl` options. */
-  axisDetail?: ChartFormat
+  /**
+   * Show the rings.
+   * @default true
+   */
+  grid?: boolean
 
   /**
    * Show the color legend. Turn it off for a single series.
@@ -104,25 +119,21 @@ export interface RadarChartProps {
    */
   legend?: boolean
 
-  /** Formats the circumference labels and the tooltip title. */
+  /**
+   * Formats the circumference labels and the tooltip title — a function, or
+   * serializable `Intl` options.
+   */
   formatX?: ChartFormat
 
-  /** Formats the tooltip values. */
+  /**
+   * Formats the tooltip values — a function, or serializable `Intl` options.
+   */
   formatY?: ChartFormat
 
-  /**
-   * Fraction of the available radius the chart fills.
-   * @default 0.78
-   */
-  radiusRatio?: number
+  /** Accessible name. Required: a chart is a figure, not decoration. */
+  ariaLabel: string
 
-  /** Outer value of the radius scale. Defaults to the largest value, rounded up. */
-  max?: number
-
-  /** Stable row identity, so filtered rows animate instead of respawning. */
-  rowKey?: string
-
-  /** Extra mark layers spliced into the polar container — cartesian marks would land outside it. */
+  /** Extra polar mark layers painted over the series — annotations, rules, labels. */
   polarMarks?: readonly PolarMarkLayer[]
 
   /** Overlay rendered above the chart surface, ignoring pointer events. */

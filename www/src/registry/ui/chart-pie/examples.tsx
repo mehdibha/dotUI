@@ -20,9 +20,10 @@ const labels = {
 
 export default function ChartPieExamples() {
   return (
-    <Examples className="lg:grid-cols-1">
-      <Example title="Pie Chart">
+    <Examples>
+      <Example title="Default">
         <PieChart
+          className="w-full"
           data={data}
           value="visitors"
           name="browser"
@@ -34,13 +35,14 @@ export default function ChartPieExamples() {
       </Example>
       <Example title="Donut">
         <PieChart
+          className="w-full"
           data={data}
           value="visitors"
           name="browser"
           labels={labels}
           innerRadius={0.55}
-          legend
           radiusRatio={0.85}
+          legend
           stroke="var(--color-bg)"
           strokeWidth={2}
           ariaLabel="Visitors by browser, donut"

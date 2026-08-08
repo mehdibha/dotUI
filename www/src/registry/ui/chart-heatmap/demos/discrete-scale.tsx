@@ -20,15 +20,15 @@ const data = services.flatMap(({ service, counts }) =>
   })),
 )
 
-export default function Demo() {
+export default function ChartHeatmapDiscreteScale() {
   return (
     <HeatmapChart
       data={data}
       x="week"
       y="service"
       value="incidents"
-      thresholds={[1, 4, 10]}
       colors={heatmapColors("var(--chart-4)", 4)}
+      thresholds={[1, 4, 10]}
       label="Incidents"
       ariaLabel="Incidents per service and week"
       height={200}

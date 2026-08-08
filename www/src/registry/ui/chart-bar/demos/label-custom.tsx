@@ -42,11 +42,11 @@ const labels = [
 export default function ChartBarLabelCustom() {
   return (
     <BarChart
-      horizontal
       data={data}
       x="month"
       y="desktop"
       labels={{ desktop: "Desktop" }}
+      horizontal
       axes={false}
       grid={false}
       legend={false}

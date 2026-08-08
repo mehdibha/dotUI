@@ -30,7 +30,6 @@ export default function ChartScatterGrouped() {
       seriesOrder={["starter", "growth", "scale"]}
       labels={{ starter: "Starter", growth: "Growth", scale: "Scale" }}
       rowKey="id"
-      ariaLabel="Monthly spend by seat count, grouped by plan"
       formatY={{
         locale: "en-US",
         number: {
@@ -39,6 +38,7 @@ export default function ChartScatterGrouped() {
           maximumFractionDigits: 0,
         },
       }}
+      ariaLabel="Monthly spend by seat count, grouped by plan"
     />
   )
 }

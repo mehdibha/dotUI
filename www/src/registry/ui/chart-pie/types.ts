@@ -2,16 +2,18 @@ import type * as React from "react"
 
 import type { PolarMarkLayer } from "./base"
 
+export type { PolarMarkLayer }
+
 /**
  * Pie and donut chart. One row per slice: `value` names the field holding the
  * magnitude, `name` the field holding the slice key. Radii are ratios of the
  * chart's resolved radius, not pixels, so a pie keeps its proportions at every
  * size. Interaction and animation props are shared by every family — see
- * `ChartBehaviorProps` — and the host props (`height`, `className`, callbacks)
- * live on `Chart`.
+ * `ChartBehaviorProps` — and the host props (`height`, `width`, `className`,
+ * callbacks) live on `Chart`.
  */
 export interface PieChartProps {
-  /** The rows to plot, one per slice. Compared by identity — define it outside render. */
+  /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
   /** Field holding the slice magnitude. */
@@ -20,11 +22,16 @@ export interface PieChartProps {
   /** Field holding the slice key. */
   name: string
 
-  /** Display names for slice keys, used by the legend, labels, and tooltip. */
-  labels?: Readonly<Record<string, string>>
+  /**
+   * Leading slice order — drives color-slot assignment and the legend. Slices
+   * the data carries but this omits follow it.
+   */
+  seriesOrder?: readonly string[]
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
+  /**
+   * Display names for slice keys, used by the legend, labels, and the tooltip.
+   */
+  labels?: Readonly<Record<string, string>>
 
   /**
    * Inner radius, as a ratio of the outer edge. Above 0 it is a donut.
@@ -71,7 +78,10 @@ export interface PieChartProps {
    */
   cornerRadius?: number
 
-  /** Stroke painted between slices — set it to the page background to separate them. */
+  /**
+   * Stroke painted between slices — set it to the page background to separate
+   * them.
+   */
   stroke?: string
 
   /** Width of that stroke, in pixels. */
@@ -92,13 +102,21 @@ export interface PieChartProps {
    */
   sliceLabel?: "none" | "name" | "value"
 
-  /** Radius the labels sit at, as a ratio. Defaults to the middle of the ring. */
+  /**
+   * Radius the labels sit at, as a ratio. Defaults to the middle of the ring.
+   */
   sliceLabelRadius?: number
 
-  /** Label color. @default "var(--color-fg)" */
+  /**
+   * Label color.
+   * @default "var(--color-fg)"
+   */
   sliceLabelFill?: string
 
-  /** Label size in pixels. @default 12 */
+  /**
+   * Label size in pixels.
+   * @default 12
+   */
   sliceLabelFontSize?: number
 
   /**
@@ -108,12 +126,12 @@ export interface PieChartProps {
    */
   legend?: boolean
 
-  /** Slice order. Drives color-slot assignment and the legend. */
-  seriesOrder?: readonly string[]
+  /** Accessible name. Required: a chart is a figure, not decoration. */
+  ariaLabel: string
 
   /**
-   * Extra polar mark layers, spliced inside the polar container — a second
-   * `pieRing`, an annotation arc. Define them outside render.
+   * Extra polar mark layers painted over the ring — a second `pieRing`, an
+   * annotation arc.
    */
   polarMarks?: readonly PolarMarkLayer[]
 

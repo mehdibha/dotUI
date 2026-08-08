@@ -116,7 +116,17 @@ const target = radialRule([{ angle: Math.PI }], {
 })
 ```
 
-## Motion
+```tsx
+<RadialBarChart
+  data={data}
+  value="visitors"
+  name="browser"
+  polarMarks={[target]}
+  ariaLabel="Visitors by browser, with a target rule"
+/>
+```
+
+## Animation
 
 Animation is off for this family. The renderer tweens the `d` attribute of a path, which interpolates the arc's large-arc flag as a plain number — an arc crossing half a turn briefly renders as an invalid path. Turning it on with `animate` re-enables that.
 
@@ -126,6 +136,7 @@ Animation is off for this family. The renderer tweens the `d` attribute of a pat
 - The chart surface is in the tab order. Arrow keys move between arcs, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
 - Color alone never carries the distinction — the tooltip and the legend name every ring, and `barLabels` prints the names on the arcs themselves.
 - A ring's angle is harder to compare than a bar's length. Print the numbers when the exact values matter.
+- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
 
 ## Examples
 

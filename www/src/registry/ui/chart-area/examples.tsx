@@ -15,9 +15,10 @@ const labels = { desktop: "Desktop", mobile: "Mobile" }
 
 export default function ChartAreaExamples() {
   return (
-    <Examples className="lg:grid-cols-1">
-      <Example title="Area Chart">
+    <Examples>
+      <Example title="Default">
         <AreaChart
+          className="w-full"
           data={data}
           x="month"
           y="desktop"
@@ -28,6 +29,7 @@ export default function ChartAreaExamples() {
       </Example>
       <Example title="Gradient">
         <AreaChart
+          className="w-full"
           data={data}
           x="month"
           y={["desktop", "mobile"]}

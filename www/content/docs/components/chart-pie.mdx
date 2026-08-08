@@ -47,7 +47,7 @@ export function Example() {
 
 `data` is compared by identity, so define it outside your component — or memoize it. Every other prop is a flat scalar and can change freely.
 
-Slices are drawn in data order and take colors from `--chart-1` through `--chart-8` in the same order. Set `seriesOrder` to fix that assignment when the data can arrive sorted differently.
+Slices are drawn in data order and take colors from `--chart-1` through `--chart-8` in the same order. Set `seriesOrder` to lead the color slots and the legend — slices the data carries but `seriesOrder` omits follow in the order they first appear.
 
 ## Geometry
 
@@ -134,6 +134,7 @@ Pie charts do not animate by default. Arc paths animate by interpolating their `
 - `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
 - The chart surface is in the tab order. Arrow keys move between slices, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
 - Color alone never carries the distinction — the legend, tooltip, and slice labels all name the slice.
+- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
 
 ## Examples
 

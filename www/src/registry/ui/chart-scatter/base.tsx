@@ -1,6 +1,6 @@
 "use client"
 
-import type { Channel, ChartBuildContext, ChartKey } from "@tanstack/charts"
+import type { ChartBuildContext } from "@tanstack/charts"
 import { dot } from "@tanstack/charts/dot"
 import { scaleSqrt } from "d3-scale"
 
@@ -16,11 +16,12 @@ import {
   Chart,
   chartDefaults,
   chartFrame,
+  planSeries,
   useChartDefinition,
 } from "@/registry/ui/chart"
 
-/* Scatter has no series plan: both axes are quantitative, so there is one dot
-   layer over the raw rows, optionally split by color and sized by `r`. */
+/* Both axes are quantitative, so there is a single dot layer over the raw rows:
+   `series` only colors them, `r` only sizes them. */
 
 /* A numeric field — scatter puts a linear scale on both axes. Intersecting the
    two field types keeps the numeric constraint while staying assignable to the
@@ -42,41 +43,22 @@ export interface ScatterChartSpecOptions<
   radiusRange?: readonly [number, number]
   /** Field splitting rows into colored groups. */
   series?: ChartSeriesField<TDatum>
-  /** Group order — drives color-slot assignment and the legend. */
+  /** Leading series order — drives color-slot assignment and the legend. */
   seriesOrder?: readonly string[]
-  /** Display names for group keys. */
+  /** Display names for series keys. */
   labels?: Readonly<Record<string, string>>
   /** Dot opacity — lower it when points overlap. */
   fillOpacity?: number
-}
-
-interface ScatterColors<TDatum> {
-  order: readonly string[]
-  color?: Channel<TDatum, ChartKey | null | undefined>
-}
-
-/* Order is explicit, never derived from iteration order of a Set over unsorted
-   data, so SSR and the client agree. */
-function scatterColors<TDatum>(
-  options: ScatterChartSpecOptions<TDatum>,
-): ScatterColors<TDatum> {
-  if (options.series === undefined) return { order: [] }
-  const field = options.series as keyof TDatum
-  const labelOf = (key: string) => options.labels?.[key] ?? key
-  const seriesOf = (row: TDatum) => labelOf(String(row[field]))
-  return {
-    order: options.seriesOrder
-      ? options.seriesOrder.map(labelOf)
-      : [...new Set(options.data.map(seriesOf))],
-    color: seriesOf,
-  }
 }
 
 export function scatterChartSpec<TDatum>(
   options: ScatterChartSpecOptions<TDatum>,
   ctx: ChartBuildContext,
 ): ChartSpecOf<TDatum, number> {
-  const { order, color } = scatterColors(options)
+  const { series } = options
+  const plan = series === undefined ? null : planSeries({ ...options, series })
+  const order = plan?.order ?? []
+  const color = plan?.seriesOf
   const [minRadius, maxRadius] =
     options.radiusRange ?? chartDefaults.bubbleRadius
   return {

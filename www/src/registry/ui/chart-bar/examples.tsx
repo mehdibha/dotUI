@@ -3,7 +3,7 @@ import { BarChart } from "@/registry/ui/chart-bar"
 import { Example } from "@/modules/create/preview/example"
 import { Examples } from "@/modules/create/preview/examples"
 
-const rows = [
+const data = [
   { month: "Jan", desktop: 186, mobile: 80 },
   { month: "Feb", desktop: 305, mobile: 200 },
   { month: "Mar", desktop: 237, mobile: 120 },
@@ -12,7 +12,7 @@ const rows = [
   { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const stacked = stackY(rows, { x: "month", y: ["desktop", "mobile"] })
+const stacked = stackY(data, { x: "month", y: ["desktop", "mobile"] })
 
 const labels = { desktop: "Desktop", mobile: "Mobile" }
 
@@ -21,7 +21,8 @@ export default function ChartBarExamples() {
     <Examples>
       <Example title="Grouped">
         <BarChart
-          data={rows}
+          className="w-full"
+          data={data}
           x="month"
           y={["desktop", "mobile"]}
           labels={labels}
@@ -30,6 +31,7 @@ export default function ChartBarExamples() {
       </Example>
       <Example title="Stacked">
         <BarChart
+          className="w-full"
           data={stacked}
           x="x"
           y="top"
@@ -43,11 +45,12 @@ export default function ChartBarExamples() {
       </Example>
       <Example title="Horizontal">
         <BarChart
-          horizontal
-          data={rows}
+          className="w-full"
+          data={data}
           x="month"
           y="desktop"
           labels={labels}
+          horizontal
           legend={false}
           focus="group-y"
           ariaLabel="Desktop visitors per month, horizontal bars"

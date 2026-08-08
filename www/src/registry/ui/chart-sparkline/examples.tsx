@@ -1,29 +1,50 @@
+import { Sparkline } from "@/registry/ui/chart-sparkline"
 import { Example } from "@/modules/create/preview/example"
 import { Examples } from "@/modules/create/preview/examples"
 
-import AreaDemo from "./demos/area"
-import DefaultDemo from "./demos/default"
-import NegativeHighlightDemo from "./demos/negative-highlight"
-import StatCardDemo from "./demos/stat-card"
-import WithTrendDemo from "./demos/with-trend"
+const data = [
+  { day: "Mon", visitors: 186 },
+  { day: "Tue", visitors: 205 },
+  { day: "Wed", visitors: 173 },
+  { day: "Thu", visitors: 241 },
+  { day: "Fri", visitors: 209 },
+  { day: "Sat", visitors: 264 },
+  { day: "Sun", visitors: 312 },
+]
 
 export default function ChartSparklineExamples() {
   return (
-    <Examples className="lg:grid-cols-2">
+    <Examples>
       <Example title="Default">
-        <DefaultDemo />
+        <Sparkline
+          className="w-full"
+          data={data}
+          x="day"
+          y="visitors"
+          ariaLabel="Visitors over the last seven days"
+        />
       </Example>
       <Example title="Area">
-        <AreaDemo />
+        <Sparkline
+          className="w-full"
+          data={data}
+          x="day"
+          y="visitors"
+          mode="area"
+          fill="gradient"
+          ariaLabel="Visitors over the last seven days"
+        />
       </Example>
-      <Example title="With Trend">
-        <WithTrendDemo />
-      </Example>
-      <Example title="Negative Highlight">
-        <NegativeHighlightDemo />
-      </Example>
-      <Example title="Stat Card">
-        <StatCardDemo />
+      <Example title="Colored">
+        <Sparkline
+          className="w-full"
+          data={data}
+          x="day"
+          y="visitors"
+          mode="area"
+          color="var(--color-success)"
+          ariaLabel="Visitors over the last seven days, trending up"
+        />
       </Example>
     </Examples>
   )

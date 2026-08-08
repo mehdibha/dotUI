@@ -32,7 +32,6 @@ export default function ChartScatterDense() {
       fillOpacity={0.35}
       // A tight radius keeps a hover from claiming a point on the far side.
       maxFocusDistance={12}
-      ariaLabel="Error rate by response time across 400 requests"
       formatX={{
         locale: "en-US",
         number: { style: "unit", unit: "millisecond" },
@@ -41,6 +40,7 @@ export default function ChartScatterDense() {
         locale: "en-US",
         number: { style: "percent", maximumFractionDigits: 1 },
       }}
+      ariaLabel="Error rate by response time across 400 requests"
     />
   )
 }

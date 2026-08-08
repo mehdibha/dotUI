@@ -78,12 +78,14 @@ The tooltip is off by default, since a sparkline is usually read as a whole rath
 const first = data[0]?.visitors ?? 0
 const last = data.at(-1)?.visitors ?? 0
 const up = last >= first
+```
 
+```tsx
 <Sparkline
   data={data}
   x="day"
   y="visitors"
-  color={up ? 'var(--color-success)' : 'var(--color-danger)'}
+  color={up ? "var(--color-success)" : "var(--color-danger)"}
   ariaLabel="Visitors"
 />
 ```
@@ -93,28 +95,39 @@ const up = last >= first
 Anything beyond the line is a mark you pass yourself: `marksBefore` paints under the series, `marks` over it. A dashed average line and a dot on the latest point are the two most common:
 
 ```tsx
-import { dot } from '@tanstack/charts/dot'
-import { ruleY } from '@tanstack/charts/rule'
+import { dot } from "@tanstack/charts/dot"
+import { ruleY } from "@tanstack/charts/rule"
 
 const mean = data.reduce((total, row) => total + row.visitors, 0) / data.length
 
 // Module scope: mark arrays are compared by identity, so an inline array would
 // rebuild the chart on every render.
-const average = [ruleY([mean], { stroke: 'var(--color-border)', strokeDasharray: '3 3' })]
-const latest = [dot(data.slice(-1), { x: 'day', y: 'visitors', r: 3 })]
+const average = [
+  ruleY([mean], { stroke: "var(--color-border)", strokeDasharray: "3 3" }),
+]
+const latest = [dot(data.slice(-1), { x: "day", y: "visitors", r: 3 })]
+```
 
-<Sparkline data={data} x="day" y="visitors" marksBefore={average} marks={latest} ariaLabel="Visitors" />
+```tsx
+<Sparkline
+  data={data}
+  x="day"
+  y="visitors"
+  marksBefore={average}
+  marks={latest}
+  ariaLabel="Visitors"
+/>
 ```
 
 The same rule applies to `data`: keep it stable across renders — defined at module scope, or memoized — and the chart rebuilds only when it actually changes.
 
 ## Accessibility
 
-`ariaLabel` is required — a chart is a figure, not decoration, and a sparkline carries no axis labels to fall back on. Describe the series and its window, not the shape: `"Revenue over the last six months"`.
-
-The chart surface is keyboard-focusable; arrow keys move between points and Home and End jump to the ends, so a sparkline stays reachable even with the tooltip off. When the sparkline sits beside the number it summarizes, keep that number in the DOM as text — it is what most assistive technology will read first.
-
-If you color a sparkline by its direction, do not let color carry that meaning alone: print the delta next to it, as the stat card example does.
+- `ariaLabel` is required — a sparkline carries no axis labels to fall back on. Describe the series and its window, not the shape: `"Revenue over the last six months"`.
+- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, so a sparkline stays reachable even with the tooltip off.
+- When the sparkline sits beside the number it summarizes, keep that number in the DOM as text — it is what most assistive technology will read first.
+- Color alone never carries the meaning: if you color a sparkline by its direction, print the delta next to it, as the stat card example does.
+- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart — on a sparkline it is already the default, so turn it on with `tooltip` unless the number beside the chart carries the value.
 
 ## Examples
 

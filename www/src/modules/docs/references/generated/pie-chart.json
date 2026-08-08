@@ -1,49 +1,7 @@
 {
   "name": "PieChartProps",
-  "description": "Pie and donut chart. One row per slice: `value` names the field holding the\nmagnitude, `name` the field holding the slice key. Radii are ratios of the\nchart's resolved radius, not pixels, so a pie keeps its proportions at every\nsize. Interaction and animation props are shared by every family — see\n`ChartBehaviorProps` — and the host props (`height`, `className`, callbacks)\nlive on `Chart`.",
+  "description": "Pie and donut chart. One row per slice: `value` names the field holding the\nmagnitude, `name` the field holding the slice key. Radii are ratios of the\nchart's resolved radius, not pixels, so a pie keeps its proportions at every\nsize. Interaction and animation props are shared by every family — see\n`ChartBehaviorProps` — and the host props (`height`, `width`, `className`,\ncallbacks) live on `Chart`.",
   "props": {
-    "activeIndex": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Index of a slice pushed out of the ring, to call it out."
-    },
-    "activeOffset": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "How far that slice is pushed out, as a ratio of the radius.",
-      "default": "0.08"
-    },
-    "ariaLabel": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Accessible name. Required: a chart is a figure, not decoration.",
-      "required": true
-    },
-    "children": {
-      "type": "ReactNode",
-      "typeAst": {
-        "type": "identifier",
-        "name": "ReactNode"
-      },
-      "description": "Overlay rendered above the chart surface, ignoring pointer events."
-    },
-    "cornerRadius": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Corner rounding of each slice, in pixels.",
-      "default": "0"
-    },
     "data": {
       "type": "readonly unknown[]",
       "typeAst": {
@@ -52,34 +10,43 @@
           "type": "unknown"
         }
       },
-      "description": "The rows to plot, one per slice. Compared by identity — define it outside render.",
+      "description": "The rows to plot. Compared by identity — define it outside render.",
       "required": true
     },
-    "endAngle": {
-      "type": "number",
-      "detailedType": "number | undefined",
+    "value": {
+      "type": "string",
       "typeAst": {
-        "type": "number"
+        "type": "string"
       },
-      "description": "Angle the last slice ends at, in radians. A half turn draws a semicircle.",
-      "default": "2 * Math.PI"
+      "description": "Field holding the slice magnitude.",
+      "required": true
     },
-    "innerRadius": {
-      "type": "number",
-      "detailedType": "number | undefined",
+    "name": {
+      "type": "string",
       "typeAst": {
-        "type": "number"
+        "type": "string"
       },
-      "description": "Inner radius, as a ratio of the outer edge. Above 0 it is a donut.",
-      "default": "0"
+      "description": "Field holding the slice key.",
+      "required": true
     },
-    "inset": {
-      "type": "number",
-      "detailedType": "number | undefined",
+    "seriesOrder": {
+      "type": "readonly string[]",
+      "detailedType": "readonly string[] | undefined",
       "typeAst": {
-        "type": "number"
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
       },
-      "description": "Pixel inset applied before `radiusRatio`."
+      "description": "Leading slice order — drives color-slot assignment and the legend. Slices\nthe data carries but this omits follow it."
     },
     "labels": {
       "type": "Readonly<Record<string, string>>",
@@ -116,24 +83,16 @@
           }
         ]
       },
-      "description": "Display names for slice keys, used by the legend, labels, and tooltip."
+      "description": "Display names for slice keys, used by the legend, labels, and the tooltip."
     },
-    "legend": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
+    "innerRadius": {
+      "type": "number",
+      "detailedType": "number | undefined",
       "typeAst": {
-        "type": "boolean"
+        "type": "number"
       },
-      "description": "Show the color legend. Off by default: a pie usually names its slices with\nlabels or the tooltip.",
-      "default": "false"
-    },
-    "name": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Field holding the slice key.",
-      "required": true
+      "description": "Inner radius, as a ratio of the outer edge. Above 0 it is a donut.",
+      "default": "0"
     },
     "outerRadius": {
       "type": "number",
@@ -144,50 +103,6 @@
       "description": "Outer radius, as a ratio of the available radius.",
       "default": "1"
     },
-    "padAngle": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Gap between slices, in radians.",
-      "default": "0"
-    },
-    "polarMarks": {
-      "type": "readonly PolarMarkLayer[]",
-      "detailedType": "readonly PolarMarkLayer[] | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "application",
-              "base": {
-                "type": "link",
-                "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
-                "name": "PolarMark"
-              },
-              "typeParameters": [
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                },
-                {
-                  "type": "any"
-                }
-              ]
-            }
-          }
-        ]
-      },
-      "description": "Extra polar mark layers, spliced inside the polar container — a second\n`pieRing`, an annotation arc. Define them outside render."
-    },
     "radiusRatio": {
       "type": "number",
       "detailedType": "number | undefined",
@@ -197,24 +112,82 @@
       "description": "Share of the available radius the ring may use — leave room for labels.",
       "default": "0.9"
     },
-    "seriesOrder": {
-      "type": "readonly string[]",
-      "detailedType": "readonly string[] | undefined",
+    "inset": {
+      "type": "number",
+      "detailedType": "number | undefined",
       "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "array",
-            "elementType": {
-              "type": "string"
-            }
-          }
-        ]
+        "type": "number"
       },
-      "description": "Slice order. Drives color-slot assignment and the legend."
+      "description": "Pixel inset applied before `radiusRatio`."
+    },
+    "startAngle": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Angle the first slice starts at, in radians, clockwise from twelve o'clock.",
+      "default": "0"
+    },
+    "endAngle": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Angle the last slice ends at, in radians. A half turn draws a semicircle.",
+      "default": "2 * Math.PI"
+    },
+    "padAngle": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Gap between slices, in radians.",
+      "default": "0"
+    },
+    "cornerRadius": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Corner rounding of each slice, in pixels.",
+      "default": "0"
+    },
+    "stroke": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Stroke painted between slices — set it to the page background to separate\nthem."
+    },
+    "strokeWidth": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Width of that stroke, in pixels."
+    },
+    "activeIndex": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Index of a slice pushed out of the ring, to call it out."
+    },
+    "activeOffset": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "How far that slice is pushed out, as a ratio of the radius.",
+      "default": "0.08"
     },
     "sliceLabel": {
       "type": "\"name\" | \"none\" | \"value\"",
@@ -239,6 +212,14 @@
       "description": "Text drawn on each slice: its key, its value, or nothing.",
       "default": "\"none\""
     },
+    "sliceLabelRadius": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Radius the labels sit at, as a ratio. Defaults to the middle of the ring."
+    },
     "sliceLabelFill": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -257,52 +238,71 @@
       "description": "Label size in pixels.",
       "default": "12"
     },
-    "sliceLabelRadius": {
-      "type": "number",
-      "detailedType": "number | undefined",
+    "legend": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
       "typeAst": {
-        "type": "number"
+        "type": "boolean"
       },
-      "description": "Radius the labels sit at, as a ratio. Defaults to the middle of the ring."
+      "description": "Show the color legend. Off by default: a pie usually names its slices with\nlabels or the tooltip.",
+      "default": "false"
     },
-    "startAngle": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Angle the first slice starts at, in radians, clockwise from twelve o'clock.",
-      "default": "0"
-    },
-    "stroke": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Stroke painted between slices — set it to the page background to separate them."
-    },
-    "strokeWidth": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Width of that stroke, in pixels."
-    },
-    "value": {
+    "ariaLabel": {
       "type": "string",
       "typeAst": {
         "type": "string"
       },
-      "description": "Field holding the slice magnitude.",
+      "description": "Accessible name. Required: a chart is a figure, not decoration.",
       "required": true
+    },
+    "polarMarks": {
+      "type": "readonly PolarMarkLayer[]",
+      "detailedType": "readonly PolarMarkLayer[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark",
+                "name": "PolarMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "description": "Extra polar mark layers painted over the ring — a second `pieRing`, an\nannotation arc."
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Overlay rendered above the chart surface, ignoring pointer events."
     }
   },
   "typeLinks": {
-    "@tanstack/charts/dist/polar.d.ts:PolarMark": {
+    "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark": {
       "type": "interface",
-      "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
+      "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark",
       "name": "PolarMark",
       "extends": [],
       "properties": {
@@ -347,7 +347,7 @@
                 "name": "context",
                 "value": {
                   "type": "link",
-                  "id": "@tanstack/charts/dist/polar.d.ts:PolarMarkInitializeContext",
+                  "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMarkInitializeContext",
                   "name": "PolarMarkInitializeContext"
                 },
                 "optional": false,
@@ -358,7 +358,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "@tanstack/charts/dist/polar.d.ts:InitializedPolarMark",
+                "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:InitializedPolarMark",
                 "name": "InitializedPolarMark"
               },
               "typeParameters": [
@@ -376,6 +376,46 @@
             "typeParameters": []
           },
           "optional": false,
+          "description": ""
+        },
+        "motion": {
+          "type": "property",
+          "name": "motion",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMotionTiming",
+                "name": "ChartMotionTiming"
+              },
+              {
+                "type": "function",
+                "parameters": [
+                  {
+                    "type": "parameter",
+                    "name": "context",
+                    "value": {
+                      "type": "identifier",
+                      "name": "ChartMotionContext<any>"
+                    },
+                    "optional": false,
+                    "rest": false
+                  }
+                ],
+                "return": {
+                  "type": "identifier",
+                  "name": "ChartMotionTiming | undefined"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
           "description": ""
         }
       },

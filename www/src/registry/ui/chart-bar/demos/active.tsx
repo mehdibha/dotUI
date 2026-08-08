@@ -55,9 +55,9 @@ export default function ChartBarActive() {
       y="visitors"
       series="browser"
       labels={LABELS}
+      fillOpacity={active === null ? 1 : 0.3}
       legend={false}
       marks={highlight}
-      fillOpacity={active === null ? 1 : 0.3}
       animate={false}
       onFocusChange={(point) => setActive(point?.datum.browser ?? null)}
       ariaLabel="Visitors by browser, with the focused bar highlighted"

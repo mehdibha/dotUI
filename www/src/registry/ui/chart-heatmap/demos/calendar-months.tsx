@@ -33,18 +33,18 @@ const data = years.flatMap(({ year, weight }) =>
   })),
 )
 
-export default function Demo() {
+export default function ChartHeatmapCalendarMonths() {
   return (
     <HeatmapChart
       data={data}
       x="month"
       y="year"
       value="rainfall"
-      label="Rainfall"
       formatValue={{
         locale: "en-US",
         number: { style: "unit", unit: "millimeter" },
       }}
+      label="Rainfall"
       ariaLabel="Monthly rainfall by year"
       height={200}
     />

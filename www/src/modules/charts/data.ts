@@ -138,8 +138,3 @@ export function variantsFor(
     }))
     .sort((a, b) => a.label.localeCompare(b.label))
 }
-
-/** Total number of shipped chart variants across every family. */
-export function totalVariantCount(): number {
-  return CHART_FAMILIES.reduce((sum, f) => sum + variantsFor(f.id).length, 0)
-}

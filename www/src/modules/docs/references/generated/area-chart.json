@@ -73,7 +73,7 @@
           }
         ]
       },
-      "description": "Series order. Drives color-slot assignment and the legend."
+      "description": "Leading series order — drives color-slot assignment and the legend. Series\nthe data carries but this omits follow it."
     },
     "labels": {
       "type": "Readonly<Record<string, string>>",
@@ -112,13 +112,13 @@
       },
       "description": "Display names for series keys, used by the legend and the tooltip."
     },
-    "ariaLabel": {
+    "rowKey": {
       "type": "string",
+      "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Accessible name. Required: a chart is a figure, not decoration.",
-      "required": true
+      "description": "Stable row identity, so filtered rows animate instead of respawning."
     },
     "curve": {
       "type": "ChartCurve",
@@ -169,15 +169,6 @@
       "description": "Draw a dot at every point.",
       "default": "false"
     },
-    "grid": {
-      "type": "boolean",
-      "detailedType": "boolean | undefined",
-      "typeAst": {
-        "type": "boolean"
-      },
-      "description": "Show the value-axis grid lines.",
-      "default": "true"
-    },
     "axes": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -185,6 +176,15 @@
         "type": "boolean"
       },
       "description": "Show the axes and their tick labels.",
+      "default": "true"
+    },
+    "grid": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the value-axis grid lines.",
       "default": "true"
     },
     "legend": {
@@ -214,13 +214,13 @@
       },
       "description": "Formats y tick labels — a function, or serializable `Intl` options."
     },
-    "rowKey": {
+    "ariaLabel": {
       "type": "string",
-      "detailedType": "string | undefined",
       "typeAst": {
         "type": "string"
       },
-      "description": "Stable row identity, so filtered rows animate instead of respawning."
+      "description": "Accessible name. Required: a chart is a figure, not decoration.",
+      "required": true
     },
     "marksBefore": {
       "type": "readonly ChartMarkLayer[]",
@@ -400,6 +400,46 @@
             "typeParameters": []
           },
           "optional": false,
+          "description": ""
+        },
+        "motion": {
+          "type": "property",
+          "name": "motion",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMotionTiming",
+                "name": "ChartMotionTiming"
+              },
+              {
+                "type": "function",
+                "parameters": [
+                  {
+                    "type": "parameter",
+                    "name": "context",
+                    "value": {
+                      "type": "identifier",
+                      "name": "ChartMotionContext<any>"
+                    },
+                    "optional": false,
+                    "rest": false
+                  }
+                ],
+                "return": {
+                  "type": "identifier",
+                  "name": "ChartMotionTiming | undefined"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
           "description": ""
         }
       },

@@ -13,26 +13,23 @@ import {
   radialGrid,
   radialText,
 } from "@tanstack/charts/polar"
-import type { ChartTooltipBodyRenderContext } from "@tanstack/react-charts"
+import type { ChartTooltipBodyRenderContext } from "@tanstack/react-charts/tooltip"
 import { scaleLinear } from "d3-scale"
-import { arc as d3arc } from "d3-shape"
+import { arc as d3Arc } from "d3-shape"
 
-import type {
-  ChartComponentProps,
-  ChartMarkLayer,
-  ChartSpecOf,
-} from "@/registry/ui/chart"
+import type { ChartComponentProps, ChartSpecOf } from "@/registry/ui/chart"
 import {
   Chart,
   CHART_THEME,
   chartDefaults,
   decorative,
+  finiteOrNull,
   useChartDefinition,
 } from "@/registry/ui/chart"
 
 const TAU = Math.PI * 2
 
-/** A polar mark layer — what `polarMarks` and `polarMarksBefore` accept. */
+/** Mark layers spliced inside the polar container — cartesian marks would land outside it. */
 // oxlint-disable-next-line no-explicit-any
 export type PolarMarkLayer = PolarMark<any, any, any>
 
@@ -79,6 +76,10 @@ export interface RadialBarChartSpecOptions<TDatum> {
   /** Ratios of the resolved layout radius. */
   innerRadius?: number
   outerRadius?: number
+  /** Shrinks the circle inside its box. */
+  radiusRatio?: number
+  /** Pixel inset applied before `radiusRatio`. */
+  inset?: number
   /** Gap between rings, as a share of a ring's thickness. */
   barPadding?: number
   cornerRadius?: number
@@ -87,26 +88,22 @@ export interface RadialBarChartSpecOptions<TDatum> {
   trackFill?: string
   /** Value that fills the whole sweep. Defaults to the largest value. */
   max?: number
-  /** Concentric rings behind the bars. */
-  grid?: boolean
-  gridTicks?: number
   /** Print each ring's name at the start of its arc. */
   barLabels?: boolean
   barLabelFill?: string
   barLabelFontSize?: number
+  /** Concentric rings behind the bars. */
+  grid?: boolean
+  gridTicks?: number
   legend?: boolean
-  /** Shrinks the circle inside its box. */
-  radiusRatio?: number
-  /** Pixel inset applied before `radiusRatio`. */
-  inset?: number
-  /** Polar mark layers painted under the bars. */
+  /** Extra polar mark layers painted under the bars. */
   polarMarksBefore?: readonly PolarMarkLayer[]
-  /** Polar mark layers painted over the bars. */
+  /** Extra polar mark layers painted over the bars. */
   polarMarks?: readonly PolarMarkLayer[]
 }
 
 function read(row: unknown, field: string): number {
-  return Number((row as Record<string, unknown>)[field] ?? 0)
+  return finiteOrNull((row as Record<string, unknown>)[field]) ?? 0
 }
 
 interface RadialBars<TDatum> {
@@ -194,7 +191,7 @@ function barArc<TDatum>(
     color: (bar: RadialBarDatum<TDatum>) => bar.name,
     key: (bar: RadialBarDatum<TDatum>) => `${id}:${bar.name}`,
     generator: ({ radius }) =>
-      d3arc<RadialBarDatum<TDatum>>()
+      d3Arc<RadialBarDatum<TDatum>>()
         .startAngle((bar) => bar.startAngle)
         .endAngle((bar) => bar.endAngle)
         .padAngle(() => 0)
@@ -202,6 +199,15 @@ function barArc<TDatum>(
         .outerRadius((bar) => bar.outer * radius)
         .cornerRadius(cornerRadius),
   })
+}
+
+/* `radialText` requires angle and radius scales even where the geometry comes
+   from raw radians, so the container carries identity ones. */
+function identityScales(startAngle: number, endAngle: number) {
+  return {
+    angle: { scale: scaleLinear().domain([startAngle, endAngle]) },
+    radius: { scale: scaleLinear().domain([0, 1]) },
+  }
 }
 
 export function radialBarChartSpec<TDatum>(
@@ -229,15 +235,11 @@ export function radialBarChartSpec<TDatum>(
     theme: CHART_THEME,
     marks: [
       polar({
+        ...identityScales(start, end),
         startAngle: start,
         endAngle: end,
         inset: options.inset ?? 0,
         radiusRatio: options.radiusRatio ?? 1,
-        /* Arcs carry their own radians and radius ratios, but `radialGrid` and
-           `radialText` refuse to render without scales — identity ones keep
-           the mapping honest. */
-        angle: { scale: scaleLinear().domain([start, end]) },
-        radius: { scale: scaleLinear().domain([0, 1]) },
         guides,
         marks: [
           ...(options.polarMarksBefore ?? []),
@@ -274,7 +276,7 @@ export function radialBarChartSpec<TDatum>(
             : []),
           ...(options.polarMarks ?? []),
         ],
-      }) as ChartMarkLayer,
+      }),
     ],
   }
 }
@@ -284,19 +286,23 @@ export function radialBarChartSpec<TDatum>(
 function radialTooltipBody({
   points,
 }: ChartTooltipBodyRenderContext<RadialBarDatum<unknown>, number, number>) {
-  return points.map((point) => (
-    <div key={point.key} className="flex items-center gap-2">
-      <span
-        aria-hidden="true"
-        className="size-2 shrink-0 rounded-xs"
-        style={{ background: point.color }}
-      />
-      <span>{point.datum.name}</span>
-      <span className="ml-auto font-medium tabular-nums">
-        {point.datum.value.toLocaleString()}
-      </span>
+  return (
+    <div className="grid gap-1">
+      {points.map((point) => (
+        <div key={point.key} className="flex items-center gap-1.5">
+          <span
+            aria-hidden
+            className="size-2 shrink-0 rounded-xs"
+            style={{ background: point.color }}
+          />
+          <span>{point.datum.name}</span>
+          <span className="ml-3 flex-1 text-right tabular-nums">
+            {String(point.datum.value)}
+          </span>
+        </div>
+      ))}
     </div>
-  ))
+  )
 }
 
 export type RadialBarChartProps<TDatum> = ChartComponentProps<
@@ -313,15 +319,18 @@ export function RadialBarChart<TDatum>(props: RadialBarChartProps<TDatum>) {
   >(
     {
       ...props,
-      /* The focus and anchor presets in `chartDefaults` are cartesian, and
-         animation stays off because the `d` tween interpolates the SVG
-         large-arc flag: an arc crossing half a turn renders an invalid path
-         for the length of the transition. */
+      /* The cartesian presets in `chartDefaults` do not fit arcs: an arc's x
+         value is an angle in radians, so only `nearest` and a point anchor
+         read right. */
       focus: props.focus ?? "nearest",
       tooltipAnchor: props.tooltipAnchor ?? "point",
+      /* Animation is off by default: the 0.7.2 SVG renderer tweens every number
+         in `d`, arc flags included, so arcs crossing 180° break mid-transition. */
       animate: props.animate ?? false,
       renderTooltipBody: props.renderTooltipBody ?? radialTooltipBody,
-      // Ride the identity-compared keys — polar mark arrays serialize alike.
+      /* The polar mark arrays serialize into the structural key — mark objects
+         key by function identity — and alias into the reference-compared
+         `marks` slots. */
       marks: props.polarMarks,
       marksBefore: props.polarMarksBefore,
     },

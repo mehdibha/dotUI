@@ -2,6 +2,7 @@
 
 import type { ChartBuildContext } from "@tanstack/charts"
 import { barX, barY } from "@tanstack/charts/bar"
+import { group } from "@tanstack/charts/group"
 import { scaleBand } from "d3-scale"
 
 import type {
@@ -31,6 +32,7 @@ export interface BarChartSpecOptions<
   radius?: number
   /** Pixels trimmed from both categorical edges of every bar. */
   inset?: number
+  /** Bar fill opacity. */
   fillOpacity?: number
 }
 
@@ -45,12 +47,14 @@ export function barChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
     radius: options.radius ?? chartDefaults.barRadius,
     inset: options.inset,
     fillOpacity: options.fillOpacity,
-    /* The group scale carries an explicit domain: a factory would infer one
-       value per layer and park every series in the middle of the band. */
-    groupScale: grouped
-      ? scaleBand<string>()
-          .domain([...order])
-          .padding(chartDefaults.groupPadding)
+    /* Every series is its own mark, so an inferred group domain would hold a
+       single value and park each series in the middle of the band. */
+    layout: grouped
+      ? group({
+          scale: scaleBand<string>()
+            .domain([...order])
+            .padding(chartDefaults.groupPadding),
+        })
       : undefined,
   }
   return {

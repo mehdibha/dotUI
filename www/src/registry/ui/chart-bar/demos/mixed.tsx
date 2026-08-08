@@ -13,7 +13,6 @@ const data = [
 export default function ChartBarMixed() {
   return (
     <BarChart
-      horizontal
       data={data}
       x="browser"
       y="visitors"
@@ -26,6 +25,7 @@ export default function ChartBarMixed() {
         edge: "Edge",
         other: "Other",
       }}
+      horizontal
       legend={false}
       focus="group-y"
       ariaLabel="Visitors by browser"

@@ -52,13 +52,19 @@ Two data shapes, one component. **Wide** rows carry one field per series:
 <LineChart data={rows} x="month" y={["desktop", "mobile"]} />
 ```
 
-**Long** rows repeat the x value and name their series in a field:
+**Long** rows repeat the x value and name their series in a field. Set `seriesOrder` to lead the color slots and the legend — series the data carries but `seriesOrder` omits follow in the order they first appear:
 
 ```tsx
-<LineChart data={rows} x="month" y="visitors" series="device" />
+<LineChart
+  data={rows}
+  x="month"
+  y="visitors"
+  series="device"
+  seriesOrder={["desktop", "mobile"]}
+/>
 ```
 
-Either way, series are colored in order from `--chart-1` onward. Pass `seriesOrder` to fix that order yourself instead of taking it from the field order or the row order.
+Either way, series are colored in order from `--chart-1` through `--chart-8`.
 
 ## Curve
 
@@ -86,13 +92,25 @@ const labels = text(chartData, {
 })
 ```
 
+```tsx
+<LineChart
+  data={chartData}
+  x="month"
+  y="desktop"
+  marks={[labels]}
+  ariaLabel="Desktop visitors, with each point labelled"
+/>
+```
+
 Give an annotation the same `z` as the series it belongs to — the series' display name, or its field name when you pass no `labels`. That keeps it in one focus group with the line, so the tooltip stays a single row instead of growing one per layer. Build marks outside render: like `data`, they are compared by identity.
 
 ## Accessibility
 
-`ariaLabel` is required — a chart is a figure, not decoration. Name what is being compared, and add `ariaDescription` for context that is not already visible next to the chart.
-
-The chart surface is keyboard-focusable. Focusing it selects the first point; Arrow keys move between points, Home and End jump to the ends, Enter or Space pins the tooltip, and Escape dismisses it. When exact values matter, put a real table or a short summary next to the chart — HTML the reader can select, translate, and print.
+- `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
+- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
+- Color alone never carries the distinction — the legend, tooltip, and axis labels all name the series.
+- When exact values matter, put a real table or a short summary next to the chart — HTML the reader can select, translate, and print.
+- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
 
 ## Examples
 

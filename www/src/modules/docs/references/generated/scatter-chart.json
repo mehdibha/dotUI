@@ -1,6 +1,6 @@
 {
   "name": "ScatterChartProps",
-  "description": "A scatter plot: one dot per row, positioned by two quantitative fields, with\noptional color grouping and an optional radius channel for bubbles.\n\nIt also accepts every prop of `Chart` (`ariaLabel`, `height`, `className`, …)\nand every interaction prop of `ChartBehaviorProps`.",
+  "description": "Scatter plot. Give it rows plus the two quantitative fields that position\nthem: `series` colors the dots, `r` sizes them. Interaction and animation\nprops are shared by every family — see `ChartBehaviorProps` — and the host\nprops (`height`, `width`, `className`, callbacks) live on `Chart`.",
   "props": {
     "data": {
       "type": "readonly unknown[]",
@@ -10,7 +10,7 @@
           "type": "unknown"
         }
       },
-      "description": "Rows to plot. Compared by identity — define it outside render.",
+      "description": "The rows to plot. Compared by identity — define it outside render.",
       "required": true
     },
     "x": {
@@ -37,40 +37,6 @@
       },
       "description": "Field sizing each dot. Values map to `radiusRange` through an\narea-preserving square-root scale, so area — not radius — reads as\nmagnitude. Omit it for a plain scatter."
     },
-    "radius": {
-      "type": "number",
-      "detailedType": "number | undefined",
-      "typeAst": {
-        "type": "number"
-      },
-      "description": "Dot radius in pixels, used when `r` is absent.",
-      "default": "4"
-    },
-    "radiusRange": {
-      "type": "readonly [number, number]",
-      "detailedType": "readonly [number, number] | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "undefined"
-          },
-          {
-            "type": "tuple",
-            "elements": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          }
-        ]
-      },
-      "description": "Smallest and largest dot radius in pixels, used when `r` is set.",
-      "default": "[3, 18]"
-    },
     "series": {
       "type": "string",
       "detailedType": "string | undefined",
@@ -96,7 +62,7 @@
           }
         ]
       },
-      "description": "Group order. Drives color-slot assignment and legend order."
+      "description": "Leading series order — drives color-slot assignment and the legend. Series\nthe data carries but this omits follow it."
     },
     "labels": {
       "type": "Readonly<Record<string, string>>",
@@ -133,7 +99,49 @@
           }
         ]
       },
-      "description": "Display names for group keys, used by the legend and the tooltip."
+      "description": "Display names for series keys, used by the legend and the tooltip."
+    },
+    "rowKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Stable row identity, so filtered rows animate instead of respawning."
+    },
+    "radius": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Dot radius in pixels, used when `r` is absent.",
+      "default": "4"
+    },
+    "radiusRange": {
+      "type": "readonly [number, number]",
+      "detailedType": "readonly [number, number] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "tuple",
+            "elements": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          }
+        ]
+      },
+      "description": "Smallest and largest dot radius in pixels, used when `r` is set.",
+      "default": "[3, 18]"
     },
     "fillOpacity": {
       "type": "number",
@@ -143,21 +151,13 @@
       },
       "description": "Dot opacity. Lower it when points overlap."
     },
-    "rowKey": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Stable row identity, so filtered or re-sorted data animates instead of respawning."
-    },
     "axes": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Show the axis lines and their tick labels.",
+      "description": "Show the axes and their tick labels.",
       "default": "true"
     },
     "grid": {
@@ -166,7 +166,7 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Show grid lines. Scatter draws them on both axes.",
+      "description": "Show the grid lines. Scatter draws them on both axes.",
       "default": "true"
     },
     "legend": {
@@ -184,7 +184,7 @@
         "type": "identifier",
         "name": "ChartFormat"
       },
-      "description": "Formats x tick labels: a function, or `Intl` options with a locale."
+      "description": "Formats x tick labels — a function, or serializable `Intl` options."
     },
     "formatY": {
       "type": "ChartFormat",
@@ -193,7 +193,15 @@
         "type": "identifier",
         "name": "ChartFormat"
       },
-      "description": "Formats y tick labels: a function, or `Intl` options with a locale."
+      "description": "Formats y tick labels — a function, or serializable `Intl` options."
+    },
+    "ariaLabel": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Accessible name. Required: a chart is a figure, not decoration.",
+      "required": true
     },
     "marksBefore": {
       "type": "readonly ChartMarkLayer[]",
@@ -234,7 +242,7 @@
           }
         ]
       },
-      "description": "Extra mark layers painted under the dots — a regression line, a rule."
+      "description": "Extra mark layers painted under the dots."
     },
     "marks": {
       "type": "readonly ChartMarkLayer[]",
@@ -275,15 +283,7 @@
           }
         ]
       },
-      "description": "Extra mark layers painted over the dots — labels, annotations."
-    },
-    "ariaLabel": {
-      "type": "string",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Accessible name. Required: a chart is a figure, not decoration.",
-      "required": true
+      "description": "Extra mark layers painted over the dots — annotations, rules, labels."
     },
     "children": {
       "type": "ReactNode",
@@ -381,6 +381,46 @@
             "typeParameters": []
           },
           "optional": false,
+          "description": ""
+        },
+        "motion": {
+          "type": "property",
+          "name": "motion",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMotionTiming",
+                "name": "ChartMotionTiming"
+              },
+              {
+                "type": "function",
+                "parameters": [
+                  {
+                    "type": "parameter",
+                    "name": "context",
+                    "value": {
+                      "type": "identifier",
+                      "name": "ChartMotionContext<any>"
+                    },
+                    "optional": false,
+                    "rest": false
+                  }
+                ],
+                "return": {
+                  "type": "identifier",
+                  "name": "ChartMotionTiming | undefined"
+                },
+                "typeParameters": []
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
           "description": ""
         }
       },

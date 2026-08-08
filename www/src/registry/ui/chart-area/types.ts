@@ -6,7 +6,7 @@ import type {
   ChartMarkLayer,
 } from "@/registry/ui/chart"
 
-export type { ChartCurve, ChartFormat }
+export type { ChartCurve, ChartFormat, ChartMarkLayer }
 
 /**
  * Area chart. Give it rows plus the fields to read: one `y` field per series
@@ -33,14 +33,17 @@ export interface AreaChartProps {
   /** Field splitting rows into series — the long-format alternative to `y`. */
   series?: string
 
-  /** Series order. Drives color-slot assignment and the legend. */
+  /**
+   * Leading series order — drives color-slot assignment and the legend. Series
+   * the data carries but this omits follow it.
+   */
   seriesOrder?: readonly string[]
 
   /** Display names for series keys, used by the legend and the tooltip. */
   labels?: Readonly<Record<string, string>>
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
+  /** Stable row identity, so filtered rows animate instead of respawning. */
+  rowKey?: string
 
   /**
    * Path interpolation between points.
@@ -67,16 +70,16 @@ export interface AreaChartProps {
   points?: boolean
 
   /**
-   * Show the value-axis grid lines.
-   * @default true
-   */
-  grid?: boolean
-
-  /**
    * Show the axes and their tick labels.
    * @default true
    */
   axes?: boolean
+
+  /**
+   * Show the value-axis grid lines.
+   * @default true
+   */
+  grid?: boolean
 
   /**
    * Show the color legend. Turn it off for a single series.
@@ -90,8 +93,8 @@ export interface AreaChartProps {
   /** Formats y tick labels — a function, or serializable `Intl` options. */
   formatY?: ChartFormat
 
-  /** Stable row identity, so filtered rows animate instead of respawning. */
-  rowKey?: string
+  /** Accessible name. Required: a chart is a figure, not decoration. */
+  ariaLabel: string
 
   /** Extra mark layers painted under the areas. */
   marksBefore?: readonly ChartMarkLayer[]

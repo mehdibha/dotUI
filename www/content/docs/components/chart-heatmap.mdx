@@ -46,6 +46,8 @@ export function Example() {
 
 Both axes are band scales, so the categories appear in the order the rows first mention them — sort your data, and the matrix follows. `label` names what the value means: it titles the legend and labels the value in the tooltip. `labelX` and `labelY` do the same for the two coordinates.
 
+Cells tile the plot, so the heatmap has no `grid` prop — the cell edges are the grid.
+
 ## Color
 
 Color is the whole reading, so it is binned rather than continuous: each bin is a distinct step, and the legend prints the boundaries between them. `colors` is the ramp, low to high, and its length is the number of bins.
@@ -104,9 +106,10 @@ Only turn it on when the cells are large enough to hold a number — a dozen cel
 
 ## Accessibility
 
-The chart surface is focusable and keyboard-navigable: arrow keys move between cells, and each focused cell is announced with its two categories and its value. `ariaLabel` is required and names the figure; `ariaDescription` adds the longer explanation a sighted reader gets from the surrounding copy.
-
-A heatmap encodes its measure in color alone, which is exactly the encoding a reader may not perceive. The legend is visual guidance and is hidden from assistive technology, so give the value a `label`, keep the tooltip on, and turn on `values` whenever the cells can hold the numbers.
+- `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
+- The chart surface is in the tab order. Arrow keys move between cells, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
+- A heatmap encodes its measure in color alone, which is exactly the encoding a reader may not perceive. The legend is visual guidance and is hidden from assistive technology, so give the value a `label` and turn on `values` whenever the cells can hold the numbers.
+- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart — and never on a heatmap, where the tooltip is the only place the exact value is spoken.
 
 ## Examples
 

@@ -22,9 +22,10 @@ const total = [{ browser: "safari", visitors: 1260 }]
 
 export default function ChartRadialExamples() {
   return (
-    <Examples className="lg:grid-cols-1">
-      <Example title="Radial Bar Chart">
+    <Examples>
+      <Example title="Default">
         <RadialBarChart
+          className="w-full"
           data={data}
           value="visitors"
           name="browser"
@@ -37,17 +38,18 @@ export default function ChartRadialExamples() {
       </Example>
       <Example title="Progress Ring">
         <RadialBarChart
+          className="w-full"
           data={total}
           value="visitors"
           name="browser"
           labels={{ safari: "Safari" }}
-          max={1600}
           endAngle={(250 * Math.PI) / 180}
           innerRadius={0.78}
           outerRadius={0.95}
-          cornerRadius={999}
           radiusRatio={0.9}
+          cornerRadius={999}
           track
+          max={1600}
           ariaLabel="Safari visitors as a progress ring"
         >
           <div className="flex h-full flex-col items-center justify-center">

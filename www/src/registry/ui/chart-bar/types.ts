@@ -2,35 +2,43 @@ import type * as React from "react"
 
 import type { ChartFormat, ChartMarkLayer } from "@/registry/ui/chart"
 
+export type { ChartFormat, ChartMarkLayer }
+
 /**
- * A bar chart. Field props (`x`, `y`, `series`, …) name keys of your row type
- * and are checked against it. Every prop of `Chart` (`ariaLabel`, `height`,
- * `className`, `children`, the focus callbacks) and every prop of
- * `ChartBehaviorProps` (`focus`, `tooltip`, `animate`, …) is accepted too.
+ * Bar chart. Give it rows plus the fields to read: one `y` field per series
+ * for wide rows, or a single `y` with `series` for long rows. Interaction and
+ * animation props are shared by every family — see `ChartBehaviorProps` — and
+ * the host props (`height`, `width`, `className`, callbacks) live on `Chart`.
  */
 export interface BarChartProps {
-  /** The rows to plot. Compared by identity — keep it out of render. */
+  /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
-  /** Field holding the category. */
+  /** Field holding the category or time value. */
   x: string
 
-  /** One field per series (wide rows), or a single field with `series`. */
+  /**
+   * One field per series (wide rows), or a single field paired with `series`
+   * (long rows).
+   */
   y: string | readonly string[]
 
-  /** Lower baseline field — pair with `stackY` for stacked bars. */
+  /** Lower baseline field. Pair it with the `stackY` helper for stacked bars. */
   y1?: string
 
   /** Field splitting rows into series — the long-format alternative to `y`. */
   series?: string
 
-  /** Series order — drives color-slot assignment and the legend. */
+  /**
+   * Leading series order — drives color-slot assignment and the legend. Series
+   * the data carries but this omits follow it.
+   */
   seriesOrder?: readonly string[]
 
-  /** Display names for series keys. */
+  /** Display names for series keys, used by the legend and the tooltip. */
   labels?: Readonly<Record<string, string>>
 
-  /** Stable row identity, so sorted or filtered rows are retained, not respawned. */
+  /** Stable row identity, so filtered rows animate instead of respawning. */
   rowKey?: string
 
   /**
@@ -41,7 +49,8 @@ export interface BarChartProps {
   horizontal?: boolean
 
   /**
-   * Side-by-side series inside each category band.
+   * Side-by-side series inside each category band. Series that share a band
+   * without it stack instead.
    * @default true for multi-series wide data, false otherwise
    */
   grouped?: boolean
@@ -59,16 +68,16 @@ export interface BarChartProps {
   fillOpacity?: number
 
   /**
-   * Gridlines on the value axis.
-   * @default true
-   */
-  grid?: boolean
-
-  /**
-   * Axis ticks and labels, on both axes.
+   * Show the axes and their tick labels.
    * @default true
    */
   axes?: boolean
+
+  /**
+   * Show the value-axis grid lines.
+   * @default true
+   */
+  grid?: boolean
 
   /**
    * Show the color legend. Turn it off for a single series.
@@ -76,20 +85,20 @@ export interface BarChartProps {
    */
   legend?: boolean
 
-  /** Formats x tick labels: a function, or Intl number/date options. */
+  /** Formats x tick labels — a function, or serializable `Intl` options. */
   formatX?: ChartFormat
 
-  /** Formats y tick labels: a function, or Intl number/date options. */
+  /** Formats y tick labels — a function, or serializable `Intl` options. */
   formatY?: ChartFormat
-
-  /** Mark layers painted under the bars — a baseline rule, a target band. */
-  marksBefore?: readonly ChartMarkLayer[]
-
-  /** Mark layers painted over the bars — value labels, annotations. */
-  marks?: readonly ChartMarkLayer[]
 
   /** Accessible name. Required: a chart is a figure, not decoration. */
   ariaLabel: string
+
+  /** Extra mark layers painted under the bars. */
+  marksBefore?: readonly ChartMarkLayer[]
+
+  /** Extra mark layers painted over the bars — annotations, rules, labels. */
+  marks?: readonly ChartMarkLayer[]
 
   /** Overlay rendered above the chart surface, ignoring pointer events. */
   children?: React.ReactNode
