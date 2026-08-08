@@ -82,8 +82,29 @@ export const ICON_WEIGHT_OPTIONS = [
 export const DENSITY_OPTIONS = [
   { value: "compact", label: "Compact" },
   { value: "default", label: "Default" },
-  { value: "comfortable", label: "Cozy" },
+  { value: "comfortable", label: "Comfortable" },
 ]
+
+/* Space v2 — the spatial system mirrors Shape's base-times-recipe model: the
+   unit scales everything, density scales gaps and insets, control size moves
+   the height ladder (in units) without touching the recipe. */
+export const DENSITY_FACTORS: Record<string, number> = {
+  compact: 0.75,
+  default: 1,
+  comfortable: 1.25,
+}
+
+export const CONTROL_SIZE_OPTIONS = [
+  { value: "sm", label: "Small" },
+  { value: "md", label: "Medium" },
+  { value: "lg", label: "Large" },
+]
+
+export const CONTROL_SIZE_UNITS: Record<string, number> = {
+  sm: 7,
+  md: 8,
+  lg: 9,
+}
 
 // CSS corner-shape values (progressive enhancement; unsupported → round).
 export const CORNER_SHAPE_OPTIONS = [
@@ -587,6 +608,10 @@ export const DEFAULTS = {
   roleSurface: "lg",
   rolePanel: "xl",
   density: "default",
+  // Space (v2) — the unit is Tailwind's --spacing in px; control sizes are
+  // ladders of units, resolved live in the Space hero.
+  spacingUnit: 4,
+  controlSize: "md",
   // Surfaces (v2) — the delineation axis (issue #590). Defaults are the
   // study's recommended direction, not today's solid neutral-400.
   surfaceDelineation: "hairline",
@@ -710,7 +735,11 @@ export const SHAPE_KEYS_V2: (keyof LabState)[] = [
   "roleSurface",
   "rolePanel",
 ]
-export const SPACE_KEYS_V2: (keyof LabState)[] = ["density"]
+export const SPACE_KEYS_V2: (keyof LabState)[] = [
+  "density",
+  "spacingUnit",
+  "controlSize",
+]
 export const EFFECT_KEYS: (keyof LabState)[] = [
   "shadows",
   "cursorInteractive",
