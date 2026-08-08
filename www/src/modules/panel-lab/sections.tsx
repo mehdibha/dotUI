@@ -43,6 +43,8 @@ import {
   FontPickerRow,
   GroupCaption,
   GroupTitle,
+  MiniSegmented,
+  ParamRow,
   ROW,
   ROW_LABEL,
   ROW_VALUE,
@@ -62,7 +64,10 @@ import { useLoadedFamilies } from "@/modules/create/typography"
 
 import { MiniSliderRow } from "./color-ideal"
 import {
+  BUTTON_HOVER_OPTIONS,
+  BUTTON_PRESS_OPTIONS,
   BUTTON_STYLES,
+  BUTTON_TRANSITION_OPTIONS,
   CLUSTERS,
   CONTROL_SIZE_OPTIONS,
   CONTROL_SIZE_UNITS,
@@ -77,7 +82,9 @@ import {
   FOCUS_CONTROL_STYLE_OPTIONS,
   FOCUS_INPUT_STYLE_OPTIONS,
   FOCUS_OFFSET_OPTIONS,
-  HOVER_PARAM_OPTIONS,
+  GROUP_LAYOUT_OPTIONS,
+  GROUP_SELECTED_OPTIONS,
+  GROUP_SEPARATOR_OPTIONS,
   ICON_LIBRARY_OPTIONS,
   ICON_WEIGHT_OPTIONS,
   INPUT_STYLES,
@@ -1354,77 +1361,190 @@ function buttonRadiusPx(state: LabState): number {
   }
 }
 
-/** Style → surface classes; `dim` is the style's own read of the dim hover. */
-const BUTTON_LOOKS = {
-  solid: { base: "bg-primary text-fg-on-primary", dim: "hover:brightness-90" },
-  soft: { base: "bg-neutral text-fg-on-neutral", dim: "hover:brightness-90" },
-  outline: {
-    base: "border border-border-field text-fg",
-    dim: "hover:bg-highlight",
+/* Style families (Aug 2026 survey) — each reshapes every fill variant at
+   once; quiet stays flat, as it does in every system with an aesthetic axis
+   (Radix classic, Untitled UI, Primer, Geist all converge on this). */
+const BUTTON_STYLE_LOOKS = {
+  flat: {
+    primary: "bg-primary text-fg-on-primary",
+    secondary: "border border-border-field bg-neutral text-fg-on-neutral",
   },
-  quiet: { base: "text-fg", dim: "hover:bg-highlight" },
+  outline: {
+    primary:
+      "bg-primary text-fg-on-primary shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
+    secondary:
+      "border border-border-field bg-neutral text-fg-on-neutral shadow-[0_1px_0_rgb(0_0_0/0.08)]",
+  },
+  raised: {
+    primary:
+      "bg-primary bg-linear-to-b from-white/15 to-black/15 text-fg-on-primary shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
+    secondary:
+      "border border-border-field bg-neutral bg-linear-to-b from-white/8 to-black/8 text-fg-on-neutral shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]",
+  },
+  elevated: {
+    primary:
+      "bg-primary text-fg-on-primary shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
+    secondary:
+      "bg-neutral text-fg-on-neutral shadow-[0_2px_6px_rgb(0_0_0/0.25),0_1px_2px_rgb(0_0_0/0.15)]",
+  },
 } as const
 
-const buttonLook = (state: LabState) =>
-  BUTTON_LOOKS[state.buttonStyle as keyof typeof BUTTON_LOOKS] ??
-  BUTTON_LOOKS.solid
+const buttonStyleLook = (state: LabState) =>
+  BUTTON_STYLE_LOOKS[state.buttonStyle as keyof typeof BUTTON_STYLE_LOOKS] ??
+  BUTTON_STYLE_LOOKS.flat
 
-function buttonHoverFx(state: LabState): string {
-  if (state.buttonHover === "dim") return buttonLook(state).dim
-  if (state.buttonHover === "lift")
-    return "hover:-translate-y-px hover:shadow-md"
-  return ""
+/* Quiet gains a background on hover in every surveyed system, whatever the
+   fill variants do — so both dim and lighten resolve to a fill for it. */
+function buttonHoverFx(state: LabState, tier: "fill" | "quiet"): string {
+  if (state.buttonHover === "none") return ""
+  if (tier === "quiet") return "hover:bg-highlight"
+  return state.buttonHover === "lighten"
+    ? "hover:brightness-110"
+    : "hover:brightness-95"
 }
 
-/** Live specimens of the synced group — a Button and a working Toggle Button
- *  pair wearing one style. Hovering demos the hover axis for real. */
+/* Press is uniform across variants (the Linear precedent). */
+function buttonPressFx(state: LabState, tier: "fill" | "quiet"): string {
+  switch (state.buttonPress) {
+    case "dim":
+      return tier === "quiet" ? "active:bg-inverse/15" : "active:brightness-90"
+    case "scale":
+      return "active:scale-[0.97]"
+    case "push":
+      return "active:translate-y-px"
+    default:
+      return ""
+  }
+}
+
+const SPECIMEN_FX =
+  "cursor-interactive focus-reset transition-[background-color,border-color,color,box-shadow,filter,scale,translate] focus-visible:focus-ring"
+
+const GROUP_SELECTED_LOOKS: Record<string, string> = {
+  fill: "bg-selected text-fg-on-selected",
+  chip: "bg-bg text-fg shadow-sm",
+  inverse: "bg-inverse text-fg-inverse",
+}
+
+/** The synced group's toggle side — one working single-select group, laid out
+ *  per the group axes. Separator only matters when attached. */
+function GroupSpecimen({ state }: { state: LabState }) {
+  const [view, setView] = useState("list")
+  const radius = buttonRadiusPx(state)
+  const duration = `${state.buttonTransition}ms`
+  const selected =
+    GROUP_SELECTED_LOOKS[state.groupSelected] ?? GROUP_SELECTED_LOOKS.fill
+  const layout = state.groupLayout
+
+  const segment = (id: string, label: string, className?: string) => (
+    <button
+      key={id}
+      type="button"
+      aria-pressed={view === id}
+      onClick={() => setView(id)}
+      className={cn(
+        "flex h-7 items-center px-3 text-xs font-medium",
+        SPECIMEN_FX,
+        view === id
+          ? cn(selected, buttonPressFx(state, "fill"))
+          : cn("text-fg-muted hover:text-fg", buttonPressFx(state, "quiet")),
+        className,
+      )}
+      style={{ transitionDuration: duration }}
+    >
+      {label}
+    </button>
+  )
+  const segments = [
+    ["list", "List"],
+    ["grid", "Grid"],
+    ["board", "Board"],
+  ] as const
+
+  if (layout === "gapped")
+    return (
+      <div className="flex items-center gap-2">
+        {segments.map(([id, label]) =>
+          segment(
+            id,
+            label,
+            cn(
+              "rounded-(--seg-radius)",
+              view !== id && "border border-border-field bg-neutral",
+            ),
+          ),
+        )}
+      </div>
+    )
+
+  if (layout === "container")
+    return (
+      <div
+        className="flex items-center gap-0.5 bg-muted p-0.5"
+        style={{ borderRadius: radius >= 999 ? 999 : radius }}
+      >
+        {segments.map(([id, label]) =>
+          segment(id, label, "rounded-(--seg-radius)"),
+        )}
+      </div>
+    )
+
+  return (
+    <div
+      className={cn(
+        "flex items-center overflow-hidden border border-border-field bg-neutral",
+        state.groupSeparator === "auto" && "divide-x divide-border-field",
+      )}
+      style={{ borderRadius: radius }}
+    >
+      {segments.map(([id, label], i) => (
+        <span key={id} className="flex items-stretch">
+          {state.groupSeparator === "divider" && i > 0 && (
+            <span className="my-1.5 w-px bg-border-field" />
+          )}
+          {segment(id, label)}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+/** Live specimens of the synced group: the fill variants and Quiet wearing
+ *  one style, plus a working toggle group. Hover and press demo for real. */
 function ButtonsHero({ state }: { state: LabState }) {
-  const [view, setView] = useState<"list" | "grid">("list")
-  const look = buttonLook(state)
+  const look = buttonStyleLook(state)
   const radius = buttonRadiusPx(state)
   const segRadius = radius >= 999 ? 999 : Math.max(radius - 3, 0)
-  const fx = buttonHoverFx(state)
-  // Quiet's base has no surface, so its selected toggle segment needs one.
-  const selectedSegment =
-    state.buttonStyle === "quiet" ? "bg-highlight text-fg" : look.base
+  const duration = `${state.buttonTransition}ms`
+
+  const specimen = (tier: "primary" | "secondary" | "quiet", label: string) => (
+    <button
+      type="button"
+      className={cn(
+        "flex h-8 items-center px-3.5 text-[0.8125rem] font-medium",
+        SPECIMEN_FX,
+        tier === "quiet" ? "text-fg" : look[tier],
+        buttonHoverFx(state, tier === "quiet" ? "quiet" : "fill"),
+        buttonPressFx(state, tier === "quiet" ? "quiet" : "fill"),
+      )}
+      style={{ borderRadius: radius, transitionDuration: duration }}
+    >
+      {label}
+    </button>
+  )
 
   return (
     <Hero>
-      <div className="flex items-center justify-center gap-3 py-4">
-        <button
-          type="button"
-          className={cn(
-            SPECIMEN_BUTTON,
-            "cursor-interactive focus-reset transition-[background-color,filter,translate,box-shadow] duration-150 focus-visible:focus-ring",
-            look.base,
-            fx,
-          )}
-          style={{ borderRadius: radius }}
-        >
-          Get started
-        </button>
-        <div
-          className="flex items-center gap-0.5 bg-muted p-0.5"
-          style={{ borderRadius: radius >= 999 ? 999 : radius }}
-        >
-          {(["list", "grid"] as const).map((v) => (
-            <button
-              key={v}
-              type="button"
-              aria-pressed={view === v}
-              onClick={() => setView(v)}
-              className={cn(
-                "flex h-7 cursor-interactive items-center px-3 text-xs font-medium focus-reset transition-[background-color,filter,color] duration-150 focus-visible:focus-ring",
-                view === v
-                  ? cn(selectedSegment, fx)
-                  : "text-fg-muted hover:text-fg",
-              )}
-              style={{ borderRadius: segRadius }}
-            >
-              {v === "list" ? "List" : "Grid"}
-            </button>
-          ))}
+      <div
+        className="flex flex-col items-center gap-3 py-4"
+        style={{ "--seg-radius": `${segRadius}px` } as CSSProperties}
+      >
+        <div className="flex items-center gap-2">
+          {specimen("primary", "Get started")}
+          {specimen("secondary", "Preview")}
+          {specimen("quiet", "Docs")}
         </div>
+        <GroupSpecimen state={state} />
       </div>
     </Hero>
   )
@@ -1452,9 +1572,53 @@ export function ButtonsSectionBody({ lab }: { lab: Lab }) {
           label="Hover"
           value={state.buttonHover}
           onChange={set("buttonHover")}
-          options={HOVER_PARAM_OPTIONS}
+          options={BUTTON_HOVER_OPTIONS}
+        />
+        <SegmentedControlRow
+          label="Press"
+          value={state.buttonPress}
+          onChange={set("buttonPress")}
+          options={BUTTON_PRESS_OPTIONS}
         />
       </ControlGroup>
+      <ControlGroup>
+        <SegmentedControlRow
+          label="Group"
+          value={state.groupLayout}
+          onChange={set("groupLayout")}
+          options={GROUP_LAYOUT_OPTIONS}
+        />
+      </ControlGroup>
+      <DetailRow label="Advanced">
+        <ParamRow label="Selected segment">
+          <MiniSegmented
+            ariaLabel="Selected segment treatment"
+            value={state.groupSelected}
+            onChange={set("groupSelected")}
+            options={GROUP_SELECTED_OPTIONS}
+          />
+        </ParamRow>
+        <ParamRow label="Group separator">
+          <MiniSegmented
+            ariaLabel="Group separator"
+            value={state.groupSeparator}
+            onChange={set("groupSeparator")}
+            options={GROUP_SEPARATOR_OPTIONS}
+          />
+        </ParamRow>
+        <ParamRow label="Transition">
+          <MiniSegmented
+            ariaLabel="Transition duration"
+            value={state.buttonTransition}
+            onChange={set("buttonTransition")}
+            options={BUTTON_TRANSITION_OPTIONS}
+          />
+        </ParamRow>
+      </DetailRow>
+      <GroupCaption>
+        Style reshapes the fill variants; Quiet and Link stay flat. Toggle
+        Button follows Button.
+      </GroupCaption>
     </>
   )
 }
