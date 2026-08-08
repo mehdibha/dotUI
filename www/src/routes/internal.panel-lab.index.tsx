@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { PanelLabGallery } from "@/modules/panel-lab/gallery"
+import { PanelLabPage } from "@/modules/panel-lab/page"
 
 export const Route = createFileRoute("/internal/panel-lab/")({
-  component: PanelLabGallery,
+  component: PanelLabPage,
   head: () => ({ meta: [{ title: "Panel Lab · dotUI" }] }),
 })
