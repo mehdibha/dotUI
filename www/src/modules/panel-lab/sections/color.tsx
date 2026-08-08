@@ -1,10 +1,7 @@
 "use client"
 
-/* The WORKING color section — the enhancement frame's body, forked from
-   color-ideal.tsx (v1, frozen) per the lab's fork rule.
-
-   What it explores: modes as a user-defined list of named schemes (1..n)
-   instead of a hardcoded light/dark pair. A mode = the same seeds resolved
+/* Color — modes as a user-defined list of named schemes (1..n) instead of a
+   hardcoded light/dark pair. A mode = the same seeds resolved
    under different conditions — polarity, background lightness, contrast
    level. One mode → no switcher at all (light-only sites); extras (Dim,
    OLED, High contrast) come from an archetype menu. The hero previews the
@@ -53,9 +50,64 @@ import {
   SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 
-import { DEFAULTS, PRIMARY_OPTIONS } from "./data"
-import type { Lab, LabMode, LabState } from "./data"
-import { DetailRow, PickerPopoverContent, SwatchDots } from "./patterns"
+import { DetailRow, PickerPopoverContent, SwatchDots } from "../patterns"
+import type { Lab, LabState } from "../state"
+
+/**
+ * A color mode — one named scheme in the user's set (1..n), not a light/dark
+ * boolean. A mode is the same seeds resolved under different conditions:
+ * polarity (ramp direction + prefers-color-scheme bucket), background
+ * lightness, and a contrast level.
+ */
+export interface LabMode {
+  id: string
+  name: string
+  polarity: "light" | "dark"
+  /** Background L*; 0 on a dark mode = OLED black. */
+  bg: number
+  contrast: "default" | "high"
+}
+
+const DEFAULT_MODES: LabMode[] = [
+  {
+    id: "light",
+    name: "Light",
+    polarity: "light",
+    bg: 99,
+    contrast: "default",
+  },
+  { id: "dark", name: "Dark", polarity: "dark", bg: 2, contrast: "default" },
+]
+
+/* Mirrors ColorConfig: '' on a seed means Auto (absent from the config), 0 on
+   a border means unmeasured. Mode edits must replace the array (never mutate)
+   so reference-diffing sees them. */
+export const COLOR_DEFAULTS = {
+  brand: "#635BFF",
+  primary: "neutral",
+  graySeed: "",
+  successSeed: "",
+  warningSeed: "",
+  dangerSeed: "",
+  infoSeed: "",
+  selectionSeed: "",
+  modes: DEFAULT_MODES,
+  defaultMode: "light",
+  vividness: 1,
+  hueShift: 1,
+  grayTintAmount: 1,
+  preserveSeed: false,
+  guarantees: "default",
+  borderContrast: false,
+  border400: 0,
+  border500: 0,
+  border600: 0,
+}
+
+const PRIMARY_OPTIONS = [
+  { value: "neutral", label: "Neutral" },
+  { value: "accent", label: "Accent" },
+]
 
 /* ------------------------------ Config bridge ------------------------------ */
 
@@ -615,7 +667,7 @@ const BORDER_JOBS = [
   { key: "border600", job: "600", label: "Border · emphasized", maxValue: 8 },
 ] as const
 
-export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
+export function ColorSection({ lab }: { lab: Lab }) {
   const { state, set } = lab
   const modes = state.modes
   const [activeId, setActiveId] = useState<string | null>(null)
@@ -652,7 +704,9 @@ export function WorkingColorSectionBody({ lab }: { lab: Lab }) {
     m.scales.selection?.["700"] ??
     (state.primary === "accent" ? solid("accent") : solid("neutral"))
 
-  const fineModified = FINE_KEYS.some((key) => state[key] !== DEFAULTS[key])
+  const fineModified = FINE_KEYS.some(
+    (key) => state[key] !== COLOR_DEFAULTS[key],
+  )
 
   const setModes = set("modes")
   const updateMode = (next: LabMode) =>

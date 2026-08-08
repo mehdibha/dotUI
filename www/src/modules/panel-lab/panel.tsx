@@ -2,9 +2,8 @@
 
 /* The panel chrome — the CURRENT /create layout (control-panel.tsx): every
    section its own bordered card in a story scroll, floating glass header and
-   footer bars the cards dip under. Chapter-agnostic: each version supplies
-   its own chapter list (see versions.tsx), so the chrome is shared and only
-   the sections differ between versions. */
+   footer bars the cards dip under. Chapter-agnostic: the list comes from
+   state.ts, so the chrome never has to know which sections exist. */
 
 import type { CSSProperties } from "react"
 import { ChevronsUpDownIcon, SearchIcon } from "lucide-react"
@@ -12,10 +11,9 @@ import { ChevronsUpDownIcon, SearchIcon } from "lucide-react"
 import { Button } from "@/registry/ui/button"
 import { useTweak } from "@/dev/tweaker"
 
-import type { Lab } from "../data"
-import { PreviewModeContext } from "../hero"
 import { ChapterCard } from "./chapter"
-import type { Chapter } from "./chapter"
+import { PreviewModeContext } from "./hero"
+import type { Chapter, Lab } from "./state"
 
 const RADIUS_STEPS: Record<string, string> = {
   none: "0px",

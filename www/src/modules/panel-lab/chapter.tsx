@@ -1,21 +1,14 @@
 "use client"
 
-/* The chapter card — the real /create panel's section chrome (control-panel.tsx),
-   shared by the v1 frame and the per-section frames so a section looks identical
-   whether it's read in the full panel or on its own. */
+/* The chapter card — the real /create panel's section chrome
+   (control-panel.tsx), so a section looks identical whether it's read in the
+   full panel or on its own. */
 
 import { RotateCcwIcon } from "lucide-react"
 
 import { Button } from "@/registry/ui/button"
 
-import type { Lab, LabState } from "../data"
-
-export interface Chapter {
-  id: string
-  label: string
-  keys: (keyof LabState)[]
-  Body: React.ComponentType<{ lab: Lab }>
-}
+import type { Chapter, Lab } from "./state"
 
 /** Label, modified dot, reset. */
 function ChapterHeading({
@@ -54,13 +47,13 @@ function ChapterHeading({
 
 /** One section as a bordered card: heading + body. */
 export function ChapterCard({
-  chapter: { label, keys, Body },
+  chapter: { label, defaults, Body },
   lab,
 }: {
   chapter: Chapter
   lab: Lab
 }) {
-  const status = lab.section(keys)
+  const status = lab.section(defaults)
   return (
     <section className="rounded-xl border border-border/45 bg-card p-3">
       <ChapterHeading

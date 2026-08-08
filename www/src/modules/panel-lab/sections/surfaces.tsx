@@ -19,17 +19,85 @@ import {
   SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 import type { OptionGridItem } from "@/modules/control-lab/rows"
+import type { SegmentedRowOption } from "@/modules/control-lab/rows"
 
-import { useModeTheme } from "./color-working"
-import {
-  HAIRLINE_ALPHA,
-  HAIRLINE_OPTIONS,
-  OVERLAY_OPTIONS,
-  SHADOW_OPTIONS,
-  SURFACE_RECIPES,
-} from "./data"
-import type { Lab, LabState, SurfaceRecipeId } from "./data"
-import { HeroModes } from "./hero"
+import { HeroModes } from "../hero"
+import type { Lab, LabState } from "../state"
+import { useModeTheme } from "./color"
+
+/* Defaults are the study's recommended direction, not today's solid
+   neutral-400. */
+export const SURFACE_DEFAULTS = {
+  surfaceDelineation: "hairline",
+  surfaceHairline: "default",
+  surfaceDarkElevate: true,
+  shadows: "soft",
+  overlayMaterial: "solid",
+}
+
+/* Delineation recipes (issue #590, the 7-system border survey). Hairline,
+   shadow role and dark elevation are traded against each other in every
+   surveyed system, so they move as one recipe, never as independent knobs.
+   References: Hairline ≈ shadcn/coss, Adaptive ≈ Spectrum S2/Geist
+   (shadow-only light, hairline dark), Shadow ≈ HeroUI/Astryx, Outline ≈ Linear
+   (solid near-bg step + heavy shadow). */
+const SURFACE_RECIPES = [
+  { id: "hairline", label: "Hairline" },
+  { id: "adaptive", label: "Adaptive" },
+  { id: "shadow", label: "Shadow" },
+  { id: "outline", label: "Outline" },
+] as const
+
+type SurfaceRecipeId = (typeof SURFACE_RECIPES)[number]["id"]
+
+/** Hairline ink strength — fg alpha, the survey's observed 5–12% band. */
+const HAIRLINE_OPTIONS: SegmentedRowOption[] = [
+  { value: "subtle", label: "Subtle" },
+  { value: "default", label: "Default" },
+  { value: "strong", label: "Strong" },
+]
+
+const HAIRLINE_ALPHA: Record<string, number> = {
+  subtle: 6,
+  default: 9,
+  strong: 13,
+}
+
+/** Overlay material for menus, popovers and tooltips. */
+const OVERLAY_OPTIONS: SegmentedRowOption[] = [
+  { value: "solid", label: "Solid" },
+  { value: "glass", label: "Glass" },
+]
+
+/* Shadow family presets — one decision that sets the overlay, card and control
+   shadows together, previewed as actual shadowed tiles. */
+function ShadowTile({ boxShadow }: { boxShadow?: string }) {
+  return (
+    <span
+      className="h-9 w-full max-w-14 rounded-md bg-highlight"
+      style={boxShadow ? { boxShadow } : undefined}
+    />
+  )
+}
+
+const SHADOW_OPTIONS: OptionGridItem[] = [
+  { id: "none", label: "None", preview: <ShadowTile /> },
+  {
+    id: "crisp",
+    label: "Crisp",
+    preview: <ShadowTile boxShadow="0 1px 2px rgb(0 0 0 / 0.5)" />,
+  },
+  {
+    id: "soft",
+    label: "Soft",
+    preview: <ShadowTile boxShadow="0 6px 16px -4px rgb(0 0 0 / 0.5)" />,
+  },
+  {
+    id: "floating",
+    label: "Floating",
+    preview: <ShadowTile boxShadow="0 14px 32px -6px rgb(0 0 0 / 0.65)" />,
+  },
+]
 
 /* ------------------------------- Recipe model ------------------------------ */
 
@@ -260,7 +328,7 @@ const RECIPE_OPTIONS: OptionGridItem[] = SURFACE_RECIPES.map((recipe) => ({
 
 /* --------------------------------- Section --------------------------------- */
 
-export function SurfacesSectionBody({ lab }: { lab: Lab }) {
+export function SurfacesSection({ lab }: { lab: Lab }) {
   const { state, set } = lab
   const modes = state.modes
   const lightMode = useMemo(

@@ -12,7 +12,7 @@ export const INTERNAL_TOOLS: InternalTool[] = [
     href: "/internal/panel-lab",
     label: "Panel Lab",
     description:
-      "The /create control panel: the row vocabulary it is built from, and every version of the panel itself.",
+      "The /create control panel, and the row vocabulary it is built from.",
   },
   {
     href: "/internal/color-lab",

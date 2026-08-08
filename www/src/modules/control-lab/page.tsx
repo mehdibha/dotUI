@@ -2,8 +2,9 @@
 
 /* Control Lab — the catalog of the row language: every primitive in rows.tsx
    on its own, with the variants that matter, read top to bottom. The panel
-   itself lives in panel-lab; this is the vocabulary it's assembled from, so
-   each entry is the control alone rather than a composed panel.
+   itself is the other tab of /internal/panel-lab; this is the vocabulary it's
+   assembled from, so each entry is the control alone rather than a composed
+   panel.
 
    Each demo owns its state (local in, callback out) and sits in a
    panel-width card, because that's the only context these rows are designed
@@ -34,7 +35,6 @@ import {
 } from "@/registry/ui/segmented-control"
 import { TOCItems, TOCProvider } from "@/modules/docs/toc"
 import type { TOCItemType } from "@/modules/docs/toc"
-import { InternalHeader } from "@/modules/internal/shell"
 
 import {
   ActionRow,
@@ -887,114 +887,103 @@ const TOC_ITEMS: TOCItemType[] = GROUPS.flatMap((group) => [
   })),
 ])
 
-export function ControlLab() {
+export function ControlLabPrimitives() {
   const [preview, setPreview] = useState<PreviewMode>("card")
 
   return (
     <TOCProvider toc={TOC_ITEMS}>
-      <div className="flex min-h-svh flex-col gap-8 px-8 py-10">
-        <InternalHeader
-          crumbs={[
-            { label: "Panel Lab", href: "/internal/panel-lab" },
-            { label: "Control Lab" },
-          ]}
-          title="Control Lab"
-          description="The row language the panel is built from — one visual grammar (compact row, label left, control right) applied to every interaction model. Each control on its own, with the variants that matter."
-        />
-
-        <div className="flex items-start gap-12">
-          <div className="flex min-w-0 flex-1 flex-col gap-16 pb-16">
-            {GROUPS.map((group) => (
-              <section
-                key={group.id}
-                id={group.id}
-                className="flex scroll-mt-10 flex-col gap-10"
-              >
-                <div className="flex max-w-lg flex-col gap-1 border-b border-border/45 pb-3">
-                  <h2 className="text-sm font-medium text-fg">{group.title}</h2>
-                  <p className="text-xs/relaxed text-pretty text-fg-muted">
-                    {group.blurb}
-                  </p>
-                </div>
-                {group.entries.map((entry) => (
-                  <section
-                    key={entry.id}
-                    id={entry.id}
-                    className="flex scroll-mt-10 flex-col gap-4"
+      <div className="flex items-start gap-12">
+        <div className="flex min-w-0 flex-1 flex-col gap-16 pb-16">
+          {GROUPS.map((group) => (
+            <section
+              key={group.id}
+              id={group.id}
+              className="flex scroll-mt-10 flex-col gap-10"
+            >
+              <div className="flex max-w-lg flex-col gap-1 border-b border-border/45 pb-3">
+                <h2 className="text-sm font-medium text-fg">{group.title}</h2>
+                <p className="text-xs/relaxed text-pretty text-fg-muted">
+                  {group.blurb}
+                </p>
+              </div>
+              {group.entries.map((entry) => (
+                <section
+                  key={entry.id}
+                  id={entry.id}
+                  className="flex scroll-mt-10 flex-col gap-4"
+                >
+                  <div className="flex max-w-lg flex-col gap-1">
+                    <h3 className="font-mono text-[0.8125rem] font-medium text-fg">
+                      {entry.name}
+                    </h3>
+                    <p className="text-xs/relaxed text-pretty text-fg-muted">
+                      {entry.description}
+                    </p>
+                  </div>
+                  <div
+                    className={cn(
+                      "flex items-start gap-5",
+                      // Wide gives each variant the full column, so they stack.
+                      preview === "wide" ? "flex-col" : "flex-wrap",
+                    )}
                   >
-                    <div className="flex max-w-lg flex-col gap-1">
-                      <h3 className="font-mono text-[0.8125rem] font-medium text-fg">
-                        {entry.name}
-                      </h3>
-                      <p className="text-xs/relaxed text-pretty text-fg-muted">
-                        {entry.description}
-                      </p>
-                    </div>
-                    <div
-                      className={cn(
-                        "flex items-start gap-5",
-                        // Wide gives each variant the full column, so they stack.
-                        preview === "wide" ? "flex-col" : "flex-wrap",
-                      )}
-                    >
-                      {entry.variants.map((variant) => (
-                        <div
-                          key={variant.label}
-                          className={cn(
-                            "flex flex-col gap-1.5",
-                            preview === "wide" && "w-full",
-                          )}
-                        >
-                          <span className="text-[11px] text-fg-muted">
-                            {variant.label}
-                          </span>
-                          <Stage mode={preview}>{variant.render}</Stage>
-                        </div>
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </section>
-            ))}
-          </div>
+                    {entry.variants.map((variant) => (
+                      <div
+                        key={variant.label}
+                        className={cn(
+                          "flex flex-col gap-1.5",
+                          preview === "wide" && "w-full",
+                        )}
+                      >
+                        <span className="text-[11px] text-fg-muted">
+                          {variant.label}
+                        </span>
+                        <Stage mode={preview}>{variant.render}</Stage>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </section>
+          ))}
+        </div>
 
-          {/* Docs-site TOC: fumadocs' AnchorProvider tracks which section is in
+        {/* Docs-site TOC: fumadocs' AnchorProvider tracks which section is in
             view, so the active entry highlights as you scroll. The preview
             control rides along, staying reachable however far you scroll. */}
-          <aside className="sticky top-10 hidden h-fit w-44 shrink-0 flex-col gap-5 lg:flex">
-            <div className="flex flex-col gap-2">
-              <span className="text-[11px] font-medium tracking-wider text-fg-muted uppercase">
-                Preview
-              </span>
-              <SegmentedControl
-                aria-label="Preview framing"
-                selectedKeys={[preview]}
-                onSelectionChange={(keys) => {
-                  const next = keys.values().next().value
-                  if (next) setPreview(next as PreviewMode)
-                }}
-                className="w-full bg-muted"
-              >
-                {PREVIEW_MODES.map((mode) => (
-                  <SegmentedControlItem
-                    key={mode.value}
-                    id={mode.value}
-                    className="flex-1 justify-center text-xs"
-                  >
-                    {mode.label}
-                  </SegmentedControlItem>
-                ))}
-              </SegmentedControl>
-            </div>
+        <aside className="sticky top-10 hidden h-fit w-44 shrink-0 flex-col gap-5 lg:flex">
+          <div className="flex flex-col gap-2">
+            <span className="text-[11px] font-medium tracking-wider text-fg-muted uppercase">
+              Preview
+            </span>
+            <SegmentedControl
+              aria-label="Preview framing"
+              selectedKeys={[preview]}
+              onSelectionChange={(keys) => {
+                const next = keys.values().next().value
+                if (next) setPreview(next as PreviewMode)
+              }}
+              className="w-full bg-muted"
+            >
+              {PREVIEW_MODES.map((mode) => (
+                <SegmentedControlItem
+                  key={mode.value}
+                  id={mode.value}
+                  className="flex-1 justify-center text-xs"
+                >
+                  {mode.label}
+                </SegmentedControlItem>
+              ))}
+            </SegmentedControl>
+          </div>
 
-            <div className="flex flex-col gap-2">
-              <span className="text-[11px] font-medium tracking-wider text-fg-muted uppercase">
-                On this page
-              </span>
-              <TOCItems className="gap-0.5 [&_a]:rounded-md [&_a]:px-2 [&_a]:py-1 [&_a]:text-xs [&_a:hover]:bg-muted [&_a:hover]:text-fg" />
-            </div>
-          </aside>
-        </div>
+          <div className="flex flex-col gap-2">
+            <span className="text-[11px] font-medium tracking-wider text-fg-muted uppercase">
+              On this page
+            </span>
+            <TOCItems className="gap-0.5 [&_a]:rounded-md [&_a]:px-2 [&_a]:py-1 [&_a]:text-xs [&_a:hover]:bg-muted [&_a:hover]:text-fg" />
+          </div>
+        </aside>
       </div>
     </TOCProvider>
   )
