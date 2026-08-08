@@ -27,9 +27,9 @@ interface ChartCardProps {
  * "Show code" links to.
  *
  * Every card is the same height and padding so the gallery reads as one set.
- * Sizing mirrors shadcn's charts page: cartesian charts (line/bar/area) fill the
- * frame width, polar charts (pie/radar/radial) stay square and are capped at
- * 250px (shadcn's size) so they don't balloon, centered in the frame.
+ * Charts size themselves: the host fills the frame's width and draws at its own
+ * height (the library measures width only). Polar charts are capped at 250px
+ * wide so they read as a circle rather than a lone arc in a wide box.
  */
 export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
   // Bumping this key remounts the chart, replaying its entry animation.
@@ -66,10 +66,9 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
       <Suspense fallback={<div className="size-full animate-pulse bg-muted" />}>
         <div
           className={cn(
-            "flex size-full items-center justify-center p-9 [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!",
-            isPolar
-              ? "[&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:max-h-[250px]! [&_[data-slot=chart]]:w-auto!"
-              : "[&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!",
+            "flex size-full items-center justify-center overflow-hidden p-6 [&_*]:pointer-events-none",
+            isPolar &&
+              "[&_.ts-chart-host]:mx-auto! [&_.ts-chart-host]:max-w-[250px]!",
           )}
         >
           <Component key={replayKey} />

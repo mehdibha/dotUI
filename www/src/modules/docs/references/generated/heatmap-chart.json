@@ -1,0 +1,358 @@
+{
+  "name": "HeatmapChartProps",
+  "description": "A matrix of cells: two categorical axes, and one numeric value per cell\ncarried by color. Every interaction and host prop of `Chart` also applies —\nsee `ChartBehaviorProps` and `ChartProps`.",
+  "props": {
+    "data": {
+      "type": "readonly unknown[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "unknown"
+        }
+      },
+      "description": "The rows to plot — one per cell. Compared by identity.",
+      "required": true
+    },
+    "x": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field holding the column category.",
+      "required": true
+    },
+    "y": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field holding the row category.",
+      "required": true
+    },
+    "value": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Numeric field the color scale reads.",
+      "required": true
+    },
+    "colors": {
+      "type": "readonly string[]",
+      "detailedType": "readonly string[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "description": "The color ramp, low to high. Its length is the number of bins.",
+      "default": "heatmapColors()"
+    },
+    "thresholds": {
+      "type": "readonly number[]",
+      "detailedType": "readonly number[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "number"
+            }
+          }
+        ]
+      },
+      "description": "Explicit cuts between bins — one fewer than `colors`. Without them the\nscale splits the observed extent into equal bins."
+    },
+    "values": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Draw each value inside its cell. Only legible on large cells.",
+      "default": "false"
+    },
+    "formatValue": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "Formats values in the legend, the tooltip, and the cells."
+    },
+    "label": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "What the value means — the legend title and the tooltip label."
+    },
+    "labelX": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Column-axis title. It also names the coordinate in the tooltip."
+    },
+    "labelY": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Row-axis title. It also names the coordinate in the tooltip."
+    },
+    "ariaLabel": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Accessible name. Required: a chart is a figure, not decoration.",
+      "required": true
+    },
+    "axes": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the axes and their tick labels.",
+      "default": "true"
+    },
+    "legend": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the color legend.",
+      "default": "true"
+    },
+    "formatX": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "Formats the column tick labels — a function, or `Intl` options."
+    },
+    "formatY": {
+      "type": "ChartFormat",
+      "detailedType": "ChartFormat | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartFormat"
+      },
+      "description": "Formats the row tick labels — a function, or `Intl` options."
+    },
+    "rowKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Stable row identity, so sorted or filtered data is retained, not respawned."
+    },
+    "marksBefore": {
+      "type": "readonly ChartMarkLayer[]",
+      "detailedType": "readonly ChartMarkLayer[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+                "name": "ChartMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "description": "Mark layers painted under the cells."
+    },
+    "marks": {
+      "type": "readonly ChartMarkLayer[]",
+      "detailedType": "readonly ChartMarkLayer[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+                "name": "ChartMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "description": "Mark layers painted over the cells — annotations, labels, outlines."
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Overlay rendered above the chart surface, ignoring pointer events."
+    }
+  },
+  "typeLinks": {
+    "@tanstack/charts/dist/types.d.ts:ChartMark": {
+      "type": "interface",
+      "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+      "name": "ChartMark",
+      "extends": [],
+      "properties": {
+        "__xScaleValue": {
+          "type": "property",
+          "name": "__xScaleValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__xValue": {
+          "type": "property",
+          "name": "__xValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__yScaleValue": {
+          "type": "property",
+          "name": "__yScaleValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__yValue": {
+          "type": "property",
+          "name": "__yValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "initialize": {
+          "type": "method",
+          "name": "initialize",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "context",
+                "value": {
+                  "type": "link",
+                  "id": "@tanstack/charts/dist/types.d.ts:MarkInitializeContext",
+                  "name": "MarkInitializeContext"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:InitializedMark",
+                "name": "InitializedMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": ""
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    }
+  }
+}

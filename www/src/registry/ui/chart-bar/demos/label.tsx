@@ -1,59 +1,41 @@
 "use client"
 
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts"
+import { text } from "@tanstack/charts/text"
 
-import type { ChartConfig } from "@/registry/ui/chart"
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/registry/ui/chart"
+import { BarChart } from "@/registry/ui/chart-bar"
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
   { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { month: "Jun", desktop: 214 },
 ]
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
-  },
-} satisfies ChartConfig
+// Same `z` as the bars, so grouped focus keeps one tooltip row per month.
+const labels = [
+  text(data, {
+    x: "month",
+    y: "desktop",
+    text: "desktop",
+    z: () => "Desktop",
+    fill: "var(--color-fg-muted)",
+    fontSize: 12,
+    dy: -10,
+  }),
+]
 
 export default function ChartBarLabel() {
   return (
-    <>
-      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-        <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-          <CartesianGrid vertical={false} />
-          <XAxis
-            dataKey="month"
-            tickLine={false}
-            tickMargin={10}
-            axisLine={false}
-            tickFormatter={(value) => value.slice(0, 3)}
-          />
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent hideLabel />}
-          />
-          <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8}>
-            <LabelList
-              position="top"
-              offset={12}
-              className="fill-fg"
-              fontSize={12}
-            />
-          </Bar>
-        </BarChart>
-      </ChartContainer>
-      <ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
-    </>
+    <BarChart
+      data={data}
+      x="month"
+      y="desktop"
+      labels={{ desktop: "Desktop" }}
+      legend={false}
+      marks={labels}
+      ariaLabel="Desktop visitors per month, labelled"
+    />
   )
 }

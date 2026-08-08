@@ -6,8 +6,8 @@ import { ChartCard } from "./chart-card"
 import { CHART_FAMILIES, variantsFor } from "./data"
 
 /**
- * Mounts its children once they come near the viewport. The page stacks ~60
- * live Recharts previews; mounting them all at once blocks the main thread for
+ * Mounts its children once they come near the viewport. The page stacks ~70
+ * live chart previews; mounting them all at once blocks the main thread for
  * seconds, so offscreen cards wait their turn. The placeholder matches
  * ChartCard's rendered height (header row + h-80 card) so nothing shifts.
  */

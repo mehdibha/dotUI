@@ -293,6 +293,9 @@ export function publish({
       ? { description: meta.description }
       : {}),
     ...(dependencies.length > 0 ? { dependencies } : {}),
+    ...(meta.devDependencies?.length
+      ? { devDependencies: meta.devDependencies }
+      : {}),
     ...(registryDependencies.length > 0 ? { registryDependencies } : {}),
     ...(css ? { css } : {}),
     ...(meta.cssVars ? { cssVars: meta.cssVars } : {}),

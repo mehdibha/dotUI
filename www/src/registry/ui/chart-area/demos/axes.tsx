@@ -1,70 +1,33 @@
 "use client"
 
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import type { ChartValue } from "@tanstack/charts"
 
-import type { ChartConfig } from "@/registry/ui/chart"
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/registry/ui/chart"
+import { AreaChart } from "@/registry/ui/chart-area"
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+const data = [
+  { month: "January", desktop: 18600 },
+  { month: "February", desktop: 30500 },
+  { month: "March", desktop: 23700 },
+  { month: "April", desktop: 7300 },
+  { month: "May", desktop: 20900 },
+  { month: "June", desktop: 21400 },
 ]
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
-  },
-} satisfies ChartConfig
+/* Module scope: a formatter defined in render would rebuild the scene every
+   time. Option-object formatters (see `formatY`) are free of that constraint. */
+const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
 
 export default function ChartAreaAxes() {
   return (
-    <>
-      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-        <AreaChart
-          accessibilityLayer
-          data={chartData}
-          margin={{ left: 0, right: 12 }}
-        >
-          <CartesianGrid vertical={false} />
-          <XAxis
-            dataKey="month"
-            tickLine={false}
-            tickMargin={8}
-            axisLine={false}
-            tickFormatter={(value) => value.slice(0, 3)}
-          />
-          <YAxis
-            width="auto"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={4}
-            tickCount={4}
-            tickFormatter={(value) => `${value}`}
-          />
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent indicator="line" />}
-          />
-          <Area
-            dataKey="desktop"
-            type="natural"
-            fill="var(--color-desktop)"
-            fillOpacity={0.4}
-            stroke="var(--color-desktop)"
-          />
-        </AreaChart>
-      </ChartContainer>
-      <ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
-    </>
+    <AreaChart
+      data={data}
+      x="month"
+      y="desktop"
+      labels={{ desktop: "Desktop" }}
+      legend={false}
+      formatX={shortMonth}
+      formatY={{ locale: "en-US", number: { notation: "compact" } }}
+      ariaLabel="Desktop visitors, January through June"
+    />
   )
 }

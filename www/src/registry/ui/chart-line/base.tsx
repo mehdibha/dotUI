@@ -1,90 +1,93 @@
 "use client"
 
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
+import type { ChartBuildContext } from "@tanstack/charts"
+import { d3Curve } from "@tanstack/charts/d3/shape"
+import { lineY } from "@tanstack/charts/line"
+import { curveMonotoneX, curveNatural, curveStepAfter } from "d3-shape"
 
-import { TrendingUpIcon } from "@/registry/icons"
+import type {
+  ChartComponentProps,
+  ChartCurve,
+  ChartSpecOf,
+  ChartXField,
+  ChartXValueOf,
+  XYChartSpecOptions,
+} from "@/registry/ui/chart"
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/registry/ui/card"
-import type { ChartConfig } from "@/registry/ui/chart"
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
+  Chart,
+  chartDefaults,
+  chartFrame,
+  planChart,
+  useChartDefinition,
 } from "@/registry/ui/chart"
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-]
+/* Curves live in the families that draw paths, so a bar or heatmap chart never
+   pulls d3-shape into the bundle. */
+const CURVES = {
+  linear: undefined,
+  natural: /* @__PURE__ */ d3Curve(curveNatural),
+  monotone: /* @__PURE__ */ d3Curve(curveMonotoneX),
+  step: /* @__PURE__ */ d3Curve(curveStepAfter),
+} as const satisfies Record<ChartCurve, unknown>
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
-  },
-} satisfies ChartConfig
+export interface LineChartSpecOptions<
+  TDatum,
+  TXField extends ChartXField<TDatum>,
+  // `lineY` has no lower-baseline channel, so `y1` would be silently dropped.
+> extends Omit<XYChartSpecOptions<TDatum, TXField>, "y1"> {
+  /** Path interpolation between points. */
+  curve?: ChartCurve
+  strokeWidth?: number
+  /** Draw a dot at every point. */
+  points?: boolean
+}
 
-export function ChartLine() {
+/* One line per series, each carrying the `z` its plan assigned — so grouped
+   focus resolves exactly one point, and one tooltip row, per series. An
+   annotation passed through `marks` joins a series' row by reusing its `z`. */
+export function lineChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
+  options: LineChartSpecOptions<TDatum, TXField>,
+  ctx: ChartBuildContext,
+): ChartSpecOf<TDatum, ChartXValueOf<TDatum, TXField>> {
+  const { order, layers } = planChart(options)
+  const curve = CURVES[options.curve ?? chartDefaults.curve]
+  return {
+    ...chartFrame(options, ctx, { order }),
+    marks: [
+      ...(options.marksBefore ?? []),
+      ...layers.map((layer) =>
+        lineY(options.data, {
+          ...layer.channels,
+          strokeWidth: options.strokeWidth ?? chartDefaults.strokeWidth,
+          points: options.points ?? chartDefaults.points,
+          curve,
+        }),
+      ),
+      ...(options.marks ?? []),
+    ],
+  }
+}
+
+export type LineChartProps<
+  TDatum,
+  TXField extends ChartXField<TDatum>,
+> = ChartComponentProps<
+  LineChartSpecOptions<TDatum, TXField>,
+  TDatum,
+  ChartXValueOf<TDatum, TXField>
+>
+
+export function LineChart<TDatum, TXField extends ChartXField<TDatum>>(
+  props: LineChartProps<TDatum, TXField>,
+) {
+  const { definition, host, children } = useChartDefinition<
+    TDatum,
+    ChartXValueOf<TDatum, TXField>,
+    LineChartSpecOptions<TDatum, TXField>
+  >(props, lineChartSpec)
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Line Chart</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <LineChart
-            accessibilityLayer
-            data={chartData}
-            margin={{ left: 12, right: 12 }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Line
-              dataKey="desktop"
-              type="natural"
-              stroke="var(--color-desktop)"
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
-        </ChartContainer>
-        <ChartDataTable
-          data={chartData}
-          config={chartConfig}
-          labelKey="month"
-          caption="Desktop visitors, January through June 2024"
-        />
-      </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUpIcon className="size-4" />
-        </div>
-        <div className="leading-none text-fg-muted">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
-    </Card>
+    <Chart definition={definition} {...host}>
+      {children}
+    </Chart>
   )
 }

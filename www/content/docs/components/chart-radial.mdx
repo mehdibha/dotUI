@@ -1,0 +1,151 @@
+---
+title: Radial Chart
+description: Bars bent around a circle — progress against a target, or a few categories compared at a glance.
+---
+
+<Demo name="chart-radial/demos/text" />
+
+A radial bar chart trades the precision of a straight axis for a compact, recognizable shape. It reads well for a single value against a target — a gauge — and for a handful of categories where the ranking matters more than the exact gap. Past five or six rings, or when the values must be compared closely, use the [bar chart](/docs/components/chart-bar).
+
+`RadialBarChart` takes your rows, the field holding each value, and the field naming it. Colors, typography, and the tooltip all come from your design system.
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/chart-radial
+```
+
+It brings the [`chart`](/docs/components/chart) core — the host, the palette, and the shared frame — along with it.
+
+## Usage
+
+```tsx
+import { RadialBarChart } from "@/ui/chart-radial"
+```
+
+Each row becomes one ring, drawn from the outside in. A chart is a figure, so `ariaLabel` is required.
+
+```tsx
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+]
+
+export function Example() {
+  return (
+    <RadialBarChart
+      data={data}
+      value="visitors"
+      name="browser"
+      labels={{ chrome: "Chrome", safari: "Safari", firefox: "Firefox" }}
+      track
+      ariaLabel="Visitors by browser"
+    />
+  )
+}
+```
+
+`data` is compared by identity, so define it outside your component — or memoize it. Every other prop is a flat scalar and can change freely.
+
+## Geometry
+
+Angles are radians, clockwise from twelve o'clock; radii are ratios of the circle the chart resolves for its box, so a chart keeps its proportions at any size.
+
+```tsx
+<RadialBarChart
+  data={data}
+  value="score"
+  name="team"
+  startAngle={-Math.PI / 2}
+  endAngle={Math.PI / 2}
+  innerRadius={0.7}
+  outerRadius={0.98}
+  radiusRatio={0.9}
+  ariaLabel="Score by team"
+/>
+```
+
+`max` sets the value that fills the whole sweep — without it the largest value fills it. Give a gauge an explicit `max` so the arc reads as a share of a target, and turn on `track` to draw the unfilled remainder.
+
+## Stacking
+
+Pass an array of fields as `value` to stack one row's values into a single ring, laid end to end from `startAngle`. It is the radial equivalent of a stacked bar: the ring is the whole, the arcs are the parts.
+
+```tsx
+<RadialBarChart
+  data={[{ month: "january", desktop: 1260, mobile: 570 }]}
+  value={["desktop", "mobile"]}
+  name="month"
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
+  max={2200}
+  ariaLabel="Visitors by device in January"
+/>
+```
+
+## Center label
+
+The middle of a ring is the place for the number it summarizes. `children` render as an HTML overlay above the chart, centered on the circle and ignoring pointer events — so the label uses your real typography and stays out of the keyboard path.
+
+```tsx
+<RadialBarChart
+  data={data}
+  value="visitors"
+  name="browser"
+  ariaLabel="Visitors"
+>
+  <div className="flex h-full flex-col items-center justify-center">
+    <span className="text-2xl font-bold">1,260</span>
+    <span className="text-sm text-fg-muted">Visitors</span>
+  </div>
+</RadialBarChart>
+```
+
+## Annotations
+
+`polarMarks` and `polarMarksBefore` accept raw [TanStack Charts](https://tanstack.com/charts) polar marks — `radialArc`, `radialText`, `radialRule` — painted over and under the bars, inside the circle's own transform. Cartesian marks would land outside it, so reach for the polar ones here.
+
+```tsx
+import { radialRule } from "@tanstack/charts/polar"
+
+const target = radialRule([{ angle: Math.PI }], {
+  angle: "angle",
+  radius1: 0,
+  radius2: 1,
+  strokeDasharray: "4 4",
+})
+```
+
+## Motion
+
+Animation is off for this family. The renderer tweens the `d` attribute of a path, which interpolates the arc's large-arc flag as a plain number — an arc crossing half a turn briefly renders as an invalid path. Turning it on with `animate` re-enables that.
+
+## Accessibility
+
+- `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
+- The chart surface is in the tab order. Arrow keys move between arcs, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
+- Color alone never carries the distinction — the tooltip and the legend name every ring, and `barLabels` prints the names on the arcs themselves.
+- A ring's angle is harder to compare than a bar's length. Print the numbers when the exact values matter.
+
+## Examples
+
+<Examples>
+  <Example name="chart-radial/demos/simple" title="Default" />
+  <Example name="chart-radial/demos/grid" title="Grid" />
+  <Example name="chart-radial/demos/label" title="Labels" />
+  <Example name="chart-radial/demos/text" title="Progress Ring" />
+  <Example name="chart-radial/demos/shape" title="Shape" />
+  <Example name="chart-radial/demos/stacked" title="Stacked" />
+</Examples>
+
+## API Reference
+
+### RadialBarChart
+
+<Reference name="radial-bar-chart" />
+
+Interaction and animation props are shared by every chart family:
+
+<Reference name="chart-behavior" />
+
+The host props — `height`, `width`, `className`, and the focus callbacks — are documented on the [Chart](/docs/components/chart) page.

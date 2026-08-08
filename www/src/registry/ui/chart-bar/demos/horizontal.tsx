@@ -1,59 +1,27 @@
 "use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { BarChart } from "@/registry/ui/chart-bar"
 
-import type { ChartConfig } from "@/registry/ui/chart"
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/registry/ui/chart"
-
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
   { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { month: "Jun", desktop: 214 },
 ]
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
-  },
-} satisfies ChartConfig
 
 export default function ChartBarHorizontal() {
   return (
-    <>
-      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-        <BarChart
-          accessibilityLayer
-          data={chartData}
-          layout="vertical"
-          margin={{ left: -20 }}
-        >
-          <CartesianGrid horizontal={false} />
-          <XAxis type="number" dataKey="desktop" hide />
-          <YAxis
-            dataKey="month"
-            type="category"
-            tickLine={false}
-            tickMargin={10}
-            axisLine={false}
-            tickFormatter={(value) => value.slice(0, 3)}
-          />
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent hideLabel />}
-          />
-          <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-        </BarChart>
-      </ChartContainer>
-      <ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
-    </>
+    <BarChart
+      horizontal
+      data={data}
+      x="month"
+      y="desktop"
+      labels={{ desktop: "Desktop" }}
+      legend={false}
+      focus="group-y"
+      ariaLabel="Desktop visitors per month, horizontal bars"
+    />
   )
 }

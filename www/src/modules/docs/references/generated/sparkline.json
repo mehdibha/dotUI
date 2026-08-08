@@ -1,0 +1,319 @@
+{
+  "name": "SparklineProps",
+  "description": "A tiny, chrome-free chart for stat cards and table cells: one series, no\naxes, no grid, no legend, and no tooltip unless you ask for one. Every\ninteraction and host prop of `Chart` also applies — see `ChartBehaviorProps`\nand `ChartProps`.",
+  "props": {
+    "data": {
+      "type": "readonly unknown[]",
+      "typeAst": {
+        "type": "array",
+        "elementType": {
+          "type": "unknown"
+        }
+      },
+      "description": "The rows to plot.",
+      "required": true
+    },
+    "x": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field holding the category or time value.",
+      "required": true
+    },
+    "y": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Field holding the value.",
+      "required": true
+    },
+    "mode": {
+      "type": "\"area\" | \"line\"",
+      "detailedType": "'area' | 'line' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "area"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "line"
+          }
+        ]
+      },
+      "description": "Draw the series as a line, or as a filled area under the line.",
+      "default": "\"line\""
+    },
+    "curve": {
+      "type": "ChartCurve",
+      "detailedType": "ChartCurve | undefined",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ChartCurve"
+      },
+      "description": "Line interpolation.",
+      "default": "\"natural\""
+    },
+    "color": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Stroke and fill color — any CSS color, so a sparkline can encode its own\ntrend (green when up, red when down).",
+      "default": "\"var(--chart-1)\""
+    },
+    "fill": {
+      "type": "\"gradient\" | number",
+      "detailedType": "'gradient' | number | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "gradient"
+          },
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "number"
+          }
+        ]
+      },
+      "description": "Area fill opacity, or `'gradient'` to fade the fill out downward. Ignored\nin line mode.",
+      "default": "0.2"
+    },
+    "strokeWidth": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Line thickness in pixels.",
+      "default": "2.25"
+    },
+    "height": {
+      "type": "number",
+      "detailedType": "number | undefined",
+      "typeAst": {
+        "type": "number"
+      },
+      "description": "Chart height in pixels. Sparklines default much shorter than a full chart.",
+      "default": "40"
+    },
+    "tooltip": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Show the tooltip on hover and keyboard focus.",
+      "default": "false"
+    },
+    "ariaLabel": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Accessible name. Required: a chart is a figure, not decoration.",
+      "required": true
+    },
+    "rowKey": {
+      "type": "string",
+      "detailedType": "string | undefined",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "Stable row identity, so sorted or filtered data is retained, not respawned."
+    },
+    "marksBefore": {
+      "type": "readonly ChartMarkLayer[]",
+      "detailedType": "readonly ChartMarkLayer[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+                "name": "ChartMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "description": "Mark layers painted under the line."
+    },
+    "marks": {
+      "type": "readonly ChartMarkLayer[]",
+      "detailedType": "readonly ChartMarkLayer[] | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "array",
+            "elementType": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+                "name": "ChartMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "description": "Mark layers painted over the line — reference rules, end dots, labels."
+    },
+    "children": {
+      "type": "ReactNode",
+      "typeAst": {
+        "type": "identifier",
+        "name": "ReactNode"
+      },
+      "description": "Overlay rendered above the chart surface, ignoring pointer events."
+    }
+  },
+  "typeLinks": {
+    "@tanstack/charts/dist/types.d.ts:ChartMark": {
+      "type": "interface",
+      "id": "@tanstack/charts/dist/types.d.ts:ChartMark",
+      "name": "ChartMark",
+      "extends": [],
+      "properties": {
+        "__xScaleValue": {
+          "type": "property",
+          "name": "__xScaleValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__xValue": {
+          "type": "property",
+          "name": "__xValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__yScaleValue": {
+          "type": "property",
+          "name": "__yScaleValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__yValue": {
+          "type": "property",
+          "name": "__yValue",
+          "value": {
+            "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "initialize": {
+          "type": "method",
+          "name": "initialize",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "context",
+                "value": {
+                  "type": "link",
+                  "id": "@tanstack/charts/dist/types.d.ts:MarkInitializeContext",
+                  "name": "MarkInitializeContext"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "application",
+              "base": {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:InitializedMark",
+                "name": "InitializedMark"
+              },
+              "typeParameters": [
+                {
+                  "type": "unknown"
+                },
+                {
+                  "type": "any"
+                },
+                {
+                  "type": "any"
+                }
+              ]
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": ""
+        }
+      },
+      "typeParameters": [],
+      "description": ""
+    }
+  }
+}

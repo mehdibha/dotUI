@@ -1,64 +1,43 @@
 "use client"
 
 import { MonitorIcon, SmartphoneIcon } from "lucide-react"
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
 
-import type { ChartConfig } from "@/registry/ui/chart"
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/registry/ui/chart"
+import { RadarChart } from "@/registry/ui/chart-radar"
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 273, mobile: 190 },
+const data = [
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
+  { month: "Mar", desktop: 237, mobile: 120 },
+  { month: "Apr", desktop: 273, mobile: 190 },
   { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { month: "Jun", desktop: 214, mobile: 140 },
 ]
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
-    icon: MonitorIcon,
-  },
-  mobile: {
-    label: "Mobile",
-    color: "var(--chart-2)",
-    icon: SmartphoneIcon,
-  },
-} satisfies ChartConfig
+const labels = { desktop: "Desktop", mobile: "Mobile" }
 
+/* An icon legend is HTML beside the chart, not a chart legend: the SVG legend
+   draws color swatches. */
 export default function ChartRadarIcons() {
   return (
-    <>
-      <ChartContainer
-        config={chartConfig}
-        className="mx-auto aspect-square max-h-[250px]"
-      >
-        <RadarChart data={chartData}>
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent indicator="line" />}
-          />
-          <PolarAngleAxis dataKey="month" />
-          <PolarGrid />
-          <Radar
-            dataKey="desktop"
-            fill="var(--color-desktop)"
-            fillOpacity={0.6}
-          />
-          <Radar dataKey="mobile" fill="var(--color-mobile)" />
-          <ChartLegend className="mt-8" content={<ChartLegendContent />} />
-        </RadarChart>
-      </ChartContainer>
-      <ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
-    </>
+    <div>
+      <RadarChart
+        data={data}
+        x="month"
+        y={["desktop", "mobile"]}
+        labels={labels}
+        legend={false}
+        ariaLabel="Desktop and mobile visitors, January through June"
+      />
+      <div className="mt-2 flex items-center justify-center gap-4 text-sm text-fg-muted">
+        <span className="flex items-center gap-1.5">
+          <MonitorIcon className="size-4" />
+          {labels.desktop}
+        </span>
+        <span className="flex items-center gap-1.5">
+          <SmartphoneIcon className="size-4" />
+          {labels.mobile}
+        </span>
+      </div>
+    </div>
   )
 }

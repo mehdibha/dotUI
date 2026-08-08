@@ -1,93 +1,32 @@
 "use client"
 
-import {
-  Label,
-  PolarGrid,
-  PolarRadiusAxis,
-  RadialBar,
-  RadialBarChart,
-} from "recharts"
+import { RadialBarChart } from "@/registry/ui/chart-radial"
 
-import type { ChartConfig } from "@/registry/ui/chart"
-import { ChartContainer, ChartDataTable } from "@/registry/ui/chart"
+const data = [{ browser: "safari", visitors: 1260 }]
 
-const chartData = [
-  { browser: "safari", visitors: 1260, fill: "var(--chart-1)" },
-]
-
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  safari: {
-    label: "Safari",
-    color: "var(--chart-1)",
-  },
-} satisfies ChartConfig
+const deg = (value: number) => (value * Math.PI) / 180
 
 export default function ChartRadialShape() {
-  const totalVisitors = chartData[0]?.visitors ?? 0
-
   return (
-    <>
-      <ChartContainer
-        config={chartConfig}
-        className="mx-auto aspect-square min-h-[250px] w-full"
-      >
-        <RadialBarChart
-          data={chartData}
-          startAngle={0}
-          endAngle={100}
-          innerRadius={65}
-          outerRadius={95}
-        >
-          <PolarGrid
-            gridType="circle"
-            radialLines={false}
-            stroke="none"
-            className="first:fill-muted last:fill-popover"
-            polarRadius={[86, 74]}
-          />
-          <RadialBar dataKey="visitors" background cornerRadius={10} />
-          <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-            <Label
-              content={({ viewBox }) => {
-                if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                  return (
-                    <text
-                      x={viewBox.cx}
-                      y={viewBox.cy}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                    >
-                      <tspan
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        className="fill-fg text-2xl font-bold"
-                      >
-                        {totalVisitors.toLocaleString()}
-                      </tspan>
-                      <tspan
-                        x={viewBox.cx}
-                        y={(viewBox.cy ?? 0) + 24}
-                        className="fill-fg-muted"
-                      >
-                        Visitors
-                      </tspan>
-                    </text>
-                  )
-                }
-                return null
-              }}
-            />
-          </PolarRadiusAxis>
-        </RadialBarChart>
-      </ChartContainer>
-      <ChartDataTable
-        data={chartData}
-        config={chartConfig}
-        labelKey="browser"
-      />
-    </>
+    <RadialBarChart
+      data={data}
+      value="visitors"
+      name="browser"
+      labels={{ safari: "Safari" }}
+      max={1600}
+      endAngle={deg(100)}
+      innerRadius={0.66}
+      outerRadius={0.95}
+      cornerRadius={999}
+      radiusRatio={0.9}
+      track
+      grid
+      ariaLabel="Safari visitors against a 1,600 target"
+    >
+      <div className="flex h-full flex-col items-center justify-center">
+        <span className="text-2xl font-bold">1,260</span>
+        <span className="text-sm text-fg-muted">Visitors</span>
+      </div>
+    </RadialBarChart>
   )
 }
