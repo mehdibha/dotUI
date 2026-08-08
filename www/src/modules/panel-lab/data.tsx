@@ -564,21 +564,14 @@ export const DEFAULTS = {
   // replace the array (never mutate) so reference-diffing sees them.
   modes: DEFAULT_MODES,
   defaultMode: "light",
-  // Draft-only state (see drafts/) — keys the open section PRs introduced.
-  // Drafts on the same section are alternatives, so where two chose the same
-  // name for different things the numeric one is suffixed (headingTrackingEm).
-  headingWeight: "600",
-  headingTracking: "normal",
-  headingTrackingEm: 0,
-  baseSize: 16,
-  typeScale: "1.25",
-  typeBase: 16,
-  typeRatio: "1.2",
-  bodyLeading: 1.5,
-  // Typography
-  headingFont: DEFAULT_BODY_FAMILY,
+  // Typography — heading mirrors --font-heading: '' = Auto, follows body.
+  headingFont: "",
   bodyFont: DEFAULT_BODY_FAMILY,
   monoFont: DEFAULT_MONO_FAMILY,
+  headingWeight: "600",
+  headingTracking: "normal",
+  typeBase: 16,
+  headingAdjust: 1,
   // Icons
   iconLibrary: "lucide",
   iconStroke: 2,
@@ -695,6 +688,13 @@ export const TYPE_KEYS: (keyof LabState)[] = [
   "headingFont",
   "bodyFont",
   "monoFont",
+]
+export const TYPE_KEYS_V2: (keyof LabState)[] = [
+  ...TYPE_KEYS,
+  "headingWeight",
+  "headingTracking",
+  "typeBase",
+  "headingAdjust",
 ]
 export const ICON_KEYS: (keyof LabState)[] = [
   "iconLibrary",
