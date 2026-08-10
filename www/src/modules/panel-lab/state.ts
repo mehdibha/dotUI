@@ -14,6 +14,7 @@ import { CursorSection, CURSOR_DEFAULTS } from "./sections/cursor"
 import { FocusSection, FOCUS_DEFAULTS } from "./sections/focus"
 import { IconsSection, ICON_DEFAULTS } from "./sections/icons"
 import { InputsSection, INPUT_DEFAULTS } from "./sections/inputs"
+import { SelectionSection, SELECTION_DEFAULTS } from "./sections/selection"
 import { ShapeSection, SHAPE_DEFAULTS } from "./sections/shape"
 import { SpaceSection, SPACE_DEFAULTS } from "./sections/space"
 import { SurfacesSection, SURFACE_DEFAULTS } from "./sections/surfaces"
@@ -28,6 +29,7 @@ export const DEFAULTS = {
   ...SURFACE_DEFAULTS,
   ...FOCUS_DEFAULTS,
   ...CURSOR_DEFAULTS,
+  ...SELECTION_DEFAULTS,
   ...BUTTON_DEFAULTS,
   ...INPUT_DEFAULTS,
 }
@@ -55,7 +57,7 @@ export const CHAPTERS: Chapter[] = [
   { id: "color", label: "Color", defaults: COLOR_DEFAULTS, Body: ColorSection },
   {
     id: "typography",
-    label: "Type",
+    label: "Typography",
     defaults: TYPE_DEFAULTS,
     Body: TypeSection,
   },
@@ -74,6 +76,12 @@ export const CHAPTERS: Chapter[] = [
     label: "Cursor",
     defaults: CURSOR_DEFAULTS,
     Body: CursorSection,
+  },
+  {
+    id: "selection",
+    label: "Selection",
+    defaults: SELECTION_DEFAULTS,
+    Body: SelectionSection,
   },
   {
     id: "buttons",

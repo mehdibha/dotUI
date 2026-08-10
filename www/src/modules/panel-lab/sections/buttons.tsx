@@ -1,32 +1,25 @@
 "use client"
 
-/* Buttons — the synced group's axes (Toggle Button follows Button). Style is a
-   family look reshaping every fill variant at once; the variant enum stays
-   API. Hover, press and the group layout are the rest of the model, with the
-   less-load-bearing group knobs behind an Advanced disclosure.
+/* Buttons — the synced family's axes: Button sets the look, Toggle Button and
+   the groups follow. Style is a family look reshaping every fill variant at
+   once; the variant enum stays API.
 
-   The hero is live: real hover, real press, radius read from Shape's roles. */
+   Three blocks, one per decision cluster: Button (style, radius, hover,
+   press), Button Group (separator), and Toggle (Toggle Button ⇄ Toggle
+   Group — the selected look). Layout never appears: attached vs gapped is
+   per-usage spacing, a prop not a system decision, and the container+chip
+   archetype is Segmented Control, a different component. Each block opens on
+   its own live specimen, its rows right under the preview they change. The
+   separator is one decision shared by every attached group. */
 
 import { useState } from "react"
-import type { CSSProperties } from "react"
+import { StarIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
-import {
-  ControlGroup,
-  GroupCaption,
-  MiniButton,
-  MiniSegmented,
-  OptionGridRow,
-  ParamRow,
-  SegmentedControlRow,
-} from "@/modules/control-lab/rows"
-import type {
-  OptionGridItem,
-  SegmentedRowOption,
-} from "@/modules/control-lab/rows"
+import { ControlGroup, GroupTitle, SelectRow } from "@/modules/control-lab/rows"
+import type { SelectRowOption } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
-import { DetailRow } from "../patterns"
 import type { Lab, LabState } from "../state"
 import { controlRadiusPx } from "./shape"
 
@@ -35,44 +28,20 @@ export const BUTTON_DEFAULTS = {
   buttonRadius: "auto",
   buttonHover: "dim",
   buttonPress: "dim",
-  buttonTransition: "150",
-  groupLayout: "attached",
   groupSeparator: "auto",
-  groupSelected: "fill",
+  toggleSelected: "fill",
 }
 
 /* Style families from the Aug 2026 survey: flat (Geist), outline (Primer
    hairline), raised (Radix classic 3D), elevated (Stripe). */
-const STYLE_OPTIONS: OptionGridItem[] = [
-  {
-    id: "flat",
-    label: "Flat",
-    preview: <MiniButton className="bg-primary text-fg-on-primary" />,
-  },
-  {
-    id: "outline",
-    label: "Outline",
-    preview: (
-      <MiniButton className="bg-primary text-fg-on-primary shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.12)]" />
-    ),
-  },
-  {
-    id: "raised",
-    label: "Raised",
-    preview: (
-      <MiniButton className="bg-primary bg-linear-to-b from-white/15 to-black/15 text-fg-on-primary shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]" />
-    ),
-  },
-  {
-    id: "elevated",
-    label: "Elevated",
-    preview: (
-      <MiniButton className="bg-primary text-fg-on-primary shadow-[0_3px_8px_rgb(0_0_0/0.35),0_1px_2px_rgb(0_0_0/0.2)]" />
-    ),
-  },
+const STYLE_OPTIONS: SelectRowOption[] = [
+  { value: "flat", label: "Flat" },
+  { value: "outline", label: "Outline" },
+  { value: "raised", label: "Raised" },
+  { value: "elevated", label: "Elevated" },
 ]
 
-const RADIUS_OPTIONS: SegmentedRowOption[] = [
+const RADIUS_OPTIONS: SelectRowOption[] = [
   { value: "auto", label: "Auto" },
   { value: "sharp", label: "Sharp" },
   { value: "round", label: "Round" },
@@ -83,42 +52,29 @@ const RADIUS_OPTIONS: SegmentedRowOption[] = [
    none or lift — dim is the default, lighten is the Linear feel. Press is
    where systems diverge: darker step (8), nothing (5), scale .97
    (Linear/HeroUI/Spectrum pressScale), 1px push (shadcn v4 styles). */
-const HOVER_OPTIONS: SegmentedRowOption[] = [
+const HOVER_OPTIONS: SelectRowOption[] = [
   { value: "dim", label: "Dim" },
   { value: "lighten", label: "Lighten" },
   { value: "none", label: "None" },
 ]
 
-const PRESS_OPTIONS: SegmentedRowOption[] = [
+const PRESS_OPTIONS: SelectRowOption[] = [
   { value: "dim", label: "Dim" },
   { value: "scale", label: "Scale" },
   { value: "push", label: "Push" },
   { value: "none", label: "None" },
 ]
 
-const GROUP_LAYOUT_OPTIONS: SegmentedRowOption[] = [
-  { value: "attached", label: "Attached" },
-  { value: "gapped", label: "Gapped" },
-  { value: "container", label: "Container" },
-]
-
-const GROUP_SEPARATOR_OPTIONS: SegmentedRowOption[] = [
+const GROUP_SEPARATOR_OPTIONS: SelectRowOption[] = [
   { value: "auto", label: "Auto" },
   { value: "divider", label: "Divider" },
   { value: "none", label: "None" },
 ]
 
-const GROUP_SELECTED_OPTIONS: SegmentedRowOption[] = [
+const TOGGLE_SELECTED_OPTIONS: SelectRowOption[] = [
   { value: "fill", label: "Fill" },
   { value: "chip", label: "Chip" },
   { value: "inverse", label: "Inverse" },
-]
-
-const TRANSITION_OPTIONS: SegmentedRowOption[] = [
-  { value: "100", label: "100ms" },
-  { value: "150", label: "150ms" },
-  { value: "200", label: "200ms" },
-  { value: "300", label: "300ms" },
 ]
 
 function buttonRadiusPx(state: LabState): number {
@@ -134,32 +90,36 @@ function buttonRadiusPx(state: LabState): number {
   }
 }
 
-/* Each family reshapes every fill variant at once; quiet stays flat, as it
-   does in every system with an aesthetic axis (Radix classic, Untitled UI,
-   Primer, Geist all converge on this). */
+/* Each family reshapes every fill variant at once — `fill` is one overlay
+   composing with any status fill (primary, warning, danger); quiet and link
+   stay flat, as they do in every system with an aesthetic axis (Radix
+   classic, Untitled UI, Primer, Geist all converge on this). */
 const STYLE_LOOKS = {
   flat: {
-    primary: "bg-primary text-fg-on-primary",
+    fill: "",
     secondary: "border border-border-field bg-neutral text-fg-on-neutral",
   },
   outline: {
-    primary:
-      "bg-primary text-fg-on-primary shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
+    fill: "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
     secondary:
       "border border-border-field bg-neutral text-fg-on-neutral shadow-[0_1px_0_rgb(0_0_0/0.08)]",
   },
   raised: {
-    primary:
-      "bg-primary bg-linear-to-b from-white/15 to-black/15 text-fg-on-primary shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
+    fill: "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
     secondary:
       "border border-border-field bg-neutral bg-linear-to-b from-white/8 to-black/8 text-fg-on-neutral shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]",
   },
   elevated: {
-    primary:
-      "bg-primary text-fg-on-primary shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
+    fill: "shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
     secondary:
       "bg-neutral text-fg-on-neutral shadow-[0_2px_6px_rgb(0_0_0/0.25),0_1px_2px_rgb(0_0_0/0.15)]",
   },
+} as const
+
+const FILLS = {
+  primary: "bg-primary text-fg-on-primary",
+  warning: "bg-warning text-fg-on-warning",
+  danger: "bg-danger text-fg-on-danger",
 } as const
 
 const styleLook = (state: LabState) =>
@@ -190,24 +150,179 @@ function pressFx(state: LabState, tier: "fill" | "quiet"): string {
 }
 
 const SPECIMEN_FX =
-  "cursor-interactive focus-reset transition-[background-color,border-color,color,box-shadow,filter,scale,translate] focus-visible:focus-ring"
+  "cursor-interactive focus-reset transition-[background-color,border-color,color,box-shadow,filter,scale,translate] duration-150 focus-visible:focus-ring"
 
-const SELECTED_LOOKS: Record<string, string> = {
-  fill: "bg-selected text-fg-on-selected",
-  chip: "bg-bg text-fg shadow-sm",
-  inverse: "bg-inverse text-fg-inverse",
+/* Chip is the container archetype's floating pill; the hairline ring keeps it
+   reading on dark wells and flat surfaces alike. */
+function selectedFx(state: LabState): string {
+  switch (state.toggleSelected) {
+    case "chip":
+      return "bg-bg text-fg shadow-sm ring-1 ring-border-field"
+    case "inverse":
+      return "bg-inverse text-fg-inverse"
+    default:
+      return "bg-selected text-fg-on-selected"
+  }
 }
 
-/** The synced group's toggle side — one working single-select group, laid out
- *  per the group axes. Separator only matters when attached. */
-function GroupSpecimen({ state }: { state: LabState }) {
-  const [view, setView] = useState("list")
-  const radius = buttonRadiusPx(state)
-  const duration = `${state.buttonTransition}ms`
-  const selected = SELECTED_LOOKS[state.groupSelected] ?? SELECTED_LOOKS.fill
-  const layout = state.groupLayout
+/** Attached grouping shared by Button Group and Toggle Group: one container,
+ *  square segments, the separator axis deciding what divides them. */
+function AttachedShell({
+  state,
+  radius,
+  className,
+  segments,
+}: {
+  state: LabState
+  radius: number
+  className?: string
+  segments: React.ReactNode[]
+}) {
+  return (
+    <div
+      className={cn(
+        "flex items-center overflow-hidden",
+        state.groupSeparator === "auto" && "divide-x divide-border-field",
+        className,
+      )}
+      style={{ borderRadius: radius }}
+    >
+      {segments.map((seg, i) => (
+        <span key={i} className="flex items-stretch">
+          {state.groupSeparator === "divider" && i > 0 && (
+            <span className="my-1.5 w-px bg-border-field" />
+          )}
+          {seg}
+        </span>
+      ))}
+    </div>
+  )
+}
 
-  const segment = (id: string, label: string, className?: string) => (
+/** The button block's specimen: the full variant ladder wearing one style —
+ *  the neutral row, then the status fills. Hover and press demo for real;
+ *  link only underlines, whatever the axes say. */
+function ButtonsHero({ state }: { state: LabState }) {
+  const look = styleLook(state)
+  const radius = buttonRadiusPx(state)
+
+  const specimen = (
+    variant: keyof typeof FILLS | "secondary" | "quiet" | "link",
+    label: string,
+  ) => {
+    const skin =
+      variant === "secondary"
+        ? look.secondary
+        : variant === "quiet"
+          ? "text-fg"
+          : variant === "link"
+            ? "text-fg underline-offset-4 hover:underline"
+            : cn(FILLS[variant], look.fill)
+    return (
+      <button
+        key={variant}
+        type="button"
+        className={cn(
+          "flex h-8 items-center px-3.5 text-[0.8125rem] font-medium whitespace-nowrap",
+          SPECIMEN_FX,
+          skin,
+          variant !== "link" &&
+            cn(
+              hoverFx(state, variant === "quiet" ? "quiet" : "fill"),
+              pressFx(state, variant === "quiet" ? "quiet" : "fill"),
+            ),
+        )}
+        style={{ borderRadius: radius }}
+      >
+        {label}
+      </button>
+    )
+  }
+
+  return (
+    <Hero className="items-center py-5">
+      <div className="flex flex-col items-center gap-2">
+        <div className="flex items-center gap-2">
+          {specimen("primary", "Get started")}
+          {specimen("secondary", "Preview")}
+          {specimen("quiet", "Docs")}
+        </div>
+        <div className="flex items-center gap-2">
+          {specimen("warning", "Reset")}
+          {specimen("danger", "Delete")}
+          {specimen("link", "Learn more")}
+        </div>
+      </div>
+    </Hero>
+  )
+}
+
+/** Action grouping — Cut/Copy/Paste as one control, wearing the secondary
+ *  skin on the shell. Always attached (gapped is a prop, not a system
+ *  decision); selection never applies here. */
+function ButtonGroupHero({ state }: { state: LabState }) {
+  const look = styleLook(state)
+  const radius = buttonRadiusPx(state)
+  const actions = ["Cut", "Copy", "Paste"]
+
+  return (
+    <Hero className="items-center py-5">
+      <AttachedShell
+        state={state}
+        radius={radius}
+        className={look.secondary}
+        segments={actions.map((label) => (
+          <button
+            key={label}
+            type="button"
+            className={cn(
+              "flex h-8 items-center px-3 text-[0.8125rem] font-medium",
+              SPECIMEN_FX,
+              hoverFx(state, "quiet"),
+              pressFx(state, "quiet"),
+            )}
+          >
+            {label}
+          </button>
+        ))}
+      />
+    </Hero>
+  )
+}
+
+/** The toggle side — a lone Toggle Button and a working single-select Toggle
+ *  Group wearing the same selected look. */
+function ToggleHero({ state }: { state: LabState }) {
+  const [starred, setStarred] = useState(true)
+  const [view, setView] = useState("list")
+  const look = styleLook(state)
+  const radius = buttonRadiusPx(state)
+  const selected = selectedFx(state)
+
+  const standalone = (
+    <button
+      type="button"
+      aria-label="Star"
+      aria-pressed={starred}
+      onClick={() => setStarred((s) => !s)}
+      className={cn(
+        "flex h-7 w-7 items-center justify-center",
+        SPECIMEN_FX,
+        starred
+          ? cn(selected, hoverFx(state, "fill"), pressFx(state, "fill"))
+          : cn(
+              "text-fg-muted hover:text-fg",
+              hoverFx(state, "quiet"),
+              pressFx(state, "quiet"),
+            ),
+      )}
+      style={{ borderRadius: radius }}
+    >
+      <StarIcon className={cn("size-3.5", starred && "fill-current")} />
+    </button>
+  )
+
+  const segment = (id: string, label: string) => (
     <button
       key={id}
       type="button"
@@ -219,9 +334,7 @@ function GroupSpecimen({ state }: { state: LabState }) {
         view === id
           ? cn(selected, pressFx(state, "fill"))
           : cn("text-fg-muted hover:text-fg", pressFx(state, "quiet")),
-        className,
       )}
-      style={{ transitionDuration: duration }}
     >
       {label}
     </button>
@@ -232,90 +345,16 @@ function GroupSpecimen({ state }: { state: LabState }) {
     ["board", "Board"],
   ] as const
 
-  if (layout === "gapped")
-    return (
-      <div className="flex items-center gap-2">
-        {segments.map(([id, label]) =>
-          segment(
-            id,
-            label,
-            cn(
-              "rounded-(--seg-radius)",
-              view !== id && "border border-border-field bg-neutral",
-            ),
-          ),
-        )}
-      </div>
-    )
-
-  if (layout === "container")
-    return (
-      <div
-        className="flex items-center gap-0.5 bg-muted p-0.5"
-        style={{ borderRadius: radius >= 999 ? 999 : radius }}
-      >
-        {segments.map(([id, label]) =>
-          segment(id, label, "rounded-(--seg-radius)"),
-        )}
-      </div>
-    )
-
   return (
-    <div
-      className={cn(
-        "flex items-center overflow-hidden border border-border-field bg-neutral",
-        state.groupSeparator === "auto" && "divide-x divide-border-field",
-      )}
-      style={{ borderRadius: radius }}
-    >
-      {segments.map(([id, label], i) => (
-        <span key={id} className="flex items-stretch">
-          {state.groupSeparator === "divider" && i > 0 && (
-            <span className="my-1.5 w-px bg-border-field" />
-          )}
-          {segment(id, label)}
-        </span>
-      ))}
-    </div>
-  )
-}
-
-/** Live specimens of the synced group: the fill variants and Quiet wearing
- *  one style, plus a working toggle group. Hover and press demo for real. */
-function ButtonsHero({ state }: { state: LabState }) {
-  const look = styleLook(state)
-  const radius = buttonRadiusPx(state)
-  const segRadius = radius >= 999 ? 999 : Math.max(radius - 3, 0)
-  const duration = `${state.buttonTransition}ms`
-
-  const specimen = (tier: "primary" | "secondary" | "quiet", label: string) => (
-    <button
-      type="button"
-      className={cn(
-        "flex h-8 items-center px-3.5 text-[0.8125rem] font-medium",
-        SPECIMEN_FX,
-        tier === "quiet" ? "text-fg" : look[tier],
-        hoverFx(state, tier === "quiet" ? "quiet" : "fill"),
-        pressFx(state, tier === "quiet" ? "quiet" : "fill"),
-      )}
-      style={{ borderRadius: radius, transitionDuration: duration }}
-    >
-      {label}
-    </button>
-  )
-
-  return (
-    <Hero>
-      <div
-        className="flex flex-col items-center gap-3 py-4"
-        style={{ "--seg-radius": `${segRadius}px` } as CSSProperties}
-      >
-        <div className="flex items-center gap-2">
-          {specimen("primary", "Get started")}
-          {specimen("secondary", "Preview")}
-          {specimen("quiet", "Docs")}
-        </div>
-        <GroupSpecimen state={state} />
+    <Hero className="items-center py-5">
+      <div className="flex items-center gap-4">
+        {standalone}
+        <AttachedShell
+          state={state}
+          radius={radius}
+          className={look.secondary}
+          segments={segments.map(([id, label]) => segment(id, label))}
+        />
       </div>
     </Hero>
   )
@@ -325,71 +364,54 @@ export function ButtonsSection({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
     <>
-      <ButtonsHero state={state} />
-      <OptionGridRow
-        label="Style"
-        value={state.buttonStyle}
-        onChange={set("buttonStyle")}
-        options={STYLE_OPTIONS}
-      />
+      <GroupTitle>Button</GroupTitle>
       <ControlGroup>
-        <SegmentedControlRow
+        <ButtonsHero state={state} />
+        <SelectRow
+          label="Style"
+          value={state.buttonStyle}
+          onChange={set("buttonStyle")}
+          options={STYLE_OPTIONS}
+        />
+        <SelectRow
           label="Radius"
           value={state.buttonRadius}
           onChange={set("buttonRadius")}
           options={RADIUS_OPTIONS}
         />
-        <SegmentedControlRow
+        <SelectRow
           label="Hover"
           value={state.buttonHover}
           onChange={set("buttonHover")}
           options={HOVER_OPTIONS}
         />
-        <SegmentedControlRow
+        <SelectRow
           label="Press"
           value={state.buttonPress}
           onChange={set("buttonPress")}
           options={PRESS_OPTIONS}
         />
       </ControlGroup>
+      <GroupTitle>Button Group</GroupTitle>
       <ControlGroup>
-        <SegmentedControlRow
-          label="Group"
-          value={state.groupLayout}
-          onChange={set("groupLayout")}
-          options={GROUP_LAYOUT_OPTIONS}
+        <ButtonGroupHero state={state} />
+        <SelectRow
+          label="Separator"
+          value={state.groupSeparator}
+          onChange={set("groupSeparator")}
+          options={GROUP_SEPARATOR_OPTIONS}
         />
       </ControlGroup>
-      <DetailRow label="Advanced">
-        <ParamRow label="Selected segment">
-          <MiniSegmented
-            ariaLabel="Selected segment treatment"
-            value={state.groupSelected}
-            onChange={set("groupSelected")}
-            options={GROUP_SELECTED_OPTIONS}
-          />
-        </ParamRow>
-        <ParamRow label="Group separator">
-          <MiniSegmented
-            ariaLabel="Group separator"
-            value={state.groupSeparator}
-            onChange={set("groupSeparator")}
-            options={GROUP_SEPARATOR_OPTIONS}
-          />
-        </ParamRow>
-        <ParamRow label="Transition">
-          <MiniSegmented
-            ariaLabel="Transition duration"
-            value={state.buttonTransition}
-            onChange={set("buttonTransition")}
-            options={TRANSITION_OPTIONS}
-          />
-        </ParamRow>
-      </DetailRow>
-      <GroupCaption>
-        Style reshapes the fill variants; Quiet and Link stay flat. Toggle
-        Button follows Button.
-      </GroupCaption>
+      <GroupTitle>Toggle</GroupTitle>
+      <ControlGroup>
+        <ToggleHero state={state} />
+        <SelectRow
+          label="Selected"
+          value={state.toggleSelected}
+          onChange={set("toggleSelected")}
+          options={TOGGLE_SELECTED_OPTIONS}
+        />
+      </ControlGroup>
     </>
   )
 }

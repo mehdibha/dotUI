@@ -12,18 +12,18 @@ import type { CSSProperties } from "react"
 
 import { cn } from "@/registry/lib/utils"
 import {
+  ControlGroup,
+  GroupTitle,
   OptionGridRow,
-  SegmentedControlRow,
   SelectRow,
   SliderRow,
 } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
-import { DetailRow } from "../patterns"
 import type { Lab, LabState } from "../state"
 
 export const SHAPE_DEFAULTS = {
-  /** The base radius — a card's radius, in px. */
+  /** The base radius — the lg rung (popover · menu), in px. */
   radiusPx: 10,
   cornerShape: "round",
   roleControl: "md",
@@ -165,56 +165,61 @@ function rolePxLabel(px: number, ratio: number): string {
   return `${Math.round(px * ratio * 10) / 10}px`
 }
 
-/* Preview geometry per role: nested arcs sharing one origin, controls boldest. */
-const ROLE_ARCS: Record<
-  ShapeRoleKey,
-  { size: number; arc: string; dot: string }
-> = {
-  rolePanel: { size: 64, arc: "border-fg/25", dot: "bg-fg/25" },
-  roleSurface: { size: 50, arc: "border-fg/40", dot: "bg-fg/40" },
-  roleControl: { size: 36, arc: "border-fg/80", dot: "bg-fg/80" },
-  roleItem: { size: 22, arc: "border-fg/55", dot: "bg-fg/55" },
+/* Nested-surfaces hero: page → card → popover → item, plus a button on the
+   card — one specimen per role, every corner wearing its resolved radius 1:1. */
+const NEST_BOX = "border border-fg/10 bg-fg/3 shadow-xs"
+
+function RoleLabel({ name, px }: { name: string; px?: string }) {
+  return (
+    <div className="flex items-baseline justify-between gap-3 text-xs text-fg-muted">
+      <span className="truncate">{name}</span>
+      {px && (
+        <span className="shrink-0 font-mono text-[10px] tabular-nums">
+          {px}
+        </span>
+      )}
+    </div>
+  )
 }
 
 function ShapeHero({ state }: { state: LabState }) {
+  const px = (key: ShapeRoleKey) =>
+    rolePxLabel(state.radiusPx, roleRatio(state, key))
+  const shape = (key: ShapeRoleKey): CSSProperties => ({
+    borderRadius: roleRadiusPx(state, key),
+    ...cornerShapeStyle(state.cornerShape),
+  })
   return (
-    <Hero className="flex-row items-center gap-5">
-      <div className="relative size-16 shrink-0">
-        {SHAPE_ROLES.map(({ key }) => {
-          const { size, arc } = ROLE_ARCS[key]
-          const radius = Math.min(roleRadiusPx(state, key), size)
-          return (
-            <div
-              key={key}
-              className={cn("absolute top-0 left-0 border-t-2 border-l-2", arc)}
-              style={{
-                width: size,
-                height: size,
-                borderTopLeftRadius: radius,
-                ...cornerShapeStyle(state.cornerShape),
-              }}
-            />
-          )
-        })}
-      </div>
-      <div className="flex flex-1 flex-col gap-1 text-xs text-fg-muted">
-        {SHAPE_ROLES.map(({ key, label, example }) => (
-          <span key={key} className="flex items-baseline gap-2">
-            <span
-              className={cn(
-                "size-1.5 shrink-0 self-center rounded-full",
-                ROLE_ARCS[key].dot,
-              )}
-            />
-            <span>{label}</span>
-            <span className="flex-1 truncate text-[10px] text-fg-muted/70">
-              {example}
-            </span>
-            <span className="font-mono text-fg tabular-nums">
-              {rolePxLabel(state.radiusPx, roleRatio(state, key))}
-            </span>
+    <Hero>
+      <div
+        className={cn(NEST_BOX, "flex flex-col gap-2.5 p-3")}
+        style={shape("rolePanel")}
+      >
+        <RoleLabel name="Card" px={px("rolePanel")} />
+        <div
+          className={cn(NEST_BOX, "flex flex-col gap-2 p-2.5")}
+          style={shape("roleSurface")}
+        >
+          <RoleLabel name="Popover" px={px("roleSurface")} />
+          <div
+            className={cn(NEST_BOX, "px-2.5 py-1.5")}
+            style={shape("roleItem")}
+          >
+            <RoleLabel name="Item" px={px("roleItem")} />
+          </div>
+        </div>
+        <div
+          className={cn(
+            NEST_BOX,
+            "flex items-baseline gap-2 self-start px-3 py-1.5",
+          )}
+          style={shape("roleControl")}
+        >
+          <span className="text-xs text-fg-muted">Button</span>
+          <span className="font-mono text-[10px] text-fg-muted tabular-nums">
+            {px("roleControl")}
           </span>
-        ))}
+        </div>
       </div>
     </Hero>
   )
@@ -270,27 +275,38 @@ export function ShapeSection({ lab }: { lab: Lab }) {
       : []),
     ...SHAPE_RUNGS.map(({ id, label, ratio }) => ({
       value: id,
-      label: `${label} · ${rolePxLabel(state.radiusPx, ratio)}`,
+      label:
+        ratio === Infinity
+          ? label
+          : `${label} · ${rolePxLabel(state.radiusPx, ratio)}`,
     })),
   ]
   return (
     <>
-      <ShapeHero state={state} />
-      {/* Self-demo: the row's own corners wear the value, 1:1. */}
-      <SliderRow
-        label="Radius"
-        value={state.radiusPx}
-        onChange={set("radiusPx")}
-        minValue={0}
-        maxValue={16}
-        step={0.5}
-        ticks={[4, 8, 10, 12]}
-        format={(v) => `${v}px`}
-        trackStyle={{
-          borderRadius: `${state.radiusPx}px`,
-          ...cornerShapeStyle(state.cornerShape),
-        }}
-      />
+      <ControlGroup>
+        <ShapeHero state={state} />
+        {/* Self-demo: the row's own corners wear the value, 1:1. */}
+        <SliderRow
+          label="Radius"
+          value={state.radiusPx}
+          onChange={set("radiusPx")}
+          minValue={0}
+          maxValue={16}
+          step={0.5}
+          ticks={[4, 8, 10, 12]}
+          format={(v) => `${v}px`}
+          trackStyle={{
+            borderRadius: `${state.radiusPx}px`,
+            ...cornerShapeStyle(state.cornerShape),
+          }}
+        />
+        <SelectRow
+          label="Corners"
+          value={state.cornerShape}
+          onChange={set("cornerShape")}
+          options={CORNER_SHAPE_OPTIONS}
+        />
+      </ControlGroup>
       <OptionGridRow
         label="Character"
         value={activeCharacter(state)}
@@ -302,28 +318,19 @@ export function ShapeSection({ lab }: { lab: Lab }) {
         options={CHARACTER_OPTIONS}
         columns={3}
       />
-      <DetailRow
-        label="Roles"
-        summary={SHAPE_ROLES.map(({ key }) =>
-          rolePxLabel(state.radiusPx, roleRatio(state, key)),
-        ).join(" · ")}
-      >
-        {SHAPE_ROLES.map(({ key, label }) => (
+      <GroupTitle>Roles</GroupTitle>
+      <ControlGroup>
+        {SHAPE_ROLES.map(({ key, label, example }) => (
           <SelectRow
             key={key}
             label={label}
+            description={example}
             value={state[key]}
             onChange={set(key)}
             options={rungOptions(key === "roleItem")}
           />
         ))}
-      </DetailRow>
-      <SegmentedControlRow
-        label="Corners"
-        value={state.cornerShape}
-        onChange={set("cornerShape")}
-        options={CORNER_SHAPE_OPTIONS}
-      />
+      </ControlGroup>
     </>
   )
 }

@@ -44,7 +44,6 @@ import {
   DisclosureRow,
   DrillInRow,
   FontPickerRow,
-  GroupCaption,
   MiniButton,
   MiniInput,
   MiniSegmented,
@@ -565,32 +564,25 @@ function DisclosureDemo({
   )
 }
 
-function GroupDemo({ caption }: { caption?: boolean }) {
+function GroupDemo() {
   const [brand, setBrand] = useState("#635BFF")
   const [radius, setRadius] = useState("md")
   const [translucent, setTranslucent] = useState(false)
   return (
-    <>
-      <ControlGroup>
-        <ColorPickerRow label="Brand" value={brand} onChange={setBrand} />
-        <SegmentedControlRow
-          label="Radius"
-          value={radius}
-          onChange={setRadius}
-          options={RADIUS_OPTIONS}
-        />
-        <SwitchRow
-          label="Translucent"
-          value={translucent}
-          onChange={setTranslucent}
-        />
-      </ControlGroup>
-      {caption && (
-        <GroupCaption>
-          One family sets the card, control and overlay shadows together.
-        </GroupCaption>
-      )}
-    </>
+    <ControlGroup>
+      <ColorPickerRow label="Brand" value={brand} onChange={setBrand} />
+      <SegmentedControlRow
+        label="Radius"
+        value={radius}
+        onChange={setRadius}
+        options={RADIUS_OPTIONS}
+      />
+      <SwitchRow
+        label="Translucent"
+        value={translucent}
+        onChange={setTranslucent}
+      />
+    </ControlGroup>
   )
 }
 
@@ -838,10 +830,7 @@ const GROUPS: Group[] = [
         name: "ControlGroup",
         description:
           "Fuses adjacent rows into one card: shared surface, hairline separators, only the group’s corners round. Rows opt in by carrying data-row.",
-        variants: [
-          { label: "Default", render: <GroupDemo /> },
-          { label: "With caption", render: <GroupDemo caption /> },
-        ],
+        variants: [{ label: "Default", render: <GroupDemo /> }],
       },
     ],
   },

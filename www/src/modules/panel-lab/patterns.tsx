@@ -98,6 +98,17 @@ export function SwatchDots({ colors }: { colors: string[] }) {
   )
 }
 
+/** A palette's color as a dot before an option label — an option that names a
+ *  color should show it. */
+export function PaletteDot({ color }: { color: string }) {
+  return (
+    <span
+      className="size-2 shrink-0 rounded-full"
+      style={{ backgroundColor: color }}
+    />
+  )
+}
+
 /* ------------------------------ Mini color row ----------------------------- */
 
 /** Shared picker popover body (area + hue + hex). */

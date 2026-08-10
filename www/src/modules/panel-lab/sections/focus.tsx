@@ -27,6 +27,7 @@ import type {
 } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { PaletteDot } from "../patterns"
 import type { Lab, LabState } from "../state"
 import { controlRadiusPx } from "./shape"
 
@@ -45,9 +46,30 @@ export const FOCUS_DEFAULTS = {
   focusInputBorderWidth: 1,
 }
 
+const COLOR_VARS = {
+  accent: "var(--accent-700)",
+  neutral: "var(--neutral-700)",
+} as const
+
 const COLOR_OPTIONS: SegmentedRowOption[] = [
-  { value: "accent", label: "Accent" },
-  { value: "neutral", label: "Neutral" },
+  {
+    value: "accent",
+    label: (
+      <>
+        <PaletteDot color={COLOR_VARS.accent} />
+        Accent
+      </>
+    ),
+  },
+  {
+    value: "neutral",
+    label: (
+      <>
+        <PaletteDot color={COLOR_VARS.neutral} />
+        Neutral
+      </>
+    ),
+  },
 ]
 
 const CONTROL_STYLE_OPTIONS: SelectRowOption[] = [
@@ -69,11 +91,6 @@ const OFFSET_OPTIONS: SegmentedRowOption[] = [
   { value: "flush", label: "Flush" },
   { value: "gap", label: "Gap" },
 ]
-
-const COLOR_VARS = {
-  accent: "var(--accent-700)",
-  neutral: "var(--neutral-700)",
-} as const
 
 const focusColorVar = (state: LabState): string =>
   COLOR_VARS[state.focusColor as keyof typeof COLOR_VARS] ?? COLOR_VARS.accent
@@ -101,8 +118,9 @@ function focusRingShadow(state: LabState): string {
 }
 
 /** The field's focus layer: border swap plus the style's shadow — the exact
- *  keyboard ring, a muted halo of the same color, or the border alone. */
-function focusFieldStyle(state: LabState): CSSProperties {
+ *  keyboard ring, a muted halo of the same color, or the border alone.
+ *  Exported: the Inputs hero wears this recipe when its specimens focus. */
+export function focusFieldStyle(state: LabState): CSSProperties {
   const base = focusColorVar(state)
   const style = state.focusInputStyle
   return {

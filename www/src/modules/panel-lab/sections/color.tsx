@@ -18,7 +18,7 @@ import {
   XIcon,
 } from "lucide-react"
 
-import { toHex, toOklch, wcag2 } from "@dotui/colors"
+import { STEPS, toHex, toOklch, wcag2 } from "@dotui/colors"
 
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import { cn } from "@/registry/lib/utils"
@@ -39,9 +39,9 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import {
   ColorPickerRow,
   ControlGroup,
-  GroupCaption,
   MiniSegmented,
   MiniSwitch,
+  NeutralPickerRow,
   ParamRow,
   ROW,
   ROW_LABEL,
@@ -50,7 +50,12 @@ import {
   SegmentedControlRow,
 } from "@/modules/control-lab/rows"
 
-import { DetailRow, PickerPopoverContent, SwatchDots } from "../patterns"
+import {
+  DetailRow,
+  PaletteDot,
+  PickerPopoverContent,
+  SwatchDots,
+} from "../patterns"
 import type { Lab, LabState } from "../state"
 
 /**
@@ -85,17 +90,16 @@ const DEFAULT_MODES: LabMode[] = [
 export const COLOR_DEFAULTS = {
   brand: "#635BFF",
   primary: "neutral",
-  graySeed: "",
+  neutralHue: null as number | null,
   successSeed: "",
   warningSeed: "",
   dangerSeed: "",
-  infoSeed: "",
   selectionSeed: "",
   modes: DEFAULT_MODES,
   defaultMode: "light",
   vividness: 1,
   hueShift: 1,
-  grayTintAmount: 1,
+  neutralTint: 1,
   preserveSeed: false,
   guarantees: "default",
   borderContrast: false,
@@ -104,26 +108,20 @@ export const COLOR_DEFAULTS = {
   border600: 0,
 }
 
-const PRIMARY_OPTIONS = [
-  { value: "neutral", label: "Neutral" },
-  { value: "accent", label: "Accent" },
-]
-
 /* ------------------------------ Config bridge ------------------------------ */
 
 /** The color-global slice of lab state that every mode shares. */
 const SHARED_KEYS = [
   "brand",
   "primary",
-  "graySeed",
+  "neutralHue",
   "successSeed",
   "warningSeed",
   "dangerSeed",
-  "infoSeed",
   "selectionSeed",
   "vividness",
   "hueShift",
-  "grayTintAmount",
+  "neutralTint",
   "preserveSeed",
   "guarantees",
   "borderContrast",
@@ -142,15 +140,14 @@ function buildModeConfig(state: SharedColorState, mode: LabMode): ColorConfig {
   const {
     brand,
     primary,
-    graySeed,
+    neutralHue,
     successSeed,
     warningSeed,
     dangerSeed,
-    infoSeed,
     selectionSeed,
     vividness,
     hueShift,
-    grayTintAmount,
+    neutralTint,
     preserveSeed,
     guarantees,
     borderContrast,
@@ -163,11 +160,9 @@ function buildModeConfig(state: SharedColorState, mode: LabMode): ColorConfig {
     v: 2,
     seeds: {
       accent: brand,
-      neutral: graySeed || undefined,
       success: successSeed || undefined,
       warning: warningSeed || undefined,
       danger: dangerSeed || undefined,
-      info: infoSeed || undefined,
       selection: selectionSeed || undefined,
     },
     background:
@@ -176,7 +171,8 @@ function buildModeConfig(state: SharedColorState, mode: LabMode): ColorConfig {
         : { dark: mode.bg === 0 ? "oled" : Math.min(20, mode.bg) },
     vividness: vividness === 1 ? undefined : vividness,
     hueShift: hueShift === 1 ? undefined : hueShift,
-    neutralTint: grayTintAmount === 1 ? undefined : grayTintAmount,
+    neutralTint: neutralTint === 1 ? undefined : neutralTint,
+    neutralHue: neutralHue ?? undefined,
     preserveSeed: preserveSeed || undefined,
     guaranteePolicy: high
       ? "strict"
@@ -496,7 +492,7 @@ function AutoColorRow({
       {({ color }) => (
         <div
           data-row=""
-          className={cn(ROW, "flex items-center gap-0.5 pr-1.5")}
+          className={cn(ROW, "flex items-center gap-0.5", value && "pr-1.5")}
         >
           <Button
             variant="quiet"
@@ -553,7 +549,7 @@ function AutoColorTile({
         <div className="relative">
           <Button
             variant="quiet"
-            className="flex h-auto w-full items-center justify-between gap-3 rounded-xl bg-muted p-3 text-left font-normal hover:bg-highlight pressed:bg-highlight"
+            className="flex h-auto w-full items-center justify-between gap-2 rounded-xl bg-muted p-2.5 text-left font-normal hover:bg-highlight pressed:bg-highlight"
           >
             <span className="flex min-w-0 flex-col gap-0.5">
               <span className={ROW_LABEL}>{label}</span>
@@ -648,7 +644,6 @@ const GUARANTEE_OPTIONS = [
 const FINE_KEYS = [
   "vividness",
   "hueShift",
-  "grayTintAmount",
   "preserveSeed",
   "guarantees",
   "borderContrast",
@@ -658,7 +653,6 @@ const SEMANTIC_SEEDS = [
   { key: "successSeed", palette: "success", label: "Success" },
   { key: "warningSeed", palette: "warning", label: "Warning" },
   { key: "dangerSeed", palette: "danger", label: "Danger" },
-  { key: "infoSeed", palette: "info", label: "Info" },
 ] as const
 
 const BORDER_JOBS = [
@@ -737,15 +731,17 @@ export function ColorSection({ lab }: { lab: Lab }) {
           value={state.brand}
           onChange={set("brand")}
         />
-        <AutoColorRow
-          label="Gray"
-          value={state.graySeed}
-          derived={m.scales.neutral?.["500"] ?? m.background}
-          onChange={set("graySeed")}
-          onReset={() => set("graySeed")("")}
+        <NeutralPickerRow
+          value={{ hue: state.neutralHue, tint: state.neutralTint }}
+          onChange={(neutral) => {
+            set("neutralHue")(neutral.hue)
+            set("neutralTint")(neutral.tint)
+          }}
+          brandHue={toOklch(state.brand).h}
+          ramp={STEPS.map((step) => m.scales.neutral?.[step] ?? m.background)}
         />
       </ControlGroup>
-      <div className="grid grid-cols-2 gap-1.5">
+      <div className="grid grid-cols-3 gap-1.5">
         {SEMANTIC_SEEDS.map(({ key, palette, label }) => (
           <AutoColorTile
             key={key}
@@ -757,11 +753,7 @@ export function ColorSection({ lab }: { lab: Lab }) {
           />
         ))}
       </div>
-      <div className="flex items-start justify-between gap-2 pr-2">
-        <GroupCaption>
-          One required seed. Every Auto color derives from it — override any,
-          reset back anytime.
-        </GroupCaption>
+      <div className="flex justify-end pr-2 empty:hidden">
         <ContrastWarnings
           warnings={theme.report.warnings}
           delta={theme.report.seedDelta.accent ?? 0}
@@ -774,7 +766,26 @@ export function ColorSection({ lab }: { lab: Lab }) {
           label="Primary"
           value={state.primary}
           onChange={set("primary")}
-          options={PRIMARY_OPTIONS}
+          options={[
+            {
+              value: "neutral",
+              label: (
+                <>
+                  <PaletteDot color={solid("neutral")} />
+                  Neutral
+                </>
+              ),
+            },
+            {
+              value: "accent",
+              label: (
+                <>
+                  <PaletteDot color={solid("accent")} />
+                  Accent
+                </>
+              ),
+            },
+          ]}
         />
         <AutoColorRow
           label="Selection"
@@ -833,15 +844,6 @@ export function ColorSection({ lab }: { lab: Lab }) {
           maxValue={3}
           step={0.1}
           format={(v) => `${v.toFixed(1)}×`}
-        />
-        <MiniSliderRow
-          label="Gray tint"
-          value={state.grayTintAmount}
-          onChange={set("grayTintAmount")}
-          minValue={0}
-          maxValue={4}
-          step={0.1}
-          format={(v) => (v === 0 ? "Pure" : `${v.toFixed(1)}×`)}
         />
         <ParamRow label="Guarantees">
           <MiniSegmented

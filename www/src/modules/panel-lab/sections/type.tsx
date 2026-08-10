@@ -1,8 +1,8 @@
 "use client"
 
-/* Type — the font roles, their weights and the size ladder. Axes are the ones
-   shipped systems actually expose: three faces, one heading weight and
-   tracking, a hand-tuned ladder with a heading size adjust. */
+/* Typography — the font roles, their weights and the size ladder. Axes are the
+   ones shipped systems actually expose: three faces, one heading weight and
+   tracking, a hand-tuned ladder with a heading size adjust, body leading. */
 
 import { ChevronsUpDownIcon, RotateCcwIcon } from "lucide-react"
 
@@ -19,7 +19,9 @@ import {
   ControlGroup,
   FontListPopover,
   FontPickerRow,
-  GroupCaption,
+  GroupTitle,
+  MiniSegmented,
+  ParamRow,
   ROW,
   ROW_LABEL,
   ROW_VALUE,
@@ -27,7 +29,7 @@ import {
 } from "@/modules/control-lab/rows"
 import { useLoadedFamilies } from "@/modules/create/typography"
 
-import { Hero, HeroInspector, useInspect } from "../hero"
+import { Hero } from "../hero"
 import { DetailRow, MiniSliderRow } from "../patterns"
 import type { Lab, LabState } from "../state"
 
@@ -40,9 +42,10 @@ export const TYPE_DEFAULTS = {
   headingTracking: "normal",
   typeBase: 16,
   headingAdjust: 1,
+  bodyLeading: "normal",
 }
 
-type TypeProbeId = "heading" | "body" | "ui" | "code"
+type TypeRoleId = "heading" | "body" | "ui" | "code"
 
 /* Hand-tuned ladder, not a modular ratio — every shipped system enumerates its
    steps. Offsets from base give 14/16/20/24/28 at base 16. */
@@ -78,9 +81,23 @@ const TRACKING_EM: Record<string, string> = {
   tighter: "-0.022em",
 }
 
+/* Body-only, like Mantine/Chakra/Tailwind leading scales — headings keep the
+   ladder's fixed leading. */
+const LEADING_OPTIONS = [
+  { value: "tight", label: "Tight" },
+  { value: "normal", label: "Normal" },
+  { value: "relaxed", label: "Relaxed" },
+]
+
+const LEADING_VALUES: Record<string, number> = {
+  tight: 1.45,
+  normal: 1.6,
+  relaxed: 1.75,
+}
+
 /** A role's live recipe — heading and body follow the scale axes, UI and code
  *  sizes are the section's constants. */
-function typeRole(state: LabState, id: TypeProbeId) {
+function typeRole(state: LabState, id: TypeRoleId) {
   switch (id) {
     case "heading":
       return {
@@ -104,112 +121,59 @@ function typeRole(state: LabState, id: TypeProbeId) {
 }
 
 /** Every text role the system ships, live in the chosen faces — heading, body,
- *  UI labels and code. Probes follow the hero contract: hover peeks a role's
- *  recipe, click pins it. */
+ *  UI labels and code. */
 function TypeHero({ state }: { state: LabState }) {
-  const { inspected, pinned, probeProps } = useInspect<TypeProbeId>()
   const heading = typeRole(state, "heading")
   const body = typeRole(state, "body")
   const ui = typeRole(state, "ui")
   const code = typeRole(state, "code")
   useLoadedFamilies([heading.family, body.family, code.family])
 
-  const probeClass = (id: TypeProbeId) =>
-    cn(
-      "-mx-1 cursor-interactive rounded-md px-1 text-left focus-reset transition-colors focus-visible:focus-ring",
-      pinned === id && "bg-muted",
-    )
-  const role = inspected ? typeRole(state, inspected) : null
-
   return (
     <Hero>
-      <button
-        type="button"
-        aria-label="Inspect heading"
-        {...probeProps("heading")}
-        className={probeClass("heading")}
+      <span
+        className="block text-balance text-fg"
+        style={{
+          fontFamily: fontStack(heading.family),
+          fontSize: heading.px,
+          fontWeight: heading.weight,
+          letterSpacing: TRACKING_EM[state.headingTracking],
+          lineHeight: 1.15,
+        }}
       >
-        <span
-          className="block text-balance text-fg"
-          style={{
-            fontFamily: fontStack(heading.family),
-            fontSize: heading.px,
-            fontWeight: heading.weight,
-            letterSpacing: TRACKING_EM[state.headingTracking],
-            lineHeight: 1.15,
-          }}
-        >
-          Before we knew it
-        </span>
-      </button>
-      <button
-        type="button"
-        aria-label="Inspect body"
-        {...probeProps("body")}
-        className={probeClass("body")}
+        Before we knew it
+      </span>
+      <span
+        className="block text-pretty text-fg-muted"
+        style={{
+          fontFamily: fontStack(body.family),
+          fontSize: body.px,
+          lineHeight: LEADING_VALUES[state.bodyLeading],
+        }}
       >
-        <span
-          className="block text-pretty text-fg-muted"
-          style={{
-            fontFamily: fontStack(body.family),
-            fontSize: body.px,
-            lineHeight: 1.6,
-          }}
-        >
-          We had left the ground, and the city lights fell away beneath us.
-        </span>
-      </button>
+        We had left the ground, and the city lights fell away beneath us.
+      </span>
       <div className="flex items-center gap-2">
-        <button
-          type="button"
-          aria-label="Inspect UI label"
-          {...probeProps("ui")}
-          className={cn(probeClass("ui"), "shrink-0")}
-        >
-          <span
-            className="flex h-7 items-center rounded-full bg-primary px-3.5 text-fg-on-primary"
-            style={{
-              fontFamily: fontStack(ui.family),
-              fontSize: ui.px,
-              fontWeight: ui.weight,
-            }}
-          >
-            Get started
-          </span>
-        </button>
         <span
-          className="flex h-7 shrink-0 items-center rounded-full border border-border-field px-3.5 text-fg"
+          className="flex h-7 shrink-0 items-center rounded-full bg-primary px-3.5 text-fg-on-primary"
           style={{
             fontFamily: fontStack(ui.family),
             fontSize: ui.px,
             fontWeight: ui.weight,
           }}
         >
-          Learn more
+          Get started
         </span>
-        <button
-          type="button"
-          aria-label="Inspect code"
-          {...probeProps("code")}
-          className={cn(probeClass("code"), "ml-auto shrink-0")}
+        <span
+          className="ml-auto flex h-6 shrink-0 items-center rounded-md bg-muted px-2 text-fg-muted"
+          style={{
+            fontFamily: fontStack(code.family),
+            fontSize: code.px,
+          }}
         >
-          <span
-            className="flex h-6 items-center rounded-md bg-muted px-2 text-fg-muted"
-            style={{
-              fontFamily: fontStack(code.family),
-              fontSize: code.px,
-            }}
-          >
-            v2.4.0
-          </span>
-        </button>
+          v2.4.0
+        </span>
       </div>
-      {inspected && role && (
-        <HeroInspector
-          label={role.label}
-          detail={`${role.family} · ${role.px}px · ${role.weight}`}
-        />
-      )}
     </Hero>
   )
 }
@@ -305,11 +269,20 @@ export function TypeSection({ lab }: { lab: Lab }) {
   const { state, set } = lab
   const scaleModified =
     state.typeBase !== TYPE_DEFAULTS.typeBase ||
-    state.headingAdjust !== TYPE_DEFAULTS.headingAdjust
+    state.headingAdjust !== TYPE_DEFAULTS.headingAdjust ||
+    state.bodyLeading !== TYPE_DEFAULTS.bodyLeading
+  const scaleSummary = [
+    `${state.typeBase}px`,
+    adjustLabel(state.headingAdjust),
+    state.bodyLeading !== TYPE_DEFAULTS.bodyLeading &&
+      LEADING_OPTIONS.find((o) => o.value === state.bodyLeading)?.label,
+  ]
+    .filter(Boolean)
+    .join(" · ")
   return (
     <>
-      <TypeHero state={state} />
       <ControlGroup>
+        <TypeHero state={state} />
         <AutoFontRow
           label="Heading"
           value={state.headingFont}
@@ -331,31 +304,24 @@ export function TypeSection({ lab }: { lab: Lab }) {
           onChange={set("monoFont")}
         />
       </ControlGroup>
+      <GroupTitle>Heading</GroupTitle>
       <ControlGroup>
         <SegmentedControlRow
-          label="Heading weight"
+          label="Weight"
           value={state.headingWeight}
           onChange={set("headingWeight")}
           options={WEIGHT_OPTIONS}
         />
         <SegmentedControlRow
-          label="Heading tracking"
+          label="Tracking"
           value={state.headingTracking}
           onChange={set("headingTracking")}
           options={TRACKING_OPTIONS}
         />
       </ControlGroup>
-      <GroupCaption>
-        Every heading level shares one weight and one tracking — body and UI
-        text keep the font's own metrics.
-      </GroupCaption>
       <DetailRow
         label="Scale"
-        summary={
-          scaleModified
-            ? `${state.typeBase}px · ${adjustLabel(state.headingAdjust)}`
-            : "Default"
-        }
+        summary={scaleModified ? scaleSummary : "Default"}
       >
         <ScaleLadder state={state} />
         <MiniSliderRow
@@ -376,6 +342,14 @@ export function TypeSection({ lab }: { lab: Lab }) {
           step={0.05}
           format={adjustLabel}
         />
+        <ParamRow label="Body leading">
+          <MiniSegmented
+            ariaLabel="Body leading"
+            value={state.bodyLeading}
+            onChange={set("bodyLeading")}
+            options={LEADING_OPTIONS}
+          />
+        </ParamRow>
       </DetailRow>
     </>
   )

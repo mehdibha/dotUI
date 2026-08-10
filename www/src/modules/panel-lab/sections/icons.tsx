@@ -136,37 +136,34 @@ function IconsHero({ state }: { state: LabState }) {
 export function IconsSection({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
-    <>
+    <ControlGroup>
       <IconsHero state={state} />
-      <ControlGroup>
-        <SelectRow
-          label="Library"
-          value={state.iconLibrary}
-          onChange={set("iconLibrary")}
-          options={LIBRARY_OPTIONS}
+      <SelectRow
+        label="Library"
+        value={state.iconLibrary}
+        onChange={set("iconLibrary")}
+        options={LIBRARY_OPTIONS}
+      />
+      {/* Stroke only exists on line-based sets; Phosphor swaps it for weight. */}
+      {STROKE_DEFAULTS[state.iconLibrary as IconLibraryName] !== undefined && (
+        <SliderRow
+          label="Stroke"
+          value={state.iconStroke}
+          onChange={set("iconStroke")}
+          minValue={1}
+          maxValue={3}
+          step={0.25}
+          format={(v) => v.toFixed(2)}
         />
-        {/* Stroke only exists on line-based sets; Phosphor swaps it for weight. */}
-        {STROKE_DEFAULTS[state.iconLibrary as IconLibraryName] !==
-          undefined && (
-          <SliderRow
-            label="Stroke"
-            value={state.iconStroke}
-            onChange={set("iconStroke")}
-            minValue={1}
-            maxValue={3}
-            step={0.25}
-            format={(v) => v.toFixed(2)}
-          />
-        )}
-        {state.iconLibrary === "phosphor" && (
-          <SelectRow
-            label="Weight"
-            value={state.iconWeight}
-            onChange={set("iconWeight")}
-            options={WEIGHT_OPTIONS}
-          />
-        )}
-      </ControlGroup>
-    </>
+      )}
+      {state.iconLibrary === "phosphor" && (
+        <SelectRow
+          label="Weight"
+          value={state.iconWeight}
+          onChange={set("iconWeight")}
+          options={WEIGHT_OPTIONS}
+        />
+      )}
+    </ControlGroup>
   )
 }
