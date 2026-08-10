@@ -10,9 +10,7 @@ import { TailwindWordmark } from "@/components/icons/tailwind-wordmark"
 import { TypeScriptIcon } from "@/components/icons/typescript"
 import { Footer } from "@/components/layout/footer"
 import Cards from "@/modules/marketing/cards"
-import { CompositionSection } from "@/modules/marketing/composition-section"
 import { CtaSection } from "@/modules/marketing/cta-section"
-import { ExportSection } from "@/modules/marketing/export-section"
 import { HeroWordSwap } from "@/modules/marketing/hero-word-swap"
 
 export function HomePage() {
@@ -82,18 +80,8 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* Section rhythm lives here, not inside the sections: one gap between
-            peers, one step up before the CTA so the page reads as ending. */}
-        <div className="mt-24 md:mt-32">
-          <CompositionSection />
-        </div>
-
-        {/* Tighter than the section gap: composition ends on a heavy code block
-            and export opens on a small label, so equal space reads as more. */}
-        <div className="mt-16 md:mt-24">
-          <ExportSection />
-        </div>
-
+        {/* Section rhythm lives here, not inside the sections: a wide gap
+            before the CTA so the page reads as ending. */}
         <div className="mt-32 md:mt-44">
           <CtaSection />
         </div>

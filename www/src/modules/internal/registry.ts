@@ -27,6 +27,12 @@ export const INTERNAL_TOOLS: InternalTool[] = [
       "Preset fidelity — how close each preset lands to the system it recreates.",
   },
   {
+    href: "/internal/composition",
+    label: "Composition",
+    description:
+      "The composition section built for the landing page: one step loop from a field's parts up to a full pattern.",
+  },
+  {
     href: "/internal/blur-reveal",
     label: "Blur reveal",
     description:

@@ -1,5 +1,4 @@
 import { startTransition, useEffect, useRef, useState } from "react"
-import type { CSSProperties } from "react"
 import {
   ArrowRightIcon,
   CheckIcon,
@@ -8,12 +7,10 @@ import {
 } from "lucide-react"
 
 import { siteConfig } from "@/config/site"
-import { DesignSystemProvider } from "@/lib/styles"
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
 import { Button, LinkButton } from "@/registry/ui/button"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
-import { DEFAULTS } from "@/modules/create/preset"
 import {
   buildInitCommands,
   PACKAGE_MANAGERS,
@@ -21,62 +18,46 @@ import {
 } from "@/modules/docs/install-commands"
 import type { PackageManager } from "@/modules/docs/install-commands"
 import { PillBacklight } from "@/modules/marketing/pill-backlight"
-import {
-  presetLabelStack,
-  usePresetLabelFonts,
-} from "@/modules/marketing/preset-fonts"
 import { PRESETS } from "@/modules/presets/presets-data"
 import type { Preset } from "@/modules/presets/presets-data"
 
 /**
  * Closing CTA: the whole pitch reduced to one headline and one command. The
- * command is the protagonist — picking a preset re-themes the section live
- * (scoped provider, same machinery as the showcase) and bakes the preset into
- * the copied `init` URL. The editor is the quiet second path underneath.
+ * command is the protagonist — picking a preset bakes it into the copied
+ * `init` URL and re-tints the light field behind the pill, and nothing else:
+ * the section keeps the site's own design system. The editor is the quiet
+ * second path underneath.
  */
 export function CtaSection() {
   const [presetId, setPresetId] = useState<string | null>("origin")
   const preset = PRESETS.find((p) => p.id === presetId) ?? null
-  const ds = preset?.designSystem ?? DEFAULTS
 
   return (
     <section className="relative">
-      {/* Density is pinned rather than taken from the preset: it's the one axis
-          that resizes the pill, and a command that changes height mid-switch
-          reads as a layout glitch instead of a re-theme. */}
-      <DesignSystemProvider
-        scoped
-        params={ds.componentParams}
-        tokens={ds.tokens}
-        density="default"
-        color={ds.color}
-        icons={ds.icons}
-      >
-        <div className="flex flex-col items-center text-center">
-          <h2 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-3xl leading-tight font-normal tracking-[-0.05em] text-balance text-fg antialiased sm:text-5xl">
-            <span className="block">Your design system,</span>
-            <span className="block text-fg-muted">one command away.</span>
-          </h2>
-          <div className="mt-10 max-w-full">
-            <InstallCommand
-              preset={preset}
-              onSelectPreset={(id) => startTransition(() => setPresetId(id))}
-            />
-          </div>
-          <LinkButton
-            href="/create"
-            variant="quiet"
-            size="sm"
-            className="group mt-6 rounded-full text-fg-muted hover:text-fg"
-          >
-            or build your own in the editor
-            <ArrowRightIcon
-              data-icon-end=""
-              className="transition-transform group-hover:translate-x-0.5"
-            />
-          </LinkButton>
+      <div className="flex flex-col items-center text-center">
+        <h2 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-3xl leading-tight font-normal tracking-[-0.05em] text-balance text-fg antialiased sm:text-5xl">
+          <span className="block">Your design system,</span>
+          <span className="block text-fg-muted">one command away.</span>
+        </h2>
+        <div className="mt-10 max-w-full">
+          <InstallCommand
+            preset={preset}
+            onSelectPreset={(id) => startTransition(() => setPresetId(id))}
+          />
         </div>
-      </DesignSystemProvider>
+        <LinkButton
+          href="/create"
+          variant="quiet"
+          size="sm"
+          className="group mt-6 rounded-full text-fg-muted hover:text-fg"
+        >
+          or build your own in the editor
+          <ArrowRightIcon
+            data-icon-end=""
+            className="transition-transform group-hover:translate-x-0.5"
+          />
+        </LinkButton>
+      </div>
     </section>
   )
 }
@@ -95,8 +76,6 @@ function InstallCommand({
   const { isCopied, copyToClipboard } = useCopyToClipboard()
   const encoded = useEncodedPreset(preset)
   const pillRef = useRef<HTMLDivElement>(null)
-
-  usePresetLabelFonts()
 
   const baseUrl = `${siteConfig.url}/r/init`
   // The encoded preset is a few hundred chars — display it truncated, copy it
@@ -122,31 +101,18 @@ function InstallCommand({
   return (
     <div
       ref={pillRef}
-      className="relative flex max-w-full items-center gap-1 rounded-full border bg-card p-2 shadow-xs motion-safe:transition-[--cta-glow-color] motion-safe:duration-700"
-      style={
-        {
-          "--cta-glow-color": preset ? preset.swatch : "var(--color-fg)",
-        } as CSSProperties
-      }
+      className="relative flex max-w-full items-center gap-1 rounded-full border bg-card p-2 shadow-xs"
     >
       {/* The shader field around the pill: -z-stacked, so it paints behind the
           pill's own background and the section's text (the pill is not a
-          stacking context). Its loop also drives the ring glow below. */}
+          stacking context). */}
       <PillBacklight
         pillRef={pillRef}
         color={preset?.swatch ?? null}
         className="-inset-x-64 -inset-y-40 -z-10 opacity-50"
       />
-      <PillGlow />
       <Menu>
-        <Button
-          size="sm"
-          variant="quiet"
-          className="w-30 rounded-full text-xs"
-          style={
-            preset ? { fontFamily: presetLabelStack(preset.id) } : undefined
-          }
-        >
+        <Button size="sm" variant="quiet" className="w-30 rounded-full text-xs">
           {preset ? (
             <>
               <PresetSwatch color={preset.swatch} />
@@ -170,12 +136,7 @@ function InstallCommand({
             }}
           >
             {PRESETS.map((p) => (
-              <MenuItem
-                key={p.id}
-                id={p.id}
-                className="text-xs"
-                style={{ fontFamily: presetLabelStack(p.id) }}
-              >
+              <MenuItem key={p.id} id={p.id} className="text-xs">
                 <PresetSwatch color={p.swatch} />
                 {p.name}
               </MenuItem>
@@ -237,46 +198,6 @@ function InstallCommand({
         {isCopied ? <CheckIcon /> : <CopyIcon />}
       </Button>
     </div>
-  )
-}
-
-/** Glow position on the pill border, set by PillBacklight (border-box px). */
-const GLOW_X = "var(--cta-glow-x, 50%)"
-const GLOW_Y = "var(--cta-glow-y, 0px)"
-/** Only the border ring: two full-cover mask layers, content-box excluded. */
-const RING_MASK: CSSProperties = {
-  maskImage: "linear-gradient(#000 0 0), linear-gradient(#000 0 0)",
-  maskClip: "content-box, border-box",
-  maskComposite: "exclude",
-}
-
-/**
- * Accent glow on the pill border: a hot core over a wider falloff, plus a
- * blurred halo bleeding past the edge. Both are masked to a ring so only the
- * border lights up; `--cta-glow-boost` (0–1) brightens them near the cursor.
- */
-function PillGlow() {
-  return (
-    <>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -inset-px rounded-full p-px"
-        style={{
-          ...RING_MASK,
-          background: `radial-gradient(4rem circle at ${GLOW_X} ${GLOW_Y}, var(--cta-glow-color), transparent 70%), radial-gradient(9rem circle at ${GLOW_X} ${GLOW_Y}, color-mix(in oklab, var(--cta-glow-color) 55%, transparent), transparent 70%)`,
-          opacity: "calc(0.8 + 0.2 * var(--cta-glow-boost, 0))",
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -inset-1 rounded-full p-1 blur-xs"
-        style={{
-          ...RING_MASK,
-          background: `radial-gradient(5rem circle at calc(${GLOW_X} + 3px) calc(${GLOW_Y} + 3px), color-mix(in oklab, var(--cta-glow-color) 45%, transparent), transparent 70%)`,
-          opacity: "calc(0.5 + 0.4 * var(--cta-glow-boost, 0))",
-        }}
-      />
-    </>
   )
 }
 

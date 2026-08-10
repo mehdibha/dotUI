@@ -6,9 +6,7 @@
  * of how it was sampled.
  *
  * The parameterisation starts at the top-left cap/edge junction and runs
- * clockwise on screen (top edge, right cap, bottom edge, left cap) — the same
- * walk as `stadiumPointPx`, so a strip position maps straight onto the DOM
- * pill's border box.
+ * clockwise on screen (top edge, right cap, bottom edge, left cap).
  *
  * The budget is a shader compile-time constant, so it's fixed and split
  * across the four segments proportionally to their arc length at build time —
@@ -162,28 +160,4 @@ export function packStrip(
     out[o + 3] = led.ny * b
     o += 4
   }
-}
-
-/**
- * Point at distance `s` along the pill's stadium perimeter, in border-box px
- * (y down) — the same walk as the strip, used to place the CSS ring glow.
- * `r` is the cap radius (half the pill height), `flat` the straight-edge
- * length.
- */
-export function stadiumPointPx(
-  s: number,
-  r: number,
-  flat: number,
-): [number, number] {
-  if (s < flat) return [r + s, 0]
-  s -= flat
-  const cap = Math.PI * r
-  if (s < cap) {
-    const beta = s / r
-    return [r + flat + Math.sin(beta) * r, r - Math.cos(beta) * r]
-  }
-  s -= cap
-  if (s < flat) return [r + flat - s, 2 * r]
-  const beta = Math.PI + (s - flat) / r
-  return [r + Math.sin(beta) * r, r - Math.cos(beta) * r]
 }

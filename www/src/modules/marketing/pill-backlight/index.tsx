@@ -4,13 +4,7 @@ import type { RefObject } from "react"
 import { cn } from "@/registry/lib/utils"
 
 import { FRAGMENT_SHADER, VERTEX_SHADER } from "./fragment"
-import {
-  buildStrip,
-  LED_COUNT,
-  packStrip,
-  stadiumPointPx,
-  WAVE_SPEED,
-} from "./strip"
+import { buildStrip, LED_COUNT, packStrip, WAVE_SPEED } from "./strip"
 import type { Led } from "./strip"
 
 // Laps of the pill perimeter per second — a full circuit takes about 11s.
@@ -18,12 +12,12 @@ const DRIFT_RATE = 0.09
 
 // Hovering the pill trades the travelling cluster for the whole-rim wave
 // (see strip.ts): full within the border, gone this far outside it (in
-// canvas-height units), eased in time at the given rate. The same blend
-// brightens the CSS ring glow.
+// canvas-height units), eased in time at the given rate.
 const HOVER_FADE = 0.06
 const HOVER_EASE = 6
 
-// Tint tween toward the preset accent — roughly the ring glow's 700ms ease.
+// Tint tween toward the preset accent, in the same ~700ms register as the rest
+// of the landing's colour transitions.
 const TINT_STIFFNESS = 5
 
 // Every pixel sums the whole strip, so resolution is the cost driver. At CSS
@@ -92,15 +86,12 @@ function createProgram(gl: WebGL2RenderingContext) {
 /**
  * The CTA pill's light field: an LED strip rides the pill's stadium perimeter
  * behind the DOM, one bright cluster drifts around it, and hovering the pill
- * crossfades the cluster into an animated whole-rim glow. The same loop
- * drives the CSS ring glow — it writes `--cta-glow-x/y/boost` on the pill,
- * so the border highlight and the spill always sit on the same point of the
- * perimeter.
+ * crossfades the cluster into an animated whole-rim glow.
  *
  * Purely decorative: the canvas is inert to pointer events and `-z`-stacked
- * behind the pill. Without WebGL2 the ring glow simply stays parked at its
- * CSS defaults, and `prefers-reduced-motion: reduce` renders a single still
- * frame with the cluster parked top-centre.
+ * behind the pill. Without WebGL2 nothing renders at all, and
+ * `prefers-reduced-motion: reduce` renders a single still frame with the
+ * cluster parked top-centre.
  */
 export function PillBacklight({
   pillRef,
@@ -213,7 +204,6 @@ export function PillBacklight({
 
       const pxR = pRect.height / 2
       const pxFlat = Math.max(pRect.width - pRect.height, 0)
-      const perimeter = 2 * pxFlat + 2 * Math.PI * pxR
 
       if (dt > 0) {
         // Hover: 1 with the cursor on the pill, fading over HOVER_FADE
@@ -237,7 +227,6 @@ export function PillBacklight({
           tint[2] + (tintTarget[2] - tint[2]) * kt,
         ]
       }
-      const [posX, posY] = stadiumPointPx(cluster * perimeter, pxR, pxFlat)
 
       syncTint()
       packStrip(strip, cluster, packed, hover, phase)
@@ -249,11 +238,6 @@ export function PillBacklight({
       gl.uniform3f(uTint, tint[0], tint[1], tint[2])
       gl.uniform4fv(uLed, packed)
       gl.drawArrays(gl.TRIANGLES, 0, 3)
-
-      // The CSS ring glow rides the drifting cluster and brightens on hover.
-      pill.style.setProperty("--cta-glow-x", `${posX}px`)
-      pill.style.setProperty("--cta-glow-y", `${posY}px`)
-      pill.style.setProperty("--cta-glow-boost", hover.toFixed(3))
     }
 
     const loop = (now: number) => {
