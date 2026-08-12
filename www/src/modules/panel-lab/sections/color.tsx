@@ -641,13 +641,9 @@ const GUARANTEE_OPTIONS = [
   { value: "strict", label: "Strict" },
 ]
 
-const FINE_KEYS = [
-  "vividness",
-  "hueShift",
-  "preserveSeed",
-  "guarantees",
-  "borderContrast",
-] as const
+const CHARACTER_KEYS = ["vividness", "hueShift"] as const
+
+const CONTRAST_KEYS = ["guarantees", "preserveSeed", "borderContrast"] as const
 
 const SEMANTIC_SEEDS = [
   { key: "successSeed", palette: "success", label: "Success" },
@@ -698,7 +694,10 @@ export function ColorSection({ lab }: { lab: Lab }) {
     m.scales.selection?.["700"] ??
     (state.primary === "accent" ? solid("accent") : solid("neutral"))
 
-  const fineModified = FINE_KEYS.some(
+  const characterModified = CHARACTER_KEYS.some(
+    (key) => state[key] !== COLOR_DEFAULTS[key],
+  )
+  const contrastModified = CONTRAST_KEYS.some(
     (key) => state[key] !== COLOR_DEFAULTS[key],
   )
 
@@ -824,8 +823,8 @@ export function ColorSection({ lab }: { lab: Lab }) {
         <AddModeRow disabled={modes.length >= MAX_MODES} onAdd={addMode} />
       </DetailRow>
       <DetailRow
-        label="Fine-tune"
-        summary={fineModified ? "Custom" : "Default"}
+        label="Character"
+        summary={characterModified ? "Custom" : "Default"}
       >
         <MiniSliderRow
           label="Vividness"
@@ -845,6 +844,11 @@ export function ColorSection({ lab }: { lab: Lab }) {
           step={0.1}
           format={(v) => `${v.toFixed(1)}×`}
         />
+      </DetailRow>
+      <DetailRow
+        label="Contrast guarantees"
+        summary={contrastModified ? "Custom" : "Default"}
+      >
         <ParamRow label="Guarantees">
           <MiniSegmented
             ariaLabel="Contrast guarantees"

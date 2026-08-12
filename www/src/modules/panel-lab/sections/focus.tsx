@@ -16,15 +16,11 @@ import {
   ControlGroup,
   GroupTitle,
   SegmentedControlRow,
-  SelectRow,
   SPECIMEN_BUTTON,
   SPECIMEN_FIELD,
   StepperRow,
 } from "@/modules/control-lab/rows"
-import type {
-  SegmentedRowOption,
-  SelectRowOption,
-} from "@/modules/control-lab/rows"
+import type { SegmentedRowOption } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
 import { PaletteDot } from "../patterns"
@@ -35,13 +31,13 @@ import { controlRadiusPx } from "./shape"
    ring, 2px bg gap, halo fields). */
 export const FOCUS_DEFAULTS = {
   focusColor: "accent",
-  focusStyle: "solid",
+  focusStyle: "ring",
   focusWidth: 2,
   focusOffset: "gap",
   focusGap: 2,
   focusHaloStrength: 45,
   focusInputStyle: "halo",
-  focusInputSpread: 2,
+  focusInputWidth: 2,
   focusInputStrength: 30,
   focusInputBorderWidth: 1,
 }
@@ -72,15 +68,18 @@ const COLOR_OPTIONS: SegmentedRowOption[] = [
   },
 ]
 
-const CONTROL_STYLE_OPTIONS: SelectRowOption[] = [
-  { value: "solid", label: "Ring" },
+/** Duo is the two-stroke family (Fluent, GOV.UK): a bg hairline inside the
+ *  colored ring, so at least one stroke reads on any fill. */
+const CONTROL_STYLE_OPTIONS: SegmentedRowOption[] = [
+  { value: "ring", label: "Ring" },
   { value: "halo", label: "Halo" },
+  { value: "duo", label: "Duo" },
 ]
 
 /** How a field wears the recipe: halo = border + muted halo of the ring color
  *  (dotUI today, Geist/Stripe); ring = the control ring exactly (Supabase);
  *  border = the border swap alone (Material). */
-const INPUT_STYLE_OPTIONS: SelectRowOption[] = [
+const INPUT_STYLE_OPTIONS: SegmentedRowOption[] = [
   { value: "halo", label: "Halo" },
   { value: "ring", label: "Ring" },
   { value: "border", label: "Border" },
@@ -103,6 +102,9 @@ const mix = (base: string, pct: number) =>
 function focusRingShadow(state: LabState): string {
   const width = state.focusWidth
   const base = focusColorVar(state)
+  // Duo sits flush by design — the inner hairline is its gap.
+  if (state.focusStyle === "duo")
+    return `0 0 0 1px var(--color-bg), 0 0 0 ${width + 1}px ${base}`
   const color =
     state.focusStyle === "halo" ? mix(base, state.focusHaloStrength) : base
   switch (state.focusOffset) {
@@ -130,41 +132,52 @@ export function focusFieldStyle(state: LabState): CSSProperties {
       style === "ring"
         ? focusRingShadow(state)
         : style === "halo"
-          ? `0 0 0 ${state.focusInputSpread}px ${mix(base, state.focusInputStrength)}`
+          ? `0 0 0 ${state.focusInputWidth}px ${mix(base, state.focusInputStrength)}`
           : undefined,
   }
 }
 
-/** One focused specimen per block — the secondary button is the neutral read
- *  of the ring, where the recipe has to work without a strong fill behind it. */
+/** Both reads of the ring: the primary is where a flush accent ring vanishes
+ *  into its own fill, the secondary where it has no strong fill behind it. */
 function ControlFocusHero({ state }: { state: LabState }) {
+  const specimen = {
+    borderRadius: controlRadiusPx(state),
+    boxShadow: focusRingShadow(state),
+  }
   return (
-    <Hero className="items-center py-5">
+    <Hero className="flex-row items-center justify-center gap-4 py-5">
       <span
-        className={cn(SPECIMEN_BUTTON, "border bg-neutral text-fg-on-neutral")}
-        style={{
-          borderRadius: controlRadiusPx(state),
-          boxShadow: focusRingShadow(state),
-        }}
+        className={cn(SPECIMEN_BUTTON, "bg-primary text-fg-on-primary")}
+        style={specimen}
       >
         Get started
+      </span>
+      <span
+        className={cn(SPECIMEN_BUTTON, "border bg-neutral text-fg-on-neutral")}
+        style={specimen}
+      >
+        Cancel
       </span>
     </Hero>
   )
 }
 
+/** An idle twin beside the focused field — the style only reads as the delta
+ *  from rest: border swap vs halo vs ring against the same silhouette. */
 function InputFocusHero({ state }: { state: LabState }) {
+  const field = cn(
+    SPECIMEN_FIELD,
+    "flex-1 border border-border-field bg-field text-fg",
+  )
+  const radius = controlRadiusPx(state)
   return (
-    <Hero className="items-center py-5">
+    <Hero className="flex-row items-center gap-2.5 py-5">
+      <span className={field} style={{ borderRadius: radius }}>
+        you@example.com
+      </span>
       <span
-        className={cn(
-          SPECIMEN_FIELD,
-          "max-w-48 border border-border-field bg-field text-fg",
-        )}
-        style={{
-          borderRadius: controlRadiusPx(state),
-          ...focusFieldStyle(state),
-        }}
+        className={field}
+        style={{ borderRadius: radius, ...focusFieldStyle(state) }}
       >
         you@example.com
         <span className="ml-px inline-block h-4 w-px animate-pulse bg-fg" />
@@ -190,7 +203,7 @@ export function FocusSection({ lab }: { lab: Lab }) {
       <GroupTitle>Controls</GroupTitle>
       <ControlGroup>
         <ControlFocusHero state={state} />
-        <SelectRow
+        <SegmentedControlRow
           label="Style"
           value={state.focusStyle}
           onChange={set("focusStyle")}
@@ -215,27 +228,31 @@ export function FocusSection({ lab }: { lab: Lab }) {
             unit="%"
           />
         )}
-        <SegmentedControlRow
-          label="Offset"
-          value={state.focusOffset}
-          onChange={set("focusOffset")}
-          options={OFFSET_OPTIONS}
-        />
-        {state.focusOffset === "gap" && (
-          <StepperRow
-            label="Gap"
-            value={state.focusGap}
-            onChange={set("focusGap")}
-            minValue={1}
-            maxValue={6}
-            unit="px"
-          />
+        {state.focusStyle !== "duo" && (
+          <>
+            <SegmentedControlRow
+              label="Offset"
+              value={state.focusOffset}
+              onChange={set("focusOffset")}
+              options={OFFSET_OPTIONS}
+            />
+            {state.focusOffset === "gap" && (
+              <StepperRow
+                label="Gap"
+                value={state.focusGap}
+                onChange={set("focusGap")}
+                minValue={1}
+                maxValue={6}
+                unit="px"
+              />
+            )}
+          </>
         )}
       </ControlGroup>
       <GroupTitle>Inputs</GroupTitle>
       <ControlGroup>
         <InputFocusHero state={state} />
-        <SelectRow
+        <SegmentedControlRow
           label="Style"
           value={state.focusInputStyle}
           onChange={set("focusInputStyle")}
@@ -244,9 +261,9 @@ export function FocusSection({ lab }: { lab: Lab }) {
         {state.focusInputStyle === "halo" && (
           <>
             <StepperRow
-              label="Spread"
-              value={state.focusInputSpread}
-              onChange={set("focusInputSpread")}
+              label="Width"
+              value={state.focusInputWidth}
+              onChange={set("focusInputWidth")}
               minValue={1}
               maxValue={8}
               unit="px"
