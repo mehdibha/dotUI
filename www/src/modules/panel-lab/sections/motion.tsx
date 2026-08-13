@@ -11,7 +11,7 @@
    character (Linear's stillness is compositional — fast, overlays none,
    instant states), overlayExit as its own row, reducedMotion, which only
    renders under an OS media query, and the skeleton idle treatment, which
-   lives in Feedback — a loading decision that happens to animate. Focus
+   lives in Skeleton — a loading decision that happens to animate. Focus
    rings never ease — pattern constant, not part of the state axis. */
 
 import { ChevronDownIcon } from "lucide-react"

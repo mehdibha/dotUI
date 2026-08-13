@@ -1,7 +1,7 @@
 "use client"
 
 /* Surfaces — how elevated surfaces separate from the page (issue #590).
-   Four axes, each a decision an author makes — never a resolver parameter:
+   Six axes, each a decision an author makes — never a resolver parameter:
 
    - Separation: which means leads (edge, shadow, contrast) and how it shifts
      per mode. Dark behavior lives INSIDE the option — shadows die on
@@ -12,11 +12,18 @@
      Hairline ≈ shadcn/Geist (hairline leads both modes, stronger in dark),
      Adaptive ≈ Radix Themes/Primer/Atlassian (shadow-led light → hairline +
      elevation dark), Shadow ≈ Fluent 2/Spectrum 2 (shadows strengthen in
-     dark), Outline ≈ Linear. Material's tonal model (bgStep-led in BOTH
-     modes, containers darker than the page in light) is the one strategy
-     not covered — candidate fifth option, not yet approved.
+     dark), Outline ≈ Linear, Tonal ≈ Material 3 (bgStep-led in BOTH modes,
+     containers darker than the page in light — the inverse of every other
+     strategy, so it bypasses the dark-only elevation ladder entirely).
    - Depth: the one intensity lever. Hairline ink, shadow scale and dark
      elevation move together, each strategy defining what "deeper" means.
+   - Shadow: the shadow's character, orthogonal to Depth — Plain single-layer
+     black alpha (shadcn), Tinted with the neutral ink (Radix Themes
+     gray-scale-tinted; Stripe tints with brand), Layered key + ambient pair
+     (Material 3). Depth keeps owning size and intensity.
+   - Edge: how the surface/panel roles draw their hairline — border inside
+     the box (dotUI today) vs ring outside it (all 8 shadcn styles render
+     overlays ring + shadow, zero border — issue #581).
    - Canvas: the page↔surface relationship — white-on-white, or a tinted
      page surfaces lift off (gray canvas in light, elevated cards in dark).
    - Material: solid or glass overlays — the grouped tweak.
@@ -49,6 +56,8 @@ import { useModeTheme } from "./color"
 export const SURFACE_DEFAULTS = {
   surfaceStrategy: "hairline",
   surfaceDepth: "subtle",
+  surfaceShadow: "plain",
+  surfaceEdge: "border",
   surfaceCanvas: "same",
   surfaceMaterial: "solid",
 }
@@ -58,6 +67,7 @@ const STRATEGY_OPTIONS: SegmentedRowOption[] = [
   { value: "adaptive", label: "Adaptive" },
   { value: "shadow", label: "Shadow" },
   { value: "outline", label: "Outline" },
+  { value: "tonal", label: "Tonal" },
 ]
 
 const DEPTH_OPTIONS: SegmentedRowOption[] = [
@@ -65,6 +75,17 @@ const DEPTH_OPTIONS: SegmentedRowOption[] = [
   { value: "subtle", label: "Subtle" },
   { value: "raised", label: "Raised" },
   { value: "floating", label: "Floating" },
+]
+
+const SHADOW_OPTIONS: SegmentedRowOption[] = [
+  { value: "plain", label: "Plain" },
+  { value: "tinted", label: "Tinted" },
+  { value: "layered", label: "Layered" },
+]
+
+const EDGE_OPTIONS: SegmentedRowOption[] = [
+  { value: "border", label: "Border" },
+  { value: "ring", label: "Ring" },
 ]
 
 const CANVAS_OPTIONS: SegmentedRowOption[] = [
@@ -90,12 +111,15 @@ interface SurfaceLook {
 }
 
 /** Shadow ladder — size 0 is none; dark scales alpha up (a shadow that reads
- *  on white disappears on near-black). */
+ *  on white disappears on near-black). Character re-colors and layers the
+ *  same ladder — Depth keeps owning size and intensity. */
 function shadowCss(
   kind: "card" | "floating",
   size: number,
   weight: number,
   dark: boolean,
+  character: string,
+  ink: string,
 ): string | undefined {
   if (size <= 0) return undefined
   const spec =
@@ -105,7 +129,21 @@ function shadowCss(
   const base =
     kind === "card" ? [0.05, 0.07, 0.09][size - 1] : [0.1, 0.16, 0.25][size - 1]
   const alpha = Math.min((base ?? 0) * weight * (dark ? 2.2 : 1), 0.7)
-  return `${spec} rgb(0 0 0 / ${alpha.toFixed(2)})`
+  // Tint only reads in light — a dark-mode shadow stays black either way.
+  // The ink is lighter than pure black, so the alpha compensates upward.
+  const color = (a: number) =>
+    character === "tinted" && !dark
+      ? `color-mix(in srgb, ${ink} ${Math.round(Math.min(a * 1.25, 0.8) * 100)}%, transparent)`
+      : `rgb(0 0 0 / ${a.toFixed(2)})`
+  if (character === "layered") {
+    // M3 pair: the crisp key keeps the ladder spec, the ambient spreads soft.
+    const ambient =
+      kind === "card"
+        ? ["0 1px 3px 1px", "0 2px 6px 2px", "0 4px 10px 3px"][size - 1]
+        : ["0 4px 10px 3px", "0 8px 24px 4px", "0 12px 36px 6px"][size - 1]
+    return `${spec} ${color(alpha)}, ${ambient} ${color(alpha * 0.55)}`
+  }
+  return `${spec} ${color(alpha)}`
 }
 
 /**
@@ -133,6 +171,8 @@ function surfaceLook(
   let shadowWeight = 1
   /* Dark-mode elevation steps this strategy adds at this depth. */
   let strategyElev = 0
+  /* Tonal only: % of the neutral-100 step mixed into the page base. */
+  let tonalMix: number | null = null
 
   if (state.surfaceStrategy === "hairline") {
     // Edge-led: the border does the work in both modes, shadows stay
@@ -154,6 +194,15 @@ function surfaceLook(
     shadowSize = floating ? ([1, 2, 3, 3][d] ?? 2) : ([1, 1, 2, 2][d] ?? 1)
     shadowWeight = 1.3
     if (dark) strategyElev = (floating ? 1 : 0) + (d >= 2 ? 1 : 0)
+  } else if (state.surfaceStrategy === "tonal") {
+    // Contrast-led in BOTH modes: containers step off the page by background
+    // alone — darker than the page in light, lighter in dark — borders absent
+    // and shadows subordinate (floating layers only, never cards).
+    tonalMix = floating
+      ? ([55, 70, 85, 100][d] ?? 70)
+      : ([25, 35, 50, 60][d] ?? 35)
+    shadowSize = floating ? ([0, 1, 1, 2][d] ?? 1) : 0
+    shadowWeight = 0.8
   } else {
     // Outline: solid near-bg step on overlays + heavy shadow.
     borderColor = floating
@@ -171,18 +220,33 @@ function surfaceLook(
   const canvasElev = dark && state.surfaceCanvas === "tinted" ? 1 : 0
   const elev = Math.min(floating ? 2 : 1, canvasElev + strategyElev)
   const lifted =
-    elev === 0
-      ? base
-      : elev === 1
-        ? `color-mix(in oklab, ${base} 50%, ${neutral["100"] ?? base})`
-        : (neutral["100"] ?? base)
+    tonalMix !== null
+      ? `color-mix(in oklab, ${base} ${100 - tonalMix}%, ${neutral["100"] ?? base})`
+      : elev === 0
+        ? base
+        : elev === 1
+          ? `color-mix(in oklab, ${base} 50%, ${neutral["100"] ?? base})`
+          : (neutral["100"] ?? base)
 
   const glass = floating && state.surfaceMaterial === "glass"
+  // Ring redraws the strategy's hairline outside the box (#581) — a strategy
+  // that paints no edge has nothing to convert.
+  const ring = state.surfaceEdge === "ring" ? borderColor : undefined
+  const shadow = shadowCss(
+    kind,
+    shadowSize,
+    shadowWeight,
+    dark,
+    state.surfaceShadow,
+    ink,
+  )
   return {
     bg: glass ? `color-mix(in srgb, ${lifted} 72%, transparent)` : lifted,
     backdropFilter: glass ? "blur(8px)" : undefined,
-    boxShadow: shadowCss(kind, shadowSize, shadowWeight, dark),
-    borderColor,
+    boxShadow: ring
+      ? [`0 0 0 1px ${ring}`, shadow].filter(Boolean).join(", ")
+      : shadow,
+    borderColor: ring ? undefined : borderColor,
   }
 }
 
@@ -268,7 +332,7 @@ function SurfaceTile({
   )
 }
 
-/** Four named options don't fit beside a label at row width, so the strategy
+/** Five named options don't fit beside a label at row width, so the strategy
  *  row stacks: label line on top, full-width segments beneath. */
 function StackedSegmentedRow({
   label,
@@ -362,6 +426,18 @@ export function SurfacesSection({ lab }: { lab: Lab }) {
           value={state.surfaceDepth}
           onChange={set("surfaceDepth")}
           options={DEPTH_OPTIONS}
+        />
+        <SegmentedControlRow
+          label="Shadow"
+          value={state.surfaceShadow}
+          onChange={set("surfaceShadow")}
+          options={SHADOW_OPTIONS}
+        />
+        <SegmentedControlRow
+          label="Edge"
+          value={state.surfaceEdge}
+          onChange={set("surfaceEdge")}
+          options={EDGE_OPTIONS}
         />
         <SegmentedControlRow
           label="Canvas"
