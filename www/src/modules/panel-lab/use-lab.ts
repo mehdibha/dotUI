@@ -5,8 +5,8 @@
 
 import { useMemo, useState } from "react"
 
-import { DEFAULTS } from "./data"
-import type { Lab, LabState } from "./data"
+import { DEFAULTS } from "./state"
+import type { Lab, LabState } from "./state"
 
 export function useLab(): Lab {
   const [state, setState] = useState<LabState>(DEFAULTS)
@@ -17,29 +17,13 @@ export function useLab(): Lab {
       (value: LabState[K]) =>
         setState((prev) => ({ ...prev, [key]: value }))
 
-    const section = (keys: (keyof LabState)[]) => ({
-      modified: keys.some((key) => state[key] !== DEFAULTS[key]),
-      onReset: () =>
-        setState((prev) => ({
-          ...prev,
-          ...(Object.fromEntries(
-            keys.map((key) => [key, DEFAULTS[key]]),
-          ) as Partial<LabState>),
-        })),
+    const section = (defaults: Partial<LabState>) => ({
+      modified: Object.entries(defaults).some(
+        ([key, value]) => state[key as keyof LabState] !== value,
+      ),
+      onReset: () => setState((prev) => ({ ...prev, ...defaults })),
     })
 
     return { state, set, section }
   }, [state])
-}
-
-/** A read-only lab at defaults — for the gallery's non-interactive previews. */
-export function useStaticLab(): Lab {
-  return useMemo(
-    () => ({
-      state: DEFAULTS,
-      set: () => () => {},
-      section: () => ({ modified: false, onReset: () => {} }),
-    }),
-    [],
-  )
 }

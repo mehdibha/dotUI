@@ -19,6 +19,13 @@ import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import {
+  Slider,
+  SliderControl,
+  SliderFill,
+  SliderThumb,
+  SliderTrack,
+} from "@/registry/ui/slider"
+import {
   ROW,
   ROW_LABEL,
   ROW_VALUE,
@@ -91,6 +98,17 @@ export function SwatchDots({ colors }: { colors: string[] }) {
   )
 }
 
+/** A palette's color as a dot before an option label — an option that names a
+ *  color should show it. */
+export function PaletteDot({ color }: { color: string }) {
+  return (
+    <span
+      className="size-2 shrink-0 rounded-full"
+      style={{ backgroundColor: color }}
+    />
+  )
+}
+
 /* ------------------------------ Mini color row ----------------------------- */
 
 /** Shared picker popover body (area + hue + hex). */
@@ -116,6 +134,55 @@ export function PickerPopoverContent() {
         </ColorField>
       </DialogContent>
     </Popover>
+  )
+}
+
+/* ------------------------------- Mini slider ------------------------------- */
+
+/** A continuous axis at sub-row scale: label left, compact drag pill + value
+ *  right — the engine's sliders in the mini-control language. */
+export function MiniSliderRow({
+  label,
+  value,
+  onChange,
+  minValue,
+  maxValue,
+  step,
+  format,
+}: {
+  label: string
+  value: number
+  onChange: (value: number) => void
+  minValue: number
+  maxValue: number
+  step: number
+  format: (value: number) => string
+}) {
+  return (
+    <div className="flex h-9 items-center justify-between gap-3 px-2">
+      <span className="truncate text-xs text-fg-muted">{label}</span>
+      <span className="flex shrink-0 items-center gap-2">
+        <Slider
+          aria-label={label}
+          value={value}
+          minValue={minValue}
+          maxValue={maxValue}
+          step={step}
+          onChange={(v) => onChange(v as number)}
+          className="relative w-24"
+        >
+          <SliderControl>
+            <SliderTrack className="relative h-5 overflow-hidden rounded-md bg-bg/50">
+              <SliderFill className="absolute inset-y-0 left-0 bg-highlight" />
+            </SliderTrack>
+            <SliderThumb className="absolute top-1/2 z-10 h-3.5 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-fg/25" />
+          </SliderControl>
+        </Slider>
+        <span className="w-14 text-right font-mono text-xs text-fg-muted tabular-nums">
+          {format(value)}
+        </span>
+      </span>
+    </div>
   )
 }
 

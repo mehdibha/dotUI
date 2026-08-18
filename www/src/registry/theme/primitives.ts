@@ -38,6 +38,7 @@ export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
   if (config.vividness !== undefined) options.vividness = config.vividness
   if (config.hueShift !== undefined) options.hueShift = config.hueShift
   if (config.neutralTint !== undefined) options.neutralTint = config.neutralTint
+  if (config.neutralHue !== undefined) options.neutralHue = config.neutralHue
   if (config.preserveSeed !== undefined)
     options.preserveSeed = config.preserveSeed
   if (config.guaranteePolicy !== undefined)
