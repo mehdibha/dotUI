@@ -134,25 +134,16 @@ export function ControlGroup({ children }: { children: React.ReactNode }) {
   )
 }
 
-/* -------------------------- Group title / caption -------------------------- */
+/* ------------------------------- Group title ------------------------------ */
 
-/** The line that opens a group: what the rows under it configure. Quieter
- *  than the chapter heading above it, heavier than the caption that closes
- *  it, and bound to its group — the margin sits on top, never between. */
+/** The line that opens a group: what the rows under it configure. Quieter than
+ *  the chapter heading above it, and bound to its group — the margin sits on
+ *  top, never between. */
 export function GroupTitle({ children }: { children: React.ReactNode }) {
   return (
     <span className="mt-2.5 px-1 text-xs font-medium text-fg-muted first:mt-0">
       {children}
     </span>
-  )
-}
-
-/** iOS-style footnote under a group: one sentence of context for the axis. */
-export function GroupCaption({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="px-4 pt-0.5 text-xs/relaxed text-pretty text-fg-muted">
-      {children}
-    </p>
   )
 }
 
@@ -371,6 +362,10 @@ export function SelectRow({
     <Select
       selectedKey={value}
       onSelectionChange={(key) => onChange(key as string)}
+      /* The popover stays up after a pick: choosing a style is comparison,
+         not commitment — you step through the options against the specimen
+         behind them, then dismiss when one wins. */
+      shouldCloseOnSelect={false}
       aria-label={label}
       className="w-full"
     >
