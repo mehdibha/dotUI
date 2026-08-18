@@ -7,13 +7,15 @@ import { Button } from "@/registry/ui/button"
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { ExportHeaderAction } from "@/modules/create/export"
-import { CreatePanel } from "@/modules/create/panel"
 import { DEFAULTS, useDesignSystem } from "@/modules/create/preset"
 import {
   loadStoredPreset,
   saveStoredPreset,
 } from "@/modules/create/preset/storage"
 import { PreviewPanel } from "@/modules/create/preview/preview-panel"
+import { PanelFrame } from "@/modules/panel-lab/panel"
+import { CHAPTERS } from "@/modules/panel-lab/state"
+import { useLab } from "@/modules/panel-lab/use-lab"
 
 export const createSearchSchema = z.object({
   panel: z.string().optional().catch(undefined),
@@ -39,6 +41,9 @@ export const Route = createFileRoute("/_app/create")({
 function CreatePage() {
   const { preset } = Route.useSearch()
   const { designSystem, setDesignSystem } = useDesignSystem()
+  // Design-phase swap: the panel-lab panel rides in the real page while its
+  // design settles; it drives its own lab state, not the design system yet.
+  const lab = useLab()
   // Below `lg` the preview is the whole page and the panel rides over it as a
   // bottom sheet — edits stay visible on the live stage while adjusting.
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -69,7 +74,9 @@ function CreatePage() {
   return (
     <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">
       <ExportHeaderAction />
-      <CreatePanel className="max-lg:hidden" />
+      <div className="relative flex w-full flex-1 flex-col max-lg:hidden lg:w-90 lg:flex-none lg:shrink-0">
+        <PanelFrame chapters={CHAPTERS} lab={lab} />
+      </div>
       <PreviewPanel />
 
       {/* Mobile: the panel is a bottom sheet over the live stage. */}
@@ -91,7 +98,9 @@ function CreatePage() {
             className="flex h-full min-h-0 flex-col gap-0 p-0"
           >
             <DrawerHandle />
-            <CreatePanel className="min-h-0 flex-1" />
+            <div className="flex min-h-0 flex-1 flex-col p-3">
+              <PanelFrame chapters={CHAPTERS} lab={lab} />
+            </div>
           </DialogContent>
         </Drawer>
       </div>
