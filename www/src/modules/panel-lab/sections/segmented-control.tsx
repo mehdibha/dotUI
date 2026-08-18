@@ -118,7 +118,7 @@ const PERIODS = [
   ["month", "Month"],
 ] as const
 
-function SegmentedHero({ state }: { state: LabState }) {
+export function SegmentedHero({ state }: { state: LabState }) {
   const [period, setPeriod] = useState("week")
   return (
     <Hero className="items-center py-5">
@@ -149,6 +149,17 @@ function SegmentedHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the chip treatment, and the track shell. */
+export function segmentedControlSummary(state: LabState): string {
+  const selected =
+    SELECTED_OPTIONS.find((o) => o.value === state.segmentedSelected)?.label ??
+    state.segmentedSelected
+  const track =
+    TRACK_OPTIONS.find((o) => o.value === state.segmentedTrack)?.label ??
+    state.segmentedTrack
+  return `${selected} chip · ${track} track`
 }
 
 export function SegmentedControlSection({ lab }: { lab: Lab }) {

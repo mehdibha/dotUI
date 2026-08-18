@@ -137,7 +137,7 @@ const TAB_OPTIONS: SelectRowOption[] = [
 
 const TABS = ["Overview", "Activity", "Settings"]
 
-function TabsHero({ state }: { state: LabState }) {
+export function TabsHero({ state }: { state: LabState }) {
   const style = state.tabStyle as keyof typeof TAB_FAMILY
   const tab = TAB_FAMILY[style]
   return (
@@ -165,6 +165,13 @@ function TabsHero({ state }: { state: LabState }) {
         <span className="h-2 w-3/5 rounded-full bg-muted" />
       </div>
     </Hero>
+  )
+}
+
+/** Collapsed-row summary: the selected-tab style. */
+export function tabsSummary(state: LabState): string {
+  return (
+    TAB_OPTIONS.find((o) => o.value === state.tabStyle)?.label ?? state.tabStyle
   )
 }
 

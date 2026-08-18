@@ -42,7 +42,7 @@ const PEOPLE = [
 
 const CELLS = "grid grid-cols-[1.1fr_1fr_auto] items-center gap-2 px-2"
 
-function TablesHero({ state }: { state: LabState }) {
+export function TablesHero({ state }: { state: LabState }) {
   return (
     <Hero className="gap-0 py-2.5">
       <div
@@ -75,6 +75,18 @@ function TablesHero({ state }: { state: LabState }) {
       ))}
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the row separation, and the header treatment. */
+export function tablesSummary(state: LabState): string {
+  const separation =
+    state.tableSeparation === "striped"
+      ? "Striped"
+      : state.tableSeparation === "plain"
+        ? "Plain rows"
+        : "Lines"
+  const header = state.tableHeader === "filled" ? "Filled" : "Plain"
+  return `${separation} · ${header} header`
 }
 
 export function TablesSection({ lab }: { lab: Lab }) {

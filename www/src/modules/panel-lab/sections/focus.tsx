@@ -137,6 +137,60 @@ export function focusFieldStyle(state: LabState): CSSProperties {
   }
 }
 
+/** The chapter specimen: both categories on one stage — controls wearing the
+ *  ring, and a focused field beside its idle twin. */
+export function FocusHero({ state }: { state: LabState }) {
+  const specimen = {
+    borderRadius: controlRadiusPx(state),
+    boxShadow: focusRingShadow(state),
+  }
+  const field = cn(
+    SPECIMEN_FIELD,
+    "flex-1 border border-border-field bg-field text-fg",
+  )
+  const radius = controlRadiusPx(state)
+  return (
+    <Hero className="items-center gap-3 py-5">
+      <div className="flex items-center justify-center gap-4">
+        <span
+          className={cn(SPECIMEN_BUTTON, "bg-primary text-fg-on-primary")}
+          style={specimen}
+        >
+          Get started
+        </span>
+        <span
+          className={cn(
+            SPECIMEN_BUTTON,
+            "border bg-neutral text-fg-on-neutral",
+          )}
+          style={specimen}
+        >
+          Cancel
+        </span>
+      </div>
+      <div className="flex w-full items-center gap-2.5">
+        <span className={field} style={{ borderRadius: radius }}>
+          you@example.com
+        </span>
+        <span
+          className={field}
+          style={{ borderRadius: radius, ...focusFieldStyle(state) }}
+        >
+          you@example.com
+          <span className="ml-px inline-block h-4 w-px animate-pulse bg-fg" />
+        </span>
+      </div>
+    </Hero>
+  )
+}
+
+/** Collapsed-row summary: the control ring style, and the ink it draws in.
+ *  Values capitalized directly — the color labels are JSX (dot + name). */
+export function focusSummary(state: LabState): string {
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+  return `${cap(state.focusStyle)} · ${cap(state.focusColor)}`
+}
+
 /** Both reads of the ring: the primary is where a flush accent ring vanishes
  *  into its own fill, the secondary where it has no strong fill behind it. */
 function ControlFocusHero({ state }: { state: LabState }) {

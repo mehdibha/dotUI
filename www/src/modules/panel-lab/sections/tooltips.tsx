@@ -64,7 +64,7 @@ const TOOLTIP_OPTIONS: SelectRowOption[] = [
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-function TooltipsHero({ state }: { state: LabState }) {
+export function TooltipsHero({ state }: { state: LabState }) {
   return (
     <Hero className="h-24 items-center justify-center">
       <div className="flex flex-col items-center gap-1.5">
@@ -81,6 +81,14 @@ function TooltipsHero({ state }: { state: LabState }) {
         </span>
       </div>
     </Hero>
+  )
+}
+
+/** Collapsed-row summary: the tooltip surface style. */
+export function tooltipsSummary(state: LabState): string {
+  return (
+    TOOLTIP_OPTIONS.find((o) => o.value === state.tooltipStyle)?.label ??
+    state.tooltipStyle
   )
 }
 

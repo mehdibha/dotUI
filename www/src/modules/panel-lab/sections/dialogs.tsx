@@ -106,7 +106,7 @@ const BACKDROP_OPTIONS: SelectRowOption[] = [
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-function DialogsHero({ state }: { state: LabState }) {
+export function DialogsHero({ state }: { state: LabState }) {
   return (
     <Hero inset={false} className="relative h-44">
       {/* Page content: what the backdrop dims, frosts, or leaves alone. */}
@@ -137,6 +137,17 @@ function DialogsHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the backdrop treatment, and where the dialog rests. */
+export function dialogsSummary(state: LabState): string {
+  const backdrop =
+    BACKDROP_OPTIONS.find((o) => o.value === state.dialogBackdrop)?.label ??
+    state.dialogBackdrop
+  const position = state.dialogPosition === "top" ? "Top" : "Center"
+  const first =
+    state.dialogBackdrop === "none" ? "No backdrop" : `${backdrop} backdrop`
+  return `${first} · ${position}`
 }
 
 export function DialogsSection({ lab }: { lab: Lab }) {

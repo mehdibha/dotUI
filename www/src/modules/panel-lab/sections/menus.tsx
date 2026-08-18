@@ -357,7 +357,7 @@ function MenuItem({
   )
 }
 
-function MenusHero({ state }: { state: LabState }) {
+export function MenusHero({ state }: { state: LabState }) {
   const inset = state.menuInset === "inset"
   const lg = state.menuScale === "large"
   const search = state.menuSearch
@@ -429,6 +429,17 @@ function MenusHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the check placement, and the highlight treatment. */
+export function menusSummary(state: LabState): string {
+  const indicator =
+    INDICATOR_OPTIONS.find((o) => o.value === state.menuIndicator)?.label ??
+    state.menuIndicator
+  const highlight =
+    HIGHLIGHT_OPTIONS.find((o) => o.value === state.menuHighlight)?.label ??
+    state.menuHighlight
+  return `${indicator} · ${highlight} highlight`
 }
 
 export function MenusSection({ lab }: { lab: Lab }) {

@@ -145,7 +145,7 @@ export function DemoCheckbox({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-function CheckboxHero({ state }: { state: LabState }) {
+export function CheckboxHero({ state }: { state: LabState }) {
   const fill = fillOf(state)
   const corner = checkboxCorner(state)
   return (
@@ -160,6 +160,17 @@ function CheckboxHero({ state }: { state: LabState }) {
       </label>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the fill school, and the corner geometry. */
+export function checkboxSummary(state: LabState): string {
+  const fill =
+    FILL_OPTIONS.find((o) => o.value === state.checkFill)?.label ??
+    state.checkFill
+  const corner =
+    CORNER_OPTIONS.find((o) => o.value === state.checkCorner)?.label ??
+    state.checkCorner
+  return `${fill} fill · ${corner} corner`
 }
 
 export function CheckboxSection({ lab }: { lab: Lab }) {

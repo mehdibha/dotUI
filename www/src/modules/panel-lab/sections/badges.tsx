@@ -127,7 +127,7 @@ function Chip({
   )
 }
 
-function BadgesHero({ state }: { state: LabState }) {
+export function BadgesHero({ state }: { state: LabState }) {
   return (
     <Hero className="items-start py-4">
       <div className="flex flex-wrap items-center gap-1.5">
@@ -154,6 +154,15 @@ function BadgesHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the chip style, and its shape. */
+export function badgesSummary(state: LabState): string {
+  const style =
+    STYLE_OPTIONS.find((o) => o.value === state.badgeStyle)?.label ??
+    state.badgeStyle
+  const shape = state.badgeShape === "rounded" ? "Rounded" : "Pill"
+  return `${style} · ${shape}`
 }
 
 export function BadgesSection({ lab }: { lab: Lab }) {

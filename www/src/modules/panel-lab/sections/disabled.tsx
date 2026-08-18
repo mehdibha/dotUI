@@ -129,7 +129,7 @@ function SpecimenColumn({ look }: { look: Look }) {
   )
 }
 
-function DisabledHero({ state }: { state: LabState }) {
+export function DisabledHero({ state }: { state: LabState }) {
   const look =
     DISABLED_LOOKS[state.disabledTreatment as keyof typeof DISABLED_LOOKS]
   return (
@@ -139,6 +139,14 @@ function DisabledHero({ state }: { state: LabState }) {
         <SpecimenColumn look={look} />
       </div>
     </Hero>
+  )
+}
+
+/** Collapsed-row summary: the disabled treatment. */
+export function disabledSummary(state: LabState): string {
+  return (
+    TREATMENT_OPTIONS.find((o) => o.value === state.disabledTreatment)?.label ??
+    state.disabledTreatment
   )
 }
 

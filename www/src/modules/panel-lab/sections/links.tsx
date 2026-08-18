@@ -27,6 +27,17 @@ export const LINK_DEFAULTS = {
   linkColor: "accent",
 }
 
+const UNDERLINE_OPTIONS = [
+  { value: "always", label: "Always" },
+  { value: "hover", label: "Hover" },
+  { value: "never", label: "Never" },
+]
+
+const COLOR_OPTIONS = [
+  { value: "accent", label: "Accent" },
+  { value: "foreground", label: "Foreground" },
+]
+
 const LINK_COLOR = {
   accent: "text-accent",
   // Weight is the only resting cue foreground links get — the Vercel/Linear
@@ -47,7 +58,7 @@ const LINK_HOVERED = {
   never: "",
 }
 
-function LinksHero({ state }: { state: LabState }) {
+export function LinksHero({ state }: { state: LabState }) {
   const color = LINK_COLOR[state.linkColor as keyof typeof LINK_COLOR]
   return (
     <Hero className="px-4 py-5">
@@ -82,6 +93,17 @@ function LinksHero({ state }: { state: LabState }) {
   )
 }
 
+/** Collapsed-row summary: the underline policy, and the link color. */
+export function linksSummary(state: LabState): string {
+  const underline =
+    UNDERLINE_OPTIONS.find((o) => o.value === state.linkUnderline)?.label ??
+    state.linkUnderline
+  const color =
+    COLOR_OPTIONS.find((o) => o.value === state.linkColor)?.label ??
+    state.linkColor
+  return `${underline} underline · ${color} color`
+}
+
 export function LinksSection({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
@@ -91,20 +113,13 @@ export function LinksSection({ lab }: { lab: Lab }) {
         label="Underline"
         value={state.linkUnderline}
         onChange={set("linkUnderline")}
-        options={[
-          { value: "always", label: "Always" },
-          { value: "hover", label: "Hover" },
-          { value: "never", label: "Never" },
-        ]}
+        options={UNDERLINE_OPTIONS}
       />
       <SegmentedControlRow
         label="Color"
         value={state.linkColor}
         onChange={set("linkColor")}
-        options={[
-          { value: "accent", label: "Accent" },
-          { value: "foreground", label: "Foreground" },
-        ]}
+        options={COLOR_OPTIONS}
       />
     </ControlGroup>
   )

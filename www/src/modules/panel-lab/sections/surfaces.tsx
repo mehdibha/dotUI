@@ -376,8 +376,9 @@ function StackedSegmentedRow({
 
 /* --------------------------------- Section --------------------------------- */
 
-export function SurfacesSection({ lab }: { lab: Lab }) {
-  const { state, set } = lab
+/** The chapter specimen: both polarities side by side — "right in light,
+ *  wrong in dark" is the failure mode being shopped for. */
+export function SurfacesHero({ state }: { state: LabState }) {
   const modes = state.modes
   const lightMode = useMemo(
     () => modes.find((mode) => mode.polarity === "light"),
@@ -391,29 +392,47 @@ export function SurfacesSection({ lab }: { lab: Lab }) {
   const darkTheme = useModeTheme(state, darkMode)
 
   return (
+    <HeroModes>
+      {light && lightMode && (
+        <SurfaceTile
+          label={lightMode.name}
+          icon={SunIcon}
+          dark={false}
+          state={state}
+          scales={light.scales}
+          background={light.background}
+        />
+      )}
+      {darkTheme && darkMode && (
+        <SurfaceTile
+          label={darkMode.name}
+          icon={MoonIcon}
+          dark
+          state={state}
+          scales={darkTheme.scales}
+          background={darkTheme.background}
+        />
+      )}
+    </HeroModes>
+  )
+}
+
+/** Collapsed-row summary: the separation strategy, and the floating material. */
+export function surfacesSummary(state: LabState): string {
+  const strategy =
+    STRATEGY_OPTIONS.find((o) => o.value === state.surfaceStrategy)?.label ??
+    state.surfaceStrategy
+  const material =
+    MATERIAL_OPTIONS.find((o) => o.value === state.surfaceMaterial)?.label ??
+    state.surfaceMaterial
+  return `${strategy} · ${material}`
+}
+
+export function SurfacesSection({ lab }: { lab: Lab }) {
+  const { state, set } = lab
+  return (
     <>
-      <HeroModes>
-        {light && lightMode && (
-          <SurfaceTile
-            label={lightMode.name}
-            icon={SunIcon}
-            dark={false}
-            state={state}
-            scales={light.scales}
-            background={light.background}
-          />
-        )}
-        {darkTheme && darkMode && (
-          <SurfaceTile
-            label={darkMode.name}
-            icon={MoonIcon}
-            dark
-            state={state}
-            scales={darkTheme.scales}
-            background={darkTheme.background}
-          />
-        )}
-      </HeroModes>
+      <SurfacesHero state={state} />
       <ControlGroup>
         <StackedSegmentedRow
           label="Separation"

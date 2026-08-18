@@ -91,7 +91,7 @@ function ChoiceCard({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-function ChoiceCardsHero({ state }: { state: LabState }) {
+export function ChoiceCardsHero({ state }: { state: LabState }) {
   const fill = fillOf(state)
   const corner = checkboxCorner(state)
   return (
@@ -127,6 +127,17 @@ function ChoiceCardsHero({ state }: { state: LabState }) {
       />
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the selected treatment, and the control placement. */
+export function choiceCardsSummary(state: LabState): string {
+  const selected =
+    SELECTED_OPTIONS.find((o) => o.value === state.cardSelected)?.label ??
+    state.cardSelected
+  const control =
+    CONTROL_OPTIONS.find((o) => o.value === state.cardControl)?.label ??
+    state.cardControl
+  return `${selected} selected · ${control} control`
 }
 
 export function ChoiceCardsSection({ lab }: { lab: Lab }) {

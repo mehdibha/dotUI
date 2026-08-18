@@ -47,7 +47,7 @@ function selectedFx(state: LabState): string {
 
 /** A lone Toggle Button and a working single-select Toggle Group wearing the
  *  same selected look. */
-function ToggleHero({ state }: { state: LabState }) {
+export function ToggleHero({ state }: { state: LabState }) {
   const [starred, setStarred] = useState(true)
   const [view, setView] = useState("list")
   const look = styleLook(state)
@@ -113,6 +113,14 @@ function ToggleHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the selected look, the section's one axis. */
+export function togglesSummary(state: LabState): string {
+  const selected =
+    SELECTED_OPTIONS.find((o) => o.value === state.toggleSelected)?.label ??
+    state.toggleSelected
+  return `${selected} selected`
 }
 
 export function TogglesSection({ lab }: { lab: Lab }) {

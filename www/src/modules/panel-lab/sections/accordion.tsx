@@ -207,7 +207,7 @@ function AccordionItem({
   )
 }
 
-function AccordionHero({ state }: { state: LabState }) {
+export function AccordionHero({ state }: { state: LabState }) {
   const container =
     CONTAINER[state.accordionContainer as keyof typeof CONTAINER]
   return (
@@ -219,6 +219,20 @@ function AccordionHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the container style, and the marker with its
+ *  position. */
+export function accordionSummary(state: LabState): string {
+  const container =
+    CONTAINER_OPTIONS.find((o) => o.value === state.accordionContainer)
+      ?.label ?? state.accordionContainer
+  const marker =
+    MARKER_OPTIONS.find((o) => o.value === state.accordionMarker)?.label ??
+    state.accordionMarker
+  const position =
+    state.accordionMarkerPosition === "leading" ? "Leading" : "Trailing"
+  return `${container} · ${position} ${marker.toLowerCase()}`
 }
 
 export function AccordionSection({ lab }: { lab: Lab }) {

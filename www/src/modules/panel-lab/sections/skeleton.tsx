@@ -99,7 +99,7 @@ const ANIMATION_OPTIONS: SelectRowOption[] = [
 /* ---------------------------------- Hero ----------------------------------- */
 
 /* One content card, wearing the idle treatment. */
-function SkeletonHero({ state }: { state: LabState }) {
+export function SkeletonHero({ state }: { state: LabState }) {
   return (
     <Hero>
       <div className="flex min-h-16 items-center rounded-lg border border-border/60 bg-card p-3">
@@ -121,6 +121,14 @@ function SkeletonHero({ state }: { state: LabState }) {
         </Skeleton>
       </div>
     </Hero>
+  )
+}
+
+/** Collapsed-row summary: the idle animation. */
+export function skeletonSummary(state: LabState): string {
+  return (
+    ANIMATION_OPTIONS.find((o) => o.value === state.skeletonAnimation)?.label ??
+    state.skeletonAnimation
   )
 }
 

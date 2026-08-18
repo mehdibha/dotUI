@@ -190,7 +190,7 @@ function DayCell({
   )
 }
 
-function CalendarHero({ state }: { state: LabState }) {
+export function CalendarHero({ state }: { state: LabState }) {
   const labels = WEEKDAYS[state.calendarWeekdays as keyof typeof WEEKDAYS]
   return (
     <Hero className="items-center py-4">
@@ -212,6 +212,17 @@ function CalendarHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the day shape, and the today marker. */
+export function calendarSummary(state: LabState): string {
+  const shape =
+    SHAPE_OPTIONS.find((o) => o.value === state.calendarDayShape)?.label ??
+    state.calendarDayShape
+  const today =
+    TODAY_OPTIONS.find((o) => o.value === state.calendarToday)?.label ??
+    state.calendarToday
+  return `${shape} days · ${today} today`
 }
 
 export function CalendarSection({ lab }: { lab: Lab }) {
