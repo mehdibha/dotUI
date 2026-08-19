@@ -147,7 +147,7 @@ export const CardsGrid = memo(function CardsGrid({
 
 // The /create preview canvas — the shadcn-create shape: a fixed-pixel,
 // horizontally scrollable life-size surface rather than a fluid grid, so card
-// size comes from the ~385px column track, never from the pane width. Columns
+// size comes from the ~360px column track, never from the pane width. Columns
 // are hand-curated stacks; the wide slot holds the AI banner over a 2-col
 // sub-grid. `content-visibility` keeps off-screen columns free to lay out.
 const CANVAS_1: CardKey[] = ["controls", "twoFactor", "filters", "accountMenu"]
@@ -178,7 +178,7 @@ function CanvasColumn({
   return (
     <div
       className={cn(
-        "flex flex-col gap-(--gap) p-px [contain-intrinsic-size:385px_1200px] [content-visibility:auto]",
+        "flex flex-col gap-(--gap) p-px [contain-intrinsic-size:360px_1200px] [content-visibility:auto]",
         className,
       )}
     >
@@ -195,9 +195,9 @@ export function CardsCanvas() {
       {/* Centers the canvas when the viewport is wider than it; otherwise the
           canvas starts flush-left and scrolls. */}
       <div className="flex w-full min-w-max justify-center">
-        {/* Width tracks the gap: 6 × ~385px columns + 5 gaps + 2 edge paddings,
+        {/* Width tracks the gap: 6 × ~360px columns + 5 gaps + 2 edge paddings,
             so tightening --gap keeps cards life-size instead of growing them. */}
-        <div className="grid w-[2000px] grid-cols-6 items-start gap-(--gap) p-(--gap) md:w-[2480px]">
+        <div className="grid w-[2000px] grid-cols-6 items-start gap-(--gap) p-(--gap) md:w-[2328px]">
           <CanvasColumn cards={CANVAS_1} />
           <CanvasColumn cards={CANVAS_2} />
           <div className="col-span-2 flex flex-col gap-(--gap) p-px [contain-intrinsic-size:790px_1200px] [content-visibility:auto]">
