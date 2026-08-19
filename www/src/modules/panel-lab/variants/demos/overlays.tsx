@@ -60,7 +60,7 @@ export function MenusDemo({ state }: { state: LabState }) {
     </span>
   )
   return (
-    <span className="flex shrink-0 self-start pt-3.5">
+    <span className="flex shrink-0">
       <span
         className={cn(
           "flex w-40 flex-col rounded-lg border border-border/60 bg-card shadow-lg",
@@ -79,7 +79,7 @@ export function MenusDemo({ state }: { state: LabState }) {
  *  dialog card resting at the chosen position — center sinks into the crop. */
 export function DialogsDemo({ state }: { state: LabState }) {
   return (
-    <span className="flex shrink-0 self-start pt-3.5">
+    <span className="flex shrink-0">
       <span className="relative h-24 w-48 overflow-hidden rounded-md border border-border/60 bg-bg">
         <span className="flex flex-col gap-1.5 p-2">
           <span className="h-1.5 w-14 rounded-full bg-fg/20" />
@@ -118,7 +118,7 @@ export function PopoversDemo({ state }: { state: LabState }) {
   const header = state.popoverHeader
   const title = "Share project"
   return (
-    <span className="flex shrink-0 self-start pt-3.5">
+    <span className="flex shrink-0">
       <span className="relative w-44 rounded-lg border border-border/60 bg-card text-xs shadow-lg">
         {state.popoverTip === "tip" && (
           <span className="absolute -top-[4.5px] left-1/2 size-2 -translate-x-1/2 rotate-45 rounded-[1px] border-t border-l border-border/60 bg-card" />
@@ -167,7 +167,7 @@ export function TabsDemo({ state }: { state: LabState }) {
   const style = state.tabStyle as keyof typeof TAB_FAMILY
   const tab = TAB_FAMILY[style]
   return (
-    <span className="flex w-52 shrink-0 flex-col self-start pt-3.5 text-[0.8125rem] whitespace-nowrap">
+    <span className="flex w-52 shrink-0 flex-col text-[0.8125rem] whitespace-nowrap">
       <span className={cn("flex", TAB_STRIP[style])}>
         {["Overview", "Activity", "Settings"].map((label) => {
           const selected = label === "Overview"
@@ -265,7 +265,7 @@ export function AccordionDemo({ state }: { state: LabState }) {
     </span>
   )
   return (
-    <span className="flex shrink-0 self-start pt-3.5">
+    <span className="flex shrink-0">
       <span className={cn("flex w-44 flex-col", container.list)}>
         {row("Shipping")}
         {row("Returns")}

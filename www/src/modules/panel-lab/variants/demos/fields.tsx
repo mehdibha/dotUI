@@ -177,7 +177,7 @@ export function CalendarDemo({ state }: { state: LabState }) {
     [15, 16, 17, 18, 19, 20, 21],
   ]
   return (
-    <span className="flex shrink-0 flex-col self-start pt-3.5">
+    <span className="flex shrink-0 flex-col">
       <span className="flex">
         {labels.map((d, i) => (
           <span

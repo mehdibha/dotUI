@@ -169,7 +169,7 @@ const TABLE_PEOPLE = [
  *  card's bottom edge. */
 export function TablesDemo({ state }: { state: LabState }) {
   return (
-    <span className="flex w-60 shrink-0 flex-col self-start pt-3.5">
+    <span className="flex w-60 shrink-0 flex-col">
       <span
         className={cn(
           CELLS,

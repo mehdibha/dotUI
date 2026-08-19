@@ -83,14 +83,16 @@ function IndexRow({
         {/* Min-width label column: strips align at the same x, long labels
             push instead of truncating. */}
         <span className="min-w-28 shrink-0">{heading}</span>
-        {/* ml-auto right-aligns previews that fit (pr-8 keeps them clear of
-            the fade); when a strip overflows, the auto margin collapses to 0
-            so it stays left-pinned and crops at the right edge. */}
+        {/* Uniform paddings: every strip top-aligns at the card's pt-3.5 and,
+            when it fits, ends at the card's pr-4 — the 16px fade starts
+            exactly where that padding begins. ml-auto right-aligns fitting
+            previews; on overflow it collapses to 0, so big strips stay
+            left-pinned and crop at the right edge. */}
         <span
           aria-hidden
-          className="pointer-events-none flex h-full min-w-0 flex-1 items-center overflow-hidden [mask-image:linear-gradient(to_left,transparent,black_32px)]"
+          className="pointer-events-none flex h-full min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(to_left,transparent,black_16px)]"
         >
-          <span className="ml-auto flex h-full items-center gap-2 pr-8">
+          <span className="ml-auto flex h-full items-start gap-2 pt-3.5 pr-4">
             <Demo state={lab.state} />
           </span>
         </span>

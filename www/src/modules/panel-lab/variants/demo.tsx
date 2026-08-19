@@ -36,7 +36,7 @@ function ButtonsDemo({ state }: { state: LabState }) {
     </span>
   )
   return (
-    <span className="flex flex-col items-start gap-2 self-start pt-3.5">
+    <span className="flex flex-col items-start gap-2">
       <span className="flex items-center gap-2">
         {specimen(cn("bg-primary text-fg-on-primary", look.fill), "Primary")}
         {specimen(look.secondary, "Secondary")}
