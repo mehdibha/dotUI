@@ -25,7 +25,7 @@ import { resolveGroups, SECTIONS } from "./groups"
 const PUSH_EASE = "cubic-bezier(0.32, 0.72, 0, 1)"
 
 const CARD =
-  "w-full shrink-0 cursor-interactive rounded-xl border border-border/45 bg-card px-4 py-3.5 focus-reset transition-colors hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight"
+  "w-full shrink-0 cursor-interactive rounded-xl border border-border/45 bg-card px-4 py-3.5 focus-reset transition-colors hover:border-border/80 hover:bg-highlight focus-visible:focus-ring pressed:border-border/80 pressed:bg-highlight"
 
 /* Chapters absorbed by another chapter's page: their row leaves the index,
    their body renders after the host's, and the host's modified dot covers

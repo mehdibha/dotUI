@@ -9,7 +9,7 @@
    the pattern is judged; the registry below decides which cards trade their
    summary for a demo strip. */
 
-import { CopyIcon, PlusIcon } from "lucide-react"
+import { CopyIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
@@ -21,39 +21,35 @@ import type { LabState } from "../state"
 const BUTTON_SPECIMEN =
   "flex h-8 shrink-0 items-center px-3.5 text-[0.8125rem] font-medium whitespace-nowrap"
 
-/** Leftmost = the identity specimen (fully visible); extras fade out right. */
+/** The hero's two-row variant ladder, scaled down a notch: the neutral row,
+ *  then the status fills — same specimens as ButtonsHero, inert. */
 function ButtonsDemo({ state }: { state: LabState }) {
   const look = styleLook(state)
   const radius = buttonRadiusPx(state)
+  const specimen = (skin: string, label: string) => (
+    <span
+      className={cn(BUTTON_SPECIMEN, skin)}
+      style={{ borderRadius: radius }}
+    >
+      {label}
+    </span>
+  )
   return (
-    <>
-      <span
-        className={cn(
-          BUTTON_SPECIMEN,
-          "bg-primary text-fg-on-primary",
-          look.fill,
+    <span className="flex origin-left scale-[0.8] flex-col items-start gap-2">
+      <span className="flex items-center gap-2">
+        {specimen(
+          cn("bg-primary text-fg-on-primary", look.fill),
+          "Get started",
         )}
-        style={{ borderRadius: radius }}
-      >
-        Get started
+        {specimen(look.secondary, "Preview")}
+        {specimen("text-fg", "Docs")}
       </span>
-      <span
-        className={cn(BUTTON_SPECIMEN, look.secondary)}
-        style={{ borderRadius: radius }}
-      >
-        Preview
+      <span className="flex items-center gap-2">
+        {specimen(cn("bg-warning text-fg-on-warning", look.fill), "Reset")}
+        {specimen(cn("bg-danger text-fg-on-danger", look.fill), "Delete")}
+        {specimen("text-fg", "Learn more")}
       </span>
-      <span
-        className={cn(
-          BUTTON_SPECIMEN,
-          "w-8 justify-center px-0",
-          look.secondary,
-        )}
-        style={{ borderRadius: radius }}
-      >
-        <PlusIcon className="size-4" />
-      </span>
-    </>
+    </span>
   )
 }
 
