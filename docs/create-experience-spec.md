@@ -1,4 +1,4 @@
-# /create — experience spec (draft 1)
+# /create — experience spec (draft 2)
 
 What building a design system on dotui.org/create should feel like. Layout
 candidates are judged against this page, not against taste. Draft — correct it;
@@ -19,9 +19,12 @@ hiding capability.
 | **Deep build** | 1–4 h+ | Recreate a target look (their brand, a Linear-like system) with precision | Never wonders "can it do X?"; finds any axis in seconds; ends in export |
 | **Return visit** | 2–5 min | Change one thing, re-export | Cold-start find → change → out, under a minute |
 
-**Deep build is the paying job. First touch is the funnel.** Design the
-structure for deep build, make the identity layer delightful for first touch,
-and never let either break the return visit (search/jump + legible state).
+**Decided (Aug 2026): first touch and deep build carry equal weight.** /create
+is both the marketing demo and the working tool, and a candidate that
+sacrifices either loses. Practically: the identity layer must delight a
+2-minute visitor, the structure must not cap the hours-long build, and the
+prototypes must be tested against both. Return visit is never allowed to break
+(search/jump + legible state).
 
 ## Non-negotiables
 
@@ -99,11 +102,20 @@ fine unless you care."
   nested popovers, dies on scroll); cheap to confirm as a variant of the
   drill-in chapter page if we want the evidence.
 
-## Open questions (for Mehdi)
+## Decided (Aug 2026)
 
-1. Is deep build really primary — or is first touch, since /create is also the
-   marketing demo?
-2. Should first touch be *guided* (an ordered walk through the identity eight)
-   or just visually prioritized?
-3. Does "Space" belong in identity, or is density a refinement?
-4. Accordion sits in Display for now — worth a Disclosure family with Menus?
+1. **First touch and deep build are equal.** Neither may be sacrificed for the
+   other; candidates are tested against both.
+2. **First touch is visually prioritized, not guided.** Identity comes first
+   and gets richer treatment; no wizard. A guided layer can sit on top of
+   whichever layout wins, later.
+3. **Space stays in the Identity 8.** Density is a fast way to tell systems
+   apart; everyone should make that decision.
+
+## Open questions
+
+1. **What visual does a chapter row carry** in the real /create (canvas beside
+   the panel)? Tiny chip vs small hero (identity only) vs text only — being
+   settled empirically: all three are live-switchable in the panel-lab
+   prototypes via the dev tweaker.
+2. Accordion sits in Display for now — worth a Disclosure family with Menus?

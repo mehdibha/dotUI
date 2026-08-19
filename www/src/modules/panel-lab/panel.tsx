@@ -1,9 +1,10 @@
 "use client"
 
-/* The panel chrome: every section a collapsed chapter stack (hero + accordion
-   row) in a story scroll, floating glass header and footer bars the stacks dip
-   under. Chapter-agnostic: the list comes from state.ts, so the chrome never
-   has to know which sections exist. */
+/* The panel chrome, split so layout variants share it: PanelChrome owns the
+   floating glass header (title, global reset, search) and footer (save,
+   export) plus the spacing/radius tweak vars; each variant supplies the middle.
+   PanelFrame is the current design — every section a collapsed chapter stack
+   in a story scroll. Chapter-agnostic: the list comes from state.ts. */
 
 import type { CSSProperties } from "react"
 import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
@@ -23,12 +24,15 @@ const RADIUS_STEPS: Record<string, string> = {
   xl: "20px",
 }
 
-export function PanelFrame({
-  chapters,
+/** Header + footer + tweak vars. Children own the middle region (and its
+ *  scrolling) — they must claim flex-1 min-h-0 and pad for the floating bars
+ *  (56px top, 62px bottom). */
+export function PanelChrome({
   lab,
+  children,
 }: {
-  chapters: Chapter[]
   lab: Lab
+  children: React.ReactNode
 }) {
   const sectionGap = useTweak("Section gap", {
     type: "number",
@@ -73,7 +77,7 @@ export function PanelFrame({
         } as CSSProperties
       }
     >
-      {/* Floating glass header — cards dip under it, never past it. */}
+      {/* Floating glass header — content dips under it, never past it. */}
       <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 rounded-xl border border-border/45 bg-neutral/90 p-1.5 shadow-[0_4px_16px_-4px_rgb(0_0_0/0.2),0_2px_6px_-2px_rgb(0_0_0/0.12)] backdrop-blur-sm">
         <Button
           variant="quiet"
@@ -107,12 +111,7 @@ export function PanelFrame({
         </span>
       </div>
 
-      {/* The story scroll: every chapter its own stack. */}
-      <div className="no-scrollbar flex min-h-0 flex-1 flex-col gap-[var(--lab-gap-section,0.75rem)] overflow-y-auto overscroll-contain rounded-xl pt-[56px] pb-[62px] *:shrink-0">
-        {chapters.map((chapter) => (
-          <ChapterStack key={chapter.id} chapter={chapter} lab={lab} />
-        ))}
-      </div>
+      {children}
 
       {/* Floating glass footer — same treatment as the header. */}
       <div className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-2 rounded-xl border border-border/45 bg-neutral/90 p-2 shadow-[0_-4px_16px_-4px_rgb(0_0_0/0.2),0_-2px_6px_-2px_rgb(0_0_0/0.12)] backdrop-blur-sm">
@@ -124,5 +123,24 @@ export function PanelFrame({
         </Button>
       </div>
     </div>
+  )
+}
+
+export function PanelFrame({
+  chapters,
+  lab,
+}: {
+  chapters: Chapter[]
+  lab: Lab
+}) {
+  return (
+    <PanelChrome lab={lab}>
+      {/* The story scroll: every chapter its own stack. */}
+      <div className="no-scrollbar flex min-h-0 flex-1 flex-col gap-[var(--lab-gap-section,0.75rem)] overflow-y-auto overscroll-contain rounded-xl pt-[56px] pb-[62px] *:shrink-0">
+        {chapters.map((chapter) => (
+          <ChapterStack key={chapter.id} chapter={chapter} lab={lab} />
+        ))}
+      </div>
+    </PanelChrome>
   )
 }
