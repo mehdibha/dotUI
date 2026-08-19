@@ -101,11 +101,76 @@ function InputsDemo({ state }: { state: LabState }) {
   )
 }
 
-/** Which cards trade their summary line for a demo strip. */
+import {
+  ButtonGroupsDemo,
+  CheckboxDemo,
+  ChoiceCardsDemo,
+  KbdDemo,
+  RadioDemo,
+  SegmentedControlDemo,
+  SwitchDemo,
+  TogglesDemo,
+} from "./demos/actions"
+import {
+  AvatarsDemo,
+  BadgesDemo,
+  NoticesDemo,
+  ProgressDemo,
+  SkeletonDemo,
+  SpinnerDemo,
+  TablesDemo,
+} from "./demos/display"
+import {
+  CalendarDemo,
+  NumberFieldDemo,
+  OtpFieldDemo,
+  PickersDemo,
+  SlidersDemo,
+} from "./demos/fields"
+import {
+  AccordionDemo,
+  BreadcrumbsDemo,
+  DialogsDemo,
+  MenusDemo,
+  PaginationDemo,
+  PopoversDemo,
+  TabsDemo,
+  TooltipsDemo,
+} from "./demos/overlays"
+
+/** Every component card carries a demo strip. */
 export const CARD_DEMOS: Record<
   string,
   React.ComponentType<{ state: LabState }>
 > = {
   buttons: ButtonsDemo,
   inputs: InputsDemo,
+  "button-groups": ButtonGroupsDemo,
+  toggles: TogglesDemo,
+  "segmented-control": SegmentedControlDemo,
+  kbd: KbdDemo,
+  switch: SwitchDemo,
+  checkbox: CheckboxDemo,
+  radio: RadioDemo,
+  "choice-cards": ChoiceCardsDemo,
+  "number-field": NumberFieldDemo,
+  "otp-field": OtpFieldDemo,
+  pickers: PickersDemo,
+  calendar: CalendarDemo,
+  sliders: SlidersDemo,
+  menus: MenusDemo,
+  dialogs: DialogsDemo,
+  popovers: PopoversDemo,
+  tooltips: TooltipsDemo,
+  tabs: TabsDemo,
+  breadcrumbs: BreadcrumbsDemo,
+  pagination: PaginationDemo,
+  notices: NoticesDemo,
+  skeleton: SkeletonDemo,
+  spinner: SpinnerDemo,
+  progress: ProgressDemo,
+  badges: BadgesDemo,
+  avatars: AvatarsDemo,
+  tables: TablesDemo,
+  accordion: AccordionDemo,
 }

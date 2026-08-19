@@ -35,14 +35,14 @@ export const SEGMENTED_DEFAULTS = {
   segmentedTrack: "filled",
 }
 
-const TRACK_SHELL = {
+export const TRACK_SHELL = {
   filled: "bg-muted",
   outline: "border border-border",
 }
 
 /* Raised keeps the hairline ring so the bg-on-bg chip survives dark wells —
    same rationale as the Toggles chip. */
-const SELECTED_FX = {
+export const SELECTED_FX = {
   raised: "bg-bg text-fg shadow-sm ring-1 ring-border-field",
   flat: "bg-selected text-fg-on-selected",
   inverse: "bg-inverse text-fg-inverse",

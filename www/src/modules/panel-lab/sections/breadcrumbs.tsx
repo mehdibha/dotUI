@@ -80,7 +80,7 @@ const SEPARATOR_OPTIONS: SelectRowOption[] = [
 /* ---------------------------------- Hero ----------------------------------- */
 
 // Rest keeps a live hover: so real pointers behave like the pinned crumb.
-const CRUMB_REST = {
+export const CRUMB_REST = {
   accent: "text-accent hover:underline hover:underline-offset-2",
   muted: "text-fg-muted hover:text-fg",
 }
@@ -90,7 +90,7 @@ const CRUMB_HOVERED = {
   muted: "text-fg",
 }
 
-function Separator({ state }: { state: LabState }) {
+export function Separator({ state }: { state: LabState }) {
   if (state.breadcrumbSeparator === "slash")
     return <span className="text-fg-muted/60">/</span>
   return (

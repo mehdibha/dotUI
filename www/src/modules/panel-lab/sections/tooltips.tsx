@@ -18,7 +18,7 @@ export const TOOLTIP_DEFAULTS = {
   tooltipStyle: "inverted",
 }
 
-const TOOLTIP = {
+export const TOOLTIP = {
   inverted: "bg-tooltip text-fg-on-tooltip",
   surface: "border border-border bg-card text-fg shadow-sm",
 }

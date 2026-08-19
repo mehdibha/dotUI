@@ -42,7 +42,7 @@ const ALERT_TO_TOAST = {
   "accent-bar": "accent-bar",
 }
 
-const TOAST_FAMILY = {
+export const TOAST_FAMILY = {
   surface: "border bg-card text-fg **:[svg]:text-fg-success",
   inverted: "bg-tooltip text-fg-on-tooltip",
   filled: "bg-success text-fg-on-success",
@@ -50,7 +50,7 @@ const TOAST_FAMILY = {
     "rounded-l-none border border-l-[3px] border-l-success bg-card text-fg **:[svg]:text-fg-success",
 }
 
-const ALERT_FAMILY = {
+export const ALERT_FAMILY = {
   neutral: "border bg-card",
   tinted: "bg-info-muted",
   "tinted-border": "border border-border-info bg-info-muted",

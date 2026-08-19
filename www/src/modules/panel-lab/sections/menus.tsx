@@ -49,7 +49,7 @@ export const MENU_DEFAULTS = {
   menuScale: "default",
 }
 
-const HIGHLIGHT = {
+export const HIGHLIGHT = {
   neutral: "bg-highlight text-fg-on-highlight",
   accent: "bg-accent text-fg-on-accent",
   edge: "bg-highlight text-fg-on-highlight",

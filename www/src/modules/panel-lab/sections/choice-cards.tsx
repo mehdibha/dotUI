@@ -26,7 +26,7 @@ export const CHOICE_CARD_DEFAULTS = {
 
 /* Selected wears the family fill's school: accent cards mark with the brand,
    neutral cards with fg — the same inversion the controls themselves use. */
-const SELECTED = {
+export const SELECTED = {
   accent: {
     outline: "border-accent",
     tint: "border-border/60 bg-accent/8",

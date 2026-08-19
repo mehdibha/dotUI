@@ -82,7 +82,7 @@ const TRACK_OPTIONS = [
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-const TRACK_HEIGHT = {
+export const TRACK_HEIGHT = {
   thin: "h-1",
   thick: "h-3",
 }

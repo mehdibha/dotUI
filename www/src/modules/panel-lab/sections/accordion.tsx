@@ -138,7 +138,7 @@ const POSITION_OPTIONS = [
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-const CONTAINER = {
+export const CONTAINER = {
   divided: { list: "divide-y divide-border", item: "" },
   boxed: {
     list: "divide-y divide-border overflow-hidden rounded-lg border border-border bg-card",
@@ -150,7 +150,7 @@ const CONTAINER = {
   },
 }
 
-function Marker({ open, state }: { open: boolean; state: LabState }) {
+export function Marker({ open, state }: { open: boolean; state: LabState }) {
   return (
     <svg
       viewBox="0 0 12 12"

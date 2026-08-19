@@ -23,13 +23,13 @@ export const TAB_DEFAULTS = {
   tabStyle: "line",
 }
 
-const TAB_STRIP = {
+export const TAB_STRIP = {
   line: "gap-4 border-b border-border px-3 pt-1",
   pill: "gap-1 px-2 py-1.5",
   enclosed: "items-end px-2 pt-1.5",
 }
 
-const TAB_FAMILY = {
+export const TAB_FAMILY = {
   line: {
     base: "py-2",
     idle: "text-fg-muted",

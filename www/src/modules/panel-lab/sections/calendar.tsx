@@ -117,7 +117,7 @@ const WEEKDAY_OPTIONS = [
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-const DAY_SHAPE = {
+export const DAY_SHAPE = {
   circle: "rounded-full",
   rounded: "rounded-md",
   square: "rounded-none",
@@ -129,7 +129,7 @@ const BAND_END: Record<keyof typeof DAY_SHAPE, [string, string]> = {
   square: ["", ""],
 }
 
-const WEEKDAYS = {
+export const WEEKDAYS = {
   single: ["S", "M", "T", "W", "T", "F", "S"],
   double: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
   triple: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],

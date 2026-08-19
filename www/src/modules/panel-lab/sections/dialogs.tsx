@@ -28,13 +28,13 @@ export const DIALOG_DEFAULTS = {
   dialogPosition: "center",
 }
 
-const BACKDROP = {
+export const BACKDROP = {
   dim: "bg-overlay/50",
   blur: "bg-overlay/30 backdrop-blur-[3px]",
   none: "",
 }
 
-const DIALOG_POSITION = {
+export const DIALOG_POSITION = {
   center: "top-1/2 -translate-y-1/2",
   top: "top-4",
 }

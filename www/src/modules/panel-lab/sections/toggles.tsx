@@ -34,7 +34,7 @@ const SELECTED_OPTIONS: SelectRowOption[] = [
 
 /* Chip is the container archetype's floating pill; the hairline ring keeps it
    reading on dark wells and flat surfaces alike. */
-function selectedFx(state: LabState): string {
+export function selectedFx(state: LabState): string {
   switch (state.toggleSelected) {
     case "chip":
       return "bg-bg text-fg shadow-sm ring-1 ring-border-field"

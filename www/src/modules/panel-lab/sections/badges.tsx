@@ -29,7 +29,7 @@ export const BADGE_DEFAULTS = {
   badgeShape: "pill",
 }
 
-const BADGE_STYLE = {
+export const BADGE_STYLE = {
   solid: {
     neutral: "bg-neutral text-fg-on-neutral",
     success: "bg-success text-fg-on-success",
@@ -56,7 +56,7 @@ const BADGE_STYLE = {
   },
 }
 
-const BADGE_SHAPE = {
+export const BADGE_SHAPE = {
   pill: "rounded-full",
   rounded: "rounded-[4px]",
 }

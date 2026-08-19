@@ -36,7 +36,7 @@ const TINTS = [
   "bg-warning-muted text-fg-warning",
 ]
 
-function LabAvatar({
+export function LabAvatar({
   initials,
   index,
   state,

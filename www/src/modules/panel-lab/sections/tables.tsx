@@ -23,12 +23,12 @@ export const TABLE_DEFAULTS = {
   tableHeader: "plain",
 }
 
-const HEADER_FAMILY = {
+export const HEADER_FAMILY = {
   plain: "border-b border-border/60 text-fg-muted",
   filled: "rounded-md bg-muted text-fg-muted",
 }
 
-const ROW_FAMILY = {
+export const ROW_FAMILY = {
   lines: "not-last:border-b not-last:border-border/60",
   striped: "odd:bg-muted/40 rounded-md",
   plain: "",
@@ -40,7 +40,7 @@ const PEOPLE = [
   { name: "Sam", role: "Viewer", status: "Invited" },
 ]
 
-const CELLS = "grid grid-cols-[1.1fr_1fr_auto] items-center gap-2 px-2"
+export const CELLS = "grid grid-cols-[1.1fr_1fr_auto] items-center gap-2 px-2"
 
 export function TablesHero({ state }: { state: LabState }) {
   return (
