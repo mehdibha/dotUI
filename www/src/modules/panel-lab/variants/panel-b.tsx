@@ -19,9 +19,13 @@ import { ROW_LABEL } from "@/modules/control-lab/rows"
 import { PanelChrome } from "../panel"
 import type { Chapter, Lab } from "../state"
 import { ChapterChip } from "./chip"
+import { CARD_DEMOS } from "./demo"
 import { resolveGroups, SECTIONS } from "./groups"
 
 const PUSH_EASE = "cubic-bezier(0.32, 0.72, 0, 1)"
+
+const CARD =
+  "w-full shrink-0 cursor-interactive rounded-xl border border-border/45 bg-card px-4 py-3.5 focus-reset transition-colors hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight"
 
 function IndexRow({
   chapter,
@@ -33,21 +37,45 @@ function IndexRow({
   onPress: () => void
 }) {
   const status = lab.section(chapter.defaults)
+  const Demo = CARD_DEMOS[chapter.id]
+
+  const heading = (
+    <span className="flex items-center gap-2">
+      <span className={ROW_LABEL}>{chapter.label}</span>
+      {status.modified && (
+        <span
+          aria-label="Modified"
+          className="size-1 shrink-0 rounded-full bg-accent"
+        />
+      )}
+    </span>
+  )
+
+  // Demo cards drop the value line for a real specimen at true size.
+  if (Demo) {
+    return (
+      <RacButton
+        onPress={onPress}
+        className={cn(CARD, "flex flex-col items-stretch gap-3")}
+      >
+        <span className="flex items-center justify-between gap-3">
+          {heading}
+          <ChevronRightIcon className="size-3.5 shrink-0 text-fg-muted" />
+        </span>
+        <span aria-hidden className="pointer-events-none flex">
+          <Demo state={lab.state} />
+        </span>
+      </RacButton>
+    )
+  }
+
   return (
     <RacButton
       onPress={onPress}
-      className="flex w-full shrink-0 cursor-interactive items-center justify-between gap-3 rounded-xl border border-border/45 bg-card px-4 py-3.5 focus-reset transition-colors hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight"
+      className={cn(CARD, "flex items-center justify-between gap-3")}
     >
       <span className="flex min-w-0 flex-col items-start gap-0.5">
-        <span className="flex items-center gap-2">
-          <span className={ROW_LABEL}>{chapter.label}</span>
-          {status.modified && (
-            <span
-              aria-label="Modified"
-              className="size-1 shrink-0 rounded-full bg-accent"
-            />
-          )}
-        </span>
+        {heading}
         <span className="truncate text-xs text-fg-muted">
           {chapter.summary(lab.state)}
         </span>
