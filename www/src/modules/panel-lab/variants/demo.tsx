@@ -21,8 +21,9 @@ import type { LabState } from "../state"
 const BUTTON_SPECIMEN =
   "flex h-8 shrink-0 items-center px-3.5 text-[0.8125rem] font-medium whitespace-nowrap"
 
-/** The hero's two-row variant ladder, scaled down a notch: the neutral row,
- *  then the status fills — same specimens as ButtonsHero, inert. */
+/** The hero's two-row variant ladder, scaled down a notch and top-aligned to
+ *  the card's padding — the second row may crop at the card's bottom edge.
+ *  Each specimen names its own variant, so the strip reads as the ladder. */
 function ButtonsDemo({ state }: { state: LabState }) {
   const look = styleLook(state)
   const radius = buttonRadiusPx(state)
@@ -35,19 +36,18 @@ function ButtonsDemo({ state }: { state: LabState }) {
     </span>
   )
   return (
-    <span className="flex origin-left scale-[0.8] flex-col items-start gap-2">
-      <span className="flex items-center gap-2">
-        {specimen(
-          cn("bg-primary text-fg-on-primary", look.fill),
-          "Get started",
-        )}
-        {specimen(look.secondary, "Preview")}
-        {specimen("text-fg", "Docs")}
-      </span>
-      <span className="flex items-center gap-2">
-        {specimen(cn("bg-warning text-fg-on-warning", look.fill), "Reset")}
-        {specimen(cn("bg-danger text-fg-on-danger", look.fill), "Delete")}
-        {specimen("text-fg", "Learn more")}
+    <span className="flex self-start pt-3.5">
+      <span className="flex origin-top-left scale-[0.8] flex-col items-start gap-2">
+        <span className="flex items-center gap-2">
+          {specimen(cn("bg-primary text-fg-on-primary", look.fill), "Primary")}
+          {specimen(look.secondary, "Secondary")}
+          {specimen("text-fg", "Quiet")}
+        </span>
+        <span className="flex items-center gap-2">
+          {specimen(cn("bg-warning text-fg-on-warning", look.fill), "Warning")}
+          {specimen(cn("bg-danger text-fg-on-danger", look.fill), "Danger")}
+          {specimen("text-fg", "Link")}
+        </span>
       </span>
     </span>
   )
