@@ -1,13 +1,13 @@
 "use client"
 
-/* Variant B — drill-in, Mehdi's pick (Aug 2026). Two index sections only —
-   Foundations, then Components (Templates planned) — with roomy two-line
-   rows: label over its muted value on the left, a small state-driven
-   micro-preview and the chevron on the right. Tapping a row pushes the
-   chapter in from the right, iOS-style, with a back header; the chapter page
-   has room, so the section body renders in its original form — hero inline
-   at the head of its group. Plain transform transitions; view transitions
-   freeze interactivity. */
+/* The drill-in panel — the chosen frame (Aug 2026). Two index sections only —
+   Foundations, then Components (Templates planned). Rows are individual
+   cards with a small gap, not fused lists: label over its muted value on the
+   left, a small state-driven micro-preview and the chevron on the right.
+   Tapping a row pushes the chapter in from the right, iOS-style, with a back
+   header; the chapter page has room, so the section body renders in its
+   original form — hero inline at the head of its group. Plain transform
+   transitions; view transitions freeze interactivity. */
 
 import { useRef, useState } from "react"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
@@ -36,7 +36,7 @@ function IndexRow({
   return (
     <RacButton
       onPress={onPress}
-      className="flex w-full shrink-0 cursor-interactive items-center justify-between gap-3 px-3.5 py-2.5 focus-reset transition-colors hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight"
+      className="flex w-full shrink-0 cursor-interactive items-center justify-between gap-3 rounded-xl border border-border/45 bg-card px-4 py-3.5 focus-reset transition-colors hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight"
     >
       <span className="flex min-w-0 flex-col items-start gap-0.5">
         <span className="flex items-center gap-2">
@@ -85,7 +85,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
               <span className="px-1 text-xs font-medium text-fg-muted">
                 {group.label}
               </span>
-              <div className="flex flex-col divide-y divide-border/45 overflow-hidden rounded-xl border border-border/45 bg-card">
+              <div className="flex flex-col gap-1.5">
                 {group.chapters.map((chapter) => (
                   <IndexRow
                     key={chapter.id}

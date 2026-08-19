@@ -1,10 +1,8 @@
 "use client"
 
-/* The panel chrome, split so layout variants share it: PanelChrome owns the
-   floating glass header (title, global reset, search) and footer (save,
-   export) plus the spacing/radius tweak vars; each variant supplies the middle.
-   PanelFrame is the current design — every section a collapsed chapter stack
-   in a story scroll. Chapter-agnostic: the list comes from state.ts. */
+/* The panel chrome: the floating glass header (title, global reset, search)
+   and footer (save, export) plus the spacing/radius tweak vars. The drill-in
+   frame supplies the middle. */
 
 import type { CSSProperties } from "react"
 import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
@@ -12,9 +10,8 @@ import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
 import { Button } from "@/registry/ui/button"
 import { useTweak } from "@/dev/tweaker"
 
-import { ChapterStack } from "./chapter"
 import { DEFAULTS } from "./state"
-import type { Chapter, Lab } from "./state"
+import type { Lab } from "./state"
 
 const RADIUS_STEPS: Record<string, string> = {
   none: "0px",
@@ -123,24 +120,5 @@ export function PanelChrome({
         </Button>
       </div>
     </div>
-  )
-}
-
-export function PanelFrame({
-  chapters,
-  lab,
-}: {
-  chapters: Chapter[]
-  lab: Lab
-}) {
-  return (
-    <PanelChrome lab={lab}>
-      {/* The story scroll: every chapter its own stack. */}
-      <div className="no-scrollbar flex min-h-0 flex-1 flex-col gap-[var(--lab-gap-section,0.75rem)] overflow-y-auto overscroll-contain rounded-xl pt-[56px] pb-[62px] *:shrink-0">
-        {chapters.map((chapter) => (
-          <ChapterStack key={chapter.id} chapter={chapter} lab={lab} />
-        ))}
-      </div>
-    </PanelChrome>
   )
 }
