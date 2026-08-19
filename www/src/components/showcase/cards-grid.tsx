@@ -191,11 +191,13 @@ function CanvasColumn({
 
 export function CardsCanvas() {
   return (
-    <div className="min-h-svh overflow-x-auto overflow-y-hidden bg-neutral [--gap:--spacing(4)] md:[--gap:--spacing(10)] dark:bg-bg">
+    <div className="min-h-svh overflow-x-auto overflow-y-hidden bg-neutral [--gap:--spacing(4)] md:[--gap:--spacing(6)] dark:bg-bg">
       {/* Centers the canvas when the viewport is wider than it; otherwise the
           canvas starts flush-left and scrolls. */}
       <div className="flex w-full min-w-max justify-center">
-        <div className="grid w-[2000px] grid-cols-6 items-start gap-(--gap) p-(--gap) md:w-[2600px]">
+        {/* Width tracks the gap: 6 × ~385px columns + 5 gaps + 2 edge paddings,
+            so tightening --gap keeps cards life-size instead of growing them. */}
+        <div className="grid w-[2000px] grid-cols-6 items-start gap-(--gap) p-(--gap) md:w-[2480px]">
           <CanvasColumn cards={CANVAS_1} />
           <CanvasColumn cards={CANVAS_2} />
           <div className="col-span-2 flex flex-col gap-(--gap) p-px [contain-intrinsic-size:790px_1200px] [content-visibility:auto]">
