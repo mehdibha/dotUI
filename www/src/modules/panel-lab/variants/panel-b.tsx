@@ -27,16 +27,32 @@ const PUSH_EASE = "cubic-bezier(0.32, 0.72, 0, 1)"
 const CARD =
   "w-full shrink-0 cursor-interactive rounded-xl border border-border/45 bg-card px-4 py-3.5 focus-reset transition-colors hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight"
 
+/* Chapters absorbed by another chapter's page: their row leaves the index,
+   their body renders after the host's, and the host's modified dot covers
+   their axes too. */
+const MERGED: Record<string, string[]> = {
+  inputs: ["input-groups"],
+}
+
+function mergedDefaults(chapter: Chapter, chapters: Chapter[]) {
+  const extra = (MERGED[chapter.id] ?? [])
+    .map((id) => chapters.find((c) => c.id === id)?.defaults)
+    .filter(Boolean)
+  return Object.assign({}, chapter.defaults, ...extra)
+}
+
 function IndexRow({
   chapter,
+  chapters,
   lab,
   onPress,
 }: {
   chapter: Chapter
+  chapters: Chapter[]
   lab: Lab
   onPress: () => void
 }) {
-  const status = lab.section(chapter.defaults)
+  const status = lab.section(mergedDefaults(chapter, chapters))
   const Demo = CARD_DEMOS[chapter.id]
 
   const heading = (
@@ -51,20 +67,23 @@ function IndexRow({
     </span>
   )
 
-  // Demo cards drop the value line for a real specimen at true size.
+  // Demo cards: label left, a right-anchored strip of real specimens that
+  // crops — the rightmost stays fully visible, the rest fades out at the
+  // label edge, so big demos still give a quick look.
   if (Demo) {
     return (
       <RacButton
         onPress={onPress}
-        className={cn(CARD, "flex flex-col items-stretch gap-3")}
+        className={cn(CARD, "relative flex h-16 items-center gap-3 py-0 pr-9")}
       >
-        <span className="flex items-center justify-between gap-3">
-          {heading}
-          <ChevronRightIcon className="size-3.5 shrink-0 text-fg-muted" />
-        </span>
-        <span aria-hidden className="pointer-events-none flex">
+        <span className="z-10 shrink-0">{heading}</span>
+        <span
+          aria-hidden
+          className="pointer-events-none flex h-full min-w-0 flex-1 items-center justify-end gap-2 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_32px)]"
+        >
           <Demo state={lab.state} />
         </span>
+        <ChevronRightIcon className="absolute right-3.5 size-3.5 shrink-0 text-fg-muted" />
       </RacButton>
     )
   }
@@ -118,6 +137,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
                   <IndexRow
                     key={chapter.id}
                     chapter={chapter}
+                    chapters={chapters}
                     lab={lab}
                     onPress={() => setActiveId(chapter.id)}
                   />
@@ -151,6 +171,10 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
                 </span>
               </div>
               <page.Body lab={lab} />
+              {(MERGED[page.id] ?? []).map((id) => {
+                const merged = chapters.find((c) => c.id === id)
+                return merged ? <merged.Body key={id} lab={lab} /> : null
+              })}
             </>
           )}
         </div>

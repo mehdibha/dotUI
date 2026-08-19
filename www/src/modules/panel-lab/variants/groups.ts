@@ -42,7 +42,6 @@ export const SECTIONS: ChapterGroup[] = [
       "checkbox",
       "radio",
       "choice-cards",
-      "input-groups",
       "number-field",
       "otp-field",
       "pickers",
