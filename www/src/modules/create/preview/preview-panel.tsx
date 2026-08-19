@@ -374,11 +374,12 @@ export function PreviewPanel({
         <div className="h-4 w-px shrink-0 bg-border max-lg:hidden" />
 
         {/* Device size — desktop only; the mobile pane is already viewport-width. */}
+        {/* w-fit: the field base's w-full would absorb the pill's width. */}
         <Select
           value={size}
           onChange={(v) => setSize(v as DeviceSize)}
           aria-label="Device size"
-          className="max-lg:hidden"
+          className="w-fit shrink-0 max-lg:hidden"
         >
           <Tooltip delay={0}>
             <Button
