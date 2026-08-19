@@ -77,7 +77,8 @@ function IndexRow({
         onPress={onPress}
         className={cn(CARD, "flex h-16 items-center gap-3 py-0 pr-0")}
       >
-        <span className="shrink-0">{heading}</span>
+        {/* Fixed label column so every card's demo strip starts at the same x. */}
+        <span className="w-28 shrink-0 overflow-hidden">{heading}</span>
         <span
           aria-hidden
           className="pointer-events-none flex h-full min-w-0 flex-1 items-center justify-start gap-2 overflow-hidden [mask-image:linear-gradient(to_left,transparent,black_32px)]"
