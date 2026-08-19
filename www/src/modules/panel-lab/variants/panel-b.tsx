@@ -24,8 +24,11 @@ import { resolveGroups, SECTIONS } from "./groups"
 
 const PUSH_EASE = "cubic-bezier(0.32, 0.72, 0, 1)"
 
+/* Hover paints a translucent highlight OVER the whole card (::after sits on
+   top of the demos too), not just the background behind them — the card
+   lifts as one surface. */
 const CARD =
-  "w-full shrink-0 cursor-interactive rounded-xl border border-border/45 bg-card px-4 py-3.5 focus-reset transition-colors hover:border-border/80 hover:bg-highlight focus-visible:focus-ring pressed:border-border/80 pressed:bg-highlight"
+  "relative w-full shrink-0 cursor-interactive rounded-xl border border-border/45 bg-card px-4 py-3.5 transition-colors focus-reset focus-visible:focus-ring hover:border-border/80 pressed:border-border/80 after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-fg/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 pressed:after:opacity-100"
 
 /* Chapters absorbed by another chapter's page: their row leaves the index,
    their body renders after the host's, and the host's modified dot covers
