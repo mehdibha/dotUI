@@ -1,9 +1,9 @@
 "use client"
 
-import { ChevronRightIcon } from "lucide-react"
 import * as ButtonPrimitives from "react-aria-components/Button"
 
 import { cn } from "@/registry/lib/utils"
+import { componentDemos } from "@/modules/docs/components-list/demos"
 
 import {
   ComponentDetailView,
@@ -32,28 +32,39 @@ export function ComponentsSection({
       {paramComponents.map((comp) => {
         const isExpanded = comp.name === expanded
         const count = comp.params ? Object.keys(comp.params).length : 0
+        const Demo = componentDemos[comp.name]
         return (
           <div key={comp.name} className="border-b last:border-b-0">
-            <ButtonPrimitives.Button
-              onPress={() => onToggle(isExpanded ? undefined : comp.name)}
-              className={cn(
-                "flex w-full items-center justify-between gap-2 rounded-md px-1 py-2.5 text-sm focus-reset transition-colors hover:bg-neutral focus-visible:focus-ring",
-                isExpanded && "font-medium",
+            {/* `content-visibility` keeps the 60 mounted demos from costing
+                layout while scrolled out of view. */}
+            <div className="relative overflow-hidden rounded-md [contain-intrinsic-size:auto_48px] [content-visibility:auto]">
+              <ButtonPrimitives.Button
+                onPress={() => onToggle(isExpanded ? undefined : comp.name)}
+                className={cn(
+                  "flex h-12 w-full items-center gap-1.5 rounded-md px-1 text-sm focus-reset transition-colors hover:bg-neutral focus-visible:focus-ring",
+                  isExpanded && "font-medium",
+                )}
+              >
+                <span className="max-w-[55%] truncate">
+                  {getComponentDisplayName(comp.name)}
+                </span>
+                <span className="shrink-0 text-xs text-fg-muted/60">
+                  {count}
+                </span>
+              </ButtonPrimitives.Button>
+              {/* Mini-preview peek — a live render anchored past mid-row and
+                  cropped by the wrapper's overflow at the right edge. Inert and
+                  non-hit-testable: the whole row stays one click target. */}
+              {Demo && (
+                <div
+                  aria-hidden
+                  inert
+                  className="pointer-events-none absolute top-1/2 left-[55%] -translate-y-1/2 [zoom:0.4] select-none"
+                >
+                  <Demo />
+                </div>
               )}
-            >
-              <span className="truncate">
-                {getComponentDisplayName(comp.name)}
-              </span>
-              <span className="flex shrink-0 items-center gap-1.5 text-xs text-fg-muted/60">
-                {count}
-                <ChevronRightIcon
-                  className={cn(
-                    "size-4 text-fg-muted transition-transform",
-                    isExpanded && "rotate-90",
-                  )}
-                />
-              </span>
-            </ButtonPrimitives.Button>
+            </div>
             {isExpanded && (
               <div className="pb-4" data-control={`component-${comp.name}`}>
                 <ComponentDetailView
