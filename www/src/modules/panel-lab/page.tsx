@@ -51,15 +51,15 @@ export function PanelLabPage() {
         <TabPanel id="panel">
           <div className="flex gap-8 overflow-x-auto pb-4">
             <LabPanel
-              title="A — structured scroll"
+              title="B — drill-in (chosen)"
               render={(chapters, lab) => (
-                <PanelA chapters={chapters} lab={lab} />
+                <PanelB chapters={chapters} lab={lab} />
               )}
             />
             <LabPanel
-              title="B — drill-in"
+              title="A — structured scroll"
               render={(chapters, lab) => (
-                <PanelB chapters={chapters} lab={lab} />
+                <PanelA chapters={chapters} lab={lab} />
               )}
             />
             <LabPanel

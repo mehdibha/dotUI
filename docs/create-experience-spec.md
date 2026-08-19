@@ -112,10 +112,24 @@ fine unless you care."
 3. **Space stays in the Identity 8.** Density is a fast way to tell systems
    apart; everyone should make that decision.
 
+## Layout verdict (Aug 2026)
+
+**Drill-in wins** over the structured scroll and the accordion stacks, with
+Mehdi's modifications:
+
+- The index shows exactly **two sections — Foundations, then Components** — a
+  **Templates** section is planned (user-picked blocks). Identity emphasis
+  survives as ordering, not extra chrome.
+- Index rows are roomy and two-line: **label over its muted value** on the
+  left, a **small state-driven micro-preview** and the chevron on the right.
+  Previews render only where a ~16px specimen is honest (real brand color,
+  real font, real fill); chapters without one show nothing.
+- The chapter page keeps the full hero — in the panel index the canvas (and
+  the micro-preview) carry the visual load.
+
+Structured scroll (variant A) and the stacks stay in panel-lab as comparison
+references until the drill-in is validated against the four tests.
+
 ## Open questions
 
-1. **What visual does a chapter row carry** in the real /create (canvas beside
-   the panel)? Tiny chip vs small hero (identity only) vs text only — being
-   settled empirically: all three are live-switchable in the panel-lab
-   prototypes via the dev tweaker.
-2. Accordion sits in Display for now — worth a Disclosure family with Menus?
+1. Accordion sits in Display for now — worth a Disclosure family with Menus?

@@ -1,59 +1,59 @@
 "use client"
 
-/* Variant B — drill-in. The top level is a compact grouped index (Identity
-   first, then families); tapping a row pushes the chapter in from the right,
-   iOS-style, with a back header. The chapter page has room, so the section
-   body renders in its original form — hero inline at the head of its group.
-   Plain transform transitions; view transitions freeze interactivity. */
+/* Variant B — drill-in, Mehdi's pick (Aug 2026). Two index sections only —
+   Foundations, then Components (Templates planned) — with roomy two-line
+   rows: label over its muted value on the left, a small state-driven
+   micro-preview and the chevron on the right. Tapping a row pushes the
+   chapter in from the right, iOS-style, with a back header; the chapter page
+   has room, so the section body renders in its original form — hero inline
+   at the head of its group. Plain transform transitions; view transitions
+   freeze interactivity. */
 
 import { useRef, useState } from "react"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
-import { ROW_LABEL, ROW_VALUE } from "@/modules/control-lab/rows"
-import { useTweak } from "@/dev/tweaker"
+import { ROW_LABEL } from "@/modules/control-lab/rows"
 
 import { PanelChrome } from "../panel"
 import type { Chapter, Lab } from "../state"
 import { ChapterChip } from "./chip"
-import { groupChapters, IDENTITY_IDS } from "./groups"
-import type { RowVisual } from "./panel-a"
+import { resolveGroups, SECTIONS } from "./groups"
 
 const PUSH_EASE = "cubic-bezier(0.32, 0.72, 0, 1)"
 
 function IndexRow({
   chapter,
   lab,
-  visual,
   onPress,
 }: {
   chapter: Chapter
   lab: Lab
-  visual: RowVisual
   onPress: () => void
 }) {
   const status = lab.section(chapter.defaults)
-  const identity = IDENTITY_IDS.includes(chapter.id)
   return (
     <RacButton
       onPress={onPress}
-      className="flex h-11 w-full shrink-0 cursor-interactive items-center justify-between gap-3 px-3.5 focus-reset transition-colors hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight"
+      className="flex w-full shrink-0 cursor-interactive items-center justify-between gap-3 px-3.5 py-2.5 focus-reset transition-colors hover:bg-highlight focus-visible:focus-ring pressed:bg-highlight"
     >
-      <span className="flex min-w-0 shrink-0 items-center gap-2.5">
-        {visual !== "text" && identity && (
-          <ChapterChip id={chapter.id} state={lab.state} />
-        )}
-        <span className={ROW_LABEL}>{chapter.label}</span>
-        {status.modified && (
-          <span
-            aria-label="Modified"
-            className="size-1 shrink-0 rounded-full bg-accent"
-          />
-        )}
+      <span className="flex min-w-0 flex-col items-start gap-0.5">
+        <span className="flex items-center gap-2">
+          <span className={ROW_LABEL}>{chapter.label}</span>
+          {status.modified && (
+            <span
+              aria-label="Modified"
+              className="size-1 shrink-0 rounded-full bg-accent"
+            />
+          )}
+        </span>
+        <span className="truncate text-xs text-fg-muted">
+          {chapter.summary(lab.state)}
+        </span>
       </span>
-      <span className="flex min-w-0 items-center gap-1.5">
-        <span className={ROW_VALUE}>{chapter.summary(lab.state)}</span>
+      <span className="flex shrink-0 items-center gap-2.5">
+        <ChapterChip id={chapter.id} state={lab.state} />
         <ChevronRightIcon className="size-3.5 shrink-0 text-fg-muted" />
       </span>
     </RacButton>
@@ -61,14 +61,6 @@ function IndexRow({
 }
 
 export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
-  // Same tweak key as variant A — one control drives both panels.
-  const visual = useTweak("Row visual", {
-    type: "select",
-    options: ["chip", "hero", "text"],
-    default: "chip",
-    group: "Variants",
-  }) as RowVisual
-
   const [activeId, setActiveId] = useState<string | null>(null)
   // The page keeps rendering its last chapter while sliding back out.
   const lastRef = useRef<Chapter | null>(null)
@@ -88,7 +80,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
           style={{ transitionTimingFunction: PUSH_EASE }}
           aria-hidden={!!active}
         >
-          {groupChapters(chapters).map((group) => (
+          {resolveGroups(SECTIONS, chapters).map((group) => (
             <section key={group.label} className="flex flex-col gap-1.5">
               <span className="px-1 text-xs font-medium text-fg-muted">
                 {group.label}
@@ -99,7 +91,6 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
                     key={chapter.id}
                     chapter={chapter}
                     lab={lab}
-                    visual={visual}
                     onPress={() => setActiveId(chapter.id)}
                   />
                 ))}
