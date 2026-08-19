@@ -1,13 +1,13 @@
 "use client"
 
-/* Card demos — real specimens on the right of a component card, as a
-   right-anchored strip that CROPS: the strip may be wider than the card, the
-   rightmost specimen stays fully visible and the rest fades out at the left
-   edge, so even big demos give a quick look. Inert by design (span-based,
-   pointer-events-none wrapper) — the card itself is the pressable. Wired for
-   buttons and inputs (which absorbed input-groups) while the pattern is
-   judged; the registry below decides which cards trade their summary for a
-   demo strip. */
+/* Card demos — real specimens beside a component card's label, as a strip
+   that CROPS off the card's right edge: the strip may be wider than the card,
+   the leftmost (identity) specimen stays fully visible and the rest fades out
+   at the right, so even big demos give a quick look. Inert by design
+   (span-based, pointer-events-none wrapper) — the card itself is the
+   pressable. Wired for buttons and inputs (which absorbed input-groups) while
+   the pattern is judged; the registry below decides which cards trade their
+   summary for a demo strip. */
 
 import { CopyIcon, PlusIcon } from "lucide-react"
 
@@ -21,12 +21,22 @@ import type { LabState } from "../state"
 const BUTTON_SPECIMEN =
   "flex h-8 shrink-0 items-center px-3.5 text-[0.8125rem] font-medium whitespace-nowrap"
 
-/** Rightmost = the identity specimen (fully visible); extras fade out left. */
+/** Leftmost = the identity specimen (fully visible); extras fade out right. */
 function ButtonsDemo({ state }: { state: LabState }) {
   const look = styleLook(state)
   const radius = buttonRadiusPx(state)
   return (
     <>
+      <span
+        className={cn(
+          BUTTON_SPECIMEN,
+          "bg-primary text-fg-on-primary",
+          look.fill,
+        )}
+        style={{ borderRadius: radius }}
+      >
+        Get started
+      </span>
       <span
         className={cn(BUTTON_SPECIMEN, look.secondary)}
         style={{ borderRadius: radius }}
@@ -43,27 +53,23 @@ function ButtonsDemo({ state }: { state: LabState }) {
       >
         <PlusIcon className="size-4" />
       </span>
-      <span
-        className={cn(
-          BUTTON_SPECIMEN,
-          "bg-primary text-fg-on-primary",
-          look.fill,
-        )}
-        style={{ borderRadius: radius }}
-      >
-        Get started
-      </span>
     </>
   )
 }
 
-/** The field family: addon group fading left, the plain field fully visible. */
+/** The field family: the plain field fully visible, addon group fading right. */
 function InputsDemo({ state }: { state: LabState }) {
   const look = inputLook(state.inputStyle, controlRadiusPx(state))
   const boxed = state.addonLayout === "boxed"
   const divided = boxed && state.addonDivider === "hairline"
   return (
     <>
+      <span
+        className={cn(SHELL, "w-44 shrink-0 gap-2 px-2.5", look.className)}
+        style={look.style}
+      >
+        <span className="flex items-center text-fg-muted">you@example.com</span>
+      </span>
       <span
         className={cn(
           SHELL,
@@ -96,12 +102,6 @@ function InputsDemo({ state }: { state: LabState }) {
         >
           <CopyIcon className="size-3.5" />
         </span>
-      </span>
-      <span
-        className={cn(SHELL, "w-44 shrink-0 gap-2 px-2.5", look.className)}
-        style={look.style}
-      >
-        <span className="flex items-center text-fg-muted">you@example.com</span>
       </span>
     </>
   )

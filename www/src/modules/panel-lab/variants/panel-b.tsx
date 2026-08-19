@@ -67,23 +67,23 @@ function IndexRow({
     </span>
   )
 
-  // Demo cards: label left, a right-anchored strip of real specimens that
-  // crops — the rightmost stays fully visible, the rest fades out at the
-  // label edge, so big demos still give a quick look.
+  // Demo cards: label left, then a strip of real specimens that bleeds off
+  // the card's right edge and fades out there — the leftmost (identity)
+  // specimen stays fully visible, the rest give a cropped quick look. No
+  // chevron: the whole card is the affordance.
   if (Demo) {
     return (
       <RacButton
         onPress={onPress}
-        className={cn(CARD, "relative flex h-16 items-center gap-3 py-0 pr-9")}
+        className={cn(CARD, "flex h-16 items-center gap-3 py-0 pr-0")}
       >
-        <span className="z-10 shrink-0">{heading}</span>
+        <span className="shrink-0">{heading}</span>
         <span
           aria-hidden
-          className="pointer-events-none flex h-full min-w-0 flex-1 items-center justify-end gap-2 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_32px)]"
+          className="pointer-events-none flex h-full min-w-0 flex-1 items-center justify-start gap-2 overflow-hidden [mask-image:linear-gradient(to_left,transparent,black_32px)]"
         >
           <Demo state={lab.state} />
         </span>
-        <ChevronRightIcon className="absolute right-3.5 size-3.5 shrink-0 text-fg-muted" />
       </RacButton>
     )
   }
