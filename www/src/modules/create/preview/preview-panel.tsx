@@ -339,10 +339,15 @@ export function PreviewPanel({
           isOpen={pickerOpen}
           onOpenChange={setPickerOpen}
           aria-label="Preview"
-          className="min-w-0"
+          // w-fit overrides the field base's w-full, which would collapse the
+          // trigger inside the pill's shrink-to-fit absolute box.
+          className="w-fit min-w-0"
         >
           <Button size="sm" variant="quiet" className="max-w-44 rounded-full">
-            <SelectValue className="truncate" />
+            {/* flex-initial overrides the base flex-1 (basis-0), which has no
+                space to grow into inside the pill's shrink-to-fit box and
+                collapses the value to a sliver. */}
+            <SelectValue className="min-w-0 flex-initial" />
             <ChevronsUpDownIcon data-icon-end="" />
           </Button>
           {isMobile ? (
