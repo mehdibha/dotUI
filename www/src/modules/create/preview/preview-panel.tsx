@@ -27,6 +27,7 @@ import {
   ListBoxSection,
   ListBoxSectionHeader,
 } from "@/registry/ui/list-box"
+import { Loader } from "@/registry/ui/loader"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
@@ -127,8 +128,10 @@ export function PreviewPanel({
   // server can't know the client's stored theme (it always resolves "light"), so reading
   // it during render would mismatch the SSR'd toggle icon on hydration. Runs once — the
   // preview mode is toggled independently of the site theme afterwards.
+  const modeSeeded = useRef(false)
   useEffect(() => {
     setPreviewMode(resolvedTheme)
+    modeSeeded.current = true
     // oxlint-disable-next-line react/exhaustive-deps -- seed once from the site theme at open; preview mode is independent thereafter
   }, [])
 
@@ -137,8 +140,16 @@ export function PreviewPanel({
   // — further updates go through postMessage without reloading the iframe.
   const iframeSrc = useMemo(() => {
     const base = `/preview/${effectivePreview}`
-    return preset ? `${base}?preset=${encodeURIComponent(preset)}` : base
-    // oxlint-disable-next-line react/exhaustive-deps -- keep live preset changes on the postMessage channel to avoid iframe reloads
+    const params = new URLSearchParams()
+    if (preset) params.set("preset", preset)
+    // Bake the current mode in so a remounted iframe first-paints in the
+    // previewed mode instead of flashing from its own stored theme. Skipped on
+    // the very first compute — previewMode hasn't seeded yet and the fresh
+    // iframe's stored theme already matches the site's.
+    if (modeSeeded.current) params.set("mode", previewMode)
+    const qs = params.toString()
+    return qs ? `${base}?${qs}` : base
+    // oxlint-disable-next-line react/exhaustive-deps -- keep live preset / mode changes on the postMessage channel to avoid iframe reloads
   }, [effectivePreview])
 
   // The iframe remounts per previewed component (key below) — show the stage
@@ -317,19 +328,17 @@ export function PreviewPanel({
         </div>
       </div>
 
-      {/* Stage skeleton — the preview never opens on a black void. One surface
-          rather than mock content: the incoming preview is an arbitrary page,
-          so any guessed layout would be wrong more often than right. */}
+      {/* Loading — a plain surface with a centered spinner. One surface rather
+          than mock content: the incoming preview is an arbitrary page, so any
+          guessed layout would be wrong more often than right. */}
       <div
         aria-hidden
         className={cn(
-          "absolute inset-0 z-10 transition-opacity duration-300",
+          "absolute inset-0 z-10 flex items-center justify-center bg-bg transition-opacity duration-300",
           isLoaded && "pointer-events-none opacity-0",
         )}
       >
-        {/* The pulse lives on the inner surface: `animate-pulse` drives opacity,
-            which would otherwise override the fade-out above and never clear. */}
-        <div className="skeleton size-full animate-pulse" />
+        <Loader className="size-5 text-fg-muted" />
       </div>
 
       {/* Floating toolbar — the panel's only chrome. It overlays the user's page,
