@@ -46,7 +46,7 @@ const ENABLED: Look = {
   field: "border border-border-field bg-card text-fg",
 }
 
-const DISABLED_LOOKS = {
+export const DISABLED_LOOKS = {
   fade: {
     primary: cn(ENABLED.primary, "opacity-50"),
     secondary: cn(ENABLED.secondary, "opacity-50"),

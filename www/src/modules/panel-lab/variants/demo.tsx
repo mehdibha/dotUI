@@ -128,6 +128,21 @@ import {
   SlidersDemo,
 } from "./demos/fields"
 import {
+  ColorDemo,
+  CursorDemo,
+  DisabledDemo,
+  FocusDemo,
+  IconsDemo,
+  LinksDemo,
+  MotionDemo,
+  ScrollbarsDemo,
+  SelectionDemo,
+  ShapeDemo,
+  SpaceDemo,
+  SurfacesDemo,
+  TypographyDemo,
+} from "./demos/foundations"
+import {
   AccordionDemo,
   BreadcrumbsDemo,
   DialogsDemo,
@@ -138,11 +153,24 @@ import {
   TooltipsDemo,
 } from "./demos/overlays"
 
-/** Every component card carries a demo strip. */
+/** Every card carries a demo strip — one grammar for the whole index. */
 export const CARD_DEMOS: Record<
   string,
   React.ComponentType<{ state: LabState }>
 > = {
+  color: ColorDemo,
+  typography: TypographyDemo,
+  icons: IconsDemo,
+  shape: ShapeDemo,
+  space: SpaceDemo,
+  surfaces: SurfacesDemo,
+  focus: FocusDemo,
+  cursor: CursorDemo,
+  selection: SelectionDemo,
+  scrollbars: ScrollbarsDemo,
+  disabled: DisabledDemo,
+  motion: MotionDemo,
+  links: LinksDemo,
   buttons: ButtonsDemo,
   inputs: InputsDemo,
   "button-groups": ButtonGroupsDemo,

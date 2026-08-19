@@ -38,7 +38,7 @@ const COLOR_OPTIONS = [
   { value: "foreground", label: "Foreground" },
 ]
 
-const LINK_COLOR = {
+export const LINK_COLOR = {
   accent: "text-accent",
   // Weight is the only resting cue foreground links get — the Vercel/Linear
   // pattern against a muted paragraph.
@@ -47,7 +47,7 @@ const LINK_COLOR = {
 
 /* Rest vs hover split so the hero can pin one link in its hovered state; the
    resting link keeps a live hover: class so real pointers work too. */
-const LINK_REST = {
+export const LINK_REST = {
   always: "underline underline-offset-2",
   hover: "underline-offset-2 hover:underline",
   never: "",

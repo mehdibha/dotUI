@@ -149,13 +149,13 @@ export function PickersDemo({ state }: { state: LabState }) {
         <span className={box} style={look.style}>
           <CalendarIcon className="size-3.5 shrink-0 text-fg-muted" />
           <span className="flex flex-1 items-center truncate text-fg">
-            Aug 12, 2026
+            Aug 12
           </span>
         </span>
       ) : (
         <span className={cn(box, "pr-1")} style={look.style}>
           <span className="flex flex-1 items-center truncate text-fg">
-            Aug 12, 2026
+            Aug 12
           </span>
           <span className="flex size-6 shrink-0 items-center justify-center text-fg-muted">
             <CalendarIcon className="size-3.5" />

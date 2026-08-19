@@ -48,7 +48,7 @@ const CONTROL_SIZE_UNITS: Record<string, number> = {
 
 const spacePx = (n: number) => Math.round(n * 2) / 2
 
-function spaceRecipe(state: LabState) {
+export function spaceRecipe(state: LabState) {
   const unit = state.spacingUnit
   const factor = DENSITY_FACTORS[state.density] ?? 1
   return {

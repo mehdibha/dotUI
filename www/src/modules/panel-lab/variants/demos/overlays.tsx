@@ -80,12 +80,12 @@ export function MenusDemo({ state }: { state: LabState }) {
 export function DialogsDemo({ state }: { state: LabState }) {
   return (
     <span className="flex shrink-0">
-      <span className="relative h-24 w-48 overflow-hidden rounded-md border border-border/60 bg-bg">
+      <span className="relative h-24 w-48 overflow-hidden rounded-md border border-border/60 bg-muted">
         <span className="flex flex-col gap-1.5 p-2">
-          <span className="h-1.5 w-14 rounded-full bg-fg/20" />
-          <span className="h-1 w-4/5 rounded-full bg-fg/10" />
-          <span className="h-1 w-full rounded-full bg-fg/10" />
-          <span className="h-1 w-3/5 rounded-full bg-fg/10" />
+          <span className="h-1.5 w-14 rounded-full bg-fg/30" />
+          <span className="h-1 w-4/5 rounded-full bg-fg/15" />
+          <span className="h-1 w-full rounded-full bg-fg/15" />
+          <span className="h-1 w-3/5 rounded-full bg-fg/15" />
         </span>
         <span
           className={cn(

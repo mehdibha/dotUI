@@ -99,7 +99,7 @@ const mix = (base: string, pct: number) =>
 
 /** The keyboard ring as a box-shadow stack — the gap paints in bg like the
  *  real focus-ring utility (ring-offset-bg), so it follows any radius. */
-function focusRingShadow(state: LabState): string {
+export function focusRingShadow(state: LabState): string {
   const width = state.focusWidth
   const base = focusColorVar(state)
   // Duo sits flush by design — the inner hairline is its gap.

@@ -10,15 +10,14 @@
    transitions; view transitions freeze interactivity. */
 
 import { useRef, useState } from "react"
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import { ChevronLeftIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
-import { ROW_LABEL } from "@/modules/control-lab/rows"
+import { GroupTitle, ROW_LABEL } from "@/modules/control-lab/rows"
 
 import { PanelChrome } from "../panel"
 import type { Chapter, Lab } from "../state"
-import { ChapterChip } from "./chip"
 import { CARD_DEMOS } from "./demo"
 import { resolveGroups, SECTIONS } from "./groups"
 
@@ -58,62 +57,37 @@ function IndexRow({
   const status = lab.section(mergedDefaults(chapter, chapters))
   const Demo = CARD_DEMOS[chapter.id]
 
-  const heading = (
-    <span className="flex items-center gap-2">
-      <span className={ROW_LABEL}>{chapter.label}</span>
-      {status.modified && (
-        <span
-          aria-label="Modified"
-          className="size-1 shrink-0 rounded-full bg-accent"
-        />
-      )}
-    </span>
-  )
-
-  // Demo cards: label left, then a strip of real specimens that bleeds off
-  // the card's right edge and fades out there — the leftmost (identity)
-  // specimen stays fully visible, the rest give a cropped quick look. No
-  // chevron: the whole card is the affordance.
-  if (Demo) {
-    return (
-      <RacButton
-        onPress={onPress}
-        className={cn(CARD, "flex h-16 items-center gap-3 py-0 pr-0")}
-      >
-        {/* Min-width label column: strips align at the same x, long labels
-            push instead of truncating. */}
-        <span className="min-w-28 shrink-0">{heading}</span>
-        {/* Uniform paddings via auto margins: a strip that FITS right-aligns
-            (ml-auto) at the card's pr-4 and vertically centers (my-auto); one
-            that OVERFLOWS collapses its auto margins to 0, so it pins to the
-            card's pt-3.5 / left edge and crops through the bottom / the 16px
-            right fade, which starts exactly where the padding begins. */}
-        <span
-          aria-hidden
-          className="pointer-events-none flex h-full min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(to_left,transparent,black_16px)] py-3.5"
-        >
-          <span className="my-auto ml-auto flex items-center gap-2 pr-4">
-            <Demo state={lab.state} />
-          </span>
-        </span>
-      </RacButton>
-    )
-  }
-
+  // One card anatomy for the whole index: label left, then a strip of real
+  // specimens. No chevron, no summary line — the specimen carries the values
+  // (precision text like a hex or font name is part of the specimen).
   return (
     <RacButton
       onPress={onPress}
-      className={cn(CARD, "flex items-center justify-between gap-3")}
+      className={cn(CARD, "flex h-16 items-center gap-3 py-0 pr-0")}
     >
-      <span className="flex min-w-0 flex-col items-start gap-0.5">
-        {heading}
-        <span className="truncate text-xs text-fg-muted">
-          {chapter.summary(lab.state)}
-        </span>
+      {/* Min-width label column: strips align at the same x, long labels
+          push instead of truncating. */}
+      <span className="flex min-w-28 shrink-0 items-center gap-2">
+        <span className={ROW_LABEL}>{chapter.label}</span>
+        {status.modified && (
+          <span
+            aria-label="Modified"
+            className="size-1 shrink-0 rounded-full bg-accent"
+          />
+        )}
       </span>
-      <span className="flex shrink-0 items-center gap-2.5">
-        <ChapterChip id={chapter.id} state={lab.state} />
-        <ChevronRightIcon className="size-3.5 shrink-0 text-fg-muted" />
+      {/* Uniform paddings via auto margins: a strip that FITS right-aligns
+          (ml-auto) at the card's pr-4 and vertically centers (my-auto); one
+          that OVERFLOWS collapses its auto margins to 0, so it pins to the
+          card's pt-3.5 / left edge and crops through the bottom / the 16px
+          right fade, which starts exactly where the padding begins. */}
+      <span
+        aria-hidden
+        className="pointer-events-none flex h-full min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(to_left,transparent,black_16px)] py-3.5"
+      >
+        <span className="my-auto ml-auto flex items-center gap-2 pr-4">
+          {Demo && <Demo state={lab.state} />}
+        </span>
       </span>
     </RacButton>
   )
@@ -185,7 +159,12 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
               <page.Body lab={lab} />
               {(MERGED[page.id] ?? []).map((id) => {
                 const merged = chapters.find((c) => c.id === id)
-                return merged ? <merged.Body key={id} lab={lab} /> : null
+                return merged ? (
+                  <span key={id} className="contents">
+                    <GroupTitle>{merged.label}</GroupTitle>
+                    <merged.Body lab={lab} />
+                  </span>
+                ) : null
               })}
             </>
           )}
