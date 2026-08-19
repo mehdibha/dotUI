@@ -31,7 +31,7 @@ import { Loader } from "@/registry/ui/loader"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
-import { Select } from "@/registry/ui/select"
+import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import {
   pingIframe,
@@ -64,11 +64,6 @@ const SIZE_OPTIONS: {
 const ALL_COMPONENTS = componentsData
   .flatMap((category) => category.components)
   .sort((a, b) => a.name.localeCompare(b.name))
-
-const PREVIEW_LABELS: Record<string, string> = {
-  cards: "Cards",
-  overview: "Brand Guidelines",
-}
 
 // Zoom magnifies the rendered iframe (CSS `zoom`, no reflow) — distinct from device
 // size, which reflows the content. Combined, they behave like a browser's device bar.
@@ -104,7 +99,6 @@ export function PreviewPanel({
 
   const panelRef = useRef<HTMLDivElement>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const switcherRef = useRef<HTMLButtonElement>(null)
   const [previewMode, setPreviewMode] = useState<PreviewMode>("light")
   const [size, setSize] = useState<DeviceSize>("desktop")
   const [zoom, setZoom] = useState(1)
@@ -118,10 +112,6 @@ export function PreviewPanel({
   // Always found: `size` is a DeviceSize and SIZE_OPTIONS covers all three.
   const sizeOption = SIZE_OPTIONS.find((o) => o.id === size)!
   const SizeIcon = sizeOption.Icon
-  const previewLabel =
-    PREVIEW_LABELS[effectivePreview] ??
-    ALL_COMPONENTS.find((comp) => comp.slug === effectivePreview)?.name ??
-    effectivePreview
 
   // Open the preview in the same light / dark mode the site is currently in. Seeded on
   // mount rather than via the useState initializer: this page is server-rendered and the
@@ -244,27 +234,15 @@ export function PreviewPanel({
     }
   }
 
-  // Picker body shared by the desktop modal and the mobile drawer — only the
-  // list's sizing differs between the two containers.
+  // Picker body shared by the desktop popover and the mobile drawer — only the
+  // list's sizing differs between the two containers. Selection state comes
+  // from the wrapping Select, so the ListBox carries no props of its own.
   const renderPicker = (listClassName: string) => (
     <Command className="min-h-0 flex-1">
       <SearchField autoFocus aria-label="Search previews">
         <Input placeholder="Search previews…" />
       </SearchField>
-      <ListBox
-        aria-label="Previews"
-        selectionMode="single"
-        disallowEmptySelection
-        selectedKeys={[effectivePreview]}
-        onSelectionChange={(keys) => {
-          if (keys === "all") return
-          const next = keys.values().next().value
-          if (next == null) return
-          navigate({ search: (prev) => ({ ...prev, preview: String(next) }) })
-          setPickerOpen(false)
-        }}
-        className={listClassName}
-      >
+      <ListBox className={listClassName}>
         <ListBoxSection>
           <ListBoxSectionHeader>Preview</ListBoxSectionHeader>
           {/* Composed, real-world UI (the landing cards grid), themed live. */}
@@ -347,18 +325,46 @@ export function PreviewPanel({
           neutral surface, full-strength border, and a deep layered shadow.
           Sits above the skeleton so the switcher works while loading. */}
       <div className="absolute bottom-3 left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center gap-1 rounded-full border border-border bg-neutral p-1 shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)]">
-        {/* Preview switcher — opens the picker (anchored popover on desktop,
-            drawer on mobile). */}
-        <Button
-          ref={switcherRef}
-          size="sm"
-          variant="quiet"
-          className="max-w-44 rounded-full"
-          onPress={() => setPickerOpen(true)}
+        {/* Preview switcher — a real Select (trigger a11y, typeahead, focus
+            restoration for free). Its overlay is the anchored popover on
+            desktop and the bottom drawer on mobile; open state is controlled
+            so the drawer can be driven by the same Select. */}
+        <Select
+          value={effectivePreview}
+          onChange={(v) =>
+            navigate({
+              search: (prev) => ({ ...prev, preview: v as string }),
+            })
+          }
+          isOpen={pickerOpen}
+          onOpenChange={setPickerOpen}
+          aria-label="Preview"
+          className="min-w-0"
         >
-          <span className="truncate">{previewLabel}</span>
-          <ChevronsUpDownIcon data-icon-end="" />
-        </Button>
+          <Button size="sm" variant="quiet" className="max-w-44 rounded-full">
+            <SelectValue className="truncate" />
+            <ChevronsUpDownIcon data-icon-end="" />
+          </Button>
+          {isMobile ? (
+            <Drawer
+              isOpen={pickerOpen}
+              onOpenChange={setPickerOpen}
+              className="h-[80svh]"
+            >
+              <DialogContent
+                aria-label="Select preview"
+                className="flex h-full min-h-0 flex-col gap-0 p-0"
+              >
+                <DrawerHandle />
+                {renderPicker("min-h-0 flex-1 overflow-y-auto")}
+              </DialogContent>
+            </Drawer>
+          ) : (
+            <Popover placement="top" className="w-64">
+              {renderPicker("max-h-72 overflow-y-auto")}
+            </Popover>
+          )}
+        </Select>
 
         <div className="h-4 w-px shrink-0 bg-border max-lg:hidden" />
 
@@ -508,37 +514,6 @@ export function PreviewPanel({
           </>
         )}
       </div>
-
-      {/* Preview picker — a searchable palette: popover anchored to the
-          switcher on desktop (list capped so the popover keeps a fixed max
-          height instead of spanning the panel), bottom drawer on mobile. */}
-      {isMobile ? (
-        <Drawer
-          isOpen={pickerOpen}
-          onOpenChange={setPickerOpen}
-          className="h-[80svh]"
-        >
-          <DialogContent
-            aria-label="Select preview"
-            className="flex h-full min-h-0 flex-col gap-0 p-0"
-          >
-            <DrawerHandle />
-            {renderPicker("min-h-0 flex-1 overflow-y-auto")}
-          </DialogContent>
-        </Drawer>
-      ) : (
-        <Popover
-          triggerRef={switcherRef}
-          isOpen={pickerOpen}
-          onOpenChange={setPickerOpen}
-          placement="top"
-          className="w-64"
-        >
-          <DialogContent aria-label="Select preview" className="p-0">
-            {renderPicker("max-h-72 overflow-y-auto")}
-          </DialogContent>
-        </Popover>
-      )}
     </div>
   )
 }
