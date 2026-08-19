@@ -348,7 +348,7 @@ export function CreatePanel({ className }: { className?: string }) {
           bars and clipped, so cards show below the header but never exceed it. */}
       <div
         ref={bodyRef}
-        className="no-scrollbar flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overscroll-contain rounded-xl"
+        className="no-scrollbar flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overscroll-contain rounded-xl [--control-label:4.5rem]"
         style={{
           paddingTop: barHeights.header + PANELS_GAP,
           paddingBottom: barHeights.footer + PANELS_GAP,
