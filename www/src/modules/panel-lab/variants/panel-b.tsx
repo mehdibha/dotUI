@@ -80,13 +80,19 @@ function IndexRow({
         onPress={onPress}
         className={cn(CARD, "flex h-16 items-center gap-3 py-0 pr-0")}
       >
-        {/* Fixed label column so every card's demo strip starts at the same x. */}
-        <span className="w-28 shrink-0 overflow-hidden">{heading}</span>
+        {/* Min-width label column: strips align at the same x, long labels
+            push instead of truncating. */}
+        <span className="min-w-28 shrink-0">{heading}</span>
+        {/* ml-auto right-aligns previews that fit (pr-8 keeps them clear of
+            the fade); when a strip overflows, the auto margin collapses to 0
+            so it stays left-pinned and crops at the right edge. */}
         <span
           aria-hidden
-          className="pointer-events-none flex h-full min-w-0 flex-1 items-center justify-start gap-2 overflow-hidden [mask-image:linear-gradient(to_left,transparent,black_32px)]"
+          className="pointer-events-none flex h-full min-w-0 flex-1 items-center overflow-hidden [mask-image:linear-gradient(to_left,transparent,black_32px)]"
         >
-          <Demo state={lab.state} />
+          <span className="ml-auto flex h-full items-center gap-2 pr-8">
+            <Demo state={lab.state} />
+          </span>
         </span>
       </RacButton>
     )
