@@ -28,7 +28,6 @@ import {
   ListBoxSectionHeader,
 } from "@/registry/ui/list-box"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
-import { Modal } from "@/registry/ui/modal"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Select } from "@/registry/ui/select"
@@ -104,6 +103,7 @@ export function PreviewPanel({
 
   const panelRef = useRef<HTMLDivElement>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const switcherRef = useRef<HTMLButtonElement>(null)
   const [previewMode, setPreviewMode] = useState<PreviewMode>("light")
   const [size, setSize] = useState<DeviceSize>("desktop")
   const [zoom, setZoom] = useState(1)
@@ -338,8 +338,10 @@ export function PreviewPanel({
           neutral surface, full-strength border, and a deep layered shadow.
           Sits above the skeleton so the switcher works while loading. */}
       <div className="absolute bottom-3 left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center gap-1 rounded-full border border-border bg-neutral p-1 shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)]">
-        {/* Preview switcher — opens the picker (modal on desktop, drawer on mobile). */}
+        {/* Preview switcher — opens the picker (anchored popover on desktop,
+            drawer on mobile). */}
         <Button
+          ref={switcherRef}
           size="sm"
           variant="quiet"
           className="max-w-44 rounded-full"
@@ -498,8 +500,9 @@ export function PreviewPanel({
         )}
       </div>
 
-      {/* Preview picker — a searchable palette: centered modal on desktop,
-          bottom drawer on mobile. */}
+      {/* Preview picker — a searchable palette: popover anchored to the
+          switcher on desktop (list capped so the popover keeps a fixed max
+          height instead of spanning the panel), bottom drawer on mobile. */}
       {isMobile ? (
         <Drawer
           isOpen={pickerOpen}
@@ -515,15 +518,17 @@ export function PreviewPanel({
           </DialogContent>
         </Drawer>
       ) : (
-        <Modal
+        <Popover
+          triggerRef={switcherRef}
           isOpen={pickerOpen}
           onOpenChange={setPickerOpen}
-          className="w-full sm:max-w-sm"
+          placement="top"
+          className="w-64"
         >
           <DialogContent aria-label="Select preview" className="p-0">
-            {renderPicker("max-h-96 overflow-y-auto")}
+            {renderPicker("max-h-72 overflow-y-auto")}
           </DialogContent>
-        </Modal>
+        </Popover>
       )}
     </div>
   )
