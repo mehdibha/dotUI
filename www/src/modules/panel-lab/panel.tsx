@@ -23,7 +23,7 @@ const RADIUS_STEPS: Record<string, string> = {
 
 /** Header + footer + tweak vars. Children own the middle region (and its
  *  scrolling) — they must claim flex-1 min-h-0 and pad for the overlaid bars
- *  (56px top, 60px bottom). */
+ *  (68px top and bottom). */
 export function PanelChrome({
   lab,
   children,
@@ -74,8 +74,9 @@ export function PanelChrome({
         } as CSSProperties
       }
     >
-      {/* Header bar — flush to the panel, content dips under it. */}
-      <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 border-b border-border/45 bg-card/85 p-1.5 backdrop-blur-sm">
+      {/* Header bar — flush to the panel, content dips under it. p-3 keeps
+          the sm button (radius-md = 7.5px) concentric with the 2xl shell. */}
+      <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 border-b border-border/45 bg-card/85 p-3 backdrop-blur-sm">
         <Button
           variant="quiet"
           size="sm"
@@ -111,7 +112,7 @@ export function PanelChrome({
       {children}
 
       {/* Footer bar — same treatment as the header. */}
-      <div className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-2 border-t border-border/45 bg-card/85 p-2 backdrop-blur-sm">
+      <div className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-2 border-t border-border/45 bg-card/85 p-3 backdrop-blur-sm">
         <Button size="sm" className="flex-1">
           Save
         </Button>

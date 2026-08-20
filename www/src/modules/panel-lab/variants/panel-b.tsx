@@ -116,7 +116,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
         {/* Index pane — recedes left under the incoming page. */}
         <div
           className={cn(
-            "absolute inset-0 no-scrollbar flex flex-col gap-5 overflow-y-auto overscroll-contain px-3 pt-[56px] pb-[60px] transition-[transform,opacity] duration-350 *:shrink-0",
+            "absolute inset-0 no-scrollbar flex flex-col gap-5 overflow-y-auto overscroll-contain px-3 pt-[68px] pb-[68px] transition-[transform,opacity] duration-350 *:shrink-0",
             active && "pointer-events-none -translate-x-1/4 opacity-60",
           )}
           style={{ transitionTimingFunction: PUSH_EASE }}
@@ -145,7 +145,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
         <div
           ref={pageRef}
           className={cn(
-            "absolute inset-0 no-scrollbar flex flex-col gap-[var(--lab-gap-control,0.375rem)] overflow-y-auto overscroll-contain bg-card px-3 pt-[56px] pb-[60px] transition-transform duration-350 *:shrink-0",
+            "absolute inset-0 no-scrollbar flex flex-col gap-[var(--lab-gap-control,0.375rem)] overflow-y-auto overscroll-contain bg-card px-3 pt-[68px] pb-[68px] transition-transform duration-350 *:shrink-0",
             active ? "translate-x-0" : "pointer-events-none translate-x-full",
           )}
           style={{ transitionTimingFunction: PUSH_EASE }}
