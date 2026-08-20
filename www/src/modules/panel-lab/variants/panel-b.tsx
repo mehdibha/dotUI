@@ -4,15 +4,13 @@
    Foundations, then Components (Templates planned). Rows are individual
    muted rows with a small gap, not fused lists: label over its muted value on
    the left, a small state-driven micro-preview and the chevron on the right.
-   Tapping a row runs a Material shared-axis fade at panel scale (24px ≈ the
-   spec's 30px travel): both panes slide the full 200ms, but the fades are
-   SEQUENTIAL — outgoing dies in the first 70ms (accelerate), incoming fades
-   over the remaining 130ms (decelerate). The split is what prevents the
-   muddy double-exposure of a plain crossfade; no blur needed. Not a
-   full-width push: this navigation fires constantly, so it stays subtle.
-   The chapter page has room, so the section body renders in its original
-   form — hero inline at the head of its group. Plain CSS transitions;
-   view transitions freeze interactivity. */
+   Tapping a row swaps panes INSTANTLY — the Raycast/Linear/cmdk school:
+   this navigation fires constantly, and the Aug 2026 animation research
+   found instant to be the most common choice among high-frequency tools.
+   (The runner-up, a Material shared-axis fade split — 24px travel, 200ms
+   slides, sequential 70ms-out/130ms-in fades — lives at e27848f5b if
+   motion ever comes back.) The chapter page has room, so the section body
+   renders in its original form — hero inline at the head of its group. */
 
 import { Fragment, useEffect, useRef, useState } from "react"
 import { ChevronLeftIcon } from "lucide-react"
@@ -26,15 +24,6 @@ import type { Chapter, Lab } from "../state"
 import { CARD_DEMOS } from "./demo"
 import { resolveIndex } from "./groups"
 import type { IndexChapter } from "./groups"
-
-/* Material's shared-axis trio: slides ride the standard curve end to end;
-   the exit fade accelerates, the enter fade decelerates after the exit is
-   gone. Transition strings live per phase because the curves differ by
-   direction — a pane going hidden gets EXIT, a pane becoming visible gets
-   ENTER. Movement drops under reduced motion; the fades stay. */
-const SLIDE = "cubic-bezier(0.4, 0, 0.2, 1)"
-const ENTER = `translate 200ms ${SLIDE}, opacity 130ms cubic-bezier(0, 0, 0.2, 1) 70ms`
-const EXIT = `translate 200ms ${SLIDE}, opacity 70ms cubic-bezier(0.4, 0, 1, 1)`
 
 const PANE =
   "absolute inset-0 no-scrollbar flex flex-col overflow-y-auto overscroll-contain px-3 pt-[68px] pb-[68px] *:shrink-0"
@@ -129,15 +118,9 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
   return (
     <PanelChrome lab={lab}>
       <div className="relative min-h-0 flex-1 overflow-hidden">
-        {/* Index pane — fades out with a small leftward nudge. */}
+        {/* Index pane. */}
         <div
-          className={cn(
-            PANE,
-            "gap-5",
-            active &&
-              cn(PANE_HIDDEN, "-translate-x-6 motion-reduce:translate-x-0"),
-          )}
-          style={{ transition: active ? EXIT : ENTER }}
+          className={cn(PANE, "gap-5", active && PANE_HIDDEN)}
           aria-hidden={!!active}
         >
           {index.map((group) => (
@@ -159,16 +142,14 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
           ))}
         </div>
 
-        {/* Chapter page — fades in from a small rightward nudge. */}
+        {/* Chapter page. */}
         <div
           ref={pageRef}
           className={cn(
             PANE,
             "gap-[var(--lab-gap-control,0.375rem)] bg-card",
-            !active &&
-              cn(PANE_HIDDEN, "translate-x-6 motion-reduce:translate-x-0"),
+            !active && PANE_HIDDEN,
           )}
-          style={{ transition: active ? ENTER : EXIT }}
           aria-hidden={!active}
         >
           {page && (
