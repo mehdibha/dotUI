@@ -4,12 +4,15 @@
    Foundations, then Components (Templates planned). Rows are individual
    muted rows with a small gap, not fused lists: label over its muted value on
    the left, a small state-driven micro-preview and the chevron on the right.
-   Tapping a row crossfades to the chapter page — a fast directional fade
-   (24px of travel, strong ease-out, a touch of blur to mask the overlap),
-   not a full-width push: this navigation fires constantly, so it stays
-   subtle. The chapter page has room, so the section body renders in its
-   original form — hero inline at the head of its group. Plain CSS
-   transitions; view transitions freeze interactivity. */
+   Tapping a row runs a Material shared-axis fade at panel scale (24px ≈ the
+   spec's 30px travel): both panes slide the full 200ms, but the fades are
+   SEQUENTIAL — outgoing dies in the first 70ms (accelerate), incoming fades
+   over the remaining 130ms (decelerate). The split is what prevents the
+   muddy double-exposure of a plain crossfade; no blur needed. Not a
+   full-width push: this navigation fires constantly, so it stays subtle.
+   The chapter page has room, so the section body renders in its original
+   form — hero inline at the head of its group. Plain CSS transitions;
+   view transitions freeze interactivity. */
 
 import { Fragment, useEffect, useRef, useState } from "react"
 import { ChevronLeftIcon } from "lucide-react"
@@ -24,14 +27,18 @@ import { CARD_DEMOS } from "./demo"
 import { resolveIndex } from "./groups"
 import type { IndexChapter } from "./groups"
 
-const EASE_OUT = "cubic-bezier(0.23, 1, 0.32, 1)"
+/* Material's shared-axis trio: slides ride the standard curve end to end;
+   the exit fade accelerates, the enter fade decelerates after the exit is
+   gone. Transition strings live per phase because the curves differ by
+   direction — a pane going hidden gets EXIT, a pane becoming visible gets
+   ENTER. Movement drops under reduced motion; the fades stay. */
+const SLIDE = "cubic-bezier(0.4, 0, 0.2, 1)"
+const ENTER = `translate 200ms ${SLIDE}, opacity 130ms cubic-bezier(0, 0, 0.2, 1) 70ms`
+const EXIT = `translate 200ms ${SLIDE}, opacity 70ms cubic-bezier(0.4, 0, 1, 1)`
 
-/* Both panes share one crossfade: hidden = faded, nudged toward its exit
-   side, slightly blurred. Movement drops under reduced motion; the fade
-   stays. */
 const PANE =
-  "absolute inset-0 no-scrollbar flex flex-col overflow-y-auto overscroll-contain px-3 pt-[68px] pb-[68px] transition-[translate,opacity,filter] duration-200 *:shrink-0"
-const PANE_HIDDEN = "pointer-events-none opacity-0 blur-[2px]"
+  "absolute inset-0 no-scrollbar flex flex-col overflow-y-auto overscroll-contain px-3 pt-[68px] pb-[68px] *:shrink-0"
+const PANE_HIDDEN = "pointer-events-none opacity-0"
 
 /* Index rows speak the same bg-muted row language as the chapter pages — no
    border, one panel surface behind them. Hover paints a translucent highlight
@@ -130,7 +137,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
             active &&
               cn(PANE_HIDDEN, "-translate-x-6 motion-reduce:translate-x-0"),
           )}
-          style={{ transitionTimingFunction: EASE_OUT }}
+          style={{ transition: active ? EXIT : ENTER }}
           aria-hidden={!!active}
         >
           {index.map((group) => (
@@ -161,7 +168,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
             !active &&
               cn(PANE_HIDDEN, "translate-x-6 motion-reduce:translate-x-0"),
           )}
-          style={{ transitionTimingFunction: EASE_OUT }}
+          style={{ transition: active ? ENTER : EXIT }}
           aria-hidden={!active}
         >
           {page && (
