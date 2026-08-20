@@ -30,72 +30,49 @@ const PUSH_EASE = "cubic-bezier(0.32, 0.72, 0, 1)"
 const CARD =
   "relative w-full shrink-0 cursor-interactive rounded-xl border border-border/45 bg-card px-4 py-3.5 transition-colors focus-reset focus-visible:focus-ring hover:border-border/80 pressed:border-border/80 after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-fg/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 pressed:after:opacity-100"
 
-/** The card anatomies under comparison: `inline` = label left, strip right
- *  (the current frame); `stacked` = frame 1, label on top, full-width strip
- *  beneath. */
-export type Frame = "inline" | "stacked"
-
 function IndexRow({
   chapter,
   lab,
-  frame,
   onPress,
 }: {
   chapter: IndexChapter
   lab: Lab
-  frame: Frame
   onPress: () => void
 }) {
   const status = lab.section(chapter.defaults)
   const Demo = CARD_DEMOS[chapter.id]
 
-  const heading = (
-    <>
-      <span className={ROW_LABEL}>{chapter.label}</span>
-      {status.modified && (
-        <span
-          aria-label="Modified"
-          className="size-1 shrink-0 rounded-full bg-accent"
-        />
-      )}
-    </>
-  )
+  // The info line under the title: composites list what they contain (the
+  // merged names stay findable); plain chapters show their live values.
+  const subline =
+    chapter.members.length > 1
+      ? chapter.members
+          .slice(chapter.hostless ? 0 : 1)
+          .map((member) => member.label)
+          .join(" · ")
+      : (chapter.members[0]?.summary(lab.state) ?? "")
 
-  // Frame 1 — stacked: title row on top, the strip below at full card width
-  // (left-aligned under the title, cropping right and through the bottom).
-  if (frame === "stacked") {
-    return (
-      <RacButton
-        onPress={onPress}
-        className={cn(CARD, "flex h-24 flex-col items-stretch p-0")}
-      >
-        <span className="flex shrink-0 items-center gap-2 px-4 pt-3.5">
-          {heading}
-        </span>
-        <span
-          aria-hidden
-          className="pointer-events-none flex min-h-0 w-full flex-1 overflow-hidden [mask-image:linear-gradient(to_left,transparent,black_16px)] py-2.5 pl-4"
-        >
-          <span className="my-auto flex items-center gap-2 pr-4">
-            {Demo && <Demo state={lab.state} />}
-          </span>
-        </span>
-      </RacButton>
-    )
-  }
-
-  // Inline (current): label left, then a strip of real specimens. No chevron,
-  // no summary line — the specimen carries the values (precision text like a
-  // hex or font name is part of the specimen).
+  // Label left (title over its info line), then a strip of real specimens.
+  // No chevron — the specimen and the info line carry the values.
   return (
     <RacButton
       onPress={onPress}
       className={cn(CARD, "flex h-16 items-center gap-3 py-0 pr-0")}
     >
-      {/* Min-width label column: strips align at the same x, long labels
-          push instead of truncating. */}
-      <span className="flex min-w-28 shrink-0 items-center gap-2">
-        {heading}
+      {/* Fixed label column so strips align; both lines truncate. */}
+      <span className="flex w-32 shrink-0 flex-col items-start gap-0.5">
+        <span className="flex w-full items-center gap-2">
+          <span className={ROW_LABEL}>{chapter.label}</span>
+          {status.modified && (
+            <span
+              aria-label="Modified"
+              className="size-1 shrink-0 rounded-full bg-accent"
+            />
+          )}
+        </span>
+        <span className="w-full truncate text-start text-xs text-fg-muted">
+          {subline}
+        </span>
       </span>
       {/* Uniform paddings via auto margins: a strip that FITS right-aligns
           (ml-auto) at the card's pr-4 and vertically centers (my-auto); one
@@ -114,15 +91,7 @@ function IndexRow({
   )
 }
 
-export function PanelB({
-  chapters,
-  lab,
-  frame = "inline",
-}: {
-  chapters: Chapter[]
-  lab: Lab
-  frame?: Frame
-}) {
+export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
   const index = resolveIndex(chapters)
   const [activeId, setActiveId] = useState<string | null>(null)
   // The page keeps rendering its last chapter while sliding back out.
@@ -163,7 +132,6 @@ export function PanelB({
                     key={chapter.id}
                     chapter={chapter}
                     lab={lab}
-                    frame={frame}
                     onPress={() => setActiveId(chapter.id)}
                   />
                 ))}

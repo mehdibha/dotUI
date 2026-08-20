@@ -31,16 +31,12 @@ import type { LabState } from "../../state"
 
 /** The brand seed as a swatch beside its hex — the raw seed, no engine run. */
 export function ColorDemo({ state }: { state: LabState }) {
+  // The hex lives in the card's info line — the specimen is just the seed.
   return (
-    <span className="flex shrink-0 items-center gap-2.5">
-      <span
-        className="size-6 shrink-0 rounded-md ring-1 ring-fg/10 ring-inset"
-        style={{ backgroundColor: state.brand }}
-      />
-      <span className="font-mono text-xs text-fg-muted uppercase">
-        {state.brand}
-      </span>
-    </span>
+    <span
+      className="size-6 shrink-0 rounded-md ring-1 ring-fg/10 ring-inset"
+      style={{ backgroundColor: state.brand }}
+    />
   )
 }
 
@@ -60,17 +56,6 @@ export function TypographyDemo({ state }: { state: LabState }) {
         }}
       >
         Ag
-      </span>
-      <span className="flex flex-col gap-1">
-        <span
-          className="text-[0.8125rem] leading-none text-fg"
-          style={{ fontFamily: fontStack(state.bodyFont) }}
-        >
-          {family}
-        </span>
-        <span className="text-xs leading-none text-fg-muted">
-          {state.typeBase}px
-        </span>
       </span>
     </span>
   )
