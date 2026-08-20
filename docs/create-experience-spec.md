@@ -130,6 +130,30 @@ Mehdi's modifications:
 Structured scroll (variant A) and the stacks stay in panel-lab as comparison
 references until the drill-in is validated against the four tests.
 
+## Taxonomy revision (Aug 2026, four-lens panel)
+
+A four-agent panel (convention, user-task, code-measured, minimalist lenses)
+reviewed the 43-chapter list. Unanimous findings: per-component chapters were
+inventory, not taxonomy — the panel's unit is the *decision* (radio and switch
+contribute zero unique axes; their only key is checkbox's `checkFill`); Color
+is never split; thinness alone is never grounds for a merge (named chapters
+like Tooltips stay findable); merged cards must SHOW their absorbed members
+and future search must index absorbed names.
+
+**Adopted (Mehdi):** 43 → 35 chapters via composite index chapters
+(`variants/groups.ts` COMPOSITES): **Interaction** ← cursor + selection +
+scrollbars + disabled (new, hostless); **Buttons** ← button-groups + toggles +
+segmented-control; **Inputs** ← input-groups + number-field + otp-field;
+**Links** moved to Components (overriding the panel's Typography-merge
+recommendation).
+
+**Panel-recommended, not yet adopted:** Selection controls ← switch + checkbox
++ radio (+ choice cards); Pickers ← calendar; Loading ← skeleton + spinner +
+progress; Badges ← kbd; rename Notices → "Alerts & toasts".
+
+Answered: Accordion stays solo — accordion and menus share zero state keys or
+recipes; there is no Disclosure family in the code.
+
 ## Open questions
 
-1. Accordion sits in Display for now — worth a Disclosure family with Menus?
+*(none currently)*
