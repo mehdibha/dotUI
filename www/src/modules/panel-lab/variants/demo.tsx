@@ -153,11 +153,27 @@ import {
   TooltipsDemo,
 } from "./demos/overlays"
 
-/** Every card carries a demo strip — one grammar for the whole index. */
+/** The Interaction composite card shows its whole family — selection text and
+ *  disabled chip visible, cursor glyphs and scrollbar cropping at the fade. */
+function InteractionDemo({ state }: { state: LabState }) {
+  return (
+    <>
+      <SelectionDemo state={state} />
+      <DisabledDemo state={state} />
+      <CursorDemo state={state} />
+      <ScrollbarsDemo state={state} />
+    </>
+  )
+}
+
+/** Every card carries a demo strip — one grammar for the whole index.
+ *  Composite ids (interaction) resolve here too; absorbed ids keep their
+ *  entries for reuse inside composite strips. */
 export const CARD_DEMOS: Record<
   string,
   React.ComponentType<{ state: LabState }>
 > = {
+  interaction: InteractionDemo,
   color: ColorDemo,
   typography: TypographyDemo,
   icons: IconsDemo,

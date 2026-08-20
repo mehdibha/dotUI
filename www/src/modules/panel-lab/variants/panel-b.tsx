@@ -9,7 +9,7 @@
    original form — hero inline at the head of its group. Plain transform
    transitions; view transitions freeze interactivity. */
 
-import { useRef, useState } from "react"
+import { Fragment, useEffect, useRef, useState } from "react"
 import { ChevronLeftIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
@@ -19,7 +19,8 @@ import { GroupTitle, ROW_LABEL } from "@/modules/control-lab/rows"
 import { PanelChrome } from "../panel"
 import type { Chapter, Lab } from "../state"
 import { CARD_DEMOS } from "./demo"
-import { resolveGroups, SECTIONS } from "./groups"
+import { resolveIndex } from "./groups"
+import type { IndexChapter } from "./groups"
 
 const PUSH_EASE = "cubic-bezier(0.32, 0.72, 0, 1)"
 
@@ -29,32 +30,16 @@ const PUSH_EASE = "cubic-bezier(0.32, 0.72, 0, 1)"
 const CARD =
   "relative w-full shrink-0 cursor-interactive rounded-xl border border-border/45 bg-card px-4 py-3.5 transition-colors focus-reset focus-visible:focus-ring hover:border-border/80 pressed:border-border/80 after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-fg/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 pressed:after:opacity-100"
 
-/* Chapters absorbed by another chapter's page: their row leaves the index,
-   their body renders after the host's, and the host's modified dot covers
-   their axes too. */
-const MERGED: Record<string, string[]> = {
-  inputs: ["input-groups"],
-}
-
-function mergedDefaults(chapter: Chapter, chapters: Chapter[]) {
-  const extra = (MERGED[chapter.id] ?? [])
-    .map((id) => chapters.find((c) => c.id === id)?.defaults)
-    .filter(Boolean)
-  return Object.assign({}, chapter.defaults, ...extra)
-}
-
 function IndexRow({
   chapter,
-  chapters,
   lab,
   onPress,
 }: {
-  chapter: Chapter
-  chapters: Chapter[]
+  chapter: IndexChapter
   lab: Lab
   onPress: () => void
 }) {
-  const status = lab.section(mergedDefaults(chapter, chapters))
+  const status = lab.section(chapter.defaults)
   const Demo = CARD_DEMOS[chapter.id]
 
   // One card anatomy for the whole index: label left, then a strip of real
@@ -94,12 +79,22 @@ function IndexRow({
 }
 
 export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
+  const index = resolveIndex(chapters)
   const [activeId, setActiveId] = useState<string | null>(null)
   // The page keeps rendering its last chapter while sliding back out.
-  const lastRef = useRef<Chapter | null>(null)
-  const active = chapters.find((chapter) => chapter.id === activeId) ?? null
+  const lastRef = useRef<IndexChapter | null>(null)
+  const active =
+    index
+      .flatMap((group) => group.chapters)
+      .find((chapter) => chapter.id === activeId) ?? null
   if (active) lastRef.current = active
   const page = active ?? lastRef.current
+
+  // The page pane is one persistent scroller — start each chapter at its top.
+  const pageRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (activeId && pageRef.current) pageRef.current.scrollTop = 0
+  }, [activeId])
 
   return (
     <PanelChrome lab={lab}>
@@ -113,7 +108,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
           style={{ transitionTimingFunction: PUSH_EASE }}
           aria-hidden={!!active}
         >
-          {resolveGroups(SECTIONS, chapters).map((group) => (
+          {index.map((group) => (
             <section key={group.label} className="flex flex-col gap-1.5">
               <span className="px-1 text-xs font-medium text-fg-muted">
                 {group.label}
@@ -123,7 +118,6 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
                   <IndexRow
                     key={chapter.id}
                     chapter={chapter}
-                    chapters={chapters}
                     lab={lab}
                     onPress={() => setActiveId(chapter.id)}
                   />
@@ -135,6 +129,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
 
         {/* Chapter page — slides in from the right. */}
         <div
+          ref={pageRef}
           className={cn(
             "absolute inset-0 no-scrollbar flex flex-col gap-[var(--lab-gap-control,0.375rem)] overflow-y-auto overscroll-contain bg-bg pt-[60px] pb-[66px] transition-transform duration-350 *:shrink-0",
             active ? "translate-x-0" : "pointer-events-none translate-x-full",
@@ -156,16 +151,14 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
                   {page.label}
                 </span>
               </div>
-              <page.Body lab={lab} />
-              {(MERGED[page.id] ?? []).map((id) => {
-                const merged = chapters.find((c) => c.id === id)
-                return merged ? (
-                  <span key={id} className="contents">
-                    <GroupTitle>{merged.label}</GroupTitle>
-                    <merged.Body lab={lab} />
-                  </span>
-                ) : null
-              })}
+              {page.members.map((member, i) => (
+                <Fragment key={member.id}>
+                  {(page.hostless || i > 0) && (
+                    <GroupTitle>{member.label}</GroupTitle>
+                  )}
+                  <member.Body lab={lab} />
+                </Fragment>
+              ))}
             </>
           )}
         </div>
