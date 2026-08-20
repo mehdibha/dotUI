@@ -1,8 +1,8 @@
 "use client"
 
-/* The panel chrome: the floating glass header (title, global reset, search)
-   and footer (save, export) plus the spacing/radius tweak vars. The drill-in
-   frame supplies the middle. */
+/* The panel chrome: one enclosed surface — header (title, global reset,
+   search) and footer (save, export) are flush hairline bars on the card, plus
+   the spacing/radius tweak vars. The drill-in frame supplies the middle. */
 
 import type { CSSProperties } from "react"
 import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
@@ -22,8 +22,8 @@ const RADIUS_STEPS: Record<string, string> = {
 }
 
 /** Header + footer + tweak vars. Children own the middle region (and its
- *  scrolling) — they must claim flex-1 min-h-0 and pad for the floating bars
- *  (56px top, 62px bottom). */
+ *  scrolling) — they must claim flex-1 min-h-0 and pad for the overlaid bars
+ *  (56px top, 60px bottom). */
 export function PanelChrome({
   lab,
   children,
@@ -65,7 +65,7 @@ export function PanelChrome({
 
   return (
     <div
-      className="relative flex h-full min-h-0 flex-col"
+      className="relative flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-border/45 bg-card"
       style={
         {
           "--lab-gap-section": `${sectionGap}px`,
@@ -74,8 +74,8 @@ export function PanelChrome({
         } as CSSProperties
       }
     >
-      {/* Floating glass header — content dips under it, never past it. */}
-      <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 rounded-xl border border-border/45 bg-neutral/90 p-1.5 shadow-[0_4px_16px_-4px_rgb(0_0_0/0.2),0_2px_6px_-2px_rgb(0_0_0/0.12)] backdrop-blur-sm">
+      {/* Header bar — flush to the panel, content dips under it. */}
+      <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 border-b border-border/45 bg-card/85 p-1.5 backdrop-blur-sm">
         <Button
           variant="quiet"
           size="sm"
@@ -110,8 +110,8 @@ export function PanelChrome({
 
       {children}
 
-      {/* Floating glass footer — same treatment as the header. */}
-      <div className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-2 rounded-xl border border-border/45 bg-neutral/90 p-2 shadow-[0_-4px_16px_-4px_rgb(0_0_0/0.2),0_-2px_6px_-2px_rgb(0_0_0/0.12)] backdrop-blur-sm">
+      {/* Footer bar — same treatment as the header. */}
+      <div className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-2 border-t border-border/45 bg-card/85 p-2 backdrop-blur-sm">
         <Button size="sm" className="flex-1">
           Save
         </Button>

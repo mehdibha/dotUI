@@ -14,7 +14,7 @@ import { PanelB } from "./variants/panel-b"
 
 function Panel() {
   const lab = useLab()
-  // The real panel sits on the page bg — no card chrome around it.
+  // The chrome is the card — one enclosed surface, no extra wrapper here.
   return (
     <div className="flex h-[720px] w-[360px] shrink-0 flex-col">
       <PanelB chapters={CHAPTERS} lab={lab} />

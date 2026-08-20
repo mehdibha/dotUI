@@ -2,8 +2,8 @@
 
 /* The drill-in panel — the chosen frame (Aug 2026). Two index sections only —
    Foundations, then Components (Templates planned). Rows are individual
-   cards with a small gap, not fused lists: label over its muted value on the
-   left, a small state-driven micro-preview and the chevron on the right.
+   muted rows with a small gap, not fused lists: label over its muted value on
+   the left, a small state-driven micro-preview and the chevron on the right.
    Tapping a row pushes the chapter in from the right, iOS-style, with a back
    header; the chapter page has room, so the section body renders in its
    original form — hero inline at the head of its group. Plain transform
@@ -24,11 +24,12 @@ import type { IndexChapter } from "./groups"
 
 const PUSH_EASE = "cubic-bezier(0.32, 0.72, 0, 1)"
 
-/* Hover paints a translucent highlight OVER the whole card (::after sits on
-   top of the demos too), not just the background behind them — the card
-   lifts as one surface. */
+/* Index rows speak the same bg-muted row language as the chapter pages — no
+   border, one panel surface behind them. Hover paints a translucent highlight
+   OVER the whole card (::after sits on top of the demos too), not just the
+   background behind them — the card lifts as one surface. */
 const CARD =
-  "relative w-full shrink-0 cursor-interactive rounded-xl border border-border/45 bg-card px-4 py-3.5 transition-colors focus-reset focus-visible:focus-ring hover:border-border/80 pressed:border-border/80 after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-fg/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 pressed:after:opacity-100"
+  "relative w-full shrink-0 cursor-interactive rounded-xl bg-muted px-4 py-3.5 transition-colors focus-reset focus-visible:focus-ring after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-fg/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 pressed:after:opacity-100"
 
 function IndexRow({
   chapter,
@@ -111,11 +112,11 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
 
   return (
     <PanelChrome lab={lab}>
-      <div className="relative min-h-0 flex-1 overflow-hidden rounded-xl">
+      <div className="relative min-h-0 flex-1 overflow-hidden">
         {/* Index pane — recedes left under the incoming page. */}
         <div
           className={cn(
-            "absolute inset-0 no-scrollbar flex flex-col gap-5 overflow-y-auto overscroll-contain pt-[60px] pb-[66px] transition-[transform,opacity] duration-350 *:shrink-0",
+            "absolute inset-0 no-scrollbar flex flex-col gap-5 overflow-y-auto overscroll-contain px-3 pt-[56px] pb-[60px] transition-[transform,opacity] duration-350 *:shrink-0",
             active && "pointer-events-none -translate-x-1/4 opacity-60",
           )}
           style={{ transitionTimingFunction: PUSH_EASE }}
@@ -144,7 +145,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
         <div
           ref={pageRef}
           className={cn(
-            "absolute inset-0 no-scrollbar flex flex-col gap-[var(--lab-gap-control,0.375rem)] overflow-y-auto overscroll-contain bg-bg pt-[60px] pb-[66px] transition-transform duration-350 *:shrink-0",
+            "absolute inset-0 no-scrollbar flex flex-col gap-[var(--lab-gap-control,0.375rem)] overflow-y-auto overscroll-contain bg-card px-3 pt-[56px] pb-[60px] transition-transform duration-350 *:shrink-0",
             active ? "translate-x-0" : "pointer-events-none translate-x-full",
           )}
           style={{ transitionTimingFunction: PUSH_EASE }}
