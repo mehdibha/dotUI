@@ -4,9 +4,11 @@
    Foundations, then Components (Templates planned). Rows are individual
    muted rows with a small gap, not fused lists: label over its muted value on
    the left, a small state-driven micro-preview and the chevron on the right.
-   Tapping a row pushes the chapter in from the right, iOS-style, with a back
-   header; the chapter page has room, so the section body renders in its
-   original form — hero inline at the head of its group. Plain transform
+   Tapping a row crossfades to the chapter page — a fast directional fade
+   (12px of travel, strong ease-out, a touch of blur to mask the overlap),
+   not a full-width push: this navigation fires constantly, so it stays
+   subtle. The chapter page has room, so the section body renders in its
+   original form — hero inline at the head of its group. Plain CSS
    transitions; view transitions freeze interactivity. */
 
 import { Fragment, useEffect, useRef, useState } from "react"
@@ -22,7 +24,14 @@ import { CARD_DEMOS } from "./demo"
 import { resolveIndex } from "./groups"
 import type { IndexChapter } from "./groups"
 
-const PUSH_EASE = "cubic-bezier(0.32, 0.72, 0, 1)"
+const EASE_OUT = "cubic-bezier(0.23, 1, 0.32, 1)"
+
+/* Both panes share one crossfade: hidden = faded, nudged toward its exit
+   side, slightly blurred. Movement drops under reduced motion; the fade
+   stays. */
+const PANE =
+  "absolute inset-0 no-scrollbar flex flex-col overflow-y-auto overscroll-contain px-3 pt-[68px] pb-[68px] transition-[translate,opacity,filter] duration-200 *:shrink-0"
+const PANE_HIDDEN = "pointer-events-none opacity-0 blur-[2px]"
 
 /* Index rows speak the same bg-muted row language as the chapter pages — no
    border, one panel surface behind them. Hover paints a translucent highlight
@@ -113,13 +122,15 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
   return (
     <PanelChrome lab={lab}>
       <div className="relative min-h-0 flex-1 overflow-hidden">
-        {/* Index pane — recedes left under the incoming page. */}
+        {/* Index pane — fades out with a small leftward nudge. */}
         <div
           className={cn(
-            "absolute inset-0 no-scrollbar flex flex-col gap-5 overflow-y-auto overscroll-contain px-3 pt-[68px] pb-[68px] transition-[transform,opacity] duration-350 *:shrink-0",
-            active && "pointer-events-none -translate-x-1/4 opacity-60",
+            PANE,
+            "gap-5",
+            active &&
+              cn(PANE_HIDDEN, "-translate-x-3 motion-reduce:translate-x-0"),
           )}
-          style={{ transitionTimingFunction: PUSH_EASE }}
+          style={{ transitionTimingFunction: EASE_OUT }}
           aria-hidden={!!active}
         >
           {index.map((group) => (
@@ -141,14 +152,16 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
           ))}
         </div>
 
-        {/* Chapter page — slides in from the right. */}
+        {/* Chapter page — fades in from a small rightward nudge. */}
         <div
           ref={pageRef}
           className={cn(
-            "absolute inset-0 no-scrollbar flex flex-col gap-[var(--lab-gap-control,0.375rem)] overflow-y-auto overscroll-contain bg-card px-3 pt-[68px] pb-[68px] transition-transform duration-350 *:shrink-0",
-            active ? "translate-x-0" : "pointer-events-none translate-x-full",
+            PANE,
+            "gap-[var(--lab-gap-control,0.375rem)] bg-card",
+            !active &&
+              cn(PANE_HIDDEN, "translate-x-3 motion-reduce:translate-x-0"),
           )}
-          style={{ transitionTimingFunction: PUSH_EASE }}
+          style={{ transitionTimingFunction: EASE_OUT }}
           aria-hidden={!active}
         >
           {page && (
