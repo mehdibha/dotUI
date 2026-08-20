@@ -5,7 +5,7 @@
    muted rows with a small gap, not fused lists: label over its muted value on
    the left, a small state-driven micro-preview and the chevron on the right.
    Tapping a row crossfades to the chapter page — a fast directional fade
-   (12px of travel, strong ease-out, a touch of blur to mask the overlap),
+   (24px of travel, strong ease-out, a touch of blur to mask the overlap),
    not a full-width push: this navigation fires constantly, so it stays
    subtle. The chapter page has room, so the section body renders in its
    original form — hero inline at the head of its group. Plain CSS
@@ -128,7 +128,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
             PANE,
             "gap-5",
             active &&
-              cn(PANE_HIDDEN, "-translate-x-3 motion-reduce:translate-x-0"),
+              cn(PANE_HIDDEN, "-translate-x-6 motion-reduce:translate-x-0"),
           )}
           style={{ transitionTimingFunction: EASE_OUT }}
           aria-hidden={!!active}
@@ -159,7 +159,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
             PANE,
             "gap-[var(--lab-gap-control,0.375rem)] bg-card",
             !active &&
-              cn(PANE_HIDDEN, "translate-x-3 motion-reduce:translate-x-0"),
+              cn(PANE_HIDDEN, "translate-x-6 motion-reduce:translate-x-0"),
           )}
           style={{ transitionTimingFunction: EASE_OUT }}
           aria-hidden={!active}
