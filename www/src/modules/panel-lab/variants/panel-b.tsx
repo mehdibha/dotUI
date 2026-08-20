@@ -1,9 +1,9 @@
 "use client"
 
 /* The drill-in panel — the chosen frame (Aug 2026). Two index sections only —
-   Foundations, then Components (Templates planned). Rows are individual
-   muted rows with a small gap, not fused lists: label over its muted value on
-   the left, a small state-driven micro-preview and the chevron on the right.
+   Foundations, then Components (Templates planned). Each category fuses its
+   rows into one ControlGroup card — the grouped-list look: label over its
+   muted value on the left, a state-driven micro-preview on the right.
    Tapping a row swaps panes INSTANTLY — the Raycast/Linear/cmdk school:
    this navigation fires constantly, and the Aug 2026 animation research
    found instant to be the most common choice among high-frequency tools.
@@ -17,7 +17,7 @@ import { ChevronLeftIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
-import { GroupTitle, ROW_LABEL } from "@/modules/control-lab/rows"
+import { ControlGroup, GroupTitle, ROW_LABEL } from "@/modules/control-lab/rows"
 
 import { PanelChrome } from "../panel"
 import type { Chapter, Lab } from "../state"
@@ -62,6 +62,7 @@ function IndexRow({
   // No chevron — the specimen and the info line carry the values.
   return (
     <RacButton
+      data-row
       onPress={onPress}
       className={cn(CARD, "flex h-16 items-center gap-3 py-0 pr-0")}
     >
@@ -128,7 +129,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
               <span className="px-1 text-xs font-medium text-fg-muted">
                 {group.label}
               </span>
-              <div className="flex flex-col gap-1.5">
+              <ControlGroup>
                 {group.chapters.map((chapter) => (
                   <IndexRow
                     key={chapter.id}
@@ -137,7 +138,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
                     onPress={() => setActiveId(chapter.id)}
                   />
                 ))}
-              </div>
+              </ControlGroup>
             </section>
           ))}
         </div>
