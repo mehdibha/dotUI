@@ -126,9 +126,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
         >
           {index.map((group) => (
             <section key={group.label} className="flex flex-col gap-1.5">
-              <span className="px-1 text-xs font-medium text-fg-muted">
-                {group.label}
-              </span>
+              <GroupTitle>{group.label}</GroupTitle>
               <ControlGroup>
                 {group.chapters.map((chapter) => (
                   <IndexRow
