@@ -96,7 +96,14 @@ export function useIframeMessageListener(
  * out-of-band where the provider would revert it on the next OS-pref / storage event.
  */
 export function usePreviewForcedTheme(): PreviewMode | undefined {
-  const [mode, setMode] = React.useState<PreviewMode | undefined>(undefined)
+  // Seeded from the iframe URL so the first paint already uses the previewed
+  // mode — waiting for the parent's post-load `preview-mode` message would
+  // flash the iframe's own stored theme first whenever the two differ.
+  const [mode, setMode] = React.useState<PreviewMode | undefined>(() => {
+    if (typeof window === "undefined" || !isInIframe()) return undefined
+    const m = new URLSearchParams(window.location.search).get("mode")
+    return m === "dark" || m === "light" ? m : undefined
+  })
 
   React.useEffect(() => {
     if (!isInIframe()) return

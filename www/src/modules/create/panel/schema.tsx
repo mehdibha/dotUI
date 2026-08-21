@@ -547,7 +547,7 @@ function ShadowField({ varName, label }: { varName: string; label: string }) {
     >
       <InputGroup>
         <InputGroupAddon>
-          <span className="w-14 shrink-0 text-left text-xs text-fg-muted">
+          <span className="w-(--control-label,4.5rem) shrink-0 text-left text-xs text-fg-muted">
             {label}
           </span>
         </InputGroupAddon>
@@ -604,7 +604,7 @@ function CursorWidget({
         className="w-full justify-start gap-2 pl-2.5"
         style={{ cursor: value }}
       >
-        <span className="w-14 shrink-0 text-left text-xs font-normal text-fg-muted">
+        <span className="w-(--control-label,4.5rem) shrink-0 text-left text-xs font-normal text-fg-muted">
           {label}
         </span>
         <SelectValue className="min-w-0 flex-1 truncate text-left" />

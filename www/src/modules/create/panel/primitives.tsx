@@ -81,7 +81,9 @@ export function ChapterHeading({
 
 /* ------------------------------ Inline row ------------------------------- */
 
-/** A one-line control: quiet label on the left, the input filling the right. */
+/** A one-line control: quiet label on the left, the input filling the right.
+ *  The label column is `--control-label` (set on the panel scroller) so every
+ *  left-labeled row shares one width and their controls align. */
 export function InlineRow({
   label,
   children,
@@ -90,7 +92,7 @@ export function InlineRow({
   children: ReactNode
 }) {
   return (
-    <div className="grid grid-cols-[4.5rem_1fr] items-center gap-2">
+    <div className="grid grid-cols-[var(--control-label,4.5rem)_1fr] items-center gap-2">
       <span className="truncate text-xs text-fg-muted">{label}</span>
       {children}
     </div>
