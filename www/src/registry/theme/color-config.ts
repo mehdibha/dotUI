@@ -72,6 +72,8 @@ export const colorConfigSchema = z.object({
   hueShift: z.number().min(0).max(3).optional(),
   /** Scales the neutral whisper tint (0 = pure gray). */
   neutralTint: z.number().min(0).max(4).optional(),
+  /** OKLCH hue the neutral tint leans toward (absent = follow the accent). */
+  neutralHue: z.number().min(0).max(360).optional(),
   /** Pin the accent verbatim at the solid step; the report prices it. */
   preserveSeed: z.boolean().optional(),
   /**
@@ -229,6 +231,7 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     vividness?: unknown
     hueShift?: unknown
     neutralTint?: unknown
+    neutralHue?: unknown
     preserveSeed?: unknown
     overrides?: unknown
     guaranteePolicy?: unknown
@@ -253,6 +256,8 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     if (finite(raw.hueShift)) config.hueShift = clamp(raw.hueShift, 0, 3)
     if (finite(raw.neutralTint))
       config.neutralTint = clamp(raw.neutralTint, 0, 4)
+    if (finite(raw.neutralHue))
+      config.neutralHue = clamp(raw.neutralHue, 0, 360)
     if (typeof raw.preserveSeed === "boolean")
       config.preserveSeed = raw.preserveSeed
     if (raw.guaranteePolicy === "relaxed" || raw.guaranteePolicy === "strict")

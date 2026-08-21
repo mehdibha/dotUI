@@ -44,7 +44,12 @@ html::-webkit-scrollbar { display: none; }
 `
 
 export const Route = createFileRoute("/preview/$slug")({
-  validateSearch: z.object({ preset: z.string().optional().catch(undefined) }),
+  validateSearch: z.object({
+    preset: z.string().optional().catch(undefined),
+    // Initial display mode, baked in by the /create parent (read directly from
+    // location by usePreviewForcedTheme; declared so the router keeps it).
+    mode: z.enum(["light", "dark"]).optional().catch(undefined),
+  }),
   ssr: false,
   beforeLoad: ({ params }) => {
     getExamplesPromise(params.slug)
