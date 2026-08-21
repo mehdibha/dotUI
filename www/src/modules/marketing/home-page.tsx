@@ -40,11 +40,11 @@ export function HomePage() {
           <Cards />
         </section>
 
-        <div className="mt-16">
+        <div className="mt-16 md:mt-20">
           <CtaSection />
         </div>
 
-        <div className="mt-16 md:mt-22">
+        <div className="mt-16 md:mt-20">
           <Footer />
         </div>
       </div>
