@@ -13,7 +13,7 @@ import {
   radialGrid,
   radialText,
 } from "@tanstack/charts/polar"
-import type { ChartTooltipBodyRenderContext } from "@tanstack/react-charts/tooltip"
+import type { ChartTooltipBodyRenderContext } from "@tanstack/charts/react/tooltip"
 import { scaleLinear } from "d3-scale"
 import { arc as d3Arc } from "d3-shape"
 
@@ -324,9 +324,6 @@ export function RadialBarChart<TDatum>(props: RadialBarChartProps<TDatum>) {
          read right. */
       focus: props.focus ?? "nearest",
       tooltipAnchor: props.tooltipAnchor ?? "point",
-      /* Animation is off by default: the 0.7.2 SVG renderer tweens every number
-         in `d`, arc flags included, so arcs crossing 180° break mid-transition. */
-      animate: props.animate ?? false,
       renderTooltipBody: props.renderTooltipBody ?? radialTooltipBody,
       /* The polar mark arrays serialize into the structural key — mark objects
          key by function identity — and alias into the reference-compared

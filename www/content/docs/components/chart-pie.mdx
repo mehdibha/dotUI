@@ -127,7 +127,7 @@ Both rings key their colors off the same field, so one month is one color from t
 
 ## Animation
 
-Pie charts do not animate by default. Arc paths animate by interpolating their `d` attribute, and an arc that crosses half a turn flips an SVG flag mid-tween — which briefly draws an invalid path. Pass `animate` explicitly if your slices never cross that boundary.
+Slices tween between data states like every other family. Pass `animate={false}` to repaint immediately instead.
 
 ## Accessibility
 

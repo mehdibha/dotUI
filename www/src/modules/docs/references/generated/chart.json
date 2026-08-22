@@ -338,7 +338,7 @@
                   "type": "application",
                   "base": {
                     "type": "link",
-                    "id": "@tanstack/react-charts/dist/tooltip.d.ts:ChartTooltipBodyRenderContext",
+                    "id": "@tanstack/charts/dist/react/tooltip.d.ts:ChartTooltipBodyRenderContext",
                     "name": "ChartTooltipBodyRenderContext"
                   },
                   "typeParameters": [
@@ -464,9 +464,9 @@
       "typeParameters": [],
       "description": ""
     },
-    "@tanstack/react-charts/dist/tooltip.d.ts:ChartTooltipBodyRenderContext": {
+    "@tanstack/charts/dist/react/tooltip.d.ts:ChartTooltipBodyRenderContext": {
       "type": "interface",
-      "id": "@tanstack/react-charts/dist/tooltip.d.ts:ChartTooltipBodyRenderContext",
+      "id": "@tanstack/charts/dist/react/tooltip.d.ts:ChartTooltipBodyRenderContext",
       "name": "ChartTooltipBodyRenderContext",
       "extends": [
         {

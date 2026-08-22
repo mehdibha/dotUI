@@ -11,21 +11,21 @@ import type {
   ChartAxisPresentationOptions,
   ChartBuildContext,
   ChartColorOptions,
-  ChartDefinition,
   ChartKey,
   ChartLinearGradient,
   ChartMargin,
   ChartMark,
   ChartTheme,
   ChartValue,
+  DomChartDefinition,
   VisualChannel,
 } from "@tanstack/charts"
 import { defineChart } from "@tanstack/charts"
 import { colorLegend } from "@tanstack/charts/legend"
+import type { ChartCommonProps } from "@tanstack/charts/react/tooltip"
+import { Chart as TanChart } from "@tanstack/charts/react/tooltip"
 import { tooltip as tooltipExtension } from "@tanstack/charts/tooltip"
 import { portal as tooltipPortal } from "@tanstack/charts/tooltip/portal"
-import type { ChartCommonProps } from "@tanstack/react-charts/tooltip"
-import { Chart as TanChart } from "@tanstack/react-charts/tooltip"
 import { scaleBand, scaleLinear, scalePoint } from "d3-scale"
 
 import { cn } from "@/registry/lib/utils"
@@ -645,7 +645,7 @@ export type ChartProps<TDatum, TXValue extends ChartValue> = ChartHostProps<
   TDatum,
   TXValue
 > & {
-  definition: ChartDefinition<TDatum, TXValue, number>
+  definition: DomChartDefinition<TDatum, TXValue, number>
   children?: ReactNode
 }
 
@@ -688,7 +688,7 @@ export function Chart<TDatum, TXValue extends ChartValue>({
 /* The memo — one shared path, structurally total                      */
 /* ------------------------------------------------------------------ */
 
-/* Tracks the library's `ChartCommonProps` (the `@tanstack/react-charts/tooltip`
+/* Tracks the library's `ChartCommonProps` (the `@tanstack/charts/react/tooltip`
    entry) minus `renderSvg`/`measureText`, which `ChartHostProps` omits. */
 const HOST_PROP_NAMES = new Set([
   "ariaLabel",
@@ -848,7 +848,7 @@ function resolveBehavior(behavior: ChartBehaviorProps, degrade: boolean) {
             sticky: behavior.tooltipSticky ?? chartDefaults.tooltipSticky,
             portal: tooltipPortal,
           },
-    animate: degrade
+    svgAnimation: degrade
       ? false
       : requested === true
         ? chartDefaults.animate
@@ -876,7 +876,7 @@ export function useChartDefinition<
     ctx: ChartBuildContext,
   ) => ChartSpecOf<TDatum, TXValue>,
 ): {
-  definition: ChartDefinition<TDatum, TXValue, number>
+  definition: DomChartDefinition<TDatum, TXValue, number>
   host: ChartHostProps<TDatum, TXValue>
   children: ReactNode
 } {

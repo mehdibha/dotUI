@@ -128,7 +128,7 @@ const target = radialRule([{ angle: Math.PI }], {
 
 ## Animation
 
-Animation is off for this family. The renderer tweens the `d` attribute of a path, which interpolates the arc's large-arc flag as a plain number — an arc crossing half a turn briefly renders as an invalid path. Turning it on with `animate` re-enables that.
+Bars tween between data states like every other family. Pass `animate={false}` to repaint immediately instead.
 
 ## Accessibility
 

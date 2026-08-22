@@ -5,7 +5,7 @@ import type {
   ChartRenderContext,
   ChartValue,
 } from "@tanstack/charts"
-import type { ChartTooltipBodyRenderContext } from "@tanstack/react-charts/tooltip"
+import type { ChartTooltipBodyRenderContext } from "@tanstack/charts/react/tooltip"
 
 import type { ChartAnimate, ChartFocus, ChartTooltipAnchor } from "./base"
 

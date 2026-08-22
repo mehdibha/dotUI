@@ -104,14 +104,13 @@ The rings, the spokes, and the circumference labels are three separate switches:
 
 ## Animation
 
-Radar charts do not animate by default. Radial paths animate by interpolating their `d` attribute, and a path that crosses half a turn flips an SVG flag mid-tween — which briefly draws an invalid path. Pass `animate` explicitly to turn it on.
+The polygon tweens between data states like every other family. Pass `animate={false}` to repaint immediately instead.
 
 ## Accessibility
 
 - `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
 - The chart surface is in the tab order. Arrow keys move between spokes, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
 - Hovering or focusing a spoke reports every series at that category, named and valued — color alone never carries the distinction.
-- Animation is off by default on polar charts. Turn it on per chart with `animate`.
 - `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
 
 ## Examples

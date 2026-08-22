@@ -403,12 +403,11 @@
             "type": "union",
             "elements": [
               {
-                "type": "undefined"
+                "type": "booleanLiteral",
+                "value": false
               },
               {
-                "type": "link",
-                "id": "@tanstack/charts/dist/types.d.ts:ChartMotionTiming",
-                "name": "ChartMotionTiming"
+                "type": "undefined"
               },
               {
                 "type": "function",
@@ -426,9 +425,23 @@
                 ],
                 "return": {
                   "type": "identifier",
-                  "name": "ChartMotionTiming | undefined"
+                  "name": "false | ChartMotionTiming<any> | undefined"
                 },
                 "typeParameters": []
+              },
+              {
+                "type": "application",
+                "base": {
+                  "type": "link",
+                  "id": "@tanstack/charts/dist/types.d.ts:ChartMotionTiming",
+                  "name": "ChartMotionTiming"
+                },
+                "typeParameters": [
+                  {
+                    "type": "identifier",
+                    "name": "any"
+                  }
+                ]
               }
             ]
           },

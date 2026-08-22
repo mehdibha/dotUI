@@ -17,7 +17,7 @@ import {
   radialGrid,
   radialLine,
 } from "@tanstack/charts/polar"
-import type { ChartTooltipBodyRenderContext } from "@tanstack/react-charts/tooltip"
+import type { ChartTooltipBodyRenderContext } from "@tanstack/charts/react/tooltip"
 import { scaleLinear, scalePoint } from "d3-scale"
 import { curveLinearClosed, pointRadial } from "d3-shape"
 
@@ -341,9 +341,6 @@ export function RadarChart<TDatum, TXField extends ChartXField<TDatum>>(
   >(
     {
       ...props,
-      /* Animation is off by default: the 0.7.2 SVG renderer tweens every number
-         in `d`, arc flags included, so arcs crossing 180° break mid-transition. */
-      animate: props.animate ?? false,
       renderTooltipBody: props.renderTooltipBody ?? tooltipBody,
       /* The polar mark arrays serialize into the structural key — mark objects
          key by function identity — and alias into the reference-compared
