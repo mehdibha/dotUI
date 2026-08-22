@@ -305,7 +305,7 @@ function LibrarySidebar() {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" tooltip="Cadence">
+            <SidebarMenuButton size="lg">
               <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
                 <AudioLinesIcon className="size-4" />
               </div>
@@ -326,10 +326,7 @@ function LibrarySidebar() {
             <SidebarMenu>
               {LIBRARY.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    isActive={item.isActive}
-                    tooltip={item.title}
-                  >
+                  <SidebarMenuButton isActive={item.isActive}>
                     <item.icon />
                     <span>{item.title}</span>
                   </SidebarMenuButton>
@@ -350,7 +347,7 @@ function LibrarySidebar() {
             <SidebarMenu>
               {PLAYLISTS.map((playlist) => (
                 <SidebarMenuItem key={playlist}>
-                  <SidebarMenuButton tooltip={playlist}>
+                  <SidebarMenuButton>
                     <ListIcon />
                     <span>{playlist}</span>
                   </SidebarMenuButton>
@@ -384,7 +381,7 @@ function LibrarySidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <Menu>
-              <SidebarMenuButton size="lg" tooltip="Mara Vidal">
+              <SidebarMenuButton size="lg">
                 <Avatar className="size-8">
                   <AvatarFallback>MV</AvatarFallback>
                 </Avatar>
@@ -396,7 +393,7 @@ function LibrarySidebar() {
                 </div>
                 <ChevronsUpDownIcon className="ml-auto" />
               </SidebarMenuButton>
-              <Popover>
+              <Popover placement="top" className="w-(--trigger-width)">
                 <MenuContent>
                   <MenuItem>Account</MenuItem>
                   <MenuItem>
@@ -460,41 +457,43 @@ function TopBar() {
 }
 
 function Hero({
-  isLiked,
-  onLikeChange,
+  isFollowing,
+  onFollowChange,
   onPlay,
+  onShuffle,
 }: {
-  isLiked: boolean
-  onLikeChange: (liked: boolean) => void
+  isFollowing: boolean
+  onFollowChange: (following: boolean) => void
   onPlay: () => void
+  onShuffle: () => void
 }) {
   return (
     <Card>
       <CardContent className="flex flex-col gap-6 lg:flex-row lg:items-end">
-        <AlbumArt
-          className="aspect-square w-36 rounded-lg lg:w-44"
-          iconClassName="size-10"
-        />
+        <Avatar className="size-36 lg:size-44">
+          <AvatarFallback className="text-4xl font-medium">VL</AvatarFallback>
+        </Avatar>
         <div className="flex min-w-0 flex-col gap-3">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge appearance="subtle">Album</Badge>
+            <Badge appearance="subtle">Artist</Badge>
             <span className="text-sm text-fg-muted">
-              2025 · 11 tracks · 42 min
+              Porto, Portugal · Recording since 2016
             </span>
           </div>
           <h1 className="font-heading text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-            Neon Cartography
+            Vesper Lane
           </h1>
           <p className="max-w-prose text-sm text-pretty text-fg-muted">
-            Vesper Lane maps a city after midnight — tape-saturated synths, a
-            borrowed drum machine and a voice recorded in a stairwell in Porto.
+            Tape-saturated synths, a borrowed drum machine and a voice recorded
+            in a stairwell. The new album, Neon Cartography, maps a city after
+            midnight.
           </p>
           <div className="flex flex-wrap items-center gap-2 pt-1">
             <Button variant="primary" onPress={onPlay}>
               <PlayIcon data-icon-start="" />
               Play
             </Button>
-            <Button variant="secondary" onPress={onPlay}>
+            <Button variant="secondary" onPress={onShuffle}>
               <ShuffleIcon data-icon-start="" />
               Shuffle
             </Button>
@@ -502,16 +501,20 @@ function Hero({
               <ToggleButton
                 variant="quiet"
                 isIconOnly
-                isSelected={isLiked}
-                onChange={onLikeChange}
-                aria-label="Save album to library"
+                isSelected={isFollowing}
+                onChange={onFollowChange}
+                aria-label="Follow Vesper Lane"
               >
-                <HeartIcon className={isLiked ? "fill-current" : undefined} />
+                <HeartIcon
+                  className={isFollowing ? "fill-current" : undefined}
+                />
               </ToggleButton>
-              <TooltipContent>Save to library</TooltipContent>
+              <TooltipContent>
+                {isFollowing ? "Following" : "Follow"}
+              </TooltipContent>
             </Tooltip>
             <Menu>
-              <Button variant="quiet" isIconOnly aria-label="Album actions">
+              <Button variant="quiet" isIconOnly aria-label="Artist actions">
                 <MoreHorizontalIcon />
               </Button>
               <Popover>
@@ -519,11 +522,11 @@ function Hero({
                   <MenuItem>Add to playlist</MenuItem>
                   <MenuItem>
                     <DownloadIcon />
-                    Download
+                    Download discography
                   </MenuItem>
                   <MenuItem>
                     <ShareIcon />
-                    Copy album link
+                    Copy artist link
                   </MenuItem>
                 </MenuContent>
               </Popover>
@@ -660,7 +663,7 @@ function AboutPanel() {
             </Avatar>
             <div className="flex flex-col">
               <span className="font-medium">Vesper Lane</span>
-              <span className="text-sm text-fg-muted">Porto, Portugal</span>
+              <span className="text-sm text-fg-muted">Ana Sequeira</span>
             </div>
           </div>
           <p className="text-sm text-pretty text-fg-muted">
@@ -895,7 +898,7 @@ export default function MusicPlayerBlock() {
   const [isMuted, setMuted] = useState(false)
   const [isShuffling, setShuffling] = useState(true)
   const [repeat, setRepeat] = useState<"off" | "all" | "one">("all")
-  const [likedAlbum, setLikedAlbum] = useState(true)
+  const [isFollowing, setFollowing] = useState(true)
   const [likedTrack, setLikedTrack] = useState(false)
 
   const track = TRACKS[currentIndex] ?? TRACKS[0]!
@@ -928,9 +931,13 @@ export default function MusicPlayerBlock() {
           <div className="min-h-0 flex-1 overflow-y-auto">
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 sm:p-6">
               <Hero
-                isLiked={likedAlbum}
-                onLikeChange={setLikedAlbum}
+                isFollowing={isFollowing}
+                onFollowChange={setFollowing}
                 onPlay={() => goTo(0)}
+                onShuffle={() => {
+                  setShuffling(true)
+                  goTo(2)
+                }}
               />
               <Tabs defaultSelectedKey="popular">
                 <TabList aria-label="Artist sections">
