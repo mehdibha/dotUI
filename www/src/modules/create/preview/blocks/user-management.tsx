@@ -321,7 +321,7 @@ function InviteDialog() {
         <PlusIcon />
         Invite people
       </Button>
-      <Modal className="w-full max-w-md">
+      <Modal className="sm:max-w-md">
         <DialogContent showCloseButton>
           <DialogHeader>
             <DialogTitle>Invite people</DialogTitle>
@@ -580,6 +580,7 @@ export default function UserManagement() {
             </CardHeader>
             <CardContent>
               <ProgressBar
+                aria-label="Seats used"
                 value={counts.all}
                 maxValue={SEAT_LIMIT}
                 className="w-full gap-1.5"
@@ -637,30 +638,33 @@ export default function UserManagement() {
                 </Button>
               )}
             </div>
-            <SegmentedControl
-              aria-label="Filter by status"
-              selectedKeys={[status]}
-              onSelectionChange={(keys) => {
-                const next = [...keys][0]
-                if (typeof next === "string") {
-                  setStatus(next)
-                  setPage(1)
-                }
-              }}
-            >
-              <SegmentedControlItem id="all">
-                All {counts.all}
-              </SegmentedControlItem>
-              <SegmentedControlItem id="active">
-                Active {counts.active}
-              </SegmentedControlItem>
-              <SegmentedControlItem id="invited">
-                Invited {counts.invited}
-              </SegmentedControlItem>
-              <SegmentedControlItem id="suspended">
-                Suspended {counts.suspended}
-              </SegmentedControlItem>
-            </SegmentedControl>
+            {/* Four labels outgrow a phone once the type scale or density widens. */}
+            <div className="-my-1 max-w-full overflow-x-auto py-1">
+              <SegmentedControl
+                aria-label="Filter by status"
+                selectedKeys={[status]}
+                onSelectionChange={(keys) => {
+                  const next = [...keys][0]
+                  if (typeof next === "string") {
+                    setStatus(next)
+                    setPage(1)
+                  }
+                }}
+              >
+                <SegmentedControlItem id="all">
+                  All {counts.all}
+                </SegmentedControlItem>
+                <SegmentedControlItem id="active">
+                  Active {counts.active}
+                </SegmentedControlItem>
+                <SegmentedControlItem id="invited">
+                  Invited {counts.invited}
+                </SegmentedControlItem>
+                <SegmentedControlItem id="suspended">
+                  Suspended {counts.suspended}
+                </SegmentedControlItem>
+              </SegmentedControl>
+            </div>
           </div>
 
           {selected.size > 0 && (
