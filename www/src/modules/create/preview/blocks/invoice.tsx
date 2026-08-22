@@ -137,9 +137,9 @@ export default function InvoiceBlock() {
             </Button>
             <div className="flex min-w-0 flex-1 items-center gap-2.5">
               <div className="flex min-w-0 flex-col">
-                <span className="truncate text-sm font-medium">
+                <h1 className="truncate text-sm font-medium">
                   {INVOICE_NUMBER}
-                </span>
+                </h1>
                 <span className="truncate text-xs text-fg-muted">
                   Helios Robotics GmbH
                 </span>
@@ -265,19 +265,19 @@ export default function InvoiceBlock() {
 
               <div className="grid gap-8 sm:grid-cols-2">
                 <section className="flex flex-col gap-2.5">
-                  <SectionLabel>From</SectionLabel>
+                  <SectionLabel as="h2">From</SectionLabel>
                   <div className="text-sm leading-relaxed">
                     <p className="font-medium">Northwind Studio GmbH</p>
                     <p className="text-fg-muted">Ateliers Nord 12</p>
                     <p className="text-fg-muted">10119 Berlin, Germany</p>
+                    <p className="mt-2.5 font-mono text-xs text-fg-muted">
+                      VAT DE 812 447 903
+                    </p>
                   </div>
-                  <p className="font-mono text-xs text-fg-muted">
-                    VAT DE 812 447 903
-                  </p>
                 </section>
 
                 <section className="flex flex-col gap-2.5">
-                  <SectionLabel>Bill to</SectionLabel>
+                  <SectionLabel as="h2">Bill to</SectionLabel>
                   <div className="flex items-start gap-3">
                     <Avatar>
                       <AvatarFallback>ML</AvatarFallback>
@@ -287,16 +287,16 @@ export default function InvoiceBlock() {
                       <p className="text-fg-muted">Helios Robotics GmbH</p>
                       <p className="text-fg-muted">Prinzregentenstraße 44</p>
                       <p className="text-fg-muted">81675 München, Germany</p>
+                      <p className="mt-2.5 font-mono text-xs text-fg-muted">
+                        VAT DE 297 118 640
+                      </p>
                     </div>
                   </div>
-                  <p className="font-mono text-xs text-fg-muted">
-                    VAT DE 297 118 640
-                  </p>
                 </section>
               </div>
 
               <section className="flex flex-col gap-3">
-                <SectionLabel>Line items</SectionLabel>
+                <SectionLabel as="h2">Line items</SectionLabel>
                 <TableContainer>
                   <Table
                     aria-label={`Line items for invoice ${INVOICE_NUMBER}`}
@@ -398,7 +398,7 @@ export default function InvoiceBlock() {
               )}
 
               <section className="flex flex-col gap-2">
-                <SectionLabel>Notes</SectionLabel>
+                <SectionLabel as="h2">Notes</SectionLabel>
                 <p className="max-w-prose text-sm leading-relaxed text-pretty text-fg-muted">
                   Thanks for another good quarter. Payment is due within 30 days
                   by bank transfer — please quote {INVOICE_NUMBER} as the
@@ -457,11 +457,17 @@ function StatusBadge({ isPaid }: { isPaid: boolean }) {
   )
 }
 
-function SectionLabel({ children }: { children: ReactNode }) {
+function SectionLabel({
+  as: As = "span",
+  children,
+}: {
+  as?: "span" | "h2"
+  children: ReactNode
+}) {
   return (
-    <span className="text-[10px] font-medium tracking-widest text-fg-muted uppercase">
+    <As className="text-[10px] font-medium tracking-widest text-fg-muted uppercase">
       {children}
-    </span>
+    </As>
   )
 }
 
@@ -520,9 +526,7 @@ function SendInvoiceDialog({
         </TextField>
       </DialogBody>
       <DialogFooter>
-        <Button slot="close" type="button">
-          Cancel
-        </Button>
+        <Button slot="close">Cancel</Button>
         <Button variant="primary" onPress={() => onSent(email)}>
           <SendIcon />
           Send invoice
