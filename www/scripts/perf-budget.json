@@ -1,0 +1,7 @@
+{
+  "comment": "Client-bundle perf budget for the production build. Thresholds sit just above the post-fix numbers from the landing-page performance work (entry ~215 KB gz, landing 46 preloads / ~406 KB gz first-load). They exist to catch silent regressions — chiefly heavy deps returning to the entry chunk and the modulepreload storm coming back. Measured by scripts/perf-budget.mjs against www/.output/public. Raise a threshold only with a deliberate, reviewed reason.",
+  "entryChunkGzKB": 240,
+  "pages": {
+    "home": { "path": "index.html", "initialGzKB": 450, "preloads": 60 }
+  }
+}
