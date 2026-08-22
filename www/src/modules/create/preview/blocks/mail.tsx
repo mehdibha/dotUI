@@ -6,7 +6,6 @@ import {
   AlertCircleIcon,
   ArchiveIcon,
   ArrowLeftIcon,
-  ArrowRightIcon,
   BadgeCheckIcon,
   ChevronsUpDownIcon,
   ClockIcon,
@@ -26,7 +25,6 @@ import {
   StarIcon,
   TagIcon,
   Trash2Icon,
-  Users2Icon,
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
@@ -65,6 +63,53 @@ import { TextField } from "@/registry/ui/text-field"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
+type IconProps = React.ComponentProps<"svg">
+
+// The curated icon set has no reply/forward glyphs, so these three are inline.
+// Same geometry and stroke as the rest of the set, sized by the button's rules.
+function StrokeIcon({ paths, ...props }: { paths: string[] } & IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      {...props}
+    >
+      {paths.map((d) => (
+        <path key={d} d={d} />
+      ))}
+    </svg>
+  )
+}
+
+const ReplyIcon = (props: IconProps) => (
+  <StrokeIcon
+    paths={["m9 17-5-5 5-5", "M20 18v-2a4 4 0 0 0-4-4H4"]}
+    {...props}
+  />
+)
+
+const ReplyAllIcon = (props: IconProps) => (
+  <StrokeIcon
+    paths={["m7 17-5-5 5-5", "m12 17-5-5 5-5", "M22 18v-2a4 4 0 0 0-4-4H7"]}
+    {...props}
+  />
+)
+
+const ForwardIcon = (props: IconProps) => (
+  <StrokeIcon
+    paths={["m15 17 5-5-5-5", "M4 18v-2a4 4 0 0 1 4-4h12"]}
+    {...props}
+  />
+)
+
 interface ThreadEntry {
   author: string
   email: string
@@ -87,9 +132,16 @@ interface Message {
   thread: ThreadEntry[]
 }
 
+const ME = {
+  author: "Maya Okonkwo",
+  email: "maya@sablecloud.io",
+  initials: "MO",
+}
+
 const FOLDERS = [
-  { id: "inbox", name: "Inbox", icon: InboxIcon, count: 12 },
-  { id: "starred", name: "Starred", icon: StarIcon, count: 4 },
+  // Inbox and Starred counts are derived from state below.
+  { id: "inbox", name: "Inbox", icon: InboxIcon },
+  { id: "starred", name: "Starred", icon: StarIcon },
   { id: "snoozed", name: "Snoozed", icon: ClockIcon, count: 2 },
   { id: "sent", name: "Sent", icon: SendIcon },
   { id: "drafts", name: "Drafts", icon: SquarePenIcon, count: 3 },
@@ -425,7 +477,7 @@ function MessageRow({
                 {message.attachments.length}
               </span>
             )}
-            {isStarred && <StarIcon className="size-3 text-warning" />}
+            {isStarred && <StarIcon className="size-3 text-fg-warning" />}
           </div>
         )}
       </div>
@@ -456,7 +508,7 @@ function Attachment({
   )
 }
 
-function ThreadMessage({ entry }: { entry: ThreadEntry }) {
+function ThreadMessage({ entry, to }: { entry: ThreadEntry; to: string }) {
   return (
     <article className="rounded-xl border bg-card p-4 sm:p-5">
       <header className="flex items-start gap-3">
@@ -470,7 +522,7 @@ function ThreadMessage({ entry }: { entry: ThreadEntry }) {
               {entry.email}
             </span>
           </div>
-          <p className="text-xs text-fg-muted">to me, design-system@</p>
+          <p className="text-xs text-fg-muted">to {to}</p>
         </div>
         <span className="shrink-0 text-xs text-fg-muted tabular-nums">
           {entry.time}
@@ -480,7 +532,7 @@ function ThreadMessage({ entry }: { entry: ThreadEntry }) {
         {entry.paragraphs.map((paragraph) => (
           <p
             key={paragraph.slice(0, 32)}
-            className="text-sm/relaxed text-pretty text-fg-muted"
+            className="text-sm/relaxed text-pretty"
           >
             {paragraph}
           </p>
@@ -535,13 +587,7 @@ export default function MailBlock() {
     if (!body) return
     setSent((current) => [
       ...current,
-      {
-        author: "Maya Okonkwo",
-        email: "maya@sablecloud.io",
-        initials: "MO",
-        time: "Just now",
-        paragraphs: [body],
-      },
+      { ...ME, time: "Just now", paragraphs: [body] },
     ])
     setReply("")
   }
@@ -579,21 +625,29 @@ export default function MailBlock() {
             <SidebarGroup>
               <SidebarGroupLabel>Mailboxes</SidebarGroupLabel>
               <SidebarMenu>
-                {FOLDERS.map((item) => (
-                  <SidebarMenuItem key={item.id}>
-                    <SidebarMenuButton
-                      isActive={item.id === folder}
-                      tooltip={item.name}
-                      onPress={() => setFolder(item.id)}
-                    >
-                      <item.icon />
-                      <span>{item.name}</span>
-                    </SidebarMenuButton>
-                    {item.count ? (
-                      <SidebarMenuBadge>{item.count}</SidebarMenuBadge>
-                    ) : null}
-                  </SidebarMenuItem>
-                ))}
+                {FOLDERS.map((item) => {
+                  const count =
+                    item.id === "inbox"
+                      ? unreadCount
+                      : item.id === "starred"
+                        ? starred.length
+                        : item.count
+                  return (
+                    <SidebarMenuItem key={item.id}>
+                      <SidebarMenuButton
+                        isActive={item.id === folder}
+                        tooltip={item.name}
+                        onPress={() => setFolder(item.id)}
+                      >
+                        <item.icon />
+                        <span>{item.name}</span>
+                      </SidebarMenuButton>
+                      {count ? (
+                        <SidebarMenuBadge>{count}</SidebarMenuBadge>
+                      ) : null}
+                    </SidebarMenuItem>
+                  )
+                })}
               </SidebarMenu>
             </SidebarGroup>
             <SidebarGroup>
@@ -622,15 +676,13 @@ export default function MailBlock() {
                       size="sm"
                       className="group-data-[collapsible=icon]:size-4"
                     >
-                      <AvatarFallback>MO</AvatarFallback>
+                      <AvatarFallback>{ME.initials}</AvatarFallback>
                     </Avatar>
                     <div className="flex min-w-0 flex-col gap-0.5 leading-none">
                       <span className="truncate font-medium text-fg">
-                        Maya Okonkwo
+                        {ME.author}
                       </span>
-                      <span className="truncate text-xs">
-                        maya@sablecloud.io
-                      </span>
+                      <span className="truncate text-xs">{ME.email}</span>
                     </div>
                     <ChevronsUpDownIcon className="ml-auto" />
                   </SidebarMenuButton>
@@ -804,7 +856,7 @@ export default function MailBlock() {
                       onChange={(isSelected) =>
                         toggleStar(selected.id, isSelected)
                       }
-                      className="selected:text-warning"
+                      className="selected:bg-transparent selected:text-fg-warning selected:hover:bg-inverse/10 selected:pressed:bg-inverse/20"
                     >
                       <StarIcon />
                     </ToggleButton>
@@ -820,7 +872,7 @@ export default function MailBlock() {
                         isIconOnly
                         aria-label="Reply"
                       >
-                        <ArrowLeftIcon />
+                        <ReplyIcon />
                       </Button>
                       <TooltipContent>Reply</TooltipContent>
                     </Tooltip>
@@ -832,7 +884,7 @@ export default function MailBlock() {
                         aria-label="Reply all"
                         className="hidden sm:flex"
                       >
-                        <Users2Icon />
+                        <ReplyAllIcon />
                       </Button>
                       <TooltipContent>Reply all</TooltipContent>
                     </Tooltip>
@@ -844,7 +896,7 @@ export default function MailBlock() {
                         aria-label="Forward"
                         className="hidden sm:flex"
                       >
-                        <ArrowRightIcon />
+                        <ForwardIcon />
                       </Button>
                       <TooltipContent>Forward</TooltipContent>
                     </Tooltip>
@@ -908,13 +960,17 @@ export default function MailBlock() {
                       <ThreadMessage
                         key={`${entry.email}-${entry.time}-${index}`}
                         entry={entry}
+                        to={entry.email === ME.email ? selected.from : "me"}
                       />
                     ))}
 
                     {selected.attachments && (
                       <div className="flex flex-col gap-2">
-                        <span className="text-[10px] font-medium tracking-widest text-fg-muted uppercase">
-                          {selected.attachments.length} attachments
+                        <span className="text-xs font-medium tracking-widest text-fg-muted uppercase">
+                          {selected.attachments.length}{" "}
+                          {selected.attachments.length === 1
+                            ? "attachment"
+                            : "attachments"}
                         </span>
                         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                           {selected.attachments.map((attachment) => (
