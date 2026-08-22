@@ -7,7 +7,7 @@ import {
   BellIcon,
   CheckCircle2Icon,
   CheckIcon,
-  ChevronRightIcon,
+  ChevronDownIcon,
   CircleDotIcon,
   CodeIcon,
   CopyIcon,
@@ -81,12 +81,6 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { TextField } from "@/registry/ui/text-field"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
-
-/* ---------------------------------------------------------------------------
- * Code Review — a pull-request page: header with status and checks, a
- * Conversation timeline, and a Files-changed view with a hand-rolled unified
- * diff whose add/remove rows are tinted with the success / danger tokens.
- * ------------------------------------------------------------------------- */
 
 const PR = {
   number: 4821,
@@ -372,7 +366,7 @@ const THREADS: Record<
   "test-ceiling": {
     author: "Marco Feld",
     when: "2 days ago at 16:40",
-    body: "Nice — the injectable RNG makes this readable. Could you pin the 30s ceiling too, so bumping MAX_ATTEMPTS later can't quietly push the last delay past the cap?",
+    body: "Nice — the injectable RNG makes this readable. Could you pin the 30s ceiling too, so bumping `MAX_ATTEMPTS` later can't quietly push the last delay past the cap?",
     replies: [],
   },
 }
@@ -404,7 +398,7 @@ const TIMELINE: TimelineItem[] = [
     author: "Dana Whitfield",
     when: "yesterday",
     state: "changes",
-    body: "One blocking issue on the catch block in dispatcher.ts — see the inline thread. Everything else reads well.",
+    body: "One blocking issue on the catch block in `dispatcher.ts` — see the inline thread. Everything else reads well.",
   },
   {
     type: "commits",
@@ -423,6 +417,22 @@ function initials(name: string) {
     .split(" ")
     .map((part) => part[0])
     .join("")
+}
+
+/** Turns the `backtick` spans review comments are written with into code. */
+function inlineCode(text: string) {
+  return text.split(/`([^`]+)`/).map((part, index) =>
+    index % 2 === 1 ? (
+      <code
+        key={index}
+        className="rounded bg-muted px-1 py-0.5 font-mono text-xs"
+      >
+        {part}
+      </code>
+    ) : (
+      part
+    ),
+  )
 }
 
 function BranchBadge({ name }: { name: string }) {
@@ -618,6 +628,7 @@ function PullRequestHeader({
 function ChecksSummary() {
   const passed = CHECKS.filter((c) => c.status === "success").length
   const failed = CHECKS.filter((c) => c.status === "failure").length
+  const running = CHECKS.length - passed - failed
 
   return (
     <div className="rounded-xl border bg-card">
@@ -629,7 +640,7 @@ function ChecksSummary() {
               Some checks were not successful
             </p>
             <p className="truncate text-xs text-fg-muted">
-              {passed} successful, {failed} failing, 1 in progress —{" "}
+              {passed} successful, {failed} failing, {running} in progress —{" "}
               {CHECKS.length} total
             </p>
           </div>
@@ -694,7 +705,7 @@ function ReviewAction({
       <Button variant="secondary">
         <MessageSquareIcon />
         {decision ? "Update review" : "Review changes"}
-        <ChevronRightIcon className="size-3.5 rotate-90" />
+        <ChevronDownIcon className="size-3.5" />
       </Button>
       <Popover
         placement="bottom end"
@@ -710,8 +721,8 @@ function ReviewAction({
               onChange={setBody}
               aria-label="Review summary"
             >
-              {/* The auto-grow TextArea measures itself against the popover's
-                  unpositioned height; the cap keeps it four rows tall. */}
+              {/* The auto-grow TextArea measures against the popover's
+                  unpositioned height, so cap it. */}
               <TextArea
                 rows={4}
                 className="max-h-28"
@@ -830,7 +841,7 @@ function InlineThread({ id }: { id: string }) {
                 <span className="text-fg-muted">{thread.when}</span>
               </p>
               <p className="mt-1 text-sm text-pretty text-fg-muted">
-                {thread.body}
+                {inlineCode(thread.body)}
               </p>
             </div>
           </div>
@@ -855,7 +866,7 @@ function InlineThread({ id }: { id: string }) {
                 <span className="text-fg-muted">{reply.when}</span>
               </p>
               <p className="mt-1 text-sm text-pretty text-fg-muted">
-                {reply.body}
+                {inlineCode(reply.body)}
               </p>
             </div>
           </div>
@@ -942,8 +953,8 @@ function FileDiff({
         </Checkbox>
       </div>
 
-      {/* Threads sit between scrollers, never inside one: a comment must not
-          need horizontal scrolling to read. */}
+      {/* Threads sit between scrollers, never inside one, so a comment never
+          needs horizontal scrolling to read. */}
       {splitOnThreads(file.lines).map((chunk, index) => (
         <div key={`${file.path}-chunk-${index}`}>
           <div className="overflow-x-auto font-mono text-xs leading-relaxed">
@@ -978,7 +989,9 @@ function FilesChanged() {
     [filter, viewed],
   )
 
-  const active = FILES.find((file) => file.path === selected)
+  // Filtering the selected file out moves the diff to the next visible one,
+  // so the list and the diff pane never disagree.
+  const active = visible.find((file) => file.path === selected) ?? visible[0]
 
   return (
     <div className="grid items-start gap-6 lg:grid-cols-[17rem_minmax(0,1fr)]">
@@ -989,7 +1002,6 @@ function FilesChanged() {
             setFilter([...keys][0]?.toString() ?? "all")
           }
           aria-label="Filter files"
-          className="w-full"
         >
           <SegmentedControlItem id="all">All</SegmentedControlItem>
           <SegmentedControlItem id="unviewed">Unviewed</SegmentedControlItem>
@@ -1014,7 +1026,7 @@ function FilesChanged() {
             aria-label="Changed files"
             selectionMode="single"
             disallowEmptySelection
-            selectedKeys={[selected]}
+            selectedKeys={active ? [active.path] : []}
             onSelectionChange={(keys) => {
               const next = [...keys][0]
               if (next) setSelected(next.toString())
@@ -1032,9 +1044,10 @@ function FilesChanged() {
                 >
                   <div className="flex min-w-0 flex-1 items-center gap-2">
                     <FileCodeIcon className="size-4 shrink-0 text-fg-muted" />
-                    <span className="min-w-0 flex-1 truncate text-sm">
-                      <span className="text-fg-muted">{dir}</span>
-                      {name}
+                    {/* The directory truncates, never the file name. */}
+                    <span className="flex min-w-0 flex-1 text-sm">
+                      <span className="truncate text-fg-muted">{dir}</span>
+                      <span className="shrink-0">{name}</span>
                     </span>
                     {file.comments > 0 && (
                       <Badge appearance="subtle" size="sm">
@@ -1094,13 +1107,13 @@ function TimelineCard({
       <Avatar size="md" className="mt-1 shrink-0">
         <AvatarFallback>{initials(author)}</AvatarFallback>
       </Avatar>
-      <Card className="min-w-0 flex-1 gap-0 py-0">
-        <CardHeader className="flex flex-wrap items-center gap-2 border-b py-3">
+      <Card className="min-w-0 flex-1">
+        <CardHeader className="flex flex-wrap items-center gap-2 border-b">
           <CardTitle className="text-sm">{author}</CardTitle>
           <span className="text-xs text-fg-muted">{when}</span>
           {header}
         </CardHeader>
-        <CardContent className="py-4">{children}</CardContent>
+        <CardContent>{children}</CardContent>
       </Card>
     </div>
   )
@@ -1163,7 +1176,7 @@ function PullRequestBody() {
           size="sm"
           isSelected={liked}
           onChange={setLiked}
-          aria-label="React with thumbs up"
+          aria-label="Add a reaction"
         >
           <SmileIcon />
           {liked ? 4 : 3}
@@ -1249,7 +1262,9 @@ function Conversation({
                   </Badge>
                 }
               >
-                <p className="text-sm text-pretty text-fg-muted">{item.body}</p>
+                <p className="text-sm text-pretty text-fg-muted">
+                  {inlineCode(item.body)}
+                </p>
               </TimelineCard>
             )
 
@@ -1260,7 +1275,9 @@ function Conversation({
                 author={item.author}
                 when={item.when}
               >
-                <p className="text-sm text-pretty text-fg-muted">{item.body}</p>
+                <p className="text-sm text-pretty text-fg-muted">
+                  {inlineCode(item.body)}
+                </p>
               </TimelineCard>
             )
 
@@ -1337,7 +1354,7 @@ function Conversation({
 
       <aside className="flex flex-col gap-6 rounded-xl border bg-card p-4 text-sm lg:sticky lg:top-20">
         <div className="flex flex-col gap-3">
-          <Label>Reviewers</Label>
+          <h3 className="text-sm font-medium">Reviewers</h3>
           {REVIEWERS.map((reviewer) => (
             <div key={reviewer.name} className="flex items-center gap-2">
               <Avatar size="sm" className="shrink-0">
@@ -1364,8 +1381,8 @@ function Conversation({
 
         <Separator />
 
-        <TagGroup size="sm">
-          <Label>Labels</Label>
+        <TagGroup size="sm" aria-label="Labels">
+          <h3 className="text-sm font-medium">Labels</h3>
           <TagList>
             {LABELS.map((label) => (
               <Tag key={label} id={label}>
@@ -1378,7 +1395,7 @@ function Conversation({
         <Separator />
 
         <div className="flex flex-col gap-3">
-          <Label>Participants</Label>
+          <h3 className="text-sm font-medium">Participants</h3>
           <AvatarGroup size="sm">
             <Avatar>
               <AvatarFallback>PR</AvatarFallback>
@@ -1396,7 +1413,7 @@ function Conversation({
         <Separator />
 
         <div className="flex flex-col gap-1">
-          <Label>Milestone</Label>
+          <h3 className="text-sm font-medium">Milestone</h3>
           <span className="text-fg-muted">Relay 3.9 — 62% complete</span>
           <ProgressBar
             value={62}
@@ -1449,22 +1466,26 @@ export default function CodeReviewBlock() {
           selectedKey={tab}
           onSelectionChange={(key) => setTab(String(key))}
         >
-          <TabList variant="line" className="overflow-x-auto">
-            <Tab id="conversation">
-              <MessageSquareIcon className="size-4" />
-              Conversation
-              <Badge appearance="subtle" size="sm">
-                8
-              </Badge>
-            </Tab>
-            <Tab id="files">
-              <FileCodeIcon className="size-4" />
-              Files changed
-              <Badge appearance="subtle" size="sm">
-                {FILES.length}
-              </Badge>
-            </Tab>
-          </TabList>
+          {/* The line indicator hangs below the list, so the scroller needs
+              bottom room or it gets clipped. */}
+          <div className="-mb-1.5 overflow-x-auto pb-1.5">
+            <TabList variant="line">
+              <Tab id="conversation">
+                <MessageSquareIcon className="size-4" />
+                Conversation
+                <Badge appearance="subtle" size="sm">
+                  8
+                </Badge>
+              </Tab>
+              <Tab id="files">
+                <FileCodeIcon className="size-4" />
+                Files changed
+                <Badge appearance="subtle" size="sm">
+                  {FILES.length}
+                </Badge>
+              </Tab>
+            </TabList>
+          </div>
           <TabPanel id="conversation" className="pt-6">
             <Conversation
               extra={reviews}
