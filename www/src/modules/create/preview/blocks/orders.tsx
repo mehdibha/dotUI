@@ -184,6 +184,12 @@ const ORDERS: Order[] = [
         qty: 2,
         price: 18,
       },
+      {
+        name: "Magnetic cable clips",
+        variant: "Set of 6, graphite",
+        qty: 1,
+        price: 12,
+      },
     ],
     shipping: 0,
     payment: "Visa ending 4417",
@@ -246,7 +252,7 @@ const ORDERS: Order[] = [
       },
     ],
     shipping: 6,
-    payment: "PayPal · s.ramirez@fastmail.com",
+    payment: "PayPal",
     carrier: "Meridian Express",
     tracking: "Awaiting handover",
     eta: "Fri, Aug 28",
@@ -461,7 +467,7 @@ const unitsOf = (order: Order) =>
 
 function Thumbnails({ order }: { order: Order }) {
   const shown = order.items.slice(0, 3)
-  const rest = unitsOf(order) - shown.length
+  const rest = order.items.length - shown.length
 
   return (
     <div className="flex shrink-0 items-center gap-2">
@@ -748,18 +754,22 @@ function OrderCard({
             </Button>
             <Popover placement="bottom end">
               <MenuContent>
-                <MenuItem onAction={() => onExpandedChange(true)}>
-                  <MapIcon />
-                  Track shipment
-                </MenuItem>
+                {order.status !== "cancelled" && (
+                  <MenuItem onAction={() => onExpandedChange(true)}>
+                    <MapIcon />
+                    Track shipment
+                  </MenuItem>
+                )}
                 <MenuItem>
                   <FileTextIcon />
                   Download invoice
                 </MenuItem>
-                <MenuItem>
-                  <RotateCwIcon />
-                  Request a return
-                </MenuItem>
+                {order.status !== "cancelled" && (
+                  <MenuItem>
+                    <RotateCwIcon />
+                    Request a return
+                  </MenuItem>
+                )}
                 <Separator />
                 <MenuItem>
                   <MessageSquareIcon />
@@ -898,7 +908,7 @@ export default function OrdersBlock() {
   const renderList = () => {
     if (pageItems.length === 0) {
       return (
-        <Empty className="border border-dashed">
+        <Empty className="border">
           <EmptyHeader>
             <EmptyMedia variant="icon">
               <ShoppingBagIcon />
@@ -963,7 +973,7 @@ export default function OrdersBlock() {
                 variant="quiet"
                 isIconOnly
                 aria-label="Account"
-                className="rounded-full p-0"
+                className="rounded-full"
               >
                 <Avatar size="sm">
                   <AvatarFallback>SR</AvatarFallback>
@@ -1035,7 +1045,7 @@ export default function OrdersBlock() {
           <Stat
             label="Orders placed"
             value={String(stats.placed)}
-            hint="Across 2 addresses"
+            hint="Across 3 payment methods"
           />
           <Stat
             label="In transit"
