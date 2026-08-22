@@ -112,13 +112,37 @@ interface Task {
   summary: string
   tags: string[]
   priority: PriorityId
+  /** ISO date, so string comparison is also chronological order. */
   due: string
-  overdue?: boolean
   assignee: MemberId
   comments: number
   attachments: number
   column: ColumnId
 }
+
+const TODAY = "2026-08-22"
+
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+]
+
+const formatDue = (iso: string) => {
+  const [, month, day] = iso.split("-")
+  return `${MONTHS[Number(month) - 1]} ${Number(day)}`
+}
+
+const isOverdue = (task: Task) => task.column !== "done" && task.due < TODAY
 
 const MEMBER_ORDER: MemberId[] = [
   "priya",
@@ -186,7 +210,7 @@ const INITIAL_TASKS: Task[] = [
       "Recompute arrival windows when dispatch reorders stops mid-shift.",
     tags: ["Routing", "Maps"],
     priority: "urgent",
-    due: "Aug 22",
+    due: "2026-08-22",
     assignee: "priya",
     comments: 9,
     attachments: 3,
@@ -198,7 +222,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "Depot, driver and vehicle filters collapse into one popover.",
     tags: ["Design", "Web"],
     priority: "high",
-    due: "Aug 25",
+    due: "2026-08-25",
     assignee: "aisha",
     comments: 6,
     attachments: 2,
@@ -210,7 +234,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "Move the 40k events/min feed off the legacy queue.",
     tags: ["Platform"],
     priority: "medium",
-    due: "Aug 30",
+    due: "2026-08-30",
     assignee: "marcus",
     comments: 4,
     attachments: 0,
@@ -222,8 +246,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "Weekly CSV with per-trip bonuses and deductions.",
     tags: ["Billing"],
     priority: "high",
-    due: "Aug 21",
-    overdue: true,
+    due: "2026-08-21",
     assignee: "elena",
     comments: 5,
     attachments: 2,
@@ -235,8 +258,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "Depots on DST boundaries logged shifts an hour short.",
     tags: ["Bug", "Reports"],
     priority: "urgent",
-    due: "Aug 20",
-    overdue: true,
+    due: "2026-08-20",
     assignee: "yuki",
     comments: 12,
     attachments: 1,
@@ -248,7 +270,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "Eight steps from contract signed to first dispatch.",
     tags: ["Onboarding"],
     priority: "low",
-    due: "Aug 26",
+    due: "2026-08-26",
     assignee: "tom",
     comments: 2,
     attachments: 0,
@@ -260,7 +282,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "Queue check-ins locally and sync when signal returns.",
     tags: ["Mobile", "Sync"],
     priority: "high",
-    due: "Aug 29",
+    due: "2026-08-29",
     assignee: "yuki",
     comments: 4,
     attachments: 1,
@@ -272,7 +294,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "Per-token buckets, 600 req/min, with a clear retry header.",
     tags: ["API", "Security"],
     priority: "high",
-    due: "Aug 27",
+    due: "2026-08-27",
     assignee: "marcus",
     comments: 3,
     attachments: 0,
@@ -284,7 +306,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "Record who overrode an assignment, when and why.",
     tags: ["Compliance"],
     priority: "medium",
-    due: "Sep 3",
+    due: "2026-09-03",
     assignee: "elena",
     comments: 2,
     attachments: 0,
@@ -296,7 +318,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "Validate VIN, plate and depot before the write.",
     tags: ["Imports"],
     priority: "low",
-    due: "Sep 11",
+    due: "2026-09-11",
     assignee: "tom",
     comments: 1,
     attachments: 1,
@@ -308,7 +330,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "TOTP with eight single-use recovery codes.",
     tags: ["Security"],
     priority: "high",
-    due: "Aug 18",
+    due: "2026-08-18",
     assignee: "aisha",
     comments: 7,
     attachments: 0,
@@ -320,7 +342,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "Replace the spinner with per-section skeletons.",
     tags: ["Web"],
     priority: "medium",
-    due: "Aug 15",
+    due: "2026-08-15",
     assignee: "priya",
     comments: 3,
     attachments: 1,
@@ -332,7 +354,7 @@ const INITIAL_TASKS: Task[] = [
     summary: "Six attempts over 24h, then a dead-letter queue.",
     tags: ["API"],
     priority: "medium",
-    due: "Aug 14",
+    due: "2026-08-14",
     assignee: "marcus",
     comments: 5,
     attachments: 0,
@@ -467,11 +489,11 @@ function TaskCard({
           <span
             className={cn(
               "flex items-center gap-1",
-              task.overdue && "text-fg-danger",
+              isOverdue(task) && "text-fg-danger",
             )}
           >
             <CalendarIcon className="size-3.5" />
-            {task.due}
+            {formatDue(task.due)}
           </span>
           {task.comments > 0 && (
             <span className="flex items-center gap-1 tabular-nums">
@@ -492,7 +514,6 @@ function TaskCard({
             size="xs"
             isIconOnly
             aria-label={`Assigned to ${MEMBERS[task.assignee].name}`}
-            className="size-6"
           >
             <MemberAvatar member={task.assignee} />
           </Button>
@@ -506,12 +527,14 @@ function TaskCard({
 function BoardColumn({
   id,
   tasks,
+  isFiltered,
   onMove,
   onDelete,
   onAdd,
 }: {
   id: ColumnId
   tasks: Task[]
+  isFiltered: boolean
   onMove: (id: string, direction: -1 | 1) => void
   onDelete: (id: string) => void
   onAdd: (column: ColumnId) => void
@@ -573,14 +596,16 @@ function BoardColumn({
 
       <div className="flex flex-col gap-2.5">
         {tasks.length === 0 ? (
-          <Empty className="border p-6">
+          <Empty className="border">
             <EmptyHeader>
               <EmptyMedia variant="icon">
                 <InboxIcon />
               </EmptyMedia>
               <EmptyTitle>Nothing here</EmptyTitle>
               <EmptyDescription>
-                No task matches the current filters.
+                {isFiltered
+                  ? "No task matches the current filters."
+                  : "No task in this column yet."}
               </EmptyDescription>
             </EmptyHeader>
           </Empty>
@@ -644,8 +669,8 @@ function TaskTable({ tasks }: { tasks: Task[] }) {
                   </span>
                 </div>
               </TableCell>
-              <TableCell className={cn(task.overdue && "text-fg-danger")}>
-                {task.due}
+              <TableCell className={cn(isOverdue(task) && "text-fg-danger")}>
+                {formatDue(task.due)}
               </TableCell>
             </TableRow>
           ))}
@@ -778,7 +803,7 @@ function NewTaskDialog({
           isMobile ? (
             <Drawer>{content}</Drawer>
           ) : (
-            <Modal className="max-w-lg">{content}</Modal>
+            <Modal className="sm:max-w-lg">{content}</Modal>
           )
         }
       />
@@ -796,8 +821,10 @@ export default function KanbanBlock() {
   const [view, setView] = useState<"board" | "list">("board")
   const [isCreating, setCreating] = useState(false)
   const [draftColumn, setDraftColumn] = useState<ColumnId>("backlog")
+  const [nextNumber, setNextNumber] = useState(450)
 
   const sortKey = [...sort][0] ?? "manual"
+  const isFiltered = query.trim().length > 0 || priorities.size > 0
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -842,14 +869,15 @@ export default function KanbanBlock() {
     setTasks((current) => [
       {
         ...draft,
-        id: `ATL-${450 + current.length}`,
+        id: `ATL-${nextNumber}`,
         tags: ["New"],
-        due: "Sep 5",
+        due: "2026-09-05",
         comments: 0,
         attachments: 0,
       },
       ...current,
     ])
+    setNextNumber((number) => number + 1)
   }
 
   const done = tasks.filter((task) => task.column === "done").length
@@ -858,7 +886,8 @@ export default function KanbanBlock() {
 
   return (
     <div className="flex min-h-screen flex-col bg-bg text-fg">
-      <header className="sticky top-0 z-10 flex flex-col gap-4 border-b bg-bg/95 px-4 py-4 backdrop-blur sm:px-6">
+      {/* Static on phones: the wrapped toolbar is a quarter of the viewport. */}
+      <header className="z-10 flex flex-col gap-4 border-b bg-bg/95 px-4 py-4 backdrop-blur sm:sticky sm:top-0 sm:px-6">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
           <div className="flex min-w-0 items-center gap-3">
             <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-fg-on-primary">
@@ -875,13 +904,13 @@ export default function KanbanBlock() {
           </div>
 
           <div className="ml-auto flex items-center gap-3">
-            <AvatarGroup className="hidden sm:flex">
+            <AvatarGroup>
               {MEMBER_ORDER.slice(0, 4).map((member) => (
                 <MemberAvatar key={member} member={member} size="md" />
               ))}
               <AvatarGroupCount>+{MEMBER_ORDER.length - 4}</AvatarGroupCount>
             </AvatarGroup>
-            <Separator orientation="vertical" className="hidden h-6 sm:block" />
+            <Separator orientation="vertical" className="h-6" />
             <NewTaskDialog
               isOpen={isCreating}
               onOpenChange={setCreating}
@@ -915,7 +944,7 @@ export default function KanbanBlock() {
               <ListFilterIcon />
               Filter
               {activeFilters > 0 && (
-                <Badge size="sm" className="tabular-nums">
+                <Badge variant="accent" size="sm" className="tabular-nums">
                   {activeFilters}
                 </Badge>
               )}
@@ -1007,6 +1036,7 @@ export default function KanbanBlock() {
                 key={id}
                 id={id}
                 tasks={visible.filter((task) => task.column === id)}
+                isFiltered={isFiltered}
                 onMove={moveTask}
                 onDelete={deleteTask}
                 onAdd={openCreate}
