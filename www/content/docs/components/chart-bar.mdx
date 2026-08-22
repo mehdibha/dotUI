@@ -61,7 +61,13 @@ const data = [
 ```
 
 ```tsx
-<BarChart data={data} x="browser" y="visitors" series="browser" />
+<BarChart
+  data={data}
+  x="browser"
+  y="visitors"
+  series="browser"
+  ariaLabel="Visitors by browser"
+/>
 ```
 
 Naming the category field as `series` is also how each bar gets its own color, as in the [Per-category color](#examples) example.
@@ -92,9 +98,9 @@ Call `stackY` at module scope — its result is the `data` identity. Positive va
 
 ## Orientation and grouping
 
-`horizontal` moves the categories to the y axis and the values to x, which is what long category names want. The value axis is still `x`, so `formatX` formats the numbers, and `focus="group-y"` groups the tooltip along the categories.
+`horizontal` moves the categories to the y axis and the values to x, which is what long category names want. The value axis is still `x`, so `formatX` formats the numbers, and focus groups along the categories automatically.
 
-Multi-series wide data is grouped side by side by default. Set `grouped` to group long-format series too. Without grouping, series that land on the same category share the band and stack from zero rather than overlapping — set `y1` (as `stackY` does) when you want to control the interval yourself.
+Multi-series wide data is grouped side by side by default. Set `grouped` to group long-format series too. Without grouping, long-format series that share a category stack from zero automatically, while wide-format series draw over one another — set `y1` (as `stackY` does) when you want to control the interval yourself.
 
 ## Labels and annotations
 
@@ -117,7 +123,13 @@ const labels = [
 ```
 
 ```tsx
-<BarChart data={data} x="month" y="desktop" marks={labels} />
+<BarChart
+  data={data}
+  x="month"
+  y="desktop"
+  marks={labels}
+  ariaLabel="Desktop visitors by month"
+/>
 ```
 
 Both props are compared by identity, like `data`. A layer that depends on state belongs in a `useMemo`.

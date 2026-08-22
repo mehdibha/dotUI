@@ -114,7 +114,9 @@ interface DecorativeMark {
    stop or tooltip target. For tracks, labels, and other decoration whose datum
    an interactive mark already carries. The library ships its own `decorative`,
    but it works through `postDomain`, which the polar container never calls —
-   this one accepts cartesian and polar marks alike. */
+   this one accepts cartesian and polar marks alike. Limitation: a mark that
+   implements `resolveLayout` (dot, difference, the hierarchy marks) renders
+   through it, bypassing this wrap — use the library `decorative` for those. */
 export function decorative<TMark extends DecorativeMark>(mark: TMark): TMark {
   const initialize = (context: never) => {
     const initialized = mark.initialize(context)
@@ -379,7 +381,7 @@ export function planChart<TDatum, TXField extends ChartXField<TDatum>>(
   return {
     order,
     layers: ordered.map((field, index) => {
-      const label = order[index] ?? field
+      const label = order[index] ?? String(field)
       return {
         channels: {
           x: options.x,
@@ -552,7 +554,8 @@ export interface StackYOptions<TDatum, TXField extends ChartXField<TDatum>> {
   x: TXField
   /** Wide-format value fields, bottom layer first. */
   y: readonly ChartYField<TDatum>[]
-  /** Divide each x group by its own total, for a 100% stack. */
+  /** Divide each x group by its own total, for a 100% stack. All-positive
+      data only — a mixed-sign group divides by its signed total. */
   normalize?: boolean
 }
 
@@ -658,6 +661,18 @@ export type ChartComponentProps<
   ChartBehaviorProps &
   ChartHostProps<TDatum, TXValue> & { children?: ReactNode }
 
+/* The library tooltip surface defaults to UA `Canvas` colors and `system-ui`.
+   These vars restyle it as the house popover surface; they sit on the tooltip
+   element itself, so the portal cannot detach them from the chart container. */
+const TOOLTIP_SURFACE_CLASS = [
+  "[--ts-chart-tooltip-background:var(--color-popover)]",
+  "[--ts-chart-tooltip-color:var(--color-fg)]",
+  "[--ts-chart-tooltip-border:1px_solid_var(--color-border-elevated)]",
+  "[--ts-chart-tooltip-border-radius:var(--popover-radius)]",
+  "[--ts-chart-tooltip-shadow:var(--shadow-overlay,var(--shadow-md))]",
+  "[--ts-chart-tooltip-font:500_0.75rem/1.3_var(--font-sans)]",
+].join(" ")
+
 /* House chart host: the tooltip-capable surface from the library's `tooltip`
    entry, with the default height built in, and `children` rendered as an HTML
    overlay above it so hover readouts repaint at pointer speed without touching
@@ -761,7 +776,8 @@ function serialize(value: unknown): string {
   if (typeof value !== "object")
     return typeof value === "string" ? JSON.stringify(value) : String(value)
   if (value instanceof Date) return `date#${value.getTime()}`
-  if (value instanceof RegExp) return `re#${value.source}#${value.flags}`
+  if (value instanceof RegExp)
+    return `re#${JSON.stringify(value.source)}#${value.flags}`
   if (Array.isArray(value)) return `[${value.map(serialize).join(",")}]`
   if (value instanceof Map)
     return `map{${[...value]
@@ -847,6 +863,7 @@ function resolveBehavior(behavior: ChartBehaviorProps, degrade: boolean) {
             anchor: behavior.tooltipAnchor ?? chartDefaults.tooltipAnchor,
             sticky: behavior.tooltipSticky ?? chartDefaults.tooltipSticky,
             portal: tooltipPortal,
+            className: TOOLTIP_SURFACE_CLASS,
           },
     svgAnimation: degrade
       ? false

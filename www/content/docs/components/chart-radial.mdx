@@ -85,7 +85,7 @@ Pass an array of fields as `value` to stack one row's values into a single ring,
 
 ## Center label
 
-The middle of a ring is the place for the number it summarizes. `children` render as an HTML overlay above the chart, centered on the circle and ignoring pointer events — so the label uses your real typography and stays out of the keyboard path.
+The middle of a ring is the place for the number it summarizes. `children` render as an HTML overlay covering the chart and ignoring pointer events — center the label with flex, as below, and it uses your real typography while staying out of the keyboard path.
 
 ```tsx
 <RadialBarChart

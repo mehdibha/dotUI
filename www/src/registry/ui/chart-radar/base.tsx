@@ -11,6 +11,7 @@ import type {
 } from "@tanstack/charts/polar"
 import {
   angleGrid,
+  focusGroupAngle,
   polar,
   radialArea,
   radialDot,
@@ -341,6 +342,11 @@ export function RadarChart<TDatum, TXField extends ChartXField<TDatum>>(
   >(
     {
       ...props,
+      /* Cartesian `group-x` groups points sharing a scene x, which two spokes
+         on a circle can coincide on. `focusGroupAngle` groups the nearest
+         angular ray across series instead. The strategy object is not in the
+         public `focus` union; it rides the untyped prop bag. */
+      focus: props.focus ?? focusGroupAngle,
       renderTooltipBody: props.renderTooltipBody ?? tooltipBody,
       /* The polar mark arrays serialize into the structural key — mark objects
          key by function identity — and alias into the reference-compared

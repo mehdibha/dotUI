@@ -126,7 +126,7 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Categories down the y axis and values along x. `formatX` still formats the\nvalue axis, and `focus=\"group-y\"` groups along the categories.",
+      "description": "Categories down the y axis and values along x. `formatX` still formats\nthe value axis, and focus groups along the categories.",
       "default": "false"
     },
     "grouped": {
@@ -135,7 +135,7 @@
       "typeAst": {
         "type": "boolean"
       },
-      "description": "Side-by-side series inside each category band. Series that share a band\nwithout it stack instead.",
+      "description": "Side-by-side series inside each category band. Without it, wide-format\nseries draw over one another from zero — stack with `stackY` instead.",
       "default": "true for multi-series wide data, false otherwise"
     },
     "radius": {

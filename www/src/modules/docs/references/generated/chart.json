@@ -3,12 +3,12 @@
   "description": "The chart host: it renders a chart definition, owns the SVG renderer and the\ndefault height, and layers `children` over the surface as a\npointer-events-none HTML overlay. Every family component (`AreaChart`,\n`BarChart`, …) renders one.",
   "props": {
     "definition": {
-      "type": "ChartDefinition<unknown, ChartValue, number>",
+      "type": "DomChartDefinition<unknown, ChartValue, number>",
       "typeAst": {
         "type": "application",
         "base": {
           "type": "identifier",
-          "name": "ChartDefinition"
+          "name": "DomChartDefinition"
         },
         "typeParameters": [
           {

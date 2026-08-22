@@ -49,7 +49,12 @@ export function Example() {
 Two data shapes, one component. **Wide** rows carry one field per series:
 
 ```tsx
-<LineChart data={rows} x="month" y={["desktop", "mobile"]} />
+<LineChart
+  data={rows}
+  x="month"
+  y={["desktop", "mobile"]}
+  ariaLabel="Visitors by month"
+/>
 ```
 
 **Long** rows repeat the x value and name their series in a field. Set `seriesOrder` to lead the color slots and the legend — series the data carries but `seriesOrder` omits follow in the order they first appear:
@@ -61,6 +66,7 @@ Two data shapes, one component. **Wide** rows carry one field per series:
   y="visitors"
   series="device"
   seriesOrder={["desktop", "mobile"]}
+  ariaLabel="Visitors by month and device"
 />
 ```
 
@@ -71,7 +77,13 @@ Either way, series are colored in order from `--chart-1` through `--chart-8`.
 `curve` chooses the path between points: `natural` (the default), `monotone`, `step`, or `linear`.
 
 ```tsx
-<LineChart data={rows} x="month" y="desktop" curve="step" />
+<LineChart
+  data={rows}
+  x="month"
+  y="desktop"
+  curve="step"
+  ariaLabel="Desktop visitors by month"
+/>
 ```
 
 Interpolation only changes how the line travels between observations — it does not smooth the data or claim anything about the values in between. A `null` value is a gap, not a zero: the line stops and restarts on the far side.

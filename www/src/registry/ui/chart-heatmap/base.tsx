@@ -21,6 +21,7 @@ import {
   chartDefaults,
   chartFrame,
   decorative,
+  finiteOrNull,
   paletteColor,
   resolveFormat,
   useChartDefinition,
@@ -82,10 +83,7 @@ export interface HeatmapChartSpecOptions<
 }
 
 function fieldReader<TDatum>(field: string) {
-  return (row: TDatum) => {
-    const value = (row as Record<string, unknown>)[field]
-    return typeof value === "number" && Number.isFinite(value) ? value : null
-  }
+  return (row: TDatum) => finiteOrNull((row as Record<string, unknown>)[field])
 }
 
 /* Which ramp step a value lands on. It rebuilds the chart's own color scale

@@ -101,7 +101,15 @@ export function BarChart<TDatum, TXField extends ChartXField<TDatum>>(
     TDatum,
     ChartXValueOf<TDatum, TXField>,
     BarChartSpecOptions<TDatum, TXField>
-  >(props, barChartSpec)
+  >(
+    {
+      ...props,
+      /* `group-x` groups points sharing a scene x — the value axis when the
+         bars run horizontally. Group along the categories instead. */
+      focus: props.focus ?? (props.horizontal ? "group-y" : undefined),
+    },
+    barChartSpec,
+  )
   return (
     <Chart definition={definition} {...host}>
       {children}

@@ -1,9 +1,9 @@
 import type * as React from "react"
 import type {
-  ChartDefinition,
   ChartPoint,
   ChartRenderContext,
   ChartValue,
+  DomChartDefinition,
 } from "@tanstack/charts"
 import type { ChartTooltipBodyRenderContext } from "@tanstack/charts/react/tooltip"
 
@@ -22,7 +22,7 @@ export interface ChartProps {
    * The definition to render — built for you by a family component, or by
    * `defineChart` for a fully custom chart.
    */
-  definition: ChartDefinition<unknown, ChartValue, number>
+  definition: DomChartDefinition<unknown, ChartValue, number>
 
   /** Accessible name. Required: a chart is a figure, not decoration. */
   ariaLabel: string

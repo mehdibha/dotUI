@@ -76,7 +76,7 @@ Slices touch by default. To separate them the way a printed chart does, stroke t
 
 ## Labels and center content
 
-`sliceLabel` draws text on each slice — `'value'` for the magnitude, `'name'` for the key — positioned with `sliceLabelRadius` and styled with `sliceLabelFill` and `sliceLabelFontSize`. Slice labels are part of the chart surface, so they are also focusable points; they carry the same slice as the arc under them, so the tooltip reads the same either way.
+`sliceLabel` draws text on each slice — `'value'` for the magnitude, `'name'` for the key — positioned with `sliceLabelRadius` and styled with `sliceLabelFill` and `sliceLabelFontSize`. Slice labels are decorative: they paint on the surface but never become keyboard stops or tooltip targets — the arc beneath them carries the interaction.
 
 The hole in a donut is best filled with plain HTML: anything passed as `children` renders as an overlay above the surface and ignores pointer events.
 

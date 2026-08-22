@@ -42,15 +42,15 @@ export interface BarChartProps {
   rowKey?: string
 
   /**
-   * Categories down the y axis and values along x. `formatX` still formats the
-   * value axis, and `focus="group-y"` groups along the categories.
+   * Categories down the y axis and values along x. `formatX` still formats
+   * the value axis, and focus groups along the categories.
    * @default false
    */
   horizontal?: boolean
 
   /**
-   * Side-by-side series inside each category band. Series that share a band
-   * without it stack instead.
+   * Side-by-side series inside each category band. Without it, wide-format
+   * series draw over one another from zero — stack with `stackY` instead.
    * @default true for multi-series wide data, false otherwise
    */
   grouped?: boolean
