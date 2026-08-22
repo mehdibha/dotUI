@@ -9,6 +9,7 @@ import {
   MoonIcon,
   SlidersHorizontalIcon,
   SmartphoneIcon,
+  SquareDashedMousePointerIcon,
   SunIcon,
   TabletIcon,
 } from "lucide-react"
@@ -35,9 +36,11 @@ import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import {
   pingIframe,
+  sendInspectorMode,
   sendPreviewMode,
   sendToIframe,
   useDesignSystem,
+  useInspectorExitMessages,
 } from "@/modules/create/preset"
 import type { PreviewMode } from "@/modules/create/preset"
 import { componentsData } from "@/modules/docs/components-list/components-data"
@@ -105,6 +108,7 @@ export function PreviewPanel({
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
+  const [inspecting, setInspecting] = useState(false)
   const isMobile = useIsMobile()
 
   const effectivePreview = preview
@@ -216,6 +220,27 @@ export function PreviewPanel({
       window.removeEventListener("message", onReady)
     }
   }, [previewMode])
+
+  // Forward inspect mode to the iframe — same resend-on-load/ready dance as the
+  // display mode, so it survives preview switches (the iframe remounts per preview).
+  useEffect(() => {
+    const iframe = iframeRef.current
+    if (!iframe) return
+    const send = () => sendInspectorMode(iframe, inspecting)
+    if (iframe.contentWindow) send()
+    iframe.addEventListener("load", send)
+    const onReady = (event: MessageEvent) => {
+      if (event.data?.type === "preview-ready") send()
+    }
+    window.addEventListener("message", onReady)
+    return () => {
+      iframe.removeEventListener("load", send)
+      window.removeEventListener("message", onReady)
+    }
+  }, [inspecting])
+
+  // The preview exits inspect mode itself on Escape — keep the toggle in sync.
+  useInspectorExitMessages(() => setInspecting(false))
 
   // Keep the fullscreen toggle's icon in sync with the actual state — exiting via Esc
   // (not just the button) still flips it back.
@@ -444,6 +469,27 @@ export function PreviewPanel({
         </Menu>
 
         <div className="h-4 w-px shrink-0 bg-border" />
+
+        {/* Component inspector — hover the preview to see the dotUI component
+            under the cursor with its props; click jumps to its params. */}
+        <Tooltip delay={0}>
+          <Button
+            size="sm"
+            variant={inspecting ? "primary" : "quiet"}
+            isIconOnly
+            className="rounded-full"
+            onPress={() => setInspecting((v) => !v)}
+            aria-label="Toggle component inspector"
+          >
+            <SquareDashedMousePointerIcon />
+          </Button>
+          <PillTooltipContent>
+            Inspect{" "}
+            <span className="text-fg-on-tooltip/60">
+              {inspecting ? "On" : "Off"}
+            </span>
+          </PillTooltipContent>
+        </Tooltip>
 
         {/* Light / dark preview mode */}
         <Tooltip delay={0}>
