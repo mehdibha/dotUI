@@ -13,7 +13,7 @@ import { ThemeProvider } from "starter-themes"
 import { siteConfig } from "@/config/site"
 import { truncateOnWord } from "@/lib/text"
 import { ToastProvider } from "@/registry/ui/toast"
-import { usePreviewForcedTheme } from "@/modules/create/preset"
+import { usePreviewForcedTheme } from "@/modules/create/preset/iframe-sync"
 
 import appCss from "@/styles.css?url"
 

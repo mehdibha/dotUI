@@ -5,7 +5,8 @@ import {
   fontStack,
 } from "@/lib/fonts"
 import { DEFAULT_COLOR_CONFIG, type ColorConfig } from "@/registry/theme"
-import { DEFAULTS, type DesignSystem } from "@/modules/create/preset"
+import { DEFAULTS } from "@/modules/create/preset/defaults"
+import type { DesignSystem } from "@/modules/create/preset/types"
 
 /**
  * A pre-built design system the gallery can browse and present.
