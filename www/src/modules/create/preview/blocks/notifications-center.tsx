@@ -42,12 +42,14 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/registry/ui/empty"
-import { Label } from "@/registry/ui/field"
+import { Description, FieldContent, Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import {
   Menu,
   MenuContent,
   MenuItem,
+  MenuItemDescription,
+  MenuItemLabel,
   MenuSection,
   MenuSectionHeader,
 } from "@/registry/ui/menu"
@@ -112,7 +114,7 @@ const DAYS = ["Today", "Yesterday", "Earlier this week"]
 
 const KIND_STYLE: Record<Kind, { icon: typeof BellIcon; tone: string }> = {
   mention: { icon: MessageSquareIcon, tone: "bg-accent-muted text-fg-accent" },
-  comment: { icon: MessageSquareIcon, tone: "bg-neutral text-fg-muted" },
+  comment: { icon: MessageSquareIcon, tone: "bg-neutral text-fg-on-neutral" },
   review: { icon: GitBranchIcon, tone: "bg-info-muted text-fg-info" },
   approval: {
     icon: CheckCircle2Icon,
@@ -126,7 +128,7 @@ const KIND_STYLE: Record<Kind, { icon: typeof BellIcon; tone: string }> = {
   },
   release: { icon: TagIcon, tone: "bg-info-muted text-fg-info" },
   star: { icon: StarIcon, tone: "bg-warning-muted text-fg-warning" },
-  assign: { icon: CircleDotIcon, tone: "bg-neutral text-fg-muted" },
+  assign: { icon: CircleDotIcon, tone: "bg-neutral text-fg-on-neutral" },
 }
 
 const ITEMS: Item[] = [
@@ -352,6 +354,7 @@ function matchesTab(item: Item, tab: TabId) {
 function matchesQuery(item: Item, query: string) {
   if (!query) return true
   const haystack = [item.actor, item.action, item.target, item.quote, item.meta]
+    .filter(Boolean)
     .join(" ")
     .toLowerCase()
   return haystack.includes(query.toLowerCase())
@@ -390,7 +393,7 @@ function NotificationRow({
       />
       <Avatar size="md" className="mt-0.5 shrink-0">
         <AvatarFallback>{initialsOf(item.actor)}</AvatarFallback>
-        <AvatarBadge className={cn("size-4", tone)}>
+        <AvatarBadge className={tone}>
           <KindIcon />
         </AvatarBadge>
       </Avatar>
@@ -432,7 +435,7 @@ function NotificationRow({
             <Button size="sm" onPress={() => onInvite(item.id, "declined")}>
               Decline
             </Button>
-            <Badge size="sm" appearance="subtle">
+            <Badge size="sm" variant="accent" appearance="subtle">
               {item.invite.role}
             </Badge>
           </div>
@@ -537,12 +540,12 @@ function SideRail() {
                 setDelivery((prev) => ({ ...prev, [row.id]: isSelected }))
               }
             >
-              <span className="flex min-w-0 flex-col">
+              <FieldContent className="min-w-0">
                 <Label>{row.label}</Label>
-                <span className="truncate text-xs text-fg-muted">
+                <Description className="truncate text-xs">
                   {row.hint}
-                </span>
-              </span>
+                </Description>
+              </FieldContent>
               <SwitchControl />
             </Switch>
           ))}
@@ -670,7 +673,7 @@ export default function NotificationsCenter() {
                   aria-label="Search notifications"
                   value={query}
                   onChange={setQuery}
-                  className="hidden w-56 md:block"
+                  className="hidden w-56 md:flex"
                 >
                   <Input placeholder="Search notifications…" size="sm" />
                 </SearchField>
@@ -710,8 +713,15 @@ export default function NotificationsCenter() {
                       <MenuSection>
                         <MenuSectionHeader>Show categories</MenuSectionHeader>
                         {CATEGORIES.map((category) => (
-                          <MenuItem key={category.id} id={category.id}>
-                            {category.label}
+                          <MenuItem
+                            key={category.id}
+                            id={category.id}
+                            textValue={category.label}
+                          >
+                            <MenuItemLabel>{category.label}</MenuItemLabel>
+                            <MenuItemDescription>
+                              {category.hint}
+                            </MenuItemDescription>
                           </MenuItem>
                         ))}
                       </MenuSection>
@@ -777,22 +787,20 @@ export default function NotificationsCenter() {
               <Input placeholder="Search notifications…" size="sm" />
             </SearchField>
 
-            <TabList
-              variant="line"
-              aria-label="Notification views"
-              className="no-scrollbar overflow-x-auto"
-            >
-              {TABS.map((t) => (
-                <Tab key={t.id} id={t.id}>
-                  {t.label}
-                  {unreadByTab[t.id] > 0 ? (
-                    <Badge size="sm" className="ml-1.5">
-                      {unreadByTab[t.id]}
-                    </Badge>
-                  ) : null}
-                </Tab>
-              ))}
-            </TabList>
+            {/* The line indicator sits a few px below the list box; the
+                scroller needs bottom room or it clips the underline. */}
+            <div className="-mx-4 -mb-1.5 no-scrollbar overflow-x-auto px-4 pb-1.5 sm:-mx-6 sm:px-6">
+              <TabList variant="line" aria-label="Notification views">
+                {TABS.map((t) => (
+                  <Tab key={t.id} id={t.id}>
+                    {t.label}
+                    {unreadByTab[t.id] > 0 ? (
+                      <Badge size="sm">{unreadByTab[t.id]}</Badge>
+                    ) : null}
+                  </Tab>
+                ))}
+              </TabList>
+            </div>
           </div>
         </header>
 
