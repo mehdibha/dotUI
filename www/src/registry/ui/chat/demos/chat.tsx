@@ -28,7 +28,7 @@ export default function Demo() {
 
   return (
     <div className="flex h-80 w-full max-w-md flex-col gap-3">
-      <Conversation className="rounded-(--chat-input-radius) border border-border-muted">
+      <Conversation className="rounded-(--radius-panel) border border-border-muted">
         {messages.map((message) => (
           <Message key={message.id} role={message.role}>
             <MessageContent>{message.text}</MessageContent>
@@ -52,7 +52,7 @@ export default function Demo() {
           placeholder="Ask anything…"
           aria-label="Message"
         />
-        <PromptInputToolbar className="justify-end">
+        <PromptInputToolbar>
           <PromptInputSubmit isIconOnly aria-label="Send message">
             <ArrowUpIcon />
           </PromptInputSubmit>

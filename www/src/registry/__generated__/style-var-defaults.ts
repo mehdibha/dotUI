@@ -12,7 +12,6 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--calendar-cell-size": "--spacing(8)",
 	"--calendar-range-radius": "var(--radius-xs)",
 	"--card-radius": "var(--radius-panel)",
-	"--chat-input-radius": "var(--radius-panel)",
 	"--chat-message-radius": "var(--radius-surface)",
 	"--checkbox-card-radius": "var(--radius-surface)",
 	"--checkbox-radius": "var(--radius-sm)",

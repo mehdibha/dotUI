@@ -1,4 +1,3 @@
 :root {
   --chat-message-radius: var(--radius-surface);
-  --chat-input-radius: var(--radius-panel);
 }

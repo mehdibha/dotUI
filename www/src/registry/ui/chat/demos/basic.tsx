@@ -10,7 +10,7 @@ export default function Demo() {
       </Message>
       <Message role="assistant">
         <MessageContent>
-          Give the parent `display: grid` and `place-items: center`. Two lines,
+          Give the parent a grid display and center its place-items. Two lines,
           no margins to guess at.
         </MessageContent>
       </Message>
@@ -21,8 +21,8 @@ export default function Demo() {
       </Message>
       <Message role="assistant">
         <MessageContent>
-          Then `justify-content: center` and `align-items: center` do the same
-          job along the two axes.
+          Then centering justify-content and align-items does the same job along
+          the two axes.
         </MessageContent>
       </Message>
     </Conversation>

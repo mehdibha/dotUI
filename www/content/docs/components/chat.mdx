@@ -24,7 +24,7 @@ import { Conversation, Message, MessageContent } from "@/ui/chat"
     <MessageContent>How do I center a div?</MessageContent>
   </Message>
   <Message role="assistant">
-    <MessageContent>Give the parent `place-items: center`.</MessageContent>
+    <MessageContent>Center it with place-items.</MessageContent>
   </Message>
 </Conversation>
 ```
@@ -51,7 +51,8 @@ import { Conversation, Message, MessageAvatar, MessageContent } from "@/ui/chat"
 
 `PromptInput` is the composer. It renders a form, so `PromptInputSubmit` — or
 pressing Enter in the textarea — submits it; Shift+Enter inserts a newline. The
-textarea grows with its content.
+textarea grows with its content, and the shell is the same input group the rest
+of your fields use, so it follows their style, radius and density.
 
 ```tsx
 import {
@@ -77,7 +78,7 @@ import {
 ## Examples
 
 <Examples className="md:grid-cols-2">
-  <Example name="chat/demos/basic" title="Conversation" />
+  <Example name="chat/demos/basic" title="Basic" />
   <Example name="chat/demos/with-avatars" title="With Avatars" />
   <Example name="chat/demos/prompt-input" title="Prompt Input" />
   <Example name="chat/demos/with-toolbar" title="With Toolbar" />

@@ -31,7 +31,7 @@ export function ChatDemo() {
         }}
       >
         <PromptInputTextarea placeholder="Ask anything…" aria-label="Message" />
-        <PromptInputToolbar className="justify-end">
+        <PromptInputToolbar>
           <PromptInputSubmit isIconOnly aria-label="Send message">
             <ArrowUpIcon />
           </PromptInputSubmit>

@@ -5,13 +5,13 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
 import { Button } from "@/registry/ui/button"
-import { TextArea } from "@/registry/ui/input"
+import { InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/input"
 
 import { useStyles } from "./styles"
 
 // MARK: chatStyles
 
-// MARK: Conversation
+// MARK: Separator
 
 interface ConversationProps extends React.ComponentProps<"div"> {}
 
@@ -27,7 +27,7 @@ const Conversation = ({ className, ...props }: ConversationProps) => {
   )
 }
 
-// MARK: Message
+// MARK: Separator
 
 interface MessageProps extends Omit<React.ComponentProps<"div">, "role"> {
   role?: "user" | "assistant"
@@ -45,7 +45,7 @@ const Message = ({ className, role = "assistant", ...props }: MessageProps) => {
   )
 }
 
-// MARK: MessageContent
+// MARK: Separator
 
 interface MessageContentProps extends React.ComponentProps<"div"> {}
 
@@ -60,7 +60,7 @@ const MessageContent = ({ className, ...props }: MessageContentProps) => {
   )
 }
 
-// MARK: MessageAvatar
+// MARK: Separator
 
 interface MessageAvatarProps extends React.ComponentProps<typeof Avatar> {
   src?: string
@@ -92,22 +92,24 @@ const MessageAvatar = ({
   )
 }
 
-// MARK: PromptInput
+// MARK: Separator
 
 interface PromptInputProps extends React.ComponentProps<"form"> {}
 
-const PromptInput = ({ className, ...props }: PromptInputProps) => {
+const PromptInput = ({ className, children, ...props }: PromptInputProps) => {
   const { promptInput } = useStyles()()
   return (
     <form
       data-prompt-input=""
       className={promptInput({ className })}
       {...props}
-    />
+    >
+      <InputGroup>{children}</InputGroup>
+    </form>
   )
 }
 
-// MARK: PromptInputTextarea
+// MARK: Separator
 
 interface PromptInputTextareaProps extends React.ComponentProps<
   typeof TextArea
@@ -142,7 +144,7 @@ const PromptInputTextarea = ({
   )
 }
 
-// MARK: PromptInputToolbar
+// MARK: Separator
 
 interface PromptInputToolbarProps extends React.ComponentProps<"div"> {}
 
@@ -152,7 +154,7 @@ const PromptInputToolbar = ({
 }: PromptInputToolbarProps) => {
   const { promptInputToolbar } = useStyles()()
   return (
-    <div
+    <InputGroupAddon
       data-prompt-input-toolbar=""
       className={promptInputToolbar({ className })}
       {...props}
@@ -160,7 +162,7 @@ const PromptInputToolbar = ({
   )
 }
 
-// MARK: PromptInputSubmit
+// MARK: Separator
 
 interface PromptInputSubmitProps extends React.ComponentProps<typeof Button> {}
 

@@ -10,7 +10,7 @@ import WithToolbar from "./demos/with-toolbar"
 export default function ChatExamples() {
   return (
     <Examples>
-      <Example title="Conversation">
+      <Example title="Basic">
         <Basic />
       </Example>
       <Example title="With avatars">
