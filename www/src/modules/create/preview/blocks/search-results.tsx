@@ -504,7 +504,6 @@ function FiltersPanel({
           <DisclosureTrigger>Bundle size</DisclosureTrigger>
           <DisclosurePanel>
             <Slider
-              aria-label="Bundle size"
               value={filters.size}
               onChange={(value) =>
                 onChange({ size: value as [number, number] })
@@ -588,12 +587,10 @@ function ResultItem({ result }: { result: Result }) {
               {result.title}
             </h3>
             {result.verified && (
-              <Tooltip>
-                <span className="inline-flex text-success">
-                  <ShieldCheckIcon className="size-4" />
-                </span>
-                <TooltipContent>Verified publisher</TooltipContent>
-              </Tooltip>
+              <span className="inline-flex items-center text-success">
+                <ShieldCheckIcon className="size-4" />
+                <span className="sr-only">Verified publisher</span>
+              </span>
             )}
             <Badge appearance="subtle" variant="accent">
               <TypeIcon aria-hidden />
@@ -634,10 +631,8 @@ function ResultItem({ result }: { result: Result }) {
 
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-fg-muted">
             <span className="flex items-center gap-1.5">
-              <Avatar size="sm" className="size-5">
-                <AvatarFallback className="text-[0.5rem]">
-                  {initials(result.publisher)}
-                </AvatarFallback>
+              <Avatar size="sm">
+                <AvatarFallback>{initials(result.publisher)}</AvatarFallback>
               </Avatar>
               {result.publisher}
             </span>
@@ -664,12 +659,14 @@ function ResultItem({ result }: { result: Result }) {
 
           <div className="flex flex-wrap gap-1.5 pt-0.5">
             {result.topics.map((topic) => (
-              <span
+              <Badge
                 key={topic}
-                className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-[0.6875rem] text-fg-muted"
+                appearance="subtle"
+                variant="neutral"
+                size="sm"
               >
                 {topic}
-              </span>
+              </Badge>
             ))}
           </div>
         </div>
