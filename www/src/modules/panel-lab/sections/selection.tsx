@@ -51,7 +51,7 @@ const HIGHLIGHT_OPTIONS: SelectRowOption[] = [
    either switch — non-selectable systems opt content back in — while the
    label follows it, arrow cursor included. ::selection can't be forced to
    render, so the sentence asks to be selected instead of faking it. */
-function SelectionHero({ state }: { state: LabState }) {
+export function SelectionHero({ state }: { state: LabState }) {
   const none = state.selectionUiText === "none"
   return (
     <Hero className="gap-2 px-5 py-5">
@@ -74,6 +74,17 @@ function SelectionHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the UI-text selectability, and the highlight. */
+export function selectionSummary(state: LabState): string {
+  const uiText =
+    UI_TEXT_OPTIONS.find((o) => o.value === state.selectionUiText)?.label ??
+    state.selectionUiText
+  const highlight =
+    HIGHLIGHT_OPTIONS.find((o) => o.value === state.selectionHighlight)
+      ?.label ?? state.selectionHighlight
+  return `${uiText} text · ${highlight} highlight`
 }
 
 export function SelectionSection({ lab }: { lab: Lab }) {

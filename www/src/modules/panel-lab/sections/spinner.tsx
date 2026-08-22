@@ -103,7 +103,7 @@ const SPINNER_OPTIONS: SelectRowOption[] = [
   { value: "dots", label: "Dots", illustration: <DotsSpinner /> },
 ]
 
-function SpinnerHero({ state }: { state: LabState }) {
+export function SpinnerHero({ state }: { state: LabState }) {
   const Spinner = SPINNER[state.spinnerStyle as keyof typeof SPINNER]
   return (
     <Hero className="flex-row items-center justify-evenly py-6">
@@ -113,6 +113,14 @@ function SpinnerHero({ state }: { state: LabState }) {
         <span className="text-[0.8125rem] text-fg-muted">Saving…</span>
       </div>
     </Hero>
+  )
+}
+
+/** Collapsed-row summary: the spinner style. */
+export function spinnerSummary(state: LabState): string {
+  return (
+    SPINNER_OPTIONS.find((o) => o.value === state.spinnerStyle)?.label ??
+    state.spinnerStyle
   )
 }
 

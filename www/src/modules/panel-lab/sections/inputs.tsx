@@ -203,7 +203,7 @@ type Specimen = "email" | "role" | "username" | "notes"
 
 /** Live specimens — label, control, help — focusing with the Focus section's
  *  field recipe, the way the buttons hero hovers and presses for real. */
-function FieldHero({ state }: { state: LabState }) {
+export function FieldHero({ state }: { state: LabState }) {
   const id = useId()
   const [focused, setFocused] = useState<Specimen | null>(null)
   const look = inputLook(state.inputStyle, controlRadiusPx(state))
@@ -304,6 +304,16 @@ function FieldHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the field style, and the hover feel when it has
+ *  one. */
+export function inputsSummary(state: LabState): string {
+  const style =
+    STYLE_OPTIONS.find((o) => o.value === state.inputStyle)?.label ??
+    state.inputStyle
+  const hover = HOVER_OPTIONS.find((o) => o.value === state.inputHover)?.label
+  return state.inputHover === "none" ? style : `${style} · ${hover} hover`
 }
 
 export function InputsSection({ lab }: { lab: Lab }) {

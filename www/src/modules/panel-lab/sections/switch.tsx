@@ -42,7 +42,7 @@ export function DemoSwitch({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-function SwitchHero({ state }: { state: LabState }) {
+export function SwitchHero({ state }: { state: LabState }) {
   const fill = fillOf(state)
   return (
     <Hero className="gap-3 p-4">
@@ -56,6 +56,11 @@ function SwitchHero({ state }: { state: LabState }) {
       </label>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the family fill school, the section's one axis. */
+export function switchSummary(state: LabState): string {
+  return state.checkFill === "neutral" ? "Neutral fill" : "Accent fill"
 }
 
 export function SwitchSection({ lab }: { lab: Lab }) {

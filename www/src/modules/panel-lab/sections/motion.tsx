@@ -271,7 +271,7 @@ const STATE_OPTIONS: SelectRowOption[] = [
 /* ---------------------------------- Hero ----------------------------------- */
 
 /* A menu the user opens themselves — self-serve replay, no fake loop. */
-function MotionHero({ state }: { state: LabState }) {
+export function MotionHero({ state }: { state: LabState }) {
   return (
     <Hero className="flex-row items-center justify-center gap-4 px-4 py-6">
       <style>{heroCss(state)}</style>
@@ -291,6 +291,20 @@ function MotionHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the easing character, and the overlay entrance
+ *  when overlays animate. */
+export function motionSummary(state: LabState): string {
+  const character =
+    CHARACTER_OPTIONS.find((o) => o.value === state.motionCharacter)?.label ??
+    state.motionCharacter
+  const overlay =
+    OVERLAY_OPTIONS.find((o) => o.value === state.motionOverlay)?.label ??
+    state.motionOverlay
+  return state.motionOverlay === "none"
+    ? character
+    : `${character} · ${overlay} overlays`
 }
 
 export function MotionSection({ lab }: { lab: Lab }) {

@@ -28,7 +28,7 @@ const OTP_STYLE_OPTIONS: SelectRowOption[] = [
 
 /** Three digits and a caret: cells wear the field style boxed, fused into one
  *  group, or reduced to a dash per digit. */
-function OtpHero({ state }: { state: LabState }) {
+export function OtpHero({ state }: { state: LabState }) {
   const look = inputLook(state.inputStyle, controlRadiusPx(state))
   const style = state.otpStyle
   const digits = ["3", "9", "4", null]
@@ -77,6 +77,14 @@ function OtpHero({ state }: { state: LabState }) {
       )}
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the cell treatment. */
+export function otpFieldSummary(state: LabState): string {
+  const style =
+    OTP_STYLE_OPTIONS.find((o) => o.value === state.otpStyle)?.label ??
+    state.otpStyle
+  return state.otpStyle === "boxes" ? style : `${style} cells`
 }
 
 export function OtpFieldSection({ lab }: { lab: Lab }) {

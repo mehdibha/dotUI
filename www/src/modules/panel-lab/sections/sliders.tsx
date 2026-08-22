@@ -82,7 +82,7 @@ const TRACK_OPTIONS = [
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-const TRACK_HEIGHT = {
+export const TRACK_HEIGHT = {
   thin: "h-1",
   thick: "h-3",
 }
@@ -124,13 +124,24 @@ function SliderSpecimen({
   )
 }
 
-function SlidersHero({ state }: { state: LabState }) {
+export function SlidersHero({ state }: { state: LabState }) {
   return (
     <Hero className="gap-5 px-5 py-6">
       <SliderSpecimen percent={35} state={state} />
       <SliderSpecimen percent={70} state={state} />
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the thumb treatment, and the track weight. */
+export function slidersSummary(state: LabState): string {
+  const thumb =
+    THUMB_OPTIONS.find((o) => o.value === state.sliderThumb)?.label ??
+    state.sliderThumb
+  const track =
+    TRACK_OPTIONS.find((o) => o.value === state.sliderTrack)?.label ??
+    state.sliderTrack
+  return `${thumb} thumb · ${track} track`
 }
 
 export function SlidersSection({ lab }: { lab: Lab }) {

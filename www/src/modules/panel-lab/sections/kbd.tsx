@@ -118,7 +118,7 @@ const TREATMENT_OPTIONS: SelectRowOption[] = [
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-function KbdHero({ state }: { state: LabState }) {
+export function KbdHero({ state }: { state: LabState }) {
   const treatment = state.kbdTreatment
   return (
     <Hero className="flex-row items-center justify-evenly py-6">
@@ -133,6 +133,14 @@ function KbdHero({ state }: { state: LabState }) {
         </div>
       </div>
     </Hero>
+  )
+}
+
+/** Collapsed-row summary: the shortcut treatment. */
+export function kbdSummary(state: LabState): string {
+  return (
+    TREATMENT_OPTIONS.find((o) => o.value === state.kbdTreatment)?.label ??
+    state.kbdTreatment
   )
 }
 

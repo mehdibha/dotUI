@@ -80,7 +80,7 @@ const SEPARATOR_OPTIONS: SelectRowOption[] = [
 /* ---------------------------------- Hero ----------------------------------- */
 
 // Rest keeps a live hover: so real pointers behave like the pinned crumb.
-const CRUMB_REST = {
+export const CRUMB_REST = {
   accent: "text-accent hover:underline hover:underline-offset-2",
   muted: "text-fg-muted hover:text-fg",
 }
@@ -90,7 +90,7 @@ const CRUMB_HOVERED = {
   muted: "text-fg",
 }
 
-function Separator({ state }: { state: LabState }) {
+export function Separator({ state }: { state: LabState }) {
   if (state.breadcrumbSeparator === "slash")
     return <span className="text-fg-muted/60">/</span>
   return (
@@ -111,7 +111,7 @@ function Separator({ state }: { state: LabState }) {
   )
 }
 
-function BreadcrumbsHero({ state }: { state: LabState }) {
+export function BreadcrumbsHero({ state }: { state: LabState }) {
   const tone = state.breadcrumbTone as keyof typeof CRUMB_REST
   return (
     <Hero className="flex-row items-center justify-center gap-1.5 py-6 text-[0.8125rem]">
@@ -128,6 +128,15 @@ function BreadcrumbsHero({ state }: { state: LabState }) {
       <span className="text-fg">Billing</span>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the separator glyph, and the crumb tone. */
+export function breadcrumbsSummary(state: LabState): string {
+  const separator =
+    SEPARATOR_OPTIONS.find((o) => o.value === state.breadcrumbSeparator)
+      ?.label ?? state.breadcrumbSeparator
+  const tone = state.breadcrumbTone === "accent" ? "Accent" : "Muted"
+  return `${separator} · ${tone} crumbs`
 }
 
 export function BreadcrumbsSection({ lab }: { lab: Lab }) {

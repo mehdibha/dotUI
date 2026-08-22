@@ -124,7 +124,7 @@ const HEADER_OPTIONS: SelectRowOption[] = [
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-function PopoversHero({ state }: { state: LabState }) {
+export function PopoversHero({ state }: { state: LabState }) {
   const header = state.popoverHeader
   const title = "Share project"
   const description = "Anyone with the link can view."
@@ -155,6 +155,16 @@ function PopoversHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the header treatment, plus the tip when present. */
+export function popoversSummary(state: LabState): string {
+  const header =
+    HEADER_OPTIONS.find((o) => o.value === state.popoverHeader)?.label ??
+    state.popoverHeader
+  const parts = [state.popoverHeader === "none" ? header : `${header} header`]
+  if (state.popoverTip === "tip") parts.push("Tip")
+  return parts.join(" · ")
 }
 
 export function PopoversSection({ lab }: { lab: Lab }) {

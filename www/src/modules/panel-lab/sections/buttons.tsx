@@ -53,6 +53,14 @@ const PRESS_OPTIONS: SelectRowOption[] = [
   { value: "none", label: "None" },
 ]
 
+const optionLabel = (options: SelectRowOption[], value: string) =>
+  options.find((o) => o.value === value)?.label ?? value
+
+/** Collapsed-row summary: the style family, and the press feel. */
+export function buttonsSummary(state: LabState): string {
+  return `${optionLabel(STYLE_OPTIONS, state.buttonStyle)} · ${optionLabel(PRESS_OPTIONS, state.buttonPress)} press`
+}
+
 export function buttonRadiusPx(state: LabState): number {
   switch (state.buttonRadius) {
     case "sharp":
@@ -131,7 +139,7 @@ export const SPECIMEN_FX =
 /** The section's specimen: the full variant ladder wearing one style — the
  *  neutral row, then the status fills. Hover and press demo for real; link
  *  only underlines, whatever the axes say. */
-function ButtonsHero({ state }: { state: LabState }) {
+export function ButtonsHero({ state }: { state: LabState }) {
   const look = styleLook(state)
   const radius = buttonRadiusPx(state)
 
