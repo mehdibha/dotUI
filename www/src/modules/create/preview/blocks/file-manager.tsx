@@ -6,6 +6,7 @@ import {
   ArchiveIcon,
   AudioLinesIcon,
   BellIcon,
+  CaptionsIcon,
   DownloadIcon,
   FileCodeIcon,
   FileIcon,
@@ -13,7 +14,6 @@ import {
   FolderIcon,
   FolderOpenIcon,
   FolderPlusIcon,
-  FrameIcon,
   ImageIcon,
   LayoutGridIcon,
   LinkIcon,
@@ -69,7 +69,6 @@ import { Popover } from "@/registry/ui/popover"
 import {
   ProgressBar,
   ProgressBarControl,
-  ProgressBarFill,
   ProgressBarOutput,
 } from "@/registry/ui/progress-bar"
 import { SearchField } from "@/registry/ui/search-field"
@@ -125,8 +124,6 @@ interface FileEntry {
 interface SubFolder {
   id: string
   name: string
-  count: number
-  bytes: number
 }
 
 interface FolderNode {
@@ -161,7 +158,7 @@ const KINDS: Record<
     icon: ImageIcon,
     tone: "bg-warning-muted text-fg-warning",
   },
-  video: { label: "Video", icon: FrameIcon, tone: "bg-muted text-fg" },
+  video: { label: "Video", icon: CaptionsIcon, tone: "bg-muted text-fg" },
   audio: {
     label: "Audio",
     icon: AudioLinesIcon,
@@ -186,15 +183,10 @@ const WORKSPACE: FolderNode = {
   name: "Meridian",
   trail: [],
   folders: [
-    { id: "design", name: "Product Design", count: 148, bytes: 41_300_000_000 },
-    { id: "marketing", name: "Marketing", count: 92, bytes: 18_700_000_000 },
-    {
-      id: "engineering",
-      name: "Engineering",
-      count: 210,
-      bytes: 6_400_000_000,
-    },
-    { id: "finance", name: "Finance", count: 37, bytes: 820_000_000 },
+    { id: "design", name: "Product Design" },
+    { id: "marketing", name: "Marketing" },
+    { id: "engineering", name: "Engineering" },
+    { id: "finance", name: "Finance" },
   ],
   files: [
     {
@@ -232,8 +224,8 @@ const FOLDERS: Record<string, FolderNode> = {
     name: "Product Design",
     trail: [ROOT],
     folders: [
-      { id: "brand", name: "Brand", count: 46, bytes: 12_100_000_000 },
-      { id: "webapp", name: "Web App", count: 88, bytes: 27_400_000_000 },
+      { id: "brand", name: "Brand" },
+      { id: "webapp", name: "Web App" },
     ],
     files: [
       {
@@ -347,9 +339,7 @@ const FOLDERS: Record<string, FolderNode> = {
   marketing: {
     name: "Marketing",
     trail: [ROOT],
-    folders: [
-      { id: "launch", name: "Q3 Launch", count: 54, bytes: 9_600_000_000 },
-    ],
+    folders: [{ id: "launch", name: "Q3 Launch" }],
     files: [
       {
         id: "m1",
@@ -432,7 +422,7 @@ const FOLDERS: Record<string, FolderNode> = {
   engineering: {
     name: "Engineering",
     trail: [ROOT],
-    folders: [{ id: "specs", name: "Specs", count: 61, bytes: 340_000_000 }],
+    folders: [{ id: "specs", name: "Specs" }],
     files: [
       {
         id: "e1",
@@ -535,6 +525,21 @@ const FOLDERS: Record<string, FolderNode> = {
       },
     ],
   },
+}
+
+// Folder tiles summarise their whole subtree. Derived rather than authored so a
+// tile can never claim contents that opening the folder contradicts.
+function folderTotals(id: string): { count: number; bytes: number } {
+  const node = FOLDERS[id]
+  if (!node) return { count: 0, bytes: 0 }
+  let count = node.files.length
+  let bytes = node.files.reduce((total, file) => total + file.bytes, 0)
+  for (const sub of node.folders) {
+    const totals = folderTotals(sub.id)
+    count += 1 + totals.count
+    bytes += totals.bytes
+  }
+  return { count, bytes }
 }
 
 const STORAGE_BREAKDOWN = [
@@ -662,8 +667,9 @@ function FileTile({ file }: { file: FileEntry }) {
               )}
               {file.starred && (
                 <StarIcon
-                  className="size-3 text-fg-warning"
+                  role="img"
                   aria-label="Starred"
+                  className="size-3 text-fg-warning"
                 />
               )}
             </div>
@@ -698,6 +704,7 @@ function FolderTile({
   folder: SubFolder
   onOpen: () => void
 }) {
+  const { count, bytes } = folderTotals(folder.id)
   return (
     <Button
       variant="quiet"
@@ -711,7 +718,7 @@ function FolderTile({
         </span>
       </span>
       <span className="text-xs font-normal text-fg-muted tabular-nums">
-        {folder.count} items · {formatSize(folder.bytes)}
+        {count === 0 ? "Empty" : `${count} items · ${formatSize(bytes)}`}
       </span>
     </Button>
   )
@@ -738,9 +745,7 @@ function StorageCard({ className }: { className?: string }) {
             <Label className="text-sm">248 GB of 512 GB</Label>
             <ProgressBarOutput className="text-xs text-fg-muted tabular-nums" />
           </div>
-          <ProgressBarControl>
-            <ProgressBarFill className="bg-primary" />
-          </ProgressBarControl>
+          <ProgressBarControl />
         </ProgressBar>
         <ul className="flex flex-col gap-2">
           {STORAGE_BREAKDOWN.map((row) => (
@@ -1001,7 +1006,10 @@ export default function FileManager() {
             <SearchField
               aria-label="Search this folder"
               value={query}
-              onChange={setQuery}
+              onChange={(next) => {
+                setQuery(next)
+                setSelected(new Set())
+              }}
               placeholder="Search files and people…"
               className="min-w-40 flex-1 sm:max-w-xs"
             />
@@ -1026,7 +1034,11 @@ export default function FileManager() {
               selectedKeys={new Set([view])}
               onSelectionChange={(keys) => {
                 const [first] = keys
-                if (first != null) setView(first === "list" ? "list" : "grid")
+                if (first == null) return
+                // Only the list view can show a row as selected — carrying a
+                // selection into the grid would leave the action bar orphaned.
+                setSelected(new Set())
+                setView(first === "list" ? "list" : "grid")
               }}
             >
               <ToggleButton id="grid" isIconOnly aria-label="Grid view">
@@ -1182,14 +1194,16 @@ export default function FileManager() {
                                 </span>
                                 {file.shared && (
                                   <Users2Icon
-                                    className="size-3.5 shrink-0 text-fg-muted"
+                                    role="img"
                                     aria-label="Shared"
+                                    className="size-3.5 shrink-0 text-fg-muted"
                                   />
                                 )}
                                 {file.starred && (
                                   <StarIcon
-                                    className="size-3.5 shrink-0 text-fg-warning"
+                                    role="img"
                                     aria-label="Starred"
+                                    className="size-3.5 shrink-0 text-fg-warning"
                                   />
                                 )}
                               </span>
