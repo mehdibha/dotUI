@@ -16,8 +16,7 @@ import {
   MailIcon,
   MessageSquareIcon,
   ShareIcon,
-  TerminalIcon,
-  TrendingUpIcon,
+  TrendingDownIcon,
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert"
@@ -40,7 +39,7 @@ import {
 } from "@/registry/ui/card"
 import { Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
-import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Link } from "@/registry/ui/link"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 import { ProgressBar, ProgressBarTrack } from "@/registry/ui/progress-bar"
@@ -193,11 +192,7 @@ function SiteHeader({
           <span className="font-heading text-sm font-semibold tracking-tight">
             Meridian
           </span>
-          <Badge
-            appearance="subtle"
-            size="sm"
-            className="hidden sm:inline-flex"
-          >
+          <Badge size="sm" className="hidden sm:inline-flex">
             Engineering blog
           </Badge>
         </div>
@@ -274,9 +269,7 @@ function ArticleHeader() {
         <Badge variant="accent" appearance="subtle" size="lg">
           Engineering
         </Badge>
-        <Badge appearance="subtle" size="lg">
-          Deep dive
-        </Badge>
+        <Badge size="lg">Deep dive</Badge>
       </div>
 
       <h1 className="max-w-3xl font-heading text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
@@ -321,10 +314,7 @@ function CodeSample() {
       <Tabs defaultSelectedKey="merge">
         <div className="flex items-center justify-between gap-2 border-b px-2 py-1.5">
           <TabList variant="line" aria-label="Source files">
-            <Tab id="merge">
-              <TerminalIcon />
-              merge.ts
-            </Tab>
+            <Tab id="merge">merge.ts</Tab>
             <Tab id="migration">migration.sql</Tab>
           </TabList>
           <Tooltip>
@@ -467,7 +457,7 @@ function ArticleBody() {
                 {stat.value}
               </span>
               <span className="flex items-center gap-1 text-xs text-fg-muted">
-                <TrendingUpIcon className="size-3" />
+                <TrendingDownIcon className="size-3" />
                 {stat.delta}
               </span>
             </CardContent>
@@ -488,40 +478,31 @@ function ArticleBody() {
 
 /* --------------------------------- Aside ---------------------------------- */
 
-function TableOfContents({
-  active,
-  onSelect,
-}: {
-  active: string
-  onSelect: (id: string) => void
-}) {
+function TableOfContents({ active }: { active: string }) {
   return (
-    <div className="flex flex-col gap-3">
+    <nav aria-label="On this page" className="flex flex-col gap-3">
       <span className="text-xs font-medium tracking-wide text-fg-muted uppercase">
         On this page
       </span>
-      <ListBox
-        aria-label="Table of contents"
-        selectionMode="single"
-        selectedKeys={new Set([active])}
-        disallowEmptySelection
-        onSelectionChange={(keys) => {
-          if (keys === "all") return
-          const id = [...keys][0]
-          if (typeof id === "string") onSelect(id)
-        }}
-      >
+      <ul className="flex flex-col">
         {SECTIONS.map((section) => (
-          <ListBoxItem
-            key={section.id}
-            id={section.id}
-            className={cn(section.nested && "pl-5 text-fg-muted")}
-          >
-            {section.label}
-          </ListBoxItem>
+          <li key={section.id}>
+            <Link
+              variant="unstyled"
+              href={`#${section.id}`}
+              aria-current={active === section.id ? "location" : undefined}
+              className={cn(
+                "py-1 text-sm text-fg-muted transition-colors hover:text-fg",
+                active === section.id && "text-fg",
+                section.nested && "pl-3",
+              )}
+            >
+              {section.label}
+            </Link>
+          </li>
         ))}
-      </ListBox>
-    </div>
+      </ul>
+    </nav>
   )
 }
 
@@ -695,16 +676,12 @@ function ReadNext() {
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {READ_NEXT.map((post) => (
-          <Card key={post.title} className="gap-0 overflow-hidden pt-0">
+          <Card key={post.title} className="overflow-hidden pt-0">
             <div className="flex aspect-[16/9] items-center justify-center border-b bg-muted">
               <ImageIcon className="size-6 text-fg-muted" />
             </div>
-            <CardHeader className="pt-4">
-              <Badge
-                appearance="subtle"
-                size="sm"
-                className="mb-2 w-fit justify-self-start"
-              >
+            <CardHeader>
+              <Badge size="sm" className="mb-2 w-fit justify-self-start">
                 {post.topic}
               </Badge>
               <CardTitle className="text-pretty">{post.title}</CardTitle>
@@ -712,7 +689,7 @@ function ReadNext() {
                 {post.excerpt}
               </CardDescription>
             </CardHeader>
-            <CardFooter className="mt-4 gap-2 border-t pt-4 text-xs text-fg-muted">
+            <CardFooter className="gap-2 border-t text-xs text-fg-muted">
               <Avatar size="sm">
                 <AvatarFallback className="text-[0.625rem]">
                   {post.author
@@ -745,7 +722,9 @@ export default function BlogArticle() {
   useEffect(() => {
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight
-      setProgress(max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0)
+      setProgress(
+        max > 0 ? Math.min(100, Math.round((window.scrollY / max) * 100)) : 0,
+      )
       let current = SECTIONS[0]?.id ?? ""
       for (const section of SECTIONS) {
         const el = document.getElementById(section.id)
@@ -765,19 +744,11 @@ export default function BlogArticle() {
   }, [copied])
 
   const copyLink = () => {
-    try {
-      void navigator.clipboard?.writeText(
-        "https://meridian.dev/blog/crdt-sync-engine",
-      )
-    } catch {
-      // clipboard is unavailable inside a cross-origin preview
-    }
+    // The clipboard is unavailable inside a cross-origin preview — ignore it.
+    navigator.clipboard
+      ?.writeText("https://meridian.dev/blog/crdt-sync-engine")
+      .catch(() => {})
     setCopied(true)
-  }
-
-  const goToSection = (id: string) => {
-    setActive(id)
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
   }
 
   return (
@@ -831,7 +802,7 @@ export default function BlogArticle() {
 
           <aside className="hidden lg:block">
             <div className="sticky top-20 flex flex-col gap-8">
-              <TableOfContents active={active} onSelect={goToSection} />
+              <TableOfContents active={active} />
               <Separator />
               <ShareRail copied={copied} onCopy={copyLink} />
               <NewsletterCard />
