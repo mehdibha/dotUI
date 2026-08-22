@@ -42,7 +42,7 @@ const ALERT_TO_TOAST = {
   "accent-bar": "accent-bar",
 }
 
-const TOAST_FAMILY = {
+export const TOAST_FAMILY = {
   surface: "border bg-card text-fg **:[svg]:text-fg-success",
   inverted: "bg-tooltip text-fg-on-tooltip",
   filled: "bg-success text-fg-on-success",
@@ -50,7 +50,7 @@ const TOAST_FAMILY = {
     "rounded-l-none border border-l-[3px] border-l-success bg-card text-fg **:[svg]:text-fg-success",
 }
 
-const ALERT_FAMILY = {
+export const ALERT_FAMILY = {
   neutral: "border bg-card",
   tinted: "bg-info-muted",
   "tinted-border": "border border-border-info bg-info-muted",
@@ -178,7 +178,7 @@ const ALERT_OPTIONS: SelectRowOption[] = [
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-function NoticesHero({ state }: { state: LabState }) {
+export function NoticesHero({ state }: { state: LabState }) {
   return (
     <Hero inset={false} className="relative h-44">
       <div className="p-2.5">
@@ -210,6 +210,17 @@ function NoticesHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the toast style, and the alert style. */
+export function noticesSummary(state: LabState): string {
+  const toast =
+    TOAST_OPTIONS.find((o) => o.value === state.noticeToast)?.label ??
+    state.noticeToast
+  const alert =
+    ALERT_OPTIONS.find((o) => o.value === state.noticeAlert)?.label ??
+    state.noticeAlert
+  return `${toast} toast · ${alert} alert`
 }
 
 export function NoticesSection({ lab }: { lab: Lab }) {

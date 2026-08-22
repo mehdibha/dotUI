@@ -45,6 +45,11 @@ export const TYPE_DEFAULTS = {
   bodyLeading: "normal",
 }
 
+/** Collapsed-row summary: the face the system reads in, and its base size. */
+export function typeSummary(state: LabState): string {
+  return `${state.headingFont || state.bodyFont} · ${state.typeBase}px`
+}
+
 type TypeRoleId = "heading" | "body" | "ui" | "code"
 
 /* Hand-tuned ladder, not a modular ratio — every shipped system enumerates its
@@ -122,7 +127,7 @@ function typeRole(state: LabState, id: TypeRoleId) {
 
 /** Every text role the system ships, live in the chosen faces — heading, body,
  *  UI labels and code. */
-function TypeHero({ state }: { state: LabState }) {
+export function TypeHero({ state }: { state: LabState }) {
   const heading = typeRole(state, "heading")
   const body = typeRole(state, "body")
   const ui = typeRole(state, "ui")

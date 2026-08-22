@@ -123,7 +123,7 @@ const SETTINGS_ROWS: [string, string][] = [
 ]
 
 /* A list long enough that the bar renders at rest, tall enough to grab. */
-function ScrollbarsHero({ state }: { state: LabState }) {
+export function ScrollbarsHero({ state }: { state: LabState }) {
   return (
     <Hero inset={false}>
       <style>
@@ -143,6 +143,14 @@ function ScrollbarsHero({ state }: { state: LabState }) {
         </div>
       </div>
     </Hero>
+  )
+}
+
+/** Collapsed-row summary: the scrollbar style. */
+export function scrollbarsSummary(state: LabState): string {
+  return (
+    STYLE_OPTIONS.find((o) => o.value === state.scrollbarStyle)?.label ??
+    state.scrollbarStyle
   )
 }
 

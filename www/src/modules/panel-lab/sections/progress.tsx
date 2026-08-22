@@ -159,13 +159,24 @@ function IndeterminateBar({ state }: { state: LabState }) {
   )
 }
 
-function ProgressHero({ state }: { state: LabState }) {
+export function ProgressHero({ state }: { state: LabState }) {
   return (
     <Hero className="gap-5 px-5 py-6">
       <DeterminateBar percent={60} state={state} />
       <IndeterminateBar state={state} />
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the track weight, and the indeterminate motion. */
+export function progressSummary(state: LabState): string {
+  const track =
+    TRACK_OPTIONS.find((o) => o.value === state.progressTrack)?.label ??
+    state.progressTrack
+  const motion =
+    INDETERMINATE_OPTIONS.find((o) => o.value === state.progressIndeterminate)
+      ?.label ?? state.progressIndeterminate
+  return `${track} track · ${motion} indeterminate`
 }
 
 export function ProgressSection({ lab }: { lab: Lab }) {

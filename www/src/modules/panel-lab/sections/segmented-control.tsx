@@ -35,14 +35,14 @@ export const SEGMENTED_DEFAULTS = {
   segmentedTrack: "filled",
 }
 
-const TRACK_SHELL = {
+export const TRACK_SHELL = {
   filled: "bg-muted",
   outline: "border border-border",
 }
 
 /* Raised keeps the hairline ring so the bg-on-bg chip survives dark wells —
    same rationale as the Toggles chip. */
-const SELECTED_FX = {
+export const SELECTED_FX = {
   raised: "bg-bg text-fg shadow-sm ring-1 ring-border-field",
   flat: "bg-selected text-fg-on-selected",
   inverse: "bg-inverse text-fg-inverse",
@@ -118,7 +118,7 @@ const PERIODS = [
   ["month", "Month"],
 ] as const
 
-function SegmentedHero({ state }: { state: LabState }) {
+export function SegmentedHero({ state }: { state: LabState }) {
   const [period, setPeriod] = useState("week")
   return (
     <Hero className="items-center py-5">
@@ -149,6 +149,17 @@ function SegmentedHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the chip treatment, and the track shell. */
+export function segmentedControlSummary(state: LabState): string {
+  const selected =
+    SELECTED_OPTIONS.find((o) => o.value === state.segmentedSelected)?.label ??
+    state.segmentedSelected
+  const track =
+    TRACK_OPTIONS.find((o) => o.value === state.segmentedTrack)?.label ??
+    state.segmentedTrack
+  return `${selected} chip · ${track} track`
 }
 
 export function SegmentedControlSection({ lab }: { lab: Lab }) {

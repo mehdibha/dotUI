@@ -182,7 +182,7 @@ function RoleLabel({ name, px }: { name: string; px?: string }) {
   )
 }
 
-function ShapeHero({ state }: { state: LabState }) {
+export function ShapeHero({ state }: { state: LabState }) {
   const px = (key: ShapeRoleKey) =>
     rolePxLabel(state.radiusPx, roleRatio(state, key))
   const shape = (key: ShapeRoleKey): CSSProperties => ({
@@ -258,6 +258,14 @@ function activeCharacter(state: LabState): string {
     SHAPE_ROLES.every(({ key }) => character.vector[key] === state[key]),
   )
   return match?.id ?? ""
+}
+
+/** Collapsed-row summary: the corner shape, and the base radius. */
+export function shapeSummary(state: LabState): string {
+  const corner =
+    CORNER_SHAPE_OPTIONS.find((o) => o.value === state.cornerShape)?.label ??
+    state.cornerShape
+  return `${corner} · ${state.radiusPx}px`
 }
 
 export function ShapeSection({ lab }: { lab: Lab }) {

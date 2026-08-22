@@ -270,7 +270,7 @@ export function GlyphBadge({ children }: { children: React.ReactNode }) {
 
 /* One specimen per axis, each wearing the cursor its selection maps to,
    ordered like the rows read: enabled, disabled, pending, dragging. */
-function CursorHero({ state }: { state: LabState }) {
+export function CursorHero({ state }: { state: LabState }) {
   const controls = state.cursorControls
   const grab = state.cursorDragging === "grab"
   return (
@@ -319,6 +319,17 @@ function CursorHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the controls cursor, and the disabled cursor. */
+export function cursorSummary(state: LabState): string {
+  const controls =
+    CONTROL_OPTIONS.find((o) => o.value === state.cursorControls)?.label ??
+    state.cursorControls
+  const disabled =
+    DISABLED_OPTIONS.find((o) => o.value === state.cursorDisabled)?.label ??
+    state.cursorDisabled
+  return `${controls} cursor · ${disabled} disabled`
 }
 
 export function CursorSection({ lab }: { lab: Lab }) {

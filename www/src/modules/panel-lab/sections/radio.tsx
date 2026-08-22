@@ -39,7 +39,7 @@ export function DemoRadio({
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-function RadioHero({ state }: { state: LabState }) {
+export function RadioHero({ state }: { state: LabState }) {
   const fill = fillOf(state)
   return (
     <Hero className="p-4">
@@ -58,6 +58,11 @@ function RadioHero({ state }: { state: LabState }) {
       </label>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the family fill school, the section's one axis. */
+export function radioSummary(state: LabState): string {
+  return state.checkFill === "neutral" ? "Neutral fill" : "Accent fill"
 }
 
 export function RadioSection({ lab }: { lab: Lab }) {

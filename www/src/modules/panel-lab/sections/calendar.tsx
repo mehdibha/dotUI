@@ -117,7 +117,7 @@ const WEEKDAY_OPTIONS = [
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-const DAY_SHAPE = {
+export const DAY_SHAPE = {
   circle: "rounded-full",
   rounded: "rounded-md",
   square: "rounded-none",
@@ -129,7 +129,7 @@ const BAND_END: Record<keyof typeof DAY_SHAPE, [string, string]> = {
   square: ["", ""],
 }
 
-const WEEKDAYS = {
+export const WEEKDAYS = {
   single: ["S", "M", "T", "W", "T", "F", "S"],
   double: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
   triple: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -190,7 +190,7 @@ function DayCell({
   )
 }
 
-function CalendarHero({ state }: { state: LabState }) {
+export function CalendarHero({ state }: { state: LabState }) {
   const labels = WEEKDAYS[state.calendarWeekdays as keyof typeof WEEKDAYS]
   return (
     <Hero className="items-center py-4">
@@ -212,6 +212,17 @@ function CalendarHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the day shape, and the today marker. */
+export function calendarSummary(state: LabState): string {
+  const shape =
+    SHAPE_OPTIONS.find((o) => o.value === state.calendarDayShape)?.label ??
+    state.calendarDayShape
+  const today =
+    TODAY_OPTIONS.find((o) => o.value === state.calendarToday)?.label ??
+    state.calendarToday
+  return `${shape} days · ${today} today`
 }
 
 export function CalendarSection({ lab }: { lab: Lab }) {

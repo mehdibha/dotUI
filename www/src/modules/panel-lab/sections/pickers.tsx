@@ -116,7 +116,7 @@ const DATE_TRIGGER_OPTIONS: SelectRowOption[] = [
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-function PickersHero({ state }: { state: LabState }) {
+export function PickersHero({ state }: { state: LabState }) {
   const look = inputLook(state.inputStyle, controlRadiusPx(state))
   const box = cn(SHELL, "gap-2 px-2.5", look.className, hoverFx(state))
   const Caret =
@@ -157,6 +157,17 @@ function PickersHero({ state }: { state: LabState }) {
       </div>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the caret glyph, and the date trigger. */
+export function pickersSummary(state: LabState): string {
+  const caret =
+    CARET_OPTIONS.find((o) => o.value === state.pickerCaret)?.label ??
+    state.pickerCaret
+  const trigger =
+    DATE_TRIGGER_OPTIONS.find((o) => o.value === state.pickerDateTrigger)
+      ?.label ?? state.pickerDateTrigger
+  return `${caret} caret · ${trigger} date trigger`
 }
 
 export function PickersSection({ lab }: { lab: Lab }) {

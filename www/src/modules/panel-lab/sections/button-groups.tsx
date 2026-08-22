@@ -65,7 +65,7 @@ export function AttachedShell({
 }
 
 /** Cut/Copy/Paste as one control, wearing the secondary skin on the shell. */
-function ButtonGroupHero({ state }: { state: LabState }) {
+export function ButtonGroupHero({ state }: { state: LabState }) {
   const look = styleLook(state)
   const radius = buttonRadiusPx(state)
   const actions = ["Cut", "Copy", "Paste"]
@@ -93,6 +93,14 @@ function ButtonGroupHero({ state }: { state: LabState }) {
       />
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the separator treatment, the section's one axis. */
+export function buttonGroupsSummary(state: LabState): string {
+  const sep =
+    SEPARATOR_OPTIONS.find((o) => o.value === state.groupSeparator)?.label ??
+    state.groupSeparator
+  return state.groupSeparator === "none" ? "No separator" : `${sep} separator`
 }
 
 export function ButtonGroupsSection({ lab }: { lab: Lab }) {

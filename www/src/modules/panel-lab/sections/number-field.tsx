@@ -39,7 +39,7 @@ const NUMBER_LAYOUT_OPTIONS: SelectRowOption[] = [
 
 /** A working stepper: the shell is the field, the buttons really step, and
  *  the three placements systems disagree on swap around a live value. */
-function NumberHero({ state }: { state: LabState }) {
+export function NumberHero({ state }: { state: LabState }) {
   const [value, setValue] = useState(12)
   const [focused, setFocused] = useState(false)
   const radius = controlRadiusPx(state)
@@ -134,6 +134,14 @@ function NumberHero({ state }: { state: LabState }) {
       )}
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the stepper placement. */
+export function numberFieldSummary(state: LabState): string {
+  const layout =
+    NUMBER_LAYOUT_OPTIONS.find((o) => o.value === state.numberLayout)?.label ??
+    state.numberLayout
+  return `${layout} steppers`
 }
 
 export function NumberFieldSection({ lab }: { lab: Lab }) {

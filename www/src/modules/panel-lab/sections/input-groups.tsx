@@ -40,7 +40,7 @@ const ADDON_DIVIDER_OPTIONS: SelectRowOption[] = [
 
 /** One group, both attachments: a text prefix and an icon-button suffix
  *  around a live input — the two addon kinds systems actually disagree on. */
-function AddonsHero({ state }: { state: LabState }) {
+export function AddonsHero({ state }: { state: LabState }) {
   const [focused, setFocused] = useState(false)
   const radius = controlRadiusPx(state)
   const look = inputLook(state.inputStyle, radius)
@@ -108,6 +108,19 @@ function AddonsHero({ state }: { state: LabState }) {
       )}
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the addon layout, and the divider when boxed. */
+export function inputGroupsSummary(state: LabState): string {
+  const layout =
+    ADDON_LAYOUT_OPTIONS.find((o) => o.value === state.addonLayout)?.label ??
+    state.addonLayout
+  if (state.addonLayout !== "boxed" || state.addonDivider === "none")
+    return `${layout} addons`
+  const divider =
+    ADDON_DIVIDER_OPTIONS.find((o) => o.value === state.addonDivider)?.label ??
+    state.addonDivider
+  return `${layout} addons · ${divider} divider`
 }
 
 export function InputGroupsSection({ lab }: { lab: Lab }) {

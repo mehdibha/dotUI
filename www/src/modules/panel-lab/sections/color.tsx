@@ -657,6 +657,13 @@ const BORDER_JOBS = [
   { key: "border600", job: "600", label: "Border · emphasized", maxValue: 8 },
 ] as const
 
+/** Collapsed-row summary: the brand seed, and how many modes it drives. The
+ *  only hero-less chapter — its rows are the specimen. */
+export function colorSummary(state: LabState): string {
+  const count = state.modes.length
+  return `${state.brand.toUpperCase()} · ${count} mode${count === 1 ? "" : "s"}`
+}
+
 export function ColorSection({ lab }: { lab: Lab }) {
   const { state, set } = lab
   const modes = state.modes

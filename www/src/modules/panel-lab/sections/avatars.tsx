@@ -36,7 +36,7 @@ const TINTS = [
   "bg-warning-muted text-fg-warning",
 ]
 
-function LabAvatar({
+export function LabAvatar({
   initials,
   index,
   state,
@@ -64,7 +64,7 @@ function LabAvatar({
   )
 }
 
-function AvatarsHero({ state }: { state: LabState }) {
+export function AvatarsHero({ state }: { state: LabState }) {
   return (
     <Hero className="flex-row items-center justify-evenly py-6">
       <div className="flex -space-x-2">
@@ -84,6 +84,13 @@ function AvatarsHero({ state }: { state: LabState }) {
       </span>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the avatar shape, and the fallback treatment. */
+export function avatarsSummary(state: LabState): string {
+  const shape = state.avatarShape === "rounded" ? "Rounded" : "Circle"
+  const fallback = state.avatarFallback === "neutral" ? "Neutral" : "Tinted"
+  return `${shape} · ${fallback} fallback`
 }
 
 export function AvatarsSection({ lab }: { lab: Lab }) {

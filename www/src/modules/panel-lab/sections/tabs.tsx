@@ -23,13 +23,13 @@ export const TAB_DEFAULTS = {
   tabStyle: "line",
 }
 
-const TAB_STRIP = {
+export const TAB_STRIP = {
   line: "gap-4 border-b border-border px-3 pt-1",
   pill: "gap-1 px-2 py-1.5",
   enclosed: "items-end px-2 pt-1.5",
 }
 
-const TAB_FAMILY = {
+export const TAB_FAMILY = {
   line: {
     base: "py-2",
     idle: "text-fg-muted",
@@ -137,7 +137,7 @@ const TAB_OPTIONS: SelectRowOption[] = [
 
 const TABS = ["Overview", "Activity", "Settings"]
 
-function TabsHero({ state }: { state: LabState }) {
+export function TabsHero({ state }: { state: LabState }) {
   const style = state.tabStyle as keyof typeof TAB_FAMILY
   const tab = TAB_FAMILY[style]
   return (
@@ -165,6 +165,13 @@ function TabsHero({ state }: { state: LabState }) {
         <span className="h-2 w-3/5 rounded-full bg-muted" />
       </div>
     </Hero>
+  )
+}
+
+/** Collapsed-row summary: the selected-tab style. */
+export function tabsSummary(state: LabState): string {
+  return (
+    TAB_OPTIONS.find((o) => o.value === state.tabStyle)?.label ?? state.tabStyle
   )
 }
 

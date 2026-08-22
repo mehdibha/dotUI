@@ -1,19 +1,17 @@
 "use client"
 
-/* The panel chrome — the CURRENT /create layout (control-panel.tsx): every
-   section its own bordered card in a story scroll, floating glass header and
-   footer bars the cards dip under. Chapter-agnostic: the list comes from
-   state.ts, so the chrome never has to know which sections exist. */
+/* The panel chrome: one enclosed surface — header (title, global reset,
+   search) and footer (save, export) are flush hairline bars on the card, plus
+   the spacing/radius tweak vars. The drill-in frame supplies the middle. */
 
 import type { CSSProperties } from "react"
-import { ChevronsUpDownIcon, SearchIcon } from "lucide-react"
+import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
 
 import { Button } from "@/registry/ui/button"
 import { useTweak } from "@/dev/tweaker"
 
-import { ChapterCard } from "./chapter"
-import { PreviewModeContext } from "./hero"
-import type { Chapter, Lab } from "./state"
+import { DEFAULTS } from "./state"
+import type { Lab } from "./state"
 
 const RADIUS_STEPS: Record<string, string> = {
   none: "0px",
@@ -23,12 +21,15 @@ const RADIUS_STEPS: Record<string, string> = {
   xl: "20px",
 }
 
-export function PanelFrame({
-  chapters,
+/** Header + footer + tweak vars. Children own the middle region (and its
+ *  scrolling) — they must claim flex-1 min-h-0 and pad for the overlaid bars
+ *  (68px top and bottom). */
+export function PanelChrome({
   lab,
+  children,
 }: {
-  chapters: Chapter[]
   lab: Lab
+  children: React.ReactNode
 }) {
   const sectionGap = useTweak("Section gap", {
     type: "number",
@@ -46,12 +47,6 @@ export function PanelFrame({
     default: 6,
     group: "Spacing",
   })
-  const preview = useTweak("Section opens on", {
-    type: "select",
-    options: ["hero", "none"],
-    default: "hero",
-    group: "Preview",
-  })
   /* Every rounded class in the panel resolves off --radius (xl = ×1.5, sm =
      ×0.5), so overriding it here rescales the whole ladder at once — cards,
      rows, groups and the controls nested in them stay in proportion. The
@@ -64,56 +59,67 @@ export function PanelFrame({
     group: "Shape",
   })
 
+  // The only reset in the panel — chapters carry a modified dot, never a
+  // button of their own.
+  const whole = lab.section(DEFAULTS)
+
   return (
-    <PreviewModeContext.Provider value={preview}>
-      <div
-        className="relative flex h-full min-h-0 flex-col"
-        style={
-          {
-            "--lab-gap-section": `${sectionGap}px`,
-            "--lab-gap-control": `${controlGap}px`,
-            "--radius": RADIUS_STEPS[radius] ?? RADIUS_STEPS.md,
-          } as CSSProperties
-        }
-      >
-        {/* Floating glass header — cards dip under it, never past it. */}
-        <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 rounded-xl border border-border/45 bg-neutral/90 p-1.5 shadow-[0_4px_16px_-4px_rgb(0_0_0/0.2),0_2px_6px_-2px_rgb(0_0_0/0.12)] backdrop-blur-sm">
-          <Button
-            variant="quiet"
-            size="sm"
-            className="min-w-0 justify-start gap-1.5 font-medium"
-          >
-            <span className="truncate">Acme design system</span>
-            <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
-          </Button>
+    <div
+      className="relative flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-border/45 bg-card"
+      style={
+        {
+          "--lab-gap-section": `${sectionGap}px`,
+          "--lab-gap-control": `${controlGap}px`,
+          "--radius": RADIUS_STEPS[radius] ?? RADIUS_STEPS.md,
+        } as CSSProperties
+      }
+    >
+      {/* Header bar — flush to the panel, content dips under it. p-3 keeps
+          the sm button (radius-md = 7.5px) concentric with the 2xl shell. */}
+      <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 border-b border-border/45 bg-card/85 p-3 backdrop-blur-sm">
+        <Button
+          variant="quiet"
+          size="sm"
+          className="min-w-0 justify-start gap-1.5 font-medium"
+        >
+          <span className="truncate">Acme design system</span>
+          <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
+        </Button>
+        <span className="flex shrink-0 items-center">
+          {whole.modified && (
+            <Button
+              size="sm"
+              variant="quiet"
+              isIconOnly
+              aria-label="Reset design system"
+              onPress={whole.onReset}
+              className="text-fg-muted"
+            >
+              <RotateCcwIcon />
+            </Button>
+          )}
           <Button
             size="sm"
             variant="quiet"
             isIconOnly
             aria-label="Search controls"
-            className="shrink-0"
           >
             <SearchIcon />
           </Button>
-        </div>
-
-        {/* The story scroll: every chapter its own card. */}
-        <div className="no-scrollbar flex min-h-0 flex-1 flex-col gap-[var(--lab-gap-section,0.75rem)] overflow-y-auto overscroll-contain rounded-xl pt-[56px] pb-[62px] *:shrink-0">
-          {chapters.map((chapter) => (
-            <ChapterCard key={chapter.id} chapter={chapter} lab={lab} />
-          ))}
-        </div>
-
-        {/* Floating glass footer — same treatment as the header. */}
-        <div className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-2 rounded-xl border border-border/45 bg-neutral/90 p-2 shadow-[0_-4px_16px_-4px_rgb(0_0_0/0.2),0_-2px_6px_-2px_rgb(0_0_0/0.12)] backdrop-blur-sm">
-          <Button size="sm" className="flex-1">
-            Save
-          </Button>
-          <Button variant="primary" size="sm" className="flex-1">
-            Export
-          </Button>
-        </div>
+        </span>
       </div>
-    </PreviewModeContext.Provider>
+
+      {children}
+
+      {/* Footer bar — same treatment as the header. */}
+      <div className="absolute inset-x-0 bottom-0 z-20 flex items-center gap-2 border-t border-border/45 bg-card/85 p-3 backdrop-blur-sm">
+        <Button size="sm" className="flex-1">
+          Save
+        </Button>
+        <Button variant="primary" size="sm" className="flex-1">
+          Export
+        </Button>
+      </div>
+    </div>
   )
 }

@@ -107,7 +107,7 @@ const SPECIMEN = [
 /** Rows of real registry icons in the current library, stroke and weight. No
  *  inspect verb — the set itself is the specimen, so the space goes to more
  *  glyphs instead of a readout. */
-function IconsHero({ state }: { state: LabState }) {
+export function IconsHero({ state }: { state: LabState }) {
   const library = state.iconLibrary as IconLibraryName
   const weight =
     library === "phosphor" ? (state.iconWeight as PhosphorWeight) : undefined
@@ -131,6 +131,14 @@ function IconsHero({ state }: { state: LabState }) {
       </IconScope>
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the library, and the stroke it draws with. */
+export function iconsSummary(state: LabState): string {
+  const library =
+    LIBRARY_OPTIONS.find((o) => o.value === state.iconLibrary)?.label ??
+    state.iconLibrary
+  return `${library} · Stroke ${state.iconStroke}`
 }
 
 export function IconsSection({ lab }: { lab: Lab }) {

@@ -89,7 +89,7 @@ function Chevron({ dir }: { dir: "prev" | "next" }) {
 const ITEM =
   "flex h-8 min-w-8 items-center justify-center px-1 text-[0.8125rem] font-medium"
 
-function PaginationHero({ state }: { state: LabState }) {
+export function PaginationHero({ state }: { state: LabState }) {
   const look = styleLook(state)
   const radius = buttonRadiusPx(state)
 
@@ -130,6 +130,14 @@ function PaginationHero({ state }: { state: LabState }) {
       {quiet("next", <Chevron dir="next" />)}
     </Hero>
   )
+}
+
+/** Collapsed-row summary: the current-page emphasis. */
+export function paginationSummary(state: LabState): string {
+  const current =
+    CURRENT_OPTIONS.find((o) => o.value === state.paginationCurrent)?.label ??
+    state.paginationCurrent
+  return `${current} current page`
 }
 
 export function PaginationSection({ lab }: { lab: Lab }) {
