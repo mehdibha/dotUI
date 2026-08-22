@@ -450,7 +450,7 @@ const ENTRIES: LogEntry[] = [
       "Upstream checkout-svc returned 504 for POST /v2/carts/8f21b4/checkout",
     duration: "30.0s",
     trace: "4b9c1ad7e2f04c81",
-    tags: ["upstream:checkout-svc", "5xx"],
+    tags: ["upstream:checkout-svc", "5xx", "timeout"],
     payload: {
       status: 504,
       upstream: "checkout-svc.prod.svc.cluster.local",
@@ -679,7 +679,7 @@ function Sparkline({
   )
 }
 
-function polyline(values: readonly number[], max: number) {
+function linePoints(values: readonly number[], max: number) {
   const step = 100 / Math.max(1, values.length - 1)
   return values
     .map(
@@ -744,7 +744,7 @@ function VolumeChart({ range }: { range: VolumeRange }) {
           {series.map((s) => (
             <polyline
               key={s.key}
-              points={polyline(data[s.key], max)}
+              points={linePoints(data[s.key], max)}
               className={cn("fill-none", s.stroke)}
               strokeWidth={2}
               strokeLinecap="round"
@@ -754,7 +754,14 @@ function VolumeChart({ range }: { range: VolumeRange }) {
           ))}
         </svg>
       </div>
-      <div className="flex justify-between gap-1 overflow-hidden font-mono text-[10px] text-fg-muted tabular-nums">
+      <div
+        className={cn(
+          "flex justify-between gap-1 overflow-hidden font-mono text-[10px] text-fg-muted tabular-nums",
+          // Twelve ticks overflow a phone; drop every other one below sm.
+          data.labels.length > 8 &&
+            "max-sm:[&>*:nth-child(even):not(:last-child)]:hidden",
+        )}
+      >
         {data.labels.map((label) => (
           <span key={label}>{label}</span>
         ))}
