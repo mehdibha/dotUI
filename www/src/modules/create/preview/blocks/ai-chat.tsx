@@ -11,7 +11,6 @@ import {
   CopyIcon,
   CreditCardIcon,
   FileCodeIcon,
-  GitBranchIcon,
   GlobeIcon,
   LogOutIcon,
   MessageSquareIcon,
@@ -28,7 +27,7 @@ import {
   Trash2Icon,
   TrendingUpIcon,
 } from "@/registry/icons"
-import { AvatarFallback } from "@/registry/ui/avatar"
+import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 import {
@@ -169,8 +168,7 @@ const MODELS = [
 const SUGGESTIONS = [
   { icon: MonitorIcon, label: "Break it down by device" },
   { icon: MessageSquareIcon, label: "Draft the #growth update" },
-  { icon: TrendingUpIcon, label: "Compare with the August release" },
-  { icon: GitBranchIcon, label: "Write the rollback plan" },
+  { icon: TrendingUpIcon, label: "Compare with August" },
 ]
 
 const HISTORY: { label: string; items: string[] }[] = [
@@ -220,6 +218,16 @@ function ConversationMenu() {
         Delete
       </MenuItem>
     </MenuContent>
+  )
+}
+
+function AssistantAvatar() {
+  return (
+    <MessageAvatar>
+      <AvatarFallback className="bg-primary text-fg-on-primary">
+        <SparklesIcon className="size-3.5" />
+      </AvatarFallback>
+    </MessageAvatar>
   )
 }
 
@@ -286,15 +294,7 @@ function ThreadMessage({ message }: { message: ChatMessage }) {
   const isUser = message.role === "user"
   return (
     <Message role={message.role} className="mx-auto max-w-3xl">
-      {isUser ? (
-        <MessageAvatar name="Mehdi" />
-      ) : (
-        <MessageAvatar aria-label="Lumen">
-          <AvatarFallback className="bg-primary text-fg-on-primary">
-            <SparklesIcon className="size-3.5" />
-          </AvatarFallback>
-        </MessageAvatar>
-      )}
+      {isUser ? <MessageAvatar name="Mehdi" /> : <AssistantAvatar />}
       <MessageContent>
         <p className="text-pretty">{message.text}</p>
 
@@ -463,7 +463,9 @@ export default function AiChatBlock() {
               <SidebarMenuItem>
                 <Menu>
                   <SidebarMenuButton size="lg">
-                    <MessageAvatar name="Mehdi" className="size-8" />
+                    <Avatar className="size-8">
+                      <AvatarFallback>ME</AvatarFallback>
+                    </Avatar>
                     <div className="flex min-w-0 flex-col gap-0.5 leading-none">
                       <span className="truncate font-medium text-fg">
                         Mehdi Benhadjali
@@ -538,11 +540,7 @@ export default function AiChatBlock() {
             ))}
             {isThinking && (
               <Message className="mx-auto max-w-3xl">
-                <MessageAvatar aria-label="Lumen">
-                  <AvatarFallback className="bg-primary text-fg-on-primary">
-                    <SparklesIcon className="size-3.5" />
-                  </AvatarFallback>
-                </MessageAvatar>
+                <AssistantAvatar />
                 <MessageContent>
                   <span className="flex items-center gap-2 text-fg-muted">
                     <Loader className="size-4" />
