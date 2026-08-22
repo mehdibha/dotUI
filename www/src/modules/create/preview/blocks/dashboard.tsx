@@ -2,7 +2,6 @@ import * as React from "react"
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 
 import {
-  ArrowUpRightIcon,
   BellIcon,
   BoxesIcon,
   Building2Icon,
@@ -49,6 +48,8 @@ import type { ChartConfig } from "@/registry/ui/chart"
 import {
   ChartContainer,
   ChartDataTable,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/registry/ui/chart"
@@ -138,20 +139,24 @@ const chartConfig = {
   target: { label: "Target", color: "var(--chart-2)" },
 } satisfies ChartConfig
 
+// `trend` drives the arrow, `intent` the colour — a falling refund rate is a
+// down arrow but good news.
 const KPIS = [
   {
     label: "Gross revenue",
     value: "$284,920",
-    delta: "+12.4%",
-    isUp: true,
-    caption: "vs. $253,410 last month",
+    delta: "+10.3%",
+    trend: "up",
+    intent: "positive",
+    caption: "vs. $258,400 in July",
     icon: CircleDollarSignIcon,
   },
   {
     label: "Orders",
     value: "3,482",
     delta: "+8.1%",
-    isUp: true,
+    trend: "up",
+    intent: "positive",
     caption: "412 awaiting fulfilment",
     icon: ShoppingCartIcon,
   },
@@ -159,7 +164,8 @@ const KPIS = [
     label: "New customers",
     value: "1,204",
     delta: "+4.6%",
-    isUp: true,
+    trend: "up",
+    intent: "positive",
     caption: "38% returning within 30 days",
     icon: Users2Icon,
   },
@@ -167,11 +173,12 @@ const KPIS = [
     label: "Refund rate",
     value: "1.8%",
     delta: "-0.4pt",
-    isUp: false,
+    trend: "down",
+    intent: "positive",
     caption: "62 refunds on 3,482 orders",
     icon: TagIcon,
   },
-]
+] as const
 
 const TOP_PRODUCTS = [
   {
@@ -340,7 +347,7 @@ const STATUS_VARIANT = {
 } as const
 
 const ORDER_TABS = [
-  { id: "all", label: "All orders" },
+  { id: "all", label: "All" },
   { id: "processing", label: "Processing" },
   { id: "fulfilled", label: "Fulfilled" },
   { id: "issues", label: "Issues" },
@@ -545,7 +552,7 @@ function Topbar() {
           <BreadcrumbSeparator />
         </BreadcrumbItem>
         <BreadcrumbItem className="hidden sm:flex">
-          <BreadcrumbLink href="#">Analytics</BreadcrumbLink>
+          <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
           <BreadcrumbSeparator />
         </BreadcrumbItem>
         <BreadcrumbItem>
@@ -612,10 +619,10 @@ function KpiCards() {
           </CardHeader>
           <CardContent className="flex items-center gap-2">
             <Badge
-              variant={kpi.isUp ? "success" : "danger"}
+              variant={kpi.intent === "positive" ? "success" : "danger"}
               appearance="subtle"
             >
-              {kpi.isUp ? <TrendingUpIcon /> : <TrendingDownIcon />}
+              {kpi.trend === "up" ? <TrendingUpIcon /> : <TrendingDownIcon />}
               {kpi.delta}
             </Badge>
             <span className="text-xs text-pretty text-fg-muted">
@@ -631,14 +638,16 @@ function KpiCards() {
 function RevenueChart() {
   const [range, setRange] = React.useState<RangeId>("12m")
 
-  const active = RANGES.find((r) => r.id === range) ?? RANGES[2]
-  const data = MONTHLY.slice(MONTHLY.length - active.months)
+  const months = RANGES.find((r) => r.id === range)?.months ?? MONTHLY.length
+  const data = MONTHLY.slice(MONTHLY.length - months)
   const total = data.reduce((sum, d) => sum + d.revenue, 0)
   const targetTotal = data.reduce((sum, d) => sum + d.target, 0)
   const overTarget = ((total - targetTotal) / targetTotal) * 100
 
+  // min-w-0: the chart's measured width would otherwise become the grid
+  // column's min-content width and widen the page.
   return (
-    <Card className="lg:col-span-2">
+    <Card className="min-w-0 lg:col-span-2">
       <CardHeader>
         <CardTitle>Revenue</CardTitle>
         <CardDescription>Net of refunds, compared against plan</CardDescription>
@@ -668,7 +677,7 @@ function RevenueChart() {
             variant={overTarget >= 0 ? "success" : "warning"}
             appearance="subtle"
           >
-            <ArrowUpRightIcon />
+            {overTarget >= 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
             {overTarget >= 0 ? "+" : ""}
             {overTarget.toFixed(1)}% vs. plan
           </Badge>
@@ -718,6 +727,7 @@ function RevenueChart() {
               fill="url(#fillRevenue)"
               stroke="var(--color-revenue)"
             />
+            <ChartLegend content={<ChartLegendContent />} />
           </AreaChart>
         </ChartContainer>
         <ChartDataTable data={data} config={chartConfig} labelKey="month" />
@@ -846,7 +856,8 @@ function RecentOrders() {
       <CardHeader>
         <CardTitle>Recent orders</CardTitle>
         <CardDescription>
-          {filtered.length} orders in the last 7 days
+          {ORDERS.length} orders in the last 7 days — {filtered.length} in this
+          view
         </CardDescription>
         <CardAction>
           <Button variant="secondary" size="sm" aria-label="Export orders">
@@ -863,13 +874,21 @@ function RecentOrders() {
             setPage(1)
           }}
         >
-          <TabList aria-label="Filter orders" variant="line">
-            {ORDER_TABS.map((t) => (
-              <Tab key={t.id} id={t.id}>
-                {t.label}
-              </Tab>
-            ))}
-          </TabList>
+          {/* Scrolls instead of widening the card; the padding keeps focus rings
+              and the line indicator inside the scroll box. */}
+          <div className="-m-1.5 overflow-x-auto p-1.5">
+            <TabList
+              aria-label="Filter orders"
+              variant="line"
+              className="w-max"
+            >
+              {ORDER_TABS.map((t) => (
+                <Tab key={t.id} id={t.id}>
+                  {t.label}
+                </Tab>
+              ))}
+            </TabList>
+          </div>
           {ORDER_TABS.map((t) => (
             <TabPanel key={t.id} id={t.id} className="flex flex-col gap-3 pt-4">
               <OrdersTable rows={rows} />
