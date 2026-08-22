@@ -31,7 +31,7 @@ import {
   BreadcrumbSeparator,
   Breadcrumbs,
 } from "@/registry/ui/breadcrumbs"
-import { Button } from "@/registry/ui/button"
+import { Button, LinkButton } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
@@ -65,6 +65,7 @@ import {
 } from "@/registry/ui/number-field"
 import {
   Pagination,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationList,
@@ -156,6 +157,7 @@ const RATING_BREAKDOWN = [
 ]
 
 const TOTAL_REVIEWS = RATING_BREAKDOWN.reduce((sum, r) => sum + r.count, 0)
+const PAGE_COUNT = Math.ceil(TOTAL_REVIEWS / 3)
 
 const REVIEWS = [
   {
@@ -253,12 +255,10 @@ function Stars({ value, className }: { value: number; className?: string }) {
 function ImagePanel({
   label,
   className,
-  icon: Icon = ImageIcon,
   iconClassName,
 }: {
   label?: string
   className?: string
-  icon?: typeof ImageIcon
   iconClassName?: string
 }) {
   return (
@@ -268,7 +268,7 @@ function ImagePanel({
         className,
       )}
     >
-      <Icon className={cn("size-8", iconClassName)} />
+      <ImageIcon className={cn("size-8", iconClassName)} />
       {label ? <span className="text-xs">{label}</span> : null}
     </div>
   )
@@ -309,9 +309,9 @@ function SiteHeader({ cartCount }: { cartCount: number }) {
         </div>
         <nav className="ml-6 hidden items-center gap-1 md:flex">
           {["Packs", "Travel", "Accessories", "Journal"].map((item) => (
-            <Button key={item} variant="quiet" size="sm">
+            <LinkButton key={item} href="#" variant="quiet" size="sm">
               {item}
-            </Button>
+            </LinkButton>
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-1.5">
@@ -356,7 +356,7 @@ function Gallery({
         />
         <div className="absolute top-3 left-3 flex gap-1.5">
           <Badge variant="accent">New season</Badge>
-          <Badge appearance="subtle">Limited run</Badge>
+          <Badge>Limited run</Badge>
         </div>
         <div className="absolute right-3 bottom-3">
           <Tooltip>
@@ -448,8 +448,15 @@ function SizeGuideDialog() {
 
 /* -------------------------------- Buy panel -------------------------------- */
 
-function BuyPanel({ onAddToCart }: { onAddToCart: (qty: number) => void }) {
-  const [colorway, setColorway] = useState("slate")
+function BuyPanel({
+  colorway,
+  onColorwayChange,
+  onAddToCart,
+}: {
+  colorway: string
+  onColorwayChange: (colorway: string) => void
+  onAddToCart: (qty: number) => void
+}) {
   const [capacity, setCapacity] = useState("28L")
   const [quantity, setQuantity] = useState(1)
   const [wishlisted, setWishlisted] = useState(false)
@@ -506,7 +513,7 @@ function BuyPanel({ onAddToCart }: { onAddToCart: (qty: number) => void }) {
             selectedKeys={[colorway]}
             onSelectionChange={(keys) => {
               const next = [...keys][0]
-              if (next != null) setColorway(String(next))
+              if (next != null) onColorwayChange(String(next))
             }}
           >
             {COLORWAYS.map((c) => (
@@ -682,6 +689,12 @@ function Reviews() {
   const [sort, setSort] = useState("recent")
   const [page, setPage] = useState(1)
 
+  const firstShown = (page - 1) * REVIEWS.length + 1
+  // A three-page window that stays inside the range, so the active page is
+  // always one of the numbered links.
+  const windowStart = Math.min(Math.max(1, page - 1), PAGE_COUNT - 2)
+  const pages = [windowStart, windowStart + 1, windowStart + 2]
+
   return (
     <section className="flex flex-col gap-6">
       <SectionTitle
@@ -715,7 +728,7 @@ function Reviews() {
                   {row.stars}
                   <StarIcon className="size-3 fill-current text-warning" />
                 </span>
-                <ProgressBarControl className="h-1.5" />
+                <ProgressBarControl />
                 <span className="w-8 text-right text-sm text-fg-muted tabular-nums">
                   {row.count}
                 </span>
@@ -730,8 +743,9 @@ function Reviews() {
 
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <span className="text-sm text-fg-muted">
-              Showing 3 of {TOTAL_REVIEWS}
+            <span className="text-sm text-fg-muted tabular-nums">
+              Showing {firstShown}–{firstShown + REVIEWS.length - 1} of{" "}
+              {TOTAL_REVIEWS}
             </span>
             <Select
               value={sort}
@@ -799,7 +813,7 @@ function Reviews() {
                   onPress={() => setPage((p) => Math.max(1, p - 1))}
                 />
               </PaginationItem>
-              {[1, 2, 3, 4].map((p) => (
+              {pages.map((p) => (
                 <PaginationItem key={p}>
                   <PaginationLink
                     isActive={p === page}
@@ -811,9 +825,21 @@ function Reviews() {
                 </PaginationItem>
               ))}
               <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink
+                  isActive={page === PAGE_COUNT}
+                  aria-label={`Page ${PAGE_COUNT}`}
+                  onPress={() => setPage(PAGE_COUNT)}
+                >
+                  {PAGE_COUNT}
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
                 <PaginationNext
-                  isDisabled={page === 4}
-                  onPress={() => setPage((p) => Math.min(4, p + 1))}
+                  isDisabled={page === PAGE_COUNT}
+                  onPress={() => setPage((p) => Math.min(PAGE_COUNT, p + 1))}
                 />
               </PaginationItem>
             </PaginationList>
@@ -867,8 +893,10 @@ function RelatedProducts() {
 
 export default function ProductPage() {
   const [view, setView] = useState("front")
-  const [colorway] = useState("Slate")
+  const [colorway, setColorway] = useState("slate")
   const [cartCount, setCartCount] = useState(2)
+
+  const activeColor = COLORWAYS.find((c) => c.id === colorway) ?? COLORWAYS[0]
 
   return (
     <div className="min-h-screen bg-bg text-fg">
@@ -894,8 +922,16 @@ export default function ProductPage() {
         </Breadcrumbs>
 
         <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
-          <Gallery view={view} onViewChange={setView} colorway={colorway} />
-          <BuyPanel onAddToCart={(qty) => setCartCount((c) => c + qty)} />
+          <Gallery
+            view={view}
+            onViewChange={setView}
+            colorway={activeColor.label}
+          />
+          <BuyPanel
+            colorway={colorway}
+            onColorwayChange={setColorway}
+            onAddToCart={(qty) => setCartCount((c) => c + qty)}
+          />
         </div>
 
         <Reviews />
@@ -912,9 +948,9 @@ export default function ProductPage() {
           </div>
           <div className="flex flex-wrap gap-1">
             {["Shipping", "Returns", "Warranty", "Contact"].map((link) => (
-              <Button key={link} variant="quiet" size="sm">
+              <LinkButton key={link} href="#" variant="quiet" size="sm">
                 {link}
-              </Button>
+              </LinkButton>
             ))}
           </div>
         </div>
