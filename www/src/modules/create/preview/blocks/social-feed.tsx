@@ -351,12 +351,18 @@ function NavRail() {
 
 /* -------------------------------- Composer -------------------------------- */
 
-const COMPOSER_TOOLS: { label: string; icon: typeof ImageIcon }[] = [
+// `secondary` tools fold away on phones so the counter and Post button always
+// fit on one row.
+const COMPOSER_TOOLS: {
+  label: string
+  icon: typeof ImageIcon
+  secondary?: boolean
+}[] = [
   { label: "Add image", icon: ImageIcon },
   { label: "Add emoji", icon: SmileIcon },
-  { label: "Create poll", icon: ChartBarIcon },
-  { label: "Schedule post", icon: CalendarIcon },
-  { label: "Tag location", icon: MapIcon },
+  { label: "Create poll", icon: ChartBarIcon, secondary: true },
+  { label: "Schedule post", icon: CalendarIcon, secondary: true },
+  { label: "Tag location", icon: MapIcon, secondary: true },
 ]
 
 function Composer({ onPost }: { onPost: (body: string) => void }) {
@@ -390,6 +396,9 @@ function Composer({ onPost }: { onPost: (body: string) => void }) {
                         size="sm"
                         isIconOnly
                         aria-label={tool.label}
+                        className={
+                          tool.secondary ? "hidden sm:inline-flex" : undefined
+                        }
                       >
                         <tool.icon />
                       </Button>
@@ -403,7 +412,7 @@ function Composer({ onPost }: { onPost: (body: string) => void }) {
                       aria-label="Characters used"
                       value={Math.min(body.length, MAX_LENGTH)}
                       maxValue={MAX_LENGTH}
-                      className="w-10"
+                      className="hidden w-10 sm:flex"
                     >
                       <ProgressBarControl />
                     </ProgressBar>
@@ -447,8 +456,7 @@ function AuthorLine({ author, time }: { author: Author; time: string }) {
         <BadgeCheckIcon className="size-3.5 shrink-0 translate-y-0.5 text-fg-accent" />
       )}
       <span className="truncate text-fg-muted">@{author.handle}</span>
-      <span className="text-fg-muted">·</span>
-      <span className="shrink-0 text-fg-muted">{time}</span>
+      <span className="shrink-0 text-fg-muted">· {time}</span>
     </div>
   )
 }
