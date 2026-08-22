@@ -496,11 +496,23 @@
       "description": "Values that should invalidate the cell cache when using dynamic collections."
     },
     "disabledBehavior": {
-      "type": "DisabledBehavior",
-      "detailedType": "DisabledBehavior | undefined",
+      "type": "'selection' | 'all'",
+      "detailedType": "'selection' | 'all' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "DisabledBehavior"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "all"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "selection"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "Whether `disabledKeys` applies to all interactions, or only selection."
     },

@@ -544,6 +544,56 @@ function resolveTypeByName(
   return null
 }
 
+const literalUnionAliasCache = new Map<string, string | null>()
+
+/**
+ * Resolve a type alias that is a plain union of string literals
+ * (e.g. MenuTriggerType = 'press' | 'longPress' | 'contextMenu') to its
+ * expanded form, in declaration order. Returns null for anything else.
+ */
+function resolveLiteralUnionAlias(
+  typeName: string,
+  context: ParserContext,
+): string | null {
+  if (SKIP_RESOLVE_TYPES.has(typeName)) return null
+
+  const cached = literalUnionAliasCache.get(typeName)
+  if (cached !== undefined) return cached
+
+  const { program } = context
+  let found: string | null = null
+
+  for (const sourceFile of program.getSourceFiles()) {
+    sourceFile.forEachChild((node) => {
+      if (found) return
+
+      if (
+        ts.isTypeAliasDeclaration(node) &&
+        node.name.text === typeName &&
+        ts.isUnionTypeNode(node.type)
+      ) {
+        const literals: string[] = []
+        for (const member of node.type.types) {
+          if (
+            ts.isLiteralTypeNode(member) &&
+            ts.isStringLiteral(member.literal)
+          ) {
+            literals.push(`'${member.literal.text}'`)
+          } else {
+            return
+          }
+        }
+        found = literals.join(" | ")
+      }
+    })
+
+    if (found) break
+  }
+
+  literalUnionAliasCache.set(typeName, found)
+  return found
+}
+
 interface FormattedProp {
   type: string
   detailedType?: string
@@ -796,14 +846,24 @@ async function getPropsWithTypeChecker(
 
           // Clean up and expand type aliases
           const cleanedType = cleanTypeString(typeString)
-          const fullType = sortUnionTypeString(
+          let fullType = sortUnionTypeString(
             expandTypeAliasInString(cleanedType),
           )
 
           // Remove | undefined first for optional props
-          const shortType = sortUnionTypeString(
+          let shortType = sortUnionTypeString(
             isOptional ? removeUndefinedFromType(fullType) : fullType,
           )
+
+          // Aliases of plain string-literal unions (e.g. MenuTriggerType) hide
+          // the valid values — expand them so the reference shows the literals
+          if (/^[A-Z][A-Za-z0-9]*$/.test(shortType)) {
+            const literalUnion = resolveLiteralUnionAlias(shortType, context)
+            if (literalUnion) {
+              fullType = fullType.replace(shortType, literalUnion)
+              shortType = literalUnion
+            }
+          }
 
           // Generate AST type for rich rendering
           // First, try to detect if the type string represents a simple type alias

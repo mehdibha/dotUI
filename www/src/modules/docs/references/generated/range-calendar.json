@@ -531,11 +531,23 @@
       "description": "Handler that is called when the value changes."
     },
     "pageBehavior": {
-      "type": "PageBehavior",
-      "detailedType": "PageBehavior | undefined",
+      "type": "'single' | 'visible'",
+      "detailedType": "'single' | 'visible' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "PageBehavior"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "single"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "visible"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "Controls the behavior of paging. Pagination either works by advancing the visible page by\nvisibleDuration (default) or one unit of visibleDuration.",
       "default": "visible"

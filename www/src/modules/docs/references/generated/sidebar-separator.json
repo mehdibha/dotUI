@@ -3,11 +3,23 @@
   "description": "A separator line styled to fit inside the sidebar.",
   "props": {
     "orientation": {
-      "type": "Orientation",
-      "detailedType": "Orientation | undefined",
+      "type": "'horizontal' | 'vertical'",
+      "detailedType": "'horizontal' | 'vertical' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "Orientation"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "horizontal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "vertical"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The orientation of the separator.",
       "default": "'horizontal'"

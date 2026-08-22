@@ -417,11 +417,103 @@
       "description": "Handler that is called when the overlay's open state changes."
     },
     "placement": {
-      "type": "Placement",
-      "detailedType": "Placement | undefined",
+      "type": "'bottom' | 'bottom left' | 'bottom right' | 'bottom start' | 'bottom end' | 'top' | 'top left' | 'top right' | 'top start' | 'top end' | 'left' | 'left top' | 'left bottom' | 'start' | 'start top' | 'start bottom' | 'right' | 'right top' | 'right bottom' | 'end' | 'end top' | 'end bottom'",
+      "detailedType": "| 'bottom'\n| 'bottom left'\n| 'bottom right'\n| 'bottom start'\n| 'bottom end'\n| 'top'\n| 'top left'\n| 'top right'\n| 'top start'\n| 'top end'\n| 'left'\n| 'left top'\n| 'left bottom'\n| 'start'\n| 'start top'\n| 'start bottom'\n| 'right'\n| 'right top'\n| 'right bottom'\n| 'end'\n| 'end top'\n| 'end bottom'\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "Placement"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom start"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "end bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "end top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "left bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "left top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "right bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "right top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top start"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The placement of the element with respect to its anchor element.",
       "default": "'bottom'"

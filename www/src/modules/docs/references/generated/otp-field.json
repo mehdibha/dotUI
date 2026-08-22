@@ -401,11 +401,31 @@
       "description": "Style applied to the element, or a function that\nreturns a style object based on the component's state."
     },
     "validationType": {
-      "type": "OTPValidationType",
-      "detailedType": "OTPValidationType | undefined",
+      "type": "'numeric' | 'alpha' | 'alphanumeric' | 'none'",
+      "detailedType": "| 'numeric'\n| 'alpha'\n| 'alphanumeric'\n| 'none'\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "OTPValidationType"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "alpha"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "alphanumeric"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "numeric"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The type of input validation to apply to the OTP value.",
       "default": "'numeric'"

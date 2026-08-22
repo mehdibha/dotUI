@@ -299,11 +299,23 @@
       "description": "Handler that is called when the value changes."
     },
     "orientation": {
-      "type": "Orientation",
-      "detailedType": "Orientation | undefined",
+      "type": "'horizontal' | 'vertical'",
+      "detailedType": "'horizontal' | 'vertical' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "Orientation"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "horizontal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "vertical"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The axis the Radio Button(s) should align with.",
       "default": "'vertical'"

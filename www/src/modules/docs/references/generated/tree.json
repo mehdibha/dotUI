@@ -251,11 +251,23 @@
       "description": "Values that should invalidate the item cache when using dynamic collections."
     },
     "disabledBehavior": {
-      "type": "DisabledBehavior",
-      "detailedType": "DisabledBehavior | undefined",
+      "type": "'selection' | 'all'",
+      "detailedType": "'selection' | 'all' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "DisabledBehavior"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "all"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "selection"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "Whether `disabledKeys` applies to all interactions, or only selection.",
       "default": "'all'"
@@ -599,21 +611,49 @@
       "description": "The currently selected keys in the collection (controlled)."
     },
     "selectionBehavior": {
-      "type": "SelectionBehavior",
-      "detailedType": "SelectionBehavior | undefined",
+      "type": "'toggle' | 'replace'",
+      "detailedType": "'toggle' | 'replace' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "SelectionBehavior"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "replace"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "toggle"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "How multiple selection should behave in the tree.",
       "default": "'toggle'"
     },
     "selectionMode": {
-      "type": "SelectionMode",
-      "detailedType": "SelectionMode | undefined",
+      "type": "'end' | 'preserve' | 'select' | 'start'",
+      "detailedType": "'end' | 'preserve' | 'select' | 'start' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "SelectionMode"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "multiple"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "single"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The type of selection that is allowed in the collection."
     },

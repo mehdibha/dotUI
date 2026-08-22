@@ -137,11 +137,31 @@
       "description": "Style applied to the element, or a function that\nreturns a style object based on the component's state."
     },
     "swipeDirection": {
-      "type": "SwipeDirection",
-      "detailedType": "SwipeDirection | undefined",
+      "type": "'up' | 'down' | 'left' | 'right'",
+      "detailedType": "'up' | 'down' | 'left' | 'right' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "SwipeDirection"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "down"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "up"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The swipe direction that opens the drawer.\nDefaults to the opposite of `Drawer.Root` `swipeDirection`."
     }

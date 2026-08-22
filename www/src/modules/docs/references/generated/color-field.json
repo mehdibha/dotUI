@@ -190,11 +190,47 @@
       "description": "Whether the element should receive focus on render."
     },
     "channel": {
-      "type": "ColorChannel",
-      "detailedType": "ColorChannel | undefined",
+      "type": "'hue' | 'saturation' | 'brightness' | 'lightness' | 'red' | 'green' | 'blue' | 'alpha'",
+      "detailedType": "| 'hue'\n| 'saturation'\n| 'brightness'\n| 'lightness'\n| 'red'\n| 'green'\n| 'blue'\n| 'alpha'\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ColorChannel"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "alpha"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "blue"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "brightness"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "green"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "hue"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "lightness"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "red"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "saturation"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The color channel that this field edits. If not provided,\nthe color is edited as a hex value."
     },
@@ -266,11 +302,27 @@
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
     },
     "colorSpace": {
-      "type": "ColorSpace",
-      "detailedType": "ColorSpace | undefined",
+      "type": "'rgb' | 'hsl' | 'hsb'",
+      "detailedType": "'rgb' | 'hsl' | 'hsb' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ColorSpace"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "hsb"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "hsl"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "rgb"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The color space that the color field operates in if a `channel` prop is provided.\nIf no `channel` is provided, the color field always displays the color as an RGB hex value."
     },

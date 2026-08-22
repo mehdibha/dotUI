@@ -35,7 +35,7 @@
       "description": "Identifies the element (or elements) that labels the current element."
     },
     "channel": {
-      "type": "ColorChannel",
+      "type": "'hue' | 'saturation' | 'brightness' | 'lightness' | 'red' | 'green' | 'blue' | 'alpha'",
       "typeAst": {
         "type": "identifier",
         "name": "ColorChannel"
@@ -111,11 +111,27 @@
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement. A function may be provided to compute the class based on component state."
     },
     "colorSpace": {
-      "type": "ColorSpace",
-      "detailedType": "ColorSpace | undefined",
+      "type": "'rgb' | 'hsl' | 'hsb'",
+      "detailedType": "'rgb' | 'hsl' | 'hsb' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ColorSpace"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "hsb"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "hsl"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "rgb"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The color space that the slider operates in. The `channel` must be in this color space.\nIf not provided, this defaults to the color space of the `color` or `defaultColor` value."
     },
@@ -223,11 +239,23 @@
       "description": "Handler that is called when the user stops dragging."
     },
     "orientation": {
-      "type": "Orientation",
-      "detailedType": "Orientation | undefined",
+      "type": "'horizontal' | 'vertical'",
+      "detailedType": "'horizontal' | 'vertical' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "Orientation"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "horizontal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "vertical"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The orientation of the Slider.",
       "default": "'horizontal'"

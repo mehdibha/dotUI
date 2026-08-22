@@ -407,11 +407,23 @@
       "description": "The name of the input element, used when submitting an HTML form. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefname)."
     },
     "orientation": {
-      "type": "Orientation",
-      "detailedType": "Orientation | undefined",
+      "type": "'horizontal' | 'vertical'",
+      "detailedType": "'horizontal' | 'vertical' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "Orientation"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "horizontal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "vertical"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The orientation of the Slider.",
       "default": "'horizontal'"
