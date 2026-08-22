@@ -246,7 +246,7 @@ function maskToken(token: string) {
   return `${prefix}${"•".repeat(12)}${token.slice(-4)}`
 }
 
-function CopyButton({ label, value }: { label: string; value: string }) {
+function CopyButton({ label }: { label: string }) {
   const [copied, setCopied] = React.useState(false)
 
   React.useEffect(() => {
@@ -266,12 +266,7 @@ function CopyButton({ label, value }: { label: string; value: string }) {
       >
         {copied ? <CheckIcon className="text-fg-success" /> : <CopyIcon />}
       </Button>
-      <TooltipContent>
-        {copied ? "Copied" : label}
-        <span className="ml-1 font-mono text-fg-muted">
-          {value.slice(0, 7)}…
-        </span>
-      </TooltipContent>
+      <TooltipContent>{copied ? "Copied" : label}</TooltipContent>
     </Tooltip>
   )
 }
@@ -303,7 +298,7 @@ function KeyTokenCell({ apiKey }: { apiKey: ApiKey }) {
         </ToggleButton>
         <TooltipContent>{revealed ? "Hide key" : "Reveal key"}</TooltipContent>
       </Tooltip>
-      <CopyButton label="Copy key" value={apiKey.token} />
+      <CopyButton label="Copy key" />
     </div>
   )
 }
@@ -393,7 +388,7 @@ function CreateKeyDialog({
         <PlusIcon />
         Create secret key
       </Button>
-      <Modal className="max-w-lg">
+      <Modal className="sm:max-w-lg">
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Create secret key</DialogTitle>
@@ -402,7 +397,7 @@ function CreateKeyDialog({
               or revoke it at any time.
             </DialogDescription>
           </DialogHeader>
-          <DialogBody className="gap-5">
+          <DialogBody className="gap-5 overflow-y-auto">
             <TextField value={name} onChange={setName} isRequired autoFocus>
               <Label>Key name</Label>
               <Input placeholder="Checkout service" />
@@ -431,7 +426,7 @@ function CreateKeyDialog({
               <Description>
                 {scopes.length} of {SCOPES.length} permissions granted.
               </Description>
-              <FieldGroup className="max-h-56 overflow-y-auto pr-1">
+              <FieldGroup>
                 {SCOPES.map((scope) => (
                   <Checkbox key={scope.id} value={scope.id}>
                     <CheckboxControl>
@@ -473,7 +468,7 @@ function CreateKeyDialog({
             </Alert>
           </DialogBody>
           <DialogFooter>
-            <Button slot="close" type="button">
+            <Button slot="close" variant="secondary">
               Cancel
             </Button>
             <Button variant="primary" onPress={create}>
@@ -513,7 +508,7 @@ function KeysPanel({
     <div className="flex flex-col gap-4">
       <Alert variant="warning">
         <ClockIcon />
-        <AlertTitle>Production server key is 17 months old</AlertTitle>
+        <AlertTitle>Analytics warehouse key is 9 months old</AlertTitle>
         <AlertDescription>
           Rotating long-lived keys quarterly keeps a leaked secret from staying
           useful.
@@ -535,12 +530,12 @@ function KeysPanel({
         >
           <Input placeholder="Filter by name…" size="sm" />
         </SearchField>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <SegmentedControl
             aria-label="Environment filter"
             selectedKeys={[environment]}
-            onSelectionChange={(keys_) => {
-              const next = [...keys_][0]
+            onSelectionChange={(selection) => {
+              const next = [...selection][0]
               if (next) setEnvironment(String(next))
             }}
           >
@@ -673,9 +668,11 @@ function KeysPanel({
 function EndpointCard({
   endpoint,
   onToggle,
+  onUrlChange,
 }: {
   endpoint: Endpoint
   onToggle: (id: string, enabled: boolean) => void
+  onUrlChange: (id: string, url: string) => void
 }) {
   return (
     <Card>
@@ -709,13 +706,13 @@ function EndpointCard({
 
         <TextField
           value={endpoint.url}
-          isReadOnly
-          aria-label={`Endpoint URL for ${endpoint.url}`}
+          onChange={(url) => onUrlChange(endpoint.id, url)}
         >
+          <Label>Endpoint URL</Label>
           <InputGroup>
             <Input className="font-mono text-xs" />
             <InputGroupAddon>
-              <CopyButton label="Copy URL" value={endpoint.url} />
+              <CopyButton label="Copy URL" />
             </InputGroupAddon>
           </InputGroup>
         </TextField>
@@ -731,7 +728,11 @@ function EndpointCard({
           </TagList>
         </TagGroup>
 
-        <ProgressBar value={endpoint.successRate} className="w-full">
+        <ProgressBar
+          value={endpoint.successRate}
+          formatOptions={{ style: "percent", maximumFractionDigits: 1 }}
+          className="w-full"
+        >
           <div className="flex items-center justify-between gap-2">
             <Label>Delivery success (30d)</Label>
             <ProgressBarOutput />
@@ -746,9 +747,11 @@ function EndpointCard({
 function WebhooksPanel({
   endpoints,
   onToggle,
+  onUrlChange,
 }: {
   endpoints: Endpoint[]
   onToggle: (id: string, enabled: boolean) => void
+  onUrlChange: (id: string, url: string) => void
 }) {
   return (
     <div className="flex flex-col gap-4">
@@ -760,7 +763,7 @@ function WebhooksPanel({
             hours.
           </p>
         </div>
-        <Button>
+        <Button className="self-start sm:self-auto">
           <PlusIcon />
           Add endpoint
         </Button>
@@ -772,6 +775,7 @@ function WebhooksPanel({
             key={endpoint.id}
             endpoint={endpoint}
             onToggle={onToggle}
+            onUrlChange={onUrlChange}
           />
         ))}
       </div>
@@ -809,7 +813,7 @@ export default function ApiKeysBlock() {
                 taking the others down.
               </p>
             </div>
-            <Button variant="quiet">
+            <Button variant="quiet" className="self-start sm:self-auto">
               <BookOpenIcon />
               API reference
             </Button>
@@ -876,6 +880,13 @@ export default function ApiKeysBlock() {
                 setEndpoints((current) =>
                   current.map((endpoint) =>
                     endpoint.id === id ? { ...endpoint, enabled } : endpoint,
+                  ),
+                )
+              }
+              onUrlChange={(id, url) =>
+                setEndpoints((current) =>
+                  current.map((endpoint) =>
+                    endpoint.id === id ? { ...endpoint, url } : endpoint,
                   ),
                 )
               }
