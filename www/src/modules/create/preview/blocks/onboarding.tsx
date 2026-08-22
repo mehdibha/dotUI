@@ -215,12 +215,11 @@ export default function OnboardingBlock() {
             <StepIndicator step={step} onSelect={setStep} />
 
             <Card>
-              <CardHeader>
+              <CardHeader className="border-b">
                 <CardTitle className="text-xl">{current.heading}</CardTitle>
                 <CardDescription>{current.description}</CardDescription>
               </CardHeader>
-              <Separator />
-              <CardContent className="py-6">
+              <CardContent>
                 {current.id === "profile" && (
                   <div className="flex flex-col gap-6">
                     <div className="flex flex-wrap items-center gap-4">
@@ -445,8 +444,7 @@ export default function OnboardingBlock() {
                   </div>
                 )}
               </CardContent>
-              <Separator />
-              <CardFooter className="flex-wrap justify-between gap-2">
+              <CardFooter className="flex-wrap justify-between gap-2 border-t">
                 <Button
                   variant="secondary"
                   isDisabled={step === 0}
@@ -525,8 +523,7 @@ function StepIndicator({
                   className={cn(
                     "grid size-5.5 shrink-0 place-content-center rounded-full border text-[0.6875rem] font-medium tabular-nums",
                     isCurrent && "border-primary bg-primary text-fg-on-primary",
-                    isComplete &&
-                      "border-primary/25 bg-primary-muted text-fg-accent",
+                    isComplete && "border-primary/25 bg-primary-muted text-fg",
                     !isCurrent && !isComplete && "text-fg-muted",
                   )}
                 >
@@ -586,7 +583,7 @@ function FinishCard({
 
   return (
     <Card>
-      <CardContent className="pt-2">
+      <CardContent>
         <Empty>
           <EmptyHeader>
             <EmptyMedia
@@ -612,7 +609,7 @@ function FinishCard({
         </Empty>
       </CardContent>
       <Separator />
-      <CardContent className="py-4">
+      <CardContent>
         <dl className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
           {summary.map((row) => (
             <div
