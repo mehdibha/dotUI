@@ -15,6 +15,7 @@ import {
   GitBranchIcon,
   GlobeIcon,
   ImageIcon,
+  InfoIcon,
   MoreHorizontalIcon,
   RefreshCwIcon,
   RotateCwIcon,
@@ -76,6 +77,7 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/registry/ui/empty"
+import { Label } from "@/registry/ui/field"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Kbd } from "@/registry/ui/kbd"
 import { Loader } from "@/registry/ui/loader"
@@ -240,6 +242,25 @@ const DEPLOYMENTS: Deployment[] = [
     pace: 1.32,
   },
 ]
+
+/** The production build traffic falls back to when the live one is rolled back. */
+const PREVIOUS_PRODUCTION = DEPLOYMENTS.find(
+  (deployment) =>
+    deployment.env === "production" && deployment.id !== LIVE_PRODUCTION.id,
+)
+
+/** Only a finished production build that is not already live can take traffic. */
+function canRollBackTo(deployment: Deployment) {
+  return (
+    deployment.env === "production" &&
+    deployment.status === "ready" &&
+    deployment.id !== LIVE_PRODUCTION.id
+  )
+}
+
+function deploymentHost(deployment: Deployment) {
+  return `halcyon-web-${deployment.hash}.halcyon.app`
+}
 
 const BUILD_STEPS = [
   {
@@ -447,8 +468,8 @@ function EnvironmentCard({
   deployment,
   copied,
   onCopy,
-  onRollback,
   onRedeploy,
+  secondaryAction,
 }: {
   name: string
   description: string
@@ -456,8 +477,8 @@ function EnvironmentCard({
   deployment: Deployment
   copied: boolean
   onCopy: (url: string) => void
-  onRollback: (deployment: Deployment) => void
   onRedeploy: (deployment: Deployment) => void
+  secondaryAction: { label: string; onPress: () => void }
 }) {
   const running = deployment.status === "building"
   return (
@@ -530,12 +551,8 @@ function EnvironmentCard({
           <RotateCwIcon />
           Redeploy
         </Button>
-        <Button
-          size="sm"
-          variant="quiet"
-          onPress={() => onRollback(deployment)}
-        >
-          Instant rollback
+        <Button size="sm" variant="quiet" onPress={secondaryAction.onPress}>
+          {secondaryAction.label}
         </Button>
       </CardFooter>
     </Card>
@@ -570,10 +587,15 @@ function ActivityCard() {
             </div>
           ))}
         </div>
-        <ProgressBar value={412} maxValue={1000} className="w-full">
+        <ProgressBar
+          value={412}
+          maxValue={1000}
+          valueLabel="412 of 1,000"
+          className="w-full"
+        >
           <div className="flex items-center justify-between gap-2 text-sm">
-            <span className="text-fg-muted">Build minutes</span>
-            <ProgressBarOutput />
+            <Label className="text-fg-muted">Build minutes</Label>
+            <ProgressBarOutput className="tabular-nums" />
           </div>
           <ProgressBarControl />
         </ProgressBar>
@@ -621,7 +643,7 @@ function BuildTimeline({ deployment }: { deployment: Deployment }) {
             <span
               aria-hidden
               className={cn(
-                "absolute top-3.5 left-0 flex size-6 items-center justify-center rounded-full border bg-bg",
+                "absolute top-2.5 left-0 flex size-6 items-center justify-center rounded-full border bg-bg",
                 STEP_TONE[state],
               )}
             >
@@ -670,15 +692,36 @@ function BuildTimeline({ deployment }: { deployment: Deployment }) {
   )
 }
 
-const DOMAINS = [
-  { host: "halcyon.app", note: "Production", variant: "accent" as const },
-  { host: "www.halcyon.app", note: "Redirect", variant: "neutral" as const },
-  {
-    host: "halcyon-web-9kc2ra1.halcyon.app",
-    note: "Preview",
+/** Only the live production build holds the apex domain; the rest keep their own host. */
+function domainsFor(deployment: Deployment) {
+  const own = {
+    host: deploymentHost(deployment),
+    note: deployment.env === "production" ? "Deployment" : "Preview",
     variant: "neutral" as const,
-  },
-]
+  }
+  if (deployment.id === LIVE_PRODUCTION.id) {
+    return [
+      { host: "halcyon.app", note: "Production", variant: "accent" as const },
+      {
+        host: "www.halcyon.app",
+        note: "Redirect",
+        variant: "neutral" as const,
+      },
+      own,
+    ]
+  }
+  if (deployment.env === "preview") {
+    return [
+      { ...own, variant: "accent" as const },
+      {
+        host: `halcyon-web-git-${deployment.branch.replace(/[^a-z0-9]+/gi, "-")}.halcyon.app`,
+        note: "Branch",
+        variant: "neutral" as const,
+      },
+    ]
+  }
+  return [{ ...own, variant: "accent" as const }]
+}
 
 function DeploymentDetail({ deployment }: { deployment: Deployment }) {
   return (
@@ -743,7 +786,7 @@ function DeploymentDetail({ deployment }: { deployment: Deployment }) {
           </TabPanel>
           <TabPanel id="domains" className="pt-4">
             <div className="flex flex-col divide-y">
-              {DOMAINS.map((domain) => (
+              {domainsFor(deployment).map((domain) => (
                 <div
                   key={domain.host}
                   className="flex items-center justify-between gap-3 py-2.5"
@@ -805,9 +848,19 @@ export default function DeploymentsBlock() {
     body: string
   } | null>(null)
 
+  const copyTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(null)
+  React.useEffect(
+    () => () => {
+      if (copyTimeout.current) clearTimeout(copyTimeout.current)
+    },
+    [],
+  )
+
   const copyUrl = React.useCallback((url: string) => {
     navigator.clipboard?.writeText(url).catch(() => {})
     setCopied(url)
+    if (copyTimeout.current) clearTimeout(copyTimeout.current)
+    copyTimeout.current = setTimeout(() => setCopied(null), 2000)
   }, [])
 
   const redeploy = React.useCallback((deployment: Deployment) => {
@@ -815,6 +868,14 @@ export default function DeploymentsBlock() {
       variant: "info",
       title: `Redeploying ${deployment.hash}`,
       body: `Queued a new build of ${deployment.branch} on the ${deployment.env} environment.`,
+    })
+  }, [])
+
+  const promotePreview = React.useCallback(() => {
+    setNotice({
+      variant: "info",
+      title: `Promoting ${LIVE_PREVIEW.hash} to production`,
+      body: `${LIVE_PREVIEW.branch} has to finish building before halcyon.app can serve it.`,
     })
   }, [])
 
@@ -901,6 +962,7 @@ export default function DeploymentsBlock() {
       <main className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
         {notice && (
           <Alert variant={notice.variant}>
+            {notice.variant === "success" ? <CircleCheckIcon /> : <InfoIcon />}
             <AlertTitle>{notice.title}</AlertTitle>
             <AlertDescription>{notice.body}</AlertDescription>
             <AlertAction>
@@ -925,18 +987,26 @@ export default function DeploymentsBlock() {
             deployment={LIVE_PRODUCTION}
             copied={copied === "halcyon.app"}
             onCopy={copyUrl}
-            onRollback={setRollbackTarget}
             onRedeploy={redeploy}
+            secondaryAction={{
+              label: "Instant rollback",
+              onPress: () => {
+                if (PREVIOUS_PRODUCTION) setRollbackTarget(PREVIOUS_PRODUCTION)
+              },
+            }}
           />
           <EnvironmentCard
             name="Preview"
             description="Latest build from an open pull request"
-            url="halcyon-web-9kc2ra1.halcyon.app"
+            url={deploymentHost(LIVE_PREVIEW)}
             deployment={LIVE_PREVIEW}
-            copied={copied === "halcyon-web-9kc2ra1.halcyon.app"}
+            copied={copied === deploymentHost(LIVE_PREVIEW)}
             onCopy={copyUrl}
-            onRollback={setRollbackTarget}
             onRedeploy={redeploy}
+            secondaryAction={{
+              label: "Promote to production",
+              onPress: promotePreview,
+            }}
           />
           <ActivityCard />
         </section>
@@ -945,7 +1015,6 @@ export default function DeploymentsBlock() {
           <div className="flex flex-wrap items-center gap-3">
             <SegmentedControl
               aria-label="Environment"
-              disallowEmptySelection
               selectedKeys={[envFilter]}
               onSelectionChange={(keys) => {
                 const next = [...keys][0]
@@ -1103,7 +1172,7 @@ export default function DeploymentsBlock() {
                             </MenuItem>
                             <MenuItem
                               onAction={() =>
-                                copyUrl(`${deployment.hash}.halcyon.app`)
+                                copyUrl(deploymentHost(deployment))
                               }
                             >
                               <CopyIcon />
@@ -1112,6 +1181,7 @@ export default function DeploymentsBlock() {
                             <Separator />
                             <MenuItem
                               variant="danger"
+                              isDisabled={!canRollBackTo(deployment)}
                               onAction={() => setRollbackTarget(deployment)}
                             >
                               <TimerIcon />
