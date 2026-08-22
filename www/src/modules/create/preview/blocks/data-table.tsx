@@ -562,15 +562,16 @@ function pageWindow(page: number, total: number): (number | "gap")[] {
 function Stat({
   label,
   value,
-  delta,
-  isUp,
+  note,
+  trend,
 }: {
   label: string
   value: string
-  delta: string
-  isUp: boolean
+  note: string
+  trend: "up" | "down" | "flat"
 }) {
-  const DeltaIcon = isUp ? TrendingUpIcon : TrendingDownIcon
+  const TrendIcon =
+    trend === "up" ? TrendingUpIcon : trend === "down" ? TrendingDownIcon : null
   return (
     <Card size="sm">
       <CardHeader>
@@ -579,11 +580,13 @@ function Stat({
         <span
           className={cn(
             "flex items-center gap-1 text-xs",
-            isUp ? "text-fg-success" : "text-fg-danger",
+            trend === "up" && "text-fg-success",
+            trend === "down" && "text-fg-danger",
+            trend === "flat" && "text-fg-muted",
           )}
         >
-          <DeltaIcon className="size-3.5" />
-          {delta}
+          {TrendIcon && <TrendIcon className="size-3.5" />}
+          {note}
         </span>
       </CardHeader>
     </Card>
@@ -814,6 +817,9 @@ export default function DataTableBlock() {
   const activeMrr = rows
     .filter((row) => row.status === "active")
     .reduce((total, row) => total + row.mrr, 0)
+  const pastDueMrr = rows
+    .filter((row) => row.status === "past-due")
+    .reduce((total, row) => total + row.mrr, 0)
 
   const renderCell = (customer: Customer, columnId: string) => {
     switch (columnId) {
@@ -872,9 +878,7 @@ export default function DataTableBlock() {
         return (
           <div className="flex items-center gap-2">
             <Avatar size="sm">
-              <AvatarFallback className="text-[0.625rem]">
-                {initials(customer.owner)}
-              </AvatarFallback>
+              <AvatarFallback>{initials(customer.owner)}</AvatarFallback>
             </Avatar>
             <span>{customer.owner}</span>
           </div>
@@ -907,7 +911,8 @@ export default function DataTableBlock() {
                 Customers
               </h1>
               <p className="text-sm text-fg-muted">
-                {rows.length} accounts across 4 regions — synced 6 minutes ago.
+                {rows.length} accounts across {REGIONS.length} regions — synced
+                6 minutes ago.
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -940,30 +945,26 @@ export default function DataTableBlock() {
           <Stat
             label="Active MRR"
             value={formatMoney(activeMrr)}
-            delta="8.4% vs last month"
-            isUp
+            note="8.4% vs last month"
+            trend="up"
           />
           <Stat
             label="Paying accounts"
             value={String(rows.filter((row) => row.status === "active").length)}
-            delta="3 added this week"
-            isUp
+            note="3 added this week"
+            trend="up"
           />
           <Stat
             label="Open trials"
             value={String(statusCounts.trial ?? 0)}
-            delta="2 ending in 5 days"
-            isUp={false}
+            note="2 ending in 5 days"
+            trend="flat"
           />
           <Stat
             label="Past due"
             value={String(statusCounts["past-due"] ?? 0)}
-            delta={formatMoney(
-              rows
-                .filter((row) => row.status === "past-due")
-                .reduce((total, row) => total + row.mrr, 0),
-            )}
-            isUp={false}
+            note={`${formatMoney(pastDueMrr)} at risk`}
+            trend="down"
           />
         </div>
 
@@ -1234,22 +1235,22 @@ export default function DataTableBlock() {
               {selectedCount} selected
             </span>
             <Separator orientation="vertical" className="h-5" />
-            <Button variant="quiet" size="sm">
+            <Button variant="quiet" size="sm" aria-label="Email selected">
               <MailIcon />
-              Email
+              <span className="hidden sm:inline">Email</span>
             </Button>
-            <Button variant="quiet" size="sm">
+            <Button variant="quiet" size="sm" aria-label="Tag selected">
               <TagIcon />
-              Tag
+              <span className="hidden sm:inline">Tag</span>
             </Button>
-            <Button variant="quiet" size="sm">
+            <Button variant="quiet" size="sm" aria-label="Export selected">
               <DownloadIcon />
-              Export
+              <span className="hidden sm:inline">Export</span>
             </Button>
             <Dialog>
-              <Button variant="danger" size="sm">
+              <Button variant="danger" size="sm" aria-label="Delete selected">
                 <Trash2Icon />
-                Delete
+                <span className="hidden sm:inline">Delete</span>
               </Button>
               <Responsive
                 render={(isMobile) => {
