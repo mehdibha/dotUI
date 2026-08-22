@@ -1,17 +1,17 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const mentionMeta = {
-  name: 'mention',
-  type: 'registry:ui',
-  group: 'pickers',
+  name: "mention",
+  type: "registry:ui",
+  group: "pickers",
   files: [
     {
-      type: 'registry:ui',
-      path: 'ui/mention/base.tsx',
-      target: 'ui/mention.tsx',
+      type: "registry:ui",
+      path: "ui/mention/base.tsx",
+      target: "ui/mention.tsx",
     },
   ],
-  registryDependencies: ['menu', 'popover', 'token-field'],
+  registryDependencies: ["menu", "popover", "token-field"],
 } satisfies RegistryItem
 
 export default mentionMeta

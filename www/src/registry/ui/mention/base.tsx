@@ -1,22 +1,22 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import * as AutocompletePrimitive from 'react-aria-components/Autocomplete'
-import { MenuContext } from 'react-aria-components/Menu'
-import type { Key } from 'react-aria-components/Menu'
-import { PopoverContext } from 'react-aria-components/Popover'
-import { Provider } from 'react-aria-components/slots'
+import * as React from "react"
+import * as AutocompletePrimitive from "react-aria-components/Autocomplete"
+import { MenuContext } from "react-aria-components/Menu"
+import type { Key } from "react-aria-components/Menu"
+import { PopoverContext } from "react-aria-components/Popover"
+import { Provider } from "react-aria-components/slots"
 import {
   tokenFieldPositionToDOMRange,
   TokenFieldValue,
-} from 'react-aria-components/TokenField'
-import { useControlledState } from 'react-stately/useControlledState'
+} from "react-aria-components/TokenField"
+import { useControlledState } from "react-stately/useControlledState"
 
-import type { PopoverProps } from '@/registry/ui/popover'
-import { TokenField } from '@/registry/ui/token-field'
-import type { TokenFieldProps } from '@/registry/ui/token-field'
+import type { PopoverProps } from "@/registry/ui/popover"
+import { TokenField } from "@/registry/ui/token-field"
+import type { TokenFieldProps } from "@/registry/ui/token-field"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: mentionStyles
 
@@ -31,7 +31,7 @@ interface MentionState {
 
 interface MentionProps extends Omit<
   TokenFieldProps,
-  'children' | 'role' | 'slot'
+  "children" | "role" | "slot"
 > {
   /**
    * The character(s) that open the suggestions list: a string for a single
@@ -45,7 +45,7 @@ interface MentionProps extends Omit<
    */
   getItemText?: (key: Key) => string
   /** Where the suggestions popover is placed relative to the caret. @default "bottom start" */
-  placement?: PopoverProps['placement']
+  placement?: PopoverProps["placement"]
   /**
    * The composed input and suggestions. A function receives the active trigger
    * and query, so the suggestions can depend on which trigger the user typed.
@@ -54,7 +54,7 @@ interface MentionProps extends Omit<
 }
 
 const escapeRegExp = (text: string) =>
-  text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 
 /**
  * Wires a mention experience onto the `TokenField` component: typing a trigger
@@ -64,9 +64,9 @@ const escapeRegExp = (text: string) =>
  * `Menu`/`MenuItem`; the value is a `TokenFieldValue` of text and tokens.
  */
 function Mention({
-  trigger = '@',
+  trigger = "@",
   getItemText = (key) => String(key),
-  placement = 'bottom start',
+  placement = "bottom start",
   className,
   children,
   value: valueProp,
@@ -76,7 +76,7 @@ function Mention({
 }: MentionProps) {
   const { root } = useStyles()()
   const { startsWith } = AutocompletePrimitive.useFilter({
-    sensitivity: 'base',
+    sensitivity: "base",
   })
   // Mention always controls the TokenField: it needs the value (and its caret
   // position) locally to find the active trigger.
@@ -92,9 +92,9 @@ function Mention({
   // `exec` below stays stateless.
   const triggerPattern = React.useMemo(
     () =>
-      typeof trigger === 'string'
+      typeof trigger === "string"
         ? new RegExp(`(?<=^|\\s)${escapeRegExp(trigger)}`)
-        : new RegExp(trigger.source, trigger.flags.replace('g', '')),
+        : new RegExp(trigger.source, trigger.flags.replace("g", "")),
     [trigger],
   )
 
@@ -111,7 +111,7 @@ function Mention({
     if (!anchor) return null
     const slice = value.slice(anchor, value.caretPosition)
     // A token between the trigger and the caret ends the mention.
-    if (slice.segments.some((segment) => segment.type === 'token')) return null
+    if (slice.segments.some((segment) => segment.type === "token")) return null
     const raw = slice.toString()
     const match = triggerPattern.exec(raw)
     if (match?.index !== 0) return null
@@ -139,7 +139,7 @@ function Mention({
 
   const getInput = React.useCallback(
     () =>
-      rootRef.current?.querySelector<HTMLDivElement>('[data-token-input]') ??
+      rootRef.current?.querySelector<HTMLDivElement>("[data-token-input]") ??
       null,
     [],
   )
@@ -159,11 +159,11 @@ function Mention({
           value.caretPosition,
           [
             {
-              type: 'token',
+              type: "token",
               text: `${active.trigger}${getItemText(key)}`,
               value: key,
             },
-            { type: 'text', text: ' ' },
+            { type: "text", text: " " },
           ],
           false,
         ),
@@ -187,7 +187,7 @@ function Mention({
 
   return (
     <AutocompletePrimitive.Autocomplete
-      inputValue={active?.query ?? ''}
+      inputValue={active?.query ?? ""}
       filter={startsWith}
     >
       <Provider
@@ -200,7 +200,7 @@ function Mention({
               onOpenChange,
               isNonModal: true,
               placement,
-              trigger: 'MenuTrigger',
+              trigger: "MenuTrigger",
               getTargetRect,
             },
           ],
@@ -214,10 +214,10 @@ function Mention({
           onChange={setValue}
           className={root({ className })}
         >
-          {typeof children === 'function'
+          {typeof children === "function"
             ? children({
                 trigger: active?.trigger ?? null,
-                query: active?.query ?? '',
+                query: active?.query ?? "",
               })
             : children}
         </TokenField>

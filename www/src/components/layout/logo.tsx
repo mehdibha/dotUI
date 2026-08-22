@@ -1,12 +1,12 @@
-import { Link, useLocation } from '@tanstack/react-router'
-import { TypeIcon } from 'lucide-react'
-import { Pressable } from 'react-aria-components/Pressable'
-import { useTheme } from 'starter-themes'
+import { Link, useLocation } from "@tanstack/react-router"
+import { TypeIcon } from "lucide-react"
+import { Pressable } from "react-aria-components/Pressable"
+import { useTheme } from "starter-themes"
 
-import { siteConfig } from '@/config/site'
-import { cn } from '@/registry/lib/utils'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
+import { siteConfig } from "@/config/site"
+import { cn } from "@/registry/lib/utils"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
 
 function BrandAssetPreview({
   file,
@@ -21,7 +21,7 @@ function BrandAssetPreview({
         src={`/brand/${file}.svg`}
         alt=""
         className={cn(
-          'h-4 w-auto opacity-60 in-data-focused:opacity-100 dark:hidden',
+          "h-4 w-auto opacity-60 in-data-focused:opacity-100 dark:hidden",
           className,
         )}
       />
@@ -29,7 +29,7 @@ function BrandAssetPreview({
         src={`/brand/${file}-white.svg`}
         alt=""
         className={cn(
-          'hidden h-4 w-auto opacity-60 in-data-focused:opacity-100 dark:block',
+          "hidden h-4 w-auto opacity-60 in-data-focused:opacity-100 dark:block",
           className,
         )}
       />
@@ -40,7 +40,7 @@ function BrandAssetPreview({
 export function Logo({ className }: { className?: string }) {
   const { resolvedTheme } = useTheme()
   const pathname = useLocation({ select: (location) => location.pathname })
-  const isLanding = pathname === '/'
+  const isLanding = pathname === "/"
 
   const copyBrandAsset = (file: string) => {
     fetch(`/brand/${file}`)
@@ -49,7 +49,7 @@ export function Logo({ className }: { className?: string }) {
       .catch(console.error)
   }
 
-  const suffix = resolvedTheme === 'dark' ? '-white' : ''
+  const suffix = resolvedTheme === "dark" ? "-white" : ""
 
   const mark = (
     <svg
@@ -84,7 +84,7 @@ export function Logo({ className }: { className?: string }) {
         to="/"
         aria-label={`${siteConfig.name} home`}
         className={cn(
-          'flex items-center opacity-100 transition-opacity duration-150 ease-out hover:opacity-80',
+          "flex items-center opacity-100 transition-opacity duration-150 ease-out hover:opacity-80",
           className,
         )}
       >
@@ -100,7 +100,7 @@ export function Logo({ className }: { className?: string }) {
           role="button"
           tabIndex={0}
           aria-label="Brand assets"
-          className={cn('flex items-center', className)}
+          className={cn("flex items-center", className)}
         >
           {mark}
         </span>

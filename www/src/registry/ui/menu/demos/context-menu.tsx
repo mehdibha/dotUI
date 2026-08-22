@@ -1,7 +1,7 @@
-import { Pressable } from 'react-aria-components/Pressable'
+import { Pressable } from "react-aria-components/Pressable"
 
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (

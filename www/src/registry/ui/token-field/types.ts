@@ -1,9 +1,9 @@
-import type { Ref } from 'react'
+import type { Ref } from "react"
 import type {
   TokenFieldProps as TokenFieldPrimitiveProps,
   TokenInputProps as TokenInputPrimitiveProps,
   TokenProps as TokenPrimitiveProps,
-} from 'react-aria-components/TokenField'
+} from "react-aria-components/TokenField"
 
 /**
  * A token field lets users enter text with inline tokens — mentions, tags, or
@@ -15,7 +15,7 @@ import type {
  */
 export interface TokenFieldProps extends Omit<
   TokenFieldPrimitiveProps,
-  'className' | 'style'
+  "className" | "style"
 > {
   ref?: Ref<HTMLDivElement>
   className?: string
@@ -27,7 +27,7 @@ export interface TokenFieldProps extends Omit<
  */
 export interface TokenInputProps extends Omit<
   TokenInputPrimitiveProps,
-  'children' | 'className' | 'style'
+  "children" | "className" | "style"
 > {
   /** Text shown while the field is empty. */
   placeholder?: string
@@ -35,13 +35,13 @@ export interface TokenInputProps extends Omit<
   /**
    * Renders each inline token. @default a `Token` with the segment's text
    */
-  children?: TokenInputPrimitiveProps['children']
+  children?: TokenInputPrimitiveProps["children"]
 }
 
 /** An inline token within a `TokenInput`. */
 export interface TokenProps extends Omit<
   TokenPrimitiveProps,
-  'className' | 'style'
+  "className" | "style"
 > {
   className?: string
 }

@@ -1,25 +1,25 @@
-import 'shiki-magic-move/style.css'
+import "shiki-magic-move/style.css"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { flushSync } from 'react-dom'
-import { parseDate } from '@internationalized/date'
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { flushSync } from "react-dom"
+import { parseDate } from "@internationalized/date"
 import {
   DIFF_DELETE,
   DIFF_EQUAL,
   DIFF_INSERT,
   diffCleanupSemanticLossless,
   type Diff,
-} from 'diff-match-patch-es'
-import { PauseIcon, PlayIcon } from 'lucide-react'
-import { Pressable } from 'react-aria-components/Pressable'
+} from "diff-match-patch-es"
+import { PauseIcon, PlayIcon } from "lucide-react"
+import { Pressable } from "react-aria-components/Pressable"
 import {
   codeToKeyedTokens,
   syncTokenKeys,
   toKeyedTokens,
-} from 'shiki-magic-move/core'
-import { ShikiMagicMoveRenderer } from 'shiki-magic-move/react'
-import type { KeyedToken, KeyedTokensInfo } from 'shiki-magic-move/types'
-import { useTheme } from 'starter-themes'
+} from "shiki-magic-move/core"
+import { ShikiMagicMoveRenderer } from "shiki-magic-move/react"
+import type { KeyedToken, KeyedTokensInfo } from "shiki-magic-move/types"
+import { useTheme } from "starter-themes"
 
 import {
   CalendarIcon,
@@ -27,41 +27,41 @@ import {
   MailIcon,
   MoreHorizontalIcon,
   SearchIcon,
-} from '@/registry/__generated__/icons'
-import { cn } from '@/registry/lib/utils'
-import { Avatar, AvatarFallback } from '@/registry/ui/avatar'
-import { Button } from '@/registry/ui/button'
-import { Calendar, RangeCalendar } from '@/registry/ui/calendar'
-import { Combobox } from '@/registry/ui/combobox'
-import { Command } from '@/registry/ui/command'
-import { DateField } from '@/registry/ui/date-field'
-import { DatePicker, DateRangePicker } from '@/registry/ui/date-picker'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Description, Label } from '@/registry/ui/field'
+} from "@/registry/__generated__/icons"
+import { cn } from "@/registry/lib/utils"
+import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
+import { Button } from "@/registry/ui/button"
+import { Calendar, RangeCalendar } from "@/registry/ui/calendar"
+import { Combobox } from "@/registry/ui/combobox"
+import { Command } from "@/registry/ui/command"
+import { DateField } from "@/registry/ui/date-field"
+import { DatePicker, DateRangePicker } from "@/registry/ui/date-picker"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Description, Label } from "@/registry/ui/field"
 import {
   DateInput,
   Input,
   InputGroup,
   InputGroupAddon,
   TextArea,
-} from '@/registry/ui/input'
-import { Kbd } from '@/registry/ui/kbd'
+} from "@/registry/ui/input"
+import { Kbd } from "@/registry/ui/kbd"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Mention } from '@/registry/ui/mention'
-import { Menu, MenuContent, MenuItem, MenuSub } from '@/registry/ui/menu'
-import { Modal } from '@/registry/ui/modal'
-import { Popover } from '@/registry/ui/popover'
-import { SearchField } from '@/registry/ui/search-field'
-import { Select, SelectValue } from '@/registry/ui/select'
-import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
-import { TextField } from '@/registry/ui/text-field'
-import { highlighter } from '@/modules/docs/highlight'
+} from "@/registry/ui/list-box"
+import { Mention } from "@/registry/ui/mention"
+import { Menu, MenuContent, MenuItem, MenuSub } from "@/registry/ui/menu"
+import { Modal } from "@/registry/ui/modal"
+import { Popover } from "@/registry/ui/popover"
+import { SearchField } from "@/registry/ui/search-field"
+import { Select, SelectValue } from "@/registry/ui/select"
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
+import { TextField } from "@/registry/ui/text-field"
+import { highlighter } from "@/modules/docs/highlight"
 
 interface Step {
   title: string
@@ -83,7 +83,7 @@ interface Step {
 // Opening mid beat: a bare Input, the seed the TextField builds around. It's
 // the first frame on load, so it dwells a touch longer than the mids after it.
 const firstStep: Step = {
-  title: 'TextField',
+  title: "TextField",
   mid: true,
   durationMs: 2000,
   code: `<Input placeholder="hello@example.com" />`,
@@ -100,7 +100,7 @@ const steps: Step[] = [
   firstStep,
   {
     // Mid beat: wrap the bare input in a TextField — no field parts yet.
-    title: 'TextField',
+    title: "TextField",
     mid: true,
     durationMs: 1400,
     code: `<TextField>
@@ -117,7 +117,7 @@ const steps: Step[] = [
   },
   {
     // Mid beat: the field gains its label.
-    title: 'TextField',
+    title: "TextField",
     mid: true,
     durationMs: 1400,
     code: `<TextField>
@@ -136,7 +136,7 @@ const steps: Step[] = [
   },
   {
     // Headline: the full field — label, input, and description.
-    title: 'TextField',
+    title: "TextField",
     durationMs: 3000,
     code: `<TextField>
   <Label>Email</Label>
@@ -158,7 +158,7 @@ const steps: Step[] = [
   },
   {
     // Mid beat: wrap the input in an InputGroup — no addons yet.
-    title: 'InputGroup',
+    title: "InputGroup",
     mid: true,
     durationMs: 1400,
     code: `<TextField>
@@ -182,7 +182,7 @@ const steps: Step[] = [
   },
   {
     // Mid beat: add the leading addon.
-    title: 'InputGroup',
+    title: "InputGroup",
     mid: true,
     durationMs: 1400,
     code: `<TextField>
@@ -212,7 +212,7 @@ const steps: Step[] = [
   },
   {
     // Headline step: add the trailing addon — the full InputGroup.
-    title: 'InputGroup',
+    title: "InputGroup",
     compact: true,
     durationMs: 3600,
     code: `<TextField>
@@ -251,7 +251,7 @@ const steps: Step[] = [
   {
     // Same anatomy, different field: swap in SearchField, a search icon, and a
     // ⌘K hint that reappears in the command palette finale.
-    title: 'SearchField',
+    title: "SearchField",
     compact: true,
     durationMs: 2800,
     code: `<SearchField>
@@ -282,7 +282,7 @@ const steps: Step[] = [
     ),
   },
   {
-    title: 'DateField',
+    title: "DateField",
     compact: true,
     durationMs: 3000,
     code: `<DateField>
@@ -297,7 +297,7 @@ const steps: Step[] = [
     preview: (
       <DateField
         className="w-full max-w-xs"
-        defaultValue={parseDate('2026-07-10')}
+        defaultValue={parseDate("2026-07-10")}
       >
         <Label className="[view-transition-name:cmp-label]">Meeting date</Label>
         <InputGroup className="[view-transition-name:cmp-field]">
@@ -312,7 +312,7 @@ const steps: Step[] = [
   {
     // Mid beat: promote to DatePicker — move the icon to a trailing trigger,
     // still no popover.
-    title: 'DatePicker',
+    title: "DatePicker",
     mid: true,
     durationMs: 1400,
     code: `<DatePicker>
@@ -329,7 +329,7 @@ const steps: Step[] = [
     preview: (
       <DatePicker
         className="w-full max-w-xs"
-        defaultValue={parseDate('2026-07-10')}
+        defaultValue={parseDate("2026-07-10")}
       >
         <Label className="[view-transition-name:cmp-label]">Meeting date</Label>
         <InputGroup className="[view-transition-name:cmp-field]">
@@ -349,7 +349,7 @@ const steps: Step[] = [
   },
   {
     // Headline: attach the popover calendar.
-    title: 'DatePicker',
+    title: "DatePicker",
     durationMs: 3400,
     code: `<DatePicker>
   <Label>Meeting date</Label>
@@ -370,7 +370,7 @@ const steps: Step[] = [
     preview: (
       <DatePicker
         className="w-full max-w-xs"
-        defaultValue={parseDate('2026-07-10')}
+        defaultValue={parseDate("2026-07-10")}
       >
         <Label className="[view-transition-name:cmp-label]">Meeting date</Label>
         <InputGroup className="[view-transition-name:cmp-field]">
@@ -397,7 +397,7 @@ const steps: Step[] = [
     // Mid beat: promote to a range — Calendar → RangeCalendar, one input still.
     // The snippet defers the slots to the headline beat; the preview needs
     // slot="start" at runtime.
-    title: 'DateRangePicker',
+    title: "DateRangePicker",
     mid: true,
     durationMs: 1400,
     code: `<DateRangePicker>
@@ -420,8 +420,8 @@ const steps: Step[] = [
       <DateRangePicker
         className="w-full max-w-xs"
         defaultValue={{
-          start: parseDate('2026-07-10'),
-          end: parseDate('2026-07-17'),
+          start: parseDate("2026-07-10"),
+          end: parseDate("2026-07-17"),
         }}
       >
         <Label className="[view-transition-name:cmp-label]">Trip dates</Label>
@@ -447,7 +447,7 @@ const steps: Step[] = [
   },
   {
     // Headline: the field gains its end date.
-    title: 'DateRangePicker',
+    title: "DateRangePicker",
     durationMs: 3400,
     code: `<DateRangePicker>
   <Label>Trip dates</Label>
@@ -471,8 +471,8 @@ const steps: Step[] = [
       <DateRangePicker
         className="w-full max-w-xs"
         defaultValue={{
-          start: parseDate('2026-07-10'),
-          end: parseDate('2026-07-17'),
+          start: parseDate("2026-07-10"),
+          end: parseDate("2026-07-17"),
         }}
       >
         <Label className="[view-transition-name:cmp-label]">Trip dates</Label>
@@ -500,7 +500,7 @@ const steps: Step[] = [
   },
   {
     // Mid beat: swap the overlay primitive — one word, Popover → Modal.
-    title: 'Modal',
+    title: "Modal",
     mid: true,
     // 110 tokens: the transition needs ~1410ms to land (see CODE_SPAN).
     durationMs: 1500,
@@ -526,8 +526,8 @@ const steps: Step[] = [
       <DateRangePicker
         className="w-full max-w-xs"
         defaultValue={{
-          start: parseDate('2026-07-10'),
-          end: parseDate('2026-07-17'),
+          start: parseDate("2026-07-10"),
+          end: parseDate("2026-07-17"),
         }}
       >
         <Label className="[view-transition-name:cmp-label]">Trip dates</Label>
@@ -554,7 +554,7 @@ const steps: Step[] = [
     ),
   },
   {
-    title: 'Drawer',
+    title: "Drawer",
     durationMs: 2800,
     code: `<DateRangePicker>
   <Label>Trip dates</Label>
@@ -578,8 +578,8 @@ const steps: Step[] = [
       <DateRangePicker
         className="w-full max-w-xs"
         defaultValue={{
-          start: parseDate('2026-07-10'),
-          end: parseDate('2026-07-17'),
+          start: parseDate("2026-07-10"),
+          end: parseDate("2026-07-17"),
         }}
       >
         <Label className="[view-transition-name:cmp-label]">Trip dates</Label>
@@ -607,7 +607,7 @@ const steps: Step[] = [
   },
   {
     // Mid beat: collapse to a bare Select — label and trigger only.
-    title: 'Select',
+    title: "Select",
     mid: true,
     durationMs: 1300,
     code: `<Select>
@@ -632,7 +632,7 @@ const steps: Step[] = [
   },
   {
     // Headline: attach the options list.
-    title: 'Select',
+    title: "Select",
     compact: true,
     durationMs: 3200,
     code: `<Select>
@@ -668,7 +668,7 @@ const steps: Step[] = [
   },
   {
     // Headline: same list, now a typeahead — swap the trigger for an input.
-    title: 'Combobox',
+    title: "Combobox",
     durationMs: 3200,
     code: `<Combobox>
   <Label>Assignee</Label>
@@ -715,7 +715,7 @@ const steps: Step[] = [
   },
   {
     // Headline: multi-select — selected people surface as tags.
-    title: 'Tags',
+    title: "Tags",
     durationMs: 3000,
     code: `<Combobox>
   <Label>Assignee</Label>
@@ -774,7 +774,7 @@ const steps: Step[] = [
   },
   {
     // Mid beat: a plain menu off an icon button.
-    title: 'Menu',
+    title: "Menu",
     mid: true,
     durationMs: 1400,
     code: `<Menu>
@@ -811,7 +811,7 @@ const steps: Step[] = [
   },
   {
     // Mid beat: the items gain keyboard shortcuts.
-    title: 'Menu',
+    title: "Menu",
     mid: true,
     durationMs: 1400,
     code: `<Menu>
@@ -857,7 +857,7 @@ const steps: Step[] = [
   },
   {
     // Headline: one item nests a submenu.
-    title: 'Menu',
+    title: "Menu",
     compact: true,
     durationMs: 3000,
     code: `<Menu>
@@ -917,7 +917,7 @@ const steps: Step[] = [
   {
     // Headline: the same menu, now opened by right-click — only the trigger
     // changes.
-    title: 'Context menu',
+    title: "Context menu",
     compact: true,
     durationMs: 3000,
     code: `<Menu trigger="contextMenu">
@@ -977,7 +977,7 @@ const steps: Step[] = [
   },
   {
     // Mid beat: the same menu, filtered by an @-mention typed into a textarea.
-    title: 'Mention',
+    title: "Mention",
     mid: true,
     durationMs: 1500,
     code: `<Mention>
@@ -1010,7 +1010,7 @@ const steps: Step[] = [
   },
   {
     // Headline: each suggestion gains an avatar.
-    title: 'Mention',
+    title: "Mention",
     durationMs: 3200,
     code: `<Mention>
   <TextField>
@@ -1057,7 +1057,7 @@ const steps: Step[] = [
   },
   {
     // Mid beat: the command palette skeleton — a search input inside Command.
-    title: 'Command',
+    title: "Command",
     mid: true,
     durationMs: 1400,
     code: `<Command>
@@ -1087,7 +1087,7 @@ const steps: Step[] = [
   },
   {
     // Mid beat: the palette gains its list of commands.
-    title: 'Command',
+    title: "Command",
     mid: true,
     durationMs: 1500,
     code: `<Command>
@@ -1131,7 +1131,7 @@ const steps: Step[] = [
   {
     // Every part recomposed into a live command palette — sectioned,
     // shortcut-hinted, and typing filters it in place.
-    title: 'Command palette',
+    title: "Command palette",
     durationMs: 4200,
     code: `<Command>
   <SearchField>
@@ -1186,7 +1186,7 @@ const steps: Step[] = [
   {
     // The palette moves behind a trigger: Dialog and Modal wrap the same
     // Command — the preview's button really opens it.
-    title: 'Command dialog',
+    title: "Command dialog",
     durationMs: 3600,
     code: `<Dialog>
   <Button>Search… <Kbd>⌘K</Kbd></Button>
@@ -1241,7 +1241,7 @@ const steps: Step[] = [
   {
     // The same searchable list drops into a Select — Command is React Aria's
     // Autocomplete, so the popover filters in place.
-    title: 'Searchable select',
+    title: "Searchable select",
     durationMs: 3600,
     code: `<Select>
   <Label>Assignee</Label>
@@ -1300,7 +1300,7 @@ const steps: Step[] = [
 ]
 
 const compactSteps = steps.filter((s) => s.compact)
-const maxCodeLines = Math.max(...steps.map((s) => s.code.split('\n').length))
+const maxCodeLines = Math.max(...steps.map((s) => s.code.split("\n").length))
 
 // Pagination lists only the headline steps; mid steps play during auto-advance
 // but aren't clickable stops. Each entry keeps its index into its list so the
@@ -1352,18 +1352,18 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
   useEffect(() => {
     setMounted(true)
     // Auto-play is motion — reduced-motion users opt in via the play button.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setUserPaused(true)
     }
   }, [])
 
   useEffect(() => {
     if (!compactBelowLg) return
-    const mq = window.matchMedia('(min-width: 64rem)')
+    const mq = window.matchMedia("(min-width: 64rem)")
     const update = () => setCompact(!mq.matches)
     update()
-    mq.addEventListener('change', update)
-    return () => mq.removeEventListener('change', update)
+    mq.addEventListener("change", update)
+    return () => mq.removeEventListener("change", update)
   }, [compactBelowLg])
   const activeSteps = compact ? compactSteps : steps
 
@@ -1381,8 +1381,8 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
 
   useEffect(() => {
     const onChange = () => setHidden(document.hidden)
-    document.addEventListener('visibilitychange', onChange)
-    return () => document.removeEventListener('visibilitychange', onChange)
+    document.addEventListener("visibilitychange", onChange)
+    return () => document.removeEventListener("visibilitychange", onChange)
   }, [])
 
   // Touch devices fire synthetic mouseenter with no matching leave — hover
@@ -1390,7 +1390,7 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
   const setHoverPaused = useCallback((next: boolean) => {
     if (
       next &&
-      !window.matchMedia('(hover: hover) and (pointer: fine)').matches
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
     )
       return
     setHoverPausedState(next)
@@ -1414,9 +1414,9 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
         scrollingRef.current = false
       }, 150)
     }
-    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener("scroll", onScroll, { passive: true })
     return () => {
-      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener("scroll", onScroll)
       clearTimeout(timer)
     }
   }, [])
@@ -1424,7 +1424,7 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
   const stepRef = useRef(0)
   const applyStep = useCallback((next: number) => {
     stepRef.current = next
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     if (reduce || scrollingRef.current || !document.startViewTransition) {
       setStep(next)
       return
@@ -1467,7 +1467,7 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
       const from = stepRef.current
       const between = activeSteps.slice(from + 1, next)
       const reduce = window.matchMedia(
-        '(prefers-reduced-motion: reduce)',
+        "(prefers-reduced-motion: reduce)",
       ).matches
       if (
         reduce ||
@@ -1524,7 +1524,7 @@ export function useCompositionPlayer({ compactBelowLg = false } = {}) {
   )
   const stepDurationMs = current.durationMs
   const reducedMotion =
-    mounted && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    mounted && window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
   // Under reduced motion the CSS clock is disabled (StepTimer renders nothing),
   // so an explicit play falls back to a plain timeout with instant swaps.
@@ -1567,7 +1567,7 @@ export function StepTimer({ player }: { player: CompositionPlayer }) {
       aria-hidden
       onAnimationEnd={advance}
       className="pointer-events-none fixed size-px opacity-0"
-      style={progressStyle(stepDurationMs, playing, 'x')}
+      style={progressStyle(stepDurationMs, playing, "x")}
     />
   )
 }
@@ -1575,15 +1575,15 @@ export function StepTimer({ player }: { player: CompositionPlayer }) {
 function progressStyle(
   durationMs: number,
   playing: boolean,
-  axis: 'x' | 'y',
+  axis: "x" | "y",
 ): React.CSSProperties {
   return {
-    animationName: axis === 'x' ? 'cmp-progress-x' : 'cmp-progress-y',
+    animationName: axis === "x" ? "cmp-progress-x" : "cmp-progress-y",
     animationDuration: `${durationMs}ms`,
-    animationTimingFunction: 'linear',
-    animationFillMode: 'both',
-    animationPlayState: playing ? 'running' : 'paused',
-    willChange: 'transform',
+    animationTimingFunction: "linear",
+    animationFillMode: "both",
+    animationPlayState: playing ? "running" : "paused",
+    willChange: "transform",
   }
 }
 
@@ -1591,16 +1591,16 @@ function progressStyle(
 // hairline bar re-rasterizes it every frame and visibly steps at slow speeds.
 export function StepProgress({
   player,
-  axis = 'x',
+  axis = "x",
   className,
 }: {
   player: CompositionPlayer
-  axis?: 'x' | 'y'
+  axis?: "x" | "y"
   className?: string
 }) {
   const { step, stepDurationMs, playing, reducedMotion } = player
   return (
-    <span key={step} aria-hidden className={cn('overflow-hidden', className)}>
+    <span key={step} aria-hidden className={cn("overflow-hidden", className)}>
       <span
         className="block size-full bg-fg"
         style={
@@ -1622,22 +1622,22 @@ export function StepDots({
 }) {
   const { paginated, activePaginated, goToStep } = player
   return (
-    <div className={cn('flex items-center', className)}>
+    <div className={cn("flex items-center", className)}>
       {paginated.map((p, pos) => (
         <button
           key={p.title}
           type="button"
           aria-label={`Step ${pos + 1}: ${p.title}`}
-          aria-current={pos === activePaginated ? 'step' : undefined}
+          aria-current={pos === activePaginated ? "step" : undefined}
           onClick={() => goToStep(p.index)}
           className="group flex h-8 cursor-pointer items-center px-[3px]"
         >
           <span
             className={cn(
-              'relative h-1 overflow-hidden rounded-full transition-all duration-300',
+              "relative h-1 overflow-hidden rounded-full transition-all duration-300",
               pos === activePaginated
-                ? 'w-5 bg-border'
-                : 'w-1.5 bg-border group-hover:bg-fg-muted',
+                ? "w-5 bg-border"
+                : "w-1.5 bg-border group-hover:bg-fg-muted",
             )}
           >
             {pos === activePaginated && (
@@ -1668,12 +1668,12 @@ export function PlayPauseButton({
       size="sm"
       variant="quiet"
       isIconOnly={!withLabel}
-      aria-label={paused ? 'Play steps' : 'Pause steps'}
+      aria-label={paused ? "Play steps" : "Pause steps"}
       onPress={togglePlay}
-      className={cn('text-fg-muted', className)}
+      className={cn("text-fg-muted", className)}
     >
       {paused ? <PlayIcon /> : <PauseIcon />}
-      {withLabel && (paused ? 'Play' : 'Pause')}
+      {withLabel && (paused ? "Play" : "Pause")}
     </Button>
   )
 }
@@ -1714,8 +1714,8 @@ const WORD = /[A-Za-z0-9]/
 
 function cleanupCodeDiff(diffs: Diff[]): Diff[] {
   diffCleanupSemanticLossless(diffs)
-  let from = ''
-  let to = ''
+  let from = ""
+  let to = ""
   for (const [op, text] of diffs) {
     if (op !== DIFF_INSERT) from += text
     if (op !== DIFF_DELETE) to += text
@@ -1731,17 +1731,17 @@ function cleanupCodeDiff(diffs: Diff[]): Diff[] {
       let core = text
       const end = text.length
       if (
-        WORD.test(core[0] ?? '') &&
-        (WORD.test(from[offFrom - 1] ?? '') || WORD.test(to[offTo - 1] ?? ''))
+        WORD.test(core[0] ?? "") &&
+        (WORD.test(from[offFrom - 1] ?? "") || WORD.test(to[offTo - 1] ?? ""))
       ) {
-        core = core.replace(/^[A-Za-z0-9]+/, '')
+        core = core.replace(/^[A-Za-z0-9]+/, "")
       }
       if (
-        WORD.test(core[core.length - 1] ?? '') &&
-        (WORD.test(from[offFrom + end] ?? '') ||
-          WORD.test(to[offTo + end] ?? ''))
+        WORD.test(core[core.length - 1] ?? "") &&
+        (WORD.test(from[offFrom + end] ?? "") ||
+          WORD.test(to[offTo + end] ?? ""))
       ) {
-        core = core.replace(/[A-Za-z0-9]+$/, '')
+        core = core.replace(/[A-Za-z0-9]+$/, "")
       }
       demote = !WORD.test(core)
     }
@@ -1750,7 +1750,7 @@ function cleanupCodeDiff(diffs: Diff[]): Diff[] {
     } else {
       out.push([op, text])
     }
-    const lines = text.split('\n').length - 1
+    const lines = text.split("\n").length - 1
     if (op !== DIFF_INSERT) {
       offFrom += text.length
       lineFrom += lines
@@ -1797,8 +1797,8 @@ function lockTagPunctuation(from: KeyedTokensInfo, to: KeyedTokensInfo) {
   const closeOf = (tokens: KeyedToken[], nameIdx: number) => {
     for (const token of tokens.slice(nameIdx + 1)) {
       const c = token.content
-      if (c === '\n' || c.includes('<')) return undefined
-      if (c.includes('>')) return token
+      if (c === "\n" || c.includes("<")) return undefined
+      if (c.includes(">")) return token
     }
     return undefined
   }
@@ -1807,7 +1807,7 @@ function lockTagPunctuation(from: KeyedTokensInfo, to: KeyedTokensInfo) {
     const name = to.tokens[i]
     const bracket = to.tokens[i - 1]
     if (!name || !bracket) continue
-    if (bracket.content !== '<' && bracket.content !== '</') continue
+    if (bracket.content !== "<" && bracket.content !== "</") continue
     if (!TAG_NAME.test(name.content)) continue
     const fromName = fromByKey.get(name.key)
     if (!fromName) continue
@@ -1823,13 +1823,13 @@ function lockTagPunctuation(from: KeyedTokensInfo, to: KeyedTokensInfo) {
   }
 
   const lineOf = (source: string, offset: number) =>
-    source.slice(0, offset).split('\n').length
+    source.slice(0, offset).split("\n").length
   for (const token of to.tokens) {
     if (bound.has(token)) continue
     const partner = fromByKey.get(token.key)
     if (!partner) continue
     const c = token.content
-    if (c.trim() === '' || WORD.test(c)) continue
+    if (c.trim() === "" || WORD.test(c)) continue
     if (lineOf(from.code, partner.offset) !== lineOf(to.code, token.offset)) {
       toByKey.delete(token.key)
       token.key = `${to.hash}-freed-${freed++}`
@@ -1838,7 +1838,7 @@ function lockTagPunctuation(from: KeyedTokensInfo, to: KeyedTokensInfo) {
   }
 }
 
-const EMPTY_TOKENS = toKeyedTokens('', [])
+const EMPTY_TOKENS = toKeyedTokens("", [])
 
 // The gutter is sized for the loop's longest snippet, so it can't widen at line
 // 10 and shift the code sideways mid-transition.
@@ -1857,14 +1857,14 @@ function withLineNumbers(info: KeyedTokensInfo): KeyedTokensInfo {
     if (atLineStart) {
       tokens.push({
         key: `ln-${line}`,
-        content: `${String(line).padStart(lineNumberWidth, ' ')}  `,
+        content: `${String(line).padStart(lineNumberWidth, " ")}  `,
         offset: token.offset,
-        htmlClass: 'shiki-magic-move-line-number',
+        htmlClass: "shiki-magic-move-line-number",
       })
       atLineStart = false
     }
     tokens.push(token)
-    if (token.content === '\n') {
+    if (token.content === "\n") {
       line += 1
       atLineStart = true
     }
@@ -1886,7 +1886,7 @@ export function CompositionCode({
   lineNumbers?: boolean
 }) {
   const { resolvedTheme } = useTheme()
-  const theme = resolvedTheme === 'light' ? 'github-light' : 'github-dark'
+  const theme = resolvedTheme === "light" ? "github-light" : "github-dark"
   // Inlined ShikiMagicMove machine so lockTagPunctuation can rewrite the
   // synced keys before they reach the renderer. The code/theme guard keeps a
   // strict-mode double render from committing the same step twice (which
@@ -1899,7 +1899,7 @@ export function CompositionCode({
     if (previous.code === code && previous.themeName === theme) {
       return cache.current!
     }
-    const next = codeToKeyedTokens(highlighter, code, { lang: 'tsx', theme })
+    const next = codeToKeyedTokens(highlighter, code, { lang: "tsx", theme })
     const { from, to } = syncTokenKeys(previous, next, {
       diffCleanup: cleanupCodeDiff,
     })
@@ -1948,7 +1948,7 @@ export function CompositionAnimation({ className }: { className?: string }) {
   return (
     <div
       ref={containerRef}
-      className={cn('overflow-hidden rounded-md border bg-card', className)}
+      className={cn("overflow-hidden rounded-md border bg-card", className)}
       onMouseEnter={() => setHoverPaused(true)}
       onMouseLeave={() => setHoverPaused(false)}
       onFocus={() => setHoverPaused(true)}

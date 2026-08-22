@@ -1,17 +1,17 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const tokenFieldMeta = {
-  name: 'token-field',
-  type: 'registry:ui',
-  group: 'inputs',
+  name: "token-field",
+  type: "registry:ui",
+  group: "inputs",
   files: [
     {
-      type: 'registry:ui',
-      path: 'ui/token-field/base.tsx',
-      target: 'ui/token-field.tsx',
+      type: "registry:ui",
+      path: "ui/token-field/base.tsx",
+      target: "ui/token-field.tsx",
     },
   ],
-  registryDependencies: ['field'],
+  registryDependencies: ["field"],
 } satisfies RegistryItem
 
 export default tokenFieldMeta
