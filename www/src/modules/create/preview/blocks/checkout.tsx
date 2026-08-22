@@ -163,7 +163,7 @@ export default function Checkout() {
   const [billingSame, setBillingSame] = useState(true)
 
   const subtotal = LINE_ITEMS.reduce(
-    (sum, item) => sum + item.price * (quantities[item.id] ?? 0),
+    (sum, item) => sum + item.price * (quantities[item.id] ?? 1),
     0,
   )
   const shippingMethod =
@@ -173,7 +173,7 @@ export default function Checkout() {
   const tax = (subtotal - discount) * TAX_RATE
   const total = subtotal - discount + shippingMethod.price + tax
   const itemCount = LINE_ITEMS.reduce(
-    (sum, item) => sum + (quantities[item.id] ?? 0),
+    (sum, item) => sum + (quantities[item.id] ?? 1),
     0,
   )
 
@@ -299,7 +299,7 @@ export default function Checkout() {
                 <Description>We'll suggest matches as you type.</Description>
               </TextField>
 
-              <TextField defaultValue="">
+              <TextField>
                 <Label>Apartment, suite, unit</Label>
                 <InputGroup>
                   <Input autoComplete="address-line2" />
@@ -392,9 +392,7 @@ export default function Checkout() {
                 <DisclosureTrigger>Add delivery instructions</DisclosureTrigger>
                 <DisclosurePanel>
                   <TextField aria-label="Delivery instructions">
-                    <InputGroup>
-                      <TextArea placeholder="Gate code, safe drop spot, anything the courier should know…" />
-                    </InputGroup>
+                    <TextArea placeholder="Gate code, safe drop spot, anything the courier should know…" />
                   </TextField>
                 </DisclosurePanel>
               </Disclosure>
@@ -425,13 +423,11 @@ export default function Checkout() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <TextField defaultValue="04 / 28" isRequired>
                   <Label>Expiration</Label>
-                  <InputGroup>
-                    <Input
-                      inputMode="numeric"
-                      placeholder="MM / YY"
-                      autoComplete="cc-exp"
-                    />
-                  </InputGroup>
+                  <Input
+                    inputMode="numeric"
+                    placeholder="MM / YY"
+                    autoComplete="cc-exp"
+                  />
                 </TextField>
                 <TextField defaultValue="812" isRequired>
                   <Label>Security code</Label>
@@ -482,7 +478,7 @@ export default function Checkout() {
                       ))}
                     </SelectContent>
                   </Select>
-                  <TextField defaultValue="">
+                  <TextField>
                     <Label>Street address</Label>
                     <Input
                       placeholder="Billing street address"
@@ -490,11 +486,11 @@ export default function Checkout() {
                     />
                   </TextField>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <TextField defaultValue="">
+                    <TextField>
                       <Label>City</Label>
                       <Input autoComplete="billing address-level2" />
                     </TextField>
-                    <TextField defaultValue="">
+                    <TextField>
                       <Label>ZIP code</Label>
                       <Input
                         inputMode="numeric"
@@ -543,11 +539,14 @@ export default function Checkout() {
                           <NumberField
                             aria-label={`Quantity, ${item.name}`}
                             value={quantities[item.id] ?? 1}
+                            // Clearing the input commits NaN; keep the last
+                            // quantity so the totals never read "$NaN".
                             onChange={(value) =>
-                              setQuantities((prev) => ({
-                                ...prev,
-                                [item.id]: value,
-                              }))
+                              setQuantities((prev) =>
+                                Number.isNaN(value)
+                                  ? prev
+                                  : { ...prev, [item.id]: value },
+                              )
                             }
                             minValue={1}
                             maxValue={9}
@@ -603,7 +602,9 @@ export default function Checkout() {
                         aria-label="Applied discounts"
                       >
                         <TagList>
-                          <Tag id={appliedPromo}>{appliedPromo} · 15% off</Tag>
+                          <Tag id={appliedPromo}>
+                            {`${appliedPromo} · ${PROMO_RATE * 100}% off`}
+                          </Tag>
                         </TagList>
                       </TagGroup>
                     )}
