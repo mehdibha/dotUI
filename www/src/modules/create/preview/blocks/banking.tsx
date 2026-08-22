@@ -1,6 +1,6 @@
 "use client"
 
-import { type ReactNode, useMemo, useState } from "react"
+import { type ReactNode, useState } from "react"
 import {
   Bar,
   BarChart,
@@ -196,8 +196,10 @@ const categoryConfig = {
   dining: { label: "Dining", color: "var(--chart-3)" },
   transport: { label: "Transport", color: "var(--chart-4)" },
   subscriptions: { label: "Subscriptions", color: "var(--chart-5)" },
-  travel: { label: "Travel", color: "var(--chart-1)" },
+  travel: { label: "Travel", color: "var(--chart-6)" },
 } satisfies ChartConfig
+
+const CATEGORY_TOTAL = CATEGORY_SPEND.reduce((sum, row) => sum + row.amount, 0)
 
 const RANGES = [
   { id: "3m", label: "3M", months: 3 },
@@ -315,7 +317,7 @@ const TRANSACTIONS: Transaction[] = [
     icon: MapIcon,
     amount: -23.8,
     date: "Aug 17",
-    status: "Posted",
+    status: "Pending",
   },
   {
     id: "t10",
@@ -439,10 +441,10 @@ function Header() {
 
         <div className="ml-auto flex items-center gap-2">
           <SearchField
-            aria-label="Search transactions"
-            className="hidden w-56 lg:block"
+            aria-label="Search everything"
+            className="hidden w-56 lg:flex"
           >
-            <Input placeholder="Search transactions" />
+            <Input placeholder="Search" />
           </SearchField>
 
           <Tooltip>
@@ -514,6 +516,8 @@ function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
   const isUp = account.delta >= 0
   const limit = "limit" in account ? account.limit : null
   const utilization = limit === null ? null : (account.balance / limit) * 100
+  // On a card the balance is debt, so paying it down is the good direction.
+  const isGood = limit === null ? isUp : !isUp
 
   return (
     <Card>
@@ -527,7 +531,7 @@ function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
         <CardAction>
           <Badge
             appearance="subtle"
-            variant={isUp ? "success" : "danger"}
+            variant={isGood ? "success" : "danger"}
             size="sm"
           >
             {isUp ? (
@@ -552,7 +556,7 @@ function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
           color={account.color}
           series={account.series}
         />
-        {utilization !== null && limit !== null ? (
+        {utilization !== null && limit !== null && (
           <ProgressBar
             value={utilization}
             aria-label={`${account.name} credit used`}
@@ -563,9 +567,8 @@ function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
               {utilization.toFixed(0)}% of {currency(limit, 0)} limit used
             </p>
           </ProgressBar>
-        ) : (
-          <p className="text-xs text-fg-muted">{account.caption}</p>
         )}
+        <p className="text-xs text-fg-muted">{account.caption}</p>
       </CardContent>
     </Card>
   )
@@ -696,11 +699,6 @@ function CashflowCard() {
 }
 
 function CategoriesCard() {
-  const total = useMemo(
-    () => CATEGORY_SPEND.reduce((sum, row) => sum + row.amount, 0),
-    [],
-  )
-
   return (
     <Card>
       <CardHeader>
@@ -739,7 +737,7 @@ function CategoriesCard() {
                           y={viewBox.cy}
                           className="fill-fg text-xl font-semibold"
                         >
-                          {currency(total, 0)}
+                          {currency(CATEGORY_TOTAL, 0)}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
@@ -879,7 +877,7 @@ function TransactionsCard() {
     TRANSACTIONS.filter((row) => {
       if (tab === "income" && row.amount <= 0) return false
       if (tab === "expenses" && row.amount > 0) return false
-      if (tab === "pending" && row.status === "Posted") return false
+      if (tab === "pending" && row.status !== "Pending") return false
       if (categories.length > 0 && !categories.includes(row.categoryId)) {
         return false
       }
@@ -1006,10 +1004,30 @@ function UpcomingCard() {
 /* ----------------------------- Transfer dialog ---------------------------- */
 
 const TRANSFER_ACCOUNTS = [
-  { id: "checking", label: "Everyday Checking •••• 4412" },
-  { id: "savings", label: "High-Yield Savings •••• 8127" },
-  { id: "credit", label: "Platinum Card •••• 9043" },
-  { id: "brokerage", label: "Meridian Invest •••• 2205" },
+  {
+    id: "checking",
+    name: "Everyday Checking",
+    mask: "•••• 4412",
+    available: 12480.65,
+  },
+  {
+    id: "savings",
+    name: "High-Yield Savings",
+    mask: "•••• 8127",
+    available: 48290.12,
+  },
+  {
+    id: "credit",
+    name: "Platinum Card",
+    mask: "•••• 9043",
+    available: 10157.7,
+  },
+  {
+    id: "brokerage",
+    name: "Meridian Invest",
+    mask: "•••• 2205",
+    available: 21640.08,
+  },
 ]
 
 function TransferDialog({
@@ -1025,10 +1043,11 @@ function TransferDialog({
   const [amount, setAmount] = useState(750)
   const [frequency, setFrequency] = useState("once")
 
+  const source = TRANSFER_ACCOUNTS.find((a) => a.id === from)
+  const target = TRANSFER_ACCOUNTS.find((a) => a.id === to)
+
   const submit = () => {
-    const target =
-      TRANSFER_ACCOUNTS.find((a) => a.id === to)?.label ?? "account"
-    onDone(`${currency(amount)} to ${target}`)
+    onDone(`${currency(amount)} to ${target?.name ?? "your account"}`)
     setOpen(false)
   }
 
@@ -1049,6 +1068,7 @@ function TransferDialog({
                 <Select
                   value={from}
                   onChange={(key) => setFrom(String(key))}
+                  disabledKeys={[to]}
                   className="w-full"
                 >
                   <Label>From</Label>
@@ -1056,7 +1076,7 @@ function TransferDialog({
                   <SelectContent>
                     {TRANSFER_ACCOUNTS.map((account) => (
                       <SelectItem key={account.id} id={account.id}>
-                        {account.label}
+                        {account.name} {account.mask}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -1065,6 +1085,7 @@ function TransferDialog({
                 <Select
                   value={to}
                   onChange={(key) => setTo(String(key))}
+                  disabledKeys={[from]}
                   className="w-full"
                 >
                   <Label>To</Label>
@@ -1072,7 +1093,7 @@ function TransferDialog({
                   <SelectContent>
                     {TRANSFER_ACCOUNTS.map((account) => (
                       <SelectItem key={account.id} id={account.id}>
-                        {account.label}
+                        {account.name} {account.mask}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -1082,6 +1103,7 @@ function TransferDialog({
                   value={amount}
                   onChange={setAmount}
                   minValue={0}
+                  maxValue={source?.available}
                   step={50}
                   formatOptions={{ style: "currency", currency: "USD" }}
                 >
@@ -1092,7 +1114,8 @@ function TransferDialog({
                     <NumberFieldIncrement />
                   </Group>
                   <Description>
-                    Everyday Checking has {currency(12480.65)} available.
+                    {source?.name} has {currency(source?.available ?? 0)}{" "}
+                    available.
                   </Description>
                 </NumberField>
 
