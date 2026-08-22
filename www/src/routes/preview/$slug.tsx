@@ -14,6 +14,7 @@ import {
   useIframeMessageListener,
 } from "@/modules/create/preset"
 import type { DesignSystem } from "@/modules/create/preset"
+import { BlocksIndex } from "@/modules/create/preview/blocks"
 import { PresetOverview } from "@/modules/create/preview/overview"
 
 const promiseCache = new Map<
@@ -24,10 +25,11 @@ const promiseCache = new Map<
 function getExamplesPromise(slug: string) {
   let promise = promiseCache.get(slug)
   if (!promise) {
-    // Group/block slugs share one namespace with component slugs and win the
-    // lookup — e.g. the "cards" block resolves here before the "card" component.
+    // Block/group slugs share one namespace with component slugs and win the
+    // lookup — e.g. the "cards" group resolves here before the "card" component.
     // A new block must not reuse a component's slug or it will silently shadow it.
-    const load = GroupExamplesIndex[slug] ?? ExamplesIndex[slug]
+    const load =
+      BlocksIndex[slug] ?? GroupExamplesIndex[slug] ?? ExamplesIndex[slug]
     if (!load) return null
     promise = load()
     promiseCache.set(slug, promise)

@@ -40,6 +40,7 @@ import {
   useDesignSystem,
 } from "@/modules/create/preset"
 import type { PreviewMode } from "@/modules/create/preset"
+import { AVAILABLE_BLOCKS } from "@/modules/create/preview/blocks"
 import { componentsData } from "@/modules/docs/components-list/components-data"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
@@ -254,6 +255,21 @@ export function PreviewPanel({
             <span className="truncate">Brand Guidelines</span>
           </ListBoxItem>
         </ListBoxSection>
+        {/* Real-world page blocks — the whole system composed into full screens. */}
+        {AVAILABLE_BLOCKS.length > 0 && (
+          <ListBoxSection>
+            <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
+            {AVAILABLE_BLOCKS.map((block) => (
+              <ListBoxItem
+                key={block.slug}
+                id={block.slug}
+                textValue={block.name}
+              >
+                <span className="truncate">{block.name}</span>
+              </ListBoxItem>
+            ))}
+          </ListBoxSection>
+        )}
         <ListBoxSection>
           <ListBoxSectionHeader>Components</ListBoxSectionHeader>
           {ALL_COMPONENTS.map((comp) => (
