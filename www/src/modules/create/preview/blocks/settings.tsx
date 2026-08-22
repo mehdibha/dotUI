@@ -226,7 +226,9 @@ function SectionIntro({
 }) {
   return (
     <div className="flex flex-col gap-1">
-      <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
+      <h2 className="font-heading text-lg font-semibold tracking-tight">
+        {title}
+      </h2>
       <p className="text-pretty text-fg-muted">{description}</p>
     </div>
   )
@@ -323,7 +325,7 @@ function ProfileCard() {
 
         <TextField value={bio} onChange={setBio} className="w-full">
           <Label>Bio</Label>
-          <TextArea rows={4} />
+          <TextArea rows={4} maxLength={280} />
           <Description>{280 - bio.length} characters remaining.</Description>
         </TextField>
       </CardContent>
@@ -857,7 +859,7 @@ function SecuritySection() {
         </Card>
       </div>
 
-      <Card className="gap-0 pb-0">
+      <Card>
         <CardHeader>
           <CardTitle>Active sessions</CardTitle>
           <CardDescription>
@@ -870,8 +872,8 @@ function SecuritySection() {
             </Button>
           </CardAction>
         </CardHeader>
-        <CardContent className="px-0 pt-4">
-          <TableContainer className="rounded-none border-x-0 border-b-0">
+        <CardContent>
+          <TableContainer>
             <Table aria-label="Active sessions">
               <TableHeader>
                 <TableColumn isRowHeader>Device</TableColumn>
@@ -982,7 +984,13 @@ export default function SettingsBlock() {
             className="gap-6 md:gap-10"
           >
             <div className="max-w-full overflow-x-auto md:w-52 md:shrink-0 md:overflow-visible">
-              <TabList aria-label="Settings sections" className="w-full">
+              {/* w-max keeps the list as wide as its tabs so the horizontal
+                  scroll reaches all of them — a w-full list would centre the
+                  overflow and strand the first tab off-screen. */}
+              <TabList
+                aria-label="Settings sections"
+                className="w-max min-w-full"
+              >
                 {SECTIONS.map((item) => (
                   <Tab key={item.id} id={item.id}>
                     <item.icon />
