@@ -25,7 +25,7 @@ import {
   TelescopeIcon,
   TerminalIcon,
   TimerIcon,
-  TrendingUpIcon,
+  TrendingDownIcon,
   Users2Icon,
   ZapIcon,
 } from "@/registry/icons"
@@ -48,6 +48,7 @@ import {
   CardTitle,
 } from "@/registry/ui/card"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Link } from "@/registry/ui/link"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 import { Separator } from "@/registry/ui/separator"
@@ -482,7 +483,7 @@ function Hero() {
         </form>
 
         <div className="mt-2 flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
-          <AvatarGroup size="sm">
+          <AvatarGroup>
             <Avatar>
               <AvatarFallback>PR</AvatarFallback>
             </Avatar>
@@ -672,7 +673,7 @@ function Stats() {
               </span>
               {stat.delta ? (
                 <Badge variant="success" appearance="subtle" size="sm">
-                  <TrendingUpIcon />
+                  <TrendingDownIcon />
                   {stat.delta}
                 </Badge>
               ) : null}
@@ -721,8 +722,8 @@ function Footer() {
   return (
     <footer className="border-t bg-card/40">
       <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-6">
-          <div className="flex flex-col gap-4 lg:col-span-2">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-6">
+          <div className="col-span-2 flex flex-col gap-4">
             <Wordmark />
             <p className="max-w-xs text-sm text-pretty text-fg-muted">
               Traces, metrics and logs in one timeline. Built in Lisbon and
@@ -739,9 +740,13 @@ function Footer() {
               <ul className="flex flex-col gap-2">
                 {column.links.map((link) => (
                   <li key={link}>
-                    <a href="#" className="text-sm text-fg-muted hover:text-fg">
+                    <Link
+                      href="#"
+                      variant="unstyled"
+                      className="text-sm text-fg-muted transition-colors hover:text-fg"
+                    >
                       {link}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
