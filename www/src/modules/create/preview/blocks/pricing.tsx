@@ -20,7 +20,7 @@ import {
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Accordion } from "@/registry/ui/accordion"
-import { Avatar, AvatarFallback, AvatarGroup } from "@/registry/ui/avatar"
+import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 import {
@@ -89,7 +89,7 @@ const plans: Plan[] = [
   {
     id: "growth",
     name: "Growth",
-    tagline: "For product teams that ship every week.",
+    tagline: "For teams that ship every week.",
     monthly: 24,
     yearly: 19,
     cta: "Start 14-day trial",
@@ -371,8 +371,7 @@ export default function PricingBlock() {
               key={plan.id}
               className={cn(
                 "h-full",
-                plan.popular &&
-                  "border-border-accent ring-1 ring-border-accent",
+                plan.popular && "border-2 border-border-accent",
               )}
             >
               <CardHeader>
@@ -479,7 +478,10 @@ export default function PricingBlock() {
             </p>
           </div>
           <TableContainer>
-            <Table aria-label="Plan comparison" className="min-w-[42rem]">
+            <Table
+              aria-label="Plan comparison"
+              className="w-full min-w-[42rem]"
+            >
               <TableHeader>
                 <TableColumn isRowHeader className="w-[34%]">
                   Feature
@@ -544,17 +546,9 @@ export default function PricingBlock() {
                 finally matched what support was telling us.”
               </blockquote>
               <div className="flex flex-wrap items-center gap-3">
-                <AvatarGroup size="sm">
-                  <Avatar>
-                    <AvatarFallback>MR</AvatarFallback>
-                  </Avatar>
-                  <Avatar>
-                    <AvatarFallback>JT</AvatarFallback>
-                  </Avatar>
-                  <Avatar>
-                    <AvatarFallback>AO</AvatarFallback>
-                  </Avatar>
-                </AvatarGroup>
+                <Avatar size="lg">
+                  <AvatarFallback>MR</AvatarFallback>
+                </Avatar>
                 <div className="flex flex-col">
                   <span className="text-sm font-medium">Maya Renard</span>
                   <span className="text-sm text-fg-muted">
