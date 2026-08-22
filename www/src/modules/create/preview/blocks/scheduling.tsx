@@ -16,25 +16,26 @@ import {
   CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  CircleAlertIcon,
   ClockIcon,
   CopyIcon,
-  HeartIcon,
   MonitorIcon,
   MoreHorizontalIcon,
   PencilIcon,
   PinIcon,
   PlusIcon,
   SettingsIcon,
-  SquarePenIcon,
   TimerIcon,
   TrashIcon,
-  UserIcon,
   Users2Icon,
 } from "@/registry/icons"
 import { Responsive } from "@/registry/lib/responsive"
 import { cn } from "@/registry/lib/utils"
-import { Avatar, AvatarFallback, AvatarGroup } from "@/registry/ui/avatar"
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+} from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 import {
@@ -48,6 +49,7 @@ import {
 } from "@/registry/ui/calendar"
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -118,45 +120,14 @@ const KINDS: Record<
     label: string
     variant: React.ComponentProps<typeof Badge>["variant"]
     dot: string
-    icon: typeof CalendarIcon
   }
 > = {
-  standup: {
-    label: "Standup",
-    variant: "accent",
-    dot: "bg-accent",
-    icon: Users2Icon,
-  },
-  review: {
-    label: "Review",
-    variant: "info",
-    dot: "bg-info",
-    icon: SquarePenIcon,
-  },
-  focus: {
-    label: "Focus",
-    variant: "success",
-    dot: "bg-success",
-    icon: TimerIcon,
-  },
-  interview: {
-    label: "Interview",
-    variant: "warning",
-    dot: "bg-warning",
-    icon: UserIcon,
-  },
-  deadline: {
-    label: "Deadline",
-    variant: "danger",
-    dot: "bg-danger",
-    icon: CircleAlertIcon,
-  },
-  personal: {
-    label: "Personal",
-    variant: "neutral",
-    dot: "bg-fg-muted",
-    icon: HeartIcon,
-  },
+  standup: { label: "Standup", variant: "accent", dot: "bg-accent" },
+  review: { label: "Review", variant: "info", dot: "bg-info" },
+  focus: { label: "Focus", variant: "success", dot: "bg-success" },
+  interview: { label: "Interview", variant: "warning", dot: "bg-warning" },
+  deadline: { label: "Deadline", variant: "danger", dot: "bg-danger" },
+  personal: { label: "Personal", variant: "neutral", dot: "bg-fg-muted" },
 }
 
 const TEAM = [
@@ -405,13 +376,16 @@ function compareEvents(a: CalEvent, b: CalEvent) {
 
 function People({ initials }: { initials: string[] }) {
   if (initials.length === 0) return null
+  const visible = initials.slice(0, 3)
+  const overflow = initials.length - visible.length
   return (
     <AvatarGroup size="sm">
-      {initials.slice(0, 3).map((i) => (
+      {visible.map((i) => (
         <Avatar key={i}>
           <AvatarFallback>{i}</AvatarFallback>
         </Avatar>
       ))}
+      {overflow > 0 && <AvatarGroupCount>+{overflow}</AvatarGroupCount>}
     </AvatarGroup>
   )
 }
@@ -455,16 +429,20 @@ function EventRow({
         </Button>
         <Popover>
           <MenuContent>
-            <MenuItem>
+            <MenuItem textValue="Edit event">
               <PencilIcon />
               Edit event
             </MenuItem>
-            <MenuItem>
+            <MenuItem textValue="Duplicate">
               <CopyIcon />
               Duplicate
             </MenuItem>
             <Separator />
-            <MenuItem variant="danger" onAction={() => onRemove(event.id)}>
+            <MenuItem
+              variant="danger"
+              textValue="Delete"
+              onAction={() => onRemove(event.id)}
+            >
               <TrashIcon />
               Delete
             </MenuItem>
@@ -522,7 +500,7 @@ function MonthView({
       aria-label="Team calendar"
       value={selected}
       onChange={(date) => date && onSelect(date)}
-      className="w-full border-0 bg-transparent p-0"
+      className="w-full"
     >
       <CalendarHeader />
       <CalendarGrid className="w-full">
@@ -533,7 +511,7 @@ function MonthView({
           {(date) => (
             <CalendarCell
               date={date}
-              className="flex aspect-auto h-16 w-full cursor-pointer flex-col items-stretch justify-start gap-1 overflow-hidden rounded-md p-1 text-left transition-colors outline-none hover:bg-inverse/5! focus-visible:focus-ring sm:h-24 sm:p-2 outside-month:text-fg-muted/40 selected:bg-accent/15! selected:text-fg!"
+              className="flex aspect-auto h-16 w-full flex-col items-stretch justify-start gap-1 overflow-hidden rounded-md p-1 text-left transition-colors outline-none hover:bg-inverse/5! focus-visible:focus-ring sm:h-24 sm:p-2 outside-month:text-fg-muted/40 selected:bg-accent/15! selected:text-fg!"
             >
               {({ formattedDate, isOutsideMonth }) => {
                 const dayEvents = eventsOn(date as CalendarDate)
@@ -647,7 +625,7 @@ function WeekView({
                   type="button"
                   onClick={() => onSelect(day)}
                   className={cn(
-                    "flex flex-col items-start gap-0.5 border-b px-2 py-2 text-left transition-colors hover:bg-inverse/5",
+                    "flex cursor-interactive flex-col items-start gap-0.5 border-b px-2 py-2 text-left transition-colors hover:bg-inverse/5",
                     isSelected && "bg-accent/10",
                   )}
                 >
@@ -908,7 +886,13 @@ function NewEventDialog({
   )
 
   return (
-    <Dialog isOpen={isOpen} onOpenChange={setOpen}>
+    <Dialog
+      isOpen={isOpen}
+      onOpenChange={(open) => {
+        if (open) setDate(defaultDate)
+        setOpen(open)
+      }}
+    >
       <Button variant="primary">
         <PlusIcon />
         New event
@@ -940,6 +924,7 @@ export default function Scheduling() {
     new Time(9, 0),
   )
   const [hoursEnd, setHoursEnd] = React.useState<Time | null>(new Time(17, 30))
+  const nextId = React.useRef(0)
 
   const byDay = React.useMemo(() => {
     const map = new Map<string, CalEvent[]>()
@@ -999,7 +984,7 @@ export default function Scheduling() {
           </div>
           <SearchField
             aria-label="Search events"
-            className="ml-4 hidden w-56 lg:block"
+            className="ml-4 hidden w-56 lg:flex"
           >
             <Input placeholder="Search events" />
           </SearchField>
@@ -1026,11 +1011,7 @@ export default function Scheduling() {
               onCreate={(event) =>
                 setEvents((prev) => [
                   ...prev,
-                  {
-                    ...event,
-                    id: `new-${prev.length}`,
-                    duration: 45,
-                  },
+                  { ...event, id: `new-${nextId.current++}`, duration: 45 },
                 ])
               }
             />
@@ -1080,18 +1061,20 @@ export default function Scheduling() {
           <CardContent className="flex flex-col gap-5 lg:flex-row lg:items-end lg:gap-8">
             <div className="flex min-w-0 flex-col gap-2">
               <Label id="availability-label">Weekly availability</Label>
-              <ToggleButtonGroup
-                aria-labelledby="availability-label"
-                selectionMode="multiple"
-                defaultSelectedKeys={["mon", "tue", "wed", "thu", "fri"]}
-                onSelectionChange={(keys) => setAvailableDays(keys.size)}
-              >
-                {AVAILABILITY_DAYS.map((day) => (
-                  <ToggleButton key={day.id} id={day.id}>
-                    {day.label}
-                  </ToggleButton>
-                ))}
-              </ToggleButtonGroup>
+              <div className="-m-1 overflow-x-auto p-1">
+                <ToggleButtonGroup
+                  aria-labelledby="availability-label"
+                  selectionMode="multiple"
+                  defaultSelectedKeys={["mon", "tue", "wed", "thu", "fri"]}
+                  onSelectionChange={(keys) => setAvailableDays(keys.size)}
+                >
+                  {AVAILABILITY_DAYS.map((day) => (
+                    <ToggleButton key={day.id} id={day.id}>
+                      {day.label}
+                    </ToggleButton>
+                  ))}
+                </ToggleButtonGroup>
+              </div>
               <Description>
                 Bookable {availableDays} day{availableDays === 1 ? "" : "s"} a
                 week · {hoursLabel}
@@ -1128,25 +1111,27 @@ export default function Scheduling() {
 
         <div className="grid min-w-0 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <Card className="min-w-0">
-            <CardHeader className="flex-row items-center justify-between gap-3">
-              <div className="flex flex-col">
-                <CardTitle>Team calendar</CardTitle>
-                <CardDescription className="hidden sm:block">
-                  Shared across product, design and engineering.
-                </CardDescription>
-              </div>
-              <SegmentedControl
-                aria-label="Calendar view"
-                selectedKeys={[view]}
-                onSelectionChange={(keys) => {
-                  const next = [...keys][0]
-                  if (next) setView(String(next))
-                }}
-              >
-                <SegmentedControlItem id="month">Month</SegmentedControlItem>
-                <SegmentedControlItem id="week">Week</SegmentedControlItem>
-                <SegmentedControlItem id="agenda">Agenda</SegmentedControlItem>
-              </SegmentedControl>
+            <CardHeader>
+              <CardTitle>Team calendar</CardTitle>
+              <CardDescription className="hidden sm:block">
+                Shared across product, design and engineering.
+              </CardDescription>
+              <CardAction>
+                <SegmentedControl
+                  aria-label="Calendar view"
+                  selectedKeys={[view]}
+                  onSelectionChange={(keys) => {
+                    const next = [...keys][0]
+                    if (next) setView(String(next))
+                  }}
+                >
+                  <SegmentedControlItem id="month">Month</SegmentedControlItem>
+                  <SegmentedControlItem id="week">Week</SegmentedControlItem>
+                  <SegmentedControlItem id="agenda">
+                    Agenda
+                  </SegmentedControlItem>
+                </SegmentedControl>
+              </CardAction>
             </CardHeader>
             <CardContent>
               {view === "month" && (
