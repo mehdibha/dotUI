@@ -254,11 +254,9 @@ const archive = [
   },
 ]
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
+// Avatars in a group overlap, so a two-letter fallback would be half-covered.
+function initial(name: string) {
+  return name.charAt(0)
 }
 
 function ChangeList({
@@ -373,8 +371,8 @@ function ReleaseEntry({
       <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3">
         <AvatarGroup size="sm">
           {visible.map((name) => (
-            <Avatar key={name}>
-              <AvatarFallback>{initials(name)}</AvatarFallback>
+            <Avatar key={name} size="sm">
+              <AvatarFallback>{initial(name)}</AvatarFallback>
             </Avatar>
           ))}
           {overflow > 0 && <AvatarGroupCount>+{overflow}</AvatarGroupCount>}
