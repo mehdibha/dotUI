@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import {
   AlertTriangleIcon,
@@ -244,6 +244,13 @@ function SectionHeading({ id, children }: { id: string; children: string }) {
 
 function CodeBlock({ code }: { code: string }) {
   const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (!copied) return
+    const timer = setTimeout(() => setCopied(false), 1600)
+    return () => clearTimeout(timer)
+  }, [copied])
+
   return (
     <div className="relative overflow-hidden rounded-lg border bg-muted">
       <div className="absolute top-2 right-2 z-10">
@@ -252,10 +259,10 @@ function CodeBlock({ code }: { code: string }) {
             variant="quiet"
             size="sm"
             isIconOnly
-            aria-label="Copy code"
+            aria-label={copied ? "Code copied" : "Copy code"}
             onPress={() => setCopied(true)}
           >
-            {copied ? <CheckIcon /> : <CopyIcon />}
+            {copied ? <CheckIcon className="text-fg-success" /> : <CopyIcon />}
           </Button>
           <TooltipContent>{copied ? "Copied" : "Copy"}</TooltipContent>
         </Tooltip>
@@ -379,7 +386,7 @@ export default function DocsPage() {
             </div>
           </header>
 
-          <div className="mx-auto flex w-full max-w-6xl gap-10 px-4 py-8 sm:px-6 lg:px-8">
+          <div className="mx-auto flex w-full max-w-6xl gap-8 px-4 py-8 sm:px-6 lg:px-8 xl:gap-10">
             <article className="flex min-w-0 flex-1 flex-col gap-10">
               <div className="flex flex-col gap-4">
                 <div className="flex flex-wrap items-center gap-2">
@@ -618,34 +625,44 @@ export default function DocsPage() {
                 aria-label="Pagination"
                 className="grid gap-3 sm:grid-cols-2"
               >
-                <Card className="transition-colors hover:bg-muted">
-                  <CardHeader>
-                    <CardDescription className="flex items-center gap-1.5">
-                      <ArrowLeftIcon className="size-3.5" />
-                      Previous
-                    </CardDescription>
-                    <CardTitle>Breadcrumbs</CardTitle>
-                    <CardDescription>
-                      Show where a page sits in the hierarchy.
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-                <Card className="transition-colors hover:bg-muted sm:text-right">
-                  <CardHeader>
-                    <CardDescription className="flex items-center gap-1.5 sm:justify-end">
-                      Next
-                      <ArrowRightIcon className="size-3.5" />
-                    </CardDescription>
-                    <CardTitle>Context menu</CardTitle>
-                    <CardDescription>
-                      Right-click actions scoped to a single row or canvas.
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+                <a
+                  href="#overview"
+                  className="rounded-(--card-radius) focus-reset focus-visible:focus-ring"
+                >
+                  <Card className="h-full transition-colors hover:bg-muted">
+                    <CardHeader>
+                      <CardDescription className="flex items-center gap-1.5">
+                        <ArrowLeftIcon className="size-3.5" />
+                        Previous
+                      </CardDescription>
+                      <CardTitle>Breadcrumbs</CardTitle>
+                      <CardDescription>
+                        Show where a page sits in the hierarchy.
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </a>
+                <a
+                  href="#overview"
+                  className="rounded-(--card-radius) focus-reset focus-visible:focus-ring"
+                >
+                  <Card className="h-full transition-colors hover:bg-muted sm:text-right">
+                    <CardHeader>
+                      <CardDescription className="flex items-center gap-1.5 sm:justify-end">
+                        Next
+                        <ArrowRightIcon className="size-3.5" />
+                      </CardDescription>
+                      <CardTitle>Context menu</CardTitle>
+                      <CardDescription>
+                        Right-click actions scoped to a single row or canvas.
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </a>
               </nav>
             </article>
 
-            <aside className="hidden w-56 shrink-0 xl:block">
+            <aside className="hidden w-52 shrink-0 lg:block xl:w-56">
               <div className="sticky top-22 flex flex-col gap-3">
                 <span className="text-xs font-medium tracking-wide text-fg-muted">
                   On this page
