@@ -91,7 +91,7 @@ interface Model {
   id: string
   name: string
   description: string
-  context: string
+  contextTokens: number
   price: string
 }
 
@@ -99,7 +99,7 @@ const DEFAULT_MODEL: Model = {
   id: "meridian-3-opus",
   name: "Meridian 3 Opus",
   description: "Deepest reasoning, slowest",
-  context: "200K context",
+  contextTokens: 200_000,
   price: "$3.00 / M input",
 }
 
@@ -109,31 +109,38 @@ const MODELS: Model[] = [
     id: "meridian-3-sonnet",
     name: "Meridian 3 Sonnet",
     description: "Balanced quality and speed",
-    context: "200K context",
+    contextTokens: 200_000,
     price: "$0.90 / M input",
   },
   {
     id: "meridian-2-haiku",
     name: "Meridian 2 Haiku",
     description: "Fastest, for high-volume calls",
-    context: "128K context",
+    contextTokens: 128_000,
     price: "$0.20 / M input",
   },
   {
     id: "vela-70b-instruct",
     name: "Vela 70B Instruct",
     description: "Open weights, self-hosted",
-    context: "32K context",
+    contextTokens: 32_000,
     price: "$0.35 / M input",
   },
   {
     id: "kestrel-8b",
     name: "Kestrel 8B",
     description: "Open weights, edge deployments",
-    context: "16K context",
+    contextTokens: 16_000,
     price: "$0.06 / M input",
   },
 ]
+
+const compactTokens = new Intl.NumberFormat("en-US", { notation: "compact" })
+const fullTokens = new Intl.NumberFormat("en-US")
+
+// The session transcript fills roughly a third of whichever window is active,
+// so the meter and the context badge never contradict each other.
+const CONTEXT_USED_SHARE = 0.312
 
 const SYSTEM_PROMPT =
   "You are Meridian, a senior support engineer at Northwind Logistics. Answer in plain English, quote the shipment ID whenever you reference one, and never promise a delivery date you cannot verify against the tracking record."
@@ -295,6 +302,7 @@ export default function AiPlayground() {
   const [copied, setCopied] = useState(false)
 
   const activeModel = MODELS.find((m) => m.id === model) ?? DEFAULT_MODEL
+  const contextUsed = Math.round(activeModel.contextTokens * CONTEXT_USED_SHARE)
 
   useEffect(() => {
     if (!isRunning) return
@@ -439,7 +447,7 @@ export default function AiPlayground() {
                   </Select>
                   <div className="flex flex-wrap gap-1.5">
                     <Badge appearance="subtle" size="lg">
-                      {activeModel.context}
+                      {compactTokens.format(activeModel.contextTokens)} context
                     </Badge>
                     <Badge appearance="subtle" size="lg">
                       {activeModel.price}
@@ -592,14 +600,19 @@ export default function AiPlayground() {
 
                 <Separator />
 
-                <ProgressBar value={31} aria-label="Context used">
+                <ProgressBar
+                  value={CONTEXT_USED_SHARE * 100}
+                  aria-label="Context used"
+                >
                   <div className="flex items-baseline justify-between">
                     <Label>Context used</Label>
                     <ProgressBarOutput className="font-mono text-xs tabular-nums" />
                   </div>
                   <ProgressBarControl />
                   <Description>
-                    62,400 of 200,000 tokens in this session.
+                    {fullTokens.format(contextUsed)} of{" "}
+                    {fullTokens.format(activeModel.contextTokens)} tokens in
+                    this session.
                   </Description>
                 </ProgressBar>
 
