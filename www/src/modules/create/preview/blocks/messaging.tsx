@@ -8,7 +8,6 @@ import {
   AudioLinesIcon,
   CameraIcon,
   CheckCircle2Icon,
-  ClockIcon,
   ImageIcon,
   MoreVerticalIcon,
   PaperclipIcon,
@@ -71,7 +70,6 @@ interface ThreadMessage {
   text?: string
   attachment?: Attachment
   time: string
-  pending?: boolean
 }
 
 interface ThreadDay {
@@ -82,7 +80,6 @@ interface ThreadDay {
 interface ChatContact {
   id: string
   name: string
-  initials: string
   kind: "dm" | "group"
   presence: string
   online?: boolean
@@ -97,7 +94,6 @@ const CONTACTS: ChatContact[] = [
   {
     id: "priya",
     name: "Priya Raghunathan",
-    initials: "PR",
     kind: "dm",
     presence: "Active now",
     online: true,
@@ -107,7 +103,6 @@ const CONTACTS: ChatContact[] = [
   {
     id: "design-guild",
     name: "Design Guild",
-    initials: "DG",
     kind: "group",
     presence: "6 members · 3 online",
     unread: 5,
@@ -115,7 +110,6 @@ const CONTACTS: ChatContact[] = [
   {
     id: "daniel",
     name: "Daniel Okafor",
-    initials: "DO",
     kind: "dm",
     presence: "Active now",
     online: true,
@@ -124,14 +118,12 @@ const CONTACTS: ChatContact[] = [
   {
     id: "marisol",
     name: "Marisol Vega",
-    initials: "MV",
     kind: "dm",
     presence: "Last seen 2h ago",
   },
   {
     id: "support",
     name: "Support Escalations",
-    initials: "SE",
     kind: "group",
     presence: "12 members · 4 online",
     muted: true,
@@ -139,14 +131,12 @@ const CONTACTS: ChatContact[] = [
   {
     id: "ethan",
     name: "Ethan Brière",
-    initials: "EB",
     kind: "dm",
     presence: "Last seen Tuesday",
   },
   {
     id: "yuki",
     name: "Yuki Tanaka",
-    initials: "YT",
     kind: "dm",
     presence: "Last seen Monday",
   },
@@ -355,6 +345,12 @@ const OUTGOING_BUBBLE = [
   "group-data-[role=user]/message:text-fg-on-primary",
 ].join(" ")
 
+function initialsOf(name: string) {
+  const parts = name.split(" ")
+  const last = parts.length > 1 ? parts[parts.length - 1] : ""
+  return `${parts[0]?.[0] ?? ""}${last?.[0] ?? ""}`
+}
+
 function lastMessageOf(days: ThreadDay[]) {
   const day = days[days.length - 1]
   return day ? day.messages[day.messages.length - 1] : undefined
@@ -390,7 +386,7 @@ function ContactAvatar({
         {contact.kind === "group" ? (
           <Users2Icon className="size-4" />
         ) : (
-          contact.initials
+          initialsOf(contact.name)
         )}
       </AvatarFallback>
       {contact.online && (
@@ -418,8 +414,9 @@ function AttachmentTile({ attachment }: { attachment: Attachment }) {
       <div className="flex aspect-[4/3] items-center justify-center rounded-md bg-bg text-fg-muted">
         <ImageIcon className="size-6" />
       </div>
-      <span className="truncate text-xs text-fg-muted">
-        {attachment.name} · {attachment.meta}
+      <span className="flex min-w-0 items-baseline gap-1 text-xs text-fg-muted">
+        <span className="truncate">{attachment.name}</span>
+        <span className="shrink-0">· {attachment.meta}</span>
       </span>
     </div>
   )
@@ -428,7 +425,7 @@ function AttachmentTile({ attachment }: { attachment: Attachment }) {
 function TypingIndicator({ contact }: { contact: ChatContact }) {
   return (
     <Message role="assistant" aria-label={`${contact.name} is typing`}>
-      <MessageAvatar name={contact.initials} />
+      <MessageAvatar name={initialsOf(contact.name)} />
       <MessageContent className={INCOMING_BUBBLE}>
         <span className="flex items-center gap-1">
           {[0, 1, 2].map((dot) => (
@@ -458,7 +455,11 @@ function MessageBubble({
     <Message role={outgoing ? "user" : "assistant"}>
       {!outgoing && (
         <MessageAvatar
-          name={message.sender ? message.sender.slice(0, 2) : contact.initials}
+          name={
+            message.sender
+              ? initialsOf(message.sender)
+              : initialsOf(contact.name)
+          }
           className={cn(!showAvatar && "invisible")}
         />
       )}
@@ -474,17 +475,12 @@ function MessageBubble({
         )}
         <span
           className={cn(
-            "flex items-center gap-1 self-end text-[0.6875rem]",
+            "flex items-center gap-1 self-end text-xs",
             outgoing ? "text-fg-on-primary/70" : "text-fg-muted",
           )}
         >
           {message.time}
-          {outgoing &&
-            (message.pending ? (
-              <ClockIcon className="size-3" />
-            ) : (
-              <CheckCircle2Icon className="size-3" />
-            ))}
+          {outgoing && <CheckCircle2Icon className="size-3" />}
         </span>
       </MessageContent>
     </Message>
@@ -521,9 +517,18 @@ export default function MessagingBlock() {
     })
   }, [filter, query, threads, unread])
 
+  // The scroller still measures 0 when this effect first runs inside the
+  // preview, so a one-shot scroll lands nowhere — re-pin on every new box.
   useEffect(() => {
     const el = scroller.current
-    if (el) el.scrollTop = el.scrollHeight
+    if (!el) return
+    const pin = () => {
+      el.scrollTop = el.scrollHeight
+    }
+    pin()
+    const observer = new ResizeObserver(pin)
+    observer.observe(el)
+    return () => observer.disconnect()
   }, [activeId, activeThread])
 
   function openConversation(id: string) {
@@ -544,7 +549,6 @@ export default function MessagingBlock() {
         from: "me",
         text,
         time: "12:47",
-        pending: true,
       }
       const last = days[days.length - 1]
       const next =
@@ -664,7 +668,11 @@ export default function MessagingBlock() {
                     <ListBoxItem
                       key={contact.id}
                       id={contact.id}
-                      textValue={`${contact.name}, ${count} unread`}
+                      textValue={
+                        count > 0
+                          ? `${contact.name}, ${count} unread`
+                          : contact.name
+                      }
                       className={cn(
                         "items-start gap-3 px-2 py-2.5",
                         contact.id === activeId && "bg-muted",
@@ -708,7 +716,9 @@ export default function MessagingBlock() {
             )}
           </div>
 
-          <div className="flex items-center gap-3 border-t border-border-muted px-4 py-3">
+          {/* max-md:pb-16: single-pane, this row sits under the preview's
+              floating toolbar. */}
+          <div className="flex items-center gap-3 border-t border-border-muted px-4 py-3 max-md:pb-16">
             <Avatar size="md" className="shrink-0">
               <AvatarFallback>AN</AvatarFallback>
               <AvatarBadge className="bg-success" aria-label="Online" />
