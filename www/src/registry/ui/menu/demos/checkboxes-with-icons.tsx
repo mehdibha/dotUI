@@ -1,26 +1,26 @@
-'use client'
+"use client"
 
-import React from 'react'
-import type { Key } from 'react-aria-components/Menu'
+import React from "react"
+import type { Key } from "react-aria-components/Menu"
 
 import {
   BellIcon,
   MailIcon,
   MessageSquareIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
 import {
   Menu,
   MenuContent,
   MenuItem,
   MenuSection,
   MenuSectionHeader,
-} from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
+} from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   const [selected, setSelected] = React.useState<Set<Key>>(
-    new Set(['email', 'push']),
+    new Set(["email", "push"]),
   )
   return (
     <Menu>
@@ -32,7 +32,7 @@ export default function Demo() {
           selectionMode="multiple"
           selectedKeys={selected}
           onSelectionChange={(keys) => {
-            if (keys !== 'all') setSelected(new Set(keys))
+            if (keys !== "all") setSelected(new Set(keys))
           }}
           className="min-w-56"
         >

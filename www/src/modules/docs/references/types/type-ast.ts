@@ -6,72 +6,72 @@
 // Keyword types (primitives and special types)
 export interface TKeyword {
   type:
-    | 'any'
-    | 'null'
-    | 'undefined'
-    | 'void'
-    | 'unknown'
-    | 'never'
-    | 'this'
-    | 'symbol'
-    | 'string'
-    | 'number'
-    | 'boolean'
-    | 'object'
-    | 'bigint'
+    | "any"
+    | "null"
+    | "undefined"
+    | "void"
+    | "unknown"
+    | "never"
+    | "this"
+    | "symbol"
+    | "string"
+    | "number"
+    | "boolean"
+    | "object"
+    | "bigint"
 }
 
 // Identifier (a named type reference without full resolution)
 export interface TIdentifier {
-  type: 'identifier'
+  type: "identifier"
   name: string
 }
 
 // Literal types
 export interface TStringLiteral {
-  type: 'stringLiteral'
+  type: "stringLiteral"
   value: string
 }
 
 export interface TNumberLiteral {
-  type: 'numberLiteral'
+  type: "numberLiteral"
   value: number
 }
 
 export interface TBooleanLiteral {
-  type: 'booleanLiteral'
+  type: "booleanLiteral"
   value: boolean
 }
 
 // Union type (A | B | C)
 export interface TUnion {
-  type: 'union'
+  type: "union"
   elements: TType[]
 }
 
 // Intersection type (A & B)
 export interface TIntersection {
-  type: 'intersection'
+  type: "intersection"
   types: TType[]
 }
 
 // Generic type application (Array<T>, Promise<T>)
 export interface TApplication {
-  type: 'application'
+  type: "application"
   base: TType
   typeParameters: TType[]
 }
 
 // Type operator (keyof, typeof, readonly)
 export interface TTypeOperator {
-  type: 'typeOperator'
+  type: "typeOperator"
   operator: string
   value: TType
 }
 
 // Function parameter
 export interface TParameter {
-  type: 'parameter'
+  type: "parameter"
   name: string
   value: TType
   optional: boolean
@@ -82,7 +82,7 @@ export interface TParameter {
 
 // Function type
 export interface TFunction {
-  type: 'function'
+  type: "function"
   id?: string
   name?: string
   parameters: TParameter[]
@@ -93,7 +93,7 @@ export interface TFunction {
 
 // Type parameter (T extends Foo = Bar)
 export interface TTypeParameter {
-  type: 'typeParameter'
+  type: "typeParameter"
   name: string
   constraint: TType | null
   default: TType | null
@@ -101,7 +101,7 @@ export interface TTypeParameter {
 
 // Object property
 export interface TProperty {
-  type: 'property'
+  type: "property"
   name: string
   value: TType
   optional: boolean
@@ -112,7 +112,7 @@ export interface TProperty {
 
 // Method in an object/interface
 export interface TMethod {
-  type: 'method'
+  type: "method"
   name: string
   value: TFunction
   optional: boolean
@@ -121,7 +121,7 @@ export interface TMethod {
 
 // Interface type
 export interface TInterface {
-  type: 'interface'
+  type: "interface"
   id: string
   name: string
   extends: TType[]
@@ -132,7 +132,7 @@ export interface TInterface {
 
 // Type alias
 export interface TAlias {
-  type: 'alias'
+  type: "alias"
   id: string
   name: string
   value: TType
@@ -142,31 +142,31 @@ export interface TAlias {
 
 // Object literal type
 export interface TObject {
-  type: 'objectLiteral'
+  type: "objectLiteral"
   properties: Record<string, TProperty | TMethod> | null
 }
 
 // Array type
 export interface TArray {
-  type: 'array'
+  type: "array"
   elementType: TType
 }
 
 // Tuple type
 export interface TTuple {
-  type: 'tuple'
+  type: "tuple"
   elements: TType[]
 }
 
 // Template literal type
 export interface TTemplate {
-  type: 'template'
+  type: "template"
   elements: TType[]
 }
 
 // Conditional type (A extends B ? C : D)
 export interface TConditional {
-  type: 'conditional'
+  type: "conditional"
   checkType: TType
   extendsType: TType
   trueType: TType
@@ -175,35 +175,35 @@ export interface TConditional {
 
 // Indexed access type (T[K])
 export interface TIndexedAccess {
-  type: 'indexedAccess'
+  type: "indexedAccess"
   objectType: TType
   indexType: TType
 }
 
 // Keyof type
 export interface TKeyof {
-  type: 'keyof'
+  type: "keyof"
   keyof: TType
 }
 
 // Link to another type (for navigation)
 export interface TLink {
-  type: 'link'
+  type: "link"
   id: string
   name: string
 }
 
 // Mapped type
 export interface TMapped {
-  type: 'mapped'
-  readonly: boolean | '+' | '-'
+  type: "mapped"
+  readonly: boolean | "+" | "-"
   typeParameter: TTypeParameter
   typeAnnotation: TType
 }
 
 // Parenthesized type (for display purposes)
 export interface TParenthesized {
-  type: 'parenthesized'
+  type: "parenthesized"
   value: TType
 }
 

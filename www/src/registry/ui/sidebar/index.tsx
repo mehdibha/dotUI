@@ -1,14 +1,14 @@
-import { Link as RouterLink } from '@tanstack/react-router'
-import type { ToOptions } from '@tanstack/react-router'
+import { Link as RouterLink } from "@tanstack/react-router"
+import type { ToOptions } from "@tanstack/react-router"
 
 import {
   SidebarMenuButton as SidebarMenuButtonPrimitive,
   SidebarMenuSubButton as SidebarMenuSubButtonPrimitive,
-} from './base'
+} from "./base"
 import type {
   SidebarMenuButtonProps as BaseSidebarMenuButtonProps,
   SidebarMenuSubButtonProps as BaseSidebarMenuSubButtonProps,
-} from './base'
+} from "./base"
 
 export {
   Sidebar,
@@ -32,7 +32,7 @@ export {
   SidebarSeparator,
   SidebarTrigger,
   useSidebar,
-} from './base'
+} from "./base"
 export type {
   SidebarContentProps,
   SidebarFooterProps,
@@ -54,9 +54,9 @@ export type {
   SidebarRailProps,
   SidebarSeparatorProps,
   SidebarTriggerProps,
-} from './base'
+} from "./base"
 
-type SidebarMenuButtonProps = Omit<BaseSidebarMenuButtonProps, 'href'> & {
+type SidebarMenuButtonProps = Omit<BaseSidebarMenuButtonProps, "href"> & {
   href?: string | ToOptions
 }
 
@@ -66,21 +66,21 @@ function SidebarMenuButton({ href, ...props }: SidebarMenuButtonProps) {
     return <SidebarMenuButtonPrimitive {...props} />
   }
   // ToOptions.to defaults to the current route, so hash/search-only objects have no `.to`.
-  const hrefString = typeof href === 'object' ? (href.to ?? '#') : href
+  const hrefString = typeof href === "object" ? (href.to ?? "#") : href
   return (
     <SidebarMenuButtonPrimitive
       href={hrefString}
       render={(domProps) => {
-        if (!('href' in domProps)) {
+        if (!("href" in domProps)) {
           return <span {...domProps} />
         }
-        if (typeof href === 'object') {
+        if (typeof href === "object") {
           // RouterLink treats a literal `href` as authoritative and recomputes
           // to/search/hash from it, dropping the ToOptions fields.
           const { href: _domHref, ...routerDomProps } = domProps
           return <RouterLink {...href} {...routerDomProps} />
         }
-        if (href.startsWith('/')) {
+        if (href.startsWith("/")) {
           // Internal paths need RouterLink too — a bare <a> full-page reloads.
           const { href: _domHref, ...routerDomProps } = domProps
           return (
@@ -94,7 +94,7 @@ function SidebarMenuButton({ href, ...props }: SidebarMenuButtonProps) {
   )
 }
 
-type SidebarMenuSubButtonProps = Omit<BaseSidebarMenuSubButtonProps, 'href'> & {
+type SidebarMenuSubButtonProps = Omit<BaseSidebarMenuSubButtonProps, "href"> & {
   href?: string | ToOptions
 }
 
@@ -102,19 +102,19 @@ function SidebarMenuSubButton({ href, ...props }: SidebarMenuSubButtonProps) {
   if (href === undefined) {
     return <SidebarMenuSubButtonPrimitive {...props} />
   }
-  const hrefString = typeof href === 'object' ? (href.to ?? '#') : href
+  const hrefString = typeof href === "object" ? (href.to ?? "#") : href
   return (
     <SidebarMenuSubButtonPrimitive
       href={hrefString}
       render={(domProps) => {
-        if (!('href' in domProps)) {
+        if (!("href" in domProps)) {
           return <span {...domProps} />
         }
-        if (typeof href === 'object') {
+        if (typeof href === "object") {
           const { href: _domHref, ...routerDomProps } = domProps
           return <RouterLink {...href} {...routerDomProps} />
         }
-        if (href.startsWith('/')) {
+        if (href.startsWith("/")) {
           const { href: _domHref, ...routerDomProps } = domProps
           return (
             <RouterLink {...({ to: href } as ToOptions)} {...routerDomProps} />

@@ -1,18 +1,18 @@
-'use client'
+"use client"
 
-import { Combobox, ComboboxValue } from '@/registry/ui/combobox'
-import { Description, FieldError, Label } from '@/registry/ui/field'
-import { Input, InputGroup } from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
+import { Combobox, ComboboxValue } from "@/registry/ui/combobox"
+import { Description, FieldError, Label } from "@/registry/ui/field"
+import { Input, InputGroup } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 
 const frameworks = [
-  { id: 'next', name: 'Next.js' },
-  { id: 'sveltekit', name: 'SvelteKit' },
-  { id: 'nuxt', name: 'Nuxt.js' },
-  { id: 'remix', name: 'Remix' },
-  { id: 'astro', name: 'Astro' },
+  { id: "next", name: "Next.js" },
+  { id: "sveltekit", name: "SvelteKit" },
+  { id: "nuxt", name: "Nuxt.js" },
+  { id: "remix", name: "Remix" },
+  { id: "astro", name: "Astro" },
 ]
 
 type Framework = (typeof frameworks)[number]
@@ -20,10 +20,10 @@ type Framework = (typeof frameworks)[number]
 export default function Demo() {
   return (
     <div className="flex w-52 flex-col gap-4">
-      <Combobox<Framework, 'multiple'>
+      <Combobox<Framework, "multiple">
         aria-label="frameworks"
         selectionMode="multiple"
-        defaultValue={['next', 'sveltekit']}
+        defaultValue={["next", "sveltekit"]}
         isInvalid
       >
         <InputGroup>
@@ -51,9 +51,9 @@ export default function Demo() {
           </ListBox>
         </Popover>
       </Combobox>
-      <Combobox<Framework, 'multiple'>
+      <Combobox<Framework, "multiple">
         selectionMode="multiple"
-        defaultValue={['next', 'sveltekit', 'nuxt']}
+        defaultValue={["next", "sveltekit", "nuxt"]}
         isInvalid
       >
         <Label>Frameworks</Label>

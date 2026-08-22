@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { ImageUpIcon } from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
-import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
-import { Button } from '@/registry/ui/button'
+import { ImageUpIcon } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
@@ -11,14 +11,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { DropZone, DropZoneLabel } from '@/registry/ui/drop-zone'
-import { FileTrigger } from '@/registry/ui/file-trigger'
+} from "@/registry/ui/card"
+import { DropZone, DropZoneLabel } from "@/registry/ui/drop-zone"
+import { FileTrigger } from "@/registry/ui/file-trigger"
 
 export function UploadAvatar({
   className,
   ...props
-}: React.ComponentProps<'div'>) {
+}: React.ComponentProps<"div">) {
   return (
     <Card className={cn(className)} {...props}>
       <CardHeader>
@@ -39,7 +39,7 @@ export function UploadAvatar({
           <DropZoneLabel className="sr-only">
             Drag a file here to upload
           </DropZoneLabel>
-          <FileTrigger acceptedFileTypes={['image/png', 'image/jpeg']}>
+          <FileTrigger acceptedFileTypes={["image/png", "image/jpeg"]}>
             <Button variant="secondary" size="sm">
               Choose file
             </Button>

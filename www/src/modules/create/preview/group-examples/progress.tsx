@@ -1,12 +1,12 @@
-import { Loader } from '@/registry/ui/loader'
+import { Loader } from "@/registry/ui/loader"
 import {
   ProgressBar,
   ProgressBarControl,
   ProgressBarOutput,
-} from '@/registry/ui/progress-bar'
-import { Skeleton } from '@/registry/ui/skeleton'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+} from "@/registry/ui/progress-bar"
+import { Skeleton } from "@/registry/ui/skeleton"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function ProgressGroupExamples() {
   return (

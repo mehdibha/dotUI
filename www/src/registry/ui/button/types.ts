@@ -1,5 +1,5 @@
-import type * as ButtonPrimitives from 'react-aria-components/Button'
-import type * as LinkPrimitives from 'react-aria-components/Link'
+import type * as ButtonPrimitives from "react-aria-components/Button"
+import type * as LinkPrimitives from "react-aria-components/Link"
 
 /**
  * A clickable element that triggers an action. Buttons communicate actions users can take
@@ -12,14 +12,14 @@ export interface ButtonProps extends React.ComponentProps<
    * The visual style of the button (Vanilla CSS implementation specific).
    * @default 'secondary'
    */
-  variant?: 'primary' | 'secondary' | 'quiet' | 'link' | 'warning' | 'danger'
+  variant?: "primary" | "secondary" | "quiet" | "link" | "warning" | "danger"
 
   /**
    * The size of the button.
    * For an icon-only button, set `isIconOnly` rather than a dedicated size.
    * @default "md"
    */
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: "xs" | "sm" | "md" | "lg"
 }
 
 /**
@@ -33,12 +33,12 @@ export interface LinkButtonProps extends React.ComponentProps<
    * The visual style of the button.
    * @default "secondary"
    */
-  variant?: 'primary' | 'secondary' | 'quiet' | 'link' | 'warning' | 'danger'
+  variant?: "primary" | "secondary" | "quiet" | "link" | "warning" | "danger"
 
   /**
    * The size of the button.
    * For an icon-only button, set `isIconOnly` rather than a dedicated size.
    * @default "md"
    */
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: "xs" | "sm" | "md" | "lg"
 }

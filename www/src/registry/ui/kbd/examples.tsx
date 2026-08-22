@@ -1,15 +1,15 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import ArrowKeys from './demos/arrow-keys'
-import Basic from './demos/basic'
-import Group from './demos/group'
-import InInputGroup from './demos/in-input-group'
-import InTooltip from './demos/in-tooltip'
-import ModifierKeys from './demos/modifier-keys'
-import WithIcons from './demos/with-icons'
-import WithIconsAndText from './demos/with-icons-and-text'
-import WithSamp from './demos/with-samp'
+import ArrowKeys from "./demos/arrow-keys"
+import Basic from "./demos/basic"
+import Group from "./demos/group"
+import InInputGroup from "./demos/in-input-group"
+import InTooltip from "./demos/in-tooltip"
+import ModifierKeys from "./demos/modifier-keys"
+import WithIcons from "./demos/with-icons"
+import WithIconsAndText from "./demos/with-icons-and-text"
+import WithSamp from "./demos/with-samp"
 
 export default function KbdExamples() {
   return (

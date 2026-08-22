@@ -1,16 +1,16 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Default from './demos/default'
-import Description from './demos/description'
-import Disabled from './demos/disabled'
-import FormatOptions from './demos/format-options'
-import Label from './demos/label'
-import Range from './demos/range'
-import Step from './demos/step'
-import ValueLabel from './demos/value-label'
-import ValueScale from './demos/value-scale'
-import Vertical from './demos/vertical'
+import Default from "./demos/default"
+import Description from "./demos/description"
+import Disabled from "./demos/disabled"
+import FormatOptions from "./demos/format-options"
+import Label from "./demos/label"
+import Range from "./demos/range"
+import Step from "./demos/step"
+import ValueLabel from "./demos/value-label"
+import ValueScale from "./demos/value-scale"
+import Vertical from "./demos/vertical"
 
 export default function SliderExamples() {
   return (

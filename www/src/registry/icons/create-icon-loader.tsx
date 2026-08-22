@@ -1,19 +1,19 @@
-'use client'
+"use client"
 
-import { use } from 'react'
-import type * as React from 'react'
+import { use } from "react"
+import type * as React from "react"
 
-import type { CommonIconProps } from './create-icon'
+import type { CommonIconProps } from "./create-icon"
 
 type IconModule = Record<string, unknown>
 
 // Each generated module exports plain icon components for the icons the
 // registry uses (hugeicons data is wrapped into components at generation).
 const libraryImporters = {
-  hugeicons: () => import('../__generated__/__hugeicons__'),
-  tabler: () => import('../__generated__/__tabler__'),
-  remix: () => import('../__generated__/__remix__'),
-  phosphor: () => import('../__generated__/__phosphor__'),
+  hugeicons: () => import("../__generated__/__hugeicons__"),
+  tabler: () => import("../__generated__/__tabler__"),
+  remix: () => import("../__generated__/__remix__"),
+  phosphor: () => import("../__generated__/__phosphor__"),
 } satisfies Record<string, () => Promise<IconModule>>
 
 export type LoadableLibrary = keyof typeof libraryImporters

@@ -1,6 +1,6 @@
-import { ArrowUpRightIcon } from 'lucide-react'
+import { ArrowUpRightIcon } from "lucide-react"
 
-import { Badge } from '@/registry/ui/badge'
+import { Badge } from "@/registry/ui/badge"
 
 export default function Demo() {
   return (

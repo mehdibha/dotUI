@@ -1,17 +1,17 @@
-'use client'
+"use client"
 
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Combobox } from '@/registry/ui/combobox'
-import { Label } from '@/registry/ui/field'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
+import { Button } from "@/registry/ui/button"
+import { Combobox } from "@/registry/ui/combobox"
+import { Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo({
-  label = 'Country',
-  placeholder = 'Search countries...',
+  label = "Country",
+  placeholder = "Search countries...",
   isDisabled = false,
   isInvalid = false,
 } = {}) {

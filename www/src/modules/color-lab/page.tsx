@@ -6,68 +6,69 @@
    html `.dark` class, so the lab's mode toggle drives that class directly
    while mounted (this route is standalone) and restores it on unmount. */
 
-import { useEffect, useMemo, useState, type ReactNode } from 'react'
-import type { Key } from 'react-aria-components'
+import { useEffect, useMemo, useState, type ReactNode } from "react"
+import type { Key } from "react-aria-components"
 
-import { Button } from '@/registry/ui/button'
-import { ColorArea } from '@/registry/ui/color-area'
-import { ColorPicker } from '@/registry/ui/color-picker'
-import { ColorSlider } from '@/registry/ui/color-slider'
-import { ColorSwatch } from '@/registry/ui/color-swatch'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Popover } from '@/registry/ui/popover'
+import { Button } from "@/registry/ui/button"
+import { ColorArea } from "@/registry/ui/color-area"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import { ColorSlider } from "@/registry/ui/color-slider"
+import { ColorSwatch } from "@/registry/ui/color-swatch"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Popover } from "@/registry/ui/popover"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { ToggleButton } from '@/registry/ui/toggle-button'
-import { ToggleButtonGroup } from '@/registry/ui/toggle-button-group'
+} from "@/registry/ui/select"
+import { ToggleButton } from "@/registry/ui/toggle-button"
+import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
+import { InternalHeader } from "@/modules/internal/shell"
 
-import type { CvdType } from './color'
-import { ENGINE_SLOT, referenceSystems, type ScaleRole } from './data'
-import { buildEngineSystem, DEFAULT_SEED, type EngineResult } from './engine'
-import { ContextSection } from './sections/context'
-import { ContrastSection } from './sections/contrast'
-import { CurvesSection } from './sections/curves'
-import { LineupSection } from './sections/lineup'
-import { RampsSection } from './sections/ramps'
-import { ScorecardSection } from './sections/scorecard'
+import type { CvdType } from "./color"
+import { ENGINE_SLOT, referenceSystems, type ScaleRole } from "./data"
+import { buildEngineSystem, DEFAULT_SEED, type EngineResult } from "./engine"
+import { ContextSection } from "./sections/context"
+import { ContrastSection } from "./sections/contrast"
+import { CurvesSection } from "./sections/curves"
+import { LineupSection } from "./sections/lineup"
+import { RampsSection } from "./sections/ramps"
+import { ScorecardSection } from "./sections/scorecard"
 
-export type Mode = 'light' | 'dark'
+export type Mode = "light" | "dark"
 
 const SECTIONS = [
-  { id: 'lineup', title: 'The lineup' },
-  { id: 'ramps', title: 'Side by side' },
-  { id: 'curves', title: 'Anatomy' },
-  { id: 'contrast', title: 'Contrast' },
-  { id: 'context', title: 'In context' },
-  { id: 'scorecard', title: 'Scorecard' },
+  { id: "lineup", title: "The lineup" },
+  { id: "ramps", title: "Side by side" },
+  { id: "curves", title: "Anatomy" },
+  { id: "contrast", title: "Contrast" },
+  { id: "context", title: "In context" },
+  { id: "scorecard", title: "Scorecard" },
 ] as const
 
 const FAMILIES: { id: ScaleRole; label: string }[] = [
-  { id: 'neutral', label: 'Neutral' },
-  { id: 'accent', label: 'Accent' },
-  { id: 'danger', label: 'Danger' },
-  { id: 'success', label: 'Success' },
-  { id: 'warning', label: 'Warning' },
+  { id: "neutral", label: "Neutral" },
+  { id: "accent", label: "Accent" },
+  { id: "danger", label: "Danger" },
+  { id: "success", label: "Success" },
+  { id: "warning", label: "Warning" },
 ]
 
-const CVD_OPTIONS: { id: CvdType | 'none'; label: string }[] = [
-  { id: 'none', label: 'Normal vision' },
-  { id: 'deuteranopia', label: 'Deuteranopia' },
-  { id: 'protanopia', label: 'Protanopia' },
-  { id: 'tritanopia', label: 'Tritanopia' },
+const CVD_OPTIONS: { id: CvdType | "none"; label: string }[] = [
+  { id: "none", label: "Normal vision" },
+  { id: "deuteranopia", label: "Deuteranopia" },
+  { id: "protanopia", label: "Protanopia" },
+  { id: "tritanopia", label: "Tritanopia" },
 ]
 
 export function ColorLab() {
-  const [mode, setMode] = useState<Mode>('light')
-  const [cvdRaw, setCvd] = useState<CvdType | 'none'>('none')
-  const [family, setFamily] = useState<ScaleRole>('neutral')
+  const [mode, setMode] = useState<Mode>("light")
+  const [cvdRaw, setCvd] = useState<CvdType | "none">("none")
+  const [family, setFamily] = useState<ScaleRole>("neutral")
   const [squint, setSquint] = useState(false)
   const [seed, setSeed] = useState(DEFAULT_SEED)
-  const cvd = cvdRaw === 'none' ? null : cvdRaw
+  const cvd = cvdRaw === "none" ? null : cvdRaw
 
   // The engine seat: live createTheme() output when the seed is valid,
   // the empty placeholder when it isn't.
@@ -87,32 +88,24 @@ export function ColorLab() {
   // lab's mode while mounted, restore whatever the site had on the way out.
   useEffect(() => {
     const root = document.documentElement
-    const had = root.classList.contains('dark')
+    const had = root.classList.contains("dark")
     return () => {
-      root.classList.toggle('dark', had)
+      root.classList.toggle("dark", had)
     }
   }, [])
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', mode === 'dark')
+    document.documentElement.classList.toggle("dark", mode === "dark")
   }, [mode])
 
   return (
     <div>
       <div className="min-h-screen bg-white font-sans text-neutral-900 antialiased transition-colors duration-300 dark:bg-neutral-950 dark:text-neutral-100">
-        <header className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-          <p className="font-mono text-[11px] tracking-widest text-neutral-400 uppercase dark:text-neutral-500">
-            internal / color-lab
-          </p>
-          <h1 className="mt-3 text-4xl font-semibold tracking-tight">
-            Color Lab
-          </h1>
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-neutral-500 dark:text-neutral-400">
-            The bench for the engine rewrite. Eight reference systems, extracted
-            from their canonical sources, compared on the axes that make a scale
-            good — with the dotUI engine generating live from the seed and
-            judged by the exact same views.
-          </p>
-        </header>
+        <InternalHeader
+          className="mx-auto max-w-6xl px-6 pt-10 pb-10"
+          crumbs={[{ label: "Color Lab" }]}
+          title="Color Lab"
+          description="The bench for the engine rewrite. Eight reference systems, extracted from their canonical sources, compared on the axes that make a scale good — with the dotUI engine generating live from the seed and judged by the exact same views."
+        />
 
         <nav className="sticky top-0 z-40 border-y border-neutral-200 bg-white/85 backdrop-blur-md dark:border-neutral-800 dark:bg-neutral-950/85">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-6 py-2.5">
@@ -130,7 +123,7 @@ export function ColorLab() {
             <div className="ml-auto flex items-center gap-3">
               <ColorPicker
                 value={seed}
-                onChange={(color) => setSeed(color.toString('hex'))}
+                onChange={(color) => setSeed(color.toString("hex"))}
               >
                 <Button size="sm" aria-label="Engine seed color">
                   <ColorSwatch className="size-4 rounded-full" />
@@ -170,7 +163,7 @@ export function ColorLab() {
                 aria-label="Color vision simulation"
                 value={cvdRaw}
                 onChange={(key: Key | null) => {
-                  if (key) setCvd(key as CvdType | 'none')
+                  if (key) setCvd(key as CvdType | "none")
                 }}
               >
                 <SelectTrigger size="sm" className="w-36" />
@@ -209,7 +202,7 @@ export function ColorLab() {
         </nav>
 
         <main
-          style={squint ? { filter: 'blur(6px)' } : undefined}
+          style={squint ? { filter: "blur(6px)" } : undefined}
           className="mx-auto max-w-6xl space-y-24 px-6 py-16 transition-[filter] duration-200"
         >
           {referenceSystems.length === 0 ? (
@@ -307,7 +300,7 @@ function Section({
     <section id={id} className="scroll-mt-20">
       <div className="mb-6 flex items-baseline gap-3">
         <span className="font-mono text-xs text-neutral-300 tabular-nums dark:text-neutral-600">
-          {String(index).padStart(2, '0')}
+          {String(index).padStart(2, "0")}
         </span>
         <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
       </div>

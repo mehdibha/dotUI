@@ -1,23 +1,21 @@
-import { useEffect, useRef, useState } from 'react'
-import { createFileRoute, stripSearchParams } from '@tanstack/react-router'
-import { SlidersHorizontalIcon } from 'lucide-react'
-import { z } from 'zod'
+import { useEffect, useRef, useState } from "react"
+import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
+import { z } from "zod"
 
-import { Button } from '@/registry/ui/button'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Drawer, DrawerHandle } from '@/registry/ui/drawer'
-import { ExportHeaderAction } from '@/modules/create/export'
-import { CreatePanel } from '@/modules/create/panel'
-import { DEFAULTS, useDesignSystem } from '@/modules/create/preset'
+import { DialogContent } from "@/registry/ui/dialog"
+import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
+import { ExportHeaderAction } from "@/modules/create/export"
+import { CreatePanel } from "@/modules/create/panel"
+import { DEFAULTS, useDesignSystem } from "@/modules/create/preset"
 import {
   loadStoredPreset,
   saveStoredPreset,
-} from '@/modules/create/preset/storage'
-import { PreviewPanel } from '@/modules/create/preview/preview-panel'
+} from "@/modules/create/preset/storage"
+import { PreviewPanel } from "@/modules/create/preview/preview-panel"
 
 export const createSearchSchema = z.object({
   panel: z.string().optional().catch(undefined),
-  preview: z.string().default('cards').catch('cards'),
+  preview: z.string().default("cards").catch("cards"),
   preset: z.string().optional().catch(undefined),
   // Opens the preset gallery modal — set by the panel's Presets button and the
   // /presets permanent redirect. Coerced boolean: the search parser reads bare
@@ -26,9 +24,9 @@ export const createSearchSchema = z.object({
   gallery: z.coerce.boolean().optional().catch(undefined),
 })
 
-const searchDefaults = { preview: 'cards' }
+const searchDefaults = { preview: "cards" }
 
-export const Route = createFileRoute('/_app/create')({
+export const Route = createFileRoute("/_app/create")({
   validateSearch: createSearchSchema,
   search: {
     middlewares: [stripSearchParams(searchDefaults)],
@@ -67,20 +65,16 @@ function CreatePage() {
   }, [designSystem])
 
   return (
-    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2">
+    // lg:pr-4 matches the header's md:pr-4 so the preview panel's right edge
+    // lines up with the Export button above it.
+    <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2 lg:pr-4">
       <ExportHeaderAction />
       <CreatePanel className="max-lg:hidden" />
-      <PreviewPanel />
+      <PreviewPanel onCustomize={() => setSheetOpen(true)} />
 
-      {/* Mobile: the panel is a bottom sheet over the live stage. */}
+      {/* Mobile: the panel is a bottom sheet over the live stage, opened from
+          the preview's floating toolbar. */}
       <div className="contents lg:hidden">
-        <Button
-          onPress={() => setSheetOpen(true)}
-          className="fixed bottom-4 left-1/2 z-30 -translate-x-1/2 shadow-lg lg:hidden"
-        >
-          <SlidersHorizontalIcon data-icon-start="" />
-          Customize
-        </Button>
         <Drawer
           isOpen={sheetOpen}
           onOpenChange={setSheetOpen}

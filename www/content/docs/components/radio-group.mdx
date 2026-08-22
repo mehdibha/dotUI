@@ -11,29 +11,29 @@ wip: true
   name="radio-group"
   controls={[
     {
-      type: 'string',
-      name: 'label',
-      defaultValue: 'Select frameworks',
+      type: "string",
+      name: "label",
+      defaultValue: "Select frameworks",
     },
     {
-      type: 'enum',
-      name: 'orientation',
-      options: ['horizontal', 'vertical'],
-      defaultValue: 'vertical',
+      type: "enum",
+      name: "orientation",
+      options: ["horizontal", "vertical"],
+      defaultValue: "vertical",
     },
     {
-      type: 'boolean',
-      name: 'isDisabled',
+      type: "boolean",
+      name: "isDisabled",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isReadOnly',
+      type: "boolean",
+      name: "isReadOnly",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isInvalid',
+      type: "boolean",
+      name: "isInvalid",
       defaultValue: false,
     },
   ]}
@@ -50,8 +50,8 @@ npx shadcn@latest add @dotui/radio-group
 Use radio group to allow users to select a single option from a short list of related options.
 
 ```tsx
-import { Radio, RadioControl, RadioGroup } from '@/ui/radio-group'
-import { FieldGroup, Label } from '@/ui/field'
+import { Radio, RadioControl, RadioGroup } from "@/ui/radio-group"
+import { FieldGroup, Label } from "@/ui/field"
 ```
 
 ```tsx
@@ -80,9 +80,12 @@ import {
   RadioControl,
   RadioGroup,
   RadioIndicator,
-} from '@/ui/radio-group'
-import { Description, FieldError, FieldGroup, Label } from '@/ui/field'
-;<RadioGroup>
+} from "@/ui/radio-group"
+import { Description, FieldError, FieldGroup, Label } from "@/ui/field"
+```
+
+```tsx
+<RadioGroup>
   <Label />
   <FieldGroup>
     <Radio>

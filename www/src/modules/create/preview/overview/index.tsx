@@ -1,6 +1,6 @@
-import { type ReactNode, use, useMemo } from 'react'
+import { type ReactNode, use, useMemo } from "react"
 
-import { STEPS, type Theme } from '@dotui/colors'
+import { STEPS, type Theme } from "@dotui/colors"
 
 import {
   DEFAULT_BODY_FAMILY,
@@ -9,9 +9,9 @@ import {
   FONT_HEADING_VAR,
   FONT_MONO_VAR,
   FONT_SANS_VAR,
-} from '@/lib/fonts'
-import { resolveColorConfigCached } from '@/lib/resolve-color'
-import * as icons from '@/registry/__generated__/icons'
+} from "@/lib/fonts"
+import { resolveColorConfigCached } from "@/lib/resolve-color"
+import * as icons from "@/registry/__generated__/icons"
 import {
   BoxIcon,
   LayersIcon,
@@ -23,39 +23,36 @@ import {
   SmileIcon,
   SparklesIcon,
   TypeIcon,
-} from '@/registry/icons'
-import { IconLibraryContext } from '@/registry/icons/create-icon'
-import { iconLibraries } from '@/registry/icons/icon-map'
-import { cn } from '@/registry/lib/utils'
-import { DEFAULT_COLOR_CONFIG, PALETTE_ORDER } from '@/registry/theme'
+} from "@/registry/icons"
+import { IconLibraryContext } from "@/registry/icons/create-icon"
+import { iconLibraries } from "@/registry/icons/icon-map"
+import { cn } from "@/registry/lib/utils"
+import { DEFAULT_COLOR_CONFIG, PALETTE_ORDER } from "@/registry/theme"
 // Live component atoms — reuse the real demos so the gallery always mirrors the
 // shipped components (and their live params / density / radius), never a stale copy.
-import AvatarDemo from '@/registry/ui/avatar/demos/group'
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
-import CheckboxDemo from '@/registry/ui/checkbox/demos/basic'
-import { Kbd } from '@/registry/ui/kbd'
-import RadioGroupDemo from '@/registry/ui/radio-group/demos/default'
-import SelectDemo from '@/registry/ui/select/demos/basic'
-import SliderDemo from '@/registry/ui/slider/demos/default'
-import SwitchDemo from '@/registry/ui/switch/demos/basic'
-import TabsDemo from '@/registry/ui/tabs/demos/basic'
-import { LoginForm } from '@/components/showcase/login-form'
-import { Notifications } from '@/components/showcase/notifications'
-import { Payment } from '@/components/showcase/payment'
-import { ContrastReadout } from '@/modules/create/colors/contrast'
+import AvatarDemo from "@/registry/ui/avatar/demos/group"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
+import CheckboxDemo from "@/registry/ui/checkbox/demos/basic"
+import { Kbd } from "@/registry/ui/kbd"
+import RadioGroupDemo from "@/registry/ui/radio-group/demos/default"
+import SelectDemo from "@/registry/ui/select/demos/basic"
+import SliderDemo from "@/registry/ui/slider/demos/default"
+import SwitchDemo from "@/registry/ui/switch/demos/basic"
+import TabsDemo from "@/registry/ui/tabs/demos/basic"
+import { LoginForm } from "@/components/showcase/login-form"
+import { Notifications } from "@/components/showcase/notifications"
+import { Payment } from "@/components/showcase/payment"
+import { ContrastReadout } from "@/modules/create/colors/contrast"
 import {
   CURSOR_DISABLED_VAR,
   CURSOR_INTERACTIVE_VAR,
   DEFAULT_CURSOR_DISABLED,
   DEFAULT_CURSOR_INTERACTIVE,
-} from '@/modules/create/cursor'
-import {
-  DEFAULT_RADIUS_FACTOR,
-  RADIUS_FACTOR_VAR,
-} from '@/modules/create/layout'
-import { sendInspect, useIsEmbeddedPreview } from '@/modules/create/preset'
-import type { DesignSystem } from '@/modules/create/preset'
+} from "@/modules/create/cursor"
+import { DEFAULT_RADIUS, RADIUS_VAR } from "@/modules/create/layout"
+import { sendInspect, useIsEmbeddedPreview } from "@/modules/create/preset"
+import type { DesignSystem } from "@/modules/create/preset"
 
 /* ---------------------------------------------------------------------------
  * The preset overview — a style guide the way a senior designer would present a
@@ -68,27 +65,27 @@ import type { DesignSystem } from '@/modules/create/preset'
  * ------------------------------------------------------------------------- */
 
 const DENSITY_LABEL: Record<string, string> = {
-  compact: 'Compact',
-  default: 'Default',
-  comfortable: 'Comfortable',
+  compact: "Compact",
+  default: "Default",
+  comfortable: "Comfortable",
 }
 
 const DENSITY_DESCRIPTION: Record<string, string> = {
-  compact: 'Tight control heights and padding for dense, information-rich UIs.',
-  default: 'Balanced spacing — the everyday baseline.',
+  compact: "Tight control heights and padding for dense, information-rich UIs.",
+  default: "Balanced spacing — the everyday baseline.",
   comfortable:
-    'Generous padding and breathing room for a relaxed, spacious feel.',
+    "Generous padding and breathing room for a relaxed, spacious feel.",
 }
 
-/** A descriptive word for a `--radius-factor` multiplier (1 = builder default). */
-function radiusLabel(factor: number): string {
-  if (Number.isNaN(factor)) return 'Default'
-  if (factor === 0) return 'Square'
-  if (factor <= 0.5) return 'Sharp'
-  if (factor < 1) return 'Tight'
-  if (factor === 1) return 'Default'
-  if (factor >= 2) return 'Pill'
-  return 'Rounded'
+/** A descriptive word for the base radius in px (10 = builder default). */
+function radiusLabel(px: number): string {
+  if (Number.isNaN(px)) return "Default"
+  if (px === 0) return "Square"
+  if (px <= 5) return "Sharp"
+  if (px < 10) return "Tight"
+  if (px === 10) return "Default"
+  if (px >= 20) return "Pill"
+  return "Rounded"
 }
 
 /** Parse `#rrggbb` into HSL so the brand seed can be given a human name + tone. */
@@ -115,24 +112,24 @@ function hexToHsl(hex: string): { h: number; s: number; l: number } | null {
 }
 
 const HUE_NAMES: { max: number; name: string }[] = [
-  { max: 15, name: 'Crimson' },
-  { max: 45, name: 'Amber' },
-  { max: 70, name: 'Gold' },
-  { max: 100, name: 'Lime' },
-  { max: 160, name: 'Emerald' },
-  { max: 195, name: 'Teal' },
-  { max: 255, name: 'Cobalt' },
-  { max: 290, name: 'Indigo' },
-  { max: 330, name: 'Violet' },
-  { max: 360, name: 'Rose' },
+  { max: 15, name: "Crimson" },
+  { max: 45, name: "Amber" },
+  { max: 70, name: "Gold" },
+  { max: 100, name: "Lime" },
+  { max: 160, name: "Emerald" },
+  { max: 195, name: "Teal" },
+  { max: 255, name: "Cobalt" },
+  { max: 290, name: "Indigo" },
+  { max: 330, name: "Violet" },
+  { max: 360, name: "Rose" },
 ]
 
 /** A friendly editorial name for the brand seed — the headline of the cover. */
 function describeAccent(hex: string): string {
   const hsl = hexToHsl(hex)
-  if (!hsl) return 'Signature'
-  if (hsl.s < 0.12) return hsl.l < 0.5 ? 'Graphite' : 'Monochrome'
-  return HUE_NAMES.find((r) => hsl.h < r.max)?.name ?? 'Signature'
+  if (!hsl) return "Signature"
+  if (hsl.s < 0.12) return hsl.l < 0.5 ? "Graphite" : "Monochrome"
+  return HUE_NAMES.find((r) => hsl.h < r.max)?.name ?? "Signature"
 }
 
 /* ------------------------------- Primitives ------------------------------- */
@@ -227,8 +224,8 @@ function Cover({
         <div
           className="flex aspect-[16/10] flex-col justify-between p-5"
           style={{
-            background: 'var(--accent-700)',
-            color: 'var(--on-accent-700)',
+            background: "var(--accent-700)",
+            color: "var(--on-accent-700)",
           }}
         >
           <span className="text-xs font-medium tracking-widest uppercase opacity-80">
@@ -239,7 +236,7 @@ function Cover({
           </span>
         </div>
         <div className="flex">
-          {['300', '400', '500', '600', '700', '800', '900'].map((step) => (
+          {["300", "400", "500", "600", "700", "800", "900"].map((step) => (
             <div
               key={step}
               className="h-8 flex-1"
@@ -251,12 +248,12 @@ function Cover({
           <div className="flex items-center gap-2">
             <span
               className="size-5 rounded-full border"
-              style={{ background: 'var(--neutral-500)' }}
+              style={{ background: "var(--neutral-500)" }}
             />
             <span className="text-sm text-fg-muted">Neutral base</span>
           </div>
           <span className="font-mono text-xs text-fg-muted uppercase">
-            {seeds.neutral ?? 'Auto'}
+            {seeds.neutral ?? "Auto"}
           </span>
         </div>
       </div>
@@ -312,19 +309,19 @@ function RampRow({
 }
 
 const SEMANTIC_SURFACES: { token: string; label: string }[] = [
-  { token: '--color-bg', label: 'Background' },
-  { token: '--color-muted', label: 'Muted' },
-  { token: '--color-field', label: 'Field' },
-  { token: '--color-primary', label: 'Primary' },
-  { token: '--color-accent', label: 'Accent' },
-  { token: '--color-inverse', label: 'Inverse' },
+  { token: "--color-bg", label: "Background" },
+  { token: "--color-muted", label: "Muted" },
+  { token: "--color-field", label: "Field" },
+  { token: "--color-primary", label: "Primary" },
+  { token: "--color-accent", label: "Accent" },
+  { token: "--color-inverse", label: "Inverse" },
 ]
 
 const SEMANTIC_STATUS: { token: string; label: string }[] = [
-  { token: '--color-success', label: 'Success' },
-  { token: '--color-warning', label: 'Warning' },
-  { token: '--color-danger', label: 'Danger' },
-  { token: '--color-info', label: 'Info' },
+  { token: "--color-success", label: "Success" },
+  { token: "--color-warning", label: "Warning" },
+  { token: "--color-danger", label: "Danger" },
+  { token: "--color-info", label: "Info" },
 ]
 
 function TokenSwatch({ token, label }: { token: string; label: string }) {
@@ -344,7 +341,7 @@ function TokenSwatch({ token, label }: { token: string; label: string }) {
 
 function ColorSection({ resolved }: { resolved: Theme }) {
   const steps = [...STEPS]
-  const bigRamps = ['neutral', 'accent']
+  const bigRamps = ["neutral", "accent"]
   const statusRamps = PALETTE_ORDER.filter(
     (p) => !bigRamps.includes(p) && resolved.light.scales[p],
   )
@@ -395,34 +392,34 @@ function ColorSection({ resolved }: { resolved: Theme }) {
 
 const TYPE_SCALE: { label: string; className: string; size: string }[] = [
   {
-    label: 'Display',
-    className: 'font-heading text-5xl font-semibold tracking-tight',
-    size: '48',
+    label: "Display",
+    className: "font-heading text-5xl font-semibold tracking-tight",
+    size: "48",
   },
   {
-    label: 'Title',
-    className: 'font-heading text-3xl font-semibold tracking-tight',
-    size: '30',
+    label: "Title",
+    className: "font-heading text-3xl font-semibold tracking-tight",
+    size: "30",
   },
   {
-    label: 'Heading',
-    className: 'font-heading text-xl font-semibold',
-    size: '20',
+    label: "Heading",
+    className: "font-heading text-xl font-semibold",
+    size: "20",
   },
-  { label: 'Body', className: 'text-base', size: '16' },
-  { label: 'Small', className: 'text-sm text-fg-muted', size: '14' },
+  { label: "Body", className: "text-base", size: "16" },
+  { label: "Small", className: "text-sm text-fg-muted", size: "14" },
   {
-    label: 'Caption',
-    className: 'text-xs tracking-wide text-fg-muted uppercase',
-    size: '12',
+    label: "Caption",
+    className: "text-xs tracking-wide text-fg-muted uppercase",
+    size: "12",
   },
 ]
 
 const WEIGHTS: { label: string; className: string }[] = [
-  { label: 'Regular', className: 'font-normal' },
-  { label: 'Medium', className: 'font-medium' },
-  { label: 'Semibold', className: 'font-semibold' },
-  { label: 'Bold', className: 'font-bold' },
+  { label: "Regular", className: "font-normal" },
+  { label: "Medium", className: "font-medium" },
+  { label: "Semibold", className: "font-semibold" },
+  { label: "Bold", className: "font-bold" },
 ]
 
 function TypographySection({
@@ -436,12 +433,12 @@ function TypographySection({
 }) {
   const families = [
     {
-      label: 'Heading — display & titles',
+      label: "Heading — display & titles",
       name: heading,
-      sample: 'font-heading',
+      sample: "font-heading",
     },
-    { label: 'Body — interface text', name: body, sample: 'font-sans' },
-    { label: 'Mono — code & numerics', name: mono, sample: 'font-mono' },
+    { label: "Body — interface text", name: body, sample: "font-sans" },
+    { label: "Mono — code & numerics", name: mono, sample: "font-mono" },
   ]
   return (
     <div className="flex flex-col gap-8">
@@ -473,7 +470,7 @@ function TypographySection({
                 {t.size}px
               </span>
             </div>
-            <p className={cn('min-w-0 truncate', t.className)}>
+            <p className={cn("min-w-0 truncate", t.className)}>
               The quick brown fox
             </p>
           </div>
@@ -498,7 +495,7 @@ function TypographySection({
                 key={w.label}
                 className="flex items-baseline justify-between"
               >
-                <span className={cn('text-lg', w.className)}>Ag</span>
+                <span className={cn("text-lg", w.className)}>Ag</span>
                 <span className="text-xs text-fg-muted">{w.label}</span>
               </div>
             ))}
@@ -518,7 +515,7 @@ const ICON_ENTRIES = Object.entries(icons)
 function IconSection() {
   const library = use(IconLibraryContext)
   const libraryLabel =
-    iconLibraries.find((lib) => lib.name === library)?.label ?? 'Lucide icons'
+    iconLibraries.find((lib) => lib.name === library)?.label ?? "Lucide icons"
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-center gap-2">
@@ -551,19 +548,19 @@ function IconSection() {
 /* --------------------------------- Shape ---------------------------------- */
 
 const RADII: { token: string; className: string }[] = [
-  { token: 'sm', className: 'rounded-sm' },
-  { token: 'md', className: 'rounded-md' },
-  { token: 'lg', className: 'rounded-lg' },
-  { token: 'xl', className: 'rounded-xl' },
-  { token: '2xl', className: 'rounded-2xl' },
-  { token: '3xl', className: 'rounded-3xl' },
+  { token: "sm", className: "rounded-sm" },
+  { token: "md", className: "rounded-md" },
+  { token: "lg", className: "rounded-lg" },
+  { token: "xl", className: "rounded-xl" },
+  { token: "2xl", className: "rounded-2xl" },
+  { token: "3xl", className: "rounded-3xl" },
 ]
 
 function ShapeSection({
-  radiusFactor,
+  radiusPx,
   radiusText,
 }: {
-  radiusFactor: number
+  radiusPx: number
   radiusText: string
 }) {
   return (
@@ -571,9 +568,9 @@ function ShapeSection({
       <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
         <div className="flex items-baseline gap-2">
           <span className="text-3xl font-semibold tracking-tight tabular-nums">
-            {radiusFactor.toFixed(2)}×
+            {radiusPx}px
           </span>
-          <span className="text-fg-muted">radius factor</span>
+          <span className="text-fg-muted">base radius</span>
         </div>
         <Badge variant="accent" appearance="subtle" size="lg">
           {radiusText}
@@ -584,7 +581,7 @@ function ShapeSection({
           <div key={r.token} className="flex flex-col items-center gap-2">
             <div
               className={cn(
-                'flex aspect-square w-full items-center justify-center border-2 border-border-control bg-card',
+                "flex aspect-square w-full items-center justify-center border-2 border-border-control bg-card",
                 r.className,
               )}
             />
@@ -601,12 +598,12 @@ function ShapeSection({
 /* ------------------------------ Density / Space --------------------------- */
 
 const SPACING_STEPS = [
-  { label: '1', px: '4', className: 'h-1' },
-  { label: '2', px: '8', className: 'h-2' },
-  { label: '3', px: '12', className: 'h-3' },
-  { label: '4', px: '16', className: 'h-4' },
-  { label: '6', px: '24', className: 'h-6' },
-  { label: '8', px: '32', className: 'h-8' },
+  { label: "1", px: "4", className: "h-1" },
+  { label: "2", px: "8", className: "h-2" },
+  { label: "3", px: "12", className: "h-3" },
+  { label: "4", px: "16", className: "h-4" },
+  { label: "6", px: "24", className: "h-6" },
+  { label: "8", px: "32", className: "h-8" },
 ]
 
 function DensitySection({ density }: { density: string }) {
@@ -642,7 +639,7 @@ function DensitySection({ density }: { density: string }) {
               className="flex flex-1 flex-col items-center gap-2"
             >
               <div
-                className={cn('w-full rounded-sm bg-primary', s.className)}
+                className={cn("w-full rounded-sm bg-primary", s.className)}
               />
               <span className="font-mono text-[10px] text-fg-muted tabular-nums">
                 {s.px}
@@ -658,17 +655,17 @@ function DensitySection({ density }: { density: string }) {
 /* ------------------------------- Elevation -------------------------------- */
 
 const SURFACE_LAYERS: { token: string; label: string }[] = [
-  { token: '--color-bg', label: 'Base' },
-  { token: '--color-card', label: 'Card' },
-  { token: '--color-muted', label: 'Muted' },
-  { token: '--color-inverse', label: 'Inverse' },
+  { token: "--color-bg", label: "Base" },
+  { token: "--color-card", label: "Card" },
+  { token: "--color-muted", label: "Muted" },
+  { token: "--color-inverse", label: "Inverse" },
 ]
 
 const SHADOWS: { className: string; label: string }[] = [
-  { className: 'shadow-xs', label: 'xs' },
-  { className: 'shadow-sm', label: 'sm' },
-  { className: 'shadow-md', label: 'md' },
-  { className: 'shadow-lg', label: 'lg' },
+  { className: "shadow-xs", label: "xs" },
+  { className: "shadow-sm", label: "sm" },
+  { className: "shadow-md", label: "md" },
+  { className: "shadow-lg", label: "lg" },
 ]
 
 function ElevationSection() {
@@ -687,9 +684,9 @@ function ElevationSection() {
                 className="text-xs font-medium"
                 style={{
                   color:
-                    s.token === '--color-inverse'
-                      ? 'var(--color-fg-inverse)'
-                      : 'var(--color-fg)',
+                    s.token === "--color-inverse"
+                      ? "var(--color-fg-inverse)"
+                      : "var(--color-fg)",
                 }}
               >
                 {s.label}
@@ -705,7 +702,7 @@ function ElevationSection() {
             <div
               key={s.label}
               className={cn(
-                'flex h-24 items-end rounded-xl border bg-card p-3',
+                "flex h-24 items-end rounded-xl border bg-card p-3",
                 s.className,
               )}
             >
@@ -804,8 +801,8 @@ function InteractionSection({
   disabled: string
 }) {
   const items = [
-    { label: 'Interactive', value: interactive },
-    { label: 'Disabled', value: disabled },
+    { label: "Interactive", value: interactive },
+    { label: "Disabled", value: disabled },
   ]
   return (
     <div className="grid gap-4 sm:grid-cols-2">
@@ -879,10 +876,12 @@ export function PresetOverview({
     }
   }, [config])
 
-  const radiusFactorRaw =
-    designSystem.tokens[RADIUS_FACTOR_VAR] ?? DEFAULT_RADIUS_FACTOR
-  const radiusFactor = Number.parseFloat(radiusFactorRaw)
-  const numericRadius = Number.isFinite(radiusFactor) ? radiusFactor : 1
+  const radiusRaw = designSystem.tokens[RADIUS_VAR] ?? DEFAULT_RADIUS
+  const radiusParsed = Number.parseFloat(radiusRaw)
+  const radiusPx = radiusRaw.trim().endsWith("rem")
+    ? radiusParsed * 16
+    : radiusParsed
+  const numericRadius = Number.isFinite(radiusPx) ? radiusPx : 10
 
   const cursorInteractive =
     designSystem.tokens[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE
@@ -903,22 +902,22 @@ export function PresetOverview({
 
   const specs = [
     {
-      label: 'Primary',
-      value: config.primary === 'accent' ? 'Accent' : 'Neutral',
+      label: "Primary",
+      value: config.primary === "accent" ? "Accent" : "Neutral",
     },
     {
-      label: 'Density',
-      value: DENSITY_LABEL[designSystem.density] ?? 'Default',
+      label: "Density",
+      value: DENSITY_LABEL[designSystem.density] ?? "Default",
     },
-    { label: 'Radius', value: radiusLabel(numericRadius) },
+    { label: "Radius", value: radiusLabel(numericRadius) },
     {
-      label: 'Type',
+      label: "Type",
       value:
         headingFamily === bodyFamily
           ? bodyFamily
           : `${headingFamily} · ${bodyFamily}`,
     },
-    { label: 'Icons', value: 'Lucide' },
+    { label: "Icons", value: "Lucide" },
   ]
 
   return (
@@ -965,10 +964,10 @@ export function PresetOverview({
           panelId="shape"
           icon={ShapesIcon}
           title="Shape"
-          description="A single radius factor scales the whole corner-radius ramp at once, setting the softness of the entire system."
+          description="A single base radius scales the whole corner-radius ramp at once, setting the softness of the entire system."
         >
           <ShapeSection
-            radiusFactor={numericRadius}
+            radiusPx={numericRadius}
             radiusText={radiusLabel(numericRadius)}
           />
         </Section>
@@ -1022,7 +1021,7 @@ export function PresetOverview({
             <span className="text-sm">Built with dotUI</span>
           </div>
           <span className="font-mono text-xs tracking-widest uppercase">
-            {name} · {DENSITY_LABEL[designSystem.density] ?? 'Default'}
+            {name} · {DENSITY_LABEL[designSystem.density] ?? "Default"}
           </span>
         </footer>
       </div>

@@ -3,13 +3,13 @@ import {
   FieldContent,
   FieldGroup,
   Label,
-} from '@/registry/ui/field'
+} from "@/registry/ui/field"
 import {
   Radio,
   RadioControl,
   RadioGroup,
   RadioIndicator,
-} from '@/registry/ui/radio-group'
+} from "@/registry/ui/radio-group"
 
 export default function Demo() {
   return (

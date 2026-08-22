@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { UploadIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { FileTrigger } from '@/registry/ui/file-trigger'
+import { UploadIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { FileTrigger } from "@/registry/ui/file-trigger"
 
 export default function Demo() {
   const [files, setFiles] = React.useState<string[] | null>(null)

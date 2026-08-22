@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 import {
   Disclosure,
   DisclosurePanel,
   DisclosureTrigger,
-} from '@/registry/ui/disclosure'
+} from "@/registry/ui/disclosure"
 
 export default function Demo() {
   const [isExpanded, setExpanded] = React.useState(false)
@@ -22,10 +22,10 @@ export default function Demo() {
         </DisclosurePanel>
       </Disclosure>
       <Button size="sm" onPress={() => setExpanded(!isExpanded)}>
-        {isExpanded ? 'Collapse' : 'Expand'}
+        {isExpanded ? "Collapse" : "Expand"}
       </Button>
       <p className="text-sm text-fg-muted">
-        Expanded: {isExpanded ? 'true' : 'false'}{' '}
+        Expanded: {isExpanded ? "true" : "false"}{" "}
       </p>
     </div>
   )

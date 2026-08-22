@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { Label } from '@/registry/ui/field'
-import { DateInput } from '@/registry/ui/input'
-import { TimeField } from '@/registry/ui/time-field'
+import { Label } from "@/registry/ui/field"
+import { DateInput } from "@/registry/ui/input"
+import { TimeField } from "@/registry/ui/time-field"
 
 export default function Demo({
-  label = 'Time',
+  label = "Time",
   isDisabled = false,
   isReadOnly = false,
   isInvalid = false,

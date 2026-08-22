@@ -20,11 +20,11 @@ wip: true
 Use forms to wrap groups of form elements and handle form submission with validation.
 
 ```tsx
-import { Form } from '@/ui/form'
-import { Button } from '@/ui/button'
-import { TextField } from '@/ui/text-field'
-import { Label } from '@/ui/field'
-import { Input } from '@/ui/input'
+import { Form } from "@/ui/form"
+import { Button } from "@/ui/button"
+import { TextField } from "@/ui/text-field"
+import { Label } from "@/ui/field"
+import { Input } from "@/ui/input"
 ```
 
 ```tsx
@@ -46,7 +46,7 @@ Mark fields `isRequired` (or add `validate` per field) to enforce validation. By
 ```tsx
 <Form
   validationBehavior="aria"
-  validationErrors={{ email: 'Email already taken' }}
+  validationErrors={{ email: "Email already taken" }}
 >
   <TextField name="email" isRequired>
     <Label>Email</Label>

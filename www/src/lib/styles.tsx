@@ -1,42 +1,47 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import { createPortal } from 'react-dom'
-import { UNSAFE_PortalProvider } from 'react-aria/PortalProvider'
-import { tv } from 'tailwind-variants'
-import type { ClassValue, TVReturnType, VariantProps } from 'tailwind-variants'
+import * as React from "react"
+import { createPortal } from "react-dom"
+import { UNSAFE_PortalProvider } from "react-aria/PortalProvider"
+import { tv } from "tailwind-variants"
+import type {
+  ClassValue,
+  TVReturnType,
+  TVReturnTypeLike,
+  VariantProps,
+} from "tailwind-variants"
 
-import { ensureFontStylesheets, fontFamiliesFromTokens } from '@/lib/fonts'
-import { resolveColorConfigCached } from '@/lib/resolve-color'
+import { ensureFontStylesheets, fontFamiliesFromTokens } from "@/lib/fonts"
+import { resolveColorConfigCached } from "@/lib/resolve-color"
 import {
   closureText,
   DARK_SELECTOR_TOKENS,
   isHarvestedProp,
   ROOT_SELECTOR_TOKENS,
   selectorIn,
-} from '@/lib/root-closure'
-import type { RootClosure } from '@/lib/root-closure'
-import serverRootClosure from '@/lib/root-closure-data'
+} from "@/lib/root-closure"
+import type { RootClosure } from "@/lib/root-closure"
+import serverRootClosure from "@/lib/root-closure-data"
 import {
   IconLibraryContext,
   IconWeightContext,
-} from '@/registry/icons/create-icon'
-import { phosphorWeights } from '@/registry/icons/icon-map'
-import type { IconLibraryName, PhosphorWeight } from '@/registry/icons/icon-map'
+} from "@/registry/icons/create-icon"
+import { phosphorWeights } from "@/registry/icons/icon-map"
+import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
 import {
   emitCss,
   emitDarkOverridesCss,
   emitPrimitivesCss,
   semanticDelta,
   semanticsFor,
-} from '@/registry/theme'
-import type { ColorConfig, SemanticVocabulary } from '@/registry/theme'
+} from "@/registry/theme"
+import type { ColorConfig, SemanticVocabulary } from "@/registry/theme"
 import type {
   Density,
   EnumParamDef,
   ParamDef,
   RegistryItem,
-} from '@/registry/types'
+} from "@/registry/types"
 
 /* --------------------------------- Types --------------------------------- */
 
@@ -55,7 +60,7 @@ interface DesignSystemContextValue {
 
 const DesignSystemContext = React.createContext<DesignSystemContextValue>({
   params: {},
-  density: 'default',
+  density: "default",
 })
 
 /* ----------------------------- Param registry ----------------------------- */
@@ -78,7 +83,7 @@ const emptyParamSelections: Record<string, string> = {}
 
 /** Resolve a token value to a CSS value. "--radius-md" → "var(--radius-md)", "0" → "0" */
 function resolveCssValue(value: string): string {
-  return value.startsWith('--') ? `var(${value})` : value
+  return value.startsWith("--") ? `var(${value})` : value
 }
 
 // The global `:root` write must land before paint on the client (no flash of the
@@ -88,16 +93,16 @@ function resolveCssValue(value: string): string {
 // so callers can mount it unconditionally (no client-only gate that would remount the
 // subtree). Same idiom as the Skeleton component.
 const useIsomorphicLayoutEffect =
-  typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
+  typeof window === "undefined" ? React.useEffect : React.useLayoutEffect
 
 /* ----------------------------- Scoped theming ----------------------------- */
 
 /*
- * Why scoping needs more than overriding `--radius-factor` / the primitive ramps on a wrapper:
+ * Why scoping needs more than overriding `--radius` / the primitive ramps on a wrapper:
  * the design system declares its whole token closure at `:root` — primitive ramps, the
  * semantic `--color-*` vocabulary, AND every component surface var (`--card-radius:
  * var(--radius-lg)`, `--btn-radius`, …). Because those are computed *on `:root`*, they bake in
- * `:root`'s `--radius-factor` / primitives and inherit down frozen; re-pointing them on a
+ * `:root`'s `--radius` / primitives and inherit down frozen; re-pointing them on a
  * descendant does nothing (dark mode escapes this only because `.dark` lives on the same
  * `<html>` element as `:root`). The robust, self-maintaining fix is to clone that closure onto
  * the scope: re-emit `:root`'s *authored* (var-preserving) declarations under the scope
@@ -119,7 +124,7 @@ let rootClosureCache: RootClosure | null = null
  * document defines at `:root` (light) and `.dark`, as raw CSS text. Reading
  * from `cssRules` (not `getComputedStyle`) preserves the `var()` / `calc()`
  * references, so re-emitting the result under a scope selector lets each token
- * recompute from that scope's primitives + `--radius-factor`. Cached — the
+ * recompute from that scope's primitives + `--radius`. Cached — the
  * closure is static (scoped mode never writes `:root`); cross-origin sheets
  * are skipped.
  *
@@ -129,8 +134,8 @@ let rootClosureCache: RootClosure | null = null
  * vocabulary supports it), whose CSSOM read-back is unreliable.
  */
 function getRootClosure(): RootClosure {
-  if (typeof document === 'undefined')
-    return serverRootClosure ?? { light: '', dark: '' }
+  if (typeof document === "undefined")
+    return serverRootClosure ?? { light: "", dark: "" }
   if (rootClosureCache) return rootClosureCache
 
   const light = new Map<string, string>()
@@ -175,7 +180,7 @@ function getRootClosure(): RootClosure {
  * onto the scope (primitives + component vars, so they recompute there), add the semantic
  * `--color-*` layer from `DEFAULT_SEMANTICS` (the reliable source — see `getRootClosure`),
  * then, when a `color` is given, override the primitive ramps with the scoped palette.
- * `--radius-factor` + param vars ride inline on the scope element.
+ * `--radius` + param vars ride inline on the scope element.
  *
  * A forced mode pins one mode's values on both the base and the `.dark`-page selector, so
  * the page theme can't flip them. The dark harvest holds only `.dark`'s overrides over
@@ -185,12 +190,12 @@ function getRootClosure(): RootClosure {
  */
 function flattenSemanticsToMode(
   vocabulary: SemanticVocabulary,
-  mode: 'light' | 'dark',
+  mode: "light" | "dark",
 ): SemanticVocabulary {
   return Object.fromEntries(
     Object.entries(vocabulary).map(([name, token]) => [
       name,
-      'light' in token.target
+      "light" in token.target
         ? { ...token, target: token.target[mode] }
         : token,
     ]),
@@ -200,7 +205,7 @@ function flattenSemanticsToMode(
 function buildScopedThemeCss(
   selector: string,
   color: ColorConfig | undefined,
-  forcedMode: 'light' | 'dark' | undefined,
+  forcedMode: "light" | "dark" | undefined,
 ): string | null {
   const { light, dark } = getRootClosure()
   // No closure to clone — the document's stylesheets aren't parsed yet (client) or the
@@ -208,8 +213,8 @@ function buildScopedThemeCss(
   // retries on a later render.
   if (!light && !dark) return null
 
-  const base = forcedMode === 'dark' ? `${light}\n${dark}` : light
-  const darkOverrides = forcedMode === 'light' ? light : dark
+  const base = forcedMode === "dark" ? `${light}\n${dark}` : light
+  const darkOverrides = forcedMode === "light" ? light : dark
 
   const blocks = [
     // `color` re-establishes the base text color from the scope's own tokens,
@@ -238,7 +243,7 @@ function buildScopedThemeCss(
   if (color) {
     let resolved = resolveColorConfigCached(color)
     if (forcedMode) {
-      const ramp = forcedMode === 'dark' ? resolved.dark : resolved.light
+      const ramp = forcedMode === "dark" ? resolved.dark : resolved.light
       const chartSet = resolved.charts[forcedMode]
       resolved = {
         ...resolved,
@@ -254,7 +259,7 @@ function buildScopedThemeCss(
       }),
     )
   }
-  return blocks.filter(Boolean).join('\n')
+  return blocks.filter(Boolean).join("\n")
 }
 
 /* ----------------------- Shared scoped theme styles ----------------------- */
@@ -296,7 +301,7 @@ function themeTokenFor(key: string): string {
  */
 function useScopedTheme(
   color: ColorConfig | undefined,
-  forcedMode: 'light' | 'dark' | undefined,
+  forcedMode: "light" | "dark" | undefined,
   enabled: boolean,
 ): { token: string | undefined; sheet: React.ReactNode } {
   // Content key = everything the stylesheet is built from (color config + pinned mode).
@@ -305,7 +310,7 @@ function useScopedTheme(
   // must not rebuild, and the cache below keys on content.
   const [key, token] = React.useMemo(() => {
     if (!enabled) return [null, undefined] as const
-    const k = `${forcedMode ?? 'auto'}:${color ? JSON.stringify(color) : 'default'}`
+    const k = `${forcedMode ?? "auto"}:${color ? JSON.stringify(color) : "default"}`
     return [k, themeTokenFor(k)] as const
   }, [enabled, color, forcedMode])
 
@@ -357,16 +362,16 @@ interface DesignSystemProviderProps {
    * closure via the scoped stylesheet and sets `data-mode` on the scope, which
    * the registry's dark custom-variant honors for raw `dark:` utilities.
    */
-  forcedMode?: 'light' | 'dark'
+  forcedMode?: "light" | "dark"
   children: React.ReactNode
 }
 
 function DesignSystemProvider({
   params = {},
   tokens = {},
-  density = 'default',
+  density = "default",
   color,
-  icons = 'lucide',
+  icons = "lucide",
   scoped = false,
   forcedMode,
   children,
@@ -417,7 +422,7 @@ function DesignSystemProvider({
   React.useEffect(() => setMounted(true), [])
 
   // Apply the global token vars to :root so values that reference each other via calc() +
-  // var() (e.g. --radius-sm = calc(.25rem * var(--radius-factor))) recompute correctly —
+  // var() (e.g. --radius-sm = calc(var(--radius) * 0.5)) recompute correctly —
   // setting them on a wrapper <div> would leave the :root-declared tokens frozen. In `scoped`
   // mode they ride inline on the wrapper instead, over the cloned closure (see buildScopedThemeCss).
   useIsomorphicLayoutEffect(() => {
@@ -438,10 +443,10 @@ function DesignSystemProvider({
   // defaults are self-hosted and never pass through here). Works in both modes:
   // this effect runs in whichever document hosts the provider — the preview
   // iframe in global mode, the main page for scoped thumbnails/demos.
-  const fontFamilies = fontFamiliesFromTokens(tokens).join('\n')
+  const fontFamilies = fontFamiliesFromTokens(tokens).join("\n")
   React.useEffect(() => {
     if (!fontFamilies) return
-    ensureFontStylesheets(document, fontFamilies.split('\n'))
+    ensureFontStylesheets(document, fontFamilies.split("\n"))
   }, [fontFamilies])
 
   // Warm the closure cache off the critical path: built lazily, the first divergence would pay
@@ -451,7 +456,7 @@ function DesignSystemProvider({
   }, [scoped])
 
   // Scoped mode: render the shared closure-clone stylesheet, but only once something
-  // actually diverges (a color, or a token like --radius-factor); an untouched preview
+  // actually diverges (a color, or a token like --radius); an untouched preview
   // emits nothing and inherits the page defaults. `cssVars` ride inline on the scope
   // element and never enter the CSS text, so divergence keys on whether any override
   // EXISTS (a boolean), not object identity — else every radius tick rebuilds identical CSS.
@@ -477,8 +482,8 @@ function DesignSystemProvider({
     if (Object.keys(delta).length === 0) return primitives
     return (
       primitives +
-      emitCss(delta, { selector: ':root' }) +
-      emitDarkOverridesCss(delta, { selector: '.dark' })
+      emitCss(delta, { selector: ":root" }) +
+      emitDarkOverridesCss(delta, { selector: ".dark" })
     )
   }, [scoped, color])
   const themeStyle = themeCss ? (
@@ -488,7 +493,7 @@ function DesignSystemProvider({
   // The weight axis rides in tokens (so it round-trips the preset URL like any
   // global token) but reaches icons as a component prop, hence the context.
   const iconWeight = phosphorWeights.find(
-    (w): w is PhosphorWeight => w === tokens['--icon-weight'],
+    (w): w is PhosphorWeight => w === tokens["--icon-weight"],
   )
 
   const tree = (
@@ -516,10 +521,10 @@ function DesignSystemProvider({
   // is declared and the markup stays byte-identical to the untouched provider.
   const scopeStyle = {
     ...cssVars,
-    ...(cssVars['--font-sans'] ? { fontFamily: 'var(--font-sans)' } : {}),
+    ...(cssVars["--font-sans"] ? { fontFamily: "var(--font-sans)" } : {}),
   } as React.CSSProperties
   // `useId` ids contain ':' etc.; strip to a valid, stable DOM id for the portal target.
-  const portalDomId = `dotui-portal-${scopeId.replace(/[^a-zA-Z0-9]/g, '')}`
+  const portalDomId = `dotui-portal-${scopeId.replace(/[^a-zA-Z0-9]/g, "")}`
 
   // `display: contents` keeps the wrapper out of layout (the children stay direct flow/flex
   // items of the real parent) while still carrying the scope marker + inline token vars.
@@ -536,7 +541,7 @@ function DesignSystemProvider({
     <div
       data-dotui-scope={scopeToken}
       data-mode={forcedMode}
-      style={{ display: 'contents', ...scopeStyle }}
+      style={{ display: "contents", ...scopeStyle }}
     >
       {scopeSheet}
       <UNSAFE_PortalProvider
@@ -689,7 +694,7 @@ type EnumParamValuesOf<M, K extends PropertyKey> = M extends {
   params: { [P in K]: infer Def }
 }
   ? Def extends EnumParamDef
-    ? Def['values'][number]
+    ? Def["values"][number]
     : never
   : never
 
@@ -720,7 +725,8 @@ type InferTv<Base> = TVReturnType<
   ExtractSlots<Base>,
   ExtractBase<Base>,
   EmptyVariants,
-  undefined
+  undefined,
+  TVReturnTypeLike<never, never> | undefined
 >
 
 /* ----- createStyles ----- */
@@ -762,7 +768,7 @@ function createStyles<const M extends RegistryItem, const Base>(
 
   for (const [paramName, def] of Object.entries(metaParams)) {
     paramDefaults[paramName] = def.default
-    if (def.kind === 'enum') {
+    if (def.kind === "enum") {
       enumParamNames.push(paramName)
       const valueVarsByValue: Record<string, Record<string, string>> = {}
       const valuesConfig = (params?.[paramName] ?? {}) as Record<
@@ -777,7 +783,7 @@ function createStyles<const M extends RegistryItem, const Base>(
         }
       }
       if (hasAny) enumVarsForComponent[paramName] = valueVarsByValue
-    } else if (def.kind === 'scalar') {
+    } else if (def.kind === "scalar") {
       scalarBindingsForComponent[paramName] = def.cssVar
     }
   }
@@ -793,7 +799,7 @@ function createStyles<const M extends RegistryItem, const Base>(
   type AnyTv = ReturnType<typeof tv>
   const baseTv = tv(base as Parameters<typeof tv>[0]) as unknown as AnyTv
 
-  const densities: Density[] = ['compact', 'default', 'comfortable']
+  const densities: Density[] = ["compact", "default", "comfortable"]
   const densityTvs: Record<string, AnyTv> = {}
   for (const d of densities) {
     const densityConfig = density?.[d]
@@ -806,10 +812,10 @@ function createStyles<const M extends RegistryItem, const Base>(
   }
 
   /* ----- Composition: base → density → params(in declared order) ----- */
-  function stripVars<T extends { vars?: unknown }>(input: T): Omit<T, 'vars'> {
+  function stripVars<T extends { vars?: unknown }>(input: T): Omit<T, "vars"> {
     // tv() can't see the `vars` key, so drop it before passing through.
     const { vars: _vars, ...rest } = input
-    return rest as Omit<T, 'vars'>
+    return rest as Omit<T, "vars">
   }
 
   function compose(
@@ -865,7 +871,7 @@ function createStyles<const M extends RegistryItem, const Base>(
 
   return {
     useStyles,
-    styles: compose('default', paramDefaults) as InferTv<Base>,
+    styles: compose("default", paramDefaults) as InferTv<Base>,
   }
 }
 

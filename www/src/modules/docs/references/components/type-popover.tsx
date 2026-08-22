@@ -3,17 +3,17 @@
  * Supports nested navigation with breadcrumbs (like s2-docs)
  */
 
-import * as React from 'react'
-import { ChevronRightIcon } from 'lucide-react'
-import * as ButtonPrimitives from 'react-aria-components/Button'
-import * as DialogPrimitives from 'react-aria-components/Dialog'
+import * as React from "react"
+import { ChevronRightIcon } from "lucide-react"
+import * as ButtonPrimitives from "react-aria-components/Button"
+import * as DialogPrimitives from "react-aria-components/Dialog"
 
-import { cn } from '@/registry/lib/utils'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Popover } from '@/registry/ui/popover'
+import { cn } from "@/registry/lib/utils"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Popover } from "@/registry/ui/popover"
 
-import type { TType } from '../types/type-ast'
-import { Type, useTypeLinks } from './type-renderer'
+import type { TType } from "../types/type-ast"
+import { Type, useTypeLinks } from "./type-renderer"
 
 /* -----------------------------------------------------------------------------------------------
  * Context for nested type navigation within a popover
@@ -121,10 +121,10 @@ function TypePopover({ name, type }: TypePopoverProps) {
                     type="button"
                     onClick={() => navigateTo(index)}
                     className={cn(
-                      'font-mono transition-colors hover:text-fg-accent',
+                      "font-mono transition-colors hover:text-fg-accent",
                       index === breadcrumbs.length - 1
-                        ? 'font-medium text-fg'
-                        : 'text-fg-muted',
+                        ? "font-medium text-fg"
+                        : "text-fg-muted",
                     )}
                   >
                     {item.name}
@@ -156,10 +156,10 @@ interface TypePopoverContentProps {
 function TypePopoverContent({ type }: TypePopoverContentProps) {
   // Show description if available
   const description =
-    'description' in type && type.description ? type.description : null
+    "description" in type && type.description ? type.description : null
 
   // For interfaces, show a table of properties
-  if (type.type === 'interface') {
+  if (type.type === "interface") {
     const properties = Object.values(type.properties || {})
 
     return (
@@ -174,12 +174,12 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
             <span className="font-mono">
               {type.extends.map((ext, idx) => {
                 const key =
-                  typeof (ext as { name?: unknown }).name === 'string'
+                  typeof (ext as { name?: unknown }).name === "string"
                     ? (ext as { name: string }).name
                     : idx
                 return (
                   <React.Fragment key={key}>
-                    {idx > 0 && ', '}
+                    {idx > 0 && ", "}
                     <Type type={ext} />
                   </React.Fragment>
                 )
@@ -199,7 +199,7 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
                   </code>
                   <code className="font-mono text-xs text-fg-muted">
                     <Type
-                      type={prop.type === 'method' ? prop.value : prop.value}
+                      type={prop.type === "method" ? prop.value : prop.value}
                     />
                   </code>
                 </div>
@@ -217,7 +217,7 @@ function TypePopoverContent({ type }: TypePopoverContentProps) {
   }
 
   // For type aliases, show the resolved type
-  if (type.type === 'alias') {
+  if (type.type === "alias") {
     return (
       <div className="space-y-3">
         {description && (

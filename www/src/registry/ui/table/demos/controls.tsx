@@ -1,18 +1,18 @@
-import type { ReactNode } from 'react'
-import { MoreHorizontalIcon, PencilIcon } from 'lucide-react'
+import type { ReactNode } from "react"
+import { MoreHorizontalIcon, PencilIcon } from "lucide-react"
 
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
-import { Dialog } from '@/registry/ui/dialog'
-import { Input } from '@/registry/ui/input'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
+import { Dialog } from "@/registry/ui/dialog"
+import { Input } from "@/registry/ui/input"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
+} from "@/registry/ui/select"
 import {
   Table,
   TableContainer,
@@ -21,63 +21,63 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
-const statuses = ['Backlog', 'Todo', 'In Progress', 'Done'] as const
+const statuses = ["Backlog", "Todo", "In Progress", "Done"] as const
 const statusVariant = {
-  Backlog: 'neutral',
-  Done: 'success',
-  'In Progress': 'info',
-  Todo: 'warning',
+  Backlog: "neutral",
+  Done: "success",
+  "In Progress": "info",
+  Todo: "warning",
 } as const
 
 const assignees = [
-  { id: 'maya', name: 'Maya Chen' },
-  { id: 'owen', name: 'Owen Diaz' },
-  { id: 'nora', name: 'Nora Smith' },
-  { id: 'amir', name: 'Amir Khan' },
+  { id: "maya", name: "Maya Chen" },
+  { id: "owen", name: "Owen Diaz" },
+  { id: "nora", name: "Nora Smith" },
+  { id: "amir", name: "Amir Khan" },
 ]
 
 const tasks: Task[] = [
   {
-    id: 'task-1',
-    task: 'Finalize onboarding',
-    status: 'In Progress',
-    assignee: 'maya',
+    id: "task-1",
+    task: "Finalize onboarding",
+    status: "In Progress",
+    assignee: "maya",
     estimate: 6,
-    due: 'May 20',
+    due: "May 20",
   },
   {
-    id: 'task-2',
-    task: 'Review audit logs',
-    status: 'Todo',
-    assignee: 'owen',
+    id: "task-2",
+    task: "Review audit logs",
+    status: "Todo",
+    assignee: "owen",
     estimate: 3,
-    due: 'May 21',
+    due: "May 21",
   },
   {
-    id: 'task-3',
-    task: 'Ship billing copy',
-    status: 'Backlog',
-    assignee: 'nora',
+    id: "task-3",
+    task: "Ship billing copy",
+    status: "Backlog",
+    assignee: "nora",
     estimate: 2,
-    due: 'May 24',
+    due: "May 24",
   },
   {
-    id: 'task-4',
-    task: 'Tune empty states',
-    status: 'Done',
-    assignee: 'amir',
+    id: "task-4",
+    task: "Tune empty states",
+    status: "Done",
+    assignee: "amir",
     estimate: 4,
-    due: 'May 25',
+    due: "May 25",
   },
   {
-    id: 'task-5',
-    task: 'Validate invite flow',
-    status: 'Todo',
-    assignee: 'maya',
+    id: "task-5",
+    task: "Validate invite flow",
+    status: "Todo",
+    assignee: "maya",
     estimate: 5,
-    due: 'May 27',
+    due: "May 27",
   },
 ]
 

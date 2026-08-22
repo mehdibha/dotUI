@@ -1,18 +1,18 @@
-'use client'
+"use client"
 
-import { useCallback, useMemo } from 'react'
-import { getRouteApi } from '@tanstack/react-router'
+import { useCallback, useMemo } from "react"
+import { getRouteApi } from "@tanstack/react-router"
 
-import { DEFAULT_COLOR_CONFIG } from '@/registry/theme'
-import type { ColorConfig, PaletteSeeds, TokenOverride } from '@/registry/theme'
-import { DEFAULT_CODE_OPTIONS } from '@/publisher/code-options'
-import type { CodeOptions } from '@/publisher/code-options'
+import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
+import type { ColorConfig, PaletteSeeds, TokenOverride } from "@/registry/theme"
+import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
+import type { CodeOptions } from "@/publisher/code-options"
 
-import { decodePreset, encodePreset } from './codec'
-import { DEFAULTS } from './defaults'
-import type { Density, DesignSystem, IconLibraryName } from './types'
+import { decodePreset, encodePreset } from "./codec"
+import { DEFAULTS } from "./defaults"
+import type { Density, DesignSystem, IconLibraryName } from "./types"
 
-const routeApi = getRouteApi('/_app/create')
+const routeApi = getRouteApi("/_app/create")
 
 export function useDesignSystem() {
   const { preset } = routeApi.useSearch()
@@ -26,7 +26,7 @@ export function useDesignSystem() {
   const setDesignSystem = useCallback(
     (updater: DesignSystem | ((prev: DesignSystem) => DesignSystem)) => {
       const next =
-        typeof updater === 'function' ? updater(designSystem) : updater
+        typeof updater === "function" ? updater(designSystem) : updater
       const encoded = encodePreset(next)
       navigate({
         search: (prev) => ({ ...prev, preset: encoded }),
@@ -77,7 +77,7 @@ export function useDesignSystem() {
     (icons: IconLibraryName) => {
       setDesignSystem((prev) => ({
         ...prev,
-        icons: icons === 'lucide' ? undefined : icons,
+        icons: icons === "lucide" ? undefined : icons,
       }))
     },
     [setDesignSystem],
@@ -98,7 +98,7 @@ export function useDesignSystem() {
   const setColorSeed = useCallback(
     (seed: keyof PaletteSeeds, value: string | undefined) => {
       setColor((base) => {
-        if (value === undefined && seed === 'accent') return base
+        if (value === undefined && seed === "accent") return base
         const seeds = { ...base.seeds }
         if (value === undefined) delete seeds[seed]
         else seeds[seed] = value
@@ -111,7 +111,7 @@ export function useDesignSystem() {
   /** Set one engine axis; `undefined` deletes it (→ engine default). */
   const setColorAxis = useCallback(
     (
-      axis: 'vividness' | 'hueShift' | 'neutralTint',
+      axis: "vividness" | "hueShift" | "neutralTint",
       value: number | undefined,
     ) => {
       setColor((base) => {
@@ -126,9 +126,9 @@ export function useDesignSystem() {
 
   /** Set one mode's app-background; `undefined` deletes it (→ engine default). */
   const setColorBackground = useCallback(
-    <M extends 'light' | 'dark'>(
+    <M extends "light" | "dark">(
       mode: M,
-      value: NonNullable<ColorConfig['background']>[M] | undefined,
+      value: NonNullable<ColorConfig["background"]>[M] | undefined,
     ) => {
       setColor((base) => {
         const background = { ...base.background }
@@ -159,7 +159,7 @@ export function useDesignSystem() {
 
   /** Set the guarantee policy; `undefined` deletes it (→ default policy). */
   const setColorGuaranteePolicy = useCallback(
-    (policy: 'relaxed' | 'strict' | undefined) => {
+    (policy: "relaxed" | "strict" | undefined) => {
       setColor((base) => {
         const { guaranteePolicy: _drop, ...rest } = base
         return policy === undefined
@@ -175,14 +175,14 @@ export function useDesignSystem() {
    * stay preset-level); `undefined` deletes it (→ skeleton placement).
    */
   const setColorBorderTarget = useCallback(
-    (job: '400' | '500' | '600', value: number | undefined) => {
+    (job: "400" | "500" | "600", value: number | undefined) => {
       setColor((base) => {
-        const shared = { ...base.borders?.['*'] }
+        const shared = { ...base.borders?.["*"] }
         if (value === undefined) delete shared[job]
         else shared[job] = value
         const borders = { ...base.borders }
-        if (Object.keys(shared).length > 0) borders['*'] = shared
-        else delete borders['*']
+        if (Object.keys(shared).length > 0) borders["*"] = shared
+        else delete borders["*"]
         const { borders: _drop, ...rest } = base
         return Object.keys(borders).length > 0 ? { ...rest, borders } : rest
       })
@@ -207,10 +207,10 @@ export function useDesignSystem() {
    * default.
    */
   const setColorPrimary = useCallback(
-    (source: 'accent' | undefined) => {
+    (source: "accent" | undefined) => {
       setColor((base) => {
         const { primary: _drop, ...rest } = base
-        return source === 'accent' ? { ...rest, primary: 'accent' } : rest
+        return source === "accent" ? { ...rest, primary: "accent" } : rest
       })
     },
     [setColor],

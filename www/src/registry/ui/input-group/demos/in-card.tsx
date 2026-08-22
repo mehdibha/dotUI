@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { ExternalLinkIcon, MailIcon } from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
+import { ExternalLinkIcon, MailIcon } from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardContent,
@@ -9,15 +9,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Label } from '@/registry/ui/field'
+} from "@/registry/ui/card"
+import { Label } from "@/registry/ui/field"
 import {
   Input,
   InputGroup,
   InputGroupAddon,
   TextArea,
-} from '@/registry/ui/input'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/input"
+import { TextField } from "@/registry/ui/text-field"
 
 export default function Demo() {
   return (

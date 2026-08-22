@@ -1,6 +1,6 @@
-import type * as HeaderPrimitives from 'react-aria-components/Header'
-import type * as MenuPrimitives from 'react-aria-components/Menu'
-import type * as TextPrimitives from 'react-aria-components/Text'
+import type * as HeaderPrimitives from "react-aria-components/Header"
+import type * as MenuPrimitives from "react-aria-components/Menu"
+import type * as TextPrimitives from "react-aria-components/Text"
 
 /**
  * A menu displays a list of actions or options that a user can choose.
@@ -26,7 +26,7 @@ export interface MenuItemProps<T> extends MenuPrimitives.MenuItemProps<T> {
    * The color variant of the menu item.
    * @default 'default'
    */
-  variant?: 'default' | 'success' | 'warning' | 'accent' | 'danger'
+  variant?: "default" | "success" | "warning" | "accent" | "danger"
 }
 
 /**

@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
-import { ProgressBar } from '@/registry/ui/progress-bar'
-import { Slider, SliderControl } from '@/registry/ui/slider'
+import { ProgressBar } from "@/registry/ui/progress-bar"
+import { Slider, SliderControl } from "@/registry/ui/slider"
 
 export default function Demo() {
   const [value, setValue] = React.useState(50)

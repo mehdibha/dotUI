@@ -8,7 +8,7 @@ links:
 
 <InteractiveDemo
   name="accordion"
-  controls={['allowsMultipleExpanded', 'isDisabled']}
+  controls={["allowsMultipleExpanded", "isDisabled"]}
 />
 
 ## Installation
@@ -20,8 +20,8 @@ npx shadcn@latest add @dotui/accordion
 ## Anatomy
 
 ```tsx
-import { Accordion } from '@/ui/accordion'
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from '@/ui/disclosure'
+import { Accordion } from "@/ui/accordion"
+import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/ui/disclosure"
 ```
 
 ```tsx
@@ -42,7 +42,7 @@ import { Disclosure, DisclosurePanel, DisclosureTrigger } from '@/ui/disclosure'
 Expanded items are tracked by each `Disclosure`'s `id`. Give the group `defaultExpandedKeys` for uncontrolled state, or `expandedKeys` with `onExpandedChange` to control it — both are a `Set` of ids. Pass `allowsMultipleExpanded` to let the set hold more than one id at a time.
 
 ```tsx
-<Accordion defaultExpandedKeys={['getting-started']}>
+<Accordion defaultExpandedKeys={["getting-started"]}>
   <Disclosure id="getting-started">
     <DisclosureTrigger>How do I get started?</DisclosureTrigger>
     <DisclosurePanel>…</DisclosurePanel>

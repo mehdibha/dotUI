@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { Button, type ButtonProps } from '@/registry/ui/button'
+import { Button, type ButtonProps } from "@/registry/ui/button"
 
 export default function Demo({
-  children = 'Button',
-  variant = 'secondary',
-  size = 'md',
+  children = "Button",
+  variant = "secondary",
+  size = "md",
   isDisabled = false,
   isPending = false,
 }: ButtonProps = {}) {

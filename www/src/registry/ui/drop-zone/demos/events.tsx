@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useDrag } from 'react-aria'
-import type * as TreePrimitives from 'react-aria-components/Tree'
+import { useDrag } from "react-aria"
+import type * as TreePrimitives from "react-aria-components/Tree"
 
-import { DropZone, DropZoneLabel } from '@/registry/ui/drop-zone'
+import { DropZone, DropZoneLabel } from "@/registry/ui/drop-zone"
 
 export default function Demo() {
   return (
@@ -17,13 +17,13 @@ export default function Demo() {
           const items = await Promise.all(
             e.items
               .filter(
-                (item) => item.kind === 'text' && item.types.has('text/plain'),
+                (item) => item.kind === "text" && item.types.has("text/plain"),
               )
               .map((item) =>
-                (item as TreePrimitives.TextDropItem).getText('text/plain'),
+                (item as TreePrimitives.TextDropItem).getText("text/plain"),
               ),
           )
-          alert(`You dropped ${items.join('\n')}`)
+          alert(`You dropped ${items.join("\n")}`)
         }}
       >
         <DropZoneLabel>Droppable</DropZoneLabel>
@@ -37,7 +37,7 @@ const Draggable = ({ text }: { text: string }) => {
     getItems() {
       return [
         {
-          'text/plain': text,
+          "text/plain": text,
         },
       ]
     },

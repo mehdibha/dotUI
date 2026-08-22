@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import type React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as PopoverPrimitives from 'react-aria-components/Popover'
+import type React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as PopoverPrimitives from "react-aria-components/Popover"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: popoverStyles
 
@@ -39,7 +39,7 @@ function Popover({
   )
 }
 
-interface PopoverArrowProps extends React.ComponentProps<'svg'> {}
+interface PopoverArrowProps extends React.ComponentProps<"svg"> {}
 function PopoverArrow({ className, ...props }: PopoverArrowProps) {
   const { arrow } = useStyles()()
   return (

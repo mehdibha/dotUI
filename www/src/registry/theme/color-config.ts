@@ -6,17 +6,17 @@
  * no algorithm menu — the v1 `{algorithm, knobs}` shape migrates below.
  */
 
-import { z } from 'zod'
+import { z } from "zod"
 
-import { STATUS_SEEDS, toOklch } from '@dotui/colors'
+import { STATUS_SEEDS, toOklch } from "@dotui/colors"
 
 import type {
   PrimaryColorSource,
   TokenOverride,
   TokenOverrides,
   TokenTargetSpec,
-} from './types'
-import { JOB_STEPS, type JobName } from './types'
+} from "./types"
+import { JOB_STEPS, type JobName } from "./types"
 
 const JOB_NAMES = Object.keys(JOB_STEPS) as [JobName, ...JobName[]]
 const tokenTargetSpec = z.object({
@@ -40,9 +40,9 @@ const borderTargetValue = z.union([
   }),
 ])
 const borderTargetsSchema = z.object({
-  '400': borderTargetValue.optional(),
-  '500': borderTargetValue.optional(),
-  '600': borderTargetValue.optional(),
+  "400": borderTargetValue.optional(),
+  "500": borderTargetValue.optional(),
+  "600": borderTargetValue.optional(),
 })
 
 export const colorConfigSchema = z.object({
@@ -63,7 +63,7 @@ export const colorConfigSchema = z.object({
   background: z
     .object({
       light: z.number().min(90).max(100).optional(),
-      dark: z.union([z.number().min(0).max(20), z.literal('oled')]).optional(),
+      dark: z.union([z.number().min(0).max(20), z.literal("oled")]).optional(),
     })
     .optional(),
   /** Scales the fitted chroma curve (1 ≈ Radix, ~1.33 ≈ Tailwind). */
@@ -72,6 +72,8 @@ export const colorConfigSchema = z.object({
   hueShift: z.number().min(0).max(3).optional(),
   /** Scales the neutral whisper tint (0 = pure gray). */
   neutralTint: z.number().min(0).max(4).optional(),
+  /** OKLCH hue the neutral tint leans toward (absent = follow the accent). */
+  neutralHue: z.number().min(0).max(360).optional(),
   /** Pin the accent verbatim at the solid step; the report prices it. */
   preserveSeed: z.boolean().optional(),
   /**
@@ -79,7 +81,7 @@ export const colorConfigSchema = z.object({
    * warnings; `strict` solves solid labels to the full WCAG 4.5. Stored only
    * when non-default — absent means the default policy.
    */
-  guaranteePolicy: z.enum(['relaxed', 'strict']).optional(),
+  guaranteePolicy: z.enum(["relaxed", "strict"]).optional(),
   /**
    * Border placement targets (engine D2): WCAG vs the app background per
    * border job, one value or per-mode values, keyed by palette (`'*'` = all).
@@ -89,7 +91,7 @@ export const colorConfigSchema = z.object({
    * Ramp the primary-action tokens draw from. Stored only as `'accent'`
    * (brand-colored primary); absent means the default neutral (black/white).
    */
-  primary: z.literal('accent').optional(),
+  primary: z.literal("accent").optional(),
   /**
    * Per-token remaps (T5): token name → (palette, job), one destination or a
    * per-mode pair. Applied by the semantic resolver; unknown names are inert.
@@ -98,7 +100,7 @@ export const colorConfigSchema = z.object({
 })
 
 export type ColorConfig = z.infer<typeof colorConfigSchema>
-export type PaletteSeeds = ColorConfig['seeds']
+export type PaletteSeeds = ColorConfig["seeds"]
 
 /**
  * dotUI's default palette: a blue brand accent, auto-tinted neutral, and the
@@ -107,7 +109,7 @@ export type PaletteSeeds = ColorConfig['seeds']
  */
 export const DEFAULT_COLOR_CONFIG: ColorConfig = {
   v: 2,
-  seeds: { accent: '#438cd6' },
+  seeds: { accent: "#438cd6" },
   background: { dark: 2 },
 }
 
@@ -116,7 +118,7 @@ export const DEFAULT_STATUS_SEEDS = STATUS_SEEDS
 
 /** True when the engine can parse `value` as a color (its render-time bar). */
 function isColor(value: unknown): value is string {
-  if (typeof value !== 'string') return false
+  if (typeof value !== "string") return false
   try {
     toOklch(value)
     return true
@@ -126,20 +128,20 @@ function isColor(value: unknown): value is string {
 }
 
 /** Salvage the seed table: keep only parseable seeds; a bad accent → default. */
-function salvageSeeds(raw: unknown): ColorConfig['seeds'] {
+function salvageSeeds(raw: unknown): ColorConfig["seeds"] {
   const input = (raw ?? {}) as Record<string, unknown>
-  const seeds: ColorConfig['seeds'] = {
+  const seeds: ColorConfig["seeds"] = {
     accent: isColor(input.accent)
       ? input.accent
       : DEFAULT_COLOR_CONFIG.seeds.accent,
   }
   for (const name of [
-    'neutral',
-    'success',
-    'warning',
-    'danger',
-    'info',
-    'selection',
+    "neutral",
+    "success",
+    "warning",
+    "danger",
+    "info",
+    "selection",
   ] as const) {
     if (isColor(input[name])) seeds[name] = input[name]
   }
@@ -150,21 +152,21 @@ const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value))
 
 const finite = (value: unknown): value is number =>
-  typeof value === 'number' && Number.isFinite(value)
+  typeof value === "number" && Number.isFinite(value)
 
 /** Salvage one remap destination: a non-empty palette + a known job name. */
 function salvageTargetSpec(raw: unknown): TokenTargetSpec | undefined {
-  if (typeof raw !== 'object' || raw === null) return undefined
+  if (typeof raw !== "object" || raw === null) return undefined
   const spec = raw as { palette?: unknown; job?: unknown }
-  if (typeof spec.palette !== 'string' || spec.palette.length === 0)
+  if (typeof spec.palette !== "string" || spec.palette.length === 0)
     return undefined
-  if (typeof spec.job !== 'string' || !(spec.job in JOB_STEPS)) return undefined
+  if (typeof spec.job !== "string" || !(spec.job in JOB_STEPS)) return undefined
   return { palette: spec.palette, job: spec.job as JobName }
 }
 
 /** Salvage the per-token remap table: keep only valid entries, drop empties. */
 function salvageOverrides(raw: unknown): TokenOverrides | undefined {
-  if (typeof raw !== 'object' || raw === null) return undefined
+  if (typeof raw !== "object" || raw === null) return undefined
   const overrides: TokenOverrides = {}
   for (const [token, value] of Object.entries(raw)) {
     const both = salvageTargetSpec(value)
@@ -172,7 +174,7 @@ function salvageOverrides(raw: unknown): TokenOverrides | undefined {
       overrides[token] = both
       continue
     }
-    if (typeof value !== 'object' || value === null) continue
+    if (typeof value !== "object" || value === null) continue
     const pair = value as { light?: unknown; dark?: unknown }
     const override: Exclude<TokenOverride, TokenTargetSpec> = {}
     const light = salvageTargetSpec(pair.light)
@@ -187,7 +189,7 @@ function salvageOverrides(raw: unknown): TokenOverrides | undefined {
 /** Salvage one border target: a clamped ratio or a per-mode pair of them. */
 function salvageBorderTarget(raw: unknown) {
   if (finite(raw)) return clamp(raw, 1.05, 21)
-  if (typeof raw !== 'object' || raw === null) return undefined
+  if (typeof raw !== "object" || raw === null) return undefined
   const pair = raw as { light?: unknown; dark?: unknown }
   const target: { light?: number; dark?: number } = {}
   if (finite(pair.light)) target.light = clamp(pair.light, 1.05, 21)
@@ -196,13 +198,13 @@ function salvageBorderTarget(raw: unknown) {
 }
 
 /** Salvage the border-target table: keep only valid entries, drop empties. */
-function salvageBorders(raw: unknown): ColorConfig['borders'] {
-  if (typeof raw !== 'object' || raw === null) return undefined
-  const borders: NonNullable<ColorConfig['borders']> = {}
+function salvageBorders(raw: unknown): ColorConfig["borders"] {
+  if (typeof raw !== "object" || raw === null) return undefined
+  const borders: NonNullable<ColorConfig["borders"]> = {}
   for (const [palette, spec] of Object.entries(raw)) {
-    if (typeof spec !== 'object' || spec === null) continue
-    const entry: NonNullable<ColorConfig['borders']>[string] = {}
-    for (const job of ['400', '500', '600'] as const) {
+    if (typeof spec !== "object" || spec === null) continue
+    const entry: NonNullable<ColorConfig["borders"]>[string] = {}
+    for (const job of ["400", "500", "600"] as const) {
       const target = salvageBorderTarget((spec as Record<string, unknown>)[job])
       if (target !== undefined) entry[job] = target
     }
@@ -220,7 +222,7 @@ function salvageBorders(raw: unknown): ColorConfig['borders'] {
  * kept seed is verified parseable — never a decode or render explosion.
  */
 export function migrateColorConfig(input: unknown): ColorConfig {
-  if (typeof input !== 'object' || input === null) return DEFAULT_COLOR_CONFIG
+  if (typeof input !== "object" || input === null) return DEFAULT_COLOR_CONFIG
 
   const raw = input as {
     v?: unknown
@@ -229,6 +231,7 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     vividness?: unknown
     hueShift?: unknown
     neutralTint?: unknown
+    neutralHue?: unknown
     preserveSeed?: unknown
     overrides?: unknown
     guaranteePolicy?: unknown
@@ -241,11 +244,11 @@ export function migrateColorConfig(input: unknown): ColorConfig {
   if (raw.v === 2) {
     const config: ColorConfig = { v: 2, seeds: salvageSeeds(raw.seeds) }
     const bg = raw.background
-    if (typeof bg === 'object' && bg !== null) {
-      const background: ColorConfig['background'] = {}
+    if (typeof bg === "object" && bg !== null) {
+      const background: ColorConfig["background"] = {}
       if (finite(bg.light)) background.light = clamp(bg.light, 90, 100)
       if (finite(bg.dark)) background.dark = clamp(bg.dark, 0, 20)
-      else if (bg.dark === 'oled') background.dark = 'oled'
+      else if (bg.dark === "oled") background.dark = "oled"
       if (background.light !== undefined || background.dark !== undefined)
         config.background = background
     }
@@ -253,13 +256,15 @@ export function migrateColorConfig(input: unknown): ColorConfig {
     if (finite(raw.hueShift)) config.hueShift = clamp(raw.hueShift, 0, 3)
     if (finite(raw.neutralTint))
       config.neutralTint = clamp(raw.neutralTint, 0, 4)
-    if (typeof raw.preserveSeed === 'boolean')
+    if (finite(raw.neutralHue))
+      config.neutralHue = clamp(raw.neutralHue, 0, 360)
+    if (typeof raw.preserveSeed === "boolean")
       config.preserveSeed = raw.preserveSeed
-    if (raw.guaranteePolicy === 'relaxed' || raw.guaranteePolicy === 'strict')
+    if (raw.guaranteePolicy === "relaxed" || raw.guaranteePolicy === "strict")
       config.guaranteePolicy = raw.guaranteePolicy
     const borders = salvageBorders(raw.borders)
     if (borders) config.borders = borders
-    if (raw.primary === 'accent') config.primary = 'accent'
+    if (raw.primary === "accent") config.primary = "accent"
     const overrides = salvageOverrides(raw.overrides)
     if (overrides) config.overrides = overrides
     return config
@@ -269,7 +274,7 @@ export function migrateColorConfig(input: unknown): ColorConfig {
 
   const seeds = salvageSeeds(raw.seeds)
   // v1's default neutral seed meant "plain gray"; v2's default is auto-tint.
-  if (seeds.neutral === '#808080') delete seeds.neutral
+  if (seeds.neutral === "#808080") delete seeds.neutral
 
   const config: ColorConfig = { v: 2, seeds }
   const chromaMult = raw.knobs?.chromaMult
@@ -277,7 +282,7 @@ export function migrateColorConfig(input: unknown): ColorConfig {
   const hueTorsion = raw.knobs?.hueTorsion
   if (finite(hueTorsion) && hueTorsion !== 0)
     config.hueShift = clamp(Math.abs(hueTorsion) / 15, 0, 3)
-  if (raw.primary === 'accent') config.primary = 'accent'
+  if (raw.primary === "accent") config.primary = "accent"
   return config
 }
 

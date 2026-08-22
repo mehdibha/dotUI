@@ -1,4 +1,4 @@
-import type * as ModalPrimitives from 'react-aria-components/Modal'
+import type * as ModalPrimitives from "react-aria-components/Modal"
 
 /**
  * A modal is an overlay element which blocks interaction with elements outside it.
@@ -22,9 +22,9 @@ export interface ModalContentProps extends React.ComponentProps<
 /**
  * The backdrop displayed behind the modal, which dims the underlying page content.
  */
-export interface ModalBackdropProps extends React.ComponentProps<'div'> {}
+export interface ModalBackdropProps extends React.ComponentProps<"div"> {}
 
 /**
  * The viewport container that centers the modal within the visible area of the screen.
  */
-export interface ModalViewportProps extends React.ComponentProps<'div'> {}
+export interface ModalViewportProps extends React.ComponentProps<"div"> {}

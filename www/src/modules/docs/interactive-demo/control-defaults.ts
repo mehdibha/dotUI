@@ -1,4 +1,4 @@
-import type { Control, ControlValues, SerializableControl } from './types'
+import type { Control, ControlValues, SerializableControl } from "./types"
 
 /**
  * Default value semantics for a control, shared by the InteractiveDemo client
@@ -8,15 +8,15 @@ export function getDefaultControlValue(
   control: Control | SerializableControl,
 ): unknown {
   switch (control.type) {
-    case 'boolean':
+    case "boolean":
       return control.defaultValue ?? false
-    case 'string':
-      return control.defaultValue ?? ''
-    case 'number':
+    case "string":
+      return control.defaultValue ?? ""
+    case "number":
       return control.defaultValue ?? 0
-    case 'enum':
+    case "enum":
       return control.defaultValue ?? control.options[0]
-    case 'icon':
+    case "icon":
       return control.defaultValue ?? null
     default:
       return undefined

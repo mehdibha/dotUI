@@ -1,6 +1,6 @@
-import { Button } from '@/registry/ui/button'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Modal } from '@/registry/ui/modal'
+import { Button } from "@/registry/ui/button"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Modal } from "@/registry/ui/modal"
 
 export default function Demo() {
   return (

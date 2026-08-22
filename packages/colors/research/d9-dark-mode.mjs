@@ -9,21 +9,21 @@
 // Note on Lab: culori `lab65` = CIELAB with D65 white point. WCAG relative
 // luminance is D65-based, so the L* bridge in SPEC.md D3 requires D65 Lab.
 
-import { mkdirSync, writeFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import * as radix from '@radix-ui/colors'
-import { APCAcontrast, sRGBtoY } from 'apca-w3'
-import { converter, parse } from 'culori'
+import { mkdirSync, writeFileSync } from "node:fs"
+import { dirname, join } from "node:path"
+import { fileURLToPath } from "node:url"
+import * as radix from "@radix-ui/colors"
+import { APCAcontrast, sRGBtoY } from "apca-w3"
+import { converter, parse } from "culori"
 
 const here = dirname(fileURLToPath(import.meta.url))
-const dataDir = join(here, 'data')
+const dataDir = join(here, "data")
 mkdirSync(dataDir, { recursive: true })
 
-const toLab65 = converter('lab65')
-const toOklch = converter('oklch')
+const toLab65 = converter("lab65")
+const toOklch = converter("oklch")
 
-const GRAYS = new Set(['gray', 'mauve', 'slate', 'sage', 'olive', 'sand'])
+const GRAYS = new Set(["gray", "mauve", "slate", "sage", "olive", "sand"])
 
 // All dark solid scales (exclude alpha "DarkA" and P3 "DarkP3" variants).
 const families = Object.keys(radix)
@@ -101,7 +101,7 @@ for (const fam of families) {
 // (1) L* skeleton, steps 1-8, median/spread per step; spacing comparison.
 const skeleton = { dark: [], light: [] }
 for (let i = 0; i < 12; i++) {
-  for (const mode of ['dark', 'light']) {
+  for (const mode of ["dark", "light"]) {
     const Ls = families.map((f) => perFamily[f][mode].Lstar[i])
     skeleton[mode].push({
       step: i + 1,
@@ -132,16 +132,16 @@ const step1 = families.map((f) => ({
 }))
 
 writeFileSync(
-  join(dataDir, 'radix-dark-Lstar.json'),
+  join(dataDir, "radix-dark-Lstar.json"),
   JSON.stringify(
     {
       meta: {
-        source: '@radix-ui/colors',
-        labSpace: 'lab65 (CIELAB, D65 white point — matches WCAG luminance)',
+        source: "@radix-ui/colors",
+        labSpace: "lab65 (CIELAB, D65 white point — matches WCAG luminance)",
         families: families.length,
         chromatic: families.filter((f) => !GRAYS.has(f)).length,
         grays: GRAYS.size,
-        generatedBy: 'research/d9-dark-mode.mjs',
+        generatedBy: "research/d9-dark-mode.mjs",
       },
       skeletonDark: skeleton.dark,
       skeletonLight: skeleton.light,
@@ -194,14 +194,14 @@ const ratioSummary = (i) => {
 }
 
 writeFileSync(
-  join(dataDir, 'radix-dark-chroma.json'),
+  join(dataDir, "radix-dark-chroma.json"),
   JSON.stringify(
     {
       meta: {
-        source: '@radix-ui/colors',
-        chromaSpace: 'OKLCH C (culori)',
-        ratio: 'C_dark / C_light per step; chromatic families only in summary',
-        generatedBy: 'research/d9-dark-mode.mjs',
+        source: "@radix-ui/colors",
+        chromaSpace: "OKLCH C (culori)",
+        ratio: "C_dark / C_light per step; chromatic families only in summary",
+        generatedBy: "research/d9-dark-mode.mjs",
       },
       ratioSummaryPerStep: Array.from({ length: 12 }, (_, i) =>
         ratioSummary(i),
@@ -251,31 +251,31 @@ const auditLight = families.map((f) => {
 })
 
 writeFileSync(
-  join(dataDir, 'dark-guarantee-audit.json'),
+  join(dataDir, "dark-guarantee-audit.json"),
   JSON.stringify(
     {
       meta: {
-        source: '@radix-ui/colors dark scales',
+        source: "@radix-ui/colors dark scales",
         meters:
-          'apca-w3 APCAcontrast+sRGBtoY (abs Lc); WCAG2 relative-luminance ratio',
-        background: 'step 2 (subtle background) unless suffixed on1',
-        generatedBy: 'research/d9-dark-mode.mjs',
+          "apca-w3 APCAcontrast+sRGBtoY (abs Lc); WCAG2 relative-luminance ratio",
+        background: "step 2 (subtle background) unless suffixed on1",
+        generatedBy: "research/d9-dark-mode.mjs",
       },
       summary: {
         scales: audit.length,
-        lc12on2: stats('lc12on2'),
-        lc11on2: stats('lc11on2'),
-        wcag12on2: stats('wcag12on2'),
-        wcag11on2: stats('wcag11on2'),
-        below_Lc90_step12: below('lc12on2', 90),
-        below_Lc60_step11: below('lc11on2', 60),
-        below_wcag7_step12: below('wcag12on2', 7),
-        below_wcag45_step11: below('wcag11on2', 4.5),
+        lc12on2: stats("lc12on2"),
+        lc11on2: stats("lc11on2"),
+        wcag12on2: stats("wcag12on2"),
+        wcag11on2: stats("wcag11on2"),
+        below_Lc90_step12: below("lc12on2", 90),
+        below_Lc60_step11: below("lc11on2", 60),
+        below_wcag7_step12: below("wcag12on2", 7),
+        below_wcag45_step11: below("wcag11on2", 4.5),
         counts: {
-          below_Lc90_step12: below('lc12on2', 90).length,
-          below_Lc60_step11: below('lc11on2', 60).length,
-          below_wcag7_step12: below('wcag12on2', 7).length,
-          below_wcag45_step11: below('wcag11on2', 4.5).length,
+          below_Lc90_step12: below("lc12on2", 90).length,
+          below_Lc60_step11: below("lc11on2", 60).length,
+          below_wcag7_step12: below("wcag12on2", 7).length,
+          below_wcag45_step11: below("wcag11on2", 4.5).length,
         },
       },
       lightSummary: {
@@ -310,70 +310,70 @@ writeFileSync(
 
 // ------------------------------------------------------------- console out ---
 
-const fmt = (arr, key) => arr.map((s) => s[key].toFixed(1)).join('  ')
+const fmt = (arr, key) => arr.map((s) => s[key].toFixed(1)).join("  ")
 console.log(
   `families: ${families.length} (${chromatics.length} chromatic + ${GRAYS.size} grays)\n`,
 )
-console.log('DARK  median L* 1-12:', fmt(skeleton.dark, 'median'))
-console.log('LIGHT median L* 1-12:', fmt(skeleton.light, 'median'))
+console.log("DARK  median L* 1-12:", fmt(skeleton.dark, "median"))
+console.log("LIGHT median L* 1-12:", fmt(skeleton.light, "median"))
 console.log(
-  '\nDARK  ΔL* between medians 1→8:',
+  "\nDARK  ΔL* between medians 1→8:",
   deltas(skeleton.dark)
     .map((d) => d.dL.toFixed(1))
-    .join('  '),
+    .join("  "),
 )
 console.log(
-  'LIGHT ΔL* between medians 1→8:',
+  "LIGHT ΔL* between medians 1→8:",
   deltas(skeleton.light)
     .map((d) => d.dL.toFixed(1))
-    .join('  '),
+    .join("  "),
 )
 console.log(
-  '\nstep-1 dark L*: min',
+  "\nstep-1 dark L*: min",
   Math.min(...step1.map((s) => s.dark_step1_Lstar)).toFixed(2),
-  'max',
+  "max",
   Math.max(...step1.map((s) => s.dark_step1_Lstar)).toFixed(2),
-  'median',
+  "median",
   median(step1.map((s) => s.dark_step1_Lstar)).toFixed(2),
 )
 console.log(
-  'Δ(1→2) dark median:',
+  "Δ(1→2) dark median:",
   median(step1.map((s) => s.dark_d12)).toFixed(2),
-  '| light median:',
+  "| light median:",
   median(step1.map((s) => s.light_d12)).toFixed(2),
 )
 console.log(
-  '\nchroma ratio dark/light per step (chromatic medians):',
+  "\nchroma ratio dark/light per step (chromatic medians):",
   Array.from({ length: 12 }, (_, i) => ratioSummary(i).median.toFixed(2)).join(
-    '  ',
+    "  ",
   ),
 )
-console.log('\nyellow family text-step chroma:')
-for (const f of ['yellow', 'amber', 'orange', 'lime', 'mint', 'sky']) {
+console.log("\nyellow family text-step chroma:")
+for (const f of ["yellow", "amber", "orange", "lime", "mint", "sky"]) {
   const row = chromaRows.find((r) => r.family === f)
   console.log(
     ` ${f}: 11 ${row.text.C11_light}→${row.text.C11_dark} (x${row.text.ratio11})  12 ${row.text.C12_light}→${row.text.C12_dark} (x${row.text.ratio12})`,
   )
 }
 console.log(
-  '\naudit: step12 on step2 —',
-  JSON.stringify(stats('lc12on2')),
-  '| below Lc90:',
-  below('lc12on2', 90).length + '/31',
+  "\naudit: step12 on step2 —",
+  JSON.stringify(stats("lc12on2")),
+  "| below Lc90:",
+  below("lc12on2", 90).length + "/31",
 )
 console.log(
-  'audit: step11 on step2 —',
-  JSON.stringify(stats('lc11on2')),
-  '| below Lc60:',
-  below('lc11on2', 60).length + '/31',
+  "audit: step11 on step2 —",
+  JSON.stringify(stats("lc11on2")),
+  "| below Lc60:",
+  below("lc11on2", 60).length + "/31",
 )
 console.log(
-  'below WCAG 7.0 (12):',
-  below('wcag12on2', 7).length,
-  below('wcag12on2', 7).join(','),
+  "below WCAG 7.0 (12):",
+  below("wcag12on2", 7).length,
+  below("wcag12on2", 7).join(","),
 )
 console.log(
-  'below WCAG 4.5 (11):',
-  below('wcag11on2', 4.5).length,
-  below('wcag11on2', 4.5).join(','),
+  "below WCAG 4.5 (11):",
+  below("wcag11on2", 4.5).length,
+  below("wcag11on2", 4.5).join(","),
 )

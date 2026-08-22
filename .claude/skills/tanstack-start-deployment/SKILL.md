@@ -7,7 +7,7 @@ description: >-
   head management.
 type: sub-skill
 library: tanstack-start
-library_version: '1.166.2'
+library_version: "1.166.2"
 requires:
   - start-core
 sources:
@@ -31,14 +31,14 @@ pnpm add -D @cloudflare/vite-plugin wrangler
 
 ```ts
 // vite.config.ts
-import { defineConfig } from 'vite'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import { cloudflare } from '@cloudflare/vite-plugin'
-import viteReact from '@vitejs/plugin-react'
+import { defineConfig } from "vite"
+import { tanstackStart } from "@tanstack/react-start/plugin/vite"
+import { cloudflare } from "@cloudflare/vite-plugin"
+import viteReact from "@vitejs/plugin-react"
 
 export default defineConfig({
   plugins: [
-    cloudflare({ viteEnvironment: { name: 'ssr' } }),
+    cloudflare({ viteEnvironment: { name: "ssr" } }),
     tanstackStart(),
     viteReact(),
   ],
@@ -65,10 +65,10 @@ pnpm add -D @netlify/vite-plugin-tanstack-start
 
 ```ts
 // vite.config.ts
-import { defineConfig } from 'vite'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import netlify from '@netlify/vite-plugin-tanstack-start'
-import viteReact from '@vitejs/plugin-react'
+import { defineConfig } from "vite"
+import { tanstackStart } from "@tanstack/react-start/plugin/vite"
+import netlify from "@netlify/vite-plugin-tanstack-start"
+import viteReact from "@vitejs/plugin-react"
 
 export default defineConfig({
   plugins: [tanstackStart(), netlify(), viteReact()],
@@ -85,10 +85,10 @@ npm install nitro@npm:nitro-nightly@latest
 
 ```ts
 // vite.config.ts
-import { defineConfig } from 'vite'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import { nitro } from 'nitro/vite'
-import viteReact from '@vitejs/plugin-react'
+import { defineConfig } from "vite"
+import { tanstackStart } from "@tanstack/react-start/plugin/vite"
+import { nitro } from "nitro/vite"
+import viteReact from "@vitejs/plugin-react"
 
 export default defineConfig({
   plugins: [tanstackStart(), nitro(), viteReact()],
@@ -103,7 +103,7 @@ Bun deployment requires React 19. For React 18, use Node.js deployment.
 
 ```ts
 // vite.config.ts — add bun preset to nitro
-plugins: [tanstackStart(), nitro({ preset: 'bun' }), viteReact()]
+plugins: [tanstackStart(), nitro({ preset: "bun" }), viteReact()]
 ```
 
 ## Selective SSR
@@ -115,7 +115,7 @@ Control SSR per route with the `ssr` property.
 Runs `beforeLoad` and `loader` on server, renders component on server:
 
 ```tsx
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   ssr: true, // default
   loader: () => fetchPost(), // runs on server during SSR
   component: PostPage, // rendered on server
@@ -127,7 +127,7 @@ export const Route = createFileRoute('/posts/$postId')({
 Disables server execution of `beforeLoad`/`loader` and server rendering:
 
 ```tsx
-export const Route = createFileRoute('/dashboard')({
+export const Route = createFileRoute("/dashboard")({
   ssr: false,
   loader: () => fetchDashboard(), // runs on client only
   component: DashboardPage, // rendered on client only
@@ -139,8 +139,8 @@ export const Route = createFileRoute('/dashboard')({
 Runs `beforeLoad`/`loader` on server but renders component on client only:
 
 ```tsx
-export const Route = createFileRoute('/canvas')({
-  ssr: 'data-only',
+export const Route = createFileRoute("/canvas")({
+  ssr: "data-only",
   loader: () => fetchCanvasData(), // runs on server
   component: CanvasPage, // rendered on client only
 })
@@ -151,9 +151,9 @@ export const Route = createFileRoute('/canvas')({
 Decide SSR at runtime based on params/search:
 
 ```tsx
-export const Route = createFileRoute('/docs/$docType/$docId')({
+export const Route = createFileRoute("/docs/$docType/$docId")({
   ssr: ({ params }) => {
-    if (params.status === 'success' && params.value.docType === 'sheet') {
+    if (params.status === "success" && params.value.docType === "sheet") {
       return false
     }
   },
@@ -172,7 +172,7 @@ Children inherit parent SSR config and can only be MORE restrictive:
 Change the default for all routes in `src/start.ts`:
 
 ```tsx
-import { createStart } from '@tanstack/react-start'
+import { createStart } from "@tanstack/react-start"
 
 export const startInstance = createStart(() => ({
   defaultSsr: false,
@@ -202,11 +202,11 @@ Static routes are auto-discovered. Dynamic routes (e.g. `/users/$userId`) requir
 ### Basic Meta Tags
 
 ```tsx
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: 'My App - Home' },
-      { name: 'description', content: 'Welcome to My App' },
+      { title: "My App - Home" },
+      { name: "description", content: "Welcome to My App" },
     ],
   }),
 })
@@ -215,14 +215,14 @@ export const Route = createFileRoute('/')({
 ### Dynamic Meta from Loader Data
 
 ```tsx
-export const Route = createFileRoute('/posts/$postId')({
+export const Route = createFileRoute("/posts/$postId")({
   loader: async ({ params }) => fetchPost(params.postId),
   head: ({ loaderData }) => ({
     meta: [
       { title: loaderData.title },
-      { name: 'description', content: loaderData.excerpt },
-      { property: 'og:title', content: loaderData.title },
-      { property: 'og:image', content: loaderData.coverImage },
+      { name: "description", content: loaderData.excerpt },
+      { property: "og:title", content: loaderData.title },
+      { property: "og:image", content: loaderData.coverImage },
     ],
   }),
 })
@@ -234,10 +234,10 @@ export const Route = createFileRoute('/posts/$postId')({
 head: ({ loaderData }) => ({
   scripts: [
     {
-      type: 'application/ld+json',
+      type: "application/ld+json",
       children: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Article',
+        "@context": "https://schema.org",
+        "@type": "Article",
         headline: loaderData.title,
       }),
     },
@@ -249,17 +249,17 @@ head: ({ loaderData }) => ({
 
 ```ts
 // src/routes/sitemap[.]xml.ts
-export const Route = createFileRoute('/sitemap.xml')({
+export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
         const posts = await fetchAllPosts()
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${posts.map((p) => `<url><loc>https://myapp.com/posts/${p.id}</loc></url>`).join('')}
+  ${posts.map((p) => `<url><loc>https://myapp.com/posts/${p.id}</loc></url>`).join("")}
 </urlset>`
         return new Response(sitemap, {
-          headers: { 'Content-Type': 'application/xml' },
+          headers: { "Content-Type": "application/xml" },
         })
       },
     },
@@ -288,14 +288,14 @@ Bun-specific deployment only works with React 19. Use Node.js deployment for Rea
 ```tsx
 // Parent sets ssr: false
 // WRONG — child cannot upgrade to ssr: true
-const parentRoute = createFileRoute('/dashboard')({ ssr: false })
-const childRoute = createFileRoute('/dashboard/stats')({
+const parentRoute = createFileRoute("/dashboard")({ ssr: false })
+const childRoute = createFileRoute("/dashboard/stats")({
   ssr: true, // IGNORED — parent false wins
 })
 
 // CORRECT — children can only be MORE restrictive
-const parentRoute = createFileRoute('/dashboard')({ ssr: 'data-only' })
-const childRoute = createFileRoute('/dashboard/stats')({
+const parentRoute = createFileRoute("/dashboard")({ ssr: "data-only" })
+const childRoute = createFileRoute("/dashboard/stats")({
   ssr: false, // OK — more restrictive than parent
 })
 ```

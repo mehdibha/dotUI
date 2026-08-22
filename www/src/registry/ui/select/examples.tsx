@@ -1,19 +1,19 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import AsyncLoading from './demos/async-loading'
-import Basic from './demos/basic'
-import Controlled from './demos/controlled'
-import Description from './demos/description'
-import Disabled from './demos/disabled'
-import Label from './demos/label'
-import Links from './demos/links'
-import Loading from './demos/loading'
-import Placeholder from './demos/placeholder'
-import Required from './demos/required'
-import Sections from './demos/sections'
-import Uncontrolled from './demos/uncontrolled'
-import Validation from './demos/validation'
+import AsyncLoading from "./demos/async-loading"
+import Basic from "./demos/basic"
+import Controlled from "./demos/controlled"
+import Description from "./demos/description"
+import Disabled from "./demos/disabled"
+import Label from "./demos/label"
+import Links from "./demos/links"
+import Loading from "./demos/loading"
+import Placeholder from "./demos/placeholder"
+import Required from "./demos/required"
+import Sections from "./demos/sections"
+import Uncontrolled from "./demos/uncontrolled"
+import Validation from "./demos/validation"
 
 export default function SelectExamples() {
   return (

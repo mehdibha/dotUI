@@ -11,14 +11,14 @@ wip: true
   name="mention"
   controls={[
     {
-      type: 'string',
-      name: 'label',
-      defaultValue: 'Comment',
+      type: "string",
+      name: "label",
+      defaultValue: "Comment",
     },
     {
-      type: 'string',
-      name: 'placeholder',
-      defaultValue: 'Type @ to mention someone...',
+      type: "string",
+      name: "placeholder",
+      defaultValue: "Type @ to mention someone...",
     },
   ]}
 />
@@ -34,10 +34,10 @@ npx shadcn@latest add @dotui/mention
 `Mention` wires a mention experience onto the [TokenField](/docs/components/token-field) component: compose a `TokenInput` for the editable area plus a `Popover` + `Menu` for the suggestions, and `Mention` injects the wiring (value, caret-anchored popover, filtering, keyboard navigation, insertion) through context. Typing the trigger character (`@` by default) opens the list at the caret and filters as you type; selecting an item inserts it as an inline token.
 
 ```tsx
-import { Mention } from '@/ui/mention'
-import { MenuContent, MenuItem } from '@/ui/menu'
-import { Popover } from '@/ui/popover'
-import { TokenInput } from '@/ui/token-field'
+import { Mention } from "@/ui/mention"
+import { MenuContent, MenuItem } from "@/ui/menu"
+import { Popover } from "@/ui/popover"
+import { TokenInput } from "@/ui/token-field"
 ```
 
 ```tsx
@@ -64,10 +64,10 @@ Add a `Label` before the input when you want a visible label; otherwise give the
 ## Anatomy
 
 ```tsx
-import { Mention } from '@/ui/mention'
-import { MenuContent, MenuItem } from '@/ui/menu'
-import { Popover } from '@/ui/popover'
-import { TokenInput } from '@/ui/token-field'
+import { Mention } from "@/ui/mention"
+import { MenuContent, MenuItem } from "@/ui/menu"
+import { Popover } from "@/ui/popover"
+import { TokenInput } from "@/ui/token-field"
 ```
 
 ```tsx
@@ -121,7 +121,7 @@ Pass a regular expression to support several triggers at once. Children may be a
     <>
       <TokenInput aria-label="Prompt" />
       <Popover>
-        <MenuContent items={trigger === '/' ? commands : files}>
+        <MenuContent items={trigger === "/" ? commands : files}>
           {(item) => <MenuItem id={item.id}>{item.id}</MenuItem>}
         </MenuContent>
       </Popover>

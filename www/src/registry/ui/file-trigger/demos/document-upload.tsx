@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
 import {
   FileTextIcon,
   TrashIcon,
   UploadIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { FileTrigger } from '@/registry/ui/file-trigger'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { FileTrigger } from "@/registry/ui/file-trigger"
 
 export default function Demo() {
   const [docs, setDocs] = React.useState<string[]>([])
@@ -16,9 +16,9 @@ export default function Demo() {
     <div className="flex w-full max-w-xs flex-col gap-3">
       <FileTrigger
         acceptedFileTypes={[
-          'application/pdf',
-          'application/msword',
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         ]}
         allowsMultiple
         onSelect={(e) => {

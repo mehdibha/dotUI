@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { Button } from '@/registry/ui/button'
-import { Group } from '@/registry/ui/group'
+import { Button } from "@/registry/ui/button"
+import { Group } from "@/registry/ui/group"
 
 export default function Demo() {
   return (

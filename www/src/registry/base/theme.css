@@ -1,13 +1,14 @@
 /* -------------- Radius -------------- */
+/* Every rung is a ratio of the base length `--radius` (= --radius-lg). */
 @theme inline {
-  --radius-xs: calc(0.125rem * var(--radius-factor));
-  --radius-sm: calc(0.25rem * var(--radius-factor));
-  --radius-md: calc(0.375rem * var(--radius-factor));
-  --radius-lg: calc(0.5rem * var(--radius-factor));
-  --radius-xl: calc(0.75rem * var(--radius-factor));
-  --radius-2xl: calc(1rem * var(--radius-factor));
-  --radius-3xl: calc(1.5rem * var(--radius-factor));
-  --radius-4xl: calc(2rem * var(--radius-factor));
+  --radius-xs: calc(var(--radius) * 0.25);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 3);
+  --radius-4xl: calc(var(--radius) * 4);
 }
 
 /* AUTO-GENERATED: semantic colors — do not edit. Run `pnpm build:registry`. */
@@ -86,6 +87,8 @@
 	--color-fg-disabled: var(--neutral-600);
 	--color-fg-on-neutral: var(--neutral-950);
 	--color-border: var(--neutral-400);
+	--color-border-muted: var(--neutral-200);
+	--color-border-elevated: var(--neutral-a200);
 	--color-border-hover: var(--neutral-500);
 	--color-border-active: var(--neutral-600);
 	--color-border-field: var(--neutral-500);
@@ -101,5 +104,10 @@
 	--color-border-sidebar: var(--neutral-400);
 	--color-overlay: oklch(0 0 0);
 	--color-thumb: oklch(1 0 0);
+}
+
+.dark {
+	--color-border-elevated: var(--neutral-a100);
+	--color-popover: color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100));
 }
 /* END AUTO-GENERATED */

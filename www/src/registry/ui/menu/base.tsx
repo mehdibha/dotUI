@@ -1,12 +1,12 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as MenuPrimitives from 'react-aria-components/Menu'
+import type * as React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as MenuPrimitives from "react-aria-components/Menu"
 
-import { CheckIcon, ChevronRightIcon } from '@/registry/icons'
+import { CheckIcon, ChevronRightIcon } from "@/registry/icons"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: menuStyles
 
@@ -48,7 +48,7 @@ const MenuSub = (props: MenuSubProps) => {
 // MARK: Separator
 
 interface MenuItemProps<T> extends MenuPrimitives.MenuItemProps<T> {
-  variant?: 'default' | 'danger'
+  variant?: "default" | "danger"
 }
 
 const MenuItem = <T extends object>({
@@ -60,7 +60,7 @@ const MenuItem = <T extends object>({
   const { item, indicator } = useStyles()()
   const textValue =
     textValueProp ||
-    (typeof props.children === 'string' ? props.children : undefined)
+    (typeof props.children === "string" ? props.children : undefined)
 
   return (
     <MenuPrimitives.MenuItem
@@ -77,14 +77,14 @@ const MenuItem = <T extends object>({
         props.children,
         (children, { selectionMode, isSelected, hasSubmenu }) => (
           <>
-            {selectionMode !== 'none' && (
+            {selectionMode !== "none" && (
               <span data-menu-item-indicator="" className={indicator()}>
                 {isSelected && (
                   <CheckIcon aria-hidden className="size-4 text-fg-accent" />
                 )}
               </span>
             )}
-            {typeof children === 'string' ? (
+            {typeof children === "string" ? (
               <MenuItemLabel>{children}</MenuItemLabel>
             ) : (
               children

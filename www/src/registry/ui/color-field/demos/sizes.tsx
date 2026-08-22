@@ -1,6 +1,6 @@
-import { ColorField } from '@/registry/ui/color-field'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
+import { ColorField } from "@/registry/ui/color-field"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
 export default function Demo() {
   return (
     <div className="flex w-full max-w-xs flex-col gap-6">

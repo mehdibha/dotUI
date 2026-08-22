@@ -1,4 +1,4 @@
-import { ProgressBar } from '@/registry/ui/progress-bar'
+import { ProgressBar } from "@/registry/ui/progress-bar"
 
 const progressValues = [0, 25, 50, 75, 100]
 

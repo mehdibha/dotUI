@@ -11,23 +11,23 @@ wip: true
   name="select"
   controls={[
     {
-      type: 'string',
-      name: 'label',
-      defaultValue: 'Country',
+      type: "string",
+      name: "label",
+      defaultValue: "Country",
     },
     {
-      type: 'string',
-      name: 'placeholder',
-      defaultValue: 'Select a country',
+      type: "string",
+      name: "placeholder",
+      defaultValue: "Select a country",
     },
     {
-      type: 'boolean',
-      name: 'isDisabled',
+      type: "boolean",
+      name: "isDisabled",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isInvalid',
+      type: "boolean",
+      name: "isInvalid",
       defaultValue: false,
     },
   ]}
@@ -44,7 +44,7 @@ npx shadcn@latest add @dotui/select
 Use `Select` to allow users to choose a single option from a collapsible list of options when space is limited.
 
 ```tsx
-import { Select, SelectContent, SelectItem, SelectTrigger } from '@/ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@/ui/select"
 ```
 
 ```tsx
@@ -67,7 +67,7 @@ import {
   SelectItem,
   SelectSection,
   SelectSectionHeader,
-} from '@/ui/select'
+} from "@/ui/select"
 ```
 
 ```tsx
@@ -121,8 +121,11 @@ Feed a `useAsyncList` result into `SelectContent` via `items`, and wire `isLoadi
 Add a `Label` and a `FieldError` inside `Select`, and set `isRequired` or `isInvalid` to surface validation.
 
 ```tsx
-import { FieldError, Label } from '@/ui/field'
-;<Select isRequired>
+import { FieldError, Label } from "@/ui/field"
+```
+
+```tsx
+<Select isRequired>
   <Label>Provider</Label>
   <SelectTrigger />
   <SelectContent>
@@ -137,16 +140,16 @@ import { FieldError, Label } from '@/ui/field'
 `SelectTrigger` wraps `Button`, `SelectContent` wraps `Popover` + `ListBox`, and `SelectItem` re-exports `ListBoxItem`. For full control, drop the wrappers and compose the primitives directly.
 
 ```tsx
-import { ChevronDownIcon } from 'lucide-react'
-import { Button } from '@/ui/button'
+import { ChevronDownIcon } from "lucide-react"
+import { Button } from "@/ui/button"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/ui/list-box'
-import { Popover } from '@/ui/popover'
-import { Select, SelectValue } from '@/ui/select'
+} from "@/ui/list-box"
+import { Popover } from "@/ui/popover"
+import { Select, SelectValue } from "@/ui/select"
 ```
 
 ```tsx

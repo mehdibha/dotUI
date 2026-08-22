@@ -1,14 +1,14 @@
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
 /**
  * The small pill "eyebrow" shown above a page headline. Static by default;
  * wrap it in a link for an interactive one.
  */
-export function Eyebrow({ className, ...props }: React.ComponentProps<'span'>) {
+export function Eyebrow({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border bg-card px-3 py-1 text-xs text-fg-muted',
+        "inline-flex items-center gap-1.5 rounded-full border bg-card px-3 py-1 text-xs text-fg-muted",
         className,
       )}
       {...props}

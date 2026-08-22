@@ -1,24 +1,24 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
-import { MoonStarIcon, SunIcon, Volume2Icon } from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
+import { MoonStarIcon, SunIcon, Volume2Icon } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { Description, FieldContent, Label } from '@/registry/ui/field'
-import { Slider, SliderControl, SliderOutput } from '@/registry/ui/slider'
-import { Switch, SwitchControl } from '@/registry/ui/switch'
+} from "@/registry/ui/card"
+import { Description, FieldContent, Label } from "@/registry/ui/field"
+import { Slider, SliderControl, SliderOutput } from "@/registry/ui/slider"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 
 export function DisplaySettings({
   className,
   ...props
-}: React.ComponentProps<'div'>) {
+}: React.ComponentProps<"div">) {
   const [brightness, setBrightness] = useState(60)
   const [volume, setVolume] = useState(35)
   const [nightShift, setNightShift] = useState(true)

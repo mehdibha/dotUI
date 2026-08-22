@@ -1,6 +1,6 @@
-import { ChartRadar } from '@/registry/ui/chart-radar'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { ChartRadar } from "@/registry/ui/chart-radar"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function ChartRadarExamples() {
   return (

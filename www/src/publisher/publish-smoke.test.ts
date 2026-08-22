@@ -10,42 +10,43 @@
  * field `fieldset`/`legend` regression). npm deps resolve from www/node_modules.
  */
 
-import { execFileSync } from 'node:child_process'
-import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
-import path from 'node:path'
-import { expect, test } from 'vitest'
+import { execFileSync } from "node:child_process"
+import { mkdirSync, rmSync, writeFileSync } from "node:fs"
+import path from "node:path"
+import { expect, test } from "vitest"
 
-import { defaultPreset } from '@/lib/registry-preset'
+import { defaultPreset } from "@/lib/registry-preset"
 import {
   publishables,
   PUBLISHABLE_NAMES,
-} from '@/registry/__generated__/publishables'
+} from "@/registry/__generated__/publishables"
 
+import { CN_UTILS_TS } from "./emit-theme"
 import {
   publish,
   selectPublishable,
   setDotuiDepResolver,
   setKnownDotuiNames,
-} from './publish'
+} from "./publish"
 
 // www/ — the fixture lives inside it so bare imports resolve via www/node_modules
 // and path aliases can reach registry source with plain relative specifiers.
-const WWW_DIR = path.resolve(import.meta.dirname, '../..')
-const FIXTURE_DIR = path.join(WWW_DIR, '.smoke-fixture')
-const TSC_BIN = path.join(WWW_DIR, 'node_modules', 'typescript', 'bin', 'tsc')
+const WWW_DIR = path.resolve(import.meta.dirname, "../..")
+const FIXTURE_DIR = path.join(WWW_DIR, ".smoke-fixture")
+const TSC_BIN = path.join(WWW_DIR, "node_modules", "typescript", "bin", "tsc")
 
 /** Map a shipped `target` to its consumer-alias location under the fixture src. */
 function fixtureRelPath(target: string): string {
-  if (target.startsWith('ui/')) return `src/components/ui/${target.slice(3)}`
-  if (target.startsWith('lib/')) return `src/lib/${target.slice(4)}`
-  if (target.startsWith('hooks/')) return `src/hooks/${target.slice(6)}`
+  if (target.startsWith("ui/")) return `src/components/ui/${target.slice(3)}`
+  if (target.startsWith("lib/")) return `src/lib/${target.slice(4)}`
+  if (target.startsWith("hooks/")) return `src/hooks/${target.slice(6)}`
   return `src/${target}`
 }
 
 function writeFixtureFile(relPath: string, content: string): void {
   const abs = path.join(FIXTURE_DIR, relPath)
   mkdirSync(path.dirname(abs), { recursive: true })
-  writeFileSync(abs, content, 'utf8')
+  writeFileSync(abs, content, "utf8")
 }
 
 async function buildFixture(): Promise<void> {
@@ -53,7 +54,7 @@ async function buildFixture(): Promise<void> {
   mkdirSync(FIXTURE_DIR, { recursive: true })
 
   setKnownDotuiNames(PUBLISHABLE_NAMES)
-  setDotuiDepResolver('https://dotui.org')
+  setDotuiDepResolver("https://dotui.org")
   const preset = defaultPreset()
 
   for (const name of PUBLISHABLE_NAMES) {
@@ -71,38 +72,38 @@ async function buildFixture(): Promise<void> {
   }
 
   // Init-bundled cn helper (ships in the registry:base item, not per-component).
-  writeFixtureFile('src/lib/utils.ts', `export { cn } from "cnfast";\n`)
+  writeFixtureFile("src/lib/utils.ts", CN_UTILS_TS)
   // `@/components/icons` is resolved to a real library at publish; type it away
   // in case any emitted file still references the marker.
-  writeFixtureFile('src/env.d.ts', `declare module "@/components/icons";\n`)
+  writeFixtureFile("src/env.d.ts", `declare module "@/components/icons";\n`)
 
   // Aliases mirror the consumer's components.json. `@/components/ui/*` MUST hit
   // the emitted fixture files (cross-component type-checking); lib/hook deps not
   // shipped inline fall back to registry source for real types.
   const toRegistry = (sub: string) =>
-    path.relative(FIXTURE_DIR, path.join(WWW_DIR, 'src/registry', sub))
+    path.relative(FIXTURE_DIR, path.join(WWW_DIR, "src/registry", sub))
   const tsconfig = {
-    extends: '@dotui/ts-config/base.json',
+    extends: "@dotui/ts-config/base.json",
     compilerOptions: {
-      lib: ['ES2022', 'DOM', 'DOM.Iterable'],
-      jsx: 'react-jsx',
-      module: 'ESNext',
-      moduleResolution: 'Bundler',
+      lib: ["ES2022", "DOM", "DOM.Iterable"],
+      jsx: "react-jsx",
+      module: "ESNext",
+      moduleResolution: "Bundler",
       noEmit: true,
       skipLibCheck: true,
       incremental: false,
       checkJs: false,
       types: [],
       paths: {
-        '@/components/ui/*': ['./src/components/ui/*'],
-        '@/lib/*': ['./src/lib/*', `${toRegistry('lib')}/*`],
-        '@/hooks/*': ['./src/hooks/*', `${toRegistry('hooks')}/*`],
-        '@/registry/*': [`${toRegistry('')}/*`],
+        "@/components/ui/*": ["./src/components/ui/*"],
+        "@/lib/*": ["./src/lib/*", `${toRegistry("lib")}/*`],
+        "@/hooks/*": ["./src/hooks/*", `${toRegistry("hooks")}/*`],
+        "@/registry/*": [`${toRegistry("")}/*`],
       },
     },
-    include: ['src/**/*.ts', 'src/**/*.tsx'],
+    include: ["src/**/*.ts", "src/**/*.tsx"],
   }
-  writeFixtureFile('tsconfig.json', JSON.stringify(tsconfig, null, 2))
+  writeFixtureFile("tsconfig.json", JSON.stringify(tsconfig, null, 2))
 }
 
 /**
@@ -120,27 +121,27 @@ const DIAGNOSTIC_RE = /^(src\/.+?)\((\d+),\d+\): error TS/
 /** Component slug that owns an errored diagnostic line, e.g. `…/time-picker.tsx(9,…)` → `time-picker`. */
 function ownerOf(line: string): string | undefined {
   const filePath = line.match(DIAGNOSTIC_RE)?.[1]
-  return filePath ? path.basename(filePath).replace(/\.tsx?$/, '') : undefined
+  return filePath ? path.basename(filePath).replace(/\.tsx?$/, "") : undefined
 }
 
 /** Run tsc over the fixture; returns diagnostic lines (only `path(line,col): error …`). */
 function runTsc(): string[] {
-  let output = ''
+  let output = ""
   try {
-    execFileSync(process.execPath, [TSC_BIN, '--noEmit', '--pretty', 'false'], {
+    execFileSync(process.execPath, [TSC_BIN, "--noEmit", "--pretty", "false"], {
       cwd: FIXTURE_DIR,
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'pipe'],
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "pipe"],
     })
   } catch (err) {
     const e = err as { stdout?: string; stderr?: string }
-    output = `${e.stdout ?? ''}${e.stderr ?? ''}`
+    output = `${e.stdout ?? ""}${e.stderr ?? ""}`
   }
-  return output.split('\n').filter((l) => DIAGNOSTIC_RE.test(l))
+  return output.split("\n").filter((l) => DIAGNOSTIC_RE.test(l))
 }
 
 test(
-  'every publishable emits code that type-checks together (default preset)',
+  "every publishable emits code that type-checks together (default preset)",
   { timeout: 180_000 },
   async () => {
     await buildFixture()
@@ -157,7 +158,7 @@ test(
     const stale = [...KNOWN_BROKEN.keys()].filter((n) => !brokenSeen.has(n))
 
     if (unexpected.length > 0) {
-      const shown = unexpected.slice(0, 40).join('\n')
+      const shown = unexpected.slice(0, 40).join("\n")
       throw new Error(
         `Emitted publishable code failed to type-check (${unexpected.length} error(s) in ` +
           `non-allowlisted components). A component ships broken code — e.g. a base file ` +
@@ -168,8 +169,8 @@ test(
     }
     if (stale.length > 0) {
       throw new Error(
-        `Stale KNOWN_BROKEN entr${stale.length === 1 ? 'y' : 'ies'} — now compiles clean: ` +
-          `${stale.join(', ')}. Remove from KNOWN_BROKEN in publish-smoke.test.ts.`,
+        `Stale KNOWN_BROKEN entr${stale.length === 1 ? "y" : "ies"} — now compiles clean: ` +
+          `${stale.join(", ")}. Remove from KNOWN_BROKEN in publish-smoke.test.ts.`,
       )
     }
 

@@ -5,12 +5,12 @@
  * exactly; alpha within 1/255 (Radix rounds to 2 hex digits).
  */
 
-import * as radix from '@radix-ui/colors'
-import { expect, test } from 'vitest'
+import * as radix from "@radix-ui/colors"
+import { expect, test } from "vitest"
 
-import { solveAlphaRgb8 } from './index'
+import { solveAlphaRgb8 } from "./index"
 
-const FAMILIES = ['blue', 'red', 'green', 'amber', 'purple', 'gray'] as const
+const FAMILIES = ["blue", "red", "green", "amber", "purple", "gray"] as const
 
 interface Rgba {
   r: number
@@ -72,7 +72,7 @@ function familyMismatches(
   return mismatches
 }
 
-test('light alpha twins match Radix digit-for-digit over #ffffff', () => {
+test("light alpha twins match Radix digit-for-digit over #ffffff", () => {
   for (const family of FAMILIES) {
     const solids = radix[family] as Record<string, string>
     const published = radix[`${family}A`] as Record<string, string>
@@ -84,7 +84,7 @@ test('light alpha twins match Radix digit-for-digit over #ffffff', () => {
   }
 })
 
-test('dark alpha twins match Radix digit-for-digit over #111111', () => {
+test("dark alpha twins match Radix digit-for-digit over #111111", () => {
   for (const family of FAMILIES) {
     const solids = radix[`${family}Dark`] as Record<string, string>
     const published = radix[`${family}DarkA`] as Record<string, string>

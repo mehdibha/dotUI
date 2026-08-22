@@ -1,18 +1,18 @@
-'use client'
+"use client"
 
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
-import { CheckboxGroup } from '@/registry/ui/checkbox-group'
-import { FieldGroup, Label } from '@/registry/ui/field'
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import { CheckboxGroup } from "@/registry/ui/checkbox-group"
+import { FieldGroup, Label } from "@/registry/ui/field"
 
 export default function Demo({
-  label = 'Select frameworks',
+  label = "Select frameworks",
   isDisabled = false,
   isReadOnly = false,
   isInvalid = false,
 } = {}) {
   return (
     <CheckboxGroup
-      defaultValue={['react']}
+      defaultValue={["react"]}
       isDisabled={isDisabled}
       isReadOnly={isReadOnly}
       isInvalid={isInvalid}

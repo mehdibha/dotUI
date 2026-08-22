@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import { DemoPreset } from '../demo-preset'
-import { ComponentCard } from './component-card'
-import { componentsData } from './components-data'
+import { DemoPreset } from "../demo-preset"
+import { ComponentCard } from "./component-card"
+import { componentsData } from "./components-data"
 
 // Categories with tall components (calendars, tables, opened overlay/picker
 // scenes, the command palette) get a taller card so those components render at
 // or near native size. Everything else uses the default height.
 const CATEGORY_PREVIEW_HEIGHT: Record<string, string> = {
-  dates: 'h-52',
-  navigation: 'h-52',
-  'data-display': 'h-52',
-  colors: 'h-52',
-  charts: 'h-72',
+  dates: "h-52",
+  navigation: "h-52",
+  "data-display": "h-52",
+  colors: "h-52",
+  charts: "h-72",
   // Overlay scenes (and the pickers' dropdowns) need room for the opened surface.
-  overlays: 'h-52',
-  pickers: 'h-52',
+  overlays: "h-52",
+  pickers: "h-52",
 }
 
 /**

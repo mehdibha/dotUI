@@ -1,7 +1,7 @@
-import type { IconLibraryName } from '@/registry/icons/icon-map'
-import type { ColorConfig } from '@/registry/theme'
-import type { Density } from '@/registry/types'
-import type { CodeOptions } from '@/publisher/code-options'
+import type { IconLibraryName } from "@/registry/icons/icon-map"
+import type { ColorConfig } from "@/registry/theme"
+import type { Density } from "@/registry/types"
+import type { CodeOptions } from "@/publisher/code-options"
 
 export type { CodeOptions, Density, IconLibraryName }
 
@@ -9,7 +9,7 @@ export type { CodeOptions, Density, IconLibraryName }
  * Compact representation for URL serialization. Short keys keep the encoded
  * string small.
  *   p = component params (per-component values, e.g. { alert: { style: "sousse", radius: "--radius-md" } })
- *   t = global theme tokens (CSS vars not owned by any component, e.g. { "--radius-factor": "1.25" })
+ *   t = global theme tokens (CSS vars not owned by any component, e.g. { "--radius": "0.75rem" })
  *   d = density
  *   c = color config (palette seeds + engine axes); present only when it differs from the default
  *   o = code options (exported-code style); present only when they differ from the default
@@ -45,7 +45,7 @@ export function fromCompact(state: DesignSystemState): DesignSystem {
   return {
     componentParams: state.p ?? {},
     tokens: state.t ?? {},
-    density: state.d ?? 'default',
+    density: state.d ?? "default",
     color: state.c,
     codeOptions: state.o,
     icons: state.i,

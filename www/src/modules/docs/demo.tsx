@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
-import type { PressEvent } from 'react-aria-components'
+import React, { useState } from "react"
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react"
+import type { PressEvent } from "react-aria-components"
 
-import { Button } from '@/registry/ui/button'
+import { Button } from "@/registry/ui/button"
 
-import { CodeBlock, Pre } from './code-block'
-import { DemoPreset } from './demo-preset'
-import { PreviewControls, PreviewPanel } from './preview-controls'
-import { toggleCodeBlock } from './toggle-code-block'
+import { CodeBlock, Pre } from "./code-block"
+import { DemoPreset } from "./demo-preset"
+import { PreviewControls, PreviewPanel } from "./preview-controls"
+import { toggleCodeBlock } from "./toggle-code-block"
 
 // ============================================================================
 // Slot Components
@@ -45,7 +45,7 @@ export function getSlotContent(
 // Demo Component
 // ============================================================================
 
-export interface DemoProps extends React.ComponentProps<'div'> {
+export interface DemoProps extends React.ComponentProps<"div"> {
   component: React.ComponentType
   children: React.ReactNode
 }

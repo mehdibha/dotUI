@@ -11,10 +11,10 @@ wip: true
   name="table"
   controls={[
     {
-      type: 'enum',
-      name: 'selectionMode',
-      options: ['none', 'single', 'multiple'],
-      defaultValue: 'none',
+      type: "enum",
+      name: "selectionMode",
+      options: ["none", "single", "multiple"],
+      defaultValue: "none",
     },
   ]}
 />
@@ -40,7 +40,7 @@ import {
   TableHeader,
   TableRow,
   TableVirtualizer,
-} from '@/ui/table'
+} from "@/ui/table"
 ```
 
 ```tsx
@@ -118,8 +118,11 @@ import {
   TableFooter,
   TableHeader,
   TableRow,
-} from '@/ui/table'
-;<TableContainer>
+} from "@/ui/table"
+```
+
+```tsx
+<TableContainer>
   <Table>
     <TableHeader>
       <TableColumn isRowHeader>Name</TableColumn>

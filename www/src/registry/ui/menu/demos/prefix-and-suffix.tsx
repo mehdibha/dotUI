@@ -3,11 +3,11 @@ import {
   MenuIcon,
   PlusSquareIcon,
   SquarePenIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Description, Label } from '@/registry/ui/field'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Description, Label } from "@/registry/ui/field"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (

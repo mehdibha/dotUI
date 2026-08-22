@@ -1,7 +1,7 @@
-import { createStyles } from '@/lib/styles'
-import { fieldStyles } from '@/registry/ui/field'
+import { createStyles } from "@/lib/styles"
+import { fieldStyles } from "@/registry/ui/field"
 
-import progressBarMeta from './meta'
+import progressBarMeta from "./meta"
 
 const { useStyles, styles } = createStyles(progressBarMeta, {
   base: {
@@ -11,9 +11,9 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
       // so the bar stays visible even when the design system hasn't injected those
       // CSS vars — otherwise the track collapses to 0 height and the fill is transparent.
       track:
-        'relative flex h-[var(--progress-track-size,calc(var(--spacing)*1))] w-full items-center overflow-x-hidden rounded-[var(--progress-track-radius,9999px)] bg-muted',
-      fill: 'data-indeterminate:animate-progress-indeterminate h-full w-full origin-left bg-[var(--progress-fill-color,var(--color-primary))] transition-all',
-      output: 'ml-auto text-fg-muted tabular-nums',
+        "relative flex h-[var(--progress-track-size,calc(var(--spacing)*1))] w-full items-center overflow-x-hidden rounded-[var(--progress-track-radius,9999px)] bg-muted",
+      fill: "data-indeterminate:animate-progress-indeterminate h-full w-full origin-left bg-[var(--progress-fill-color,var(--color-primary))] transition-all",
+      output: "ml-auto text-fg-muted tabular-nums",
     },
     variants: {},
     defaultVariants: {},
@@ -21,17 +21,17 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
   density: {
     compact: {
       slots: {
-        output: 'text-xs',
+        output: "text-xs",
       },
     },
     default: {
       slots: {
-        output: 'text-sm',
+        output: "text-sm",
       },
     },
     comfortable: {
       slots: {
-        output: 'text-sm',
+        output: "text-sm",
       },
     },
   },

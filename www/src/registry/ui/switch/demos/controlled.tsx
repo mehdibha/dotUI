@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Label } from '@/registry/ui/field'
-import { Switch, SwitchControl } from '@/registry/ui/switch'
+import { Label } from "@/registry/ui/field"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 
 export default function Demo() {
   const [isSelected, setSelected] = React.useState(true)
@@ -14,7 +14,7 @@ export default function Demo() {
         <Label>Focus mode</Label>
       </Switch>
       <p className="text-xs text-fg-muted">
-        You are {!isSelected && 'not'} on{' '}
+        You are {!isSelected && "not"} on{" "}
         <span className="font-bold">focus mode</span>.
       </p>
     </div>

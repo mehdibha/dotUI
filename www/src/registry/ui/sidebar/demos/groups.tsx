@@ -4,7 +4,7 @@ import {
   HomeIcon,
   InboxIcon,
   PlusIcon,
-} from '@/registry/__generated__/icons'
+} from "@/registry/__generated__/icons"
 import {
   Sidebar,
   SidebarContent,
@@ -18,7 +18,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from '@/registry/ui/sidebar'
+} from "@/registry/ui/sidebar"
 
 export default function Demo() {
   return (

@@ -1,21 +1,21 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const accordionMeta = {
-  name: 'accordion',
-  type: 'registry:ui',
-  group: 'disclosure',
+  name: "accordion",
+  type: "registry:ui",
+  group: "disclosure",
   files: [
     {
-      type: 'registry:ui',
-      path: 'ui/accordion/base.tsx',
-      target: 'ui/accordion.tsx',
+      type: "registry:ui",
+      path: "ui/accordion/base.tsx",
+      target: "ui/accordion.tsx",
     },
   ],
   params: {
     style: {
-      kind: 'enum',
-      default: 'default',
-      values: ['default', 'hammamet'] as const,
+      kind: "enum",
+      default: "default",
+      values: ["default", "hammamet"] as const,
     },
   },
 } satisfies RegistryItem

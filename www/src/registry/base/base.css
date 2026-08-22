@@ -1,7 +1,7 @@
-@import 'tw-animate-css';
+@import "tw-animate-css";
 
-@plugin 'tailwindcss-react-aria-components';
-@plugin 'tailwindcss-with';
+@plugin "tailwindcss-react-aria-components";
+@plugin "tailwindcss-with";
 
 /* Page mode comes from the `.dark` class; a subtree can pin its own mode with
    `data-mode="light|dark"` (e.g. a themed preview inside a differently-themed

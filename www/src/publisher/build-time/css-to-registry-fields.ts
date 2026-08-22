@@ -1,28 +1,28 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
-export type RegistryCssFields = Pick<RegistryItem, 'css' | 'cssVars'>
+export type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
 
-type CssValue = NonNullable<RegistryItem['css']>[string]
+type CssValue = NonNullable<RegistryItem["css"]>[string]
 type CssObject = Record<string, CssValue>
-type CssVars = NonNullable<RegistryItem['cssVars']>
+type CssVars = NonNullable<RegistryItem["cssVars"]>
 
 type CssNode = AtRuleNode | DeclarationNode | RuleNode
 
 interface AtRuleNode {
-  type: 'atrule'
+  type: "atrule"
   name: string
   params: string
   nodes: CssNode[]
 }
 
 interface DeclarationNode {
-  type: 'decl'
+  type: "decl"
   prop: string
   value: string
 }
 
 interface RuleNode {
-  type: 'rule'
+  type: "rule"
   selector: string
   nodes: CssNode[]
 }
@@ -36,8 +36,8 @@ export function cssToRegistryFields(css: string): RegistryCssFields {
 }
 
 function addNodeToFields(fields: RegistryCssFields, node: CssNode): void {
-  if (node.type === 'atrule' && node.name === 'theme') {
-    addDeclarationsToVars(fields, 'theme', node.nodes, {
+  if (node.type === "atrule" && node.name === "theme") {
+    addDeclarationsToVars(fields, "theme", node.nodes, {
       stripCustomPropertyPrefix: false,
     })
     return
@@ -58,7 +58,7 @@ function addDeclarationsToVars(
 ): void {
   const declarations = nodes.filter(
     (node): node is DeclarationNode =>
-      node.type === 'decl' && node.prop.startsWith('--'),
+      node.type === "decl" && node.prop.startsWith("--"),
   )
   if (declarations.length === 0) return
 
@@ -70,13 +70,13 @@ function addDeclarationsToVars(
 }
 
 function nodeToCssEntry(node: CssNode): [string, CssValue] | undefined {
-  if (node.type === 'decl') return [node.prop, node.value]
-  if (node.type === 'rule') return [node.selector, nodesToCssObject(node.nodes)]
+  if (node.type === "decl") return [node.prop, node.value]
+  if (node.type === "rule") return [node.selector, nodesToCssObject(node.nodes)]
 
-  const key = `@${node.name}${node.params ? ` ${node.params}` : ''}`
+  const key = `@${node.name}${node.params ? ` ${node.params}` : ""}`
   // shadcn emits @plugin as a statement, so nested plugin option bodies would
   // be dropped by the installer anyway. Keep the plugin declaration explicit.
-  if (node.name === 'plugin') return [key, {}]
+  if (node.name === "plugin") return [key, {}]
   return [key, node.nodes.length > 0 ? nodesToCssObject(node.nodes) : {}]
 }
 
@@ -106,7 +106,7 @@ function compactFields(fields: RegistryCssFields): RegistryCssFields {
   if (fields.css && Object.keys(fields.css).length > 0) out.css = fields.css
   if (fields.cssVars) {
     const cssVars: CssVars = {}
-    for (const key of ['theme', 'light', 'dark'] as const) {
+    for (const key of ["theme", "light", "dark"] as const) {
       const value = fields.cssVars[key]
       if (value && Object.keys(value).length > 0) cssVars[key] = value
     }
@@ -116,14 +116,14 @@ function compactFields(fields: RegistryCssFields): RegistryCssFields {
 }
 
 function isPlainObject(value: unknown): value is Record<string, CssValue> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value)
+  return typeof value === "object" && value !== null && !Array.isArray(value)
 }
 
 function cssVarKey(
   prop: string,
   options: { stripCustomPropertyPrefix: boolean },
 ): string {
-  return options.stripCustomPropertyPrefix ? prop.replace(/^--/, '') : prop
+  return options.stripCustomPropertyPrefix ? prop.replace(/^--/, "") : prop
 }
 
 function parseCss(input: string): CssNode[] {
@@ -132,7 +132,7 @@ function parseCss(input: string): CssNode[] {
 }
 
 function stripComments(input: string): string {
-  return input.replace(/\/\*[\s\S]*?\*\//g, '')
+  return input.replace(/\/\*[\s\S]*?\*\//g, "")
 }
 
 class CssParser {
@@ -144,7 +144,7 @@ class CssParser {
     const nodes: CssNode[] = []
     while (this.index < this.input.length) {
       this.skipWhitespace()
-      if (this.peek() === '}') break
+      if (this.peek() === "}") break
       const node = this.parseNode()
       if (node) nodes.push(node)
     }
@@ -161,22 +161,22 @@ class CssParser {
       return undefined
     }
 
-    if (endChar === '{') {
+    if (endChar === "{") {
       this.index += 1
       const nodes = this.parseNodes()
-      if (this.peek() === '}') this.index += 1
-      return prelude.startsWith('@')
+      if (this.peek() === "}") this.index += 1
+      return prelude.startsWith("@")
         ? atRuleWithNodes(prelude, nodes)
-        : { type: 'rule', selector: prelude, nodes }
+        : { type: "rule", selector: prelude, nodes }
     }
 
-    if (endChar === ';') this.index += 1
-    if (prelude.startsWith('@')) return atRuleWithNodes(prelude, [])
+    if (endChar === ";") this.index += 1
+    if (prelude.startsWith("@")) return atRuleWithNodes(prelude, [])
 
     const colon = findTopLevelColon(prelude)
     if (colon === -1) return undefined
     return {
-      type: 'decl',
+      type: "decl",
       prop: prelude.slice(0, colon).trim(),
       value: prelude.slice(colon + 1).trim(),
     }
@@ -189,29 +189,29 @@ class CssParser {
       const char = this.input[this.index]
       const prev = this.input[this.index - 1]
       if (quote) {
-        if (char === quote && prev !== '\\') quote = undefined
+        if (char === quote && prev !== "\\") quote = undefined
         continue
       }
       if (char === `"` || char === `'`) {
         quote = char
         continue
       }
-      if (char === '(' || char === '[') {
+      if (char === "(" || char === "[") {
         parenDepth += 1
         continue
       }
-      if (char === ')' || char === ']') {
+      if (char === ")" || char === "]") {
         parenDepth = Math.max(0, parenDepth - 1)
         continue
       }
-      if (parenDepth === 0 && (char === '{' || char === ';' || char === '}'))
+      if (parenDepth === 0 && (char === "{" || char === ";" || char === "}"))
         return char
     }
     return undefined
   }
 
   private skipWhitespace(): void {
-    while (/\s/.test(this.peek() ?? '')) this.index += 1
+    while (/\s/.test(this.peek() ?? "")) this.index += 1
   }
 
   private peek(): string | undefined {
@@ -222,9 +222,9 @@ class CssParser {
 function atRuleWithNodes(prelude: string, nodes: CssNode[]): AtRuleNode {
   const body = prelude.slice(1).trim()
   const space = body.search(/\s/)
-  if (space === -1) return { type: 'atrule', name: body, params: '', nodes }
+  if (space === -1) return { type: "atrule", name: body, params: "", nodes }
   return {
-    type: 'atrule',
+    type: "atrule",
     name: body.slice(0, space),
     params: body.slice(space + 1).trim(),
     nodes,
@@ -238,22 +238,22 @@ function findTopLevelColon(input: string): number {
     const char = input[i]
     const prev = input[i - 1]
     if (quote) {
-      if (char === quote && prev !== '\\') quote = undefined
+      if (char === quote && prev !== "\\") quote = undefined
       continue
     }
     if (char === `"` || char === `'`) {
       quote = char
       continue
     }
-    if (char === '(' || char === '[') {
+    if (char === "(" || char === "[") {
       parenDepth += 1
       continue
     }
-    if (char === ')' || char === ']') {
+    if (char === ")" || char === "]") {
       parenDepth = Math.max(0, parenDepth - 1)
       continue
     }
-    if (char === ':' && parenDepth === 0) return i
+    if (char === ":" && parenDepth === 0) return i
   }
   return -1
 }

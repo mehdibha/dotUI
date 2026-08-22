@@ -1,19 +1,19 @@
-import type React from 'react'
-import { CodeIcon, XIcon } from 'lucide-react'
+import type React from "react"
+import { CodeIcon, XIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Dialog, DialogContent, DialogTitle } from '@/registry/ui/dialog'
-import { Modal } from '@/registry/ui/modal'
+import { Button } from "@/registry/ui/button"
+import { Dialog, DialogContent, DialogTitle } from "@/registry/ui/dialog"
+import { Modal } from "@/registry/ui/modal"
 
-import { CodeBlock, Pre } from './code-block'
+import { CodeBlock, Pre } from "./code-block"
 import {
   CodeBlockTab,
   CodeBlockTabs,
   CodeBlockTabsList,
   CodeBlockTabsTrigger,
-} from './code-block-tabs'
-import { DemoPreset } from './demo-preset'
-import { buildInstallCommands, PACKAGE_MANAGERS } from './install-commands'
+} from "./code-block-tabs"
+import { DemoPreset } from "./demo-preset"
+import { buildInstallCommands, PACKAGE_MANAGERS } from "./install-commands"
 
 export interface ExampleCodeModalProps {
   /** Modal title — the example's title. */

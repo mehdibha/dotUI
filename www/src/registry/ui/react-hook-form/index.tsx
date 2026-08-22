@@ -1,21 +1,21 @@
-'use client'
+"use client"
 
-import { Controller } from 'react-hook-form'
+import { Controller } from "react-hook-form"
 import type {
   ControllerFieldState,
   ControllerRenderProps,
   FieldPath,
   FieldValues,
   UseControllerProps,
-} from 'react-hook-form'
+} from "react-hook-form"
 
 type FormControlProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = Omit<UseControllerProps<TFieldValues, TName>, 'render'> & {
+> = Omit<UseControllerProps<TFieldValues, TName>, "render"> & {
   render: (
-    props: Omit<ControllerRenderProps<TFieldValues, TName>, 'disabled'> &
-      Omit<ControllerFieldState, 'invalid' | 'error'> & {
+    props: Omit<ControllerRenderProps<TFieldValues, TName>, "disabled"> &
+      Omit<ControllerFieldState, "invalid" | "error"> & {
         isInvalid: boolean
         isDisabled?: boolean
         errorMessage?: string

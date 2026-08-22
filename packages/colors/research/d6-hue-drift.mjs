@@ -14,17 +14,17 @@
 //   makes light and dark mode directly comparable (in Radix dark mode the dark
 //   side is steps 1-8, the light side 10-12).
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
-import { createRequire } from 'node:module'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { oklch } from 'culori'
+import { readFileSync, writeFileSync, mkdirSync } from "node:fs"
+import { createRequire } from "node:module"
+import { dirname, join } from "node:path"
+import { fileURLToPath } from "node:url"
+import { oklch } from "culori"
 
 const require = createRequire(import.meta.url)
-const radix = require('@radix-ui/colors')
+const radix = require("@radix-ui/colors")
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const DATA_DIR = join(__dirname, 'data')
+const DATA_DIR = join(__dirname, "data")
 mkdirSync(DATA_DIR, { recursive: true })
 
 const CHROMA_FLOOR = 0.03 // below this, OKLCH hue is unreliable
@@ -34,12 +34,12 @@ const round = (x, d = 3) => (x == null ? null : Number(x.toFixed(d)))
 
 // ---------- Radix ----------
 
-const GRAYS = new Set(['gray', 'mauve', 'slate', 'sage', 'olive', 'sand'])
+const GRAYS = new Set(["gray", "mauve", "slate", "sage", "olive", "sand"])
 const radixFamilies = Object.keys(radix)
-  .filter((k) => !/Dark|A$|P3/.test(k) && !k.endsWith('A'))
+  .filter((k) => !/Dark|A$|P3/.test(k) && !k.endsWith("A"))
   .filter(
     (k) =>
-      /^[a-z]+$/.test(k) && !GRAYS.has(k) && !['whiteA', 'blackA'].includes(k),
+      /^[a-z]+$/.test(k) && !GRAYS.has(k) && !["whiteA", "blackA"].includes(k),
   )
 
 function scaleToOklch(scale, familyKey) {
@@ -143,10 +143,10 @@ for (const fam of radixFamilies) {
 const twCss = readFileSync(
   join(
     __dirname,
-    '../../..',
-    'node_modules/.pnpm/tailwindcss@4.3.0/node_modules/tailwindcss/theme.css',
+    "../../..",
+    "node_modules/.pnpm/tailwindcss@4.3.0/node_modules/tailwindcss/theme.css",
   ),
-  'utf8',
+  "utf8",
 )
 const twScales = {}
 for (const m of twCss.matchAll(
@@ -181,25 +181,25 @@ for (const [fam, steps] of Object.entries(twScales)) {
 
 // Bands are defined on the light-mode seed hue (Radix step 9 H, degrees).
 const BANDS = [
-  { name: 'pink-magenta', lo: 330, hi: 5 },
-  { name: 'red', lo: 5, hi: 40 },
-  { name: 'orange-brown', lo: 40, hi: 75 },
-  { name: 'gold-amber', lo: 75, hi: 95 },
-  { name: 'yellow-lime', lo: 95, hi: 135 },
-  { name: 'green', lo: 135, hi: 168 },
-  { name: 'teal-cyan', lo: 168, hi: 225 },
-  { name: 'blue', lo: 225, hi: 262 },
-  { name: 'indigo-violet', lo: 262, hi: 300 },
-  { name: 'purple-plum', lo: 300, hi: 330 },
+  { name: "pink-magenta", lo: 330, hi: 5 },
+  { name: "red", lo: 5, hi: 40 },
+  { name: "orange-brown", lo: 40, hi: 75 },
+  { name: "gold-amber", lo: 75, hi: 95 },
+  { name: "yellow-lime", lo: 95, hi: 135 },
+  { name: "green", lo: 135, hi: 168 },
+  { name: "teal-cyan", lo: 168, hi: 225 },
+  { name: "blue", lo: 225, hi: 262 },
+  { name: "indigo-violet", lo: 262, hi: 300 },
+  { name: "purple-plum", lo: 300, hi: 330 },
 ]
 const inBand = (h, b) =>
   b.lo < b.hi ? h >= b.lo && h < b.hi : h >= b.lo || h < b.hi
 
 function classify(absEnd) {
-  if (absEnd == null) return 'no-data'
-  if (absEnd >= 20) return 'strong'
-  if (absEnd >= 8) return 'moderate'
-  return 'flat'
+  if (absEnd == null) return "no-data"
+  if (absEnd >= 20) return "strong"
+  if (absEnd >= 8) return "moderate"
+  return "flat"
 }
 
 const mean = (xs) =>
@@ -252,12 +252,12 @@ const bendTable = BANDS.map((band) => {
     }
   }
   const light = {
-    towardDark: side('light', 'dark'),
-    towardLight: side('light', 'light'),
+    towardDark: side("light", "dark"),
+    towardLight: side("light", "light"),
   }
   const dark = {
-    towardDark: side('dark', 'dark'),
-    towardLight: side('dark', 'light'),
+    towardDark: side("dark", "dark"),
+    towardLight: side("dark", "light"),
   }
   return {
     band: band.name,
@@ -277,11 +277,11 @@ const bendTable = BANDS.map((band) => {
 
 const ep = (f, mode, side) => radixOut[f][mode][side].endpoint?.dH ?? null
 const hypothesisCheck = {
-  'yellow/amber/orange bend 35-50deg toward gold at dark end': {
+  "yellow/amber/orange bend 35-50deg toward gold at dark end": {
     radixLightDarkEnd: {
-      yellow: ep('yellow', 'light', 'dark'),
-      amber: ep('amber', 'light', 'dark'),
-      orange: ep('orange', 'light', 'dark'),
+      yellow: ep("yellow", "light", "dark"),
+      amber: ep("amber", "light", "dark"),
+      orange: ep("orange", "light", "dark"),
     },
     tailwindSpan50to950: {
       yellow: twOut.yellow.span50to950,
@@ -289,50 +289,50 @@ const hypothesisCheck = {
       orange: twOut.orange.span50to950,
     },
     verdict:
-      'direction confirmed (negative = toward gold/orange); magnitude family-dependent: Tailwind -37..-50deg over full ramp, Radix -14..-30deg from step 9 to 12',
+      "direction confirmed (negative = toward gold/orange); magnitude family-dependent: Tailwind -37..-50deg over full ramp, Radix -14..-30deg from step 9 to 12",
   },
-  'blue bends ~13deg toward violet': {
-    radixLightDarkEnd: { blue: ep('blue', 'light', 'dark') },
-    radixDarkBgEnd: { blue: ep('blue', 'dark', 'dark') },
+  "blue bends ~13deg toward violet": {
+    radixLightDarkEnd: { blue: ep("blue", "light", "dark") },
+    radixDarkBgEnd: { blue: ep("blue", "dark", "dark") },
     tailwindSpan50to950: { blue: twOut.blue.span50to950 },
     verdict:
-      'confirmed for Tailwind (+13.3deg full ramp); Radix bends less (+7deg light, +9.5deg dark bg side); positive = toward violet',
+      "confirmed for Tailwind (+13.3deg full ramp); Radix bends less (+7deg light, +9.5deg dark bg side); positive = toward violet",
   },
-  'red/green ~flat': {
+  "red/green ~flat": {
     radixLightDarkEnd: {
-      red: ep('red', 'light', 'dark'),
-      green: ep('green', 'light', 'dark'),
+      red: ep("red", "light", "dark"),
+      green: ep("green", "light", "dark"),
     },
     radixDarkBgEnd: {
-      red: ep('red', 'dark', 'dark'),
-      green: ep('green', 'dark', 'dark'),
+      red: ep("red", "dark", "dark"),
+      green: ep("green", "dark", "dark"),
     },
     tailwindSpan50to950: {
       red: twOut.red.span50to950,
       green: twOut.green.span50to950,
     },
     verdict:
-      'roughly confirmed: |drift| < 8deg in light mode; red dark-mode backgrounds drift ~-10deg toward crimson',
+      "roughly confirmed: |drift| < 8deg in light mode; red dark-mode backgrounds drift ~-10deg toward crimson",
   },
 }
 
 // ---------- Write fixtures ----------
 
 const meta = {
-  generatedBy: 'research/d6-hue-drift.mjs',
-  decision: 'D6',
-  space: 'OKLCH via culori v4 (D65)',
+  generatedBy: "research/d6-hue-drift.mjs",
+  decision: "D6",
+  space: "OKLCH via culori v4 (D65)",
   chromaFloor: CHROMA_FLOOR,
   driftSign:
-    'dH = signed shortest H(step)-H(ref); negative = hue angle decreases',
+    "dH = signed shortest H(step)-H(ref); negative = hue angle decreases",
   radixRefStep: 9,
   tailwindRefStep: 600,
-  tailwindVersion: '4.3.0',
-  radixVersion: require('@radix-ui/colors/package.json').version,
+  tailwindVersion: "4.3.0",
+  radixVersion: require("@radix-ui/colors/package.json").version,
 }
 
 writeFileSync(
-  join(DATA_DIR, 'radix-hue-drift.json'),
+  join(DATA_DIR, "radix-hue-drift.json"),
   JSON.stringify(
     {
       meta,
@@ -345,14 +345,14 @@ writeFileSync(
   ),
 )
 writeFileSync(
-  join(DATA_DIR, 'hue-bend-table.json'),
+  join(DATA_DIR, "hue-bend-table.json"),
   JSON.stringify({ meta, hypothesisCheck, bands: bendTable }, null, 2),
 )
 
 // ---------- Console summary ----------
 
 console.log(
-  'family        H9(L)   H9(D)  | light dark-side: slope  end(dH@L)   | dark dark-side: slope  end(dH@L)',
+  "family        H9(L)   H9(D)  | light dark-side: slope  end(dH@L)   | dark dark-side: slope  end(dH@L)",
 )
 for (const fam of radixFamilies) {
   const l = radixOut[fam].light
@@ -360,21 +360,21 @@ for (const fam of radixFamilies) {
   const fmt = (a) =>
     a.fit
       ? `${String(a.fit.slopePerL).padStart(7)}  ${String(a.endpoint?.dH).padStart(7)}@${a.endpoint?.L}`
-      : '      -        -'
+      : "      -        -"
   console.log(
     `${fam.padEnd(10)} ${String(l.refH).padStart(6)} ${String(d.refH).padStart(6)}  |  ${fmt(l.dark)}   |  ${fmt(d.dark)}`,
   )
 }
-console.log('\nTailwind (ref 600):')
+console.log("\nTailwind (ref 600):")
 for (const [fam, a] of Object.entries(twOut)) {
   console.log(
     `${fam.padEnd(10)} H600=${String(a.refH).padStart(7)} darkSlope=${String(a.dark.fit?.slopePerL).padStart(7)} darkEnd=${String(a.dark.endpoint?.dH).padStart(7)} lightEnd=${String(a.light.endpoint?.dH).padStart(7)} span50->950=${a.span50to950}`,
   )
 }
-console.log('\nBend table (median endpoints, outliers flagged):')
+console.log("\nBend table (median endpoints, outliers flagged):")
 for (const b of bendTable) {
   const o = b.light.towardDark.outliers.concat(b.dark.towardDark.outliers)
   console.log(
-    `${b.band.padEnd(14)} [${b.hRange}] ${b.families.join(',').padEnd(30)} L-mode dark-end=${b.light.towardDark.medianEndpointDH} (${b.bendClass.light})  D-mode dark-end=${b.dark.towardDark.medianEndpointDH} (${b.bendClass.dark})${o.length ? '  outliers: ' + [...new Set(o)].join(',') : ''}`,
+    `${b.band.padEnd(14)} [${b.hRange}] ${b.families.join(",").padEnd(30)} L-mode dark-end=${b.light.towardDark.medianEndpointDH} (${b.bendClass.light})  D-mode dark-end=${b.dark.towardDark.medianEndpointDH} (${b.bendClass.dark})${o.length ? "  outliers: " + [...new Set(o)].join(",") : ""}`,
   )
 }

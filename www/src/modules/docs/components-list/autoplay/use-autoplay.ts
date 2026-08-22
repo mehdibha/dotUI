@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useEffect, useRef, useState } from 'react'
-import { useReducedMotion } from 'motion/react'
+import { useEffect, useRef, useState } from "react"
+import { useReducedMotion } from "motion/react"
 
-import { useCardHover } from './card-hover'
+import { useCardHover } from "./card-hover"
 
 /**
  * Looping timeline primitives that drive the component-card preview animations.
@@ -66,7 +66,7 @@ export function useAutoplay(
   phasesRef.current = phases
 
   // Restart the timeline whenever its shape changes, not just its array identity.
-  const shape = phases.map((p) => `${p.name}:${p.duration}`).join('|')
+  const shape = phases.map((p) => `${p.name}:${p.duration}`).join("|")
   const enabled = active && !reduce && phases.length > 1
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export function useAutoplay(
   }, [enabled, loop, startDelay, shape])
 
   const resolvedIndex = enabled ? index : 0
-  const phase = phases[resolvedIndex]?.name ?? phases[0]?.name ?? 'idle'
+  const phase = phases[resolvedIndex]?.name ?? phases[0]?.name ?? "idle"
 
   return { phase, index: resolvedIndex, cycle, playing: enabled }
 }
@@ -125,7 +125,7 @@ export interface TypewriterState {
   active: boolean
 }
 
-interface TypewriterOptions extends Pick<AutoplayOptions, 'active' | 'loop'> {
+interface TypewriterOptions extends Pick<AutoplayOptions, "active" | "loop"> {
   /** Delay before the first character, in ms. */
   startDelay?: number
   /** Time between characters, in ms. */
@@ -193,7 +193,7 @@ export function useTypewriter(
     }
   }, [enabled, text, charInterval, holdAfter, startDelay, loop])
 
-  const value = enabled ? text.slice(0, count) : ''
+  const value = enabled ? text.slice(0, count) : ""
   return {
     value,
     typing: enabled && count < text.length,
@@ -220,16 +220,16 @@ export function useToggleAutoplay(
   const { initial = false, ...rest } = options
   const { phase } = useAutoplay(
     [
-      { name: 'rest-a', duration: 1100 },
-      { name: 'press-a', duration: 170 },
-      { name: 'rest-b', duration: 1100 },
-      { name: 'press-b', duration: 170 },
+      { name: "rest-a", duration: 1100 },
+      { name: "press-a", duration: 170 },
+      { name: "rest-b", duration: 1100 },
+      { name: "press-b", duration: 170 },
     ],
     rest,
   )
-  const pressing = phase === 'press-a' || phase === 'press-b'
+  const pressing = phase === "press-a" || phase === "press-b"
   // After press-a we're "on", after press-b we're "off" again.
-  const flipped = phase === 'press-a' || phase === 'rest-b'
+  const flipped = phase === "press-a" || phase === "rest-b"
   return { selected: initial ? !flipped : flipped, pressing }
 }
 
@@ -286,7 +286,7 @@ export function useCycle<T>(
   return { item: items[safe] as T, index: safe, pressing }
 }
 
-export type ScenePhase = 'open' | 'closed'
+export type ScenePhase = "open" | "closed"
 
 /**
  * The overlay timeline. At rest — un-hovered or under reduced motion — the
@@ -306,8 +306,8 @@ export function useOpenAutoplay(
   const { holdOpen = 1500, holdClosed = 620, ...rest } = options
   const { phase, cycle } = useAutoplay(
     [
-      { name: 'open', duration: holdOpen },
-      { name: 'closed', duration: holdClosed },
+      { name: "open", duration: holdOpen },
+      { name: "closed", duration: holdClosed },
     ],
     rest,
   )

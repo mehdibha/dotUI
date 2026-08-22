@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { type ComponentProps, createContext, use } from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as ProgressBarPrimitive from 'react-aria-components/ProgressBar'
+import { type ComponentProps, createContext, use } from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as ProgressBarPrimitive from "react-aria-components/ProgressBar"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 const ProgressBarContext =
   createContext<ProgressBarPrimitive.ProgressBarRenderProps | null>(null)
@@ -41,7 +41,7 @@ const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
 
 // MARK: Separator
 
-interface ProgressBarTrackProps extends React.ComponentProps<'div'> {}
+interface ProgressBarTrackProps extends React.ComponentProps<"div"> {}
 type ProgressBarControlProps = ProgressBarTrackProps
 
 const ProgressBarTrack = ({
@@ -59,7 +59,7 @@ const ProgressBarTrack = ({
 
 // MARK: Separator
 
-interface ProgressBarFillProps extends React.ComponentProps<'div'> {}
+interface ProgressBarFillProps extends React.ComponentProps<"div"> {}
 const ProgressBarFill = ({
   className,
   style,
@@ -67,7 +67,7 @@ const ProgressBarFill = ({
 }: ProgressBarFillProps) => {
   const { fill } = useStyles()()
   const { isIndeterminate, percentage } =
-    useProgressBarContext('ProgressBarControl')
+    useProgressBarContext("ProgressBarControl")
 
   return (
     <div
@@ -77,7 +77,7 @@ const ProgressBarFill = ({
       style={
         {
           transform:
-            typeof percentage === 'number'
+            typeof percentage === "number"
               ? `scaleX(${percentage / 100})`
               : undefined,
           ...style,
@@ -90,10 +90,10 @@ const ProgressBarFill = ({
 
 // MARK: Separator
 
-interface ProgressBarOutputProps extends React.ComponentProps<'span'> {}
+interface ProgressBarOutputProps extends React.ComponentProps<"span"> {}
 const ProgressBarOutput = ({ className, ...props }: ProgressBarOutputProps) => {
   const { output } = useStyles()()
-  const { valueText } = useProgressBarContext('ProgressBarOutput')
+  const { valueText } = useProgressBarContext("ProgressBarOutput")
 
   return (
     <span className={output({ className })} {...props}>

@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { ColorEditor } from '@/registry/ui/color-editor'
+import { Button } from "@/registry/ui/button"
+import { ColorEditor } from "@/registry/ui/color-editor"
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene, useOpenAutoplay } from "../autoplay"
 
-const COLOR = '#7f007f'
+const COLOR = "#7f007f"
 
 // Trigger → hover → click → the color editor popover unfolds and the scene zooms
 // out. The trigger is a real Button showing the current swatch + hex; the surface

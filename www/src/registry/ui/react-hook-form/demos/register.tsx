@@ -1,51 +1,51 @@
-'use client'
+"use client"
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { parseDate } from '@internationalized/date'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod"
+import { parseDate } from "@internationalized/date"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
-import { CalendarIcon, ChevronDownIcon } from '@/registry/__generated__/icons'
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
-import { Calendar } from '@/registry/ui/calendar'
-import { Checkbox, CheckboxControl } from '@/registry/ui/checkbox'
-import { Combobox } from '@/registry/ui/combobox'
-import { DatePicker } from '@/registry/ui/date-picker'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { FieldGroup, Label } from '@/registry/ui/field'
+import { CalendarIcon, ChevronDownIcon } from "@/registry/__generated__/icons"
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
+import { Calendar } from "@/registry/ui/calendar"
+import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
+import { Combobox } from "@/registry/ui/combobox"
+import { DatePicker } from "@/registry/ui/date-picker"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { FieldGroup, Label } from "@/registry/ui/field"
 import {
   DateInput,
   Input,
   InputGroup,
   InputGroupAddon,
-} from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { Radio, RadioControl, RadioGroup } from '@/registry/ui/radio-group'
-import { FormControl } from '@/registry/ui/react-hook-form'
+} from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group"
+import { FormControl } from "@/registry/ui/react-hook-form"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/registry/ui/select'
-import { TextField } from '@/registry/ui/text-field'
+} from "@/registry/ui/select"
+import { TextField } from "@/registry/ui/text-field"
 
 const FormSchema = z.object({
   name: z.string().min(2),
   email: z.email(),
-  gender: z.enum(['male', 'female', 'other']),
-  'birth-date': z.string(),
+  gender: z.enum(["male", "female", "other"]),
+  "birth-date": z.string(),
   referral: z.string({
-    error: 'Please select a method.',
+    error: "Please select a method.",
   }),
   language: z.string({
-    error: 'Please select a language.',
+    error: "Please select a language.",
   }),
   terms: z.boolean().refine((val) => val === true, {
-    message: 'You must accept the terms and conditions',
+    message: "You must accept the terms and conditions",
   }),
 })
 
@@ -207,13 +207,13 @@ export default function Demo() {
 }
 
 const languages = [
-  { label: 'English', value: 'en' },
-  { label: 'French', value: 'fr' },
-  { label: 'German', value: 'de' },
-  { label: 'Spanish', value: 'es' },
-  { label: 'Portuguese', value: 'pt' },
-  { label: 'Russian', value: 'ru' },
-  { label: 'Japanese', value: 'ja' },
-  { label: 'Korean', value: 'ko' },
-  { label: 'Chinese', value: 'zh' },
+  { label: "English", value: "en" },
+  { label: "French", value: "fr" },
+  { label: "German", value: "de" },
+  { label: "Spanish", value: "es" },
+  { label: "Portuguese", value: "pt" },
+  { label: "Russian", value: "ru" },
+  { label: "Japanese", value: "ja" },
+  { label: "Korean", value: "ko" },
+  { label: "Chinese", value: "zh" },
 ] as const

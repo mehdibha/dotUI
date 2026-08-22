@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react'
-import { Link, useLocation } from '@tanstack/react-router'
-import type * as PageTree from 'fumadocs-core/page-tree'
+import { useEffect, useRef } from "react"
+import { Link, useLocation } from "@tanstack/react-router"
+import type * as PageTree from "fumadocs-core/page-tree"
 
-import type { DocsPageItem } from '@/lib/source'
-import { cn } from '@/registry/lib/utils'
+import type { DocsPageItem } from "@/lib/source"
+import { cn } from "@/registry/lib/utils"
 
 export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
   const { pathname } = useLocation()
@@ -14,14 +14,14 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
       className="no-scrollbar flex h-full scroll-fade-y flex-col gap-6 overflow-y-auto scroll-smooth rounded-2xl pt-10 pr-3 pb-6 pl-4 scroll-fade-6"
     >
       {items.map((item) => {
-        if (item.type === 'folder') {
+        if (item.type === "folder") {
           return (
             <div key={item.$id} className="flex flex-col">
               <h4 className="mb-1 px-2 text-sm font-medium text-fg">
                 {item.name}
               </h4>
               {item.children.map((child) => {
-                if (child.type !== 'page') return null
+                if (child.type !== "page") return null
                 return (
                   <DocsSidebarLink
                     key={child.url}
@@ -33,7 +33,7 @@ export function DocsSidebar({ items }: { items: PageTree.Node[] }) {
             </div>
           )
         }
-        if (item.type === 'page') {
+        if (item.type === "page") {
           return (
             <DocsSidebarLink
               key={item.url}
@@ -64,12 +64,12 @@ function DocsSidebarLink({
   useEffect(() => {
     if (!isActive) return
     const el = ref.current
-    const scroller = el?.closest('nav')
+    const scroller = el?.closest("nav")
     if (!el || !scroller) return
     const er = el.getBoundingClientRect()
     const sr = scroller.getBoundingClientRect()
     if (er.top < sr.top || er.bottom > sr.bottom) {
-      el.scrollIntoView({ block: 'nearest', behavior: 'instant' })
+      el.scrollIntoView({ block: "nearest", behavior: "instant" })
     }
   }, [isActive])
 
@@ -77,21 +77,21 @@ function DocsSidebarLink({
     <Link
       ref={ref}
       to="/docs/$"
-      params={{ _splat: item.url.replace(/^\/docs\/?/, '') }}
+      params={{ _splat: item.url.replace(/^\/docs\/?/, "") }}
       className="text-[0.8rem]"
     >
       <span
         className={cn(
-          'flex items-center gap-2 px-2 py-1 text-fg-muted transition-colors hover:text-fg',
-          isActive && 'font-medium text-fg',
+          "flex items-center gap-2 px-2 py-1 text-fg-muted transition-colors hover:text-fg",
+          isActive && "font-medium text-fg",
         )}
       >
         {/* Highlight hugs the text, not the full-width row: padding sizes the
             pill, negative margins cancel it so nothing shifts when active. */}
         <span
           className={cn(
-            '-mx-1.5 -my-0.5 rounded-md px-1.5 py-0.5',
-            isActive && 'bg-neutral',
+            "-mx-1.5 -my-0.5 rounded-md px-1.5 py-0.5",
+            isActive && "bg-neutral",
           )}
         >
           {item.name}

@@ -1,23 +1,23 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useState } from "react"
 
 import {
   ChevronDownIcon,
   InfoIcon,
   StarIcon,
-} from '@/registry/__generated__/icons'
-import { Button } from '@/registry/ui/button'
-import { Dialog, DialogContent, DialogTitle } from '@/registry/ui/dialog'
-import { Description, Label } from '@/registry/ui/field'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Menu, MenuContent, MenuItem } from '@/registry/ui/menu'
-import { Popover } from '@/registry/ui/popover'
-import { TextField } from '@/registry/ui/text-field'
-import { Tooltip, TooltipContent } from '@/registry/ui/tooltip'
+} from "@/registry/__generated__/icons"
+import { Button } from "@/registry/ui/button"
+import { Dialog, DialogContent, DialogTitle } from "@/registry/ui/dialog"
+import { Description, Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Popover } from "@/registry/ui/popover"
+import { TextField } from "@/registry/ui/text-field"
+import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 export default function Demo() {
-  const [country, setCountry] = useState('+1')
+  const [country, setCountry] = useState("+1")
   return (
     <div className="flex w-full max-w-xs flex-col gap-6">
       <TextField>
@@ -46,9 +46,9 @@ export default function Demo() {
               </Button>
               <Popover>
                 <MenuContent>
-                  <MenuItem onAction={() => setCountry('+1')}>+1</MenuItem>
-                  <MenuItem onAction={() => setCountry('+44')}>+44</MenuItem>
-                  <MenuItem onAction={() => setCountry('+46')}>+46</MenuItem>
+                  <MenuItem onAction={() => setCountry("+1")}>+1</MenuItem>
+                  <MenuItem onAction={() => setCountry("+44")}>+44</MenuItem>
+                  <MenuItem onAction={() => setCountry("+46")}>+46</MenuItem>
                 </MenuContent>
               </Popover>
             </Menu>

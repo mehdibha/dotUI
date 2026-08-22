@@ -1,4 +1,4 @@
-import type * as SliderPrimitives from 'react-aria-components/Slider'
+import type * as SliderPrimitives from "react-aria-components/Slider"
 
 /**
  * A slider allows a user to select one or more values within a range.
@@ -17,7 +17,7 @@ export interface SliderControlProps extends React.ComponentProps<
 /**
  * A slider track is the visual track that contains the selected fill.
  */
-export interface SliderTrackProps extends React.ComponentProps<'div'> {}
+export interface SliderTrackProps extends React.ComponentProps<"div"> {}
 
 /**
  * A slider fill displays the selected region of the track.

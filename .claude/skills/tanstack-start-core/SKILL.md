@@ -7,7 +7,7 @@ description: >-
   tsconfig configuration. Entry point for all Start skills.
 type: core
 library: tanstack-start
-library_version: '1.166.2'
+library_version: "1.166.2"
 sources:
   - TanStack/router:docs/start/framework/react/build-from-scratch.md
   - TanStack/router:docs/start/framework/react/quick-start.md
@@ -64,9 +64,9 @@ npm i -D vite @vitejs/plugin-react typescript
 
 ```ts
 // vite.config.ts
-import { defineConfig } from 'vite'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import viteReact from '@vitejs/plugin-react'
+import { defineConfig } from "vite"
+import { tanstackStart } from "@tanstack/react-start/plugin/vite"
+import viteReact from "@vitejs/plugin-react"
 
 export default defineConfig({
   plugins: [
@@ -81,8 +81,8 @@ export default defineConfig({
 
 ```tsx
 // src/router.tsx
-import { createRouter } from '@tanstack/react-router'
-import { routeTree } from './routeTree.gen'
+import { createRouter } from "@tanstack/react-router"
+import { routeTree } from "./routeTree.gen"
 
 export function getRouter() {
   const router = createRouter({
@@ -98,20 +98,20 @@ export function getRouter() {
 
 ```tsx
 // src/routes/__root.tsx
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react"
 import {
   Outlet,
   createRootRoute,
   HeadContent,
   Scripts,
-} from '@tanstack/react-router'
+} from "@tanstack/react-router"
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: "My App" },
     ],
   }),
   component: RootComponent,
@@ -136,14 +136,14 @@ function RootComponent() {
 
 ```tsx
 // src/routes/index.tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { createServerFn } from '@tanstack/react-start'
+import { createFileRoute } from "@tanstack/react-router"
+import { createServerFn } from "@tanstack/react-start"
 
-const getGreeting = createServerFn({ method: 'GET' }).handler(async () => {
-  return { message: 'Hello from the server!' }
+const getGreeting = createServerFn({ method: "GET" }).handler(async () => {
+  return { message: "Hello from the server!" }
 })
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   loader: () => getGreeting(),
   component: HomePage,
 })

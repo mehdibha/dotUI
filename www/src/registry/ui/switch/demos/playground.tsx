@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { Label } from '@/registry/ui/field'
-import { Switch, SwitchControl, type SwitchProps } from '@/registry/ui/switch'
+import { Label } from "@/registry/ui/field"
+import { Switch, SwitchControl, type SwitchProps } from "@/registry/ui/switch"
 
 export default function Demo({
-  label = 'Airplane mode',
-  size = 'md',
+  label = "Airplane mode",
+  size = "md",
   isDisabled = false,
   isReadOnly = false,
 }: {
   label?: string
-  size?: SwitchProps['size']
+  size?: SwitchProps["size"]
   isDisabled?: boolean
   isReadOnly?: boolean
 } = {}) {

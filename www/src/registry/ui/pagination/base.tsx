@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
+import type * as React from "react"
 
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MoreHorizontalIcon,
-} from '@/registry/icons'
-import { LinkButton } from '@/registry/ui/button'
-import type { LinkButtonProps } from '@/registry/ui/button'
+} from "@/registry/icons"
+import { LinkButton } from "@/registry/ui/button"
+import type { LinkButtonProps } from "@/registry/ui/button"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: Pagination
 
-interface PaginationProps extends React.ComponentProps<'nav'> {}
+interface PaginationProps extends React.ComponentProps<"nav"> {}
 const Pagination = ({ className, ...props }: PaginationProps) => {
   const { root } = useStyles()()
   return (
@@ -29,7 +29,7 @@ const Pagination = ({ className, ...props }: PaginationProps) => {
 
 // MARK: PaginationList
 
-interface PaginationListProps extends React.ComponentProps<'ul'> {}
+interface PaginationListProps extends React.ComponentProps<"ul"> {}
 const PaginationList = ({ className, ...props }: PaginationListProps) => {
   const { list } = useStyles()()
   return (
@@ -44,7 +44,7 @@ const PaginationList = ({ className, ...props }: PaginationListProps) => {
 
 // MARK: PaginationItem
 
-interface PaginationItemProps extends React.ComponentProps<'li'> {}
+interface PaginationItemProps extends React.ComponentProps<"li"> {}
 const PaginationItem = ({ className, ...props }: PaginationItemProps) => {
   const { item } = useStyles()()
   return (
@@ -65,9 +65,9 @@ const PaginationLink = ({
 }: PaginationLinkProps) => {
   return (
     <LinkButton
-      aria-current={isActive ? 'page' : undefined}
+      aria-current={isActive ? "page" : undefined}
       data-pagination-link=""
-      variant={variant ?? (isActive ? 'secondary' : 'quiet')}
+      variant={variant ?? (isActive ? "secondary" : "quiet")}
       isIconOnly={isIconOnly}
       {...props}
     />
@@ -78,7 +78,7 @@ const PaginationLink = ({
 
 interface PaginationPreviousProps extends Omit<
   PaginationLinkProps,
-  'children'
+  "children"
 > {
   children?: React.ReactNode
 }
@@ -96,7 +96,7 @@ const PaginationPrevious = ({
     >
       <ChevronLeftIcon />
       {!isIconOnly && (
-        <span className="hidden sm:inline">{children ?? 'Previous'}</span>
+        <span className="hidden sm:inline">{children ?? "Previous"}</span>
       )}
     </PaginationLink>
   )
@@ -104,7 +104,7 @@ const PaginationPrevious = ({
 
 // MARK: PaginationNext
 
-interface PaginationNextProps extends Omit<PaginationLinkProps, 'children'> {
+interface PaginationNextProps extends Omit<PaginationLinkProps, "children"> {
   children?: React.ReactNode
 }
 const PaginationNext = ({
@@ -120,7 +120,7 @@ const PaginationNext = ({
       {...props}
     >
       {!isIconOnly && (
-        <span className="hidden sm:inline">{children ?? 'Next'}</span>
+        <span className="hidden sm:inline">{children ?? "Next"}</span>
       )}
       <ChevronRightIcon />
     </PaginationLink>
@@ -129,7 +129,7 @@ const PaginationNext = ({
 
 // MARK: PaginationEllipsis
 
-interface PaginationEllipsisProps extends React.ComponentProps<'span'> {}
+interface PaginationEllipsisProps extends React.ComponentProps<"span"> {}
 const PaginationEllipsis = ({
   className,
   ...props

@@ -1,20 +1,20 @@
-import { type ReactNode, use, useCallback, useState } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
-import { z } from 'zod'
+import { type ReactNode, use, useCallback, useState } from "react"
+import { createFileRoute } from "@tanstack/react-router"
+import { z } from "zod"
 
-import { DesignSystemProvider } from '@/lib/styles'
+import { DesignSystemProvider } from "@/lib/styles"
 import {
   ExamplesIndex,
   GroupExamplesIndex,
-} from '@/modules/create/__generated__/examples'
+} from "@/modules/create/__generated__/examples"
 import {
   DEFAULTS,
   decodePreset,
   useAnnouncePreviewReady,
   useIframeMessageListener,
-} from '@/modules/create/preset'
-import type { DesignSystem } from '@/modules/create/preset'
-import { PresetOverview } from '@/modules/create/preview/overview'
+} from "@/modules/create/preset"
+import type { DesignSystem } from "@/modules/create/preset"
+import { PresetOverview } from "@/modules/create/preview/overview"
 
 const promiseCache = new Map<
   string,
@@ -43,8 +43,13 @@ html { scrollbar-width: none; }
 html::-webkit-scrollbar { display: none; }
 `
 
-export const Route = createFileRoute('/preview/$slug')({
-  validateSearch: z.object({ preset: z.string().optional().catch(undefined) }),
+export const Route = createFileRoute("/preview/$slug")({
+  validateSearch: z.object({
+    preset: z.string().optional().catch(undefined),
+    // Initial display mode, baked in by the /create parent (read directly from
+    // location by usePreviewForcedTheme; declared so the router keeps it).
+    mode: z.enum(["light", "dark"]).optional().catch(undefined),
+  }),
   ssr: false,
   beforeLoad: ({ params }) => {
     getExamplesPromise(params.slug)
@@ -71,7 +76,7 @@ function PreviewPage() {
   // view that needs the raw designSystem (for the generated color ramps), so it's
   // rendered directly here rather than through the generated examples index.
   let content: ReactNode
-  if (slug === 'overview') {
+  if (slug === "overview") {
     content = <PresetOverview designSystem={designSystem} />
   } else {
     const promise = getExamplesPromise(slug)
@@ -86,7 +91,7 @@ function PreviewPage() {
     content = <Examples />
   }
 
-  const embedded = typeof window !== 'undefined' && window.self !== window.top
+  const embedded = typeof window !== "undefined" && window.self !== window.top
 
   return (
     <DesignSystemProvider

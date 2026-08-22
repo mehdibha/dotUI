@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { FieldGroup, Label } from '@/registry/ui/field'
+import { FieldGroup, Label } from "@/registry/ui/field"
 import {
   Radio,
   RadioControl,
   RadioGroup,
   type RadioGroupProps,
-} from '@/registry/ui/radio-group'
+} from "@/registry/ui/radio-group"
 
 export default function Demo({
-  label = 'Select frameworks',
-  orientation = 'vertical',
+  label = "Select frameworks",
+  orientation = "vertical",
   isDisabled = false,
   isReadOnly = false,
   isInvalid = false,

@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { ColorField } from '@/registry/ui/color-field'
-import { Label } from '@/registry/ui/field'
-import { Input } from '@/registry/ui/input'
+import { ColorField } from "@/registry/ui/color-field"
+import { Label } from "@/registry/ui/field"
+import { Input } from "@/registry/ui/input"
 
 export default function Demo({
-  label = 'Color',
+  label = "Color",
   isDisabled = false,
   isReadOnly = false,
 } = {}) {

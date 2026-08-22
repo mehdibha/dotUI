@@ -1,28 +1,28 @@
-import { memo } from 'react'
+import { memo } from "react"
 
-import { cn } from '@/registry/lib/utils'
-import { AccountMenu } from '@/components/showcase/account-menu'
-import { AiPrompt } from '@/components/showcase/ai-prompt'
-import { Appearance } from '@/components/showcase/appearance'
-import { Booking } from '@/components/showcase/booking'
-import { ColorEditorCard } from '@/components/showcase/color-editor'
-import { CommandMenu } from '@/components/showcase/command-menu'
-import { ComputerUse } from '@/components/showcase/computer-use'
-import { Controls } from '@/components/showcase/controls'
-import { CookiePreferences } from '@/components/showcase/cookie-preferences'
-import { DisplaySettings } from '@/components/showcase/display-settings'
-import { Faq } from '@/components/showcase/faq'
-import { Filters } from '@/components/showcase/filters'
-import { InviteMembers } from '@/components/showcase/invite-members'
-import { LoginForm } from '@/components/showcase/login-form'
-import { Metrics } from '@/components/showcase/metrics'
-import { Notifications } from '@/components/showcase/notifications'
-import { Payment } from '@/components/showcase/payment'
-import { PricingPlans } from '@/components/showcase/pricing-plans'
-import { Storage } from '@/components/showcase/storage'
-import { TeamName } from '@/components/showcase/team-name'
-import { TwoFactor } from '@/components/showcase/two-factor'
-import { UploadAvatar } from '@/components/showcase/upload-avatar'
+import { cn } from "@/registry/lib/utils"
+import { AccountMenu } from "@/components/showcase/account-menu"
+import { AiPrompt } from "@/components/showcase/ai-prompt"
+import { Appearance } from "@/components/showcase/appearance"
+import { Booking } from "@/components/showcase/booking"
+import { ColorEditorCard } from "@/components/showcase/color-editor"
+import { CommandMenu } from "@/components/showcase/command-menu"
+import { ComputerUse } from "@/components/showcase/computer-use"
+import { Controls } from "@/components/showcase/controls"
+import { CookiePreferences } from "@/components/showcase/cookie-preferences"
+import { DisplaySettings } from "@/components/showcase/display-settings"
+import { Faq } from "@/components/showcase/faq"
+import { Filters } from "@/components/showcase/filters"
+import { InviteMembers } from "@/components/showcase/invite-members"
+import { LoginForm } from "@/components/showcase/login-form"
+import { Metrics } from "@/components/showcase/metrics"
+import { Notifications } from "@/components/showcase/notifications"
+import { Payment } from "@/components/showcase/payment"
+import { PricingPlans } from "@/components/showcase/pricing-plans"
+import { Storage } from "@/components/showcase/storage"
+import { TeamName } from "@/components/showcase/team-name"
+import { TwoFactor } from "@/components/showcase/two-factor"
+import { UploadAvatar } from "@/components/showcase/upload-avatar"
 
 // Every showcase card in one place — the single source of truth for what the
 // landing grid and the /create preview masonry render.
@@ -61,33 +61,33 @@ type CardKey = keyof typeof CARDS
 // hiding it elsewhere leaves the remaining three columns balanced on their
 // own.
 const RAIL: CardKey[] = [
-  'controls',
-  'twoFactor',
-  'filters',
-  'accountMenu',
-  'inviteMembers',
+  "controls",
+  "twoFactor",
+  "filters",
+  "accountMenu",
+  "inviteMembers",
 ]
 const MAIN_LEFT: CardKey[] = [
-  'commandMenu',
-  'payment',
-  'storage',
-  'loginForm',
-  'metrics',
+  "commandMenu",
+  "payment",
+  "storage",
+  "loginForm",
+  "metrics",
 ]
 const MAIN_RIGHT: CardKey[] = [
-  'booking',
-  'uploadAvatar',
-  'pricingPlans',
-  'appearance',
-  'colorEditor',
+  "booking",
+  "uploadAvatar",
+  "pricingPlans",
+  "appearance",
+  "colorEditor",
 ]
 const SIDE: CardKey[] = [
-  'computerUse',
-  'notifications',
-  'faq',
-  'displaySettings',
-  'cookiePreferences',
-  'teamName',
+  "computerUse",
+  "notifications",
+  "faq",
+  "displaySettings",
+  "cookiePreferences",
+  "teamName",
 ]
 
 // A fixed flex column of cards. Fixed columns (rather than CSS `columns`) keep
@@ -103,7 +103,7 @@ function CardColumn({
   className?: string
 }) {
   return (
-    <div className={cn('flex min-w-0 flex-1 flex-col gap-5', className)}>
+    <div className={cn("flex min-w-0 flex-1 flex-col gap-5", className)}>
       {cards.map((key) => (
         <div
           key={key}
@@ -128,7 +128,7 @@ export const CardsGrid = memo(function CardsGrid({
   return (
     <div
       className={cn(
-        'grid grid-cols-3 items-start gap-5 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4',
+        "grid grid-cols-3 items-start gap-5 sm:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4",
         className,
       )}
     >
@@ -145,22 +145,79 @@ export const CardsGrid = memo(function CardsGrid({
   )
 })
 
-// The /create preview and preset thumbnails: the banner over a CSS-columns
-// masonry of every card. It never animates, so the column balancer's per-frame
-// re-flow cost doesn't apply here.
-export function CardsMasonry({ className }: { className?: string }) {
+// The /create preview canvas — the shadcn-create shape: a fixed-pixel,
+// horizontally scrollable life-size surface rather than a fluid grid, so card
+// size comes from the ~340px column track, never from the pane width. Columns
+// are hand-curated stacks; the wide slot holds the AI banner over a 2-col
+// sub-grid. `content-visibility` keeps off-screen columns free to lay out.
+const CANVAS_1: CardKey[] = ["controls", "twoFactor", "filters", "accountMenu"]
+const CANVAS_2: CardKey[] = ["commandMenu", "payment", "storage", "loginForm"]
+const CANVAS_WIDE_LEFT: CardKey[] = ["metrics", "booking"]
+const CANVAS_WIDE_RIGHT: CardKey[] = ["uploadAvatar", "pricingPlans"]
+const CANVAS_5: CardKey[] = [
+  "computerUse",
+  "notifications",
+  "faq",
+  "displaySettings",
+]
+const CANVAS_6: CardKey[] = [
+  "inviteMembers",
+  "appearance",
+  "colorEditor",
+  "cookiePreferences",
+  "teamName",
+]
+
+function CanvasColumn({
+  cards,
+  className,
+}: {
+  cards: CardKey[]
+  className?: string
+}) {
   return (
-    <div className={cn('flex flex-col gap-4', className)}>
-      <AiPrompt />
-      <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
-        {[...RAIL, ...MAIN_LEFT, ...MAIN_RIGHT, ...SIDE].map((key) => (
-          // The vertical gap is the cell's *padding*, not a margin: Safari leaks
-          // a child's margin-bottom across column breaks, pushing the next
-          // column's first card down.
-          <div key={key} className="break-inside-avoid pb-4">
-            {CARDS[key]}
+    <div
+      className={cn(
+        "flex flex-col gap-(--gap) p-px [contain-intrinsic-size:340px_1200px] [content-visibility:auto]",
+        className,
+      )}
+    >
+      {cards.map((key) => (
+        <div key={key}>{CARDS[key]}</div>
+      ))}
+    </div>
+  )
+}
+
+export function CardsCanvas() {
+  return (
+    <div className="min-h-svh overflow-x-auto overflow-y-hidden bg-neutral [--gap:--spacing(4)] md:[--gap:--spacing(6)] dark:bg-bg">
+      {/* Centers the canvas when the viewport is wider than it; otherwise the
+          canvas starts flush-left and scrolls. */}
+      <div className="flex w-full min-w-max justify-center">
+        {/* Width tracks the gap: 6 × ~340px columns + 5 gaps + 2 edge paddings,
+            so tightening --gap keeps cards life-size instead of growing them. */}
+        <div className="grid w-[2000px] grid-cols-6 items-start gap-(--gap) p-(--gap) md:w-[2208px]">
+          <CanvasColumn cards={CANVAS_1} />
+          <CanvasColumn cards={CANVAS_2} />
+          <div className="col-span-2 flex flex-col gap-(--gap) p-px [contain-intrinsic-size:790px_1200px] [content-visibility:auto]">
+            <AiPrompt />
+            <div className="grid grid-cols-2 items-start gap-(--gap)">
+              <div className="flex flex-col gap-(--gap)">
+                {CANVAS_WIDE_LEFT.map((key) => (
+                  <div key={key}>{CARDS[key]}</div>
+                ))}
+              </div>
+              <div className="flex flex-col gap-(--gap)">
+                {CANVAS_WIDE_RIGHT.map((key) => (
+                  <div key={key}>{CARDS[key]}</div>
+                ))}
+              </div>
+            </div>
           </div>
-        ))}
+          <CanvasColumn cards={CANVAS_5} />
+          <CanvasColumn cards={CANVAS_6} />
+        </div>
       </div>
     </div>
   )

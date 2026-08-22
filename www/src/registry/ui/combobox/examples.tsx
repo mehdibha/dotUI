@@ -1,21 +1,21 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Basic from './demos/basic'
-import Disabled from './demos/disabled'
-import DisabledItems from './demos/disabled-items'
-import InDialog from './demos/in-dialog'
-import Invalid from './demos/invalid'
-import LargeList from './demos/large-list'
-import Multiple from './demos/multiple'
-import MultipleDisabled from './demos/multiple-disabled'
-import MultipleInvalid from './demos/multiple-invalid'
-import Sections from './demos/sections'
-import Sides from './demos/sides'
-import WithCustomItems from './demos/with-custom-items'
-import WithForm from './demos/with-form'
-import WithGroupsAndSeparator from './demos/with-groups-and-separator'
-import WithIcon from './demos/with-icon'
+import Basic from "./demos/basic"
+import Disabled from "./demos/disabled"
+import DisabledItems from "./demos/disabled-items"
+import InDialog from "./demos/in-dialog"
+import Invalid from "./demos/invalid"
+import LargeList from "./demos/large-list"
+import Multiple from "./demos/multiple"
+import MultipleDisabled from "./demos/multiple-disabled"
+import MultipleInvalid from "./demos/multiple-invalid"
+import Sections from "./demos/sections"
+import Sides from "./demos/sides"
+import WithCustomItems from "./demos/with-custom-items"
+import WithForm from "./demos/with-form"
+import WithGroupsAndSeparator from "./demos/with-groups-and-separator"
+import WithIcon from "./demos/with-icon"
 
 export default function ComboboxExamples() {
   return (

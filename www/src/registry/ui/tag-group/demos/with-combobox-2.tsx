@@ -1,30 +1,30 @@
-'use client'
+"use client"
 
-import { Combobox, ComboboxValue } from '@/registry/ui/combobox'
-import { Label } from '@/registry/ui/field'
-import { Input, InputGroup } from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
-import { Tag, TagGroup, TagList } from '@/registry/ui/tag-group'
+import { Combobox, ComboboxValue } from "@/registry/ui/combobox"
+import { Label } from "@/registry/ui/field"
+import { Input, InputGroup } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
+import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 
 const frameworks = [
-  { id: 'react', name: 'React' },
-  { id: 'vue', name: 'Vue' },
-  { id: 'svelte', name: 'Svelte' },
-  { id: 'solid', name: 'Solid' },
-  { id: 'angular', name: 'Angular' },
-  { id: 'qwik', name: 'Qwik' },
-  { id: 'preact', name: 'Preact' },
-  { id: 'ember', name: 'Ember' },
+  { id: "react", name: "React" },
+  { id: "vue", name: "Vue" },
+  { id: "svelte", name: "Svelte" },
+  { id: "solid", name: "Solid" },
+  { id: "angular", name: "Angular" },
+  { id: "qwik", name: "Qwik" },
+  { id: "preact", name: "Preact" },
+  { id: "ember", name: "Ember" },
 ]
 
 type Framework = (typeof frameworks)[number]
 
 export default function Demo() {
   return (
-    <Combobox<Framework, 'multiple'>
+    <Combobox<Framework, "multiple">
       selectionMode="multiple"
-      defaultValue={['react', 'vue']}
+      defaultValue={["react", "vue"]}
     >
       <Label>Frameworks</Label>
       <InputGroup>

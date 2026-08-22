@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as DropZonePrimitives from 'react-aria-components/DropZone'
-import * as TextPrimitives from 'react-aria-components/Text'
+import type * as React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as DropZonePrimitives from "react-aria-components/DropZone"
+import * as TextPrimitives from "react-aria-components/Text"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: dropZoneStyles
 
@@ -30,7 +30,7 @@ const DropZone = ({ className, ...props }: DropZoneProps) => {
 
 interface DropZoneLabelProps extends Omit<
   React.ComponentProps<typeof TextPrimitives.Text>,
-  'slot'
+  "slot"
 > {}
 const DropZoneLabel = ({ className, ...props }: DropZoneLabelProps) => {
   const { label } = useStyles()()

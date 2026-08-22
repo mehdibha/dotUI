@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react"
 
-import { DesignSystemProvider } from '@/lib/styles'
+import { DesignSystemProvider } from "@/lib/styles"
 
-import { useForcedPreviewMode, useResolvedPreset } from './preview-controls'
+import { useForcedPreviewMode, useResolvedPreset } from "./preview-controls"
 
 /**
  * Themes a docs preview subtree with the globally selected preset and preview

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   CalculatorIcon,
@@ -9,22 +9,22 @@ import {
   SmileIcon,
   UserIcon,
   XIcon,
-} from 'lucide-react'
+} from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Command } from '@/registry/ui/command'
-import { Dialog, DialogContent } from '@/registry/ui/dialog'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Kbd } from '@/registry/ui/kbd'
+import { Button } from "@/registry/ui/button"
+import { Command } from "@/registry/ui/command"
+import { Dialog, DialogContent } from "@/registry/ui/dialog"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Kbd } from "@/registry/ui/kbd"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { Modal } from '@/registry/ui/modal'
-import { SearchField } from '@/registry/ui/search-field'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/ui/list-box"
+import { Modal } from "@/registry/ui/modal"
+import { SearchField } from "@/registry/ui/search-field"
+import { Separator } from "@/registry/ui/separator"
 
 export default function Demo() {
   return (
@@ -52,7 +52,7 @@ export default function Demo() {
               </SearchField>
               <ListBox
                 aria-label="Commands"
-                onAction={() => console.log('action')}
+                onAction={() => console.log("action")}
               >
                 <ListBoxSection>
                   <ListBoxSectionHeader>Suggestions</ListBoxSectionHeader>

@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   type ReactNode,
@@ -7,11 +7,11 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-} from 'react'
+} from "react"
 
-import { cn } from '@/registry/lib/utils'
+import { cn } from "@/registry/lib/utils"
 
-import type { ScenePhase } from './use-autoplay'
+import type { ScenePhase } from "./use-autoplay"
 
 /**
  * The cinematic for overlay triggers. A trigger sits centered and the surface
@@ -31,13 +31,13 @@ import type { ScenePhase } from './use-autoplay'
  * intrinsic size — instead of cropping against the card edge.
  */
 
-export type SurfaceVariant = 'popover' | 'menu' | 'modal' | 'drawer' | 'tooltip'
+export type SurfaceVariant = "popover" | "menu" | "modal" | "drawer" | "tooltip"
 
 interface OverlaySceneProps {
   phase: ScenePhase
   variant: SurfaceVariant
   /** Which side of the trigger the surface unfolds (anchored variants only). */
-  side?: 'top' | 'bottom'
+  side?: "top" | "bottom"
   /** The real trigger (a Button, icon button, input group…). */
   trigger: React.ReactNode
   /** The surface contents — real sub-components (DialogHeader, ListBox…). */
@@ -53,31 +53,31 @@ interface OverlaySceneProps {
 
 const SURFACE_FRAME: Record<SurfaceVariant, string> = {
   popover:
-    'rounded-(--popover-radius) border bg-popover p-2.5 text-xs/relaxed shadow-md',
-  menu: 'rounded-(--popover-radius) border bg-popover p-1 shadow-md',
+    "rounded-(--popover-radius) border bg-popover p-2.5 text-xs/relaxed shadow-md",
+  menu: "rounded-(--popover-radius) border bg-popover p-1 shadow-md",
   modal:
-    'rounded-(--modal-radius,var(--radius-lg)) border bg-bg p-4 text-sm shadow-lg',
-  drawer: 'rounded-t-(--radius-xl) border-t bg-bg p-4 text-sm shadow-lg',
+    "rounded-(--modal-radius,var(--radius-lg)) border bg-bg p-4 text-sm shadow-lg",
+  drawer: "rounded-t-(--radius-xl) border-t bg-bg p-4 text-sm shadow-lg",
   tooltip:
-    'rounded-(--tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip shadow-md',
+    "rounded-(--tooltip-radius) bg-tooltip px-3 py-1.5 text-center text-xs text-fg-on-tooltip shadow-md",
 }
 
 // The ancestor data attribute the real Dialog* sub-components key their
 // in-context padding on (`in-data-popover:` / `in-data-modal:`).
 const SURFACE_DATA: Partial<Record<SurfaceVariant, Record<string, string>>> = {
-  popover: { 'data-popover': '' },
-  menu: { 'data-popover': '' },
-  modal: { 'data-modal': '' },
+  popover: { "data-popover": "" },
+  menu: { "data-popover": "" },
+  modal: { "data-modal": "" },
 }
 
 const SCENE_ROOT =
-  'relative flex h-full w-full items-center justify-center overflow-hidden'
-const EASE = 'cubic-bezier(0.32,0.72,0,1)'
+  "relative flex h-full w-full items-center justify-center overflow-hidden"
+const EASE = "cubic-bezier(0.32,0.72,0,1)"
 // How much of the card the open composition may occupy before it's scaled down.
 const FIT_MARGIN = 0.86
 
 const useIsoLayoutEffect =
-  typeof window === 'undefined' ? useEffect : useLayoutEffect
+  typeof window === "undefined" ? useEffect : useLayoutEffect
 
 /**
  * Scale factor that keeps the open composition inside the preview card. Measures
@@ -156,8 +156,8 @@ function Trigger({
       ref={triggerRef}
       // `fluid` field triggers fill the column so their width matches the
       // stretched field demos; icon-button triggers stay content-sized.
-      className={cn('relative', fluid && 'w-full')}
-      style={{ opacity: dim ? 0.55 : 1, transition: 'opacity 300ms ease' }}
+      className={cn("relative", fluid && "w-full")}
+      style={{ opacity: dim ? 0.55 : 1, transition: "opacity 300ms ease" }}
     >
       {children}
     </div>
@@ -174,26 +174,26 @@ function AnchoredSurface({
   children,
 }: {
   open: boolean
-  side: 'top' | 'bottom'
+  side: "top" | "bottom"
   fluid?: boolean
   children: ReactNode
 }) {
   return (
     <div
-      className={cn('grid overflow-hidden', fluid && 'w-full grid-cols-1')}
+      className={cn("grid overflow-hidden", fluid && "w-full grid-cols-1")}
       style={{
-        gridTemplateRows: open ? '1fr' : '0fr',
+        gridTemplateRows: open ? "1fr" : "0fr",
         transition: `grid-template-rows 360ms ${EASE}`,
       }}
     >
       <div className="min-h-0">
         <div
-          className={cn(side === 'bottom' ? 'pt-2' : 'pb-2', fluid && 'w-full')}
+          className={cn(side === "bottom" ? "pt-2" : "pb-2", fluid && "w-full")}
           style={{
             opacity: open ? 1 : 0,
             transform: open
-              ? 'none'
-              : `translateY(${side === 'bottom' ? '-4px' : '4px'}) scale(0.96)`,
+              ? "none"
+              : `translateY(${side === "bottom" ? "-4px" : "4px"}) scale(0.96)`,
             transition: `opacity 240ms ease, transform 300ms ${EASE}`,
           }}
         >
@@ -207,21 +207,21 @@ function AnchoredSurface({
 export function OverlayScene({
   phase,
   variant,
-  side = 'bottom',
+  side = "bottom",
   trigger,
   children,
   openScale,
   fluid = false,
   surfaceClassName,
 }: OverlaySceneProps) {
-  const open = phase === 'open'
+  const open = phase === "open"
   const sceneRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
   const surfaceRef = useRef<HTMLDivElement>(null)
 
   // Anchored variants stack trigger + surface and scale as one; overlay variants
   // (modal/drawer) float the surface over the trigger.
-  const anchored = variant !== 'modal' && variant !== 'drawer'
+  const anchored = variant !== "modal" && variant !== "drawer"
   const fitScale = useFitScale({
     sceneRef,
     surfaceRef,
@@ -242,7 +242,7 @@ export function OverlayScene({
   )
 
   // Modal: centered panel over a dimming backdrop; the trigger dims behind it.
-  if (variant === 'modal') {
+  if (variant === "modal") {
     return (
       <div ref={sceneRef} className={SCENE_ROOT}>
         <Trigger triggerRef={triggerRef} dim={open}>
@@ -251,7 +251,7 @@ export function OverlayScene({
         <div
           aria-hidden
           className="absolute inset-0 bg-black/40 backdrop-blur-[1px]"
-          style={{ opacity: open ? 1 : 0, transition: 'opacity 250ms ease' }}
+          style={{ opacity: open ? 1 : 0, transition: "opacity 250ms ease" }}
         />
         <div className="absolute inset-0 flex items-center justify-center p-3">
           <div
@@ -260,8 +260,8 @@ export function OverlayScene({
               opacity: open ? 1 : 0,
               transform: open
                 ? `scale(${fitScale})`
-                : 'translateY(6px) scale(0.9)',
-              transformOrigin: 'center',
+                : "translateY(6px) scale(0.9)",
+              transformOrigin: "center",
               transition: `opacity 250ms ease, transform 300ms ${EASE}`,
             }}
           >
@@ -273,7 +273,7 @@ export function OverlayScene({
   }
 
   // Drawer: bottom sheet slides up over a dimming backdrop.
-  if (variant === 'drawer') {
+  if (variant === "drawer") {
     return (
       <div ref={sceneRef} className={SCENE_ROOT}>
         <Trigger triggerRef={triggerRef} dim={open}>
@@ -282,12 +282,12 @@ export function OverlayScene({
         <div
           aria-hidden
           className="absolute inset-0 bg-black/40 backdrop-blur-[1px]"
-          style={{ opacity: open ? 1 : 0, transition: 'opacity 250ms ease' }}
+          style={{ opacity: open ? 1 : 0, transition: "opacity 250ms ease" }}
         />
         <div
           className="absolute inset-x-2 bottom-0"
           style={{
-            transform: open ? 'translateY(0)' : 'translateY(100%)',
+            transform: open ? "translateY(0)" : "translateY(100%)",
             transition: `transform 360ms ${EASE}`,
           }}
         >
@@ -305,14 +305,14 @@ export function OverlayScene({
         // `fluid` makes field-style triggers (combobox, select, date-picker) fill
         // the width + horizontal inset so they match the stretched field demos;
         // icon-button triggers stay content-sized and centered.
-        className={cn('flex flex-col items-center', fluid && 'w-full px-4')}
+        className={cn("flex flex-col items-center", fluid && "w-full px-4")}
         style={{
           transform: `scale(${open ? fitScale : 1})`,
-          transformOrigin: 'center',
+          transformOrigin: "center",
           transition: `transform 400ms ${EASE}`,
         }}
       >
-        {side === 'top' && (
+        {side === "top" && (
           <AnchoredSurface open={open} side="top" fluid={fluid}>
             {surface}
           </AnchoredSurface>
@@ -320,7 +320,7 @@ export function OverlayScene({
         <Trigger triggerRef={triggerRef} fluid={fluid}>
           {trigger}
         </Trigger>
-        {side === 'bottom' && (
+        {side === "bottom" && (
           <AnchoredSurface open={open} side="bottom" fluid={fluid}>
             {surface}
           </AnchoredSurface>

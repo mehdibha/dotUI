@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
 import {
   Command,
   CommandContent,
   CommandInput,
   CommandItem,
-} from '@/registry/ui/command'
+} from "@/registry/ui/command"
 
 export default function Demo() {
   return (

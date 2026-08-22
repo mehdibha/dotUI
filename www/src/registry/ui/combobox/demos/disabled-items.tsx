@@ -1,20 +1,20 @@
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Combobox } from '@/registry/ui/combobox'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Popover } from '@/registry/ui/popover'
+import { Button } from "@/registry/ui/button"
+import { Combobox } from "@/registry/ui/combobox"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Popover } from "@/registry/ui/popover"
 
 const frameworks = [
-  { id: 'next', name: 'Next.js' },
-  { id: 'sveltekit', name: 'SvelteKit' },
-  { id: 'nuxt', name: 'Nuxt.js' },
-  { id: 'remix', name: 'Remix' },
-  { id: 'astro', name: 'Astro' },
+  { id: "next", name: "Next.js" },
+  { id: "sveltekit", name: "SvelteKit" },
+  { id: "nuxt", name: "Nuxt.js" },
+  { id: "remix", name: "Remix" },
+  { id: "astro", name: "Astro" },
 ]
 
-const disabledKeys = ['nuxt', 'remix']
+const disabledKeys = ["nuxt", "remix"]
 
 export default function Demo() {
   return (

@@ -8,32 +8,32 @@
  * this layer owns the semantic vocabulary + CSS.
  */
 
-import type { StepName } from '@dotui/colors'
+import type { StepName } from "@dotui/colors"
 
-export type ModeName = 'light' | 'dark'
+export type ModeName = "light" | "dark"
 
 /**
  * Which ramp the primary-action tokens (`color-primary*`, `color-fg-on-primary`)
  * draw from: the neutral backbone (black/white buttons — Vercel-style) or the
  * brand accent ramp (colored buttons — Material/Linear-style).
  */
-export type PrimaryColorSource = 'neutral' | 'accent'
+export type PrimaryColorSource = "neutral" | "accent"
 
 /** How a semantic token resolves to a CSS value. */
 export type SemanticTarget =
   | { ref: { palette: string; step: StepName } } // → var(--<palette>-<step>)
   | { alpha: { palette: string; step: StepName } } // → var(--<palette>-a<step>)
-  | { on: { palette: string; step: '700' | '800' } } // → var(--on-<palette>-<step>)
+  | { on: { palette: string; step: "700" | "800" } } // → var(--on-<palette>-<step>)
   | { value: string } // a literal CSS value
   | {
       mix: {
-        space: 'oklab' | 'oklch' | 'srgb'
+        space: "oklab" | "oklch" | "srgb"
         stops: [SemanticTarget, number, SemanticTarget]
       }
     }
 
 /** Customizer grouping for a token. The picker filters on this today. */
-export type SemanticCategory = 'background' | 'foreground' | 'border'
+export type SemanticCategory = "background" | "foreground" | "border"
 
 export interface SemanticToken {
   /** A mode-agnostic target, or a per-mode pair (dark re-points are generated). */
@@ -54,18 +54,18 @@ export type SemanticVocabulary = Record<string, SemanticToken>
 
 /** The engine's 12-job ladder by job name (T2) — the remap-facing vocabulary. */
 export const JOB_STEPS = {
-  'app-bg': '25',
-  'subtle-bg': '50',
-  'ui-rest': '100',
-  'ui-hover': '200',
-  'ui-active': '300',
-  'border-subtle': '400',
-  'border-interactive': '500',
-  'border-emphasized': '600',
-  solid: '700',
-  'solid-hover': '800',
-  'text-muted': '900',
-  text: '950',
+  "app-bg": "25",
+  "subtle-bg": "50",
+  "ui-rest": "100",
+  "ui-hover": "200",
+  "ui-active": "300",
+  "border-subtle": "400",
+  "border-interactive": "500",
+  "border-emphasized": "600",
+  solid: "700",
+  "solid-hover": "800",
+  "text-muted": "900",
+  text: "950",
 } as const satisfies Record<string, StepName>
 
 export type JobName = keyof typeof JOB_STEPS

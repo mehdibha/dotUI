@@ -1,6 +1,6 @@
-import DropZoneDemo from '@/registry/ui/drop-zone/demos/basic'
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import DropZoneDemo from "@/registry/ui/drop-zone/demos/basic"
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
 export default function DropZoneGroupExamples() {
   return (

@@ -1,47 +1,47 @@
-'use client'
+"use client"
 
 import {
   createFormHook,
   createFormHookContexts,
   useStore,
-} from '@tanstack/react-form'
-import type * as CalendarPrimitives from 'react-aria-components/Calendar'
-import type * as ColorAreaPrimitives from 'react-aria-components/ColorArea'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import type * as MenuPrimitives from 'react-aria-components/Menu'
-import type * as TimeFieldPrimitives from 'react-aria-components/TimeField'
+} from "@tanstack/react-form"
+import type * as CalendarPrimitives from "react-aria-components/Calendar"
+import type * as ColorAreaPrimitives from "react-aria-components/ColorArea"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import type * as MenuPrimitives from "react-aria-components/Menu"
+import type * as TimeFieldPrimitives from "react-aria-components/TimeField"
 
-import { Button } from '@/registry/ui/button'
-import type { ButtonProps } from '@/registry/ui/button'
-import { Checkbox } from '@/registry/ui/checkbox'
-import type { CheckboxProps } from '@/registry/ui/checkbox'
-import { ColorField } from '@/registry/ui/color-field'
-import type { ColorFieldProps } from '@/registry/ui/color-field'
-import { ColorPicker } from '@/registry/ui/color-picker'
-import type { ColorPickerProps } from '@/registry/ui/color-picker'
-import { Combobox } from '@/registry/ui/combobox'
-import type { ComboboxProps } from '@/registry/ui/combobox'
-import { DateField } from '@/registry/ui/date-field'
-import type { DateFieldProps } from '@/registry/ui/date-field'
-import { DatePicker } from '@/registry/ui/date-picker'
-import type { DatePickerProps } from '@/registry/ui/date-picker'
-import { FieldError } from '@/registry/ui/field'
-import { NumberField } from '@/registry/ui/number-field'
-import type { NumberFieldProps } from '@/registry/ui/number-field'
-import { RadioGroup } from '@/registry/ui/radio-group'
-import type { RadioGroupProps } from '@/registry/ui/radio-group'
-import { SearchField } from '@/registry/ui/search-field'
-import type { SearchFieldProps } from '@/registry/ui/search-field'
-import { Select } from '@/registry/ui/select'
-import type { SelectProps } from '@/registry/ui/select'
-import { Slider } from '@/registry/ui/slider'
-import type { SliderProps } from '@/registry/ui/slider'
-import { Switch } from '@/registry/ui/switch'
-import type { SwitchProps } from '@/registry/ui/switch'
-import { TextField } from '@/registry/ui/text-field'
-import type { TextFieldProps } from '@/registry/ui/text-field'
-import { TimeField } from '@/registry/ui/time-field'
-import type { TimeFieldProps } from '@/registry/ui/time-field'
+import { Button } from "@/registry/ui/button"
+import type { ButtonProps } from "@/registry/ui/button"
+import { Checkbox } from "@/registry/ui/checkbox"
+import type { CheckboxProps } from "@/registry/ui/checkbox"
+import { ColorField } from "@/registry/ui/color-field"
+import type { ColorFieldProps } from "@/registry/ui/color-field"
+import { ColorPicker } from "@/registry/ui/color-picker"
+import type { ColorPickerProps } from "@/registry/ui/color-picker"
+import { Combobox } from "@/registry/ui/combobox"
+import type { ComboboxProps } from "@/registry/ui/combobox"
+import { DateField } from "@/registry/ui/date-field"
+import type { DateFieldProps } from "@/registry/ui/date-field"
+import { DatePicker } from "@/registry/ui/date-picker"
+import type { DatePickerProps } from "@/registry/ui/date-picker"
+import { FieldError } from "@/registry/ui/field"
+import { NumberField } from "@/registry/ui/number-field"
+import type { NumberFieldProps } from "@/registry/ui/number-field"
+import { RadioGroup } from "@/registry/ui/radio-group"
+import type { RadioGroupProps } from "@/registry/ui/radio-group"
+import { SearchField } from "@/registry/ui/search-field"
+import type { SearchFieldProps } from "@/registry/ui/search-field"
+import { Select } from "@/registry/ui/select"
+import type { SelectProps } from "@/registry/ui/select"
+import { Slider } from "@/registry/ui/slider"
+import type { SliderProps } from "@/registry/ui/slider"
+import { Switch } from "@/registry/ui/switch"
+import type { SwitchProps } from "@/registry/ui/switch"
+import { TextField } from "@/registry/ui/text-field"
+import type { TextFieldProps } from "@/registry/ui/text-field"
+import { TimeField } from "@/registry/ui/time-field"
+import type { TimeFieldProps } from "@/registry/ui/time-field"
 
 export const { fieldContext, formContext, useFieldContext, useFormContext } =
   createFormHookContexts()

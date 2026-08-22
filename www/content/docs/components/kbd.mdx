@@ -13,11 +13,11 @@ npx shadcn@latest add @dotui/kbd
 ## Usage
 
 ```tsx
-import { Kbd } from '@/ui/kbd'
+import { Kbd } from "@/ui/kbd"
 ```
 
 ```tsx
-;<Kbd>⌘</Kbd> + <Kbd>K</Kbd>
+<Kbd>⌘K</Kbd>
 ```
 
 ## Anatomy
@@ -25,8 +25,11 @@ import { Kbd } from '@/ui/kbd'
 Use `Kbd` for a single key. Wrap several in `KbdGroup` to present a key combination as one unit.
 
 ```tsx
-import { Kbd, KbdGroup } from '@/ui/kbd'
-;<KbdGroup>
+import { Kbd, KbdGroup } from "@/ui/kbd"
+```
+
+```tsx
+<KbdGroup>
   <Kbd>⌘</Kbd>
   <Kbd>K</Kbd>
 </KbdGroup>

@@ -1,20 +1,20 @@
-import { createContext, useContext, useRef } from 'react'
-import { CheckIcon, CopyIcon, FileIcon } from 'lucide-react'
+import { createContext, useContext, useRef } from "react"
+import { CheckIcon, CopyIcon, FileIcon } from "lucide-react"
 
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
 
 const CodeBlockContext =
   createContext<React.RefObject<HTMLElement | null> | null>(null)
 
-export interface CodeBlockProps extends React.ComponentProps<'figure'> {
+export interface CodeBlockProps extends React.ComponentProps<"figure"> {
   title?: string
   actions?: React.ReactNode
   icon?: string | React.ReactNode
   /** Extra classes for the scrollable code container, e.g. to make it a modal's scroller. */
   contentClassName?: string
-  'data-line-numbers'?: boolean
+  "data-line-numbers"?: boolean
 }
 
 export function CodeBlock({
@@ -27,7 +27,7 @@ export function CodeBlock({
   ...props
 }: CodeBlockProps) {
   const containerRef = useRef<HTMLElement>(null)
-  const language = 'tsx'
+  const language = "tsx"
 
   const actions = (
     <>
@@ -40,7 +40,7 @@ export function CodeBlock({
     <CodeBlockContext.Provider value={containerRef}>
       <figure
         ref={containerRef}
-        className={cn('rounded-md border bg-card', className)}
+        className={cn("rounded-md border bg-card", className)}
         {...props}
       >
         {title && (
@@ -51,7 +51,7 @@ export function CodeBlock({
             </figcaption>
             <div
               className={cn(
-                'flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5',
+                "flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
               )}
             >
               {actions}
@@ -59,17 +59,17 @@ export function CodeBlock({
           </div>
         )}
         <div
-          className={cn('relative overflow-auto', contentClassName)}
+          className={cn("relative overflow-auto", contentClassName)}
           style={{
-            counterReset: 'line',
+            counterReset: "line",
           }}
         >
           <section className="overflow-auto">{children}</section>
           {!title && (
             <div
               className={cn(
-                'absolute top-1.75 right-1.75 flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5',
-                'backdrop-blur-[1px] **:data-button:bg-card/60 **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))] **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))]',
+                "absolute top-1.75 right-1.75 flex items-center gap-0.5 **:data-button:text-fg-muted **:data-button:*:[svg]:size-3.5",
+                "backdrop-blur-[1px] **:data-button:bg-card/60 **:data-button:hover:bg-[color-mix(in_oklab,var(--color-card)_85%,var(--color-inverse))] **:data-button:pressed:bg-[color-mix(in_oklab,var(--color-card)_80%,var(--color-inverse))]",
               )}
             >
               {actions}
@@ -85,25 +85,25 @@ export function Pre({
   children,
   className,
   ...props
-}: React.ComponentProps<'pre'>) {
+}: React.ComponentProps<"pre">) {
   return (
     <pre
       className={cn(
-        'w-max min-w-full py-3 [tab-size:2] **:[.line]:px-4!',
+        "w-max min-w-full py-3 [tab-size:2] **:[.line]:px-4!",
         // shiki
-        '**:[code]:text-[0.8125rem] **:[code]:**:[span]:text-(--shiki-light) dark:**:[code]:**:[span]:text-(--shiki-dark)',
+        "**:[code]:text-[0.8125rem] **:[code]:**:[span]:text-(--shiki-light) dark:**:[code]:**:[span]:text-(--shiki-dark)",
         // code
-        '*:[code]:flex *:[code]:w-full *:[code]:flex-col',
+        "*:[code]:flex *:[code]:w-full *:[code]:flex-col",
         // line
-        '**:[.line]:relative **:[.line]:min-h-lh',
+        "**:[.line]:relative **:[.line]:min-h-lh",
         // highlight
         "**:[.highlighted]:m-0! **:[.highlighted]:bg-selected/70! **:[.highlighted]:before:absolute **:[.highlighted]:before:inset-y-0 **:[.highlighted]:before:left-0 **:[.highlighted]:before:w-0.5 **:[.highlighted]:before:bg-fg/40 **:[.highlighted]:before:content-['']",
         // diff
-        '**:[.diff]:before:absolute **:[.diff]:before:inset-y-0 **:[.diff]:before:left-0.5 **:[.diff]:before:w-0.5',
+        "**:[.diff]:before:absolute **:[.diff]:before:inset-y-0 **:[.diff]:before:left-0.5 **:[.diff]:before:w-0.5",
         "**:[.diff.add]:bg-success/15 **:[.diff.add]:before:text-success **:[.diff.add]:before:content-['+']",
         "**:[.diff.remove]:bg-danger/20 **:[.diff.remove]:before:text-danger **:[.diff.remove]:before:content-['-']",
         // line numbers
-        '**:[.line]:[counter-increment:line] **:[.line]:after:absolute **:[.line]:after:left-2 **:[.line]:after:text-fg-muted in-data-line-numbers:**:[.line]:pl-9! in-data-line-numbers:**:[.line]:after:content-[counter(line)]',
+        "**:[.line]:[counter-increment:line] **:[.line]:after:absolute **:[.line]:after:left-2 **:[.line]:after:text-fg-muted in-data-line-numbers:**:[.line]:pl-9! in-data-line-numbers:**:[.line]:after:content-[counter(line)]",
         className,
       )}
       {...props}
@@ -118,15 +118,15 @@ function CopyButton() {
   const containerRef = useContext(CodeBlockContext)
 
   const handleCopy = () => {
-    const pre = containerRef?.current?.getElementsByTagName('pre').item(0)
+    const pre = containerRef?.current?.getElementsByTagName("pre").item(0)
     if (!pre) return
 
     const clone = pre.cloneNode(true) as HTMLElement
-    clone.querySelectorAll('.nd-copy-ignore').forEach((node) => {
-      node.replaceWith('\n')
+    clone.querySelectorAll(".nd-copy-ignore").forEach((node) => {
+      node.replaceWith("\n")
     })
 
-    const text = clone.textContent ?? ''
+    const text = clone.textContent ?? ""
     if (text) {
       copyToClipboard(text)
     }
@@ -138,7 +138,7 @@ function CopyButton() {
       size="xs"
       isIconOnly
       onPress={handleCopy}
-      aria-label={isCopied ? 'Copied!' : 'Copy code'}
+      aria-label={isCopied ? "Copied!" : "Copy code"}
     >
       {isCopied ? <CheckIcon /> : <CopyIcon />}
     </Button>
@@ -179,17 +179,17 @@ const Icons = {
 
 export function getIconForLanguageExtension(language: string) {
   switch (language) {
-    case 'json':
+    case "json":
       return <Icons.json />
-    case 'css':
+    case "css":
       return <Icons.css className="fill-fg-muted" />
-    case 'ts':
-    case 'tsx':
-    case 'typescript':
+    case "ts":
+    case "tsx":
+    case "typescript":
       return <Icons.ts className="fill-fg-muted" />
-    case 'bash':
-    case 'sh':
-    case 'shell':
+    case "bash":
+    case "sh":
+    case "shell":
       return <Icons.bash className="fill-fg-muted" />
     default:
       return <FileIcon />

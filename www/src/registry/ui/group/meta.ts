@@ -1,17 +1,17 @@
-import type { RegistryItem } from '@/registry/types'
+import type { RegistryItem } from "@/registry/types"
 
 const groupMeta = {
-  name: 'group',
-  type: 'registry:ui',
-  group: 'containers',
+  name: "group",
+  type: "registry:ui",
+  group: "containers",
   files: [
     {
-      type: 'registry:ui',
-      path: 'ui/group/base.tsx',
-      target: 'ui/group.tsx',
+      type: "registry:ui",
+      path: "ui/group/base.tsx",
+      target: "ui/group.tsx",
     },
   ],
-  registryDependencies: ['button'],
+  registryDependencies: ["button"],
 } satisfies RegistryItem
 
 export default groupMeta

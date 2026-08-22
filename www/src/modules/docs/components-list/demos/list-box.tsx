@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
-import { useCycle } from '../autoplay'
+import { useCycle } from "../autoplay"
 
-const KEYS = ['nextjs', 'remix', 'astro', 'gatsby']
+const KEYS = ["nextjs", "remix", "astro", "gatsby"]
 
 export function ListBoxDemo() {
   const { item } = useCycle(KEYS, { dwell: 1150 })

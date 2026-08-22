@@ -18,7 +18,7 @@ npx shadcn@latest add @dotui/tag-group
 ## Usage
 
 ```tsx
-import { TagGroup, TagList, Tag } from '@/ui/tag-group'
+import { TagGroup, TagList, Tag } from "@/ui/tag-group"
 ```
 
 ```tsx
@@ -35,9 +35,12 @@ import { TagGroup, TagList, Tag } from '@/ui/tag-group'
 A `TagGroup` wraps an optional `Label` and a `TagList` of `Tag` items.
 
 ```tsx
-import { TagGroup, TagList, Tag } from '@/ui/tag-group'
-import { Label } from '@/ui/field'
-;<TagGroup>
+import { TagGroup, TagList, Tag } from "@/ui/tag-group"
+import { Label } from "@/ui/field"
+```
+
+```tsx
+<TagGroup>
   <Label />
   <TagList>
     <Tag />
@@ -50,7 +53,7 @@ import { Label } from '@/ui/field'
 Set `selectionMode` to `single` or `multiple` to make tags selectable, giving each `Tag` an `id`. Control selection with `selectedKeys` + `onSelectionChange`, or default it with `defaultSelectedKeys`.
 
 ```tsx
-<TagGroup selectionMode="multiple" defaultSelectedKeys={['news', 'gaming']}>
+<TagGroup selectionMode="multiple" defaultSelectedKeys={["news", "gaming"]}>
   <TagList>
     <Tag id="news">News</Tag>
     <Tag id="gaming">Gaming</Tag>

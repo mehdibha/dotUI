@@ -1,7 +1,7 @@
-import { Copy } from 'lucide-react'
+import { Copy } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { Tab, TabList, TabPanel, Tabs } from '@/registry/ui/tabs'
+import { Button } from "@/registry/ui/button"
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 
 export default function Demo() {
   return (

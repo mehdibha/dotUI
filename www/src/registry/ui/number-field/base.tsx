@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import type * as React from 'react'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as NumberFieldPrimitives from 'react-aria-components/NumberField'
+import type * as React from "react"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as NumberFieldPrimitives from "react-aria-components/NumberField"
 
-import { MinusIcon, PlusIcon } from '@/registry/icons'
-import { Button, type ButtonProps } from '@/registry/ui/button'
-import { fieldStyles } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
+import { MinusIcon, PlusIcon } from "@/registry/icons"
+import { Button, type ButtonProps } from "@/registry/ui/button"
+import { fieldStyles } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
 
 interface NumberFieldProps extends React.ComponentProps<
   typeof NumberFieldPrimitives.NumberField

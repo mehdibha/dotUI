@@ -1,5 +1,5 @@
-import type * as CalendarPrimitives from 'react-aria-components/Calendar'
-import type * as DateFieldPrimitives from 'react-aria-components/DateField'
+import type * as CalendarPrimitives from "react-aria-components/Calendar"
+import type * as DateFieldPrimitives from "react-aria-components/DateField"
 
 /**
  * A date field allows users to enter and edit date and time values using a keyboard.

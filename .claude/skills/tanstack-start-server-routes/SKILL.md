@@ -8,7 +8,7 @@ description: >-
   helpers, file naming for API routes.
 type: sub-skill
 library: tanstack-start
-library_version: '1.166.2'
+library_version: "1.166.2"
 requires:
   - start-core
 sources:
@@ -23,13 +23,13 @@ Server routes are API endpoints defined alongside app routes in the `src/routes`
 
 ```ts
 // src/routes/api/hello.ts
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/api/hello')({
+export const Route = createFileRoute("/api/hello")({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        return new Response('Hello, World!')
+        return new Response("Hello, World!")
       },
     },
   },
@@ -42,10 +42,10 @@ The same file can define both a server route and a UI route:
 
 ```tsx
 // src/routes/hello.tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
+import { createFileRoute } from "@tanstack/react-router"
+import { useState } from "react"
 
-export const Route = createFileRoute('/hello')({
+export const Route = createFileRoute("/hello")({
   server: {
     handlers: {
       POST: async ({ request }) => {
@@ -58,14 +58,14 @@ export const Route = createFileRoute('/hello')({
 })
 
 function HelloComponent() {
-  const [reply, setReply] = useState('')
+  const [reply, setReply] = useState("")
   return (
     <button
       onClick={() => {
-        fetch('/hello', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: 'Tanner' }),
+        fetch("/hello", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: "Tanner" }),
         })
           .then((res) => res.json())
           .then((data) => setReply(data.message))
@@ -111,9 +111,9 @@ Each handler receives:
 
 ```ts
 // routes/users/$id.ts
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/users/$id')({
+export const Route = createFileRoute("/users/$id")({
   server: {
     handlers: {
       GET: async ({ params }) => {
@@ -128,9 +128,9 @@ export const Route = createFileRoute('/users/$id')({
 
 ```ts
 // routes/file/$.ts
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute('/file/$')({
+export const Route = createFileRoute("/file/$")({
   server: {
     handlers: {
       GET: async ({ params }) => {
@@ -144,7 +144,7 @@ export const Route = createFileRoute('/file/$')({
 ## Request Body Handling
 
 ```ts
-export const Route = createFileRoute('/api/users')({
+export const Route = createFileRoute("/api/users")({
   server: {
     handlers: {
       POST: async ({ request }) => {
@@ -198,7 +198,7 @@ handlers: {
 ### All handlers
 
 ```tsx
-export const Route = createFileRoute('/api/admin')({
+export const Route = createFileRoute("/api/admin")({
   server: {
     middleware: [authMiddleware, loggerMiddleware],
     handlers: {
@@ -214,7 +214,7 @@ export const Route = createFileRoute('/api/admin')({
 ### Specific handlers with createHandlers
 
 ```tsx
-export const Route = createFileRoute('/api/data')({
+export const Route = createFileRoute("/api/data")({
   server: {
     handlers: ({ createHandlers }) =>
       createHandlers({
@@ -233,7 +233,7 @@ export const Route = createFileRoute('/api/data')({
 ### Combined route-level and handler-specific
 
 ```tsx
-export const Route = createFileRoute('/api/posts')({
+export const Route = createFileRoute("/api/posts")({
   server: {
     middleware: [authMiddleware], // runs first for all
     handlers: ({ createHandlers }) =>

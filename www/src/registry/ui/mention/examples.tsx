@@ -1,12 +1,12 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Basic from './demos/basic'
-import Controlled from './demos/controlled'
-import CustomTrigger from './demos/custom-trigger'
-import MultipleTriggers from './demos/multiple-triggers'
-import WithAvatars from './demos/with-avatars'
-import WithInput from './demos/with-input'
+import Basic from "./demos/basic"
+import Controlled from "./demos/controlled"
+import CustomTrigger from "./demos/custom-trigger"
+import MultipleTriggers from "./demos/multiple-triggers"
+import WithAvatars from "./demos/with-avatars"
+import WithInput from "./demos/with-input"
 
 export default function MentionExamples() {
   return (

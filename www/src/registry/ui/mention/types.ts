@@ -1,8 +1,8 @@
-import type { ReactNode } from 'react'
-import type { Key } from 'react-aria-components/Menu'
+import type { ReactNode } from "react"
+import type { Key } from "react-aria-components/Menu"
 
-import type { PopoverProps } from '@/registry/ui/popover'
-import type { TokenFieldProps } from '@/registry/ui/token-field'
+import type { PopoverProps } from "@/registry/ui/popover"
+import type { TokenFieldProps } from "@/registry/ui/token-field"
 
 /**
  * A mention input lets users type a trigger character (like `@` or `/`) to
@@ -15,7 +15,7 @@ import type { TokenFieldProps } from '@/registry/ui/token-field'
  */
 export interface MentionProps extends Omit<
   TokenFieldProps,
-  'children' | 'role' | 'slot'
+  "children" | "role" | "slot"
 > {
   /**
    * The character(s) that open the suggestions list: a string for a single
@@ -29,7 +29,7 @@ export interface MentionProps extends Omit<
    */
   getItemText?: (key: Key) => string
   /** Where the suggestions popover is placed relative to the caret. @default "bottom start" */
-  placement?: PopoverProps['placement']
+  placement?: PopoverProps["placement"]
   /**
    * The composed input and suggestions. A function receives the active trigger
    * and query, so the suggestions can depend on which trigger the user typed.

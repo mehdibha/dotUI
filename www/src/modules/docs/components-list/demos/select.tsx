@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon } from "lucide-react"
 
-import { Button } from '@/registry/ui/button'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
+import { Button } from "@/registry/ui/button"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
-import { OverlayScene, useOpenAutoplay } from '../autoplay'
+import { OverlayScene, useOpenAutoplay } from "../autoplay"
 
 export function SelectDemo() {
   const { phase } = useOpenAutoplay()
@@ -26,7 +26,7 @@ export function SelectDemo() {
       <ListBox
         aria-label="Provider"
         selectionMode="single"
-        selectedKeys={['perplexity']}
+        selectedKeys={["perplexity"]}
         className="border-0 bg-transparent shadow-none"
       >
         <ListBoxItem id="perplexity">Perplexity</ListBoxItem>

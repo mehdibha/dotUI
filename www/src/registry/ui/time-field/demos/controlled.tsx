@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { Time } from '@internationalized/date'
-import type * as TimeFieldPrimitives from 'react-aria-components/TimeField'
+import React from "react"
+import { Time } from "@internationalized/date"
+import type * as TimeFieldPrimitives from "react-aria-components/TimeField"
 
-import { DateInput } from '@/registry/ui/input'
-import { TimeField } from '@/registry/ui/time-field'
+import { DateInput } from "@/registry/ui/input"
+import { TimeField } from "@/registry/ui/time-field"
 
 export default function Demo() {
   const [time, setTime] = React.useState<TimeFieldPrimitives.TimeValue | null>(
@@ -17,7 +17,7 @@ export default function Demo() {
         <DateInput />
       </TimeField>
       <p className="text-sm text-fg-muted">
-        selected time: {time ? time.toString() : 'none'}
+        selected time: {time ? time.toString() : "none"}
       </p>
     </div>
   )

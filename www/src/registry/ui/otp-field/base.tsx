@@ -1,19 +1,19 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import { OTPFieldPreview as OTPFieldPrimitive } from '@base-ui/react/otp-field'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as FieldErrorPrimitive from 'react-aria-components/FieldError'
-import * as InputPrimitive from 'react-aria-components/Input'
-import * as LabelPrimitive from 'react-aria-components/Label'
-import { Provider } from 'react-aria-components/slots'
-import * as TextPrimitive from 'react-aria-components/Text'
-import { useSlotId } from 'react-aria/private/utils/useId'
+import * as React from "react"
+import { OTPFieldPreview as OTPFieldPrimitive } from "@base-ui/react/otp-field"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as FieldErrorPrimitive from "react-aria-components/FieldError"
+import * as InputPrimitive from "react-aria-components/Input"
+import * as LabelPrimitive from "react-aria-components/Label"
+import { Provider } from "react-aria-components/slots"
+import * as TextPrimitive from "react-aria-components/Text"
+import { useSlotId } from "react-aria/private/utils/useId"
 
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 type OTPFieldRootProps = React.ComponentProps<typeof OTPFieldPrimitive.Root>
 type FieldValidationResult = NonNullable<
@@ -22,7 +22,7 @@ type FieldValidationResult = NonNullable<
 
 interface OTPFieldProps extends Omit<
   OTPFieldRootProps,
-  'disabled' | 'readOnly' | 'required' | 'onValueChange'
+  "disabled" | "readOnly" | "required" | "onValueChange"
 > {
   isDisabled?: boolean
   isInvalid?: boolean
@@ -50,7 +50,7 @@ const VALID_VALIDITY_STATE: ValidityState = {
 }
 
 const getAriaIds = (...ids: Array<string | undefined>) =>
-  ids.filter(Boolean).join(' ') || undefined
+  ids.filter(Boolean).join(" ") || undefined
 
 function OTPField({
   children,
@@ -62,8 +62,8 @@ function OTPField({
   isRequired,
   length,
   onChange,
-  'aria-describedby': ariaDescribedBy,
-  'aria-labelledby': ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-labelledby": ariaLabelledBy,
   ...props
 }: OTPFieldProps) {
   const styles = useStyles()()
@@ -98,7 +98,7 @@ function OTPField({
         [
           InputPrimitive.InputContext,
           {
-            'aria-invalid': isInvalid || undefined,
+            "aria-invalid": isInvalid || undefined,
             render: (inputProps) => (
               <OTPFieldPrimitive.Input
                 {...inputProps}

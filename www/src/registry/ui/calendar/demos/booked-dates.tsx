@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { getLocalTimeZone, today } from '@internationalized/date'
-import type * as CalendarPrimitives from 'react-aria-components/Calendar'
+import React from "react"
+import { getLocalTimeZone, today } from "@internationalized/date"
+import type * as CalendarPrimitives from "react-aria-components/Calendar"
 
-import { Calendar } from '@/registry/ui/calendar'
+import { Calendar } from "@/registry/ui/calendar"
 
 export default function Demo() {
   const [date, setDate] = React.useState<CalendarPrimitives.DateValue | null>(

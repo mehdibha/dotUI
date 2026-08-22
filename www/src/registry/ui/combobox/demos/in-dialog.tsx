@@ -1,8 +1,8 @@
-import { ChevronDownIcon } from 'lucide-react'
+import { ChevronDownIcon } from "lucide-react"
 
-import { Responsive } from '@/registry/lib/responsive'
-import { Button } from '@/registry/ui/button'
-import { Combobox } from '@/registry/ui/combobox'
+import { Responsive } from "@/registry/lib/responsive"
+import { Button } from "@/registry/ui/button"
+import { Combobox } from "@/registry/ui/combobox"
 import {
   Dialog,
   DialogBody,
@@ -11,13 +11,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/registry/ui/dialog'
-import { Drawer } from '@/registry/ui/drawer'
-import { Label } from '@/registry/ui/field'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Modal } from '@/registry/ui/modal'
-import { Popover } from '@/registry/ui/popover'
+} from "@/registry/ui/dialog"
+import { Drawer } from "@/registry/ui/drawer"
+import { Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Modal } from "@/registry/ui/modal"
+import { Popover } from "@/registry/ui/popover"
 
 export default function Demo() {
   return (

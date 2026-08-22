@@ -1,0 +1,11 @@
+/* Radius roles (#579) — builder-only indirection between the ladder and the
+   per-component vars. A shape character retargets these four together; the
+   publisher resolves the whole chain to plain utilities on publish, so
+   exported code never carries them. Items ride one rung below surfaces by
+   default — the invariant every rounded shadcn style follows. */
+:root {
+  --radius-control: var(--radius-md);
+  --radius-item: var(--radius-md);
+  --radius-surface: var(--radius-lg);
+  --radius-panel: var(--radius-xl);
+}

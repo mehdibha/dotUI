@@ -1,6 +1,4 @@
-'use client'
-
-import { cn } from 'cnfast'
+"use client"
 
 import {
   BoxIcon,
@@ -11,26 +9,27 @@ import {
   SquarePenIcon,
   TagIcon,
   UserIcon,
-} from '@/registry/icons'
-import { Card } from '@/registry/ui/card'
-import { Command } from '@/registry/ui/command'
-import { Input, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Kbd } from '@/registry/ui/kbd'
+} from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
+import { Card } from "@/registry/ui/card"
+import { Command } from "@/registry/ui/command"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Kbd } from "@/registry/ui/kbd"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from '@/registry/ui/list-box'
-import { SearchField } from '@/registry/ui/search-field'
-import { Separator } from '@/registry/ui/separator'
+} from "@/registry/ui/list-box"
+import { SearchField } from "@/registry/ui/search-field"
+import { Separator } from "@/registry/ui/separator"
 
 export function CommandMenu({
   className,
   ...props
-}: React.ComponentProps<'div'>) {
+}: React.ComponentProps<"div">) {
   return (
-    <Card className={cn('p-0', className)} {...props}>
+    <Card className={cn("p-0", className)} {...props}>
       <Command aria-label="Command menu">
         <SearchField aria-label="Search">
           <InputGroup>

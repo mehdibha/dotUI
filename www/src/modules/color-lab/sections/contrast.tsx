@@ -1,19 +1,19 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState } from "react"
 
-import { apcaContrast, wcagContrast } from '../color'
+import { apcaContrast, wcagContrast } from "../color"
 import {
   mappingFor,
   scaleByRole,
   type ColorSystem,
   type ScaleRole,
   type Step,
-} from '../data'
-import type { Mode } from '../page'
+} from "../data"
+import type { Mode } from "../page"
 
 function stepsFor(system: ColorSystem, family: ScaleRole, mode: Mode): Step[] {
   const scale = scaleByRole(system, family)
   if (!scale) return []
-  return mode === 'dark' && scale.dark ? scale.dark : scale.light
+  return mode === "dark" && scale.dark ? scale.dark : scale.light
 }
 
 /** Contrast, two ways: a promises table (each system's documented text/solid
@@ -29,7 +29,7 @@ export function ContrastSection({
   family: ScaleRole
 }) {
   const selectable = systems.filter((s) => !s.empty)
-  const [selected, setSelected] = useState(selectable[0]?.id ?? '')
+  const [selected, setSelected] = useState(selectable[0]?.id ?? "")
   const selectedSystem =
     selectable.find((s) => s.id === selected) ?? selectable[0]
 
@@ -91,8 +91,8 @@ export function ContrastSection({
               onClick={() => setSelected(system.id)}
               className={`rounded-md px-2 py-1 ${
                 selected === system.id
-                  ? 'bg-neutral-100 font-medium dark:bg-neutral-900'
-                  : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100'
+                  ? "bg-neutral-100 font-medium dark:bg-neutral-900"
+                  : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
               }`}
             >
               {system.name}
@@ -128,13 +128,13 @@ function PromiseRow({
 }) {
   const scale = scaleByRole(system, family)
   const steps = stepsFor(system, family, mode)
-  const at = (role: 'text' | 'textSubtle' | 'solid') => {
+  const at = (role: "text" | "textSubtle" | "solid") => {
     const index = scale ? mappingFor(system, scale)[role] : undefined
     return index === null || index === undefined ? undefined : steps[index]
   }
-  const text = at('text')
-  const subtle = at('textSubtle')
-  const solid = at('solid')
+  const text = at("text")
+  const subtle = at("textSubtle")
+  const solid = at("solid")
   return (
     <tr className="border-b border-neutral-100 dark:border-neutral-900">
       <td className="py-2.5 pr-4 font-medium">{system.name}</td>
@@ -151,7 +151,7 @@ function PromiseRow({
               className="inline-flex size-4 items-center justify-center rounded-[4px] text-[8px] font-bold"
               style={{
                 backgroundColor: solid.hex,
-                color: solid.asBg.fg === 'white' ? '#fff' : '#111',
+                color: solid.asBg.fg === "white" ? "#fff" : "#111",
               }}
             >
               A
@@ -160,7 +160,7 @@ function PromiseRow({
             <Pass ok={solid.asBg.wcag >= 4.5} />
           </span>
         ) : (
-          '—'
+          "—"
         )}
       </td>
     </tr>
@@ -194,8 +194,8 @@ function PairCell({
 function Pass({ ok }: { ok: boolean }) {
   return (
     <span
-      className={`inline-block size-1.5 rounded-full ${ok ? 'bg-emerald-500' : 'bg-red-400'}`}
-      title={ok ? 'passes' : 'fails'}
+      className={`inline-block size-1.5 rounded-full ${ok ? "bg-emerald-500" : "bg-red-400"}`}
+      title={ok ? "passes" : "fails"}
     />
   )
 }
@@ -238,7 +238,7 @@ function AaMatrix({ steps }: { steps: Step[] }) {
                   onMouseEnter={() => setHover({ t, b })}
                   style={{ backgroundColor: bg.hex, color: text.hex }}
                   className={`flex h-9 items-center justify-center text-[11px] font-medium ${
-                    readable ? 'inset-ring-2 inset-ring-white/40' : ''
+                    readable ? "inset-ring-2 inset-ring-white/40" : ""
                   }`}
                 >
                   Aa
@@ -251,7 +251,7 @@ function AaMatrix({ steps }: { steps: Step[] }) {
       <p className="mt-1.5 h-4 font-mono text-[10px] text-neutral-500 tabular-nums dark:text-neutral-400">
         {hoverText && hoverBg
           ? `text ${hoverText.name} on bg ${hoverBg.name} · WCAG ${wcagContrast(hoverText.rgb, hoverBg.rgb).toFixed(2)} · APCA Lc ${apcaContrast(hoverText.rgb, hoverBg.rgb).toFixed(1)}`
-          : ''}
+          : ""}
       </p>
     </div>
   )

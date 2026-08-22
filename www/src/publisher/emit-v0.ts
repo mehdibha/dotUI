@@ -14,25 +14,25 @@
  * Pure JS — no `ts-morph`, no React. Safe to import in route handlers.
  */
 
-import type { RegistryItem, RegistryItemFile } from '@/registry/types'
+import type { RegistryItem, RegistryItemFile } from "@/registry/types"
 
-import { DEFAULT_DEPENDENCIES } from './emit-theme'
+import { DEFAULT_DEPENDENCIES } from "./emit-theme"
 
 type CssRecord = { [key: string]: string | CssRecord }
-type RegistryCssFields = Pick<RegistryItem, 'css' | 'cssVars'>
+type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
 
 /** Packages the target's framework scaffold provides — never pin or install. */
 const FRAMEWORK_PROVIDED = new Set([
-  'react',
-  'react-dom',
-  'next',
-  'tailwindcss',
+  "react",
+  "react-dom",
+  "next",
+  "tailwindcss",
 ])
 
 /** Font packages referenced from the generated globals.css `@import`s. */
 const FONT_DEPENDENCIES = [
-  '@fontsource-variable/geist',
-  '@fontsource/geist-mono',
+  "@fontsource-variable/geist",
+  "@fontsource/geist-mono",
 ]
 
 /* ------------------------------ css rendering ------------------------------ */
@@ -40,7 +40,7 @@ const FONT_DEPENDENCIES = [
 function renderCssEntries(record: CssRecord, indent: string): string[] {
   const lines: string[] = []
   for (const [key, value] of Object.entries(record)) {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       lines.push(`${indent}${key}: ${value};`)
     } else if (Object.keys(value).length === 0) {
       lines.push(`${indent}${key};`)
@@ -60,52 +60,52 @@ function renderCssEntries(record: CssRecord, indent: string): string[] {
  */
 export function renderGlobalsCss(fields: RegistryCssFields): string {
   const css = (fields.css ?? {}) as CssRecord
-  const importKeys = Object.keys(css).filter((k) => k.startsWith('@import'))
-  const rest = Object.entries(css).filter(([k]) => !k.startsWith('@import'))
+  const importKeys = Object.keys(css).filter((k) => k.startsWith("@import"))
+  const rest = Object.entries(css).filter(([k]) => !k.startsWith("@import"))
 
   const lines: string[] = [
     '@import "tailwindcss";',
     '@import "@fontsource-variable/geist";',
     '@import "@fontsource/geist-mono";',
     ...importKeys.map((k) => `${k};`),
-    '',
+    "",
     // The base theme aliases --font-sans to these; the faces come from the
     // @fontsource imports above.
-    '@theme {',
+    "@theme {",
     '  --font-geist-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;',
     '  --font-geist-mono: "Geist Mono", ui-monospace, monospace;',
-    '}',
+    "}",
   ]
 
   const theme = fields.cssVars?.theme
   if (theme && Object.keys(theme).length > 0) {
-    lines.push('', '@theme inline {')
+    lines.push("", "@theme inline {")
     for (const [name, value] of Object.entries(theme)) {
-      lines.push(`  ${name.startsWith('--') ? name : `--${name}`}: ${value};`)
+      lines.push(`  ${name.startsWith("--") ? name : `--${name}`}: ${value};`)
     }
-    lines.push('}')
+    lines.push("}")
   }
 
   for (const [key, value] of rest) {
-    lines.push('')
-    lines.push(...renderCssEntries({ [key]: value } as CssRecord, ''))
+    lines.push("")
+    lines.push(...renderCssEntries({ [key]: value } as CssRecord, ""))
   }
 
-  return `${lines.join('\n')}\n`
+  return `${lines.join("\n")}\n`
 }
 
 /** Deep-merge one component's `css` block into the accumulated record. */
 export function mergeComponentCss(
-  target: NonNullable<RegistryCssFields['css']>,
-  source: RegistryItem['css'],
+  target: NonNullable<RegistryCssFields["css"]>,
+  source: RegistryItem["css"],
 ): void {
   if (!source) return
   const dst = target as CssRecord
   for (const [key, value] of Object.entries(source as CssRecord)) {
     const existing = dst[key]
     if (
-      typeof value === 'object' &&
-      typeof existing === 'object' &&
+      typeof value === "object" &&
+      typeof existing === "object" &&
       existing !== null
     ) {
       mergeComponentCss(existing as never, value as never)
@@ -124,14 +124,14 @@ export function mergeComponentCss(
  */
 export function rewriteRegistryImports(content: string): string {
   return content
-    .replaceAll('@/registry/ui/', '@/components/ui/')
-    .replaceAll('@/registry/hooks/', '@/hooks/')
-    .replaceAll('@/registry/lib/', '@/lib/')
+    .replaceAll("@/registry/ui/", "@/components/ui/")
+    .replaceAll("@/registry/hooks/", "@/hooks/")
+    .replaceAll("@/registry/lib/", "@/lib/")
 }
 
 /** `ui/button.tsx` → `components/ui/button.tsx`; lib/hooks pass through. */
 function projectTarget(target: string): string {
-  return target.startsWith('ui/') ? `components/${target}` : target
+  return target.startsWith("ui/") ? `components/${target}` : target
 }
 
 /* -------------------------------- assembly -------------------------------- */
@@ -166,7 +166,7 @@ function satisfiableItems(items: RegistryItem[]): RegistryItem[] {
   for (;;) {
     let dropped = false
     for (const [name, item] of available) {
-      const contents = (item.files ?? []).map((f) => f.content ?? '')
+      const contents = (item.files ?? []).map((f) => f.content ?? "")
       const missing = contents.some((content) =>
         [...content.matchAll(/@\/components\/ui\/([a-z0-9-]+)/g)].some(
           (m) => !available.has(m[1]!),
@@ -199,10 +199,10 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
     if (!filesByTarget.has(file.target)) filesByTarget.set(file.target, file)
   }
 
-  add(v0File('registry:file', 'app/globals.css', renderGlobalsCss(cssFields)))
-  add(v0File('registry:page', 'app/layout.tsx', V0_LAYOUT_TSX))
-  add(v0File('registry:page', 'app/page.tsx', V0_PAGE_TSX))
-  add(v0File('registry:component', 'components/demo.tsx', V0_DEMO_TSX))
+  add(v0File("registry:file", "app/globals.css", renderGlobalsCss(cssFields)))
+  add(v0File("registry:page", "app/layout.tsx", V0_LAYOUT_TSX))
+  add(v0File("registry:page", "app/page.tsx", V0_PAGE_TSX))
+  add(v0File("registry:component", "components/demo.tsx", V0_DEMO_TSX))
 
   for (const item of items) {
     for (const file of item.files ?? []) {
@@ -213,7 +213,7 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
 
   // Fill support-module gaps (hooks, lib helpers) not shipped by any item.
   for (const [target, content] of Object.entries(input.supportFiles)) {
-    add(v0File('registry:lib', target, content))
+    add(v0File("registry:lib", target, content))
   }
 
   // Same base deps `shadcn init` would install, since there's no init step
@@ -227,12 +227,12 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
   }
 
   return {
-    $schema: 'https://ui.shadcn.com/schema/registry-item.json',
-    name: 'dotui-v0',
-    type: 'registry:block',
-    title: 'dotUI Design System',
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: "dotui-v0",
+    type: "registry:block",
+    title: "dotUI Design System",
     description:
-      'Your dotUI design system with a starter demo, themed to your preset.',
+      "Your dotUI design system with a starter demo, themed to your preset.",
     dependencies: [...dependencies]
       .filter((dep) => !FRAMEWORK_PROVIDED.has(dep))
       .sort(),
@@ -242,7 +242,7 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
 }
 
 function fileType(file: RegistryItemFile): string {
-  return file.type === 'registry:ui' ? 'registry:ui' : 'registry:lib'
+  return file.type === "registry:ui" ? "registry:ui" : "registry:lib"
 }
 
 /* ------------------------------ project shell ------------------------------ */

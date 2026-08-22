@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   Tab,
@@ -6,10 +6,10 @@ import {
   TabPanel,
   Tabs,
   type TabsProps,
-} from '@/registry/ui/tabs'
+} from "@/registry/ui/tabs"
 
 export default function Demo({
-  orientation = 'horizontal',
+  orientation = "horizontal",
   isDisabled = false,
 }: TabsProps = {}) {
   return (

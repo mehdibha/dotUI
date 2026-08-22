@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import * as ButtonPrimitives from 'react-aria-components/Button'
-import { composeRenderProps } from 'react-aria-components/composeRenderProps'
-import * as DisclosurePrimitives from 'react-aria-components/Disclosure'
-import * as HeadingPrimitives from 'react-aria-components/Heading'
+import * as ButtonPrimitives from "react-aria-components/Button"
+import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as DisclosurePrimitives from "react-aria-components/Disclosure"
+import * as HeadingPrimitives from "react-aria-components/Heading"
 
-import { ChevronDownIcon } from '@/registry/icons'
+import { ChevronDownIcon } from "@/registry/icons"
 
-import { useStyles } from './styles'
+import { useStyles } from "./styles"
 
 // MARK: disclosureStyles
 

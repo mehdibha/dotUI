@@ -1,7 +1,7 @@
-import type * as TagGroupPrimitives from 'react-aria-components/TagGroup'
-import type { VariantProps } from 'tailwind-variants'
+import type * as TagGroupPrimitives from "react-aria-components/TagGroup"
+import type { VariantProps } from "tailwind-variants"
 
-import type { TagGroupStyles } from './styles'
+import type { TagGroupStyles } from "./styles"
 
 /**
  * A tag group is a focusable list of labels, categories, keywords, filters, or other items,

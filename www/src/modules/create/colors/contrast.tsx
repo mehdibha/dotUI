@@ -1,26 +1,26 @@
-'use client'
+"use client"
 
-import type { GuaranteeResult, ThemeReport } from '@dotui/colors'
+import type { GuaranteeResult, ThemeReport } from "@dotui/colors"
 
-import { PALETTE_ORDER } from '@/registry/theme'
+import { PALETTE_ORDER } from "@/registry/theme"
 
-const MODES = ['light', 'dark'] as const
+const MODES = ["light", "dark"] as const
 
 const GROUPS = [
   {
-    id: 'text',
-    label: 'Text',
-    match: (name: string) => name.startsWith('text'),
+    id: "text",
+    label: "Text",
+    match: (name: string) => name.startsWith("text"),
   },
   {
-    id: 'on-solid',
-    label: 'On solid',
-    match: (name: string) => name === 'on-solid',
+    id: "on-solid",
+    label: "On solid",
+    match: (name: string) => name === "on-solid",
   },
   {
-    id: 'border',
-    label: 'Border',
-    match: (name: string) => name.startsWith('border'),
+    id: "border",
+    label: "Border",
+    match: (name: string) => name.startsWith("border"),
   },
 ] as const
 
@@ -41,7 +41,7 @@ function failureTitle(failures: GuaranteeResult[]): string | undefined {
       (f) =>
         `${f.name} (${f.fg} on ${f.bg}): WCAG ${f.wcag.toFixed(2)}/${f.wcagTarget} · Lc ${f.lc.toFixed(1)}/${f.lcTarget}`,
     )
-    .join('\n')
+    .join("\n")
 }
 
 function GroupChip({
@@ -60,11 +60,11 @@ function GroupChip({
       title={failureTitle(failures)}
       className={
         passes
-          ? 'rounded bg-neutral px-1.5 py-0.5 text-[10px] font-medium text-fg-muted'
-          : 'rounded bg-danger px-1.5 py-0.5 text-[10px] font-medium text-fg-on-danger'
+          ? "rounded bg-neutral px-1.5 py-0.5 text-[10px] font-medium text-fg-muted"
+          : "rounded bg-danger px-1.5 py-0.5 text-[10px] font-medium text-fg-on-danger"
       }
     >
-      {label} {passes ? '✓' : '✕'}
+      {label} {passes ? "✓" : "✕"}
     </span>
   )
 }
@@ -103,7 +103,7 @@ export function ContrastReadout({ report }: { report: ThemeReport }) {
                 return (
                   <div key={mode} className="flex flex-1 items-center gap-1">
                     <span className="text-[10px] text-fg-muted">
-                      {mode === 'light' ? 'L' : 'D'}
+                      {mode === "light" ? "L" : "D"}
                     </span>
                     {GROUPS.map((group) => (
                       <GroupChip

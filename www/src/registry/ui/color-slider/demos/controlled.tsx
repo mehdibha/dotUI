@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import React from 'react'
-import * as ColorAreaPrimitives from 'react-aria-components/ColorArea'
+import React from "react"
+import * as ColorAreaPrimitives from "react-aria-components/ColorArea"
 
-import { ColorSlider, ColorSliderControl } from '@/registry/ui/color-slider'
+import { ColorSlider, ColorSliderControl } from "@/registry/ui/color-slider"
 
 export default function Demo() {
   const [value, setValue] = React.useState(
-    ColorAreaPrimitives.parseColor('hsl(0, 100%, 50%)'),
+    ColorAreaPrimitives.parseColor("hsl(0, 100%, 50%)"),
   )
 
   return (
@@ -20,7 +20,7 @@ export default function Demo() {
       >
         <ColorSliderControl />
       </ColorSlider>
-      <p className="text-xs text-fg-muted">Value: {value.toString('hex')}</p>
+      <p className="text-xs text-fg-muted">Value: {value.toString("hex")}</p>
     </div>
   )
 }

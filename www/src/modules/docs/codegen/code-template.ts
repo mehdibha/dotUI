@@ -20,19 +20,19 @@
 // ============================================================================
 
 export type ValueKind =
-  | 'boolean'
-  | 'string'
-  | 'number'
-  | 'enum'
-  | 'icon'
-  | 'node'
+  | "boolean"
+  | "string"
+  | "number"
+  | "enum"
+  | "icon"
+  | "node"
 export type SerializedDefault = string | number | boolean | null
 
 export const PRINT_WIDTH = 120
 
 /** A controllable attribute on a dynamic element. Dropped at its default. */
 export interface AttrHole {
-  part: 'attr'
+  part: "attr"
   control: string
   attrName: string
   kind: ValueKind
@@ -41,23 +41,23 @@ export interface AttrHole {
   dropWhen?: string
 }
 
-export type AttrPart = { part: 'static'; text: string } | AttrHole
+export type AttrPart = { part: "static"; text: string } | AttrHole
 
 /** A `{param}` child slot: plain text, or an icon element. Dropped when falsy. */
 export interface TextHole {
-  part: 'text'
+  part: "text"
   control: string
   kind: ValueKind
 }
 
 export type ChildPart =
   /** Verbatim formatted lines, dedented so the block's first column is 0. */
-  | { part: 'static'; lines: string[] }
+  | { part: "static"; lines: string[] }
   /** Static JSX text, whitespace-collapsed; refilled at render time. */
-  | { part: 'static-text'; text: string }
+  | { part: "static-text"; text: string }
   | TextHole
   /** A nested element; with `showWhen` it came from `{cond && <El>…</El>}`. */
-  | { part: 'element'; el: TemplateElement; showWhen?: string }
+  | { part: "element"; el: TemplateElement; showWhen?: string }
 
 export interface TemplateElement {
   tag: string
@@ -71,7 +71,7 @@ export interface ImportDecl {
   /** Verbatim oxfmt line(s) for the FULL symbol set (fast path). */
   text: string
   symbols: { name: string; local?: string }[]
-  kind: 'named' | 'default'
+  kind: "named" | "default"
 }
 
 export interface ConstDecl {
@@ -96,11 +96,11 @@ export function collectTemplateHoles(
 ): (AttrHole | TextHole)[] {
   const holes: (AttrHole | TextHole)[] = []
   for (const attr of el.attrs) {
-    if (attr.part === 'attr') holes.push(attr)
+    if (attr.part === "attr") holes.push(attr)
   }
   for (const child of el.children) {
-    if (child.part === 'text') holes.push(child)
-    else if (child.part === 'element')
+    if (child.part === "text") holes.push(child)
+    else if (child.part === "element")
       holes.push(...collectTemplateHoles(child.el))
   }
   return holes
@@ -127,17 +127,17 @@ export function renderCode(
     template.bodyIndent,
     icons,
   )
-  const body = bodyLines.join('\n')
+  const body = bodyLines.join("\n")
   const used = collectUsedSymbols(template, body)
 
   if (!expanded) {
     const placeholders = template.consts
       .filter((c) => used.consts.has(c.name))
       .map((c) => c.placeholder)
-      .join('\n')
+      .join("\n")
     const dedented = bodyLines
-      .map((l) => (l.trim() === '' ? '' : l.slice(template.bodyIndent)))
-      .join('\n')
+      .map((l) => (l.trim() === "" ? "" : l.slice(template.bodyIndent)))
+      .join("\n")
     return placeholders ? `${placeholders}\n\n${dedented}` : dedented
   }
 
@@ -145,7 +145,7 @@ export function renderCode(
   const realConsts = template.consts
     .filter((c) => used.consts.has(c.name))
     .map((c) => c.real)
-    .join('\n\n')
+    .join("\n\n")
 
   // oxfmt inlines a single-line JSX return; parens only for multiline bodies.
   const inlineReturn = `  return ${body.trim()};`
@@ -158,7 +158,7 @@ export function renderCode(
   if (importLines) parts.push(importLines)
   if (realConsts) parts.push(realConsts)
   parts.push(fn)
-  return parts.join('\n\n')
+  return parts.join("\n\n")
 }
 
 // ---------------------------------------------------------------------------
@@ -167,9 +167,9 @@ export function renderCode(
 
 /** A rendered child: fillable text, an atomic `{…}` expression, or block lines. */
 type Kid =
-  | { type: 'text'; text: string }
-  | { type: 'expr'; code: string }
-  | { type: 'block'; lines: string[] }
+  | { type: "text"; text: string }
+  | { type: "expr"; code: string }
+  | { type: "block"; lines: string[] }
 
 function renderElement(
   el: TemplateElement,
@@ -177,12 +177,12 @@ function renderElement(
   indent: number,
   icons: Set<string>,
 ): string[] {
-  const pad = ' '.repeat(indent)
+  const pad = " ".repeat(indent)
 
   const attrs: string[] = []
   for (const attr of el.attrs) {
     const text =
-      attr.part === 'static' ? attr.text : renderAttrHole(attr, values, icons)
+      attr.part === "static" ? attr.text : renderAttrHole(attr, values, icons)
     if (text !== null) attrs.push(text)
   }
 
@@ -192,11 +192,11 @@ function renderElement(
     if (kid) kids.push(kid)
   }
 
-  const openInline = `<${el.tag}${attrs.map((a) => ` ${a}`).join('')}`
+  const openInline = `<${el.tag}${attrs.map((a) => ` ${a}`).join("")}`
   // oxfmt never breaks an open tag whose only attribute is a plain string
   // literal, no matter how long the line gets.
   const neverBreakOpen =
-    attrs.length === 1 && /^[\w-]+="[^"]*"$/.test(attrs[0] ?? '')
+    attrs.length === 1 && /^[\w-]+="[^"]*"$/.test(attrs[0] ?? "")
 
   // Every child dropped → self-close.
   if (kids.length === 0) {
@@ -208,8 +208,8 @@ function renderElement(
 
   // Single text/expression child + at most one attribute → join when it fits.
   const only = kids.length === 1 ? kids[0] : undefined
-  if (only && only.type !== 'block' && attrs.length <= 1) {
-    const inner = only.type === 'text' ? only.text : only.code
+  if (only && only.type !== "block" && attrs.length <= 1) {
+    const inner = only.type === "text" ? only.text : only.code
     const joined = `${openInline}>${inner}</${el.tag}>`
     if (indent + joined.length <= PRINT_WIDTH) return [pad + joined]
   }
@@ -220,8 +220,8 @@ function renderElement(
       : [`${pad}<${el.tag}`, ...attrLines(attrs, indent + 2), `${pad}>`]
 
   const childLines = kids.flatMap((kid) => {
-    if (kid.type === 'text') return fillText(kid.text, indent + 2)
-    if (kid.type === 'expr') return [`${' '.repeat(indent + 2)}${kid.code}`]
+    if (kid.type === "text") return fillText(kid.text, indent + 2)
+    if (kid.type === "expr") return [`${" ".repeat(indent + 2)}${kid.code}`]
     return kid.lines
   })
 
@@ -229,25 +229,25 @@ function renderElement(
 }
 
 function attrLines(attrs: string[], indent: number): string[] {
-  const pad = ' '.repeat(indent)
+  const pad = " ".repeat(indent)
   return attrs.map((a) => pad + a)
 }
 
 /** Greedy fill at PRINT_WIDTH — matches oxfmt's JSX text wrapping. */
 function fillText(text: string, indent: number): string[] {
-  const pad = ' '.repeat(indent)
+  const pad = " ".repeat(indent)
   const budget = PRINT_WIDTH - indent
   const lines: string[] = []
-  let current = ''
+  let current = ""
   for (const word of text.split(/\s+/).filter(Boolean)) {
-    if (current === '') current = word
+    if (current === "") current = word
     else if (current.length + 1 + word.length <= budget) current += ` ${word}`
     else {
       lines.push(pad + current)
       current = word
     }
   }
-  if (current !== '') lines.push(pad + current)
+  if (current !== "") lines.push(pad + current)
   return lines
 }
 
@@ -261,11 +261,11 @@ function renderAttrHole(
   if (serializeForCompare(value, hole.kind) === hole.default) return null
 
   switch (hole.kind) {
-    case 'boolean':
+    case "boolean":
       return value === true ? hole.attrName : `${hole.attrName}={false}`
-    case 'number':
+    case "number":
       return `${hole.attrName}={${Number(value)}}`
-    case 'icon': {
+    case "icon": {
       if (!value) return null
       const icon = String(value)
       icons.add(icon)
@@ -288,35 +288,35 @@ function renderChild(
   icons: Set<string>,
 ): Kid | null {
   switch (child.part) {
-    case 'static': {
-      const pad = ' '.repeat(indent)
+    case "static": {
+      const pad = " ".repeat(indent)
       return {
-        type: 'block',
-        lines: child.lines.map((l) => (l === '' ? '' : pad + l)),
+        type: "block",
+        lines: child.lines.map((l) => (l === "" ? "" : pad + l)),
       }
     }
-    case 'static-text':
-      return { type: 'text', text: child.text }
-    case 'text': {
+    case "static-text":
+      return { type: "text", text: child.text }
+    case "text": {
       const value = values[child.control]
-      if (child.kind === 'icon') {
+      if (child.kind === "icon") {
         if (!value) return null
         const icon = String(value)
         icons.add(icon)
-        return { type: 'block', lines: [`${' '.repeat(indent)}<${icon} />`] }
+        return { type: "block", lines: [`${" ".repeat(indent)}<${icon} />`] }
       }
       if (isFalsy(value)) return null
       const s = String(value)
       // JSX text can't hold <>{} and collapses whitespace runs — use an
       // expression child for anything the text form couldn't represent.
       return /[<>{}\n\r]/.test(s) || /^\s|\s$/.test(s) || /\s{2,}/.test(s)
-        ? { type: 'expr', code: `{${quoteString(s)}}` }
-        : { type: 'text', text: s }
+        ? { type: "expr", code: `{${quoteString(s)}}` }
+        : { type: "text", text: s }
     }
-    case 'element': {
+    case "element": {
       if (child.showWhen && isFalsy(values[child.showWhen])) return null
       return {
-        type: 'block',
+        type: "block",
         lines: renderElement(child.el, values, indent, icons),
       }
     }
@@ -329,10 +329,10 @@ function quoteString(s: string): string {
   const singles = (s.match(/'/g) ?? []).length
   const q = doubles > singles ? "'" : '"'
   const escaped = s
-    .replaceAll('\\', '\\\\')
+    .replaceAll("\\", "\\\\")
     .replaceAll(q, `\\${q}`)
-    .replaceAll('\n', '\\n')
-    .replaceAll('\r', '\\r')
+    .replaceAll("\n", "\\n")
+    .replaceAll("\r", "\\r")
   return q + escaped + q
 }
 
@@ -342,11 +342,11 @@ function serializeForCompare(
 ): SerializedDefault {
   if (value === undefined || value === null) return null
   switch (kind) {
-    case 'boolean':
+    case "boolean":
       return Boolean(value)
-    case 'number':
+    case "number":
       return Number(value)
-    case 'icon':
+    case "icon":
       return value ? String(value) : null
     default:
       return String(value)
@@ -354,7 +354,7 @@ function serializeForCompare(
 }
 
 function isFalsy(v: unknown): boolean {
-  return v === undefined || v === null || v === '' || v === false
+  return v === undefined || v === null || v === "" || v === false
 }
 function isTruthy(v: unknown): boolean {
   return !isFalsy(v)
@@ -376,7 +376,7 @@ function collectUsedSymbols(
   const survivingConstText = template.consts
     .filter((c) => consts.has(c.name))
     .map((c) => c.real)
-    .join('\n')
+    .join("\n")
   const haystack = `${body}\n${survivingConstText}`
   const symbols = new Set<string>()
   for (const imp of template.imports) {
@@ -406,7 +406,7 @@ function renderImports(
 
   const lines: string[] = []
   for (const imp of imports) {
-    if (imp.kind === 'default') {
+    if (imp.kind === "default") {
       const sym = imp.symbols[0]
       if (sym && used.has(sym.name)) lines.push(imp.text)
       continue
@@ -415,7 +415,7 @@ function renderImports(
     let names = survivors.map((s) =>
       s.local && s.local !== s.name ? `${s.name} as ${s.local}` : s.name,
     )
-    if (imp.source === 'lucide-react' && missingIcons.length > 0) {
+    if (imp.source === "lucide-react" && missingIcons.length > 0) {
       names = [...names, ...missingIcons.splice(0)]
     }
     if (names.length === 0) continue
@@ -429,17 +429,17 @@ function renderImports(
     lines.push(importLine(names, imp.source))
   }
   if (missingIcons.length > 0) {
-    lines.unshift(importLine(missingIcons, 'lucide-react'))
+    lines.unshift(importLine(missingIcons, "lucide-react"))
   }
-  return lines.join('\n')
+  return lines.join("\n")
 }
 
 function importLine(names: string[], source: string): string {
-  const inline = `import { ${names.join(', ')} } from "${source}";`
+  const inline = `import { ${names.join(", ")} } from "${source}";`
   if (inline.length <= PRINT_WIDTH) return inline
-  return `import {\n${names.map((n) => `  ${n},`).join('\n')}\n} from "${source}";`
+  return `import {\n${names.map((n) => `  ${n},`).join("\n")}\n} from "${source}";`
 }
 
 function escapeRe(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
 }

@@ -1,38 +1,38 @@
-import React from 'react'
+import React from "react"
 
-import { cn } from '@/registry/lib/utils'
-import { Avatar, AvatarFallback, AvatarImage } from '@/registry/ui/avatar'
-import { Badge } from '@/registry/ui/badge'
-import { Button } from '@/registry/ui/button'
+import { cn } from "@/registry/lib/utils"
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
 import {
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-} from '@/registry/ui/card'
-import { ListBox, ListBoxItem } from '@/registry/ui/list-box'
-import { Separator } from '@/registry/ui/separator'
-import { Tab, TabList, Tabs } from '@/registry/ui/tabs'
+} from "@/registry/ui/card"
+import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Separator } from "@/registry/ui/separator"
+import { Tab, TabList, Tabs } from "@/registry/ui/tabs"
 
-type NotificationFilter = 'all' | 'unread' | 'read'
+type NotificationFilter = "all" | "unread" | "read"
 
 export function Notifications({
   className,
   ...props
-}: React.ComponentProps<'div'>) {
-  const [filter, setFilter] = React.useState<NotificationFilter>('all')
+}: React.ComponentProps<"div">) {
+  const [filter, setFilter] = React.useState<NotificationFilter>("all")
   const unreadCount = notifications.filter(
     (notification) => !notification.read,
   ).length
   const visibleNotifications = notifications.filter((notification) => {
-    if (filter === 'unread') return !notification.read
-    if (filter === 'read') return notification.read
+    if (filter === "unread") return !notification.read
+    if (filter === "read") return notification.read
     return true
   })
 
   return (
-    <Card className={cn('gap-2 pb-0', className)} {...props}>
+    <Card className={cn("gap-2 pb-0", className)} {...props}>
       <CardHeader className="flex min-w-0 items-center justify-between gap-2">
         <CardTitle className="flex shrink-0 items-center gap-2">
           Notifications
@@ -75,16 +75,16 @@ export function Notifications({
                       />
                       <AvatarFallback>
                         {notification.user.name
-                          .split(' ')
+                          .split(" ")
                           .map((n) => n[0])
-                          .join('')}
+                          .join("")}
                       </AvatarFallback>
                     </Avatar>
                     <div className="min-w-0 flex-1">
                       <p className="text-sm break-words">
                         <span className="font-medium">
                           {notification.user.name}
-                        </span>{' '}
+                        </span>{" "}
                         {notification.content ? (
                           notification.content
                         ) : (
@@ -118,24 +118,24 @@ export function Notifications({
 const notifications = [
   {
     user: {
-      name: 'Guillermo Rauch',
-      avatar: 'https://avatars.githubusercontent.com/rauchg',
+      name: "Guillermo Rauch",
+      avatar: "https://avatars.githubusercontent.com/rauchg",
     },
-    text: 'starred your repository dotUI.',
+    text: "starred your repository dotUI.",
     content: (
       <>
         starred <span className="font-semibold">mehdibha/dotUI</span>.
       </>
     ),
     read: false,
-    timestamp: '2 hours ago',
+    timestamp: "2 hours ago",
   },
   {
     user: {
-      name: 'Lee Robinson',
-      avatar: 'https://avatars.githubusercontent.com/leerob',
+      name: "Lee Robinson",
+      avatar: "https://avatars.githubusercontent.com/leerob",
     },
-    text: 'invited you to the Vercel GitHub organization.',
+    text: "invited you to the Vercel GitHub organization.",
     content: (
       <>
         invited you to join <span className="font-semibold">Cursor</span> on
@@ -143,15 +143,15 @@ const notifications = [
       </>
     ),
     read: false,
-    action: { label: 'View invite' },
-    timestamp: '7 hours ago',
+    action: { label: "View invite" },
+    timestamp: "7 hours ago",
   },
   {
     user: {
-      name: 'Tim Neutkens',
-      avatar: 'https://avatars.githubusercontent.com/timneutkens',
+      name: "Tim Neutkens",
+      avatar: "https://avatars.githubusercontent.com/timneutkens",
     },
-    text: 'published a new release v14.2.0-canary on vercel/next.js.',
+    text: "published a new release v14.2.0-canary on vercel/next.js.",
     content: (
       <>
         published <span className="font-semibold">v14.2.0-canary</span> on
@@ -159,15 +159,15 @@ const notifications = [
       </>
     ),
     read: false,
-    action: { label: 'See release' },
-    timestamp: 'Yesterday',
+    action: { label: "See release" },
+    timestamp: "Yesterday",
   },
   {
     user: {
-      name: 'Steven Tey',
-      avatar: 'https://avatars.githubusercontent.com/steven-tey',
+      name: "Steven Tey",
+      avatar: "https://avatars.githubusercontent.com/steven-tey",
     },
-    text: 'opened a pull request: Improve docs.',
+    text: "opened a pull request: Improve docs.",
     content: (
       <>
         opened <span className="font-semibold">PR</span>:
@@ -176,29 +176,29 @@ const notifications = [
       </>
     ),
     read: true,
-    action: { label: 'Review PR' },
-    timestamp: 'Yesterday',
+    action: { label: "Review PR" },
+    timestamp: "Yesterday",
   },
   {
     user: {
-      name: 'Shu Ding',
-      avatar: 'https://avatars.githubusercontent.com/shuding',
+      name: "Shu Ding",
+      avatar: "https://avatars.githubusercontent.com/shuding",
     },
-    text: 'starred your repository dotUI.',
+    text: "starred your repository dotUI.",
     content: (
       <>
         starred <span className="font-semibold">mehdibha/dotUI</span>.
       </>
     ),
     read: true,
-    timestamp: '2 days ago',
+    timestamp: "2 days ago",
   },
   {
     user: {
-      name: 'Delba de Oliveira',
-      avatar: 'https://avatars.githubusercontent.com/delbaoliveira',
+      name: "Delba de Oliveira",
+      avatar: "https://avatars.githubusercontent.com/delbaoliveira",
     },
-    text: 'commented on issue: Add theme presets.',
+    text: "commented on issue: Add theme presets.",
     content: (
       <>
         commented on <span className="font-semibold">#128</span>:
@@ -206,7 +206,7 @@ const notifications = [
       </>
     ),
     read: false,
-    action: { label: 'Reply' },
-    timestamp: '3 days ago',
+    action: { label: "Reply" },
+    timestamp: "3 days ago",
   },
 ]

@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
 
 import {
   Pagination,
@@ -8,7 +8,7 @@ import {
   PaginationList,
   PaginationNext,
   PaginationPrevious,
-} from '@/registry/ui/pagination'
+} from "@/registry/ui/pagination"
 import {
   Table,
   TableBody,
@@ -17,7 +17,7 @@ import {
   TableContainer,
   TableHeader,
   TableRow,
-} from '@/registry/ui/table'
+} from "@/registry/ui/table"
 
 interface Invoice {
   id: string
@@ -26,14 +26,14 @@ interface Invoice {
 }
 
 const INVOICES: Invoice[] = [
-  { id: 'INV-001', customer: 'Acme Corp', amount: '$1,240.00' },
-  { id: 'INV-002', customer: 'Globex', amount: '$820.50' },
-  { id: 'INV-003', customer: 'Initech', amount: '$3,100.00' },
-  { id: 'INV-004', customer: 'Umbrella', amount: '$540.00' },
-  { id: 'INV-005', customer: 'Soylent', amount: '$2,015.75' },
-  { id: 'INV-006', customer: 'Hooli', amount: '$1,890.00' },
-  { id: 'INV-007', customer: 'Stark Inc', amount: '$4,320.00' },
-  { id: 'INV-008', customer: 'Wayne Co', amount: '$960.25' },
+  { id: "INV-001", customer: "Acme Corp", amount: "$1,240.00" },
+  { id: "INV-002", customer: "Globex", amount: "$820.50" },
+  { id: "INV-003", customer: "Initech", amount: "$3,100.00" },
+  { id: "INV-004", customer: "Umbrella", amount: "$540.00" },
+  { id: "INV-005", customer: "Soylent", amount: "$2,015.75" },
+  { id: "INV-006", customer: "Hooli", amount: "$1,890.00" },
+  { id: "INV-007", customer: "Stark Inc", amount: "$4,320.00" },
+  { id: "INV-008", customer: "Wayne Co", amount: "$960.25" },
 ]
 
 const PAGE_SIZE = 3

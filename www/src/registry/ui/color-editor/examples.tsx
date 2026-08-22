@@ -1,9 +1,9 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import AlphaChannel from './demos/alpha-channel'
-import Composition from './demos/composition'
-import Default from './demos/default'
+import AlphaChannel from "./demos/alpha-channel"
+import Composition from "./demos/composition"
+import Default from "./demos/default"
 
 export default function ColorEditorExamples() {
   return (

@@ -1,19 +1,19 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Async from './demos/async'
-import Basic from './demos/basic'
-import Danger from './demos/danger'
-import Disabled from './demos/disabled'
-import Empty from './demos/empty'
-import FileActions from './demos/file-actions'
-import Grid from './demos/grid'
-import Horizontal from './demos/horizontal'
-import Selection from './demos/multiple-selection'
-import Sections from './demos/sections'
-import UserMenu from './demos/user-menu'
-import WithDescription from './demos/with-description'
-import WithIcons from './demos/with-icons'
+import Async from "./demos/async"
+import Basic from "./demos/basic"
+import Danger from "./demos/danger"
+import Disabled from "./demos/disabled"
+import Empty from "./demos/empty"
+import FileActions from "./demos/file-actions"
+import Grid from "./demos/grid"
+import Horizontal from "./demos/horizontal"
+import Selection from "./demos/multiple-selection"
+import Sections from "./demos/sections"
+import UserMenu from "./demos/user-menu"
+import WithDescription from "./demos/with-description"
+import WithIcons from "./demos/with-icons"
 
 export default function ListBoxExamples() {
   return (

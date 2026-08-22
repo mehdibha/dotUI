@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from "react"
 
-import { siteConfig } from '@/config/site'
+import { siteConfig } from "@/config/site"
 
-import { useDesignSystem } from '../preset'
-import { encodePreset } from '../preset/codec'
-import type { PresetUrl } from './types'
+import { useDesignSystem } from "../preset"
+import { encodePreset } from "../preset/codec"
+import type { PresetUrl } from "./types"
 
 const DEFAULT_REGISTRY_HOST: string = siteConfig.url
 
@@ -15,13 +15,13 @@ const DEFAULT_REGISTRY_HOST: string = siteConfig.url
  * `hostname` (not the full origin) so any dev port (e.g. :4444) still counts.
  */
 function getRegistryHost(): string {
-  if (typeof window === 'undefined') return DEFAULT_REGISTRY_HOST
+  if (typeof window === "undefined") return DEFAULT_REGISTRY_HOST
   const { origin, hostname } = window.location
   if (
-    origin === 'null' ||
-    hostname === 'localhost' ||
-    hostname === '127.0.0.1' ||
-    origin.startsWith('file:')
+    origin === "null" ||
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    origin.startsWith("file:")
   ) {
     return DEFAULT_REGISTRY_HOST
   }

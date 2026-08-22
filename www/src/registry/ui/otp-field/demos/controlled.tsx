@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Label } from '@/registry/ui/field'
-import { Group } from '@/registry/ui/group'
-import { Input } from '@/registry/ui/input'
-import { OTPField } from '@/registry/ui/otp-field'
+import { Label } from "@/registry/ui/field"
+import { Group } from "@/registry/ui/group"
+import { Input } from "@/registry/ui/input"
+import { OTPField } from "@/registry/ui/otp-field"
 
 export default function Controlled() {
-  const [value, setValue] = React.useState('123')
+  const [value, setValue] = React.useState("123")
 
   return (
     <div className="flex flex-col gap-3">
@@ -23,7 +23,7 @@ export default function Controlled() {
           <Input aria-label="Digit 6" />
         </Group>
       </OTPField>
-      <p className="text-sm text-fg-muted">mirrored code: {value || 'empty'}</p>
+      <p className="text-sm text-fg-muted">mirrored code: {value || "empty"}</p>
     </div>
   )
 }

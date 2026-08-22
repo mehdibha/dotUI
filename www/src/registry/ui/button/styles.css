@@ -1,4 +1,4 @@
 :root {
-  --btn-radius: var(--radius-md);
+  --btn-radius: var(--radius-control);
   --btn-font-weight: var(--font-weight-medium);
 }

@@ -1,32 +1,32 @@
-'use client'
+"use client"
 
-import React from 'react'
-import { parseDate, Time } from '@internationalized/date'
-import type { DateValue } from 'react-aria-components/Calendar'
-import type { RangeValue } from 'react-aria-components/RangeCalendar'
+import React from "react"
+import { parseDate, Time } from "@internationalized/date"
+import type { DateValue } from "react-aria-components/Calendar"
+import type { RangeValue } from "react-aria-components/RangeCalendar"
 
-import { CalendarIcon, ClockIcon } from '@/registry/__generated__/icons'
-import { cn } from '@/registry/lib/utils'
-import { Button } from '@/registry/ui/button'
-import { RangeCalendar } from '@/registry/ui/calendar'
-import { Card, CardContent, CardFooter } from '@/registry/ui/card'
-import { DatePicker } from '@/registry/ui/date-picker'
-import { DialogContent } from '@/registry/ui/dialog'
-import { Label } from '@/registry/ui/field'
-import { DateInput, InputGroup, InputGroupAddon } from '@/registry/ui/input'
-import { Popover } from '@/registry/ui/popover'
-import { TimePicker, TimePickerColumns } from '@/registry/ui/time-picker'
+import { CalendarIcon, ClockIcon } from "@/registry/__generated__/icons"
+import { cn } from "@/registry/lib/utils"
+import { Button } from "@/registry/ui/button"
+import { RangeCalendar } from "@/registry/ui/calendar"
+import { Card, CardContent, CardFooter } from "@/registry/ui/card"
+import { DatePicker } from "@/registry/ui/date-picker"
+import { DialogContent } from "@/registry/ui/dialog"
+import { Label } from "@/registry/ui/field"
+import { DateInput, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Popover } from "@/registry/ui/popover"
+import { TimePicker, TimePickerColumns } from "@/registry/ui/time-picker"
 
-export function Booking({ className, ...props }: React.ComponentProps<'div'>) {
+export function Booking({ className, ...props }: React.ComponentProps<"div">) {
   const [range, setRange] = React.useState<RangeValue<DateValue>>({
-    start: parseDate('2026-02-11'),
-    end: parseDate('2026-02-19'),
+    start: parseDate("2026-02-11"),
+    end: parseDate("2026-02-19"),
   })
   const [startTime, setStartTime] = React.useState<Time | null>(new Time(14, 0))
   const [endTime, setEndTime] = React.useState<Time | null>(new Time(12, 0))
 
   return (
-    <Card className={cn('', className)} {...props}>
+    <Card className={cn("", className)} {...props}>
       <CardContent className="space-y-3">
         <RangeCalendar
           className="w-full border-0 bg-transparent p-0"

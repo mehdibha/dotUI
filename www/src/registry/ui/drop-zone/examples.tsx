@@ -1,12 +1,12 @@
-import { Example } from '@/modules/create/preview/example'
-import { Examples } from '@/modules/create/preview/examples'
+import { Example } from "@/modules/create/preview/example"
+import { Examples } from "@/modules/create/preview/examples"
 
-import Basic from './demos/basic'
-import Disabled from './demos/disabled'
-import Events from './demos/events'
-import FileTrigger from './demos/file-trigger'
-import Label from './demos/label'
-import VisualFeedback from './demos/visual-feedback'
+import Basic from "./demos/basic"
+import Disabled from "./demos/disabled"
+import Events from "./demos/events"
+import FileTrigger from "./demos/file-trigger"
+import Label from "./demos/label"
+import VisualFeedback from "./demos/visual-feedback"
 
 export default function DropZoneExamples() {
   return (

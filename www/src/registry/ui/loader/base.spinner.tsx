@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import * as ProgressBarPrimitives from 'react-aria-components/ProgressBar'
+import * as ProgressBarPrimitives from "react-aria-components/ProgressBar"
 
-import { Loader2Icon } from '@/registry/icons'
-import { cn } from '@/registry/lib/utils'
+import { Loader2Icon } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
 
 interface LoaderProps extends ProgressBarPrimitives.ProgressBarProps {}
 
@@ -12,7 +12,7 @@ function Loader({ className, ...props }: LoaderProps) {
     <ProgressBarPrimitives.ProgressBar
       data-loader=""
       className={cn(
-        'inline-flex shrink-0 items-center justify-center',
+        "inline-flex shrink-0 items-center justify-center",
         className,
       )}
       aria-label="loading..."
@@ -22,7 +22,7 @@ function Loader({ className, ...props }: LoaderProps) {
       <Loader2Icon
         role="status"
         aria-label="Loading"
-        className={cn('size-4 animate-spin')}
+        className={cn("size-4 animate-spin")}
       />
     </ProgressBarPrimitives.ProgressBar>
   )

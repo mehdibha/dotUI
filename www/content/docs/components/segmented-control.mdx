@@ -20,11 +20,11 @@ npx shadcn@latest add @dotui/segmented-control
 Use a segmented control for a small set of mutually exclusive options — view modes, ranges, filters. It's built on `ToggleButtonGroup` with single selection, and the indicator slides between segments (React Aria's `SelectionIndicator`).
 
 ```tsx
-import { SegmentedControl, SegmentedControlItem } from '@/ui/segmented-control'
+import { SegmentedControl, SegmentedControlItem } from "@/ui/segmented-control"
 ```
 
 ```tsx
-<SegmentedControl aria-label="Date range" defaultSelectedKeys={['week']}>
+<SegmentedControl aria-label="Date range" defaultSelectedKeys={["week"]}>
   <SegmentedControlItem id="day">Day</SegmentedControlItem>
   <SegmentedControlItem id="week">Week</SegmentedControlItem>
   <SegmentedControlItem id="month">Month</SegmentedControlItem>
@@ -36,8 +36,11 @@ import { SegmentedControl, SegmentedControlItem } from '@/ui/segmented-control'
 A `SegmentedControl` wraps one `SegmentedControlItem` per option. Each item needs a unique `id`, which is the value the control reports as selected.
 
 ```tsx
-import { SegmentedControl, SegmentedControlItem } from '@/ui/segmented-control'
-;<SegmentedControl>
+import { SegmentedControl, SegmentedControlItem } from "@/ui/segmented-control"
+```
+
+```tsx
+<SegmentedControl>
   <SegmentedControlItem id="…">…</SegmentedControlItem>
 </SegmentedControl>
 ```

@@ -11,8 +11,8 @@ wip: true
   name="color-swatch-picker"
   controls={[
     {
-      type: 'boolean',
-      name: 'isDisabled',
+      type: "boolean",
+      name: "isDisabled",
       defaultValue: false,
     },
   ]}
@@ -32,7 +32,7 @@ Use color swatch pickers to allow users to select a color from a list of swatche
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from '@/ui/color-swatch-picker'
+} from "@/ui/color-swatch-picker"
 ```
 
 ```tsx
@@ -49,8 +49,11 @@ import {
 import {
   ColorSwatchPicker,
   ColorSwatchPickerItem,
-} from '@/ui/color-swatch-picker'
-;<ColorSwatchPicker>
+} from "@/ui/color-swatch-picker"
+```
+
+```tsx
+<ColorSwatchPicker>
   <ColorSwatchPickerItem color="#ff0000" />
 </ColorSwatchPicker>
 ```

@@ -11,23 +11,23 @@ wip: true
   name="search-field"
   controls={[
     {
-      type: 'string',
-      name: 'label',
-      defaultValue: 'Search',
+      type: "string",
+      name: "label",
+      defaultValue: "Search",
     },
     {
-      type: 'string',
-      name: 'placeholder',
-      defaultValue: 'Search...',
+      type: "string",
+      name: "placeholder",
+      defaultValue: "Search...",
     },
     {
-      type: 'boolean',
-      name: 'isDisabled',
+      type: "boolean",
+      name: "isDisabled",
       defaultValue: false,
     },
     {
-      type: 'boolean',
-      name: 'isReadOnly',
+      type: "boolean",
+      name: "isReadOnly",
       defaultValue: false,
     },
   ]}
@@ -44,9 +44,9 @@ npx shadcn@latest add @dotui/search-field
 Use `SearchField` to allow users to enter and clear a search query.
 
 ```tsx
-import { SearchField } from '@/ui/search-field'
-import { Input } from '@/ui/input'
-import { Label } from '@/ui/field'
+import { SearchField } from "@/ui/search-field"
+import { Input } from "@/ui/input"
+import { Label } from "@/ui/field"
 ```
 
 ```tsx
@@ -61,10 +61,13 @@ import { Label } from '@/ui/field'
 A `SearchField` wraps an optional `Label`, an `Input`, and optional `Description` and `FieldError`. Rendered on its own it supplies a default `InputGroup` with a search icon and a clear button, so `<SearchField><Input /></SearchField>` is enough.
 
 ```tsx
-import { SearchField } from '@/ui/search-field'
-import { Label, Description, FieldError } from '@/ui/field'
-import { Input } from '@/ui/input'
-;<SearchField>
+import { SearchField } from "@/ui/search-field"
+import { Label, Description, FieldError } from "@/ui/field"
+import { Input } from "@/ui/input"
+```
+
+```tsx
+<SearchField>
   <Label />
   <Input />
   <Description />

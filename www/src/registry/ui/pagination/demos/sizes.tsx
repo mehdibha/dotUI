@@ -5,9 +5,9 @@ import {
   PaginationList,
   PaginationNext,
   PaginationPrevious,
-} from '@/registry/ui/pagination'
+} from "@/registry/ui/pagination"
 
-const SIZES = ['sm', 'md', 'lg'] as const
+const SIZES = ["sm", "md", "lg"] as const
 
 export default function Demo() {
   return (

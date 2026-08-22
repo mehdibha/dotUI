@@ -1,8 +1,8 @@
-import { Link } from '@/registry/ui/link'
+import { Link } from "@/registry/ui/link"
 
 const sections = [
-  { title: 'Product', links: ['Features', 'Pricing', 'Changelog'] },
-  { title: 'Company', links: ['About', 'Blog', 'Careers'] },
+  { title: "Product", links: ["Features", "Pricing", "Changelog"] },
+  { title: "Company", links: ["About", "Blog", "Careers"] },
 ]
 
 export default function Demo() {
