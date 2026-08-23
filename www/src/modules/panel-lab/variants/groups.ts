@@ -1,10 +1,12 @@
-/* The drill-in index taxonomy (docs/create-experience-spec.md, revised by the
-   Aug 2026 taxonomy panel): two sections — Foundations, then Components
-   (Templates planned) — built from COMPOSITE index chapters. A composite
-   bundles one or more state.ts chapters into a single index card and chapter
-   page: the first member is the host body, later members render as titled
-   subsections, and the card's modified dot covers every member's axes. The
-   flat chapter list in state.ts stays untouched. */
+/* The drill-in index taxonomy (docs/create-experience-spec.md, revised Aug
+   2026): untitled family clusters — each renders as its own card, grouping
+   alone carries the structure. Identity comes first; set-once axes (focus,
+   icons, motion, interaction) sit in their own lesser-weight cluster. Built
+   from COMPOSITE index chapters: a composite bundles one or more state.ts
+   chapters into a single index card and chapter page — the first member is
+   the host body, later members render as titled subsections, and the card's
+   modified dot covers every member's axes. The flat chapter list in state.ts
+   stays untouched. */
 
 import type { Chapter, LabState } from "../state"
 
@@ -33,28 +35,16 @@ const COMPOSITES: CompositeDef[] = [
   },
 ]
 
-export const SECTIONS: Array<{ label: string; ids: string[] }> = [
+export const GROUPS: Array<{ ids: string[] }> = [
+  // Identity — how the system reads at a glance.
+  { ids: ["color", "typography", "shape", "space", "surfaces"] },
+  // Set-once foundations — inherited everywhere, rarely revisited.
+  { ids: ["focus", "icons", "motion", "interaction"] },
+  // Core components.
+  { ids: ["buttons", "inputs"] },
+  // Forms.
   {
-    label: "Foundations",
     ids: [
-      "color",
-      "typography",
-      "shape",
-      "space",
-      "surfaces",
-      "focus",
-      "icons",
-      "motion",
-      "interaction",
-    ],
-  },
-  {
-    label: "Components",
-    ids: [
-      "buttons",
-      "inputs",
-      "links",
-      "kbd",
       "switch",
       "checkbox",
       "radio",
@@ -62,23 +52,16 @@ export const SECTIONS: Array<{ label: string; ids: string[] }> = [
       "pickers",
       "calendar",
       "sliders",
-      "menus",
-      "dialogs",
-      "popovers",
-      "tooltips",
-      "tabs",
-      "breadcrumbs",
-      "pagination",
-      "notices",
-      "skeleton",
-      "spinner",
-      "progress",
-      "badges",
-      "avatars",
-      "tables",
-      "accordion",
     ],
   },
+  // Overlays.
+  { ids: ["menus", "dialogs", "popovers", "tooltips"] },
+  // Navigation.
+  { ids: ["links", "tabs", "breadcrumbs", "pagination"] },
+  // Feedback.
+  { ids: ["notices", "skeleton", "spinner", "progress"] },
+  // Display.
+  { ids: ["badges", "kbd", "avatars", "tables", "accordion"] },
 ]
 
 export interface IndexChapter {
@@ -92,11 +75,11 @@ export interface IndexChapter {
   hostless: boolean
 }
 
-/** Resolve the sections' ids (plain chapter ids or composite ids) against the
+/** Resolve the groups' ids (plain chapter ids or composite ids) against the
  *  flat chapter list. */
 export function resolveIndex(
   chapters: Chapter[],
-): Array<{ label: string; chapters: IndexChapter[] }> {
+): Array<{ chapters: IndexChapter[] }> {
   const byId = new Map(chapters.map((chapter) => [chapter.id, chapter]))
   const toIndexChapter = (id: string): IndexChapter | undefined => {
     const composite = COMPOSITES.find((c) => c.id === id)
@@ -124,9 +107,8 @@ export function resolveIndex(
       hostless: !host,
     }
   }
-  return SECTIONS.map((section) => ({
-    label: section.label,
-    chapters: section.ids
+  return GROUPS.map((group) => ({
+    chapters: group.ids
       .map(toIndexChapter)
       .filter((chapter): chapter is IndexChapter => chapter !== undefined),
   }))
