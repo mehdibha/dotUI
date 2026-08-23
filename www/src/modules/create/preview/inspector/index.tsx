@@ -176,9 +176,11 @@ export function PreviewInspector() {
     }
   }
 
-  // Label above the box, flipped below when clipped; props card follows on the
-  // opposite side so the two never overlap.
-  const labelAbove = box ? box.top > 28 : true
+  // One card carries the name and the props; above the box, flipped below
+  // when there's no room. Estimated height keeps the flip decision cheap.
+  const cardAbove = box
+    ? box.top > 40 + 16 * Math.min(sel?.props.length ?? 0, MAX_PROPS + 1)
+    : true
 
   return (
     <div
@@ -210,68 +212,56 @@ export function PreviewInspector() {
           <div
             style={{
               position: "absolute",
-              top: labelAbove ? box.top - 4 : box.top + box.height + 4,
-              left: Math.max(4, Math.min(box.left, window.innerWidth - 160)),
-              transform: labelAbove ? "translateY(-100%)" : undefined,
-              display: "flex",
-              alignItems: "baseline",
-              gap: 6,
-              padding: "3px 7px",
-              borderRadius: 5,
-              background: ACCENT,
-              color: "#fff",
+              top: cardAbove ? box.top - 6 : box.top + box.height + 6,
+              left: Math.max(4, Math.min(box.left, window.innerWidth - 240)),
+              transform: cardAbove ? "translateY(-100%)" : undefined,
+              maxWidth: 300,
+              padding: "5px 8px",
+              borderRadius: 6,
+              background: CHROME_BG,
+              color: "#e4e4e7",
               fontSize: 11,
-              lineHeight: "14px",
-              whiteSpace: "nowrap",
+              lineHeight: "16px",
             }}
           >
-            <span style={{ fontWeight: 600 }}>{sel.entry.name}</span>
-            <span style={{ opacity: 0.75 }}>
-              {Math.round(box.width)}×{Math.round(box.height)}
-            </span>
-            {sel.entry.customizable && (
-              <span style={{ opacity: 0.75 }}>click to edit</span>
-            )}
-          </div>
-          {sel.props.length > 0 && (
             <div
               style={{
-                position: "absolute",
-                top: labelAbove ? box.top + box.height + 6 : undefined,
-                bottom: labelAbove
-                  ? undefined
-                  : window.innerHeight - box.top + 6,
-                left: Math.max(4, Math.min(box.left, window.innerWidth - 240)),
-                maxWidth: 300,
-                padding: "6px 8px",
-                borderRadius: 6,
-                background: CHROME_BG,
-                color: "#e4e4e7",
-                fontSize: 11,
-                lineHeight: "16px",
+                display: "flex",
+                alignItems: "baseline",
+                gap: 6,
+                whiteSpace: "nowrap",
               }}
             >
-              {sel.props.slice(0, MAX_PROPS).map(([key, value]) => (
-                <div
-                  key={key}
-                  style={{
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  <span style={{ color: "#93c5fd" }}>{key}</span>
-                  <span style={{ opacity: 0.5 }}>=</span>
-                  <span style={{ color: "#fda4af" }}>{formatValue(value)}</span>
-                </div>
-              ))}
-              {sel.props.length > MAX_PROPS && (
-                <div style={{ opacity: 0.5 }}>
-                  +{sel.props.length - MAX_PROPS} more
-                </div>
+              <span style={{ color: "#93c5fd", fontWeight: 600 }}>
+                {sel.entry.name}
+              </span>
+              <span style={{ opacity: 0.55 }}>
+                {Math.round(box.width)}×{Math.round(box.height)}
+              </span>
+              {sel.entry.customizable && (
+                <span style={{ opacity: 0.55 }}>click to edit</span>
               )}
             </div>
-          )}
+            {sel.props.slice(0, MAX_PROPS).map(([key, value]) => (
+              <div
+                key={key}
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span style={{ color: "#a5b4fc" }}>{key}</span>
+                <span style={{ opacity: 0.5 }}>=</span>
+                <span style={{ color: "#fda4af" }}>{formatValue(value)}</span>
+              </div>
+            ))}
+            {sel.props.length > MAX_PROPS && (
+              <div style={{ opacity: 0.5 }}>
+                +{sel.props.length - MAX_PROPS} more
+              </div>
+            )}
+          </div>
         </>
       )}
     </div>
