@@ -112,16 +112,21 @@ export function PreviewPanel({
   const [inspecting, setInspecting] = useState(false)
   const [toolbarHidden, setToolbarHidden] = useState(false)
 
-  // The tools collapse by animating the wrapper's width to 0 — a `0fr` grid
-  // track (react-grab's trick) resolves to content size here because the
+  // The tools collapse by animating the wrapper to 0×0 — a `0fr` grid track
+  // (react-grab's trick) resolves to content size here because the
   // shrink-to-fit pill gives the grid no definite width. The content keeps
   // its natural size (w-max) inside, so it slides out instead of reflowing.
   const toolsRef = useRef<HTMLDivElement>(null)
-  const [toolsWidth, setToolsWidth] = useState<number | null>(null)
+  const [toolsSize, setToolsSize] = useState<{ w: number; h: number } | null>(
+    null,
+  )
   useEffect(() => {
     const el = toolsRef.current
     if (!el) return
-    const measure = () => setToolsWidth(el.getBoundingClientRect().width)
+    const measure = () => {
+      const rect = el.getBoundingClientRect()
+      setToolsSize({ w: rect.width, h: rect.height })
+    }
     const observer = new ResizeObserver(measure)
     observer.observe(el)
     measure()
@@ -375,8 +380,8 @@ export function PreviewPanel({
           "absolute left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center border border-border bg-neutral shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)] transition-[bottom,border-radius,padding] duration-200 ease-out",
           toolbarHidden
             ? // Tucked into the panel's bottom edge as a react-grab-style tab:
-              // flush, squared toward the edge, only the chevron peeking out.
-              "bottom-0 rounded-[10px] rounded-b-none border-b-0 px-1.5 pt-0.5 pb-0"
+              // flush, squared toward the edge, the chevron button IS the tab.
+              "bottom-0 rounded-[10px] rounded-b-none border-b-0 p-0"
             : "bottom-3 gap-1 rounded-[20px] p-1",
         )}
       >
@@ -384,10 +389,16 @@ export function PreviewPanel({
             style, leaving the pill as a lone show/hide button. */}
         <div
           className={cn(
-            "overflow-hidden transition-[width] duration-200 ease-out",
+            "overflow-hidden transition-[width,height] duration-200 ease-out",
             toolbarHidden && "pointer-events-none",
           )}
-          style={{ width: toolbarHidden ? 0 : (toolsWidth ?? "auto") }}
+          style={{
+            width: toolbarHidden ? 0 : (toolsSize?.w ?? "auto"),
+            // Shrink to the collapsed button's height so the tab is exactly
+            // the chevron — the wrapper's clipped content otherwise props the
+            // pill open at the expanded height.
+            height: toolbarHidden ? 20 : (toolsSize?.h ?? "auto"),
+          }}
         >
           <div
             ref={toolsRef}
@@ -627,7 +638,15 @@ export function PreviewPanel({
             size="sm"
             variant="quiet"
             isIconOnly
-            className="rounded-full"
+            // rounded-[14px] = rounded-full at the 28px size, but interpolates.
+            // Collapsed, the button shrinks and fills the whole tab (inline
+            // style wins over the size variant's icon-only square).
+            className="rounded-[14px] transition-[width,height,border-radius] duration-200 ease-out"
+            style={
+              toolbarHidden
+                ? { height: 20, width: 36, borderRadius: "9px 9px 0 0" }
+                : undefined
+            }
             onPress={() => setToolbarHidden((v) => !v)}
             aria-label={toolbarHidden ? "Show toolbar" : "Hide toolbar"}
           >
