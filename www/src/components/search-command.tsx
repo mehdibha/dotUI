@@ -99,7 +99,7 @@ export function SearchCommand({
           )
           return isMobile ? (
             // Match the desktop modal's raised surface.
-            <Drawer className="bg-(--neutral-200)">{content}</Drawer>
+            <Drawer className="bg-(--neutral-100)">{content}</Drawer>
           ) : (
             // Composed (not <Modal>) so the panel AND backdrop appear
             // instantly — duration-0 on both. Mirror shadcn.com: max-w-lg
@@ -107,7 +107,7 @@ export function SearchCommand({
             <ModalOverlay>
               <ModalBackdrop className="duration-0 group-exiting/modal:duration-0" />
               <ModalViewport>
-                <ModalPanel className="mt-[15vh] self-start duration-0 [--modal-background:var(--neutral-200)] [--modal-radius:var(--radius-2xl)] sm:max-w-lg entering:scale-100 exiting:scale-100">
+                <ModalPanel className="mt-[15vh] self-start duration-0 [--modal-background:var(--neutral-100)] [--modal-radius:var(--radius-2xl)] sm:max-w-lg entering:scale-100 exiting:scale-100">
                   {content}
                 </ModalPanel>
               </ModalViewport>
