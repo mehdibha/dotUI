@@ -1,20 +1,17 @@
-import type * as React from "react"
-
 import type {
   ChartCurve,
   ChartFormat,
   ChartMarkLayer,
 } from "@/registry/ui/chart"
+import type { ChartFamilyProps } from "@/registry/ui/chart/types"
 
 export type { ChartCurve, ChartFormat, ChartMarkLayer }
 
 /**
  * Area chart. Give it rows plus the fields to read: one `y` field per series
- * for wide rows, or a single `y` with `series` for long rows. Interaction and
- * animation props are shared by every family — see `ChartBehaviorProps` — and
- * the host props (`height`, `width`, `className`, callbacks) live on `Chart`.
+ * for wide rows, or a single `y` with `series` for long rows.
  */
-export interface AreaChartProps {
+export interface AreaChartProps extends ChartFamilyProps {
   /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
@@ -93,15 +90,9 @@ export interface AreaChartProps {
   /** Formats y tick labels — a function, or serializable `Intl` options. */
   formatY?: ChartFormat
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
-
   /** Extra mark layers painted under the areas. */
   marksBefore?: readonly ChartMarkLayer[]
 
   /** Extra mark layers painted over the areas — annotations, rules, labels. */
   marks?: readonly ChartMarkLayer[]
-
-  /** Overlay rendered above the chart surface, ignoring pointer events. */
-  children?: React.ReactNode
 }

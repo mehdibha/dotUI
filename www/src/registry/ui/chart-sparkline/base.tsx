@@ -97,20 +97,16 @@ export function sparklineSpec<TDatum, TXField extends ChartXField<TDatum>>(
   }
 }
 
-export type SparklineProps<TDatum, TXField extends ChartXField<TDatum>> = Omit<
-  ChartComponentProps<
-    SparklineSpecOptions<TDatum, TXField>,
-    TDatum,
-    ChartXValueOf<TDatum, TXField>
-  >,
-  "tooltip"
-> & {
-  /** Sparklines are read at a glance, so the tooltip is opt-in. */
-  tooltip?: boolean
-}
+export type SparklineProps<
+  TDatum,
+  TXField extends ChartXField<TDatum>,
+> = ChartComponentProps<
+  SparklineSpecOptions<TDatum, TXField>,
+  TDatum,
+  ChartXValueOf<TDatum, TXField>
+>
 
 export function Sparkline<TDatum, TXField extends ChartXField<TDatum>>({
-  tooltip = false,
   height = chartDefaults.sparklineHeight,
   ...props
 }: SparklineProps<TDatum, TXField>) {
@@ -119,7 +115,8 @@ export function Sparkline<TDatum, TXField extends ChartXField<TDatum>>({
     ChartXValueOf<TDatum, TXField>,
     SparklineSpecOptions<TDatum, TXField>
   >(
-    { ...props, height, tooltip: tooltip ? undefined : (false as const) },
+    /* Sparklines are read at a glance, so the tooltip is opt-in. */
+    { ...props, height, tooltip: props.tooltip ?? false },
     sparklineSpec,
   )
   return (

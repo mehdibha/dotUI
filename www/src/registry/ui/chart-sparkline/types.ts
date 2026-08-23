@@ -1,17 +1,14 @@
-import type * as React from "react"
-
 import type { ChartCurve, ChartMarkLayer } from "@/registry/ui/chart"
+import type { ChartFamilyProps } from "@/registry/ui/chart/types"
 
 export type { ChartCurve, ChartMarkLayer }
 
 /**
  * Sparkline. A chrome-free single series for stat cards and table cells: give
  * it rows plus the `x` and `y` fields to read — there are no axes, no grid and
- * no legend to configure. Interaction and animation props are shared by every
- * family — see `ChartBehaviorProps` — and the host props (`width`, `className`,
- * callbacks) live on `Chart`.
+ * no legend to configure.
  */
-export interface SparklineProps {
+export interface SparklineProps extends ChartFamilyProps {
   /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
@@ -69,15 +66,9 @@ export interface SparklineProps {
    */
   tooltip?: boolean
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
-
   /** Extra mark layers painted under the line. */
   marksBefore?: readonly ChartMarkLayer[]
 
   /** Extra mark layers painted over the line — annotations, rules, labels. */
   marks?: readonly ChartMarkLayer[]
-
-  /** Overlay rendered above the chart surface, ignoring pointer events. */
-  children?: React.ReactNode
 }

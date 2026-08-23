@@ -1,17 +1,17 @@
-import type * as React from "react"
-
 import type { ChartFormat, ChartMarkLayer } from "@/registry/ui/chart"
+import type {
+  ChartFamilyProps,
+  ChartFocus,
+  ChartTooltipAnchor,
+} from "@/registry/ui/chart/types"
 
 export type { ChartFormat, ChartMarkLayer }
 
 /**
  * Heatmap chart. Give it rows plus the fields to read: one row per cell, with
  * the column field, the row field, and the numeric value color carries.
- * Interaction and animation props are shared by every family — see
- * `ChartBehaviorProps` — and the host props (`height`, `width`, `className`,
- * callbacks) live on `Chart`.
  */
-export interface HeatmapChartProps {
+export interface HeatmapChartProps extends ChartFamilyProps {
   /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
@@ -75,15 +75,22 @@ export interface HeatmapChartProps {
   /** Formats y tick labels — a function, or serializable `Intl` options. */
   formatY?: ChartFormat
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
-
   /** Extra mark layers painted under the cells. */
   marksBefore?: readonly ChartMarkLayer[]
 
   /** Extra mark layers painted over the cells — annotations, rules, labels. */
   marks?: readonly ChartMarkLayer[]
 
-  /** Overlay rendered above the chart surface, ignoring pointer events. */
-  children?: React.ReactNode
+  /**
+   * How pointer and keyboard resolve to points. Each cell is its own focus
+   * stop.
+   * @default "nearest"
+   */
+  focus?: ChartFocus
+
+  /**
+   * Where the tooltip attaches.
+   * @default "point"
+   */
+  tooltipAnchor?: ChartTooltipAnchor
 }

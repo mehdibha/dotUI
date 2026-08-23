@@ -1,4 +1,8 @@
-import type * as React from "react"
+import type {
+  ChartFamilyProps,
+  ChartFocus,
+  ChartTooltipAnchor,
+} from "@/registry/ui/chart/types"
 
 import type { PolarMarkLayer } from "./base"
 
@@ -8,11 +12,9 @@ export type { PolarMarkLayer }
  * Pie and donut chart. One row per slice: `value` names the field holding the
  * magnitude, `name` the field holding the slice key. Radii are ratios of the
  * chart's resolved radius, not pixels, so a pie keeps its proportions at every
- * size. Interaction and animation props are shared by every family — see
- * `ChartBehaviorProps` — and the host props (`height`, `width`, `className`,
- * callbacks) live on `Chart`.
+ * size.
  */
-export interface PieChartProps {
+export interface PieChartProps extends ChartFamilyProps {
   /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
@@ -126,15 +128,22 @@ export interface PieChartProps {
    */
   legend?: boolean
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
-
   /**
    * Extra polar mark layers painted over the ring — a second `pieRing`, an
    * annotation arc.
    */
   polarMarks?: readonly PolarMarkLayer[]
 
-  /** Overlay rendered above the chart surface, ignoring pointer events. */
-  children?: React.ReactNode
+  /**
+   * How pointer and keyboard resolve to points. An arc's x value is its
+   * mid-angle, so slices match by their painted geometry.
+   * @default "nearest"
+   */
+  focus?: ChartFocus
+
+  /**
+   * Where the tooltip attaches.
+   * @default "point"
+   */
+  tooltipAnchor?: ChartTooltipAnchor
 }

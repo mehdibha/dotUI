@@ -632,7 +632,7 @@ export interface ChartBehaviorProps {
   /** Flat scalars, not a nested object — see `chartKey` below. */
   tooltipAnchor?: ChartTooltipAnchor
   tooltipSticky?: boolean
-  tooltip?: false
+  tooltip?: boolean
   animate?: ChartAnimate
 }
 

@@ -1,16 +1,17 @@
-import type * as React from "react"
-
 import type { ChartFormat, ChartMarkLayer } from "@/registry/ui/chart"
+import type {
+  ChartFamilyProps,
+  ChartFocus,
+  ChartTooltipAnchor,
+} from "@/registry/ui/chart/types"
 
 export type { ChartFormat, ChartMarkLayer }
 
 /**
  * Scatter plot. Give it rows plus the two quantitative fields that position
- * them: `series` colors the dots, `r` sizes them. Interaction and animation
- * props are shared by every family — see `ChartBehaviorProps` — and the host
- * props (`height`, `width`, `className`, callbacks) live on `Chart`.
+ * them: `series` colors the dots, `r` sizes them.
  */
-export interface ScatterChartProps {
+export interface ScatterChartProps extends ChartFamilyProps {
   /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
@@ -81,15 +82,22 @@ export interface ScatterChartProps {
   /** Formats y tick labels — a function, or serializable `Intl` options. */
   formatY?: ChartFormat
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
-
   /** Extra mark layers painted under the dots. */
   marksBefore?: readonly ChartMarkLayer[]
 
   /** Extra mark layers painted over the dots — annotations, rules, labels. */
   marks?: readonly ChartMarkLayer[]
 
-  /** Overlay rendered above the chart surface, ignoring pointer events. */
-  children?: React.ReactNode
+  /**
+   * How pointer and keyboard resolve to points. Dots are matched one at a
+   * time — positions rarely align on either axis.
+   * @default "nearest"
+   */
+  focus?: ChartFocus
+
+  /**
+   * Where the tooltip attaches.
+   * @default "point"
+   */
+  tooltipAnchor?: ChartTooltipAnchor
 }

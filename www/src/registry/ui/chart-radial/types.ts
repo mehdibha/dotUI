@@ -1,4 +1,8 @@
-import type * as React from "react"
+import type {
+  ChartFamilyProps,
+  ChartFocus,
+  ChartTooltipAnchor,
+} from "@/registry/ui/chart/types"
 
 import type { PolarMarkLayer } from "./base"
 
@@ -7,11 +11,9 @@ export type { PolarMarkLayer }
 /**
  * Radial bar chart. Give it rows, the field holding each value, and the field
  * naming it. Angles are radians and radii are ratios of the circle the chart
- * resolves for its box. Interaction and animation props are shared by every
- * family — see `ChartBehaviorProps` — and the host props (`height`, `width`,
- * `className`, callbacks) live on `Chart`.
+ * resolves for its box.
  */
-export interface RadialBarChartProps {
+export interface RadialBarChartProps extends ChartFamilyProps {
   /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
@@ -122,15 +124,22 @@ export interface RadialBarChartProps {
    */
   legend?: boolean
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
-
   /** Extra polar mark layers painted under the bars. */
   polarMarksBefore?: readonly PolarMarkLayer[]
 
   /** Extra polar mark layers painted over the bars — annotations, rules, labels. */
   polarMarks?: readonly PolarMarkLayer[]
 
-  /** Overlay rendered above the chart surface, ignoring pointer events. */
-  children?: React.ReactNode
+  /**
+   * How pointer and keyboard resolve to points. An arc's x value is its
+   * mid-angle, so bars match by their painted geometry.
+   * @default "nearest"
+   */
+  focus?: ChartFocus
+
+  /**
+   * Where the tooltip attaches.
+   * @default "point"
+   */
+  tooltipAnchor?: ChartTooltipAnchor
 }

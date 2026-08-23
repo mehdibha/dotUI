@@ -3,7 +3,6 @@ import type {
   ChartPoint,
   ChartRenderContext,
   ChartValue,
-  DomChartDefinition,
 } from "@tanstack/charts"
 import type { ChartTooltipBodyRenderContext } from "@tanstack/charts/react/tooltip"
 
@@ -12,23 +11,57 @@ import type { ChartAnimate, ChartFocus, ChartTooltipAnchor } from "./base"
 export type { ChartAnimate, ChartFocus, ChartTooltipAnchor }
 
 /**
- * The chart host: it renders a chart definition, owns the SVG renderer and the
- * default height, and layers `children` over the surface as a
- * pointer-events-none HTML overlay. Every family component (`AreaChart`,
- * `BarChart`, …) renders one.
+ * Props every chart family component shares: the interaction and animation
+ * behavior, and the host surface — sizing, callbacks, and the HTML overlay.
+ * Family props interfaces extend this, so each family's API reference lists
+ * them alongside its own options.
+ * @ignore no page of its own — it renders inlined into every family reference
  */
-export interface ChartProps {
-  /**
-   * The definition to render — built for you by a family component, or by
-   * `defineChart` for a fully custom chart.
-   */
-  definition: DomChartDefinition<unknown, ChartValue, number>
-
+export interface ChartFamilyProps {
   /** Accessible name. Required: a chart is a figure, not decoration. */
   ariaLabel: string
 
   /** Longer description, announced after the name. */
   ariaDescription?: string
+
+  /**
+   * How pointer and keyboard resolve to points. Group modes highlight every
+   * series at the same position; `nearest` matches a single point.
+   * @default "group-x"
+   */
+  focus?: ChartFocus
+
+  /** Pixel radius beyond which the pointer stops matching a point. */
+  maxFocusDistance?: number
+
+  /**
+   * Where the tooltip attaches: to the focused point, to the pointer, or to
+   * the center of the focused group.
+   * @default "group-center"
+   */
+  tooltipAnchor?: ChartTooltipAnchor
+
+  /**
+   * Keep the tooltip pinned to the focused position instead of letting it
+   * follow the pointer between points.
+   * @default true
+   */
+  tooltipSticky?: boolean
+
+  /**
+   * Pass `false` to remove the tooltip entirely. Keyboard focus stops remain
+   * but lose their live region, so screen readers get silent stops — keep the
+   * tooltip unless the chart is decorative.
+   * @default true
+   */
+  tooltip?: boolean
+
+  /**
+   * Animation on data and size changes: `false` to disable, or duration and
+   * easing options. Charts above ~800 points animate off automatically.
+   * @default { duration: 240, respectReducedMotion: true }
+   */
+  animate?: ChartAnimate
 
   /**
    * Chart height in pixels.
@@ -80,49 +113,4 @@ export interface ChartProps {
 
   /** Overlay rendered above the chart surface, ignoring pointer events. */
   children?: React.ReactNode
-}
-
-/**
- * Interaction and animation props shared by every chart family component.
- * They are flat scalars on purpose: the chart definition is memoized on a
- * serialized key, and a nested option object would silently go stale.
- */
-export interface ChartBehaviorProps {
-  /**
-   * How pointer and keyboard resolve to points. Group modes highlight every
-   * series at the same position; `nearest` matches a single point.
-   * @default "group-x"
-   */
-  focus?: ChartFocus
-
-  /** Pixel radius beyond which the pointer stops matching a point. */
-  maxFocusDistance?: number
-
-  /**
-   * Where the tooltip attaches: to the focused point, to the pointer, or to
-   * the center of the focused group.
-   * @default "group-center"
-   */
-  tooltipAnchor?: ChartTooltipAnchor
-
-  /**
-   * Keep the tooltip pinned to the focused position instead of letting it
-   * follow the pointer between points.
-   * @default true
-   */
-  tooltipSticky?: boolean
-
-  /**
-   * Pass `false` to remove the tooltip entirely. Keyboard focus stops remain
-   * but lose their live region, so screen readers get silent stops — keep the
-   * tooltip unless the chart is decorative.
-   */
-  tooltip?: false
-
-  /**
-   * Animation on data and size changes: `false` to disable, or duration and
-   * easing options. Charts above ~800 points animate off automatically.
-   * @default { duration: 240, respectReducedMotion: true }
-   */
-  animate?: ChartAnimate
 }

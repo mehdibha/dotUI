@@ -1,6 +1,5 @@
-import type * as React from "react"
-
 import type { ChartFormat } from "@/registry/ui/chart"
+import type { ChartFamilyProps, ChartFocus } from "@/registry/ui/chart/types"
 
 import type { PolarMarkLayer } from "./base"
 
@@ -9,11 +8,8 @@ export type { ChartFormat, PolarMarkLayer }
 /**
  * Radar chart. Give it one row per category plus the fields to read: one `y`
  * field per series for wide rows, or a single `y` with `series` for long rows.
- * Interaction and animation props are shared by every family — see
- * `ChartBehaviorProps` — and the host props (`height`, `width`, `className`,
- * callbacks) live on `Chart`.
  */
-export interface RadarChartProps {
+export interface RadarChartProps extends ChartFamilyProps {
   /** The rows to plot. Compared by identity — define it outside render. */
   data: readonly unknown[]
 
@@ -130,12 +126,13 @@ export interface RadarChartProps {
    */
   formatY?: ChartFormat
 
-  /** Accessible name. Required: a chart is a figure, not decoration. */
-  ariaLabel: string
-
   /** Extra polar mark layers painted over the series — annotations, rules, labels. */
   polarMarks?: readonly PolarMarkLayer[]
 
-  /** Overlay rendered above the chart surface, ignoring pointer events. */
-  children?: React.ReactNode
+  /**
+   * How pointer and keyboard resolve to points. By default the nearest spoke
+   * is focused as a group — every series at that category.
+   * @default groups by angular ray
+   */
+  focus?: ChartFocus
 }
