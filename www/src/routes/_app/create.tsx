@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
-import { z } from "zod"
+import type { SearchSchemaInput } from "@tanstack/react-router"
 
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
@@ -13,16 +13,30 @@ import {
 } from "@/modules/create/preset/storage"
 import { PreviewPanel } from "@/modules/create/preview/preview-panel"
 
-export const createSearchSchema = z.object({
-  panel: z.string().optional().catch(undefined),
-  preview: z.string().default("cards").catch("cards"),
-  preset: z.string().optional().catch(undefined),
-  // Opens the preset gallery modal — set by the panel's Presets button and the
-  // /presets permanent redirect. Coerced boolean: the search parser reads bare
-  // `1`/`true` as non-strings, so a plain `z.string()` would reject them and
-  // the param would be dropped.
-  gallery: z.coerce.boolean().optional().catch(undefined),
-})
+export function createSearchSchema(
+  search: {
+    panel?: string
+    preview?: string
+    preset?: string
+    gallery?: boolean
+  } & SearchSchemaInput,
+): {
+  panel?: string
+  preview: string
+  preset?: string
+  gallery?: boolean
+} {
+  return {
+    panel: typeof search.panel === "string" ? search.panel : undefined,
+    preview: typeof search.preview === "string" ? search.preview : "cards",
+    preset: typeof search.preset === "string" ? search.preset : undefined,
+    // Opens the preset gallery modal — set by the panel's Presets button and the
+    // /presets permanent redirect. Coerced boolean: the search parser reads bare
+    // `1`/`true` as non-strings, so a string check would reject them and the
+    // param would be dropped.
+    gallery: search.gallery === undefined ? undefined : Boolean(search.gallery),
+  }
+}
 
 const searchDefaults = { preview: "cards" }
 
