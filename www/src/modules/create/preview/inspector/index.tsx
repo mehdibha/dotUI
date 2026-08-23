@@ -283,21 +283,12 @@ export function PreviewInspector() {
             >
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  gap: 6,
+                  fontSize: 13,
+                  fontWeight: 500,
                   whiteSpace: "nowrap",
                 }}
               >
-                <span style={{ fontSize: 13, fontWeight: 500 }}>
-                  {sel.entry.name}
-                </span>
-                <span style={{ opacity: 0.6 }}>
-                  {Math.round(box.width)}×{Math.round(box.height)}
-                </span>
-                {sel.entry.customizable && (
-                  <span style={{ opacity: 0.6 }}>click to edit</span>
-                )}
+                {sel.entry.name}
               </div>
               {sel.props.slice(0, MAX_PROPS).map(([key, value]) => (
                 <div
