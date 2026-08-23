@@ -13,6 +13,7 @@ import {
   useIframeMessageListener,
 } from "@/modules/create/preset"
 import type { DesignSystem } from "@/modules/create/preset"
+import { PreviewInspector } from "@/modules/create/preview/inspector"
 import { PresetOverview } from "@/modules/create/preview/overview"
 
 const promiseCache = new Map<
@@ -106,6 +107,7 @@ function PreviewPage() {
       icons={designSystem.icons}
     >
       {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
+      {embedded && <PreviewInspector />}
       {content}
     </DesignSystemProvider>
   )
