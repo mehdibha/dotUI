@@ -1,9 +1,11 @@
 "use client"
 
-/* The drill-in panel — the chosen frame (Aug 2026). Two index sections only —
-   Foundations, then Components (Templates planned). Each category fuses its
-   rows into one ControlGroup card — the grouped-list look: label over its
-   muted value on the left, a state-driven micro-preview on the right.
+/* The drill-in panel — the chosen frame (Aug 2026). The index is a run of
+   UNTITLED family clusters — each fuses its rows into one ControlGroup card,
+   and the gaps alone carry the structure (the iOS-Settings grouped look):
+   label over its muted value on the left, a state-driven micro-preview on the
+   right. Weight survives as ordering — identity first. (Per-cluster row
+   heights were tried and reverted — uniform h-16 keeps the scan rhythm.)
    Tapping a row swaps panes INSTANTLY — the Raycast/Linear/cmdk school:
    this navigation fires constantly, and the Aug 2026 animation research
    found instant to be the most common choice among high-frequency tools.
@@ -124,20 +126,17 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
           className={cn(PANE, "gap-5", active && PANE_HIDDEN)}
           aria-hidden={!!active}
         >
-          {index.map((group) => (
-            <section key={group.label} className="flex flex-col gap-1.5">
-              <GroupTitle>{group.label}</GroupTitle>
-              <ControlGroup>
-                {group.chapters.map((chapter) => (
-                  <IndexRow
-                    key={chapter.id}
-                    chapter={chapter}
-                    lab={lab}
-                    onPress={() => setActiveId(chapter.id)}
-                  />
-                ))}
-              </ControlGroup>
-            </section>
+          {index.map((group, i) => (
+            <ControlGroup key={i}>
+              {group.chapters.map((chapter) => (
+                <IndexRow
+                  key={chapter.id}
+                  chapter={chapter}
+                  lab={lab}
+                  onPress={() => setActiveId(chapter.id)}
+                />
+              ))}
+            </ControlGroup>
           ))}
         </div>
 
