@@ -128,7 +128,7 @@ const target = radialRule([{ angle: Math.PI }], {
 
 ## Animation
 
-Bars tween between data states like every other family. Pass `animate={false}` to repaint immediately instead.
+Bars sweep in through their angles on first client paint, one after another, and spring between data states — the background track stays put, and server-rendered charts replay the entrance once hydration lands. `animate` takes `false` for an immediate repaint, or a tween or spring configuration to change the feel.
 
 ## Accessibility
 

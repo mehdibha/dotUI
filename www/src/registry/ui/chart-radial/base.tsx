@@ -183,11 +183,13 @@ function barArc<TDatum>(
   rows: readonly RadialBarDatum<TDatum>[],
   cornerRadius: number,
   fill?: string,
+  motion?: false,
 ) {
   return radialArc(rows, {
     id,
     cornerRadius,
     fill,
+    motion,
     color: (bar: RadialBarDatum<TDatum>) => bar.name,
     key: (bar: RadialBarDatum<TDatum>) => `${id}:${bar.name}`,
     generator: ({ radius }) =>
@@ -246,11 +248,14 @@ export function radialBarChartSpec<TDatum>(
           ...(options.track && track.length > 0
             ? [
                 decorative(
+                  /* The track is static background spanning the whole sweep —
+                     entrance choreography would sweep it in like a value. */
                   barArc(
                     "radial-track",
                     track,
                     corner,
                     options.trackFill ?? radialDefaults.trackFill,
+                    false,
                   ),
                 ),
               ]

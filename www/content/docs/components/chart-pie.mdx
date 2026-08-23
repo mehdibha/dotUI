@@ -127,7 +127,7 @@ Both rings key their colors off the same field, so one month is one color from t
 
 ## Animation
 
-Slices tween between data states like every other family. Pass `animate={false}` to repaint immediately instead.
+Slices sweep in through their angles on first client paint, one after another, and spring between data states — server-rendered charts replay the entrance once hydration lands. `animate` takes `false` for an immediate repaint, or a tween or spring configuration to change the feel.
 
 ## Accessibility
 

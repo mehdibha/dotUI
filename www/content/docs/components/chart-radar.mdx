@@ -104,7 +104,7 @@ The rings, the spokes, and the circumference labels are three separate switches:
 
 ## Animation
 
-The polygon tweens between data states like every other family. Pass `animate={false}` to repaint immediately instead.
+The polygon grows from the center on first client paint and springs between data states — server-rendered charts replay the entrance once hydration lands. `animate` takes `false` for an immediate repaint, or a tween or spring configuration to change the feel.
 
 ## Accessibility
 

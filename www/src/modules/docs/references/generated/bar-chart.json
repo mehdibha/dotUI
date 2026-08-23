@@ -359,8 +359,8 @@
         "type": "identifier",
         "name": "ChartAnimate"
       },
-      "description": "Animation on data and size changes: `false` to disable, or duration and\neasing options. Charts above ~800 points animate off automatically.",
-      "default": "{ duration: 240, respectReducedMotion: true }"
+      "description": "Animation between data states, and the entrance on first client paint:\n`false` to disable, a `{ type: \"tween\" }` with duration and easing, or a\n`{ type: \"spring\" }` with stiffness, damping, and mass. Charts above ~800\npoints animate off automatically, and reduced motion is always respected.",
+      "default": "{ type: \"spring\", stiffness: 170, damping: 26 }"
     },
     "height": {
       "type": "number",
@@ -592,8 +592,8 @@
       "description": "Called when a point is activated with Enter, Space, or a click."
     },
     "onRender": {
-      "type": "((context: ChartRenderContext<unknown, ChartValue, number>) => void)",
-      "detailedType": "| ((\n    context: ChartRenderContext<\n      unknown,\n      ChartValue,\n      number\n    >,\n  ) => void)\n| undefined",
+      "type": "((context: ChartRendererRenderContext<unknown, ChartValue, number>) => void)",
+      "detailedType": "| ((\n    context: ChartRendererRenderContext<\n      unknown,\n      ChartValue,\n      number\n    >,\n  ) => void)\n| undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -610,8 +610,8 @@
                   "type": "application",
                   "base": {
                     "type": "link",
-                    "id": "@tanstack/charts/dist/dom-types.d.ts:ChartRenderContext",
-                    "name": "ChartRenderContext"
+                    "id": "@tanstack/charts/dist/dom-types.d.ts:ChartRendererRenderContext",
+                    "name": "ChartRendererRenderContext"
                   },
                   "typeParameters": [
                     {
@@ -698,10 +698,10 @@
     }
   },
   "typeLinks": {
-    "@tanstack/charts/dist/dom-types.d.ts:ChartRenderContext": {
+    "@tanstack/charts/dist/dom-types.d.ts:ChartRendererRenderContext": {
       "type": "interface",
-      "id": "@tanstack/charts/dist/dom-types.d.ts:ChartRenderContext",
-      "name": "ChartRenderContext",
+      "id": "@tanstack/charts/dist/dom-types.d.ts:ChartRendererRenderContext",
+      "name": "ChartRendererRenderContext",
       "extends": [],
       "properties": {
         "container": {
@@ -769,12 +769,28 @@
           "readonly": false,
           "description": ""
         },
-        "svg": {
+        "surface": {
           "type": "property",
-          "name": "svg",
+          "name": "surface",
           "value": {
-            "type": "identifier",
-            "name": "SVGSVGElement"
+            "type": "application",
+            "base": {
+              "type": "link",
+              "id": "@tanstack/charts/dist/dom-types.d.ts:ChartSurface",
+              "name": "ChartSurface"
+            },
+            "typeParameters": [
+              {
+                "type": "unknown"
+              },
+              {
+                "type": "identifier",
+                "name": "ChartValue"
+              },
+              {
+                "type": "number"
+              }
+            ]
           },
           "optional": false,
           "readonly": false,

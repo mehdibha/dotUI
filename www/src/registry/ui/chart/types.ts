@@ -1,7 +1,7 @@
 import type * as React from "react"
 import type {
   ChartPoint,
-  ChartRenderContext,
+  ChartRendererRenderContext,
   ChartValue,
 } from "@tanstack/charts"
 import type { ChartTooltipBodyRenderContext } from "@tanstack/charts/react/tooltip"
@@ -57,9 +57,11 @@ export interface ChartFamilyProps {
   tooltip?: boolean
 
   /**
-   * Animation on data and size changes: `false` to disable, or duration and
-   * easing options. Charts above ~800 points animate off automatically.
-   * @default { duration: 240, respectReducedMotion: true }
+   * Animation between data states, and the entrance on first client paint:
+   * `false` to disable, a `{ type: "tween" }` with duration and easing, or a
+   * `{ type: "spring" }` with stiffness, damping, and mass. Charts above ~800
+   * points animate off automatically, and reduced motion is always respected.
+   * @default { type: "spring", stiffness: 170, damping: 26 }
    */
   animate?: ChartAnimate
 
@@ -104,7 +106,9 @@ export interface ChartFamilyProps {
   onSelect?: (point: ChartPoint<unknown, ChartValue, number> | null) => void
 
   /** Called after every paint, with the container, SVG, and scene. */
-  onRender?: (context: ChartRenderContext<unknown, ChartValue, number>) => void
+  onRender?: (
+    context: ChartRendererRenderContext<unknown, ChartValue, number>,
+  ) => void
 
   /** Replaces the tooltip body. Receives the default body to wrap or discard. */
   renderTooltipBody?: (

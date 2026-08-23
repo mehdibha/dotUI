@@ -6,7 +6,6 @@ import type {
   Channel,
   ChannelField,
   ChannelOutput,
-  ChartAnimationOptions,
   ChartAxisOptions,
   ChartAxisPresentationOptions,
   ChartBuildContext,
@@ -15,6 +14,8 @@ import type {
   ChartLinearGradient,
   ChartMargin,
   ChartMark,
+  ChartMotionSpringTransition,
+  ChartMotionTweenTransition,
   ChartTheme,
   ChartValue,
   DomChartDefinition,
@@ -22,8 +23,9 @@ import type {
 } from "@tanstack/charts"
 import { defineChart } from "@tanstack/charts"
 import { colorLegend } from "@tanstack/charts/legend"
-import type { ChartCommonProps } from "@tanstack/charts/react/tooltip"
-import { Chart as TanChart } from "@tanstack/charts/react/tooltip"
+import { motion, stagger } from "@tanstack/charts/motion"
+import type { RendererChartCommonProps } from "@tanstack/charts/react/tooltip"
+import { RendererChart } from "@tanstack/charts/react/tooltip"
 import { tooltip as tooltipExtension } from "@tanstack/charts/tooltip"
 import { portal as tooltipPortal } from "@tanstack/charts/tooltip/portal"
 import { scaleBand, scaleLinear, scalePoint } from "d3-scale"
@@ -58,8 +60,9 @@ export const chartDefaults = {
   focus: "group-x",
   tooltipAnchor: "group-center",
   tooltipSticky: true,
-  animate: { duration: 240, respectReducedMotion: true },
+  animate: { type: "spring", stiffness: 170, damping: 26 },
   animateMaxPoints: 800,
+  enterStagger: 25,
   axisTickMinWidth: 420,
   axisTickCountNarrow: 4,
   gradientStops: [0.02, 0.5],
@@ -621,9 +624,10 @@ function safeShare(value: number, total: number): number {
    render for no gain — the named easings cover the design space. */
 export type ChartAnimate =
   | boolean
-  | (Omit<ChartAnimationOptions, "easing"> & {
-      easing?: Extract<ChartAnimationOptions["easing"], string>
+  | (Omit<ChartMotionTweenTransition, "easing"> & {
+      easing?: Extract<ChartMotionTweenTransition["easing"], string>
     })
+  | ChartMotionSpringTransition
 
 export interface ChartBehaviorProps {
   focus?: ChartFocus
@@ -636,12 +640,12 @@ export interface ChartBehaviorProps {
   animate?: ChartAnimate
 }
 
-/* `renderSvg` and `measureText` are deliberately absent: a renderer identity
+/* `renderer` and `measureText` are deliberately absent: a renderer identity
    change tears the whole surface down and remounts it on every render, which
    is strictly worse than a scene rebuild. The host owns them. */
 export type ChartHostProps<TDatum, TXValue extends ChartValue> = Omit<
-  ChartCommonProps<TDatum, TXValue, number>,
-  "renderSvg" | "measureText"
+  RendererChartCommonProps<TDatum, TXValue, number>,
+  "renderer" | "measureText"
 >
 
 export type ChartProps<TDatum, TXValue extends ChartValue> = ChartHostProps<
@@ -673,12 +677,20 @@ const TOOLTIP_SURFACE_CLASS = [
   "[--ts-chart-tooltip-font:500_0.75rem/1.3_var(--font-sans)]",
 ].join(" ")
 
+/* One motion renderer for the whole design system, at module scope: a renderer
+   identity change tears down and remounts the surface, so it must never be
+   created in render. `initial: "always"` because the React adapter prerenders
+   and adopts its own markup on every mount — the default "adopted SVG skips
+   entrance" rule would otherwise suppress entrance everywhere, hydrated and
+   client-only alike. Timing comes from the definition-level `motion` below. */
+const MOTION_RENDERER = motion({ initial: "always" })
+
 /* House chart host: the tooltip-capable surface from the library's `tooltip`
-   entry, with the default height built in, and `children` rendered as an HTML
-   overlay above it so hover readouts repaint at pointer speed without touching
-   the definition. The tooltip is portaled, so it always paints above the
-   overlay. `className` lands on the outer box — the one the overlay is
-   positioned against. */
+   entry driving the motion renderer, with the default height built in, and
+   `children` rendered as an HTML overlay above it so hover readouts repaint at
+   pointer speed without touching the definition. The tooltip is portaled, so
+   it always paints above the overlay. `className` lands on the outer box —
+   the one the overlay is positioned against. */
 export function Chart<TDatum, TXValue extends ChartValue>({
   children,
   className,
@@ -686,7 +698,8 @@ export function Chart<TDatum, TXValue extends ChartValue>({
 }: ChartProps<TDatum, TXValue>) {
   return (
     <div className={cn("relative", className)}>
-      <TanChart
+      <RendererChart
+        renderer={MOTION_RENDERER}
         height={
           props.aspectRatio === undefined ? chartDefaults.height : undefined
         }
@@ -703,8 +716,9 @@ export function Chart<TDatum, TXValue extends ChartValue>({
 /* The memo — one shared path, structurally total                      */
 /* ------------------------------------------------------------------ */
 
-/* Tracks the library's `ChartCommonProps` (the `@tanstack/charts/react/tooltip`
-   entry) minus `renderSvg`/`measureText`, which `ChartHostProps` omits. */
+/* Tracks the library's `RendererChartCommonProps` (the
+   `@tanstack/charts/react/tooltip` entry) minus `renderer`/`measureText`,
+   which `ChartHostProps` omits. */
 const HOST_PROP_NAMES = new Set([
   "ariaLabel",
   "ariaDescription",
@@ -850,6 +864,14 @@ function countPoints(spec: Record<string, unknown>): number {
   return rows * series
 }
 
+/* Entrance choreography: bars and arcs enter in sequence, 25 ms apart. Lines
+   and areas are single paths, dots and cells can number in the hundreds — for
+   those, per-datum delay is either meaningless or a multi-second tail. */
+const ENTER_STAGGER = stagger({
+  each: chartDefaults.enterStagger,
+  roles: ["arc", "bar"],
+})
+
 function resolveBehavior(behavior: ChartBehaviorProps, degrade: boolean) {
   const requested = behavior.animate ?? true
   return {
@@ -865,11 +887,13 @@ function resolveBehavior(behavior: ChartBehaviorProps, degrade: boolean) {
             portal: tooltipPortal,
             className: TOOLTIP_SURFACE_CLASS,
           },
-    svgAnimation: degrade
-      ? false
-      : requested === true
-        ? chartDefaults.animate
-        : requested,
+    motion:
+      degrade || requested === false
+        ? (false as const)
+        : {
+            transition: requested === true ? chartDefaults.animate : requested,
+            ...ENTER_STAGGER,
+          },
     keyboard: true,
   }
 }
