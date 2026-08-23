@@ -14,8 +14,13 @@ import {
 // The dialog body pulls in the Orama search client, the fumadocs search hook
 // and react-aria's Autocomplete (~25 KB gz). Load it lazily on first open so it
 // stays off every page's critical path — the trigger and shell below are cheap.
-const loadSearchDialog = () => import("./search-dialog")
-const SearchDialog = React.lazy(loadSearchDialog)
+// A module var instead of React.lazy: lazy suspends once even on a resolved
+// import, committing the fallback before the content — a potential flash.
+let SearchDialog: (typeof import("./search-dialog"))["default"] | null = null
+const loadSearchDialog = () =>
+  import("./search-dialog").then((module) => {
+    SearchDialog = module.default
+  })
 
 interface SearchCommandProps {
   items: PageTree.Node[]
@@ -29,6 +34,18 @@ export function SearchCommand({
   children,
 }: SearchCommandProps) {
   const [isOpen, setIsOpen] = React.useState(false)
+
+  // A cold open (first ⌘K, nothing warmed) waits for the chunk — a few ms,
+  // since the open request itself starts the fetch — instead of flashing the
+  // Suspense fallback. Once loaded, opens are synchronous.
+  const requestOpen = (open: boolean) => {
+    if (!open || SearchDialog) {
+      setIsOpen(open)
+      return
+    }
+    const show = () => setIsOpen(true)
+    void loadSearchDialog().then(show, show)
+  }
 
   React.useEffect(() => {
     if (!keyboardShortcut) return
@@ -46,16 +63,17 @@ export function SearchCommand({
         }
 
         e.preventDefault()
-        setIsOpen((open) => !open)
+        if (isOpen) setIsOpen(false)
+        else requestOpen(true)
       }
     }
 
     document.addEventListener("keydown", onKeyDown)
     return () => document.removeEventListener("keydown", onKeyDown)
-  }, [keyboardShortcut])
+  })
 
   return (
-    <Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
+    <Dialog isOpen={isOpen} onOpenChange={requestOpen}>
       {/* Hover/focus intent on the trigger warms the lazy chunk so first open
           feels instant. display:contents keeps the trigger's press wiring —
           RAC's DialogTrigger reaches pressables via context, not cloning. */}
@@ -74,11 +92,9 @@ export function SearchCommand({
               aria-label="Search documentation"
               className="flex flex-col gap-0 overflow-hidden p-0!"
             >
-              <React.Suspense
-                fallback={<div className="h-14" aria-hidden="true" />}
-              >
+              {SearchDialog && (
                 <SearchDialog items={items} onClose={() => setIsOpen(false)} />
-              </React.Suspense>
+              )}
             </DialogContent>
           )
           return isMobile ? (
