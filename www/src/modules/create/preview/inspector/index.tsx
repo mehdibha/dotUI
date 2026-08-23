@@ -17,11 +17,21 @@ interface Selection {
   props: [string, unknown][]
 }
 
-// Fixed palette on purpose — the overlay is tool chrome, not part of the
-// previewed design system, and must stay readable over any theme.
+// Highlight box: fixed accent, readable over any previewed theme. The card
+// borrows the react-grab look, mapped onto the previewed system's tooltip
+// tokens (its guaranteed-contrast inverse surface), with react-grab's own
+// values as fallbacks.
 const ACCENT = "#3b82f6"
 const ACCENT_FILL = "rgba(59, 130, 246, 0.09)"
-const CHROME_BG = "rgba(24, 24, 27, 0.94)"
+const CARD_BG = "var(--color-tooltip, #161616)"
+const CARD_FG = "var(--color-fg-on-tooltip, #ffffff)"
+const CARD_FONT = "Geist, ui-sans-serif, system-ui, sans-serif"
+const CARD_SHADOW = "drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15))"
+
+const ARROW_W = 16
+const ARROW_H = 8
+const CARD_GAP = 4
+const VIEWPORT_MARGIN = 6
 
 const MAX_PROPS = 8
 const MAX_VALUE_CHARS = 28
@@ -71,6 +81,21 @@ export function PreviewInspector() {
 
   const selRef = React.useRef<Selection | null>(null)
   selRef.current = sel
+
+  // The card is centered on the box and its arrow points at the box center,
+  // both clamped to the viewport — that needs the card's rendered size.
+  const cardRef = React.useRef<HTMLDivElement>(null)
+  const [cardSize, setCardSize] = React.useState({ w: 0, h: 0 })
+  React.useLayoutEffect(() => {
+    const el = cardRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    setCardSize((prev) =>
+      prev.w === rect.width && prev.h === rect.height
+        ? prev
+        : { w: rect.width, h: rect.height },
+    )
+  })
 
   useInspectorModeMessages(
     React.useCallback((on: boolean) => {
@@ -176,11 +201,38 @@ export function PreviewInspector() {
     }
   }
 
-  // One card carries the name and the props; above the box, flipped below
-  // when there's no room. Estimated height keeps the flip decision cheap.
-  const cardAbove = box
-    ? box.top > 40 + 16 * Math.min(sel?.props.length ?? 0, MAX_PROPS + 1)
-    : true
+  // react-grab-style placement: card centered on the box with an arrow
+  // pointing at its center, above by default, flipped below when clipped.
+  let card: {
+    top: number
+    left: number
+    above: boolean
+    arrowX: number
+  } | null = null
+  if (box && cardSize.w > 0) {
+    const centerX = box.left + box.width / 2
+    const above =
+      box.top - CARD_GAP - ARROW_H - cardSize.h >= VIEWPORT_MARGIN ||
+      box.top + box.height + CARD_GAP + ARROW_H + cardSize.h >
+        window.innerHeight - VIEWPORT_MARGIN
+    const top = above
+      ? box.top - CARD_GAP - ARROW_H - cardSize.h
+      : box.top + box.height + CARD_GAP + ARROW_H
+    const left = Math.max(
+      VIEWPORT_MARGIN,
+      Math.min(
+        centerX - cardSize.w / 2,
+        window.innerWidth - VIEWPORT_MARGIN - cardSize.w,
+      ),
+    )
+    const arrowX = Math.max(
+      12,
+      Math.min(centerX - left, cardSize.w - 12),
+    )
+    card = { top, left, above, arrowX }
+  }
+
+  const hasProps = (sel?.props.length ?? 0) > 0
 
   return (
     <div
@@ -191,7 +243,7 @@ export function PreviewInspector() {
         inset: 0,
         zIndex: 2147483000,
         pointerEvents: "none",
-        fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+        fontFamily: CARD_FONT,
       }}
     >
       <style>{"* { cursor: crosshair !important; }"}</style>
@@ -209,61 +261,99 @@ export function PreviewInspector() {
               borderRadius: 3,
             }}
           />
+          {/* Wrapper carries the drop-shadow so panel + arrow cast one shape. */}
           <div
+            ref={cardRef}
             style={{
               position: "absolute",
-              top: cardAbove ? box.top - 6 : box.top + box.height + 6,
-              left: Math.max(4, Math.min(box.left, window.innerWidth - 240)),
-              transform: cardAbove ? "translateY(-100%)" : undefined,
-              maxWidth: 300,
-              padding: "5px 8px",
-              borderRadius: 6,
-              background: CHROME_BG,
-              color: "#e4e4e7",
-              fontSize: 11,
-              lineHeight: "16px",
+              top: card?.top ?? -9999,
+              left: card?.left ?? -9999,
+              visibility: card ? "visible" : "hidden",
+              filter: CARD_SHADOW,
             }}
           >
             <div
               style={{
-                display: "flex",
-                alignItems: "baseline",
-                gap: 6,
-                whiteSpace: "nowrap",
+                maxWidth: 300,
+                padding: hasProps ? "6px 10px" : "4px 10px",
+                borderRadius: hasProps ? 14 : 999,
+                background: CARD_BG,
+                color: CARD_FG,
+                fontSize: 12,
+                lineHeight: "16px",
               }}
             >
-              <span style={{ color: "#93c5fd", fontWeight: 600 }}>
-                {sel.entry.name}
-              </span>
-              <span style={{ opacity: 0.55 }}>
-                {Math.round(box.width)}×{Math.round(box.height)}
-              </span>
-              {sel.entry.customizable && (
-                <span style={{ opacity: 0.55 }}>click to edit</span>
-              )}
-            </div>
-            {sel.props.slice(0, MAX_PROPS).map(([key, value]) => (
               <div
-                key={key}
                 style={{
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: 6,
                   whiteSpace: "nowrap",
                 }}
               >
-                <span style={{ color: "#a5b4fc" }}>{key}</span>
-                <span style={{ opacity: 0.5 }}>=</span>
-                <span style={{ color: "#fda4af" }}>{formatValue(value)}</span>
+                <span style={{ fontSize: 13, fontWeight: 500 }}>
+                  {sel.entry.name}
+                </span>
+                <span style={{ opacity: 0.6 }}>
+                  {Math.round(box.width)}×{Math.round(box.height)}
+                </span>
+                {sel.entry.customizable && (
+                  <span style={{ opacity: 0.6 }}>click to edit</span>
+                )}
               </div>
-            ))}
-            {sel.props.length > MAX_PROPS && (
-              <div style={{ opacity: 0.5 }}>
-                +{sel.props.length - MAX_PROPS} more
-              </div>
-            )}
+              {sel.props.slice(0, MAX_PROPS).map(([key, value]) => (
+                <div
+                  key={key}
+                  style={{
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  <span style={{ opacity: 0.6 }}>{key}=</span>
+                  <span>{formatValue(value)}</span>
+                </div>
+              ))}
+              {sel.props.length > MAX_PROPS && (
+                <div style={{ opacity: 0.6 }}>
+                  +{sel.props.length - MAX_PROPS} more
+                </div>
+              )}
+            </div>
+            {card && <CardArrow x={card.arrowX} pointDown={card.above} />}
           </div>
         </>
       )}
     </div>
+  )
+}
+
+/** react-grab's rounded-tip arrow, filled with the card surface. */
+function CardArrow({ x, pointDown }: { x: number; pointDown: boolean }) {
+  const r = 1
+  const t = r * Math.SQRT1_2
+  const half = ARROW_W / 2
+  const baseY = pointDown ? 0 : ARROW_H
+  const tipY = pointDown ? ARROW_H - t : t
+  const sweep = pointDown ? 0 : 1
+  const d = `M0 ${baseY} L${half - t} ${tipY} A${r} ${r} 0 0 ${sweep} ${half + t} ${tipY} L${ARROW_W} ${baseY} Z`
+  return (
+    <svg
+      width={ARROW_W}
+      height={ARROW_H}
+      viewBox={`0 0 ${ARROW_W} ${ARROW_H}`}
+      style={{
+        position: "absolute",
+        display: "block",
+        left: x,
+        // 1px overlap hides the antialiased seam between panel and arrow.
+        top: pointDown ? "calc(100% - 1px)" : undefined,
+        bottom: pointDown ? undefined : "calc(100% - 1px)",
+        transform: "translateX(-50%)",
+      }}
+    >
+      {/* fill via CSS so the var() resolves — attribute values don't. */}
+      <path d={d} style={{ fill: CARD_BG }} />
+    </svg>
   )
 }
