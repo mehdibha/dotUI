@@ -86,6 +86,7 @@ export function PreviewInspector() {
   // both clamped to the viewport — that needs the card's rendered size.
   const cardRef = React.useRef<HTMLDivElement>(null)
   const [cardSize, setCardSize] = React.useState({ w: 0, h: 0 })
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- measures after every render on purpose; the equality guard stops the update chain
   React.useLayoutEffect(() => {
     const el = cardRef.current
     if (!el) return
@@ -225,10 +226,7 @@ export function PreviewInspector() {
         window.innerWidth - VIEWPORT_MARGIN - cardSize.w,
       ),
     )
-    const arrowX = Math.max(
-      12,
-      Math.min(centerX - left, cardSize.w - 12),
-    )
+    const arrowX = Math.max(12, Math.min(centerX - left, cardSize.w - 12))
     card = { top, left, above, arrowX }
   }
 
