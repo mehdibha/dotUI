@@ -4,8 +4,11 @@ import { z } from "zod"
 
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
+import { cn } from "@/registry/lib/utils"
 import { ExportHeaderAction } from "@/modules/create/export"
-import { CreatePanel } from "@/modules/create/panel"
+import { CHAPTERS } from "@/modules/panel-lab/state"
+import { useLab } from "@/modules/panel-lab/use-lab"
+import { PanelB } from "@/modules/panel-lab/variants/panel-b"
 import { DEFAULTS, useDesignSystem } from "@/modules/create/preset"
 import {
   loadStoredPreset,
@@ -25,6 +28,21 @@ export const createSearchSchema = z.object({
 })
 
 const searchDefaults = { preview: "cards" }
+
+// Temporary look-check: the panel-lab drill-in panel in place of CreatePanel.
+function LabPanel({ className }: { className?: string }) {
+  const lab = useLab()
+  return (
+    <div
+      className={cn(
+        "relative flex w-full flex-1 flex-col lg:w-[360px] lg:flex-none lg:shrink-0",
+        className,
+      )}
+    >
+      <PanelB chapters={CHAPTERS} lab={lab} />
+    </div>
+  )
+}
 
 export const Route = createFileRoute("/_app/create")({
   validateSearch: createSearchSchema,
@@ -69,7 +87,7 @@ function CreatePage() {
     // lines up with the Export button above it.
     <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2 lg:pr-4">
       <ExportHeaderAction />
-      <CreatePanel className="max-lg:hidden" />
+      <LabPanel className="max-lg:hidden" />
       <PreviewPanel onCustomize={() => setSheetOpen(true)} />
 
       {/* Mobile: the panel is a bottom sheet over the live stage, opened from
@@ -85,7 +103,7 @@ function CreatePage() {
             className="flex h-full min-h-0 flex-col gap-0 p-0"
           >
             <DrawerHandle />
-            <CreatePanel className="min-h-0 flex-1" />
+            <LabPanel className="min-h-0 flex-1" />
           </DialogContent>
         </Drawer>
       </div>
