@@ -1,238 +1,164 @@
 "use client"
 
-/* Card demo strips for the foundation chapters — inert, span/svg-based
-   specimens (the card itself is the pressable) driven by each chapter's own
-   state keys, cropped by the strip's right-edge fade. */
+/* Foundation-chapter illustrations — monochrome anatomy schematics (see
+   ink.tsx). Color alone stays live: its subject IS the brand seed. */
 
 import {
   BanIcon,
   BellIcon,
   HomeIcon,
   MousePointer2Icon,
-  PointerIcon,
   SearchIcon,
   SettingsIcon,
 } from "lucide-react"
 
-import { fontStack } from "@/lib/fonts"
-import { cn } from "@/registry/lib/utils"
-import { useLoadedFamilies } from "@/modules/create/typography"
-
-import { DISABLED_LOOKS } from "../../sections/disabled"
-import { focusRingShadow } from "../../sections/focus"
-import { LINK_COLOR, LINK_REST } from "../../sections/links"
-import {
-  controlRadiusPx,
-  cornerShapeStyle,
-  roleRadiusPx,
-} from "../../sections/shape"
-import { spaceRecipe } from "../../sections/space"
 import type { LabState } from "../../state"
+import { Bar } from "./ink"
 
-/** The brand seed as a swatch beside its hex — the raw seed, no engine run. */
+/** The brand seed as a swatch — the raw seed, no engine run. */
 export function ColorDemo({ state }: { state: LabState }) {
-  // The hex lives in the card's info line — the specimen is just the seed.
   return (
     <span
-      className="size-6 shrink-0 rounded-md ring-1 ring-fg/10 ring-inset"
+      className="size-5 shrink-0 rounded-md ring-1 ring-fg/10 ring-inset"
       style={{ backgroundColor: state.brand }}
     />
   )
 }
 
-/** "Ag" in the real heading face and weight, named beside it in the body face. */
-export function TypographyDemo({ state }: { state: LabState }) {
-  const family = state.headingFont || state.bodyFont
-  useLoadedFamilies([family, state.bodyFont])
+/** The classic type-specimen pair — a large and a small "Ag". */
+export function TypographyDemo() {
   return (
-    <span className="flex shrink-0 items-center gap-2.5 whitespace-nowrap">
-      <span
-        className="text-fg"
-        style={{
-          fontFamily: fontStack(family),
-          fontWeight: Number(state.headingWeight),
-          fontSize: 27,
-          lineHeight: 1,
-        }}
-      >
+    <span className="flex shrink-0 items-baseline gap-1.5 whitespace-nowrap">
+      <span className="text-lg leading-none font-semibold text-fg/85">Ag</span>
+      <span className="text-[11px] leading-none font-medium text-fg/45">
         Ag
       </span>
     </span>
   )
 }
 
-/** A few registry-representative glyphs drawing with the current stroke. */
-export function IconsDemo({ state }: { state: LabState }) {
+/** A short run of registry-representative glyphs. */
+export function IconsDemo() {
   return (
-    <span className="flex shrink-0 items-center gap-2.5 text-fg-muted">
+    <span className="flex shrink-0 items-center gap-1.5 text-fg/55">
       {[HomeIcon, SearchIcon, BellIcon, SettingsIcon].map((Icon, i) => (
-        <Icon key={i} className="size-4.5" strokeWidth={state.iconStroke} />
+        <Icon key={i} className="size-4" strokeWidth={1.75} />
       ))}
     </span>
   )
 }
 
-/** Control and surface corners at their resolved radii, outlined. */
-export function ShapeDemo({ state }: { state: LabState }) {
-  const box = (key: "roleControl" | "roleSurface", size: string) => (
-    <span
-      className={cn("border border-fg/25 bg-fg/3", size)}
-      style={{
-        borderRadius: roleRadiusPx(state, key),
-        ...cornerShapeStyle(state.cornerShape),
-      }}
-    />
-  )
-  return (
-    <span className="flex shrink-0 items-center gap-2">
-      {box("roleControl", "size-6")}
-      {box("roleSurface", "size-8")}
-    </span>
-  )
-}
-
-/** Stacked bars whose gap is the resolved item gap — unit × density, live. */
-export function SpaceDemo({ state }: { state: LabState }) {
-  const r = spaceRecipe(state)
-  return (
-    <span className="flex shrink-0 flex-col" style={{ gap: r.itemGap }}>
-      {["w-16", "w-12", "w-14"].map((width) => (
-        <span
-          key={width}
-          className={cn("h-1.5 rounded-full bg-fg/25", width)}
-        />
-      ))}
-    </span>
-  )
-}
-
-/* Schematic card looks per strategy — neutral tokens, no engine run: fg-alpha
-   tonal steps read darker on light and lighter on dark, like the real axis. */
-const SURFACE_CARD: Record<string, string> = {
-  hairline: "border border-fg/12 bg-card",
-  adaptive: "bg-card shadow-sm",
-  shadow: "bg-card shadow-md",
-  outline: "border border-fg/25 bg-card shadow-xs",
-  tonal: "bg-fg/8",
-}
-
-/** A tiny page tile holding a card wearing the separation strategy. */
-export function SurfacesDemo({ state }: { state: LabState }) {
-  return (
-    <span className="relative h-9 w-14 shrink-0 rounded-md border border-border/45 bg-bg">
-      <span
-        className={cn(
-          "absolute inset-x-2 top-2 bottom-2 rounded-sm",
-          SURFACE_CARD[state.surfaceStrategy] ?? SURFACE_CARD.hairline,
-        )}
-      />
-    </span>
-  )
-}
-
-/** A primary chip wearing the real keyboard ring. */
-export function FocusDemo({ state }: { state: LabState }) {
+/** A bare top-right corner arc whose stroke fades away from the corner. */
+export function ShapeDemo() {
   return (
     <span
-      className="flex h-7 shrink-0 items-center bg-primary px-3 text-[0.8125rem] font-medium text-fg-on-primary"
-      style={{
-        borderRadius: controlRadiusPx(state),
-        boxShadow: focusRingShadow(state),
-      }}
+      aria-hidden
+      className="relative size-5 shrink-0 overflow-hidden [mask-image:linear-gradient(225deg,black_35%,transparent_85%)]"
     >
-      Focus
+      <span className="absolute top-0 right-0 size-8 rounded-tr-[10px] border-t-2 border-r-2 border-fg/50" />
     </span>
   )
 }
 
-/** The interactive and disabled cursors the axes select, as glyphs. */
-export function CursorDemo({ state }: { state: LabState }) {
-  const Interactive =
-    state.cursorControls === "pointer" ? PointerIcon : MousePointer2Icon
-  const Disabled =
-    state.cursorDisabled === "not-allowed" ? BanIcon : MousePointer2Icon
+/** A tiny three-panel layout — the gutters are the subject. */
+export function SpaceDemo() {
+  const panel = "rounded-[3px] bg-fg/20"
   return (
-    <span className="flex shrink-0 items-center gap-3">
-      <Interactive className="size-4.5 text-fg" />
-      <Disabled className="size-4.5 text-fg-muted" />
-    </span>
-  )
-}
-
-/** The word pair wearing the highlight axis — literal OS blue vs accent. */
-export function SelectionDemo({ state }: { state: LabState }) {
-  const accent = state.selectionHighlight === "accent"
-  return (
-    <span className="shrink-0 text-[0.8125rem] whitespace-nowrap">
-      <span
-        className={cn(
-          "rounded-xs px-0.5",
-          accent
-            ? "bg-accent text-fg-on-accent"
-            : "bg-[#B3D7FF] text-[#1B1B1F]",
-        )}
-      >
-        Selected text
+    <span className="flex h-7 w-13 shrink-0 gap-[5px]">
+      <span className={`${panel} w-1/3 shrink-0`} />
+      <span className="flex min-w-0 flex-1 flex-col gap-[5px]">
+        <span className={`${panel} flex-1`} />
+        <span className={`${panel} flex-1`} />
       </span>
     </span>
   )
 }
 
-/** Content lines beside a track + thumb wearing the style axis. */
-export function ScrollbarsDemo({ state }: { state: LabState }) {
-  const style = state.scrollbarStyle
+/** One raised card lifting off a flat neighbor. */
+export function SurfacesDemo() {
+  return (
+    <span className="relative h-7 w-12 shrink-0">
+      <span className="absolute inset-y-1 right-0 left-2 rounded-md bg-fg/10" />
+      <span className="absolute inset-y-0 left-0 w-9 rounded-md border border-fg/25 bg-card shadow-xs" />
+    </span>
+  )
+}
+
+/** A bare chip wearing a keyboard ring — the ring is the subject. */
+export function FocusDemo() {
+  return (
+    <span
+      className="h-5 w-9 shrink-0 rounded-[5px] bg-fg/15"
+      style={{
+        boxShadow:
+          "0 0 0 2px var(--color-muted), 0 0 0 4px color-mix(in oklab, var(--color-fg) 65%, transparent)",
+      }}
+    />
+  )
+}
+
+/** A failed field: danger shell over its message line — the one semantic
+ *  color the schematic keeps, since the axis is the red itself. */
+export function InvalidDemo() {
+  return (
+    <span className="flex shrink-0 flex-col items-start gap-1">
+      <span className="h-5 w-12 rounded-[5px] border border-border-danger bg-fg/5" />
+      <Bar className="w-8 bg-fg-danger/60" />
+    </span>
+  )
+}
+
+/** The arrow hovering a control chip — filled dark with a light outline. */
+export function CursorDemo() {
+  return (
+    <span className="relative shrink-0">
+      <span className="block h-5 w-9 rounded-[5px] bg-fg/15" />
+      <MousePointer2Icon className="absolute right-0.5 -bottom-1 size-3.5 fill-fg stroke-card" />
+    </span>
+  )
+}
+
+/** A run of words wearing the highlight. */
+export function SelectionDemo() {
+  return (
+    <span className="shrink-0 text-[0.8125rem] whitespace-nowrap text-fg/85">
+      <span className="rounded-xs bg-fg/20 px-0.5">Selected text</span>
+    </span>
+  )
+}
+
+/** Content lines beside a track and thumb. */
+export function ScrollbarsDemo() {
   return (
     <span className="flex h-8 shrink-0 items-stretch gap-2.5">
       <span className="flex flex-col justify-between py-0.5">
         {["w-14", "w-10", "w-12"].map((width) => (
-          <span
-            key={width}
-            className={cn("h-1 rounded-full bg-fg/25", width)}
-          />
+          <Bar key={width} className={width} />
         ))}
       </span>
-      {style === "native" ? (
-        <span className="relative w-[7px] rounded-full bg-fg/10">
-          <span className="absolute inset-x-0 top-0 h-4 rounded-full bg-fg/40" />
-        </span>
-      ) : (
-        <span
-          className={cn(
-            "w-[3px] rounded-full",
-            style === "overlay" ? "h-4 bg-fg/15" : "h-4 bg-fg/40",
-          )}
-        />
-      )}
+      <span className="relative w-[7px] rounded-full bg-fg/10">
+        <span className="absolute inset-x-0 top-0 h-4 rounded-full bg-fg/40" />
+      </span>
     </span>
   )
 }
 
-/** A disabled control wearing the treatment recipe. */
-export function DisabledDemo({ state }: { state: LabState }) {
-  const look =
-    DISABLED_LOOKS[state.disabledTreatment as keyof typeof DISABLED_LOOKS] ??
-    DISABLED_LOOKS.fade
+/** A disabled button under the ban cursor. */
+export function DisabledDemo() {
   return (
-    <span
-      className={cn(
-        "flex h-7 shrink-0 items-center rounded-lg px-3 text-[0.8125rem] font-medium",
-        look.primary,
-      )}
-    >
-      Disabled
+    <span className="relative shrink-0">
+      <span className="flex h-7 shrink-0 items-center rounded-lg bg-(--neutral-a100) px-2.5 text-[11px] font-medium whitespace-nowrap text-(--neutral-600)">
+        Save
+      </span>
+      <span className="absolute -right-1 -bottom-1 flex rounded-full bg-card p-px">
+        <BanIcon className="size-3 text-fg" />
+      </span>
     </span>
   )
 }
 
-/* The section's own curve drawings, static — one per easing character. */
-const MOTION_CURVES: Record<string, string> = {
-  standard: "M4 20C8 9 12 6 20 6",
-  emphasized: "M4 20C5 8 9 6 20 6",
-  spring: "M4 20C6 6 6.5 2 9.5 3.5 12 4.8 12.5 8.2 15 7 17 6 18 6 20 6",
-}
-
-/** The easing character as a still curve settling on a dashed line. */
-export function MotionDemo({ state }: { state: LabState }) {
+/** An easing curve settling on a dashed line. */
+export function MotionDemo() {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -248,7 +174,7 @@ export function MotionDemo({ state }: { state: LabState }) {
         opacity=".35"
       />
       <path
-        d={MOTION_CURVES[state.motionCharacter] ?? MOTION_CURVES.standard}
+        d="M4 20C8 9 12 6 20 6"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
@@ -258,16 +184,11 @@ export function MotionDemo({ state }: { state: LabState }) {
   )
 }
 
-/** A resting link wearing the underline and color axes. */
-export function LinksDemo({ state }: { state: LabState }) {
+/** A resting inline link. */
+export function LinksDemo() {
   return (
     <span className="shrink-0 text-[0.8125rem] whitespace-nowrap">
-      <span
-        className={cn(
-          LINK_COLOR[state.linkColor as keyof typeof LINK_COLOR],
-          LINK_REST[state.linkUnderline as keyof typeof LINK_REST],
-        )}
-      >
+      <span className="text-fg/85 underline decoration-fg/40 underline-offset-2">
         Learn more
       </span>
     </span>

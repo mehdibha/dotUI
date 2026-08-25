@@ -51,6 +51,12 @@ import {
   calendarSummary,
 } from "./sections/calendar"
 import {
+  ChartsHero,
+  ChartsSection,
+  chartsSummary,
+  CHART_DEFAULTS,
+} from "./sections/charts"
+import {
   CheckboxSection,
   CHECKBOX_DEFAULTS,
   CheckboxHero,
@@ -105,6 +111,12 @@ import {
   inputsSummary,
   INPUT_DEFAULTS,
 } from "./sections/inputs"
+import {
+  InvalidHero,
+  InvalidSection,
+  invalidSummary,
+  INVALID_DEFAULTS,
+} from "./sections/invalid"
 import { KbdSection, KBD_DEFAULTS, KbdHero, kbdSummary } from "./sections/kbd"
 import {
   LinksSection,
@@ -275,7 +287,9 @@ export const DEFAULTS = {
   ...SELECTION_DEFAULTS,
   ...SCROLLBAR_DEFAULTS,
   ...DISABLED_DEFAULTS,
+  ...INVALID_DEFAULTS,
   ...MOTION_DEFAULTS,
+  ...CHART_DEFAULTS,
   ...LINK_DEFAULTS,
   ...NOTICE_DEFAULTS,
   ...SKELETON_DEFAULTS,
@@ -400,7 +414,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     id: "selection",
-    label: "Selection",
+    label: "Text selection",
     defaults: SELECTION_DEFAULTS,
     Body: SelectionSection,
     Hero: SelectionHero,
@@ -421,6 +435,22 @@ export const CHAPTERS: Chapter[] = [
     Body: DisabledSection,
     Hero: DisabledHero,
     summary: disabledSummary,
+  },
+  {
+    id: "invalid",
+    label: "Invalid",
+    defaults: INVALID_DEFAULTS,
+    Body: InvalidSection,
+    Hero: InvalidHero,
+    summary: invalidSummary,
+  },
+  {
+    id: "charts",
+    label: "Charts",
+    defaults: CHART_DEFAULTS,
+    Body: ChartsSection,
+    Hero: ChartsHero,
+    summary: chartsSummary,
   },
   {
     id: "motion",

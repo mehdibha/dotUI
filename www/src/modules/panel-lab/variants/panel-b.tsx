@@ -20,6 +20,7 @@ import { Button as RacButton } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
 import { ControlGroup, GroupTitle, ROW_LABEL } from "@/modules/control-lab/rows"
+import { useTweak } from "@/dev/tweaker"
 
 import { PanelChrome } from "../panel"
 import type { Chapter, Lab } from "../state"
@@ -28,7 +29,7 @@ import { resolveIndex } from "./groups"
 import type { IndexChapter } from "./groups"
 
 const PANE =
-  "absolute inset-0 no-scrollbar flex flex-col overflow-y-auto overscroll-contain px-3 pt-[68px] pb-[68px] *:shrink-0"
+  "absolute inset-0 no-scrollbar flex flex-col overflow-y-auto overscroll-contain px-3 pt-[56px] pb-[64px] *:shrink-0"
 const PANE_HIDDEN = "pointer-events-none opacity-0"
 
 /* Index rows speak the same bg-muted row language as the chapter pages — no
@@ -36,72 +37,105 @@ const PANE_HIDDEN = "pointer-events-none opacity-0"
    OVER the whole card (::after sits on top of the demos too), not just the
    background behind them — the card lifts as one surface. */
 const CARD =
-  "relative w-full shrink-0 cursor-interactive rounded-xl bg-muted px-4 py-3.5 transition-colors focus-reset focus-visible:focus-ring after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-fg/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 pressed:after:opacity-100"
+  "relative w-full shrink-0 cursor-interactive rounded-lg bg-muted px-3.5 py-3 transition-colors focus-reset focus-visible:focus-ring after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-fg/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 pressed:after:opacity-100"
 
 function IndexRow({
   chapter,
   lab,
+  compact,
+  showValue,
   onPress,
 }: {
   chapter: IndexChapter
   lab: Lab
+  compact?: boolean
+  showValue?: boolean
   onPress: () => void
 }) {
   const status = lab.section(chapter.defaults)
   const Demo = CARD_DEMOS[chapter.id]
+  // The label column: title (with its modified dot), and — behind the
+  // tweak — the live value beneath it, first segment only, one word-ish.
+  const label = (
+    <span
+      className={cn(
+        "flex min-w-0 flex-col items-start gap-px",
+        !compact && "w-24 shrink-0",
+      )}
+    >
+      <span className="flex max-w-full items-center gap-2">
+        <span className={cn(ROW_LABEL, "truncate")}>{chapter.label}</span>
+        {status.modified && (
+          <span
+            aria-label="Modified"
+            className="size-1 shrink-0 rounded-full bg-accent"
+          />
+        )}
+      </span>
+      {showValue && (
+        <span className="max-w-full truncate text-xs text-fg-muted/60">
+          {chapter.summary(lab.state).split(" · ")[0]}
+        </span>
+      )}
+    </span>
+  )
+  const height = showValue ? "h-14" : "h-11"
 
-  // The info line under the title: composites list what they contain (the
-  // merged names stay findable); plain chapters show their live values.
-  const subline =
-    chapter.members.length > 1
-      ? chapter.members
-          .slice(chapter.hostless ? 0 : 1)
-          .map((member) => member.label)
-          .join(" · ")
-      : (chapter.members[0]?.summary(lab.state) ?? "")
+  // Compact: one line — title left, specimen right. For the set-and-forget
+  // page-chrome rows; nothing crops, everything fits.
+  if (compact)
+    return (
+      <RacButton
+        data-row
+        onPress={onPress}
+        className={cn(CARD, height, "flex items-center gap-5 py-0")}
+      >
+        {label}
+        <span className="ml-auto flex min-w-0 items-center gap-3">
+          {Demo && (
+            <span
+              aria-hidden
+              className="pointer-events-none flex shrink-0 items-center"
+            >
+              <Demo state={lab.state} />
+            </span>
+          )}
+        </span>
+      </RacButton>
+    )
 
-  // Label left (title over its info line), then a strip of real specimens.
-  // No chevron — the specimen and the info line carry the values.
+  // Label left, then the illustration strip. No chevron — tapping is the
+  // only affordance the rows need.
   return (
     <RacButton
       data-row
       onPress={onPress}
-      className={cn(CARD, "flex h-16 items-center gap-3 py-0 pr-0")}
+      className={cn(CARD, height, "flex items-center gap-5 py-0 pr-0")}
     >
-      {/* Fixed label column so strips align; both lines truncate. */}
-      <span className="flex w-32 shrink-0 flex-col items-start gap-0.5">
-        <span className="flex w-full items-center gap-2">
-          <span className={ROW_LABEL}>{chapter.label}</span>
-          {status.modified && (
-            <span
-              aria-label="Modified"
-              className="size-1 shrink-0 rounded-full bg-accent"
-            />
-          )}
+      {label}
+      {/* A strip that FITS right-aligns (ml-auto) and centers (my-auto); one
+          that OVERFLOWS collapses its auto margins and clips at the edges. */}
+      {Demo && (
+        <span
+          aria-hidden
+          className="pointer-events-none ml-auto flex h-full min-w-0 flex-1 overflow-hidden py-1.5"
+        >
+          <span className="my-auto ml-auto flex items-center gap-2 pr-3.5">
+            <Demo state={lab.state} />
+          </span>
         </span>
-        <span className="w-full truncate text-start text-xs text-fg-muted">
-          {subline}
-        </span>
-      </span>
-      {/* Uniform paddings via auto margins: a strip that FITS right-aligns
-          (ml-auto) at the card's pr-4 and vertically centers (my-auto); one
-          that OVERFLOWS collapses its auto margins to 0, so it pins to the
-          card's pt-3.5 / left edge and crops through the bottom / the 16px
-          right fade, which starts exactly where the padding begins. */}
-      <span
-        aria-hidden
-        className="pointer-events-none flex h-full min-w-0 flex-1 overflow-hidden [mask-image:linear-gradient(to_left,transparent,black_16px)] py-3.5"
-      >
-        <span className="my-auto ml-auto flex items-center gap-2 pr-4">
-          {Demo && <Demo state={lab.state} />}
-        </span>
-      </span>
+      )}
     </RacButton>
   )
 }
 
 export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
   const index = resolveIndex(chapters)
+  const showValues = useTweak("Index values", {
+    type: "boolean",
+    default: false,
+    group: "Index",
+  })
   const [activeId, setActiveId] = useState<string | null>(null)
   // The page keeps rendering its last chapter while sliding back out.
   const lastRef = useRef<IndexChapter | null>(null)
@@ -123,7 +157,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
       <div className="relative min-h-0 flex-1 overflow-hidden">
         {/* Index pane. */}
         <div
-          className={cn(PANE, "gap-5", active && PANE_HIDDEN)}
+          className={cn(PANE, "gap-3", active && PANE_HIDDEN)}
           aria-hidden={!!active}
         >
           {index.map((group, i) => (
@@ -133,6 +167,8 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
                   key={chapter.id}
                   chapter={chapter}
                   lab={lab}
+                  compact={group.compact}
+                  showValue={showValues}
                   onPress={() => setActiveId(chapter.id)}
                 />
               ))}
@@ -145,7 +181,7 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
           ref={pageRef}
           className={cn(
             PANE,
-            "gap-[var(--lab-gap-control,0.375rem)] bg-card",
+            "gap-[var(--lab-gap-control,0.75rem)] bg-card",
             !active && PANE_HIDDEN,
           )}
           aria-hidden={!active}

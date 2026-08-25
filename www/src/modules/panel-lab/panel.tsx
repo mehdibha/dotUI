@@ -23,7 +23,7 @@ const RADIUS_STEPS: Record<string, string> = {
 
 /** Header + footer + tweak vars. Children own the middle region (and its
  *  scrolling) — they must claim flex-1 min-h-0 and pad for the overlaid bars
- *  (68px top and bottom). */
+ *  (44px header, 52px footer, plus the body's 12px gap). */
 export function PanelChrome({
   lab,
   children,
@@ -44,7 +44,7 @@ export function PanelChrome({
     min: 0,
     max: 16,
     step: 1,
-    default: 6,
+    default: 12,
     group: "Spacing",
   })
   /* Every rounded class in the panel resolves off --radius (xl = ×1.5, sm =
@@ -65,7 +65,7 @@ export function PanelChrome({
 
   return (
     <div
-      className="relative flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-border/45 bg-card"
+      className="relative flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-border/45 bg-card"
       style={
         {
           "--lab-gap-section": `${sectionGap}px`,
@@ -74,9 +74,8 @@ export function PanelChrome({
         } as CSSProperties
       }
     >
-      {/* Header bar — flush to the panel, content dips under it. p-3 keeps
-          the sm button (radius-md = 7.5px) concentric with the 2xl shell. */}
-      <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 border-b border-border/45 bg-card/85 p-3 backdrop-blur-sm">
+      {/* Header bar — flush to the panel, content dips under it. */}
+      <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 border-b border-border/45 bg-card/85 p-2 backdrop-blur-sm">
         <Button
           variant="quiet"
           size="sm"
