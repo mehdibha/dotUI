@@ -23,6 +23,8 @@ import { ControlGroup, GroupTitle, ROW_LABEL } from "@/modules/control-lab/rows"
 import { useTweak } from "@/dev/tweaker"
 
 import { PanelChrome } from "../panel"
+import type { PanelSystem } from "../panel"
+import { PanelSearch } from "../search"
 import type { Chapter, Lab } from "../state"
 import { CARD_DEMOS } from "./demo"
 import { resolveIndex } from "./groups"
@@ -129,7 +131,15 @@ function IndexRow({
   )
 }
 
-export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
+export function PanelB({
+  chapters,
+  lab,
+  system,
+}: {
+  chapters: Chapter[]
+  lab: Lab
+  system?: PanelSystem
+}) {
   const index = resolveIndex(chapters)
   const showValues = useTweak("Index values", {
     type: "boolean",
@@ -153,7 +163,16 @@ export function PanelB({ chapters, lab }: { chapters: Chapter[]; lab: Lab }) {
   }, [activeId])
 
   return (
-    <PanelChrome lab={lab}>
+    <PanelChrome
+      lab={lab}
+      system={system}
+      search={
+        <PanelSearch
+          chapters={index.flatMap((group) => group.chapters)}
+          onOpenChapter={setActiveId}
+        />
+      }
+    >
       <div className="relative min-h-0 flex-1 overflow-hidden">
         {/* Index pane. */}
         <div

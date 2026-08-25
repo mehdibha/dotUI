@@ -14,7 +14,7 @@ import { Modal } from "@/registry/ui/modal"
 import { TextField } from "@/registry/ui/text-field"
 
 import { encodePreset, useDesignSystem, useMyPresets } from "./preset"
-import { useDesignSystemName } from "./preset/storage"
+import { saveDesignSystemName, useDesignSystemName } from "./preset/storage"
 
 /**
  * Snapshots the current design system to a named localStorage preset ("Save as").
@@ -42,13 +42,19 @@ export function SavePresetDialog({
 
   const trimmed = name.trim()
 
+  // The saved name becomes the working system's name — the panel header
+  // reflects what was just saved.
   function saveAsNew() {
-    save(trimmed || storedName, currentState)
+    const name = trimmed || storedName
+    save(name, currentState)
+    saveDesignSystemName(name)
     onOpenChange(false)
   }
 
   function updateActive() {
-    if (active) update(active.id, currentState, trimmed || undefined)
+    if (!active) return
+    update(active.id, currentState, trimmed || undefined)
+    saveDesignSystemName(trimmed || active.name)
     onOpenChange(false)
   }
 
