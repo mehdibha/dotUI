@@ -1,6 +1,6 @@
 "use client"
 
-import type { ReactNode } from "react"
+import { useSyncExternalStore, type ReactNode } from "react"
 import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "starter-themes"
 
@@ -45,11 +45,21 @@ const modeStore = createPersistedStore<PreviewMode | null>(
   },
 )
 
+/** `resolvedTheme` reads the client theme during hydration, so SSR must ignore it. */
+const useHydrated = () =>
+  useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  )
+
 /** The stored choice, else the site theme; undefined until that is known. */
 function usePreviewMode(): PreviewMode | undefined {
+  const hydrated = useHydrated()
   const stored = modeStore.useValue()
   const { resolvedTheme } = useTheme()
   if (stored) return stored
+  if (!hydrated) return undefined
   return resolvedTheme === "dark" || resolvedTheme === "light"
     ? resolvedTheme
     : undefined
@@ -168,9 +178,9 @@ function PresetSelector() {
 }
 
 function PreviewModeToggle({ className }: { className?: string }) {
+  const stored = modeStore.useValue()
   const mode = usePreviewMode() ?? "light"
   const next = mode === "light" ? "dark" : "light"
-  const Icon = mode === "light" ? SunIcon : MoonIcon
 
   return (
     <Tooltip>
@@ -182,7 +192,17 @@ function PreviewModeToggle({ className }: { className?: string }) {
         className={cn("text-fg-muted", className)}
         onPress={() => modeStore.set(next)}
       >
-        <Icon />
+        {/* Without a stored choice the mode is the site theme, which only CSS knows during SSR. */}
+        {stored === "dark" ? (
+          <MoonIcon />
+        ) : stored === "light" ? (
+          <SunIcon />
+        ) : (
+          <>
+            <SunIcon className="block dark:hidden" />
+            <MoonIcon className="hidden dark:block" />
+          </>
+        )}
       </Button>
       <TooltipContent>Switch to {next} mode</TooltipContent>
     </Tooltip>
