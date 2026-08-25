@@ -2,26 +2,17 @@
 
 /* The panel chrome: one enclosed surface — header (system switcher, global
    reset, search) and footer (save, export) are flush hairline bars on the
-   card, plus the spacing/radius tweak vars. The drill-in frame supplies the
-   middle. Real behavior arrives through `system` (wired by LabCreatePanel on
-   /create); without it the chrome stays the lab's inert design shell. */
+   card. The drill-in frame supplies the middle. Real behavior arrives through
+   `system` (wired by LabCreatePanel on /create); without it the chrome stays
+   the lab's inert design shell. */
 
-import type { CSSProperties, ReactNode } from "react"
+import type { ReactNode } from "react"
 import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
 
 import { Button } from "@/registry/ui/button"
-import { useTweak } from "@/dev/tweaker"
 
 import { DEFAULTS } from "./state"
 import type { Lab } from "./state"
-
-const RADIUS_STEPS: Record<string, string> = {
-  none: "0px",
-  sm: "6px",
-  md: "10px",
-  lg: "14px",
-  xl: "20px",
-}
 
 /** The create-engine wiring the chrome acts through. Everything here operates
  *  on the real design system (URL preset + localStorage); the lab's own axes
@@ -56,34 +47,6 @@ export function PanelChrome({
   search?: ReactNode
   children: React.ReactNode
 }) {
-  const sectionGap = useTweak("Section gap", {
-    type: "number",
-    min: 0,
-    max: 32,
-    step: 1,
-    default: 12,
-    group: "Spacing",
-  })
-  const controlGap = useTweak("Control gap", {
-    type: "number",
-    min: 0,
-    max: 16,
-    step: 1,
-    default: 12,
-    group: "Spacing",
-  })
-  /* Every rounded class in the panel resolves off --radius (xl = ×1.5, sm =
-     ×0.5), so overriding it here rescales the whole ladder at once — cards,
-     rows, groups and the controls nested in them stay in proportion. The
-     steps name the panel's own roundness, not the ladder they drive; `md` is
-     the shipped 10px. */
-  const radius = useTweak("Radius", {
-    type: "select",
-    options: ["none", "sm", "md", "lg", "xl"],
-    default: "md",
-    group: "Shape",
-  })
-
   // The only reset in the panel — chapters carry a modified dot, never a
   // button of their own. It clears the lab axes and the engine state as one.
   const whole = lab.section(DEFAULTS)
@@ -117,16 +80,7 @@ export function PanelChrome({
   )
 
   return (
-    <div
-      className="relative flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-border/45 bg-card"
-      style={
-        {
-          "--lab-gap-section": `${sectionGap}px`,
-          "--lab-gap-control": `${controlGap}px`,
-          "--radius": RADIUS_STEPS[radius] ?? RADIUS_STEPS.md,
-        } as CSSProperties
-      }
-    >
+    <div className="relative flex h-full min-h-0 flex-col overflow-hidden rounded-xl border border-border/45 bg-card">
       {/* Header bar — flush to the panel, content dips under it. */}
       <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 border-b border-border/45 bg-card/85 p-2 backdrop-blur-sm">
         {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}

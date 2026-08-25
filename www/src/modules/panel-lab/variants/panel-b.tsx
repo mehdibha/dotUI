@@ -20,7 +20,6 @@ import { Button as RacButton } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
 import { ControlGroup, GroupTitle, ROW_LABEL } from "@/modules/control-lab/rows"
-import { useTweak } from "@/dev/tweaker"
 
 import { PanelChrome } from "../panel"
 import type { PanelSystem } from "../panel"
@@ -45,19 +44,17 @@ function IndexRow({
   chapter,
   lab,
   compact,
-  showValue,
   onPress,
 }: {
   chapter: IndexChapter
   lab: Lab
   compact?: boolean
-  showValue?: boolean
   onPress: () => void
 }) {
   const status = lab.section(chapter.defaults)
   const Demo = CARD_DEMOS[chapter.id]
-  // The label column: title (with its modified dot), and — behind the
-  // tweak — the live value beneath it, first segment only, one word-ish.
+  // The label column: title (with its modified dot), and the live value
+  // beneath it — first segment only, one word-ish.
   const label = (
     <span
       className={cn(
@@ -74,14 +71,12 @@ function IndexRow({
           />
         )}
       </span>
-      {showValue && (
-        <span className="max-w-full truncate text-xs text-fg-muted/60">
-          {chapter.summary(lab.state).split(" · ")[0]}
-        </span>
-      )}
+      <span className="max-w-full truncate text-xs text-fg-muted/60">
+        {chapter.summary(lab.state).split(" · ")[0]}
+      </span>
     </span>
   )
-  const height = showValue ? "h-14" : "h-11"
+  const height = "h-14"
 
   // Compact: one line — title left, specimen right. For the set-and-forget
   // page-chrome rows; nothing crops, everything fits.
@@ -141,11 +136,6 @@ export function PanelB({
   system?: PanelSystem
 }) {
   const index = resolveIndex(chapters)
-  const showValues = useTweak("Index values", {
-    type: "boolean",
-    default: false,
-    group: "Index",
-  })
   const [activeId, setActiveId] = useState<string | null>(null)
   // The page keeps rendering its last chapter while sliding back out.
   const lastRef = useRef<IndexChapter | null>(null)
@@ -187,7 +177,6 @@ export function PanelB({
                   chapter={chapter}
                   lab={lab}
                   compact={group.compact}
-                  showValue={showValues}
                   onPress={() => setActiveId(chapter.id)}
                 />
               ))}
@@ -198,11 +187,7 @@ export function PanelB({
         {/* Chapter page. */}
         <div
           ref={pageRef}
-          className={cn(
-            PANE,
-            "gap-[var(--lab-gap-control,0.75rem)] bg-card",
-            !active && PANE_HIDDEN,
-          )}
+          className={cn(PANE, "gap-3 bg-card", !active && PANE_HIDDEN)}
           aria-hidden={!active}
         >
           {page && (
