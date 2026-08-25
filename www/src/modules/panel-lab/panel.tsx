@@ -7,24 +7,9 @@
    /create); without it the chrome stays the lab's inert design shell. */
 
 import type { CSSProperties, ReactNode } from "react"
-import {
-  CheckIcon,
-  ChevronsUpDownIcon,
-  PlusIcon,
-  RotateCcwIcon,
-  SearchIcon,
-  SwatchBookIcon,
-} from "lucide-react"
+import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
 
 import { Button } from "@/registry/ui/button"
-import {
-  Menu,
-  MenuContent,
-  MenuItem,
-  MenuSection,
-  MenuSub,
-} from "@/registry/ui/menu"
-import { Popover } from "@/registry/ui/popover"
 import { useTweak } from "@/dev/tweaker"
 
 import { DEFAULTS } from "./state"
@@ -42,21 +27,16 @@ const RADIUS_STEPS: Record<string, string> = {
  *  on the real design system (URL preset + localStorage); the lab's own axes
  *  reset alongside it but aren't persisted until their chapters are wired. */
 export interface PanelSystem {
-  /** Current design-system name (defaults to "Untitled"). */
+  /** What's being edited: the active saved system's name, else the working name. */
   name: string
-  /** Saved systems for the switcher. */
-  systems: { id: string; name: string }[]
-  /** The saved system last applied or saved, if any. */
-  activeId?: string
-  /** Built-in presets (Origin, Linear, …) — starting points, not saved state. */
-  presets: { id: string; name: string; swatch: string }[]
+  /** Edits past the active saved snapshot (or any built-in) — unsaved work. */
+  dirty: boolean
   /** Engine state differs from the defaults. */
   modified: boolean
-  onSelect: (id: string) => void
-  onSelectPreset: (id: string) => void
-  onNew: () => void
   onReset: () => void
   onSave: () => void
+  /** Wraps the header name button in the preset picker's trigger. */
+  renderSwitcher: (trigger: ReactNode) => ReactNode
   /** Wraps the footer Export button in the export dialog's trigger. */
   renderExport: (trigger: ReactNode) => ReactNode
 }
@@ -120,6 +100,12 @@ export function PanelChrome({
       className="min-w-0 justify-start gap-1.5 font-medium"
     >
       <span className="truncate">{system?.name ?? "Acme design system"}</span>
+      {system?.dirty && (
+        <span
+          aria-label="Unsaved changes"
+          className="size-1.5 shrink-0 rounded-full bg-fg-muted"
+        />
+      )}
       <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg-muted" />
     </Button>
   )
@@ -143,71 +129,7 @@ export function PanelChrome({
     >
       {/* Header bar — flush to the panel, content dips under it. */}
       <div className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-2 border-b border-border/45 bg-card/85 p-2 backdrop-blur-sm">
-        {system ? (
-          <Menu>
-            {switcherTrigger}
-            <Popover placement="bottom start" className="min-w-52">
-              <MenuContent
-                onAction={(key) => {
-                  const id = String(key)
-                  if (id === "new") system.onNew()
-                  else system.onSelect(id)
-                }}
-              >
-                {system.systems.length > 0 && (
-                  <MenuSection>
-                    {system.systems.map((saved) => (
-                      <MenuItem
-                        key={saved.id}
-                        id={saved.id}
-                        textValue={saved.name}
-                      >
-                        <span className="truncate">{saved.name}</span>
-                        {saved.id === system.activeId && (
-                          <CheckIcon className="ml-auto size-4 shrink-0 text-fg-muted" />
-                        )}
-                      </MenuItem>
-                    ))}
-                  </MenuSection>
-                )}
-                <MenuSection>
-                  <MenuSub>
-                    <MenuItem id="presets" textValue="Presets">
-                      <SwatchBookIcon className="size-4 shrink-0 text-fg-muted" />
-                      Presets
-                    </MenuItem>
-                    <Popover>
-                      <MenuContent
-                        onAction={(key) => system.onSelectPreset(String(key))}
-                      >
-                        {system.presets.map((preset) => (
-                          <MenuItem
-                            key={preset.id}
-                            id={preset.id}
-                            textValue={preset.name}
-                          >
-                            <span
-                              aria-hidden
-                              className="size-2.5 shrink-0 rounded-full"
-                              style={{ background: preset.swatch }}
-                            />
-                            {preset.name}
-                          </MenuItem>
-                        ))}
-                      </MenuContent>
-                    </Popover>
-                  </MenuSub>
-                  <MenuItem id="new" textValue="New design system">
-                    <PlusIcon className="size-4 shrink-0 text-fg-muted" />
-                    New design system
-                  </MenuItem>
-                </MenuSection>
-              </MenuContent>
-            </Popover>
-          </Menu>
-        ) : (
-          switcherTrigger
-        )}
+        {system ? system.renderSwitcher(switcherTrigger) : switcherTrigger}
         <span className="flex shrink-0 items-center">
           {modified && (
             <Button
