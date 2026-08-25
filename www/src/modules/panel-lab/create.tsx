@@ -21,6 +21,7 @@ import {
   useDesignSystemName,
 } from "@/modules/create/preset/storage"
 import { SavePresetDialog } from "@/modules/create/save-preset-dialog"
+import { PRESETS } from "@/modules/presets/presets-data"
 
 import type { PanelSystem } from "./panel"
 import { CHAPTERS } from "./state"
@@ -38,6 +39,11 @@ export function LabCreatePanel({ className }: { className?: string }) {
     name,
     systems: presets.map((p) => ({ id: p.id, name: p.name })),
     activeId,
+    presets: PRESETS.map((p) => ({
+      id: p.id,
+      name: p.name,
+      swatch: p.swatch,
+    })),
     // encodePreset returns undefined when everything matches the defaults.
     modified: encodePreset(designSystem) !== undefined,
     onSelect: (id) => {
@@ -46,6 +52,15 @@ export function LabCreatePanel({ className }: { className?: string }) {
       setDesignSystem(decodePreset(saved.state))
       setActive(id)
       saveDesignSystemName(saved.name)
+    },
+    // A preset is a starting point, not saved state — applying one detaches
+    // from any active saved system and adopts the preset's name.
+    onSelectPreset: (id) => {
+      const preset = PRESETS.find((p) => p.id === id)
+      if (!preset) return
+      setDesignSystem(preset.designSystem)
+      setActive(undefined)
+      saveDesignSystemName(preset.name)
     },
     onNew: () => {
       setDesignSystem(ENGINE_DEFAULTS)

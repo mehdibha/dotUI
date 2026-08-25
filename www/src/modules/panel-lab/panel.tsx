@@ -13,10 +13,17 @@ import {
   PlusIcon,
   RotateCcwIcon,
   SearchIcon,
+  SwatchBookIcon,
 } from "lucide-react"
 
 import { Button } from "@/registry/ui/button"
-import { Menu, MenuContent, MenuItem, MenuSection } from "@/registry/ui/menu"
+import {
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuSection,
+  MenuSub,
+} from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 import { useTweak } from "@/dev/tweaker"
 
@@ -41,9 +48,12 @@ export interface PanelSystem {
   systems: { id: string; name: string }[]
   /** The saved system last applied or saved, if any. */
   activeId?: string
+  /** Built-in presets (Origin, Linear, …) — starting points, not saved state. */
+  presets: { id: string; name: string; swatch: string }[]
   /** Engine state differs from the defaults. */
   modified: boolean
   onSelect: (id: string) => void
+  onSelectPreset: (id: string) => void
   onNew: () => void
   onReset: () => void
   onSave: () => void
@@ -161,6 +171,32 @@ export function PanelChrome({
                   </MenuSection>
                 )}
                 <MenuSection>
+                  <MenuSub>
+                    <MenuItem id="presets" textValue="Presets">
+                      <SwatchBookIcon className="size-4 shrink-0 text-fg-muted" />
+                      Presets
+                    </MenuItem>
+                    <Popover>
+                      <MenuContent
+                        onAction={(key) => system.onSelectPreset(String(key))}
+                      >
+                        {system.presets.map((preset) => (
+                          <MenuItem
+                            key={preset.id}
+                            id={preset.id}
+                            textValue={preset.name}
+                          >
+                            <span
+                              aria-hidden
+                              className="size-2.5 shrink-0 rounded-full"
+                              style={{ background: preset.swatch }}
+                            />
+                            {preset.name}
+                          </MenuItem>
+                        ))}
+                      </MenuContent>
+                    </Popover>
+                  </MenuSub>
                   <MenuItem id="new" textValue="New design system">
                     <PlusIcon className="size-4 shrink-0 text-fg-muted" />
                     New design system
