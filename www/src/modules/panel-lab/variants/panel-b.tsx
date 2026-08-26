@@ -6,13 +6,12 @@
    label over its muted value on the left, a state-driven micro-preview on the
    right. Weight survives as ordering — identity first. (Per-cluster row
    heights were tried and reverted — uniform h-16 keeps the scan rhythm.)
-   Tapping a row swaps panes INSTANTLY — the Raycast/Linear/cmdk school:
-   this navigation fires constantly, and the Aug 2026 animation research
-   found instant to be the most common choice among high-frequency tools.
-   (The runner-up, a Material shared-axis fade split — 24px travel, 200ms
-   slides, sequential 70ms-out/130ms-in fades — lives at e27848f5b if
-   motion ever comes back.) The chapter page has room, so the section body
-   renders in its original form — hero inline at the head of its group. */
+   Tapping a row animates entry-only (the Design System Builder mock, Aug
+   2026): the incoming pane fades in over a 20px slide — from the right
+   drilling in, from the left coming back — 220ms cubic-bezier(.2,.7,.3,1);
+   the outgoing pane swaps out instantly, so motion never gates input.
+   The chapter page has room, so the section body renders in its original
+   form — hero inline at the head of its group. */
 
 import { Fragment, useEffect, useRef, useState } from "react"
 import { ChevronLeftIcon } from "lucide-react"
@@ -31,7 +30,15 @@ import type { IndexChapter } from "./groups"
 
 const PANE =
   "absolute inset-0 no-scrollbar flex flex-col overflow-y-auto overscroll-contain px-3 pt-[56px] pb-[64px] *:shrink-0"
-const PANE_HIDDEN = "pointer-events-none opacity-0"
+/* Entry-only motion: a visible pane transitions opacity+transform in; a
+   hidden one snaps out (transition-none) so the swap never overlaps. The
+   hidden offset sets where the pane enters FROM next time it shows —
+   the index re-enters from the left (back), the page from the right
+   (drill-in). First paint renders the visible classes directly, so
+   nothing animates on mount. */
+const PANE_SHOWN =
+  "translate-x-0 opacity-100 transition-[opacity,translate] duration-[220ms] ease-[cubic-bezier(.2,.7,.3,1)] motion-reduce:transition-none"
+const PANE_HIDDEN = "pointer-events-none opacity-0 transition-none"
 
 /* Index rows speak the same bg-muted row language as the chapter pages — no
    border, one panel surface behind them. Hover paints a translucent highlight
@@ -166,7 +173,11 @@ export function PanelB({
       <div className="relative min-h-0 flex-1 overflow-hidden">
         {/* Index pane. */}
         <div
-          className={cn(PANE, "gap-3", active && PANE_HIDDEN)}
+          className={cn(
+            PANE,
+            "gap-3",
+            active ? cn(PANE_HIDDEN, "-translate-x-5") : PANE_SHOWN,
+          )}
           aria-hidden={!!active}
         >
           {index.map((group, i) => (
@@ -187,7 +198,11 @@ export function PanelB({
         {/* Chapter page. */}
         <div
           ref={pageRef}
-          className={cn(PANE, "gap-3 bg-card", !active && PANE_HIDDEN)}
+          className={cn(
+            PANE,
+            "gap-3 bg-card",
+            active ? PANE_SHOWN : cn(PANE_HIDDEN, "translate-x-5"),
+          )}
           aria-hidden={!active}
         >
           {page && (
