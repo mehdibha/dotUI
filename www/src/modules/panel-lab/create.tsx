@@ -13,9 +13,7 @@ import { cn } from "@/registry/lib/utils"
 import { ExportDialog } from "@/modules/create/export"
 import {
   decodePreset,
-  DEFAULTS as ENGINE_DEFAULTS,
   encodePreset,
-  useDesignSystem,
   useMyPresets,
 } from "@/modules/create/preset"
 import {
@@ -26,7 +24,7 @@ import { SavePresetDialog } from "@/modules/create/save-preset-dialog"
 import { SavedPresetActions } from "@/modules/create/saved-preset-actions"
 import { UnsavedChangesDialog } from "@/modules/create/unsaved-changes-dialog"
 import { PresetPicker } from "@/modules/presets/preset-picker"
-import { PRESETS } from "@/modules/presets/presets-data"
+import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 
 import type { PanelSystem } from "./panel"
 import { CHAPTERS } from "./state"
@@ -40,11 +38,14 @@ function canon(state: string): string {
   return encodePreset(decodePreset(state)) ?? ""
 }
 
+/* Origin is the panel's baseline: what first-time users start on, what the
+   global reset returns to, and what the modified dot diffs against. */
+const ORIGIN_CANON = canon(encodePreset(ORIGIN.designSystem) ?? "")
+
 export function LabCreatePanel({ className }: { className?: string }) {
   const lab = useLab()
   const { preset, gallery } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const { designSystem, setDesignSystem } = useDesignSystem()
   const {
     presets,
     activeId,
@@ -157,9 +158,8 @@ export function LabCreatePanel({ className }: { className?: string }) {
   const system: PanelSystem = {
     name: displayName,
     dirty: isDirty,
-    // encodePreset returns undefined when everything matches the defaults.
-    modified: encodePreset(designSystem) !== undefined,
-    onReset: () => setDesignSystem(ENGINE_DEFAULTS),
+    modified: currentCanon !== ORIGIN_CANON,
+    onReset: () => pickPreset(ORIGIN.id),
     onSave: () => setSaveOpen(true),
     renderSwitcher: (trigger) => (
       <PresetPicker

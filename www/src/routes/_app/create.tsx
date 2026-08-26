@@ -12,6 +12,7 @@ import {
 } from "@/modules/create/preset/storage"
 import { PreviewPanel } from "@/modules/create/preview/preview-panel"
 import { LabCreatePanel } from "@/modules/panel-lab/create"
+import { ORIGIN } from "@/modules/presets/presets-data"
 
 export function createSearchSchema(
   search: {
@@ -58,6 +59,7 @@ function CreatePage() {
   // The user's selected preset is persisted in localStorage so every docs
   // component demo renders in it. Seed the editor from it on open (unless a
   // shared ?preset= link is being viewed), then persist back as it's edited.
+  // First visit — nothing stored — starts on Origin, the default preset.
   const seededFromStorage = useRef(false)
   useEffect(() => {
     if (seededFromStorage.current) return
@@ -65,6 +67,7 @@ function CreatePage() {
     if (preset) return // a shared / deep-linked preset wins over the saved one
     const stored = loadStoredPreset()
     if (stored !== DEFAULTS) setDesignSystem(stored)
+    else setDesignSystem(ORIGIN.designSystem)
   }, [preset, setDesignSystem])
 
   const skipFirstPersist = useRef(true)
