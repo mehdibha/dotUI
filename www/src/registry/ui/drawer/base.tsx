@@ -131,38 +131,47 @@ function Drawer({
         }}
         swipeDirection={swipeDirectionMap[placement]}
       >
-        <DrawerPrimitive.Portal>
-          <ClearPressResponder>
-            <div className={overlay()}>
-              <DrawerPrimitive.Backdrop className={backdrop()} />
-              <DrawerPrimitive.Viewport className={viewport({ placement })}>
-                <DrawerPrimitive.Popup
-                  data-base-ui-swipe-ignore={swipeToDismiss ? undefined : ""}
-                  initialFocus={() => getInitialFocusTarget(popupRef.current)}
-                  className={(state) =>
-                    popup({
-                      placement,
-                      className: resolveClassName(className, state),
-                    })
-                  }
-                  render={(renderProps) => {
-                    const presentationProps = stripPopupDialogProps(renderProps)
+        {/* Keyboard-aware focus/scroll handling: publishes --drawer-keyboard-inset
+            on the viewport while the software keyboard is open. */}
+        <DrawerPrimitive.VirtualKeyboardProvider>
+          <DrawerPrimitive.Portal>
+            <ClearPressResponder>
+              <div className={overlay()}>
+                <DrawerPrimitive.Backdrop className={backdrop()} />
+                <DrawerPrimitive.Viewport className={viewport({ placement })}>
+                  <DrawerPrimitive.Popup
+                    data-base-ui-swipe-ignore={swipeToDismiss ? undefined : ""}
+                    initialFocus={() => getInitialFocusTarget(popupRef.current)}
+                    className={(state) =>
+                      popup({
+                        placement,
+                        className: resolveClassName(className, state),
+                      })
+                    }
+                    render={(renderProps) => {
+                      const presentationProps =
+                        stripPopupDialogProps(renderProps)
 
-                    return <div {...presentationProps} />
-                  }}
-                  ref={popupRef}
-                  style={style}
-                >
-                  <OverlayTriggerStateContext.Provider value={state}>
-                    {isDismissable && <DismissButton onDismiss={state.close} />}
-                    {children}
-                    {isDismissable && <DismissButton onDismiss={state.close} />}
-                  </OverlayTriggerStateContext.Provider>
-                </DrawerPrimitive.Popup>
-              </DrawerPrimitive.Viewport>
-            </div>
-          </ClearPressResponder>
-        </DrawerPrimitive.Portal>
+                      return <div {...presentationProps} />
+                    }}
+                    ref={popupRef}
+                    style={style}
+                  >
+                    <OverlayTriggerStateContext.Provider value={state}>
+                      {isDismissable && (
+                        <DismissButton onDismiss={state.close} />
+                      )}
+                      {children}
+                      {isDismissable && (
+                        <DismissButton onDismiss={state.close} />
+                      )}
+                    </OverlayTriggerStateContext.Provider>
+                  </DrawerPrimitive.Popup>
+                </DrawerPrimitive.Viewport>
+              </div>
+            </ClearPressResponder>
+          </DrawerPrimitive.Portal>
+        </DrawerPrimitive.VirtualKeyboardProvider>
       </DrawerPrimitive.Root>
     </DrawerPlacementContext.Provider>
   )
