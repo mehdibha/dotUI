@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { OTPFieldPreview as OTPFieldPrimitive } from "@base-ui/react/otp-field"
+import { OTPField as OTPFieldPrimitive } from "@base-ui/react/otp-field"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as FieldErrorPrimitive from "react-aria-components/FieldError"
 import * as InputPrimitive from "react-aria-components/Input"

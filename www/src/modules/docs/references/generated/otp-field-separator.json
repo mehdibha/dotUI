@@ -22,7 +22,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/separator/Separator.d.ts:SeparatorState",
+                  "id": "@base-ui/react/separator/Separator.d.mts:SeparatorState",
                   "name": "SeparatorState"
                 },
                 "optional": false,
@@ -94,7 +94,7 @@
               },
               {
                 "type": "link",
-                "id": "@base-ui/react/esm/separator/Separator.d.ts:SeparatorState",
+                "id": "@base-ui/react/separator/Separator.d.mts:SeparatorState",
                 "name": "SeparatorState"
               }
             ]
@@ -124,7 +124,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/separator/Separator.d.ts:SeparatorState",
+                  "id": "@base-ui/react/separator/Separator.d.mts:SeparatorState",
                   "name": "SeparatorState"
                 },
                 "optional": false,
@@ -151,9 +151,9 @@
     }
   },
   "typeLinks": {
-    "@base-ui/react/esm/separator/Separator.d.ts:SeparatorState": {
+    "@base-ui/react/separator/Separator.d.mts:SeparatorState": {
       "type": "interface",
-      "id": "@base-ui/react/esm/separator/Separator.d.ts:SeparatorState",
+      "id": "@base-ui/react/separator/Separator.d.mts:SeparatorState",
       "name": "SeparatorState",
       "extends": [],
       "properties": {

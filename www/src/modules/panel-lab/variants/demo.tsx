@@ -1,138 +1,39 @@
 "use client"
 
-/* Card demos — real specimens beside a component card's label, as a strip
-   that CROPS off the card's right edge: the strip may be wider than the card,
-   the leftmost (identity) specimen stays fully visible and the rest fades out
-   at the right, so even big demos give a quick look. Inert by design
-   (span-based, pointer-events-none wrapper) — the card itself is the
-   pressable. Wired for buttons and inputs (which absorbed input-groups) while
-   the pattern is judged; the registry below decides which cards trade their
-   summary for a demo strip. */
+/* Card illustrations — the React Aria anatomy school (see demos/ink.tsx):
+   each index card carries a stateless monochrome miniature of its chapter's
+   subject instead of a live specimen. Inert by design (span/svg-based,
+   pointer-events-none wrapper) — the card itself is the pressable. Only
+   Color stays wired to state: its subject IS the brand seed. */
 
-import { CopyIcon } from "lucide-react"
+import { PlusIcon } from "lucide-react"
 
-import { cn } from "@/registry/lib/utils"
-
-import { buttonRadiusPx, styleLook } from "../sections/buttons"
-import { inputLook, SHELL } from "../sections/inputs"
-import { controlRadiusPx } from "../sections/shape"
 import type { LabState } from "../state"
-
-const BUTTON_SPECIMEN =
-  "flex h-8 shrink-0 items-center px-3.5 text-[0.8125rem] font-medium whitespace-nowrap"
-
-/** The hero's two-row variant ladder at true size, top-aligned to the card's
- *  padding — the second row crops at the card's bottom edge. Each specimen
- *  names its own variant, so the strip reads as the ladder. */
-function ButtonsDemo({ state }: { state: LabState }) {
-  const look = styleLook(state)
-  const radius = buttonRadiusPx(state)
-  const specimen = (skin: string, label: string) => (
-    <span
-      className={cn(BUTTON_SPECIMEN, skin)}
-      style={{ borderRadius: radius }}
-    >
-      {label}
-    </span>
-  )
-  return (
-    <span className="flex flex-col items-start gap-2">
-      <span className="flex items-center gap-2">
-        {specimen(cn("bg-primary text-fg-on-primary", look.fill), "Primary")}
-        {specimen(look.secondary, "Secondary")}
-        {specimen("text-fg", "Quiet")}
-      </span>
-      <span className="flex items-center gap-2">
-        {specimen(cn("bg-warning text-fg-on-warning", look.fill), "Warning")}
-        {specimen(cn("bg-danger text-fg-on-danger", look.fill), "Danger")}
-        {specimen("text-fg", "Link")}
-      </span>
-    </span>
-  )
-}
-
-/** The field family: the plain field fully visible, addon group fading right. */
-function InputsDemo({ state }: { state: LabState }) {
-  const look = inputLook(state.inputStyle, controlRadiusPx(state))
-  const boxed = state.addonLayout === "boxed"
-  const divided = boxed && state.addonDivider === "hairline"
-  return (
-    <>
-      <span
-        className={cn(SHELL, "w-44 shrink-0 gap-2 px-2.5", look.className)}
-        style={look.style}
-      >
-        <span className="flex items-center text-fg-muted">you@example.com</span>
-      </span>
-      <span
-        className={cn(
-          SHELL,
-          "w-56 shrink-0",
-          look.className,
-          boxed ? "overflow-hidden" : "gap-2 px-2.5",
-        )}
-        style={look.style}
-      >
-        <span
-          className={cn(
-            "flex shrink-0 items-center text-fg-muted",
-            boxed && "h-full bg-neutral px-2.5",
-            divided && "border-r border-border-field",
-          )}
-        >
-          https://
-        </span>
-        <span
-          className={cn("flex flex-1 items-center text-fg", boxed && "px-2.5")}
-        >
-          dotui.org
-        </span>
-        <span
-          className={cn(
-            "flex shrink-0 items-center text-fg-muted",
-            boxed && "h-full bg-neutral px-2.5",
-            divided && "border-l border-border-field",
-          )}
-        >
-          <CopyIcon className="size-3.5" />
-        </span>
-      </span>
-    </>
-  )
-}
-
 import {
-  ButtonGroupsDemo,
   CheckboxDemo,
   ChoiceCardsDemo,
   KbdDemo,
   RadioDemo,
-  SegmentedControlDemo,
   SwitchDemo,
-  TogglesDemo,
 } from "./demos/actions"
 import {
   AvatarsDemo,
   BadgesDemo,
+  ChartsDemo,
   NoticesDemo,
   ProgressDemo,
   SkeletonDemo,
   SpinnerDemo,
   TablesDemo,
 } from "./demos/display"
-import {
-  CalendarDemo,
-  NumberFieldDemo,
-  OtpFieldDemo,
-  PickersDemo,
-  SlidersDemo,
-} from "./demos/fields"
+import { CalendarDemo, PickersDemo, SlidersDemo } from "./demos/fields"
 import {
   ColorDemo,
   CursorDemo,
   DisabledDemo,
   FocusDemo,
   IconsDemo,
+  InvalidDemo,
   LinksDemo,
   MotionDemo,
   ScrollbarsDemo,
@@ -153,52 +54,56 @@ import {
   TooltipsDemo,
 } from "./demos/overlays"
 
-/** The Interaction composite card shows its whole family — selection text and
- *  disabled chip visible, cursor glyphs and scrollbar cropping at the fade. */
-function InteractionDemo({ state }: { state: LabState }) {
+/** The pair: tonal icon button beside the solid Save. */
+function ButtonsDemo() {
   return (
-    <>
-      <SelectionDemo state={state} />
-      <DisabledDemo state={state} />
-      <CursorDemo state={state} />
-      <ScrollbarsDemo state={state} />
-    </>
+    <span className="flex shrink-0 items-center gap-1.5">
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-fg/10">
+        <PlusIcon className="size-3.5 text-fg/70" />
+      </span>
+      <span className="flex h-7 shrink-0 items-center rounded-lg bg-fg/10 px-2.5 text-[11px] font-medium whitespace-nowrap text-fg/70">
+        Save
+      </span>
+    </span>
   )
 }
 
-/** Every card carries a demo strip — one grammar for the whole index.
- *  Composite ids (interaction) resolve here too; absorbed ids keep their
- *  entries for reuse inside composite strips. */
+/** An empty field: caret ahead of its placeholder. */
+function InputsDemo() {
+  return (
+    <span className="flex h-7 w-28 shrink-0 items-center gap-1 rounded-lg border border-fg/30 px-2.5">
+      <span className="h-3 w-px shrink-0 bg-fg/70" />
+      <span className="truncate text-[11px] text-fg/45">Email address</span>
+    </span>
+  )
+}
+
+/** Every index card carries an illustration — one grammar for the whole
+ *  index. Keyed by index-chapter id (composites included). */
 export const CARD_DEMOS: Record<
   string,
   React.ComponentType<{ state: LabState }>
 > = {
-  interaction: InteractionDemo,
   color: ColorDemo,
   typography: TypographyDemo,
   icons: IconsDemo,
   shape: ShapeDemo,
   space: SpaceDemo,
   surfaces: SurfacesDemo,
-  focus: FocusDemo,
   cursor: CursorDemo,
   selection: SelectionDemo,
   scrollbars: ScrollbarsDemo,
+  focus: FocusDemo,
+  invalid: InvalidDemo,
   disabled: DisabledDemo,
   motion: MotionDemo,
   links: LinksDemo,
   buttons: ButtonsDemo,
   inputs: InputsDemo,
-  "button-groups": ButtonGroupsDemo,
-  toggles: TogglesDemo,
-  "segmented-control": SegmentedControlDemo,
-  kbd: KbdDemo,
   switch: SwitchDemo,
   checkbox: CheckboxDemo,
   radio: RadioDemo,
   "choice-cards": ChoiceCardsDemo,
-  "number-field": NumberFieldDemo,
-  "otp-field": OtpFieldDemo,
   pickers: PickersDemo,
   calendar: CalendarDemo,
   sliders: SlidersDemo,
@@ -214,7 +119,9 @@ export const CARD_DEMOS: Record<
   spinner: SpinnerDemo,
   progress: ProgressDemo,
   badges: BadgesDemo,
+  kbd: KbdDemo,
   avatars: AvatarsDemo,
   tables: TablesDemo,
   accordion: AccordionDemo,
+  charts: ChartsDemo,
 }

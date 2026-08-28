@@ -7,11 +7,8 @@
    placeholder-only failed review (a11y, systems moving away), inset is an
    InputGroup composition, not an axis.
 
-   Error: border swap only (shadcn primitive) vs danger border + message line
-   with icon (Material, Spectrum, Carbon, Ant, Polaris — the icon rides the
-   message in Spectrum/Polaris/Atlassian, the field slot in Material/Carbon)
-   vs GOV.UK's left bar + bold message. Danger halo rejected: the Focus field
-   recipe recolored — a state of that axis, not a new one.
+   Error treatment moved to the Invalid section (a cross-component state, with
+   Focus and Disabled); the hero's failed specimen still wears it live.
 
    This section owns the field look: Input groups, Number field, and OTP field
    reuse inputLook and the shell constants so every field wears the same skin. */
@@ -32,7 +29,6 @@ import { controlRadiusPx } from "./shape"
 export const INPUT_DEFAULTS = {
   inputStyle: "outline",
   inputHover: "none",
-  inputError: "message",
 }
 
 const STYLE_OPTIONS: SelectRowOption[] = [
@@ -48,106 +44,6 @@ const HOVER_OPTIONS: SelectRowOption[] = [
   { value: "none", label: "None" },
   { value: "border", label: "Border" },
   { value: "tint", label: "Tint" },
-]
-
-function ErrorGlyph({ kind }: { kind: "border" | "message" | "bar" }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      {kind === "border" && (
-        <>
-          <rect
-            x="3.75"
-            y="8"
-            width="16.5"
-            height="8"
-            rx="2"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            className="text-fg-danger"
-          />
-          <path
-            d="M7 12h5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            opacity=".35"
-          />
-        </>
-      )}
-      {kind === "message" && (
-        <>
-          <rect
-            x="3.75"
-            y="4.5"
-            width="16.5"
-            height="8"
-            rx="2"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            className="text-fg-danger"
-          />
-          <circle
-            cx="5.5"
-            cy="17.25"
-            r="1.4"
-            fill="currentColor"
-            className="text-fg-danger"
-          />
-          <path
-            d="M9 17.25h7.5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            className="text-fg-danger"
-          />
-        </>
-      )}
-      {kind === "bar" && (
-        <>
-          <rect
-            x="4"
-            y="4.5"
-            width="2"
-            height="15"
-            rx="1"
-            fill="currentColor"
-            className="text-fg-danger"
-          />
-          <path
-            d="M9 7h7"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            className="text-fg-danger"
-          />
-          <rect
-            x="9"
-            y="10.5"
-            width="11"
-            height="7"
-            rx="1.5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            opacity=".45"
-          />
-        </>
-      )}
-    </svg>
-  )
-}
-
-const ERROR_OPTIONS: SelectRowOption[] = [
-  {
-    value: "border",
-    label: "Border",
-    illustration: <ErrorGlyph kind="border" />,
-  },
-  {
-    value: "message",
-    label: "Message",
-    illustration: <ErrorGlyph kind="message" />,
-  },
-  { value: "bar", label: "Bar", illustration: <ErrorGlyph kind="bar" /> },
 ]
 
 /** Style → what the field shell paints. Radius only where the style rounds;
@@ -332,13 +228,6 @@ export function InputsSection({ lab }: { lab: Lab }) {
         value={state.inputHover}
         onChange={set("inputHover")}
         options={HOVER_OPTIONS}
-      />
-      <SelectRow
-        label="Error"
-        value={state.inputError}
-        onChange={set("inputError")}
-        options={ERROR_OPTIONS}
-        layout="grid"
       />
     </ControlGroup>
   )
