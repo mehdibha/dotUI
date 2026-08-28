@@ -7,18 +7,8 @@ import { siteConfig } from "@/config/site"
 import { nodeText } from "@/lib/node-text"
 import { docsSource } from "@/lib/source"
 import { truncateOnWord } from "@/lib/text"
-import { cn } from "@/registry/lib/utils"
-import { DocsCopyPage } from "@/modules/docs/docs-copy-page"
-import { DocsPager } from "@/modules/docs/docs-pager"
-import { PageLastUpdate } from "@/modules/docs/last-update"
-import { mdxComponents } from "@/modules/docs/mdx-components"
-import {
-  PageHeaderDescription,
-  PageHeaderHeading,
-  PageLayout,
-} from "@/modules/docs/page-layout"
-import { MiniTOC, TOC, TOCProvider } from "@/modules/docs/toc"
-import browserCollections from "@/.source/browser"
+
+import { DocsPage } from "./-docs-page"
 
 /** Section label above the title on the OG card: the docs folder a page sits
  *  in, or "Docs" for the top-level pages that have no folder. */
@@ -41,6 +31,9 @@ export const Route = createFileRoute("/_app/docs/$")({
   loader: async ({ params }) => {
     const slugs = params._splat?.split("/") ?? []
     const data = await serverLoader({ data: slugs })
+    // Same chunk the component needs — dynamic so the MDX/shiki pipeline
+    // stays out of the critical route graph shared by every page.
+    const { clientLoader } = await import("./-docs-page")
     await clientLoader.preload(data.path)
     return data
   },
@@ -136,102 +129,3 @@ const serverLoader = createServerFn({ method: "GET" })
       },
     }
   })
-
-type SerializedNeighbours = {
-  previous?: { name: string; path: string }
-  next?: { name: string; path: string }
-}
-
-const clientLoader = browserCollections.docs.createClientLoader({
-  component(
-    { toc, frontmatter, lastModified, default: MDX },
-    {
-      url,
-      rawContent,
-      neighbours,
-    }: { url: string; rawContent: string; neighbours: SerializedNeighbours },
-  ) {
-    const hasToc = (toc?.length ?? 0) > 0
-    // Wide layout (frontmatter `full: true`): widen the content column and drop
-    // the xl TOC rail; the in-flow MiniTOC column takes over at every width.
-    // Width only — prose and heading styles stay identical to other docs pages.
-    const full = frontmatter.full
-
-    return (
-      <TOCProvider toc={toc}>
-        <PageLayout className="mt-4 flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
-          <div
-            className={cn(
-              "mx-auto flex w-full min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 lg:px-0 dark:text-neutral-300",
-              full ? "max-w-4xl" : "max-w-2xl",
-            )}
-          >
-            <div data-page-header="" className="relative mb-2 space-y-3 pb-4">
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center justify-between gap-3">
-                  <PageHeaderHeading className="min-w-0 xl:leading-none">
-                    {frontmatter.title}
-                  </PageHeaderHeading>
-                  <div className="flex shrink-0 items-center gap-3">
-                    <DocsCopyPage content={rawContent} url={url} />
-                    <DocsPager neighbours={neighbours} />
-                  </div>
-                </div>
-                <PageHeaderDescription>
-                  {frontmatter.description}
-                </PageHeaderDescription>
-              </div>
-              <div className="absolute bottom-0 left-0 h-px w-full bg-linear-to-r from-[color-mix(in_oklab,var(--color-border)_40%,transparent)] via-[color-mix(in_oklab,var(--color-border)_90%,transparent)] to-[color-mix(in_oklab,var(--color-border)_50%,transparent)]" />
-            </div>
-            <div>
-              <MDX components={mdxComponents} />
-            </div>
-            <div className="min-w-0">
-              {lastModified && (
-                <PageLastUpdate date={lastModified} className="mt-12" />
-              )}
-            </div>
-          </div>
-          {/* -mt-4 cancels PageLayout's mt-4 so the TOC top lines up with the
-              sidebar (which isn't inside PageLayout) at scroll 0, matching the
-              already-aligned scrolled/sticky state. */}
-          {!full && (
-            <div className="sticky top-(--header-height) z-30 -mt-4 hidden max-h-[90svh] w-(--sidebar-width) flex-col gap-4 self-start overflow-hidden overscroll-none pb-8 xl:flex">
-              {hasToc && <TOC className="pr-12" />}
-            </div>
-          )}
-          {/* In-flow TOC column for md–xl (all widths ≥md on full pages): it
-              reserves layout space (instead of floating) so the content column
-              stays centered. Mirrors the xl rail's sticky/-mt-4 alignment; pt
-              lands the lines on the title. px-6 lines the bars up with the
-              header's right-edge icon glyph (which is inset ~8px inside its
-              button), mirroring how the sidebar text lines up with the logo on
-              the left. */}
-          {hasToc && (
-            <div
-              className={cn(
-                "sticky top-(--header-height) z-30 -mt-4 hidden w-16 shrink-0 justify-end self-start px-6 pt-10 md:flex",
-                !full && "xl:hidden",
-              )}
-            >
-              <MiniTOC />
-            </div>
-          )}
-        </PageLayout>
-      </TOCProvider>
-    )
-  },
-})
-
-function DocsPage() {
-  const data = Route.useLoaderData()
-  const Content = clientLoader.getComponent(data.path)
-
-  return (
-    <Content
-      url={data.url}
-      rawContent={data.rawContent}
-      neighbours={data.neighbours}
-    />
-  )
-}
