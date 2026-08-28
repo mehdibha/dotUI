@@ -25,6 +25,7 @@ import { PanelChrome } from "../panel"
 import type { PanelSystem } from "../panel"
 import { PanelSearch } from "../search"
 import type { Chapter, Lab } from "../state"
+import { isWired } from "../wired"
 import { CARD_DEMOS } from "./demo"
 import { resolveIndex } from "./groups"
 import type { IndexChapter } from "./groups"
@@ -46,6 +47,15 @@ const PANE_SHOWN: Record<string, string> = {
 }
 const PANE_HIDDEN = "pointer-events-none opacity-0 transition-none"
 
+/** The not-wired-yet marker (issue #666) — drops per chapter via WIRED_CHAPTERS. */
+function WipChip() {
+  return (
+    <span className="shrink-0 rounded-sm border border-border/60 px-1 py-px text-[9px] leading-none font-medium tracking-wide text-fg-muted/80 uppercase">
+      wip
+    </span>
+  )
+}
+
 /* Index rows speak the same bg-muted row language as the chapter pages — no
    border, one panel surface behind them. Hover paints a translucent highlight
    OVER the whole card (::after sits on top of the demos too), not just the
@@ -66,6 +76,7 @@ function IndexRow({
 }) {
   const status = lab.section(chapter.defaults)
   const Demo = CARD_DEMOS[chapter.id]
+  const wip = !isWired(chapter.members.map((m) => m.id)) && <WipChip />
   // The label column: title (with its modified dot), and the live value
   // beneath it — first segment only, one word-ish.
   const label = (
@@ -75,14 +86,20 @@ function IndexRow({
         !compact && "w-24 shrink-0",
       )}
     >
-      <span className="flex max-w-full items-center gap-2">
-        <span className={cn(ROW_LABEL, "truncate")}>{chapter.label}</span>
+      {/* No truncation: the title row may overflow the w-24 column into the
+          slack before the demo strip, so the chip always sits right after
+          the full title. */}
+      <span className="flex items-center gap-2">
+        <span className={cn(ROW_LABEL, "whitespace-nowrap")}>
+          {chapter.label}
+        </span>
         {status.modified && (
           <span
             aria-label="Modified"
             className="size-1 shrink-0 rounded-full bg-accent"
           />
         )}
+        {wip}
       </span>
       <span className="max-w-full truncate text-xs text-fg-muted/60">
         {chapter.summary(lab.state).split(" · ")[0]}
@@ -228,8 +245,11 @@ export function PanelB({
                   <ChevronLeftIcon className="size-4" />
                   All settings
                 </RacButton>
-                <span className="ml-auto pr-1 text-[0.8125rem] font-medium text-fg">
-                  {page.label}
+                <span className="ml-auto flex items-center gap-1.5 pr-1">
+                  {!isWired(page.members.map((m) => m.id)) && <WipChip />}
+                  <span className="text-[0.8125rem] font-medium text-fg">
+                    {page.label}
+                  </span>
                 </span>
               </div>
               {page.members.map((member, i) => (
