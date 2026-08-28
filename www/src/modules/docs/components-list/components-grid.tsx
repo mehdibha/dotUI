@@ -1,6 +1,7 @@
 "use client"
 
 import { DemoPreset } from "../demo-preset"
+import { PreviewVeil } from "../preview-controls"
 import { ComponentCard } from "./component-card"
 import { componentsData } from "./components-data"
 
@@ -37,7 +38,8 @@ export function ComponentsGrid({ category }: { category: string }) {
 
   return (
     <DemoPreset>
-      <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
+      <div className="relative mt-6 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
+        <PreviewVeil />
         {data.components.map((component) => (
           <ComponentCard
             key={component.slug}

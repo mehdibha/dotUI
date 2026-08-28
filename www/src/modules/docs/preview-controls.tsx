@@ -1,6 +1,6 @@
 "use client"
 
-import { useSyncExternalStore, type ReactNode } from "react"
+import { useEffect, useSyncExternalStore, type ReactNode } from "react"
 import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "starter-themes"
 
@@ -9,6 +9,7 @@ import { DesignSystemProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import { Button } from "@/registry/ui/button"
+import { Loader } from "@/registry/ui/loader"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { DEFAULTS, type DesignSystem } from "@/modules/create/preset"
 import {
@@ -44,6 +45,32 @@ const modeStore = createPersistedStore<PreviewMode | null>(
     encode: (mode) => mode,
   },
 )
+
+/**
+ * Covers a preview until hydration applies the stored preset/mode. Rendered on
+ * every load but only visible (via CSS) when the pre-paint script flagged a
+ * stored selection (see preview-pending.ts), so first-time visitors keep the
+ * instant SSR previews. Drop inside any `relative` preview container that
+ * isn't wrapped in PreviewPanel.
+ */
+export function PreviewVeil() {
+  const hydrated = useHydrated()
+  // Runs after the re-render with the stored selection commits, so the flag
+  // clears without a wrong-preset flash and later navigations never veil.
+  useEffect(() => {
+    if (hydrated)
+      document.documentElement.removeAttribute("data-preview-pending")
+  }, [hydrated])
+  if (hydrated) return null
+  return (
+    <div
+      aria-hidden
+      className="absolute inset-0 z-20 hidden items-center justify-center rounded-[inherit] bg-bg [[data-preview-pending]_&]:flex"
+    >
+      <Loader />
+    </div>
+  )
+}
 
 /** `resolvedTheme` reads the client theme during hydration, so SSR must ignore it. */
 const useHydrated = () =>
@@ -95,7 +122,10 @@ export function PreviewPanel({
   return (
     <DesignSystemProvider forcedMode={useForcedPreviewMode()} scoped>
       {/* `relative` anchors the absolutely-positioned PreviewControls toolbar. */}
-      <div className={cn("relative bg-bg", className)}>{children}</div>
+      <div className={cn("relative bg-bg", className)}>
+        {children}
+        <PreviewVeil />
+      </div>
     </DesignSystemProvider>
   )
 }
