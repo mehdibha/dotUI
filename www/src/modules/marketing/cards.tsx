@@ -2,7 +2,7 @@ import { startTransition, useCallback, useState } from "react"
 
 import { DesignSystemProvider } from "@/lib/styles"
 import { CardsGrid } from "@/components/showcase/cards-grid"
-import { DEFAULTS } from "@/modules/create/preset"
+import { DEFAULTS } from "@/modules/create/preset/defaults"
 import { PresetSwitcher } from "@/modules/marketing/preset-switcher"
 import { SkeletonRail } from "@/modules/marketing/skeleton-cards"
 import { PRESETS } from "@/modules/presets/presets-data"
