@@ -407,6 +407,13 @@ export const componentsData: ComponentCategory[] = [
         status: "done",
       },
       {
+        name: "Chat",
+        slug: "chat",
+        href: "/docs/components/chat",
+        scale: 0.8,
+        status: "in review",
+      },
+      {
         name: "QRCode",
         slug: "qr-code",
         href: "/docs/components/qr-code",

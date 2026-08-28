@@ -1,0 +1,14 @@
+{
+  "name": "PromptInputProps",
+  "description": "The composer users type their message into. Renders a form, so a submit\nbutton — or pressing Enter in the textarea — submits it.",
+  "extendsElement": "form",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

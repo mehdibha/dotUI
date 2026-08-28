@@ -8,11 +8,40 @@
 @import "@fontsource/geist-mono";
 @import "./registry/styles.css";
 
+/* Metric-matched fallbacks (capsize) for the fontsource faces above. The webfonts
+   load with font-display: swap; without these, the swap reflows the whole page
+   and the landing showcase shifts (CLS). Sized so fallback text occupies the
+   same lines as the real font — the swap becomes paint-only. */
+@font-face {
+  font-family: "Geist Variable Fallback";
+  src: local("Arial"), local("ArialMT");
+  ascent-override: 95.9379%;
+  descent-override: 28.1609%;
+  line-gap-override: 0%;
+  size-adjust: 104.7553%;
+}
+@font-face {
+  font-family: "Geist Mono Fallback";
+  src: local("Courier New"), local("CourierNewPSMT");
+  ascent-override: 100.5164%;
+  descent-override: 29.5048%;
+  line-gap-override: 0%;
+  size-adjust: 99.9837%;
+}
+@font-face {
+  font-family: "Josefin Sans Variable Fallback";
+  src: local("Arial"), local("ArialMT");
+  ascent-override: 73.3225%;
+  descent-override: 24.4408%;
+  line-gap-override: 0%;
+  size-adjust: 102.2878%;
+}
+
 @theme {
   --font-sans:
     "Geist Variable", "Geist Variable Fallback", ui-sans-serif, system-ui,
     sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
   --font-josefin:
     "Josefin Sans Variable", "Josefin Sans Variable Fallback", ui-sans-serif,
     system-ui, sans-serif;

@@ -19,6 +19,7 @@ export const ExamplesIndex: Record<string, () => Promise<{ default: React.Compon
 	"chart-radial": () => import("@/registry/ui/chart-radial/examples"),
 	"chart-scatter": () => import("@/registry/ui/chart-scatter/examples"),
 	"chart-sparkline": () => import("@/registry/ui/chart-sparkline/examples"),
+	chat: () => import("@/registry/ui/chat/examples"),
 	checkbox: () => import("@/registry/ui/checkbox/examples"),
 	"checkbox-group": () => import("@/registry/ui/checkbox-group/examples"),
 	"color-area": () => import("@/registry/ui/color-area/examples"),
