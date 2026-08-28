@@ -12,10 +12,12 @@ type ParentToIframeMessage =
   | { type: "design-system"; data: DesignSystem }
   | { type: "preview-mode"; mode: PreviewMode }
   | { type: "preview-ping" }
+  | { type: "inspector-mode"; enabled: boolean }
 
 type IframeToParentMessage =
   | { type: "preview-ready" }
   | { type: "preview-inspect"; panel: string }
+  | { type: "inspector-exit" }
 
 /* ------------------------------ Send (parent) ------------------------------ */
 
@@ -37,6 +39,17 @@ export function sendPreviewMode(
   if (!iframe?.contentWindow) return
   iframe.contentWindow.postMessage(
     { type: "preview-mode", mode } satisfies ParentToIframeMessage,
+    "*",
+  )
+}
+
+export function sendInspectorMode(
+  iframe: HTMLIFrameElement | null,
+  enabled: boolean,
+) {
+  if (!iframe?.contentWindow) return
+  iframe.contentWindow.postMessage(
+    { type: "inspector-mode", enabled } satisfies ParentToIframeMessage,
     "*",
   )
 }
@@ -171,6 +184,53 @@ export function sendInspect(panel: string) {
     { type: "preview-inspect", panel } satisfies IframeToParentMessage,
     "*",
   )
+}
+
+/** Inside the preview iframe: follow the parent's inspector on/off toggle. */
+export function useInspectorModeMessages(onChange: (enabled: boolean) => void) {
+  const onChangeRef = React.useRef(onChange)
+  React.useEffect(() => {
+    onChangeRef.current = onChange
+  }, [onChange])
+
+  React.useEffect(() => {
+    if (!isInIframe()) return
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === "inspector-mode") {
+        onChangeRef.current(event.data.enabled === true)
+      }
+    }
+    window.addEventListener("message", handleMessage)
+    return () => window.removeEventListener("message", handleMessage)
+  }, [])
+}
+
+/**
+ * Inside the preview iframe: tell the parent the user left inspect mode from
+ * within the preview (Escape), so the toolbar toggle stays in sync.
+ */
+export function sendInspectorExit() {
+  if (!isInIframe()) return
+  window.parent.postMessage(
+    { type: "inspector-exit" } satisfies IframeToParentMessage,
+    "*",
+  )
+}
+
+/** In the /create parent: react to the preview leaving inspect mode. */
+export function useInspectorExitMessages(onExit: () => void) {
+  const onExitRef = React.useRef(onExit)
+  React.useEffect(() => {
+    onExitRef.current = onExit
+  }, [onExit])
+
+  React.useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === "inspector-exit") onExitRef.current()
+    }
+    window.addEventListener("message", handleMessage)
+    return () => window.removeEventListener("message", handleMessage)
+  }, [])
 }
 
 /** In the /create parent: react to the preview's inspect requests. */

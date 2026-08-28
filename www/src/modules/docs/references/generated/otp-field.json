@@ -97,7 +97,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
+                  "id": "@base-ui/react/otp-field/root/OTPFieldRoot.d.mts:OTPFieldRootState",
                   "name": "OTPFieldRootState"
                 },
                 "optional": false,
@@ -212,6 +212,31 @@
       },
       "description": "Identifies the field when a form is submitted."
     },
+    "normalizeValue": {
+      "type": "((value: string) => string)",
+      "detailedType": "((value: string) => string) | undefined",
+      "typeAst": {
+        "type": "function",
+        "parameters": [
+          {
+            "type": "parameter",
+            "name": "value",
+            "value": {
+              "type": "link",
+              "id": "string",
+              "name": "string"
+            },
+            "optional": false,
+            "rest": false
+          }
+        ],
+        "return": {
+          "type": "string"
+        },
+        "typeParameters": []
+      },
+      "description": "Function that normalizes the OTP value after whitespace and `validationType` filtering.\nIt runs whenever OTP Field normalizes a value, including initial/default values, controlled\nvalues, and user edits.\n\nThe returned value is filtered by `validationType` again, then clamped to `length`.\nIt should be idempotent because OTP Field may normalize the same value more than once while\nhandling edits, storing state, and rendering controlled or uncontrolled values. Non-idempotent\nnormalizers can compound across those normalization passes. Characters rejected while\nnormalizing typed or pasted text are reported through `onValueInvalid`."
+    },
     "onValueComplete": {
       "type": "((value: string, eventDetails: OTPFieldRootCompleteEventDetails) => void)",
       "detailedType": "| ((\n    value: string,\n    eventDetails: OTPFieldRootCompleteEventDetails,\n  ) => void)\n| undefined",
@@ -251,7 +276,7 @@
           }
         ]
       },
-      "description": "Callback function that is fired when the OTP value becomes complete.\n\nIt runs later than `onValueChange`, after the internal value update is applied.\n\nIf `autoSubmit` is enabled, it runs immediately before the owning form is submitted."
+      "description": "Callback function that is fired when the OTP value becomes complete, or when a complete value\nis pasted while the OTP is already complete.\n\nWhen the value changes, it runs later than `onValueChange`, after the internal value update is\napplied. If a complete pasted value matches the current value, `onValueChange` does not fire.\n\nIf `autoSubmit` is enabled, it runs immediately before the owning form is submitted."
     },
     "onValueInvalid": {
       "type": "((value: string, eventDetails: OTPFieldRootInvalidEventDetails) => void)",
@@ -292,7 +317,7 @@
           }
         ]
       },
-      "description": "Callback fired when entered text contains characters that are rejected by sanitization,\nbefore the OTP value updates.\n\nThe `value` argument is the attempted user-entered string before sanitization."
+      "description": "Callback fired when entered text contains characters that are rejected by validation or\nnormalization before the OTP value updates.\n\nThe `value` argument is the attempted user-entered string before normalization."
     },
     "render": {
       "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ComponentRenderFn<HTMLProps, OTPFieldRootState>",
@@ -320,7 +345,7 @@
               },
               {
                 "type": "link",
-                "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
+                "id": "@base-ui/react/otp-field/root/OTPFieldRoot.d.mts:OTPFieldRootState",
                 "name": "OTPFieldRootState"
               }
             ]
@@ -328,31 +353,6 @@
         ]
       },
       "description": "Allows you to replace the component's HTML element\nwith a different tag, or compose it with another component.\n\nAccepts a `ReactElement` or a function that returns the element to render."
-    },
-    "sanitizeValue": {
-      "type": "((value: string) => string)",
-      "detailedType": "((value: string) => string) | undefined",
-      "typeAst": {
-        "type": "function",
-        "parameters": [
-          {
-            "type": "parameter",
-            "name": "value",
-            "value": {
-              "type": "link",
-              "id": "string",
-              "name": "string"
-            },
-            "optional": false,
-            "rest": false
-          }
-        ],
-        "return": {
-          "type": "string"
-        },
-        "typeParameters": []
-      },
-      "description": "Function for custom sanitization when `validationType` is set to `'none'`.\nThis function runs before updating the OTP value from user interactions."
     },
     "style": {
       "type": "CSSProperties | ((state: OTPFieldRootState) => CSSProperties | undefined)",
@@ -375,7 +375,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
+                  "id": "@base-ui/react/otp-field/root/OTPFieldRoot.d.mts:OTPFieldRootState",
                   "name": "OTPFieldRootState"
                 },
                 "optional": false,
@@ -420,14 +420,14 @@
     }
   },
   "typeLinks": {
-    "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState": {
+    "@base-ui/react/otp-field/root/OTPFieldRoot.d.mts:OTPFieldRootState": {
       "type": "interface",
-      "id": "@base-ui/react/esm/otp-field/root/OTPFieldRoot.d.ts:OTPFieldRootState",
+      "id": "@base-ui/react/otp-field/root/OTPFieldRoot.d.mts:OTPFieldRootState",
       "name": "OTPFieldRootState",
       "extends": [
         {
           "type": "link",
-          "id": "@base-ui/react/esm/field/root/FieldRoot.d.ts:FieldRootState",
+          "id": "@base-ui/react/field/root/FieldRoot.d.mts:FieldRootState",
           "name": "FieldRootState"
         }
       ],

@@ -192,8 +192,24 @@ export function CreatePanel({ className }: { className?: string }) {
   }, [panel])
 
   // The preview's "Adjust" chips (overview sections) hop straight to the
-  // owning chapter — the preview is a navigation surface, not just a monitor.
-  useInspectMessages((panelId) => scrollToAnchor(panelId, false))
+  // owning chapter, and inspector clicks (`component:<slug>`) expand that
+  // component's params — without switching the preview away from where the
+  // user clicked, unlike toggleComponent.
+  useInspectMessages((panelId) => {
+    if (panelId.startsWith("component:")) {
+      const slug = panelId.slice("component:".length)
+      if (panel === `components.${slug}`) {
+        scrollToAnchor(`component-${slug}`)
+      } else {
+        pendingJumpRef.current = `component-${slug}`
+        navigate({
+          search: (prev) => ({ ...prev, panel: `components.${slug}` }),
+        })
+      }
+      return
+    }
+    scrollToAnchor(panelId, false)
+  })
 
   // Deep link on arrival: scroll the linked chapter (or expanded component)
   // into view once, without the ⌘P flash.

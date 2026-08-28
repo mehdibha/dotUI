@@ -198,7 +198,7 @@ export function TypeSpecimen({
 }) {
   useLoadedFamilies([heading, body])
   return (
-    <div className="flex items-center gap-3.5 rounded-xl bg-muted px-4 py-3">
+    <div className="flex items-center gap-3.5 rounded-lg bg-muted px-4 py-3">
       <span
         className="text-2xl/none font-semibold text-fg"
         style={{ fontFamily: fontStack(heading) }}

@@ -22,7 +22,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
+                  "id": "@base-ui/react/drawer/swipe-area/DrawerSwipeArea.d.mts:DrawerSwipeAreaState",
                   "name": "DrawerSwipeAreaState"
                 },
                 "optional": false,
@@ -81,7 +81,7 @@
               },
               {
                 "type": "link",
-                "id": "@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
+                "id": "@base-ui/react/drawer/swipe-area/DrawerSwipeArea.d.mts:DrawerSwipeAreaState",
                 "name": "DrawerSwipeAreaState"
               }
             ]
@@ -111,7 +111,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
+                  "id": "@base-ui/react/drawer/swipe-area/DrawerSwipeArea.d.mts:DrawerSwipeAreaState",
                   "name": "DrawerSwipeAreaState"
                 },
                 "optional": false,
@@ -147,9 +147,9 @@
     }
   },
   "typeLinks": {
-    "@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState": {
+    "@base-ui/react/drawer/swipe-area/DrawerSwipeArea.d.mts:DrawerSwipeAreaState": {
       "type": "interface",
-      "id": "@base-ui/react/esm/drawer/swipe-area/DrawerSwipeArea.d.ts:DrawerSwipeAreaState",
+      "id": "@base-ui/react/drawer/swipe-area/DrawerSwipeArea.d.mts:DrawerSwipeAreaState",
       "name": "DrawerSwipeAreaState",
       "extends": [],
       "properties": {

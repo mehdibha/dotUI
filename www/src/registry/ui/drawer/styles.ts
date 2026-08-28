@@ -31,7 +31,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
         bottom: {
           viewport: "grid grid-rows-[1fr_auto] overflow-visible pt-12",
           popup:
-            "row-start-2 [margin-bottom:calc(0px_-_var(--drawer-bleed))] max-h-[calc(100dvh_-_3rem_+_var(--drawer-bleed))] min-h-20 w-full [transform-origin:50%_100%] [transform:translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-xl border-b-0 pb-[calc(env(safe-area-inset-bottom,0px)_+_var(--drawer-bleed))] data-[ending-style]:[transform:translateY(100%)] data-[nested-drawer-open]:[height:var(--drawer-frontmost-height,var(--drawer-height,auto))] data-[nested-drawer-open]:[transform:translateY(calc(var(--drawer-swipe-movement-y,0px)_-_var(--drawer-stack-offset)_-_(var(--drawer-shrink)_*_var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-[starting-style]:[transform:translateY(100%)]",
+            "row-start-2 [margin-bottom:calc(0px_-_var(--drawer-bleed))] max-h-[calc(100dvh_-_3rem_+_var(--drawer-bleed))] min-h-20 w-full [transform-origin:50%_100%] [transform:translateY(var(--drawer-swipe-movement-y,0px))] rounded-t-xl border-b-0 pb-[calc(env(safe-area-inset-bottom,0px)_+_var(--drawer-bleed)_+_var(--drawer-keyboard-inset,0px))] data-[ending-style]:[transform:translateY(100%)] data-[nested-drawer-open]:[height:var(--drawer-frontmost-height,var(--drawer-height,auto))] data-[nested-drawer-open]:[transform:translateY(calc(var(--drawer-swipe-movement-y,0px)_-_var(--drawer-stack-offset)_-_(var(--drawer-shrink)_*_var(--drawer-frontmost-height,var(--drawer-height,0px)))))_scale(var(--drawer-scale))] data-[starting-style]:[transform:translateY(100%)]",
           swipeArea: "inset-x-0 bottom-0 h-8",
         },
         left: {

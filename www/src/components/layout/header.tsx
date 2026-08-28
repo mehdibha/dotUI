@@ -52,7 +52,13 @@ export function Header({ className, items = [] }: HeaderProps) {
         <ProgressiveBlur />
       </div>
       <div className="flex items-center gap-3 md:gap-6">
-        <Logo />
+        <span className="flex items-center gap-2">
+          <Logo />
+          {/* The whole product is pre-1.0 — one quiet word of context. */}
+          <span className="rounded-sm border border-border/60 px-1 py-px text-[9px] leading-none font-medium tracking-wide text-fg-muted/80 uppercase select-none">
+            preview
+          </span>
+        </span>
         {/* Small screens have no in-page TOC (the MiniTOC is md–xl); surface it
             here next to the logo instead. Renders null off docs pages. */}
         <DocsTocSelect className="md:hidden" />
