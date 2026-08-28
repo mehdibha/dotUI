@@ -16,7 +16,7 @@
     "probe:registry": "tsx scripts/registry-probe.ts"
   },
   "dependencies": {
-    "@base-ui/react": "1.4.1",
+    "@base-ui/react": "1.7.0",
     "@dotui/colors": "workspace:*",
     "@fontsource-variable/geist": "^5.2.8",
     "@fontsource-variable/josefin-sans": "^5.2.8",

@@ -181,7 +181,11 @@ export default function SearchDialog({
     <Autocomplete inputValue={search} onInputChange={setSearch}>
       <div
         data-command=""
-        className={commandStyles({ className: "gap-0 overflow-y-hidden p-0" })}
+        className={commandStyles({
+          // On mobile the dialog fills a near-full-height drawer, so the
+          // command column flexes instead of sizing to its content.
+          className: "gap-0 overflow-y-hidden p-0 max-md:min-h-0 max-md:grow",
+        })}
       >
         <SearchField autoFocus aria-label="Search" className="px-1.5 pt-1.5">
           {/* Radius stays concentric with the modal (2xl − 6px inset); the
@@ -202,7 +206,7 @@ export default function SearchDialog({
               it rather than on the wrapper. */}
         <MenuContent
           aria-label="Search results"
-          className="max-h-80 overflow-y-auto p-1.5 pt-3 **:data-menu-item:py-2"
+          className="max-h-80 overflow-y-auto p-1.5 pt-3 **:data-menu-item:py-2 max-md:max-h-none max-md:min-h-0 max-md:grow"
           onAction={onClose}
           renderEmptyState={() => (
             <div className="py-8 text-center text-sm text-fg-muted">

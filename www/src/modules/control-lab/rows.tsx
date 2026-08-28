@@ -128,7 +128,7 @@ export function RowLabel({
  */
 export function ControlGroup({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex w-full flex-col divide-y divide-bg/50 overflow-hidden rounded-xl bg-muted **:data-preview:rounded-b-none **:data-row:rounded-none **:data-row:bg-transparent">
+    <div className="flex w-full flex-col gap-px overflow-hidden rounded-lg bg-bg/50 **:data-preview:rounded-b-none **:data-row:rounded-none">
       {children}
     </div>
   )

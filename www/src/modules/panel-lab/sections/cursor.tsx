@@ -321,15 +321,12 @@ export function CursorHero({ state }: { state: LabState }) {
   )
 }
 
-/** Collapsed-row summary: the controls cursor, and the disabled cursor. */
+/** Collapsed-row summary: the controls cursor alone. */
 export function cursorSummary(state: LabState): string {
-  const controls =
+  return (
     CONTROL_OPTIONS.find((o) => o.value === state.cursorControls)?.label ??
     state.cursorControls
-  const disabled =
-    DISABLED_OPTIONS.find((o) => o.value === state.cursorDisabled)?.label ??
-    state.cursorDisabled
-  return `${controls} cursor · ${disabled} disabled`
+  )
 }
 
 export function CursorSection({ lab }: { lab: Lab }) {
