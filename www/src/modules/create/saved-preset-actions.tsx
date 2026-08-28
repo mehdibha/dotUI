@@ -119,7 +119,7 @@ function RenamePresetDialog({
             onChange={setName}
           >
             <Label>Name</Label>
-            <Input placeholder="Untitled" />
+            <Input placeholder="My design system" />
           </TextField>
         </form>
         <div className="flex justify-end gap-2">

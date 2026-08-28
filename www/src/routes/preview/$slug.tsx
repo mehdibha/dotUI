@@ -1,6 +1,5 @@
 import { type ReactNode, use, useCallback, useState } from "react"
 import { createFileRoute } from "@tanstack/react-router"
-import { z } from "zod"
 
 import { DesignSystemProvider } from "@/lib/styles"
 import {
@@ -14,6 +13,7 @@ import {
   useIframeMessageListener,
 } from "@/modules/create/preset"
 import type { DesignSystem } from "@/modules/create/preset"
+import { PreviewInspector } from "@/modules/create/preview/inspector"
 import { PresetOverview } from "@/modules/create/preview/overview"
 
 const promiseCache = new Map<
@@ -44,11 +44,16 @@ html::-webkit-scrollbar { display: none; }
 `
 
 export const Route = createFileRoute("/preview/$slug")({
-  validateSearch: z.object({
-    preset: z.string().optional().catch(undefined),
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { preset?: string; mode?: "light" | "dark" } => ({
+    preset: typeof search.preset === "string" ? search.preset : undefined,
     // Initial display mode, baked in by the /create parent (read directly from
     // location by usePreviewForcedTheme; declared so the router keeps it).
-    mode: z.enum(["light", "dark"]).optional().catch(undefined),
+    mode:
+      search.mode === "light" || search.mode === "dark"
+        ? search.mode
+        : undefined,
   }),
   ssr: false,
   beforeLoad: ({ params }) => {
@@ -102,6 +107,7 @@ function PreviewPage() {
       icons={designSystem.icons}
     >
       {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
+      {embedded && <PreviewInspector />}
       {content}
     </DesignSystemProvider>
   )

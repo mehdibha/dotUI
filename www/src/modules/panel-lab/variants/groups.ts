@@ -17,14 +17,8 @@ interface CompositeDef {
   members: string[]
 }
 
-/* Merges Mehdi adopted from the panel (Aug 2026). Interaction is the one
-   composite with no host chapter — every member renders titled. */
+/* Merges Mehdi adopted from the panel (Aug 2026). */
 const COMPOSITES: CompositeDef[] = [
-  {
-    id: "interaction",
-    label: "Interaction",
-    members: ["cursor", "selection", "scrollbars", "disabled"],
-  },
   {
     id: "buttons",
     members: ["buttons", "button-groups", "toggles", "segmented-control"],
@@ -35,25 +29,24 @@ const COMPOSITES: CompositeDef[] = [
   },
 ]
 
-export const GROUPS: Array<{ ids: string[] }> = [
+export const GROUPS: Array<{
+  ids: string[]
+  compact?: boolean
+}> = [
   // Identity — how the system reads at a glance.
-  { ids: ["color", "typography", "shape", "space", "surfaces"] },
-  // Set-once foundations — inherited everywhere, rarely revisited.
-  { ids: ["focus", "icons", "motion", "interaction"] },
+  { ids: ["color", "typography", "icons", "shape", "space", "surfaces"] },
+  // Page chrome — the browser-level surface, set once. One-line rows: these
+  // are quick set-and-forget axes, not destinations.
+  { ids: ["cursor", "selection", "scrollbars"], compact: true },
+  // Component states — cross-component treatments every control below wears.
+  { ids: ["focus", "invalid", "disabled", "motion"] },
+  // Component clusters — title + specimen, the demo carries the values.
   // Core components.
   { ids: ["buttons", "inputs"] },
-  // Forms.
-  {
-    ids: [
-      "switch",
-      "checkbox",
-      "radio",
-      "choice-cards",
-      "pickers",
-      "calendar",
-      "sliders",
-    ],
-  },
+  // Selection controls.
+  { ids: ["switch", "checkbox", "radio", "choice-cards"] },
+  // Fields.
+  { ids: ["pickers", "calendar", "sliders"] },
   // Overlays.
   { ids: ["menus", "dialogs", "popovers", "tooltips"] },
   // Navigation.
@@ -62,6 +55,8 @@ export const GROUPS: Array<{ ids: string[] }> = [
   { ids: ["notices", "skeleton", "spinner", "progress"] },
   // Display.
   { ids: ["badges", "kbd", "avatars", "tables", "accordion"] },
+  // Charts.
+  { ids: ["charts"] },
 ]
 
 export interface IndexChapter {
@@ -71,6 +66,8 @@ export interface IndexChapter {
   members: Chapter[]
   /** Union of every member's defaults — drives the modified dot. */
   defaults: Partial<LabState>
+  /** The host member's live value summary. */
+  summary: (state: LabState) => string
   /** Untitled host body, or all-titled for hostless composites. */
   hostless: boolean
 }
@@ -79,7 +76,7 @@ export interface IndexChapter {
  *  flat chapter list. */
 export function resolveIndex(
   chapters: Chapter[],
-): Array<{ chapters: IndexChapter[] }> {
+): Array<{ chapters: IndexChapter[]; compact?: boolean }> {
   const byId = new Map(chapters.map((chapter) => [chapter.id, chapter]))
   const toIndexChapter = (id: string): IndexChapter | undefined => {
     const composite = COMPOSITES.find((c) => c.id === id)
@@ -91,6 +88,7 @@ export function resolveIndex(
             label: chapter.label,
             members: [chapter],
             defaults: chapter.defaults,
+            summary: chapter.summary,
             hostless: false,
           }
         : undefined
@@ -104,6 +102,7 @@ export function resolveIndex(
       label: composite.label ?? host?.label ?? composite.id,
       members,
       defaults: Object.assign({}, ...members.map((m) => m.defaults)),
+      summary: members[0]?.summary ?? (() => ""),
       hostless: !host,
     }
   }
@@ -111,5 +110,6 @@ export function resolveIndex(
     chapters: group.ids
       .map(toIndexChapter)
       .filter((chapter): chapter is IndexChapter => chapter !== undefined),
+    compact: group.compact,
   }))
 }
