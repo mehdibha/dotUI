@@ -13,7 +13,6 @@ import {
   MailIcon,
   MoreHorizontalIcon,
   PencilIcon,
-  PlusIcon,
   SearchIcon,
   Settings2Icon,
   TagIcon,
@@ -21,7 +20,6 @@ import {
   TrendingDownIcon,
   TrendingUpIcon,
   TriangleAlertIcon,
-  UploadIcon,
   UserIcon,
   XIcon,
 } from "@/registry/icons"
@@ -29,12 +27,6 @@ import { Responsive } from "@/registry/lib/responsive"
 import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
-import {
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-  Breadcrumbs,
-} from "@/registry/ui/breadcrumbs"
 import { Button } from "@/registry/ui/button"
 import {
   Card,
@@ -82,7 +74,6 @@ import {
   TableRow,
 } from "@/registry/ui/table"
 import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
-import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 /* --------------------------------- Data ---------------------------------- */
 
@@ -894,53 +885,16 @@ export default function DataTableBlock() {
 
   return (
     <div className="min-h-screen bg-bg text-fg">
-      <header className="sticky top-0 z-20 border-b border-border-muted bg-bg/85 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:px-6">
-          <Breadcrumbs>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="#">Revenue</BreadcrumbLink>
-              <BreadcrumbSeparator />
-            </BreadcrumbItem>
-            <BreadcrumbItem>
-              <BreadcrumbLink>Customers</BreadcrumbLink>
-            </BreadcrumbItem>
-          </Breadcrumbs>
-          <div className="flex flex-wrap items-end justify-between gap-3">
-            <div className="space-y-1">
-              <h1 className="font-heading text-2xl font-semibold tracking-tight">
-                Customers
-              </h1>
-              <p className="text-sm text-fg-muted">
-                {rows.length} accounts across {REGIONS.length} regions — synced
-                6 minutes ago.
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <Tooltip>
-                <Button
-                  variant="quiet"
-                  size="sm"
-                  isIconOnly
-                  aria-label="Import"
-                >
-                  <UploadIcon />
-                </Button>
-                <TooltipContent>Import from CSV</TooltipContent>
-              </Tooltip>
-              <Button variant="secondary" size="sm">
-                <DownloadIcon />
-                Export
-              </Button>
-              <Button variant="primary" size="sm">
-                <PlusIcon />
-                Add customer
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <main className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-6 pb-28 sm:px-6">
+        <div className="space-y-1">
+          <h1 className="font-heading text-2xl font-semibold tracking-tight">
+            Customers
+          </h1>
+          <p className="text-sm text-fg-muted">
+            {rows.length} accounts across {REGIONS.length} regions — synced 6
+            minutes ago.
+          </p>
+        </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Stat
             label="Active MRR"

@@ -4,7 +4,6 @@ import { useIsMobile } from "@/registry/hooks/use-mobile"
 import {
   ActivityIcon,
   BellIcon,
-  Building2Icon,
   CreditCardIcon,
   ExternalLinkIcon,
   FolderIcon,
@@ -64,9 +63,7 @@ import {
   InputGroupAddon,
   TextArea,
 } from "@/registry/ui/input"
-import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Modal } from "@/registry/ui/modal"
-import { Popover } from "@/registry/ui/popover"
 import {
   Radio,
   RadioControl,
@@ -925,55 +922,10 @@ export default function SettingsBlock() {
 
   return (
     <div className="min-h-screen bg-bg text-fg">
-      <header className="sticky top-0 z-20 border-b bg-bg/85 backdrop-blur">
-        <div className="mx-auto flex h-14 w-full max-w-6xl items-center gap-3 px-4 sm:px-6">
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-fg-on-primary">
-            <Building2Icon className="size-4" />
-          </div>
-          <span className="truncate font-medium">Northwind Labs</span>
-          <Badge
-            appearance="subtle"
-            size="sm"
-            className="hidden sm:inline-flex"
-          >
-            Pro
-          </Badge>
-          <div className="ml-auto flex items-center gap-1">
-            <Tooltip>
-              <Button variant="quiet" isIconOnly aria-label="Notifications">
-                <BellIcon />
-              </Button>
-              <TooltipContent>3 unread notifications</TooltipContent>
-            </Tooltip>
-            <Menu>
-              <Button variant="quiet" isIconOnly aria-label="Account menu">
-                <Avatar size="sm">
-                  <AvatarFallback>ME</AvatarFallback>
-                </Avatar>
-              </Button>
-              <Popover>
-                <MenuContent>
-                  <MenuItem>Profile</MenuItem>
-                  <MenuItem>Command menu</MenuItem>
-                  <MenuItem>Billing</MenuItem>
-                  <MenuItem variant="danger">Sign out</MenuItem>
-                </MenuContent>
-              </Popover>
-            </Menu>
-          </div>
-        </div>
-      </header>
-
       <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-        <div className="flex flex-col gap-2">
-          <h1 className="font-heading text-3xl font-semibold tracking-tight">
-            Settings
-          </h1>
-          <p className="max-w-prose text-pretty text-fg-muted">
-            Manage your profile, how Northwind notifies you, and the services
-            connected to this workspace.
-          </p>
-        </div>
+        <h1 className="font-heading text-3xl font-semibold tracking-tight">
+          Settings
+        </h1>
 
         {/* Change events bubble, so one handler marks the whole page dirty. */}
         <main className="mt-8" onChange={() => setIsDirty(true)}>

@@ -887,49 +887,7 @@ export default function KanbanBlock() {
   return (
     <div className="flex min-h-screen flex-col bg-bg text-fg">
       {/* Static on phones: the wrapped toolbar is a quarter of the viewport. */}
-      <header className="z-10 flex flex-col gap-4 border-b bg-bg/95 px-4 py-4 backdrop-blur sm:sticky sm:top-0 sm:px-6">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-          <div className="flex min-w-0 items-center gap-3">
-            <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-fg-on-primary">
-              <LayoutGridIcon className="size-4.5" />
-            </div>
-            <div className="flex min-w-0 flex-col">
-              <h1 className="truncate font-heading text-lg font-semibold tracking-tight">
-                Atlas Dispatch
-              </h1>
-              <p className="truncate text-xs text-fg-muted">
-                Sprint 24 · Aug 12 – Aug 26 · {tasks.length} tasks
-              </p>
-            </div>
-          </div>
-
-          <div className="ml-auto flex items-center gap-3">
-            <AvatarGroup>
-              {MEMBER_ORDER.slice(0, 4).map((member) => (
-                <MemberAvatar key={member} member={member} size="md" />
-              ))}
-              <AvatarGroupCount>+{MEMBER_ORDER.length - 4}</AvatarGroupCount>
-            </AvatarGroup>
-            <Separator orientation="vertical" className="h-6" />
-            <NewTaskDialog
-              isOpen={isCreating}
-              onOpenChange={setCreating}
-              column={draftColumn}
-              onColumnChange={setDraftColumn}
-              onCreate={createTask}
-            >
-              <Button
-                variant="primary"
-                size="sm"
-                onPress={() => setDraftColumn("backlog")}
-              >
-                <PlusIcon />
-                New task
-              </Button>
-            </NewTaskDialog>
-          </div>
-        </div>
-
+      <header className="z-10 flex flex-col gap-4 bg-bg/95 px-4 py-4 backdrop-blur sm:sticky sm:top-0 sm:px-6">
         <div className="flex flex-wrap items-center gap-2">
           <SearchField
             aria-label="Search tasks"
@@ -1012,19 +970,44 @@ export default function KanbanBlock() {
             </SegmentedControlItem>
           </SegmentedControl>
 
-          <ProgressBar
-            value={completion}
-            aria-label="Sprint completion"
-            className="ml-auto hidden w-48 gap-1 lg:flex"
-          >
-            <div className="flex items-center justify-between gap-2 text-xs text-fg-muted">
-              <span>
-                {done} of {tasks.length} done
-              </span>
-              <ProgressBarOutput />
-            </div>
-            <ProgressBarControl />
-          </ProgressBar>
+          <div className="ml-auto flex items-center gap-3">
+            <ProgressBar
+              value={completion}
+              aria-label="Sprint completion"
+              className="hidden w-48 gap-1 lg:flex"
+            >
+              <div className="flex items-center justify-between gap-2 text-xs text-fg-muted">
+                <span>
+                  {done} of {tasks.length} done
+                </span>
+                <ProgressBarOutput />
+              </div>
+              <ProgressBarControl />
+            </ProgressBar>
+            <AvatarGroup>
+              {MEMBER_ORDER.slice(0, 4).map((member) => (
+                <MemberAvatar key={member} member={member} size="md" />
+              ))}
+              <AvatarGroupCount>+{MEMBER_ORDER.length - 4}</AvatarGroupCount>
+            </AvatarGroup>
+            <Separator orientation="vertical" className="h-6" />
+            <NewTaskDialog
+              isOpen={isCreating}
+              onOpenChange={setCreating}
+              column={draftColumn}
+              onColumnChange={setDraftColumn}
+              onCreate={createTask}
+            >
+              <Button
+                variant="primary"
+                size="sm"
+                onPress={() => setDraftColumn("backlog")}
+              >
+                <PlusIcon />
+                New task
+              </Button>
+            </NewTaskDialog>
+          </div>
         </div>
       </header>
 

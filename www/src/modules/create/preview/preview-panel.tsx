@@ -250,10 +250,6 @@ export function PreviewPanel({
           <ListBoxItem id="cards" textValue="Cards">
             <span className="truncate">Cards</span>
           </ListBoxItem>
-          {/* A designer walkthrough of the whole system. */}
-          <ListBoxItem id="overview" textValue="Brand Guidelines">
-            <span className="truncate">Brand Guidelines</span>
-          </ListBoxItem>
         </ListBoxSection>
         {/* Real-world page blocks — the whole system composed into full screens. */}
         {AVAILABLE_BLOCKS.length > 0 && (
