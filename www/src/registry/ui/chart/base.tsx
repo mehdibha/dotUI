@@ -54,7 +54,8 @@ export const chartDefaults = {
   cellInset: 1,
   bandPadding: 0.3,
   bandOuterPadding: 0,
-  pointPadding: 0.5,
+  // Zero outer padding: lines and areas span the plot edge to edge.
+  pointPadding: 0,
   groupPadding: 0.15,
   grid: true,
   axes: true,
