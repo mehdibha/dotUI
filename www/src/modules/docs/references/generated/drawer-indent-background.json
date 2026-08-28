@@ -22,7 +22,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/drawer/indent-background/DrawerIndentBackground.d.ts:DrawerIndentBackgroundState",
+                  "id": "@base-ui/react/drawer/indent-background/DrawerIndentBackground.d.mts:DrawerIndentBackgroundState",
                   "name": "DrawerIndentBackgroundState"
                 },
                 "optional": false,
@@ -72,7 +72,7 @@
               },
               {
                 "type": "link",
-                "id": "@base-ui/react/esm/drawer/indent-background/DrawerIndentBackground.d.ts:DrawerIndentBackgroundState",
+                "id": "@base-ui/react/drawer/indent-background/DrawerIndentBackground.d.mts:DrawerIndentBackgroundState",
                 "name": "DrawerIndentBackgroundState"
               }
             ]
@@ -102,7 +102,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/drawer/indent-background/DrawerIndentBackground.d.ts:DrawerIndentBackgroundState",
+                  "id": "@base-ui/react/drawer/indent-background/DrawerIndentBackground.d.mts:DrawerIndentBackgroundState",
                   "name": "DrawerIndentBackgroundState"
                 },
                 "optional": false,
@@ -129,9 +129,9 @@
     }
   },
   "typeLinks": {
-    "@base-ui/react/esm/drawer/indent-background/DrawerIndentBackground.d.ts:DrawerIndentBackgroundState": {
+    "@base-ui/react/drawer/indent-background/DrawerIndentBackground.d.mts:DrawerIndentBackgroundState": {
       "type": "interface",
-      "id": "@base-ui/react/esm/drawer/indent-background/DrawerIndentBackground.d.ts:DrawerIndentBackgroundState",
+      "id": "@base-ui/react/drawer/indent-background/DrawerIndentBackground.d.mts:DrawerIndentBackgroundState",
       "name": "DrawerIndentBackgroundState",
       "extends": [],
       "properties": {
