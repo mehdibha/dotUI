@@ -53,6 +53,7 @@ export const chartDefaults = {
   cellRadius: 2,
   cellInset: 1,
   bandPadding: 0.3,
+  bandOuterPadding: 0,
   pointPadding: 0.5,
   groupPadding: 0.15,
   grid: true,
@@ -413,7 +414,11 @@ export type ChartScaleKind = "band" | "point" | "linear"
 type ChartScaleOption = ChartAxisOptions["scale"]
 
 const SCALES: Record<ChartScaleKind, () => ChartScaleOption> = {
-  band: () => scaleBand().padding(chartDefaults.bandPadding),
+  // Outer padding stays 0: gaps belong between bars, not at the plot edges.
+  band: () =>
+    scaleBand()
+      .paddingInner(chartDefaults.bandPadding)
+      .paddingOuter(chartDefaults.bandOuterPadding),
   point: () => scalePoint().padding(chartDefaults.pointPadding),
   linear: () => scaleLinear(),
 }
