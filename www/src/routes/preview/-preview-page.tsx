@@ -13,6 +13,8 @@ import {
   useIframeMessageListener,
 } from "@/modules/create/preset/iframe-sync"
 import type { DesignSystem } from "@/modules/create/preset/types"
+import { BlocksIndex } from "@/modules/create/preview/blocks"
+import { PreviewInspector } from "@/modules/create/preview/inspector"
 import { PresetOverview } from "@/modules/create/preview/overview"
 
 // Non-route file so the examples barrel, preset codec and overview stay in
@@ -25,10 +27,11 @@ const promiseCache = new Map<
 export function getExamplesPromise(slug: string) {
   let promise = promiseCache.get(slug)
   if (!promise) {
-    // Group/block slugs share one namespace with component slugs and win the
-    // lookup — e.g. the "cards" block resolves here before the "card" component.
+    // Block/group slugs share one namespace with component slugs and win the
+    // lookup — e.g. the "cards" group resolves here before the "card" component.
     // A new block must not reuse a component's slug or it will silently shadow it.
-    const load = GroupExamplesIndex[slug] ?? ExamplesIndex[slug]
+    const load =
+      BlocksIndex[slug] ?? GroupExamplesIndex[slug] ?? ExamplesIndex[slug]
     if (!load) return null
     promise = load()
     promiseCache.set(slug, promise)
@@ -91,6 +94,7 @@ export function PreviewPage() {
       icons={designSystem.icons}
     >
       {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
+      {embedded && <PreviewInspector />}
       {content}
     </DesignSystemProvider>
   )

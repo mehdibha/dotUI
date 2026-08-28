@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 import {
+  ChevronDownIcon,
   ChevronsUpDownIcon,
   ExternalLinkIcon,
   MaximizeIcon,
@@ -9,6 +10,7 @@ import {
   MoonIcon,
   SlidersHorizontalIcon,
   SmartphoneIcon,
+  SquareDashedMousePointerIcon,
   SunIcon,
   TabletIcon,
 } from "lucide-react"
@@ -35,11 +37,14 @@ import { Select, SelectValue } from "@/registry/ui/select"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import {
   pingIframe,
+  sendInspectorMode,
   sendPreviewMode,
   sendToIframe,
   useDesignSystem,
+  useInspectorExitMessages,
 } from "@/modules/create/preset"
 import type { PreviewMode } from "@/modules/create/preset"
+import { AVAILABLE_BLOCKS } from "@/modules/create/preview/blocks"
 import { componentsData } from "@/modules/docs/components-list/components-data"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
@@ -64,6 +69,14 @@ const SIZE_OPTIONS: {
 const ALL_COMPONENTS = componentsData
   .flatMap((category) => category.components)
   .sort((a, b) => a.name.localeCompare(b.name))
+
+// Composed, real-world previews: the landing cards grid plus the page blocks.
+const PREVIEW_ITEMS = [{ slug: "cards", name: "Cards" }, ...AVAILABLE_BLOCKS]
+
+// How many previews the picker shows before "Show more".
+const PREVIEW_ITEMS_COLLAPSED = 4
+
+const SHOW_ALL_PREVIEWS_ID = "__show-all-previews"
 
 // Zoom magnifies the rendered iframe (CSS `zoom`, no reflow) — distinct from device
 // size, which reflows the content. Combined, they behave like a browser's device bar.
@@ -105,6 +118,34 @@ export function PreviewPanel({
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
+  const [pickerQuery, setPickerQuery] = useState("")
+  const [showAllPreviews, setShowAllPreviews] = useState(false)
+  // Set when "Show more" is picked so the close the Select requests right
+  // after committing that selection can be swallowed.
+  const keepPickerOpen = useRef(false)
+  const [inspecting, setInspecting] = useState(false)
+  const [toolbarHidden, setToolbarHidden] = useState(false)
+
+  // The tools collapse by animating the wrapper to 0×0 — a `0fr` grid track
+  // (react-grab's trick) resolves to content size here because the
+  // shrink-to-fit pill gives the grid no definite width. The content keeps
+  // its natural size (w-max) inside, so it slides out instead of reflowing.
+  const toolsRef = useRef<HTMLDivElement>(null)
+  const [toolsSize, setToolsSize] = useState<{ w: number; h: number } | null>(
+    null,
+  )
+  useEffect(() => {
+    const el = toolsRef.current
+    if (!el) return
+    const measure = () => {
+      const rect = el.getBoundingClientRect()
+      setToolsSize({ w: rect.width, h: rect.height })
+    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(el)
+    measure()
+    return () => observer.disconnect()
+  }, [])
   const isMobile = useIsMobile()
 
   const effectivePreview = preview
@@ -217,6 +258,27 @@ export function PreviewPanel({
     }
   }, [previewMode])
 
+  // Forward inspect mode to the iframe — same resend-on-load/ready dance as the
+  // display mode, so it survives preview switches (the iframe remounts per preview).
+  useEffect(() => {
+    const iframe = iframeRef.current
+    if (!iframe) return
+    const send = () => sendInspectorMode(iframe, inspecting)
+    if (iframe.contentWindow) send()
+    iframe.addEventListener("load", send)
+    const onReady = (event: MessageEvent) => {
+      if (event.data?.type === "preview-ready") send()
+    }
+    window.addEventListener("message", onReady)
+    return () => {
+      iframe.removeEventListener("load", send)
+      window.removeEventListener("message", onReady)
+    }
+  }, [inspecting])
+
+  // The preview exits inspect mode itself on Escape — keep the toggle in sync.
+  useInspectorExitMessages(() => setInspecting(false))
+
   // Keep the fullscreen toggle's icon in sync with the actual state — exiting via Esc
   // (not just the button) still flips it back.
   useEffect(() => {
@@ -234,25 +296,60 @@ export function PreviewPanel({
     }
   }
 
+  // The picker truncates the blocks list behind "Show more" while browsing, but
+  // hidden items can't match the Autocomplete filter — so the full list renders
+  // whenever a search is underway (the filter then prunes it).
+  const onPickerOpenChange = (open: boolean) => {
+    if (!open && keepPickerOpen.current) {
+      keepPickerOpen.current = false
+      return
+    }
+    setPickerOpen(open)
+    if (!open) {
+      // Fresh picker on reopen — collapsed list, cleared search.
+      setShowAllPreviews(false)
+      setPickerQuery("")
+    }
+  }
+
+  const previewsExpanded = showAllPreviews || pickerQuery.trim() !== ""
+  const visiblePreviews = previewsExpanded
+    ? PREVIEW_ITEMS
+    : PREVIEW_ITEMS.slice(0, PREVIEW_ITEMS_COLLAPSED)
+  const hiddenPreviewCount = PREVIEW_ITEMS.length - visiblePreviews.length
+
   // Picker body shared by the desktop popover and the mobile drawer — only the
   // list's sizing differs between the two containers. Selection state comes
   // from the wrapping Select, so the ListBox carries no props of its own.
   const renderPicker = (listClassName: string) => (
     <Command className="min-h-0 flex-1">
-      <SearchField autoFocus aria-label="Search previews">
+      <SearchField
+        autoFocus
+        aria-label="Search previews"
+        onChange={setPickerQuery}
+      >
         <Input placeholder="Search previews…" />
       </SearchField>
       <ListBox className={listClassName}>
+        {/* Real-world previews — the whole system composed into full screens. */}
         <ListBoxSection>
-          <ListBoxSectionHeader>Preview</ListBoxSectionHeader>
-          {/* Composed, real-world UI (the landing cards grid), themed live. */}
-          <ListBoxItem id="cards" textValue="Cards">
-            <span className="truncate">Cards</span>
-          </ListBoxItem>
-          {/* A designer walkthrough of the whole system. */}
-          <ListBoxItem id="overview" textValue="Brand Guidelines">
-            <span className="truncate">Brand Guidelines</span>
-          </ListBoxItem>
+          <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
+          {visiblePreviews.map((block) => (
+            <ListBoxItem
+              key={block.slug}
+              id={block.slug}
+              textValue={block.name}
+            >
+              <span className="truncate">{block.name}</span>
+            </ListBoxItem>
+          ))}
+          {hiddenPreviewCount > 0 && (
+            <ListBoxItem id={SHOW_ALL_PREVIEWS_ID} textValue="Show more">
+              <span className="truncate text-fg-muted">
+                Show {hiddenPreviewCount} more…
+              </span>
+            </ListBoxItem>
+          )}
         </ListBoxSection>
         <ListBoxSection>
           <ListBoxSectionHeader>Components</ListBoxSectionHeader>
@@ -324,201 +421,300 @@ export function PreviewPanel({
           site-themed and earns separation from contrast, not size: a solid
           neutral surface, full-strength border, and a deep layered shadow.
           Sits above the skeleton so the switcher works while loading. */}
-      <div className="absolute bottom-3 left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center gap-1 rounded-full border border-border bg-neutral p-1 shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)]">
-        {/* Preview switcher — a real Select (trigger a11y, typeahead, focus
+      <div
+        className={cn(
+          // rounded-[20px] renders like rounded-full (half the 40px pill) but,
+          // unlike calc(infinity*1px), interpolates visibly during the tuck —
+          // react-grab's trick for its edge collapse.
+          "absolute left-1/2 z-20 flex max-w-[calc(100%-1.5rem)] -translate-x-1/2 items-center border border-border bg-neutral shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)] transition-[bottom,border-radius,padding] duration-200 ease-out",
+          toolbarHidden
+            ? // Tucked into the panel's bottom edge as a react-grab-style tab:
+              // flush, squared toward the edge, the chevron button IS the tab.
+              "bottom-0 rounded-[10px] rounded-b-none border-b-0 p-0"
+            : "bottom-3 gap-1 rounded-[20px] p-1",
+        )}
+      >
+        {/* Collapsible content — slides shut toward the chevron, react-grab
+            style, leaving the pill as a lone show/hide button. */}
+        <div
+          className={cn(
+            "overflow-hidden transition-[width,height] duration-200 ease-out",
+            toolbarHidden && "pointer-events-none",
+          )}
+          style={{
+            width: toolbarHidden ? 0 : (toolsSize?.w ?? "auto"),
+            // Shrink to the collapsed button's height so the tab is exactly
+            // the chevron — the wrapper's clipped content otherwise props the
+            // pill open at the expanded height.
+            height: toolbarHidden ? 20 : (toolsSize?.h ?? "auto"),
+          }}
+        >
+          <div
+            ref={toolsRef}
+            className={cn(
+              "flex w-max items-center gap-1 transition-opacity duration-150",
+              toolbarHidden ? "opacity-0" : "opacity-100",
+            )}
+          >
+            {/* Preview switcher — a real Select (trigger a11y, typeahead, focus
             restoration for free). Its overlay is the anchored popover on
             desktop and the bottom drawer on mobile; open state is controlled
             so the drawer can be driven by the same Select. */}
-        <Select
-          value={effectivePreview}
-          onChange={(v) =>
-            navigate({
-              search: (prev) => ({ ...prev, preview: v as string }),
-            })
-          }
-          isOpen={pickerOpen}
-          onOpenChange={setPickerOpen}
-          aria-label="Preview"
-          // w-fit overrides the field base's w-full, which would collapse the
-          // trigger inside the pill's shrink-to-fit absolute box.
-          className="w-fit min-w-0"
-        >
-          <Button size="sm" variant="quiet" className="max-w-44 rounded-full">
-            {/* flex-initial overrides the base flex-1 (basis-0), which has no
+            <Select
+              value={effectivePreview}
+              onChange={(v) => {
+                if (v === SHOW_ALL_PREVIEWS_ID) {
+                  setShowAllPreviews(true)
+                  keepPickerOpen.current = true
+                  return
+                }
+                navigate({
+                  search: (prev) => ({ ...prev, preview: v as string }),
+                })
+              }}
+              isOpen={pickerOpen}
+              onOpenChange={onPickerOpenChange}
+              aria-label="Preview"
+              // w-fit overrides the field base's w-full, which would collapse the
+              // trigger inside the pill's shrink-to-fit absolute box.
+              className="w-fit min-w-0"
+            >
+              <Button
+                size="sm"
+                variant="quiet"
+                className="max-w-44 rounded-full"
+              >
+                {/* flex-initial overrides the base flex-1 (basis-0), which has no
                 space to grow into inside the pill's shrink-to-fit box and
                 collapses the value to a sliver. */}
-            <SelectValue className="min-w-0 flex-initial" />
-            <ChevronsUpDownIcon data-icon-end="" />
-          </Button>
-          {isMobile ? (
-            <Drawer
-              isOpen={pickerOpen}
-              onOpenChange={setPickerOpen}
-              className="h-[80svh]"
+                <SelectValue className="min-w-0 flex-initial" />
+                <ChevronsUpDownIcon data-icon-end="" />
+              </Button>
+              {isMobile ? (
+                <Drawer
+                  isOpen={pickerOpen}
+                  onOpenChange={onPickerOpenChange}
+                  className="h-[80svh]"
+                >
+                  <DialogContent
+                    aria-label="Select preview"
+                    className="flex h-full min-h-0 flex-col gap-0 p-0"
+                  >
+                    <DrawerHandle />
+                    {renderPicker("min-h-0 flex-1 overflow-y-auto")}
+                  </DialogContent>
+                </Drawer>
+              ) : (
+                <Popover placement="top" className="w-64">
+                  {renderPicker("max-h-72 overflow-y-auto")}
+                </Popover>
+              )}
+            </Select>
+
+            <div className="h-4 w-px shrink-0 bg-border max-lg:hidden" />
+
+            {/* Device size — desktop only; the mobile pane is already viewport-width. */}
+            {/* w-fit: the field base's w-full would absorb the pill's width. */}
+            <Select
+              value={size}
+              onChange={(v) => setSize(v as DeviceSize)}
+              aria-label="Device size"
+              className="w-fit shrink-0 max-lg:hidden"
             >
-              <DialogContent
-                aria-label="Select preview"
-                className="flex h-full min-h-0 flex-col gap-0 p-0"
+              <Tooltip delay={0}>
+                <Button
+                  size="sm"
+                  variant="quiet"
+                  isIconOnly
+                  className="rounded-full"
+                >
+                  <SizeIcon />
+                </Button>
+                <PillTooltipContent>
+                  Device{" "}
+                  <span className="text-fg-on-tooltip/60">
+                    {sizeOption.label}
+                  </span>
+                </PillTooltipContent>
+              </Tooltip>
+              <Popover placement="top" className="min-w-32">
+                <ListBox>
+                  {SIZE_OPTIONS.map(({ id, label, Icon }) => (
+                    <ListBoxItem key={id} id={id} textValue={label}>
+                      <Icon />
+                      {label}
+                    </ListBoxItem>
+                  ))}
+                </ListBox>
+              </Popover>
+            </Select>
+
+            {/* Zoom level */}
+            <Menu>
+              <Tooltip delay={0}>
+                <Button
+                  size="sm"
+                  variant="quiet"
+                  className="rounded-full tabular-nums max-lg:hidden"
+                >
+                  {Math.round(zoom * 100)}%
+                </Button>
+                <PillTooltipContent>
+                  Zoom{" "}
+                  <span className="text-fg-on-tooltip/60">
+                    {Math.round(zoom * 100)}%
+                  </span>
+                </PillTooltipContent>
+              </Tooltip>
+              <Popover placement="top" className="min-w-28">
+                <MenuContent
+                  selectionMode="single"
+                  selectedKeys={[String(zoom)]}
+                  onSelectionChange={(keys) => {
+                    if (keys === "all") return
+                    const v = keys.values().next().value
+                    if (v != null) setZoom(Number(v))
+                  }}
+                >
+                  {ZOOM_LEVELS.map((z) => (
+                    <MenuItem key={z} id={String(z)} textValue={`${z * 100}%`}>
+                      {Math.round(z * 100)}%
+                    </MenuItem>
+                  ))}
+                </MenuContent>
+              </Popover>
+            </Menu>
+
+            <div className="h-4 w-px shrink-0 bg-border" />
+
+            {/* Component inspector — hover the preview to see the dotUI component
+            under the cursor with its props; click jumps to its params. */}
+            <Tooltip delay={0}>
+              <Button
+                size="sm"
+                variant={inspecting ? "primary" : "quiet"}
+                isIconOnly
+                className="rounded-full"
+                onPress={() => setInspecting((v) => !v)}
+                aria-label="Toggle component inspector"
               >
-                <DrawerHandle />
-                {renderPicker("min-h-0 flex-1 overflow-y-auto")}
-              </DialogContent>
-            </Drawer>
-          ) : (
-            <Popover placement="top" className="w-64">
-              {renderPicker("max-h-72 overflow-y-auto")}
-            </Popover>
-          )}
-        </Select>
+                <SquareDashedMousePointerIcon />
+              </Button>
+              <PillTooltipContent>
+                Inspect{" "}
+                <span className="text-fg-on-tooltip/60">
+                  {inspecting ? "On" : "Off"}
+                </span>
+              </PillTooltipContent>
+            </Tooltip>
 
-        <div className="h-4 w-px shrink-0 bg-border max-lg:hidden" />
+            {/* Light / dark preview mode */}
+            <Tooltip delay={0}>
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                className="rounded-full"
+                onPress={() =>
+                  setPreviewMode((m) => (m === "dark" ? "light" : "dark"))
+                }
+                aria-label="Toggle preview mode"
+              >
+                {previewMode === "dark" ? <SunIcon /> : <MoonIcon />}
+              </Button>
+              <PillTooltipContent>
+                Preview mode{" "}
+                <span className="text-fg-on-tooltip/60">
+                  {previewMode === "dark" ? "Dark" : "Light"}
+                </span>
+              </PillTooltipContent>
+            </Tooltip>
 
-        {/* Device size — desktop only; the mobile pane is already viewport-width. */}
-        {/* w-fit: the field base's w-full would absorb the pill's width. */}
-        <Select
-          value={size}
-          onChange={(v) => setSize(v as DeviceSize)}
-          aria-label="Device size"
-          className="w-fit shrink-0 max-lg:hidden"
-        >
-          <Tooltip delay={0}>
-            <Button
-              size="sm"
-              variant="quiet"
-              isIconOnly
-              className="rounded-full"
-            >
-              <SizeIcon />
-            </Button>
-            <PillTooltipContent>
-              Device{" "}
-              <span className="text-fg-on-tooltip/60">{sizeOption.label}</span>
-            </PillTooltipContent>
-          </Tooltip>
-          <Popover placement="top" className="min-w-32">
-            <ListBox>
-              {SIZE_OPTIONS.map(({ id, label, Icon }) => (
-                <ListBoxItem key={id} id={id} textValue={label}>
-                  <Icon />
-                  {label}
-                </ListBoxItem>
-              ))}
-            </ListBox>
-          </Popover>
-        </Select>
+            {/* Open in new tab */}
+            <Tooltip delay={0}>
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                className="rounded-full"
+                onPress={() =>
+                  window.open(iframeSrc, "_blank", "noopener,noreferrer")
+                }
+                aria-label="Open preview in new tab"
+              >
+                <ExternalLinkIcon />
+              </Button>
+              <PillTooltipContent>Open in new tab</PillTooltipContent>
+            </Tooltip>
 
-        {/* Zoom level */}
-        <Menu>
-          <Tooltip delay={0}>
-            <Button
-              size="sm"
-              variant="quiet"
-              className="rounded-full tabular-nums max-lg:hidden"
-            >
-              {Math.round(zoom * 100)}%
-            </Button>
-            <PillTooltipContent>
-              Zoom{" "}
-              <span className="text-fg-on-tooltip/60">
-                {Math.round(zoom * 100)}%
-              </span>
-            </PillTooltipContent>
-          </Tooltip>
-          <Popover placement="top" className="min-w-28">
-            <MenuContent
-              selectionMode="single"
-              selectedKeys={[String(zoom)]}
-              onSelectionChange={(keys) => {
-                if (keys === "all") return
-                const v = keys.values().next().value
-                if (v != null) setZoom(Number(v))
-              }}
-            >
-              {ZOOM_LEVELS.map((z) => (
-                <MenuItem key={z} id={String(z)} textValue={`${z * 100}%`}>
-                  {Math.round(z * 100)}%
-                </MenuItem>
-              ))}
-            </MenuContent>
-          </Popover>
-        </Menu>
+            {/* Fullscreen */}
+            <Tooltip delay={0}>
+              <Button
+                size="sm"
+                variant="quiet"
+                isIconOnly
+                className="rounded-full"
+                onPress={toggleFullscreen}
+                aria-label="Toggle fullscreen"
+              >
+                {isFullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
+              </Button>
+              <PillTooltipContent>
+                Fullscreen{" "}
+                <span className="text-fg-on-tooltip/60">
+                  {isFullscreen ? "On" : "Off"}
+                </span>
+              </PillTooltipContent>
+            </Tooltip>
 
-        <div className="h-4 w-px shrink-0 bg-border" />
-
-        {/* Light / dark preview mode */}
-        <Tooltip delay={0}>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            className="rounded-full"
-            onPress={() =>
-              setPreviewMode((m) => (m === "dark" ? "light" : "dark"))
-            }
-            aria-label="Toggle preview mode"
-          >
-            {previewMode === "dark" ? <SunIcon /> : <MoonIcon />}
-          </Button>
-          <PillTooltipContent>
-            Preview mode{" "}
-            <span className="text-fg-on-tooltip/60">
-              {previewMode === "dark" ? "Dark" : "Light"}
-            </span>
-          </PillTooltipContent>
-        </Tooltip>
-
-        {/* Open in new tab */}
-        <Tooltip delay={0}>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            className="rounded-full"
-            onPress={() =>
-              window.open(iframeSrc, "_blank", "noopener,noreferrer")
-            }
-            aria-label="Open preview in new tab"
-          >
-            <ExternalLinkIcon />
-          </Button>
-          <PillTooltipContent>Open in new tab</PillTooltipContent>
-        </Tooltip>
-
-        {/* Fullscreen */}
-        <Tooltip delay={0}>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            className="rounded-full"
-            onPress={toggleFullscreen}
-            aria-label="Toggle fullscreen"
-          >
-            {isFullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
-          </Button>
-          <PillTooltipContent>
-            Fullscreen{" "}
-            <span className="text-fg-on-tooltip/60">
-              {isFullscreen ? "On" : "Off"}
-            </span>
-          </PillTooltipContent>
-        </Tooltip>
-
-        {/* Mobile — the customize sheet joins the pill so the page has a single
+            {/* Mobile — the customize sheet joins the pill so the page has a single
             floating cluster instead of two stacked bottom-center controls. */}
-        {onCustomize && (
-          <>
-            <div className="h-4 w-px shrink-0 bg-border lg:hidden" />
-            <Button
-              size="sm"
-              className="rounded-full lg:hidden"
-              onPress={onCustomize}
-            >
-              <SlidersHorizontalIcon data-icon-start="" />
-              Customize
-            </Button>
-          </>
-        )}
+            {onCustomize && (
+              <>
+                <div className="h-4 w-px shrink-0 bg-border lg:hidden" />
+                <Button
+                  size="sm"
+                  className="rounded-full lg:hidden"
+                  onPress={onCustomize}
+                >
+                  <SlidersHorizontalIcon data-icon-start="" />
+                  Customize
+                </Button>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Show / hide — tucks the pill into the bottom edge, chevron flipping
+            to point the way back out. */}
+        <Tooltip delay={0}>
+          <Button
+            size="sm"
+            variant="quiet"
+            isIconOnly
+            // rounded-[14px] = rounded-full at the 28px size, but interpolates.
+            // Collapsed, the button shrinks and fills the whole tab (inline
+            // style wins over the size variant's icon-only square).
+            className="rounded-[14px] transition-[width,height,border-radius] duration-200 ease-out"
+            style={
+              toolbarHidden
+                ? { height: 20, width: 36, borderRadius: "9px 9px 0 0" }
+                : undefined
+            }
+            onPress={() => setToolbarHidden((v) => !v)}
+            aria-label={toolbarHidden ? "Show toolbar" : "Hide toolbar"}
+          >
+            <ChevronDownIcon
+              className={cn(
+                "transition-transform duration-200",
+                toolbarHidden && "rotate-180",
+              )}
+            />
+          </Button>
+          <PillTooltipContent>
+            {toolbarHidden ? "Show toolbar" : "Hide toolbar"}
+          </PillTooltipContent>
+        </Tooltip>
       </div>
     </div>
   )

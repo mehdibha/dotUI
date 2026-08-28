@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-import { lazy, Suspense, useEffect } from "react"
+import { lazy, Suspense } from "react"
 import {
   ClientOnly,
   createRootRoute,
@@ -25,19 +25,6 @@ const DevTweaker =
   (import.meta.env.DEV || import.meta.env.VERCEL_ENV === "preview")
     ? lazy(() =>
         import("@/dev/tweaker").then((m) => ({ default: m.DevTweaker })),
-      )
-    : null
-
-// Router devtools: shown in dev and on Vercel previews, stripped from production.
-// The !SSR guard keeps the chunk out of the server bundle entirely — it touches
-// `window` at module scope, which crashes build-time prerendering.
-const RouterDevtools =
-  !import.meta.env.SSR &&
-  (import.meta.env.DEV || import.meta.env.VERCEL_ENV === "preview")
-    ? lazy(() =>
-        import("@tanstack/react-router-devtools").then((m) => ({
-          default: m.TanStackRouterDevtoolsInProd,
-        })),
       )
     : null
 
@@ -90,12 +77,6 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
-  useEffect(() => {
-    if (import.meta.env.DEV) {
-      void import("react-grab")
-    }
-  }, [])
-
   // In the /create preview iframe, the customizer owns the displayed mode — force it so
   // the provider's own system / storage listeners can't revert it. `undefined` elsewhere.
   const forcedTheme = usePreviewForcedTheme()
@@ -129,15 +110,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="min-h-screen bg-bg font-sans text-fg antialiased">
         {children}
-        {/* ClientOnly: the devtools touch `window` at module scope, which
-            crashes build-time prerendering when previews include them. */}
-        {RouterDevtools && (
-          <ClientOnly fallback={null}>
-            <Suspense fallback={null}>
-              <RouterDevtools position="bottom-right" />
-            </Suspense>
-          </ClientOnly>
-        )}
         <Scripts />
       </body>
     </html>

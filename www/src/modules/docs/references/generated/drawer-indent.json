@@ -22,7 +22,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/drawer/indent/DrawerIndent.d.ts:DrawerIndentState",
+                  "id": "@base-ui/react/drawer/indent/DrawerIndent.d.mts:DrawerIndentState",
                   "name": "DrawerIndentState"
                 },
                 "optional": false,
@@ -72,7 +72,7 @@
               },
               {
                 "type": "link",
-                "id": "@base-ui/react/esm/drawer/indent/DrawerIndent.d.ts:DrawerIndentState",
+                "id": "@base-ui/react/drawer/indent/DrawerIndent.d.mts:DrawerIndentState",
                 "name": "DrawerIndentState"
               }
             ]
@@ -102,7 +102,7 @@
                 "name": "state",
                 "value": {
                   "type": "link",
-                  "id": "@base-ui/react/esm/drawer/indent/DrawerIndent.d.ts:DrawerIndentState",
+                  "id": "@base-ui/react/drawer/indent/DrawerIndent.d.mts:DrawerIndentState",
                   "name": "DrawerIndentState"
                 },
                 "optional": false,
@@ -129,9 +129,9 @@
     }
   },
   "typeLinks": {
-    "@base-ui/react/esm/drawer/indent/DrawerIndent.d.ts:DrawerIndentState": {
+    "@base-ui/react/drawer/indent/DrawerIndent.d.mts:DrawerIndentState": {
       "type": "interface",
-      "id": "@base-ui/react/esm/drawer/indent/DrawerIndent.d.ts:DrawerIndentState",
+      "id": "@base-ui/react/drawer/indent/DrawerIndent.d.mts:DrawerIndentState",
       "name": "DrawerIndentState",
       "extends": [],
       "properties": {

@@ -1,28 +1,43 @@
 import { useEffect, useRef, useState } from "react"
 import { createFileRoute, stripSearchParams } from "@tanstack/react-router"
-import { z } from "zod"
+import type { SearchSchemaInput } from "@tanstack/react-router"
 
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { ExportHeaderAction } from "@/modules/create/export"
-import { CreatePanel } from "@/modules/create/panel"
 import { DEFAULTS, useDesignSystem } from "@/modules/create/preset"
 import {
   loadStoredPreset,
   saveStoredPreset,
 } from "@/modules/create/preset/storage"
 import { PreviewPanel } from "@/modules/create/preview/preview-panel"
+import { LabCreatePanel } from "@/modules/panel-lab/create"
+import { ORIGIN } from "@/modules/presets/presets-data"
 
-export const createSearchSchema = z.object({
-  panel: z.string().optional().catch(undefined),
-  preview: z.string().default("cards").catch("cards"),
-  preset: z.string().optional().catch(undefined),
-  // Opens the preset gallery modal — set by the panel's Presets button and the
-  // /presets permanent redirect. Coerced boolean: the search parser reads bare
-  // `1`/`true` as non-strings, so a plain `z.string()` would reject them and
-  // the param would be dropped.
-  gallery: z.coerce.boolean().optional().catch(undefined),
-})
+export function createSearchSchema(
+  search: {
+    panel?: string
+    preview?: string
+    preset?: string
+    gallery?: boolean
+  } & SearchSchemaInput,
+): {
+  panel?: string
+  preview: string
+  preset?: string
+  gallery?: boolean
+} {
+  return {
+    panel: typeof search.panel === "string" ? search.panel : undefined,
+    preview: typeof search.preview === "string" ? search.preview : "cards",
+    preset: typeof search.preset === "string" ? search.preset : undefined,
+    // Opens the preset gallery modal — set by the panel's Presets button and the
+    // /presets permanent redirect. Coerced boolean: the search parser reads bare
+    // `1`/`true` as non-strings, so a string check would reject them and the
+    // param would be dropped.
+    gallery: search.gallery === undefined ? undefined : Boolean(search.gallery),
+  }
+}
 
 const searchDefaults = { preview: "cards" }
 
@@ -44,6 +59,7 @@ function CreatePage() {
   // The user's selected preset is persisted in localStorage so every docs
   // component demo renders in it. Seed the editor from it on open (unless a
   // shared ?preset= link is being viewed), then persist back as it's edited.
+  // First visit — nothing stored — starts on Origin, the default preset.
   const seededFromStorage = useRef(false)
   useEffect(() => {
     if (seededFromStorage.current) return
@@ -51,6 +67,7 @@ function CreatePage() {
     if (preset) return // a shared / deep-linked preset wins over the saved one
     const stored = loadStoredPreset()
     if (stored !== DEFAULTS) setDesignSystem(stored)
+    else setDesignSystem(ORIGIN.designSystem)
   }, [preset, setDesignSystem])
 
   const skipFirstPersist = useRef(true)
@@ -69,7 +86,9 @@ function CreatePage() {
     // lines up with the Export button above it.
     <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2 lg:pr-4">
       <ExportHeaderAction />
-      <CreatePanel className="max-lg:hidden" />
+      {/* Panel-lab drill-in panel mounted in the real slot — design only,
+          not wired to the create engine (see modules/panel-lab). */}
+      <LabCreatePanel className="max-lg:hidden" />
       <PreviewPanel onCustomize={() => setSheetOpen(true)} />
 
       {/* Mobile: the panel is a bottom sheet over the live stage, opened from
@@ -85,7 +104,7 @@ function CreatePage() {
             className="flex h-full min-h-0 flex-col gap-0 p-0"
           >
             <DrawerHandle />
-            <CreatePanel className="min-h-0 flex-1" />
+            <LabCreatePanel className="min-h-0 flex-1" />
           </DialogContent>
         </Drawer>
       </div>

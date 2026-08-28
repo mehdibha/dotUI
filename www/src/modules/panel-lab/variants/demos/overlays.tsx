@@ -1,274 +1,120 @@
 "use client"
 
-/* Card demos for the overlay and navigation chapters — inert, span-based
-   specimens of each chapter's hero, sized for the index card's demo strip
-   (see demo.tsx). Panels taller than the card top-align via self-start
-   pt-3.5 and crop at the bottom edge. */
+/* Overlay and navigation illustrations — monochrome anatomy schematics (see
+   ink.tsx). Floating panels sit on bg-card, the one lifted surface the
+   schematics allow; panels taller than the row band top-align and crop. */
 
-import {
-  CheckIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CopyIcon,
-} from "lucide-react"
+import { ChevronDownIcon, ChevronLeftIcon, CopyIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
-import {
-  CONTAINER as ACCORDION_CONTAINER,
-  Marker,
-} from "../../sections/accordion"
-import { CRUMB_REST, Separator } from "../../sections/breadcrumbs"
-import { buttonRadiusPx, styleLook } from "../../sections/buttons"
-import { BACKDROP, DIALOG_POSITION } from "../../sections/dialogs"
-import { HIGHLIGHT as MENU_HIGHLIGHT } from "../../sections/menus"
-import { TAB_FAMILY, TAB_STRIP } from "../../sections/tabs"
-import { TOOLTIP } from "../../sections/tooltips"
-import type { LabState } from "../../state"
+import { Bar } from "./ink"
 
-/** A mini menu panel: the first item selected and highlighted so indicator
- *  and highlight both land in the visible band; the rest crop below. */
-export function MenusDemo({ state }: { state: LabState }) {
-  const inset = state.menuInset === "inset"
-  const indicator = state.menuIndicator
-  const item = (
-    label: string,
-    flags: { selected?: boolean; highlighted?: boolean } = {},
-  ) => (
-    <span
-      key={label}
-      className={cn(
-        "relative flex items-center gap-1.5 py-1.5 text-[0.8125rem]",
-        inset ? "rounded-md px-2" : "px-3",
-        flags.highlighted
-          ? MENU_HIGHLIGHT[state.menuHighlight as keyof typeof MENU_HIGHLIGHT]
-          : "text-fg",
-      )}
-    >
-      {flags.highlighted && state.menuHighlight === "edge" && (
-        <span className="absolute inset-y-0 left-0 w-0.5 bg-accent" />
-      )}
-      {indicator === "check-start" && (
-        <span className="flex size-3.5 shrink-0 items-center justify-center">
-          {flags.selected && <CheckIcon className="size-3.5" />}
-        </span>
-      )}
-      <span className="flex-1 truncate">{label}</span>
-      {indicator === "check-end" && flags.selected && (
-        <CheckIcon className="size-3.5 shrink-0" />
-      )}
-    </span>
-  )
+/** A floating list, the first item highlighted. */
+export function MenusDemo() {
   return (
-    <span className="flex shrink-0">
-      <span
-        className={cn(
-          "flex w-40 flex-col rounded-lg border border-border/60 bg-card shadow-lg",
-          inset ? "p-1" : "py-1",
-        )}
-      >
-        {item("In progress", { selected: true, highlighted: true })}
-        {item("Backlog")}
-        {item("Done")}
-      </span>
+    <span className="flex w-18 shrink-0 flex-col rounded-md border border-fg/15 bg-card p-0.5 text-[9px] leading-none font-medium text-fg/75 shadow-sm">
+      <span className="rounded-[4px] bg-fg/10 px-1.5 py-[3px]">Copy</span>
+      <span className="px-1.5 py-[3px]">Paste</span>
     </span>
   )
 }
 
-/** A mini app viewport: skeleton page, the chosen backdrop over it, the
- *  dialog card resting at the chosen position — center sinks into the crop. */
-export function DialogsDemo({ state }: { state: LabState }) {
+/** A dimmed viewport with the card resting at its center. */
+export function DialogsDemo() {
   return (
-    <span className="flex shrink-0">
-      <span className="relative h-24 w-48 overflow-hidden rounded-md border border-border/60 bg-muted">
-        <span className="flex flex-col gap-1.5 p-2">
-          <span className="h-1.5 w-14 rounded-full bg-fg/30" />
-          <span className="h-1 w-4/5 rounded-full bg-fg/15" />
-          <span className="h-1 w-full rounded-full bg-fg/15" />
-          <span className="h-1 w-3/5 rounded-full bg-fg/15" />
-        </span>
-        <span
-          className={cn(
-            "absolute inset-0",
-            BACKDROP[state.dialogBackdrop as keyof typeof BACKDROP],
-          )}
-        />
-        <span
-          className={cn(
-            "absolute left-1/2 flex w-28 -translate-x-1/2 flex-col rounded-md border border-border/60 bg-card p-2 shadow-xl",
-            DIALOG_POSITION[
-              state.dialogPosition as keyof typeof DIALOG_POSITION
-            ],
-          )}
-        >
-          <span className="h-1 w-10 rounded-full bg-fg/60" />
-          <span className="mt-1.5 h-1 w-16 rounded-full bg-fg/15" />
-          <span className="mt-2 flex justify-end gap-1">
-            <span className="h-3 w-7 rounded-[3px] border border-border bg-muted" />
-            <span className="h-3 w-7 rounded-[3px] bg-accent" />
-          </span>
+    <span className="relative h-8 w-24 shrink-0 overflow-hidden rounded-md bg-fg/10">
+      <span className="absolute top-1/2 left-1/2 flex w-13 -translate-x-1/2 -translate-y-1/2 flex-col gap-1 rounded-[5px] bg-card p-1 shadow-md">
+        <Bar className="w-6 bg-fg/50" />
+        <span className="flex justify-end gap-1">
+          <span className="h-2 w-3.5 rounded-[2px] bg-fg/15" />
+          <span className="h-2 w-3.5 rounded-[2px] bg-fg/70" />
         </span>
       </span>
     </span>
   )
 }
 
-/** The anchored panel alone, wearing the tip and header treatments. */
-export function PopoversDemo({ state }: { state: LabState }) {
-  const header = state.popoverHeader
-  const title = "Share project"
+/** The anchored panel alone, tip up. */
+export function PopoversDemo() {
   return (
-    <span className="flex shrink-0">
-      <span className="relative w-44 rounded-lg border border-border/60 bg-card text-xs shadow-lg">
-        {state.popoverTip === "tip" && (
-          <span className="absolute -top-[4.5px] left-1/2 size-2 -translate-x-1/2 rotate-45 rounded-[1px] border-t border-l border-border/60 bg-card" />
-        )}
-        {header === "band" && (
-          <span className="block rounded-t-lg border-b border-border/60 bg-muted/50 px-2.5 py-1 font-medium text-fg">
-            {title}
-          </span>
-        )}
-        <span className="flex flex-col gap-0.5 p-2.5">
-          {header === "title" && (
-            <span className="font-medium text-fg">{title}</span>
-          )}
-          <span className="text-[0.6875rem] text-fg-muted">
-            Anyone with the link can view.
-          </span>
-          <span className="mt-1 h-5 rounded-md border border-border/60 bg-bg" />
-        </span>
-      </span>
+    <span className="relative mt-1 flex w-20 shrink-0 flex-col gap-1 rounded-lg border border-fg/15 bg-card p-2 shadow-sm">
+      <span className="absolute -top-1 left-1/2 size-2 -translate-x-1/2 rotate-45 rounded-[1px] border-t border-l border-fg/15 bg-card" />
+      <Bar className="w-9 bg-fg/50" />
+      <Bar className="w-12 bg-fg/15" />
     </span>
   )
 }
 
-/** The tooltip chip pinned over the icon it names, wearing the style axis. */
-export function TooltipsDemo({ state }: { state: LabState }) {
+/** The chip pinned over the control it names. */
+export function TooltipsDemo() {
   return (
-    <span className="flex shrink-0 flex-col items-center gap-1.5">
-      <span
-        className={cn(
-          "rounded-md px-1.5 py-0.5 text-[0.6875rem] font-medium",
-          TOOLTIP[state.tooltipStyle as keyof typeof TOOLTIP],
-        )}
-      >
+    <span className="flex shrink-0 flex-col items-center gap-1">
+      <span className="rounded-[4px] bg-fg/80 px-1.5 py-[3px] text-[9px] leading-none font-medium text-bg">
         Copy
       </span>
-      <span className="flex size-6 items-center justify-center rounded-md border border-border/60 bg-card">
-        <CopyIcon className="size-3 text-fg-muted" />
+      <span className="flex size-4 items-center justify-center rounded-[5px] border border-fg/25">
+        <CopyIcon className="size-2.5 text-fg/55" />
       </span>
     </span>
   )
 }
 
-/** The hero's strip with its content edge — first tab selected so the
- *  signature (line, pill, enclosed fuse) is fully visible before the fade. */
-export function TabsDemo({ state }: { state: LabState }) {
-  const style = state.tabStyle as keyof typeof TAB_FAMILY
-  const tab = TAB_FAMILY[style]
+/** Two tabs on the content edge, the first carrying the line. */
+export function TabsDemo() {
   return (
-    <span className="flex w-52 shrink-0 flex-col text-[0.8125rem] whitespace-nowrap">
-      <span className={cn("flex", TAB_STRIP[style])}>
-        {["Overview", "Activity", "Settings"].map((label) => {
-          const selected = label === "Overview"
-          return (
-            <span
-              key={label}
-              className={cn(tab.base, selected ? tab.selected : tab.idle)}
-            >
-              {label}
-            </span>
-          )
-        })}
+    <span className="flex shrink-0 gap-3 border-b border-fg/15 px-0.5 text-[10px] font-medium whitespace-nowrap">
+      <span className="relative pb-1.5 text-fg/85">
+        Overview
+        <span className="absolute inset-x-0 -bottom-px h-[2px] rounded-full bg-fg/80" />
       </span>
-      <span
-        className={cn(
-          "flex flex-col gap-1.5 p-2.5",
-          style === "enclosed" && "border-t border-border bg-card",
-        )}
-      >
-        <span className="h-1.5 w-4/5 rounded-full bg-muted" />
-        <span className="h-1.5 w-3/5 rounded-full bg-muted" />
-      </span>
+      <span className="pb-1.5 text-fg/45">Activity</span>
     </span>
   )
 }
 
-/** The trail at true size: two ancestor crumbs in the tone, current on fg. */
-export function BreadcrumbsDemo({ state }: { state: LabState }) {
-  const tone = state.breadcrumbTone as keyof typeof CRUMB_REST
+/** A short trail, the current crumb on fg. */
+export function BreadcrumbsDemo() {
   return (
-    <span className="flex shrink-0 items-center gap-1.5 text-[0.8125rem] whitespace-nowrap">
-      <span className={CRUMB_REST[tone]}>Home</span>
-      <Separator state={state} />
-      <span className={CRUMB_REST[tone]}>Projects</span>
-      <Separator state={state} />
-      <span className="text-fg">Settings</span>
+    <span className="flex shrink-0 items-center gap-1 text-[10px] font-medium whitespace-nowrap">
+      <span className="text-fg/50">Home</span>
+      <span className="text-fg/30">/</span>
+      <span className="text-fg/50">Team</span>
+      <span className="text-fg/30">/</span>
+      <span className="text-fg/85">Billing</span>
     </span>
   )
 }
 
-const PAGE_ITEM =
-  "flex h-8 min-w-8 shrink-0 items-center justify-center px-1 text-[0.8125rem] font-medium"
-
-/** A short page run: quiet items in Buttons' language, the current page
- *  wearing its filled or outline emphasis. */
-export function PaginationDemo({ state }: { state: LabState }) {
-  const look = styleLook(state)
-  const radius = buttonRadiusPx(state)
-  const current =
-    state.paginationCurrent === "outline"
-      ? look.secondary
-      : cn("bg-primary text-fg-on-primary", look.fill)
-  const quiet = (key: string, children: React.ReactNode) => (
-    <span
-      key={key}
-      className={cn(PAGE_ITEM, "text-fg")}
-      style={{ borderRadius: radius }}
-    >
-      {children}
-    </span>
-  )
+/** A short page run, the current page solid. */
+export function PaginationDemo() {
+  const item =
+    "flex size-5 shrink-0 items-center justify-center rounded-[5px] text-[10px] font-medium"
   return (
     <span className="flex shrink-0 items-center gap-1">
-      {quiet("prev", <ChevronLeftIcon className="size-4" />)}
-      {quiet("1", "1")}
-      <span className={cn(PAGE_ITEM, current)} style={{ borderRadius: radius }}>
-        2
+      <span className={cn(item, "text-fg/55")}>
+        <ChevronLeftIcon className="size-3" />
       </span>
-      {quiet("3", "3")}
-      {quiet("next", <ChevronRightIcon className="size-4" />)}
+      <span className={cn(item, "text-fg/70")}>1</span>
+      <span className={cn(item, "bg-fg/75 text-bg")}>2</span>
+      <span className={cn(item, "text-fg/70")}>3</span>
     </span>
   )
 }
 
-/** Two collapsed rows wearing the container, marker and position axes —
- *  the second row crops at the card's bottom edge. */
-export function AccordionDemo({ state }: { state: LabState }) {
-  const container =
-    ACCORDION_CONTAINER[
-      state.accordionContainer as keyof typeof ACCORDION_CONTAINER
-    ]
-  const trailing = state.accordionMarkerPosition === "trailing"
-  const row = (label: string) => (
-    <span
-      key={label}
-      className={cn(
-        "flex items-center gap-2 py-2.5",
-        trailing && "justify-between",
-        container.item,
-      )}
-    >
-      {!trailing && <Marker open={false} state={state} />}
-      <span className="text-[0.8125rem] font-medium text-fg">{label}</span>
-      {trailing && <Marker open={false} state={state} />}
-    </span>
-  )
+/** Two collapsed rows and the hairline between them. */
+export function AccordionDemo() {
+  const row =
+    "flex items-center justify-between gap-2 py-1.5 text-[10px] font-medium text-fg/75"
   return (
-    <span className="flex shrink-0">
-      <span className={cn("flex w-44 flex-col", container.list)}>
-        {row("Shipping")}
-        {row("Returns")}
+    <span className="flex w-24 shrink-0 flex-col">
+      <span className={row}>
+        Shipping
+        <ChevronDownIcon className="size-2.5 shrink-0 text-fg/45" />
+      </span>
+      <span className={cn(row, "border-t border-fg/15")}>
+        Returns
+        <ChevronDownIcon className="size-2.5 shrink-0 text-fg/45" />
       </span>
     </span>
   )

@@ -88,6 +88,7 @@ const SELECTION_BLUE = "#0072f5"
 
 export const PRESETS: Preset[] = [
   {
+    // Kept first: ORIGIN below and the gallery's ordering both rely on it.
     id: "origin",
     name: "Origin",
     description: "dotUI blue, the starting point.",
@@ -312,3 +313,6 @@ export const PRESETS: Preset[] = [
     }),
   },
 ]
+
+/** The default preset — what /create starts on for first-time users. */
+export const ORIGIN = PRESETS[0]!

@@ -545,6 +545,26 @@ export const DemosIndex: Record<
 		files: ["ui/chart-radial/demos/text.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-radial/demos/text")),
 	},
+	"chat/demos/basic": {
+		files: ["ui/chat/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chat/demos/basic")),
+	},
+	"chat/demos/chat": {
+		files: ["ui/chat/demos/chat.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chat/demos/chat")),
+	},
+	"chat/demos/prompt-input": {
+		files: ["ui/chat/demos/prompt-input.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chat/demos/prompt-input")),
+	},
+	"chat/demos/with-avatars": {
+		files: ["ui/chat/demos/with-avatars.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chat/demos/with-avatars")),
+	},
+	"chat/demos/with-toolbar": {
+		files: ["ui/chat/demos/with-toolbar.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chat/demos/with-toolbar")),
+	},
 	"checkbox/demos/basic": {
 		files: ["ui/checkbox/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox/demos/basic")),

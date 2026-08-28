@@ -1,0 +1,33 @@
+{
+  "name": "MessageProps",
+  "description": "A single turn in a conversation. Lays out the avatar and the content, and\nexposes the role its children style against.",
+  "extendsElement": "div",
+  "props": {
+    "role": {
+      "type": "\"assistant\" | \"user\"",
+      "detailedType": "'assistant' | 'user' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "assistant"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "user"
+          }
+        ]
+      },
+      "description": "Who sent the message. `user` renders a contained bubble aligned to the end\nof the row, `assistant` renders plain full-width content.",
+      "default": "'assistant'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}
