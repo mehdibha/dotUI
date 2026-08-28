@@ -70,6 +70,14 @@ const ALL_COMPONENTS = componentsData
   .flatMap((category) => category.components)
   .sort((a, b) => a.name.localeCompare(b.name))
 
+// Composed, real-world previews: the landing cards grid plus the page blocks.
+const PREVIEW_ITEMS = [{ slug: "cards", name: "Cards" }, ...AVAILABLE_BLOCKS]
+
+// How many previews the picker shows before "Show more".
+const PREVIEW_ITEMS_COLLAPSED = 4
+
+const SHOW_ALL_PREVIEWS_ID = "__show-all-previews"
+
 // Zoom magnifies the rendered iframe (CSS `zoom`, no reflow) — distinct from device
 // size, which reflows the content. Combined, they behave like a browser's device bar.
 const ZOOM_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2]
@@ -110,6 +118,11 @@ export function PreviewPanel({
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
+  const [pickerQuery, setPickerQuery] = useState("")
+  const [showAllPreviews, setShowAllPreviews] = useState(false)
+  // Set when "Show more" is picked so the close the Select requests right
+  // after committing that selection can be swallowed.
+  const keepPickerOpen = useRef(false)
   const [inspecting, setInspecting] = useState(false)
   const [toolbarHidden, setToolbarHidden] = useState(false)
 
@@ -283,37 +296,61 @@ export function PreviewPanel({
     }
   }
 
+  // The picker truncates the blocks list behind "Show more" while browsing, but
+  // hidden items can't match the Autocomplete filter — so the full list renders
+  // whenever a search is underway (the filter then prunes it).
+  const onPickerOpenChange = (open: boolean) => {
+    if (!open && keepPickerOpen.current) {
+      keepPickerOpen.current = false
+      return
+    }
+    setPickerOpen(open)
+    if (!open) {
+      // Fresh picker on reopen — collapsed list, cleared search.
+      setShowAllPreviews(false)
+      setPickerQuery("")
+    }
+  }
+
+  const previewsExpanded = showAllPreviews || pickerQuery.trim() !== ""
+  const visiblePreviews = previewsExpanded
+    ? PREVIEW_ITEMS
+    : PREVIEW_ITEMS.slice(0, PREVIEW_ITEMS_COLLAPSED)
+  const hiddenPreviewCount = PREVIEW_ITEMS.length - visiblePreviews.length
+
   // Picker body shared by the desktop popover and the mobile drawer — only the
   // list's sizing differs between the two containers. Selection state comes
   // from the wrapping Select, so the ListBox carries no props of its own.
   const renderPicker = (listClassName: string) => (
     <Command className="min-h-0 flex-1">
-      <SearchField autoFocus aria-label="Search previews">
+      <SearchField
+        autoFocus
+        aria-label="Search previews"
+        onChange={setPickerQuery}
+      >
         <Input placeholder="Search previews…" />
       </SearchField>
       <ListBox className={listClassName}>
+        {/* Real-world previews — the whole system composed into full screens. */}
         <ListBoxSection>
-          <ListBoxSectionHeader>Preview</ListBoxSectionHeader>
-          {/* Composed, real-world UI (the landing cards grid), themed live. */}
-          <ListBoxItem id="cards" textValue="Cards">
-            <span className="truncate">Cards</span>
-          </ListBoxItem>
+          <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
+          {visiblePreviews.map((block) => (
+            <ListBoxItem
+              key={block.slug}
+              id={block.slug}
+              textValue={block.name}
+            >
+              <span className="truncate">{block.name}</span>
+            </ListBoxItem>
+          ))}
+          {hiddenPreviewCount > 0 && (
+            <ListBoxItem id={SHOW_ALL_PREVIEWS_ID} textValue="Show more">
+              <span className="truncate text-fg-muted">
+                Show {hiddenPreviewCount} more…
+              </span>
+            </ListBoxItem>
+          )}
         </ListBoxSection>
-        {/* Real-world page blocks — the whole system composed into full screens. */}
-        {AVAILABLE_BLOCKS.length > 0 && (
-          <ListBoxSection>
-            <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
-            {AVAILABLE_BLOCKS.map((block) => (
-              <ListBoxItem
-                key={block.slug}
-                id={block.slug}
-                textValue={block.name}
-              >
-                <span className="truncate">{block.name}</span>
-              </ListBoxItem>
-            ))}
-          </ListBoxSection>
-        )}
         <ListBoxSection>
           <ListBoxSectionHeader>Components</ListBoxSectionHeader>
           {ALL_COMPONENTS.map((comp) => (
@@ -425,13 +462,18 @@ export function PreviewPanel({
             so the drawer can be driven by the same Select. */}
             <Select
               value={effectivePreview}
-              onChange={(v) =>
+              onChange={(v) => {
+                if (v === SHOW_ALL_PREVIEWS_ID) {
+                  setShowAllPreviews(true)
+                  keepPickerOpen.current = true
+                  return
+                }
                 navigate({
                   search: (prev) => ({ ...prev, preview: v as string }),
                 })
-              }
+              }}
               isOpen={pickerOpen}
-              onOpenChange={setPickerOpen}
+              onOpenChange={onPickerOpenChange}
               aria-label="Preview"
               // w-fit overrides the field base's w-full, which would collapse the
               // trigger inside the pill's shrink-to-fit absolute box.
@@ -451,7 +493,7 @@ export function PreviewPanel({
               {isMobile ? (
                 <Drawer
                   isOpen={pickerOpen}
-                  onOpenChange={setPickerOpen}
+                  onOpenChange={onPickerOpenChange}
                   className="h-[80svh]"
                 >
                   <DialogContent

@@ -1,6 +1,5 @@
 import { useState } from "react"
 
-import { useIsMobile } from "@/registry/hooks/use-mobile"
 import {
   ActivityIcon,
   BellIcon,
@@ -9,12 +8,12 @@ import {
   FolderIcon,
   FrameIcon,
   GitBranchIcon,
-  ImageIcon,
   KeyboardIcon,
   LogOutIcon,
   MessageSquareIcon,
   PaletteIcon,
   PlugIcon,
+  SearchIcon,
   ShieldIcon,
   TriangleAlertIcon,
   UploadIcon,
@@ -30,15 +29,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/registry/ui/card"
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import { CheckboxGroup } from "@/registry/ui/checkbox-group"
 import {
@@ -70,6 +60,7 @@ import {
   RadioGroup,
   RadioIndicator,
 } from "@/registry/ui/radio-group"
+import { SearchField } from "@/registry/ui/search-field"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -80,7 +71,22 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/registry/ui/select"
-import { Separator } from "@/registry/ui/separator"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+  useSidebar,
+} from "@/registry/ui/sidebar"
 import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
 import {
   Table,
@@ -91,11 +97,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/registry/ui/table"
-import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import { TextField } from "@/registry/ui/text-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
-import { Appearance } from "@/components/showcase/appearance"
-import { TwoFactor } from "@/components/showcase/two-factor"
 
 const SECTIONS = [
   { id: "account", label: "Account", icon: UserIcon },
@@ -214,102 +217,178 @@ const SESSIONS = [
   },
 ]
 
-function SectionIntro({
+/* ------------------------------ Row primitives ---------------------------- */
+
+// A titled group of hairline-separated rows — the flat, card-less shape
+// desktop-app settings use. `action` sits on the title's right (e.g. a badge
+// or a group-wide button).
+function SettingsGroup({
   title,
-  description,
+  action,
+  danger = false,
+  children,
 }: {
   title: string
-  description: string
+  action?: React.ReactNode
+  danger?: boolean
+  children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-1">
-      <h2 className="font-heading text-lg font-semibold tracking-tight">
-        {title}
-      </h2>
-      <p className="text-pretty text-fg-muted">{description}</p>
+    <section className="flex flex-col">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2
+          className={cn(
+            "font-heading text-lg font-semibold tracking-tight",
+            danger && "text-fg-danger",
+          )}
+        >
+          {title}
+        </h2>
+        {action}
+      </div>
+      <div className="flex flex-col divide-y divide-border-muted">
+        {children}
+      </div>
+    </section>
+  )
+}
+
+// One setting: label (and optional description) on the left, its control on
+// the right. `stacked` puts the control below instead — for wide controls
+// like a textarea or a table.
+function SettingsRow({
+  label,
+  description,
+  stacked = false,
+  children,
+}: {
+  label: string
+  description?: string
+  stacked?: boolean
+  children?: React.ReactNode
+}) {
+  return (
+    <div
+      className={cn(
+        "flex gap-x-8 gap-y-4 py-5",
+        stacked ? "flex-col" : "flex-wrap items-center justify-between",
+      )}
+    >
+      <div className="flex min-w-0 flex-col gap-1">
+        <span className="font-medium">{label}</span>
+        {description && (
+          <p className="max-w-prose text-sm text-pretty text-fg-muted">
+            {description}
+          </p>
+        )}
+      </div>
+      {children && (
+        <div className={cn(!stacked && "flex shrink-0 items-center gap-2")}>
+          {children}
+        </div>
+      )}
     </div>
   )
 }
 
-function ProfileCard() {
+// A bare switch on the row's right — a labeled SwitchControl would render the
+// DS's bordered card style and break the flat hairline stack.
+function SwitchRow({
+  label,
+  description,
+  defaultSelected = false,
+}: {
+  label: string
+  description?: string
+  defaultSelected?: boolean
+}) {
+  return (
+    <SettingsRow label={label} description={description}>
+      <Switch aria-label={label} defaultSelected={defaultSelected}>
+        <SwitchControl>
+          <SwitchIndicator />
+        </SwitchControl>
+      </Switch>
+    </SettingsRow>
+  )
+}
+
+/* -------------------------------- Sections -------------------------------- */
+
+function AccountSection() {
   const [photo, setPhoto] = useState<string | null>(null)
   const [bio, setBio] = useState(
     "Product engineer working on the Northwind platform team. Previously infrastructure at Halcyon.",
   )
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Profile</CardTitle>
-        <CardDescription>
-          This information appears on your public profile and in mentions.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-6">
-        <div className="relative">
-          <div className="flex h-28 items-center justify-center rounded-xl border bg-muted text-fg-muted sm:h-32">
-            <ImageIcon className="size-6" />
-          </div>
-          <div className="absolute right-3 bottom-3">
-            <FileTrigger acceptedFileTypes={["image/png", "image/jpeg"]}>
-              <Button size="sm">Change cover</Button>
-            </FileTrigger>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <Avatar size="lg" className="size-16 shrink-0">
+    <>
+      <SettingsGroup title="Profile">
+        <SettingsRow
+          label="Profile photo"
+          description="Square PNG or JPG, at least 256×256 and under 2 MB."
+        >
+          <Avatar size="lg" className="shrink-0">
             {photo && <AvatarImage src={photo} alt="Mara Ellison" />}
             <AvatarFallback>ME</AvatarFallback>
           </Avatar>
-          <div className="flex min-w-0 flex-col gap-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <FileTrigger
-                acceptedFileTypes={["image/png", "image/jpeg"]}
-                onSelect={(files) => {
-                  const file = files ? Array.from(files)[0] : null
-                  if (file) setPhoto(URL.createObjectURL(file))
-                }}
-              >
-                <Button size="sm">
-                  <UploadIcon />
-                  Upload photo
-                </Button>
-              </FileTrigger>
-              <Button
-                size="sm"
-                variant="quiet"
-                isDisabled={!photo}
-                onPress={() => setPhoto(null)}
-              >
-                Remove
-              </Button>
-            </div>
-            <p className="text-xs text-fg-muted">
-              Square PNG or JPG, at least 256×256 and under 2 MB.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          <TextField defaultValue="Mara Ellison" className="w-full">
-            <Label>Full name</Label>
+          <FileTrigger
+            acceptedFileTypes={["image/png", "image/jpeg"]}
+            onSelect={(files) => {
+              const file = files ? Array.from(files)[0] : null
+              if (file) setPhoto(URL.createObjectURL(file))
+            }}
+          >
+            <Button size="sm">
+              <UploadIcon />
+              Upload
+            </Button>
+          </FileTrigger>
+          <Button
+            size="sm"
+            variant="quiet"
+            isDisabled={!photo}
+            onPress={() => setPhoto(null)}
+          >
+            Remove
+          </Button>
+        </SettingsRow>
+        <SettingsRow label="Full name">
+          <TextField
+            defaultValue="Mara Ellison"
+            aria-label="Full name"
+            className="w-56"
+          >
             <Input />
           </TextField>
-          <TextField defaultValue="mara-ellison" className="w-full">
-            <Label>Username</Label>
+        </SettingsRow>
+        <SettingsRow label="Username">
+          <TextField
+            defaultValue="mara-ellison"
+            aria-label="Username"
+            className="w-64"
+          >
             <InputGroup>
               <InputGroupAddon>northwind.dev/</InputGroupAddon>
               <Input />
             </InputGroup>
           </TextField>
-          <TextField defaultValue="mara@northwind.dev" className="w-full">
-            <Label>Email</Label>
+        </SettingsRow>
+        <SettingsRow label="Email" description="Used for sign-in and receipts.">
+          <TextField
+            defaultValue="mara@northwind.dev"
+            aria-label="Email"
+            className="w-64"
+          >
             <Input type="email" />
-            <Description>Used for sign-in and receipts.</Description>
           </TextField>
-          <Select defaultSelectedKey="engineering" className="w-full">
-            <Label>Job title</Label>
+        </SettingsRow>
+        <SettingsRow label="Job title">
+          <Select
+            defaultSelectedKey="engineering"
+            aria-label="Job title"
+            className="w-56"
+          >
             <SelectTrigger />
             <SelectContent>
               <SelectItem id="engineering">Product engineer</SelectItem>
@@ -318,70 +397,87 @@ function ProfileCard() {
               <SelectItem id="support">Support engineer</SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </SettingsRow>
+        <SettingsRow
+          stacked
+          label="Bio"
+          description="Shown on your public profile and in mentions."
+        >
+          <TextField
+            value={bio}
+            onChange={setBio}
+            aria-label="Bio"
+            className="w-full"
+          >
+            <TextArea rows={4} maxLength={280} />
+            <Description>{280 - bio.length} characters remaining.</Description>
+          </TextField>
+        </SettingsRow>
+      </SettingsGroup>
 
-        <TextField value={bio} onChange={setBio} className="w-full">
-          <Label>Bio</Label>
-          <TextArea rows={4} maxLength={280} />
-          <Description>{280 - bio.length} characters remaining.</Description>
-        </TextField>
-      </CardContent>
-      <CardFooter className="justify-end gap-2">
-        <Button variant="quiet">Cancel</Button>
-        <Button variant="primary">Save profile</Button>
-      </CardFooter>
-    </Card>
-  )
-}
-
-function WorkspaceCard() {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Workspace</CardTitle>
-        <CardDescription>
-          Names and defaults shared by everyone at Northwind Labs.
-        </CardDescription>
-        <CardAction>
+      <SettingsGroup
+        title="Workspace"
+        action={
           <Badge variant="accent" appearance="subtle">
             Owner
           </Badge>
-        </CardAction>
-      </CardHeader>
-      <CardContent className="grid gap-4 sm:grid-cols-2">
-        <TextField defaultValue="Northwind Labs" className="w-full">
-          <Label>Workspace name</Label>
-          <Input />
-        </TextField>
-        <TextField defaultValue="northwind-labs" className="w-full">
-          <Label>Workspace URL</Label>
-          <InputGroup>
-            <InputGroupAddon>app.northwind.dev/</InputGroupAddon>
+        }
+      >
+        <SettingsRow label="Workspace name">
+          <TextField
+            defaultValue="Northwind Labs"
+            aria-label="Workspace name"
+            className="w-56"
+          >
             <Input />
-          </InputGroup>
-        </TextField>
-        <Select defaultSelectedKey="overview" className="w-full">
-          <Label>Default landing page</Label>
-          <SelectTrigger />
-          <SelectContent>
-            <SelectItem id="overview">Overview</SelectItem>
-            <SelectItem id="deployments">Deployments</SelectItem>
-            <SelectItem id="issues">Issues</SelectItem>
-            <SelectItem id="analytics">Analytics</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select defaultSelectedKey="wet" className="w-full">
-          <Label>Time zone</Label>
-          <SelectTrigger />
-          <SelectContent>
-            <SelectItem id="wet">Lisbon — WET (UTC+0)</SelectItem>
-            <SelectItem id="cet">Berlin — CET (UTC+1)</SelectItem>
-            <SelectItem id="est">New York — EST (UTC−5)</SelectItem>
-            <SelectItem id="pst">San Francisco — PST (UTC−8)</SelectItem>
-          </SelectContent>
-        </Select>
-      </CardContent>
-    </Card>
+          </TextField>
+        </SettingsRow>
+        <SettingsRow label="Workspace URL">
+          <TextField
+            defaultValue="northwind-labs"
+            aria-label="Workspace URL"
+            className="w-72"
+          >
+            <InputGroup>
+              <InputGroupAddon>app.northwind.dev/</InputGroupAddon>
+              <Input />
+            </InputGroup>
+          </TextField>
+        </SettingsRow>
+        <SettingsRow label="Default landing page">
+          <Select
+            defaultSelectedKey="overview"
+            aria-label="Default landing page"
+            className="w-56"
+          >
+            <SelectTrigger />
+            <SelectContent>
+              <SelectItem id="overview">Overview</SelectItem>
+              <SelectItem id="deployments">Deployments</SelectItem>
+              <SelectItem id="issues">Issues</SelectItem>
+              <SelectItem id="analytics">Analytics</SelectItem>
+            </SelectContent>
+          </Select>
+        </SettingsRow>
+        <SettingsRow label="Time zone">
+          <Select
+            defaultSelectedKey="wet"
+            aria-label="Time zone"
+            className="w-56"
+          >
+            <SelectTrigger />
+            <SelectContent>
+              <SelectItem id="wet">Lisbon — WET (UTC+0)</SelectItem>
+              <SelectItem id="cet">Berlin — CET (UTC+1)</SelectItem>
+              <SelectItem id="est">New York — EST (UTC−5)</SelectItem>
+              <SelectItem id="pst">San Francisco — PST (UTC−8)</SelectItem>
+            </SelectContent>
+          </Select>
+        </SettingsRow>
+      </SettingsGroup>
+
+      <DangerZone />
+    </>
   )
 }
 
@@ -416,141 +512,89 @@ function DangerZone() {
   }
 
   return (
-    <Card className="border-border-danger">
-      <CardHeader>
-        <CardTitle className="text-fg-danger">Danger zone</CardTitle>
-        <CardDescription>
-          These actions affect every member of Northwind Labs.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex min-w-0 flex-col">
-            <span className="font-medium">Transfer ownership</span>
-            <span className="text-sm text-fg-muted">
-              Hand the workspace to another admin.
-            </span>
-          </div>
-          <Button className="shrink-0">Transfer</Button>
-        </div>
-        <Separator />
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex min-w-0 flex-col">
-            <span className="font-medium">Delete this workspace</span>
-            <span className="text-sm text-fg-muted">
-              Removes 24 projects, 1,842 issues and all deploy history.
-            </span>
-          </div>
-          <Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
-            <Button variant="danger" className="shrink-0">
-              Delete workspace
-            </Button>
-            <Modal>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Delete Northwind Labs?</DialogTitle>
-                  <DialogDescription>
-                    This cannot be undone once the 7-day grace period ends.
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogBody className="gap-4">
-                  <Alert variant="danger">
-                    <TriangleAlertIcon />
-                    <AlertTitle>18 members will lose access</AlertTitle>
-                    <AlertDescription>
-                      Projects, integrations and audit logs are deleted with the
-                      workspace.
-                    </AlertDescription>
-                  </Alert>
-                  <TextField
-                    value={confirmation}
-                    onChange={setConfirmation}
-                    className="w-full"
-                  >
-                    <Label>
-                      Type <span className="font-mono">northwind-labs</span> to
-                      confirm
-                    </Label>
-                    <Input placeholder="northwind-labs" />
-                  </TextField>
-                </DialogBody>
-                <DialogFooter>
-                  <Button onPress={() => setIsOpen(false)}>Cancel</Button>
-                  <Button
-                    variant="danger"
-                    isDisabled={!canDelete}
-                    onPress={() => {
-                      setIsOpen(false)
-                      setIsScheduled(true)
-                    }}
-                  >
-                    Delete workspace
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Modal>
-          </Dialog>
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
-
-function AccountSection() {
-  return (
-    <>
-      <SectionIntro
-        title="Account"
-        description="Your profile, the workspace it belongs to, and the actions you can't take back."
-      />
-      <ProfileCard />
-      <WorkspaceCard />
-      <DangerZone />
-    </>
+    <SettingsGroup title="Danger zone" danger>
+      <SettingsRow
+        label="Transfer ownership"
+        description="Hand the workspace to another admin."
+      >
+        <Button>Transfer</Button>
+      </SettingsRow>
+      <SettingsRow
+        label="Delete this workspace"
+        description="Removes 24 projects, 1,842 issues and all deploy history."
+      >
+        <Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
+          <Button variant="danger">Delete workspace</Button>
+          <Modal>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Delete Northwind Labs?</DialogTitle>
+                <DialogDescription>
+                  This cannot be undone once the 7-day grace period ends.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogBody className="gap-4">
+                <Alert variant="danger">
+                  <TriangleAlertIcon />
+                  <AlertTitle>18 members will lose access</AlertTitle>
+                  <AlertDescription>
+                    Projects, integrations and audit logs are deleted with the
+                    workspace.
+                  </AlertDescription>
+                </Alert>
+                <TextField
+                  value={confirmation}
+                  onChange={setConfirmation}
+                  className="w-full"
+                >
+                  <Label>
+                    Type <span className="font-mono">northwind-labs</span> to
+                    confirm
+                  </Label>
+                  <Input placeholder="northwind-labs" />
+                </TextField>
+              </DialogBody>
+              <DialogFooter>
+                <Button onPress={() => setIsOpen(false)}>Cancel</Button>
+                <Button
+                  variant="danger"
+                  isDisabled={!canDelete}
+                  onPress={() => {
+                    setIsOpen(false)
+                    setIsScheduled(true)
+                  }}
+                >
+                  Delete workspace
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Modal>
+        </Dialog>
+      </SettingsRow>
+    </SettingsGroup>
   )
 }
 
 function NotificationsSection() {
   return (
     <>
-      <SectionIntro
-        title="Notifications"
-        description="Choose where Northwind reaches you and how often it batches updates."
-      />
-      <Card>
-        <CardHeader>
-          <CardTitle>Channels</CardTitle>
-          <CardDescription>
-            Turn a channel off to silence it everywhere.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          {CHANNELS.map((channel) => (
-            <Switch
-              key={channel.id}
-              className="w-full"
-              defaultSelected={channel.defaultSelected}
-            >
-              <SwitchControl>
-                <FieldContent>
-                  <Label>{channel.label}</Label>
-                  <Description>{channel.description}</Description>
-                </FieldContent>
-                <SwitchIndicator />
-              </SwitchControl>
-            </Switch>
-          ))}
-        </CardContent>
-      </Card>
+      <SettingsGroup title="Channels">
+        {CHANNELS.map((channel) => (
+          <SwitchRow
+            key={channel.id}
+            label={channel.label}
+            description={channel.description}
+            defaultSelected={channel.defaultSelected}
+          />
+        ))}
+      </SettingsGroup>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Email me about</CardTitle>
-          <CardDescription>
-            Applies to the daily and weekly digests too.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+      <SettingsGroup title="Email me about">
+        <SettingsRow
+          stacked
+          label="Topics"
+          description="Applies to the daily and weekly digests too."
+        >
           <CheckboxGroup
             aria-label="Email topics"
             defaultValue={["mentions", "reviews", "incidents"]}
@@ -578,17 +622,15 @@ function NotificationsSection() {
               </Checkbox>
             </FieldGroup>
           </CheckboxGroup>
-        </CardContent>
-      </Card>
+        </SettingsRow>
+      </SettingsGroup>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Delivery</CardTitle>
-          <CardDescription>
-            How often batched notifications leave the queue.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-5">
+      <SettingsGroup title="Delivery">
+        <SettingsRow
+          stacked
+          label="Frequency"
+          description="How often batched notifications leave the queue."
+        >
           <RadioGroup defaultValue="daily" aria-label="Delivery frequency">
             <FieldGroup>
               <Radio value="realtime">
@@ -624,35 +666,37 @@ function NotificationsSection() {
               </Radio>
             </FieldGroup>
           </RadioGroup>
-          <Separator />
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Select defaultSelectedKey="22-08" className="w-full">
-              <Label>Quiet hours</Label>
-              <SelectTrigger />
-              <SelectContent>
-                <SelectItem id="off">Off</SelectItem>
-                <SelectItem id="22-08">22:00 — 08:00</SelectItem>
-                <SelectItem id="20-09">20:00 — 09:00</SelectItem>
-                <SelectItem id="weekends">Weekends only</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select defaultSelectedKey="mentions" className="w-full">
-              <Label>Break quiet hours for</Label>
-              <SelectTrigger />
-              <SelectContent>
-                <SelectItem id="nothing">Nothing</SelectItem>
-                <SelectItem id="mentions">Direct mentions</SelectItem>
-                <SelectItem id="incidents">
-                  Incidents I'm on call for
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </CardContent>
-        <CardFooter className="justify-end">
-          <Button variant="primary">Save preferences</Button>
-        </CardFooter>
-      </Card>
+        </SettingsRow>
+        <SettingsRow label="Quiet hours">
+          <Select
+            defaultSelectedKey="22-08"
+            aria-label="Quiet hours"
+            className="w-48"
+          >
+            <SelectTrigger />
+            <SelectContent>
+              <SelectItem id="off">Off</SelectItem>
+              <SelectItem id="22-08">22:00 — 08:00</SelectItem>
+              <SelectItem id="20-09">20:00 — 09:00</SelectItem>
+              <SelectItem id="weekends">Weekends only</SelectItem>
+            </SelectContent>
+          </Select>
+        </SettingsRow>
+        <SettingsRow label="Break quiet hours for">
+          <Select
+            defaultSelectedKey="mentions"
+            aria-label="Break quiet hours for"
+            className="w-56"
+          >
+            <SelectTrigger />
+            <SelectContent>
+              <SelectItem id="nothing">Nothing</SelectItem>
+              <SelectItem id="mentions">Direct mentions</SelectItem>
+              <SelectItem id="incidents">Incidents I'm on call for</SelectItem>
+            </SelectContent>
+          </Select>
+        </SettingsRow>
+      </SettingsGroup>
     </>
   )
 }
@@ -660,79 +704,68 @@ function NotificationsSection() {
 function AppearanceSection() {
   return (
     <>
-      <SectionIntro
-        title="Appearance"
-        description="Theme, language and the small display choices that follow you across devices."
-      />
-      <Appearance />
-      <Card>
-        <CardHeader>
-          <CardTitle>Display</CardTitle>
-          <CardDescription>
-            Applies to this browser and syncs to the Northwind desktop app.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-5">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Select defaultSelectedKey="en" className="w-full">
-              <Label>Language</Label>
-              <SelectTrigger />
-              <SelectContent>
-                <SelectItem id="en">English (United States)</SelectItem>
-                <SelectItem id="en-gb">English (United Kingdom)</SelectItem>
-                <SelectItem id="fr">Français</SelectItem>
-                <SelectItem id="de">Deutsch</SelectItem>
-                <SelectItem id="pt">Português</SelectItem>
-                <SelectItem id="ja">日本語</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select defaultSelectedKey="iso" className="w-full">
-              <Label>Date format</Label>
-              <SelectTrigger />
-              <SelectContent>
-                <SelectItem id="iso">2026-08-22</SelectItem>
-                <SelectItem id="us">Aug 22, 2026</SelectItem>
-                <SelectItem id="eu">22 August 2026</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label id="density-label">Interface density</Label>
-            <SegmentedControl
-              aria-labelledby="density-label"
-              defaultSelectedKeys={new Set(["cozy"])}
-              className="grid w-full grid-cols-3"
-            >
-              <SegmentedControlItem id="compact">Compact</SegmentedControlItem>
-              <SegmentedControlItem id="cozy">Cozy</SegmentedControlItem>
-              <SegmentedControlItem id="roomy">Roomy</SegmentedControlItem>
-            </SegmentedControl>
-          </div>
-          <Separator />
-          <Switch className="w-full" defaultSelected>
-            <SwitchControl>
-              <FieldContent>
-                <Label>Show avatars in lists</Label>
-                <Description>
-                  Turn off for a denser, text-only issue list.
-                </Description>
-              </FieldContent>
-              <SwitchIndicator />
-            </SwitchControl>
-          </Switch>
-          <Switch className="w-full">
-            <SwitchControl>
-              <FieldContent>
-                <Label>Collapse the sidebar by default</Label>
-                <Description>
-                  Starts every session with the navigation tucked away.
-                </Description>
-              </FieldContent>
-              <SwitchIndicator />
-            </SwitchControl>
-          </Switch>
-        </CardContent>
-      </Card>
+      <SettingsGroup title="Appearance">
+        <SettingsRow label="Theme">
+          <SegmentedControl
+            aria-label="Theme"
+            defaultSelectedKeys={new Set(["system"])}
+          >
+            <SegmentedControlItem id="system">System</SegmentedControlItem>
+            <SegmentedControlItem id="light">Light</SegmentedControlItem>
+            <SegmentedControlItem id="dark">Dark</SegmentedControlItem>
+          </SegmentedControl>
+        </SettingsRow>
+        <SettingsRow label="Language">
+          <Select
+            defaultSelectedKey="en"
+            aria-label="Language"
+            className="w-64"
+          >
+            <SelectTrigger />
+            <SelectContent>
+              <SelectItem id="en">English (United States)</SelectItem>
+              <SelectItem id="en-gb">English (United Kingdom)</SelectItem>
+              <SelectItem id="fr">Français</SelectItem>
+              <SelectItem id="de">Deutsch</SelectItem>
+              <SelectItem id="pt">Português</SelectItem>
+              <SelectItem id="ja">日本語</SelectItem>
+            </SelectContent>
+          </Select>
+        </SettingsRow>
+        <SettingsRow label="Date format">
+          <Select
+            defaultSelectedKey="iso"
+            aria-label="Date format"
+            className="w-48"
+          >
+            <SelectTrigger />
+            <SelectContent>
+              <SelectItem id="iso">2026-08-22</SelectItem>
+              <SelectItem id="us">Aug 22, 2026</SelectItem>
+              <SelectItem id="eu">22 August 2026</SelectItem>
+            </SelectContent>
+          </Select>
+        </SettingsRow>
+        <SettingsRow label="Interface density">
+          <SegmentedControl
+            aria-label="Interface density"
+            defaultSelectedKeys={new Set(["cozy"])}
+          >
+            <SegmentedControlItem id="compact">Compact</SegmentedControlItem>
+            <SegmentedControlItem id="cozy">Cozy</SegmentedControlItem>
+            <SegmentedControlItem id="roomy">Roomy</SegmentedControlItem>
+          </SegmentedControl>
+        </SettingsRow>
+        <SwitchRow
+          label="Show avatars in lists"
+          description="Turn off for a denser, text-only issue list."
+          defaultSelected
+        />
+        <SwitchRow
+          label="Collapse the sidebar by default"
+          description="Starts every session with the navigation tucked away."
+        />
+      </SettingsGroup>
     </>
   )
 }
@@ -740,54 +773,48 @@ function AppearanceSection() {
 function ConnectionsSection() {
   return (
     <>
-      <SectionIntro
-        title="Connections"
-        description="Services linked to your Northwind account. Disconnecting stops the sync but keeps imported data."
-      />
-      <Card className="gap-0 py-0">
-        <CardContent className="flex flex-col p-0">
-          {INTEGRATIONS.map((integration, index) => (
-            <div key={integration.id}>
-              {index > 0 && <Separator />}
-              <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:gap-4">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border bg-muted text-fg-muted">
-                  <integration.icon className="size-5" />
-                </div>
-                <div className="flex min-w-0 flex-1 flex-col">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-medium">{integration.name}</span>
-                    {integration.connected ? (
-                      <Badge variant="success" appearance="subtle" size="sm">
-                        Connected
-                      </Badge>
-                    ) : null}
-                  </div>
-                  <span className="truncate text-sm text-fg-muted">
-                    {integration.account ?? integration.detail}
-                  </span>
-                </div>
-                <div className="flex shrink-0 items-center gap-2">
-                  {integration.connected ? (
-                    <>
-                      <Tooltip>
-                        <Button variant="quiet" size="sm" isIconOnly>
-                          <ExternalLinkIcon />
-                        </Button>
-                        <TooltipContent>Open {integration.name}</TooltipContent>
-                      </Tooltip>
-                      <Button size="sm">Disconnect</Button>
-                    </>
-                  ) : (
-                    <Button size="sm" variant="primary">
-                      Connect
-                    </Button>
-                  )}
-                </div>
-              </div>
+      <SettingsGroup title="Connected services">
+        {INTEGRATIONS.map((integration) => (
+          <div
+            key={integration.id}
+            className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-4"
+          >
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border bg-muted text-fg-muted">
+              <integration.icon className="size-5" />
             </div>
-          ))}
-        </CardContent>
-      </Card>
+            <div className="flex min-w-0 flex-1 flex-col">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-medium">{integration.name}</span>
+                {integration.connected ? (
+                  <Badge variant="success" appearance="subtle" size="sm">
+                    Connected
+                  </Badge>
+                ) : null}
+              </div>
+              <span className="truncate text-sm text-fg-muted">
+                {integration.account ?? integration.detail}
+              </span>
+            </div>
+            <div className="flex shrink-0 items-center gap-2">
+              {integration.connected ? (
+                <>
+                  <Tooltip>
+                    <Button variant="quiet" size="sm" isIconOnly>
+                      <ExternalLinkIcon />
+                    </Button>
+                    <TooltipContent>Open {integration.name}</TooltipContent>
+                  </Tooltip>
+                  <Button size="sm">Disconnect</Button>
+                </>
+              ) : (
+                <Button size="sm" variant="primary">
+                  Connect
+                </Button>
+              )}
+            </div>
+          </div>
+        ))}
+      </SettingsGroup>
       <Alert>
         <PlugIcon />
         <AlertTitle>Looking for something else?</AlertTitle>
@@ -803,73 +830,44 @@ function ConnectionsSection() {
 function SecuritySection() {
   return (
     <>
-      <SectionIntro
-        title="Security"
-        description="Sign-in factors and the devices currently holding a session."
-      />
-      <div className="grid items-start gap-6 lg:grid-cols-2">
-        <TwoFactor />
-        <Card>
-          <CardHeader>
-            <CardTitle>Sign-in</CardTitle>
-            <CardDescription>
-              Last password change: March 4, 2026.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <Switch className="w-full" defaultSelected>
-              <SwitchControl>
-                <FieldContent>
-                  <Label>Require 2FA for this workspace</Label>
-                  <Description>
-                    Every member must enrol before their next sign-in.
-                  </Description>
-                </FieldContent>
-                <SwitchIndicator />
-              </SwitchControl>
-            </Switch>
-            <Switch className="w-full">
-              <SwitchControl>
-                <FieldContent>
-                  <Label>Alert me about new devices</Label>
-                  <Description>
-                    Email whenever a session starts somewhere new.
-                  </Description>
-                </FieldContent>
-                <SwitchIndicator />
-              </SwitchControl>
-            </Switch>
-            <Separator />
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="flex min-w-0 flex-col">
-                <span className="font-medium">Passkeys</span>
-                <span className="text-sm text-fg-muted">
-                  2 registered — MacBook Pro, YubiKey 5C
-                </span>
-              </div>
-              <Button size="sm">
-                <KeyboardIcon />
-                Add passkey
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <SettingsGroup title="Sign-in">
+        <SettingsRow label="Password" description="Last changed March 4, 2026.">
+          <Button size="sm">Change password</Button>
+        </SettingsRow>
+        <SwitchRow
+          label="Require 2FA for this workspace"
+          description="Every member must enrol before their next sign-in."
+          defaultSelected
+        />
+        <SwitchRow
+          label="Alert me about new devices"
+          description="Email whenever a session starts somewhere new."
+        />
+        <SettingsRow
+          label="Passkeys"
+          description="2 registered — MacBook Pro, YubiKey 5C."
+        >
+          <Button size="sm">
+            <KeyboardIcon />
+            Add passkey
+          </Button>
+        </SettingsRow>
+      </SettingsGroup>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Active sessions</CardTitle>
-          <CardDescription>
-            Revoke anything you don't recognise.
-          </CardDescription>
-          <CardAction>
-            <Button size="sm" variant="danger">
-              <LogOutIcon />
-              Revoke all
-            </Button>
-          </CardAction>
-        </CardHeader>
-        <CardContent>
+      <SettingsGroup
+        title="Active sessions"
+        action={
+          <Button size="sm" variant="danger">
+            <LogOutIcon />
+            Revoke all
+          </Button>
+        }
+      >
+        <SettingsRow
+          stacked
+          label="Devices"
+          description="Revoke anything you don't recognise."
+        >
           <TableContainer>
             <Table aria-label="Active sessions">
               <TableHeader>
@@ -909,90 +907,124 @@ function SecuritySection() {
               </TableBody>
             </Table>
           </TableContainer>
-        </CardContent>
-      </Card>
+        </SettingsRow>
+      </SettingsGroup>
     </>
+  )
+}
+
+/* --------------------------------- Block ---------------------------------- */
+
+function SettingsSidebar({
+  section,
+  onSectionChange,
+}: {
+  section: string
+  onSectionChange: (id: string) => void
+}) {
+  const { setOpenMobile } = useSidebar()
+
+  return (
+    <Sidebar>
+      <SidebarHeader className="p-2">
+        <SearchField aria-label="Search settings">
+          <InputGroup size="sm">
+            <InputGroupAddon>
+              <SearchIcon />
+            </InputGroupAddon>
+            <Input placeholder="Search settings…" />
+          </InputGroup>
+        </SearchField>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Settings</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {SECTIONS.map((item) => (
+                <SidebarMenuItem key={item.id}>
+                  <SidebarMenuButton
+                    isActive={section === item.id}
+                    onPress={() => {
+                      onSectionChange(item.id)
+                      setOpenMobile(false)
+                    }}
+                  >
+                    <item.icon />
+                    {item.label}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton>
+              <LogOutIcon />
+              Log out
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
   )
 }
 
 export default function SettingsBlock() {
   const [section, setSection] = useState("account")
   const [isDirty, setIsDirty] = useState(false)
-  const isMobile = useIsMobile()
 
   return (
-    <div className="min-h-screen bg-bg text-fg">
-      <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-        <h1 className="font-heading text-3xl font-semibold tracking-tight">
-          Settings
-        </h1>
+    <SidebarProvider className="min-h-screen bg-bg text-fg">
+      <SettingsSidebar section={section} onSectionChange={setSection} />
+      <SidebarInset>
+        {/* Mobile only — the sidebar is a drawer there and needs its trigger. */}
+        <header className="flex h-12 items-center gap-2 border-b px-3 md:hidden">
+          <SidebarTrigger />
+          <span className="font-medium">Settings</span>
+        </header>
 
         {/* Change events bubble, so one handler marks the whole page dirty. */}
-        <main className="mt-8" onChange={() => setIsDirty(true)}>
-          <Tabs
-            orientation={isMobile ? "horizontal" : "vertical"}
-            selectedKey={section}
-            onSelectionChange={(key) => setSection(String(key))}
-            className="gap-6 md:gap-10"
-          >
-            <div className="max-w-full overflow-x-auto md:w-52 md:shrink-0 md:overflow-visible">
-              {/* w-max keeps the list as wide as its tabs so the horizontal
-                  scroll reaches all of them — a w-full list would centre the
-                  overflow and strand the first tab off-screen. */}
-              <TabList
-                aria-label="Settings sections"
-                className="w-max min-w-full"
-              >
-                {SECTIONS.map((item) => (
-                  <Tab key={item.id} id={item.id}>
-                    <item.icon />
-                    {item.label}
-                  </Tab>
-                ))}
-              </TabList>
+        <div onChange={() => setIsDirty(true)}>
+          <div className="mx-auto flex w-full max-w-3xl flex-col px-4 py-6 sm:px-8 sm:py-10">
+            <div className="flex min-w-0 flex-col gap-10 text-base">
+              {section === "account" && <AccountSection />}
+              {section === "notifications" && <NotificationsSection />}
+              {section === "appearance" && <AppearanceSection />}
+              {section === "connections" && <ConnectionsSection />}
+              {section === "security" && <SecuritySection />}
             </div>
 
-            {SECTIONS.map((item) => (
-              <TabPanel
-                key={item.id}
-                id={item.id}
-                className="flex min-w-0 flex-col gap-6 text-base"
-              >
-                {item.id === "account" && <AccountSection />}
-                {item.id === "notifications" && <NotificationsSection />}
-                {item.id === "appearance" && <AppearanceSection />}
-                {item.id === "connections" && <ConnectionsSection />}
-                {item.id === "security" && <SecuritySection />}
-              </TabPanel>
-            ))}
-          </Tabs>
-
-          <div
-            className={cn(
-              "sticky bottom-4 z-10 mt-6 transition-opacity",
-              isDirty ? "opacity-100" : "pointer-events-none opacity-0",
-            )}
-          >
-            <div className="flex items-center justify-between gap-3 rounded-xl border bg-card p-3 shadow-lg">
-              <span className="min-w-0 truncate text-sm text-fg-muted">
-                You have unsaved changes.
-              </span>
-              <div className="flex shrink-0 items-center gap-2">
-                <Button size="sm" onPress={() => setIsDirty(false)}>
-                  Discard
-                </Button>
-                <Button
-                  size="sm"
-                  variant="primary"
-                  onPress={() => setIsDirty(false)}
-                >
-                  Save changes
-                </Button>
+            <div
+              className={cn(
+                "sticky bottom-4 z-10 mt-6 transition-opacity",
+                isDirty ? "opacity-100" : "pointer-events-none opacity-0",
+              )}
+            >
+              <div className="flex items-center justify-between gap-3 rounded-xl border bg-card p-3 shadow-lg">
+                <span className="min-w-0 truncate text-sm text-fg-muted">
+                  You have unsaved changes.
+                </span>
+                <div className="flex shrink-0 items-center gap-2">
+                  <Button size="sm" onPress={() => setIsDirty(false)}>
+                    Discard
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="primary"
+                    onPress={() => setIsDirty(false)}
+                  >
+                    Save changes
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }
