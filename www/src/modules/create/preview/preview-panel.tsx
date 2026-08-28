@@ -85,7 +85,7 @@ const ZOOM_LEVELS = [0.5, 0.75, 1, 1.25, 1.5, 2]
 const PREVIEW_PING_INTERVAL = 150
 const PREVIEW_READY_TIMEOUT = 8000
 
-const routeApi = getRouteApi("/_app/create")
+const routeApi = getRouteApi("/_app/studio")
 
 // Pill tooltips pop with no enter / exit transition — neutralizes the scale /
 // fade / slide the base tooltip ships with.
