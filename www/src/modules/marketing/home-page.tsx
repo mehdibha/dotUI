@@ -1,8 +1,21 @@
 import { LinkButton } from "@/registry/ui/button"
+import { Eyebrow } from "@/components/eyebrow"
 import { Footer } from "@/components/layout/footer"
 import Cards from "@/modules/marketing/cards"
 import { CtaSection } from "@/modules/marketing/cta-section"
 import { HeroWordSwap } from "@/modules/marketing/hero-word-swap"
+
+function HeroEyebrow() {
+  return (
+    <Eyebrow className="mb-3 border-transparent bg-inverse/5 pl-2.5">
+      <span aria-hidden className="relative flex size-1.5">
+        <span className="absolute inset-0 animate-ping rounded-full bg-warning opacity-75" />
+        <span className="relative size-1.5 rounded-full bg-warning" />
+      </span>
+      Public preview
+    </Eyebrow>
+  )
+}
 
 export function HomePage() {
   return (
@@ -12,8 +25,9 @@ export function HomePage() {
     <div className="overflow-x-clip">
       <div className="container">
         {/* Hero section */}
-        <section className="flex flex-col pt-14 sm:pt-18 md:pt-26">
+        <section className="flex flex-col pt-10 sm:pt-14 md:pt-20">
           <div className="flex flex-col items-center text-center">
+            <HeroEyebrow />
             <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-[4rem]">
               The Design System Studio
               <br />

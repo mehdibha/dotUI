@@ -119,7 +119,7 @@ const notifications = [
   {
     user: {
       name: "Guillermo Rauch",
-      avatar: "https://avatars.githubusercontent.com/rauchg",
+      avatar: "https://avatars.githubusercontent.com/rauchg?size=96",
     },
     text: "starred your repository dotUI.",
     content: (
@@ -133,7 +133,7 @@ const notifications = [
   {
     user: {
       name: "Lee Robinson",
-      avatar: "https://avatars.githubusercontent.com/leerob",
+      avatar: "https://avatars.githubusercontent.com/leerob?size=96",
     },
     text: "invited you to the Vercel GitHub organization.",
     content: (
@@ -149,7 +149,7 @@ const notifications = [
   {
     user: {
       name: "Tim Neutkens",
-      avatar: "https://avatars.githubusercontent.com/timneutkens",
+      avatar: "https://avatars.githubusercontent.com/timneutkens?size=96",
     },
     text: "published a new release v14.2.0-canary on vercel/next.js.",
     content: (
@@ -165,7 +165,7 @@ const notifications = [
   {
     user: {
       name: "Steven Tey",
-      avatar: "https://avatars.githubusercontent.com/steven-tey",
+      avatar: "https://avatars.githubusercontent.com/steven-tey?size=96",
     },
     text: "opened a pull request: Improve docs.",
     content: (
@@ -182,7 +182,7 @@ const notifications = [
   {
     user: {
       name: "Shu Ding",
-      avatar: "https://avatars.githubusercontent.com/shuding",
+      avatar: "https://avatars.githubusercontent.com/shuding?size=96",
     },
     text: "starred your repository dotUI.",
     content: (
@@ -196,7 +196,7 @@ const notifications = [
   {
     user: {
       name: "Delba de Oliveira",
-      avatar: "https://avatars.githubusercontent.com/delbaoliveira",
+      avatar: "https://avatars.githubusercontent.com/delbaoliveira?size=96",
     },
     text: "commented on issue: Add theme presets.",
     content: (
