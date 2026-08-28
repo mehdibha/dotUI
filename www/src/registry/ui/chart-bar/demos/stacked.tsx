@@ -29,6 +29,7 @@ export default function ChartBarStacked() {
       seriesOrder={["desktop", "mobile", "tablet"]}
       labels={{ desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" }}
       radius={2}
+      axes="x"
       ariaLabel="Visitors per month by device, stacked"
     />
   )

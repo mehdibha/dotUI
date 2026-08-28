@@ -21,6 +21,7 @@ export default function ChartBarHorizontal() {
       horizontal
       legend={false}
       focus="group-y"
+      axes="y"
       ariaLabel="Desktop visitors per month, horizontal bars"
     />
   )

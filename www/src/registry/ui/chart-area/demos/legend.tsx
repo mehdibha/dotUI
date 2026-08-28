@@ -18,6 +18,7 @@ export default function ChartAreaLegend() {
       x="month"
       y={["desktop", "mobile"]}
       labels={{ desktop: "Desktop", mobile: "Mobile" }}
+      axes="x"
       ariaLabel="Desktop and mobile visitors, January through June"
     />
   )

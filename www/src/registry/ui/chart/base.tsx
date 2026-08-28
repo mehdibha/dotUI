@@ -219,7 +219,8 @@ export interface ChartSpecOf<TDatum, TXValue extends ChartValue> {
 /** The frame-shaping props every family exposes verbatim. */
 export interface ChartFrameOptions {
   grid?: boolean
-  axes?: boolean
+  /** Both axes, neither, or just one — `"x"` is the minimal dashboard look. */
+  axes?: boolean | "x" | "y"
   legend?: boolean
   formatX?: ChartFormat
   formatY?: ChartFormat
@@ -472,6 +473,8 @@ export function chartFrame(
   spec: ChartFrameSpec = {},
 ): ChartFrame {
   const axes = options.axes ?? chartDefaults.axes
+  const xAxis = axes === true || axes === "x"
+  const yAxis = axes === true || axes === "y"
   const grid = options.grid ?? chartDefaults.grid
   const where = spec.grid ?? "y"
   const legend =
@@ -483,7 +486,7 @@ export function chartFrame(
         spec.x,
         "point",
         grid && (where === "x" || where === "both"),
-        axes && {
+        xAxis && {
           ticks: {
             format: resolveFormat(options.formatX),
             count:
@@ -497,7 +500,7 @@ export function chartFrame(
         spec.y,
         "linear",
         grid && (where === "y" || where === "both"),
-        axes && { ticks: { format: resolveFormat(options.formatY) } },
+        yAxis && { ticks: { format: resolveFormat(options.formatY) } },
       ),
     },
     color: {

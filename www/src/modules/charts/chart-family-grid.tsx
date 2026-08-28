@@ -2,16 +2,22 @@
 
 import { useEffect, useRef, useState } from "react"
 
-import { ChartCard } from "./chart-card"
+import { CARD_HEIGHT_DEFAULT, CARD_HEIGHTS, ChartCard } from "./chart-card"
 import { CHART_FAMILIES, variantsFor } from "./data"
 
 /**
  * Mounts its children once they come near the viewport. The page stacks ~70
  * live chart previews; mounting them all at once blocks the main thread for
  * seconds, so offscreen cards wait their turn. The placeholder matches
- * ChartCard's rendered height (header row + h-80 card) so nothing shifts.
+ * ChartCard's rendered height (header row + card box) so nothing shifts.
  */
-function LazyMount({ children }: { children: React.ReactNode }) {
+function LazyMount({
+  className,
+  children,
+}: {
+  className?: string
+  children: React.ReactNode
+}) {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
 
@@ -32,10 +38,17 @@ function LazyMount({ children }: { children: React.ReactNode }) {
   }, [])
 
   return (
-    <div ref={ref} className="h-[22.25rem]">
+    <div ref={ref} className={className}>
       {visible && children}
     </div>
   )
+}
+
+/* The header row above each card box is 36px tall (28px row + 8px gap), so
+   the placeholder is the family's box height plus that. */
+const PLACEHOLDER_HEIGHTS: Record<string, string> = {
+  [CARD_HEIGHT_DEFAULT]: "h-[20.25rem]",
+  "h-60": "h-[17.25rem]",
 }
 
 /**
@@ -55,10 +68,14 @@ export function ChartFamilyGrid({ family }: { family: string }) {
     return null
   }
 
+  // Two columns, not three: the content column is ~900px, and three-across
+  // makes every card taller than it is wide.
+  const placeholder =
+    PLACEHOLDER_HEIGHTS[CARD_HEIGHTS[data.id] ?? CARD_HEIGHT_DEFAULT]
   return (
-    <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+    <div className="mt-6 grid grid-cols-1 gap-x-5 gap-y-6 sm:grid-cols-2">
       {variantsFor(data.id).map((v) => (
-        <LazyMount key={v.key}>
+        <LazyMount key={v.key} className={placeholder}>
           <ChartCard familyId={data.id} demoKey={v.key} label={v.label} />
         </LazyMount>
       ))}

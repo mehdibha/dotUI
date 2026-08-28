@@ -262,7 +262,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark",
+                "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
                 "name": "PolarMark"
               },
               "typeParameters": [
@@ -792,9 +792,9 @@
       "typeParameters": [],
       "description": ""
     },
-    "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark": {
+    "@tanstack/charts/dist/polar.d.ts:PolarMark": {
       "type": "interface",
-      "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:PolarMark",
+      "id": "@tanstack/charts/dist/polar.d.ts:PolarMark",
       "name": "PolarMark",
       "extends": [],
       "properties": {
@@ -803,6 +803,25 @@
           "name": "__angle",
           "value": {
             "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__angleScaleId": {
+          "type": "property",
+          "name": "__angleScaleId",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "angle"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -823,6 +842,25 @@
           "name": "__radius",
           "value": {
             "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__radiusScaleId": {
+          "type": "property",
+          "name": "__radiusScaleId",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "radius"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -850,7 +888,7 @@
               "type": "application",
               "base": {
                 "type": "link",
-                "id": "@tanstack/charts/dist/polar-mark-internal.d.ts:InitializedPolarMark",
+                "id": "@tanstack/charts/dist/polar.d.ts:InitializedPolarMark",
                 "name": "InitializedPolarMark"
               },
               "typeParameters": [
@@ -916,6 +954,26 @@
                     "name": "any"
                   }
                 ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "renderer": {
+          "type": "property",
+          "name": "renderer",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMarkRenderer",
+                "name": "ChartMarkRenderer"
               }
             ]
           },

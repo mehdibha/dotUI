@@ -20,6 +20,7 @@ export default function ChartLineStep() {
       labels={{ desktop: "Desktop" }}
       legend={false}
       curve="step"
+      axes="x"
       ariaLabel="Desktop visitors, January through June"
     />
   )

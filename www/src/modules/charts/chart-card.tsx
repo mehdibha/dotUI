@@ -26,11 +26,20 @@ interface ChartCardProps {
  * the real, interactive component (with its source) lives in the docs, which
  * "Show code" links to.
  *
- * Every card is the same height and padding so the gallery reads as one set.
- * Charts size themselves: the host fills the frame's width and draws at its own
- * height (the library measures width only). Polar charts are capped at 250px
- * wide so they read as a circle rather than a lone arc in a wide box.
+ * Every card in a family is the same height and padding so the gallery reads
+ * as one set. Charts size themselves: the host fills the frame's width and
+ * draws at its own height (the library measures width only) — the box is
+ * sized landscape around the 256px chart, and the sparkline family gets a
+ * shorter box so its small previews aren't floating in air. Polar charts are
+ * capped at 250px wide so they read as a circle rather than a lone arc in a
+ * wide box.
  */
+export const CARD_HEIGHTS: Record<string, string> = {
+  "chart-sparkline": "h-60",
+}
+
+export const CARD_HEIGHT_DEFAULT = "h-72"
+
 export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
   // Bumping this key remounts the chart, replaying its entry animation.
   const [replayKey, setReplayKey] = useState(0)
@@ -57,7 +66,7 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
           <ChartCodeModal demoKey={demoKey} label={label} />
         </div>
       }
-      className="h-80"
+      className={CARD_HEIGHTS[familyId] ?? CARD_HEIGHT_DEFAULT}
       inert
       aria-hidden="true"
     >
@@ -66,7 +75,7 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
       <Suspense fallback={<div className="size-full animate-pulse bg-muted" />}>
         <div
           className={cn(
-            "flex size-full items-center justify-center overflow-hidden p-6 [&_*]:pointer-events-none",
+            "flex size-full items-center justify-center overflow-hidden p-4 [&_*]:pointer-events-none",
             isPolar &&
               "[&_.ts-chart-host]:mx-auto! [&_.ts-chart-host]:max-w-[250px]!",
           )}

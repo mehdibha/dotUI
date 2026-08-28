@@ -27,6 +27,7 @@ export default function ChartAreaLabels() {
       series="channel"
       seriesOrder={["paid_social", "organic_search"]}
       labels={{ organic_search: "Organic search", paid_social: "Paid social" }}
+      axes="x"
       ariaLabel="Visitors by acquisition channel, January through June"
     />
   )

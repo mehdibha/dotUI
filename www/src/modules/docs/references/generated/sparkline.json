@@ -844,6 +844,25 @@
       "name": "ChartMark",
       "extends": [],
       "properties": {
+        "__xScaleId": {
+          "type": "property",
+          "name": "__xScaleId",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "x"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
         "__xScaleValue": {
           "type": "property",
           "name": "__xScaleValue",
@@ -859,6 +878,25 @@
           "name": "__xValue",
           "value": {
             "type": "any"
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "__yScaleId": {
+          "type": "property",
+          "name": "__yScaleId",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "stringLiteral",
+                "value": "y"
+              },
+              {
+                "type": "undefined"
+              }
+            ]
           },
           "optional": true,
           "readonly": false,
@@ -972,6 +1010,26 @@
                     "name": "any"
                   }
                 ]
+              }
+            ]
+          },
+          "optional": true,
+          "readonly": false,
+          "description": ""
+        },
+        "renderer": {
+          "type": "property",
+          "name": "renderer",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "undefined"
+              },
+              {
+                "type": "link",
+                "id": "@tanstack/charts/dist/types.d.ts:ChartMarkRenderer",
+                "name": "ChartMarkRenderer"
               }
             ]
           },

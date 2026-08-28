@@ -18,7 +18,7 @@ export default function ChartBarMultiple() {
       x="month"
       y={["desktop", "mobile"]}
       labels={{ desktop: "Desktop", mobile: "Mobile" }}
-      formatY={{ locale: "en-US", number: { notation: "compact" } }}
+      axes="x"
       ariaLabel="Desktop and mobile visitors per month, side by side"
     />
   )

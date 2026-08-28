@@ -26,6 +26,7 @@ export default function ChartBarNegative() {
       seriesOrder={["gain", "loss"]}
       labels={{ gain: "Gain", loss: "Loss" }}
       marksBefore={baseline}
+      axes="x"
       ariaLabel="Monthly change in visitors, gains and losses"
     />
   )
