@@ -3,7 +3,7 @@ import type * as PageTree from "fumadocs-core/page-tree"
 
 import { Responsive } from "@/registry/lib/responsive"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
-import { Drawer } from "@/registry/ui/drawer"
+import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import {
   ModalBackdrop,
   ModalOverlay,
@@ -90,7 +90,7 @@ export function SearchCommand({
           const content = (
             <DialogContent
               aria-label="Search documentation"
-              className="flex flex-col gap-0 overflow-hidden p-0!"
+              className="flex flex-col gap-0 overflow-hidden p-0! max-md:min-h-0 max-md:flex-1"
             >
               {SearchDialog && (
                 <SearchDialog items={items} onClose={() => setIsOpen(false)} />
@@ -98,8 +98,15 @@ export function SearchCommand({
             </DialogContent>
           )
           return isMobile ? (
-            // Match the desktop modal's raised surface.
-            <Drawer className="bg-(--neutral-100)">{content}</Drawer>
+            // Match the desktop modal's raised surface. Near-full-height sheet
+            // (mirrors base-ui.com's mobile search): the input sits at the top,
+            // structurally clear of the iOS keyboard, and the results list
+            // flexes below it. The drawer's keyboard inset keeps the list's
+            // bottom above the keyboard.
+            <Drawer className="h-[calc(100dvh_-_3rem_+_var(--drawer-bleed))] bg-(--neutral-100)">
+              <DrawerHandle />
+              {content}
+            </Drawer>
           ) : (
             // Composed (not <Modal>) so the panel AND backdrop appear
             // instantly — duration-0 on both. Mirror shadcn.com: max-w-lg
