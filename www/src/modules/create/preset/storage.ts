@@ -26,8 +26,9 @@ export const loadStoredPreset = presetStore.get
 export const saveStoredPreset = presetStore.set
 export const useStoredPreset = presetStore.useValue
 
-/** Shown for a design system the user hasn't named. */
-export const DEFAULT_DESIGN_SYSTEM_NAME = "Untitled"
+/** Shown for a design system the user hasn't named — first-time users start
+ *  on the Origin preset, so the unnamed fallback carries its name. */
+export const DEFAULT_DESIGN_SYSTEM_NAME = "Origin"
 
 const nameStore = createPersistedStore<string>(
   "dotui:design-system-name",

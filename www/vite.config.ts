@@ -1,4 +1,3 @@
-import { devtools } from "@tanstack/devtools-vite"
 import { tanstackStart } from "@tanstack/react-start/plugin/vite"
 import path from "node:path"
 import tailwindcss from "@tailwindcss/vite"
@@ -76,7 +75,6 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
-    devtools(),
     tanstackStart({
       prerender: {
         enabled: true,

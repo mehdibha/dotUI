@@ -16,7 +16,7 @@ function Panel() {
   const lab = useLab()
   // The chrome is the card — one enclosed surface, no extra wrapper here.
   return (
-    <div className="flex h-[720px] w-[360px] shrink-0 flex-col">
+    <div className="flex h-[720px] w-[336px] shrink-0 flex-col">
       <PanelB chapters={CHAPTERS} lab={lab} />
     </div>
   )
