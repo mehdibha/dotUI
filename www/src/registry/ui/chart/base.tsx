@@ -14,6 +14,7 @@ import type {
   ChartLinearGradient,
   ChartMargin,
   ChartMark,
+  ChartMotionDefinition,
   ChartMotionSpringTransition,
   ChartMotionTweenTransition,
   ChartTheme,
@@ -63,6 +64,7 @@ export const chartDefaults = {
   animate: { type: "spring", stiffness: 170, damping: 26 },
   animateMaxPoints: 800,
   enterStagger: 25,
+  draw: { duration: 900, easing: "cubic-bezier(0.33, 1, 0.68, 1)" },
   axisTickMinWidth: 420,
   axisTickCountNarrow: 4,
   gradientStops: [0.02, 0.5],
@@ -196,12 +198,14 @@ export type ChartXValueOf<TDatum, TXField> = ChannelOutput<
 
 /* `ChartSpecDatum` branches on `__datum` before falling back to mark-tuple
    inference, so these phantoms are what preserve TDatum through defineChart.
-   `x`/`y` must be required: optional ones fail the CheckedChartSpec
-   constraint outright. */
+   `scales.x`/`scales.y` must be required: optional ones fail the
+   CheckedChartSpec constraint outright. */
 export interface ChartSpecOf<TDatum, TXValue extends ChartValue> {
   marks: readonly ChartMarkLayer[]
-  x: ChartAxisOptions | null
-  y: ChartAxisOptions | null
+  scales: {
+    x: ChartAxisOptions | null
+    y: ChartAxisOptions | null
+  }
   color?: ChartColorOptions
   gradients?: readonly ChartLinearGradient[]
   theme?: Partial<ChartTheme>
@@ -433,8 +437,10 @@ export interface ChartFrameSpec {
 }
 
 export interface ChartFrame {
-  x: ChartAxisOptions | null
-  y: ChartAxisOptions | null
+  scales: {
+    x: ChartAxisOptions | null
+    y: ChartAxisOptions | null
+  }
   color?: ChartColorOptions
   theme?: Partial<ChartTheme>
 }
@@ -472,26 +478,28 @@ export function chartFrame(
     (options.legend ?? chartDefaults.legend) ? colorLegend() : undefined
   const order = spec.order ?? []
   return {
-    x: frameAxis(
-      spec.x,
-      "point",
-      grid && (where === "x" || where === "both"),
-      axes && {
-        ticks: {
-          format: resolveFormat(options.formatX),
-          count:
-            ctx.width < chartDefaults.axisTickMinWidth
-              ? chartDefaults.axisTickCountNarrow
-              : undefined,
+    scales: {
+      x: frameAxis(
+        spec.x,
+        "point",
+        grid && (where === "x" || where === "both"),
+        axes && {
+          ticks: {
+            format: resolveFormat(options.formatX),
+            count:
+              ctx.width < chartDefaults.axisTickMinWidth
+                ? chartDefaults.axisTickCountNarrow
+                : undefined,
+          },
         },
-      },
-    ),
-    y: frameAxis(
-      spec.y,
-      "linear",
-      grid && (where === "y" || where === "both"),
-      axes && { ticks: { format: resolveFormat(options.formatY) } },
-    ),
+      ),
+      y: frameAxis(
+        spec.y,
+        "linear",
+        grid && (where === "y" || where === "both"),
+        axes && { ticks: { format: resolveFormat(options.formatY) } },
+      ),
+    },
     color: {
       ...(order.length > 0 ? { domain: order } : null),
       legend,
@@ -653,6 +661,8 @@ export type ChartProps<TDatum, TXValue extends ChartValue> = ChartHostProps<
   TXValue
 > & {
   definition: DomChartDefinition<TDatum, TXValue, number>
+  /** `"draw"` wipes lines and areas in left to right on first render. */
+  entrance?: "draw"
   children?: ReactNode
 }
 
@@ -685,6 +695,76 @@ const TOOLTIP_SURFACE_CLASS = [
    client-only alike. Timing comes from the definition-level `motion` below. */
 const MOTION_RENDERER = motion({ initial: "always" })
 
+/* ------------------------------------------------------------------ */
+/* Draw entrance                                                       */
+/* ------------------------------------------------------------------ */
+
+/* The renderer's own entrance grows lines and areas from the baseline. The
+   path families replace that with a left-to-right draw, in two halves: the
+   mark opts out of the built-in enter with this definition, and the host
+   wipes a clip across the plot on first render. Updates and exits still
+   inherit the chart's motion. */
+export const drawEnterMotion: ChartMotionDefinition = (context) =>
+  context.phase === "enter" ? false : undefined
+
+let drawClipSequence = 0
+
+const PATH_GROUPS =
+  "g.ts-chart__line:not(.ts-chart__radial-line), g.ts-chart__area:not(.ts-chart__radial-area)"
+
+/* An injected SVG clipPath, not a CSS `clip-path` on the groups: CSS basic
+   shapes resolve against each group's own fill-box, which is degenerate for a
+   flat line. The rect covers the viewBox plus a margin for strokes and edge
+   dots. The renderer owns the SVG and strips foreign nodes on every
+   reconciliation, so `ensure` runs after each render, re-attaching the clip
+   to the current groups until the wipe lands — then everything is removed. */
+function createDrawEntrance(): (container: HTMLElement) => void {
+  const id = `dotui-draw-${drawClipSequence++}`
+  let clip: SVGClipPathElement | null = null
+  let done = false
+  return function ensure(container) {
+    if (done) return
+    const svg = container.querySelector("svg")
+    if (!svg || svg.querySelector(PATH_GROUPS) === null) return
+    if (
+      typeof svg.animate !== "function" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      done = true
+      return
+    }
+    if (clip === null) {
+      const box = svg.viewBox.baseVal
+      const margin = 8
+      const namespace = "http://www.w3.org/2000/svg"
+      clip = document.createElementNS(namespace, "clipPath")
+      clip.id = id
+      const rect = document.createElementNS(namespace, "rect")
+      rect.setAttribute("x", String(box.x - margin))
+      rect.setAttribute("y", String(box.y - margin))
+      rect.setAttribute("width", String(box.width + margin * 2))
+      rect.setAttribute("height", String(box.height + margin * 2))
+      rect.style.transformOrigin = `${box.x - margin}px 0px`
+      clip.appendChild(rect)
+      const cleanup = () => {
+        done = true
+        for (const group of container.querySelectorAll(`[clip-path*="${id}"]`))
+          group.removeAttribute("clip-path")
+        clip?.remove()
+      }
+      const animation = rect.animate(
+        [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+        chartDefaults.draw,
+      )
+      animation.finished.then(cleanup, cleanup)
+    }
+    if (clip.parentNode !== svg) svg.appendChild(clip)
+    for (const group of svg.querySelectorAll(PATH_GROUPS)) {
+      group.setAttribute("clip-path", `url(#${id})`)
+    }
+  }
+}
+
 /* House chart host: the tooltip-capable surface from the library's `tooltip`
    entry driving the motion renderer, with the default height built in, and
    `children` rendered as an HTML overlay above it so hover readouts repaint at
@@ -694,14 +774,26 @@ const MOTION_RENDERER = motion({ initial: "always" })
 export function Chart<TDatum, TXValue extends ChartValue>({
   children,
   className,
+  entrance,
+  onRender,
   ...props
 }: ChartProps<TDatum, TXValue>) {
+  const draw = useRef<ReturnType<typeof createDrawEntrance> | null>(null)
   return (
     <div className={cn("relative", className)}>
       <RendererChart
         renderer={MOTION_RENDERER}
         height={
           props.aspectRatio === undefined ? chartDefaults.height : undefined
+        }
+        onRender={
+          entrance === undefined
+            ? onRender
+            : (context) => {
+                onRender?.(context)
+                draw.current ??= createDrawEntrance()
+                draw.current(context.container)
+              }
         }
         {...props}
       />
@@ -916,10 +1008,12 @@ export function useChartDefinition<
     options: TOptions,
     ctx: ChartBuildContext,
   ) => ChartSpecOf<TDatum, TXValue>,
+  family?: { entrance?: "draw" },
 ): {
   definition: DomChartDefinition<TDatum, TXValue, number>
   host: ChartHostProps<TDatum, TXValue>
   children: ReactNode
+  entrance?: "draw"
 } {
   const { host, behavior, spec } = splitChartProps(props)
   const options = spec as TOptions
@@ -937,6 +1031,9 @@ export function useChartDefinition<
     definition,
     host: host as ChartHostProps<TDatum, TXValue>,
     children: (props as { children?: ReactNode }).children,
+    // The draw follows the same switch as every other entrance motion.
+    entrance:
+      degrade || behavior.animate === false ? undefined : family?.entrance,
   }
 }
 

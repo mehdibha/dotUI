@@ -175,12 +175,30 @@ export interface PieChartSpecOptions<TDatum> extends Omit<
   polarMarks?: readonly PolarMarkLayer[]
 }
 
-/* `radialText` requires angle and radius scales even where the geometry comes
-   from raw radians, so the container carries identity ones. */
-function identityScales(startAngle: number, endAngle: number) {
+/* `radialText` maps its channels through the container scales, so the ring
+   carries identity ones while any mark binds them. A configured polar scale
+   with no mark binding it is rejected — a bare ring of `radialArc`s uses
+   authored radians, no scale bindings — so the extra layers are probed:
+   `initialize` is pure data preparation and exposes the mark's bindings. */
+function marksUseScales(marks: readonly PolarMarkLayer[] | undefined) {
+  return (marks ?? []).some((mark) => {
+    const probed = mark.initialize({ markIndex: 0, parentId: "probe" })
+    return Boolean(
+      probed.angleScale ??
+      probed.radiusScale ??
+      (probed.requiresAngleScale || probed.requiresRadiusScale),
+    )
+  })
+}
+
+function identityScales(startAngle: number, endAngle: number, used: boolean) {
   return {
-    angle: { scale: scaleLinear().domain([startAngle, endAngle]) },
-    radius: { scale: scaleLinear().domain([0, 1]) },
+    scales: used
+      ? {
+          angle: { scale: scaleLinear().domain([startAngle, endAngle]) },
+          radius: { scale: scaleLinear().domain([0, 1]) },
+        }
+      : { angle: null, radius: null },
   }
 }
 
@@ -204,8 +222,7 @@ export function pieChartSpec<TDatum>(
   const endAngle = options.endAngle ?? TAU
   return {
     // A pie has no axes: its scales live on the polar container.
-    x: null,
-    y: null,
+    scales: { x: null, y: null },
     color: {
       domain: order,
       legend: (options.legend ?? false) ? colorLegend() : undefined,
@@ -213,7 +230,12 @@ export function pieChartSpec<TDatum>(
     theme: CHART_THEME,
     marks: [
       polar({
-        ...identityScales(startAngle, endAngle),
+        ...identityScales(
+          startAngle,
+          endAngle,
+          (options.sliceLabel ?? "none") !== "none" ||
+            marksUseScales(options.polarMarks),
+        ),
         startAngle,
         endAngle,
         inset: options.inset ?? 0,

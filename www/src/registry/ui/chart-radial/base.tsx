@@ -203,12 +203,30 @@ function barArc<TDatum>(
   })
 }
 
-/* `radialText` requires angle and radius scales even where the geometry comes
-   from raw radians, so the container carries identity ones. */
-function identityScales(startAngle: number, endAngle: number) {
+/* `radialText` maps its channels through the container scales, so the chart
+   carries identity ones while any mark binds them. A configured polar scale
+   with no mark binding it is rejected — bare `radialArc` bars use authored
+   radians, no scale bindings — so the extra layers are probed: `initialize`
+   is pure data preparation and exposes the mark's bindings. */
+function marksUseScales(marks: readonly PolarMarkLayer[] | undefined) {
+  return (marks ?? []).some((mark) => {
+    const probed = mark.initialize({ markIndex: 0, parentId: "probe" })
+    return Boolean(
+      probed.angleScale ??
+      probed.radiusScale ??
+      (probed.requiresAngleScale || probed.requiresRadiusScale),
+    )
+  })
+}
+
+function identityScales(startAngle: number, endAngle: number, used: boolean) {
   return {
-    angle: { scale: scaleLinear().domain([startAngle, endAngle]) },
-    radius: { scale: scaleLinear().domain([0, 1]) },
+    scales: used
+      ? {
+          angle: { scale: scaleLinear().domain([startAngle, endAngle]) },
+          radius: { scale: scaleLinear().domain([0, 1]) },
+        }
+      : { angle: null, radius: null },
   }
 }
 
@@ -221,23 +239,42 @@ export function radialBarChartSpec<TDatum>(
   const { bars, track } = radialBars(options, start, end)
   const corner = options.cornerRadius ?? chartDefaults.barRadius
   const legend = (options.legend ?? false) ? colorLegend() : undefined
+  /* The grid reads its ring radii from a named scale: a reserved scale may
+     only be configured when a mark binds it, and the bars bind none. */
   const guides: PolarGuide[] = options.grid
     ? [
         radialGrid({
+          scale: "grid",
           ticks: options.gridTicks ?? radialDefaults.gridTicks,
           shape: "circle",
           labels: false,
         }),
       ]
     : []
+  const identity = identityScales(
+    start,
+    end,
+    Boolean(options.barLabels) ||
+      marksUseScales(options.polarMarks) ||
+      marksUseScales(options.polarMarksBefore),
+  )
   return {
-    x: null,
-    y: null,
+    scales: { x: null, y: null },
     color: { domain: bars.map((bar) => bar.name), legend },
     theme: CHART_THEME,
     marks: [
       polar({
-        ...identityScales(start, end),
+        scales: {
+          ...identity.scales,
+          ...(options.grid
+            ? {
+                grid: {
+                  channel: "radius" as const,
+                  scale: scaleLinear().domain([0, 1]),
+                },
+              }
+            : null),
+        },
         startAngle: start,
         endAngle: end,
         inset: options.inset ?? 0,

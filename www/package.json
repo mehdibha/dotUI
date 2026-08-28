@@ -29,7 +29,7 @@
     "@remixicon/react": "^4.2.0",
     "@tabler/icons-react": "^3.35.0",
     "@tailwindcss/vite": "catalog:",
-    "@tanstack/charts": "0.14.0",
+    "@tanstack/charts": "0.16.0",
     "@tanstack/react-devtools": "^0.10.5",
     "@tanstack/react-form": "^1.32.0",
     "@tanstack/react-router": "catalog:",

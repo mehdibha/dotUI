@@ -21,6 +21,7 @@ import {
   Chart,
   chartDefaults,
   chartFrame,
+  drawEnterMotion,
   fadeGradient,
   paletteColor,
   useChartDefinition,
@@ -87,10 +88,17 @@ export function sparklineSpec<TDatum, TXField extends ChartXField<TDatum>>(
               fill: gradient ? `url(#${FILL_ID})` : color,
               fillOpacity: gradient ? 1 : fill,
               curve,
+              motion: drawEnterMotion,
             }),
           ]
         : []),
-      lineY(options.data, { ...channels, stroke: color, strokeWidth, curve }),
+      lineY(options.data, {
+        ...channels,
+        stroke: color,
+        strokeWidth,
+        curve,
+        motion: drawEnterMotion,
+      }),
       ...(options.marks ?? []),
     ],
     gradients: gradient ? [fadeGradient(FILL_ID, color)] : undefined,
@@ -110,7 +118,7 @@ export function Sparkline<TDatum, TXField extends ChartXField<TDatum>>({
   height = chartDefaults.sparklineHeight,
   ...props
 }: SparklineProps<TDatum, TXField>) {
-  const { definition, host, children } = useChartDefinition<
+  const { definition, host, children, entrance } = useChartDefinition<
     TDatum,
     ChartXValueOf<TDatum, TXField>,
     SparklineSpecOptions<TDatum, TXField>
@@ -118,9 +126,10 @@ export function Sparkline<TDatum, TXField extends ChartXField<TDatum>>({
     /* Sparklines are read at a glance, so the tooltip is opt-in. */
     { ...props, height, tooltip: props.tooltip ?? false },
     sparklineSpec,
+    { entrance: "draw" },
   )
   return (
-    <Chart definition={definition} {...host}>
+    <Chart definition={definition} entrance={entrance} {...host}>
       {children}
     </Chart>
   )

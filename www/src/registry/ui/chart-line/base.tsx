@@ -17,6 +17,7 @@ import {
   Chart,
   chartDefaults,
   chartFrame,
+  drawEnterMotion,
   planChart,
   useChartDefinition,
 } from "@/registry/ui/chart"
@@ -61,6 +62,7 @@ export function lineChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
           strokeWidth: options.strokeWidth ?? chartDefaults.strokeWidth,
           points: options.points ?? chartDefaults.points,
           curve,
+          motion: drawEnterMotion,
         }),
       ),
       ...(options.marks ?? []),
@@ -80,13 +82,13 @@ export type LineChartProps<
 export function LineChart<TDatum, TXField extends ChartXField<TDatum>>(
   props: LineChartProps<TDatum, TXField>,
 ) {
-  const { definition, host, children } = useChartDefinition<
+  const { definition, host, children, entrance } = useChartDefinition<
     TDatum,
     ChartXValueOf<TDatum, TXField>,
     LineChartSpecOptions<TDatum, TXField>
-  >(props, lineChartSpec)
+  >(props, lineChartSpec, { entrance: "draw" })
   return (
-    <Chart definition={definition} {...host}>
+    <Chart definition={definition} entrance={entrance} {...host}>
       {children}
     </Chart>
   )

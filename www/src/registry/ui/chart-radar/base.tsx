@@ -119,7 +119,7 @@ function gridFillPath(
   shape: "circle" | "polygon",
 ): string {
   const radius = layout.radius
-  const angle = layout.angle
+  const angle = layout.scales.angle
   if (shape === "circle" || angle === undefined || angle.domain.length < 3) {
     return `M${radius},0A${radius},${radius} 0 1,1 ${-radius},0A${radius},${radius} 0 1,1 ${radius},0Z`
   }
@@ -249,8 +249,7 @@ export function radarChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
   })
 
   return {
-    x: null,
-    y: null,
+    scales: { x: null, y: null },
     color: {
       domain: order,
       legend:
@@ -260,14 +259,16 @@ export function radarChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
     marks: [
       polar({
         radiusRatio: options.radiusRatio ?? radarDefaults.radiusRatio,
-        angle: {
-          scale: scalePoint<ChartValue>().domain(categories),
-          wrap: true,
-        },
-        radius: {
-          scale: scaleLinear().domain([0, options.max ?? observed]),
-          // An explicit max is the domain, not a suggestion.
-          nice: options.max === undefined && ticks,
+        scales: {
+          angle: {
+            scale: scalePoint<ChartValue>().domain(categories),
+            wrap: true,
+          },
+          radius: {
+            scale: scaleLinear().domain([0, options.max ?? observed]),
+            // An explicit max is the domain, not a suggestion.
+            nice: options.max === undefined && ticks,
+          },
         },
         guides,
         marks: [...marks, ...(options.polarMarks ?? [])],

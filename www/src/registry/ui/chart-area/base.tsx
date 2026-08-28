@@ -18,6 +18,7 @@ import {
   Chart,
   chartDefaults,
   chartFrame,
+  drawEnterMotion,
   paletteGradients,
   planChart,
   useChartDefinition,
@@ -66,12 +67,14 @@ export function areaChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
           fillOpacity: gradient ? 1 : fill,
           fill: gradient ? layer.gradientFill : undefined,
           curve,
+          motion: drawEnterMotion,
         }),
         lineY(options.data, {
           ...layer.channels,
           strokeWidth: options.strokeWidth ?? chartDefaults.strokeWidth,
           points: options.points ?? chartDefaults.points,
           curve,
+          motion: drawEnterMotion,
         }),
       ]),
       ...(options.marks ?? []),
@@ -92,13 +95,13 @@ export type AreaChartProps<
 export function AreaChart<TDatum, TXField extends ChartXField<TDatum>>(
   props: AreaChartProps<TDatum, TXField>,
 ) {
-  const { definition, host, children } = useChartDefinition<
+  const { definition, host, children, entrance } = useChartDefinition<
     TDatum,
     ChartXValueOf<TDatum, TXField>,
     AreaChartSpecOptions<TDatum, TXField>
-  >(props, areaChartSpec)
+  >(props, areaChartSpec, { entrance: "draw" })
   return (
-    <Chart definition={definition} {...host}>
+    <Chart definition={definition} entrance={entrance} {...host}>
       {children}
     </Chart>
   )
