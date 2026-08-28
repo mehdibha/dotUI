@@ -33,15 +33,17 @@ function fromBase64Url(str: string): Uint8Array {
 
 /* ------------------------------ diff helpers ------------------------------ */
 
-/** Remove entries that match defaults, returning only overrides. */
+/** Remove entries that match defaults, returning only overrides (sorted keys
+ *  so the encoding doesn't depend on input key order). */
 function diffRecords(
   current: Record<string, string>,
   defaults: Record<string, string>,
 ): Record<string, string> | undefined {
   const result: Record<string, string> = {}
   let hasEntries = false
-  for (const [key, value] of Object.entries(current)) {
-    if (value !== defaults[key]) {
+  for (const key of Object.keys(current).sort()) {
+    const value = current[key]
+    if (value !== undefined && value !== defaults[key]) {
       result[key] = value
       hasEntries = true
     }
@@ -55,8 +57,8 @@ function diffNestedRecords(
 ): Record<string, Record<string, string>> | undefined {
   const result: Record<string, Record<string, string>> = {}
   let hasEntries = false
-  for (const [outer, inner] of Object.entries(current)) {
-    const innerDiff = diffRecords(inner, defaults[outer] ?? {})
+  for (const outer of Object.keys(current).sort()) {
+    const innerDiff = diffRecords(current[outer] ?? {}, defaults[outer] ?? {})
     if (innerDiff) {
       result[outer] = innerDiff
       hasEntries = true
@@ -77,11 +79,40 @@ function mergeNested(
   return merged
 }
 
+/* ----------------------------- sanitize helpers ----------------------------- */
+
+/**
+ * Migrate a color recipe to `ColorConfig` v2 — v1 shapes map onto the nearest
+ * v2 axes, garbage falls back to the default (never throws). A result equal to
+ * the default becomes `undefined` so it encodes to nothing.
+ */
+function sanitizeColor(
+  color: ColorConfig | undefined,
+): ColorConfig | undefined {
+  if (!color) return undefined
+  const migrated = migrateColorConfig(color)
+  return JSON.stringify(migrated) === JSON.stringify(DEFAULT_COLOR_CONFIG)
+    ? undefined
+    : migrated
+}
+
+/** Unknown/garbage library names sanitize to the default (lucide → `undefined`). */
+function sanitizeIcons(
+  icons: IconLibraryName | undefined,
+): IconLibraryName | undefined {
+  if (!icons || icons === "lucide") return undefined
+  return iconLibraries.some((lib) => lib.name === icons) ? icons : undefined
+}
+
 /* --------------------------------- encode --------------------------------- */
 
 /**
  * Encode a DesignSystem into a compact URL-safe string.
  * Returns `undefined` when all values match defaults (no preset needed).
+ *
+ * Canonical: sanitizers rebuild recipes in a fixed key order and diffs emit
+ * sorted keys, so encode∘decode is byte-identity regardless of how the input
+ * was constructed.
  */
 export function encodePreset(ds: DesignSystem): string | undefined {
   const compact: DesignSystemState = {}
@@ -98,20 +129,18 @@ export function encodePreset(ds: DesignSystem): string | undefined {
   if (ds.density !== DEFAULTS.density) compact.d = ds.density
 
   // Store the whole (small) color recipe only when it differs from the default palette.
-  if (
-    ds.color &&
-    JSON.stringify(ds.color) !== JSON.stringify(DEFAULT_COLOR_CONFIG)
-  )
-    compact.c = ds.color
+  const color = sanitizeColor(ds.color)
+  if (color) compact.c = color
 
   // Store the whole (small) code-options recipe only when it differs from the default style.
-  if (
-    ds.codeOptions &&
-    JSON.stringify(ds.codeOptions) !== JSON.stringify(DEFAULT_CODE_OPTIONS)
-  )
-    compact.o = ds.codeOptions
+  if (ds.codeOptions) {
+    const codeOptions = sanitizeCodeOptions(ds.codeOptions)
+    if (JSON.stringify(codeOptions) !== JSON.stringify(DEFAULT_CODE_OPTIONS))
+      compact.o = codeOptions
+  }
 
-  if (ds.icons && ds.icons !== "lucide") compact.i = ds.icons
+  const icons = sanitizeIcons(ds.icons)
+  if (icons) compact.i = icons
 
   if (
     !compact.p &&
@@ -129,29 +158,6 @@ export function encodePreset(ds: DesignSystem): string | undefined {
 }
 
 /* --------------------------------- decode --------------------------------- */
-
-/**
- * Migrate a decoded color recipe to `ColorConfig` v2 — v1 shapes map onto the
- * nearest v2 axes, garbage falls back to the default (never throws). A result
- * equal to the default decodes as `undefined` so it re-encodes to nothing.
- */
-function sanitizeColor(
-  color: ColorConfig | undefined,
-): ColorConfig | undefined {
-  if (!color) return undefined
-  const migrated = migrateColorConfig(color)
-  return JSON.stringify(migrated) === JSON.stringify(DEFAULT_COLOR_CONFIG)
-    ? undefined
-    : migrated
-}
-
-/** Unknown/garbage library names decode as the default (lucide → `undefined`). */
-function sanitizeIcons(
-  icons: IconLibraryName | undefined,
-): IconLibraryName | undefined {
-  if (!icons || icons === "lucide") return undefined
-  return iconLibraries.some((lib) => lib.name === icons) ? icons : undefined
-}
 
 /**
  * Decode a preset string back into a full DesignSystem.

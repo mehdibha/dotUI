@@ -2,6 +2,7 @@ import { deflateRaw } from "pako"
 import { describe, expect, it } from "vitest"
 
 import { DEFAULT_COLOR_CONFIG, type ColorConfig } from "@/registry/theme"
+import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 
 import { decodePreset, encodePreset } from "./codec"
 import { DEFAULTS } from "./defaults"
@@ -153,5 +154,32 @@ describe("preset codec — color recipe", () => {
     const decoded = decodePreset(encoded).color
     expect(decoded?.primary).toBeUndefined()
     expect(decoded?.seeds.accent).toBe("#ef4444")
+  })
+})
+
+describe("preset codec — canonical encoding", () => {
+  // /create seeds from a stored state via decode → encode on reload; a
+  // non-identity roundtrip makes a freshly applied preset look edited.
+  for (const preset of [ORIGIN, ...PRESETS]) {
+    it(`encode∘decode is byte-identity for the ${preset.name} preset`, () => {
+      const encoded = encodePreset(preset.designSystem)
+      if (encoded === undefined) return
+      expect(encodePreset(decodePreset(encoded))).toBe(encoded)
+    })
+  }
+
+  it("encodes the same system identically regardless of input key order", () => {
+    const a = encodePreset({
+      ...DEFAULTS,
+      tokens: { "--radius": "0.75rem", "--font-sans": "Inter" },
+      color: { ...DEFAULT_COLOR_CONFIG, primary: "accent", vividness: 1.2 },
+    })
+    const b = encodePreset({
+      ...DEFAULTS,
+      tokens: { "--font-sans": "Inter", "--radius": "0.75rem" },
+      color: { ...DEFAULT_COLOR_CONFIG, vividness: 1.2, primary: "accent" },
+    })
+    expect(a).toBeTypeOf("string")
+    expect(b).toBe(a)
   })
 })
