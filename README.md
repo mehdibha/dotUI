@@ -3,8 +3,12 @@
 **Create a design system that looks like your brand — not a preset.**
 
 Design your visual language once — colors, icon library, radius, density — and
-export it anywhere: your codebase via the shadcn CLI, or straight into v0,
-Bolt, and Lovable.
+export it anywhere: your codebase via the shadcn CLI, or straight into v0
+(Bolt and Lovable are on the way).
+
+> **Preview** — dotUI is in active development. The builder panel is being
+> rebuilt chapter by chapter ([#666](https://github.com/mehdibha/dotUI/issues/666));
+> chapters marked WIP aren't wired yet, and APIs may change before 1.0.
 
 <!-- TODO: screenshot/GIF of the /create theme builder -->
 
@@ -25,8 +29,8 @@ Bolt, and Lovable.
    npx shadcn add @dotui/button
    ```
 
-   Or open your design system directly in **v0**, **Bolt** or **Lovable** and
-   start prompting with your brand already baked in.
+   Or open your design system directly in **v0** and start prompting with
+   your brand already baked in — **Bolt** and **Lovable** are on the way.
 
 3. **Own the code.** Components land in your project as plain React files —
    no runtime dependency, restyle or rewrite anything.
