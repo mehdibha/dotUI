@@ -140,6 +140,7 @@ function Drawer({
                 <DrawerPrimitive.Backdrop className={backdrop()} />
                 <DrawerPrimitive.Viewport className={viewport({ placement })}>
                   <DrawerPrimitive.Popup
+                    data-drawer=""
                     data-base-ui-swipe-ignore={swipeToDismiss ? undefined : ""}
                     initialFocus={() => getInitialFocusTarget(popupRef.current)}
                     className={(state) =>
