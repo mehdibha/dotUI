@@ -547,6 +547,20 @@ interface DropTarget {
   position: "before" | "after"
 }
 
+/** The drop target currently hovered/selected during a drag, board-wide. */
+interface ActiveDrop {
+  column: ColumnId
+  type: "root" | "item"
+  key?: string
+  position?: string
+}
+
+const sameDrop = (a: ActiveDrop, b: ActiveDrop) =>
+  a.column === b.column &&
+  a.type === b.type &&
+  a.key === b.key &&
+  a.position === b.position
+
 const noop = () => {}
 
 /** Inert copy of the dragged card, used as drop placeholder and drag preview. */
@@ -569,7 +583,10 @@ function BoardColumn({
   tasks,
   isFiltered,
   draggedTask,
+  activeDrop,
   onDragActive,
+  onTargetEnter,
+  onTargetExit,
   onMove,
   onDelete,
   onAdd,
@@ -580,13 +597,52 @@ function BoardColumn({
   isFiltered: boolean
   /** The task currently being dragged, from any column. */
   draggedTask: Task | null
+  /** The drop target currently hovered/selected anywhere on the board. */
+  activeDrop: ActiveDrop | null
   onDragActive: (task: Task | null) => void
+  onTargetEnter: (target: ActiveDrop) => void
+  onTargetExit: (target: ActiveDrop) => void
   onMove: (id: string, direction: -1 | 1) => void
   onDelete: (id: string) => void
   onAdd: (column: ColumnId) => void
   onDropTasks: (ids: string[], target?: DropTarget) => void
 }) {
   const { name, icon: Icon, hint } = COLUMNS[id]
+
+  const describeTarget = (target: {
+    type: string
+    key?: unknown
+    dropPosition?: string
+  }): ActiveDrop => ({
+    column: id,
+    type: target.type === "root" ? "root" : "item",
+    key: target.key != null ? String(target.key) : undefined,
+    position: target.dropPosition,
+  })
+
+  const draggedIndex = draggedTask
+    ? tasks.findIndex((task) => task.id === draggedTask.id)
+    : -1
+
+  /** Targets that resolve to where the dragged card already sits. */
+  const isDropAtDraggedSlot = (target: ActiveDrop) => {
+    if (target.column !== id || draggedIndex === -1) return false
+    if (target.type === "root") return true
+    if (target.key === draggedTask?.id) return true
+    const prev = tasks[draggedIndex - 1]
+    const next = tasks[draggedIndex + 1]
+    return (
+      (next != null &&
+        target.key === next.id &&
+        target.position === "before") ||
+      (prev != null && target.key === prev.id && target.position === "after")
+    )
+  }
+
+  // The source slot stays open in place until the drag targets a genuinely
+  // new position; dropping "at the same slot" then changes nothing visually.
+  const collapseDragSource =
+    activeDrop != null && !isDropAtDraggedSlot(activeDrop)
 
   const { dragAndDropHooks } = useDragAndDrop({
     getItems: (keys) =>
@@ -604,6 +660,8 @@ function BoardColumn({
       onDragActive(tasks.find((task) => task.id === key) ?? null)
     },
     onDragEnd: () => onDragActive(null),
+    onDropEnter: (e) => onTargetEnter(describeTarget(e.target)),
+    onDropExit: (e) => onTargetExit(describeTarget(e.target)),
     renderDragPreview: (items) => {
       const dragged = tasks.find(
         (task) => task.id === items[0]?.["kanban-task"],
@@ -625,12 +683,18 @@ function BoardColumn({
         target={target}
         // RAC nests children in a [role=gridcell] wrapper — it is the grid
         // child, so it must carry min-h-0/overflow-hidden for 0fr to collapse.
-        className="grid grid-rows-[0fr] outline-hidden transition-[grid-template-rows] duration-200 ease-out data-drop-target:grid-rows-[1fr] motion-reduce:transition-none [&>[role=gridcell]]:min-h-0 [&>[role=gridcell]]:overflow-hidden"
+        // Indicators at the dragged card's own slot never expand — the open
+        // source slot already shows that space.
+        className={cn(
+          "grid grid-rows-[0fr] outline-hidden transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none [&>[role=gridcell]]:min-h-0 [&>[role=gridcell]]:overflow-hidden",
+          !isDropAtDraggedSlot(describeTarget(target)) &&
+            "data-drop-target:grid-rows-[1fr] data-drop-target:starting:grid-rows-[0fr]",
+        )}
       >
         {draggedTask ? (
           <TaskCardGhost
             task={draggedTask}
-            className="w-full pb-2.5 opacity-40"
+            className="invisible w-full pb-2.5"
           />
         ) : (
           <div className="mb-2.5 h-0.5 rounded-full bg-border-focus" />
@@ -639,6 +703,8 @@ function BoardColumn({
     ),
     onReorder: (e) => {
       if (e.target.dropPosition === "on") return
+      // Dropping at the card's own slot (e.g. before/after itself) is a no-op.
+      if (isDropAtDraggedSlot(describeTarget(e.target))) return
       onDropTasks([...e.keys].map(String), {
         key: String(e.target.key),
         position: e.target.dropPosition,
@@ -660,6 +726,9 @@ function BoardColumn({
           .filter(isTextDropItem)
           .map((item) => item.getText("kanban-task")),
       )
+      // A short drag resolves to the root target — the column's own cards
+      // dropped there keep their position instead of jumping to the end.
+      if (ids.every((id) => tasks.some((task) => task.id === id))) return
       onDropTasks(ids)
     },
   })
@@ -717,7 +786,7 @@ function BoardColumn({
 
       <p className="-mt-1 text-xs text-fg-muted">{hint}</p>
 
-      <div className="flex flex-col gap-2.5">
+      <div className="flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto">
         <GridList
           aria-label={`${name} tasks`}
           items={tasks}
@@ -742,9 +811,21 @@ function BoardColumn({
           {(task) => (
             <GridListItem
               textValue={task.title}
-              className="mb-2.5 rounded-lg focus-reset data-dragging:opacity-50 data-focus-visible:focus-ring"
+              // While dragging, the card hides but its slot stays open in
+              // place (the free space) until a real new position is targeted;
+              // only then does the slot animate closed. The gridcell is
+              // display:contents, so the wrapper below is the grid item; fr
+              // interpolation needs its zero min-height.
+              className={({ isDragging }) =>
+                cn(
+                  "group/row mb-2.5 grid grid-rows-[1fr] rounded-lg focus-reset transition-[grid-template-rows,margin] duration-200 ease-out data-focus-visible:focus-ring",
+                  isDragging && collapseDragSource && "mb-0 grid-rows-[0fr]",
+                )
+              }
             >
-              <TaskCard task={task} onMove={onMove} onDelete={onDelete} />
+              <div className="min-h-0 transition-opacity duration-200 group-data-[dragging]/row:overflow-hidden group-data-[dragging]/row:opacity-0">
+                <TaskCard task={task} onMove={onMove} onDelete={onDelete} />
+              </div>
             </GridListItem>
           )}
         </GridList>
@@ -950,6 +1031,7 @@ export default function KanbanBlock() {
   const [view, setView] = useState<"board" | "list">("board")
   const [isCreating, setCreating] = useState(false)
   const [draggedTask, setDraggedTask] = useState<Task | null>(null)
+  const [activeDrop, setActiveDrop] = useState<ActiveDrop | null>(null)
   const [draftColumn, setDraftColumn] = useState<ColumnId>("backlog")
   const [nextNumber, setNextNumber] = useState(450)
 
@@ -997,6 +1079,9 @@ export default function KanbanBlock() {
       const index = target
         ? rest.findIndex((task) => task.id === target.key)
         : -1
+      // A target that is itself being dragged has no anchor left — bail
+      // rather than misplacing the cards at the end.
+      if (target && index === -1) return current
       const at =
         index === -1
           ? rest.length
@@ -1035,9 +1120,8 @@ export default function KanbanBlock() {
   const activeFilters = priorities.size
 
   return (
-    <div className="flex min-h-screen flex-col bg-bg text-fg">
-      {/* Static on phones: the wrapped toolbar is a quarter of the viewport. */}
-      <header className="z-10 flex flex-col gap-4 bg-bg/95 px-4 py-4 backdrop-blur sm:sticky sm:top-0 sm:px-6">
+    <div className="flex h-screen flex-col overflow-hidden bg-bg text-fg">
+      <header className="flex flex-col gap-4 px-4 py-4 sm:px-6">
         <div className="flex flex-wrap items-center gap-2">
           <SearchField
             aria-label="Search tasks"
@@ -1161,9 +1245,9 @@ export default function KanbanBlock() {
         </div>
       </header>
 
-      <main className="flex-1">
+      <main className="min-h-0 flex-1">
         {view === "board" ? (
-          <div className="flex items-start gap-4 overflow-x-auto px-4 py-6 sm:px-6">
+          <div className="flex h-full items-stretch gap-4 overflow-x-auto px-4 py-6 sm:px-6">
             {COLUMN_ORDER.map((id) => (
               <BoardColumn
                 key={id}
@@ -1171,7 +1255,17 @@ export default function KanbanBlock() {
                 tasks={visible.filter((task) => task.column === id)}
                 isFiltered={isFiltered}
                 draggedTask={draggedTask}
-                onDragActive={setDraggedTask}
+                activeDrop={activeDrop}
+                onDragActive={(task) => {
+                  setDraggedTask(task)
+                  if (!task) setActiveDrop(null)
+                }}
+                onTargetEnter={setActiveDrop}
+                onTargetExit={(target) =>
+                  setActiveDrop((current) =>
+                    current && sameDrop(current, target) ? null : current,
+                  )
+                }
                 onMove={moveTask}
                 onDelete={deleteTask}
                 onAdd={openCreate}
@@ -1180,19 +1274,11 @@ export default function KanbanBlock() {
             ))}
           </div>
         ) : (
-          <div className="px-4 py-6 sm:px-6">
+          <div className="h-full overflow-y-auto px-4 py-6 sm:px-6">
             <TaskTable tasks={visible} />
           </div>
         )}
       </main>
-
-      <footer className="flex flex-wrap items-center justify-between gap-2 border-t px-4 py-3 text-xs text-fg-muted sm:px-6">
-        <span>
-          {visible.length} of {tasks.length} tasks shown · {completion}% of the
-          sprint complete
-        </span>
-        <span>Board synced 2 minutes ago</span>
-      </footer>
     </div>
   )
 }
