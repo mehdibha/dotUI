@@ -581,26 +581,6 @@ export const DemosIndex: Record<
 		files: ["ui/chart-scatter/demos/with-regression.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-scatter/demos/with-regression")),
 	},
-	"chart-sparkline/demos/area": {
-		files: ["ui/chart-sparkline/demos/area.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-sparkline/demos/area")),
-	},
-	"chart-sparkline/demos/default": {
-		files: ["ui/chart-sparkline/demos/default.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-sparkline/demos/default")),
-	},
-	"chart-sparkline/demos/negative-highlight": {
-		files: ["ui/chart-sparkline/demos/negative-highlight.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-sparkline/demos/negative-highlight")),
-	},
-	"chart-sparkline/demos/stat-card": {
-		files: ["ui/chart-sparkline/demos/stat-card.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-sparkline/demos/stat-card")),
-	},
-	"chart-sparkline/demos/with-trend": {
-		files: ["ui/chart-sparkline/demos/with-trend.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-sparkline/demos/with-trend")),
-	},
 	"chat/demos/basic": {
 		files: ["ui/chat/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chat/demos/basic")),

@@ -1,6 +1,6 @@
 "use client"
 
-import { type ReactNode, useMemo, useState } from "react"
+import { type CSSProperties, type ReactNode, useMemo, useState } from "react"
 
 import {
   ArrowDownIcon,
@@ -52,8 +52,8 @@ import {
 } from "@/registry/ui/card"
 import { paletteColor } from "@/registry/ui/chart"
 import { BarChart } from "@/registry/ui/chart-bar"
+import { LineChart } from "@/registry/ui/chart-line"
 import { PieChart } from "@/registry/ui/chart-pie"
-import { Sparkline } from "@/registry/ui/chart-sparkline"
 import {
   Dialog,
   DialogBody,
@@ -474,14 +474,27 @@ function AccountSparkline({
   )
 
   return (
-    <Sparkline
-      data={data}
-      x="point"
-      y="value"
-      color={color}
-      height={48}
-      ariaLabel={label}
-    />
+    // A single series always paints slot 1; remap it to the account's color.
+    // Skipped for slot 1 itself — `--chart-1: var(--chart-1)` is a cycle.
+    <div
+      style={
+        color === "var(--chart-1)"
+          ? undefined
+          : ({ "--chart-1": color } as CSSProperties)
+      }
+    >
+      <LineChart
+        data={data}
+        x="point"
+        y="value"
+        axes={false}
+        grid={false}
+        legend={false}
+        tooltip={false}
+        height={48}
+        ariaLabel={label}
+      />
+    </div>
   )
 }
 

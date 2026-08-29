@@ -22,8 +22,8 @@ export function familyOf(demoKey: string): string {
 
 /**
  * The registry items to install for a variant: its family, plus any other
- * registry UI components the variant's source imports (e.g. the sparkline stat
- * card pulls in `card`). Matches the rewritten display source, so the paths are
+ * registry UI components the variant's source imports (e.g. a stat-card demo
+ * pulls in `card`). Matches the rewritten display source, so the paths are
  * the installed `@/ui/*` ones, not `@/registry/ui/*`.
  */
 export function installItems(demoKey: string, source: string | null): string[] {
@@ -122,7 +122,6 @@ export const CHART_FAMILIES = [
   { id: "chart-radial", name: "Radial chart" },
   { id: "chart-scatter", name: "Scatter chart" },
   { id: "chart-heatmap", name: "Heatmap" },
-  { id: "chart-sparkline", name: "Sparkline" },
 ] as const satisfies readonly ChartFamily[]
 
 /** Variant entries for a family, derived from the demo index (always in sync). */

@@ -547,12 +547,6 @@ export const componentsData: ComponentCategory[] = [
         href: "/docs/components/chart-heatmap",
         status: "done",
       },
-      {
-        name: "Sparkline",
-        slug: "chart-sparkline",
-        href: "/docs/components/chart-sparkline",
-        status: "done",
-      },
     ],
   },
 ]

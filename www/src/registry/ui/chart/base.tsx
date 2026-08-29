@@ -42,7 +42,6 @@ import { cn } from "@/registry/lib/utils"
    Never scatter a literal into a `??` fallback — read it from here. */
 export const chartDefaults = {
   height: 256,
-  sparklineHeight: 40,
   curve: "natural",
   strokeWidth: 2.25,
   fill: 0.2,

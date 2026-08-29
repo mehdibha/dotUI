@@ -29,16 +29,10 @@ interface ChartCardProps {
  * Every card in a family is the same height and padding so the gallery reads
  * as one set. Charts size themselves: the host fills the frame's width and
  * draws at its own height (the library measures width only) — the box is
- * sized landscape around the 256px chart, and the sparkline family gets a
- * shorter box so its small previews aren't floating in air. Polar charts are
- * capped at 250px wide so they read as a circle rather than a lone arc in a
- * wide box.
+ * sized landscape around the 256px chart. Polar charts are capped at 250px
+ * wide so they read as a circle rather than a lone arc in a wide box.
  */
-export const CARD_HEIGHTS: Record<string, string> = {
-  "chart-sparkline": "h-60",
-}
-
-export const CARD_HEIGHT_DEFAULT = "h-72"
+export const CARD_HEIGHT = "h-72"
 
 export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
   // Bumping this key remounts the chart, replaying its entry animation.
@@ -66,7 +60,7 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
           <ChartCodeModal demoKey={demoKey} label={label} />
         </div>
       }
-      className={CARD_HEIGHTS[familyId] ?? CARD_HEIGHT_DEFAULT}
+      className={CARD_HEIGHT}
       inert
       aria-hidden="true"
     >

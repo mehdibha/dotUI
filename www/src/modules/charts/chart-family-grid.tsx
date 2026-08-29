@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 
-import { CARD_HEIGHT_DEFAULT, CARD_HEIGHTS, ChartCard } from "./chart-card"
+import { ChartCard } from "./chart-card"
 import { CHART_FAMILIES, variantsFor } from "./data"
 
 /**
@@ -45,11 +45,8 @@ function LazyMount({
 }
 
 /* The header row above each card box is 36px tall (28px row + 8px gap), so
-   the placeholder is the family's box height plus that. */
-const PLACEHOLDER_HEIGHTS: Record<string, string> = {
-  [CARD_HEIGHT_DEFAULT]: "h-[20.25rem]",
-  "h-60": "h-[17.25rem]",
-}
+   the placeholder is the card box height plus that. */
+const PLACEHOLDER_HEIGHT = "h-[20.25rem]"
 
 /**
  * Renders the chart previews for a single family, identified by its registry id
@@ -70,12 +67,10 @@ export function ChartFamilyGrid({ family }: { family: string }) {
 
   // Two columns, not three: the content column is ~900px, and three-across
   // makes every card taller than it is wide.
-  const placeholder =
-    PLACEHOLDER_HEIGHTS[CARD_HEIGHTS[data.id] ?? CARD_HEIGHT_DEFAULT]
   return (
     <div className="mt-6 grid grid-cols-1 gap-x-5 gap-y-6 sm:grid-cols-2">
       {variantsFor(data.id).map((v) => (
-        <LazyMount key={v.key} className={placeholder}>
+        <LazyMount key={v.key} className={PLACEHOLDER_HEIGHT}>
           <ChartCard familyId={data.id} demoKey={v.key} label={v.label} />
         </LazyMount>
       ))}

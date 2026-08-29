@@ -16,7 +16,6 @@ import { ChartPieDemo } from "./chart-pie"
 import { ChartRadarDemo } from "./chart-radar"
 import { ChartRadialDemo } from "./chart-radial"
 import { ChartScatterDemo } from "./chart-scatter"
-import { ChartSparklineDemo } from "./chart-sparkline"
 import { ChatDemo } from "./chat"
 import { CheckboxDemo } from "./checkbox"
 import { CheckboxGroupDemo } from "./checkbox-group"
@@ -88,7 +87,6 @@ export const componentDemos: Record<string, ComponentType> = {
   "chart-radar": ChartRadarDemo,
   "chart-radial": ChartRadialDemo,
   "chart-scatter": ChartScatterDemo,
-  "chart-sparkline": ChartSparklineDemo,
   chat: ChatDemo,
   checkbox: CheckboxDemo,
   "checkbox-group": CheckboxGroupDemo,
