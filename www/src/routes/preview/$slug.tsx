@@ -15,12 +15,16 @@ export const Route = createFileRoute("/preview/$slug")({
         : undefined,
   }),
   ssr: false,
-  beforeLoad: ({ params }) => {
-    // Warm the example chunk without pulling the examples barrel into the
-    // router's critical import graph.
-    void import("./-preview-page").then(({ getExamplesPromise }) =>
-      getExamplesPromise(params.slug),
-    )
+  loader: async ({ params }) => {
+    // The example chunk must resolve here, not in the component: while a
+    // loader pends the router keeps the previous preview on screen, whereas a
+    // component that suspends blanks the page (there is no boundary above it —
+    // and no transition can hold it, since router state updates flow through
+    // useSyncExternalStore and render synchronously). The dynamic import keeps
+    // the examples barrel out of the router's critical import graph.
+    const { getExamplesPromise } = await import("./-preview-page")
+    const mod = await getExamplesPromise(params.slug)
+    return { Examples: mod?.default ?? null }
   },
   component: PreviewPage,
 })
