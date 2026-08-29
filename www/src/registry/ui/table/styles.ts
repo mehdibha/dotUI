@@ -8,10 +8,15 @@ const { useStyles, styles } = createStyles(tableMeta, {
       container:
         "relative isolate min-h-0 w-full scroll-pt-10 overflow-auto rounded-md border border-border bg-bg",
       table: "min-w-full text-sm text-fg outline-hidden select-none",
+      // The blur lives on the cells, not the thead: a backdrop-filter is
+      // clipped by its own border-radius but escapes the scroll container's
+      // rounded clip (Chromium), so the corner cells round themselves to the
+      // container's inner radius and the thead must stay filter-free.
       header:
-        "sticky top-0 z-10 bg-bg/95 backdrop-blur supports-[-moz-appearance:none]:bg-bg",
+        "sticky top-0 z-10 bg-bg/95 supports-[-moz-appearance:none]:bg-bg",
       column: [
         "box-border h-10 cursor-default border-b border-border bg-bg/95 px-2.5 text-left align-middle font-medium whitespace-nowrap text-fg-muted focus-reset outline-hidden backdrop-blur supports-[-moz-appearance:none]:bg-bg",
+        "first:rounded-tl-[calc(var(--radius-md)-1px)] last:rounded-tr-[calc(var(--radius-md)-1px)]",
         "[&:is(div)]:flex [&:is(div)]:h-full [&:is(div)]:items-center",
         "relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:[outline:2px_solid_var(--color-border-focus)] focus-visible:before:[outline-offset:-2px] focus-visible:before:content-['']",
       ],
@@ -19,6 +24,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       columnLabel: "min-w-0 flex-1 truncate",
       chromeColumn: [
         "box-border h-10 border-b border-border bg-bg/95 px-0 text-left align-middle focus-reset outline-hidden backdrop-blur supports-[-moz-appearance:none]:bg-bg",
+        "first:rounded-tl-[calc(var(--radius-md)-1px)] last:rounded-tr-[calc(var(--radius-md)-1px)]",
         "[&:is(div)]:flex [&:is(div)]:h-full [&:is(div)]:items-center",
         "relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:[outline:2px_solid_var(--color-border-focus)] focus-visible:before:[outline-offset:-2px] focus-visible:before:content-['']",
       ],
