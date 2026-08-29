@@ -20,6 +20,7 @@ import {
   TriangleAlertIcon,
   Users2Icon,
   VolumeOffIcon,
+  XIcon,
   ZapIcon,
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
@@ -647,14 +648,17 @@ export default function NotificationsCenter() {
   }
 
   return (
-    <div className="min-h-screen bg-bg text-fg">
+    // Same fake-modal shell as the settings block — the backdrop and card
+    // reuse the Modal style's global vars so the fake tracks the axis.
+    <div className="relative flex h-svh items-center justify-center bg-bg p-4 text-fg sm:p-8">
+      <div className="absolute inset-0 bg-overlay/(--modal-backdrop-opacity) backdrop-blur-(--modal-backdrop-blur)" />
       <Tabs
         selectedKey={tab}
         onSelectionChange={(key) => setTab(key as TabId)}
-        className="flex min-h-screen flex-col gap-0"
+        className="relative flex h-full max-h-[46rem] w-full max-w-5xl flex-col gap-0 overflow-hidden rounded-(--modal-radius) border border-border-elevated bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))]"
       >
-        <header className="sticky top-0 z-20 border-b bg-bg/90 backdrop-blur">
-          <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 pt-4 sm:px-6">
+        <header className="shrink-0 border-b">
+          <div className="flex w-full flex-col gap-3 px-4 pt-4 sm:px-6">
             <div className="flex items-center gap-3">
               <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-fg-on-primary">
                 <BellIcon className="size-4" />
@@ -775,6 +779,20 @@ export default function NotificationsCenter() {
                     </MenuContent>
                   </Popover>
                 </Menu>
+
+                <Separator orientation="vertical" className="h-5" />
+
+                <Tooltip>
+                  <Button
+                    size="sm"
+                    variant="quiet"
+                    isIconOnly
+                    aria-label="Close notifications"
+                  >
+                    <XIcon />
+                  </Button>
+                  <TooltipContent>Close</TooltipContent>
+                </Tooltip>
               </div>
             </div>
 
@@ -804,7 +822,7 @@ export default function NotificationsCenter() {
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6">
+        <main className="min-h-0 w-full flex-1 overflow-y-auto px-4 py-6 sm:px-6">
           <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
             <div className="min-w-0">
               {TABS.map((t) => (
