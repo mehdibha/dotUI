@@ -80,7 +80,7 @@ const BUTTON_STYLES: OptionGridItem[] = [
   {
     id: "outline",
     label: "Outline",
-    preview: <MiniButton className="border border-border-field text-fg" />,
+    preview: <MiniButton className="border border-border-control text-fg" />,
   },
   { id: "quiet", label: "Quiet", preview: <MiniButton className="text-fg" /> },
 ]
@@ -90,13 +90,13 @@ const INPUT_STYLES: OptionGridItem[] = [
     id: "outline",
     label: "Outline",
     preview: (
-      <MiniInput className="rounded-(--input-radius) border border-border-field bg-field" />
+      <MiniInput className="rounded-(--input-radius) border border-border-control bg-field" />
     ),
   },
   {
     id: "line",
     label: "Line",
-    preview: <MiniInput className="border-b border-border-field" />,
+    preview: <MiniInput className="border-b border-border-control" />,
   },
   {
     id: "filled",
@@ -107,7 +107,7 @@ const INPUT_STYLES: OptionGridItem[] = [
     id: "filled-line",
     label: "Filled line",
     preview: (
-      <MiniInput className="rounded-t-(--input-radius) border-b border-border-field bg-neutral" />
+      <MiniInput className="rounded-t-(--input-radius) border-b border-border-control bg-neutral" />
     ),
   },
 ]

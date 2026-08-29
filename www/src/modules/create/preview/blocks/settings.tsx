@@ -247,9 +247,7 @@ function SettingsGroup({
         </h2>
         {action}
       </div>
-      <div className="flex flex-col divide-y divide-border-muted">
-        {children}
-      </div>
+      <div className="flex flex-col divide-y divide-border">{children}</div>
     </section>
   )
 }
@@ -983,7 +981,7 @@ export default function SettingsBlock() {
     // and card reuse the Modal style's global vars so the fake tracks the axis.
     <div className="relative flex h-svh items-center justify-center bg-bg p-4 text-fg sm:p-8">
       <div className="absolute inset-0 bg-overlay/(--modal-backdrop-opacity) backdrop-blur-(--modal-backdrop-blur)" />
-      <SidebarProvider className="relative h-full max-h-[46rem] min-h-0 w-full max-w-5xl overflow-hidden rounded-(--modal-radius) border border-border-elevated bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))]">
+      <SidebarProvider className="relative h-full max-h-[46rem] min-h-0 w-full max-w-5xl overflow-hidden rounded-(--modal-radius) border bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))]">
         <SettingsSidebar section={section} onSectionChange={setSection} />
         <Tooltip>
           <Button

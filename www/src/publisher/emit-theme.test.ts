@@ -45,7 +45,7 @@ describe("emitInitItem", () => {
       ...baseRegistryCss.css,
       ".dark": {
         ...baseRegistryCss.css[".dark"],
-        "--color-border-elevated": "var(--neutral-a100)",
+        "--color-border": "var(--neutral-a100)",
         "--color-popover":
           "color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100))",
       },

@@ -42,7 +42,7 @@ export function OtpHero({ state }: { state: LabState }) {
       {style === "group" ? (
         <div
           className={cn(
-            "flex divide-x divide-border-field overflow-hidden",
+            "flex divide-x divide-border-control overflow-hidden",
             look.className,
           )}
           style={look.style}
@@ -59,7 +59,7 @@ export function OtpHero({ state }: { state: LabState }) {
             style === "underline" ? (
               <span
                 key={i}
-                className={cn(cell, "border-b-2 border-border-field")}
+                className={cn(cell, "border-b-2 border-border-control")}
               >
                 {glyph(digit)}
               </span>

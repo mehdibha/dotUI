@@ -52,7 +52,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       // The thin draggable strip on the inner edge that toggles the sidebar.
       rail: [
         "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 cursor-interactive outline-hidden transition-all ease-fluid-out group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
-        "after:absolute after:inset-y-0 after:left-1/2 after:w-px hover:after:bg-border",
+        "after:absolute after:inset-y-0 after:left-1/2 after:w-px hover:after:bg-border-control",
         "in-data-[side=left]:cursor-w-resize in-data-[side=right]:cursor-e-resize",
         "group-data-[collapsible=offcanvas]:translate-x-0 group-data-[collapsible=offcanvas]:after:left-full hover:group-data-[collapsible=offcanvas]:bg-sidebar",
         "group-data-[side=left]:group-data-[collapsible=offcanvas]:-right-2 group-data-[side=right]:group-data-[collapsible=offcanvas]:-left-2",
@@ -102,7 +102,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       menuSkeletonIcon: "size-4 rounded-md",
       menuSkeletonText: "h-4 max-w-(--skeleton-width) flex-1",
       menuSub: [
-        "mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l border-border px-2.5 py-0.5",
+        "mx-3.5 flex min-w-0 translate-x-px flex-col gap-1 border-l px-2.5 py-0.5",
         "group-data-[collapsible=icon]:hidden",
       ],
       menuSubItem: "group/menu-sub-item relative",

@@ -47,7 +47,7 @@ export function AttachedShell({
     <div
       className={cn(
         "flex items-center overflow-hidden",
-        state.groupSeparator === "auto" && "divide-x divide-border-field",
+        state.groupSeparator === "auto" && "divide-x divide-border-control",
         className,
       )}
       style={{ borderRadius: radius }}
@@ -55,7 +55,7 @@ export function AttachedShell({
       {segments.map((seg, i) => (
         <span key={i} className="flex items-stretch">
           {state.groupSeparator === "divider" && i > 0 && (
-            <span className="my-1.5 w-px bg-border-field" />
+            <span className="my-1.5 w-px bg-border-control" />
           )}
           {seg}
         </span>

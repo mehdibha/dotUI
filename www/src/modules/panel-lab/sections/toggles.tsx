@@ -37,7 +37,7 @@ const SELECTED_OPTIONS: SelectRowOption[] = [
 export function selectedFx(state: LabState): string {
   switch (state.toggleSelected) {
     case "chip":
-      return "bg-bg text-fg shadow-sm ring-1 ring-border-field"
+      return "bg-bg text-fg shadow-sm ring-1 ring-border-control"
     case "inverse":
       return "bg-inverse text-fg-inverse"
     default:

@@ -29,7 +29,7 @@ const defaultText = "text-base sm:text-sm"
 // nested input-control.
 
 const outlineField = tv({
-  base: "rounded-(--input-radius) border border-border-field bg-field px-(--edge-to-text) shadow-[var(--shadow-control,none)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-border-disabled disabled:bg-disabled",
+  base: "rounded-(--input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-[var(--shadow-control,none)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-border disabled:bg-disabled",
   variants: {
     focus: {
       self: "focus:ring-2 focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted",
@@ -40,7 +40,7 @@ const outlineField = tv({
 })
 
 const lineField = tv({
-  base: "border-b border-border-field transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border-disabled",
+  base: "border-b border-border-control transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus invalid:focus:border-fg-danger",
@@ -51,7 +51,7 @@ const lineField = tv({
 })
 
 const filledLineBottomField = tv({
-  base: "rounded-t-(--input-radius) border-b border-border-field bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border-disabled disabled:bg-disabled",
+  base: "rounded-t-(--input-radius) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border disabled:bg-disabled",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus",

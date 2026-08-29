@@ -146,7 +146,7 @@ export function FocusHero({ state }: { state: LabState }) {
   }
   const field = cn(
     SPECIMEN_FIELD,
-    "flex-1 border border-border-field bg-field text-fg",
+    "flex-1 border border-border-control bg-field text-fg",
   )
   const radius = controlRadiusPx(state)
   return (
@@ -221,7 +221,7 @@ function ControlFocusHero({ state }: { state: LabState }) {
 function InputFocusHero({ state }: { state: LabState }) {
   const field = cn(
     SPECIMEN_FIELD,
-    "flex-1 border border-border-field bg-field text-fg",
+    "flex-1 border border-border-control bg-field text-fg",
   )
   const radius = controlRadiusPx(state)
   return (

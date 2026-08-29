@@ -74,7 +74,7 @@ const { useStyles, styles } = createStyles(sliderMeta, {
       faceted: {
         slots: {
           thumb: [
-            "size-(--slider-thumb-size) border border-border/60",
+            "size-(--slider-thumb-size) border border-border-control/60",
             "bg-[conic-gradient(from_45deg,var(--color-bg),var(--color-neutral),var(--color-fg),var(--color-bg),var(--color-fg-muted),var(--color-bg))]",
           ],
         },
