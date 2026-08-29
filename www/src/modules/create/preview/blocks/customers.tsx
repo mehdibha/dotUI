@@ -676,7 +676,7 @@ function RowMenu({ customer }: { customer: Customer }) {
 
 /* --------------------------------- Page ----------------------------------- */
 
-export default function DataTableBlock() {
+export default function CustomersBlock() {
   const [rows, setRows] = React.useState(CUSTOMERS)
   const [query, setQuery] = React.useState("")
   const [statusFilter, setStatusFilter] = React.useState<Set<string>>(new Set())
@@ -1100,7 +1100,7 @@ export default function DataTableBlock() {
                   textValue={customer.name}
                 >
                   {(column) => (
-                    <TableCell className={column.cellClassName}>
+                    <TableCell className={cn("h-12", column.cellClassName)}>
                       {renderCell(customer, column.id)}
                     </TableCell>
                   )}

@@ -14,6 +14,7 @@ import { siteConfig } from "@/config/site"
 import { truncateOnWord } from "@/lib/text"
 import { ToastProvider } from "@/registry/ui/toast"
 import { usePreviewForcedTheme } from "@/modules/create/preset/iframe-sync"
+import { PREVIEW_PENDING_SCRIPT } from "@/modules/docs/preview-pending"
 
 import appCss from "@/styles.css?url"
 
@@ -106,6 +107,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
+        <script dangerouslySetInnerHTML={{ __html: PREVIEW_PENDING_SCRIPT }} />
         <HeadContent />
       </head>
       <body className="min-h-screen bg-bg font-sans text-fg antialiased">

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 import {
   ChevronDownIcon,
@@ -39,6 +39,8 @@ import {
   pingIframe,
   sendInspectorMode,
   sendPreviewMode,
+  sendPreviewNavigate,
+  sendPreviewPrefetch,
   sendToIframe,
   useDesignSystem,
   useInspectorExitMessages,
@@ -72,11 +74,6 @@ const ALL_COMPONENTS = componentsData
 
 // Composed, real-world previews: the landing cards grid plus the page blocks.
 const PREVIEW_ITEMS = [{ slug: "cards", name: "Cards" }, ...AVAILABLE_BLOCKS]
-
-// How many previews the picker shows before "Show more".
-const PREVIEW_ITEMS_COLLAPSED = 4
-
-const SHOW_ALL_PREVIEWS_ID = "__show-all-previews"
 
 // Zoom magnifies the rendered iframe (CSS `zoom`, no reflow) — distinct from device
 // size, which reflows the content. Combined, they behave like a browser's device bar.
@@ -118,11 +115,6 @@ export function PreviewPanel({
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
-  const [pickerQuery, setPickerQuery] = useState("")
-  const [showAllPreviews, setShowAllPreviews] = useState(false)
-  // Set when "Show more" is picked so the close the Select requests right
-  // after committing that selection can be swallowed.
-  const keepPickerOpen = useRef(false)
   const [inspecting, setInspecting] = useState(false)
   const [toolbarHidden, setToolbarHidden] = useState(false)
 
@@ -159,38 +151,29 @@ export function PreviewPanel({
   // server can't know the client's stored theme (it always resolves "light"), so reading
   // it during render would mismatch the SSR'd toggle icon on hydration. Runs once — the
   // preview mode is toggled independently of the site theme afterwards.
-  const modeSeeded = useRef(false)
   useEffect(() => {
     setPreviewMode(resolvedTheme)
-    modeSeeded.current = true
     // oxlint-disable-next-line react/exhaustive-deps -- seed once from the site theme at open; preview mode is independent thereafter
   }, [])
 
-  // Bake the preset into the iframe src so the initial render has the right state.
-  // Only recompute when the previewed component changes (not on every param change)
-  // — further updates go through postMessage without reloading the iframe.
-  const iframeSrc = useMemo(() => {
+  // The iframe's document URL, fixed at mount — the preset is baked in so the
+  // initial render has the right state. Everything after goes over postMessage
+  // (preset / mode changes, and preview switches, which navigate the iframe's
+  // own SPA router), so the iframe never reloads.
+  const [iframeSrc] = useState(() => {
     const base = `/preview/${effectivePreview}`
-    const params = new URLSearchParams()
-    if (preset) params.set("preset", preset)
-    // Bake the current mode in so a remounted iframe first-paints in the
-    // previewed mode instead of flashing from its own stored theme. Skipped on
-    // the very first compute — previewMode hasn't seeded yet and the fresh
-    // iframe's stored theme already matches the site's.
-    if (modeSeeded.current) params.set("mode", previewMode)
-    const qs = params.toString()
-    return qs ? `${base}?${qs}` : base
-    // oxlint-disable-next-line react/exhaustive-deps -- keep live preset / mode changes on the postMessage channel to avoid iframe reloads
-  }, [effectivePreview])
+    return preset ? `${base}?${new URLSearchParams({ preset })}` : base
+  })
 
-  // The iframe remounts per previewed component (key below) — show the stage
-  // skeleton again until the new document signals it has rendered. The iframe's
-  // `load` event is too early (it fires before the SPA paints), so wait for the
-  // app's own `preview-ready` instead. On first load the iframe usually mounts
-  // before this server-rendered parent hydrates, so its unprompted announcement
-  // lands with no listener attached — poll until it answers rather than trusting
-  // that one message. Give up after PREVIEW_READY_TIMEOUT so a preview that
-  // never reports (an error page, say) reveals itself instead of hanging.
+  // Show the stage skeleton until the iframe's document signals it has rendered
+  // — initial boot only, since preview switches keep the document alive. The
+  // iframe's `load` event is too early (it fires before the SPA paints), so
+  // wait for the app's own `preview-ready` instead. On first load the iframe
+  // usually mounts before this server-rendered parent hydrates, so its
+  // unprompted announcement lands with no listener attached — poll until it
+  // answers rather than trusting that one message. Give up after
+  // PREVIEW_READY_TIMEOUT so a preview that never reports (an error page, say)
+  // reveals itself instead of hanging.
   useEffect(() => {
     setIsLoaded(false)
     const iframe = iframeRef.current
@@ -218,6 +201,27 @@ export function PreviewPanel({
       window.removeEventListener("message", onReady)
     }
   }, [iframeSrc])
+
+  // Preview switches navigate the iframe's SPA router instead of remounting the
+  // iframe — the current preview stays on screen until the next one commits, and
+  // revisited previews appear instantly from the document's module cache. Resent
+  // on load / ready: a switch made while the document is still booting would
+  // land before its message listener exists. (The iframe ignores same-slug sends.)
+  useEffect(() => {
+    const iframe = iframeRef.current
+    if (!iframe) return
+    const send = () => sendPreviewNavigate(iframe, effectivePreview)
+    if (iframe.contentWindow) send()
+    iframe.addEventListener("load", send)
+    const onReady = (event: MessageEvent) => {
+      if (event.data?.type === "preview-ready") send()
+    }
+    window.addEventListener("message", onReady)
+    return () => {
+      iframe.removeEventListener("load", send)
+      window.removeEventListener("message", onReady)
+    }
+  }, [effectivePreview])
 
   // Send the design system to the iframe on change, on load, and when the iframe signals it's
   // ready — its message listener can mount after the load event, racing the load-fired send.
@@ -296,65 +300,43 @@ export function PreviewPanel({
     }
   }
 
-  // The picker truncates the blocks list behind "Show more" while browsing, but
-  // hidden items can't match the Autocomplete filter — so the full list renders
-  // whenever a search is underway (the filter then prunes it).
-  const onPickerOpenChange = (open: boolean) => {
-    if (!open && keepPickerOpen.current) {
-      keepPickerOpen.current = false
-      return
-    }
-    setPickerOpen(open)
-    if (!open) {
-      // Fresh picker on reopen — collapsed list, cleared search.
-      setShowAllPreviews(false)
-      setPickerQuery("")
-    }
-  }
-
-  const previewsExpanded = showAllPreviews || pickerQuery.trim() !== ""
-  const visiblePreviews = previewsExpanded
-    ? PREVIEW_ITEMS
-    : PREVIEW_ITEMS.slice(0, PREVIEW_ITEMS_COLLAPSED)
-  const hiddenPreviewCount = PREVIEW_ITEMS.length - visiblePreviews.length
+  // Warm a preview's chunk inside the iframe while the pointer hovers its
+  // picker item, so the switch on click is instant.
+  const prefetchPreview = (slug: string) =>
+    sendPreviewPrefetch(iframeRef.current, slug)
 
   // Picker body shared by the desktop popover and the mobile drawer — only the
   // list's sizing differs between the two containers. Selection state comes
   // from the wrapping Select, so the ListBox carries no props of its own.
   const renderPicker = (listClassName: string) => (
     <Command className="min-h-0 flex-1">
-      <SearchField
-        autoFocus
-        aria-label="Search previews"
-        onChange={setPickerQuery}
-      >
+      <SearchField autoFocus aria-label="Search previews">
         <Input placeholder="Search previews…" />
       </SearchField>
       <ListBox className={listClassName}>
         {/* Real-world previews — the whole system composed into full screens. */}
         <ListBoxSection>
           <ListBoxSectionHeader>Blocks</ListBoxSectionHeader>
-          {visiblePreviews.map((block) => (
+          {PREVIEW_ITEMS.map((block) => (
             <ListBoxItem
               key={block.slug}
               id={block.slug}
               textValue={block.name}
+              onHoverStart={() => prefetchPreview(block.slug)}
             >
               <span className="truncate">{block.name}</span>
             </ListBoxItem>
           ))}
-          {hiddenPreviewCount > 0 && (
-            <ListBoxItem id={SHOW_ALL_PREVIEWS_ID} textValue="Show more">
-              <span className="truncate text-fg-muted">
-                Show {hiddenPreviewCount} more…
-              </span>
-            </ListBoxItem>
-          )}
         </ListBoxSection>
         <ListBoxSection>
           <ListBoxSectionHeader>Components</ListBoxSectionHeader>
           {ALL_COMPONENTS.map((comp) => (
-            <ListBoxItem key={comp.slug} id={comp.slug} textValue={comp.name}>
+            <ListBoxItem
+              key={comp.slug}
+              id={comp.slug}
+              textValue={comp.name}
+              onHoverStart={() => prefetchPreview(comp.slug)}
+            >
               <span className="truncate">{comp.name}</span>
             </ListBoxItem>
           ))}
@@ -388,7 +370,6 @@ export function PreviewPanel({
         <div className="flex h-full w-full">
           <iframe
             ref={iframeRef}
-            key={effectivePreview}
             src={iframeSrc}
             title="preview"
             className={cn(
@@ -463,17 +444,12 @@ export function PreviewPanel({
             <Select
               value={effectivePreview}
               onChange={(v) => {
-                if (v === SHOW_ALL_PREVIEWS_ID) {
-                  setShowAllPreviews(true)
-                  keepPickerOpen.current = true
-                  return
-                }
                 navigate({
                   search: (prev) => ({ ...prev, preview: v as string }),
                 })
               }}
               isOpen={pickerOpen}
-              onOpenChange={onPickerOpenChange}
+              onOpenChange={setPickerOpen}
               aria-label="Preview"
               // w-fit overrides the field base's w-full, which would collapse the
               // trigger inside the pill's shrink-to-fit absolute box.
@@ -493,7 +469,7 @@ export function PreviewPanel({
               {isMobile ? (
                 <Drawer
                   isOpen={pickerOpen}
-                  onOpenChange={onPickerOpenChange}
+                  onOpenChange={setPickerOpen}
                   className="h-[80svh]"
                 >
                   <DialogContent
@@ -637,9 +613,18 @@ export function PreviewPanel({
                 variant="quiet"
                 isIconOnly
                 className="rounded-full"
-                onPress={() =>
-                  window.open(iframeSrc, "_blank", "noopener,noreferrer")
-                }
+                onPress={() => {
+                  // Built at click time — the iframe src is frozen at mount, so
+                  // it no longer reflects the current preview or mode.
+                  const params = new URLSearchParams()
+                  if (preset) params.set("preset", preset)
+                  params.set("mode", previewMode)
+                  window.open(
+                    `/preview/${effectivePreview}?${params}`,
+                    "_blank",
+                    "noopener,noreferrer",
+                  )
+                }}
                 aria-label="Open preview in new tab"
               >
                 <ExternalLinkIcon />

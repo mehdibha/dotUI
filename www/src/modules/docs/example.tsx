@@ -5,6 +5,7 @@ import { cn } from "@/registry/lib/utils"
 import { DemoCode, getSlotContent } from "./demo"
 import { DemoPreset } from "./demo-preset"
 import { ExampleCodeModal } from "./example-code-modal"
+import { PreviewVeil } from "./preview-controls"
 
 export interface ExampleProps extends React.ComponentProps<"div"> {
   component: React.ComponentType
@@ -66,9 +67,10 @@ export function Example({
       <DemoPreset>
         <div
           data-example-preview=""
-          className="no-scrollbar flex min-h-32 flex-1 flex-col items-center justify-center gap-6 overflow-x-auto rounded-2xl border bg-card p-6 sm:p-10"
+          className="relative no-scrollbar flex min-h-32 flex-1 flex-col items-center justify-center gap-6 overflow-x-auto rounded-2xl border bg-card p-6 sm:p-10"
         >
           <Component />
+          <PreviewVeil />
         </div>
       </DemoPreset>
     </div>
