@@ -33,8 +33,6 @@ const ref = (palette: string, step: string): SemanticTarget =>
 const on = (palette: string, step: "700" | "800"): SemanticTarget => ({
   on: { palette, step },
 })
-const alpha = (palette: string, step: string): SemanticTarget =>
-  ({ alpha: { palette, step } }) as SemanticTarget
 const mix = (
   a: SemanticTarget,
   weight: number,
@@ -184,16 +182,19 @@ export function semanticVocabulary(
     "color-fg-on-neutral": fg(ref("neutral", "950")),
     // ---- borders ----
     // Two-weight model: every structural edge (chrome, cards, separators,
-    // overlays) shares one subtle hairline, and controls opt into one solid
-    // emphasized weight. The hairline is alpha, not a solid rung — ~9% ink
-    // composites correctly over any surface in both modes (a200 light / a100
-    // dark: equal nominal alpha; the rung numbers differ because the ladder
-    // calibrates alphas per mode), where a solid step tuned for control edges
-    // lands ~2× too strong in dark (issue #590, the 7-system border survey).
+    // overlays) shares one subtle weight, and controls opt into one solid
+    // emphasized weight. Solid, not alpha: an alpha hairline composites over
+    // each element's own background, so the same token paints brighter on
+    // elevated surfaces (a border-t on a bg-card code bar reads stronger than
+    // the frame around it). One fixed color reads identically everywhere.
+    // Light matches ~9% ink over the app bg; dark sits between the mids
+    // (Geist-style, ~L 0.25) so edges stay legible on the lighter elevated
+    // surfaces — a dark solid matched to the page-bg hairline would vanish
+    // on popover (both ~L 0.20).
     "color-border": bd(
       {
-        light: alpha("neutral", "200"),
-        dark: alpha("neutral", "100"),
+        light: mix(ref("neutral", "200"), 50, ref("neutral", "300")),
+        dark: mix(ref("neutral", "100"), 50, ref("neutral", "200")),
       },
       NEUTRAL,
     ),
