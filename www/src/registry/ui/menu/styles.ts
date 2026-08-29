@@ -32,15 +32,15 @@ const { useStyles, styles } = createStyles(menuMeta, {
     compact: {
       slots: {
         root: "text-xs/relaxed",
-        item: "min-h-7 gap-2 px-1.5 py-1 text-xs/relaxed **:[svg]:not-with-[size]:size-3.5",
-        sectionTitle: "px-1.5 py-1",
+        item: "min-h-7 gap-2 px-2 py-1 text-xs/relaxed **:[svg]:not-with-[size]:size-3.5",
+        sectionTitle: "px-2 py-1",
       },
     },
     default: {
       slots: {
         root: "text-sm",
-        item: "gap-2 px-2 py-1 text-sm **:[svg]:not-with-[size]:size-4",
-        sectionTitle: "px-2 py-1",
+        item: "gap-1.5 px-1.5 py-1 text-sm **:[svg]:not-with-[size]:size-4",
+        sectionTitle: "px-1.5 py-1",
       },
     },
     comfortable: {
