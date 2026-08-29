@@ -311,11 +311,9 @@ function PresetPickerContent({
                 textValue={item.name}
                 // The themed row IS the option and covers the item edge to edge,
                 // so the list highlight never shows; hover/focus render on the
-                // row instead (`before:hidden` drops the highlight style's own
-                // accent bar, which would paint the site's accent over the
-                // preset's). `overflow-visible` lets the focus ring and the
+                // row instead. `overflow-visible` lets the focus ring and the
                 // selected badge sit outside the row.
-                className="block overflow-visible rounded-xl p-0 before:hidden"
+                className="block overflow-visible rounded-xl p-0"
               >
                 {({ isHovered, isFocusVisible }) => (
                   <PresetOptionRow

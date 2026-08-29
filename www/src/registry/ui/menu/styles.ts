@@ -53,9 +53,6 @@ const { useStyles, styles } = createStyles(menuMeta, {
   params: {
     highlight: {
       subtle: {
-        slots: {
-          item: "overflow-hidden focus-visible:before:absolute focus-visible:before:inset-y-0 focus-visible:before:left-0 focus-visible:before:w-0.5 focus-visible:before:rounded-[inherit] focus-visible:before:bg-accent",
-        },
         vars: {
           "--color-highlight": "var(--neutral-200)",
           "--color-fg-on-highlight": "var(--neutral-950)",
