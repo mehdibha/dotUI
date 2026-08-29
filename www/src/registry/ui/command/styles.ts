@@ -25,7 +25,7 @@ const { useStyles, styles } = createStyles(commandMeta, {
           // The shell inset lives on the search field (margins) and inside the
           // scrolling list (padding) — never on the root, so the list runs to
           // the popover edge and the scrollbar sits flush against it.
-          "**:data-search-field:mx-1.5 **:data-search-field:mt-1.5 **:data-search-field:pb-0",
+          "**:data-search-field:px-1.5 **:data-search-field:pt-1.5 **:data-search-field:pb-0",
           "**:data-listbox:scroll-py-1.5 **:data-listbox:px-1.5 **:data-listbox:pt-0 **:data-listbox:pb-1.5",
           "**:data-listbox:**:data-separator:-mx-1.5 **:data-listbox:**:data-separator:my-1.5 **:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--radius-panel)-(--spacing(1.5)))]",
         ],
@@ -44,7 +44,9 @@ const { useStyles, styles } = createStyles(commandMeta, {
           // hairline's geometry) and the list's own padding, so the scrollbar
           // sits flush against the popover edge.
           "gap-2",
-          "**:data-search-field:mx-2 **:data-search-field:mt-2",
+          // w-auto: margins keep the hairline inset, and the field's base
+          // w-full would otherwise add them on top of the full width.
+          "**:data-search-field:w-auto **:data-search-field:mx-2 **:data-search-field:mt-2",
           "**:data-listbox:scroll-py-2 **:data-listbox:px-2 **:data-listbox:pt-0 **:data-listbox:pb-2",
           "**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0",
           "**:data-search-field:border-b **:data-search-field:pb-1.5",
