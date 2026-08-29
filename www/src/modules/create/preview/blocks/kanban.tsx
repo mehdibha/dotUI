@@ -616,23 +616,25 @@ function BoardColumn({
         </div>
       )
     },
-    // Inactive indicators are absolutely positioned so they don't consume
-    // flex-gap slots; the active one drops in as a ghost of the dragged card.
+    // Every indicator holds a ghost of the dragged card inside a collapsed
+    // 0fr grid track; the active one expands so surrounding cards slide
+    // instead of jumping. List spacing lives on item margins, not flex gap,
+    // so the collapsed rows cost no space.
     renderDropIndicator: (target) => (
       <DropIndicator
         target={target}
-        className={({ isDropTarget }) =>
-          cn("outline-hidden", !isDropTarget && "absolute")
-        }
+        // RAC nests children in a [role=gridcell] wrapper — it is the grid
+        // child, so it must carry min-h-0/overflow-hidden for 0fr to collapse.
+        className="grid grid-rows-[0fr] outline-hidden transition-[grid-template-rows] duration-200 ease-out data-drop-target:grid-rows-[1fr] motion-reduce:transition-none [&>[role=gridcell]]:min-h-0 [&>[role=gridcell]]:overflow-hidden"
       >
-        {({ isDropTarget }) =>
-          isDropTarget &&
-          (draggedTask ? (
-            <TaskCardGhost task={draggedTask} className="w-full opacity-40" />
-          ) : (
-            <div className="h-0.5 rounded-full bg-border-focus" />
-          ))
-        }
+        {draggedTask ? (
+          <TaskCardGhost
+            task={draggedTask}
+            className="w-full pb-2.5 opacity-40"
+          />
+        ) : (
+          <div className="mb-2.5 h-0.5 rounded-full bg-border-focus" />
+        )}
       </DropIndicator>
     ),
     onReorder: (e) => {
@@ -721,7 +723,7 @@ function BoardColumn({
           items={tasks}
           dragAndDropHooks={dragAndDropHooks}
           renderEmptyState={() => (
-            <Empty className="border">
+            <Empty className="mb-2.5 border">
               <EmptyHeader>
                 <EmptyMedia variant="icon">
                   <InboxIcon />
@@ -735,12 +737,12 @@ function BoardColumn({
               </EmptyHeader>
             </Empty>
           )}
-          className="flex flex-col gap-2.5 rounded-lg focus-reset data-drop-target:focus-ring"
+          className="-mb-2.5 flex flex-col rounded-lg focus-reset data-drop-target:focus-ring"
         >
           {(task) => (
             <GridListItem
               textValue={task.title}
-              className="rounded-lg focus-reset data-dragging:opacity-50 data-focus-visible:focus-ring"
+              className="mb-2.5 rounded-lg focus-reset data-dragging:opacity-50 data-focus-visible:focus-ring"
             >
               <TaskCard task={task} onMove={onMove} onDelete={onDelete} />
             </GridListItem>
