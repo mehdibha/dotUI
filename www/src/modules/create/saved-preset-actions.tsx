@@ -37,7 +37,7 @@ export function SavedPresetActions({
     if (key === "rename") setRenameOpen(true)
     else if (key === "duplicate") onDuplicate()
     else if (key === "copy") {
-      copyToClipboard(`${window.location.origin}/create?preset=${saved.state}`)
+      copyToClipboard(`${window.location.origin}/studio?preset=${saved.state}`)
     } else if (key === "delete") onDelete()
   }
 
