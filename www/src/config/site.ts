@@ -66,5 +66,5 @@ export const navItems: {
     to: "/docs/$",
     params: { _splat: "charts" },
   },
-  { name: "Create", match: "/create", to: "/create" },
+  { name: "Studio", match: "/studio", to: "/studio" },
 ]

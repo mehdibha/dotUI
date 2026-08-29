@@ -31,7 +31,7 @@ import { CHAPTERS } from "./state"
 import { useLab } from "./use-lab"
 import { PanelB } from "./variants/panel-b"
 
-const routeApi = getRouteApi("/_app/create")
+const routeApi = getRouteApi("/_app/studio")
 
 /* The codec is canonical (encode∘decode = identity), but states from the URL
    or storage may predate it — one roundtrip normalizes those. */

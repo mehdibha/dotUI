@@ -28,7 +28,7 @@ import { PanelSearch } from "./search"
 import type { CommandTarget } from "./search"
 import type { Section } from "./types"
 
-const routeApi = getRouteApi("/_app/create")
+const routeApi = getRouteApi("/_app/studio")
 
 /** Card chrome shared by every chapter of the story scroll. */
 const CHAPTER_CARD =

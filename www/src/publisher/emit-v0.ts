@@ -253,7 +253,7 @@ import "./globals.css";
 
 export const metadata = {
 \ttitle: "dotUI",
-\tdescription: "A dotUI design system, generated on dotui.org/create.",
+\tdescription: "A dotUI design system, generated on dotui.org/studio.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

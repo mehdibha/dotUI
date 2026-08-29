@@ -1100,7 +1100,7 @@ export default function CustomersBlock() {
                   textValue={customer.name}
                 >
                   {(column) => (
-                    <TableCell className={column.cellClassName}>
+                    <TableCell className={cn("h-12", column.cellClassName)}>
                       {renderCell(customer, column.id)}
                     </TableCell>
                   )}

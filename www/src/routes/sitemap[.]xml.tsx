@@ -21,7 +21,7 @@ const escapeXml = (value: string) =>
 // source below, so they are not listed here. /components and /charts are
 // permanent redirects, so they are omitted, and /playground is a dev scratch
 // page that shouldn't be advertised/indexed.
-const STATIC_PATHS = ["/", "/create"]
+const STATIC_PATHS = ["/", "/studio"]
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
