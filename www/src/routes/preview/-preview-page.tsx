@@ -1,4 +1,10 @@
-import { type ReactNode, use, useCallback, useState } from "react"
+import {
+  type ReactNode,
+  startTransition,
+  use,
+  useCallback,
+  useState,
+} from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { DesignSystemProvider } from "@/lib/styles"
@@ -11,6 +17,7 @@ import { DEFAULTS } from "@/modules/create/preset/defaults"
 import {
   useAnnouncePreviewReady,
   useIframeMessageListener,
+  usePreviewNavigationMessages,
 } from "@/modules/create/preset/iframe-sync"
 import type { DesignSystem } from "@/modules/create/preset/types"
 import { BlocksIndex } from "@/modules/create/preview/blocks"
@@ -56,9 +63,36 @@ export function PreviewPage() {
     preset ? decodePreset(preset) : DEFAULTS,
   )
 
+  const navigate = route.useNavigate()
+
   useIframeMessageListener(
     useCallback((ds: DesignSystem) => setDesignSystem(ds), []),
   )
+
+  // The parent switches previews by navigating this document's own router — the
+  // iframe never remounts, so the module cache and design-system state survive
+  // and revisited previews render instantly. `replace` keeps these switches out
+  // of the shared browsing history; the transition keeps the current preview on
+  // screen while a first-visit chunk loads instead of unmounting to a blank.
+  usePreviewNavigationMessages({
+    onNavigate: useCallback(
+      (next: string) => {
+        if (next === slug) return
+        startTransition(() => {
+          void navigate({
+            to: "/preview/$slug",
+            params: { slug: next },
+            search: (prev) => prev,
+            replace: true,
+          })
+        })
+      },
+      [slug, navigate],
+    ),
+    onPrefetch: useCallback((next: string) => {
+      void getExamplesPromise(next)
+    }, []),
+  })
 
   // Declared above the `use()` below on purpose: a render that suspends never
   // commits, so this effect first runs once the example chunk has resolved.
