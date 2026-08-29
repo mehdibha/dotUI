@@ -104,7 +104,11 @@ export function PresetPicker({
   const content = (surface: "popover" | "drawer") => (
     <DialogContent
       aria-label="Presets"
-      className="flex flex-col gap-0 rounded-[inherit] p-0"
+      // `max-h-[inherit]` chains the popover's computed max-height (set inline
+      // by react-aria from the available space) down to the list, so the
+      // search field stays pinned and the list owns all the overflow — the
+      // surface then always fits the space react-aria positioned it for.
+      className="flex max-h-[inherit] flex-col gap-0 rounded-[inherit] p-0"
     >
       {({ close }) => (
         <PresetPickerContent
@@ -280,6 +284,9 @@ function PresetPickerContent({
           gap: 4,
           padding: "0 8px 8px",
           maxHeight: surface === "popover" ? 420 : "60vh",
+          // Shrink below the content when the inherited max-height is tighter
+          // than the 420 cap.
+          minHeight: 0,
           overflowY: "auto",
           scrollPaddingBlock: 8,
         }}
@@ -344,12 +351,14 @@ function PresetPickerContent({
   return (
     <>
       <Command
-        className="gap-0 overflow-hidden p-0"
+        className="max-h-[inherit] gap-0 overflow-hidden p-0"
         onKeyDownCapture={(e) => {
           if (e.key.startsWith("Arrow")) navigatedRef.current = true
         }}
       >
-        <div className="flex w-[260px] shrink-0 flex-col">{list}</div>
+        <div className="flex max-h-[inherit] w-[260px] shrink-0 flex-col">
+          {list}
+        </div>
       </Command>
       {flyout && (
         <PresetPreviewFlyout
