@@ -23,11 +23,19 @@ const { useStyles, styles } = createStyles(commandMeta, {
       1: {
         base: [
           // The shell inset lives on the search field and inside the scrolling
-          // list — never on the root, so the list runs to the popover edge and
-          // the scrollbar sits flush against it.
+          // list — never on the root, so the list runs to the surface edge and
+          // the scrollbar sits flush against it. The input radius stays
+          // concentric by subtracting the inset from the container's own
+          // radius var.
           "**:data-search-field:px-1.5 **:data-search-field:pt-1.5 **:data-search-field:pb-0",
           "**:data-listbox:scroll-py-1.5 **:data-listbox:px-1.5 **:data-listbox:pt-0 **:data-listbox:pb-1.5",
-          "**:data-listbox:**:data-separator:-mx-1.5 **:data-listbox:**:data-separator:my-1.5 **:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--radius-panel)-(--spacing(1.5)))]",
+          "**:data-listbox:**:data-separator:-mx-1.5 **:data-listbox:**:data-separator:my-1.5",
+          "**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--popover-radius)-(--spacing(1.5)))]",
+          // The modal is a bigger surface — roomier inset to match.
+          "in-data-modal:**:data-search-field:px-2.5 in-data-modal:**:data-search-field:pt-2.5",
+          "in-data-modal:**:data-listbox:scroll-py-2.5 in-data-modal:**:data-listbox:px-2.5 in-data-modal:**:data-listbox:pb-2.5",
+          "in-data-modal:**:data-listbox:**:data-separator:-mx-2.5",
+          "in-data-modal:**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--modal-radius)-(--spacing(2.5)))]",
         ],
       },
       2: {
