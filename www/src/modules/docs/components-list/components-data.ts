@@ -536,12 +536,6 @@ export const componentsData: ComponentCategory[] = [
         status: "done",
       },
       {
-        name: "Scatter Chart",
-        slug: "chart-scatter",
-        href: "/docs/components/chart-scatter",
-        status: "done",
-      },
-      {
         name: "Heatmap",
         slug: "chart-heatmap",
         href: "/docs/components/chart-heatmap",

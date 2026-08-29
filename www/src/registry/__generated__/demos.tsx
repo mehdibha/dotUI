@@ -561,26 +561,6 @@ export const DemosIndex: Record<
 		files: ["ui/chart-radial/demos/text.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-radial/demos/text")),
 	},
-	"chart-scatter/demos/bubble": {
-		files: ["ui/chart-scatter/demos/bubble.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-scatter/demos/bubble")),
-	},
-	"chart-scatter/demos/default": {
-		files: ["ui/chart-scatter/demos/default.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-scatter/demos/default")),
-	},
-	"chart-scatter/demos/dense": {
-		files: ["ui/chart-scatter/demos/dense.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-scatter/demos/dense")),
-	},
-	"chart-scatter/demos/grouped": {
-		files: ["ui/chart-scatter/demos/grouped.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-scatter/demos/grouped")),
-	},
-	"chart-scatter/demos/with-regression": {
-		files: ["ui/chart-scatter/demos/with-regression.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chart-scatter/demos/with-regression")),
-	},
 	"chat/demos/basic": {
 		files: ["ui/chat/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chat/demos/basic")),

@@ -120,7 +120,6 @@ export const CHART_FAMILIES = [
   { id: "chart-pie", name: "Pie chart" },
   { id: "chart-radar", name: "Radar chart" },
   { id: "chart-radial", name: "Radial chart" },
-  { id: "chart-scatter", name: "Scatter chart" },
   { id: "chart-heatmap", name: "Heatmap" },
 ] as const satisfies readonly ChartFamily[]
 

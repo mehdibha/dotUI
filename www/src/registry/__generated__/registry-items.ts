@@ -22,7 +22,6 @@ import UiChartLine from "@/registry/ui/chart-line/meta";
 import UiChartPie from "@/registry/ui/chart-pie/meta";
 import UiChartRadar from "@/registry/ui/chart-radar/meta";
 import UiChartRadial from "@/registry/ui/chart-radial/meta";
-import UiChartScatter from "@/registry/ui/chart-scatter/meta";
 import UiChart from "@/registry/ui/chart/meta";
 import UiChat from "@/registry/ui/chat/meta";
 import UiCheckboxGroup from "@/registry/ui/checkbox-group/meta";
@@ -104,7 +103,6 @@ export const registryUi: RegistryItem[] = [
 	UiChartPie,
 	UiChartRadar,
 	UiChartRadial,
-	UiChartScatter,
 	UiChat,
 	UiCheckbox,
 	UiCheckboxGroup,
