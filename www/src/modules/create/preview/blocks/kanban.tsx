@@ -1,6 +1,12 @@
 "use client"
 
 import { type ReactNode, useMemo, useState } from "react"
+import { GridList, GridListItem } from "react-aria-components/GridList"
+import {
+  DropIndicator,
+  isTextDropItem,
+  useDragAndDrop,
+} from "react-aria-components/useDragAndDrop"
 
 import {
   ArrowLeftIcon,
@@ -12,6 +18,7 @@ import {
   CircleDotIcon,
   CopyIcon,
   EyeIcon,
+  GripVerticalIcon,
   InboxIcon,
   LayoutGridIcon,
   ListFilterIcon,
@@ -469,7 +476,17 @@ function TaskCard({
         <CardTitle className="text-sm leading-snug text-pretty">
           {task.title}
         </CardTitle>
-        <CardAction>
+        <CardAction className="flex items-center">
+          <Button
+            slot="drag"
+            variant="quiet"
+            size="xs"
+            isIconOnly
+            aria-label={`Drag ${task.title}`}
+            className="-mt-1 cursor-grab text-fg-muted"
+          >
+            <GripVerticalIcon />
+          </Button>
           <TaskMenu task={task} onMove={onMove} onDelete={onDelete} />
         </CardAction>
         <CardDescription className="line-clamp-2 text-xs">
@@ -524,6 +541,12 @@ function TaskCard({
   )
 }
 
+/** Where dragged tasks land relative to an existing task; end of column if absent. */
+interface DropTarget {
+  key: string
+  position: "before" | "after"
+}
+
 function BoardColumn({
   id,
   tasks,
@@ -531,6 +554,7 @@ function BoardColumn({
   onMove,
   onDelete,
   onAdd,
+  onDropTasks,
 }: {
   id: ColumnId
   tasks: Task[]
@@ -538,8 +562,58 @@ function BoardColumn({
   onMove: (id: string, direction: -1 | 1) => void
   onDelete: (id: string) => void
   onAdd: (column: ColumnId) => void
+  onDropTasks: (ids: string[], target?: DropTarget) => void
 }) {
   const { name, icon: Icon, hint } = COLUMNS[id]
+
+  const { dragAndDropHooks } = useDragAndDrop({
+    getItems: (keys) =>
+      [...keys].map((key) => {
+        const task = tasks.find((candidate) => candidate.id === key)
+        return {
+          "kanban-task": String(key),
+          "text/plain": task ? `${task.id} ${task.title}` : String(key),
+        }
+      }),
+    acceptedDragTypes: ["kanban-task"],
+    getDropOperation: () => "move",
+    renderDragPreview: (items) => (
+      <div className="flex max-w-64 items-center rounded-md border bg-bg px-3 py-2 text-sm shadow-md">
+        <span className="truncate">{items[0]?.["text/plain"]}</span>
+      </div>
+    ),
+    renderDropIndicator: (target) => (
+      <DropIndicator
+        target={target}
+        className="h-0.5 rounded-full outline-hidden data-drop-target:bg-border-focus"
+      />
+    ),
+    onReorder: (e) => {
+      if (e.target.dropPosition === "on") return
+      onDropTasks([...e.keys].map(String), {
+        key: String(e.target.key),
+        position: e.target.dropPosition,
+      })
+    },
+    async onInsert(e) {
+      if (e.target.dropPosition === "on") return
+      const { key, dropPosition } = e.target
+      const ids = await Promise.all(
+        e.items
+          .filter(isTextDropItem)
+          .map((item) => item.getText("kanban-task")),
+      )
+      onDropTasks(ids, { key: String(key), position: dropPosition })
+    },
+    async onRootDrop(e) {
+      const ids = await Promise.all(
+        e.items
+          .filter(isTextDropItem)
+          .map((item) => item.getText("kanban-task")),
+      )
+      onDropTasks(ids)
+    },
+  })
   return (
     <section className="flex w-[280px] shrink-0 flex-col gap-3 sm:w-[300px]">
       <div className="flex items-center gap-2">
@@ -595,30 +669,36 @@ function BoardColumn({
       <p className="-mt-1 text-xs text-fg-muted">{hint}</p>
 
       <div className="flex flex-col gap-2.5">
-        {tasks.length === 0 ? (
-          <Empty className="border">
-            <EmptyHeader>
-              <EmptyMedia variant="icon">
-                <InboxIcon />
-              </EmptyMedia>
-              <EmptyTitle>Nothing here</EmptyTitle>
-              <EmptyDescription>
-                {isFiltered
-                  ? "No task matches the current filters."
-                  : "No task in this column yet."}
-              </EmptyDescription>
-            </EmptyHeader>
-          </Empty>
-        ) : (
-          tasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              onMove={onMove}
-              onDelete={onDelete}
-            />
-          ))
-        )}
+        <GridList
+          aria-label={`${name} tasks`}
+          items={tasks}
+          dragAndDropHooks={dragAndDropHooks}
+          renderEmptyState={() => (
+            <Empty className="border">
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <InboxIcon />
+                </EmptyMedia>
+                <EmptyTitle>Nothing here</EmptyTitle>
+                <EmptyDescription>
+                  {isFiltered
+                    ? "No task matches the current filters."
+                    : "No task in this column yet."}
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
+          )}
+          className="flex flex-col gap-2.5 rounded-lg focus-reset data-drop-target:focus-ring"
+        >
+          {(task) => (
+            <GridListItem
+              textValue={task.title}
+              className="rounded-lg focus-reset data-dragging:opacity-50 data-focus-visible:focus-ring"
+            >
+              <TaskCard task={task} onMove={onMove} onDelete={onDelete} />
+            </GridListItem>
+          )}
+        </GridList>
         <Button
           variant="quiet"
           size="sm"
@@ -857,6 +937,26 @@ export default function KanbanBlock() {
     )
   }
 
+  const dropTasks = (column: ColumnId, ids: string[], target?: DropTarget) => {
+    setTasks((current) => {
+      const moving = current
+        .filter((task) => ids.includes(task.id))
+        .map((task) => ({ ...task, column }))
+      if (moving.length === 0) return current
+      const rest = current.filter((task) => !ids.includes(task.id))
+      const index = target
+        ? rest.findIndex((task) => task.id === target.key)
+        : -1
+      const at =
+        index === -1
+          ? rest.length
+          : target?.position === "after"
+            ? index + 1
+            : index
+      return [...rest.slice(0, at), ...moving, ...rest.slice(at)]
+    })
+  }
+
   const deleteTask = (id: string) =>
     setTasks((current) => current.filter((task) => task.id !== id))
 
@@ -1023,6 +1123,7 @@ export default function KanbanBlock() {
                 onMove={moveTask}
                 onDelete={deleteTask}
                 onAdd={openCreate}
+                onDropTasks={(ids, target) => dropTasks(id, ids, target)}
               />
             ))}
           </div>
