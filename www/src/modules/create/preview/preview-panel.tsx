@@ -115,6 +115,30 @@ export function PreviewPanel({
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
+
+  // Open the picker centered on the selected item: the autocomplete's virtual
+  // focus starts at the top, so react-aria never scrolls to the selection.
+  // Retried briefly — the collection DOM mounts a few frames after the open.
+  // Offset math, not scrollIntoView: the popover's entering scale skews rects.
+  useEffect(() => {
+    if (!pickerOpen) return
+    let tries = 0
+    let timer: ReturnType<typeof setTimeout>
+    const attempt = () => {
+      const option = document.querySelector<HTMLElement>(
+        '[data-listbox] [role="option"][aria-selected="true"]',
+      )
+      const scroller = option?.offsetParent
+      if (option && scroller instanceof HTMLElement) {
+        scroller.scrollTop =
+          option.offsetTop - (scroller.clientHeight - option.offsetHeight) / 2
+      } else if (++tries < 20) {
+        timer = setTimeout(attempt, 16)
+      }
+    }
+    attempt()
+    return () => clearTimeout(timer)
+  }, [pickerOpen])
   const [inspecting, setInspecting] = useState(false)
   const [toolbarHidden, setToolbarHidden] = useState(false)
 
@@ -477,12 +501,14 @@ export function PreviewPanel({
                     className="flex h-full min-h-0 flex-col gap-0 p-0"
                   >
                     <DrawerHandle />
-                    {renderPicker("min-h-0 flex-1 overflow-y-auto")}
+                    {/* relative: the options' offsetTop then reads against the
+                        scroller for the scroll-to-selection effect. */}
+                    {renderPicker("relative min-h-0 flex-1 overflow-y-auto")}
                   </DialogContent>
                 </Drawer>
               ) : (
                 <Popover placement="top" className="w-64">
-                  {renderPicker("max-h-72 overflow-y-auto")}
+                  {renderPicker("relative max-h-72 overflow-y-auto")}
                 </Popover>
               )}
             </Select>

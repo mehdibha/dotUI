@@ -6,10 +6,11 @@ const { useStyles, styles } = createStyles(commandMeta, {
   base: {
     base: [
       "group/command flex w-full flex-col gap-1 text-fg",
-      "max-h-[inherit] overflow-y-auto",
-
-      // ListBox — frameless, scrollable
-      // "**:data-listbox:max-h-72 **:data-listbox:scroll-py-1 **:data-listbox:overflow-y-auto **:data-listbox:p-0 **:data-listbox:outline-hidden",
+      // The search field stays pinned; the list owns all the overflow so the
+      // collection's own scroll (keyboard focus, scroll-into-view) works.
+      "max-h-[inherit]",
+      "**:data-search-field:shrink-0",
+      "**:data-listbox:min-h-0 **:data-listbox:overflow-y-auto",
     ],
   },
   density: {
@@ -21,7 +22,7 @@ const { useStyles, styles } = createStyles(commandMeta, {
     style: {
       1: {
         base: [
-          "p-1.5 **:data-listbox:overflow-visible **:data-listbox:p-0 **:data-search-field:pb-0 **:data-listbox:**:data-separator:-mx-1.5 **:data-listbox:**:data-separator:my-1.5 **:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--radius-panel)-(--spacing(1.5)))]",
+          "p-1.5 **:data-listbox:p-0 **:data-search-field:pb-0 **:data-listbox:**:data-separator:-mx-1.5 **:data-listbox:**:data-separator:my-1.5 **:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--radius-panel)-(--spacing(1.5)))]",
         ],
       },
       2: {
