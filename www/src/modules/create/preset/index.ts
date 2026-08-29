@@ -8,6 +8,8 @@ export {
   sendInspectorExit,
   sendInspectorMode,
   sendPreviewMode,
+  sendPreviewNavigate,
+  sendPreviewPrefetch,
   sendToIframe,
   useAnnouncePreviewReady,
   useIframeMessageListener,
