@@ -33,6 +33,8 @@ import { PanelB } from "./variants/panel-b"
 
 const routeApi = getRouteApi("/_app/create")
 
+/* The codec is canonical (encode∘decode = identity), but states from the URL
+   or storage may predate it — one roundtrip normalizes those. */
 function canon(state: string): string {
   if (!state) return ""
   return encodePreset(decodePreset(state)) ?? ""
@@ -40,7 +42,7 @@ function canon(state: string): string {
 
 /* Origin is the panel's baseline: what first-time users start on, what the
    global reset returns to, and what the modified dot diffs against. */
-const ORIGIN_CANON = canon(encodePreset(ORIGIN.designSystem) ?? "")
+const ORIGIN_CANON = encodePreset(ORIGIN.designSystem) ?? ""
 
 export function LabCreatePanel({ className }: { className?: string }) {
   const lab = useLab()
@@ -68,12 +70,8 @@ export function LabCreatePanel({ className }: { className?: string }) {
 
   // Built-in presets are re-loadable from the gallery, so a freshly applied one
   // isn't unsaved work — only edits past it (or past a saved snapshot) are.
-  // encode∘decode isn't byte-identical (a reload's seeded state re-encodes
-  // slightly differently), so states compare in canonical form — one roundtrip
-  // reaches a fixed point.
   const builtInStates = useMemo(
-    () =>
-      new Set(PRESETS.map((p) => canon(encodePreset(p.designSystem) ?? ""))),
+    () => new Set(PRESETS.map((p) => encodePreset(p.designSystem) ?? "")),
     [],
   )
   const currentState = preset ?? ""
