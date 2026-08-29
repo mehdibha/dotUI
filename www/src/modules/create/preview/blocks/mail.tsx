@@ -463,7 +463,9 @@ function MessageRow({
         >
           {message.subject}
         </p>
-        <p className="truncate text-xs text-fg-muted">{message.preview}</p>
+        <p className="line-clamp-2 text-sm/snug text-fg-muted">
+          {message.preview}
+        </p>
         {(message.labels.length > 0 || message.attachments || isStarred) && (
           <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
             {message.labels.map((label) => (
@@ -496,8 +498,8 @@ function Attachment({
 }) {
   const Icon = kind === "image" ? ImageIcon : FileTextIcon
   return (
-    <div className="flex w-full items-center gap-3 rounded-lg border bg-card p-2.5 sm:w-64">
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-muted text-fg-muted">
+    <div className="flex w-full items-center gap-3 rounded-xl bg-muted p-2.5 sm:w-64">
+      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-bg text-fg-muted">
         <Icon className="size-5" />
       </div>
       <div className="min-w-0 flex-1">
@@ -510,14 +512,14 @@ function Attachment({
 
 function ThreadMessage({ entry, to }: { entry: ThreadEntry; to: string }) {
   return (
-    <article className="rounded-xl border bg-card p-4 sm:p-5">
+    <article className="py-5 first:pt-0 last:pb-0">
       <header className="flex items-start gap-3">
         <Avatar size="md" className="shrink-0">
           <AvatarFallback>{entry.initials}</AvatarFallback>
         </Avatar>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline gap-x-2">
-            <span className="text-sm font-medium">{entry.author}</span>
+            <span className="text-sm font-semibold">{entry.author}</span>
             <span className="truncate text-xs text-fg-muted">
               {entry.email}
             </span>
@@ -532,7 +534,7 @@ function ThreadMessage({ entry, to }: { entry: ThreadEntry; to: string }) {
         {entry.paragraphs.map((paragraph) => (
           <p
             key={paragraph.slice(0, 32)}
-            className="text-sm/relaxed text-pretty"
+            className="text-base/relaxed text-pretty"
           >
             {paragraph}
           </p>
@@ -601,24 +603,17 @@ export default function MailBlock() {
         className="h-screen min-h-0 overflow-hidden"
         style={{ "--sidebar-width": "13.5rem" } as React.CSSProperties}
       >
-        <Sidebar collapsible="icon">
+        <Sidebar collapsible="offcanvas">
           <SidebarHeader className="gap-3">
             <div className="flex items-center gap-2 px-1 pt-1">
               <div className="flex size-6 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
                 <MailIcon className="size-3.5" />
               </div>
-              <span className="truncate text-sm font-semibold group-data-[collapsible=icon]:hidden">
-                Sable Mail
-              </span>
+              <span className="truncate text-sm font-semibold">Sable Mail</span>
             </div>
-            <Button
-              variant="primary"
-              className="w-full group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-0!"
-            >
+            <Button variant="primary" className="w-full">
               <SquarePenIcon />
-              <span className="group-data-[collapsible=icon]:hidden">
-                Compose
-              </span>
+              Compose
             </Button>
           </SidebarHeader>
           <SidebarContent>
@@ -636,7 +631,6 @@ export default function MailBlock() {
                     <SidebarMenuItem key={item.id}>
                       <SidebarMenuButton
                         isActive={item.id === folder}
-                        tooltip={item.name}
                         onPress={() => setFolder(item.id)}
                       >
                         <item.icon />
@@ -655,7 +649,7 @@ export default function MailBlock() {
               <SidebarMenu>
                 {LABELS.map((item) => (
                   <SidebarMenuItem key={item.id}>
-                    <SidebarMenuButton tooltip={item.name}>
+                    <SidebarMenuButton>
                       <TagIcon />
                       <span>{item.name}</span>
                     </SidebarMenuButton>
@@ -672,10 +666,7 @@ export default function MailBlock() {
               <SidebarMenuItem>
                 <Menu>
                   <SidebarMenuButton size="lg">
-                    <Avatar
-                      size="sm"
-                      className="group-data-[collapsible=icon]:size-4"
-                    >
+                    <Avatar size="sm">
                       <AvatarFallback>{ME.initials}</AvatarFallback>
                     </Avatar>
                     <div className="flex min-w-0 flex-col gap-0.5 leading-none">
@@ -716,30 +707,37 @@ export default function MailBlock() {
               pane === "list" ? "flex w-full" : "hidden",
             )}
           >
-            <div className="flex h-14 shrink-0 items-center gap-2 border-b px-3">
-              <SidebarTrigger />
-              <div className="flex min-w-0 flex-1 items-center gap-2">
-                <h1 className="truncate text-sm font-semibold">{folderName}</h1>
-                <Badge appearance="subtle" size="sm">
-                  {visible.length}
-                </Badge>
+            <div className="flex shrink-0 flex-col gap-2.5 px-3 pt-2">
+              <div className="flex items-center">
+                <SidebarTrigger />
+                <Menu>
+                  <Button
+                    variant="quiet"
+                    size="sm"
+                    isIconOnly
+                    aria-label="Sort"
+                    className="ml-auto"
+                  >
+                    <ListFilterIcon />
+                  </Button>
+                  <Popover placement="bottom end">
+                    <MenuContent>
+                      <MenuItem>Newest first</MenuItem>
+                      <MenuItem>Oldest first</MenuItem>
+                      <MenuItem>Unread first</MenuItem>
+                      <MenuItem>Sender A–Z</MenuItem>
+                    </MenuContent>
+                  </Popover>
+                </Menu>
               </div>
-              <Menu>
-                <Button variant="quiet" size="sm" isIconOnly aria-label="Sort">
-                  <ListFilterIcon />
-                </Button>
-                <Popover placement="bottom end">
-                  <MenuContent>
-                    <MenuItem>Newest first</MenuItem>
-                    <MenuItem>Oldest first</MenuItem>
-                    <MenuItem>Unread first</MenuItem>
-                    <MenuItem>Sender A–Z</MenuItem>
-                  </MenuContent>
-                </Popover>
-              </Menu>
-            </div>
-
-            <div className="shrink-0 px-3 pt-3">
+              <div className="flex min-w-0 items-baseline gap-2 px-1">
+                <h1 className="truncate font-heading text-xl font-bold tracking-tight">
+                  {folderName}
+                </h1>
+                <span className="shrink-0 text-sm text-fg-muted tabular-nums">
+                  {visible.length}
+                </span>
+              </div>
               <SearchField
                 aria-label="Search mail"
                 placeholder="Search mail"
@@ -751,7 +749,7 @@ export default function MailBlock() {
             <Tabs
               selectedKey={filter}
               onSelectionChange={(key) => setFilter(key as "all" | "unread")}
-              className="shrink-0 border-b px-3"
+              className="shrink-0 px-3"
             >
               <TabList variant="line" aria-label="Filter messages">
                 <Tab id="all">All</Tab>
@@ -817,7 +815,7 @@ export default function MailBlock() {
           >
             {selected ? (
               <>
-                <div className="flex h-14 shrink-0 items-center gap-1 border-b px-2 sm:px-3">
+                <div className="flex h-12 shrink-0 items-center gap-1 px-2 sm:px-3">
                   <Button
                     variant="quiet"
                     size="sm"
@@ -934,9 +932,9 @@ export default function MailBlock() {
                 </div>
 
                 <div className="min-h-0 flex-1 overflow-y-auto">
-                  <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-5 sm:px-6 sm:py-6">
-                    <div className="flex flex-col gap-2">
-                      <h2 className="font-heading text-xl font-semibold text-balance sm:text-2xl">
+                  <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-5 sm:px-6 sm:py-6">
+                    <div className="flex flex-col gap-2.5">
+                      <h2 className="font-heading text-xl font-bold tracking-tight text-balance sm:text-2xl">
                         {selected.subject}
                       </h2>
                       <div className="flex flex-wrap items-center gap-1.5">
@@ -956,13 +954,15 @@ export default function MailBlock() {
                       </div>
                     </div>
 
-                    {thread.map((entry, index) => (
-                      <ThreadMessage
-                        key={`${entry.email}-${entry.time}-${index}`}
-                        entry={entry}
-                        to={entry.email === ME.email ? selected.from : "me"}
-                      />
-                    ))}
+                    <div className="flex flex-col divide-y">
+                      {thread.map((entry, index) => (
+                        <ThreadMessage
+                          key={`${entry.email}-${entry.time}-${index}`}
+                          entry={entry}
+                          to={entry.email === ME.email ? selected.from : "me"}
+                        />
+                      ))}
+                    </div>
 
                     {selected.attachments && (
                       <div className="flex flex-col gap-2">
@@ -982,7 +982,7 @@ export default function MailBlock() {
                   </div>
                 </div>
 
-                <div className="shrink-0 border-t bg-bg px-4 py-3 sm:px-6 sm:py-4">
+                <div className="shrink-0 bg-bg px-4 pt-1 pb-3 sm:px-6 sm:pb-4">
                   <div className="mx-auto flex w-full max-w-3xl flex-col gap-2">
                     <TextField
                       aria-label={`Reply to ${replyTo}`}
