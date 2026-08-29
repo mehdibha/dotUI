@@ -32,10 +32,10 @@ const { useStyles, styles } = createStyles(commandMeta, {
           "**:data-listbox:**:data-separator:-mx-1.5 **:data-listbox:**:data-separator:my-1.5",
           "**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--popover-radius)-(--spacing(1.5)))]",
           // The modal is a bigger surface — roomier inset to match.
-          "in-data-modal:**:data-search-field:px-2.5 in-data-modal:**:data-search-field:pt-2.5",
-          "in-data-modal:**:data-listbox:scroll-py-2.5 in-data-modal:**:data-listbox:px-2.5 in-data-modal:**:data-listbox:pb-2.5",
-          "in-data-modal:**:data-listbox:**:data-separator:-mx-2.5",
-          "in-data-modal:**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--modal-radius)-(--spacing(2.5)))]",
+          "in-data-modal:**:data-search-field:px-2 in-data-modal:**:data-search-field:pt-2",
+          "in-data-modal:**:data-listbox:scroll-py-2 in-data-modal:**:data-listbox:px-2 in-data-modal:**:data-listbox:pb-2",
+          "in-data-modal:**:data-listbox:**:data-separator:-mx-2",
+          "in-data-modal:**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--modal-radius)-(--spacing(2)))]",
         ],
       },
       2: {
