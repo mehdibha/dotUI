@@ -48,7 +48,12 @@ export const navItems: {
   to: string
   params?: { _splat: string }
 }[] = [
-  { name: "Docs", match: "/docs", to: "/docs/$", params: { _splat: "" } },
+  {
+    name: "Docs",
+    match: "/docs",
+    to: "/docs/$",
+    params: { _splat: "installation" },
+  },
   {
     name: "Components",
     match: "/docs/components",
