@@ -1,11 +1,11 @@
 import { Link, useLocation } from "@tanstack/react-router"
 import { TypeIcon } from "lucide-react"
+import { Pressable } from "react-aria-components/Pressable"
 import { useTheme } from "starter-themes"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/registry/lib/utils"
-import { ContextMenu } from "@/registry/ui/context-menu"
-import { MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 
 function BrandAssetPreview({
@@ -94,8 +94,17 @@ export function Logo({ className }: { className?: string }) {
   }
 
   return (
-    <ContextMenu aria-label="Brand assets">
-      <span className={cn("flex items-center", className)}>{mark}</span>
+    <Menu trigger="contextMenu">
+      <Pressable>
+        <span
+          role="button"
+          tabIndex={0}
+          aria-label="Brand assets"
+          className={cn("flex items-center", className)}
+        >
+          {mark}
+        </span>
+      </Pressable>
       <Popover className="w-56">
         <MenuContent>
           <MenuItem
@@ -114,6 +123,6 @@ export function Logo({ className }: { className?: string }) {
           </MenuItem>
         </MenuContent>
       </Popover>
-    </ContextMenu>
+    </Menu>
   )
 }

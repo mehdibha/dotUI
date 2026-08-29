@@ -941,30 +941,6 @@ export const DemosIndex: Record<
 		files: ["ui/command/demos/with-tag-group.tsx"],
 		component: React.lazy(() => import("@/registry/ui/command/demos/with-tag-group")),
 	},
-	"context-menu/demos/basic": {
-		files: ["ui/context-menu/demos/basic.tsx"],
-		component: React.lazy(() => import("@/registry/ui/context-menu/demos/basic")),
-	},
-	"context-menu/demos/controlled": {
-		files: ["ui/context-menu/demos/controlled.tsx"],
-		component: React.lazy(() => import("@/registry/ui/context-menu/demos/controlled")),
-	},
-	"context-menu/demos/disabled": {
-		files: ["ui/context-menu/demos/disabled.tsx"],
-		component: React.lazy(() => import("@/registry/ui/context-menu/demos/disabled")),
-	},
-	"context-menu/demos/nested": {
-		files: ["ui/context-menu/demos/nested.tsx"],
-		component: React.lazy(() => import("@/registry/ui/context-menu/demos/nested")),
-	},
-	"context-menu/demos/with-icons": {
-		files: ["ui/context-menu/demos/with-icons.tsx"],
-		component: React.lazy(() => import("@/registry/ui/context-menu/demos/with-icons")),
-	},
-	"context-menu/demos/with-submenu": {
-		files: ["ui/context-menu/demos/with-submenu.tsx"],
-		component: React.lazy(() => import("@/registry/ui/context-menu/demos/with-submenu")),
-	},
 	"date-field/demos/appointment": {
 		files: ["ui/date-field/demos/appointment.tsx"],
 		component: React.lazy(() => import("@/registry/ui/date-field/demos/appointment")),
@@ -1712,6 +1688,10 @@ export const DemosIndex: Record<
 	"menu/demos/complex": {
 		files: ["ui/menu/demos/complex.tsx"],
 		component: React.lazy(() => import("@/registry/ui/menu/demos/complex")),
+	},
+	"menu/demos/context-menu": {
+		files: ["ui/menu/demos/context-menu.tsx"],
+		component: React.lazy(() => import("@/registry/ui/menu/demos/context-menu")),
 	},
 	"menu/demos/controlled": {
 		files: ["ui/menu/demos/controlled.tsx"],

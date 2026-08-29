@@ -251,11 +251,23 @@
       "description": "Fired when the slider stops moving, due to being let go."
     },
     "orientation": {
-      "type": "Orientation",
-      "detailedType": "Orientation | undefined",
+      "type": "'horizontal' | 'vertical'",
+      "detailedType": "'horizontal' | 'vertical' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "Orientation"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "horizontal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "vertical"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The orientation of the Slider.",
       "default": "'horizontal'"

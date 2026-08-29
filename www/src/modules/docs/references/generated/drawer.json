@@ -3,11 +3,31 @@
   "description": "A React Aria compatible drawer overlay powered by Base UI's Drawer overlay\nprimitives.",
   "props": {
     "placement": {
-      "type": "DrawerPlacement",
-      "detailedType": "DrawerPlacement | undefined",
+      "type": "'top' | 'bottom' | 'left' | 'right'",
+      "detailedType": "'top' | 'bottom' | 'left' | 'right' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "DrawerPlacement"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The side of the screen where the drawer appears.",
       "default": "'bottom'"

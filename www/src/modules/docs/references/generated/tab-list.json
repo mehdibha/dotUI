@@ -3,11 +3,23 @@
   "description": "A TabList is used within Tabs to group tabs that a user can switch between.",
   "props": {
     "variant": {
-      "type": "TabsVariant",
-      "detailedType": "TabsVariant | undefined",
+      "type": "'default' | 'line'",
+      "detailedType": "'default' | 'line' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "TabsVariant"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "default"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "line"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The visual style of the tab list.",
       "default": "\"default\""

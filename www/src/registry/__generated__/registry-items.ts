@@ -3,7 +3,6 @@
 
 import LibContext from "@/registry/lib/context/meta";
 import LibFocusStyles from "@/registry/lib/focus-styles/meta";
-import LibReactAriaTokenField from "@/registry/lib/react-aria-token-field/meta";
 import LibResponsive from "@/registry/lib/responsive/meta";
 import LibTextareaCaret from "@/registry/lib/textarea-caret/meta";
 import LibUtils from "@/registry/lib/utils/meta";
@@ -35,7 +34,6 @@ import UiColorSwatch from "@/registry/ui/color-swatch/meta";
 import UiColorThumb from "@/registry/ui/color-thumb/meta";
 import UiCombobox from "@/registry/ui/combobox/meta";
 import UiCommand from "@/registry/ui/command/meta";
-import UiContextMenu from "@/registry/ui/context-menu/meta";
 import UiDateField from "@/registry/ui/date-field/meta";
 import UiDatePicker from "@/registry/ui/date-picker/meta";
 import UiDialog from "@/registry/ui/dialog/meta";
@@ -114,7 +112,6 @@ export const registryUi: RegistryItem[] = [
 	UiColorThumb,
 	UiCombobox,
 	UiCommand,
-	UiContextMenu,
 	UiDateField,
 	UiDatePicker,
 	UiDialog,
@@ -163,11 +160,4 @@ export const registryUi: RegistryItem[] = [
 	UiTree,
 ];
 
-export const registryLib: RegistryItem[] = [
-	LibContext,
-	LibFocusStyles,
-	LibReactAriaTokenField,
-	LibResponsive,
-	LibTextareaCaret,
-	LibUtils,
-];
+export const registryLib: RegistryItem[] = [LibContext, LibFocusStyles, LibResponsive, LibTextareaCaret, LibUtils];

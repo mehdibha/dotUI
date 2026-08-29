@@ -19,6 +19,14 @@
         "name": "T"
       },
       "description": "Options for the layout."
+    },
+    "shouldObserveItemSize": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether to observe each item's size with a ResizeObserver and re-measure when it changes."
     }
   }
 }

@@ -18,6 +18,25 @@
       },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the\nelement."
     },
+    "direction": {
+      "type": "\"end\" | \"start\"",
+      "detailedType": "'end' | 'start' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start"
+          }
+        ]
+      },
+      "description": "The scroll direction that triggers load more. Use 'start' for reversed layouts where older\ncontent loads when scrolling toward the top.",
+      "default": "'end'"
+    },
     "isLoading": {
       "type": "boolean",
       "detailedType": "boolean | undefined",

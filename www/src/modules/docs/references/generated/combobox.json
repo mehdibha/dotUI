@@ -265,11 +265,27 @@
       "description": "Whether the ComboBox allows a non-item matching input value to be set."
     },
     "menuTrigger": {
-      "type": "MenuTriggerAction",
-      "detailedType": "MenuTriggerAction | undefined",
+      "type": "'focus' | 'input' | 'manual'",
+      "detailedType": "'focus' | 'input' | 'manual' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "MenuTriggerAction"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "focus"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "input"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "manual"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The interaction required to display the ComboBox menu.",
       "default": "'input'"
@@ -885,7 +901,7 @@
           }
         ]
       },
-      "description": "The filter function used to determine if a option should be included in the combo box list."
+      "description": "The filter function used to determine if an option should be included in the combo box list.\nBy default, a language-sensitive \"contains\" filter from `useFilter` is used."
     },
     "form": {
       "type": "string",

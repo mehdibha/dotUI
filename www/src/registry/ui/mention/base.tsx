@@ -6,13 +6,12 @@ import { MenuContext } from "react-aria-components/Menu"
 import type { Key } from "react-aria-components/Menu"
 import { PopoverContext } from "react-aria-components/Popover"
 import { Provider } from "react-aria-components/slots"
+import {
+  tokenFieldPositionToDOMRange,
+  TokenFieldValue,
+} from "react-aria-components/TokenField"
 import { useControlledState } from "react-stately/useControlledState"
 
-import {
-  Direction,
-  positionToDOMRange,
-  TokenSegmentList,
-} from "@/registry/lib/react-aria-token-field"
 import type { PopoverProps } from "@/registry/ui/popover"
 import { TokenField } from "@/registry/ui/token-field"
 import type { TokenFieldProps } from "@/registry/ui/token-field"
@@ -62,7 +61,7 @@ const escapeRegExp = (text: string) =>
  * character opens a `Menu` of suggestions (filtered via React Aria's
  * `Autocomplete`) in a caret-anchored `Popover`, and selecting an item inserts
  * it as an inline token. Consumers compose a `TokenInput` plus a `Popover` +
- * `Menu`/`MenuItem`; the value is a `TokenSegmentList` of text and tokens.
+ * `Menu`/`MenuItem`; the value is a `TokenFieldValue` of text and tokens.
  */
 function Mention({
   trigger = "@",
@@ -106,7 +105,7 @@ function Mention({
   const active = React.useMemo(() => {
     const anchor = value.findText(
       value.caretPosition,
-      Direction.Backward,
+      TokenFieldValue.Direction.Backward,
       triggerPattern,
     )
     if (!anchor) return null
@@ -178,7 +177,10 @@ function Mention({
     (target: Element) => {
       const input = getInput()
       if (!input || !active) return target.getBoundingClientRect()
-      return positionToDOMRange(input, active.anchor).getBoundingClientRect()
+      return tokenFieldPositionToDOMRange(
+        input,
+        active.anchor,
+      ).getBoundingClientRect()
     },
     [active, getInput],
   )
@@ -224,9 +226,9 @@ function Mention({
   )
 }
 
-const emptyValue = new TokenSegmentList([])
+const emptyValue = new TokenFieldValue([])
 
 // MARK: exports
 
 export type { MentionProps, MentionState }
-export { Mention, TokenSegmentList }
+export { Mention }

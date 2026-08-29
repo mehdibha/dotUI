@@ -2,6 +2,14 @@
   "name": "TableCellProps",
   "description": "A cell within a table row.",
   "props": {
+    "allowsArrowNavigation": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the cell should support arrow key navigation even when the containing table uses\ntab keyboard navigation. Allows users to navigate between cells and rows with arrow keys while\nfocus is on an interactive child element within the cell."
+    },
     "children": {
       "type": "ReactNode | (values: CellRenderProps) => ReactNode",
       "typeAst": {
@@ -76,6 +84,24 @@
         "type": "number"
       },
       "description": "Indicates how many columns the data cell spans."
+    },
+    "focusMode": {
+      "type": "\"cell\" | \"child\"",
+      "detailedType": "'cell' | 'child' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "cell"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "child"
+          }
+        ]
+      },
+      "description": "Whether the cell or its first focusable child element should be focused when the cell is\nfocused. Defaults to 'child' in arrow keyboard navigation mode and 'cell' in tab keyboard\nnavigation mode."
     },
     "id": {
       "type": "Key",

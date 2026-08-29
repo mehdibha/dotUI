@@ -620,6 +620,26 @@
           "optional": false,
           "description": "Opens the menu."
         },
+        "point": {
+          "type": "property",
+          "name": "point",
+          "value": {
+            "type": "union",
+            "elements": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "link",
+                "id": "react-stately/dist/types/src/overlays/useOverlayTriggerState.d.ts:Point",
+                "name": "Point"
+              }
+            ]
+          },
+          "optional": false,
+          "readonly": false,
+          "description": "The cursor position when the overlay was triggered, relative to the window viewport."
+        },
         "realtimeValidation": {
           "type": "property",
           "name": "realtimeValidation",
@@ -779,6 +799,32 @@
           },
           "optional": false,
           "description": "Sets whether the overlay is open."
+        },
+        "setPoint": {
+          "type": "method",
+          "name": "setPoint",
+          "value": {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "point",
+                "value": {
+                  "type": "link",
+                  "id": "react-stately/dist/types/src/overlays/useOverlayTriggerState.d.ts:Point",
+                  "name": "Point"
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
+            },
+            "typeParameters": []
+          },
+          "optional": false,
+          "description": "Sets the cursor position relative to the window viewport."
         },
         "setSelectedKey": {
           "type": "method",

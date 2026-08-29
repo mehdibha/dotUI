@@ -93,6 +93,36 @@ import { Popover } from "@/ui/popover"
 </Menu>
 ```
 
+## Triggers
+
+Menus open on press by default. Set `trigger="longPress"` when press is reserved for a primary action — the menu then opens on long press (or <kbd>Alt</kbd> + <kbd>▼</kbd>):
+
+```tsx
+<Menu trigger="longPress">
+  <Button onPress={crop}>Crop</Button>
+  <Popover>{/* ... */}</Popover>
+</Menu>
+```
+
+Set `trigger="contextMenu"` to open the menu at the pointer on right click, long press on touch, or OS keyboard shortcuts. The trigger doesn't have to be a `Button` — wrap any focusable element in React Aria's `Pressable`.
+
+<Demo name="menu/demos/context-menu" />
+
+```tsx
+import { Pressable } from "react-aria-components"
+```
+
+```tsx
+<Menu trigger="contextMenu">
+  <Pressable>
+    <div role="button" tabIndex={0}>
+      Right click me
+    </div>
+  </Pressable>
+  <Popover>{/* ... */}</Popover>
+</Menu>
+```
+
 ## Selection
 
 Set `selectionMode` to `single` or `multiple` on `MenuContent` to turn items into checkbox or radio items. Control the selection with `selectedKeys`/`onSelectionChange` (or `defaultSelectedKeys`), and disable specific items with `disabledKeys`.

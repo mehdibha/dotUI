@@ -1,6 +1,6 @@
 {
   "name": "MentionProps",
-  "description": "A mention input lets users type a trigger character (like `@` or `/`) to\nopen an inline list of suggestions and insert one as an inline token.\n\n`Mention` wires the behaviour onto the [TokenField](/docs/components/token-field)\ncomponent — a `TokenInput` for the editable area, a `Popover` +\n`Menu`/`MenuItem` for the suggestions — by injecting their props through\ncontext. The value is a `TokenSegmentList` of text and token segments.",
+  "description": "A mention input lets users type a trigger character (like `@` or `/`) to\nopen an inline list of suggestions and insert one as an inline token.\n\n`Mention` wires the behaviour onto the [TokenField](/docs/components/token-field)\ncomponent — a `TokenInput` for the editable area, a `Popover` +\n`Menu`/`MenuItem` for the suggestions — by injecting their props through\ncontext. The value is a `TokenFieldValue` of text and token segments.",
   "props": {
     "trigger": {
       "type": "RegExp | string",
@@ -50,11 +50,103 @@
       "default": "String(key)"
     },
     "placement": {
-      "type": "Placement",
-      "detailedType": "Placement | undefined",
+      "type": "'bottom' | 'bottom left' | 'bottom right' | 'bottom start' | 'bottom end' | 'top' | 'top left' | 'top right' | 'top start' | 'top end' | 'left' | 'left top' | 'left bottom' | 'start' | 'start top' | 'start bottom' | 'right' | 'right top' | 'right bottom' | 'end' | 'end top' | 'end bottom'",
+      "detailedType": "| 'bottom'\n| 'bottom left'\n| 'bottom right'\n| 'bottom start'\n| 'bottom end'\n| 'top'\n| 'top left'\n| 'top right'\n| 'top start'\n| 'top end'\n| 'left'\n| 'left top'\n| 'left bottom'\n| 'start'\n| 'start top'\n| 'start bottom'\n| 'right'\n| 'right top'\n| 'right bottom'\n| 'end'\n| 'end top'\n| 'end bottom'\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "Placement"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom start"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "end bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "end top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "left bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "left top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "right bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "right top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top start"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "Where the suggestions popover is placed relative to the caret.",
       "default": "\"bottom start\""
@@ -232,52 +324,84 @@
       "description": "Handler that is called when the element's focus status changes."
     },
     "onKeyDown": {
-      "type": "((e: KeyboardEvent) => void)",
-      "detailedType": "((e: KeyboardEvent) => void) | undefined",
+      "type": "((e: KeyboardEvent<HTMLDivElement>) => void)",
+      "detailedType": "| ((e: KeyboardEvent<HTMLDivElement>) => void)\n| undefined",
       "typeAst": {
-        "type": "function",
-        "parameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "KeyboardEvent",
-              "name": "KeyboardEvent"
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "KeyboardEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "HTMLDivElement"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
             },
-            "optional": false,
-            "rest": false
+            "typeParameters": []
           }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
+        ]
       },
       "description": "Handler that is called when a key is pressed."
     },
     "onKeyUp": {
-      "type": "((e: KeyboardEvent) => void)",
-      "detailedType": "((e: KeyboardEvent) => void) | undefined",
+      "type": "((e: KeyboardEvent<HTMLDivElement>) => void)",
+      "detailedType": "| ((e: KeyboardEvent<HTMLDivElement>) => void)\n| undefined",
       "typeAst": {
-        "type": "function",
-        "parameters": [
+        "type": "union",
+        "elements": [
           {
-            "type": "parameter",
-            "name": "e",
-            "value": {
-              "type": "link",
-              "id": "KeyboardEvent",
-              "name": "KeyboardEvent"
+            "type": "undefined"
+          },
+          {
+            "type": "function",
+            "parameters": [
+              {
+                "type": "parameter",
+                "name": "e",
+                "value": {
+                  "type": "application",
+                  "base": {
+                    "type": "identifier",
+                    "name": "KeyboardEvent"
+                  },
+                  "typeParameters": [
+                    {
+                      "type": "identifier",
+                      "name": "HTMLDivElement"
+                    }
+                  ]
+                },
+                "optional": false,
+                "rest": false
+              }
+            ],
+            "return": {
+              "type": "void"
             },
-            "optional": false,
-            "rest": false
+            "typeParameters": []
           }
-        ],
-        "return": {
-          "type": "void"
-        },
-        "typeParameters": []
+        ]
       },
       "description": "Handler that is called when a key is released."
     },
@@ -303,7 +427,7 @@
       "typeAst": {
         "type": "string"
       },
-      "description": "Identifies the element (or elements) that provide a detailed, extended description for the object."
+      "description": "Identifies the element (or elements) that provide a detailed, extended description for the\nobject."
     },
     "aria-label": {
       "type": "string",
@@ -337,8 +461,8 @@
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
     "defaultValue": {
-      "type": "TokenSegmentList<any>",
-      "detailedType": "TokenSegmentList<any> | undefined",
+      "type": "TokenFieldValue<any>",
+      "detailedType": "TokenFieldValue<any> | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -347,8 +471,8 @@
           },
           {
             "type": "link",
-            "id": "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegmentList",
-            "name": "TokenSegmentList"
+            "id": "react-stately/dist/types/src/tokenfield/TokenFieldValue.d.ts:TokenFieldValue",
+            "name": "TokenFieldValue"
           }
         ]
       },
@@ -371,8 +495,8 @@
       "description": "Whether the token field is read only."
     },
     "onChange": {
-      "type": "((value: TokenSegmentList<any>) => void)",
-      "detailedType": "| ((value: TokenSegmentList<any>) => void)\n| undefined",
+      "type": "((value: TokenFieldValue<any>) => void)",
+      "detailedType": "((value: TokenFieldValue<any>) => void) | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -387,8 +511,8 @@
                 "name": "value",
                 "value": {
                   "type": "link",
-                  "id": "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegmentList",
-                  "name": "TokenSegmentList"
+                  "id": "react-stately/dist/types/src/tokenfield/TokenFieldValue.d.ts:TokenFieldValue",
+                  "name": "TokenFieldValue"
                 },
                 "optional": false,
                 "rest": false
@@ -404,31 +528,85 @@
       "description": "Handler that is called when the value changes."
     },
     "onCopy": {
-      "type": "ClipboardEventHandler",
-      "detailedType": "ClipboardEventHandler | undefined",
+      "type": "ClipboardEventHandler<TokenFieldValue<any>>",
+      "detailedType": "| ClipboardEventHandler<TokenFieldValue<any>>\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ClipboardEventHandler"
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "ClipboardEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "link",
+                "id": "react-stately/dist/types/src/tokenfield/TokenFieldValue.d.ts:TokenFieldValue",
+                "name": "TokenFieldValue"
+              }
+            ]
+          }
+        ]
       },
-      "description": "Handler that is called when the user copies text."
+      "description": "Handler that is called when the user copies text. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncopy)."
     },
     "onCut": {
-      "type": "ClipboardEventHandler",
-      "detailedType": "ClipboardEventHandler | undefined",
+      "type": "ClipboardEventHandler<TokenFieldValue<any>>",
+      "detailedType": "| ClipboardEventHandler<TokenFieldValue<any>>\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ClipboardEventHandler"
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "ClipboardEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "link",
+                "id": "react-stately/dist/types/src/tokenfield/TokenFieldValue.d.ts:TokenFieldValue",
+                "name": "TokenFieldValue"
+              }
+            ]
+          }
+        ]
       },
-      "description": "Handler that is called when the user cuts text."
+      "description": "Handler that is called when the user cuts text. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/oncut)."
     },
     "onPaste": {
-      "type": "ClipboardEventHandler",
-      "detailedType": "ClipboardEventHandler | undefined",
+      "type": "ClipboardEventHandler<TokenFieldValue<any>>",
+      "detailedType": "| ClipboardEventHandler<TokenFieldValue<any>>\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ClipboardEventHandler"
+        "type": "union",
+        "elements": [
+          {
+            "type": "undefined"
+          },
+          {
+            "type": "application",
+            "base": {
+              "type": "identifier",
+              "name": "ClipboardEventHandler"
+            },
+            "typeParameters": [
+              {
+                "type": "link",
+                "id": "react-stately/dist/types/src/tokenfield/TokenFieldValue.d.ts:TokenFieldValue",
+                "name": "TokenFieldValue"
+              }
+            ]
+          }
+        ]
       },
-      "description": "Handler that is called when the user pastes text."
+      "description": "Handler that is called when the user pastes text. See\n[MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/onpaste)."
     },
     "onSubmit": {
       "type": "(() => void)",
@@ -473,7 +651,7 @@
               },
               {
                 "type": "link",
-                "id": "src/registry/lib/react-aria-token-field/token-field.tsx:TokenFieldRenderProps",
+                "id": "react-aria-components/dist/types/src/TokenField.d.ts:TokenFieldRenderProps",
                 "name": "TokenFieldRenderProps"
               }
             ]
@@ -483,8 +661,8 @@
       "description": "Overrides the default DOM element with a custom render function.\nThis allows rendering existing components with built-in styles and behaviors\nsuch as router links, animation libraries, and pre-styled components.\n\nRequirements:\n\n- You must render the expected element type (e.g. if `<button>` is expected, you cannot render an\n  `<a>`).\n- Only a single root DOM element can be rendered (no fragments).\n- You must pass through props and ref to the underlying DOM element, merging with your own prop\n  as appropriate."
     },
     "value": {
-      "type": "TokenSegmentList<any>",
-      "detailedType": "TokenSegmentList<any> | undefined",
+      "type": "TokenFieldValue<any>",
+      "detailedType": "TokenFieldValue<any> | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -493,8 +671,8 @@
           },
           {
             "type": "link",
-            "id": "src/registry/lib/react-aria-token-field/segment-list.ts:TokenSegmentList",
-            "name": "TokenSegmentList"
+            "id": "react-stately/dist/types/src/tokenfield/TokenFieldValue.d.ts:TokenFieldValue",
+            "name": "TokenFieldValue"
           }
         ]
       },
@@ -643,9 +821,9 @@
       "typeParameters": [],
       "description": ""
     },
-    "src/registry/lib/react-aria-token-field/token-field.tsx:TokenFieldRenderProps": {
+    "react-aria-components/dist/types/src/TokenField.d.ts:TokenFieldRenderProps": {
       "type": "interface",
-      "id": "src/registry/lib/react-aria-token-field/token-field.tsx:TokenFieldRenderProps",
+      "id": "react-aria-components/dist/types/src/TokenField.d.ts:TokenFieldRenderProps",
       "name": "TokenFieldRenderProps",
       "extends": [],
       "properties": {
