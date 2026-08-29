@@ -3,6 +3,7 @@ import { memo } from "react"
 import { cn } from "@/registry/lib/utils"
 import { AccountMenu } from "@/components/showcase/account-menu"
 import { AiPrompt } from "@/components/showcase/ai-prompt"
+import { ApiKeys } from "@/components/showcase/api-keys"
 import { Appearance } from "@/components/showcase/appearance"
 import { Booking } from "@/components/showcase/booking"
 import { ColorEditorCard } from "@/components/showcase/color-editor"
@@ -10,9 +11,12 @@ import { CommandMenu } from "@/components/showcase/command-menu"
 import { ComputerUse } from "@/components/showcase/computer-use"
 import { Controls } from "@/components/showcase/controls"
 import { CookiePreferences } from "@/components/showcase/cookie-preferences"
+import { CreateEvent } from "@/components/showcase/create-event"
 import { DisplaySettings } from "@/components/showcase/display-settings"
 import { Faq } from "@/components/showcase/faq"
+import { Feedback } from "@/components/showcase/feedback"
 import { Filters } from "@/components/showcase/filters"
+import { Integrations } from "@/components/showcase/integrations"
 import { InviteMembers } from "@/components/showcase/invite-members"
 import { LoginForm } from "@/components/showcase/login-form"
 import { Metrics } from "@/components/showcase/metrics"
@@ -20,15 +24,25 @@ import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
 import { PricingPlans } from "@/components/showcase/pricing-plans"
 import { Storage } from "@/components/showcase/storage"
+import { Tasks } from "@/components/showcase/tasks"
 import { TeamName } from "@/components/showcase/team-name"
+import { Transactions } from "@/components/showcase/transactions"
 import { TwoFactor } from "@/components/showcase/two-factor"
 import { UploadAvatar } from "@/components/showcase/upload-avatar"
+import { UsageLimit } from "@/components/showcase/usage-limit"
 
 // Every showcase card in one place — the single source of truth for what the
 // landing grid and the /create preview masonry render.
 const CARDS = {
   accountMenu: <AccountMenu />,
+  apiKeys: <ApiKeys />,
   appearance: <Appearance />,
+  createEvent: <CreateEvent />,
+  feedback: <Feedback />,
+  integrations: <Integrations />,
+  tasks: <Tasks />,
+  transactions: <Transactions />,
+  usageLimit: <UsageLimit />,
   booking: <Booking />,
   colorEditor: <ColorEditorCard />,
   commandMenu: <CommandMenu />,
@@ -150,15 +164,38 @@ export const CardsGrid = memo(function CardsGrid({
 // size comes from the ~340px column track, never from the pane width. Columns
 // are hand-curated stacks; the wide slot holds the AI banner over a 2-col
 // sub-grid. `content-visibility` keeps off-screen columns free to lay out.
-const CANVAS_1: CardKey[] = ["controls", "twoFactor", "filters", "accountMenu"]
-const CANVAS_2: CardKey[] = ["commandMenu", "payment", "storage", "loginForm"]
-const CANVAS_WIDE_LEFT: CardKey[] = ["metrics", "booking"]
-const CANVAS_WIDE_RIGHT: CardKey[] = ["uploadAvatar", "pricingPlans"]
+const CANVAS_1: CardKey[] = [
+  "controls",
+  "twoFactor",
+  "filters",
+  "accountMenu",
+  "feedback",
+]
+const CANVAS_2: CardKey[] = [
+  "commandMenu",
+  "payment",
+  "storage",
+  "loginForm",
+  "usageLimit",
+]
+const CANVAS_WIDE_LEFT: CardKey[] = [
+  "metrics",
+  "booking",
+  "createEvent",
+  "transactions",
+]
+const CANVAS_WIDE_RIGHT: CardKey[] = [
+  "uploadAvatar",
+  "pricingPlans",
+  "tasks",
+  "apiKeys",
+]
 const CANVAS_5: CardKey[] = [
   "computerUse",
   "notifications",
   "faq",
   "displaySettings",
+  "integrations",
 ]
 const CANVAS_6: CardKey[] = [
   "inviteMembers",
