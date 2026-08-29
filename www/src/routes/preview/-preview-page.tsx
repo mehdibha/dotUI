@@ -1,10 +1,4 @@
-import {
-  type ReactNode,
-  startTransition,
-  use,
-  useCallback,
-  useState,
-} from "react"
+import { type ReactNode, useCallback, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { DesignSystemProvider } from "@/lib/styles"
@@ -72,19 +66,17 @@ export function PreviewPage() {
   // The parent switches previews by navigating this document's own router — the
   // iframe never remounts, so the module cache and design-system state survive
   // and revisited previews render instantly. `replace` keeps these switches out
-  // of the shared browsing history; the transition keeps the current preview on
-  // screen while a first-visit chunk loads instead of unmounting to a blank.
+  // of the shared browsing history; the route loader keeps the current preview
+  // on screen while a first-visit chunk loads.
   usePreviewNavigationMessages({
     onNavigate: useCallback(
       (next: string) => {
         if (next === slug) return
-        startTransition(() => {
-          void navigate({
-            to: "/preview/$slug",
-            params: { slug: next },
-            search: (prev) => prev,
-            replace: true,
-          })
+        void navigate({
+          to: "/preview/$slug",
+          params: { slug: next },
+          search: (prev) => prev,
+          replace: true,
         })
       },
       [slug, navigate],
@@ -94,27 +86,25 @@ export function PreviewPage() {
     }, []),
   })
 
-  // Declared above the `use()` below on purpose: a render that suspends never
-  // commits, so this effect first runs once the example chunk has resolved.
+  // The route loader resolved the example chunk before this render, so this
+  // effect runs with the previewed content committed.
   useAnnouncePreviewReady()
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
   // rendered directly here rather than through the generated examples index.
+  const { Examples } = route.useLoaderData()
   let content: ReactNode
   if (slug === "overview") {
     content = <PresetOverview designSystem={designSystem} />
-  } else {
-    const promise = getExamplesPromise(slug)
-    if (!promise) {
-      return (
-        <div className="flex h-screen items-center justify-center">
-          <span className="text-fg-muted">Preview not found</span>
-        </div>
-      )
-    }
-    const { default: Examples } = use(promise)
+  } else if (Examples) {
     content = <Examples />
+  } else {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <span className="text-fg-muted">Preview not found</span>
+      </div>
+    )
   }
 
   const embedded = typeof window !== "undefined" && window.self !== window.top
