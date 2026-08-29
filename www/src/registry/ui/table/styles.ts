@@ -30,10 +30,9 @@ const { useStyles, styles } = createStyles(tableMeta, {
         "resizing:w-0.5 resizing:bg-border-focus resizing:pl-[7px]",
       ],
       body: "data-[empty]:h-24 data-[empty]:text-center data-[empty]:text-fg-muted",
-      footer:
-        "border-t bg-muted/50 font-medium [&_[role=row]]:last:border-b-0 [&>tr]:last:border-b-0",
+      footer: "border-t bg-muted/50 font-medium",
       row: [
-        "group/row relative box-border cursor-default border-b border-border bg-bg/70 focus-reset transition-colors [&:is(div)]:h-full",
+        "group/row relative box-border cursor-default border-b border-border bg-bg/70 focus-reset transition-colors last:border-b-0 [&:is(div)]:h-full",
         "hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted dragging:cursor-grabbing dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70 drop-target:bg-accent-muted/70",
         "focus-visible:bg-accent-muted/70 disabled:text-fg-disabled focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
       ],
