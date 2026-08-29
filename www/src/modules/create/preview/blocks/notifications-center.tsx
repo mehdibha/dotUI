@@ -380,10 +380,8 @@ function NotificationRow({
 
   return (
     <li
-      className={cn(
-        "group relative flex gap-3 rounded-lg border border-transparent px-2 py-3 transition-colors hover:border-border-muted hover:bg-card sm:px-3",
-        item.unread && "bg-card",
-      )}
+      // Quiet-button hover — flat rows, no card background.
+      className="group relative flex gap-3 rounded-lg px-2 py-3 transition-colors hover:bg-inverse/10 sm:px-3"
     >
       <span
         aria-hidden
@@ -660,9 +658,6 @@ export default function NotificationsCenter() {
         <header className="shrink-0 border-b">
           <div className="flex w-full flex-col gap-3 px-4 pt-4 sm:px-6">
             <div className="flex items-center gap-3">
-              <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-fg-on-primary">
-                <BellIcon className="size-4" />
-              </span>
               <div className="flex min-w-0 flex-col">
                 <h1 className="truncate font-heading text-lg font-semibold tracking-tight">
                   Notifications
