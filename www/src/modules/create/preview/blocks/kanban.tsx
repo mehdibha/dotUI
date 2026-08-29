@@ -547,10 +547,29 @@ interface DropTarget {
   position: "before" | "after"
 }
 
+const noop = () => {}
+
+/** Inert copy of the dragged card, used as drop placeholder and drag preview. */
+function TaskCardGhost({
+  task,
+  className,
+}: {
+  task: Task
+  className?: string
+}) {
+  return (
+    <div inert className={cn("w-[280px] sm:w-[300px]", className)}>
+      <TaskCard task={task} onMove={noop} onDelete={noop} />
+    </div>
+  )
+}
+
 function BoardColumn({
   id,
   tasks,
   isFiltered,
+  draggedTask,
+  onDragActive,
   onMove,
   onDelete,
   onAdd,
@@ -559,6 +578,9 @@ function BoardColumn({
   id: ColumnId
   tasks: Task[]
   isFiltered: boolean
+  /** The task currently being dragged, from any column. */
+  draggedTask: Task | null
+  onDragActive: (task: Task | null) => void
   onMove: (id: string, direction: -1 | 1) => void
   onDelete: (id: string) => void
   onAdd: (column: ColumnId) => void
@@ -577,16 +599,41 @@ function BoardColumn({
       }),
     acceptedDragTypes: ["kanban-task"],
     getDropOperation: () => "move",
-    renderDragPreview: (items) => (
-      <div className="flex max-w-64 items-center rounded-md border bg-bg px-3 py-2 text-sm shadow-md">
-        <span className="truncate">{items[0]?.["text/plain"]}</span>
-      </div>
-    ),
+    onDragStart: (e) => {
+      const [key] = [...e.keys]
+      onDragActive(tasks.find((task) => task.id === key) ?? null)
+    },
+    onDragEnd: () => onDragActive(null),
+    renderDragPreview: (items) => {
+      const dragged = tasks.find(
+        (task) => task.id === items[0]?.["kanban-task"],
+      )
+      return dragged ? (
+        <TaskCardGhost task={dragged} className="rounded-lg shadow-lg" />
+      ) : (
+        <div className="flex max-w-64 items-center rounded-md border bg-bg px-3 py-2 text-sm shadow-md">
+          <span className="truncate">{items[0]?.["text/plain"]}</span>
+        </div>
+      )
+    },
+    // Inactive indicators are absolutely positioned so they don't consume
+    // flex-gap slots; the active one drops in as a ghost of the dragged card.
     renderDropIndicator: (target) => (
       <DropIndicator
         target={target}
-        className="h-0.5 rounded-full outline-hidden data-drop-target:bg-border-focus"
-      />
+        className={({ isDropTarget }) =>
+          cn("outline-hidden", !isDropTarget && "absolute")
+        }
+      >
+        {({ isDropTarget }) =>
+          isDropTarget &&
+          (draggedTask ? (
+            <TaskCardGhost task={draggedTask} className="w-full opacity-40" />
+          ) : (
+            <div className="h-0.5 rounded-full bg-border-focus" />
+          ))
+        }
+      </DropIndicator>
     ),
     onReorder: (e) => {
       if (e.target.dropPosition === "on") return
@@ -900,6 +947,7 @@ export default function KanbanBlock() {
   const [sort, setSort] = useState<Set<string>>(new Set(["manual"]))
   const [view, setView] = useState<"board" | "list">("board")
   const [isCreating, setCreating] = useState(false)
+  const [draggedTask, setDraggedTask] = useState<Task | null>(null)
   const [draftColumn, setDraftColumn] = useState<ColumnId>("backlog")
   const [nextNumber, setNextNumber] = useState(450)
 
@@ -1120,6 +1168,8 @@ export default function KanbanBlock() {
                 id={id}
                 tasks={visible.filter((task) => task.column === id)}
                 isFiltered={isFiltered}
+                draggedTask={draggedTask}
+                onDragActive={setDraggedTask}
                 onMove={moveTask}
                 onDelete={deleteTask}
                 onAdd={openCreate}
