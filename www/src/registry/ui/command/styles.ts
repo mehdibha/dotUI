@@ -31,6 +31,8 @@ const { useStyles, styles } = createStyles(commandMeta, {
           "**:data-listbox:scroll-py-1.5 **:data-listbox:px-1.5 **:data-listbox:pt-0 **:data-listbox:pb-1.5",
           "**:data-listbox:**:data-separator:-mx-1.5 **:data-listbox:**:data-separator:my-1.5",
           "**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--popover-radius)-(--spacing(1.5)))]",
+          // Cards round with the panel radius, not the popover's.
+          "in-data-card:**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--card-radius)-(--spacing(1.5)))]",
           // The modal is a bigger surface — roomier inset to match.
           "in-data-modal:**:data-search-field:px-2 in-data-modal:**:data-search-field:pt-2",
           "in-data-modal:**:data-listbox:scroll-py-2 in-data-modal:**:data-listbox:px-2 in-data-modal:**:data-listbox:pb-2",
