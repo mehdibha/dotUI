@@ -9,7 +9,7 @@ export function CtaSection() {
         <span className="block text-fg-muted">one click away.</span>
       </h2>
       <LinkButton
-        href="/create"
+        href="/studio"
         variant="primary"
         size="lg"
         className="mt-8 px-4"

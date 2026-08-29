@@ -1,6 +1,7 @@
 import { LinkButton } from "@/registry/ui/button"
 import { Eyebrow } from "@/components/eyebrow"
 import { Footer } from "@/components/layout/footer"
+import { HeaderActions } from "@/components/layout/header-slot"
 import Cards from "@/modules/marketing/cards"
 import { CtaSection } from "@/modules/marketing/cta-section"
 import { HeroWordSwap } from "@/modules/marketing/hero-word-swap"
@@ -23,6 +24,16 @@ export function HomePage() {
     // content box. Decorations that bleed past it (cards rails, full-bleed
     // washes) are clipped at the viewport by the root.
     <div className="overflow-x-clip">
+      <HeaderActions>
+        <LinkButton
+          href="/studio"
+          variant="primary"
+          size="sm"
+          className="ml-1.5"
+        >
+          Open studio
+        </LinkButton>
+      </HeaderActions>
       <div className="container">
         {/* Hero section */}
         <section className="flex flex-col pt-10 sm:pt-14 md:pt-20">
@@ -40,7 +51,7 @@ export function HomePage() {
               Install with the shadcn CLI, or export straight to v0.
             </p>
             <div className="mt-9 flex items-center gap-3">
-              <LinkButton href="/create" variant="primary" size="lg">
+              <LinkButton href="/studio" variant="primary" size="lg">
                 Start building
               </LinkButton>
               <LinkButton href="/docs/components" variant="secondary" size="lg">

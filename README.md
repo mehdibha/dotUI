@@ -10,11 +10,11 @@ export it anywhere: your codebase via the shadcn CLI, or straight into v0
 > rebuilt chapter by chapter ([#666](https://github.com/mehdibha/dotUI/issues/666));
 > chapters marked WIP aren't wired yet, and APIs may change before 1.0.
 
-<!-- TODO: screenshot/GIF of the /create theme builder -->
+<!-- TODO: screenshot/GIF of the /studio theme builder -->
 
 ## How it works
 
-1. **Design** your system at [dotui.org/create](https://dotui.org/create) —
+1. **Design** your system at [dotui.org/studio](https://dotui.org/studio) —
    not just a palette swap: pick your colors, icon library, radius and
    density, and preview every change live on real components.
 2. **Export** it wherever you build:
