@@ -12,6 +12,8 @@ type ParentToIframeMessage =
   | { type: "design-system"; data: DesignSystem }
   | { type: "preview-mode"; mode: PreviewMode }
   | { type: "preview-ping" }
+  | { type: "preview-navigate"; slug: string }
+  | { type: "preview-prefetch"; slug: string }
   | { type: "inspector-mode"; enabled: boolean }
 
 type IframeToParentMessage =
@@ -39,6 +41,34 @@ export function sendPreviewMode(
   if (!iframe?.contentWindow) return
   iframe.contentWindow.postMessage(
     { type: "preview-mode", mode } satisfies ParentToIframeMessage,
+    "*",
+  )
+}
+
+/**
+ * Ask the iframe's SPA router to show another preview. Navigating inside the
+ * document — instead of remounting the iframe — keeps its module cache and
+ * design-system state alive, so revisited previews render instantly.
+ */
+export function sendPreviewNavigate(
+  iframe: HTMLIFrameElement | null,
+  slug: string,
+) {
+  if (!iframe?.contentWindow) return
+  iframe.contentWindow.postMessage(
+    { type: "preview-navigate", slug } satisfies ParentToIframeMessage,
+    "*",
+  )
+}
+
+/** Ask the iframe to warm a preview's chunk (e.g. on picker-item hover). */
+export function sendPreviewPrefetch(
+  iframe: HTMLIFrameElement | null,
+  slug: string,
+) {
+  if (!iframe?.contentWindow) return
+  iframe.contentWindow.postMessage(
+    { type: "preview-prefetch", slug } satisfies ParentToIframeMessage,
     "*",
   )
 }
@@ -94,6 +124,32 @@ export function useIframeMessageListener(
       if (event.data?.type === "design-system") {
         onMessageRef.current(event.data.data)
       }
+    }
+
+    window.addEventListener("message", handleMessage)
+    return () => window.removeEventListener("message", handleMessage)
+  }, [])
+}
+
+/** Inside the preview iframe: follow the parent's block switches and prefetch hints. */
+export function usePreviewNavigationMessages(handlers: {
+  onNavigate: (slug: string) => void
+  onPrefetch: (slug: string) => void
+}) {
+  const handlersRef = React.useRef(handlers)
+
+  React.useEffect(() => {
+    handlersRef.current = handlers
+  }, [handlers])
+
+  React.useEffect(() => {
+    if (!isInIframe()) return
+
+    const handleMessage = (event: MessageEvent) => {
+      const { type, slug } = event.data ?? {}
+      if (typeof slug !== "string") return
+      if (type === "preview-navigate") handlersRef.current.onNavigate(slug)
+      if (type === "preview-prefetch") handlersRef.current.onPrefetch(slug)
     }
 
     window.addEventListener("message", handleMessage)
