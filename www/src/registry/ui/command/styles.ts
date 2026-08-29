@@ -11,6 +11,10 @@ const { useStyles, styles } = createStyles(commandMeta, {
       "max-h-[inherit]",
       "**:data-search-field:shrink-0",
       "**:data-listbox:min-h-0 **:data-listbox:overflow-y-auto",
+      // Modal and drawer commands are spotlight/touch surfaces — roomier rows
+      // than a dropdown.
+      "in-data-modal:**:data-listbox-item:px-2 in-data-modal:**:data-listbox-item:py-2 in-data-modal:**:data-menu-item:px-2 in-data-modal:**:data-menu-item:py-2",
+      "in-data-drawer:**:data-listbox-item:px-2 in-data-drawer:**:data-listbox-item:py-2 in-data-drawer:**:data-menu-item:px-2 in-data-drawer:**:data-menu-item:py-2",
     ],
   },
   density: {

@@ -314,6 +314,9 @@ function PresetPickerContent({
                 // row instead. `overflow-visible` lets the focus ring and the
                 // selected badge sit outside the row.
                 className="block overflow-visible rounded-xl p-0"
+                // Inline: the Command's drawer/modal row-size rules are
+                // descendant selectors our classes lose to.
+                style={{ padding: 0 }}
               >
                 {({ isHovered, isFocusVisible }) => (
                   <PresetOptionRow
