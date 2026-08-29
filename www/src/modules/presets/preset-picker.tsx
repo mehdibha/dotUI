@@ -273,6 +273,8 @@ function PresetPickerContent({
         // and `overflow-visible` on us through descendant selectors that any
         // class of ours would lose to.
         style={{
+          // Relative so the rows' offsetTop reads against the scroller.
+          position: "relative",
           display: "flex",
           flexDirection: "column",
           gap: 4,
@@ -438,8 +440,21 @@ function PresetOptionRow({
     else onHide?.(item.id)
   }, [isHovered, isFocused, item.id, onShow, onHide])
 
+  // Center the selected row when it enters the list: the collection carries no
+  // selection (rows draw their own), so RAC never scrolls to it on open.
+  // Offset math, not scrollIntoView — the popover's entering scale skews rects.
+  const rowRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!isSelected) return
+    const option = rowRef.current?.closest<HTMLElement>("[data-listbox-item]")
+    const scroller = option?.offsetParent
+    if (!option || !(scroller instanceof HTMLElement)) return
+    scroller.scrollTop =
+      option.offsetTop - (scroller.clientHeight - option.offsetHeight) / 2
+  }, [isSelected])
+
   return (
-    <div className="relative w-full">
+    <div ref={rowRef} className="relative w-full">
       <DesignSystemProvider
         scoped
         params={designSystem.componentParams}
