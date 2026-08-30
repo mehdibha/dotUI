@@ -14,9 +14,14 @@ const { useStyles, styles } = createStyles(buttonMeta, {
     variants: {
       variant: {
         primary:
-          "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-300)] hover:bg-primary-hover disabled:border-0 pending:border-0 pressed:bg-primary-active",
-        secondary:
-          "border bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+          "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-300)] hover:bg-primary-hover pressed:bg-primary-active",
+        secondary: [
+          "bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:bg-neutral-active",
+          // Bevel edge: inverse-tinted ring over a soft shade, composited over
+          // the fill so it reads in both modes without a border token.
+          "[--bevel-ring:color-mix(in_oklab,var(--color-inverse)_15%,transparent)] [--shadow-control:0_0_0_1px_var(--bevel-ring),0_1px_2px_rgba(0,0,0,0.15)]",
+          "disabled:[--shadow-control:none] pending:[--shadow-control:none]",
+        ],
         quiet:
           "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
         link: "text-fg underline-offset-4 hover:underline",
