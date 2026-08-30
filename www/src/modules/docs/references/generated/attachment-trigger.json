@@ -1,0 +1,13 @@
+{
+  "name": "AttachmentTriggerProps",
+  "description": "An invisible button stretched over the attachment, making the whole card\nclickable while the actions stay independently pressable.",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

@@ -27,6 +27,7 @@
     "@internationalized/date": "^3.12.3",
     "@phosphor-icons/react": "^2.1.10",
     "@remixicon/react": "^4.2.0",
+    "@shadcn/react": "^0.3.0",
     "@tabler/icons-react": "^3.35.0",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/react-devtools": "^0.10.5",

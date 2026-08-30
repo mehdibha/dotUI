@@ -6,11 +6,14 @@
 
 @import "./ui/avatar/styles.css";
 @import "./ui/alert/styles.css";
+@import "./ui/attachment/styles.css";
 @import "./ui/badge/styles.css";
+@import "./ui/bubble/styles.css";
 @import "./ui/button/styles.css";
 @import "./ui/calendar/styles.css";
 @import "./ui/card/styles.css";
 @import "./ui/chat/styles.css";
+@import "./ui/questionnaire/styles.css";
 @import "./ui/checkbox/styles.css";
 @import "./ui/color-area/styles.css";
 @import "./ui/color-swatch-picker/styles.css";

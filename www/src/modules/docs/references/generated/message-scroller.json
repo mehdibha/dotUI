@@ -1,0 +1,13 @@
+{
+  "name": "MessageScrollerProps",
+  "description": "A message list that sticks to the newest message — it follows new content\nwhile the reader is at the edge and stays put once they scroll away.",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

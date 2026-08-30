@@ -1,0 +1,89 @@
+---
+title: MessageScroller
+description: A message list that sticks to the newest message, with a scroll-to-bottom button and lazy-rendered items.
+wip: true
+---
+
+<Demo name="message-scroller/demos/message-scroller" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/message-scroller
+```
+
+## Usage
+
+```tsx
+import {
+  MessageScroller,
+  MessageScrollerButton,
+  MessageScrollerContent,
+  MessageScrollerItem,
+  MessageScrollerProvider,
+  MessageScrollerViewport,
+} from "@/ui/message-scroller"
+```
+
+```tsx
+<MessageScrollerProvider>
+  <MessageScroller>
+    <MessageScrollerViewport>
+      <MessageScrollerContent>
+        {messages.map((message) => (
+          <MessageScrollerItem key={message.id}>
+            {/* message */}
+          </MessageScrollerItem>
+        ))}
+      </MessageScrollerContent>
+    </MessageScrollerViewport>
+    <MessageScrollerButton />
+  </MessageScroller>
+</MessageScrollerProvider>
+```
+
+## Anatomy
+
+`MessageScrollerProvider` holds the scroll state — autoscroll follows new
+content while the reader sits at the bottom edge and lets go the moment they
+scroll away. `MessageScrollerViewport` is the scrollable area,
+`MessageScrollerContent` lays the messages out, and each
+`MessageScrollerItem` renders lazily as it nears the viewport, so long
+conversations stay cheap. `MessageScrollerButton` appears once the reader
+leaves the edge and scrolls them back to the newest message.
+
+The `useMessageScroller`, `useMessageScrollerScrollable` and
+`useMessageScrollerVisibility` hooks expose imperative scrolling and scroll
+state to anything inside the provider.
+
+## Examples
+
+<Examples className="md:grid-cols-2">
+  <Example name="message-scroller/demos/basic" title="Basic" />
+</Examples>
+
+## API Reference
+
+### MessageScrollerProvider
+
+<Reference name="message-scroller-provider" />
+
+### MessageScroller
+
+<Reference name="message-scroller" />
+
+### MessageScrollerViewport
+
+<Reference name="message-scroller-viewport" />
+
+### MessageScrollerContent
+
+<Reference name="message-scroller-content" />
+
+### MessageScrollerItem
+
+<Reference name="message-scroller-item" />
+
+### MessageScrollerButton
+
+<Reference name="message-scroller-button" />

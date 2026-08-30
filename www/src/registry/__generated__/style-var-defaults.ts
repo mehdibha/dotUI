@@ -4,10 +4,12 @@
 
 export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--alert-radius": "var(--radius-surface)",
+	"--attachment-radius": "var(--radius-surface)",
 	"--avatar-radius": "calc(infinity * 1px)",
 	"--badge-radius": "var(--radius-full)",
 	"--btn-font-weight": "var(--font-weight-medium)",
 	"--btn-radius": "var(--radius-control)",
+	"--bubble-radius": "var(--radius-surface)",
 	"--calendar-cell-radius": "var(--radius-md)",
 	"--calendar-cell-size": "--spacing(8)",
 	"--calendar-range-radius": "var(--radius-xs)",
@@ -26,6 +28,9 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--modal-background": "var(--color-popover)",
 	"--modal-radius": "var(--radius-panel)",
 	"--popover-radius": "var(--radius-surface)",
+	"--questionnaire-choice-radius": "var(--radius-control)",
+	"--questionnaire-indicator-radius": "var(--radius-sm)",
+	"--questionnaire-input-radius": "var(--radius-control)",
 	"--radio-card-radius": "var(--radius-surface)",
 	"--radio-radius": "var(--radius-full)",
 	"--radius-control": "var(--radius-md)",

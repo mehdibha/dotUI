@@ -73,6 +73,26 @@ export const DemosIndex: Record<
 		files: ["ui/alert/demos/warning.tsx"],
 		component: React.lazy(() => import("@/registry/ui/alert/demos/warning")),
 	},
+	"attachment/demos/attachment": {
+		files: ["ui/attachment/demos/attachment.tsx"],
+		component: React.lazy(() => import("@/registry/ui/attachment/demos/attachment")),
+	},
+	"attachment/demos/group": {
+		files: ["ui/attachment/demos/group.tsx"],
+		component: React.lazy(() => import("@/registry/ui/attachment/demos/group")),
+	},
+	"attachment/demos/sizes": {
+		files: ["ui/attachment/demos/sizes.tsx"],
+		component: React.lazy(() => import("@/registry/ui/attachment/demos/sizes")),
+	},
+	"attachment/demos/states": {
+		files: ["ui/attachment/demos/states.tsx"],
+		component: React.lazy(() => import("@/registry/ui/attachment/demos/states")),
+	},
+	"attachment/demos/vertical": {
+		files: ["ui/attachment/demos/vertical.tsx"],
+		component: React.lazy(() => import("@/registry/ui/attachment/demos/vertical")),
+	},
 	"avatar/demos/avatar-group-count": {
 		files: ["ui/avatar/demos/avatar-group-count.tsx"],
 		component: React.lazy(() => import("@/registry/ui/avatar/demos/avatar-group-count")),
@@ -176,6 +196,18 @@ export const DemosIndex: Record<
 	"breadcrumbs/demos/with-icons": {
 		files: ["ui/breadcrumbs/demos/with-icons.tsx"],
 		component: React.lazy(() => import("@/registry/ui/breadcrumbs/demos/with-icons")),
+	},
+	"bubble/demos/bubble": {
+		files: ["ui/bubble/demos/bubble.tsx"],
+		component: React.lazy(() => import("@/registry/ui/bubble/demos/bubble")),
+	},
+	"bubble/demos/reactions": {
+		files: ["ui/bubble/demos/reactions.tsx"],
+		component: React.lazy(() => import("@/registry/ui/bubble/demos/reactions")),
+	},
+	"bubble/demos/variants": {
+		files: ["ui/bubble/demos/variants.tsx"],
+		component: React.lazy(() => import("@/registry/ui/bubble/demos/variants")),
 	},
 	"button/demos/default": {
 		files: ["ui/button/demos/default.tsx"],
@@ -1649,6 +1681,22 @@ export const DemosIndex: Record<
 		files: ["ui/loader/demos/overlay.tsx"],
 		component: React.lazy(() => import("@/registry/ui/loader/demos/overlay")),
 	},
+	"marker/demos/basic": {
+		files: ["ui/marker/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/marker/demos/basic")),
+	},
+	"marker/demos/border": {
+		files: ["ui/marker/demos/border.tsx"],
+		component: React.lazy(() => import("@/registry/ui/marker/demos/border")),
+	},
+	"marker/demos/marker": {
+		files: ["ui/marker/demos/marker.tsx"],
+		component: React.lazy(() => import("@/registry/ui/marker/demos/marker")),
+	},
+	"marker/demos/separator": {
+		files: ["ui/marker/demos/separator.tsx"],
+		component: React.lazy(() => import("@/registry/ui/marker/demos/separator")),
+	},
 	"mention/demos/basic": {
 		files: ["ui/mention/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/mention/demos/basic")),
@@ -1792,6 +1840,14 @@ export const DemosIndex: Record<
 	"menu/demos/with-submenu": {
 		files: ["ui/menu/demos/with-submenu.tsx"],
 		component: React.lazy(() => import("@/registry/ui/menu/demos/with-submenu")),
+	},
+	"message-scroller/demos/basic": {
+		files: ["ui/message-scroller/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message-scroller/demos/basic")),
+	},
+	"message-scroller/demos/message-scroller": {
+		files: ["ui/message-scroller/demos/message-scroller.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message-scroller/demos/message-scroller")),
 	},
 	"modal/demos/basic": {
 		files: ["ui/modal/demos/basic.tsx"],
@@ -2016,6 +2072,18 @@ export const DemosIndex: Record<
 	"qr-code/demos/with-logo": {
 		files: ["ui/qr-code/demos/with-logo.tsx"],
 		component: React.lazy(() => import("@/registry/ui/qr-code/demos/with-logo")),
+	},
+	"questionnaire/demos/questionnaire": {
+		files: ["ui/questionnaire/demos/questionnaire.tsx"],
+		component: React.lazy(() => import("@/registry/ui/questionnaire/demos/questionnaire")),
+	},
+	"questionnaire/demos/with-descriptions": {
+		files: ["ui/questionnaire/demos/with-descriptions.tsx"],
+		component: React.lazy(() => import("@/registry/ui/questionnaire/demos/with-descriptions")),
+	},
+	"questionnaire/demos/with-input": {
+		files: ["ui/questionnaire/demos/with-input.tsx"],
+		component: React.lazy(() => import("@/registry/ui/questionnaire/demos/with-input")),
 	},
 	"radio-group/demos/cards": {
 		files: ["ui/radio-group/demos/cards.tsx"],

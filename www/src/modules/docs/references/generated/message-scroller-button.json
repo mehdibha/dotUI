@@ -1,0 +1,13 @@
+{
+  "name": "MessageScrollerButtonProps",
+  "description": "The scroll-to-edge button. Appears once the reader scrolls away from the\nedge it points at, and hides again at the edge.",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

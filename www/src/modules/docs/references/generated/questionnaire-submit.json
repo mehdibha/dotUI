@@ -1,0 +1,13 @@
+{
+  "name": "QuestionnaireSubmitProps",
+  "description": "Submits the form. Only rendered on the last question.",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

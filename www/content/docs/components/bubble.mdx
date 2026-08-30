@@ -1,0 +1,76 @@
+---
+title: Bubble
+description: A chat bubble — contained message content with variants, alignment, and reactions.
+wip: true
+---
+
+<Demo name="bubble/demos/bubble" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/bubble
+```
+
+## Usage
+
+```tsx
+import { Bubble, BubbleContent } from "@/ui/bubble"
+```
+
+```tsx
+<Bubble align="end">
+  <BubbleContent>Shipping it this week 🚀</BubbleContent>
+</Bubble>
+```
+
+## Anatomy
+
+`Bubble` positions one message on a side of the conversation and styles the
+`BubbleContent` inside it — `variant` picks the surface (primary, neutral,
+muted, tinted, outline, ghost or danger), `align` picks the side. Consecutive
+bubbles from the same sender stack inside a `BubbleGroup`, and
+`BubbleReactions` pins emoji reactions to a corner of the bubble.
+
+```tsx
+import {
+  Bubble,
+  BubbleContent,
+  BubbleGroup,
+  BubbleReactions,
+} from "@/ui/bubble"
+```
+
+```tsx
+<BubbleGroup>
+  <Bubble variant="muted">
+    <BubbleContent>We just passed 10k stars!</BubbleContent>
+    <BubbleReactions>🎉 3</BubbleReactions>
+  </Bubble>
+</BubbleGroup>
+```
+
+## Examples
+
+<Examples className="md:grid-cols-2">
+  <Example name="bubble/demos/variants" title="Variants" />
+  <Example name="bubble/demos/reactions" title="Reactions" />
+</Examples>
+
+## API Reference
+
+### BubbleGroup
+
+<Reference name="bubble-group" />
+
+### Bubble
+
+<Reference name="bubble" />
+
+### BubbleContent
+
+<Reference name="bubble-content" />
+
+### BubbleReactions
+
+<Reference name="bubble-reactions" />
