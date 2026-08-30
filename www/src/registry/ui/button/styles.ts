@@ -22,6 +22,9 @@ const { useStyles, styles } = createStyles(buttonMeta, {
           "[--bevel-ring:color-mix(in_oklab,var(--color-inverse)_15%,transparent)] [--shadow-control:0_0_0_1px_var(--bevel-ring),0_1px_2px_rgba(0,0,0,0.15)]",
           "hover:[--bevel-ring:color-mix(in_oklab,var(--color-inverse)_25%,transparent)]",
           "disabled:[--shadow-control:none] pending:[--shadow-control:none]",
+          // Segmented groups collapse adjacent borders; the bevel can't, so
+          // grouped buttons trade it for the field border weight.
+          "in-data-[slot=group]:border in-data-[slot=group]:border-border-control in-data-[slot=group]:[--shadow-control:none]",
         ],
         quiet:
           "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
