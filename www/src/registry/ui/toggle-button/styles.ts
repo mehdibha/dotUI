@@ -20,6 +20,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
           // Bevel edge: inverse-tinted ring over a soft shade, composited over
           // the fill so it reads in both modes without a border token.
           "[--bevel-ring:color-mix(in_oklab,var(--color-inverse)_15%,transparent)] [--shadow-control:0_0_0_1px_var(--bevel-ring),0_1px_2px_rgba(0,0,0,0.15)]",
+          "hover:[--bevel-ring:color-mix(in_oklab,var(--color-inverse)_25%,transparent)]",
           "disabled:[--shadow-control:none]",
         ],
         quiet:
