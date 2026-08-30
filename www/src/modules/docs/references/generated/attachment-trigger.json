@@ -1,6 +1,7 @@
 {
   "name": "AttachmentTriggerProps",
   "description": "An invisible button stretched over the attachment, making the whole card\nclickable while the actions stay independently pressable.",
+  "extendsElement": "button",
   "props": {
     "className": {
       "type": "string",

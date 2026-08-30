@@ -1,7 +1,7 @@
 {
-  "name": "PromptInputTextareaProps",
-  "description": "The auto-growing textarea of the composer. Enter submits the surrounding\nform, Shift+Enter inserts a newline.",
-  "extendsElement": "textarea",
+  "name": "MessageFooterProps",
+  "description": "Metadata below the content — delivery status, reactions summary.",
+  "extendsElement": "div",
   "props": {
     "className": {
       "type": "string",

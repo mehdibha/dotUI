@@ -419,10 +419,9 @@ export const componentsData: ComponentCategory[] = [
     slug: "chat",
     components: [
       {
-        name: "Chat",
-        slug: "chat",
-        href: "/docs/components/chat",
-        scale: 0.8,
+        name: "Message",
+        slug: "message",
+        href: "/docs/components/message",
         status: "in review",
       },
       {

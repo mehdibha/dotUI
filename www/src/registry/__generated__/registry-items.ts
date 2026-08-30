@@ -23,7 +23,6 @@ import UiChartPie from "@/registry/ui/chart-pie/meta";
 import UiChartRadar from "@/registry/ui/chart-radar/meta";
 import UiChartRadial from "@/registry/ui/chart-radial/meta";
 import UiChart from "@/registry/ui/chart/meta";
-import UiChat from "@/registry/ui/chat/meta";
 import UiCheckboxGroup from "@/registry/ui/checkbox-group/meta";
 import UiCheckbox from "@/registry/ui/checkbox/meta";
 import UiColorArea from "@/registry/ui/color-area/meta";
@@ -55,6 +54,7 @@ import UiMarker from "@/registry/ui/marker/meta";
 import UiMention from "@/registry/ui/mention/meta";
 import UiMenu from "@/registry/ui/menu/meta";
 import UiMessageScroller from "@/registry/ui/message-scroller/meta";
+import UiMessage from "@/registry/ui/message/meta";
 import UiModal from "@/registry/ui/modal/meta";
 import UiNumberField from "@/registry/ui/number-field/meta";
 import UiOtpField from "@/registry/ui/otp-field/meta";
@@ -106,7 +106,6 @@ export const registryUi: RegistryItem[] = [
 	UiChartPie,
 	UiChartRadar,
 	UiChartRadial,
-	UiChat,
 	UiCheckbox,
 	UiCheckboxGroup,
 	UiColorArea,
@@ -137,6 +136,7 @@ export const registryUi: RegistryItem[] = [
 	UiMarker,
 	UiMention,
 	UiMenu,
+	UiMessage,
 	UiMessageScroller,
 	UiModal,
 	UiNumberField,

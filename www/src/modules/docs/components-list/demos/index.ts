@@ -16,7 +16,6 @@ import { ChartLineDemo } from "./chart-line"
 import { ChartPieDemo } from "./chart-pie"
 import { ChartRadarDemo } from "./chart-radar"
 import { ChartRadialDemo } from "./chart-radial"
-import { ChatDemo } from "./chat"
 import { CheckboxDemo } from "./checkbox"
 import { CheckboxGroupDemo } from "./checkbox-group"
 import { ColorAreaDemo } from "./color-area"
@@ -43,6 +42,7 @@ import { LoaderDemo } from "./loader"
 import { MarkerDemo } from "./marker"
 import { MentionDemo } from "./mention"
 import { MenuDemo } from "./menu"
+import { MessageDemo } from "./message"
 import { MessageScrollerDemo } from "./message-scroller"
 import { ModalDemo } from "./modal"
 import { NumberFieldDemo } from "./number-field"
@@ -90,7 +90,6 @@ export const componentDemos: Record<string, ComponentType> = {
   "chart-pie": ChartPieDemo,
   "chart-radar": ChartRadarDemo,
   "chart-radial": ChartRadialDemo,
-  chat: ChatDemo,
   checkbox: CheckboxDemo,
   "checkbox-group": CheckboxGroupDemo,
   "color-area": ColorAreaDemo,
@@ -116,6 +115,7 @@ export const componentDemos: Record<string, ComponentType> = {
   loader: LoaderDemo,
   marker: MarkerDemo,
   mention: MentionDemo,
+  message: MessageDemo,
   menu: MenuDemo,
   "message-scroller": MessageScrollerDemo,
   modal: ModalDemo,

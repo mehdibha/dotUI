@@ -1,6 +1,7 @@
 "use client"
 
-import { Message, MessageContent } from "@/registry/ui/chat"
+import { Bubble, BubbleContent } from "@/registry/ui/bubble"
+import { Message, MessageContent } from "@/registry/ui/message"
 import {
   MessageScroller,
   MessageScrollerButton,
@@ -31,8 +32,16 @@ export function MessageScrollerDemo() {
           <MessageScrollerContent className="p-1">
             {conversation.map((message, index) => (
               <MessageScrollerItem key={index}>
-                <Message role={message.role}>
-                  <MessageContent>{message.text}</MessageContent>
+                <Message align={message.role === "user" ? "end" : "start"}>
+                  <MessageContent>
+                    {message.role === "user" ? (
+                      <Bubble align="end" variant="muted">
+                        <BubbleContent>{message.text}</BubbleContent>
+                      </Bubble>
+                    ) : (
+                      message.text
+                    )}
+                  </MessageContent>
                 </Message>
               </MessageScrollerItem>
             ))}

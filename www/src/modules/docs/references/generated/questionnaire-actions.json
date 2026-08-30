@@ -1,6 +1,7 @@
 {
   "name": "QuestionnaireActionsProps",
   "description": "The navigation row — previous, skip, and next or submit.",
+  "extendsElement": "div",
   "props": {
     "className": {
       "type": "string",

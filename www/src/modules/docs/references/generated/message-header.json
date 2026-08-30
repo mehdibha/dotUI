@@ -1,6 +1,6 @@
 {
-  "name": "ConversationProps",
-  "description": "A scrollable list of chat messages.",
+  "name": "MessageHeaderProps",
+  "description": "Metadata above the content — sender name, timestamp.",
   "extendsElement": "div",
   "props": {
     "className": {

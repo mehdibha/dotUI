@@ -8,7 +8,7 @@ const { useStyles, styles } = createStyles(bubbleMeta, {
       group: "flex min-w-0 flex-col",
       root: [
         "group/bubble relative flex w-fit max-w-[80%] min-w-0 flex-col gap-1",
-        "group-data-[role=user]/message:self-end data-[align=end]:self-end",
+        "group-data-[align=end]/message:self-end data-[align=end]:self-end",
       ],
       content: [
         "w-fit max-w-full min-w-0 overflow-hidden rounded-(--bubble-radius) border border-transparent wrap-break-word",

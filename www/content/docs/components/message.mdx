@@ -1,0 +1,89 @@
+---
+title: Message
+description: One turn in a conversation — avatar, header, content, and footer, aligned to a side of the thread.
+wip: true
+---
+
+<Demo name="message/demos/message" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/message
+```
+
+## Usage
+
+```tsx
+import { Message, MessageContent } from "@/ui/message"
+```
+
+```tsx
+<Message align="end">
+  <MessageContent>{/* bubbles, text, rich content */}</MessageContent>
+</Message>
+```
+
+## Anatomy
+
+`Message` lays out one turn: `align` picks the side of the thread and flips
+the row, so the `MessageAvatar` sits on the sender's side. `MessageContent`
+is the content column — put a [Bubble](/docs/components/bubble) inside for
+contained messages, or plain content for full-width assistant replies.
+`MessageHeader` and `MessageFooter` carry metadata like the sender name,
+timestamp, or delivery status, and consecutive messages from one sender stack
+in a `MessageGroup`.
+
+```tsx
+import {
+  Message,
+  MessageAvatar,
+  MessageContent,
+  MessageFooter,
+  MessageHeader,
+} from "@/ui/message"
+```
+
+```tsx
+<Message>
+  <MessageAvatar>{/* <Avatar /> */}</MessageAvatar>
+  <MessageContent>
+    <MessageHeader>Lena · 2:14 PM</MessageHeader>
+    {/* content */}
+    <MessageFooter>Seen</MessageFooter>
+  </MessageContent>
+</Message>
+```
+
+## Examples
+
+<Examples className="md:grid-cols-2">
+  <Example name="message/demos/basic" title="Basic" />
+  <Example name="message/demos/group" title="Group" />
+</Examples>
+
+## API Reference
+
+### MessageGroup
+
+<Reference name="message-group" />
+
+### Message
+
+<Reference name="message" />
+
+### MessageAvatar
+
+<Reference name="message-avatar" />
+
+### MessageContent
+
+<Reference name="message-content" />
+
+### MessageHeader
+
+<Reference name="message-header" />
+
+### MessageFooter
+
+<Reference name="message-footer" />

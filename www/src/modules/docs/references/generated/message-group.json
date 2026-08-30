@@ -1,6 +1,6 @@
 {
-  "name": "PromptInputToolbarProps",
-  "description": "The row of actions below the textarea, such as attachments or the submit\nbutton.",
+  "name": "MessageGroupProps",
+  "description": "A group of consecutive messages from the same sender.",
   "extendsElement": "div",
   "props": {
     "className": {

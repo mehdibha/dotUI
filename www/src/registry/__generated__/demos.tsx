@@ -577,26 +577,6 @@ export const DemosIndex: Record<
 		files: ["ui/chart-radial/demos/text.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-radial/demos/text")),
 	},
-	"chat/demos/basic": {
-		files: ["ui/chat/demos/basic.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chat/demos/basic")),
-	},
-	"chat/demos/chat": {
-		files: ["ui/chat/demos/chat.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chat/demos/chat")),
-	},
-	"chat/demos/prompt-input": {
-		files: ["ui/chat/demos/prompt-input.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chat/demos/prompt-input")),
-	},
-	"chat/demos/with-avatars": {
-		files: ["ui/chat/demos/with-avatars.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chat/demos/with-avatars")),
-	},
-	"chat/demos/with-toolbar": {
-		files: ["ui/chat/demos/with-toolbar.tsx"],
-		component: React.lazy(() => import("@/registry/ui/chat/demos/with-toolbar")),
-	},
 	"checkbox/demos/basic": {
 		files: ["ui/checkbox/demos/basic.tsx"],
 		component: React.lazy(() => import("@/registry/ui/checkbox/demos/basic")),
@@ -1840,6 +1820,18 @@ export const DemosIndex: Record<
 	"menu/demos/with-submenu": {
 		files: ["ui/menu/demos/with-submenu.tsx"],
 		component: React.lazy(() => import("@/registry/ui/menu/demos/with-submenu")),
+	},
+	"message/demos/basic": {
+		files: ["ui/message/demos/basic.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message/demos/basic")),
+	},
+	"message/demos/group": {
+		files: ["ui/message/demos/group.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message/demos/group")),
+	},
+	"message/demos/message": {
+		files: ["ui/message/demos/message.tsx"],
+		component: React.lazy(() => import("@/registry/ui/message/demos/message")),
 	},
 	"message-scroller/demos/basic": {
 		files: ["ui/message-scroller/demos/basic.tsx"],

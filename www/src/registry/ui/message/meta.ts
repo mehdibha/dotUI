@@ -1,17 +1,16 @@
 import type { RegistryItem } from "@/registry/types"
 
-const chatMeta = {
-  name: "chat",
+const messageMeta = {
+  name: "message",
   type: "registry:ui",
   group: "containers",
   files: [
     {
       type: "registry:ui",
-      path: "ui/chat/base.tsx",
-      target: "ui/chat.tsx",
+      path: "ui/message/base.tsx",
+      target: "ui/message.tsx",
     },
   ],
-  registryDependencies: ["avatar", "button", "input"],
 } satisfies RegistryItem
 
-export default chatMeta
+export default messageMeta

@@ -2,8 +2,9 @@
 
 import React from "react"
 
+import { Bubble, BubbleContent } from "@/registry/ui/bubble"
 import { Button } from "@/registry/ui/button"
-import { Message, MessageContent } from "@/registry/ui/chat"
+import { Message, MessageContent } from "@/registry/ui/message"
 import {
   MessageScroller,
   MessageScrollerButton,
@@ -54,8 +55,16 @@ export default function Demo() {
             <MessageScrollerContent className="p-4">
               {messages.map((message) => (
                 <MessageScrollerItem key={message.id}>
-                  <Message role={message.role}>
-                    <MessageContent>{message.text}</MessageContent>
+                  <Message align={message.role === "user" ? "end" : "start"}>
+                    <MessageContent>
+                      {message.role === "user" ? (
+                        <Bubble align="end" variant="muted">
+                          <BubbleContent>{message.text}</BubbleContent>
+                        </Bubble>
+                      ) : (
+                        message.text
+                      )}
+                    </MessageContent>
                   </Message>
                 </MessageScrollerItem>
               ))}
