@@ -1,6 +1,6 @@
 "use client"
 
-/* Control Lab rows — one visual language (compact row, label left, value +
+/* Panel rows — one visual language (compact row, label left, value +
    control right) applied to every interaction model the panel needs: triggers,
    drag surfaces, toggles, steppers, specimen grids, drill-in navigation, and
    the grouped-list container that fuses rows into cards.
@@ -86,6 +86,9 @@ export const ROW_LABEL = "truncate text-[0.8125rem] font-medium text-fg"
 export const ROW_VALUE = "truncate text-[0.8125rem] text-fg-muted"
 /** What a fixed-height row becomes once it carries a description. */
 export const ROW_DESCRIBED = "h-auto py-2.5"
+
+/** Panel popovers open and close instantly — control feedback, not content. */
+export const INSTANT_POPOVER = "duration-0 exiting:duration-0"
 
 /* Where row-attached overlays (pickers, selects, menus) open. Panel-lab's
    preview-rail draft overrides it to explore preview/popover combos. */
@@ -386,7 +389,7 @@ export function SelectRow({
         </span>
       </Button>
       <Popover
-        className="w-(--trigger-width)"
+        className={cn("w-(--trigger-width)", INSTANT_POPOVER)}
         placement={useContext(RowOverlayPlacementContext)}
       >
         {layout === "grid" ? (
@@ -544,7 +547,7 @@ export function ColorPickerRow({
             // A tile is as wide as the picker, so opening below it keeps the
             // two edges aligned; a row has no width to align to.
             placement={tile ? "bottom start" : rowPlacement}
-            className="w-64 min-w-0"
+            className={cn("w-64 min-w-0", INSTANT_POPOVER)}
           >
             <DialogContent className="flex flex-col gap-3 p-3">
               <ColorSwatchPicker className="justify-between gap-0">
@@ -769,7 +772,7 @@ export function NeutralPickerRow({
       </Button>
       <Popover
         placement={useContext(RowOverlayPlacementContext)}
-        className="w-64 min-w-0"
+        className={cn("w-64 min-w-0", INSTANT_POPOVER)}
       >
         <DialogContent className="flex flex-col gap-3 p-3">
           {/* Seeds, same as the brand picker: one tap to a known gray family,
@@ -874,7 +877,7 @@ export function FontListPopover({
   const listRef = useLazyFontPreviews()
   return (
     <Popover
-      className="w-(--trigger-width) outline-hidden"
+      className={cn("w-(--trigger-width) outline-hidden", INSTANT_POPOVER)}
       placement={useContext(RowOverlayPlacementContext)}
     >
       <Command>

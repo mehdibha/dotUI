@@ -134,8 +134,14 @@ export function PresetPicker({
             <Drawer>{content("drawer")}</Drawer>
           ) : (
             // The popover always sizes to the list column — the preview, when
-            // on, floats outside it as a detached flyout.
-            <Popover placement={placement}>{content("popover")}</Popover>
+            // on, floats outside it as a detached flyout. Instant, like every
+            // panel control popover.
+            <Popover
+              placement={placement}
+              className="duration-0 exiting:duration-0"
+            >
+              {content("popover")}
+            </Popover>
           )
         }
       />

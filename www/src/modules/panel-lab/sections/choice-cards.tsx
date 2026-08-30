@@ -11,9 +11,9 @@
    selectable-card school). */
 
 import { cn } from "@/registry/lib/utils"
-import { ControlGroup, SegmentedControlRow } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
 import { checkboxCorner, DemoCheckbox, fillOf } from "./checkbox"
 import { DemoRadio } from "./radio"

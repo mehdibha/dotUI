@@ -41,15 +41,10 @@ import {
   SegmentedControl,
   SegmentedControlItem,
 } from "@/registry/ui/segmented-control"
-import {
-  ControlGroup,
-  ROW,
-  ROW_LABEL,
-  SegmentedControlRow,
-} from "@/modules/control-lab/rows"
-import type { SegmentedRowOption } from "@/modules/control-lab/rows"
 
 import { HeroModes } from "../hero"
+import { ControlGroup, ROW, ROW_LABEL, SegmentedControlRow } from "../rows"
+import type { SegmentedRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { useModeTheme } from "./color"
 

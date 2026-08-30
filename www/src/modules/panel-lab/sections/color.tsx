@@ -36,6 +36,13 @@ import {
   SliderTrack,
 } from "@/registry/ui/slider"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+
+import {
+  DetailRow,
+  PaletteDot,
+  PickerPopoverContent,
+  SwatchDots,
+} from "../patterns"
 import {
   ColorPickerRow,
   ControlGroup,
@@ -48,14 +55,7 @@ import {
   ROW_VALUE,
   RowOverlayPlacementContext,
   SegmentedControlRow,
-} from "@/modules/control-lab/rows"
-
-import {
-  DetailRow,
-  PaletteDot,
-  PickerPopoverContent,
-  SwatchDots,
-} from "../patterns"
+} from "../rows"
 import type { Lab, LabState } from "../state"
 
 /**

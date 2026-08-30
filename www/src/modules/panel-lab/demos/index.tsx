@@ -15,7 +15,7 @@ import {
   KbdDemo,
   RadioDemo,
   SwitchDemo,
-} from "./demos/actions"
+} from "./actions"
 import {
   AvatarsDemo,
   BadgesDemo,
@@ -25,8 +25,8 @@ import {
   SkeletonDemo,
   SpinnerDemo,
   TablesDemo,
-} from "./demos/display"
-import { CalendarDemo, PickersDemo, SlidersDemo } from "./demos/fields"
+} from "./display"
+import { CalendarDemo, PickersDemo, SlidersDemo } from "./fields"
 import {
   ColorDemo,
   CursorDemo,
@@ -42,7 +42,7 @@ import {
   SpaceDemo,
   SurfacesDemo,
   TypographyDemo,
-} from "./demos/foundations"
+} from "./foundations"
 import {
   AccordionDemo,
   BreadcrumbsDemo,
@@ -52,7 +52,7 @@ import {
   PopoversDemo,
   TabsDemo,
   TooltipsDemo,
-} from "./demos/overlays"
+} from "./overlays"
 
 /** The pair: tonal icon button beside the solid Save. */
 function ButtonsDemo() {

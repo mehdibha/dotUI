@@ -9,9 +9,8 @@
 
 import { toHex, toOklch } from "@dotui/colors"
 
-import { ControlGroup, SegmentedControlRow } from "@/modules/control-lab/rows"
-
 import { Hero } from "../hero"
+import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const CHART_DEFAULTS = {

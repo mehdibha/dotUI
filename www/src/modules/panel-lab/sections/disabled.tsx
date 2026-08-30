@@ -11,9 +11,9 @@
    inside one treatment, not a fork. */
 
 import { cn } from "@/registry/lib/utils"
-import { ControlGroup, SegmentedControlRow } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const DISABLED_DEFAULTS = {

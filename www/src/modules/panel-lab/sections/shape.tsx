@@ -11,15 +11,15 @@
 import type { CSSProperties } from "react"
 
 import { cn } from "@/registry/lib/utils"
+
+import { Hero } from "../hero"
 import {
   ControlGroup,
   GroupTitle,
   OptionGridRow,
   SelectRow,
   SliderRow,
-} from "@/modules/control-lab/rows"
-
-import { Hero } from "../hero"
+} from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const SHAPE_DEFAULTS = {

@@ -1,8 +1,8 @@
 "use client"
 
 /* Panel Lab patterns — controls invented for the full-panel recreation, built
-   on the control-lab row language. If one earns its keep it graduates into
-   control-lab/rows.tsx. Prototype only: local state in, callback out. */
+   on the panel row language. If one earns its keep it graduates into
+   rows.tsx. Prototype only: local state in, callback out. */
 
 import { useContext } from "react"
 import { ChevronDownIcon, SearchIcon } from "lucide-react"
@@ -25,13 +25,15 @@ import {
   SliderThumb,
   SliderTrack,
 } from "@/registry/ui/slider"
+import { useLoadedFamilies } from "@/modules/create/typography"
+
 import {
+  INSTANT_POPOVER,
   ROW,
   ROW_LABEL,
   ROW_VALUE,
   RowOverlayPlacementContext,
-} from "@/modules/control-lab/rows"
-import { useLoadedFamilies } from "@/modules/create/typography"
+} from "./rows"
 
 /* -------------------------------- Detail row ------------------------------- */
 
@@ -114,7 +116,10 @@ export function PaletteDot({ color }: { color: string }) {
 /** Shared picker popover body (area + hue + hex). */
 export function PickerPopoverContent() {
   return (
-    <Popover placement={useContext(RowOverlayPlacementContext)}>
+    <Popover
+      placement={useContext(RowOverlayPlacementContext)}
+      className={INSTANT_POPOVER}
+    >
       <DialogContent className="flex flex-col gap-2">
         <div className="flex gap-2">
           <ColorArea

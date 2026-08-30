@@ -17,14 +17,9 @@
 
 import { MousePointer2Icon } from "lucide-react"
 
-import {
-  ControlGroup,
-  SegmentedControlRow,
-  SelectRow,
-} from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
-
 import { Hero } from "../hero"
+import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const BREADCRUMB_DEFAULTS = {

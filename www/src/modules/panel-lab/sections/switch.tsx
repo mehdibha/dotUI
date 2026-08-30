@@ -8,9 +8,9 @@
    (switch tint: follow | success), not yet approved. */
 
 import { cn } from "@/registry/lib/utils"
-import { ControlGroup } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup } from "../rows"
 import type { Lab, LabState } from "../state"
 import { FillRow, fillOf, HERO_ROW } from "./checkbox"
 import type { CheckFill } from "./checkbox"

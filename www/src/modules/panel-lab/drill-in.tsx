@@ -6,10 +6,8 @@
    label over its muted value on the left, a state-driven micro-preview on the
    right. Weight survives as ordering — identity first. (Per-cluster row
    heights were tried and reverted — uniform h-16 keeps the scan rhythm.)
-   Tapping a row animates entry-only (the Design System Builder mock, Aug
-   2026): the incoming pane fades in over a 20px slide — from the right
-   drilling in, from the left coming back — 220ms cubic-bezier(.2,.7,.3,1);
-   the outgoing pane swaps out instantly, so motion never gates input.
+   Tapping a row swaps panes instantly — control feedback, never gated on
+   motion (slide/fade drill-ins were tried and dropped, Aug 2026).
    The chapter page has room, so the section body renders in its original
    form — hero inline at the head of its group. */
 
@@ -18,34 +16,20 @@ import { ChevronLeftIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
-import { ControlGroup, GroupTitle, ROW_LABEL } from "@/modules/control-lab/rows"
-import { useTweak } from "@/dev/tweaker"
 
-import { PanelChrome } from "../panel"
-import type { PanelSystem } from "../panel"
-import { PanelSearch } from "../search"
-import type { Chapter, Lab } from "../state"
-import { isWired } from "../wired"
-import { CARD_DEMOS } from "./demo"
+import { CARD_DEMOS } from "./demos"
 import { resolveIndex } from "./groups"
 import type { IndexChapter } from "./groups"
+import { PanelChrome } from "./panel"
+import type { PanelSystem } from "./panel"
+import { ControlGroup, GroupTitle, ROW_LABEL } from "./rows"
+import { PanelSearch } from "./search"
+import type { Chapter, Lab } from "./state"
+import { isWired } from "./wired"
 
 const PANE =
   "absolute inset-0 no-scrollbar flex flex-col overflow-y-auto overscroll-contain px-3 pt-[56px] pb-[64px] *:shrink-0"
-/* Entry-only motion: a visible pane transitions opacity+transform in; a
-   hidden one snaps out (transition-none) so the swap never overlaps. The
-   hidden offset sets where the pane enters FROM next time it shows —
-   the index re-enters from the left (back), the page from the right
-   (drill-in). First paint renders the visible classes directly, so
-   nothing animates on mount. `fade` leaves the offset out of the
-   transition so only opacity eases; `instant` transitions nothing. */
-const PANE_SHOWN: Record<string, string> = {
-  slide:
-    "translate-x-0 opacity-100 transition-[opacity,translate] duration-[220ms] ease-[cubic-bezier(.2,.7,.3,1)] motion-reduce:transition-none",
-  fade: "translate-x-0 opacity-100 transition-opacity duration-[220ms] ease-[cubic-bezier(.2,.7,.3,1)] motion-reduce:transition-none",
-  instant: "translate-x-0 opacity-100",
-}
-const PANE_HIDDEN = "pointer-events-none opacity-0 transition-none"
+const PANE_HIDDEN = "pointer-events-none opacity-0"
 
 /** The not-wired-yet marker (issue #666) — drops per chapter via WIRED_CHAPTERS. */
 function WipChip() {
@@ -156,7 +140,7 @@ function IndexRow({
   )
 }
 
-export function PanelB({
+export function DrillInPanel({
   chapters,
   lab,
   system,
@@ -166,22 +150,11 @@ export function PanelB({
   system?: PanelSystem
 }) {
   const index = resolveIndex(chapters)
-  const drillIn = useTweak("Drill-in", {
-    type: "select",
-    options: ["slide", "fade", "instant"],
-    default: "slide",
-    group: "Motion",
-  })
-  const shown = PANE_SHOWN[drillIn] ?? PANE_SHOWN.slide
   const [activeId, setActiveId] = useState<string | null>(null)
-  // The page keeps rendering its last chapter while sliding back out.
-  const lastRef = useRef<IndexChapter | null>(null)
-  const active =
+  const page =
     index
       .flatMap((group) => group.chapters)
       .find((chapter) => chapter.id === activeId) ?? null
-  if (active) lastRef.current = active
-  const page = active ?? lastRef.current
 
   // The page pane is one persistent scroller — start each chapter at its top.
   const pageRef = useRef<HTMLDivElement>(null)
@@ -203,12 +176,8 @@ export function PanelB({
       <div className="relative min-h-0 flex-1 overflow-hidden">
         {/* Index pane. */}
         <div
-          className={cn(
-            PANE,
-            "gap-3",
-            active ? cn(PANE_HIDDEN, "-translate-x-5") : shown,
-          )}
-          aria-hidden={!!active}
+          className={cn(PANE, "gap-3", page && PANE_HIDDEN)}
+          aria-hidden={!!page}
         >
           {index.map((group, i) => (
             <ControlGroup key={i}>
@@ -228,12 +197,8 @@ export function PanelB({
         {/* Chapter page. */}
         <div
           ref={pageRef}
-          className={cn(
-            PANE,
-            "gap-3 bg-card",
-            active ? shown : cn(PANE_HIDDEN, "translate-x-5"),
-          )}
-          aria-hidden={!active}
+          className={cn(PANE, "gap-3 bg-card", !page && PANE_HIDDEN)}
+          aria-hidden={!page}
         >
           {page && (
             <>
