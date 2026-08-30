@@ -4,14 +4,19 @@ import { cn } from "@/registry/lib/utils"
 import { AccountMenu } from "@/components/showcase/account-menu"
 import { AiPrompt } from "@/components/showcase/ai-prompt"
 import { Appearance } from "@/components/showcase/appearance"
+import { AssignIssue } from "@/components/showcase/assign-issue"
 import { Booking } from "@/components/showcase/booking"
 import { ColorEditorCard } from "@/components/showcase/color-editor"
 import { CommandMenu } from "@/components/showcase/command-menu"
 import { ComputerUse } from "@/components/showcase/computer-use"
 import { Controls } from "@/components/showcase/controls"
 import { CookiePreferences } from "@/components/showcase/cookie-preferences"
+import { CustomDomain } from "@/components/showcase/custom-domain"
+import { DeployStatus } from "@/components/showcase/deploy-status"
 import { DisplaySettings } from "@/components/showcase/display-settings"
+import { EmptyState } from "@/components/showcase/empty-state"
 import { Faq } from "@/components/showcase/faq"
+import { FileTree } from "@/components/showcase/file-tree"
 import { Filters } from "@/components/showcase/filters"
 import { InviteMembers } from "@/components/showcase/invite-members"
 import { LoginForm } from "@/components/showcase/login-form"
@@ -20,7 +25,9 @@ import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
 import { PricingPlans } from "@/components/showcase/pricing-plans"
 import { Storage } from "@/components/showcase/storage"
+import { SupportChat } from "@/components/showcase/support-chat"
 import { TeamName } from "@/components/showcase/team-name"
+import { TeamTable } from "@/components/showcase/team-table"
 import { TwoFactor } from "@/components/showcase/two-factor"
 import { UploadAvatar } from "@/components/showcase/upload-avatar"
 
@@ -29,6 +36,13 @@ import { UploadAvatar } from "@/components/showcase/upload-avatar"
 const CARDS = {
   accountMenu: <AccountMenu />,
   appearance: <Appearance />,
+  assignIssue: <AssignIssue />,
+  customDomain: <CustomDomain />,
+  deployStatus: <DeployStatus />,
+  emptyState: <EmptyState />,
+  fileTree: <FileTree />,
+  supportChat: <SupportChat />,
+  teamTable: <TeamTable />,
   booking: <Booking />,
   colorEditor: <ColorEditorCard />,
   commandMenu: <CommandMenu />,
@@ -150,15 +164,38 @@ export const CardsGrid = memo(function CardsGrid({
 // size comes from the ~340px column track, never from the pane width. Columns
 // are hand-curated stacks; the wide slot holds the AI banner over a 2-col
 // sub-grid. `content-visibility` keeps off-screen columns free to lay out.
-const CANVAS_1: CardKey[] = ["controls", "twoFactor", "filters", "accountMenu"]
-const CANVAS_2: CardKey[] = ["commandMenu", "payment", "storage", "loginForm"]
-const CANVAS_WIDE_LEFT: CardKey[] = ["metrics", "booking"]
-const CANVAS_WIDE_RIGHT: CardKey[] = ["uploadAvatar", "pricingPlans"]
+const CANVAS_1: CardKey[] = [
+  "controls",
+  "twoFactor",
+  "filters",
+  "accountMenu",
+  "customDomain",
+]
+const CANVAS_2: CardKey[] = [
+  "commandMenu",
+  "payment",
+  "storage",
+  "loginForm",
+  "emptyState",
+]
+const CANVAS_WIDE_LEFT: CardKey[] = [
+  "metrics",
+  "booking",
+  "teamTable",
+  "deployStatus",
+]
+const CANVAS_WIDE_RIGHT: CardKey[] = [
+  "uploadAvatar",
+  "pricingPlans",
+  "supportChat",
+  "assignIssue",
+]
 const CANVAS_5: CardKey[] = [
   "computerUse",
   "notifications",
   "faq",
   "displaySettings",
+  "fileTree",
 ]
 const CANVAS_6: CardKey[] = [
   "inviteMembers",
