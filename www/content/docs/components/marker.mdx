@@ -1,0 +1,67 @@
+---
+title: Marker
+description: A labeled divider row — a date in a message list, a section label in a feed.
+wip: true
+---
+
+<Demo name="marker/demos/marker" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/marker
+```
+
+## Usage
+
+```tsx
+import { Marker, MarkerContent } from "@/ui/marker"
+```
+
+```tsx
+<Marker variant="separator">
+  <MarkerContent>Today</MarkerContent>
+</Marker>
+```
+
+## Anatomy
+
+`Marker` is the row; `variant` picks its treatment — `separator` centers the
+content between two hairlines, `border` underlines the row, and the default
+renders it plain. `MarkerIcon` holds an optional leading icon, hidden from
+assistive technology.
+
+```tsx
+import { Marker, MarkerContent, MarkerIcon } from "@/ui/marker"
+```
+
+```tsx
+<Marker>
+  <MarkerIcon>
+    <BellIcon />
+  </MarkerIcon>
+  <MarkerContent>3 unread messages</MarkerContent>
+</Marker>
+```
+
+## Examples
+
+<Examples className="md:grid-cols-2">
+  <Example name="marker/demos/basic" title="Basic" />
+  <Example name="marker/demos/separator" title="Separator" />
+  <Example name="marker/demos/border" title="Border" />
+</Examples>
+
+## API Reference
+
+### Marker
+
+<Reference name="marker" />
+
+### MarkerIcon
+
+<Reference name="marker-icon" />
+
+### MarkerContent
+
+<Reference name="marker-content" />

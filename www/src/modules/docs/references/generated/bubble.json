@@ -1,0 +1,72 @@
+{
+  "name": "BubbleProps",
+  "description": "A chat bubble — positions its content, reactions and metadata on one side\nof the conversation.",
+  "extendsElement": "div",
+  "props": {
+    "variant": {
+      "type": "\"danger\" | \"ghost\" | \"muted\" | \"neutral\" | \"outline\" | \"primary\" | \"tinted\"",
+      "detailedType": "| 'danger'\n| 'ghost'\n| 'muted'\n| 'neutral'\n| 'outline'\n| 'primary'\n| 'tinted'\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "danger"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "ghost"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "muted"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "neutral"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "outline"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "primary"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tinted"
+          }
+        ]
+      },
+      "description": "The visual style of the bubble's content.",
+      "default": "'primary'"
+    },
+    "align": {
+      "type": "\"end\" | \"start\"",
+      "detailedType": "'end' | 'start' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start"
+          }
+        ]
+      },
+      "description": "Which side of the conversation the bubble sits on.",
+      "default": "'start'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

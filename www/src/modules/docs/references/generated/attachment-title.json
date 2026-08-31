@@ -1,0 +1,14 @@
+{
+  "name": "AttachmentTitleProps",
+  "description": "The file name. Truncates, and pulses while the file uploads or processes.",
+  "extendsElement": "span",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

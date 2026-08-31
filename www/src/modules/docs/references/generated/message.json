@@ -1,26 +1,26 @@
 {
   "name": "MessageProps",
-  "description": "A single turn in a conversation. Lays out the avatar and the content, and\nexposes the role its children style against.",
+  "description": "One turn in a conversation — lays out the avatar and the content column on\none side of the thread.",
   "extendsElement": "div",
   "props": {
-    "role": {
-      "type": "\"assistant\" | \"user\"",
-      "detailedType": "'assistant' | 'user' | undefined",
+    "align": {
+      "type": "\"end\" | \"start\"",
+      "detailedType": "'end' | 'start' | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "assistant"
+            "value": "end"
           },
           {
             "type": "stringLiteral",
-            "value": "user"
+            "value": "start"
           }
         ]
       },
-      "description": "Who sent the message. `user` renders a contained bubble aligned to the end\nof the row, `assistant` renders plain full-width content.",
-      "default": "'assistant'"
+      "description": "Which side of the conversation the message sits on. `end` flips the row,\nputting the avatar after the content.",
+      "default": "'start'"
     },
     "className": {
       "type": "string",

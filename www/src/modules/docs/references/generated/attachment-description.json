@@ -1,0 +1,14 @@
+{
+  "name": "AttachmentDescriptionProps",
+  "description": "Metadata under the title — file size, type, or an error message.",
+  "extendsElement": "span",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

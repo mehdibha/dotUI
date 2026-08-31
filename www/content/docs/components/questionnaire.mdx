@@ -1,0 +1,131 @@
+---
+title: Questionnaire
+description: A multi-step survey — one question at a time, with progress, keyboard shortcuts, and navigation.
+wip: true
+---
+
+<Demo name="questionnaire/demos/questionnaire" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/questionnaire
+```
+
+## Usage
+
+```tsx
+import {
+  Questionnaire,
+  QuestionnaireActions,
+  QuestionnaireChoice,
+  QuestionnaireChoices,
+  QuestionnaireItem,
+  QuestionnaireNext,
+  QuestionnairePrevious,
+  QuestionnaireSubmit,
+  QuestionnaireTitle,
+} from "@/ui/questionnaire"
+```
+
+```tsx
+<Questionnaire onSubmit={handleSubmit}>
+  <QuestionnaireItem name="role" required>
+    <QuestionnaireTitle>What best describes your role?</QuestionnaireTitle>
+    <QuestionnaireChoices>
+      <QuestionnaireChoice value="designer">Designer</QuestionnaireChoice>
+      <QuestionnaireChoice value="engineer">Engineer</QuestionnaireChoice>
+    </QuestionnaireChoices>
+  </QuestionnaireItem>
+  <QuestionnaireActions>
+    <QuestionnairePrevious />
+    <QuestionnaireNext />
+    <QuestionnaireSubmit />
+  </QuestionnaireActions>
+</Questionnaire>
+```
+
+## Anatomy
+
+`Questionnaire` renders a form and shows one `QuestionnaireItem` at a time.
+An item is single-answer by default and multi-answer with `multiple`; its
+choices render as radios or checkboxes accordingly, with optional letter or
+number `shortcuts`. Free-text questions use `QuestionnaireInput`, and
+`QuestionnaireError` shows the active question's validation message.
+
+The navigation renders itself: `QuestionnairePrevious` hides on the first
+question, `QuestionnaireSkip` only appears on optional questions,
+`QuestionnaireNext` advances, and `QuestionnaireSubmit` takes its place on
+the last question. `QuestionnaireProgress` reads "1 of 4"-style progress.
+
+## Examples
+
+<Examples className="md:grid-cols-2">
+  <Example name="questionnaire/demos/with-input" title="With Input" />
+  <Example
+    name="questionnaire/demos/with-descriptions"
+    title="With Descriptions"
+  />
+</Examples>
+
+## API Reference
+
+### Questionnaire
+
+<Reference name="questionnaire" />
+
+### QuestionnaireProgress
+
+<Reference name="questionnaire-progress" />
+
+### QuestionnaireItem
+
+<Reference name="questionnaire-item" />
+
+### QuestionnaireTitle
+
+<Reference name="questionnaire-title" />
+
+### QuestionnaireDescription
+
+<Reference name="questionnaire-description" />
+
+### QuestionnaireChoices
+
+<Reference name="questionnaire-choices" />
+
+### QuestionnaireChoice
+
+<Reference name="questionnaire-choice" />
+
+### QuestionnaireChoiceDescription
+
+<Reference name="questionnaire-choice-description" />
+
+### QuestionnaireInput
+
+<Reference name="questionnaire-input" />
+
+### QuestionnaireError
+
+<Reference name="questionnaire-error" />
+
+### QuestionnaireActions
+
+<Reference name="questionnaire-actions" />
+
+### QuestionnairePrevious
+
+<Reference name="questionnaire-previous" />
+
+### QuestionnaireSkip
+
+<Reference name="questionnaire-skip" />
+
+### QuestionnaireNext
+
+<Reference name="questionnaire-next" />
+
+### QuestionnaireSubmit
+
+<Reference name="questionnaire-submit" />
