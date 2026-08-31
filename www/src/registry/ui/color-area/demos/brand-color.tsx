@@ -18,9 +18,9 @@ export default function Demo() {
         yChannel="lightness"
         aria-label="Brand color"
       />
-      <div className="flex w-full items-center gap-2 rounded-md border border-border p-2">
+      <div className="flex w-full items-center gap-2 rounded-md border p-2">
         <div
-          className="size-8 shrink-0 rounded-sm border border-border"
+          className="size-8 shrink-0 rounded-sm border"
           style={{ backgroundColor: value.toString("hex") }}
         />
         <div className="flex flex-col">

@@ -412,7 +412,7 @@ function NotificationRow({
         </div>
 
         {item.quote ? (
-          <p className="rounded-md border-l-2 border-border-muted bg-muted px-3 py-2 text-sm text-pretty text-fg-muted">
+          <p className="rounded-md border-l-2 bg-muted px-3 py-2 text-sm text-pretty text-fg-muted">
             “{item.quote}”
           </p>
         ) : null}
@@ -653,7 +653,7 @@ export default function NotificationsCenter() {
       <Tabs
         selectedKey={tab}
         onSelectionChange={(key) => setTab(key as TabId)}
-        className="relative flex h-full max-h-[46rem] w-full max-w-5xl flex-col gap-0 overflow-hidden rounded-(--modal-radius) border border-border-elevated bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))]"
+        className="relative flex h-full max-h-[46rem] w-full max-w-5xl flex-col gap-0 overflow-hidden rounded-(--modal-radius) border bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))]"
       >
         <header className="shrink-0 border-b">
           <div className="flex w-full flex-col gap-3 px-4 pt-4 sm:px-6">

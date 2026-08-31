@@ -646,10 +646,10 @@ function FileTile({ file }: { file: FileEntry }) {
           aria-label={`Actions for ${file.name}`}
           className="h-full"
         >
-          <Card className="h-full gap-0 overflow-hidden p-0 transition-colors hover:border-border-hover">
+          <Card className="h-full gap-0 overflow-hidden p-0 transition-colors hover:border-border-control">
             <div
               className={cn(
-                "flex aspect-[16/9] items-center justify-center border-b border-border-muted",
+                "flex aspect-[16/9] items-center justify-center border-b",
                 kind.tone,
               )}
             >

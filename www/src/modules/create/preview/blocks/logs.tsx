@@ -721,7 +721,7 @@ function VolumeChart({ range }: { range: VolumeRange }) {
           peak {max}/interval
         </span>
       </div>
-      <div className="relative h-44 w-full rounded-md border border-border-muted bg-muted/30">
+      <div className="relative h-44 w-full rounded-md border bg-muted/30">
         <svg
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
@@ -736,7 +736,7 @@ function VolumeChart({ range }: { range: VolumeRange }) {
               x2="100"
               y1={y}
               y2={y}
-              className="stroke-border-muted"
+              className="stroke-border"
               strokeWidth={1}
               vectorEffect="non-scaling-stroke"
             />
@@ -801,7 +801,7 @@ function LogRow({ entry }: { entry: LogEntry }) {
   return (
     <Disclosure
       className={cn(
-        "border-b border-l-2 border-b-border-muted last:border-b-0",
+        "border-b border-l-2 last:border-b-0",
         meta.accent,
         entry.level === "error" && "bg-danger-muted/25",
       )}
@@ -876,7 +876,7 @@ function LogRow({ entry }: { entry: LogEntry }) {
             <p className="mb-1.5 text-[10px] font-medium tracking-widest text-fg-muted uppercase">
               Raw event
             </p>
-            <pre className="max-h-56 overflow-auto rounded-md border border-border-muted bg-muted/50 p-3 font-mono text-xs leading-relaxed text-fg">
+            <pre className="max-h-56 overflow-auto rounded-md border bg-muted/50 p-3 font-mono text-xs leading-relaxed text-fg">
               {JSON.stringify(raw, null, 2)}
             </pre>
           </div>
@@ -935,7 +935,7 @@ export default function LogsBlock() {
 
   return (
     <div className="min-h-screen bg-bg text-fg">
-      <header className="sticky top-0 z-20 border-b border-border-muted bg-bg/85 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b bg-bg/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
             <ActivityIcon className="size-4" />
@@ -1106,7 +1106,7 @@ export default function LogsBlock() {
           </CardFooter>
         </Card>
 
-        <section className="flex flex-col gap-3 rounded-lg border border-border-muted bg-card p-3">
+        <section className="flex flex-col gap-3 rounded-lg border bg-card p-3">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
             <SearchField
               aria-label="Search logs"
@@ -1253,7 +1253,7 @@ export default function LogsBlock() {
           <CardContent className="px-0">
             <div className="overflow-x-auto">
               <div className="md:min-w-[36rem]">
-                <div className="hidden grid-cols-[6.5rem_6rem_9rem_1fr] gap-x-3 border-b border-border-muted px-3 py-2 pl-[calc(0.75rem+2px)] text-[10px] font-medium tracking-widest text-fg-muted uppercase md:grid">
+                <div className="hidden grid-cols-[6.5rem_6rem_9rem_1fr] gap-x-3 border-b px-3 py-2 pl-[calc(0.75rem+2px)] text-[10px] font-medium tracking-widest text-fg-muted uppercase md:grid">
                   <span>Time</span>
                   <span>Level</span>
                   <span>Service</span>

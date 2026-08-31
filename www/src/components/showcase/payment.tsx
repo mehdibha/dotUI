@@ -95,7 +95,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                     border with gap-0 dividers — the Stripe-style combined card input.
                     Each segment rings on its own focus (z-10 lifts it above the
                     dividers) rather than ringing the whole group. */}
-                <div className="relative rounded-(--input-radius) border border-border-field bg-field text-fg">
+                <div className="relative rounded-(--input-radius) border border-border-control bg-field text-fg">
                   <label
                     className={cn(
                       segmentClassName,
@@ -118,7 +118,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                     <label
                       className={cn(
                         segmentClassName,
-                        "rounded-bl-(--input-radius) border-t border-border-field",
+                        "rounded-bl-(--input-radius) border-t border-border-control",
                       )}
                     >
                       <input
@@ -132,7 +132,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                     <label
                       className={cn(
                         segmentClassName,
-                        "gap-2 rounded-br-(--input-radius) border-t border-l border-border-field",
+                        "gap-2 rounded-br-(--input-radius) border-t border-l border-border-control",
                       )}
                     >
                       <input
@@ -232,7 +232,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                 <Label>Billing address</Label>
                 {/* Same joined-field pattern as the card information group:
                     country select on top, address rows below, one shared border. */}
-                <div className="relative rounded-(--input-radius) border border-border-field bg-field text-fg">
+                <div className="relative rounded-(--input-radius) border border-border-control bg-field text-fg">
                   <Select
                     defaultValue="fr"
                     aria-label="Country or region"
@@ -253,7 +253,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                   <label
                     className={cn(
                       segmentClassName,
-                      "border-t border-border-field",
+                      "border-t border-border-control",
                     )}
                   >
                     <input
@@ -265,7 +265,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                   <label
                     className={cn(
                       segmentClassName,
-                      "border-t border-border-field",
+                      "border-t border-border-control",
                     )}
                   >
                     <input
@@ -278,7 +278,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                     <label
                       className={cn(
                         segmentClassName,
-                        "rounded-bl-(--input-radius) border-t border-border-field",
+                        "rounded-bl-(--input-radius) border-t border-border-control",
                       )}
                     >
                       <input
@@ -290,7 +290,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                     <label
                       className={cn(
                         segmentClassName,
-                        "rounded-br-(--input-radius) border-t border-l border-border-field",
+                        "rounded-br-(--input-radius) border-t border-l border-border-control",
                       )}
                     >
                       <input

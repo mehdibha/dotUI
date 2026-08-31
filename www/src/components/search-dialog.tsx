@@ -193,7 +193,7 @@ export default function SearchDialog({
               border stays the neutral field color on focus. */}
           <InputGroup
             size="lg"
-            className="rounded-[10px]! border-border-field! bg-(--neutral-300) ring-0!"
+            className="rounded-[10px]! border-border-control! bg-(--neutral-300) ring-0!"
           >
             <InputGroupAddon>
               <SearchIcon />

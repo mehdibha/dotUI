@@ -1184,7 +1184,7 @@ export default function CustomersBlock() {
 
       {selectedCount > 0 && (
         <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 flex justify-center p-4">
-          <div className="pointer-events-auto flex max-w-full items-center gap-2 overflow-x-auto rounded-lg border border-border-muted bg-card p-1.5 pl-3 shadow-lg">
+          <div className="pointer-events-auto flex max-w-full items-center gap-2 overflow-x-auto rounded-lg border bg-card p-1.5 pl-3 shadow-lg">
             <span className="text-sm font-medium whitespace-nowrap tabular-nums">
               {selectedCount} selected
             </span>

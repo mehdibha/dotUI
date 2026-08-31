@@ -54,10 +54,10 @@ export function inputLook(
 ): { className: string; style: CSSProperties } {
   switch (styleId) {
     case "line":
-      return { className: "border-b border-border-field", style: {} }
+      return { className: "border-b border-border-control", style: {} }
     case "filled-line-bottom":
       return {
-        className: "border-b border-border-field bg-neutral",
+        className: "border-b border-border-control bg-neutral",
         style: {
           borderTopLeftRadius: radius,
           borderTopRightRadius: radius,
@@ -70,7 +70,7 @@ export function inputLook(
       }
     default:
       return {
-        className: "border border-border-field bg-field",
+        className: "border border-border-control bg-field",
         style: { borderRadius: radius },
       }
   }
@@ -79,7 +79,7 @@ export function inputLook(
 export function hoverFx(state: LabState): string {
   switch (state.inputHover) {
     case "border":
-      return "hover:not-focus-within:border-border-hover"
+      return "hover:not-focus-within:border-neutral-600"
     case "tint":
       return "hover:not-focus-within:bg-neutral-hover"
     default:

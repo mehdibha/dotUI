@@ -33,8 +33,6 @@ const ref = (palette: string, step: string): SemanticTarget =>
 const on = (palette: string, step: "700" | "800"): SemanticTarget => ({
   on: { palette, step },
 })
-const alpha = (palette: string, step: string): SemanticTarget =>
-  ({ alpha: { palette, step } }) as SemanticTarget
 const mix = (
   a: SemanticTarget,
   weight: number,
@@ -183,28 +181,25 @@ export function semanticVocabulary(
     "color-fg-disabled": fg(ref("neutral", "600"), NEUTRAL),
     "color-fg-on-neutral": fg(ref("neutral", "950")),
     // ---- borders ----
-    "color-border": bd(ref("neutral", "400"), NEUTRAL),
-    // Quiet edges on non-interactive containers (cards, separators) — the
-    // Radix step-6 role; `color-border` keeps the interactive-adjacent weight.
-    "color-border-muted": bd(ref("neutral", "200"), NEUTRAL),
-    // Hairline on elevated surfaces (popover/menu, modal, drawer, toast) —
-    // ~9% ink over the surface in both modes (a200 light / a100 dark: equal
-    // nominal alpha; the rung numbers differ because the ladder calibrates
-    // alphas per mode). Alpha, not a solid rung: it composites correctly over
-    // elevated/translucent surfaces, and a solid step tuned for control edges
-    // lands ~2× too strong in dark (issue #590, the 7-system border survey).
-    "color-border-elevated": bd(
+    // Two-weight model: every structural edge (chrome, cards, separators,
+    // overlays) shares one subtle weight, and controls opt into one solid
+    // emphasized weight. Solid, not alpha: an alpha hairline composites over
+    // each element's own background, so the same token paints brighter on
+    // elevated surfaces (a border-t on a bg-card code bar reads stronger than
+    // the frame around it). One fixed color reads identically everywhere.
+    // Light matches ~9% ink over the app bg; dark sits between the mids
+    // (Geist-style, ~L 0.25) so edges stay legible on the lighter elevated
+    // surfaces — a dark solid matched to the page-bg hairline would vanish
+    // on popover (both ~L 0.20).
+    "color-border": bd(
       {
-        light: alpha("neutral", "200"),
-        dark: alpha("neutral", "100"),
+        light: mix(ref("neutral", "200"), 50, ref("neutral", "300")),
+        dark: mix(ref("neutral", "100"), 50, ref("neutral", "200")),
       },
       NEUTRAL,
     ),
-    "color-border-hover": bd(ref("neutral", "500"), NEUTRAL),
-    "color-border-active": bd(ref("neutral", "600"), NEUTRAL),
-    "color-border-field": bd(ref("neutral", "500"), NEUTRAL),
-    "color-border-control": bd(ref("neutral", "600"), NEUTRAL),
-    "color-border-disabled": bd(ref("neutral", "400"), NEUTRAL),
+    // The control weight: field, control, and secondary-button edges.
+    "color-border-control": bd(ref("neutral", "400"), NEUTRAL),
     "color-border-focus": bd(
       ref(hasSelection ? "selection" : "accent", "700"),
       PRIMARY,
@@ -229,7 +224,6 @@ export function semanticVocabulary(
       NEUTRAL,
     ),
     "color-sidebar": bg(ref("neutral", "50"), NEUTRAL),
-    "color-border-sidebar": bd(ref("neutral", "400"), NEUTRAL),
     // ---- overlay / chrome (previously hardcoded in components) ----
     "color-overlay": bg({ value: "oklch(0 0 0)" }),
     "color-thumb": bg({ value: "oklch(1 0 0)" }),

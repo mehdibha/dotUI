@@ -94,12 +94,12 @@ export function NumberHero({ state }: { state: LabState }) {
           style={shellStyle}
         >
           {input}
-          <span className="flex h-full w-6 shrink-0 flex-col border-l border-border-field">
+          <span className="flex h-full w-6 shrink-0 flex-col border-l border-border-control">
             <button
               type="button"
               aria-label="Increment"
               onClick={() => setValue((v) => v + 1)}
-              className="flex flex-1 cursor-interactive items-center justify-center border-b border-border-field text-fg-muted outline-none hover:bg-highlight hover:text-fg"
+              className="flex flex-1 cursor-interactive items-center justify-center border-b border-border-control text-fg-muted outline-none hover:bg-highlight hover:text-fg"
             >
               <ChevronUpIcon className="size-3" />
             </button>

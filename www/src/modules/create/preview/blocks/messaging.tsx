@@ -565,7 +565,7 @@ export default function MessagingBlock() {
         {/* Conversation list */}
         <aside
           className={cn(
-            "flex w-full min-w-0 shrink-0 flex-col border-r border-border-muted bg-sidebar md:w-80 lg:w-96",
+            "flex w-full min-w-0 shrink-0 flex-col border-r bg-sidebar md:w-80 lg:w-96",
             pane === "thread" && "max-md:hidden",
           )}
         >
@@ -711,7 +711,7 @@ export default function MessagingBlock() {
 
           {/* max-md:pb-16: single-pane, this row sits under the preview's
               floating toolbar. */}
-          <div className="flex items-center gap-3 border-t border-border-muted px-4 py-3 max-md:pb-16">
+          <div className="flex items-center gap-3 border-t px-4 py-3 max-md:pb-16">
             <Avatar size="md" className="shrink-0">
               <AvatarFallback>AN</AvatarFallback>
               <AvatarBadge className="bg-success" aria-label="Online" />
@@ -735,7 +735,7 @@ export default function MessagingBlock() {
             pane === "list" && "max-md:hidden",
           )}
         >
-          <header className="flex items-center gap-3 border-b border-border-muted px-3 py-3 md:px-4">
+          <header className="flex items-center gap-3 border-b px-3 py-3 md:px-4">
             <Button
               variant="quiet"
               size="sm"
@@ -842,7 +842,7 @@ export default function MessagingBlock() {
           </div>
 
           {/* pb-16: the /create preview floats its toolbar over the page bottom. */}
-          <div className="border-t border-border-muted p-3 pb-16 md:px-4">
+          <div className="border-t p-3 pb-16 md:px-4">
             <form
               onSubmit={(e) => {
                 e.preventDefault()

@@ -117,7 +117,7 @@ export function ComponentCard({
       <ComponentPreview
         stageRef={stageRef}
         className={cn(
-          "w-full transition-colors group-hover:border-border-hover",
+          "w-full transition-colors group-hover:border-border-control",
           previewClassName,
         )}
       >

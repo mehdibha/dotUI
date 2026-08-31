@@ -666,7 +666,7 @@ function ChecksSummary() {
             {CHECKS.map((check) => (
               <li
                 key={check.name}
-                className="flex items-center gap-3 border-t border-border-muted py-2 first:border-t-0"
+                className="flex items-center gap-3 border-t py-2 first:border-t-0"
               >
                 <CheckIndicator status={check.status} />
                 <span className="min-w-0 flex-1 truncate font-mono text-xs">
@@ -855,7 +855,7 @@ function InlineThread({ id }: { id: string }) {
         {replies.map((reply) => (
           <div
             key={`${reply.author}-${reply.when}`}
-            className="flex items-start gap-3 border-l-2 border-border-muted pl-4"
+            className="flex items-start gap-3 border-l-2 pl-4"
           >
             <Avatar size="sm" className="shrink-0">
               <AvatarFallback>{initials(reply.author)}</AvatarFallback>

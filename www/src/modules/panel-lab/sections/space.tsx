@@ -78,7 +78,7 @@ export function SpaceHero({ state }: { state: LabState }) {
         }}
       >
         <span
-          className="flex w-full items-center border border-border-field bg-field text-[0.8125rem] text-fg-muted"
+          className="flex w-full items-center border border-border-control bg-field text-[0.8125rem] text-fg-muted"
           style={{
             height: r.controlH,
             paddingInline: r.padX,
