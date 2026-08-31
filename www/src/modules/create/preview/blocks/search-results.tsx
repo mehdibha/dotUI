@@ -575,7 +575,7 @@ function ResultItem({ result }: { result: Result }) {
   const CategoryIcon = category?.icon ?? BoxIcon
 
   return (
-    <Card className="p-4 transition-colors hover:border-border-hover sm:p-5">
+    <Card className="p-4 transition-colors hover:border-border-control sm:p-5">
       <div className="flex gap-3 sm:gap-4">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted text-fg-muted sm:size-12">
           <CategoryIcon className="size-5" />

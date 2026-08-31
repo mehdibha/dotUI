@@ -88,7 +88,7 @@ describe("extractStylesConfig", () => {
     // `outlineField({ focus: 'self' })` in params.style.outline.
     const outline = cfg.params?.style?.outline?.slots?.input as string
     expect(outline).toContain("focus:ring-2")
-    expect(outline).toContain("border-border-field")
+    expect(outline).toContain("border-border-control")
   })
 
   test("otp-field: composes field styles via fieldStyles().field(...)", () => {

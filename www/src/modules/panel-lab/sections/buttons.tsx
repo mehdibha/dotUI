@@ -6,10 +6,10 @@
    variant enum stays API. */
 
 import { cn } from "@/registry/lib/utils"
-import { ControlGroup, SelectRow } from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup, SelectRow } from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { controlRadiusPx } from "./shape"
 
@@ -81,17 +81,17 @@ export function buttonRadiusPx(state: LabState): number {
 const STYLE_LOOKS = {
   flat: {
     fill: "",
-    secondary: "border border-border-field bg-neutral text-fg-on-neutral",
+    secondary: "border border-border-control bg-neutral text-fg-on-neutral",
   },
   outline: {
     fill: "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
     secondary:
-      "border border-border-field bg-neutral text-fg-on-neutral shadow-[0_1px_0_rgb(0_0_0/0.08)]",
+      "border border-border-control bg-neutral text-fg-on-neutral shadow-[0_1px_0_rgb(0_0_0/0.08)]",
   },
   raised: {
     fill: "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
     secondary:
-      "border border-border-field bg-neutral bg-linear-to-b from-white/8 to-black/8 text-fg-on-neutral shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]",
+      "border border-border-control bg-neutral bg-linear-to-b from-white/8 to-black/8 text-fg-on-neutral shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]",
   },
   elevated: {
     fill: "shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",

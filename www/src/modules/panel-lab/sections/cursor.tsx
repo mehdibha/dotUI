@@ -12,10 +12,10 @@ import { GripVerticalIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
-import { ControlGroup, SelectRow } from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup, SelectRow } from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const CURSOR_DEFAULTS = {

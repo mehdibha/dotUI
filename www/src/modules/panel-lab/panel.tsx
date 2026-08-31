@@ -6,38 +6,13 @@
    `system` (wired by LabCreatePanel on /create); without it the chrome stays
    the lab's inert design shell. */
 
-import { useEffect } from "react"
 import type { ReactNode } from "react"
 import { ChevronsUpDownIcon, RotateCcwIcon, SearchIcon } from "lucide-react"
 
 import { Button } from "@/registry/ui/button"
-import { useTweak } from "@/dev/tweaker"
 
 import { DEFAULTS } from "./state"
 import type { Lab } from "./state"
-
-/* Popovers portal to <body>, so the instant-feel option lands as a root
-   attribute plus one injected rule that zeroes the .popover slot's
-   transition — every popover surface (picker, menus, selects) opens and
-   closes with no easing while it's on. Throwaway tweak scaffolding. */
-const POPOVER_KILL_ID = "tweak-instant-popovers"
-
-function useInstantPopovers(enabled: boolean) {
-  useEffect(() => {
-    if (!enabled) return
-    let style = document.getElementById(POPOVER_KILL_ID)
-    if (!style) {
-      style = document.createElement("style")
-      style.id = POPOVER_KILL_ID
-      style.textContent =
-        "html[data-instant-popovers] .popover{transition-duration:0s!important}"
-      document.head.appendChild(style)
-    }
-    document.documentElement.setAttribute("data-instant-popovers", "")
-    return () =>
-      document.documentElement.removeAttribute("data-instant-popovers")
-  }, [enabled])
-}
 
 /** The create-engine wiring the chrome acts through. Everything here operates
  *  on the real design system (URL preset + localStorage); the lab's own axes
@@ -57,7 +32,7 @@ export interface PanelSystem {
   renderExport: (trigger: ReactNode) => ReactNode
 }
 
-/** Header + footer + tweak vars. Children own the middle region (and its
+/** Header + footer. Children own the middle region (and its
  *  scrolling) — they must claim flex-1 min-h-0 and pad for the overlaid bars
  *  (44px header, 52px footer, plus the body's 12px gap). */
 export function PanelChrome({
@@ -72,14 +47,6 @@ export function PanelChrome({
   search?: ReactNode
   children: React.ReactNode
 }) {
-  const popovers = useTweak("Popovers", {
-    type: "select",
-    options: ["animated", "instant"],
-    default: "animated",
-    group: "Motion",
-  })
-  useInstantPopovers(popovers === "instant")
-
   // The only reset in the panel — chapters carry a modified dot, never a
   // button of their own. It clears the lab axes and the engine state as one.
   const whole = lab.section(DEFAULTS)

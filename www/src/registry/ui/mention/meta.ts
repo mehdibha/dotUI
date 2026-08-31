@@ -11,12 +11,7 @@ const mentionMeta = {
       target: "ui/mention.tsx",
     },
   ],
-  registryDependencies: [
-    "menu",
-    "popover",
-    "react-aria-token-field",
-    "token-field",
-  ],
+  registryDependencies: ["menu", "popover", "token-field"],
 } satisfies RegistryItem
 
 export default mentionMeta

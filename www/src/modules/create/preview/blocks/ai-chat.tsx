@@ -29,20 +29,13 @@ import {
 } from "@/registry/icons"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
+import { Bubble, BubbleContent } from "@/registry/ui/bubble"
 import { Button } from "@/registry/ui/button"
-import {
-  Conversation,
-  Message,
-  MessageAvatar,
-  MessageContent,
-  PromptInput,
-  PromptInputSubmit,
-  PromptInputTextarea,
-  PromptInputToolbar,
-} from "@/registry/ui/chat"
+import { InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/input"
 import { Kbd } from "@/registry/ui/kbd"
 import { Loader } from "@/registry/ui/loader"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Message, MessageAvatar, MessageContent } from "@/registry/ui/message"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import {
@@ -224,9 +217,11 @@ function ConversationMenu() {
 function AssistantAvatar() {
   return (
     <MessageAvatar>
-      <AvatarFallback className="bg-primary text-fg-on-primary">
-        <SparklesIcon className="size-3.5" />
-      </AvatarFallback>
+      <Avatar size="sm">
+        <AvatarFallback className="bg-primary text-fg-on-primary">
+          <SparklesIcon className="size-3.5" />
+        </AvatarFallback>
+      </Avatar>
     </MessageAvatar>
   )
 }
@@ -293,10 +288,26 @@ function MessageActions() {
 function ThreadMessage({ message }: { message: ChatMessage }) {
   const isUser = message.role === "user"
   return (
-    <Message role={message.role} className="mx-auto max-w-3xl">
-      {isUser ? <MessageAvatar name="Mehdi" /> : <AssistantAvatar />}
+    <Message align={isUser ? "end" : undefined} className="mx-auto max-w-3xl">
+      {isUser ? (
+        <MessageAvatar>
+          <Avatar size="sm">
+            <AvatarFallback>ME</AvatarFallback>
+          </Avatar>
+        </MessageAvatar>
+      ) : (
+        <AssistantAvatar />
+      )}
       <MessageContent>
-        <p className="text-pretty">{message.text}</p>
+        {isUser ? (
+          <Bubble align="end" variant="muted">
+            <BubbleContent>
+              <p className="text-pretty">{message.text}</p>
+            </BubbleContent>
+          </Bubble>
+        ) : (
+          <p className="text-pretty">{message.text}</p>
+        )}
 
         {message.bullets && (
           <ul className="flex flex-col gap-1.5">
@@ -534,7 +545,11 @@ export default function AiChatBlock() {
             </div>
           </header>
 
-          <Conversation ref={scrollRef} className="min-h-0 flex-1 px-3 sm:px-6">
+          <div
+            ref={scrollRef}
+            role="log"
+            className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-4 px-3 text-sm sm:px-6"
+          >
             {messages.map((message) => (
               <ThreadMessage key={message.id} message={message} />
             ))}
@@ -549,7 +564,7 @@ export default function AiChatBlock() {
                 </MessageContent>
               </Message>
             )}
-          </Conversation>
+          </div>
 
           <div className="shrink-0 border-t bg-bg px-3 pt-3 pb-4 sm:px-6">
             <div className="mx-auto flex max-w-3xl flex-col gap-3">
@@ -568,70 +583,88 @@ export default function AiChatBlock() {
                 ))}
               </div>
 
-              <PromptInput
+              <form
                 onSubmit={(e) => {
                   e.preventDefault()
                   send()
                 }}
+                className="w-full min-w-0"
               >
-                <PromptInputTextarea
-                  value={draft}
-                  onChange={(e) => setDraft(e.target.value)}
-                  placeholder="Ask about the pricing release, a metric, or a query…"
-                  aria-label="Message Lumen"
-                />
-                <PromptInputToolbar>
-                  <div className="flex min-w-0 items-center gap-1">
-                    <Tooltip>
-                      <Button
+                <InputGroup>
+                  <TextArea
+                    value={draft}
+                    onChange={(e) => setDraft(e.target.value)}
+                    placeholder="Ask about the pricing release, a metric, or a query…"
+                    aria-label="Message Lumen"
+                    className="min-h-16"
+                    onKeyDown={(e) => {
+                      if (
+                        e.defaultPrevented ||
+                        e.key !== "Enter" ||
+                        e.shiftKey ||
+                        e.nativeEvent.isComposing
+                      )
+                        return
+                      e.preventDefault()
+                      e.currentTarget.form?.requestSubmit()
+                    }}
+                  />
+                  <InputGroupAddon>
+                    <div className="flex min-w-0 items-center gap-1">
+                      <Tooltip>
+                        <Button
+                          variant="quiet"
+                          size="sm"
+                          isIconOnly
+                          aria-label="Attach a file"
+                        >
+                          <PaperclipIcon />
+                        </Button>
+                        <TooltipContent>Attach a file</TooltipContent>
+                      </Tooltip>
+                      <ToggleButton
                         variant="quiet"
                         size="sm"
-                        isIconOnly
-                        aria-label="Attach a file"
+                        isSelected={webSearch}
+                        onChange={setWebSearch}
                       >
-                        <PaperclipIcon />
-                      </Button>
-                      <TooltipContent>Attach a file</TooltipContent>
-                    </Tooltip>
-                    <ToggleButton
-                      variant="quiet"
-                      size="sm"
-                      isSelected={webSearch}
-                      onChange={setWebSearch}
+                        <GlobeIcon />
+                        <span className="hidden sm:inline">Search</span>
+                      </ToggleButton>
+                      <Select
+                        aria-label="Model"
+                        value={model}
+                        onChange={(key) => setModel(String(key))}
+                        className="w-auto"
+                      >
+                        <SelectTrigger variant="quiet" size="sm" />
+                        <SelectContent className="min-w-56">
+                          {MODELS.map((m) => (
+                            <SelectItem key={m.id} id={m.id} textValue={m.name}>
+                              <div className="flex flex-col">
+                                <span>{m.name}</span>
+                                <span className="text-xs text-fg-muted">
+                                  {m.detail}
+                                </span>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      isIconOnly
+                      aria-label="Send message"
+                      isDisabled={!draft.trim() || isThinking}
+                      className="ml-auto shrink-0"
                     >
-                      <GlobeIcon />
-                      <span className="hidden sm:inline">Search</span>
-                    </ToggleButton>
-                    <Select
-                      aria-label="Model"
-                      value={model}
-                      onChange={(key) => setModel(String(key))}
-                      className="w-auto"
-                    >
-                      <SelectTrigger variant="quiet" size="sm" />
-                      <SelectContent className="min-w-56">
-                        {MODELS.map((m) => (
-                          <SelectItem key={m.id} id={m.id} textValue={m.name}>
-                            <div className="flex flex-col">
-                              <span>{m.name}</span>
-                              <span className="text-xs text-fg-muted">
-                                {m.detail}
-                              </span>
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <PromptInputSubmit
-                    isIconOnly
-                    aria-label="Send message"
-                    isDisabled={!draft.trim() || isThinking}
-                  >
-                    <ArrowUpIcon />
-                  </PromptInputSubmit>
-                </PromptInputToolbar>
-              </PromptInput>
+                      <ArrowUpIcon />
+                    </Button>
+                  </InputGroupAddon>
+                </InputGroup>
+              </form>
 
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-fg-muted">
                 <span>

@@ -1,18 +1,15 @@
 "use client"
 
 import * as React from "react"
+import { TokenFieldValue } from "react-aria-components/TokenField"
 
 import { Label } from "@/registry/ui/field"
-import {
-  TokenField,
-  TokenInput,
-  TokenSegmentList,
-} from "@/registry/ui/token-field"
+import { TokenField, TokenInput } from "@/registry/ui/token-field"
 
 export default function Demo() {
   const [value, setValue] = React.useState(
     () =>
-      new TokenSegmentList([
+      new TokenFieldValue([
         { type: "text", text: "Hello " },
         { type: "token", text: "@sarahjones" },
         { type: "text", text: "!" },

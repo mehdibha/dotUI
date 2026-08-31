@@ -12,7 +12,7 @@ import { decodePreset, encodePreset } from "./codec"
 import { DEFAULTS } from "./defaults"
 import type { Density, DesignSystem, IconLibraryName } from "./types"
 
-const routeApi = getRouteApi("/_app/create")
+const routeApi = getRouteApi("/_app/studio")
 
 export function useDesignSystem() {
   const { preset } = routeApi.useSearch()

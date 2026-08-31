@@ -24,25 +24,18 @@ import {
 import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarBadge, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
+import { Bubble, BubbleContent } from "@/registry/ui/bubble"
 import { Button } from "@/registry/ui/button"
-import {
-  Conversation,
-  Message,
-  MessageAvatar,
-  MessageContent,
-  PromptInput,
-  PromptInputSubmit,
-  PromptInputTextarea,
-  PromptInputToolbar,
-} from "@/registry/ui/chat"
 import {
   Empty,
   EmptyDescription,
   EmptyHeader,
   EmptyTitle,
 } from "@/registry/ui/empty"
+import { InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/input"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
+import { Message, MessageAvatar, MessageContent } from "@/registry/ui/message"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import {
@@ -329,22 +322,6 @@ const INITIAL_THREADS: Record<string, ThreadDay[]> = {
   ],
 }
 
-// The bubble shapes the chat primitive only ships for the `user` role — mirrored
-// onto `assistant` for incoming, and tinted primary for outgoing.
-const INCOMING_BUBBLE = [
-  "group-data-[role=assistant]/message:w-fit",
-  "group-data-[role=assistant]/message:max-w-[85%]",
-  "group-data-[role=assistant]/message:rounded-(--chat-message-radius)",
-  "group-data-[role=assistant]/message:bg-muted",
-  "group-data-[role=assistant]/message:px-3",
-  "group-data-[role=assistant]/message:py-2",
-].join(" ")
-
-const OUTGOING_BUBBLE = [
-  "group-data-[role=user]/message:bg-primary",
-  "group-data-[role=user]/message:text-fg-on-primary",
-].join(" ")
-
 function initialsOf(name: string) {
   const parts = name.split(" ")
   const last = parts.length > 1 ? parts[parts.length - 1] : ""
@@ -424,18 +401,26 @@ function AttachmentTile({ attachment }: { attachment: Attachment }) {
 
 function TypingIndicator({ contact }: { contact: ChatContact }) {
   return (
-    <Message role="assistant" aria-label={`${contact.name} is typing`}>
-      <MessageAvatar name={initialsOf(contact.name)} />
-      <MessageContent className={INCOMING_BUBBLE}>
-        <span className="flex items-center gap-1">
-          {[0, 1, 2].map((dot) => (
-            <span
-              key={dot}
-              className="size-1.5 animate-bounce rounded-full bg-fg-muted"
-              style={{ animationDelay: `${dot * 140}ms` }}
-            />
-          ))}
-        </span>
+    <Message aria-label={`${contact.name} is typing`}>
+      <MessageAvatar>
+        <Avatar size="sm">
+          <AvatarFallback>{initialsOf(contact.name)}</AvatarFallback>
+        </Avatar>
+      </MessageAvatar>
+      <MessageContent>
+        <Bubble variant="muted">
+          <BubbleContent>
+            <span className="flex items-center gap-1">
+              {[0, 1, 2].map((dot) => (
+                <span
+                  key={dot}
+                  className="size-1.5 animate-bounce rounded-full bg-fg-muted"
+                  style={{ animationDelay: `${dot * 140}ms` }}
+                />
+              ))}
+            </span>
+          </BubbleContent>
+        </Bubble>
       </MessageContent>
     </Message>
   )
@@ -452,36 +437,44 @@ function MessageBubble({
 }) {
   const outgoing = message.from === "me"
   return (
-    <Message role={outgoing ? "user" : "assistant"}>
+    <Message align={outgoing ? "end" : undefined}>
       {!outgoing && (
-        <MessageAvatar
-          name={
-            message.sender
-              ? initialsOf(message.sender)
-              : initialsOf(contact.name)
-          }
-          className={cn(!showAvatar && "invisible")}
-        />
+        <MessageAvatar className={cn(!showAvatar && "invisible")}>
+          <Avatar size="sm">
+            <AvatarFallback>
+              {message.sender
+                ? initialsOf(message.sender)
+                : initialsOf(contact.name)}
+            </AvatarFallback>
+          </Avatar>
+        </MessageAvatar>
       )}
-      <MessageContent className={outgoing ? OUTGOING_BUBBLE : INCOMING_BUBBLE}>
-        {!outgoing && message.sender && showAvatar && (
-          <span className="text-xs font-medium text-fg-accent">
-            {message.sender}
-          </span>
-        )}
-        {message.text && <span>{message.text}</span>}
-        {message.attachment && (
-          <AttachmentTile attachment={message.attachment} />
-        )}
-        <span
-          className={cn(
-            "flex items-center gap-1 self-end text-xs",
-            outgoing ? "text-fg-on-primary/70" : "text-fg-muted",
-          )}
+      <MessageContent>
+        <Bubble
+          align={outgoing ? "end" : undefined}
+          variant={outgoing ? "primary" : "muted"}
         >
-          {message.time}
-          {outgoing && <CheckCircle2Icon className="size-3" />}
-        </span>
+          <BubbleContent className="flex flex-col gap-1">
+            {!outgoing && message.sender && showAvatar && (
+              <span className="text-xs font-medium text-fg-accent">
+                {message.sender}
+              </span>
+            )}
+            {message.text && <span>{message.text}</span>}
+            {message.attachment && (
+              <AttachmentTile attachment={message.attachment} />
+            )}
+            <span
+              className={cn(
+                "flex items-center gap-1 self-end text-xs",
+                outgoing ? "text-fg-on-primary/70" : "text-fg-muted",
+              )}
+            >
+              {message.time}
+              {outgoing && <CheckCircle2Icon className="size-3" />}
+            </span>
+          </BubbleContent>
+        </Bubble>
       </MessageContent>
     </Message>
   )
@@ -572,7 +565,7 @@ export default function MessagingBlock() {
         {/* Conversation list */}
         <aside
           className={cn(
-            "flex w-full min-w-0 shrink-0 flex-col border-r border-border-muted bg-sidebar md:w-80 lg:w-96",
+            "flex w-full min-w-0 shrink-0 flex-col border-r bg-sidebar md:w-80 lg:w-96",
             pane === "thread" && "max-md:hidden",
           )}
         >
@@ -718,7 +711,7 @@ export default function MessagingBlock() {
 
           {/* max-md:pb-16: single-pane, this row sits under the preview's
               floating toolbar. */}
-          <div className="flex items-center gap-3 border-t border-border-muted px-4 py-3 max-md:pb-16">
+          <div className="flex items-center gap-3 border-t px-4 py-3 max-md:pb-16">
             <Avatar size="md" className="shrink-0">
               <AvatarFallback>AN</AvatarFallback>
               <AvatarBadge className="bg-success" aria-label="Online" />
@@ -742,7 +735,7 @@ export default function MessagingBlock() {
             pane === "list" && "max-md:hidden",
           )}
         >
-          <header className="flex items-center gap-3 border-b border-border-muted px-3 py-3 md:px-4">
+          <header className="flex items-center gap-3 border-b px-3 py-3 md:px-4">
             <Button
               variant="quiet"
               size="sm"
@@ -819,9 +812,11 @@ export default function MessagingBlock() {
             </Menu>
           </header>
 
-          <Conversation
+          <div
             ref={scroller}
+            role="log"
             aria-label={`Conversation with ${active.name}`}
+            className="flex w-full min-w-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-4 text-sm"
           >
             {activeThread?.map((day) => (
               <div key={day.label} className="flex flex-col gap-4">
@@ -844,48 +839,77 @@ export default function MessagingBlock() {
               </div>
             ))}
             {active.typing && !sent && <TypingIndicator contact={active} />}
-          </Conversation>
+          </div>
 
           {/* pb-16: the /create preview floats its toolbar over the page bottom. */}
-          <div className="border-t border-border-muted p-3 pb-16 md:px-4">
-            <PromptInput
+          <div className="border-t p-3 pb-16 md:px-4">
+            <form
               onSubmit={(e) => {
                 e.preventDefault()
                 send()
               }}
+              className="w-full min-w-0"
             >
-              <PromptInputTextarea
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-                placeholder={`Message ${
-                  active.kind === "group"
-                    ? active.name
-                    : active.name.split(" ")[0]
-                }…`}
-                aria-label="Write a message"
-              />
-              <PromptInputToolbar>
-                <div className="flex items-center gap-1">
-                  <Button variant="quiet" isIconOnly aria-label="Attach a file">
-                    <PaperclipIcon />
-                  </Button>
-                  <Button variant="quiet" isIconOnly aria-label="Send a photo">
-                    <ImageIcon />
-                  </Button>
+              <InputGroup>
+                <TextArea
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
+                  placeholder={`Message ${
+                    active.kind === "group"
+                      ? active.name
+                      : active.name.split(" ")[0]
+                  }…`}
+                  aria-label="Write a message"
+                  className="min-h-16"
+                  onKeyDown={(e) => {
+                    if (
+                      e.defaultPrevented ||
+                      e.key !== "Enter" ||
+                      e.shiftKey ||
+                      e.nativeEvent.isComposing
+                    )
+                      return
+                    e.preventDefault()
+                    e.currentTarget.form?.requestSubmit()
+                  }}
+                />
+                <InputGroupAddon>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="quiet"
+                      isIconOnly
+                      aria-label="Attach a file"
+                    >
+                      <PaperclipIcon />
+                    </Button>
+                    <Button
+                      variant="quiet"
+                      isIconOnly
+                      aria-label="Send a photo"
+                    >
+                      <ImageIcon />
+                    </Button>
+                    <Button
+                      variant="quiet"
+                      isIconOnly
+                      className="max-sm:hidden"
+                      aria-label="Insert an emoji"
+                    >
+                      <SmileIcon />
+                    </Button>
+                  </div>
                   <Button
-                    variant="quiet"
+                    type="submit"
+                    variant="primary"
                     isIconOnly
-                    className="max-sm:hidden"
-                    aria-label="Insert an emoji"
+                    aria-label="Send message"
+                    className="ml-auto shrink-0"
                   >
-                    <SmileIcon />
+                    <SendIcon />
                   </Button>
-                </div>
-                <PromptInputSubmit isIconOnly aria-label="Send message">
-                  <SendIcon />
-                </PromptInputSubmit>
-              </PromptInputToolbar>
-            </PromptInput>
+                </InputGroupAddon>
+              </InputGroup>
+            </form>
           </div>
         </section>
       </div>

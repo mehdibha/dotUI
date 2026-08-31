@@ -11,9 +11,9 @@
    inside one treatment, not a fork. */
 
 import { cn } from "@/registry/lib/utils"
-import { ControlGroup, SegmentedControlRow } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const DISABLED_DEFAULTS = {
@@ -39,11 +39,11 @@ interface Look {
 
 const ENABLED: Look = {
   primary: "bg-primary text-fg-on-primary",
-  secondary: "border border-border-field bg-card text-fg",
+  secondary: "border border-border-control bg-card text-fg",
   boxOn: "bg-primary text-fg-on-primary",
-  boxOff: "border border-border-field bg-card",
+  boxOff: "border border-border-control bg-card",
   label: "text-fg",
-  field: "border border-border-field bg-card text-fg",
+  field: "border border-border-control bg-card text-fg",
 }
 
 export const DISABLED_LOOKS = {

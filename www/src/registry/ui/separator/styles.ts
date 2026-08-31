@@ -4,7 +4,7 @@ import separatorMeta from "./meta"
 
 const { useStyles, styles } = createStyles(separatorMeta, {
   base: {
-    base: "separator shrink-0 border-0 bg-border-muted",
+    base: "separator shrink-0 border-0 bg-border",
     variants: {
       orientation: {
         horizontal: "h-px w-full",

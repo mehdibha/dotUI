@@ -13,10 +13,10 @@ import { useId } from "react"
 import { CircleAlertIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
-import { ControlGroup, SelectRow } from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup, SelectRow } from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { BARE_INPUT, inputLook, SHELL } from "./inputs"
 import { controlRadiusPx } from "./shape"

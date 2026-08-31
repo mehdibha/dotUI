@@ -3,11 +3,27 @@
   "description": "A menu displays a list of actions or options that a user can choose.\nIt wraps a trigger element and the menu, linking the menu's open state with the trigger's press state.",
   "props": {
     "trigger": {
-      "type": "MenuTriggerType",
-      "detailedType": "MenuTriggerType | undefined",
+      "type": "'press' | 'longPress' | 'contextMenu'",
+      "detailedType": "'press' | 'longPress' | 'contextMenu' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "MenuTriggerType"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "contextMenu"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "longPress"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "press"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "How the menu is triggered.",
       "default": "'press'"

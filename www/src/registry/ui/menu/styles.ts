@@ -32,15 +32,15 @@ const { useStyles, styles } = createStyles(menuMeta, {
     compact: {
       slots: {
         root: "text-xs/relaxed",
-        item: "min-h-7 gap-2 px-1.5 py-1 text-xs/relaxed **:[svg]:not-with-[size]:size-3.5",
-        sectionTitle: "px-1.5 py-1",
+        item: "min-h-7 gap-2 px-2 py-1 text-xs/relaxed **:[svg]:not-with-[size]:size-3.5",
+        sectionTitle: "px-2 py-1",
       },
     },
     default: {
       slots: {
         root: "text-sm",
-        item: "gap-2 px-2 py-1 text-sm **:[svg]:not-with-[size]:size-4",
-        sectionTitle: "px-2 py-1",
+        item: "gap-1.5 px-1.5 py-1 text-sm **:[svg]:not-with-[size]:size-4",
+        sectionTitle: "px-1.5 py-1",
       },
     },
     comfortable: {
@@ -53,9 +53,6 @@ const { useStyles, styles } = createStyles(menuMeta, {
   params: {
     highlight: {
       subtle: {
-        slots: {
-          item: "overflow-hidden focus-visible:before:absolute focus-visible:before:inset-y-0 focus-visible:before:left-0 focus-visible:before:w-0.5 focus-visible:before:rounded-[inherit] focus-visible:before:bg-accent",
-        },
         vars: {
           "--color-highlight": "var(--neutral-200)",
           "--color-fg-on-highlight": "var(--neutral-950)",

@@ -1,6 +1,6 @@
 "use client"
 
-import type { ReactNode } from "react"
+import { useEffect, useSyncExternalStore, type ReactNode } from "react"
 import { ChevronsUpDownIcon, MoonIcon, SunIcon } from "lucide-react"
 import { useTheme } from "starter-themes"
 
@@ -9,6 +9,7 @@ import { DesignSystemProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { DEFAULT_COLOR_CONFIG } from "@/registry/theme"
 import { Button } from "@/registry/ui/button"
+import { Loader } from "@/registry/ui/loader"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { DEFAULTS, type DesignSystem } from "@/modules/create/preset"
 import {
@@ -45,11 +46,47 @@ const modeStore = createPersistedStore<PreviewMode | null>(
   },
 )
 
+/**
+ * Covers a preview until hydration applies the stored preset/mode. Rendered on
+ * every load but only visible (via CSS) when the pre-paint script flagged a
+ * stored selection (see preview-pending.ts), so first-time visitors keep the
+ * instant SSR previews. Drop inside any `relative` preview container that
+ * isn't wrapped in PreviewPanel.
+ */
+export function PreviewVeil() {
+  const hydrated = useHydrated()
+  // Runs after the re-render with the stored selection commits, so the flag
+  // clears without a wrong-preset flash and later navigations never veil.
+  useEffect(() => {
+    if (hydrated)
+      document.documentElement.removeAttribute("data-preview-pending")
+  }, [hydrated])
+  if (hydrated) return null
+  return (
+    <div
+      aria-hidden
+      className="absolute inset-0 z-20 hidden items-center justify-center rounded-[inherit] bg-bg [[data-preview-pending]_&]:flex"
+    >
+      <Loader />
+    </div>
+  )
+}
+
+/** `resolvedTheme` reads the client theme during hydration, so SSR must ignore it. */
+const useHydrated = () =>
+  useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  )
+
 /** The stored choice, else the site theme; undefined until that is known. */
 function usePreviewMode(): PreviewMode | undefined {
+  const hydrated = useHydrated()
   const stored = modeStore.useValue()
   const { resolvedTheme } = useTheme()
   if (stored) return stored
+  if (!hydrated) return undefined
   return resolvedTheme === "dark" || resolvedTheme === "light"
     ? resolvedTheme
     : undefined
@@ -85,7 +122,10 @@ export function PreviewPanel({
   return (
     <DesignSystemProvider forcedMode={useForcedPreviewMode()} scoped>
       {/* `relative` anchors the absolutely-positioned PreviewControls toolbar. */}
-      <div className={cn("relative bg-bg", className)}>{children}</div>
+      <div className={cn("relative bg-bg", className)}>
+        {children}
+        <PreviewVeil />
+      </div>
     </DesignSystemProvider>
   )
 }
@@ -168,9 +208,9 @@ function PresetSelector() {
 }
 
 function PreviewModeToggle({ className }: { className?: string }) {
+  const stored = modeStore.useValue()
   const mode = usePreviewMode() ?? "light"
   const next = mode === "light" ? "dark" : "light"
-  const Icon = mode === "light" ? SunIcon : MoonIcon
 
   return (
     <Tooltip>
@@ -182,7 +222,17 @@ function PreviewModeToggle({ className }: { className?: string }) {
         className={cn("text-fg-muted", className)}
         onPress={() => modeStore.set(next)}
       >
-        <Icon />
+        {/* Without a stored choice the mode is the site theme, which only CSS knows during SSR. */}
+        {stored === "dark" ? (
+          <MoonIcon />
+        ) : stored === "light" ? (
+          <SunIcon />
+        ) : (
+          <>
+            <SunIcon className="block dark:hidden" />
+            <MoonIcon className="hidden dark:block" />
+          </>
+        )}
       </Button>
       <TooltipContent>Switch to {next} mode</TooltipContent>
     </Tooltip>

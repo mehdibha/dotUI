@@ -1,0 +1,5 @@
+{
+  "name": "MessageScrollerProviderProps",
+  "description": "Holds the scroller's state — autoscroll behavior, the default scroll\nposition, and edge thresholds. Wrap it around the scroller and anything\nthat calls its hooks.",
+  "props": {}
+}

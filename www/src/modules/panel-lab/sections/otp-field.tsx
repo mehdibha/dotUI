@@ -8,10 +8,10 @@
    look comes from the Inputs section. */
 
 import { cn } from "@/registry/lib/utils"
-import { ControlGroup, SelectRow } from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup, SelectRow } from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { inputLook } from "./inputs"
 import { controlRadiusPx } from "./shape"
@@ -42,7 +42,7 @@ export function OtpHero({ state }: { state: LabState }) {
       {style === "group" ? (
         <div
           className={cn(
-            "flex divide-x divide-border-field overflow-hidden",
+            "flex divide-x divide-border-control overflow-hidden",
             look.className,
           )}
           style={look.style}
@@ -59,7 +59,7 @@ export function OtpHero({ state }: { state: LabState }) {
             style === "underline" ? (
               <span
                 key={i}
-                className={cn(cell, "border-b-2 border-border-field")}
+                className={cn(cell, "border-b-2 border-border-control")}
               >
                 {glyph(digit)}
               </span>

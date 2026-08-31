@@ -1,0 +1,13 @@
+{
+  "name": "QuestionnaireProps",
+  "description": "A multi-step survey — one question at a time, with progress, keyboard\nshortcuts, and navigation. Renders a form.",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

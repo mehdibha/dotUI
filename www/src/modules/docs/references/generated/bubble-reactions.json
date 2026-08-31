@@ -1,0 +1,52 @@
+{
+  "name": "BubbleReactionsProps",
+  "description": "Emoji reactions pinned to a corner of the bubble.",
+  "extendsElement": "div",
+  "props": {
+    "side": {
+      "type": "\"bottom\" | \"top\"",
+      "detailedType": "'bottom' | 'top' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top"
+          }
+        ]
+      },
+      "description": "The bubble edge the reactions attach to.",
+      "default": "'bottom'"
+    },
+    "align": {
+      "type": "\"end\" | \"start\"",
+      "detailedType": "'end' | 'start' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start"
+          }
+        ]
+      },
+      "description": "The corner of that edge the reactions align with.",
+      "default": "'end'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

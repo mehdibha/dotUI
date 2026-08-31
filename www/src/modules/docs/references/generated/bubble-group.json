@@ -1,0 +1,14 @@
+{
+  "name": "BubbleGroupProps",
+  "description": "A group of consecutive bubbles from the same sender, stacked with a tight\ngap.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

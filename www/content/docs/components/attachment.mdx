@@ -1,0 +1,117 @@
+---
+title: Attachment
+description: A file attached to a message or composer — preview, metadata, actions, and upload states.
+wip: true
+---
+
+<Demo name="attachment/demos/attachment" />
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/attachment
+```
+
+## Usage
+
+```tsx
+import {
+  Attachment,
+  AttachmentContent,
+  AttachmentDescription,
+  AttachmentMedia,
+  AttachmentTitle,
+} from "@/ui/attachment"
+```
+
+```tsx
+<Attachment>
+  <AttachmentMedia>
+    <FileTextIcon />
+  </AttachmentMedia>
+  <AttachmentContent>
+    <AttachmentTitle>quarterly-report.pdf</AttachmentTitle>
+    <AttachmentDescription>1.2 MB · PDF</AttachmentDescription>
+  </AttachmentContent>
+</Attachment>
+```
+
+## Anatomy
+
+`Attachment` is the card; its `state` walks the upload lifecycle — `idle`
+renders a dashed outline, `uploading` and `processing` pulse the title, and
+`error` switches to the danger treatment. `AttachmentMedia` holds a file-type
+icon or an image thumbnail, `AttachmentActions` holds icon buttons that stay
+pressable even when an `AttachmentTrigger` stretches a click target over the
+whole card. A scrolling row of attachments goes in an `AttachmentGroup`.
+
+```tsx
+import {
+  Attachment,
+  AttachmentAction,
+  AttachmentActions,
+  AttachmentGroup,
+  AttachmentTrigger,
+} from "@/ui/attachment"
+```
+
+```tsx
+<AttachmentGroup>
+  <Attachment state="uploading">
+    {/* media, content… */}
+    <AttachmentActions>
+      <AttachmentAction aria-label="Cancel upload">
+        <XIcon />
+      </AttachmentAction>
+    </AttachmentActions>
+    <AttachmentTrigger aria-label="Open file" onClick={openFile} />
+  </Attachment>
+</AttachmentGroup>
+```
+
+## Examples
+
+<Examples className="md:grid-cols-2">
+  <Example name="attachment/demos/states" title="States" />
+  <Example name="attachment/demos/sizes" title="Sizes" />
+  <Example name="attachment/demos/vertical" title="Vertical" />
+  <Example name="attachment/demos/group" title="Group" />
+</Examples>
+
+## API Reference
+
+### Attachment
+
+<Reference name="attachment" />
+
+### AttachmentMedia
+
+<Reference name="attachment-media" />
+
+### AttachmentContent
+
+<Reference name="attachment-content" />
+
+### AttachmentTitle
+
+<Reference name="attachment-title" />
+
+### AttachmentDescription
+
+<Reference name="attachment-description" />
+
+### AttachmentActions
+
+<Reference name="attachment-actions" />
+
+### AttachmentAction
+
+<Reference name="attachment-action" />
+
+### AttachmentTrigger
+
+<Reference name="attachment-trigger" />
+
+### AttachmentGroup
+
+<Reference name="attachment-group" />

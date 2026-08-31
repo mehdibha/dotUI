@@ -132,11 +132,23 @@
       "description": "The initial selected keys in the collection (uncontrolled)."
     },
     "disabledBehavior": {
-      "type": "DisabledBehavior",
-      "detailedType": "DisabledBehavior | undefined",
+      "type": "'selection' | 'all'",
+      "detailedType": "'selection' | 'all' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "DisabledBehavior"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "all"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "selection"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "Whether `disabledKeys` applies to all interactions, or only selection.",
       "default": "'all'"
@@ -228,6 +240,25 @@
         ]
       },
       "description": "The currently expanded keys in the collection (controlled)."
+    },
+    "keyboardNavigationBehavior": {
+      "type": "\"arrow\" | \"tab\"",
+      "detailedType": "'arrow' | 'tab' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "arrow"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "tab"
+          }
+        ]
+      },
+      "description": "Whether keyboard navigation to focusable elements within the cells is\nvia the left/right arrow keys or the tab key.",
+      "default": "'arrow'"
     },
     "onExpandedChange": {
       "type": "((keys: Set<Key>) => any)",
@@ -416,21 +447,49 @@
       "description": "The currently selected keys in the collection (controlled)."
     },
     "selectionBehavior": {
-      "type": "SelectionBehavior",
-      "detailedType": "SelectionBehavior | undefined",
+      "type": "'toggle' | 'replace'",
+      "detailedType": "'toggle' | 'replace' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "SelectionBehavior"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "replace"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "toggle"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "How multiple selection should behave in the collection.",
       "default": "'toggle'"
     },
     "selectionMode": {
-      "type": "SelectionMode",
-      "detailedType": "SelectionMode | undefined",
+      "type": "'end' | 'preserve' | 'select' | 'start'",
+      "detailedType": "'end' | 'preserve' | 'select' | 'start' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "SelectionMode"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "multiple"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "single"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The type of selection that is allowed in the collection."
     },

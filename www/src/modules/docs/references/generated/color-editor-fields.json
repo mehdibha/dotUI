@@ -4,20 +4,60 @@
   "extendsElement": "div",
   "props": {
     "format": {
-      "type": "ColorFormat",
-      "detailedType": "ColorFormat | undefined",
+      "type": "'hex' | 'hexa' | 'rgb' | 'rgba' | 'hsl' | 'hsla' | 'hsb' | 'hsba'",
+      "detailedType": "| 'hex'\n| 'hexa'\n| 'rgb'\n| 'rgba'\n| 'hsl'\n| 'hsla'\n| 'hsb'\n| 'hsba'\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ColorFormat"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "hex"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "hsb"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "hsl"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "rgb"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The color format displayed by the fields (controlled)."
     },
     "defaultFormat": {
-      "type": "ColorFormat",
-      "detailedType": "ColorFormat | undefined",
+      "type": "'hex' | 'hexa' | 'rgb' | 'rgba' | 'hsl' | 'hsla' | 'hsb' | 'hsba'",
+      "detailedType": "| 'hex'\n| 'hexa'\n| 'rgb'\n| 'rgba'\n| 'hsl'\n| 'hsla'\n| 'hsb'\n| 'hsba'\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ColorFormat"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "hex"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "hsb"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "hsl"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "rgb"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The initial color format displayed by the fields (uncontrolled).",
       "default": "'hex'"

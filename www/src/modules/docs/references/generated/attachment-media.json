@@ -1,0 +1,33 @@
+{
+  "name": "AttachmentMediaProps",
+  "description": "The attachment's visual — a file-type icon or an image thumbnail.",
+  "extendsElement": "div",
+  "props": {
+    "variant": {
+      "type": "\"icon\" | \"image\"",
+      "detailedType": "'icon' | 'image' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "icon"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "image"
+          }
+        ]
+      },
+      "description": "What the media holds: an `icon` on a muted square, or an `image`\nthumbnail cropped to the square.",
+      "default": "'icon'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

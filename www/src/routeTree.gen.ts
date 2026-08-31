@@ -29,6 +29,7 @@ import { Route as InternalColorLabRouteImport } from './routes/internal.color-la
 import { Route as InternalBlurRevealRouteImport } from './routes/internal.blur-reveal'
 import { Route as DemosSlugRouteImport } from './routes/demos/$slug'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
+import { Route as AppStudioRouteImport } from './routes/_app/studio'
 import { Route as AppPresetsRouteImport } from './routes/_app/presets'
 import { Route as AppCreateRouteImport } from './routes/_app/create'
 import { Route as AppComponentsRouteImport } from './routes/_app/components'
@@ -138,6 +139,11 @@ const ApiSearchRoute = ApiSearchRouteImport.update({
   path: '/api/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppStudioRoute = AppStudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 const AppPresetsRoute = AppPresetsRouteImport.update({
   id: '/presets',
   path: '/presets',
@@ -199,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
   '/presets': typeof AppPresetsRoute
+  '/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
@@ -228,6 +235,7 @@ export interface FileRoutesByTo {
   '/components': typeof AppComponentsRoute
   '/create': typeof AppCreateRoute
   '/presets': typeof AppPresetsRoute
+  '/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
@@ -260,6 +268,7 @@ export interface FileRoutesById {
   '/_app/components': typeof AppComponentsRoute
   '/_app/create': typeof AppCreateRoute
   '/_app/presets': typeof AppPresetsRoute
+  '/_app/studio': typeof AppStudioRoute
   '/api/search': typeof ApiSearchRoute
   '/demos/$slug': typeof DemosSlugRoute
   '/internal/blur-reveal': typeof InternalBlurRevealRoute
@@ -293,6 +302,7 @@ export interface FileRouteTypes {
     | '/components'
     | '/create'
     | '/presets'
+    | '/studio'
     | '/api/search'
     | '/demos/$slug'
     | '/internal/blur-reveal'
@@ -322,6 +332,7 @@ export interface FileRouteTypes {
     | '/components'
     | '/create'
     | '/presets'
+    | '/studio'
     | '/api/search'
     | '/demos/$slug'
     | '/internal/blur-reveal'
@@ -353,6 +364,7 @@ export interface FileRouteTypes {
     | '/_app/components'
     | '/_app/create'
     | '/_app/presets'
+    | '/_app/studio'
     | '/api/search'
     | '/demos/$slug'
     | '/internal/blur-reveal'
@@ -537,6 +549,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/studio': {
+      id: '/_app/studio'
+      path: '/studio'
+      fullPath: '/studio'
+      preLoaderRoute: typeof AppStudioRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
     '/_app/presets': {
       id: '/_app/presets'
       path: '/presets'
@@ -623,6 +642,7 @@ interface AppRouteRouteChildren {
   AppComponentsRoute: typeof AppComponentsRoute
   AppCreateRoute: typeof AppCreateRoute
   AppPresetsRoute: typeof AppPresetsRoute
+  AppStudioRoute: typeof AppStudioRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
@@ -632,6 +652,7 @@ const AppRouteRouteChildren: AppRouteRouteChildren = {
   AppComponentsRoute: AppComponentsRoute,
   AppCreateRoute: AppCreateRoute,
   AppPresetsRoute: AppPresetsRoute,
+  AppStudioRoute: AppStudioRoute,
   AppIndexRoute: AppIndexRoute,
 }
 

@@ -3,11 +3,103 @@
   "description": "Contains the list of options, displayed in a popover when the select is open.",
   "props": {
     "placement": {
-      "type": "Placement",
-      "detailedType": "Placement | undefined",
+      "type": "'bottom' | 'bottom left' | 'bottom right' | 'bottom start' | 'bottom end' | 'top' | 'top left' | 'top right' | 'top start' | 'top end' | 'left' | 'left top' | 'left bottom' | 'start' | 'start top' | 'start bottom' | 'right' | 'right top' | 'right bottom' | 'end' | 'end top' | 'end bottom'",
+      "detailedType": "| 'bottom'\n| 'bottom left'\n| 'bottom right'\n| 'bottom start'\n| 'bottom end'\n| 'top'\n| 'top left'\n| 'top right'\n| 'top start'\n| 'top end'\n| 'left'\n| 'left top'\n| 'left bottom'\n| 'start'\n| 'start top'\n| 'start bottom'\n| 'right'\n| 'right top'\n| 'right bottom'\n| 'end'\n| 'end top'\n| 'end bottom'\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "Placement"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "bottom start"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "end bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "end top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "left bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "left top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "right bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "right top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start bottom"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "start top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top end"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top left"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top right"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "top start"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The placement of the element with respect to its anchor element.",
       "default": "'bottom'"
@@ -195,11 +287,27 @@
       "description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise\ninteracted with."
     },
     "selectionMode": {
-      "type": "SelectionMode",
-      "detailedType": "SelectionMode | undefined",
+      "type": "'end' | 'preserve' | 'select' | 'start'",
+      "detailedType": "'end' | 'preserve' | 'select' | 'start' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "SelectionMode"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "multiple"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "single"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The type of selection that is allowed in the collection."
     },
@@ -608,11 +716,23 @@
       "description": "Handler that is called when the overlay's open state changes."
     },
     "orientation": {
-      "type": "Orientation",
-      "detailedType": "Orientation | undefined",
+      "type": "'horizontal' | 'vertical'",
+      "detailedType": "'horizontal' | 'vertical' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "Orientation"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "horizontal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "vertical"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The primary orientation of the items. Usually this is the\ndirection that the collection scrolls.",
       "default": "'vertical'"
@@ -675,11 +795,23 @@
       "description": "Provides content to display when there are no items in the list."
     },
     "selectionBehavior": {
-      "type": "SelectionBehavior",
-      "detailedType": "SelectionBehavior | undefined",
+      "type": "'toggle' | 'replace'",
+      "detailedType": "'toggle' | 'replace' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "SelectionBehavior"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "replace"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "toggle"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "How multiple selection should behave in the collection.",
       "default": "'toggle'"

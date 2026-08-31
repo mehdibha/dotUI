@@ -12,6 +12,9 @@
 import type { CSSProperties } from "react"
 
 import { cn } from "@/registry/lib/utils"
+
+import { Hero } from "../hero"
+import { PaletteDot } from "../patterns"
 import {
   ControlGroup,
   GroupTitle,
@@ -19,11 +22,8 @@ import {
   SPECIMEN_BUTTON,
   SPECIMEN_FIELD,
   StepperRow,
-} from "@/modules/control-lab/rows"
-import type { SegmentedRowOption } from "@/modules/control-lab/rows"
-
-import { Hero } from "../hero"
-import { PaletteDot } from "../patterns"
+} from "../rows"
+import type { SegmentedRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { controlRadiusPx } from "./shape"
 
@@ -146,7 +146,7 @@ export function FocusHero({ state }: { state: LabState }) {
   }
   const field = cn(
     SPECIMEN_FIELD,
-    "flex-1 border border-border-field bg-field text-fg",
+    "flex-1 border border-border-control bg-field text-fg",
   )
   const radius = controlRadiusPx(state)
   return (
@@ -221,7 +221,7 @@ function ControlFocusHero({ state }: { state: LabState }) {
 function InputFocusHero({ state }: { state: LabState }) {
   const field = cn(
     SPECIMEN_FIELD,
-    "flex-1 border border-border-field bg-field text-fg",
+    "flex-1 border border-border-control bg-field text-fg",
   )
   const radius = controlRadiusPx(state)
   return (

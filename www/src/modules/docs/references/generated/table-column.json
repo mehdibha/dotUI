@@ -10,6 +10,14 @@
       },
       "description": "Whether the column is resizable."
     },
+    "allowsArrowNavigation": {
+      "type": "boolean",
+      "detailedType": "boolean | undefined",
+      "typeAst": {
+        "type": "boolean"
+      },
+      "description": "Whether the column should support arrow key navigation even when the containing table uses tab\nkeyboard navigation. Allows users to navigate between columns and rows with arrow keys while\nfocus is on an interactive child element within the column header."
+    },
     "allowsSorting": {
       "type": "boolean",
       "detailedType": "boolean | undefined",
@@ -135,6 +143,24 @@
         ]
       },
       "description": "The default width of the column. This prop only applies when the `<Table>` is wrapped in a\n`<ResizableTableContainer>`."
+    },
+    "focusMode": {
+      "type": "\"cell\" | \"child\"",
+      "detailedType": "'cell' | 'child' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "cell"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "child"
+          }
+        ]
+      },
+      "description": "Whether the column header or its first focusable child element should be focused when the\ncolumn header is focused. Defaults to 'child' in arrow keyboard navigation mode and 'cell' in\ntab keyboard navigation mode."
     },
     "id": {
       "type": "Key",

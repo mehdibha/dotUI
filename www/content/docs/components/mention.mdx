@@ -85,14 +85,16 @@ import { TokenInput } from "@/ui/token-field"
 
 ## Value
 
-The value is a `TokenSegmentList` — a list of plain-text and token segments. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it; `toString()` joins the segments back into plain text, and each token segment carries the inserted item's key as its `value`.
+The value is a `TokenFieldValue` — a list of plain-text and token segments, imported from `react-aria-components`. Use `defaultValue` for uncontrolled state, or `value` with `onChange` to control it; `toString()` joins the segments back into plain text, and each token segment carries the inserted item's key as its `value`.
 
 ```tsx
+import { TokenFieldValue } from "react-aria-components"
+
 const [value, setValue] = React.useState(
   () =>
-    new TokenSegmentList([
-      { type: 'text', text: 'Hey ' },
-      { type: 'token', text: '@alexmiller' },
+    new TokenFieldValue([
+      { type: "text", text: "Hey " },
+      { type: "token", text: "@alexmiller" },
     ]),
 )
 

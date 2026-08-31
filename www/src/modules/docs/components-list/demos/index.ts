@@ -2,9 +2,11 @@ import type { ComponentType } from "react"
 
 import { AccordionDemo } from "./accordion"
 import { AlertDemo } from "./alert"
+import { AttachmentDemo } from "./attachment"
 import { AvatarDemo } from "./avatar"
 import { BadgeDemo } from "./badge"
 import { BreadcrumbsDemo } from "./breadcrumbs"
+import { BubbleDemo } from "./bubble"
 import { ButtonDemo } from "./button"
 import { CalendarDemo } from "./calendar"
 import { CardDemo } from "./card"
@@ -15,7 +17,6 @@ import { ChartLineDemo } from "./chart-line"
 import { ChartPieDemo } from "./chart-pie"
 import { ChartRadarDemo } from "./chart-radar"
 import { ChartRadialDemo } from "./chart-radial"
-import { ChatDemo } from "./chat"
 import { CheckboxDemo } from "./checkbox"
 import { CheckboxGroupDemo } from "./checkbox-group"
 import { ColorAreaDemo } from "./color-area"
@@ -39,8 +40,11 @@ import { KbdDemo } from "./kbd"
 import { LinkDemo } from "./link"
 import { ListBoxDemo } from "./list-box"
 import { LoaderDemo } from "./loader"
+import { MarkerDemo } from "./marker"
 import { MentionDemo } from "./mention"
 import { MenuDemo } from "./menu"
+import { MessageDemo } from "./message"
+import { MessageScrollerDemo } from "./message-scroller"
 import { ModalDemo } from "./modal"
 import { NumberFieldDemo } from "./number-field"
 import { OTPFieldDemo } from "./otp-field"
@@ -48,6 +52,7 @@ import { PaginationDemo } from "./pagination"
 import { PopoverDemo } from "./popover"
 import { ProgressBarDemo } from "./progress-bar"
 import { QRCodeDemo } from "./qr-code"
+import { QuestionnaireDemo } from "./questionnaire"
 import { RadioGroupDemo } from "./radio-group"
 import { SearchFieldDemo } from "./search-field"
 import { SelectDemo } from "./select"
@@ -72,9 +77,11 @@ import { TreeDemo } from "./tree"
 export const componentDemos: Record<string, ComponentType> = {
   accordion: AccordionDemo,
   alert: AlertDemo,
+  attachment: AttachmentDemo,
   avatar: AvatarDemo,
   badge: BadgeDemo,
   breadcrumbs: BreadcrumbsDemo,
+  bubble: BubbleDemo,
   button: ButtonDemo,
   calendar: CalendarDemo,
   card: CardDemo,
@@ -85,7 +92,6 @@ export const componentDemos: Record<string, ComponentType> = {
   "chart-pie": ChartPieDemo,
   "chart-radar": ChartRadarDemo,
   "chart-radial": ChartRadialDemo,
-  chat: ChatDemo,
   checkbox: CheckboxDemo,
   "checkbox-group": CheckboxGroupDemo,
   "color-area": ColorAreaDemo,
@@ -109,8 +115,11 @@ export const componentDemos: Record<string, ComponentType> = {
   link: LinkDemo,
   "list-box": ListBoxDemo,
   loader: LoaderDemo,
+  marker: MarkerDemo,
   mention: MentionDemo,
+  message: MessageDemo,
   menu: MenuDemo,
+  "message-scroller": MessageScrollerDemo,
   modal: ModalDemo,
   "number-field": NumberFieldDemo,
   "otp-field": OTPFieldDemo,
@@ -118,6 +127,7 @@ export const componentDemos: Record<string, ComponentType> = {
   popover: PopoverDemo,
   "progress-bar": ProgressBarDemo,
   "qr-code": QRCodeDemo,
+  questionnaire: QuestionnaireDemo,
   "radio-group": RadioGroupDemo,
   "search-field": SearchFieldDemo,
   select: SelectDemo,

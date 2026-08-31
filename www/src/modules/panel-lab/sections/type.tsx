@@ -15,6 +15,10 @@ import type { FontCategory } from "@/lib/fonts"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Select } from "@/registry/ui/select"
+import { useLoadedFamilies } from "@/modules/create/typography"
+
+import { Hero } from "../hero"
+import { DetailRow, MiniSliderRow } from "../patterns"
 import {
   ControlGroup,
   FontListPopover,
@@ -26,11 +30,7 @@ import {
   ROW_LABEL,
   ROW_VALUE,
   SegmentedControlRow,
-} from "@/modules/control-lab/rows"
-import { useLoadedFamilies } from "@/modules/create/typography"
-
-import { Hero } from "../hero"
-import { DetailRow, MiniSliderRow } from "../patterns"
+} from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const TYPE_DEFAULTS = {

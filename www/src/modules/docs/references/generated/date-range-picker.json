@@ -354,11 +354,31 @@
       "description": "The `<form>` element to associate the input with.\nThe value of this attribute must be the id of a `<form>` in the same document.\nSee [MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#form)."
     },
     "granularity": {
-      "type": "Granularity",
-      "detailedType": "Granularity | undefined",
+      "type": "'day' | 'hour' | 'minute' | 'second'",
+      "detailedType": "'day' | 'hour' | 'minute' | 'second' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "Granularity"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "day"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "hour"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "minute"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "second"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "Determines the smallest unit that is displayed in the date picker. By default, this is `\"day\"`\nfor dates, and `\"minute\"` for times."
     },
@@ -638,11 +658,23 @@
       "description": "Handler that is called when the overlay's open state changes."
     },
     "pageBehavior": {
-      "type": "PageBehavior",
-      "detailedType": "PageBehavior | undefined",
+      "type": "'single' | 'visible'",
+      "detailedType": "'single' | 'visible' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "PageBehavior"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "single"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "visible"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "Controls the behavior of paging. Pagination either works by advancing the visible page by\nvisibleDuration (default) or one unit of visibleDuration.",
       "default": "visible"

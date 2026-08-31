@@ -20,14 +20,10 @@
 import { useState } from "react"
 
 import { cn } from "@/registry/lib/utils"
-import {
-  ControlGroup,
-  SegmentedControlRow,
-  SelectRow,
-} from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const SEGMENTED_DEFAULTS = {
@@ -43,7 +39,7 @@ export const TRACK_SHELL = {
 /* Raised keeps the hairline ring so the bg-on-bg chip survives dark wells —
    same rationale as the Toggles chip. */
 export const SELECTED_FX = {
-  raised: "bg-bg text-fg shadow-sm ring-1 ring-border-field",
+  raised: "bg-bg text-fg shadow-sm ring-1 ring-border-control",
   flat: "bg-selected text-fg-on-selected",
   inverse: "bg-inverse text-fg-inverse",
 }

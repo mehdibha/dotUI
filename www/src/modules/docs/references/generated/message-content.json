@@ -1,6 +1,6 @@
 {
   "name": "MessageContentProps",
-  "description": "The body of a message — text, or any rich content the message carries.",
+  "description": "The message's content column — bubbles, text, or any rich content.",
   "extendsElement": "div",
   "props": {
     "className": {

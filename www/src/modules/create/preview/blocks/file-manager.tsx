@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { Pressable } from "react-aria-components/Pressable"
 
 import {
   ArchiveIcon,
@@ -40,7 +41,6 @@ import {
 } from "@/registry/ui/breadcrumbs"
 import { Button } from "@/registry/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/registry/ui/card"
-import { ContextMenu } from "@/registry/ui/context-menu"
 import {
   Dialog,
   DialogBody,
@@ -638,62 +638,74 @@ function FileTile({ file }: { file: FileEntry }) {
   const kind = KINDS[file.kind]
   const Icon = kind.icon
   return (
-    <ContextMenu aria-label={`Actions for ${file.name}`} className="h-full">
-      <Card className="h-full gap-0 overflow-hidden p-0 transition-colors hover:border-border-hover">
+    <Menu trigger="contextMenu">
+      <Pressable>
         <div
-          className={cn(
-            "flex aspect-[16/9] items-center justify-center border-b border-border-muted",
-            kind.tone,
-          )}
+          role="button"
+          tabIndex={0}
+          aria-label={`Actions for ${file.name}`}
+          className="h-full"
         >
-          <Icon className="size-8" />
-        </div>
-        <CardContent className="flex items-start gap-2 p-3">
-          <div className="flex min-w-0 flex-1 flex-col gap-1">
-            <span className="truncate text-sm font-medium" title={file.name}>
-              {file.name}
-            </span>
-            <span className="text-xs text-fg-muted tabular-nums">
-              {formatSize(file.bytes)} · {formatDate(file.modified)}
-            </span>
-            <div className="flex flex-wrap items-center gap-1 pt-0.5">
-              <Badge appearance="subtle" size="sm">
-                {kind.label}
-              </Badge>
-              {file.shared && (
-                <Badge appearance="subtle" size="sm" variant="info">
-                  Shared
-                </Badge>
+          <Card className="h-full gap-0 overflow-hidden p-0 transition-colors hover:border-border-control">
+            <div
+              className={cn(
+                "flex aspect-[16/9] items-center justify-center border-b",
+                kind.tone,
               )}
-              {file.starred && (
-                <StarIcon
-                  role="img"
-                  aria-label="Starred"
-                  className="size-3 text-fg-warning"
-                />
-              )}
-            </div>
-          </div>
-          <Menu>
-            <Button
-              variant="quiet"
-              size="sm"
-              isIconOnly
-              aria-label={`Actions for ${file.name}`}
-              className="-mt-1 -mr-1"
             >
-              <MoreVerticalIcon />
-            </Button>
-            <Popover placement="bottom end">
-              <FileActions file={file} />
-            </Popover>
-          </Menu>
-        </CardContent>
-      </Card>
+              <Icon className="size-8" />
+            </div>
+            <CardContent className="flex items-start gap-2 p-3">
+              <div className="flex min-w-0 flex-1 flex-col gap-1">
+                <span
+                  className="truncate text-sm font-medium"
+                  title={file.name}
+                >
+                  {file.name}
+                </span>
+                <span className="text-xs text-fg-muted tabular-nums">
+                  {formatSize(file.bytes)} · {formatDate(file.modified)}
+                </span>
+                <div className="flex flex-wrap items-center gap-1 pt-0.5">
+                  <Badge appearance="subtle" size="sm">
+                    {kind.label}
+                  </Badge>
+                  {file.shared && (
+                    <Badge appearance="subtle" size="sm" variant="info">
+                      Shared
+                    </Badge>
+                  )}
+                  {file.starred && (
+                    <StarIcon
+                      role="img"
+                      aria-label="Starred"
+                      className="size-3 text-fg-warning"
+                    />
+                  )}
+                </div>
+              </div>
+              <Menu>
+                <Button
+                  variant="quiet"
+                  size="sm"
+                  isIconOnly
+                  aria-label={`Actions for ${file.name}`}
+                  className="-mt-1 -mr-1"
+                >
+                  <MoreVerticalIcon />
+                </Button>
+                <Popover placement="bottom end">
+                  <FileActions file={file} />
+                </Popover>
+              </Menu>
+            </CardContent>
+          </Card>
+        </div>
+      </Pressable>
       <Popover>
         <FileActions file={file} />
       </Popover>
-    </ContextMenu>
+    </Menu>
   )
 }
 

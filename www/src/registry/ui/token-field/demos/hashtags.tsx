@@ -1,14 +1,15 @@
 "use client"
 
-import { TokenSegmentList } from "@/registry/lib/react-aria-token-field"
-import type { TokenFieldSegment } from "@/registry/lib/react-aria-token-field"
+import { TokenFieldValue } from "react-aria-components/TokenField"
+import type { TokenFieldSegment } from "react-aria-components/TokenField"
+
 import { Label } from "@/registry/ui/field"
 import { TokenField, TokenInput } from "@/registry/ui/token-field"
 
 // Overriding `tokenize` converts typed text into tokens automatically — here
 // anything matching #hashtag or @username becomes a token once a space follows.
-class HashtagSegmentList extends TokenSegmentList {
-  static tokenize(text: string): HashtagSegmentList {
+class HashtagFieldValue extends TokenFieldValue {
+  static tokenize(text: string): HashtagFieldValue {
     const list = new this([])
     return new this(list.tokenize(text))
   }
@@ -38,7 +39,7 @@ export default function Demo() {
   return (
     <TokenField
       allowsNewlines
-      defaultValue={HashtagSegmentList.tokenize(
+      defaultValue={HashtagFieldValue.tokenize(
         "This field tokenizes #hashtags and @usernames as you type. ",
       )}
       className="w-[320px]"

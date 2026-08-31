@@ -8,7 +8,7 @@
    active mode; the Modes row manages the set. Still engine-real: each mode
    resolves through @dotui/colors with its own background/guarantee settings. */
 
-import { useContext, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import {
   MoonIcon,
   PlusIcon,
@@ -36,6 +36,13 @@ import {
   SliderTrack,
 } from "@/registry/ui/slider"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+
+import {
+  DetailRow,
+  PaletteDot,
+  PickerPopoverContent,
+  SwatchDots,
+} from "../patterns"
 import {
   ColorPickerRow,
   ControlGroup,
@@ -46,16 +53,10 @@ import {
   ROW,
   ROW_LABEL,
   ROW_VALUE,
-  RowOverlayPlacementContext,
+  ROW_OVERLAY_PLACEMENT,
+  INSTANT_POPOVER,
   SegmentedControlRow,
-} from "@/modules/control-lab/rows"
-
-import {
-  DetailRow,
-  PaletteDot,
-  PickerPopoverContent,
-  SwatchDots,
-} from "../patterns"
+} from "../rows"
 import type { Lab, LabState } from "../state"
 
 /**
@@ -437,7 +438,7 @@ function AddModeRow({
           <PlusIcon className="size-3.5" />
           {disabled ? `Up to ${MAX_MODES} modes` : "Add mode"}
         </Button>
-        <Popover placement={useContext(RowOverlayPlacementContext)}>
+        <Popover placement={ROW_OVERLAY_PLACEMENT} className={INSTANT_POPOVER}>
           <MenuContent>
             {MODE_ARCHETYPES.map(({ key, note, mode }) => (
               <MenuItem

@@ -1,47 +1,8 @@
 {
   "name": "MessageAvatarProps",
-  "description": "The avatar of the message sender.",
-  "extendsElement": "span",
+  "description": "The sender's avatar — a circular wrapper for an image, initials, or icon.\nAnchors to the bottom of the message.",
+  "extendsElement": "div",
   "props": {
-    "size": {
-      "type": "\"lg\" | \"md\" | \"sm\"",
-      "detailedType": "'lg' | 'md' | 'sm' | undefined",
-      "typeAst": {
-        "type": "union",
-        "elements": [
-          {
-            "type": "stringLiteral",
-            "value": "lg"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "md"
-          },
-          {
-            "type": "stringLiteral",
-            "value": "sm"
-          }
-        ]
-      },
-      "description": "The size of the avatar.",
-      "default": "'sm'"
-    },
-    "src": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Image source for the sender's avatar."
-    },
-    "name": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Sender name, used as the image alt text and as the fallback initials."
-    },
     "className": {
       "type": "string",
       "typeAst": {

@@ -1,0 +1,87 @@
+{
+  "name": "AttachmentProps",
+  "description": "A file attached to a message or a composer — an icon or image preview, a\nname, metadata, and actions, with upload states.",
+  "extendsElement": "div",
+  "props": {
+    "state": {
+      "type": "\"done\" | \"error\" | \"idle\" | \"processing\" | \"uploading\"",
+      "detailedType": "| 'done'\n| 'error'\n| 'idle'\n| 'processing'\n| 'uploading'\n| undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "done"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "error"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "idle"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "processing"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "uploading"
+          }
+        ]
+      },
+      "description": "Where the file is in its lifecycle. `idle` renders a dashed outline,\n`uploading` and `processing` pulse the title, `error` renders the danger\ntreatment.",
+      "default": "'done'"
+    },
+    "size": {
+      "type": "\"md\" | \"sm\" | \"xs\"",
+      "detailedType": "'md' | 'sm' | 'xs' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "md"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "sm"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "xs"
+          }
+        ]
+      },
+      "description": "The size of the attachment.",
+      "default": "'md'"
+    },
+    "orientation": {
+      "type": "\"horizontal\" | \"vertical\"",
+      "detailedType": "'horizontal' | 'vertical' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "horizontal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "vertical"
+          }
+        ]
+      },
+      "description": "The layout direction — `horizontal` puts the media beside the content,\n`vertical` stacks the media above it.",
+      "default": "'horizontal'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

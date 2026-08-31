@@ -1,20 +1,17 @@
 import type { Ref } from "react"
-
 import type {
   TokenFieldProps as TokenFieldPrimitiveProps,
   TokenInputProps as TokenInputPrimitiveProps,
   TokenProps as TokenPrimitiveProps,
-} from "@/registry/lib/react-aria-token-field"
+} from "react-aria-components/TokenField"
 
 /**
  * A token field lets users enter text with inline tokens — mentions, tags, or
  * object references. Use it to build AI prompt fields, tag inputs, structured
  * search fields, and mention inputs.
  *
- * The value is a `TokenSegmentList` of text and token segments; subclass it
+ * The value is a `TokenFieldValue` of text and token segments; subclass it
  * and override `tokenize` to convert typed text into tokens automatically.
- * Built on the `TokenField` primitive vendored from React Aria's upcoming
- * release (adobe/react-spectrum#10318).
  */
 export interface TokenFieldProps extends Omit<
   TokenFieldPrimitiveProps,

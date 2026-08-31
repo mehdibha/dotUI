@@ -9,17 +9,17 @@ export interface BlockMeta {
 // once its `./<slug>.tsx` file lands — entries without a file are simply not
 // offered yet, so this list can stay ahead of the implementations.
 // Slugs share a namespace with component and group-example slugs and are looked
-// up first — never reuse one of those (e.g. "calendar" → "scheduling" here).
+// up first — never reuse one of those (e.g. a calendar block must not be
+// slugged "calendar", which is a component).
 export const BLOCKS: BlockMeta[] = [
   { slug: "dashboard", name: "Dashboard" },
   { slug: "settings", name: "Settings" },
-  { slug: "data-table", name: "Data Table" },
+  { slug: "customers", name: "Customers" },
   { slug: "mail", name: "Mail" },
-  { slug: "kanban", name: "Kanban Board" },
-  { slug: "scheduling", name: "Scheduling" },
+  { slug: "kanban", name: "Kanban" },
   { slug: "file-manager", name: "File Manager" },
   { slug: "notifications-center", name: "Notifications" },
-  { slug: "search-results", name: "Search" },
+  { slug: "search-results", name: "Search Results" },
   { slug: "ai-chat", name: "AI Chat" },
   { slug: "code-review", name: "Code Review" },
   { slug: "logs", name: "Logs" },

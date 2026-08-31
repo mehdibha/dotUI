@@ -1,0 +1,37 @@
+{
+  "name": "MarkerProps",
+  "description": "A labeled divider row — a date in a message list, a section label in a\nfeed — rendered inline with the content it annotates.",
+  "extendsElement": "div",
+  "props": {
+    "variant": {
+      "type": "\"border\" | \"default\" | \"separator\"",
+      "detailedType": "'border' | 'default' | 'separator' | undefined",
+      "typeAst": {
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "border"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "default"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "separator"
+          }
+        ]
+      },
+      "description": "The visual treatment. `separator` centers the content between two\nhairlines, `border` underlines the row, `default` renders the content\nplain.",
+      "default": "'default'"
+    },
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

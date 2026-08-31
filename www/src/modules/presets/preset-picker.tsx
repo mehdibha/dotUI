@@ -64,6 +64,8 @@ interface PresetPickerProps {
   onOpenChange?: (open: boolean) => void
   /** Desktop popover placement. */
   placement?: PopoverProps["placement"]
+  /** Extra classes on the desktop popover (e.g. the panel's instant motion). */
+  popoverClassName?: string
   /** Pin the previews to one mode (docs previews pin light/dark). */
   previewMode?: "light" | "dark"
   /**
@@ -97,6 +99,7 @@ export function PresetPicker({
   isOpen,
   onOpenChange,
   placement = "bottom start",
+  popoverClassName,
   previewMode,
   withPreview = false,
   renderItemActions,
@@ -104,7 +107,11 @@ export function PresetPicker({
   const content = (surface: "popover" | "drawer") => (
     <DialogContent
       aria-label="Presets"
-      className="flex flex-col gap-0 rounded-[inherit] p-0"
+      // `max-h-[inherit]` chains the popover's computed max-height (set inline
+      // by react-aria from the available space) down to the list, so the
+      // search field stays pinned and the list owns all the overflow — the
+      // surface then always fits the space react-aria positioned it for.
+      className="flex max-h-[inherit] flex-col gap-0 rounded-[inherit] p-0"
     >
       {({ close }) => (
         <PresetPickerContent
@@ -131,7 +138,9 @@ export function PresetPicker({
           ) : (
             // The popover always sizes to the list column — the preview, when
             // on, floats outside it as a detached flyout.
-            <Popover placement={placement}>{content("popover")}</Popover>
+            <Popover placement={placement} className={popoverClassName}>
+              {content("popover")}
+            </Popover>
           )
         }
       />
@@ -273,11 +282,16 @@ function PresetPickerContent({
         // and `overflow-visible` on us through descendant selectors that any
         // class of ours would lose to.
         style={{
+          // Relative so the rows' offsetTop reads against the scroller.
+          position: "relative",
           display: "flex",
           flexDirection: "column",
           gap: 4,
           padding: "0 8px 8px",
           maxHeight: surface === "popover" ? 420 : "60vh",
+          // Shrink below the content when the inherited max-height is tighter
+          // than the 420 cap.
+          minHeight: 0,
           overflowY: "auto",
           scrollPaddingBlock: 8,
         }}
@@ -302,11 +316,12 @@ function PresetPickerContent({
                 textValue={item.name}
                 // The themed row IS the option and covers the item edge to edge,
                 // so the list highlight never shows; hover/focus render on the
-                // row instead (`before:hidden` drops the highlight style's own
-                // accent bar, which would paint the site's accent over the
-                // preset's). `overflow-visible` lets the focus ring and the
+                // row instead. `overflow-visible` lets the focus ring and the
                 // selected badge sit outside the row.
-                className="block overflow-visible rounded-xl p-0 before:hidden"
+                className="block overflow-visible rounded-xl p-0"
+                // Inline: the Command's drawer/modal row-size rules are
+                // descendant selectors our classes lose to.
+                style={{ padding: 0 }}
               >
                 {({ isHovered, isFocusVisible }) => (
                   <PresetOptionRow
@@ -342,12 +357,14 @@ function PresetPickerContent({
   return (
     <>
       <Command
-        className="gap-0 overflow-hidden p-0"
+        className="max-h-[inherit] gap-0 overflow-hidden p-0"
         onKeyDownCapture={(e) => {
           if (e.key.startsWith("Arrow")) navigatedRef.current = true
         }}
       >
-        <div className="flex w-[260px] shrink-0 flex-col">{list}</div>
+        <div className="flex max-h-[inherit] w-[260px] shrink-0 flex-col">
+          {list}
+        </div>
       </Command>
       {flyout && (
         <PresetPreviewFlyout
@@ -438,8 +455,21 @@ function PresetOptionRow({
     else onHide?.(item.id)
   }, [isHovered, isFocused, item.id, onShow, onHide])
 
+  // Center the selected row when it enters the list: the collection carries no
+  // selection (rows draw their own), so RAC never scrolls to it on open.
+  // Offset math, not scrollIntoView — the popover's entering scale skews rects.
+  const rowRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!isSelected) return
+    const option = rowRef.current?.closest<HTMLElement>("[data-listbox-item]")
+    const scroller = option?.offsetParent
+    if (!option || !(scroller instanceof HTMLElement)) return
+    scroller.scrollTop =
+      option.offsetTop - (scroller.clientHeight - option.offsetHeight) / 2
+  }, [isSelected])
+
   return (
-    <div className="relative w-full">
+    <div ref={rowRef} className="relative w-full">
       <DesignSystemProvider
         scoped
         params={designSystem.componentParams}

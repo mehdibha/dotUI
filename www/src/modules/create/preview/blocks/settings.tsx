@@ -18,6 +18,7 @@ import {
   TriangleAlertIcon,
   UploadIcon,
   UserIcon,
+  XIcon,
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import {
@@ -246,9 +247,7 @@ function SettingsGroup({
         </h2>
         {action}
       </div>
-      <div className="flex flex-col divide-y divide-border-muted">
-        {children}
-      </div>
+      <div className="flex flex-col divide-y divide-border">{children}</div>
     </section>
   )
 }
@@ -978,53 +977,70 @@ export default function SettingsBlock() {
   const [isDirty, setIsDirty] = useState(false)
 
   return (
-    <SidebarProvider className="min-h-screen bg-bg text-fg">
-      <SettingsSidebar section={section} onSectionChange={setSection} />
-      <SidebarInset>
-        {/* Mobile only — the sidebar is a drawer there and needs its trigger. */}
-        <header className="flex h-12 items-center gap-2 border-b px-3 md:hidden">
-          <SidebarTrigger />
-          <span className="font-medium">Settings</span>
-        </header>
+    // Looks like an opened settings modal but is a plain card — the backdrop
+    // and card reuse the Modal style's global vars so the fake tracks the axis.
+    <div className="relative flex h-svh items-center justify-center bg-bg p-4 text-fg sm:p-8">
+      <div className="absolute inset-0 bg-overlay/(--modal-backdrop-opacity) backdrop-blur-(--modal-backdrop-blur)" />
+      <SidebarProvider className="relative h-full max-h-[46rem] min-h-0 w-full max-w-5xl overflow-hidden rounded-(--modal-radius) border bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))]">
+        <SettingsSidebar section={section} onSectionChange={setSection} />
+        <Tooltip>
+          <Button
+            variant="quiet"
+            size="sm"
+            isIconOnly
+            aria-label="Close settings"
+            className="absolute top-2 right-2 z-20"
+          >
+            <XIcon />
+          </Button>
+          <TooltipContent>Close</TooltipContent>
+        </Tooltip>
+        <SidebarInset className="min-w-0 overflow-y-auto bg-transparent">
+          {/* Mobile only — the sidebar is a drawer there and needs its trigger. */}
+          <header className="sticky top-0 z-10 flex h-12 shrink-0 items-center gap-2 border-b bg-(--modal-background) px-3 md:hidden">
+            <SidebarTrigger />
+            <span className="font-medium">Settings</span>
+          </header>
 
-        {/* Change events bubble, so one handler marks the whole page dirty. */}
-        <div onChange={() => setIsDirty(true)}>
-          <div className="mx-auto flex w-full max-w-3xl flex-col px-4 py-6 sm:px-8 sm:py-10">
-            <div className="flex min-w-0 flex-col gap-10 text-base">
-              {section === "account" && <AccountSection />}
-              {section === "notifications" && <NotificationsSection />}
-              {section === "appearance" && <AppearanceSection />}
-              {section === "connections" && <ConnectionsSection />}
-              {section === "security" && <SecuritySection />}
-            </div>
+          {/* Change events bubble, so one handler marks the whole page dirty. */}
+          <div onChange={() => setIsDirty(true)}>
+            <div className="mx-auto flex w-full max-w-3xl flex-col px-4 py-6 sm:px-8 sm:py-10">
+              <div className="flex min-w-0 flex-col gap-10 text-base">
+                {section === "account" && <AccountSection />}
+                {section === "notifications" && <NotificationsSection />}
+                {section === "appearance" && <AppearanceSection />}
+                {section === "connections" && <ConnectionsSection />}
+                {section === "security" && <SecuritySection />}
+              </div>
 
-            <div
-              className={cn(
-                "sticky bottom-4 z-10 mt-6 transition-opacity",
-                isDirty ? "opacity-100" : "pointer-events-none opacity-0",
-              )}
-            >
-              <div className="flex items-center justify-between gap-3 rounded-xl border bg-card p-3 shadow-lg">
-                <span className="min-w-0 truncate text-sm text-fg-muted">
-                  You have unsaved changes.
-                </span>
-                <div className="flex shrink-0 items-center gap-2">
-                  <Button size="sm" onPress={() => setIsDirty(false)}>
-                    Discard
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="primary"
-                    onPress={() => setIsDirty(false)}
-                  >
-                    Save changes
-                  </Button>
+              <div
+                className={cn(
+                  "sticky bottom-4 z-10 mt-6 transition-opacity",
+                  isDirty ? "opacity-100" : "pointer-events-none opacity-0",
+                )}
+              >
+                <div className="flex items-center justify-between gap-3 rounded-xl border bg-card p-3 shadow-lg">
+                  <span className="min-w-0 truncate text-sm text-fg-muted">
+                    You have unsaved changes.
+                  </span>
+                  <div className="flex shrink-0 items-center gap-2">
+                    <Button size="sm" onPress={() => setIsDirty(false)}>
+                      Discard
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      onPress={() => setIsDirty(false)}
+                    >
+                      Save changes
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </SidebarInset>
-    </SidebarProvider>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
   )
 }

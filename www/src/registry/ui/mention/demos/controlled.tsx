@@ -1,12 +1,13 @@
 "use client"
 
 import * as React from "react"
+import { TokenFieldValue } from "react-aria-components/TokenField"
 
 import { Label } from "@/registry/ui/field"
 import { Mention } from "@/registry/ui/mention"
 import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
-import { TokenInput, TokenSegmentList } from "@/registry/ui/token-field"
+import { TokenInput } from "@/registry/ui/token-field"
 
 const people = [
   { id: "alexmiller" },
@@ -15,11 +16,11 @@ const people = [
   { id: "emmawatson" },
 ]
 
-// The value is a TokenSegmentList of text and token segments; toString() joins
+// The value is a TokenFieldValue of text and token segments; toString() joins
 // the segments back into plain text.
 export default function Demo() {
   const [value, setValue] = React.useState(
-    () => new TokenSegmentList([{ type: "text", text: "Hey " }]),
+    () => new TokenFieldValue([{ type: "text", text: "Hey " }]),
   )
   return (
     <div className="flex w-[320px] flex-col gap-2">

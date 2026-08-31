@@ -7,10 +7,10 @@
    shell). The family look comes from the Buttons section. */
 
 import { cn } from "@/registry/lib/utils"
-import { ControlGroup, SelectRow } from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup, SelectRow } from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import {
   buttonRadiusPx,
@@ -47,7 +47,7 @@ export function AttachedShell({
     <div
       className={cn(
         "flex items-center overflow-hidden",
-        state.groupSeparator === "auto" && "divide-x divide-border-field",
+        state.groupSeparator === "auto" && "divide-x divide-border-control",
         className,
       )}
       style={{ borderRadius: radius }}
@@ -55,7 +55,7 @@ export function AttachedShell({
       {segments.map((seg, i) => (
         <span key={i} className="flex items-stretch">
           {state.groupSeparator === "divider" && i > 0 && (
-            <span className="my-1.5 w-px bg-border-field" />
+            <span className="my-1.5 w-px bg-border-control" />
           )}
           {seg}
         </span>

@@ -4,13 +4,8 @@
    scales everything, density picks the gap/inset recipe, control size moves
    the height ladder. All three resolve in the hero's specimen. */
 
-import {
-  ControlGroup,
-  SegmentedControlRow,
-  SliderRow,
-} from "@/modules/control-lab/rows"
-
 import { Hero } from "../hero"
+import { ControlGroup, SegmentedControlRow, SliderRow } from "../rows"
 import type { Lab, LabState } from "../state"
 import { controlRadiusPx, roleRadiusPx } from "./shape"
 
@@ -78,7 +73,7 @@ export function SpaceHero({ state }: { state: LabState }) {
         }}
       >
         <span
-          className="flex w-full items-center border border-border-field bg-field text-[0.8125rem] text-fg-muted"
+          className="flex w-full items-center border border-border-control bg-field text-[0.8125rem] text-fg-muted"
           style={{
             height: r.controlH,
             paddingInline: r.padX,

@@ -1,0 +1,13 @@
+{
+  "name": "QuestionnaireChoiceProps",
+  "description": "One selectable choice — radio for single-answer questions, checkbox when\nthe item allows multiple. Shows its keyboard shortcut when the\nquestionnaire enables them.",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

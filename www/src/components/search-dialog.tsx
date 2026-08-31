@@ -193,7 +193,7 @@ export default function SearchDialog({
               border stays the neutral field color on focus. */}
           <InputGroup
             size="lg"
-            className="rounded-[10px]! border-border-field! bg-(--neutral-300) ring-0!"
+            className="rounded-[10px]! border-border-control! bg-(--neutral-300) ring-0!"
           >
             <InputGroupAddon>
               <SearchIcon />
@@ -206,7 +206,7 @@ export default function SearchDialog({
               it rather than on the wrapper. */}
         <MenuContent
           aria-label="Search results"
-          className="max-h-80 overflow-y-auto p-1.5 pt-3 **:data-menu-item:py-2 max-md:max-h-none max-md:min-h-0 max-md:grow"
+          className="max-h-80 overflow-y-auto p-1.5 pt-3 max-md:max-h-none max-md:min-h-0 max-md:grow"
           onAction={onClose}
           renderEmptyState={() => (
             <div className="py-8 text-center text-sm text-fg-muted">

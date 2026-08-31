@@ -177,11 +177,27 @@
       "description": "The item keys that are disabled. These items cannot be selected, focused, or otherwise\ninteracted with."
     },
     "selectionMode": {
-      "type": "SelectionMode",
-      "detailedType": "SelectionMode | undefined",
+      "type": "'end' | 'preserve' | 'select' | 'start'",
+      "detailedType": "'end' | 'preserve' | 'select' | 'start' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "SelectionMode"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "multiple"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "none"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "single"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The type of selection that is allowed in the collection."
     },
@@ -549,11 +565,23 @@
       "description": "Handler that is called when a user performs an action on an item. The exact user event depends\non the collection's `selectionBehavior` prop and the interaction modality."
     },
     "orientation": {
-      "type": "Orientation",
-      "detailedType": "Orientation | undefined",
+      "type": "'horizontal' | 'vertical'",
+      "detailedType": "'horizontal' | 'vertical' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "Orientation"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "horizontal"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "vertical"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "The primary orientation of the items. Usually this is the\ndirection that the collection scrolls.",
       "default": "'vertical'"
@@ -616,11 +644,23 @@
       "description": "Provides content to display when there are no items in the list."
     },
     "selectionBehavior": {
-      "type": "SelectionBehavior",
-      "detailedType": "SelectionBehavior | undefined",
+      "type": "'toggle' | 'replace'",
+      "detailedType": "'toggle' | 'replace' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "SelectionBehavior"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "replace"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "toggle"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "How multiple selection should behave in the collection.",
       "default": "'toggle'"
