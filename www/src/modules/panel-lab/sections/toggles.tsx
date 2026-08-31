@@ -8,10 +8,10 @@ import { useState } from "react"
 import { StarIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
-import { ControlGroup, SelectRow } from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup, SelectRow } from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { AttachedShell } from "./button-groups"
 import {

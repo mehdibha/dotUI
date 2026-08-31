@@ -19,10 +19,9 @@
 
 import { ChevronDownIcon } from "lucide-react"
 
-import { ControlGroup, SelectRow } from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
-
 import { Hero } from "../hero"
+import { ControlGroup, SelectRow } from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const POPOVER_DEFAULTS = {

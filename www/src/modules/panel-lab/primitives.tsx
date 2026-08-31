@@ -1,6 +1,6 @@
 "use client"
 
-/* Control Lab — the catalog of the row language: every primitive in rows.tsx
+/* Primitives — the catalog of the row language: every primitive in rows.tsx
    on its own, with the variants that matter, read top to bottom. The panel
    itself is the other tab of /internal/panel-lab; this is the vocabulary it's
    assembled from, so each entry is the control alone rather than a composed
@@ -876,7 +876,7 @@ const TOC_ITEMS: TOCItemType[] = GROUPS.flatMap((group) => [
   })),
 ])
 
-export function ControlLabPrimitives() {
+export function PrimitivesShowcase() {
   const [preview, setPreview] = useState<PreviewMode>("card")
 
   return (

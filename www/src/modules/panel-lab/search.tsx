@@ -16,7 +16,7 @@ import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 import { SearchField } from "@/registry/ui/search-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-import type { IndexChapter } from "./variants/groups"
+import type { IndexChapter } from "./groups"
 
 /** Renders the trigger button in place; the bar and suggestions card position
  *  against the panel header (the nearest positioned ancestor). */

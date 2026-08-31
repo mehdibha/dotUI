@@ -5,19 +5,19 @@
    Primitives tab: the row vocabulary everything is assembled from. */
 
 import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
-import { ControlLabPrimitives } from "@/modules/control-lab/page"
 import { InternalShell } from "@/modules/internal/shell"
 
+import { DrillInPanel } from "./drill-in"
+import { PrimitivesShowcase } from "./primitives"
 import { CHAPTERS } from "./state"
 import { useLab } from "./use-lab"
-import { PanelB } from "./variants/panel-b"
 
 function Panel() {
   const lab = useLab()
   // The chrome is the card — one enclosed surface, no extra wrapper here.
   return (
     <div className="flex h-[720px] w-[336px] shrink-0 flex-col">
-      <PanelB chapters={CHAPTERS} lab={lab} />
+      <DrillInPanel chapters={CHAPTERS} lab={lab} />
     </div>
   )
 }
@@ -38,7 +38,7 @@ export function PanelLabPage() {
           <Panel />
         </TabPanel>
         <TabPanel id="primitives">
-          <ControlLabPrimitives />
+          <PrimitivesShowcase />
         </TabPanel>
       </Tabs>
     </InternalShell>

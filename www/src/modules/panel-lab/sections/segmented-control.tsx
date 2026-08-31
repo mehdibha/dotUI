@@ -20,14 +20,10 @@
 import { useState } from "react"
 
 import { cn } from "@/registry/lib/utils"
-import {
-  ControlGroup,
-  SegmentedControlRow,
-  SelectRow,
-} from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
 
 import { Hero } from "../hero"
+import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const SEGMENTED_DEFAULTS = {

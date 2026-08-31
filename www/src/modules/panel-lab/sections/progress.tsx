@@ -11,15 +11,15 @@
    tone=success) is a prop; percent-label placement is a prop. */
 
 import { cn } from "@/registry/lib/utils"
+
+import { Hero } from "../hero"
 import {
   ControlGroup,
   SegmentedControlRow,
   SelectRow,
   SwitchRow,
-} from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
-
-import { Hero } from "../hero"
+} from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const PROGRESS_DEFAULTS = {

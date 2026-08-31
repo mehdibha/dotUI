@@ -10,10 +10,9 @@
    second decision); thumb radius (rides Shape); scrollbar-gutter (layout
    engineering every option needs, no system treats it as a look). */
 
-import { ControlGroup, SelectRow } from "@/modules/control-lab/rows"
-import type { SelectRowOption } from "@/modules/control-lab/rows"
-
 import { Hero } from "../hero"
+import { ControlGroup, SelectRow } from "../rows"
+import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const SCROLLBAR_DEFAULTS = {

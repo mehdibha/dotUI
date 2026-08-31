@@ -12,7 +12,7 @@ import {
   SettingsIcon,
 } from "lucide-react"
 
-import type { LabState } from "../../state"
+import type { LabState } from "../state"
 import { Bar } from "./ink"
 
 /** The brand seed as a swatch — the raw seed, no engine run. */

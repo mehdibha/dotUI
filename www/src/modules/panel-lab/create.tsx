@@ -26,10 +26,11 @@ import { UnsavedChangesDialog } from "@/modules/create/unsaved-changes-dialog"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 
+import { DrillInPanel } from "./drill-in"
 import type { PanelSystem } from "./panel"
+import { INSTANT_POPOVER } from "./rows"
 import { CHAPTERS } from "./state"
 import { useLab } from "./use-lab"
-import { PanelB } from "./variants/panel-b"
 
 const routeApi = getRouteApi("/_app/studio")
 
@@ -163,6 +164,7 @@ export function LabCreatePanel({ className }: { className?: string }) {
       <PresetPicker
         isOpen={gallery === true}
         onOpenChange={setGalleryOpen}
+        popoverClassName={INSTANT_POPOVER}
         sections={pickerSections}
         selectedId={activeSaved && !isDirty ? activeSaved.id : undefined}
         onPick={(item) => requestPick(item.id)}
@@ -193,7 +195,7 @@ export function LabCreatePanel({ className }: { className?: string }) {
         className,
       )}
     >
-      <PanelB chapters={CHAPTERS} lab={lab} system={system} />
+      <DrillInPanel chapters={CHAPTERS} lab={lab} system={system} />
       <SavePresetDialog isOpen={saveOpen} onOpenChange={setSaveOpen} />
       <UnsavedChangesDialog
         isOpen={pendingPick !== null}

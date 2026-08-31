@@ -12,13 +12,13 @@ import {
   IconWeightContext,
 } from "@/registry/icons/create-icon"
 import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
-import { ControlGroup, SelectRow, SliderRow } from "@/modules/control-lab/rows"
 import {
   ICON_STROKE_WIDTH_VAR,
   STROKE_DEFAULTS,
 } from "@/modules/create/iconography"
 
 import { Hero } from "../hero"
+import { ControlGroup, SelectRow, SliderRow } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const ICON_DEFAULTS = {
