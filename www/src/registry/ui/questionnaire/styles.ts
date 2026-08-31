@@ -14,7 +14,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       description: "text-pretty text-fg-muted",
       choices: "group/questionnaire-choices grid min-w-0",
       choice: [
-        "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-(--questionnaire-choice-radius) border border-border-field bg-transparent text-start transition-colors select-none",
+        "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-(--questionnaire-choice-radius) border border-border-control bg-transparent text-start transition-colors select-none",
         "hover:bg-muted/50",
         "data-checked:border-primary/40 data-checked:bg-muted",
         "data-invalid:border-border-danger",
@@ -24,7 +24,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       choiceInput:
         "absolute inset-0 z-10 size-full cursor-interactive opacity-0",
       choiceIndicator: [
-        "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--questionnaire-indicator-radius) border border-border-field",
+        "pointer-events-none relative flex size-4 shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--questionnaire-indicator-radius) border border-border-control",
         "group-has-[[data-questionnaire-choice-description]]/questionnaire-choice:translate-y-0.5",
         "group-data-[type=radio]/questionnaire-choice:rounded-full",
         "group-data-checked/questionnaire-choice:border-primary group-data-checked/questionnaire-choice:bg-primary group-data-checked/questionnaire-choice:text-fg-on-primary",
@@ -36,14 +36,14 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       choiceContent: "flex min-w-0 flex-1 flex-col leading-snug",
       choiceDescription: "text-fg-muted",
       shortcut:
-        "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--radius-item) border border-border-field bg-bg font-mono leading-none font-medium text-fg-muted group-has-[[data-questionnaire-choice-description]]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex",
+        "pointer-events-none ms-auto hidden shrink-0 translate-y-[--spacing(0.45)] items-center justify-center rounded-(--radius-item) border border-border-control bg-bg font-mono leading-none font-medium text-fg-muted group-has-[[data-questionnaire-choice-description]]/questionnaire-choice:translate-y-0.5 group-data-shortcut/questionnaire-choice:inline-flex",
       inputWrapper: "group/questionnaire-input relative w-full min-w-0",
       input: [
-        "w-full min-w-0 rounded-(--questionnaire-input-radius) border border-border-field bg-field transition-[box-shadow,border-color,color] outline-none",
+        "w-full min-w-0 rounded-(--questionnaire-input-radius) border border-border-control bg-field transition-[box-shadow,border-color,color] outline-none",
         "placeholder:text-fg-muted",
         "focus:ring-2 focus:not-aria-invalid:border-border-focus focus:not-aria-invalid:ring-border-focus-muted",
         "aria-invalid:border-border-danger aria-invalid:ring-2 aria-invalid:ring-danger-muted",
-        "disabled:pointer-events-none disabled:border-border-disabled disabled:bg-disabled disabled:text-fg-disabled",
+        "disabled:pointer-events-none disabled:border-border disabled:bg-disabled disabled:text-fg-disabled",
       ],
       error: "mt-2 text-fg-danger",
       actions:
