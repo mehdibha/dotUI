@@ -16,6 +16,12 @@ const tooltipMeta = {
       kind: "enum",
       default: "default",
       values: ["default", "translucid"] as const,
+      vars: {
+        translucid: {
+          "--color-tooltip": "var(--neutral-200)",
+          "--color-fg-on-tooltip": "var(--neutral-950)",
+        },
+      },
       description: "How the tooltip surface is rendered.",
     },
     radius: {

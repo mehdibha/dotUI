@@ -48,14 +48,20 @@ export type RegistryItemFile = NonNullable<ShadcnRegistryItem["files"]>[number]
 
 /**
  * An "enum" param: user picks one of a fixed set of named values.
- * Each value can carry tv slices and/or CSS vars in `createStyles`.
- * Covers what was previously `meta.styles` (aesthetic) and `meta.params`
+ * Each value can carry tv slices in `createStyles` and/or CSS vars in `vars`
+ * here. Covers what was previously `meta.styles` (aesthetic) and `meta.params`
  * (per-component variants).
  */
 export type EnumParamDef = {
   kind: "enum"
   default: string
   values: readonly string[]
+  /**
+   * CSS vars a value sets on the provider scope, keyed by value name. Lives in
+   * meta (not the styles config) so the provider can resolve selections from
+   * data both server and client always share — like `ScalarParamDef.cssVar`.
+   */
+  vars?: Record<string, Record<`--${string}`, string>>
   files?: Record<string, readonly RegistryItemFile[]>
   description?: string
 }
