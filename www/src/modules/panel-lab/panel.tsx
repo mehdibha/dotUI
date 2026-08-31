@@ -32,7 +32,7 @@ export interface PanelSystem {
   renderExport: (trigger: ReactNode) => ReactNode
 }
 
-/** Header + footer + tweak vars. Children own the middle region (and its
+/** Header + footer. Children own the middle region (and its
  *  scrolling) — they must claim flex-1 min-h-0 and pad for the overlaid bars
  *  (44px header, 52px footer, plus the body's 12px gap). */
 export function PanelChrome({

@@ -5,7 +5,7 @@
    and the gaps alone carry the structure (the iOS-Settings grouped look):
    label over its muted value on the left, a state-driven micro-preview on the
    right. Weight survives as ordering — identity first. (Per-cluster row
-   heights were tried and reverted — uniform h-16 keeps the scan rhythm.)
+   heights were tried and reverted — uniform h-14 keeps the scan rhythm.)
    Tapping a row swaps panes instantly — control feedback, never gated on
    motion (slide/fade drill-ins were tried and dropped, Aug 2026).
    The chapter page has room, so the section body renders in its original
@@ -29,7 +29,9 @@ import { isWired } from "./wired"
 
 const PANE =
   "absolute inset-0 no-scrollbar flex flex-col overflow-y-auto overscroll-contain px-3 pt-[56px] pb-[64px] *:shrink-0"
-const PANE_HIDDEN = "pointer-events-none opacity-0"
+/* Hidden panes stay mounted (the index keeps its scroll position) but go
+   `inert` — invisible, unfocusable, and out of the accessibility tree. */
+const PANE_HIDDEN = "opacity-0"
 
 /** The not-wired-yet marker (issue #666) — drops per chapter via WIRED_CHAPTERS. */
 function WipChip() {
@@ -45,7 +47,7 @@ function WipChip() {
    OVER the whole card (::after sits on top of the demos too), not just the
    background behind them — the card lifts as one surface. */
 const CARD =
-  "relative w-full shrink-0 cursor-interactive rounded-lg bg-muted px-3.5 py-3 transition-colors focus-reset focus-visible:focus-ring after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-fg/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 pressed:after:opacity-100"
+  "relative h-14 w-full shrink-0 cursor-interactive rounded-lg bg-muted px-3.5 transition-colors focus-reset focus-visible:focus-ring after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:bg-fg/5 after:opacity-0 after:transition-opacity hover:after:opacity-100 pressed:after:opacity-100"
 
 function IndexRow({
   chapter,
@@ -90,16 +92,15 @@ function IndexRow({
       </span>
     </span>
   )
-  const height = "h-14"
-
   // Compact: one line — title left, specimen right. For the set-and-forget
   // page-chrome rows; nothing crops, everything fits.
   if (compact)
     return (
       <RacButton
         data-row
+        data-chapter={chapter.id}
         onPress={onPress}
-        className={cn(CARD, height, "flex items-center gap-5 py-0")}
+        className={cn(CARD, "flex items-center gap-5")}
       >
         {label}
         <span className="ml-auto flex min-w-0 items-center gap-3">
@@ -120,8 +121,9 @@ function IndexRow({
   return (
     <RacButton
       data-row
+      data-chapter={chapter.id}
       onPress={onPress}
-      className={cn(CARD, height, "flex items-center gap-5 py-0 pr-0")}
+      className={cn(CARD, "flex items-center gap-5 pr-0")}
     >
       {label}
       {/* A strip that FITS right-aligns (ml-auto) and centers (my-auto); one
@@ -157,9 +159,23 @@ export function DrillInPanel({
       .find((chapter) => chapter.id === activeId) ?? null
 
   // The page pane is one persistent scroller — start each chapter at its top.
+  // The instant swap moves focus with it: drilling in lands on the back
+  // button (its subtree is about to go inert under the focused row), backing
+  // out returns to the row that was drilled into before its pane goes inert.
   const pageRef = useRef<HTMLDivElement>(null)
+  const indexRef = useRef<HTMLDivElement>(null)
+  const backRef = useRef<HTMLButtonElement>(null)
+  const lastIdRef = useRef<string | null>(null)
   useEffect(() => {
-    if (activeId && pageRef.current) pageRef.current.scrollTop = 0
+    if (activeId) {
+      if (pageRef.current) pageRef.current.scrollTop = 0
+      backRef.current?.focus()
+      lastIdRef.current = activeId
+    } else if (lastIdRef.current) {
+      indexRef.current
+        ?.querySelector<HTMLElement>(`[data-chapter="${lastIdRef.current}"]`)
+        ?.focus()
+    }
   }, [activeId])
 
   return (
@@ -176,8 +192,9 @@ export function DrillInPanel({
       <div className="relative min-h-0 flex-1 overflow-hidden">
         {/* Index pane. */}
         <div
+          ref={indexRef}
           className={cn(PANE, "gap-3", page && PANE_HIDDEN)}
-          aria-hidden={!!page}
+          inert={!!page}
         >
           {index.map((group, i) => (
             <ControlGroup key={i}>
@@ -198,12 +215,13 @@ export function DrillInPanel({
         <div
           ref={pageRef}
           className={cn(PANE, "gap-3 bg-card", !page && PANE_HIDDEN)}
-          aria-hidden={!page}
+          inert={!page}
         >
           {page && (
             <>
               <div className="mb-1 flex h-8 items-center gap-1">
                 <RacButton
+                  ref={backRef}
                   onPress={() => setActiveId(null)}
                   className="flex h-8 cursor-interactive items-center gap-1 rounded-lg pr-2.5 pl-1.5 text-[0.8125rem] text-fg-muted focus-reset transition-colors hover:bg-highlight hover:text-fg focus-visible:focus-ring pressed:bg-highlight"
                 >

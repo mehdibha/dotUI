@@ -127,8 +127,8 @@ Mehdi's modifications:
 - The chapter page keeps the full hero — in the panel index the canvas (and
   the micro-preview) carry the visual load.
 
-Structured scroll (variant A) and the stacks stay in panel-lab as comparison
-references until the drill-in is validated against the four tests.
+Structured scroll (variant A) and the stacks served as comparison references;
+the drill-in won and they have been deleted from panel-lab.
 
 ## Taxonomy revision (Aug 2026, four-lens panel)
 
@@ -141,7 +141,7 @@ like Tooltips stay findable); merged cards must SHOW their absorbed members
 and future search must index absorbed names.
 
 **Adopted (Mehdi):** 43 → 35 chapters via composite index chapters
-(`variants/groups.ts` COMPOSITES): **Interaction** ← cursor + selection +
+(`groups.ts` COMPOSITES): **Interaction** ← cursor + selection +
 scrollbars + disabled (new, hostless); **Buttons** ← button-groups + toggles +
 segmented-control; **Inputs** ← input-groups + number-field + otp-field;
 **Links** moved to Components (overriding the panel's Typography-merge

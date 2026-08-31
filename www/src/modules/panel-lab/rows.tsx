@@ -4,9 +4,9 @@
    control right) applied to every interaction model the panel needs: triggers,
    drag surfaces, toggles, steppers, specimen grids, drill-in navigation, and
    the grouped-list container that fuses rows into cards.
-   Prototype only: local state in, callback out, no design-system wiring. */
+   Rows are controlled — value in, callback out. */
 
-import { createContext, useContext, useState } from "react"
+import { useState } from "react"
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -88,13 +88,10 @@ export const ROW_VALUE = "truncate text-[0.8125rem] text-fg-muted"
 export const ROW_DESCRIBED = "h-auto py-2.5"
 
 /** Panel popovers open and close instantly — control feedback, not content. */
-export const INSTANT_POPOVER = "duration-0 exiting:duration-0"
+export const INSTANT_POPOVER = "transition-none will-change-auto"
 
-/* Where row-attached overlays (pickers, selects, menus) open. Panel-lab's
-   preview-rail draft overrides it to explore preview/popover combos. */
-export type RowOverlayPlacement = "right top" | "left top" | "bottom start"
-export const RowOverlayPlacementContext =
-  createContext<RowOverlayPlacement>("right top")
+/** Where row-attached overlays (pickers, selects, menus) open. */
+export const ROW_OVERLAY_PLACEMENT = "right top" as const
 
 /** The left column of a row: the label, and the line under it that says what
  *  the axis actually changes. Rows stay one line until a description arrives.
@@ -390,7 +387,7 @@ export function SelectRow({
       </Button>
       <Popover
         className={cn("w-(--trigger-width)", INSTANT_POPOVER)}
-        placement={useContext(RowOverlayPlacementContext)}
+        placement={ROW_OVERLAY_PLACEMENT}
       >
         {layout === "grid" ? (
           /* Raw RAC listbox: Select wires it up through context, and
@@ -475,7 +472,6 @@ export function ColorPickerRow({
 }) {
   const tile = layout === "tile"
   const palette = layout === "palette"
-  const rowPlacement = useContext(RowOverlayPlacementContext)
   return (
     <ColorPicker value={value} onChange={(c) => onChange(c.toString("hex"))}>
       {({ color }) => (
@@ -546,7 +542,7 @@ export function ColorPickerRow({
           <Popover
             // A tile is as wide as the picker, so opening below it keeps the
             // two edges aligned; a row has no width to align to.
-            placement={tile ? "bottom start" : rowPlacement}
+            placement={tile ? "bottom start" : ROW_OVERLAY_PLACEMENT}
             className={cn("w-64 min-w-0", INSTANT_POPOVER)}
           >
             <DialogContent className="flex flex-col gap-3 p-3">
@@ -771,7 +767,7 @@ export function NeutralPickerRow({
         </span>
       </Button>
       <Popover
-        placement={useContext(RowOverlayPlacementContext)}
+        placement={ROW_OVERLAY_PLACEMENT}
         className={cn("w-64 min-w-0", INSTANT_POPOVER)}
       >
         <DialogContent className="flex flex-col gap-3 p-3">
@@ -878,7 +874,7 @@ export function FontListPopover({
   return (
     <Popover
       className={cn("w-(--trigger-width) outline-hidden", INSTANT_POPOVER)}
-      placement={useContext(RowOverlayPlacementContext)}
+      placement={ROW_OVERLAY_PLACEMENT}
     >
       <Command>
         <SearchField autoFocus aria-label="Search fonts">

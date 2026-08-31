@@ -64,6 +64,8 @@ interface PresetPickerProps {
   onOpenChange?: (open: boolean) => void
   /** Desktop popover placement. */
   placement?: PopoverProps["placement"]
+  /** Extra classes on the desktop popover (e.g. the panel's instant motion). */
+  popoverClassName?: string
   /** Pin the previews to one mode (docs previews pin light/dark). */
   previewMode?: "light" | "dark"
   /**
@@ -97,6 +99,7 @@ export function PresetPicker({
   isOpen,
   onOpenChange,
   placement = "bottom start",
+  popoverClassName,
   previewMode,
   withPreview = false,
   renderItemActions,
@@ -134,12 +137,8 @@ export function PresetPicker({
             <Drawer>{content("drawer")}</Drawer>
           ) : (
             // The popover always sizes to the list column — the preview, when
-            // on, floats outside it as a detached flyout. Instant, like every
-            // panel control popover.
-            <Popover
-              placement={placement}
-              className="duration-0 exiting:duration-0"
-            >
+            // on, floats outside it as a detached flyout.
+            <Popover placement={placement} className={popoverClassName}>
               {content("popover")}
             </Popover>
           )
