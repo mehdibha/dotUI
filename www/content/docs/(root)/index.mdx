@@ -1,48 +1,35 @@
 ---
 title: Introduction
-description: A design-system builder and component registry. You compose it, preview it live, and own the code.
+description: Build your own design system. Compose it in the studio, preview it live, and export code you own.
 ---
 
-**dotUI is a design-system builder.** You compose your system at [dotui.org/studio](https://dotui.org/studio) — colors, typography, icons, density, radius, per-component styles — preview every change on live components, and export code you own: into your codebase via the shadcn CLI, or straight into [v0](https://v0.dev), with more targets planned.
+**dotUI is not a component library. It's how you build your own design system.**
 
-Open code alone doesn't get you there: you own the files, but the decisions inside them are still someone else's. dotUI makes the decisions yours. The output is not our library with your colors — it is your design system.
+You know how this usually goes: you pick a component library, ship fast, and a few months later your app looks like every other app built with it. So you start fighting the library — overriding styles, wrapping components, patching decisions that were never yours to begin with.
 
-## API philosophy
+Copy-paste libraries fixed part of this. You own the files now. But the design inside them is still someone else's: their colors, their radius, their spacing, their taste. Changing the code is easy — changing the _system_ is not.
 
-### Composition
+That's what dotUI is for. **Everyone should be able to build a design system that actually feels like theirs** — without a design team, and without spending months on it.
 
-The API is built on composition: each component maps to a single DOM element, so you can style every element and control DOM order to implement any pattern. Every component also ships default children, so you only write the composition when you need to change it.
+## How it works
 
-<CompositionAnimation />
+1. **Compose** your system at [dotui.org/studio](https://dotui.org/studio) — colors, typography, icons, density, radius, and the style of each component.
+2. **Preview** every change instantly, on real components.
+3. **Export** it as code you own — into your codebase with the shadcn CLI, or straight into [v0](https://v0.dev). More targets are coming.
 
-The same primitives recompose into every component in the library: an `Input` becomes a `TextField`, a `DateField`, a `DatePicker`; the same list becomes a `Select`, a `Combobox`, a command palette; the same menu opens from a button, a right click, or an `@`-mention. Around ten primitives cover a dozen components, with zero parallel APIs.
+What you get isn't our library with your colors on top. It's your design system, in your codebase, ready to change however you like.
 
-### Reusable primitives
+## What's inside
 
-Most libraries claim composability and then ship parallel APIs for the same pattern: `MenuPopover`, `ComboboxPopover`, `SelectPopover` for one popover; `MenuTrigger`, `DialogTrigger`, `PopoverTrigger` for one button. You end up memorizing four names for every concept.
+Every component is accessible out of the box, built on [React Aria](https://react-spectrum.adobe.com/react-aria/) and styled with Tailwind CSS. The API is small and consistent: one `Button` for every trigger, one `Popover` for everything that floats, one `Input` for every field. Learn a component once and you know the whole library.
 
-dotUI has one of each:
+## Docs that show, not tell
 
-- **Popover** — one component for menus, dialogs, selects, and comboboxes.
-- **Button** — one component for every trigger.
-- **Input** — one component for text, search, and number fields.
-- **Label** — one component everywhere a label appears.
-
-Learn a primitive once; it works across the entire library.
-
-## The foundational layer
-
-dotUI is built on [React Aria Components](https://react-spectrum.adobe.com/react-aria/), styled with Tailwind CSS v4 and tailwind-variants, and themed by an OKLCH color engine.
-
-We evaluated the alternatives for the behavior layer. Radix is effectively unmaintained. [Base UI](https://base-ui.com) is promising but young, and missing features dotUI relies on. React Aria is battle-tested, comprehensive, and unstyled all the way down — a foundation that disappears behind whatever design system you build on it.
-
-## Documentation
-
-The docs show rather than tell. Every component page opens with an interactive playground: change a prop, and the code and preview update in real time. Play with the props; read the prose only when you need it.
+Every component page starts with a playground. Change a prop, watch the code and preview update. Read the prose only when you need it.
 
 <Demo name="menu/demos/account" />
 
-Below the playground, examples show components composed into real product UI:
+And below that, examples of components composed into real product UI:
 
 <div className='grid grid-cols-2 gap-4 mt-6'>
 
@@ -53,10 +40,10 @@ Below the playground, examples show components composed into real product UI:
 
 </div>
 
-## Built for AI
+## Works great with AI
 
-dotUI is built for humans and AI. The API is consistent and predictable across the library: an agent that has seen one trigger, one field, or one overlay has seen them all. Fewer APIs to learn means fewer APIs to get wrong — an agent that has written one component can write the next.
+Because the API is consistent and predictable, AI agents pick it up fast: an agent that has written one component can write the next. And since you own the code, your tools can read it, understand it, and build on it.
 
 ## Get involved
 
-Open an issue on [GitHub](https://github.com/mehdibha/dotUI/issues) for feedback, bugs, or feature requests, or DM [@mehdibha](https://x.com/mehdibha) on X. Contributions are welcome.
+Found a bug? Have an idea? Open an issue on [GitHub](https://github.com/mehdibha/dotUI/issues) or DM [@mehdibha](https://x.com/mehdibha) on X. Contributions are welcome.
