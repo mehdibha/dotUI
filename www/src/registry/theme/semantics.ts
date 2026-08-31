@@ -199,7 +199,9 @@ export function semanticVocabulary(
       NEUTRAL,
     ),
     // The control weight: field and control edges (input, checkbox, radio).
-    "color-border-control": bd(ref("neutral", "500"), NEUTRAL),
+    // 400, not 500: composited against the secondary-button bevel ring it
+    // should read a nudge stronger, not double (Linear's field/button gap).
+    "color-border-control": bd(ref("neutral", "400"), NEUTRAL),
     "color-border-focus": bd(
       ref(hasSelection ? "selection" : "accent", "700"),
       PRIMARY,

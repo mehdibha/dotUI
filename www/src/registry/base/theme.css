@@ -87,7 +87,7 @@
 	--color-fg-disabled: var(--neutral-600);
 	--color-fg-on-neutral: var(--neutral-950);
 	--color-border: color-mix(in oklab, var(--neutral-200) 50%, var(--neutral-300));
-	--color-border-control: var(--neutral-500);
+	--color-border-control: var(--neutral-400);
 	--color-border-focus: var(--accent-700);
 	--color-border-focus-muted: var(--accent-300);
 	--color-tooltip: var(--neutral-950);
