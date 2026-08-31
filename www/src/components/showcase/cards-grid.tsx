@@ -2,21 +2,21 @@ import { memo } from "react"
 
 import { cn } from "@/registry/lib/utils"
 import { AccountMenu } from "@/components/showcase/account-menu"
+import { AgentTasks } from "@/components/showcase/agent-tasks"
 import { AiPrompt } from "@/components/showcase/ai-prompt"
 import { Appearance } from "@/components/showcase/appearance"
-import { AssignIssue } from "@/components/showcase/assign-issue"
+import { ApprovalPrompt } from "@/components/showcase/approval-prompt"
 import { Booking } from "@/components/showcase/booking"
 import { ColorEditorCard } from "@/components/showcase/color-editor"
 import { CommandMenu } from "@/components/showcase/command-menu"
 import { ComputerUse } from "@/components/showcase/computer-use"
+import { ConnectedTools } from "@/components/showcase/connected-tools"
 import { Controls } from "@/components/showcase/controls"
 import { CookiePreferences } from "@/components/showcase/cookie-preferences"
 import { CustomDomain } from "@/components/showcase/custom-domain"
-import { DeployStatus } from "@/components/showcase/deploy-status"
 import { DisplaySettings } from "@/components/showcase/display-settings"
 import { EmptyState } from "@/components/showcase/empty-state"
 import { Faq } from "@/components/showcase/faq"
-import { FileTree } from "@/components/showcase/file-tree"
 import { Filters } from "@/components/showcase/filters"
 import { InviteMembers } from "@/components/showcase/invite-members"
 import { LoginForm } from "@/components/showcase/login-form"
@@ -27,22 +27,22 @@ import { PricingPlans } from "@/components/showcase/pricing-plans"
 import { Storage } from "@/components/showcase/storage"
 import { SupportChat } from "@/components/showcase/support-chat"
 import { TeamName } from "@/components/showcase/team-name"
-import { TeamTable } from "@/components/showcase/team-table"
 import { TwoFactor } from "@/components/showcase/two-factor"
 import { UploadAvatar } from "@/components/showcase/upload-avatar"
+import { UsageCredits } from "@/components/showcase/usage-credits"
 
 // Every showcase card in one place — the single source of truth for what the
 // landing grid and the /create preview masonry render.
 const CARDS = {
   accountMenu: <AccountMenu />,
+  agentTasks: <AgentTasks />,
   appearance: <Appearance />,
-  assignIssue: <AssignIssue />,
+  approvalPrompt: <ApprovalPrompt />,
+  connectedTools: <ConnectedTools />,
   customDomain: <CustomDomain />,
-  deployStatus: <DeployStatus />,
   emptyState: <EmptyState />,
-  fileTree: <FileTree />,
   supportChat: <SupportChat />,
-  teamTable: <TeamTable />,
+  usageCredits: <UsageCredits />,
   booking: <Booking />,
   colorEditor: <ColorEditorCard />,
   commandMenu: <CommandMenu />,
@@ -181,21 +181,21 @@ const CANVAS_2: CardKey[] = [
 const CANVAS_WIDE_LEFT: CardKey[] = [
   "metrics",
   "booking",
-  "teamTable",
-  "deployStatus",
+  "agentTasks",
+  "connectedTools",
 ]
 const CANVAS_WIDE_RIGHT: CardKey[] = [
   "uploadAvatar",
   "pricingPlans",
   "supportChat",
-  "assignIssue",
+  "approvalPrompt",
 ]
 const CANVAS_5: CardKey[] = [
   "computerUse",
   "notifications",
   "faq",
   "displaySettings",
-  "fileTree",
+  "usageCredits",
 ]
 const CANVAS_6: CardKey[] = [
   "inviteMembers",
