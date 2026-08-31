@@ -1,52 +1,7 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-
 import { ChartCard } from "./chart-card"
 import { CHART_FAMILIES, variantsFor } from "./data"
-
-/**
- * Mounts its children once they come near the viewport. The page stacks ~70
- * live chart previews; mounting them all at once blocks the main thread for
- * seconds, so offscreen cards wait their turn. The placeholder matches
- * ChartCard's rendered height (header row + card box) so nothing shifts.
- */
-function LazyMount({
-  className,
-  children,
-}: {
-  className?: string
-  children: React.ReactNode
-}) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setVisible(true)
-          observer.disconnect()
-        }
-      },
-      { rootMargin: "600px 0px" },
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <div ref={ref} className={className}>
-      {visible && children}
-    </div>
-  )
-}
-
-/* The header row above each card box is 36px tall (28px row + 8px gap), so
-   the placeholder is the card box height plus that. */
-const PLACEHOLDER_HEIGHT = "h-[20.25rem]"
 
 /**
  * Renders the chart previews for a single family, identified by its registry id
@@ -70,9 +25,12 @@ export function ChartFamilyGrid({ family }: { family: string }) {
   return (
     <div className="mt-6 grid grid-cols-1 gap-x-5 gap-y-6 sm:grid-cols-2">
       {variantsFor(data.id).map((v) => (
-        <LazyMount key={v.key} className={PLACEHOLDER_HEIGHT}>
-          <ChartCard familyId={data.id} demoKey={v.key} label={v.label} />
-        </LazyMount>
+        <ChartCard
+          key={v.key}
+          familyId={data.id}
+          demoKey={v.key}
+          label={v.label}
+        />
       ))}
     </div>
   )
