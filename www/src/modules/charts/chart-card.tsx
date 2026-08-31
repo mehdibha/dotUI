@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense, useState } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 import { RotateCcwIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
@@ -9,6 +9,40 @@ import { ShowcaseCard } from "@/components/showcase-card"
 
 import { ChartCodeModal } from "./chart-code-modal"
 import { getDemoComponent, POLAR_FAMILIES } from "./data"
+
+/**
+ * Mounts the chart once the card comes near the viewport; until then the card
+ * surface stays empty. The page stacks ~60 live Recharts previews; mounting
+ * them all at once blocks the main thread for seconds, so offscreen charts wait
+ * their turn. Only the chart body is deferred — the card shell renders on
+ * first paint.
+ */
+function LazyChartBody({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: "600px 0px" },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div ref={ref} className="size-full">
+      {visible && children}
+    </div>
+  )
+}
 
 interface ChartCardProps {
   /** Family id, e.g. `chart-bar` — decides polar vs cartesian sizing. */
@@ -61,20 +95,20 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
       inert
       aria-hidden="true"
     >
-      {/* Skeleton fills the whole box edge-to-edge; padding lives on the chart
-          wrapper so it never insets the fallback. */}
-      <Suspense fallback={<div className="size-full animate-pulse bg-muted" />}>
-        <div
-          className={cn(
-            "flex size-full items-center justify-center p-9 [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!",
-            isPolar
-              ? "[&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:max-h-[250px]! [&_[data-slot=chart]]:w-auto!"
-              : "[&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!",
-          )}
-        >
-          <Component key={replayKey} />
-        </div>
-      </Suspense>
+      <LazyChartBody>
+        <Suspense fallback={null}>
+          <div
+            className={cn(
+              "flex size-full animate-in items-center justify-center p-9 duration-300 fade-in [&_*]:pointer-events-none [&_[data-slot=chart]]:h-full! [&_[data-slot=chart]]:min-h-0!",
+              isPolar
+                ? "[&_[data-slot=chart]]:mx-auto! [&_[data-slot=chart]]:aspect-square! [&_[data-slot=chart]]:max-h-[250px]! [&_[data-slot=chart]]:w-auto!"
+                : "[&_[data-slot=chart]]:aspect-auto! [&_[data-slot=chart]]:w-full!",
+            )}
+          >
+            <Component key={replayKey} />
+          </div>
+        </Suspense>
+      </LazyChartBody>
     </ShowcaseCard>
   )
 }
