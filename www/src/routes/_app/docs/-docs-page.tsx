@@ -42,8 +42,16 @@ export const clientLoader = browserCollections.docs.createClientLoader({
         <PageLayout className="mt-4 flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
           <div
             className={cn(
-              "mx-auto flex w-full min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 lg:px-0 dark:text-neutral-300",
-              full ? "max-w-4xl" : "max-w-2xl",
+              // Padding tracks the header's logo inset (pl-4/md:pl-6). Narrow
+              // pages center at every width (left-hugging strands them far from
+              // the MiniTOC); wide (full) pages nearly fill the row below lg,
+              // so they hug the left edge to stay aligned with the logo, and
+              // keep lg padding until xl centering slack separates them from
+              // the sidebar and MiniTOC rails.
+              "flex w-full min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-6 dark:text-neutral-300",
+              full
+                ? "max-w-4xl lg:mx-auto lg:px-8 xl:px-0"
+                : "mx-auto max-w-2xl lg:px-0",
             )}
           >
             <div data-page-header="" className="relative mb-2 space-y-3 pb-4">
