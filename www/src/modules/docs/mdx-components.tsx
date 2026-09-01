@@ -25,6 +25,7 @@ import { Examples, type ExamplesProps } from "@/modules/docs/examples"
 import {
   InstallationCandidate,
   InstallationCandidates,
+  StudioCta,
 } from "@/modules/docs/installation-candidates"
 import { InteractiveDemo } from "@/modules/docs/interactive-demo"
 import { Reference, type ReferenceProps } from "@/modules/docs/reference"
@@ -218,6 +219,7 @@ export const mdxComponents: MDXComponents = {
   ChartFamilyGrid,
   InstallationCandidates,
   InstallationCandidate,
+  StudioCta,
   CompositionAnimation: ({
     className,
     ...props

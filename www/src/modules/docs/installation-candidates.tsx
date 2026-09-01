@@ -1,5 +1,6 @@
 import { Children, isValidElement } from "react"
 
+import { LinkButton } from "@/registry/ui/button"
 import { useTweak } from "@/dev/tweaker"
 
 // Throwaway exploration scaffolding: three from-scratch installation page
@@ -12,8 +13,8 @@ export function InstallationCandidates({
 }) {
   const pick = useTweak("Candidate", {
     type: "select",
-    options: ["A", "B", "C"],
-    default: "A",
+    options: ["A", "B", "C", "D"],
+    default: "D",
     group: "Installation page",
   })
   return Children.toArray(children).find(
@@ -27,4 +28,12 @@ export function InstallationCandidate(props: {
   children: React.ReactNode
 }) {
   return props.children
+}
+
+export function StudioCta() {
+  return (
+    <LinkButton href="/studio" variant="primary" className="mt-6">
+      Open the Studio
+    </LinkButton>
+  )
 }
