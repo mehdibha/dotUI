@@ -4,7 +4,7 @@ import { SearchIcon } from "lucide-react"
 
 import { navItems, siteConfig } from "@/config/site"
 import { cn } from "@/registry/lib/utils"
-import { Button, buttonStyles } from "@/registry/ui/button"
+import { Button, buttonStyles, LinkButton } from "@/registry/ui/button"
 import { Separator } from "@/registry/ui/separator"
 import { GitHubIcon } from "@/components/icons/github"
 import { HeaderActionsSlot } from "@/components/layout/header-slot"
@@ -102,6 +102,17 @@ export function Header({ className, items = [] }: HeaderProps) {
         </a>
         <ThemeToggle variant="quiet" isIconOnly />
         <HeaderActionsSlot />
+        {/* On /studio the slot above carries studio-specific actions instead. */}
+        {pathname !== "/studio" && (
+          <LinkButton
+            href="/studio"
+            variant="primary"
+            size="sm"
+            className="ml-1.5"
+          >
+            Open studio
+          </LinkButton>
+        )}
         <Separator orientation="vertical" className="mx-1.5 h-4 lg:hidden" />
         <MobileNav items={items} />
       </div>
