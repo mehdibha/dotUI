@@ -36,8 +36,9 @@ export function HomePage() {
               </span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
-              Every design decision is yours, previewed live on real components.
-              Install with the shadcn CLI, or export straight to v0.
+              Every design decision is yours — create, tweak, and ship code you
+              own.
+              {/* Once a non-web export ships: One foundation for all platforms. */}
             </p>
             <div className="mt-9 flex items-center gap-3">
               <LinkButton href="/studio" variant="primary" size="lg">
