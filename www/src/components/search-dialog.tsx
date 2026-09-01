@@ -129,9 +129,11 @@ function groupResults(results: SortedResult[]): ResultGroup[] {
 
 export default function SearchDialog({
   items,
+  autoFocus = true,
   onClose,
 }: {
   items: PageTree.Node[]
+  autoFocus?: boolean
   onClose: () => void
 }) {
   const commandStyles = useCommandStyles()
@@ -187,7 +189,11 @@ export default function SearchDialog({
           className: "gap-0 overflow-y-hidden p-0 max-md:min-h-0 max-md:grow",
         })}
       >
-        <SearchField autoFocus aria-label="Search" className="px-1.5 pt-1.5">
+        <SearchField
+          autoFocus={autoFocus}
+          aria-label="Search"
+          className="px-1.5 pt-1.5"
+        >
           {/* Radius stays concentric with the modal (2xl − 6px inset); the
               filled input needs no focus treatment, so the ring is off and the
               border stays the neutral field color on focus. */}
@@ -236,9 +242,15 @@ export default function SearchDialog({
                 ))}
               </MenuSection>
             ),
-            filteredNav.length > 0 && (
+            (matches("Home") || filteredNav.length > 0) && (
               <MenuSection key="navigation">
                 <MenuSectionHeader>Navigation</MenuSectionHeader>
+                {matches("Home") && (
+                  <MenuItem href={{ to: "/" }} textValue="Home">
+                    <ArrowRightIcon className="text-fg-muted!" />
+                    Home
+                  </MenuItem>
+                )}
                 {filteredNav.map((item) => (
                   <MenuItem
                     key={item.name}

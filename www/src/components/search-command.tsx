@@ -93,7 +93,13 @@ export function SearchCommand({
               className="flex flex-col gap-0 overflow-hidden p-0! max-md:min-h-0 max-md:flex-1"
             >
               {SearchDialog && (
-                <SearchDialog items={items} onClose={() => setIsOpen(false)} />
+                <SearchDialog
+                  items={items}
+                  // The mobile drawer doubles as the nav menu — opening with
+                  // the keyboard up would punish browse intent.
+                  autoFocus={!isMobile}
+                  onClose={() => setIsOpen(false)}
+                />
               )}
             </DialogContent>
           )

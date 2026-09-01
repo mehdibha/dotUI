@@ -1,15 +1,13 @@
 import { Link as RouterLink, useLocation } from "@tanstack/react-router"
 import type * as PageTree from "fumadocs-core/page-tree"
-import { SearchIcon } from "lucide-react"
+import { MenuIcon, SearchIcon } from "lucide-react"
 
 import { navItems, siteConfig } from "@/config/site"
 import { cn } from "@/registry/lib/utils"
 import { Button, buttonStyles, LinkButton } from "@/registry/ui/button"
-import { Separator } from "@/registry/ui/separator"
 import { GitHubIcon } from "@/components/icons/github"
 import { HeaderActionsSlot } from "@/components/layout/header-slot"
 import { Logo } from "@/components/layout/logo"
-import { MobileNav } from "@/components/layout/mobile-nav"
 import { ProgressiveBlur } from "@/components/progressive-blur"
 import { SearchCommand } from "@/components/search-command"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -85,9 +83,26 @@ export function Header({ className, items = [] }: HeaderProps) {
         </nav>
       </div>
       <div className="flex items-center gap-0.5">
+        {/* One dialog, two triggers: RAC's DialogTrigger reaches pressables via
+            context, so the desktop search icon and the mobile menu button share
+            the same search surface — its empty state already lists the full
+            navigation, GitHub and the theme toggle, so mobile needs nothing else. */}
         <SearchCommand keyboardShortcut items={items}>
-          <Button variant="quiet" isIconOnly aria-label="Search docs">
+          <Button
+            variant="quiet"
+            isIconOnly
+            aria-label="Search docs"
+            className="max-lg:hidden"
+          >
             <SearchIcon />
+          </Button>
+          <Button
+            variant="quiet"
+            isIconOnly
+            aria-label="Menu"
+            className="lg:hidden"
+          >
+            <MenuIcon />
           </Button>
         </SearchCommand>
         <a
@@ -96,25 +111,29 @@ export function Header({ className, items = [] }: HeaderProps) {
           target="_blank"
           rel="noopener noreferrer"
           data-icon-only=""
-          className={buttonStyles({ variant: "quiet", isIconOnly: true })}
+          className={buttonStyles({
+            variant: "quiet",
+            isIconOnly: true,
+            className: "max-lg:hidden",
+          })}
         >
           <GitHubIcon />
         </a>
-        <ThemeToggle variant="quiet" isIconOnly />
+        <ThemeToggle variant="quiet" isIconOnly className="max-lg:hidden" />
         <HeaderActionsSlot />
-        {/* On /studio the slot above carries studio-specific actions instead. */}
+        {/* On /studio the slot above carries studio-specific actions instead.
+            Desktop-only: studio is a desktop tool, and mobile keeps the navbar
+            to logo + menu — Studio stays reachable from the menu drawer. */}
         {pathname !== "/studio" && (
           <LinkButton
             href="/studio"
             variant="primary"
             size="sm"
-            className="ml-1.5"
+            className="ml-1.5 max-lg:hidden"
           >
             Open studio
           </LinkButton>
         )}
-        <Separator orientation="vertical" className="mx-1.5 h-4 lg:hidden" />
-        <MobileNav items={items} />
       </div>
     </header>
   )
