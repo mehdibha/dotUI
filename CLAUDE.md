@@ -6,6 +6,8 @@ This is the dotUI repository — a design-system builder. Users compose a comple
 
 This is the goal, not the current state — check the code before assuming an axis exists.
 
+The vision: dotUI is the tool for creating a real, professional design system with your own taste — everything a startup needs as a foundation: technically strong, coherent, well built, and made to work well with AI. Create it once, then build on it everywhere — a web component library that matches your brand today; emails, native apps, and other platforms planned. Export widens the same way: the shadcn CLI and v0 today; vibe-coding tools like Bolt and Lovable, plus Figma and more, planned.
+
 The north star: the builder should be flexible enough to recreate almost any design system. If a user can't reproduce the look of a Material-, Geist-, or Linear-style system, an axis is missing. Coverage comes from a complete set of well-chosen axes, not infinite options: **every visual decision is a user-configurable axis of the builder**, never a hardcoded choice. Axes include (not exhaustive):
 
 - Color system: simple or advanced, selectable generation algorithm, semantic tokens, optionally context-aware tokens.
@@ -15,8 +17,6 @@ The north star: the builder should be flexible enough to recreate almost any des
 - For consistency, related components form synced groups: Button and ToggleButton share the same styles and must stay in sync.
 
 A second customization layer beyond visuals: `codeOptions` — the style of the exported code itself. Separator comments or not, arrow functions vs function declarations, tailwind-variants styles as commented arrays vs one line per slot/variant, etc. The exported design system should read like the user's codebase, not ours.
-
-Beyond that, export keeps widening: CLI + v0 today; Bolt, Lovable, Figma, Claude design, etc. planned.
 
 What this means when writing code today:
 
