@@ -1,23 +1,15 @@
-"use client"
-
-import { PinIcon } from "lucide-react"
-
+import { BookmarkIcon, PinIcon } from "@/registry/__generated__/icons"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 
-import { DemoPress, useToggleAutoplay } from "../autoplay"
-
 export function ToggleButtonDemo() {
-  const { selected, pressing } = useToggleAutoplay({ initial: true })
   return (
-    <DemoPress pressing={pressing} selected={selected}>
-      <ToggleButton
-        isIconOnly
-        aria-label="Toggle pin"
-        isSelected={selected}
-        onChange={() => {}}
-      >
-        <PinIcon className="rotate-45" />
+    <div className="flex items-center gap-3">
+      <ToggleButton defaultSelected isIconOnly aria-label="Pin">
+        <PinIcon />
       </ToggleButton>
-    </DemoPress>
+      <ToggleButton isIconOnly aria-label="Bookmark">
+        <BookmarkIcon />
+      </ToggleButton>
+    </div>
   )
 }

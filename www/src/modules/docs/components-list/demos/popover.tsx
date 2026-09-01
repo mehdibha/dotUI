@@ -1,19 +1,13 @@
-"use client"
-
-import { InfoIcon } from "lucide-react"
-
+import { InfoIcon } from "@/registry/__generated__/icons"
 import { Button } from "@/registry/ui/button"
 import { DialogHeader, DialogTitle } from "@/registry/ui/dialog"
 
-import { OverlayScene, useOpenAutoplay } from "../autoplay"
+import { OverlayPreview } from "../overlay"
 
 export function PopoverDemo() {
-  const { phase } = useOpenAutoplay()
   return (
-    <OverlayScene
-      phase={phase}
+    <OverlayPreview
       variant="popover"
-      side="bottom"
       surfaceClassName="w-52 text-left"
       trigger={
         <Button aria-label="Help" isIconOnly>
@@ -27,6 +21,6 @@ export function PopoverDemo() {
       <p className="mt-1 text-fg-muted">
         If you&apos;re having issues, contact our customer support team.
       </p>
-    </OverlayScene>
+    </OverlayPreview>
   )
 }

@@ -1,18 +1,17 @@
-"use client"
-
 import { Label } from "@/registry/ui/field"
 import { Switch, SwitchControl } from "@/registry/ui/switch"
 
-import { DemoPress, useToggleAutoplay } from "../autoplay"
-
 export function SwitchDemo() {
-  const { selected, pressing } = useToggleAutoplay()
   return (
-    <Switch isSelected={selected} onChange={() => {}}>
-      <DemoPress pressing={pressing}>
+    <div className="flex flex-col gap-3">
+      <Switch defaultSelected>
         <SwitchControl />
-      </DemoPress>
-      <Label>Focus mode</Label>
-    </Switch>
+        <Label>Notifications</Label>
+      </Switch>
+      <Switch>
+        <SwitchControl />
+        <Label>Focus mode</Label>
+      </Switch>
+    </div>
   )
 }

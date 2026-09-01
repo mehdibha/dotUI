@@ -49,7 +49,6 @@ export function ComponentsGrid({ category }: { category: string }) {
             scale={component.scale}
             fill={component.fill}
             stretch={component.stretch}
-            cursor={component.cursor}
             previewClassName={CATEGORY_PREVIEW_HEIGHT[category]}
           />
         ))}

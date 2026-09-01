@@ -1,5 +1,3 @@
-"use client"
-
 import {
   Pagination,
   PaginationItem,
@@ -9,37 +7,26 @@ import {
   PaginationPrevious,
 } from "@/registry/ui/pagination"
 
-import { useStepAutoplay } from "../autoplay"
-
-// Kept short so the row fits the preview card without overflowing.
-const PAGES = [1, 2, 3]
-
 export function PaginationDemo() {
-  const { index } = useStepAutoplay(PAGES.length, { dwell: 1100 })
-  const page = PAGES[index] ?? PAGES[0]
-
   return (
     <Pagination>
       <PaginationList>
         <PaginationItem>
-          <PaginationPrevious isDisabled={page === 1} onPress={() => {}} />
+          <PaginationPrevious onPress={() => {}} />
         </PaginationItem>
-        {PAGES.map((p) => (
-          <PaginationItem key={p}>
+        {[1, 2, 3].map((page) => (
+          <PaginationItem key={page}>
             <PaginationLink
-              isActive={p === page}
-              aria-label={`Page ${p}`}
+              isActive={page === 2}
+              aria-label={`Page ${page}`}
               onPress={() => {}}
             >
-              {p}
+              {page}
             </PaginationLink>
           </PaginationItem>
         ))}
         <PaginationItem>
-          <PaginationNext
-            isDisabled={page === PAGES.length}
-            onPress={() => {}}
-          />
+          <PaginationNext onPress={() => {}} />
         </PaginationItem>
       </PaginationList>
     </Pagination>

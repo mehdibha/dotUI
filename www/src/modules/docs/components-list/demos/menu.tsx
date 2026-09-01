@@ -1,19 +1,13 @@
-"use client"
-
-import { MenuIcon } from "lucide-react"
-
+import { MenuIcon } from "@/registry/__generated__/icons"
 import { Button } from "@/registry/ui/button"
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
-import { OverlayScene, useOpenAutoplay } from "../autoplay"
+import { OverlayPreview } from "../overlay"
 
 export function MenuDemo() {
-  const { phase } = useOpenAutoplay()
   return (
-    <OverlayScene
-      phase={phase}
+    <OverlayPreview
       variant="menu"
-      side="bottom"
       surfaceClassName="w-44 p-0"
       trigger={
         <Button aria-label="Menu" isIconOnly>
@@ -29,6 +23,6 @@ export function MenuDemo() {
         <ListBoxItem id="team">Create team</ListBoxItem>
         <ListBoxItem id="logout">Log out</ListBoxItem>
       </ListBox>
-    </OverlayScene>
+    </OverlayPreview>
   )
 }
