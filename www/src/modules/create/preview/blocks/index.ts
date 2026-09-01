@@ -22,6 +22,7 @@ export const BLOCKS: BlockMeta[] = [
   { slug: "search-results", name: "Search Results" },
   { slug: "ai-chat", name: "AI Chat" },
   { slug: "code-review", name: "Code Review" },
+  { slug: "code-editor", name: "Code Editor" },
   { slug: "logs", name: "Logs" },
   { slug: "checkout", name: "Checkout" },
   { slug: "banking", name: "Banking" },
