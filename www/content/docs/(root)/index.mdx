@@ -3,13 +3,13 @@ title: Introduction
 description: Build your own design system. Compose it in the studio, preview it live, and export code you own.
 ---
 
-**dotUI is not a component library. It's how you build your own design system.**
+**dotUI is a design-system builder.** You decide every detail — colors, typography, density, the style of each component — and leave with a design system that's actually yours.
 
-You know how this usually goes: you pick a component library, ship fast, and a few months later your app looks like every other app built with it. So you start fighting the library — overriding styles, wrapping components, patching decisions that were never yours to begin with.
+Component libraries come with a look. Ship with one and your app looks like every other app built with it — so you start fighting it: overriding styles, wrapping components, patching decisions that were never yours to begin with.
 
 Copy-paste libraries fixed part of this. You own the files now. But the design inside them is still someone else's: their colors, their radius, their spacing, their taste. Changing the code is easy — changing the _system_ is not.
 
-That's what dotUI is for. **Everyone should be able to build a design system that actually feels like theirs** — without a design team, and without spending months on it.
+dotUI exists so that **everyone can build their own design system** — without a design team, and without spending months on it.
 
 ## How it works
 
@@ -23,24 +23,7 @@ What you get isn't our library with your colors on top. It's your design system,
 
 Every component is accessible out of the box, built on [React Aria](https://react-spectrum.adobe.com/react-aria/) and styled with Tailwind CSS. The API is small and consistent: one `Button` for every trigger, one `Popover` for everything that floats, one `Input` for every field. Learn a component once and you know the whole library.
 
-## Docs that show, not tell
-
-Every component page starts with a playground. Change a prop, watch the code and preview update. Read the prose only when you need it.
-
-<Demo name="menu/demos/account" />
-
-And below that, examples of components composed into real product UI:
-
-<div className='grid grid-cols-2 gap-4 mt-6'>
-
-<Example name="calendar/demos/with-presets" />
-<Example name="combobox/demos/multi-select" />
-<Example name="date-picker/demos/with-modal" />
-<Example name="switch/demos/notification-preferences" />
-
-</div>
-
-## Works great with AI
+## Built for the AI era
 
 Because the API is consistent and predictable, AI agents pick it up fast: an agent that has written one component can write the next. And since you own the code, your tools can read it, understand it, and build on it.
 
