@@ -49,8 +49,12 @@ export const clientLoader = browserCollections.docs.createClientLoader({
               // keep lg padding until xl centering slack separates them from
               // the sidebar and MiniTOC rails.
               "flex w-full min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-6 dark:text-neutral-300",
+              // mr-auto: when the column hits max-w below lg, the auto margin
+              // absorbs the leftover flex space so the MiniTOC column stays
+              // pinned to the viewport edge (aligned with the header's menu
+              // button) instead of trailing the capped column.
               full
-                ? "max-w-4xl lg:mx-auto lg:px-8 xl:px-0"
+                ? "mr-auto max-w-4xl lg:mx-auto lg:px-8 xl:px-0"
                 : "mx-auto max-w-2xl lg:px-0",
             )}
           >
