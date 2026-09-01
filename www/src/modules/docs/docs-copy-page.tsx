@@ -97,11 +97,7 @@ export function DocsCopyPage({
         className="gap-1.5"
         onPress={() => copyToClipboard(content)}
       >
-        {isCopied ? (
-          <CheckIcon data-icon-start="" />
-        ) : (
-          <CopyIcon data-icon-start="" />
-        )}
+        {isCopied ? <CheckIcon /> : <CopyIcon />}
         Copy page
       </Button>
       <Menu>
