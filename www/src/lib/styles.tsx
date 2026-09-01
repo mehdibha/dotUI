@@ -42,6 +42,7 @@ import type {
   ParamDef,
   RegistryItem,
 } from "@/registry/types"
+import { registryUi } from "@/registry/ui/registry"
 
 /* --------------------------------- Types --------------------------------- */
 
@@ -63,21 +64,36 @@ const DesignSystemContext = React.createContext<DesignSystemContextValue>({
   density: "default",
 })
 
-/* ----------------------------- Param registry ----------------------------- */
+/* ----------------------------- Param bindings ----------------------------- */
+
+const emptyParamSelections: Record<string, string> = {}
 
 /**
- * Module-scoped registry populated by `createStyles` at module load. The
- * provider reads it to resolve the user's per-component selections into CSS
- * vars on `:root`. Two kinds:
- *   - enum vars: `{ [component]: { [paramName]: { [valueName]: vars } } }`
- *   - scalar bindings: `{ [component]: { [paramName]: cssVar } }`
+ * Param → CSS var bindings derived from the registry metas: enum values' `vars`
+ * blocks (`{ [component]: { [paramName]: { [valueName]: vars } } }`) and scalar
+ * params' `cssVar` (`{ [component]: { [paramName]: cssVar } }`). Deliberately
+ * NOT registered by `createStyles` at module load: that would make the
+ * provider's inline vars depend on which styles modules happen to be evaluated,
+ * which differs between the server (accretes every SSR'd route in the dev
+ * process) and the client (only the current page's chunks) — a hydration
+ * mismatch. Metas are plain data both environments always share.
  */
-const enumVarsRegistry = new Map<
+const enumVarBindings = new Map<
   string,
   Record<string, Record<string, Record<string, string>>>
 >()
-const scalarVarsRegistry = new Map<string, Record<string, string>>()
-const emptyParamSelections: Record<string, string> = {}
+const scalarVarBindings = new Map<string, Record<string, string>>()
+for (const item of registryUi) {
+  if (!item.params) continue
+  const enumVars: Record<string, Record<string, Record<string, string>>> = {}
+  const scalars: Record<string, string> = {}
+  for (const [paramName, def] of Object.entries(item.params)) {
+    if (def.kind === "scalar") scalars[paramName] = def.cssVar
+    else if (def.vars) enumVars[paramName] = def.vars
+  }
+  if (Object.keys(enumVars).length > 0) enumVarBindings.set(item.name, enumVars)
+  if (Object.keys(scalars).length > 0) scalarVarBindings.set(item.name, scalars)
+}
 
 /* -------------------------------- Provider ------------------------------- */
 
@@ -390,8 +406,8 @@ function DesignSystemProvider({
     // Enum params write a value's `vars` block; scalar params write a single
     // CSS var resolved from the selected token reference.
     for (const [componentName, componentSelections] of Object.entries(params)) {
-      const enumVars = enumVarsRegistry.get(componentName)
-      const scalarBindings = scalarVarsRegistry.get(componentName)
+      const enumVars = enumVarBindings.get(componentName)
+      const scalarBindings = scalarVarBindings.get(componentName)
       for (const [paramName, paramValue] of Object.entries(
         componentSelections,
       )) {
@@ -703,9 +719,7 @@ type EnumParamsConfig<M, Base> = [EnumParamNamesOf<M>] extends [never]
   : {
       params?: {
         [K in EnumParamNamesOf<M>]?: {
-          [V in EnumParamValuesOf<M, K> & string]?: ExtendingTv<Base> & {
-            vars?: Record<string, string>
-          }
+          [V in EnumParamValuesOf<M, K> & string]?: ExtendingTv<Base>
         }
       }
     }
@@ -746,53 +760,15 @@ function createStyles<const M extends RegistryItem, const Base>(
   const { base, density, params } = config as {
     base: Base
     density?: Record<Density, Record<string, unknown>>
-    params?: Record<
-      string,
-      Record<
-        string,
-        Record<string, unknown> & { vars?: Record<string, string> }
-      >
-    >
+    params?: Record<string, Record<string, Record<string, unknown>>>
   }
 
-  /* ----- Register param vars / scalar bindings into runtime registry ----- */
   const metaParams = (meta.params ?? {}) as Record<string, ParamDef>
   const enumParamNames: string[] = []
   const paramDefaults: Record<string, string> = {}
-
-  const enumVarsForComponent: Record<
-    string,
-    Record<string, Record<string, string>>
-  > = {}
-  const scalarBindingsForComponent: Record<string, string> = {}
-
   for (const [paramName, def] of Object.entries(metaParams)) {
     paramDefaults[paramName] = def.default
-    if (def.kind === "enum") {
-      enumParamNames.push(paramName)
-      const valueVarsByValue: Record<string, Record<string, string>> = {}
-      const valuesConfig = (params?.[paramName] ?? {}) as Record<
-        string,
-        { vars?: Record<string, string> }
-      >
-      let hasAny = false
-      for (const [valueName, valueConfig] of Object.entries(valuesConfig)) {
-        if (valueConfig?.vars && Object.keys(valueConfig.vars).length > 0) {
-          valueVarsByValue[valueName] = valueConfig.vars
-          hasAny = true
-        }
-      }
-      if (hasAny) enumVarsForComponent[paramName] = valueVarsByValue
-    } else if (def.kind === "scalar") {
-      scalarBindingsForComponent[paramName] = def.cssVar
-    }
-  }
-
-  if (Object.keys(enumVarsForComponent).length > 0) {
-    enumVarsRegistry.set(meta.name, enumVarsForComponent)
-  }
-  if (Object.keys(scalarBindingsForComponent).length > 0) {
-    scalarVarsRegistry.set(meta.name, scalarBindingsForComponent)
+    if (def.kind === "enum") enumParamNames.push(paramName)
   }
 
   /* ----- Build per-density tv functions ----- */
@@ -812,12 +788,6 @@ function createStyles<const M extends RegistryItem, const Base>(
   }
 
   /* ----- Composition: base → density → params(in declared order) ----- */
-  function stripVars<T extends { vars?: unknown }>(input: T): Omit<T, "vars"> {
-    // tv() can't see the `vars` key, so drop it before passing through.
-    const { vars: _vars, ...rest } = input
-    return rest as Omit<T, "vars">
-  }
-
   function compose(
     d: Density,
     paramSelection: Record<string, string>,
@@ -829,12 +799,10 @@ function createStyles<const M extends RegistryItem, const Base>(
         paramSelection[paramName] ?? paramDefaults[paramName]
       if (!selectedValue) continue
       const valueConfig = params?.[paramName]?.[selectedValue]
-      if (!valueConfig) continue
-      const tvOverride = stripVars(valueConfig)
-      if (Object.keys(tvOverride).length === 0) continue
+      if (!valueConfig || Object.keys(valueConfig).length === 0) continue
       current = tv({
         extend: current as never,
-        ...(tvOverride as Parameters<typeof tv>[0]),
+        ...(valueConfig as Parameters<typeof tv>[0]),
       } as never)
     }
     return current

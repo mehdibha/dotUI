@@ -29,6 +29,7 @@ const fixtureMeta = {
       kind: "enum",
       default: "default",
       values: ["default", "alt"] as const,
+      vars: { alt: { "--fixture-bg": "var(--neutral-100)" } },
     },
     highlight: {
       kind: "enum",
@@ -84,7 +85,6 @@ createStyles(fixtureMeta, {
       default: { slots: { root: "border" } },
       alt: {
         slots: { item: "italic" },
-        vars: { "--fixture-bg": "var(--neutral-100)" },
       },
     },
     highlight: {
@@ -225,14 +225,14 @@ createStyles(fixtureMeta, {
   },
 })
 
-/* 11) Params: vars must be Record<string, string>, not number values */
+/* 11) Params: `vars` lives in meta now, not the styles config */
 createStyles(fixtureMeta, {
   base: baseConfig.base,
   params: {
     style: {
       alt: {
-        // @ts-expect-error — vars values must be strings
-        vars: { "--x": 12 },
+        // @ts-expect-error — vars is not a styles-config key
+        vars: { "--x": "var(--neutral-100)" },
       },
     },
   },

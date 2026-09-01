@@ -18,14 +18,15 @@ import { PREVIEW_PENDING_SCRIPT } from "@/modules/docs/preview-pending"
 
 import appCss from "@/styles.css?url"
 
-// Floating panel for live design/layout exploration (see src/dev/tweaker).
-// Dev + Vercel previews; the !SSR guard keeps the chunk out of the server
-// bundle so build-time prerendering never evaluates it.
-const DevTweaker =
+// Devtools hub — ⌘⇧D toggles a switch panel for the tweaker, React Grab and
+// TanStack Devtools (see src/dev/devtools). Dev + Vercel previews; the !SSR
+// guard keeps the chunk out of the server bundle so build-time prerendering
+// never evaluates it.
+const DevtoolsHub =
   !import.meta.env.SSR &&
   (import.meta.env.DEV || import.meta.env.VERCEL_ENV === "preview")
     ? lazy(() =>
-        import("@/dev/tweaker").then((m) => ({ default: m.DevTweaker })),
+        import("@/dev/devtools").then((m) => ({ default: m.DevtoolsHub })),
       )
     : null
 
@@ -90,10 +91,10 @@ function RootComponent() {
         </ToastProvider>
         {/* ClientOnly: the !SSR guard above renders nothing on the server, so
             without it the client's first render mismatches and hydration fails. */}
-        {DevTweaker && (
+        {DevtoolsHub && (
           <ClientOnly fallback={null}>
             <Suspense fallback={null}>
-              <DevTweaker />
+              <DevtoolsHub />
             </Suspense>
           </ClientOnly>
         )}

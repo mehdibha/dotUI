@@ -65,19 +65,9 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
   },
   params: {
     highlight: {
-      subtle: {
-        vars: {
-          "--color-highlight": "var(--neutral-200)",
-          "--color-fg-on-highlight": "var(--neutral-950)",
-        },
-      },
       accent: {
         slots: {
           item: "hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:**:text-current focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:**:text-current",
-        },
-        vars: {
-          "--color-highlight": "var(--accent-700)",
-          "--color-fg-on-highlight": "var(--on-accent-700)",
         },
       },
     },

@@ -60,11 +60,5 @@ export const navItems: {
     to: "/docs/$",
     params: { _splat: "components" },
   },
-  {
-    name: "Charts",
-    match: "/docs/charts",
-    to: "/docs/$",
-    params: { _splat: "charts" },
-  },
   { name: "Studio", match: "/studio", to: "/studio" },
 ]
