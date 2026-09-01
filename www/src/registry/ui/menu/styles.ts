@@ -50,22 +50,6 @@ const { useStyles, styles } = createStyles(menuMeta, {
       },
     },
   },
-  params: {
-    highlight: {
-      subtle: {
-        vars: {
-          "--color-highlight": "var(--neutral-200)",
-          "--color-fg-on-highlight": "var(--neutral-950)",
-        },
-      },
-      accent: {
-        vars: {
-          "--color-highlight": "var(--accent-700)",
-          "--color-fg-on-highlight": "var(--on-accent-700)",
-        },
-      },
-    },
-  },
 })
 
 export type MenuStyles = typeof styles
