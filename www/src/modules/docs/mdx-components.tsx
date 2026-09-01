@@ -22,13 +22,9 @@ import {
 } from "@/modules/docs/demo"
 import { Example } from "@/modules/docs/example"
 import { Examples, type ExamplesProps } from "@/modules/docs/examples"
-import {
-  InstallationCandidate,
-  InstallationCandidates,
-  StudioCta,
-} from "@/modules/docs/installation-candidates"
 import { InteractiveDemo } from "@/modules/docs/interactive-demo"
 import { Reference, type ReferenceProps } from "@/modules/docs/reference"
+import { StudioCta } from "@/modules/docs/studio-cta"
 
 export const mdxComponents: MDXComponents = {
   h1: ({ className, ...props }) => (
@@ -217,8 +213,6 @@ export const mdxComponents: MDXComponents = {
   ),
   ComponentsGrid,
   ChartFamilyGrid,
-  InstallationCandidates,
-  InstallationCandidate,
   StudioCta,
   CompositionAnimation: ({
     className,
