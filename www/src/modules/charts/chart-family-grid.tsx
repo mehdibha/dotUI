@@ -20,10 +20,8 @@ export function ChartFamilyGrid({ family }: { family: string }) {
     return null
   }
 
-  // Two columns, not three: the content column is ~900px, and three-across
-  // makes every card taller than it is wide.
   return (
-    <div className="mt-6 grid grid-cols-1 gap-x-5 gap-y-6 sm:grid-cols-2">
+    <div className="mt-6 grid grid-cols-1 gap-x-5 gap-y-6 sm:grid-cols-2 xl:grid-cols-3">
       {variantsFor(data.id).map((v) => (
         <ChartCard
           key={v.key}

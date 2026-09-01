@@ -41,7 +41,8 @@ import { cn } from "@/registry/lib/utils"
    codegen baseline and the single auditable list of candidate builder axes.
    Never scatter a literal into a `??` fallback — read it from here. */
 export const chartDefaults = {
-  height: 256,
+  // 16/9 like shadcn's `aspect-video` container; height follows measured width.
+  aspectRatio: 16 / 9,
   curve: "natural",
   strokeWidth: 2.25,
   fill: 0.2,
@@ -774,7 +775,7 @@ function createDrawEntrance(): (container: HTMLElement) => void {
 }
 
 /* House chart host: the tooltip-capable surface from the library's `tooltip`
-   entry driving the motion renderer, with the default height built in, and
+   entry driving the motion renderer, with the default aspect ratio built in, and
    `children` rendered as an HTML overlay above it so hover readouts repaint at
    pointer speed without touching the definition. The tooltip is portaled, so
    it always paints above the overlay. `className` lands on the outer box —
@@ -791,8 +792,8 @@ export function Chart<TDatum, TXValue extends ChartValue>({
     <div className={cn("relative", className)}>
       <RendererChart
         renderer={MOTION_RENDERER}
-        height={
-          props.aspectRatio === undefined ? chartDefaults.height : undefined
+        aspectRatio={
+          props.height === undefined ? chartDefaults.aspectRatio : undefined
         }
         onRender={
           entrance === undefined

@@ -17,7 +17,14 @@ import { getDemoComponent, POLAR_FAMILIES } from "./data"
  * their turn. Only the chart body is deferred — the card shell renders on
  * first paint.
  */
-function LazyChartBody({ children }: { children: React.ReactNode }) {
+function LazyChartBody({
+  placeholderClassName,
+  children,
+}: {
+  /** Sized to match the mounted chart exactly, so mounting never shifts layout. */
+  placeholderClassName: string
+  children: React.ReactNode
+}) {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
 
@@ -38,8 +45,8 @@ function LazyChartBody({ children }: { children: React.ReactNode }) {
   }, [])
 
   return (
-    <div ref={ref} className="size-full">
-      {visible && children}
+    <div ref={ref} className="w-full">
+      {visible ? children : <div className={placeholderClassName} />}
     </div>
   )
 }
@@ -60,14 +67,11 @@ interface ChartCardProps {
  * the real, interactive component (with its source) lives in the docs, which
  * "Show code" links to.
  *
- * Every card in a family is the same height and padding so the gallery reads
- * as one set. Charts size themselves: the host fills the frame's width and
- * draws at its own height (the library measures width only) — the box is
- * sized landscape around the 256px chart. Polar charts are capped at 250px
+ * Cards have no fixed height (mirroring shadcn's charts page): the chart draws
+ * at 16/9 of the frame width and the card wraps it, so every card in a grid of
+ * equal columns lands at the same height. Polar charts are capped at 250px
  * wide so they read as a circle rather than a lone arc in a wide box.
  */
-export const CARD_HEIGHT = "h-72"
-
 export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
   // Bumping this key remounts the chart, replaying its entry animation.
   const [replayKey, setReplayKey] = useState(0)
@@ -75,6 +79,12 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
   if (!Component) return null
 
   const isPolar = POLAR_FAMILIES.has(familyId)
+  // What the chart resolves to once mounted — the placeholder mirrors it so
+  // neither lazy mounting nor the Suspense chunk load shifts layout.
+  const chartFootprint = cn(
+    "aspect-video w-full",
+    isPolar && "mx-auto max-w-[250px]",
+  )
 
   return (
     <ShowcaseCard
@@ -94,23 +104,25 @@ export function ChartCard({ familyId, demoKey, label }: ChartCardProps) {
           <ChartCodeModal demoKey={demoKey} label={label} />
         </div>
       }
-      className={CARD_HEIGHT}
+      className="h-auto"
       inert
       aria-hidden="true"
     >
-      <LazyChartBody>
-        <Suspense fallback={null}>
-          <div
-            className={cn(
-              "flex size-full animate-in items-center justify-center overflow-hidden p-4 duration-300 fade-in [&_*]:pointer-events-none",
-              isPolar &&
-                "[&_.ts-chart-host]:mx-auto! [&_.ts-chart-host]:max-w-[250px]!",
-            )}
-          >
-            <Component key={replayKey} />
-          </div>
-        </Suspense>
-      </LazyChartBody>
+      <div className="p-6">
+        <LazyChartBody placeholderClassName={chartFootprint}>
+          <Suspense fallback={<div className={chartFootprint} />}>
+            <div
+              className={cn(
+                "w-full animate-in duration-300 fade-in [&_*]:pointer-events-none [&>div]:w-full",
+                isPolar &&
+                  "[&_.ts-chart-host]:mx-auto! [&_.ts-chart-host]:max-w-[250px]!",
+              )}
+            >
+              <Component key={replayKey} />
+            </div>
+          </Suspense>
+        </LazyChartBody>
+      </div>
     </ShowcaseCard>
   )
 }
