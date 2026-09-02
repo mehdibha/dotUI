@@ -4,7 +4,7 @@ import { FieldGroup, Label } from "@/registry/ui/field"
 
 export function CheckboxGroupDemo() {
   return (
-    <CheckboxGroup defaultValue={["comments", "mentions"]}>
+    <CheckboxGroup defaultValue={["comments", "mentions"]} className="w-36">
       <Label>Email me about</Label>
       <FieldGroup>
         <Checkbox value="comments">

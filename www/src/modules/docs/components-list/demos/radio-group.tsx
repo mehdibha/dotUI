@@ -3,7 +3,7 @@ import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group"
 
 export function RadioGroupDemo() {
   return (
-    <RadioGroup defaultValue="medium">
+    <RadioGroup defaultValue="medium" className="w-36">
       <Label>Size</Label>
       <FieldGroup>
         <Radio value="small">
