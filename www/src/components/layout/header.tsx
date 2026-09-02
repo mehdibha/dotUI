@@ -100,12 +100,13 @@ export function Header({ className, items = [] }: HeaderProps) {
           {/* Linear-style two-bar menu icon; no hover/press fill — those
               states don't exist on touch. Bars sit at the center and shift
               apart when closed; on open they collapse back and rotate into an
-              X (Linear's 160ms ease-out-quad). */}
+              X (Linear's 160ms ease-out-quad). order-last keeps it at the far
+              edge past the slot's Export action on /studio. */}
           <Button
             variant="quiet"
             isIconOnly
             aria-label="Menu"
-            className="hover:bg-transparent lg:hidden pressed:bg-transparent"
+            className="order-last hover:bg-transparent lg:hidden pressed:bg-transparent"
           >
             <svg
               width="16"
