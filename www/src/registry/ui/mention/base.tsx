@@ -202,6 +202,9 @@ function Mention({
               placement,
               trigger: "MenuTrigger",
               getTargetRect,
+              // Anchored to the caret, not the field: drop the field's width
+              // as the popover's minimum so it sizes to its suggestions.
+              style: { "--trigger-width": "0px" } as React.CSSProperties,
             },
           ],
           [MenuContext, { onAction: insert }],
