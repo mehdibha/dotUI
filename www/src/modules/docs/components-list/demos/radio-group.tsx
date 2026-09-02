@@ -1,11 +1,12 @@
 import { FieldGroup, Label } from "@/registry/ui/field"
 import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group"
 
+// FieldGroup is a CSS container, which zeroes its intrinsic width; lift that
+// so the group shrinks to its options and centers in the card.
 export function RadioGroupDemo() {
   return (
-    <RadioGroup defaultValue="medium" className="w-36">
-      <Label>Size</Label>
-      <FieldGroup>
+    <RadioGroup aria-label="Size" defaultValue="medium">
+      <FieldGroup className="[container-type:normal]!">
         <Radio value="small">
           <RadioControl />
           <Label>Small</Label>

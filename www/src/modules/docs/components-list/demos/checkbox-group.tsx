@@ -4,9 +4,9 @@ import { FieldGroup, Label } from "@/registry/ui/field"
 
 export function CheckboxGroupDemo() {
   return (
-    <CheckboxGroup defaultValue={["updates", "security"]} className="w-44">
+    <CheckboxGroup defaultValue={["updates", "security"]}>
       <Label>Notification Preferences</Label>
-      <FieldGroup>
+      <FieldGroup className="[container-type:normal]!">
         <Checkbox value="updates">
           <CheckboxControl />
           <Label>Product Updates</Label>
