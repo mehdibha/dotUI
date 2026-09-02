@@ -40,15 +40,26 @@ function resolveClassName<TState>(
   return typeof className === "function" ? className(state) : className
 }
 
-function stripPopupDialogProps(props: DrawerPopupRenderProps) {
-  const {
-    "aria-describedby": _ariaDescribedBy,
-    "aria-labelledby": _ariaLabelledBy,
-    role: _role,
-    ...presentationProps
-  } = props
+// The popup is a presentation container: the dialog semantics belong to the
+// <Dialog> rendered inside it.
+function DrawerPopupElement({
+  "aria-describedby": _ariaDescribedBy,
+  "aria-labelledby": _ariaLabelledBy,
+  role: _role,
+  swiping,
+  ...props
+}: DrawerPopupRenderProps & { swiping: boolean }) {
+  // A swipe that starts on a pressable (menu item, button) never cancels the
+  // react-aria press: the content moves with the finger, so the pointer stays
+  // over the target, and the drawer claims the gesture before the browser
+  // would fire pointercancel. Releasing then fires onPress. Cancel in-flight
+  // presses the way the platform does when a gesture is taken over.
+  React.useEffect(() => {
+    if (!swiping) return
+    document.dispatchEvent(new PointerEvent("pointercancel"))
+  }, [swiping])
 
-  return presentationProps
+  return <div {...props} />
 }
 
 function getInitialFocusTarget(popupElement: HTMLDivElement | null) {
@@ -149,12 +160,9 @@ function Drawer({
                         className: resolveClassName(className, state),
                       })
                     }
-                    render={(renderProps) => {
-                      const presentationProps =
-                        stripPopupDialogProps(renderProps)
-
-                      return <div {...presentationProps} />
-                    }}
+                    render={(renderProps, { swiping }) => (
+                      <DrawerPopupElement {...renderProps} swiping={swiping} />
+                    )}
                     ref={popupRef}
                     style={style}
                   >
