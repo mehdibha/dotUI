@@ -4,20 +4,20 @@ import { FieldGroup, Label } from "@/registry/ui/field"
 
 export function CheckboxGroupDemo() {
   return (
-    <CheckboxGroup defaultValue={["comments", "mentions"]} className="w-36">
-      <Label>Email me about</Label>
+    <CheckboxGroup defaultValue={["updates", "security"]} className="w-44">
+      <Label>Notification Preferences</Label>
       <FieldGroup>
-        <Checkbox value="comments">
+        <Checkbox value="updates">
           <CheckboxControl />
-          <Label>Comments</Label>
+          <Label>Product Updates</Label>
         </Checkbox>
-        <Checkbox value="mentions">
+        <Checkbox value="security">
           <CheckboxControl />
-          <Label>Mentions</Label>
+          <Label>Security Alerts</Label>
         </Checkbox>
-        <Checkbox value="followers">
+        <Checkbox value="marketing">
           <CheckboxControl />
-          <Label>Followers</Label>
+          <Label>Marketing Emails</Label>
         </Checkbox>
       </FieldGroup>
     </CheckboxGroup>
