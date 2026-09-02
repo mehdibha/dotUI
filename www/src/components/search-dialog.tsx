@@ -185,14 +185,20 @@ export default function SearchDialog({
         data-command=""
         className={commandStyles({
           // On mobile the dialog fills a near-full-height drawer, so the
-          // command column flexes instead of sizing to its content.
-          className: "gap-0 overflow-y-hidden p-0 max-lg:min-h-0 max-lg:grow",
+          // command column flexes instead of sizing to its content, and the
+          // field's shell inset moves to its bottom edge (same specificity as
+          // the command's own **: rules, which outrank plain classes).
+          className:
+            "gap-0 overflow-y-hidden p-0 max-lg:min-h-0 max-lg:grow max-lg:**:data-search-field:pt-0 max-lg:**:data-search-field:pb-1.5",
         })}
       >
+        {/* On mobile the field sits at the bottom of the drawer, thumb-reach
+            and directly above the keyboard (the drawer's keyboard inset pads
+            the popup bottom). */}
         <SearchField
           autoFocus={autoFocus}
           aria-label="Search"
-          className="px-1.5 pt-1.5"
+          className="px-1.5 pt-1.5 max-lg:order-last"
         >
           {/* Radius stays concentric with the modal (2xl − 6px inset); the
               filled input needs no focus treatment, so the ring is off and the
@@ -212,7 +218,7 @@ export default function SearchDialog({
               it rather than on the wrapper. */}
         <MenuContent
           aria-label="Search results"
-          className="max-h-80 overflow-y-auto p-1.5 pt-3 max-lg:max-h-none max-lg:min-h-0 max-lg:grow"
+          className="max-h-80 overflow-y-auto p-1.5 pt-3 max-lg:max-h-none max-lg:min-h-0 max-lg:grow max-lg:pt-1.5 max-lg:pb-3"
           onAction={onClose}
           renderEmptyState={() => (
             <div className="py-8 text-center text-sm text-fg-muted">

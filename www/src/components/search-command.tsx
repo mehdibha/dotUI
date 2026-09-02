@@ -119,11 +119,9 @@ export function SearchCommand({
           </DialogContent>
         )
         return isMobile ? (
-          // Match the desktop modal's raised surface. Near-full-height sheet
-          // (mirrors base-ui.com's mobile search): the input sits at the top,
-          // structurally clear of the iOS keyboard, and the results list
-          // flexes below it. The drawer's keyboard inset keeps the list's
-          // bottom above the keyboard.
+          // Match the desktop modal's raised surface. Near-full-height sheet:
+          // the results list flexes above the input, which sits at the
+          // bottom — the drawer's keyboard inset keeps it above the keyboard.
           <Drawer className="h-[calc(100dvh_-_3rem_+_var(--drawer-bleed))] bg-(--neutral-100)">
             <DrawerHandle />
             {content}
