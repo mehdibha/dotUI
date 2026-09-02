@@ -92,12 +92,12 @@ export function DocsCopyPage({
 
   return (
     <Group className="hidden sm:flex">
-      <Button size="sm" onPress={() => copyToClipboard(content)}>
-        {isCopied ? (
-          <CheckIcon data-icon-start="" />
-        ) : (
-          <CopyIcon data-icon-start="" />
-        )}{" "}
+      <Button
+        size="sm"
+        className="gap-1.5"
+        onPress={() => copyToClipboard(content)}
+      >
+        {isCopied ? <CheckIcon /> : <CopyIcon />}
         Copy page
       </Button>
       <Menu>
