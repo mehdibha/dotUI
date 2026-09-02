@@ -68,11 +68,13 @@ interface DrawerProps {
   isKeyboardDismissDisabled?: boolean
   swipeToDismiss?: boolean
   className?: DrawerPrimitive.Popup.Props["className"]
+  backdropClassName?: string
   style?: DrawerPrimitive.Popup.Props["style"]
   children?: React.ReactNode
 }
 
 function Drawer({
+  backdropClassName,
   children,
   className,
   defaultOpen,
@@ -137,7 +139,9 @@ function Drawer({
           <DrawerPrimitive.Portal>
             <ClearPressResponder>
               <div className={overlay()}>
-                <DrawerPrimitive.Backdrop className={backdrop()} />
+                <DrawerPrimitive.Backdrop
+                  className={backdrop({ className: backdropClassName })}
+                />
                 <DrawerPrimitive.Viewport className={viewport({ placement })}>
                   <DrawerPrimitive.Popup
                     data-drawer=""
