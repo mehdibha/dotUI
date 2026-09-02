@@ -109,10 +109,7 @@ export function SearchCommand({
             // structurally clear of the iOS keyboard, and the results list
             // flexes below it. The drawer's keyboard inset keeps the list's
             // bottom above the keyboard.
-            <Drawer
-              className="h-[calc(100dvh_-_3rem_+_var(--drawer-bleed))] bg-(--neutral-100)"
-              backdropClassName="bg-transparent"
-            >
+            <Drawer className="h-[calc(100dvh_-_3rem_+_var(--drawer-bleed))] bg-(--neutral-100)">
               <DrawerHandle />
               {content}
             </Drawer>

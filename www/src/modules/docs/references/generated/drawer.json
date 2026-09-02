@@ -108,14 +108,6 @@
       },
       "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
     },
-    "backdropClassName": {
-      "type": "string",
-      "detailedType": "string | undefined",
-      "typeAst": {
-        "type": "string"
-      },
-      "description": "Class name applied to the backdrop element."
-    },
     "children": {
       "type": "ReactNode",
       "typeAst": {

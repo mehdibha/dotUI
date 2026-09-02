@@ -32,8 +32,6 @@ export interface DrawerProps {
   /** Whether pressing Escape is suppressed. @default false */
   isKeyboardDismissDisabled?: boolean
   className?: DrawerPrimitive.Popup.Props["className"]
-  /** Class name applied to the backdrop element. */
-  backdropClassName?: string
   style?: DrawerPrimitive.Popup.Props["style"]
 
   /** The content of the drawer. */
