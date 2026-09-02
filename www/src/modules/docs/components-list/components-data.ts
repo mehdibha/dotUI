@@ -315,7 +315,7 @@ export const componentsData: ComponentCategory[] = [
         name: "Command",
         slug: "command",
         href: "/docs/components/command",
-        scale: 0.95,
+        fill: true,
         status: "done",
       },
       {
