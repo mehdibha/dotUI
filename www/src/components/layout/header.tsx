@@ -149,25 +149,25 @@ export function Header({ className, items = [] }: HeaderProps) {
           <GitHubIcon />
         </a>
         <ThemeToggle variant="quiet" isIconOnly className="max-lg:hidden" />
+        {/* Splits the icon cluster from the primary action — the studio CTA,
+            or on /studio the Export action portaled into the slot below. */}
+        <Separator
+          orientation="vertical"
+          className="mx-1.5 h-4 max-lg:hidden"
+        />
         <HeaderActionsSlot />
         {/* On /studio the slot above carries studio-specific actions instead.
             Desktop-only: studio is a desktop tool, and mobile keeps the navbar
             to logo + menu — Studio stays reachable from the menu drawer. */}
         {pathname !== "/studio" && (
-          <>
-            <Separator
-              orientation="vertical"
-              className="mx-1.5 h-4 max-lg:hidden"
-            />
-            <LinkButton
-              href="/studio"
-              variant="primary"
-              size="sm"
-              className="max-lg:hidden"
-            >
-              Open studio
-            </LinkButton>
-          </>
+          <LinkButton
+            href="/studio"
+            variant="primary"
+            size="sm"
+            className="max-lg:hidden"
+          >
+            Open studio
+          </LinkButton>
         )}
       </div>
     </header>
