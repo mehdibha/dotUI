@@ -1,10 +1,11 @@
 import { Link as RouterLink, useLocation } from "@tanstack/react-router"
 import type * as PageTree from "fumadocs-core/page-tree"
-import { MenuIcon, SearchIcon } from "lucide-react"
+import { SearchIcon } from "lucide-react"
 
 import { navItems, siteConfig } from "@/config/site"
 import { cn } from "@/registry/lib/utils"
 import { Button, buttonStyles, LinkButton } from "@/registry/ui/button"
+import { Separator } from "@/registry/ui/separator"
 import { GitHubIcon } from "@/components/icons/github"
 import { HeaderActionsSlot } from "@/components/layout/header-slot"
 import { Logo } from "@/components/layout/logo"
@@ -96,13 +97,24 @@ export function Header({ className, items = [] }: HeaderProps) {
           >
             <SearchIcon />
           </Button>
+          {/* Linear-style two-bar menu icon; no hover/press fill — those
+              states don't exist on touch. */}
           <Button
             variant="quiet"
             isIconOnly
             aria-label="Menu"
-            className="lg:hidden"
+            className="hover:bg-transparent lg:hidden pressed:bg-transparent"
           >
-            <MenuIcon />
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              aria-hidden
+            >
+              <rect x="1" y="4" width="14" height="1" rx="0.5" />
+              <rect x="1" y="11" width="14" height="1" rx="0.5" />
+            </svg>
           </Button>
         </SearchCommand>
         <a
@@ -125,14 +137,20 @@ export function Header({ className, items = [] }: HeaderProps) {
             Desktop-only: studio is a desktop tool, and mobile keeps the navbar
             to logo + menu — Studio stays reachable from the menu drawer. */}
         {pathname !== "/studio" && (
-          <LinkButton
-            href="/studio"
-            variant="primary"
-            size="sm"
-            className="ml-1.5 max-lg:hidden"
-          >
-            Open studio
-          </LinkButton>
+          <>
+            <Separator
+              orientation="vertical"
+              className="mx-1.5 h-4 max-lg:hidden"
+            />
+            <LinkButton
+              href="/studio"
+              variant="primary"
+              size="sm"
+              className="max-lg:hidden"
+            >
+              Open studio
+            </LinkButton>
+          </>
         )}
       </div>
     </header>
