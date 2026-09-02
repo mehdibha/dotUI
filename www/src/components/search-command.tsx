@@ -123,7 +123,9 @@ export function SearchCommand({
           // the results list flexes above the input, which sits at the
           // bottom — the drawer's keyboard inset keeps it above the keyboard.
           <Drawer className="h-[calc(100dvh_-_3rem_+_var(--drawer-bleed))] bg-(--neutral-100)">
-            <DrawerHandle />
+            {/* Base UI docs' handle: 56×5 pill floated 5px from the top,
+                content starting 16px down (the list's own top inset). */}
+            <DrawerHandle className="absolute inset-x-0 top-[5px] my-0 h-[5px]! w-14!" />
             {content}
           </Drawer>
         ) : (

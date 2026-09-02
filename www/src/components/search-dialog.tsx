@@ -218,7 +218,7 @@ export default function SearchDialog({
               it rather than on the wrapper. */}
         <MenuContent
           aria-label="Search results"
-          className="max-h-80 overflow-y-auto p-1.5 pt-3 max-lg:max-h-none max-lg:min-h-0 max-lg:grow max-lg:pt-1.5 max-lg:pb-3"
+          className="max-h-80 overflow-y-auto p-1.5 pt-3 max-lg:max-h-none max-lg:min-h-0 max-lg:grow max-lg:pt-4 max-lg:pb-3"
           onAction={onClose}
           renderEmptyState={() => (
             <div className="py-8 text-center text-sm text-fg-muted">
