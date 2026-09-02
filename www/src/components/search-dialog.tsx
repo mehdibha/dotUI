@@ -186,7 +186,7 @@ export default function SearchDialog({
         className={commandStyles({
           // On mobile the dialog fills a near-full-height drawer, so the
           // command column flexes instead of sizing to its content.
-          className: "gap-0 overflow-y-hidden p-0 max-md:min-h-0 max-md:grow",
+          className: "gap-0 overflow-y-hidden p-0 max-lg:min-h-0 max-lg:grow",
         })}
       >
         <SearchField
@@ -212,7 +212,7 @@ export default function SearchDialog({
               it rather than on the wrapper. */}
         <MenuContent
           aria-label="Search results"
-          className="max-h-80 overflow-y-auto p-1.5 pt-3 max-md:max-h-none max-md:min-h-0 max-md:grow"
+          className="max-h-80 overflow-y-auto p-1.5 pt-3 max-lg:max-h-none max-lg:min-h-0 max-lg:grow"
           onAction={onClose}
           renderEmptyState={() => (
             <div className="py-8 text-center text-sm text-fg-muted">
