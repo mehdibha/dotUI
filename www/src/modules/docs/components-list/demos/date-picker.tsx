@@ -14,6 +14,7 @@ export function DatePickerDemo() {
   return (
     <OverlayPreview
       variant="popover"
+      align="start"
       surfaceClassName="p-2"
       trigger={
         <DateField

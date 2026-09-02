@@ -1,16 +1,13 @@
-import { Label } from "@/registry/ui/field"
 import { Switch, SwitchControl } from "@/registry/ui/switch"
 
 export function SwitchDemo() {
   return (
-    <div className="flex flex-col gap-3">
-      <Switch defaultSelected>
+    <div className="flex items-center gap-4">
+      <Switch defaultSelected aria-label="On">
         <SwitchControl />
-        <Label>Notifications</Label>
       </Switch>
-      <Switch>
+      <Switch aria-label="Off">
         <SwitchControl />
-        <Label>Focus mode</Label>
       </Switch>
     </div>
   )

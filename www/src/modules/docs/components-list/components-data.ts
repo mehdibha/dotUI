@@ -259,7 +259,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Skeleton",
         slug: "skeleton",
         href: "/docs/components/skeleton",
-        scale: 0.5,
         status: "pending",
       },
     ],

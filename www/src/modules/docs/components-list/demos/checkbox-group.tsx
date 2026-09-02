@@ -4,20 +4,20 @@ import { FieldGroup, Label } from "@/registry/ui/field"
 
 export function CheckboxGroupDemo() {
   return (
-    <CheckboxGroup defaultValue={["nextjs", "astro"]}>
-      <Label>React frameworks</Label>
+    <CheckboxGroup defaultValue={["comments", "mentions"]}>
+      <Label>Email me about</Label>
       <FieldGroup>
-        <Checkbox value="nextjs">
+        <Checkbox value="comments">
           <CheckboxControl />
-          <Label>Next.js</Label>
+          <Label>Comments</Label>
         </Checkbox>
-        <Checkbox value="remix">
+        <Checkbox value="mentions">
           <CheckboxControl />
-          <Label>Remix</Label>
+          <Label>Mentions</Label>
         </Checkbox>
-        <Checkbox value="astro">
+        <Checkbox value="followers">
           <CheckboxControl />
-          <Label>Astro</Label>
+          <Label>Followers</Label>
         </Checkbox>
       </FieldGroup>
     </CheckboxGroup>

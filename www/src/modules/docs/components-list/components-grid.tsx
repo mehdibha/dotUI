@@ -5,20 +5,6 @@ import { PreviewVeil } from "../preview-controls"
 import { ComponentCard } from "./component-card"
 import { componentsData } from "./components-data"
 
-// Categories with tall components (calendars, tables, opened overlay/picker
-// scenes, the command palette) get a taller card so those components render at
-// or near native size. Everything else uses the default height.
-const CATEGORY_PREVIEW_HEIGHT: Record<string, string> = {
-  dates: "h-52",
-  navigation: "h-52",
-  "data-display": "h-52",
-  colors: "h-52",
-  charts: "h-72",
-  // Overlay scenes (and the pickers' dropdowns) need room for the opened surface.
-  overlays: "h-52",
-  pickers: "h-52",
-}
-
 /**
  * Renders the component previews for a single category, identified by its slug
  * (see components-data.ts). The category heading itself lives in the MDX so it
@@ -49,7 +35,6 @@ export function ComponentsGrid({ category }: { category: string }) {
             scale={component.scale}
             fill={component.fill}
             stretch={component.stretch}
-            previewClassName={CATEGORY_PREVIEW_HEIGHT[category]}
           />
         ))}
       </div>

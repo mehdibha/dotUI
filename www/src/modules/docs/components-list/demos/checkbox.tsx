@@ -1,16 +1,13 @@
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
-import { Label } from "@/registry/ui/field"
 
 export function CheckboxDemo() {
   return (
-    <div className="flex flex-col gap-3">
-      <Checkbox defaultSelected>
+    <div className="flex items-center gap-4">
+      <Checkbox defaultSelected aria-label="Selected">
         <CheckboxControl />
-        <Label>Accept terms</Label>
       </Checkbox>
-      <Checkbox>
+      <Checkbox aria-label="Unselected">
         <CheckboxControl />
-        <Label>Subscribe to updates</Label>
       </Checkbox>
     </div>
   )

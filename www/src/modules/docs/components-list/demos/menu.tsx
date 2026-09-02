@@ -8,6 +8,7 @@ export function MenuDemo() {
   return (
     <OverlayPreview
       variant="menu"
+      align="start"
       surfaceClassName="w-44 p-0"
       trigger={
         <Button aria-label="Menu" isIconOnly>

@@ -1,4 +1,3 @@
-import { Label } from "@/registry/ui/field"
 import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
 import { OTPField, OTPFieldSeparator } from "@/registry/ui/otp-field"
@@ -6,7 +5,6 @@ import { OTPField, OTPFieldSeparator } from "@/registry/ui/otp-field"
 export function OTPFieldDemo() {
   return (
     <OTPField length={6} defaultValue="2849">
-      <Label>Code</Label>
       <div className="flex items-center">
         <Group>
           <Input />

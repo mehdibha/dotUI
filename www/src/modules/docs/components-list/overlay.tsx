@@ -50,17 +50,21 @@ export function Surface({
 
 /**
  * Trigger + open surface, filling the card (`fill` demos). Anchored surfaces
- * hang below a top-aligned trigger and crop at the card's bottom edge; modal
+ * hang below a top-aligned trigger (`align` picks centered or bottom-left) and crop at the card's bottom edge; modal
  * and drawer float over a dimmed backdrop.
  */
 export function OverlayPreview({
   variant,
   trigger,
+  align = "center",
   surfaceClassName,
   children,
 }: {
   variant: SurfaceVariant
   trigger: ReactNode
+  /** Where the surface sits relative to the trigger: centered under it, or
+   *  flush with its left edge (bottom-left placement). */
+  align?: "start" | "center"
   surfaceClassName?: string
   children: ReactNode
 }) {
@@ -80,7 +84,7 @@ export function OverlayPreview({
           )}
         />
         {variant === "modal" ? (
-          <div className="absolute inset-x-6 top-8 flex justify-center">
+          <div className="absolute inset-x-6 top-6 flex justify-center">
             <Surface
               variant="modal"
               className={cn("w-full max-w-[13rem]", surfaceClassName)}
@@ -100,11 +104,18 @@ export function OverlayPreview({
   }
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center gap-2 px-4 pt-4">
-      {trigger}
-      <Surface variant={variant} className={surfaceClassName}>
-        {children}
-      </Surface>
+    <div className="absolute inset-0 flex justify-center px-4 pt-4">
+      <div
+        className={cn(
+          "flex flex-col gap-2",
+          align === "start" ? "w-fit items-start" : "w-full items-center",
+        )}
+      >
+        {trigger}
+        <Surface variant={variant} className={surfaceClassName}>
+          {children}
+        </Surface>
+      </div>
     </div>
   )
 }

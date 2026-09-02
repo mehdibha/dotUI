@@ -1,4 +1,3 @@
-import { Label } from "@/registry/ui/field"
 import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
 import {
@@ -10,7 +9,6 @@ import {
 export function NumberFieldDemo() {
   return (
     <NumberField defaultValue={12}>
-      <Label>Quantity</Label>
       <Group>
         <NumberFieldDecrement />
         <Input className="w-16" />

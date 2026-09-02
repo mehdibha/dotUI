@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 import { Link } from "@tanstack/react-router"
 
-import { cn } from "@/registry/lib/utils"
-
 import { componentDemos } from "./demos"
 
 interface ComponentCardProps {
@@ -12,7 +10,6 @@ interface ComponentCardProps {
   slug: string
   href: string
   scale?: number
-  previewClassName?: string
   /** The demo fills the card and manages its own framing (overlay scenes that
    *  crop at the bottom edge) instead of being centered and scaled. */
   fill?: boolean
@@ -26,7 +23,6 @@ export function ComponentCard({
   slug,
   href,
   scale = 1,
-  previewClassName,
   fill = false,
   stretch = false,
 }: ComponentCardProps) {
@@ -72,12 +68,7 @@ export function ComponentCard({
       data-component={slug}
       className="group flex flex-col items-center gap-3 rounded-lg focus-reset focus-visible:focus-ring"
     >
-      <div
-        className={cn(
-          "relative h-40 w-full overflow-hidden rounded-lg border bg-bg transition-colors group-hover:border-border-control",
-          previewClassName,
-        )}
-      >
+      <div className="relative h-48 w-full overflow-hidden rounded-lg border bg-bg transition-colors group-hover:border-border-control">
         {/* The demo is a non-interactive preview: `inert` keeps its controls out
             of the tab order and lets clicks fall through to the card link, so the
             whole card navigates instead of an embedded demo hijacking the click. */}
