@@ -98,7 +98,9 @@ export function Header({ className, items = [] }: HeaderProps) {
             <SearchIcon />
           </Button>
           {/* Linear-style two-bar menu icon; no hover/press fill — those
-              states don't exist on touch. */}
+              states don't exist on touch. Bars sit at the center and shift
+              apart when closed; on open they collapse back and rotate into an
+              X (Linear's 160ms ease-out-quad). */}
           <Button
             variant="quiet"
             isIconOnly
@@ -111,9 +113,24 @@ export function Header({ className, items = [] }: HeaderProps) {
               viewBox="0 0 16 16"
               fill="currentColor"
               aria-hidden
+              className="**:[rect]:origin-center **:[rect]:transition-transform **:[rect]:duration-[160ms] **:[rect]:ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
             >
-              <rect x="1" y="4" width="14" height="1" rx="0.5" />
-              <rect x="1" y="11" width="14" height="1" rx="0.5" />
+              <rect
+                x="1"
+                y="7.5"
+                width="14"
+                height="1"
+                rx="0.5"
+                className="-translate-y-[3.5px] group-aria-expanded/button:translate-y-0 group-aria-expanded/button:rotate-45"
+              />
+              <rect
+                x="1"
+                y="7.5"
+                width="14"
+                height="1"
+                rx="0.5"
+                className="translate-y-[3.5px] group-aria-expanded/button:translate-y-0 group-aria-expanded/button:-rotate-45"
+              />
             </svg>
           </Button>
         </SearchCommand>
