@@ -8,7 +8,8 @@
  *   - scalar param values (rewritten inline into Tailwind suffixes)
  *   - enum-with-files choices (e.g. loader.style = "ring" → ship base.ring.tsx)
  *
- * `name` must match a generated publishable. Missing names return 404.
+ * `name` must match a generated publishable, or a `font-*` item name (see
+ * publisher/emit-font). Missing names return 404.
  */
 
 import { createFileRoute } from "@tanstack/react-router"
@@ -30,6 +31,7 @@ import {
 setKnownDotuiNames(PUBLISHABLE_NAMES)
 
 import { resolveRequestPreset } from "@/lib/registry-preset"
+import { emitFontItem } from "@/publisher/emit-font"
 
 const JSON_HEADERS = {
   "Content-Type": "application/json; charset=utf-8",
@@ -47,6 +49,19 @@ export const Route = createFileRoute("/r/$name")({
     handlers: {
       GET: async ({ request, params }) => {
         const name = params.name
+
+        // `font-*` names are `registry:font` items the init item depends on;
+        // preset-independent, no publishable behind them.
+        if (name.startsWith("font-")) {
+          const fontItem = emitFontItem(name)
+          if (!fontItem) {
+            return Response.json({ error: "Not found" }, { status: 404 })
+          }
+          return new Response(JSON.stringify(fontItem, null, 2), {
+            headers: JSON_HEADERS,
+          })
+        }
+
         const loader = publishables[name]
         if (!loader) {
           return Response.json({ error: "Not found" }, { status: 404 })
