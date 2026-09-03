@@ -42,8 +42,22 @@ export const clientLoader = browserCollections.docs.createClientLoader({
         <PageLayout className="mt-4 flex scroll-mt-24 items-stretch pb-8 text-[1.05rem] sm:text-[15px] xl:w-full">
           <div
             className={cn(
-              "mx-auto flex w-full min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 lg:px-0 dark:text-neutral-300",
-              full ? "max-w-4xl" : "max-w-2xl",
+              // Padding tracks the header's logo inset (pl-4/md:pl-6). Narrow
+              // pages center at every width (left-hugging strands them far from
+              // the MiniTOC); wide (full) pages nearly fill the row below lg,
+              // so they hug the left edge to stay aligned with the logo. From
+              // lg they keep px-8 as a minimum gap against the sidebar and
+              // MiniTOC rails; the cap grows by that padding (60rem = 4xl +
+              // 4rem) so the content holds its full width whenever there's
+              // room, with no snap at any breakpoint.
+              "flex w-full min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-6 dark:text-neutral-300",
+              // mr-auto: when the column hits max-w below lg, the auto margin
+              // absorbs the leftover flex space so the MiniTOC column stays
+              // pinned to the viewport edge (aligned with the header's menu
+              // button) instead of trailing the capped column.
+              full
+                ? "mr-auto max-w-4xl lg:mx-auto lg:max-w-[60rem] lg:px-8"
+                : "mx-auto max-w-2xl lg:px-0",
             )}
           >
             <div data-page-header="" className="relative mb-2 space-y-3 pb-4">
@@ -91,7 +105,13 @@ export const clientLoader = browserCollections.docs.createClientLoader({
             <div
               className={cn(
                 "sticky top-(--header-height) z-30 -mt-4 hidden w-16 shrink-0 justify-end self-start px-6 pt-10 md:flex",
-                !full && "xl:hidden",
+                // Narrow pages mirror the sidebar's width so the body sits
+                // viewport-centered between equal rails — and the xl swap to
+                // the TOC rail doesn't shift it. Wide pages keep a slim rail:
+                // the bars carry no text, so a full-width rail reads as
+                // left-heavy; the slight rightward bias evens out the visible
+                // whitespace on both sides of the body.
+                full ? "lg:w-24" : "lg:w-(--sidebar-width) xl:hidden",
               )}
             >
               <MiniTOC />
