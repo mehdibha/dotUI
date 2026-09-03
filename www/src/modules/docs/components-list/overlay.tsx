@@ -57,11 +57,14 @@ export function OverlayPreview({
   variant,
   trigger,
   align = "center",
+  className,
   surfaceClassName,
   children,
 }: {
   variant: SurfaceVariant
   trigger: ReactNode
+  /** Extra classes for the anchored scene, e.g. a roomier inset. */
+  className?: string
   /** Where the surface sits relative to the trigger: centered under it, or
    *  flush with its left edge (bottom-left placement). */
   align?: "start" | "center"
@@ -104,7 +107,12 @@ export function OverlayPreview({
   }
 
   return (
-    <div className="absolute inset-0 flex items-start justify-center px-4 pt-4">
+    <div
+      className={cn(
+        "absolute inset-0 flex items-start justify-center px-4 pt-4",
+        className,
+      )}
+    >
       <div
         className={cn(
           "flex w-full flex-col gap-2",
