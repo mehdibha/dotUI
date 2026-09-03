@@ -26,7 +26,7 @@ export function MentionDemo() {
         ],
       }}
     >
-      <div className="absolute inset-0 flex justify-center px-4 pt-4">
+      <div className="absolute inset-0 flex items-start justify-center px-4 pt-4">
         <Field className="w-full max-w-[17rem]">
           <Label>Comment</Label>
           <div data-rac="" data-focused="" className={input()}>

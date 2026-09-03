@@ -1,9 +1,7 @@
 import {
-  BellIcon,
   CalculatorIcon,
   CalendarIcon,
   CreditCardIcon,
-  NotebookPenIcon,
   SearchIcon,
   SettingsIcon,
   SmileIcon,
@@ -25,7 +23,7 @@ import { Separator } from "@/registry/ui/separator"
 
 export function CommandDemo() {
   return (
-    <div className="absolute inset-0 flex justify-center px-4 pt-4">
+    <div className="absolute inset-0 flex items-start justify-center px-4 pt-4">
       <Card className="w-full max-w-[17rem] p-0">
         <Command aria-label="Command menu">
           <SearchField aria-label="Search">
@@ -50,14 +48,6 @@ export function CommandDemo() {
               <ListBoxItem textValue="Calculator">
                 <CalculatorIcon />
                 <span>Calculator</span>
-              </ListBoxItem>
-              <ListBoxItem textValue="Notes">
-                <NotebookPenIcon />
-                <span>Notes</span>
-              </ListBoxItem>
-              <ListBoxItem textValue="Reminders">
-                <BellIcon />
-                <span>Reminders</span>
               </ListBoxItem>
             </ListBoxSection>
             <Separator />

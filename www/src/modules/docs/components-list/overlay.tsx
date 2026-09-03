@@ -104,7 +104,7 @@ export function OverlayPreview({
   }
 
   return (
-    <div className="absolute inset-0 flex justify-center px-4 pt-4">
+    <div className="absolute inset-0 flex items-start justify-center px-4 pt-4">
       <div
         className={cn(
           "flex w-full flex-col gap-2",
