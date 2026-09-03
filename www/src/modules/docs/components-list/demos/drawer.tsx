@@ -1,11 +1,10 @@
-import { Button } from "@/registry/ui/button"
 import { DialogHeader, DialogTitle } from "@/registry/ui/dialog"
 
-import { OverlayPreview } from "../overlay"
+import { OverlayPreview, PageMock } from "../overlay"
 
 export function DrawerDemo() {
   return (
-    <OverlayPreview variant="drawer" trigger={<Button>Open Drawer</Button>}>
+    <OverlayPreview variant="drawer" page={<PageMock />}>
       <DialogHeader>
         <DialogTitle>Settings</DialogTitle>
       </DialogHeader>

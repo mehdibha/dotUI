@@ -48,6 +48,26 @@ export function Surface({
   )
 }
 
+/** A page mock (header + text and card blocks) for modal and drawer scenes, so
+ *  the overlay reads as opened over real content. */
+export function PageMock() {
+  return (
+    <div className="absolute inset-0 flex flex-col gap-3 p-4">
+      <div className="flex items-center justify-between">
+        <div className="h-5 w-28 rounded-full bg-muted" />
+        <div className="size-6 rounded-full bg-muted" />
+      </div>
+      <div className="mt-2 h-4 w-full rounded-full bg-muted" />
+      <div className="h-4 w-5/6 rounded-full bg-muted" />
+      <div className="h-4 w-2/3 rounded-full bg-muted" />
+      <div className="mt-2 grid grid-cols-2 gap-3">
+        <div className="h-16 rounded-lg bg-muted" />
+        <div className="h-16 rounded-lg bg-muted" />
+      </div>
+    </div>
+  )
+}
+
 /**
  * Trigger + open surface, filling the card (`fill` demos). Anchored surfaces
  * hang below a top-aligned trigger (`align` picks centered or bottom-left) and crop at the card's bottom edge; modal
