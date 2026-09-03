@@ -93,10 +93,13 @@ export function OverlayPreview({
           )}
         />
         {variant === "modal" ? (
-          <div className="absolute inset-x-6 top-6 flex justify-center">
+          <div className="absolute inset-0 flex items-center justify-center p-6">
             <Surface
               variant="modal"
-              className={cn("w-full max-w-[13rem]", surfaceClassName)}
+              className={cn(
+                "w-full max-w-[13rem] scale-[0.85]",
+                surfaceClassName,
+              )}
             >
               {children}
             </Surface>
