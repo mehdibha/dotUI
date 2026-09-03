@@ -16,7 +16,13 @@
     "**/.nitro/**",
     "**/.output/**",
     "**/.source/**",
-    "www/src/routeTree.gen.ts"
+    "www/src/routeTree.gen.ts",
+    "examples/*/src/routeTree.gen.ts",
+    "examples/*/src/components/ui/**",
+    "examples/*/src/hooks/**",
+    "examples/*/src/lib/**",
+    "examples/*/.next/**",
+    "examples/next/next-env.d.ts"
   ],
   "rules": {
     "eslint/no-unused-vars": [
