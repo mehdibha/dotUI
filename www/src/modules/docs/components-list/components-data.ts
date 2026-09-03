@@ -165,7 +165,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Menu",
         slug: "menu",
         href: "/docs/components/menu",
-        fill: true,
         status: "in review",
       },
       {
@@ -186,7 +185,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Select",
         slug: "select",
         href: "/docs/components/select",
-        fill: true,
         status: "done",
       },
     ],
