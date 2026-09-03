@@ -39,7 +39,7 @@ export const GROUPS: Array<{
   // are quick set-and-forget axes, not destinations.
   { ids: ["cursor", "selection", "scrollbars"], compact: true },
   // Component states — cross-component treatments every control below wears.
-  { ids: ["focus", "invalid", "disabled", "motion"] },
+  { ids: ["focus", "invalid", "disabled", "motion", "mobile"] },
   // Component clusters — title + specimen, the demo carries the values.
   // Core components.
   { ids: ["buttons", "inputs"] },
