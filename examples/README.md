@@ -36,7 +36,7 @@ One template only:
 pnpm smoke:examples --example spotify-tanstack-start
 ```
 
-Per template the script wipes generated files, runs `pnpm install`, `shadcn init <origin>/r/init?preset=…`, `shadcn add @dotui/<name>` for every item in `<origin>/r/registry.json`, then a production build and `tsc --noEmit`. The shadcn version is pinned in `scripts/smoke.ts`.
+Per template the script wipes generated files, runs `pnpm install`, `shadcn init <origin>/r/init?preset=…`, `shadcn add @dotui/<name>` for every item in `<origin>/r/registry.json`, then a production build and `tsc --noEmit`. After the build it also checks that every `@import url()` the theme appended to the stylesheet (Google Fonts) survived into the built CSS — bundlers drop a misplaced import silently instead of failing. The shadcn version is pinned in `scripts/smoke.ts`.
 
 After a run you can `pnpm dev` inside a template to look at the result. The run also leaves each template's `package.json` modified — the CLI adds the components' npm dependencies to it, as it would in any project. `git checkout examples` resets the scaffolds.
 

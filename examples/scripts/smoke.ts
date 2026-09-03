@@ -26,7 +26,7 @@
  */
 
 import { spawnSync } from "node:child_process"
-import { rmSync, writeFileSync } from "node:fs"
+import { readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -55,9 +55,20 @@ const EXAMPLES: Record<string, { framework: Framework; preset: string }> = {
 // and rewritten from this seed before every run. The `@source` is needed
 // because the installed components live in a gitignored folder, which
 // Tailwind v4 would otherwise skip when scanning for classes.
-const STYLESHEET: Record<Framework, { file: string; source: string }> = {
-  next: { file: "src/app/globals.css", source: "../components/ui" },
-  "tanstack-start": { file: "src/styles.css", source: "./components/ui" },
+const STYLESHEET: Record<
+  Framework,
+  { file: string; source: string; builtCss: string }
+> = {
+  next: {
+    file: "src/app/globals.css",
+    source: "../components/ui",
+    builtCss: ".next/static",
+  },
+  "tanstack-start": {
+    file: "src/styles.css",
+    source: "./components/ui",
+    builtCss: "dist/client",
+  },
 }
 
 // Everything the CLI writes. Wiped before each run so a result never depends
@@ -130,6 +141,48 @@ function encodePresets(ids: string[]): Record<string, string> {
   return JSON.parse(result.stdout.trim()) as Record<string, string>
 }
 
+/** Every `.css` file under `dir`, recursively. */
+function cssFiles(dir: string): string[] {
+  const out: string[] = []
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name)
+    if (entry.isDirectory()) out.push(...cssFiles(full))
+    else if (entry.name.endsWith(".css")) out.push(full)
+  }
+  return out
+}
+
+/**
+ * A build can pass while quietly dropping part of the theme: an `@import url()`
+ * the registry appends (Google Fonts) lands after `@import "tailwindcss"`, which
+ * is invalid once Tailwind expands, and bundlers strip it instead of failing.
+ * Every URL import in the stylesheet must survive into the built CSS.
+ */
+function checkBuiltCss(
+  cwd: string,
+  stylesheet: { file: string; builtCss: string },
+): void {
+  const source = readFileSync(path.join(cwd, stylesheet.file), "utf8")
+  const urls = [...source.matchAll(/@import\s+url\(\s*['"]?([^'")]+)/g)].map(
+    (m) => m[1]!,
+  )
+  if (urls.length === 0) return
+  const built = cssFiles(path.join(cwd, stylesheet.builtCss)).map((file) =>
+    readFileSync(file, "utf8"),
+  )
+  if (built.length === 0) {
+    throw new Error(`no built CSS found under ${stylesheet.builtCss}`)
+  }
+  const dropped = urls.filter((url) => !built.some((css) => css.includes(url)))
+  if (dropped.length > 0) {
+    throw new Error(
+      `built CSS dropped ${dropped.length} @import url() from ${stylesheet.file}:\n` +
+        dropped.map((url) => `  ${url}`).join("\n"),
+    )
+  }
+  console.log(`@import url() survived the build: ${urls.length}`)
+}
+
 async function registryNames(origin: string): Promise<string[]> {
   const url = `${origin}/r/registry.json`
   const res = await fetch(url)
@@ -177,6 +230,7 @@ async function smoke(
   // Next's next-env.d.ts).
   run(cwd, "pnpm", ["build"])
   run(cwd, "pnpm", ["typecheck"])
+  checkBuiltCss(cwd, stylesheet)
 }
 
 async function main() {
