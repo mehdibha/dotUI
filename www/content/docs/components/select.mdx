@@ -44,7 +44,12 @@ npx shadcn@latest add @dotui/select
 Use `Select` to allow users to choose a single option from a collapsible list of options when space is limited.
 
 ```tsx
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@/ui/select"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select"
 ```
 
 ```tsx
@@ -67,7 +72,7 @@ import {
   SelectItem,
   SelectSection,
   SelectSectionHeader,
-} from "@/ui/select"
+} from "@/components/ui/select"
 ```
 
 ```tsx
@@ -121,7 +126,7 @@ Feed a `useAsyncList` result into `SelectContent` via `items`, and wire `isLoadi
 Add a `Label` and a `FieldError` inside `Select`, and set `isRequired` or `isInvalid` to surface validation.
 
 ```tsx
-import { FieldError, Label } from "@/ui/field"
+import { FieldError, Label } from "@/components/ui/field"
 ```
 
 ```tsx
@@ -141,15 +146,15 @@ import { FieldError, Label } from "@/ui/field"
 
 ```tsx
 import { ChevronDownIcon } from "lucide-react"
-import { Button } from "@/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   ListBox,
   ListBoxItem,
   ListBoxSection,
   ListBoxSectionHeader,
-} from "@/ui/list-box"
-import { Popover } from "@/ui/popover"
-import { Select, SelectValue } from "@/ui/select"
+} from "@/components/ui/list-box"
+import { Popover } from "@/components/ui/popover"
+import { Select, SelectValue } from "@/components/ui/select"
 ```
 
 ```tsx

@@ -726,11 +726,12 @@ const DOCS_REGISTRY_URL_RE =
   /dotui\.org\/r\/([a-z0-9][a-z0-9-]*)(?![/a-z0-9-])/g
 
 /**
- * Stale consumer import prefix. A `shadcn add` install lands `ui/<name>.tsx`
- * targets at `@/ui/<name>` — never `@/components/ui/<name>` — so any docs
- * snippet showing the old prefix would break when copied after install.
+ * Stale consumer import prefix. Published items ship `ui/<name>.tsx` as a
+ * plain `path`, so `shadcn add` lands them under the consumer's `aliases.ui`
+ * (`@/components/ui/<name>` by default). Docs snippets showing the old
+ * `@/ui/<name>` prefix would break when copied after install.
  */
-const DOCS_STALE_UI_IMPORT_RE = /@\/components\/ui\//
+const DOCS_STALE_UI_IMPORT_RE = /@\/ui\//
 
 /**
  * Guard 3: every install name advertised in the docs must ship. Scans
@@ -753,8 +754,8 @@ async function checkDocsRegistryConsistency(
     lines.forEach((line, i) => {
       if (DOCS_STALE_UI_IMPORT_RE.test(line)) {
         errors.push(
-          `${path.relative(process.cwd(), file)}:${i + 1} imports from "@/components/ui/", ` +
-            `but a shadcn install lands components at "@/ui/". Use "@/ui/<name>" so copied ` +
+          `${path.relative(process.cwd(), file)}:${i + 1} imports from "@/ui/", ` +
+            `but a shadcn install lands components at "@/components/ui/". Use "@/components/ui/<name>" so copied ` +
             `snippets resolve after install.`,
         )
       }
