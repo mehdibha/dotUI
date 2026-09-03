@@ -14,7 +14,7 @@ function DocsLayout() {
   const items = pageTree.children as PageTree.Node[]
 
   return (
-    <div className="flex min-h-[calc(100vh-var(--header-height))] [--sidebar-width:228px]">
+    <div className="flex min-h-[calc(100vh-var(--header-height))] [--sidebar-width:200px]">
       <aside className="sticky top-(--header-height) hidden h-[calc(100vh-var(--header-height))] w-(--sidebar-width) shrink-0 lg:block">
         <DocsSidebar items={items} />
       </aside>

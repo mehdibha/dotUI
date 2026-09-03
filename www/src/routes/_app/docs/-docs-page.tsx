@@ -104,7 +104,9 @@ export const clientLoader = browserCollections.docs.createClientLoader({
           {hasToc && (
             <div
               className={cn(
-                "sticky top-(--header-height) z-30 -mt-4 hidden w-16 shrink-0 justify-end self-start px-6 pt-10 md:flex",
+                // From lg the column mirrors the sidebar's width so the
+                // content sits viewport-centered between equal rails.
+                "sticky top-(--header-height) z-30 -mt-4 hidden w-16 shrink-0 justify-end self-start px-6 pt-10 md:flex lg:w-(--sidebar-width)",
                 !full && "xl:hidden",
               )}
             >
