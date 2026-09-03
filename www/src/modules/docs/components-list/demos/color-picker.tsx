@@ -10,9 +10,10 @@ export function ColorPickerDemo() {
   return (
     <OverlayPreview
       variant="popover"
-      surfaceClassName="w-56 p-2"
+      className="px-6 pt-6"
+      surfaceClassName="flex w-full justify-center p-2"
       trigger={
-        <Button className="w-40 justify-start font-normal">
+        <Button className="w-full justify-start font-normal">
           <span
             aria-hidden
             className="size-4 rounded-sm border border-black/10"
@@ -25,7 +26,15 @@ export function ColorPickerDemo() {
         </Button>
       }
     >
-      <ColorEditor defaultValue={COLOR} showFormatSelector={false} />
+      {/* `data-dialog` lets the color area fill the width, as it does inside a
+          real popover dialog, so the editor fits the trigger-wide surface. */}
+      <div data-dialog="" className="w-full">
+        <ColorEditor
+          defaultValue={COLOR}
+          showFormatSelector={false}
+          className="w-full"
+        />
+      </div>
     </OverlayPreview>
   )
 }
