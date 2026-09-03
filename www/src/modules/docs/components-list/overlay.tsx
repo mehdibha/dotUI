@@ -54,7 +54,7 @@ export function PageMock() {
   return (
     <div className="absolute inset-0 flex flex-col gap-3 p-4">
       <div className="flex items-center justify-between">
-        <div className="h-5 w-28 rounded-full bg-muted" />
+        <div className="h-4 w-24 rounded-full bg-muted" />
         <div className="size-6 rounded-full bg-muted" />
       </div>
       <div className="mt-2 h-4 w-full rounded-full bg-muted" />
