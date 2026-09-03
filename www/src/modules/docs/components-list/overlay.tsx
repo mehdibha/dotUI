@@ -107,8 +107,8 @@ export function OverlayPreview({
     <div className="absolute inset-0 flex justify-center px-4 pt-4">
       <div
         className={cn(
-          "flex flex-col gap-2",
-          align === "start" ? "w-fit items-start" : "w-full items-center",
+          "flex w-full flex-col gap-2",
+          align === "start" ? "items-start" : "items-center",
         )}
       >
         {trigger}

@@ -17,11 +17,7 @@ export function DatePickerDemo() {
       align="start"
       surfaceClassName="p-2"
       trigger={
-        <DateField
-          className="w-full max-w-[11.5rem]"
-          aria-label="Date"
-          defaultValue={VALUE}
-        >
+        <DateField className="w-full" aria-label="Date" defaultValue={VALUE}>
           <InputGroup className="w-full">
             <DateInput />
             <InputGroupAddon>
