@@ -45,16 +45,18 @@ export const clientLoader = browserCollections.docs.createClientLoader({
               // Padding tracks the header's logo inset (pl-4/md:pl-6). Narrow
               // pages center at every width (left-hugging strands them far from
               // the MiniTOC); wide (full) pages nearly fill the row below lg,
-              // so they hug the left edge to stay aligned with the logo, and
-              // keep lg padding until xl centering slack separates them from
-              // the sidebar and MiniTOC rails.
+              // so they hug the left edge to stay aligned with the logo. From
+              // lg they keep px-8 as a minimum gap against the sidebar and
+              // MiniTOC rails; the cap grows by that padding (60rem = 4xl +
+              // 4rem) so the content holds its full width whenever there's
+              // room, with no snap at any breakpoint.
               "flex w-full min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-neutral-800 md:px-6 dark:text-neutral-300",
               // mr-auto: when the column hits max-w below lg, the auto margin
               // absorbs the leftover flex space so the MiniTOC column stays
               // pinned to the viewport edge (aligned with the header's menu
               // button) instead of trailing the capped column.
               full
-                ? "mr-auto max-w-4xl lg:mx-auto lg:px-8 xl:px-0"
+                ? "mr-auto max-w-4xl lg:mx-auto lg:max-w-[60rem] lg:px-8"
                 : "mx-auto max-w-2xl lg:px-0",
             )}
           >
