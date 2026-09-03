@@ -278,7 +278,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Tree",
         slug: "tree",
         href: "/docs/components/tree",
-        scale: 0.85,
         status: "in review",
       },
       {
