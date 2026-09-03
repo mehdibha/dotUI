@@ -401,12 +401,14 @@ export const componentsData: ComponentCategory[] = [
         name: "Message",
         slug: "message",
         href: "/docs/components/message",
+        stretch: true,
         status: "in review",
       },
       {
         name: "Bubble",
         slug: "bubble",
         href: "/docs/components/bubble",
+        stretch: true,
         status: "in review",
       },
       {
