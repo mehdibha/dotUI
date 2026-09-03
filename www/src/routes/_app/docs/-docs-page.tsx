@@ -104,10 +104,14 @@ export const clientLoader = browserCollections.docs.createClientLoader({
           {hasToc && (
             <div
               className={cn(
-                // From lg the column mirrors the sidebar's width so the
-                // content sits viewport-centered between equal rails.
-                "sticky top-(--header-height) z-30 -mt-4 hidden w-16 shrink-0 justify-end self-start px-6 pt-10 md:flex lg:w-(--sidebar-width)",
-                !full && "xl:hidden",
+                "sticky top-(--header-height) z-30 -mt-4 hidden w-16 shrink-0 justify-end self-start px-6 pt-10 md:flex",
+                // Narrow pages mirror the sidebar's width so the body sits
+                // viewport-centered between equal rails — and the xl swap to
+                // the TOC rail doesn't shift it. Wide pages keep a slim rail:
+                // the bars carry no text, so a full-width rail reads as
+                // left-heavy; the slight rightward bias evens out the visible
+                // whitespace on both sides of the body.
+                full ? "lg:w-24" : "lg:w-(--sidebar-width) xl:hidden",
               )}
             >
               <MiniTOC />
