@@ -325,7 +325,7 @@ export const componentsData: ComponentCategory[] = [
         name: "Sidebar",
         slug: "sidebar",
         href: "/docs/components/sidebar",
-        scale: 0.5,
+        fill: true,
         status: "done",
       },
     ],
