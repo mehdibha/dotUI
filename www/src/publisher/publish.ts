@@ -133,6 +133,7 @@ const FILE_IMPORT_NPM_DEPS = [
   "@hugeicons/react",
   "@hugeicons/core-free-icons",
   "@phosphor-icons/react",
+  "@internationalized/date",
 ]
 
 export function depsFromFileImports(
