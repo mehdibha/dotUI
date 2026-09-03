@@ -10,7 +10,7 @@ export function ColorPickerDemo() {
   return (
     <OverlayPreview
       variant="popover"
-      className="px-6 pt-6"
+      className="px-9 pt-8"
       surfaceClassName="flex w-full justify-center p-2"
       trigger={
         <Button className="w-full justify-start font-normal">
