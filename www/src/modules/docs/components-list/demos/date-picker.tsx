@@ -15,7 +15,7 @@ export function DatePickerDemo() {
     <OverlayPreview
       variant="popover"
       align="start"
-      surfaceClassName="p-2"
+      surfaceClassName="flex w-full justify-center p-2"
       trigger={
         <DateField className="w-full" aria-label="Date" defaultValue={VALUE}>
           <InputGroup className="w-full">
