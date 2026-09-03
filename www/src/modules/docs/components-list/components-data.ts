@@ -199,7 +199,7 @@ export const componentsData: ComponentCategory[] = [
         name: "Calendar",
         slug: "calendar",
         href: "/docs/components/calendar",
-        scale: 0.6,
+        fill: true,
         status: "pending",
       },
       {
