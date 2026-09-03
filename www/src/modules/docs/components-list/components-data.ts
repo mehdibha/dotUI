@@ -369,7 +369,7 @@ export const componentsData: ComponentCategory[] = [
         name: "Card",
         slug: "card",
         href: "/docs/components/card",
-        stretch: true,
+        fill: true,
         status: "done",
       },
       {
