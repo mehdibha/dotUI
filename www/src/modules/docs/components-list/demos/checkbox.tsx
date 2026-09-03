@@ -1,18 +1,14 @@
-"use client"
-
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
-import { Label } from "@/registry/ui/field"
-
-import { DemoPress, useToggleAutoplay } from "../autoplay"
 
 export function CheckboxDemo() {
-  const { selected, pressing } = useToggleAutoplay({ initial: true })
   return (
-    <Checkbox isSelected={selected} onChange={() => {}}>
-      <DemoPress pressing={pressing}>
+    <div className="flex items-center gap-4">
+      <Checkbox defaultSelected aria-label="Selected">
         <CheckboxControl />
-      </DemoPress>
-      <Label>Accept terms</Label>
-    </Checkbox>
+      </Checkbox>
+      <Checkbox aria-label="Unselected">
+        <CheckboxControl />
+      </Checkbox>
+    </div>
   )
 }

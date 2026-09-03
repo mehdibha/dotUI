@@ -1,24 +1,21 @@
-"use client"
-
 import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
 
-import { useCycle } from "../autoplay"
-
-const KEYS = ["nextjs", "remix", "astro", "gatsby"]
+import { Surface } from "../overlay"
 
 export function ListBoxDemo() {
-  const { item } = useCycle(KEYS, { dwell: 1150 })
   return (
-    <ListBox
-      aria-label="Framework"
-      selectionMode="single"
-      selectedKeys={[item]}
-      onSelectionChange={() => {}}
-    >
-      <ListBoxItem id="nextjs">Next.js</ListBoxItem>
-      <ListBoxItem id="remix">Remix</ListBoxItem>
-      <ListBoxItem id="astro">Astro</ListBoxItem>
-      <ListBoxItem id="gatsby">Gatsby</ListBoxItem>
-    </ListBox>
+    <Surface variant="menu" className="w-44 p-0">
+      <ListBox
+        aria-label="Framework"
+        selectionMode="single"
+        defaultSelectedKeys={["remix"]}
+        className="border-0 bg-transparent shadow-none"
+      >
+        <ListBoxItem id="nextjs">Next.js</ListBoxItem>
+        <ListBoxItem id="remix">Remix</ListBoxItem>
+        <ListBoxItem id="astro">Astro</ListBoxItem>
+        <ListBoxItem id="gatsby">Gatsby</ListBoxItem>
+      </ListBox>
+    </Surface>
   )
 }

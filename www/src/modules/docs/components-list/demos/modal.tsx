@@ -1,5 +1,3 @@
-"use client"
-
 import { Button } from "@/registry/ui/button"
 import {
   DialogBody,
@@ -11,16 +9,14 @@ import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { TextField } from "@/registry/ui/text-field"
 
-import { OverlayScene, useOpenAutoplay } from "../autoplay"
+import { OverlayPreview, PageMock } from "../overlay"
 
 export function ModalDemo() {
-  const { phase } = useOpenAutoplay()
   return (
-    <OverlayScene
-      phase={phase}
+    <OverlayPreview
       variant="modal"
+      page={<PageMock />}
       surfaceClassName="space-y-3"
-      trigger={<Button>Open Modal</Button>}
     >
       <DialogHeader>
         <DialogTitle>Edit username</DialogTitle>
@@ -35,6 +31,6 @@ export function ModalDemo() {
         <Button variant="quiet">Cancel</Button>
         <Button variant="primary">Apply</Button>
       </DialogFooter>
-    </OverlayScene>
+    </OverlayPreview>
   )
 }

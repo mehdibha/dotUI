@@ -1,29 +1,23 @@
-"use client"
-
 import { FieldGroup, Label } from "@/registry/ui/field"
 import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group"
 
-import { useStepAutoplay } from "../autoplay"
-
-const KEYS = ["nextjs", "remix", "gatsby"]
-
+// FieldGroup is a CSS container, which zeroes its intrinsic width; lift that
+// so the group shrinks to its options and centers in the card.
 export function RadioGroupDemo() {
-  const { index } = useStepAutoplay(KEYS.length, { dwell: 1300 })
   return (
-    <RadioGroup value={KEYS[index]} onChange={() => {}}>
-      <Label>React frameworks</Label>
-      <FieldGroup>
-        <Radio value="nextjs">
+    <RadioGroup aria-label="Size" defaultValue="medium">
+      <FieldGroup className="[container-type:normal]!">
+        <Radio value="small">
           <RadioControl />
-          <Label>Next.js</Label>
+          <Label>Small</Label>
         </Radio>
-        <Radio value="remix">
+        <Radio value="medium">
           <RadioControl />
-          <Label>Remix</Label>
+          <Label>Medium</Label>
         </Radio>
-        <Radio value="gatsby">
+        <Radio value="large">
           <RadioControl />
-          <Label>Gatsby</Label>
+          <Label>Large</Label>
         </Radio>
       </FieldGroup>
     </RadioGroup>
