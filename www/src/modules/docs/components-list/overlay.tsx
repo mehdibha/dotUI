@@ -57,12 +57,16 @@ export function OverlayPreview({
   variant,
   trigger,
   align = "center",
+  page,
   className,
   surfaceClassName,
   children,
 }: {
   variant: SurfaceVariant
-  trigger: ReactNode
+  trigger?: ReactNode
+  /** Modal/drawer: a page mock rendered behind the backdrop instead of a lone
+   *  trigger, so the overlay reads as opened over real content. */
+  page?: ReactNode
   /** Extra classes for the anchored scene, e.g. a roomier inset. */
   className?: string
   /** Where the surface sits relative to the trigger: centered under it, or
@@ -74,9 +78,11 @@ export function OverlayPreview({
   if (variant === "modal" || variant === "drawer") {
     return (
       <div className="absolute inset-0">
-        <div className="absolute inset-x-0 top-4 flex justify-center">
-          {trigger}
-        </div>
+        {page ?? (
+          <div className="absolute inset-x-0 top-4 flex justify-center">
+            {trigger}
+          </div>
+        )}
         <div
           aria-hidden
           className={cn(

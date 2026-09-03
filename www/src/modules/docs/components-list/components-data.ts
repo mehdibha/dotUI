@@ -448,7 +448,7 @@ export const componentsData: ComponentCategory[] = [
         name: "ColorArea",
         slug: "color-area",
         href: "/docs/components/color-area",
-        scale: 0.85,
+        scale: 0.7,
         status: "pending",
       },
       {

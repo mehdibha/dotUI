@@ -1,21 +1,16 @@
 import { parseColor } from "react-aria-components/ColorArea"
 
-import {
-  ColorSlider,
-  ColorSliderControl,
-  ColorSliderOutput,
-} from "@/registry/ui/color-slider"
-import { Description, Label } from "@/registry/ui/field"
+import { ColorSlider, ColorSliderControl } from "@/registry/ui/color-slider"
 
 export function ColorSliderDemo() {
   return (
-    <ColorSlider channel="hue" defaultValue={parseColor("hsl(200, 100%, 50%)")}>
-      <div className="flex items-center justify-between">
-        <Label>Hue</Label>
-        <ColorSliderOutput />
-      </div>
+    <ColorSlider
+      aria-label="Hue"
+      channel="hue"
+      defaultValue={parseColor("hsl(200, 100%, 50%)")}
+      className="w-44"
+    >
       <ColorSliderControl />
-      <Description>Adjust the hue of the color.</Description>
     </ColorSlider>
   )
 }
