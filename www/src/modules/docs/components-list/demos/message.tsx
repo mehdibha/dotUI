@@ -11,7 +11,7 @@ import {
 
 export function MessageDemo() {
   return (
-    <div className="flex w-full max-w-[13.5rem] flex-col gap-3">
+    <div className="flex w-full max-w-[14.5rem] flex-col gap-3">
       <Message>
         <MessageAvatar>
           <Avatar size="sm">
