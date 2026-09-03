@@ -494,7 +494,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Popover",
         slug: "popover",
         href: "/docs/components/popover",
-        fill: true,
         status: "done",
       },
       {
