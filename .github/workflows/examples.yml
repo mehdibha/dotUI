@@ -42,7 +42,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        example: [next, tanstack]
+        example:
+          - origin-next
+          - origin-tanstack-start
+          - spotify-next
+          - spotify-tanstack-start
     env:
       ORIGIN: ${{ inputs.origin || 'http://127.0.0.1:4444' }}
     steps:

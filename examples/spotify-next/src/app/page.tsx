@@ -1,5 +1,5 @@
 import { Showcase } from "@/components/showcase"
 
 export default function Page() {
-  return <Showcase framework="Next.js" />
+  return <Showcase framework="Next.js" preset="Spotify" />
 }

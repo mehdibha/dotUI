@@ -7,19 +7,22 @@
  * component installed to `src/ui/` instead of `src/components/ui/` for three
  * months (#706).
  *
- * For each example app in `examples/` (a bare framework scaffold with no
- * components.json):
+ * Each example in `examples/` is a preset × framework template: a bare
+ * framework scaffold with no components.json. Per example:
  *   1. Remove everything a previous run generated.
  *   2. `pnpm install` the scaffold (each example is its own pnpm workspace root).
- *   3. `shadcn init <origin>/r/init` — the exact command the docs give.
+ *   3. `shadcn init <origin>/r/init?preset=…` — the exact command the docs
+ *      give, with the template's preset baked in.
  *   4. `shadcn add @dotui/<name>` for every item in `<origin>/r/registry.json`.
  *   5. A production build, then `tsc --noEmit`.
  *
  * Usage:
- *   node examples/scripts/smoke.ts [--origin <url>] [--example next|tanstack]
+ *   node examples/scripts/smoke.ts [--origin <url>] [--example <name>]
  *
  * `--origin` is any deployment: a local `pnpm dev:www` (the default,
- * http://127.0.0.1:4444), a Vercel preview, or production.
+ * http://127.0.0.1:4444), a Vercel preview, or production. Preset encoding
+ * always comes from this checkout (`www/scripts/encode-preset.ts`), the same
+ * way the create page encodes it in the browser.
  */
 
 import { spawnSync } from "node:child_process"
@@ -30,20 +33,33 @@ import { fileURLToPath } from "node:url"
 // Pinned so a CLI release can't change what a green run means. Bump on purpose.
 const SHADCN = "shadcn@4.20.1"
 const DEFAULT_ORIGIN = "http://127.0.0.1:4444"
-const EXAMPLES = ["next", "tanstack"]
-// The Tailwind entry stylesheet each app imports. `shadcn init` appends the
-// dotUI theme to it, so the smoke owns the file: it is gitignored and rewritten
-// from this seed before every run. The `@source` is needed because the
-// installed components live in a gitignored folder, which Tailwind v4 would
-// otherwise skip when scanning for classes.
-const STYLESHEET: Record<string, { file: string; source: string }> = {
-  next: { file: "src/app/globals.css", source: "../components/ui" },
-  tanstack: { file: "src/styles.css", source: "./components/ui" },
-}
 const EXAMPLES_DIR = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
 )
+const REPO_DIR = path.resolve(EXAMPLES_DIR, "..")
+
+type Framework = "next" | "tanstack-start"
+
+// Directory name → what it exercises. Add a template here and to the
+// workflow matrix.
+const EXAMPLES: Record<string, { framework: Framework; preset: string }> = {
+  "origin-next": { framework: "next", preset: "origin" },
+  "origin-tanstack-start": { framework: "tanstack-start", preset: "origin" },
+  "spotify-next": { framework: "next", preset: "spotify" },
+  "spotify-tanstack-start": { framework: "tanstack-start", preset: "spotify" },
+}
+
+// The Tailwind entry stylesheet each framework's app imports. `shadcn init`
+// appends the dotUI theme to it, so the smoke owns the file: it is gitignored
+// and rewritten from this seed before every run. The `@source` is needed
+// because the installed components live in a gitignored folder, which
+// Tailwind v4 would otherwise skip when scanning for classes.
+const STYLESHEET: Record<Framework, { file: string; source: string }> = {
+  next: { file: "src/app/globals.css", source: "../components/ui" },
+  "tanstack-start": { file: "src/styles.css", source: "./components/ui" },
+}
+
 // Everything the CLI writes. Wiped before each run so a result never depends
 // on a previous one — and so `src/components/ui` is proven to be where files
 // land, not where they were left.
@@ -61,7 +77,7 @@ interface Options {
 
 function parseArgs(argv: string[]): Options {
   let origin = process.env.SMOKE_ORIGIN ?? DEFAULT_ORIGIN
-  let examples = EXAMPLES
+  let examples = Object.keys(EXAMPLES)
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]
     const value = argv[i + 1]
@@ -69,9 +85,9 @@ function parseArgs(argv: string[]): Options {
       origin = value
       i++
     } else if (arg === "--example" && value) {
-      if (!EXAMPLES.includes(value)) {
+      if (!(value in EXAMPLES)) {
         console.error(
-          `error: unknown example "${value}" (expected ${EXAMPLES.join(" | ")})`,
+          `error: unknown example "${value}" (expected ${Object.keys(EXAMPLES).join(" | ")})`,
         )
         process.exit(2)
       }
@@ -94,6 +110,26 @@ function run(cwd: string, cmd: string, args: string[]): void {
   }
 }
 
+/** Encoded `?preset=` values by preset id, from this checkout's preset data. */
+function encodePresets(ids: string[]): Record<string, string> {
+  const args = [
+    "--filter=www",
+    "exec",
+    "tsx",
+    "scripts/encode-preset.ts",
+    ...ids,
+  ]
+  const result = spawnSync("pnpm", args, {
+    cwd: REPO_DIR,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "inherit"],
+  })
+  if (result.error) throw result.error
+  if (result.status !== 0)
+    throw new Error(`encode-preset exited with ${result.status}`)
+  return JSON.parse(result.stdout.trim()) as Record<string, string>
+}
+
 async function registryNames(origin: string): Promise<string[]> {
   const url = `${origin}/r/registry.json`
   const res = await fetch(url)
@@ -104,20 +140,31 @@ async function registryNames(origin: string): Promise<string[]> {
   return names
 }
 
-async function smoke(example: string, origin: string, names: string[]) {
+async function smoke(
+  example: string,
+  origin: string,
+  encodedPreset: string,
+  names: string[],
+) {
+  const { framework } = EXAMPLES[example]!
   const cwd = path.join(EXAMPLES_DIR, example)
   console.log(`\n=== ${example} ===`)
   for (const generated of GENERATED) {
     rmSync(path.join(cwd, generated), { recursive: true, force: true })
   }
-  const stylesheet = STYLESHEET[example]
-  if (!stylesheet) throw new Error(`no stylesheet seed for "${example}"`)
+  const stylesheet = STYLESHEET[framework]
   writeFileSync(
     path.join(cwd, stylesheet.file),
     `@import "tailwindcss";\n@source "${stylesheet.source}";\n`,
   )
   run(cwd, "pnpm", ["install"])
-  run(cwd, "pnpm", ["dlx", SHADCN, "init", `${origin}/r/init`, "--yes"])
+  run(cwd, "pnpm", [
+    "dlx",
+    SHADCN,
+    "init",
+    `${origin}/r/init?preset=${encodedPreset}`,
+    "--yes",
+  ])
   run(cwd, "pnpm", [
     "dlx",
     SHADCN,
@@ -135,13 +182,15 @@ async function smoke(example: string, origin: string, names: string[]) {
 async function main() {
   const { origin, examples } = parseArgs(process.argv.slice(2))
   console.log(`registry: ${origin}`)
+  const presetIds = [...new Set(examples.map((name) => EXAMPLES[name]!.preset))]
+  const encoded = encodePresets(presetIds)
   const names = await registryNames(origin)
-  console.log(`items: ${names.length}`)
+  console.log(`items: ${names.length} · presets: ${presetIds.join(", ")}`)
 
   const failures: string[] = []
   for (const example of examples) {
     try {
-      await smoke(example, origin, names)
+      await smoke(example, origin, encoded[EXAMPLES[example]!.preset]!, names)
       console.log(`\n✓ ${example}`)
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error)

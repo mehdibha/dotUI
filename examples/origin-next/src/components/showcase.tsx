@@ -17,7 +17,13 @@ import { TextField } from "@/components/ui/text-field"
 
 // A handful of installed components composed the way the docs show them.
 // Every import resolves to a file `shadcn add` wrote — see examples/README.md.
-export function Showcase({ framework }: { framework: string }) {
+export function Showcase({
+  framework,
+  preset,
+}: {
+  framework: string
+  preset: string
+}) {
   return (
     <main className="mx-auto flex min-h-screen w-full max-w-xl flex-col gap-8 p-8">
       <header className="flex items-center justify-between gap-4">
@@ -27,7 +33,9 @@ export function Showcase({ framework }: { framework: string }) {
             <AvatarFallback>M</AvatarFallback>
           </Avatar>
           <div>
-            <p className="font-medium">dotUI on {framework}</p>
+            <p className="font-medium">
+              dotUI · {preset} preset on {framework}
+            </p>
             <p className="text-sm text-fg-muted">
               Installed with shadcn init + shadcn add.
             </p>

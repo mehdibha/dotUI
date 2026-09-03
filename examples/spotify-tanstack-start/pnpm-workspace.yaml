@@ -1,0 +1,4 @@
+# Makes this example its own pnpm workspace root, so `pnpm install` — and the
+# `pnpm add` the shadcn CLI spawns — resolve here instead of folding the app
+# into the monorepo workspace and writing its dependencies into the root lockfile.
+packages: []

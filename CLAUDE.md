@@ -73,7 +73,7 @@ When working on a component's styles, compare against the shadcn equivalent to c
 
 After modifying `www/src/registry/`, run `pnpm build:registry` and commit the regenerated `__generated__/*` + `base/colors.css` — CI's registry-drift job diffs exactly these files.
 
-Touched the registry, the publisher, or the `/r/*` routes? Run `pnpm smoke:examples` against `pnpm dev:www` (or `--origin <preview-url>`). It runs the real shadcn CLI — init, then add every item — in the consumer apps under `examples/` and type-checks and builds the result; the publisher tests never invoke the CLI. See `examples/README.md`.
+Touched the registry, the publisher, or the `/r/*` routes? Run `pnpm smoke:examples` against `pnpm dev:www` (or `--origin <preview-url>`). It runs the real shadcn CLI — init, then add every item — in the preset × framework templates under `examples/` and type-checks and builds the result; the publisher tests never invoke the CLI. See `examples/README.md`.
 
 ### Before committing
 
