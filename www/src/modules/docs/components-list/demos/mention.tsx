@@ -1,57 +1,62 @@
-import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
+import { Field, Label } from "@/registry/ui/field"
+import { MenuContent, MenuItem } from "@/registry/ui/menu"
+import { useStyles as useTokenFieldStyles } from "@/registry/ui/token-field/styles"
 
-import { OverlayPreview } from "../overlay"
+import { DemoState } from "../demo-state"
+import { Surface } from "../overlay"
 
 const PEOPLE = [
-  { id: "amandarivera", name: "Amanda Rivera" },
-  { id: "adamscott", name: "Adam Scott" },
-  { id: "ariachen", name: "Aria Chen" },
+  { id: "alex", name: "Alex Miller" },
+  { id: "sarah", name: "Sarah Jones" },
+  { id: "david", name: "David Kim" },
 ]
 
-// The editor and suggestion rows use the real token classes (field, popover,
-// highlighted item) so the scene restyles under any preset.
+// The field is laid out by hand with the real TokenField styles so the
+// suggestions can hang off the trailing `@`, where Mention anchors its popover.
 export function MentionDemo() {
+  const { input, token } = useTokenFieldStyles()()
   return (
-    <OverlayPreview
-      variant="menu"
-      surfaceClassName="w-full max-w-[17rem]"
-      trigger={
-        <div className="w-full max-w-[17rem] rounded-(--input-radius) border border-border-focus bg-field px-3 py-2.5 text-sm/relaxed text-fg ring-2 ring-border-focus-muted">
-          Great work{" "}
-          <span className="rounded-sm bg-muted px-1 font-medium">
-            @alexmiller
-          </span>{" "}
-          and @a
-        </div>
-      }
+    <DemoState
+      states={{
+        "[data-menu-item]:first-of-type": [
+          "data-hovered",
+          "data-focused",
+          "data-focus-visible",
+        ],
+      }}
     >
-      {PEOPLE.map((person, i) => (
-        <div
-          key={person.id}
-          className={cn(
-            "flex items-center gap-2 rounded-sm px-2 py-1.5",
-            i === 0 && "bg-highlight text-fg-on-highlight",
-          )}
-        >
-          <Avatar size="sm">
-            <AvatarFallback>{person.name.charAt(0)}</AvatarFallback>
-          </Avatar>
-          <div className="flex min-w-0 flex-col leading-tight">
-            <span className="truncate text-[0.8rem] font-medium">
-              {person.name}
-            </span>
-            <span
-              className={cn(
-                "truncate text-xs",
-                i === 0 ? "text-fg-on-highlight/70" : "text-fg-muted",
-              )}
-            >
-              @{person.id}
+      <div className="absolute inset-0 flex justify-center px-4 pt-4">
+        <Field className="w-full max-w-[17rem]">
+          <Label>Comment</Label>
+          <div data-rac="" data-focused="" className={input()}>
+            cc <span className={token()}>@alex</span>{" "}
+            <span className="relative">
+              @
+              <Surface
+                variant="menu"
+                className="absolute top-full left-0 mt-2 w-44"
+              >
+                <MenuContent aria-label="People" items={PEOPLE}>
+                  {(person) => (
+                    <MenuItem id={person.id} textValue={person.id}>
+                      <Avatar size="sm">
+                        <AvatarFallback>{person.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col">
+                        <span className="text-sm">{person.name}</span>
+                        <span className="text-xs text-fg-muted">
+                          @{person.id}
+                        </span>
+                      </div>
+                    </MenuItem>
+                  )}
+                </MenuContent>
+              </Surface>
             </span>
           </div>
-        </div>
-      ))}
-    </OverlayPreview>
+        </Field>
+      </div>
+    </DemoState>
   )
 }
