@@ -55,19 +55,30 @@ const EXAMPLES: Record<string, { framework: Framework; preset: string }> = {
 // and rewritten from this seed before every run. The `@source` is needed
 // because the installed components live in a gitignored folder, which
 // Tailwind v4 would otherwise skip when scanning for classes.
-const STYLESHEET: Record<
-  Framework,
-  { file: string; source: string; builtCss: string }
-> = {
+interface FrameworkSetup {
+  file: string
+  source: string
+  builtCss: string
+  /**
+   * Where `shadcn init` wires a `registry:font` item on this framework: the
+   * `next/font/google` import in the root layout on Next.js, the `@fontsource`
+   * import in the stylesheet elsewhere.
+   */
+  fontWiring: { file: string; needle: string }
+}
+
+const STYLESHEET: Record<Framework, FrameworkSetup> = {
   next: {
     file: "src/app/globals.css",
     source: "../components/ui",
     builtCss: ".next/static",
+    fontWiring: { file: "src/app/layout.tsx", needle: "next/font/google" },
   },
   "tanstack-start": {
     file: "src/styles.css",
     source: "./components/ui",
     builtCss: "dist/client",
+    fontWiring: { file: "src/styles.css", needle: '@import "@fontsource' },
   },
 }
 
@@ -160,13 +171,13 @@ function cssFiles(dir: string): string[] {
  */
 function checkBuiltCss(
   cwd: string,
-  stylesheet: { file: string; builtCss: string },
+  stylesheet: FrameworkSetup,
+  expectFonts: boolean,
 ): void {
   const source = readFileSync(path.join(cwd, stylesheet.file), "utf8")
   const urls = [...source.matchAll(/@import\s+url\(\s*['"]?([^'")]+)/g)].map(
     (m) => m[1]!,
   )
-  if (urls.length === 0) return
   const built = cssFiles(path.join(cwd, stylesheet.builtCss)).map((file) =>
     readFileSync(file, "utf8"),
   )
@@ -180,7 +191,33 @@ function checkBuiltCss(
         dropped.map((url) => `  ${url}`).join("\n"),
     )
   }
-  console.log(`@import url() survived the build: ${urls.length}`)
+  if (urls.length > 0) {
+    console.log(`@import url() survived the build: ${urls.length}`)
+  }
+
+  // A preset with fonts ships `registry:font` items; the CLI must have wired
+  // them the framework's way, and the faces must be in the built CSS.
+  if (!expectFonts) return
+  const { file, needle } = stylesheet.fontWiring
+  if (!readFileSync(path.join(cwd, file), "utf8").includes(needle)) {
+    throw new Error(`font not wired: ${file} has no ${needle}`)
+  }
+  if (!built.some((css) => css.includes("@font-face"))) {
+    throw new Error("font not wired: built CSS has no @font-face")
+  }
+  console.log(`fonts wired via ${needle}`)
+}
+
+/** Whether the init item for this preset pulls in `registry:font` items. */
+async function initHasFonts(
+  origin: string,
+  encodedPreset: string,
+): Promise<boolean> {
+  const url = `${origin}/r/init?preset=${encodedPreset}`
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`GET ${url} → ${res.status}`)
+  const item = (await res.json()) as { registryDependencies?: string[] }
+  return (item.registryDependencies ?? []).some((dep) => /\/r\/font-/.test(dep))
 }
 
 async function registryNames(origin: string): Promise<string[]> {
@@ -202,6 +239,7 @@ async function smoke(
   const { framework } = EXAMPLES[example]!
   const cwd = path.join(EXAMPLES_DIR, example)
   console.log(`\n=== ${example} ===`)
+  const expectFonts = await initHasFonts(origin, encodedPreset)
   for (const generated of GENERATED) {
     rmSync(path.join(cwd, generated), { recursive: true, force: true })
   }
@@ -230,7 +268,7 @@ async function smoke(
   // Next's next-env.d.ts).
   run(cwd, "pnpm", ["build"])
   run(cwd, "pnpm", ["typecheck"])
-  checkBuiltCss(cwd, stylesheet)
+  checkBuiltCss(cwd, stylesheet, expectFonts)
 }
 
 async function main() {

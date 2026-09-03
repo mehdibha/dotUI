@@ -22,6 +22,7 @@ import {
 } from "@/registry/theme"
 import type { Density, RegistryItem } from "@/registry/types"
 
+import { fontItemNamesForTokens } from "./emit-font"
 import type { PublishPreset } from "./types"
 
 type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
@@ -91,6 +92,12 @@ function emitPresetLightVars(preset: PublishPreset): Record<string, string> {
 export function emitInitItem(input: EmitThemeInput): RegistryItem {
   const { baseRegistryCss, preset, encodedPreset, registryRoot } = input
   const { css, cssVars } = mergePresetCssFields(baseRegistryCss, preset)
+  // One `registry:font` item per font token the preset sets. shadcn installs
+  // the face per framework (next/font on Next.js, @fontsource elsewhere) and
+  // sets the token variable — see emit-font.ts for why not a CSS `@import`.
+  const fontDependencies = fontItemNamesForTokens(preset.tokens ?? {}).map(
+    (name) => `${registryRoot}/r/${name}`,
+  )
 
   // Intentionally minimal `config` block:
   // - No `tailwind.css` or `tailwind.baseColor` — shadcn detects these from
@@ -129,8 +136,9 @@ export function emitInitItem(input: EmitThemeInput): RegistryItem {
     extends: "none",
     dependencies: DEFAULT_DEPENDENCIES,
     // shadcn's `cn` utils sit in a 4xx-gated path under v4 Tailwind, so we ship our own copy
-    // in `files[]` rather than declaring a registry dependency.
-    registryDependencies: [],
+    // in `files[]` rather than declaring a registry dependency. Fonts are the
+    // only registry deps here.
+    registryDependencies: fontDependencies,
     ...(css ? { css } : {}),
     ...(cssVars ? { cssVars } : {}),
     files: [
@@ -190,6 +198,16 @@ function chartVars(
 export function mergePresetCssFields(
   base: RegistryCssFields,
   preset: PublishPreset,
+  options: {
+    /**
+     * Ship the preset's Google-hosted faces as a CSS `@import url()`. Only for
+     * renderers that hoist `@import` keys to the top of a real stylesheet (the
+     * v0 globals.css). The init item ships `registry:font` items instead —
+     * shadcn's CSS updater would place this import after `@import
+     * "tailwindcss"`, where bundlers drop it.
+     */
+    googleFontsImport?: boolean
+  } = {},
 ): RegistryCssFields {
   const css = cloneRecord(base.css) ?? {}
   mergeCssVarsIntoCssRule(css, ":root", base.cssVars?.light)
@@ -242,16 +260,17 @@ export function mergePresetCssFields(
 
   // Typography: re-point the `@theme` vocabulary at the preset's stacks (the
   // block renders `@theme inline`, so utilities bake these values in — a
-  // `:root` override wouldn't reach them), and ship the Google-hosted faces
-  // with a plain CSS import (the v0 globals renderer hoists `@import` keys,
-  // shadcn's CSS updater passes at-rule keys through).
+  // `:root` override wouldn't reach them). The faces themselves come from
+  // `registry:font` items (init) or, on request, a Google Fonts import (v0).
   for (const varName of FONT_TOKEN_VARS) {
     const stack = preset.tokens?.[varName]
     if (stack) themeVars[varName] = stack
   }
-  const fontFamilies = fontFamiliesFromTokens(preset.tokens ?? {})
-  if (fontFamilies.length > 0) {
-    css[`@import url('${googleFontsUrl(fontFamilies)}')`] = {}
+  if (options.googleFontsImport) {
+    const fontFamilies = fontFamiliesFromTokens(preset.tokens ?? {})
+    if (fontFamilies.length > 0) {
+      css[`@import url('${googleFontsUrl(fontFamilies)}')`] = {}
+    }
   }
 
   return {

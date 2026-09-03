@@ -37,8 +37,9 @@ const CONCURRENCY = 6
 // Hard per-request ceiling so a slow/blackholing host can't stretch the run
 // past undici's ~300s default headers timeout (× retries).
 const REQUEST_TIMEOUT_MS = 15_000
-// Extra names to probe that don't appear in registry.json's items list.
-const EXTRA_NAMES = ["init"]
+// Extra names to probe that don't appear in registry.json's items list: the
+// init item, and one `registry:font` item of the kind init depends on.
+const EXTRA_NAMES = ["init", "font-inter"]
 
 interface Failure {
   name: string
