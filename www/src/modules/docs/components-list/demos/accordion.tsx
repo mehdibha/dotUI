@@ -7,7 +7,7 @@ import {
 
 export function AccordionDemo() {
   return (
-    <Accordion className="w-72" defaultExpandedKeys={["react"]}>
+    <Accordion className="w-56" defaultExpandedKeys={["react"]}>
       <Disclosure id="react">
         <DisclosureTrigger>What is React?</DisclosureTrigger>
         <DisclosurePanel>

@@ -338,7 +338,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Accordion",
         slug: "accordion",
         href: "/docs/components/accordion",
-        scale: 0.9,
         status: "done",
       },
       {
