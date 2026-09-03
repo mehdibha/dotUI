@@ -57,9 +57,9 @@ export function PageMock() {
         <div className="h-4 w-24 rounded-full bg-muted" />
         <div className="size-6 rounded-full bg-muted" />
       </div>
-      <div className="mt-2 h-5 w-full rounded-full bg-muted" />
-      <div className="h-5 w-5/6 rounded-full bg-muted" />
-      <div className="h-5 w-2/3 rounded-full bg-muted" />
+      <div className="mt-2 h-1.5 w-full rounded-full bg-muted" />
+      <div className="h-1.5 w-5/6 rounded-full bg-muted" />
+      <div className="h-1.5 w-2/3 rounded-full bg-muted" />
       <div className="mt-2 grid grid-cols-2 gap-3">
         <div className="h-16 rounded-lg bg-muted" />
         <div className="h-16 rounded-lg bg-muted" />
