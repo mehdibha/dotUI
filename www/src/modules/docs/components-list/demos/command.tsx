@@ -1,7 +1,9 @@
 import {
+  BellIcon,
   CalculatorIcon,
   CalendarIcon,
   CreditCardIcon,
+  NotebookPenIcon,
   SearchIcon,
   SettingsIcon,
   SmileIcon,
@@ -48,6 +50,14 @@ export function CommandDemo() {
               <ListBoxItem textValue="Calculator">
                 <CalculatorIcon />
                 <span>Calculator</span>
+              </ListBoxItem>
+              <ListBoxItem textValue="Notes">
+                <NotebookPenIcon />
+                <span>Notes</span>
+              </ListBoxItem>
+              <ListBoxItem textValue="Reminders">
+                <BellIcon />
+                <span>Reminders</span>
               </ListBoxItem>
             </ListBoxSection>
             <Separator />
