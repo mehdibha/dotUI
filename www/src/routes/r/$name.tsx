@@ -78,7 +78,7 @@ export const Route = createFileRoute("/r/$name")({
             item.files.map(async (file) => {
               try {
                 const result = await format(
-                  file.target ?? "ui.tsx",
+                  file.path,
                   file.content ?? "",
                   OUTPUT_FORMAT,
                 )

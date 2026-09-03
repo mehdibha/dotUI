@@ -206,8 +206,8 @@ export function buildV0Item(input: BuildV0ItemInput): Record<string, unknown> {
 
   for (const item of items) {
     for (const file of item.files ?? []) {
-      if (!file.content || !file.target) continue
-      add(v0File(fileType(file), projectTarget(file.target), file.content))
+      if (!file.content) continue
+      add(v0File(fileType(file), projectTarget(file.path), file.content))
     }
   }
 

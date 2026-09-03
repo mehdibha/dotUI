@@ -167,13 +167,13 @@ function rewriteImports(sf: SourceFile): void {
       imp.remove()
       continue
     }
-    // `rewriteImportPath` yields the shipped base.tsx paths, where `ui/*` maps to
-    // `@/components/ui/*`. Displayed docs code must match where a real install
-    // lands files — `ui/<name>.tsx` targets resolve to `@/ui/*`.
-    const rewritten =
+    // `rewriteImportPath` yields the shipped paths, where `ui/*` maps to
+    // `@/components/ui/*` — the default shadcn `aliases.ui`, and where a real
+    // install lands files.
+    imp.setModuleSpecifier(
       rewriteImportPath(imp.getModuleSpecifierValue()) ??
-      imp.getModuleSpecifierValue()
-    imp.setModuleSpecifier(rewritten.replace(/^@\/components\/ui\//, "@/ui/"))
+        imp.getModuleSpecifierValue(),
+    )
   }
 }
 
