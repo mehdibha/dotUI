@@ -104,7 +104,9 @@ export function ComponentCard({
           className="pointer-events-none absolute inset-0 z-10 bg-fg/5 opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100"
         />
       </div>
-      <span className="text-sm font-medium text-fg">{name}</span>
+      <span className="text-base font-medium text-fg group-hover:underline">
+        {name}
+      </span>
     </Link>
   )
 }
