@@ -1,0 +1,79 @@
+# Consumer smoke (see examples/README.md): runs the real shadcn CLI — init,
+# then add every item — in each example app against this branch's registry,
+# and type-checks + builds the result. The publisher's own tests never invoke
+# the CLI, so this is the only check on where files land and how imports
+# resolve in a consumer project.
+
+name: Examples smoke
+
+on:
+  pull_request:
+    paths:
+      - "www/src/registry/**"
+      - "www/src/publisher/**"
+      - "www/src/routes/r/**"
+      - "www/src/lib/registry-preset.ts"
+      - "examples/**"
+      - ".github/workflows/examples.yml"
+  push:
+    branches: [main]
+    paths:
+      - "www/src/registry/**"
+      - "www/src/publisher/**"
+      - "www/src/routes/r/**"
+      - "www/src/lib/registry-preset.ts"
+      - "examples/**"
+      - ".github/workflows/examples.yml"
+  workflow_dispatch:
+    inputs:
+      origin:
+        description: "Registry origin to smoke against (e.g. a Vercel preview URL). Empty serves this checkout locally."
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.example }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - origin-next
+          - origin-tanstack-start
+          - spotify-next
+          - spotify-tanstack-start
+    env:
+      ORIGIN: ${{ inputs.origin || 'http://127.0.0.1:4444' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      - name: Build registry
+        if: inputs.origin == ''
+        run: pnpm build:registry
+
+      # The dev server compiles /r/* on first request, so warm the index route
+      # before handing over to the CLI.
+      - name: Serve registry
+        if: inputs.origin == ''
+        run: |
+          pnpm --filter=www exec vite dev --port 4444 --host 127.0.0.1 > /tmp/www-dev.log 2>&1 &
+          for attempt in $(seq 1 60); do
+            if curl -sf "$ORIGIN/r/registry.json" > /dev/null; then exit 0; fi
+            sleep 3
+          done
+          echo "::error::www dev server did not come up"
+          cat /tmp/www-dev.log
+          exit 1
+
+      - name: Smoke
+        run: node examples/scripts/smoke.ts --example ${{ matrix.example }} --origin "$ORIGIN"
+
+      - name: Dev server log
+        if: failure() && inputs.origin == ''
+        run: cat /tmp/www-dev.log

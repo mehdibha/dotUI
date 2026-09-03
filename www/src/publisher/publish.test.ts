@@ -601,4 +601,11 @@ describe("depsFromFileImports", () => {
     expect(found).toContain("react-aria")
     expect(found).toContain("react-aria-components")
   })
+
+  test("type-only @internationalized/date import is a real dependency", () => {
+    // The consumer's tsc needs the package installed even when only its
+    // types are imported (time-picker) — caught by the examples smoke.
+    const found = deps(`import type { Time } from "@internationalized/date"`)
+    expect(found).toContain("@internationalized/date")
+  })
 })
