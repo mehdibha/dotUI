@@ -16,6 +16,7 @@ import { ChevronLeftIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { cn } from "@/registry/lib/utils"
+import { useTweak } from "@/dev/tweaker"
 
 import { CARD_DEMOS } from "./demos"
 import { resolveIndex } from "./groups"
@@ -53,16 +54,20 @@ function IndexRow({
   chapter,
   lab,
   compact,
+  showWip,
   onPress,
 }: {
   chapter: IndexChapter
   lab: Lab
   compact?: boolean
+  showWip: boolean
   onPress: () => void
 }) {
   const status = lab.section(chapter.defaults)
   const Demo = CARD_DEMOS[chapter.id]
-  const wip = !isWired(chapter.members.map((m) => m.id)) && <WipChip />
+  const wip = showWip && !isWired(chapter.members.map((m) => m.id)) && (
+    <WipChip />
+  )
   // The label column: title (with its modified dot), and the live value
   // beneath it — first segment only, one word-ish.
   const label = (
@@ -153,6 +158,14 @@ export function DrillInPanel({
 }) {
   const index = resolveIndex(chapters)
   const [activeId, setActiveId] = useState<string | null>(null)
+  // Dev tweak: hide the chips to read the panel as the finished product.
+  // Deliberately kept (not exploration scaffolding) — it goes when the last
+  // chip drops at the parity bar (issue #666).
+  const showWip = useTweak("WIP chips", {
+    type: "boolean",
+    default: true,
+    group: "Studio panel",
+  })
   const page =
     index
       .flatMap((group) => group.chapters)
@@ -204,6 +217,7 @@ export function DrillInPanel({
                   chapter={chapter}
                   lab={lab}
                   compact={group.compact}
+                  showWip={showWip}
                   onPress={() => setActiveId(chapter.id)}
                 />
               ))}
@@ -229,7 +243,9 @@ export function DrillInPanel({
                   All settings
                 </RacButton>
                 <span className="ml-auto flex items-center gap-1.5 pr-1">
-                  {!isWired(page.members.map((m) => m.id)) && <WipChip />}
+                  {showWip && !isWired(page.members.map((m) => m.id)) && (
+                    <WipChip />
+                  )}
                   <span className="text-[0.8125rem] font-medium text-fg">
                     {page.label}
                   </span>
