@@ -173,10 +173,11 @@ function renderIndex(writtenPaths: string[], outDir: string): string {
 }
 
 async function renderBaseRegistryCss(registryDir: string): Promise<string> {
-  // Order matches `www/src/registry/styles.css`.
+  // Order matches `www/src/registry/styles.css`. `colors.css` (ramps +
+  // referenced semantic tokens) is site-only: the shipped theme gets literal
+  // semantic tokens from the publisher instead (`mergePresetCssFields`).
   const candidates = [
     path.join(registryDir, "base", "base.css"),
-    path.join(registryDir, "base", "colors.css"),
     path.join(registryDir, "base", "theme.css"),
     path.join(registryDir, "base", "fonts.css"),
   ]

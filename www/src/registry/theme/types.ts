@@ -25,12 +25,7 @@ export type SemanticTarget =
   | { alpha: { palette: string; step: StepName } } // → var(--<palette>-a<step>)
   | { on: { palette: string; step: "700" | "800" } } // → var(--on-<palette>-<step>)
   | { value: string } // a literal CSS value
-  | {
-      mix: {
-        space: "oklab" | "oklch" | "srgb"
-        stops: [SemanticTarget, number, SemanticTarget]
-      }
-    }
+  | { mix: [SemanticTarget, number, SemanticTarget] } // → color-mix(in oklab, a <n>%, b)
 
 /** Customizer grouping for a token. The picker filters on this today. */
 export type SemanticCategory = "background" | "foreground" | "border"

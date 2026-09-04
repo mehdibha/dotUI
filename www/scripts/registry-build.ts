@@ -865,31 +865,21 @@ async function buildShadcnPublishables(
   return { skipped, builtNames }
 }
 
-/** Generate base/colors.css from the default ColorConfig (both modes solved independently by the engine). */
+/**
+ * Generate base/colors.css from the default ColorConfig: the primitive ramps
+ * (both modes solved independently by the engine) and the semantic `@theme`
+ * block that references them. This file is site-only — the shipped theme
+ * flattens the semantic tokens to literals instead (see publisher/emit-theme).
+ */
 async function generateBaseColorsCss() {
-  const css = emitPrimitivesCss(resolveColorConfig(DEFAULT_COLOR_CONFIG))
-  await fs.writeFile(path.join(REGISTRY_DIR, "base", "colors.css"), css, "utf8")
-}
-
-const THEME_CSS_MARKER_START =
-  "/* AUTO-GENERATED: semantic colors — do not edit. Run `pnpm build:registry`. */"
-const THEME_CSS_MARKER_END = "/* END AUTO-GENERATED */"
-
-/** Regenerate the semantic-color section of base/theme.css between its markers. */
-async function generateThemeCssSemantics() {
-  const themePath = path.join(REGISTRY_DIR, "base", "theme.css")
-  const source = await fs.readFile(themePath, "utf8")
-  const start = source.indexOf(THEME_CSS_MARKER_START)
-  const end = source.indexOf(THEME_CSS_MARKER_END)
-  if (start === -1 || end === -1 || end < start) {
-    throw new Error(
-      "base/theme.css is missing its AUTO-GENERATED semantic-colors markers",
-    )
-  }
+  const primitives = emitPrimitivesCss(resolveColorConfig(DEFAULT_COLOR_CONFIG))
   const dark = emitDarkOverridesCss(DEFAULT_SEMANTICS)
-  const generated = emitCss(DEFAULT_SEMANTICS) + (dark ? `\n${dark}` : "")
-  const next = `${source.slice(0, start + THEME_CSS_MARKER_START.length)}\n${generated}${source.slice(end)}`
-  await fs.writeFile(themePath, next, "utf8")
+  const semantics = emitCss(DEFAULT_SEMANTICS) + (dark ? `\n${dark}` : "")
+  await fs.writeFile(
+    path.join(REGISTRY_DIR, "base", "colors.css"),
+    `${primitives}\n/* Semantic tokens over the ramps above. */\n${semantics}`,
+    "utf8",
+  )
 }
 
 async function main() {
@@ -898,7 +888,6 @@ async function main() {
   try {
     console.log("Generating base color css")
     await generateBaseColorsCss()
-    await generateThemeCssSemantics()
 
     // Fresh item lists globbed from disk — never the (possibly stale) committed
     // manifest — so a just-added/removed item is handled in this same run.

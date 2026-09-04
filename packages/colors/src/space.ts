@@ -49,6 +49,28 @@ export function toHex(color: Oklch): string {
   return formatHex(asCulori(color))
 }
 
+/**
+ * Mix two colors in OKLab — the JS twin of `color-mix(in oklab, a <weight>%, b)`
+ * — with `weight` in percent of `a`. Used to flatten semantic recipes to
+ * literals at export.
+ */
+export function mixOklab(a: Oklch, weight: number, b: Oklch): Oklch {
+  const t = weight / 100
+  const la = toOklab(a)
+  const lb = toOklab(b)
+  const {
+    l = 0,
+    c = 0,
+    h = 0,
+  } = toOklchConv({
+    mode: "oklab",
+    l: la.l * t + lb.l * (1 - t),
+    a: la.a * t + lb.a * (1 - t),
+    b: la.b * t + lb.b * (1 - t),
+  }) as CuloriOklch
+  return { l, c, h }
+}
+
 /** OKLab coordinates (the ΔEok distance space). */
 export function toOklab(color: Oklch): { l: number; a: number; b: number } {
   const { l = 0, a = 0, b = 0 } = toOklabConv(asCulori(color))

@@ -33,7 +33,9 @@ export {
   type EmitCssOptions,
   emitDarkOverridesCss,
   resolveTarget,
+  resolveTargetLiteral,
   resolveTokenValue,
+  semanticLiterals,
 } from "./emit-css"
 export {
   type ColorConfig,

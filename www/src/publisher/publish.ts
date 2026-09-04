@@ -66,7 +66,7 @@ let dotuiDepQuery = ""
 export const BUNDLED_INTO_INIT = new Set([
   // focus-ring / focus-reset / focus-input utilities ship in base.css.
   "focus-styles",
-  // @theme blocks ship in theme.css.
+  // The @theme vocabulary ships in the init item's cssVars.
   "theme",
   // cn() helper ships as `src/lib/utils.ts` in the init item.
   "utils",

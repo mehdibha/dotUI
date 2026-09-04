@@ -37,7 +37,7 @@ const mix = (
   a: SemanticTarget,
   weight: number,
   b: SemanticTarget,
-): SemanticTarget => ({ mix: { space: "oklab", stops: [a, weight, b] } })
+): SemanticTarget => ({ mix: [a, weight, b] })
 
 const bg = (
   target: SemanticToken["target"],
@@ -118,6 +118,7 @@ export function semanticVocabulary(
           PRIMARY,
         ),
         "color-primary-muted": bg(ref("accent", "100"), PRIMARY),
+        "color-primary-disabled": bg(ref("neutral", "300"), PRIMARY),
         "color-fg-on-primary": primaryFillOn,
         "color-fg-primary-disabled": fg(ref("accent", "400"), PRIMARY),
       }
@@ -129,6 +130,7 @@ export function semanticVocabulary(
           PRIMARY,
         ),
         "color-primary-muted": bg(ref("neutral", "200"), PRIMARY),
+        "color-primary-disabled": bg(ref("neutral", "300"), PRIMARY),
         "color-fg-on-primary": primaryFillOn,
         "color-fg-primary-disabled": fg(ref("neutral", "500"), PRIMARY),
       }
@@ -227,6 +229,10 @@ export function semanticVocabulary(
     // ---- overlay / chrome (previously hardcoded in components) ----
     "color-overlay": bg({ value: "oklch(0 0 0)" }),
     "color-thumb": bg({ value: "oklch(1 0 0)" }),
+    // `::selection` — a light accent tint under dark text in light mode, a
+    // dark tint under light text in dark (both flip with the ramps).
+    "color-text-selection": bg(ref("accent", "300"), PRIMARY),
+    "color-fg-on-text-selection": fg(ref("neutral", "950")),
   }
 }
 

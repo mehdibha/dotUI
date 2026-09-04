@@ -29,6 +29,7 @@ export {
   fitSrgb,
   lstarOf,
   maxChroma,
+  mixOklab,
   type Oklch,
   oklchCss,
   toHex,
