@@ -172,7 +172,7 @@ export function InteractiveDemo({
               controlsOpen ? "h-auto" : "h-56",
             )}
           >
-            <div className="flex flex-col gap-4 px-5 pt-3 pb-5">
+            <div className="flex flex-col gap-4 px-4 pt-2 pb-4">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-medium text-fg-muted">
                   Controls
