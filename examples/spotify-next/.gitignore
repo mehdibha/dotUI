@@ -4,15 +4,6 @@ pnpm-lock.yaml
 next-env.d.ts
 *.tsbuildinfo
 
-# Written by `shadcn init` / `shadcn add` — the smoke script regenerates them.
-components.json
-src/components/ui
-src/hooks
-src/lib
-
-# Tailwind entry: written by scripts/smoke.ts before `shadcn init` appends the theme.
-src/app/globals.css
-
 # `next dev` writes these agent-rules files.
 AGENTS.md
 CLAUDE.md

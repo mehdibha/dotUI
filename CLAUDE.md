@@ -73,7 +73,7 @@ When working on a component's styles, compare against the shadcn equivalent to c
 
 After modifying `www/src/registry/`, run `pnpm build:registry` and commit the regenerated `__generated__/*` + `base/colors.css` — CI's registry-drift job diffs exactly these files.
 
-Touched the registry, the publisher, or the `/r/*` routes? Run `pnpm smoke:examples` against `pnpm dev:www` (or `--origin <preview-url>`). It runs the real shadcn CLI — init, then add every item — in the preset × framework templates under `examples/` and type-checks and builds the result; the publisher tests never invoke the CLI. See `examples/README.md`.
+`examples/` holds consumer templates with the registry's resolved output committed (styles collapsed to the preset, icons swapped, params inlined). Never edit or regenerate them as part of a PR: CI regenerates every template with the real shadcn CLI on push to `main` and commits the result. On PRs the Examples job reports the consumer-facing diff in its summary — read it when you touch the registry, the publisher, presets, or `/r/*`. To look at a branch's output locally, `pnpm smoke:examples`. See `examples/README.md`.
 
 ### Before committing
 

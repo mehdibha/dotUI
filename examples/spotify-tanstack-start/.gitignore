@@ -5,13 +5,4 @@ dist
 .nitro
 .output
 *.tsbuildinfo
-
-# Written by `shadcn init` / `shadcn add` — the smoke script regenerates them.
-components.json
-src/components/ui
-src/hooks
-src/lib
 src/routeTree.gen.ts
-
-# Tailwind entry: written by scripts/smoke.ts before `shadcn init` appends the theme.
-src/styles.css

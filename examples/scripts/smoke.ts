@@ -1,38 +1,53 @@
 /**
- * Consumer smoke test — runs the real shadcn CLI against a dotUI registry.
+ * Regenerate the consumer templates with the real shadcn CLI.
  *
- * The publisher's tests type-check what the registry serves, but nothing
- * exercised the CLI that consumers actually run: where it lands files, how it
- * rewrites imports, which dependencies it installs. That gap is how every
- * component installed to `src/ui/` instead of `src/components/ui/` for three
- * months (#706).
- *
- * Each example in `examples/` is a preset × framework template: a bare
- * framework scaffold with no components.json. Per example:
+ * Each template in `examples/` is a preset × framework app with the registry's
+ * resolved output committed: styles collapsed to the preset, icon imports
+ * swapped, params inlined — what a consumer actually gets, browsable and
+ * type-checked in one place. This script is the only thing that writes those
+ * files. Per template:
  *   1. Remove everything a previous run generated.
- *   2. `pnpm install` the scaffold (each example is its own pnpm workspace root).
+ *   2. `pnpm install` the scaffold (each template is its own pnpm workspace root).
  *   3. `shadcn init <origin>/r/init?preset=…` — the exact command the docs
  *      give, with the template's preset baked in.
  *   4. `shadcn add @dotui/<name>` for every item in `<origin>/r/registry.json`.
- *   5. A production build, then `tsc --noEmit`.
+ *   5. A production build, then `tsc --noEmit`, then checks that the theme's
+ *      fonts survived into the built output.
+ *
+ * Commit the result. CI runs the same script and fails if the committed
+ * template differs, so a registry change shows up in the PR as the files it
+ * changes for consumers. The publisher's tests never invoke the CLI — this is
+ * the only check on where files land and how imports resolve (#706 lived in
+ * that gap for three months).
  *
  * Usage:
  *   node examples/scripts/smoke.ts [--origin <url>] [--example <name>]
  *
- * `--origin` is any deployment: a local `pnpm dev:www` (the default,
- * http://127.0.0.1:4444), a Vercel preview, or production. Preset encoding
- * always comes from this checkout (`www/scripts/encode-preset.ts`), the same
- * way the create page encodes it in the browser.
+ * With no `--origin` the script builds the registry and serves this checkout
+ * with the www dev server (reusing one already running on its port). Pass a
+ * Vercel preview or production to regenerate from a deployment instead. Preset
+ * encoding always comes from this checkout (`www/scripts/encode-preset.ts`),
+ * the same way the create page encodes it in the browser.
  */
 
-import { spawnSync } from "node:child_process"
-import { readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
+import { spawn, spawnSync } from "node:child_process"
+import {
+  openSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs"
+import os from "node:os"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
 // Pinned so a CLI release can't change what a green run means. Bump on purpose.
 const SHADCN = "shadcn@4.20.1"
-const DEFAULT_ORIGIN = "http://127.0.0.1:4444"
+// The www dev server's port (www/vite.config.ts).
+const LOCAL_ORIGIN = "http://127.0.0.1:4444"
+// What the committed `components.json` points at, whatever origin generated it.
+const CANONICAL_ORIGIN = "https://dotui.org"
 const EXAMPLES_DIR = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "..",
@@ -50,14 +65,13 @@ const EXAMPLES: Record<string, { framework: Framework; preset: string }> = {
   "spotify-tanstack-start": { framework: "tanstack-start", preset: "spotify" },
 }
 
-// The Tailwind entry stylesheet each framework's app imports. `shadcn init`
-// appends the dotUI theme to it, so the smoke owns the file: it is gitignored
-// and rewritten from this seed before every run. The `@source` is needed
-// because the installed components live in a gitignored folder, which
-// Tailwind v4 would otherwise skip when scanning for classes.
 interface FrameworkSetup {
-  file: string
-  source: string
+  /**
+   * The Tailwind entry stylesheet the app imports. `shadcn init` appends the
+   * theme to it, so it is reset to `@import "tailwindcss"` before every run.
+   */
+  stylesheet: string
+  /** Where the production build writes CSS. */
   builtCss: string
   /**
    * Where `shadcn init` wires a `registry:font` item on this framework: the
@@ -67,16 +81,14 @@ interface FrameworkSetup {
   fontWiring: { file: string; needle: string }
 }
 
-const STYLESHEET: Record<Framework, FrameworkSetup> = {
+const FRAMEWORKS: Record<Framework, FrameworkSetup> = {
   next: {
-    file: "src/app/globals.css",
-    source: "../components/ui",
+    stylesheet: "src/app/globals.css",
     builtCss: ".next/static",
     fontWiring: { file: "src/app/layout.tsx", needle: "next/font/google" },
   },
   "tanstack-start": {
-    file: "src/styles.css",
-    source: "./components/ui",
+    stylesheet: "src/styles.css",
     builtCss: "dist/client",
     fontWiring: { file: "src/styles.css", needle: '@import "@fontsource' },
   },
@@ -93,12 +105,12 @@ const GENERATED = [
 ]
 
 interface Options {
-  origin: string
+  origin: string | undefined
   examples: string[]
 }
 
 function parseArgs(argv: string[]): Options {
-  let origin = process.env.SMOKE_ORIGIN ?? DEFAULT_ORIGIN
+  let origin: string | undefined = process.env.SMOKE_ORIGIN
   let examples = Object.keys(EXAMPLES)
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]
@@ -120,7 +132,7 @@ function parseArgs(argv: string[]): Options {
       process.exit(2)
     }
   }
-  return { origin: origin.replace(/\/+$/, ""), examples }
+  return { origin: origin?.replace(/\/+$/, ""), examples }
 }
 
 function run(cwd: string, cmd: string, args: string[]): void {
@@ -130,6 +142,93 @@ function run(cwd: string, cmd: string, args: string[]): void {
   if (result.status !== 0) {
     throw new Error(`${cmd} ${args[0] ?? ""} exited with ${result.status}`)
   }
+}
+
+/* ------------------------------ local registry ------------------------------ */
+
+async function isServing(origin: string): Promise<boolean> {
+  try {
+    const res = await fetch(`${origin}/r/registry.json`)
+    return res.ok
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Serve this checkout's registry on the www dev server. Reuses a server that
+ * is already answering on the port (a `pnpm dev:www` you left running);
+ * otherwise builds the registry, starts vite, and returns a stop function.
+ */
+async function serveLocalRegistry(): Promise<() => void> {
+  if (await isServing(LOCAL_ORIGIN)) {
+    console.log(`registry: reusing the dev server at ${LOCAL_ORIGIN}`)
+    return () => {}
+  }
+  run(REPO_DIR, "pnpm", ["build:registry"])
+  const log = path.join(os.tmpdir(), "dotui-examples-www.log")
+  const fd = openSync(log, "w")
+  const child = spawn(
+    "pnpm",
+    [
+      "--filter=www",
+      "exec",
+      "vite",
+      "dev",
+      "--port",
+      "4444",
+      "--host",
+      "127.0.0.1",
+    ],
+    { cwd: REPO_DIR, stdio: ["ignore", fd, fd], detached: true },
+  )
+  const stop = () => {
+    if (child.pid && child.exitCode === null) {
+      try {
+        process.kill(-child.pid, "SIGTERM")
+      } catch {
+        // Already gone.
+      }
+    }
+  }
+  process.on("exit", stop)
+  for (const signal of ["SIGINT", "SIGTERM"] as const) {
+    process.on(signal, () => {
+      stop()
+      process.exit(130)
+    })
+  }
+  console.log(`registry: starting the dev server (log: ${log})`)
+  for (let attempt = 0; attempt < 60; attempt++) {
+    if (await isServing(LOCAL_ORIGIN)) return stop
+    if (child.exitCode !== null) break
+    await new Promise((resolve) => setTimeout(resolve, 3000))
+  }
+  stop()
+  throw new Error(`www dev server did not come up; see ${log}`)
+}
+
+/* ---------------------------------- registry -------------------------------- */
+
+/**
+ * GET JSON from the registry, retrying transient failures — the dev server
+ * can drop a connection while re-optimizing between templates.
+ */
+async function fetchJson<T>(url: string, attempts = 5): Promise<T> {
+  let lastError: unknown
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try {
+      const res = await fetch(url)
+      if (!res.ok) throw new Error(`GET ${url} → ${res.status}`)
+      return (await res.json()) as T
+    } catch (error) {
+      lastError = error
+      if (attempt < attempts) {
+        await new Promise((resolve) => setTimeout(resolve, 2000 * attempt))
+      }
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error(String(lastError))
 }
 
 /** Encoded `?preset=` values by preset id, from this checkout's preset data. */
@@ -152,6 +251,27 @@ function encodePresets(ids: string[]): Record<string, string> {
   return JSON.parse(result.stdout.trim()) as Record<string, string>
 }
 
+/** Whether the init item for this preset pulls in `registry:font` items. */
+async function initHasFonts(
+  origin: string,
+  encodedPreset: string,
+): Promise<boolean> {
+  const item = await fetchJson<{ registryDependencies?: string[] }>(
+    `${origin}/r/init?preset=${encodedPreset}`,
+  )
+  return (item.registryDependencies ?? []).some((dep) => /\/r\/font-/.test(dep))
+}
+
+async function registryNames(origin: string): Promise<string[]> {
+  const url = `${origin}/r/registry.json`
+  const registry = await fetchJson<{ items?: Array<{ name: string }> }>(url)
+  const names = (registry.items ?? []).map((item) => item.name)
+  if (names.length === 0) throw new Error(`GET ${url} lists no items`)
+  return names
+}
+
+/* ----------------------------------- checks --------------------------------- */
+
 /** Every `.css` file under `dir`, recursively. */
 function cssFiles(dir: string): string[] {
   const out: string[] = []
@@ -165,29 +285,30 @@ function cssFiles(dir: string): string[] {
 
 /**
  * A build can pass while quietly dropping part of the theme: an `@import url()`
- * the registry appends (Google Fonts) lands after `@import "tailwindcss"`, which
- * is invalid once Tailwind expands, and bundlers strip it instead of failing.
- * Every URL import in the stylesheet must survive into the built CSS.
+ * the registry appends lands after `@import "tailwindcss"`, which is invalid
+ * once Tailwind expands, and bundlers strip it instead of failing. Every URL
+ * import in the stylesheet must survive into the built CSS, and a preset that
+ * ships fonts must have had them wired the framework's way.
  */
 function checkBuiltCss(
   cwd: string,
-  stylesheet: FrameworkSetup,
+  framework: FrameworkSetup,
   expectFonts: boolean,
 ): void {
-  const source = readFileSync(path.join(cwd, stylesheet.file), "utf8")
+  const source = readFileSync(path.join(cwd, framework.stylesheet), "utf8")
   const urls = [...source.matchAll(/@import\s+url\(\s*['"]?([^'")]+)/g)].map(
     (m) => m[1]!,
   )
-  const built = cssFiles(path.join(cwd, stylesheet.builtCss)).map((file) =>
+  const built = cssFiles(path.join(cwd, framework.builtCss)).map((file) =>
     readFileSync(file, "utf8"),
   )
   if (built.length === 0) {
-    throw new Error(`no built CSS found under ${stylesheet.builtCss}`)
+    throw new Error(`no built CSS found under ${framework.builtCss}`)
   }
   const dropped = urls.filter((url) => !built.some((css) => css.includes(url)))
   if (dropped.length > 0) {
     throw new Error(
-      `built CSS dropped ${dropped.length} @import url() from ${stylesheet.file}:\n` +
+      `built CSS dropped ${dropped.length} @import url() from ${framework.stylesheet}:\n` +
         dropped.map((url) => `  ${url}`).join("\n"),
     )
   }
@@ -195,10 +316,8 @@ function checkBuiltCss(
     console.log(`@import url() survived the build: ${urls.length}`)
   }
 
-  // A preset with fonts ships `registry:font` items; the CLI must have wired
-  // them the framework's way, and the faces must be in the built CSS.
   if (!expectFonts) return
-  const { file, needle } = stylesheet.fontWiring
+  const { file, needle } = framework.fontWiring
   if (!readFileSync(path.join(cwd, file), "utf8").includes(needle)) {
     throw new Error(`font not wired: ${file} has no ${needle}`)
   }
@@ -208,46 +327,78 @@ function checkBuiltCss(
   console.log(`fonts wired via ${needle}`)
 }
 
-/** Whether the init item for this preset pulls in `registry:font` items. */
-async function initHasFonts(
-  origin: string,
-  encodedPreset: string,
-): Promise<boolean> {
-  const url = `${origin}/r/init?preset=${encodedPreset}`
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`GET ${url} → ${res.status}`)
-  const item = (await res.json()) as { registryDependencies?: string[] }
-  return (item.registryDependencies ?? []).some((dep) => /\/r\/font-/.test(dep))
+/* -------------------------------- normalizing ------------------------------- */
+
+/**
+ * The CLI writes the origin it installed from into `components.json`. The
+ * committed file must point at production whatever served this run, or every
+ * regeneration against a dev server or preview would show as drift.
+ */
+function canonicalizeOrigin(cwd: string, origin: string): void {
+  if (origin === CANONICAL_ORIGIN) return
+  const file = path.join(cwd, "components.json")
+  const content = readFileSync(file, "utf8")
+  writeFileSync(file, content.replaceAll(origin, CANONICAL_ORIGIN))
 }
 
-async function registryNames(origin: string): Promise<string[]> {
-  const url = `${origin}/r/registry.json`
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`GET ${url} → ${res.status}`)
-  const registry = (await res.json()) as { items?: Array<{ name: string }> }
-  const names = (registry.items ?? []).map((item) => item.name)
-  if (names.length === 0) throw new Error(`GET ${url} lists no items`)
-  return names
+function dependencyNames(packageJson: string): Set<string> {
+  const parsed = JSON.parse(packageJson) as {
+    dependencies?: Record<string, string>
+    devDependencies?: Record<string, string>
+  }
+  return new Set([
+    ...Object.keys(parsed.dependencies ?? {}),
+    ...Object.keys(parsed.devDependencies ?? {}),
+  ])
 }
 
-async function smoke(
+/**
+ * `pnpm add` (which the CLI runs for each item's npm dependencies) re-resolves
+ * ranges to whatever is latest today, so a byte-for-byte `package.json` would
+ * drift with every upstream release. Keep the committed file unless the SET of
+ * dependencies changed — that is the signal worth seeing in a diff.
+ */
+function stabilizePackageJson(cwd: string, before: string): void {
+  const file = path.join(cwd, "package.json")
+  const after = readFileSync(file, "utf8")
+  const was = dependencyNames(before)
+  const now = dependencyNames(after)
+  const added = [...now].filter((name) => !was.has(name))
+  const removed = [...was].filter((name) => !now.has(name))
+  if (added.length === 0 && removed.length === 0) {
+    writeFileSync(file, before)
+    return
+  }
+  console.log(
+    `package.json dependencies changed` +
+      (added.length ? ` +${added.join(" +")}` : "") +
+      (removed.length ? ` -${removed.join(" -")}` : ""),
+  )
+}
+
+/* ---------------------------------- per template ---------------------------- */
+
+async function regenerate(
   example: string,
   origin: string,
   encodedPreset: string,
   names: string[],
 ) {
-  const { framework } = EXAMPLES[example]!
+  const { framework: frameworkName } = EXAMPLES[example]!
+  const framework = FRAMEWORKS[frameworkName]
   const cwd = path.join(EXAMPLES_DIR, example)
   console.log(`\n=== ${example} ===`)
   const expectFonts = await initHasFonts(origin, encodedPreset)
+  const packageJsonBefore = readFileSync(path.join(cwd, "package.json"), "utf8")
+
   for (const generated of GENERATED) {
     rmSync(path.join(cwd, generated), { recursive: true, force: true })
   }
-  const stylesheet = STYLESHEET[framework]
   writeFileSync(
-    path.join(cwd, stylesheet.file),
-    `@import "tailwindcss";\n@source "${stylesheet.source}";\n`,
+    path.join(cwd, framework.stylesheet),
+    '@import "tailwindcss";\n',
   )
+
   run(cwd, "pnpm", ["install"])
   run(cwd, "pnpm", [
     "dlx",
@@ -264,25 +415,41 @@ async function smoke(
     "--yes",
     "--overwrite",
   ])
+  canonicalizeOrigin(cwd, origin)
+  stabilizePackageJson(cwd, packageJsonBefore)
+
   // Build first: it generates what typecheck needs (TanStack's routeTree.gen.ts,
   // Next's next-env.d.ts).
   run(cwd, "pnpm", ["build"])
   run(cwd, "pnpm", ["typecheck"])
-  checkBuiltCss(cwd, stylesheet, expectFonts)
+  checkBuiltCss(cwd, framework, expectFonts)
 }
 
 async function main() {
-  const { origin, examples } = parseArgs(process.argv.slice(2))
+  const options = parseArgs(process.argv.slice(2))
+  let stopServer = () => {}
+  let origin = options.origin
+  if (!origin) {
+    stopServer = await serveLocalRegistry()
+    origin = LOCAL_ORIGIN
+  }
   console.log(`registry: ${origin}`)
-  const presetIds = [...new Set(examples.map((name) => EXAMPLES[name]!.preset))]
+  const presetIds = [
+    ...new Set(options.examples.map((name) => EXAMPLES[name]!.preset)),
+  ]
   const encoded = encodePresets(presetIds)
   const names = await registryNames(origin)
   console.log(`items: ${names.length} · presets: ${presetIds.join(", ")}`)
 
   const failures: string[] = []
-  for (const example of examples) {
+  for (const example of options.examples) {
     try {
-      await smoke(example, origin, encoded[EXAMPLES[example]!.preset]!, names)
+      await regenerate(
+        example,
+        origin,
+        encoded[EXAMPLES[example]!.preset]!,
+        names,
+      )
       console.log(`\n✓ ${example}`)
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error)
@@ -290,10 +457,10 @@ async function main() {
       failures.push(example)
     }
   }
+  stopServer()
 
-  console.log(
-    `\n${examples.length - failures.length}/${examples.length} examples passed`,
-  )
+  const total = options.examples.length
+  console.log(`\n${total - failures.length}/${total} templates regenerated`)
   process.exit(failures.length === 0 ? 0 : 1)
 }
 
