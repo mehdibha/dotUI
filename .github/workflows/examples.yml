@@ -69,9 +69,13 @@ jobs:
       - uses: ./.github/actions/setup
 
       # With no --origin the script builds the registry, serves it with the www
-      # dev server, and stops it when done.
+      # dev server, and stops it when done. The dispatch input reaches the shell
+      # through an env var, never by interpolation into the command line.
       - name: Regenerate, build, type-check
-        run: node examples/scripts/smoke.ts --example ${{ matrix.example }} ${{ inputs.origin && format('--origin {0}', inputs.origin) || '' }}
+        env:
+          ORIGIN: ${{ inputs.origin }}
+        run: |
+          node examples/scripts/smoke.ts --example "${{ matrix.example }}" ${ORIGIN:+--origin "$ORIGIN"}
 
       - name: Report what changed for consumers
         run: |
@@ -128,4 +132,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "chore(examples): regenerate templates" -m "Registry output changed in ${{ github.sha }}; regenerated with the real shadcn CLI."
-          git push origin HEAD:main
+          # main may have moved while this ran (any push, not just a matching
+          # one). The commit touches only examples/, so rebasing is trivial.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            echo "push rejected (attempt $attempt); retrying"
+            sleep 10
+          done
+          echo "::error::could not push the regenerated templates to main after 3 attempts"
+          exit 1

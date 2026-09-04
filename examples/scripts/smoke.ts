@@ -14,11 +14,12 @@
  *   5. A production build, then `tsc --noEmit`, then checks that the theme's
  *      fonts survived into the built output.
  *
- * Commit the result. CI runs the same script and fails if the committed
- * template differs, so a registry change shows up in the PR as the files it
- * changes for consumers. The publisher's tests never invoke the CLI — this is
- * the only check on where files land and how imports resolve (#706 lived in
- * that gap for three months).
+ * CI runs the same script: on pull requests it reports the diff against the
+ * committed template (never failing on drift), so a registry change shows up
+ * as the files it changes for consumers; on push to main it commits the
+ * result, so nobody maintains `examples/` by hand. The publisher's tests never
+ * invoke the CLI — this is the only check on where files land and how imports
+ * resolve (#706 lived in that gap for three months).
  *
  * Usage:
  *   node examples/scripts/smoke.ts [--origin <url>] [--example <name>]
@@ -71,6 +72,13 @@ interface FrameworkSetup {
    * theme to it, so it is reset to `@import "tailwindcss"` before every run.
    */
   stylesheet: string
+  /**
+   * Scaffold files the CLI edits in place rather than creating — reset to
+   * this pristine content before every run, so the committed result is what
+   * one `init` produces and the font-wiring check is not satisfied by a
+   * previous run's output.
+   */
+  seeds: Record<string, string>
   /** Where the production build writes CSS. */
   builtCss: string
   /**
@@ -81,14 +89,37 @@ interface FrameworkSetup {
   fontWiring: { file: string; needle: string }
 }
 
+const NEXT_LAYOUT = `import "./globals.css"
+
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "dotUI · Next.js example",
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body className="bg-bg text-fg">{children}</body>
+    </html>
+  )
+}
+`
+
 const FRAMEWORKS: Record<Framework, FrameworkSetup> = {
   next: {
     stylesheet: "src/app/globals.css",
+    seeds: { "src/app/layout.tsx": NEXT_LAYOUT },
     builtCss: ".next/static",
     fontWiring: { file: "src/app/layout.tsx", needle: "next/font/google" },
   },
   "tanstack-start": {
     stylesheet: "src/styles.css",
+    seeds: {},
     builtCss: "dist/client",
     fontWiring: { file: "src/styles.css", needle: '@import "@fontsource' },
   },
