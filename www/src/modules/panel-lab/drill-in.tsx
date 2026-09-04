@@ -25,7 +25,7 @@ import type { PanelSystem } from "./panel"
 import { ControlGroup, GroupTitle, ROW_LABEL } from "./rows"
 import { PanelSearch } from "./search"
 import type { Chapter, Lab } from "./state"
-import { isWired } from "./wired"
+import { showWip } from "./wired"
 
 const PANE =
   "absolute inset-0 no-scrollbar flex flex-col overflow-y-auto overscroll-contain px-3 pt-[56px] pb-[64px] *:shrink-0"
@@ -62,7 +62,7 @@ function IndexRow({
 }) {
   const status = lab.section(chapter.defaults)
   const Demo = CARD_DEMOS[chapter.id]
-  const wip = !isWired(chapter.members.map((m) => m.id)) && <WipChip />
+  const wip = showWip(chapter.members.map((m) => m.id)) && <WipChip />
   // The label column: title (with its modified dot), and the live value
   // beneath it — first segment only, one word-ish.
   const label = (
@@ -229,7 +229,7 @@ export function DrillInPanel({
                   All settings
                 </RacButton>
                 <span className="ml-auto flex items-center gap-1.5 pr-1">
-                  {!isWired(page.members.map((m) => m.id)) && <WipChip />}
+                  {showWip(page.members.map((m) => m.id)) && <WipChip />}
                   <span className="text-[0.8125rem] font-medium text-fg">
                     {page.label}
                   </span>
