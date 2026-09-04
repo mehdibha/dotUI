@@ -20,6 +20,9 @@ import { PALETTE_ORDER } from "./palettes"
 
 export type Ramp = Record<string, string>
 
+/** Base radius length; presets override it through `tokens["--radius"]`. */
+export const DEFAULT_RADIUS = "0.625rem"
+
 /** Convert the persisted config into engine options. */
 export function themeOptionsFromConfig(config: ColorConfig): ThemeOptions {
   const options: ThemeOptions = { seeds: { accent: config.seeds.accent } }
@@ -62,7 +65,7 @@ export interface EmitPrimitivesOptions {
    * Selector for the light-mode block (default `:root`). Pass a subtree
    * selector (e.g. `[data-dotui-scope="x"]`) to override the primitives on a
    * scope rather than globally. The default `:root` also carries the
-   * `base/colors.css` banner + `--radius: 0.625rem` base; a custom selector
+   * `base/colors.css` banner + `--radius` base; a custom selector
    * omits both.
    */
   lightSelector?: string
@@ -125,7 +128,7 @@ export function emitPrimitivesCss(
     })
   }
   out.push(`${lightSelector} {`)
-  if (isRoot) out.push("\t--radius: 0.625rem;", "")
+  if (isRoot) out.push(`\t--radius: ${DEFAULT_RADIUS};`, "")
   emitModeBlock(out, theme.light, names)
   if (charts) emitCharts(theme.charts.light)
   out.push("}", "", `${darkSelector} {`)

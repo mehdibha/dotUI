@@ -67,7 +67,6 @@ jobs:
             www/src/registry/__generated__/base-css.ts \
             www/src/registry/__generated__/registry-items.ts \
             www/src/registry/base/colors.css \
-            www/src/registry/base/theme.css \
             www/src/registry/__generated__/__tabler__.ts \
             www/src/registry/__generated__/__hugeicons__.ts \
             www/src/registry/__generated__/__remix__.ts \

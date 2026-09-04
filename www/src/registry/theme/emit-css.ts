@@ -29,7 +29,7 @@ import type {
 } from "./types"
 
 /** Resolve a single {@link SemanticTarget} to its CSS value string. */
-export function resolveTarget(target: SemanticTarget): string {
+function resolveTarget(target: SemanticTarget): string {
   if ("ref" in target) return `var(--${target.ref.palette}-${target.ref.step})`
   if ("on" in target) return `var(--on-${target.on.palette}-${target.on.step})`
   if ("value" in target) return target.value
@@ -107,7 +107,7 @@ function baseTarget(target: SemanticToken["target"]): SemanticTarget {
 }
 
 /** Resolve a token's base (light) target to its CSS value. */
-export function resolveTokenValue(token: SemanticToken): string {
+function resolveTokenValue(token: SemanticToken): string {
   return resolveTarget(baseTarget(token.target))
 }
 

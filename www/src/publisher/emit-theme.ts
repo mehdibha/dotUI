@@ -5,10 +5,17 @@
  * same shape shadcn's own themes use:
  *   - `cssVars.light` / `.dark` -> `:root` / `.dark` — every semantic token
  *                                  as a literal `oklch()` per mode, plus
- *                                  radius, density, and chart slots
+ *                                  radius and chart slots
  *   - `cssVars.theme`           -> `@theme inline` — the Tailwind vocabulary
  *                                  (`--color-bg: var(--bg)`, radius rungs, fonts)
- *   - `css`                     -> imports, plugins, utilities, layers, selectors
+ *   - `css`                     -> imports, plugins, utilities, layers,
+ *                                  selectors, and the preset's non-color
+ *                                  `:root` vars (density, component tokens)
+ *
+ * Keys in `light`/`dark` carry no `--`: shadcn's theme updater aliases every
+ * key it doesn't know as `var(--<key>)`, so a prefixed key would render as
+ * `var(----key)`. Non-color preset vars stay out of those fields for the
+ * same reason — the updater would alias them into `@theme inline` as junk.
  *
  * The primitive ramps never ship: users own ~90 readable semantic values,
  * not the generator's intermediate output.
@@ -23,6 +30,7 @@ import {
 } from "@/lib/fonts"
 import {
   DEFAULT_COLOR_CONFIG,
+  DEFAULT_RADIUS,
   resolveColorConfig,
   semanticLiterals,
   semanticsFor,
@@ -62,29 +70,28 @@ export const cn = (...classes: Parameters<typeof cnBase>): string =>
   cnBase(...classes) ?? "";
 `
 
-/** Base radius length; presets override it through `tokens["--radius"]`. */
-const DEFAULT_RADIUS = "0.625rem"
-
 /** Mirror of `resolveCssValue` in lib/styles.tsx (not importable here — React). */
 function resolveCssValue(value: string): string {
   return value.startsWith("--") ? `var(${value})` : value
 }
 
 /**
- * Global preset tokens (radius, density, cursors, …) for `:root`.
- * `componentParams` are inlined into component classes at build, so they're
- * not written here. Font tokens are excluded: the shipped theme renders
- * `@theme inline`, which bakes values into utilities, so a `:root` override
- * would be ignored — they re-point the `@theme` vocabulary instead.
+ * Global preset tokens (density, cursors, component vars, …) for `:root`,
+ * radius excluded (it rides in `cssVars.light`). `componentParams` are
+ * inlined into component classes at build, so they're not written here.
+ * Font tokens are excluded: the shipped theme renders `@theme inline`, which
+ * bakes values into utilities, so a `:root` override would be ignored — they
+ * re-point the `@theme` vocabulary instead.
  */
 function presetRootVars(preset: PublishPreset): Record<string, string> {
-  const vars: Record<string, string> = { "--radius": DEFAULT_RADIUS }
+  const vars: Record<string, string> = {}
   // dotui's default density is `default`, so it needs no declaration.
   if (preset.density !== "default") vars["--dotui-density"] = preset.density
-  const fontVars = new Set<string>(FONT_TOKEN_VARS)
+  const skip = new Set<string>([...FONT_TOKEN_VARS, "--radius"])
   for (const [key, value] of Object.entries(preset.tokens ?? {})) {
-    if (fontVars.has(key)) continue
-    vars[key.startsWith("--") ? key : `--${key}`] = resolveCssValue(value)
+    const name = key.startsWith("--") ? key : `--${key}`
+    if (skip.has(name)) continue
+    vars[name] = resolveCssValue(value)
   }
   return vars
 }
@@ -162,9 +169,9 @@ function registryConfigUrl(
   return `${registryRoot}/r/{name}?preset=${encodedPreset ?? ""}`
 }
 
-/** `color-fg-on-primary` → `--fg-on-primary`: the `:root` name behind a token. */
+/** `color-fg-on-primary` → `fg-on-primary`: the `:root` name behind a token. */
 function rootVar(tokenName: string): string {
-  return `--${tokenName.replace(/^color-/, "")}`
+  return tokenName.replace(/^color-/, "")
 }
 
 export function mergePresetCssFields(
@@ -183,25 +190,36 @@ export function mergePresetCssFields(
 ): RegistryCssFields {
   const css = cloneRecord(base.css) ?? {}
   const theme = { ...base.cssVars?.theme }
-  const light = { ...base.cssVars?.light, ...presetRootVars(preset) }
-  const dark = { ...base.cssVars?.dark }
+  const light: Record<string, string> = {
+    ...base.cssVars?.light,
+    radius: preset.tokens?.["--radius"] ?? DEFAULT_RADIUS,
+  }
+  const dark: Record<string, string> = { ...base.cssVars?.dark }
+  const rootVars = presetRootVars(preset)
+  if (Object.keys(rootVars).length > 0) {
+    const root = css[":root"]
+    css[":root"] = {
+      ...(typeof root === "object" && root !== null ? root : {}),
+      ...rootVars,
+    }
+  }
 
   // The color layer: every semantic token flattened to a literal per mode,
   // named shadcn-style in `:root`/`.dark` and aliased into the vocabulary.
   const engine = resolveColorConfig(preset.color ?? DEFAULT_COLOR_CONFIG)
   const literals = semanticLiterals(semanticsFor(preset.color), engine)
   for (const [name, value] of Object.entries(literals.light)) {
-    theme[`--${name}`] = `var(${rootVar(name)})`
+    theme[`--${name}`] = `var(--${rootVar(name)})`
     light[rootVar(name)] = value
   }
   for (const [name, value] of Object.entries(literals.dark)) {
     dark[rootVar(name)] = value
   }
   engine.charts.light.categorical.forEach((color, i) => {
-    light[`--chart-${i + 1}`] = color
+    light[`chart-${i + 1}`] = color
   })
   engine.charts.dark.categorical.forEach((color, i) => {
-    dark[`--chart-${i + 1}`] = color
+    dark[`chart-${i + 1}`] = color
   })
 
   // Typography: re-point the `@theme` vocabulary at the preset's stacks. The

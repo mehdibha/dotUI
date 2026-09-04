@@ -71,25 +71,27 @@ describe("emitInitItem", () => {
     for (const name of Object.keys(theme ?? {}).filter((n) =>
       n.startsWith("--color-"),
     )) {
-      const root = name.replace("--color-", "--")
+      const root = name.replace("--color-", "")
       expect(light?.[root], root).toMatch(OKLCH)
       expect(dark?.[root], root).toMatch(OKLCH)
     }
-    expect(light).toMatchObject({ "--radius": "0.625rem" })
+    expect(
+      Object.keys({ ...light, ...dark }).some((k) => k.startsWith("--")),
+    ).toBe(false)
+    expect(light).toMatchObject({ radius: "0.625rem" })
     // A neutral primary is the inverse surface: dark text in light mode …
-    expect(hueOf(light?.["--primary"])).toBeCloseTo(hueOf(light?.["--fg"]), 0)
-    expect(light?.["--primary"]).toBe(light?.["--fg"])
+    expect(light?.["primary"]).toBe(light?.["fg"])
     // … and light in dark mode.
-    expect(dark?.["--primary"]).toBe(dark?.["--fg"])
+    expect(dark?.["primary"]).toBe(dark?.["fg"])
     // Recipes flatten to literals — no `color-mix()` or `var()` escapes.
-    expect(light?.["--primary-hover"]).toMatch(OKLCH)
-    expect(dark?.["--border"]).toMatch(OKLCH)
+    expect(light?.["primary-hover"]).toMatch(OKLCH)
+    expect(dark?.["border"]).toMatch(OKLCH)
     expect(JSON.stringify([light, dark])).not.toMatch(
       /var\(--(neutral|accent)-/,
     )
     // Chart slots ride along per mode.
-    expect(light?.["--chart-1"]).toMatch(OKLCH)
-    expect(dark?.["--chart-8"]).toMatch(OKLCH)
+    expect(light?.["chart-1"]).toMatch(OKLCH)
+    expect(dark?.["chart-8"]).toMatch(OKLCH)
   })
 
   test("writes the preset into the @dotui registry URL string", () => {
@@ -112,8 +114,8 @@ describe("emitInitItem", () => {
       registryRoot: "https://dotui.com",
     })
 
-    expect(item.cssVars?.light).toMatchObject({ "--dotui-density": "compact" })
-    expect(baseRegistryCss.cssVars).not.toHaveProperty("light")
+    expect(item.css?.[":root"]).toMatchObject({ "--dotui-density": "compact" })
+    expect(baseRegistryCss.css).not.toHaveProperty(":root")
   })
 
   test("emits preset tokens as :root vars, wrapping token refs in var()", () => {
@@ -130,10 +132,10 @@ describe("emitInitItem", () => {
       registryRoot: "https://dotui.com",
     })
 
-    expect(item.cssVars?.light).toMatchObject({
-      "--radius": "0.5rem",
-      "--btn-radius": "var(--radius-md)",
-    })
+    // Radius rides with the colors; other tokens stay in a plain `:root`
+    // rule, out of reach of shadcn's theme updater.
+    expect(item.cssVars?.light).toMatchObject({ radius: "0.5rem" })
+    expect(item.css?.[":root"]).toEqual({ "--btn-radius": "var(--radius-md)" })
   })
 
   test("font tokens become registry:font deps, not a Google Fonts @import", () => {
@@ -187,13 +189,13 @@ describe("emitInitItem", () => {
     const light = item.cssVars?.light ?? {}
     const dark = item.cssVars?.dark ?? {}
     // #ef4444 is red — hue far from the default blue (~250).
-    expect(hueOf(light["--accent"])).toBeGreaterThan(0)
-    expect(hueOf(light["--accent"])).toBeLessThan(60)
-    expect(hueOf(dark["--accent-muted"])).toBeLessThan(60)
-    expect(light["--accent-muted"]).not.toBe(dark["--accent-muted"])
+    expect(hueOf(light["accent"])).toBeGreaterThan(0)
+    expect(hueOf(light["accent"])).toBeLessThan(60)
+    expect(hueOf(dark["accent-muted"])).toBeLessThan(60)
+    expect(light["accent-muted"]).not.toBe(dark["accent-muted"])
     // Per-mode chart palettes: at least one slot differs (slot 1 may
     // legitimately match when the accent's lightness snaps to the same rung).
-    const chartSlots = Array.from({ length: 8 }, (_, i) => `--chart-${i + 1}`)
+    const chartSlots = Array.from({ length: 8 }, (_, i) => `chart-${i + 1}`)
     expect(chartSlots.some((slot) => dark[slot] !== light[slot])).toBe(true)
   })
 
@@ -209,10 +211,10 @@ describe("emitInitItem", () => {
     })
 
     const light = item.cssVars?.light ?? {}
-    expect(light["--primary"]).toBe(light["--accent"])
-    expect(light["--primary-hover"]).toBe(light["--accent-hover"])
-    expect(light["--primary-muted"]).toBe(light["--accent-muted"])
-    expect(light["--fg-on-primary"]).toBe(light["--fg-on-accent"])
+    expect(light["primary"]).toBe(light["accent"])
+    expect(light["primary-hover"]).toBe(light["accent-hover"])
+    expect(light["primary-muted"]).toBe(light["accent-muted"])
+    expect(light["fg-on-primary"]).toBe(light["fg-on-accent"])
     // The base fixture stays untouched.
     expect(baseRegistryCss.cssVars.theme).toEqual({
       "--radius-lg": "var(--radius)",
