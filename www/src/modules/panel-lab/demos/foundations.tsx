@@ -147,7 +147,7 @@ export function ScrollbarsDemo() {
 export function DisabledDemo() {
   return (
     <span className="relative shrink-0">
-      <span className="flex h-7 shrink-0 items-center rounded-lg bg-(--neutral-a100) px-2.5 text-[11px] font-medium whitespace-nowrap text-(--neutral-600)">
+      <span className="flex h-7 shrink-0 items-center rounded-lg bg-disabled px-2.5 text-[11px] font-medium whitespace-nowrap text-fg-disabled">
         Save
       </span>
       <span className="absolute -right-1 -bottom-1 flex rounded-full bg-card p-px">

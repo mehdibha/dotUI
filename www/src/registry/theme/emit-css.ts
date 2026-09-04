@@ -31,8 +31,6 @@ import type {
 /** Resolve a single {@link SemanticTarget} to its CSS value string. */
 export function resolveTarget(target: SemanticTarget): string {
   if ("ref" in target) return `var(--${target.ref.palette}-${target.ref.step})`
-  if ("alpha" in target)
-    return `var(--${target.alpha.palette}-a${target.alpha.step})`
   if ("on" in target) return `var(--on-${target.on.palette}-${target.on.step})`
   if ("value" in target) return target.value
   const [a, weight, b] = target.mix
@@ -41,7 +39,7 @@ export function resolveTarget(target: SemanticTarget): string {
 
 function primitive(
   mode: ModeOutput,
-  kind: "scales" | "alphas" | "on",
+  kind: "scales" | "on",
   palette: string,
   step: string,
 ): string {
@@ -62,8 +60,6 @@ export function resolveTargetLiteral(
 ): string {
   if ("ref" in target)
     return primitive(mode, "scales", target.ref.palette, target.ref.step)
-  if ("alpha" in target)
-    return primitive(mode, "alphas", target.alpha.palette, target.alpha.step)
   if ("on" in target)
     return primitive(mode, "on", target.on.palette, target.on.step)
   if ("value" in target) return target.value

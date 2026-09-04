@@ -2,8 +2,8 @@
  * @dotui/colors — the color engine.
  *
  * One engine, no algorithm menu (SPEC.md). `createTheme` turns seeds into a
- * complete two-mode system: 12-job scales, solved on-* foregrounds, alpha
- * twins, chart palettes — every guarantee enforced in-loop and audited in
+ * complete two-mode system: 12-job scales, solved on-* foregrounds, chart
+ * palettes — every guarantee enforced in-loop and audited in
  * the returned report. Pure: no CSS-variable names, no semantic vocabulary
  * (that lives in the www semantic layer).
  */
@@ -43,7 +43,6 @@ export {
   simulateCvd,
   wcag2,
 } from "./meters"
-export { alphaTwin, solveAlphaRgb8 } from "./alpha"
 export {
   categoricalGateReport,
   categoricalPalette,

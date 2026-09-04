@@ -16,9 +16,8 @@ decision behind those utilities is a config axis.
 
 Three tiers, one direction of reference, no skips upward:
 
-1. **Primitives** — per-mode ramps from the engine: `--{palette}-{step}`,
-   `--{palette}-a{step}` (alpha twins), `--on-{palette}-{step}` (solved
-   foregrounds). Emitted into `:root` (light) and `.dark`. Light and dark are
+1. **Primitives** — per-mode ramps from the engine: `--{palette}-{step}`
+   and `--on-{palette}-{step}` (solved foregrounds). Emitted into `:root` (light) and `.dark`. Light and dark are
    **independent engine passes** — the reversal hack and `stretchLightness`
    die with v1.
 2. **Semantic tokens** — `--color-*` vocabulary in Tailwind's `@theme`,
@@ -56,7 +55,7 @@ unchanged; 80 components consume them. Changes:
   `tailwindcss-autocontrast` plugin is dropped from the pipeline and from
   exported dependencies; `--on-*` ship as literals.
 - **Muted tint surfaces become real tokens** (`color-primary-muted` etc.
-  re-derived from alpha twins or subtle-bg jobs); the ad-hoc
+  re-derived from subtle-bg jobs); the ad-hoc
   `color-mix(...)` recipes in checkbox/radio/calendar migrate onto them.
 - **New tokens** 🟡: `color-overlay` (modal/drawer scrim — today hardcoded
   `bg-black/70`) and `color-fg-on-overlay`; `color-thumb` (switch/slider
@@ -113,7 +112,7 @@ validates the full shape (zod), not just the discriminant.
 ## T6. Emission ✅
 
 - `resolveColorConfig(config)` → engine `createTheme` (both modes, one call)
-  → `{ light, dark }` primitives incl. `on-*` + alpha twins.
+  → `{ light, dark }` primitives incl. `on-*`.
 - `emitPrimitivesCss` — `:root` + `.dark` (or scoped selectors), always with
   `on-*`; no compile-time/plugin dependency, so static CSS, live preview,
   and v0 bundle are the same code path.

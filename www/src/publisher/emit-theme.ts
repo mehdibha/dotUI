@@ -193,11 +193,15 @@ export function mergePresetCssFields(
   for (const [name, value] of Object.entries(literals.light)) {
     theme[`--${name}`] = `var(${rootVar(name)})`
     light[rootVar(name)] = value
-    dark[rootVar(name)] = literals.dark[name]!
+  }
+  for (const [name, value] of Object.entries(literals.dark)) {
+    dark[rootVar(name)] = value
   }
   engine.charts.light.categorical.forEach((color, i) => {
     light[`--chart-${i + 1}`] = color
-    dark[`--chart-${i + 1}`] = engine.charts.dark.categorical[i]!
+  })
+  engine.charts.dark.categorical.forEach((color, i) => {
+    dark[`--chart-${i + 1}`] = color
   })
 
   // Typography: re-point the `@theme` vocabulary at the preset's stacks. The

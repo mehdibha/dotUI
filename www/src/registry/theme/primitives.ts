@@ -4,7 +4,7 @@
  *
  * The `@dotui/colors` engine generates BOTH modes as independent passes
  * (no ladder reversal, no post-hoc lightness surgery) plus solved `on-*`
- * labels, alpha twins, and chart palettes. Emission routes light into
+ * labels and chart palettes. Emission routes light into
  * `:root`, dark into `.dark`; the semantic layer stays mode-agnostic.
  */
 
@@ -68,8 +68,6 @@ export interface EmitPrimitivesOptions {
   lightSelector?: string
   /** Selector for the dark-mode block (default `.dark`). */
   darkSelector?: string
-  /** Emit `--<palette>-a<step>` alpha twins (default true). */
-  alphas?: boolean
   /** Emit `--chart-N` categorical tokens per mode (default true). */
   charts?: boolean
 }
@@ -86,18 +84,11 @@ function emitModeBlock(
   out: string[],
   mode: Theme["light"],
   names: string[],
-  alphas: boolean,
 ): void {
   names.forEach((name, index) => {
     const scale = mode.scales[name]
     if (!scale) return
     for (const step of STEPS) out.push(`\t--${name}-${step}: ${scale[step]};`)
-    if (alphas) {
-      const twin = mode.alphas[name]
-      if (twin)
-        for (const step of STEPS)
-          out.push(`\t--${name}-a${step}: ${twin[step]};`)
-    }
     const on = mode.on[name]
     if (on) {
       out.push(`\t--on-${name}-700: ${on["700"]};`)
@@ -115,7 +106,6 @@ export function emitPrimitivesCss(
   const {
     lightSelector = ":root",
     darkSelector = ".dark",
-    alphas = true,
     charts = true,
   } = options
   const isRoot = lightSelector === ":root"
@@ -136,10 +126,10 @@ export function emitPrimitivesCss(
   }
   out.push(`${lightSelector} {`)
   if (isRoot) out.push("\t--radius: 0.625rem;", "")
-  emitModeBlock(out, theme.light, names, alphas)
+  emitModeBlock(out, theme.light, names)
   if (charts) emitCharts(theme.charts.light)
   out.push("}", "", `${darkSelector} {`)
-  emitModeBlock(out, theme.dark, names, alphas)
+  emitModeBlock(out, theme.dark, names)
   if (charts) emitCharts(theme.charts.dark)
   out.push("}")
   return `${out.join("\n")}\n`

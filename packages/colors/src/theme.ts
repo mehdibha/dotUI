@@ -1,12 +1,10 @@
 /**
  * `createTheme` (D12): one seed in, a complete correct system out — both
- * modes × {accent, neutral, status} × 12 steps + on-* + alpha twins + chart
- * palettes, all guarantees enforced in-loop and audited in the report.
+ * modes × {accent, neutral, status} × 12 steps + on-* + chart palettes, all guarantees enforced in-loop and audited in the report.
  */
 
 import { z } from "zod"
 
-import { alphaTwin } from "./alpha"
 import {
   divergingPalette,
   sequentialPalette,
@@ -123,8 +121,6 @@ export interface ModeOutput {
   /** The app background (= neutral step 25). */
   background: string
   scales: Record<string, Record<StepName, string>>
-  /** Alpha twins compositing to the solids over this mode's background. */
-  alphas: Record<string, Record<StepName, string>>
   /** Solved solid-label foregrounds. */
   on: Record<string, { "700": string; "800": string }>
 }
@@ -398,7 +394,6 @@ export function createTheme(input: string | ThemeOptions): Theme {
   const modeOutput = (mode: Mode): ModeOutput => {
     const background = built[mode].neutral!.steps["25"]!
     const scales: ModeOutput["scales"] = {}
-    const alphas: ModeOutput["alphas"] = {}
     const on: ModeOutput["on"] = {}
     const names = [
       ...CORE_ORDER.filter((n) => n in built[mode]),
@@ -411,15 +406,12 @@ export function createTheme(input: string | ThemeOptions): Theme {
       scales[name] = Object.fromEntries(
         STEPS.map((s) => [s, oklchCss(scale.steps[s]!)]),
       ) as Record<StepName, string>
-      alphas[name] = Object.fromEntries(
-        STEPS.map((s) => [s, alphaTwin(scale.steps[s]!, background)]),
-      ) as Record<StepName, string>
       on[name] = {
         "700": oklchCss(scale.on["700"]),
         "800": oklchCss(scale.on["800"]),
       }
     }
-    return { background: oklchCss(background), scales, alphas, on }
+    return { background: oklchCss(background), scales, on }
   }
 
   // preserveSeed on-solid misses already carry their own warning; relaxed
