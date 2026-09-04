@@ -100,7 +100,7 @@ jobs:
 
   # main: regenerate everything and commit the result back.
   commit:
-    if: ${{ github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'chore(examples): regenerate') }}
+    if: "${{ github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'chore(examples): regenerate') }}"
     runs-on: ubuntu-latest
     name: Regenerate and commit
     timeout-minutes: 45
