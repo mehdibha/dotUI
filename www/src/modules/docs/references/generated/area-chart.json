@@ -121,11 +121,31 @@
       "description": "Stable row identity, so filtered rows animate instead of respawning."
     },
     "curve": {
-      "type": "ChartCurve",
-      "detailedType": "ChartCurve | undefined",
+      "type": "'linear' | 'natural' | 'monotone' | 'step'",
+      "detailedType": "| 'linear'\n| 'natural'\n| 'monotone'\n| 'step'\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ChartCurve"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "linear"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "monotone"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "natural"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "step"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "Path interpolation between points.",
       "default": "\"natural\""
@@ -313,11 +333,35 @@
       "description": "Longer description, announced after the name."
     },
     "focus": {
-      "type": "ChartFocus",
-      "detailedType": "ChartFocus | undefined",
+      "type": "'nearest' | 'nearest-x' | 'nearest-y' | 'group-x' | 'group-y'",
+      "detailedType": "| 'nearest'\n| 'nearest-x'\n| 'nearest-y'\n| 'group-x'\n| 'group-y'\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ChartFocus"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "group-x"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "group-y"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "nearest"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "nearest-x"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "nearest-y"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "How pointer and keyboard resolve to points. Group modes highlight every\nseries at the same position; `nearest` matches a single point.",
       "default": "\"group-x\""
@@ -331,11 +375,27 @@
       "description": "Pixel radius beyond which the pointer stops matching a point."
     },
     "tooltipAnchor": {
-      "type": "ChartTooltipAnchor",
-      "detailedType": "ChartTooltipAnchor | undefined",
+      "type": "'point' | 'pointer' | 'group-center'",
+      "detailedType": "'point' | 'pointer' | 'group-center' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ChartTooltipAnchor"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "group-center"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "point"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "pointer"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "Where the tooltip attaches: to the focused point, to the pointer, or to\nthe center of the focused group.",
       "default": "\"group-center\""

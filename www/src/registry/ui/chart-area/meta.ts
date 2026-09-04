@@ -11,7 +11,7 @@ const chartAreaMeta = {
       target: "ui/chart-area.tsx",
     },
   ],
-  dependencies: ["@tanstack/charts@0.14.0", "d3-shape"],
+  dependencies: ["@tanstack/charts@0.16.0", "d3-shape"],
   devDependencies: ["@types/d3-shape"],
   registryDependencies: ["chart"],
 } satisfies RegistryItem

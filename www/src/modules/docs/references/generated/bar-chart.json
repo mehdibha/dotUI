@@ -291,11 +291,35 @@
       "description": "Extra mark layers painted over the bars — annotations, rules, labels."
     },
     "focus": {
-      "type": "ChartFocus",
-      "detailedType": "ChartFocus | undefined",
+      "type": "'nearest' | 'nearest-x' | 'nearest-y' | 'group-x' | 'group-y'",
+      "detailedType": "| 'nearest'\n| 'nearest-x'\n| 'nearest-y'\n| 'group-x'\n| 'group-y'\n| undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ChartFocus"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "group-x"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "group-y"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "nearest"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "nearest-x"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "nearest-y"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "How pointer and keyboard resolve to points.",
       "default": "\"group-x\", or \"group-y\" when `horizontal`"
@@ -325,11 +349,27 @@
       "description": "Pixel radius beyond which the pointer stops matching a point."
     },
     "tooltipAnchor": {
-      "type": "ChartTooltipAnchor",
-      "detailedType": "ChartTooltipAnchor | undefined",
+      "type": "'point' | 'pointer' | 'group-center'",
+      "detailedType": "'point' | 'pointer' | 'group-center' | undefined",
       "typeAst": {
-        "type": "identifier",
-        "name": "ChartTooltipAnchor"
+        "type": "union",
+        "elements": [
+          {
+            "type": "stringLiteral",
+            "value": "group-center"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "point"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "pointer"
+          },
+          {
+            "type": "undefined"
+          }
+        ]
       },
       "description": "Where the tooltip attaches: to the focused point, to the pointer, or to\nthe center of the focused group.",
       "default": "\"group-center\""
