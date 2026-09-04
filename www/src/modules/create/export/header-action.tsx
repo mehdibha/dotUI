@@ -11,7 +11,7 @@ export function ExportHeaderAction() {
   return (
     <HeaderActions>
       <ExportDialog>
-        <Button variant="primary" size="sm" className="ml-1.5">
+        <Button variant="primary" size="sm">
           Export
         </Button>
       </ExportDialog>

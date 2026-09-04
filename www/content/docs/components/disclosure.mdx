@@ -18,7 +18,11 @@ npx shadcn@latest add @dotui/disclosure
 ## Anatomy
 
 ```tsx
-import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/ui/disclosure"
+import {
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTrigger,
+} from "@/components/ui/disclosure"
 ```
 
 `DisclosureTrigger` renders the heading, button, and chevron; `DisclosurePanel` holds the collapsible content.
@@ -33,9 +37,9 @@ import { Disclosure, DisclosurePanel, DisclosureTrigger } from "@/ui/disclosure"
 For full control over the trigger, compose the header from `Heading` and `Button` yourself.
 
 ```tsx
-import { Disclosure, DisclosurePanel } from "@/ui/disclosure"
-import { Button } from "@/ui/button"
-import { Heading } from "@/ui/heading"
+import { Disclosure, DisclosurePanel } from "@/components/ui/disclosure"
+import { Button } from "@/components/ui/button"
+import { Heading } from "@/components/ui/heading"
 import { ChevronDownIcon } from "your-icon-library"
 ```
 

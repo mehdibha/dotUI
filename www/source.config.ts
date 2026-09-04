@@ -49,5 +49,11 @@ export default defineConfig({
       tab: true,
     },
     rehypePlugins: [rehypeTransform],
+    // ```npm blocks become package-manager tabs. `persist` adds `groupId` so
+    // <CodeBlockTabs> binds them to the shared packageManagerStore (pnpm by
+    // default, the user's last pick remembered).
+    remarkNpmOptions: {
+      persist: { id: "package-manager" },
+    },
   },
 })

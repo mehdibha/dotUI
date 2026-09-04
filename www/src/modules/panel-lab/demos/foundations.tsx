@@ -184,6 +184,21 @@ export function MotionDemo() {
   )
 }
 
+/** A phone with a drawer docked at its foot — the touch layer. */
+export function MobileDemo() {
+  return (
+    <span className="relative h-8 w-6 shrink-0 overflow-hidden rounded-[5px] border border-fg/30 bg-fg/10">
+      <span className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-1 rounded-t-[3px] bg-card pt-1 shadow-md">
+        <span className="h-0.5 w-2 rounded-full bg-fg/30" />
+        <span className="flex w-full flex-col gap-0.5 px-1 pb-1">
+          <Bar className="h-0.5 w-2.5 bg-fg/50" />
+          <Bar className="h-0.5 w-2 bg-fg/15" />
+        </span>
+      </span>
+    </span>
+  )
+}
+
 /** A resting inline link. */
 export function LinksDemo() {
   return (

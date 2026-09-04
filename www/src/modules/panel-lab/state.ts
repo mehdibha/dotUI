@@ -131,6 +131,12 @@ import {
   MENU_DEFAULTS,
 } from "./sections/menus"
 import {
+  MobileHero,
+  MobileSection,
+  mobileSummary,
+  MOBILE_DEFAULTS,
+} from "./sections/mobile"
+import {
   MotionSection,
   MOTION_DEFAULTS,
   MotionHero,
@@ -289,6 +295,7 @@ export const DEFAULTS = {
   ...DISABLED_DEFAULTS,
   ...INVALID_DEFAULTS,
   ...MOTION_DEFAULTS,
+  ...MOBILE_DEFAULTS,
   ...CHART_DEFAULTS,
   ...LINK_DEFAULTS,
   ...NOTICE_DEFAULTS,
@@ -459,6 +466,14 @@ export const CHAPTERS: Chapter[] = [
     Body: MotionSection,
     Hero: MotionHero,
     summary: motionSummary,
+  },
+  {
+    id: "mobile",
+    label: "Mobile",
+    defaults: MOBILE_DEFAULTS,
+    Body: MobileSection,
+    Hero: MobileHero,
+    summary: mobileSummary,
   },
   {
     id: "links",

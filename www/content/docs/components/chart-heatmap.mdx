@@ -18,7 +18,7 @@ It brings the `chart` core — the host, the palette, and the shared frame — a
 ## Usage
 
 ```tsx
-import { HeatmapChart } from "@/ui/chart-heatmap"
+import { HeatmapChart } from "@/components/ui/chart-heatmap"
 ```
 
 A heatmap reads long rows: one row per cell, with the column field, the row field, and the value. `ariaLabel` is required — a chart is a figure, not decoration.
@@ -53,7 +53,7 @@ Cells tile the plot, so the heatmap has no `grid` prop — the cell edges are th
 Color is the whole reading, so it is binned rather than continuous: each bin is a distinct step, and the legend prints the boundaries between them. `colors` is the ramp, low to high, and its length is the number of bins.
 
 ```tsx
-import { heatmapColors, HeatmapChart } from "@/ui/chart-heatmap"
+import { heatmapColors, HeatmapChart } from "@/components/ui/chart-heatmap"
 ```
 
 ```tsx

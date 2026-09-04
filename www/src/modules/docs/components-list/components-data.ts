@@ -7,15 +7,12 @@ export interface ComponentInfo {
   /** Scale the preview down (default 1 — native size). Set only on demos too
    *  large for the card stage (calendars, tables, the command palette…). */
   scale?: number
-  /** Render the demo full-bleed (overlay "zoom out" scenes manage their own
-   *  framing) instead of the default centered + scaled preview. */
+  /** Render the demo full-bleed (overlay scenes manage their own framing and
+   *  crop at the card's bottom edge) instead of the default centered + scaled preview. */
   fill?: boolean
   /** Render the demo full-width (responsive, not scaled) — for field-like demos
    *  that should share one consistent, responsive width. */
   stretch?: boolean
-  /** Show a macOS pointer that follows the demo's simulated clicks. Set on demos
-   *  that press or select a control (buttons, toggles, tabs, lists…). */
-  cursor?: boolean
   status: ComponentStatus
 }
 
@@ -34,35 +31,30 @@ export const componentsData: ComponentCategory[] = [
         name: "Button",
         slug: "button",
         href: "/docs/components/button",
-        cursor: true,
         status: "done",
       },
       {
         name: "ToggleButton",
         slug: "toggle-button",
         href: "/docs/components/toggle-button",
-        cursor: true,
         status: "in review",
       },
       {
         name: "ToggleButtonGroup",
         slug: "toggle-button-group",
         href: "/docs/components/toggle-button-group",
-        cursor: true,
         status: "in review",
       },
       {
         name: "FileTrigger",
         slug: "file-trigger",
         href: "/docs/components/file-trigger",
-        cursor: true,
         status: "done",
       },
       {
         name: "Group",
         slug: "group",
         href: "/docs/components/group",
-        cursor: true,
         status: "done",
       },
     ],
@@ -129,28 +121,24 @@ export const componentsData: ComponentCategory[] = [
         name: "Checkbox",
         slug: "checkbox",
         href: "/docs/components/checkbox",
-        cursor: true,
         status: "done",
       },
       {
         name: "CheckboxGroup",
         slug: "checkbox-group",
         href: "/docs/components/checkbox-group",
-        cursor: true,
         status: "done",
       },
       {
         name: "RadioGroup",
         slug: "radio-group",
         href: "/docs/components/radio-group",
-        cursor: true,
         status: "in review",
       },
       {
         name: "Switch",
         slug: "switch",
         href: "/docs/components/switch",
-        cursor: true,
         status: "in review",
       },
       {
@@ -177,7 +165,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Menu",
         slug: "menu",
         href: "/docs/components/menu",
-        fill: true,
         status: "in review",
       },
       {
@@ -198,7 +185,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Select",
         slug: "select",
         href: "/docs/components/select",
-        fill: true,
         status: "done",
       },
     ],
@@ -211,7 +197,7 @@ export const componentsData: ComponentCategory[] = [
         name: "Calendar",
         slug: "calendar",
         href: "/docs/components/calendar",
-        scale: 0.6,
+        fill: true,
         status: "pending",
       },
       {
@@ -271,7 +257,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Skeleton",
         slug: "skeleton",
         href: "/docs/components/skeleton",
-        scale: 0.5,
         status: "pending",
       },
     ],
@@ -285,21 +270,18 @@ export const componentsData: ComponentCategory[] = [
         slug: "list-box",
         href: "/docs/components/list-box",
         scale: 0.95,
-        cursor: true,
         status: "done",
       },
       {
         name: "Tree",
         slug: "tree",
         href: "/docs/components/tree",
-        scale: 0.85,
         status: "in review",
       },
       {
         name: "TagGroup",
         slug: "tag-group",
         href: "/docs/components/tag-group",
-        cursor: true,
         status: "done",
       },
     ],
@@ -318,7 +300,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Tabs",
         slug: "tabs",
         href: "/docs/components/tabs",
-        cursor: true,
         status: "pending",
       },
       {
@@ -331,21 +312,20 @@ export const componentsData: ComponentCategory[] = [
         name: "Command",
         slug: "command",
         href: "/docs/components/command",
-        scale: 0.95,
+        fill: true,
         status: "done",
       },
       {
         name: "Pagination",
         slug: "pagination",
         href: "/docs/components/pagination",
-        cursor: true,
         status: "in review",
       },
       {
         name: "Sidebar",
         slug: "sidebar",
         href: "/docs/components/sidebar",
-        scale: 0.5,
+        fill: true,
         status: "done",
       },
     ],
@@ -358,7 +338,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Accordion",
         slug: "accordion",
         href: "/docs/components/accordion",
-        scale: 0.9,
         status: "done",
       },
       {
@@ -390,7 +369,7 @@ export const componentsData: ComponentCategory[] = [
         name: "Card",
         slug: "card",
         href: "/docs/components/card",
-        stretch: true,
+        fill: true,
         status: "done",
       },
       {
@@ -422,12 +401,14 @@ export const componentsData: ComponentCategory[] = [
         name: "Message",
         slug: "message",
         href: "/docs/components/message",
+        stretch: true,
         status: "in review",
       },
       {
         name: "Bubble",
         slug: "bubble",
         href: "/docs/components/bubble",
+        stretch: true,
         status: "in review",
       },
       {
@@ -467,7 +448,7 @@ export const componentsData: ComponentCategory[] = [
         name: "ColorArea",
         slug: "color-area",
         href: "/docs/components/color-area",
-        scale: 0.85,
+        scale: 0.7,
         status: "pending",
       },
       {
@@ -494,7 +475,6 @@ export const componentsData: ComponentCategory[] = [
         name: "ColorSwatchPicker",
         slug: "color-swatch-picker",
         href: "/docs/components/color-swatch-picker",
-        cursor: true,
         status: "pending",
       },
     ],
@@ -514,7 +494,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Popover",
         slug: "popover",
         href: "/docs/components/popover",
-        fill: true,
         status: "done",
       },
       {
@@ -528,7 +507,6 @@ export const componentsData: ComponentCategory[] = [
         name: "Tooltip",
         slug: "tooltip",
         href: "/docs/components/tooltip",
-        fill: true,
         status: "pending",
       },
     ],

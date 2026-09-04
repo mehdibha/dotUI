@@ -1,24 +1,16 @@
-"use client"
-
-import { Button } from "@/registry/ui/button"
 import { DialogHeader, DialogTitle } from "@/registry/ui/dialog"
 
-import { OverlayScene, useOpenAutoplay } from "../autoplay"
+import { OverlayPreview, PageMock } from "../overlay"
 
 export function DrawerDemo() {
-  const { phase } = useOpenAutoplay()
   return (
-    <OverlayScene
-      phase={phase}
-      variant="drawer"
-      trigger={<Button>Open Drawer</Button>}
-    >
+    <OverlayPreview variant="drawer" page={<PageMock />}>
       <DialogHeader>
         <DialogTitle>Settings</DialogTitle>
       </DialogHeader>
       <p className="mt-1 text-fg-muted">
         Manage your workspace preferences and notifications.
       </p>
-    </OverlayScene>
+    </OverlayPreview>
   )
 }

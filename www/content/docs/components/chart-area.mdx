@@ -20,7 +20,7 @@ It brings the `chart` core — the host, the palette, and the shared frame — a
 ## Usage
 
 ```tsx
-import { AreaChart } from "@/ui/chart-area"
+import { AreaChart } from "@/components/ui/chart-area"
 ```
 
 Point `x` at the category or time field and `y` at the value field. A chart is a figure, so `ariaLabel` is required.
@@ -85,7 +85,7 @@ Series take colors from `--chart-1` through `--chart-8` in order. A `null` value
 Stacking is a data transform, not a chart flag: `stackY` turns wide rows into one long row per band, carrying the `base` and `top` of the band it should fill plus its own `value` for the tooltip. Call it outside your component, then read those fields.
 
 ```tsx
-import { stackY } from "@/ui/chart"
+import { stackY } from "@/components/ui/chart"
 
 const stacked = stackY(data, { x: "month", y: ["desktop", "mobile", "other"] })
 ```

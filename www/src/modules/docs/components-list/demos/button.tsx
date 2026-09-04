@@ -1,18 +1,13 @@
-"use client"
-
+import { PlusIcon } from "@/registry/__generated__/icons"
 import { Button } from "@/registry/ui/button"
 
-import { DemoPress, useAutoplay } from "../autoplay"
-
 export function ButtonDemo() {
-  const { phase } = useAutoplay([
-    { name: "idle", duration: 850 },
-    { name: "hover", duration: 520 },
-    { name: "press", duration: 260 },
-  ])
   return (
-    <DemoPress phase={phase}>
-      <Button>Button</Button>
-    </DemoPress>
+    <div className="flex items-center gap-3">
+      <Button variant="primary">Button</Button>
+      <Button isIconOnly aria-label="Add">
+        <PlusIcon />
+      </Button>
+    </div>
   )
 }

@@ -1,23 +1,15 @@
-"use client"
-
 import { Description, Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
 import { TextField } from "@/registry/ui/text-field"
 
-import { DemoFocus, useTypewriter } from "../autoplay"
-
 export function TextFieldDemo() {
-  const { value, active } = useTypewriter("hello@example.com")
   return (
     <TextField
+      defaultValue="hello@example.com"
       className="w-full max-w-[11.5rem]"
-      value={value}
-      onChange={() => {}}
     >
       <Label>Email</Label>
-      <DemoFocus active={active}>
-        <Input placeholder="hello@example.com" />
-      </DemoFocus>
+      <Input />
       <Description>Enter your email.</Description>
     </TextField>
   )

@@ -1,24 +1,17 @@
-import { Button } from "@/registry/ui/button"
-import { Description, Label } from "@/registry/ui/field"
-import { Input } from "@/registry/ui/input"
+import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Skeleton } from "@/registry/ui/skeleton"
-import { TextField } from "@/registry/ui/text-field"
 
 export function SkeletonDemo() {
   return (
     <Skeleton isLoading>
-      <div className="space-y-4">
-        <TextField>
-          <Label>Email</Label>
-          <Input />
-          <Description>Enter your email.</Description>
-        </TextField>
-        <TextField>
-          <Label>Password</Label>
-          <Input />
-          <Description>Enter your password.</Description>
-        </TextField>
-        <Button className="w-full">Submit</Button>
+      <div className="flex items-center gap-4">
+        <Avatar size="lg">
+          <AvatarFallback>DU</AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col gap-2">
+          <div data-skeleton="block" className="h-4 w-44 rounded-full" />
+          <div data-skeleton="block" className="h-4 w-32 rounded-full" />
+        </div>
       </div>
     </Skeleton>
   )

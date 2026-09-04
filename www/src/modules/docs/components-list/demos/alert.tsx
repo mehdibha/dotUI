@@ -2,11 +2,9 @@ import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert"
 
 export function AlertDemo() {
   return (
-    <Alert className="w-80">
-      <AlertTitle>Payment information</AlertTitle>
-      <AlertDescription>
-        You are currently on the free plan. Upgrade to unlock more features.
-      </AlertDescription>
+    <Alert className="w-64">
+      <AlertTitle>Trial ending</AlertTitle>
+      <AlertDescription>Your trial ends in 3 days.</AlertDescription>
     </Alert>
   )
 }

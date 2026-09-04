@@ -65,7 +65,9 @@ export const Route = createFileRoute("/r/v0")({
 
         const item = buildV0Item({
           items,
-          cssFields: mergePresetCssFields(baseRegistryCss, preset),
+          cssFields: mergePresetCssFields(baseRegistryCss, preset, {
+            googleFontsImport: true,
+          }),
           supportFiles: SUPPORT_FILES,
         })
 

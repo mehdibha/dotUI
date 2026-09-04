@@ -20,7 +20,7 @@ It brings the `chart` core — the host, the palette, and the shared frame — a
 ## Usage
 
 ```tsx
-import { PieChart } from "@/ui/chart-pie"
+import { PieChart } from "@/components/ui/chart-pie"
 ```
 
 One row per slice. `value` names the field holding the magnitude, `name` the field holding the slice key. A chart is a figure, so `ariaLabel` is required.
@@ -100,7 +100,7 @@ The hole in a donut is best filled with plain HTML: anything passed as `children
 A second series is a second ring, not a stack. `pieRing` builds one, and `polarMarks` splices it inside the chart's polar container — plain `marks` would land outside the transform. Build it outside your component so it keeps its identity across renders.
 
 ```tsx
-import { pieRing, PieChart } from "@/ui/chart-pie"
+import { pieRing, PieChart } from "@/components/ui/chart-pie"
 
 const mobileRing = pieRing({
   id: "mobile",

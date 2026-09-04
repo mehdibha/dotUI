@@ -9,14 +9,24 @@ import type {
 import { packageManagerStore } from "./install-commands"
 import type { PackageManager } from "./install-commands"
 
+/**
+ * Code tabs. With a `groupId` (fumadocs' remarkNpm emits
+ * `groupId="package-manager"` for ```npm blocks when `persist` is on, and the
+ * install modals pass it by hand) the tabs are bound to `packageManagerStore`,
+ * so every install snippet shows pnpm by default and follows the user's last
+ * pick. Without one they are plain uncontrolled tabs.
+ */
 export function CodeBlockTabs({
   groupId,
   defaultValue,
+  // Emitted alongside `groupId` by remarkNpm; not a DOM/Tabs prop.
+  persist: _persist,
   children,
   ...props
 }: Omit<TabsProps, "defaultSelectedKey"> & {
   groupId?: string
   defaultValue?: string
+  persist?: boolean
 }) {
   const packageManager = packageManagerStore.useValue()
 

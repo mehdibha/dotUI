@@ -1,0 +1,9 @@
+node_modules
+pnpm-lock.yaml
+.next
+next-env.d.ts
+*.tsbuildinfo
+
+# `next dev` writes these agent-rules files.
+AGENTS.md
+CLAUDE.md

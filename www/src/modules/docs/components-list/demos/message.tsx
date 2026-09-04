@@ -11,7 +11,7 @@ import {
 
 export function MessageDemo() {
   return (
-    <div className="flex w-full max-w-3xs flex-col gap-3">
+    <div className="flex w-full max-w-[14.5rem] flex-col gap-3">
       <Message>
         <MessageAvatar>
           <Avatar size="sm">
@@ -21,14 +21,14 @@ export function MessageDemo() {
         <MessageContent>
           <MessageHeader>Lena · 2:14 PM</MessageHeader>
           <Bubble variant="muted">
-            <BubbleContent>Did you try the studio?</BubbleContent>
+            <BubbleContent>Have you tried the studio?</BubbleContent>
           </Bubble>
         </MessageContent>
       </Message>
       <Message align="end">
         <MessageContent>
           <Bubble align="end">
-            <BubbleContent>Shipping it this week 🚀</BubbleContent>
+            <BubbleContent>Shipping this week 🚀</BubbleContent>
           </Bubble>
         </MessageContent>
       </Message>

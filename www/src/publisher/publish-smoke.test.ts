@@ -35,7 +35,7 @@ const WWW_DIR = path.resolve(import.meta.dirname, "../..")
 const FIXTURE_DIR = path.join(WWW_DIR, ".smoke-fixture")
 const TSC_BIN = path.join(WWW_DIR, "node_modules", "typescript", "bin", "tsc")
 
-/** Map a shipped `target` to its consumer-alias location under the fixture src. */
+/** Map a shipped `path` to its consumer-alias location under the fixture src. */
 function fixtureRelPath(target: string): string {
   if (target.startsWith("ui/")) return `src/components/ui/${target.slice(3)}`
   if (target.startsWith("lib/")) return `src/lib/${target.slice(4)}`
@@ -66,8 +66,8 @@ async function buildFixture(): Promise<void> {
       preset,
     })
     for (const file of item.files ?? []) {
-      if (!file.target || file.content == null) continue
-      writeFixtureFile(fixtureRelPath(file.target), file.content)
+      if (file.content == null) continue
+      writeFixtureFile(fixtureRelPath(file.path), file.content)
     }
   }
 

@@ -1,30 +1,23 @@
-"use client"
-
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import { CheckboxGroup } from "@/registry/ui/checkbox-group"
 import { FieldGroup, Label } from "@/registry/ui/field"
 
-import { useCycle } from "../autoplay"
-
-const KEYS = ["nextjs", "remix", "astro"]
-
 export function CheckboxGroupDemo() {
-  const { item } = useCycle(KEYS, { dwell: 1300 })
   return (
-    <CheckboxGroup value={[item]} onChange={() => {}}>
-      <Label>React frameworks</Label>
-      <FieldGroup>
-        <Checkbox value="nextjs">
+    <CheckboxGroup defaultValue={["updates", "security"]}>
+      <Label>Notification Preferences</Label>
+      <FieldGroup className="[container-type:normal]!">
+        <Checkbox value="updates">
           <CheckboxControl />
-          <Label>Next.js</Label>
+          <Label>Product Updates</Label>
         </Checkbox>
-        <Checkbox value="remix">
+        <Checkbox value="security">
           <CheckboxControl />
-          <Label>Remix</Label>
+          <Label>Security Alerts</Label>
         </Checkbox>
-        <Checkbox value="astro">
+        <Checkbox value="marketing">
           <CheckboxControl />
-          <Label>Astro</Label>
+          <Label>Marketing Emails</Label>
         </Checkbox>
       </FieldGroup>
     </CheckboxGroup>

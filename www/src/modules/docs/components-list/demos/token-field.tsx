@@ -1,6 +1,5 @@
 import { TokenFieldValue } from "react-aria-components/TokenField"
 
-import { Label } from "@/registry/ui/field"
 import { TokenField, TokenInput } from "@/registry/ui/token-field"
 
 export function TokenFieldDemo() {
@@ -18,7 +17,6 @@ export function TokenFieldDemo() {
       }
       className="max-w-64"
     >
-      <Label>Message</Label>
       <TokenInput />
     </TokenField>
   )

@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest"
 
 import type { RegistryItem } from "@/registry/types"
 
-import { emitInitItem } from "./emit-theme"
+import { emitInitItem, mergePresetCssFields } from "./emit-theme"
 
 type InitItemConfig = {
   config?: {
@@ -128,6 +128,43 @@ describe("emitInitItem", () => {
       "--btn-radius": "var(--radius-md)",
     })
     expect(baseRegistryCss.css[":root"]).not.toHaveProperty("--radius-factor") // legacy knob must stay gone
+  })
+
+  test("font tokens become registry:font deps, not a Google Fonts @import", () => {
+    const preset = {
+      density: "default" as const,
+      componentParams: {},
+      tokens: {
+        "--font-sans": "'Figtree', ui-sans-serif, system-ui, sans-serif",
+        "--font-heading": "'Figtree', ui-sans-serif, system-ui, sans-serif",
+      },
+    }
+    const item = emitInitItem({
+      baseRegistryCss,
+      preset,
+      registryRoot: "https://dotui.com",
+    })
+
+    expect(item.registryDependencies).toEqual([
+      "https://dotui.com/r/font-figtree",
+      "https://dotui.com/r/font-heading-figtree",
+    ])
+    // shadcn would place a CSS import after `@import "tailwindcss"`, where
+    // bundlers drop it — the faces travel as font items instead.
+    expect(
+      Object.keys(item.css ?? {}).some((key) => key.startsWith("@import url(")),
+    ).toBe(false)
+    // The `@theme` vocabulary still points at the family for the stack.
+    expect(item.cssVars?.theme?.["--font-sans"]).toMatch(/^'Figtree'/)
+
+    // The v0 export renders a real stylesheet and hoists imports, so it asks
+    // for the Google import explicitly.
+    const v0 = mergePresetCssFields(baseRegistryCss, preset, {
+      googleFontsImport: true,
+    })
+    expect(
+      Object.keys(v0.css ?? {}).find((key) => key.startsWith("@import url(")),
+    ).toMatch(/fonts\.googleapis\.com.*Figtree/)
   })
 
   test("a custom color recipe regenerates the :root + .dark primitive layer", () => {

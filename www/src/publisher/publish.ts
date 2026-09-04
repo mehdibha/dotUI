@@ -133,6 +133,7 @@ const FILE_IMPORT_NPM_DEPS = [
   "@hugeicons/react",
   "@hugeicons/core-free-icons",
   "@phosphor-icons/react",
+  "@internationalized/date",
 ]
 
 export function depsFromFileImports(
@@ -255,10 +256,16 @@ export function publish({
   // object and cast at the boundary.
   // Secondary files (e.g. a `use-x.ts` hook) carry their own pre-transformed
   // content; only the base file gets the preset-resolved template.
+  //
+  // Ship the flat filename (`ui/button.tsx`) as `path` and no `target`: the
+  // shadcn CLI then places the file under the consumer's own alias directory
+  // (`aliases.ui` → `src/components/ui/`). An explicit `target` bypasses those
+  // aliases and lands files at `src/ui/` regardless of components.json.
   const files = (meta.files ?? []).map((file) => {
     const extra = extraFiles?.[file.path]
     return {
-      ...file,
+      type: file.type,
+      path: file.target ?? file.path,
       content: extra
         ? rewriteClassString(
             resolveIconImports(extra, preset.icons, iconOptions),

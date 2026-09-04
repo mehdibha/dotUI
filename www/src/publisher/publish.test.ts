@@ -327,7 +327,10 @@ describe("publish", () => {
     // call there's no URL rewrite.
     expect(item.registryDependencies).toEqual(["loader"])
     const file = item.files?.[0]
-    expect(file?.target).toBe("ui/button.tsx")
+    // Shipped as a flat `path` with no `target`, so the shadcn CLI honours the
+    // consumer's `aliases.ui` instead of forcing `src/ui/`.
+    expect(file?.path).toBe("ui/button.tsx")
+    expect(file?.target).toBeUndefined()
     expect(file?.content).toBe(rawContent)
   })
 
@@ -551,8 +554,8 @@ describe("publish", () => {
       preset: { density: "default", componentParams: {} },
     })
 
-    const base = item.files?.find((f) => f.target === "ui/thing.tsx")
-    const hook = item.files?.find((f) => f.target === "ui/use-thing.ts")
+    const base = item.files?.find((f) => f.path === "ui/thing.tsx")
+    const hook = item.files?.find((f) => f.path === "ui/use-thing.ts")
 
     // The base file gets the resolved template; the hook file gets its own
     // pre-transformed content — never the base template (the multi-file bug).
@@ -597,5 +600,12 @@ describe("depsFromFileImports", () => {
     )
     expect(found).toContain("react-aria")
     expect(found).toContain("react-aria-components")
+  })
+
+  test("type-only @internationalized/date import is a real dependency", () => {
+    // The consumer's tsc needs the package installed even when only its
+    // types are imported (time-picker) — caught by the examples smoke.
+    const found = deps(`import type { Time } from "@internationalized/date"`)
+    expect(found).toContain("@internationalized/date")
   })
 })

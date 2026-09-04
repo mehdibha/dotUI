@@ -6,7 +6,7 @@ const { useStyles, styles } = createStyles(treeMeta, {
   base: {
     slots: {
       root: [
-        "flex max-h-[inherit] flex-col gap-px overflow-auto rounded-lg border bg-bg p-1 outline-hidden",
+        "flex max-h-[inherit] flex-col gap-px overflow-auto outline-hidden",
         "[--tree-indent:--spacing(4)]",
         "data-empty:items-center data-empty:justify-center",
       ],

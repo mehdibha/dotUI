@@ -129,9 +129,11 @@ function groupResults(results: SortedResult[]): ResultGroup[] {
 
 export default function SearchDialog({
   items,
+  autoFocus = true,
   onClose,
 }: {
   items: PageTree.Node[]
+  autoFocus?: boolean
   onClose: () => void
 }) {
   const commandStyles = useCommandStyles()
@@ -184,10 +186,14 @@ export default function SearchDialog({
         className={commandStyles({
           // On mobile the dialog fills a near-full-height drawer, so the
           // command column flexes instead of sizing to its content.
-          className: "gap-0 overflow-y-hidden p-0 max-md:min-h-0 max-md:grow",
+          className: "gap-0 overflow-y-hidden p-0 max-lg:min-h-0 max-lg:grow",
         })}
       >
-        <SearchField autoFocus aria-label="Search" className="px-1.5 pt-1.5">
+        <SearchField
+          autoFocus={autoFocus}
+          aria-label="Search"
+          className="px-1.5 pt-1.5"
+        >
           {/* Radius stays concentric with the modal (2xl − 6px inset); the
               filled input needs no focus treatment, so the ring is off and the
               border stays the neutral field color on focus. */}
@@ -206,7 +212,7 @@ export default function SearchDialog({
               it rather than on the wrapper. */}
         <MenuContent
           aria-label="Search results"
-          className="max-h-80 overflow-y-auto p-1.5 pt-3 max-md:max-h-none max-md:min-h-0 max-md:grow"
+          className="max-h-80 overflow-y-auto p-1.5 pt-3 max-lg:max-h-none max-lg:min-h-0 max-lg:grow"
           onAction={onClose}
           renderEmptyState={() => (
             <div className="py-8 text-center text-sm text-fg-muted">
@@ -236,9 +242,15 @@ export default function SearchDialog({
                 ))}
               </MenuSection>
             ),
-            filteredNav.length > 0 && (
+            (matches("Home") || filteredNav.length > 0) && (
               <MenuSection key="navigation">
                 <MenuSectionHeader>Navigation</MenuSectionHeader>
+                {matches("Home") && (
+                  <MenuItem href={{ to: "/" }} textValue="Home">
+                    <ArrowRightIcon className="text-fg-muted!" />
+                    Home
+                  </MenuItem>
+                )}
                 {filteredNav.map((item) => (
                   <MenuItem
                     key={item.name}

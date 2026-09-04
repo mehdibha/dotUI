@@ -18,7 +18,7 @@ It brings the `chart` core — the host, the palette, and the shared frame — a
 ## Usage
 
 ```tsx
-import { BarChart } from "@/ui/chart-bar"
+import { BarChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
@@ -77,7 +77,7 @@ Naming the category field as `series` is also how each bar gets its own color, a
 `stackY` turns wide rows into long rows carrying the interval each segment spans. Feed it the same fields you would have passed to `y`, then plot `top` over `base`:
 
 ```tsx
-import { stackY } from "@/ui/chart"
+import { stackY } from "@/components/ui/chart"
 
 const stacked = stackY(rows, { x: "month", y: ["desktop", "mobile", "tablet"] })
 ```
