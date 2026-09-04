@@ -159,6 +159,8 @@ export function DrillInPanel({
   const index = resolveIndex(chapters)
   const [activeId, setActiveId] = useState<string | null>(null)
   // Dev tweak: hide the chips to read the panel as the finished product.
+  // Deliberately kept (not exploration scaffolding) — it goes when the last
+  // chip drops at the parity bar (issue #666).
   const showWip = useTweak("WIP chips", {
     type: "boolean",
     default: true,
