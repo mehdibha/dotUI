@@ -28,7 +28,7 @@ export function HomePage() {
         <section className="flex flex-col pt-10 sm:pt-14 md:pt-20">
           <div className="flex flex-col items-center text-center">
             <HeroEyebrow />
-            <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/10.3),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-[4rem]">
+            <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.625rem,calc((100vw-2rem)/10.7),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-[4rem]">
               The Design System Studio
               <br />
               <span className="text-fg-muted">
