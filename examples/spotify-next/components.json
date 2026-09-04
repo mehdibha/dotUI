@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
+  "rtl": false,
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  },
+  "registries": {
+    "@dotui": "https://dotui.org/r/{name}?preset=PY3RCsMgDEV_ZWQPfTGw7qGDfsD-w9VYAtYVo4NS_PeZbpS83BxzvDusMO7wsm4mDck6LgIjIP4i-hICVAMc15L1RPIW2i14DoEc1PZ2cET_jhnFRvW7J885EXXmUviAKJTYm4tskmnBwi2eGMzZ2OQ-0aKdk_77gfFuQIic6GqniWIrhGtP7jHcmhmp5GSDssHqqLsmXmzaGvwbtX4B"
+  }
+}

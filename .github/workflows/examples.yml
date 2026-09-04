@@ -1,10 +1,19 @@
-# Consumer smoke (see examples/README.md): runs the real shadcn CLI — init,
-# then add every item — in each example app against this branch's registry,
-# and type-checks + builds the result. The publisher's own tests never invoke
-# the CLI, so this is the only check on where files land and how imports
-# resolve in a consumer project.
+# Consumer templates (see examples/README.md): each is a real app with the
+# registry's resolved output committed — styles collapsed to its preset, icon
+# imports swapped, params inlined. Nobody maintains that output by hand:
+#
+#   - On pull requests, every template is regenerated from scratch with the real
+#     shadcn CLI (init, then add every item) against the branch's registry, then
+#     built and type-checked. The resulting diff against the committed template
+#     goes into the job summary and a patch artifact, so a registry change is
+#     reviewable as the consumer-facing files it changes. Drift never fails a PR.
+#   - On push to main, one job regenerates all templates and commits the result
+#     back to main, so `examples/` always matches what the registry serves.
+#
+# The publisher's own tests never invoke the CLI, so the regeneration is also
+# the only check on where files land and how imports resolve in a consumer.
 
-name: Examples smoke
+name: Examples
 
 on:
   pull_request:
@@ -13,6 +22,9 @@ on:
       - "www/src/publisher/**"
       - "www/src/routes/r/**"
       - "www/src/lib/registry-preset.ts"
+      - "www/src/lib/fonts.ts"
+      - "www/src/modules/presets/presets-data.ts"
+      - "www/src/modules/create/preset/**"
       - "examples/**"
       - ".github/workflows/examples.yml"
   push:
@@ -22,12 +34,15 @@ on:
       - "www/src/publisher/**"
       - "www/src/routes/r/**"
       - "www/src/lib/registry-preset.ts"
+      - "www/src/lib/fonts.ts"
+      - "www/src/modules/presets/presets-data.ts"
+      - "www/src/modules/create/preset/**"
       - "examples/**"
       - ".github/workflows/examples.yml"
   workflow_dispatch:
     inputs:
       origin:
-        description: "Registry origin to smoke against (e.g. a Vercel preview URL). Empty serves this checkout locally."
+        description: "Registry origin to regenerate from (e.g. a Vercel preview URL). Empty serves this checkout locally."
         required: false
         default: ""
 
@@ -35,7 +50,9 @@ permissions:
   contents: read
 
 jobs:
-  smoke:
+  # Pull requests: regenerate per template, report the diff, never commit.
+  verify:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     name: ${{ matrix.example }}
     timeout-minutes: 25
@@ -47,33 +64,82 @@ jobs:
           - origin-tanstack-start
           - spotify-next
           - spotify-tanstack-start
-    env:
-      ORIGIN: ${{ inputs.origin || 'http://127.0.0.1:4444' }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
 
-      - name: Build registry
-        if: inputs.origin == ''
-        run: pnpm build:registry
-
-      # The dev server compiles /r/* on first request, so warm the index route
-      # before handing over to the CLI.
-      - name: Serve registry
-        if: inputs.origin == ''
+      # With no --origin the script builds the registry, serves it with the www
+      # dev server, and stops it when done. The dispatch input reaches the shell
+      # through an env var, never by interpolation into the command line.
+      - name: Regenerate, build, type-check
+        env:
+          ORIGIN: ${{ inputs.origin }}
         run: |
-          pnpm --filter=www exec vite dev --port 4444 --host 127.0.0.1 > /tmp/www-dev.log 2>&1 &
-          for attempt in $(seq 1 60); do
-            if curl -sf "$ORIGIN/r/registry.json" > /dev/null; then exit 0; fi
-            sleep 3
+          node examples/scripts/smoke.ts --example "${{ matrix.example }}" ${ORIGIN:+--origin "$ORIGIN"}
+
+      - name: Report what changed for consumers
+        run: |
+          git add -A -- examples/${{ matrix.example }}
+          if git diff --cached --quiet -- examples/${{ matrix.example }}; then
+            echo "### ${{ matrix.example }}: no change for consumers" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git diff --cached -- examples/${{ matrix.example }} > examples-${{ matrix.example }}.patch
+          {
+            echo "### ${{ matrix.example }}: consumer-facing changes"
+            echo
+            echo '```'
+            git --no-pager diff --cached --stat -- examples/${{ matrix.example }}
+            echo '```'
+            echo
+            echo "Full patch in the \`examples-${{ matrix.example }}\` artifact. \`main\` regenerates and commits this on merge."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: hashFiles('examples-*.patch') != ''
+        with:
+          name: examples-${{ matrix.example }}
+          path: examples-*.patch
+          retention-days: 14
+
+  # main: regenerate everything and commit the result back.
+  commit:
+    if: "${{ github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'chore(examples): regenerate') }}"
+    runs-on: ubuntu-latest
+    name: Regenerate and commit
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    # One regeneration at a time; a newer push supersedes an in-flight one.
+    concurrency:
+      group: examples-main
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+
+      - name: Regenerate, build, type-check
+        run: node examples/scripts/smoke.ts
+
+      - name: Commit if anything changed
+        run: |
+          git add -A -- examples
+          if git diff --cached --quiet -- examples; then
+            echo "examples/ already matches the registry"
+            exit 0
+          fi
+          git --no-pager diff --cached --stat -- examples
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(examples): regenerate templates" -m "Registry output changed in ${{ github.sha }}; regenerated with the real shadcn CLI."
+          # main may have moved while this ran (any push, not just a matching
+          # one). The commit touches only examples/, so rebasing is trivial.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            echo "push rejected (attempt $attempt); retrying"
+            sleep 10
           done
-          echo "::error::www dev server did not come up"
-          cat /tmp/www-dev.log
+          echo "::error::could not push the regenerated templates to main after 3 attempts"
           exit 1
-
-      - name: Smoke
-        run: node examples/scripts/smoke.ts --example ${{ matrix.example }} --origin "$ORIGIN"
-
-      - name: Dev server log
-        if: failure() && inputs.origin == ''
-        run: cat /tmp/www-dev.log
