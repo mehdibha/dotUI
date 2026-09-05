@@ -130,6 +130,27 @@ describe("emitInitItem", () => {
     expect(baseRegistryCss.css[":root"]).not.toHaveProperty("--radius-factor") // legacy knob must stay gone
   })
 
+  test("a preset token re-defining a per-mode semantic drops its .dark re-point", () => {
+    const item = emitInitItem({
+      baseRegistryCss,
+      preset: {
+        density: "default",
+        componentParams: {},
+        tokens: {
+          "--color-popover":
+            "light-dark(var(--neutral-50), var(--neutral-100))",
+        },
+      },
+      registryRoot: "https://dotui.com",
+    })
+
+    expect(item.css?.[":root"]).toMatchObject({
+      "--color-popover": "light-dark(var(--neutral-50), var(--neutral-100))",
+    })
+    expect(item.css?.[".dark"]).not.toHaveProperty("--color-popover")
+    expect(item.css?.[".dark"]).toHaveProperty("--color-border")
+  })
+
   test("font tokens become registry:font deps, not a Google Fonts @import", () => {
     const preset = {
       density: "default" as const,

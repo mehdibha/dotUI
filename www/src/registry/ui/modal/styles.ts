@@ -23,7 +23,7 @@ const { useStyles, styles } = createStyles(modalMeta, {
       viewport:
         "@container-[size] sticky top-0 left-0 flex h-(--visual-viewport-height) w-full items-center justify-center",
       modal: [
-        "relative flex max-h-[calc(var(--visual-viewport-height)-2rem)] w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--modal-radius) border bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))] [--surface-radius:var(--modal-radius)] sm:max-h-[calc(var(--visual-viewport-height)*.9)]",
+        "relative flex max-h-[calc(var(--visual-viewport-height)-2rem)] w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--modal-radius) border border-(--overlay-border) bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))] [backdrop-filter:var(--overlay-backdrop-filter,none)] [--surface-radius:var(--modal-radius)] sm:max-h-[calc(var(--visual-viewport-height)*.9)]",
       ],
     },
   },

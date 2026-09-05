@@ -55,6 +55,16 @@
   ) {
     user-select: var(--user-select-ui, auto);
   }
+  /* Each mode declares its scheme: native controls and scrollbars follow it,
+     and a token can carry one value per mode through light-dark(). */
+  :root,
+  [data-mode="light"] {
+    color-scheme: light;
+  }
+  .dark,
+  [data-mode="dark"] {
+    color-scheme: dark;
+  }
   /* The heading voice: face, weight and tracking are design-system axes. */
   h1,
   h2,
@@ -78,6 +88,13 @@
   html {
     @apply font-sans;
   }
+}
+
+/* Surfaces: the edge cards and floating layers (popover, menu, dialog) draw.
+   Their shadows ride `--shadow-card` / `--shadow-overlay`, none by default. */
+:root {
+  --card-border: var(--color-border);
+  --overlay-border: var(--color-border);
 }
 
 /* Selection highlight axis: the OS pair unless the design system paints its

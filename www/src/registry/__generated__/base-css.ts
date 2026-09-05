@@ -25,16 +25,13 @@ export const baseRegistryCss = {
 			"*": {
 				"@apply border-border": {},
 				"corner-shape": "var(--corner-shape, round)",
-				"scrollbar-width": "var(--scrollbar-width, auto)",
-				"scrollbar-color": "var(--scrollbar-color, auto)",
 			},
-			"*:hover": {
-				"scrollbar-color": "var(--scrollbar-color-hover, var(--scrollbar-color, auto))",
+			':root,\n  [data-mode="light"]': {
+				"color-scheme": "light",
 			},
-			':where(\n    button,\n    label,\n    kbd,\n    th,\n    [role="button"],\n    [role="tab"],\n    [role="option"],\n    [role^="menuitem"],\n    [role="radio"],\n    [role="switch"],\n    [role="tooltip"]\n  )':
-				{
-					"user-select": "var(--user-select-ui, auto)",
-				},
+			'.dark,\n  [data-mode="dark"]': {
+				"color-scheme": "dark",
+			},
 			"h1,\n  h2,\n  h3,\n  h4,\n  h5,\n  h6": {
 				"font-family": "var(--font-heading)",
 				"font-weight": "var(--font-weight-heading, var(--font-weight-semibold))",
@@ -43,24 +40,13 @@ export const baseRegistryCss = {
 			body: {
 				"@apply bg-bg font-sans text-fg": {},
 			},
-			":is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *)": {
-				opacity: "var(--disabled-opacity, 1)",
-			},
 			html: {
 				"@apply font-sans": {},
 			},
 		},
-		"::selection": {
-			"background-color": "var(--selection-bg, Highlight)",
-			color: "var(--selection-fg, HighlightText)",
-		},
-		".lucide,\n.tabler-icon": {
-			"stroke-width": "var(--icon-stroke-width, 2)",
-		},
-		".hugeicon,\n.hugeicon *": {
-			"stroke-width": "var(--icon-stroke-width, 1.5)",
-		},
 		":root": {
+			"--card-border": "var(--color-border)",
+			"--overlay-border": "var(--color-border)",
 			"--radius": "0.625rem",
 			"--neutral-25": "oklch(0.9921 0.0021 251.06)",
 			"--neutral-50": "oklch(0.9829 0.003 251.06)",
@@ -226,6 +212,16 @@ export const baseRegistryCss = {
 			"--chart-6": "oklch(0.4662 0.1337 254.29)",
 			"--chart-7": "oklch(0.4072 0.1337 255.47)",
 			"--chart-8": "oklch(0.3567 0.124 256.48)",
+		},
+		"::selection": {
+			"background-color": "var(--accent-300)",
+			color: "var(--neutral-950)",
+		},
+		".lucide,\n.tabler-icon": {
+			"stroke-width": "var(--icon-stroke-width, 2)",
+		},
+		".hugeicon,\n.hugeicon *": {
+			"stroke-width": "var(--icon-stroke-width, 1.5)",
 		},
 		".dark": {
 			"--neutral-25": "oklch(0.1307 0.0037 251.06)",
@@ -398,10 +394,6 @@ export const baseRegistryCss = {
 	},
 	cssVars: {
 		theme: {
-			"--ease-enter": "cubic-bezier(0, 0, 0.2, 1)",
-			"--transition-duration-enter": "200ms",
-			"--transition-duration-exit": "150ms",
-			"--default-transition-duration": "150ms",
 			"--ease-fluid-out": "cubic-bezier(0.32, 0.72, 0, 1)",
 			"--cursor-interactive": "pointer",
 			"--cursor-pending": "default",
@@ -435,14 +427,11 @@ export const baseRegistryCss = {
 			"--color-primary-hover": "color-mix(in oklab, var(--neutral-950) 90%, var(--neutral-25))",
 			"--color-primary-active": "color-mix(in oklab, var(--neutral-950) 80%, var(--neutral-25))",
 			"--color-primary-muted": "var(--neutral-200)",
-			"--color-primary-disabled": "var(--neutral-300)",
 			"--color-fg-on-primary": "var(--neutral-25)",
-			"--color-fg-primary-disabled": "var(--neutral-600)",
+			"--color-fg-primary-disabled": "var(--neutral-500)",
 			"--color-selection": "var(--neutral-950)",
 			"--color-selection-hover": "color-mix(in oklab, var(--neutral-950) 90%, var(--neutral-25))",
 			"--color-fg-on-selection": "var(--neutral-25)",
-			"--color-selection-disabled": "var(--neutral-100)",
-			"--color-fg-on-selection-disabled": "var(--neutral-600)",
 			"--color-success": "var(--success-700)",
 			"--color-success-hover": "var(--success-800)",
 			"--color-success-active": "color-mix(in oklab, var(--success-800) 88%, var(--neutral-950))",
