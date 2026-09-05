@@ -14,7 +14,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
         "[&:has([data-tab-indicator])_>_[data-tab-default-indicator]]:hidden",
       ],
       selectionIndicator: [
-        "pointer-events-none absolute rounded-md duration-150 ease-out motion-safe:transition-[translate,width,height]",
+        "pointer-events-none absolute rounded-md ease-out motion-safe:transition-[translate,width,height]",
       ],
       panel: "flex-1 outline-none data-[inert=true]:hidden",
     },

@@ -16,7 +16,7 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
       // item; the transition makes it glide. `inset-0` + `isolate` on the item sit
       // it behind the content (which is `z-10`).
       indicator:
-        "pointer-events-none absolute inset-0 rounded-md bg-selected shadow-sm duration-150 ease-out motion-safe:transition-[translate,width,height]",
+        "pointer-events-none absolute inset-0 rounded-md bg-selected shadow-sm ease-out motion-safe:transition-[translate,width,height]",
       itemContent: "relative z-10 inline-flex items-center [gap:inherit]",
     },
   },

@@ -29,8 +29,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
         "relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:[outline:2px_solid_var(--color-border-focus)] focus-visible:before:[outline-offset:-2px] focus-visible:before:content-['']",
       ],
       selectionColumn: "w-10 min-w-10 px-2.5",
-      sortIndicator:
-        "size-3.5 shrink-0 text-fg-muted transition-transform duration-150",
+      sortIndicator: "size-3.5 shrink-0 text-fg-muted transition-transform",
       resizer: [
         "h-5 w-px translate-x-2 cursor-col-resize rounded-xs bg-border-control bg-clip-content px-2 py-1 focus-reset focus-visible:focus-ring",
         "resizing:w-0.5 resizing:bg-border-focus resizing:pl-[7px]",
@@ -70,7 +69,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
         "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-sm text-fg-muted focus-reset focus-visible:focus-ring",
         "hover:bg-muted disabled:text-fg-disabled",
       ],
-      expandIcon: "size-3.5 transition-transform duration-150",
+      expandIcon: "size-3.5 transition-transform",
       loadMore: [
         "relative h-7 **:data-[slot=loader]:absolute **:data-[slot=loader]:top-0 **:data-[slot=loader]:left-1/2 **:data-[slot=loader]:-translate-x-1/2",
         "[&_[data-slot=loader]_svg]:size-4",

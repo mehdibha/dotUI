@@ -24,6 +24,13 @@ const tooltipMeta = {
       },
       description: "How the tooltip surface is rendered.",
     },
+    // Synced with popover and modal: the studio's Motion axis writes all three.
+    motion: {
+      kind: "enum",
+      default: "scale",
+      values: ["scale", "fade", "slide", "none"] as const,
+      description: "How the tooltip enters and leaves.",
+    },
   },
 } satisfies RegistryItem
 

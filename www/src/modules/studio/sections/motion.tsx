@@ -5,71 +5,36 @@
    one multiplier over the duration ramp; Overlays is the entrance pattern
    for floating layers; State changes is whether hover/press color shifts
    ease or snap — the native-vs-web cue. The hero is self-serve proof: a
-   real menu wearing overlay + character + speed, its trigger and items
-   wearing the state timing. Exits stay a plain mirrored curve at ~0.6x —
-   springs are for arriving, not leaving. Deliberately absent: a "none"
-   character (Linear's stillness is compositional — fast, overlays none,
-   instant states), overlayExit as its own row, reducedMotion, which only
-   renders under an OS media query, and the skeleton idle treatment, which
-   lives in Skeleton — a loading decision that happens to animate. Focus
-   rings never ease — pattern constant, not part of the state axis. */
+   real menu inside a scoped design system wearing the chapter's resolved
+   tokens and overlay param, its trigger wearing the state timing. Exits
+   stay a plain mirrored curve at a shorter duration — springs are for
+   arriving, not leaving. Deliberately absent: a "none" character (Linear's
+   stillness is compositional — fast, overlays none, instant states),
+   overlayExit as its own row, reducedMotion, which only renders under an OS
+   media query, and the skeleton idle treatment, which lives in Skeleton — a
+   loading decision that happens to animate. Focus rings never ease —
+   pattern constant, not part of the state axis. */
 
+import { useMemo } from "react"
 import { ChevronDownIcon } from "lucide-react"
 
+import { DesignSystemProvider } from "@/lib/styles"
 import { Button } from "@/registry/ui/button"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 
+import {
+  CHARACTER_OPTIONS,
+  OVERLAY_OPTIONS,
+  resolveMotion,
+  SPEED,
+  SPEED_OPTIONS,
+  STATE_OPTIONS,
+} from "../axes/motion"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
-
-/* Jake Archibald-style linear() spring, ~15% overshoot settling over the
-   full duration. */
-const SPRING =
-  "linear(0, 0.009, 0.035 2.1%, 0.141 4.4%, 0.723 12.9%, 0.938 16.7%, 1.017, 1.077 20.4%, 1.121, 1.149 24.3%, 1.159, 1.163 27%, 1.154, 1.129 32.8%, 1.051 39.6%, 1.017 43.1%, 0.991, 0.977 51%, 0.974 53.8%, 0.975 57.1%, 0.997 69.8%, 1.003 76.9%, 1)"
-
-/* Character sets both the curve and the base entrance duration — emphasized
-   settles longer, springs need room to oscillate. */
-const CHARACTER = {
-  standard: { ease: "cubic-bezier(0, 0, 0.2, 1)", enterMs: 200 },
-  emphasized: { ease: "cubic-bezier(0.05, 0.7, 0.1, 1)", enterMs: 280 },
-  spring: { ease: SPRING, enterMs: 450 },
-}
-
-const SPEED = { fast: 0.75, default: 1, relaxed: 1.4 }
-
-const STATE_MS = { instant: 0, quick: 100, smooth: 180 }
-
-/* The overlay overrides ride a doubled marker class so they outrank the
-   popover's own entering/exiting utilities regardless of sheet order. */
-const S = ".motion-lab-overlay.motion-lab-overlay"
-
-function heroCss(state: LabState) {
-  const character = CHARACTER[state.motionCharacter as keyof typeof CHARACTER]
-  const speed = SPEED[state.motionSpeed as keyof typeof SPEED]
-  const enter = Math.round(character.enterMs * speed)
-  const exit = Math.round(character.enterMs * 0.6 * speed)
-  const stateMs = Math.round(
-    STATE_MS[state.motionState as keyof typeof STATE_MS] * speed,
-  )
-
-  const overlay = {
-    none: `${S}, ${S}[data-entering], ${S}[data-exiting] { transition: none; }`,
-    fade: `${S}[data-entering], ${S}[data-exiting] { scale: 1; transform: none; }`,
-    scale: "",
-    slide: `${S} { --slide-offset: 8px; } ${S}[data-entering], ${S}[data-exiting] { scale: 1; }`,
-  }[state.motionOverlay as "none" | "fade" | "scale" | "slide"]
-
-  return `
-    ${S} { transition-timing-function: ${character.ease}; transition-duration: ${enter}ms; }
-    ${S}[data-exiting] { transition-timing-function: cubic-bezier(0, 0, 0.2, 1); transition-duration: ${exit}ms; }
-    ${overlay}
-    [data-motion-hero] [data-button] { transition-duration: ${stateMs}ms; }
-    .motion-lab-overlay [data-menu-item] { transition: background-color ${stateMs}ms ease, color ${stateMs}ms ease; }
-  `
-}
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -198,82 +163,58 @@ function StateGlyph({ d }: { d: string }) {
 
 /* --------------------------------- Options --------------------------------- */
 
-const CHARACTER_OPTIONS: SelectRowOption[] = [
-  {
-    value: "standard",
-    label: "Standard",
-    illustration: <CurveGlyph d="M4 20C8 9 12 6 20 6" />,
-  },
-  {
-    value: "emphasized",
-    label: "Emphasized",
-    illustration: <CurveGlyph d="M4 20C5 8 9 6 20 6" />,
-  },
-  {
-    value: "spring",
-    label: "Spring",
-    illustration: (
-      <CurveGlyph d="M4 20C6 6 6.5 2 9.5 3.5 12 4.8 12.5 8.2 15 7 17 6 18 6 20 6" />
-    ),
-  },
-]
+const withGlyphs = (
+  options: { value: string; label: string }[],
+  glyphs: Record<string, React.ReactNode>,
+): SelectRowOption[] =>
+  options.map((o) => ({ ...o, illustration: glyphs[o.value] }))
 
-const SPEED_OPTIONS: SelectRowOption[] = [
-  {
-    value: "fast",
-    label: "Fast",
-    illustration: <SpeedGlyph>0.75×</SpeedGlyph>,
-  },
-  {
-    value: "default",
-    label: "Default",
-    illustration: <SpeedGlyph>1×</SpeedGlyph>,
-  },
-  {
-    value: "relaxed",
-    label: "Relaxed",
-    illustration: <SpeedGlyph>1.4×</SpeedGlyph>,
-  },
-]
+const CHARACTER_ROWS = withGlyphs(CHARACTER_OPTIONS, {
+  standard: <CurveGlyph d="M4 20C8 9 12 6 20 6" />,
+  emphasized: <CurveGlyph d="M4 20C5 8 9 6 20 6" />,
+  spring: (
+    <CurveGlyph d="M4 20C6 6 6.5 2 9.5 3.5 12 4.8 12.5 8.2 15 7 17 6 18 6 20 6" />
+  ),
+})
 
-const OVERLAY_OPTIONS: SelectRowOption[] = [
-  { value: "none", label: "None", illustration: <OverlayNoneGlyph /> },
-  { value: "fade", label: "Fade", illustration: <OverlayFadeGlyph /> },
-  { value: "scale", label: "Scale", illustration: <OverlayScaleGlyph /> },
-  { value: "slide", label: "Slide", illustration: <OverlaySlideGlyph /> },
-]
+const SPEED_ROWS = withGlyphs(
+  SPEED_OPTIONS,
+  Object.fromEntries(
+    Object.entries(SPEED).map(([value, factor]) => [
+      value,
+      <SpeedGlyph key={value}>{factor}×</SpeedGlyph>,
+    ]),
+  ),
+)
 
-const STATE_OPTIONS: SelectRowOption[] = [
-  {
-    value: "instant",
-    label: "Instant",
-    illustration: <StateGlyph d="M4 18h7V6h9" />,
-  },
-  {
-    value: "quick",
-    label: "Quick",
-    illustration: <StateGlyph d="M4 18h4c2.5 0 2-12 4.5-12H20" />,
-  },
-  {
-    value: "smooth",
-    label: "Smooth",
-    illustration: <StateGlyph d="M4 18c10 0 6-12 16-12" />,
-  },
-]
+const OVERLAY_ROWS = withGlyphs(OVERLAY_OPTIONS, {
+  none: <OverlayNoneGlyph />,
+  fade: <OverlayFadeGlyph />,
+  scale: <OverlayScaleGlyph />,
+  slide: <OverlaySlideGlyph />,
+})
+
+const STATE_ROWS = withGlyphs(STATE_OPTIONS, {
+  instant: <StateGlyph d="M4 18h7V6h9" />,
+  quick: <StateGlyph d="M4 18h4c2.5 0 2-12 4.5-12H20" />,
+  smooth: <StateGlyph d="M4 18c10 0 6-12 16-12" />,
+})
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-/* A menu the user opens themselves — self-serve replay, no fake loop. */
+/* A menu the user opens themselves — self-serve replay, no fake loop. The
+   scoped provider is the engine: the popover reads the overlay param, the
+   tokens ride on the scope and its portal. */
 export function MotionHero({ state }: { state: LabState }) {
+  const { tokens, params } = useMemo(() => resolveMotion(state), [state])
   return (
     <Hero className="flex-row items-center justify-center gap-4 px-4 py-6">
-      <style>{heroCss(state)}</style>
-      <div data-motion-hero="" className="contents">
+      <DesignSystemProvider scoped tokens={tokens} params={params}>
         <Menu>
           <Button variant="secondary">
             Menu <ChevronDownIcon />
           </Button>
-          <Popover placement="bottom start" className="motion-lab-overlay">
+          <Popover placement="bottom start">
             <MenuContent>
               <MenuItem>Duplicate</MenuItem>
               <MenuItem>Rename</MenuItem>
@@ -281,23 +222,23 @@ export function MotionHero({ state }: { state: LabState }) {
             </MenuContent>
           </Popover>
         </Menu>
-      </div>
+      </DesignSystemProvider>
     </Hero>
   )
 }
 
+const optionLabel = (
+  options: { value: string; label: string }[],
+  value: string,
+) => options.find((o) => o.value === value)?.label ?? value
+
 /** Collapsed-row summary: the easing character, and the overlay entrance
  *  when overlays animate. */
 export function motionSummary(state: LabState): string {
-  const character =
-    CHARACTER_OPTIONS.find((o) => o.value === state.motionCharacter)?.label ??
-    state.motionCharacter
-  const overlay =
-    OVERLAY_OPTIONS.find((o) => o.value === state.motionOverlay)?.label ??
-    state.motionOverlay
+  const character = optionLabel(CHARACTER_OPTIONS, state.motionCharacter)
   return state.motionOverlay === "none"
     ? character
-    : `${character} · ${overlay} overlays`
+    : `${character} · ${optionLabel(OVERLAY_OPTIONS, state.motionOverlay)} overlays`
 }
 
 export function MotionSection({ lab }: { lab: Lab }) {
@@ -309,28 +250,28 @@ export function MotionSection({ lab }: { lab: Lab }) {
         label="Character"
         value={state.motionCharacter}
         onChange={set("motionCharacter")}
-        options={CHARACTER_OPTIONS}
+        options={CHARACTER_ROWS}
         layout="grid"
       />
       <SelectRow
         label="Speed"
         value={state.motionSpeed}
         onChange={set("motionSpeed")}
-        options={SPEED_OPTIONS}
+        options={SPEED_ROWS}
         layout="grid"
       />
       <SelectRow
         label="Overlays"
         value={state.motionOverlay}
         onChange={set("motionOverlay")}
-        options={OVERLAY_OPTIONS}
+        options={OVERLAY_ROWS}
         layout="grid"
       />
       <SelectRow
         label="State changes"
         value={state.motionState}
         onChange={set("motionState")}
-        options={STATE_OPTIONS}
+        options={STATE_ROWS}
         layout="grid"
       />
     </ControlGroup>
