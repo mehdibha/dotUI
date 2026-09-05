@@ -1,25 +1,12 @@
 /**
- * Single source of truth for scalar-param token options.
+ * The static token pools the publisher's class rewriter resolves through:
+ * `rounded-(--alert-radius)` → `rounded-md` when the var chain lands on
+ * `--radius-md`. Values are CSS var references (`--radius-md`) or literals
+ * (`0`, `none`); `suffix` is the Tailwind utility suffix.
  *
- * Two consumers:
- *   1. The create-page customizer's picker UI (`components-config.tsx`).
- *      Uses `{ label, value }` to render dropdowns / sliders.
- *   2. The publish pipeline's class rewriter (`resolve-classes.ts`).
- *      Uses `{ value → suffix }` to rewrite e.g.
- *      `rounded-(--alert-radius)` → `rounded-md` when the preset binds
- *      `alert.radius = "--radius-md"`.
- *
- * Token types covered by static option pools: radius, blur, opacity, shadow, cursor.
- *
- * Not in this table:
- *   - `spacing`  — driven by a slider over `calc(var(--spacing) * N)`; the
- *                  publisher emits Tailwind arbitrary values.
- *   - `color`    — derived from `DEFAULT_SEMANTICS` (registry/theme); CSS vars are kept in the
- *                  base item rather than rewritten inline.
- *   - `font-size` — no scalar params use it yet.
+ * Not in these pools — spacing (emitted as arbitrary values), color (kept as
+ * vars in the base item), font-size (unused) — ships as var references.
  */
-
-import type { TokenType } from "@/registry/types"
 
 export interface TokenOption {
   /** Human-readable label for the picker. */
@@ -41,6 +28,8 @@ export const RADIUS_OPTIONS: readonly TokenOption[] = [
   { label: "lg", value: "--radius-lg", suffix: "lg" },
   { label: "xl", value: "--radius-xl", suffix: "xl" },
   { label: "2xl", value: "--radius-2xl", suffix: "2xl" },
+  { label: "3xl", value: "--radius-3xl", suffix: "3xl" },
+  { label: "4xl", value: "--radius-4xl", suffix: "4xl" },
   { label: "full", value: "--radius-full", suffix: "full" },
 ]
 
@@ -90,34 +79,13 @@ export const CURSOR_OPTIONS: readonly TokenOption[] = [
   { label: "Progress", value: "progress", suffix: "progress" },
 ]
 
-const STATIC_OPTIONS_BY_TYPE = {
-  radius: RADIUS_OPTIONS,
-  blur: BLUR_OPTIONS,
-  opacity: OPACITY_OPTIONS,
-  shadow: SHADOW_OPTIONS,
-  cursor: CURSOR_OPTIONS,
-} satisfies Partial<Record<TokenType, readonly TokenOption[]>>
-
-export function getStaticTokenOptions(
-  type: TokenType,
-): readonly TokenOption[] | undefined {
-  return (
-    STATIC_OPTIONS_BY_TYPE as Record<string, readonly TokenOption[] | undefined>
-  )[type]
-}
-
-/**
- * Map a preset value to its Tailwind utility suffix. Returns `undefined` for
- * values outside the static pool (custom spacing, color vars, etc.) — callers
- * decide whether to fall back to arbitrary-value syntax or to keep the var ref.
- */
-export function tokenValueToSuffix(
-  type: TokenType,
-  value: string,
-): string | undefined {
-  const options = getStaticTokenOptions(type)
-  return options?.find((opt) => opt.value === value)?.suffix
-}
+const TOKEN_POOLS = [
+  RADIUS_OPTIONS,
+  BLUR_OPTIONS,
+  OPACITY_OPTIONS,
+  SHADOW_OPTIONS,
+  CURSOR_OPTIONS,
+]
 
 /**
  * Map a token var reference (`--radius-md`) to its Tailwind suffix by
@@ -127,7 +95,7 @@ export function tokenValueToSuffix(
  */
 export function tokenRefToSuffix(ref: string): string | undefined {
   if (!ref.startsWith("--")) return undefined
-  for (const options of Object.values(STATIC_OPTIONS_BY_TYPE)) {
+  for (const options of TOKEN_POOLS) {
     const hit = options.find((opt) => opt.value === ref)
     if (hit) return hit.suffix
   }

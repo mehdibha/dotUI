@@ -13,6 +13,14 @@ import { Button } from "@/registry/ui/button"
 import { Select } from "@/registry/ui/select"
 import { useLoadedFamilies } from "@/modules/create/typography"
 
+import {
+  LEADING_OPTIONS,
+  LEADING_VALUES,
+  TRACKING_EM,
+  TRACKING_OPTIONS,
+  TYPE_DEFAULTS,
+  WEIGHT_OPTIONS,
+} from "../axes/type"
 import { Hero } from "../hero"
 import { DetailRow, MiniSliderRow } from "../patterns"
 import {
@@ -27,14 +35,6 @@ import {
   ROW_VALUE,
   SegmentedControlRow,
 } from "../rows"
-import {
-  LEADING_OPTIONS,
-  LEADING_VALUES,
-  TRACKING_EM,
-  TRACKING_OPTIONS,
-  TYPE_DEFAULTS,
-  WEIGHT_OPTIONS,
-} from "../axes/type"
 import type { Lab, LabState } from "../state"
 
 /** Collapsed-row summary: the face the system reads in, and its base size. */
@@ -53,11 +53,6 @@ const HERO_STEP = 12
 function headingPx(state: LabState, step: number): number {
   return state.typeBase + step
 }
-
-
-
-
-
 
 /** A role's live recipe — heading and body follow the scale axes, UI and code
  *  sizes are the section's constants. */

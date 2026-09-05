@@ -24,12 +24,6 @@ const tooltipMeta = {
       },
       description: "How the tooltip surface is rendered.",
     },
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--tooltip-radius",
-      default: "--radius-md",
-    },
   },
 } satisfies RegistryItem
 

@@ -12,14 +12,6 @@ const avatarMeta = {
     },
   ],
   registryDependencies: ["context", "use-image-loading-status"],
-  params: {
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--avatar-radius",
-      default: "--radius-full",
-    },
-  },
 } satisfies RegistryItem
 
 export default avatarMeta

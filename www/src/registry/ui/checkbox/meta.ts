@@ -12,14 +12,6 @@ const checkboxMeta = {
     },
   ],
   registryDependencies: ["focus-styles", "field"],
-  params: {
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--checkbox-radius",
-      default: "--radius-sm",
-    },
-  },
 } satisfies RegistryItem
 
 export default checkboxMeta

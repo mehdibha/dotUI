@@ -7,7 +7,7 @@
  *
  * Pipeline:
  *   1. flatten         — merge base ← density ← param-value layers
- *   2. resolveClasses  — rewrite scalar-param var refs to Tailwind suffixes
+ *   2. resolveClasses  — rewrite surface-var refs to Tailwind suffixes
  *   3. serialize       — render the flat config to a TS literal string
  *   4. substitute      — splice into the template at `%%TV_CONFIG%%`
  *   5. assemble        — build the shadcn-shaped JSON
@@ -28,7 +28,6 @@ import {
 } from "./code-options"
 import { flatten } from "./flatten"
 import {
-  buildScalarVarMap,
   buildStyleVarMap,
   pruneResolvedCssVars,
   resolveClasses,
@@ -219,16 +218,12 @@ export function publish({
 
   // 2. Rewrite surface-var refs to Tailwind suffixes. The registry-wide
   // styles.css defaults seed the map (those vars are builder-only
-  // indirection); this component's scalar-param selections override.
-  // Preset tokens overlay the defaults so a retargeted role (`--radius-control`
-  // → 2xl) exports as the utility it resolves to.
+  // indirection); the preset's tokens overlay them so a retargeted role
+  // (`--radius-control` → 2xl) exports as the utility it resolves to.
   const varMap = buildStyleVarMap({
     ...(styleVarDefaults ?? STYLE_VAR_DEFAULTS),
     ...preset.tokens,
   })
-  for (const [cssVar, suffix] of buildScalarVarMap(meta, paramSelections)) {
-    varMap.set(cssVar, suffix)
-  }
   let resolved = resolveClasses(flat, varMap)
 
   // 2b. Code-style: collapse grouped class arrays to a single string per

@@ -105,7 +105,9 @@ export function useResolvedPreset(): DesignSystem {
   const yours = useStoredPreset()
   const yoursResolved = useMemo(() => resolveDesignSystem(yours.state), [yours])
   if (selected === YOURS) return yoursResolved
-  return PRESETS.find((p) => p.id === selected)?.designSystem ?? ORIGIN.designSystem
+  return (
+    PRESETS.find((p) => p.id === selected)?.designSystem ?? ORIGIN.designSystem
+  )
 }
 
 /**

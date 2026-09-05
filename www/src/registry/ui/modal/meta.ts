@@ -17,33 +17,6 @@ const modalMeta = {
       default: "default",
       values: ["default", "muted-footer"] as const,
     },
-    "backdrop-blur": {
-      kind: "scalar",
-      type: "blur",
-      cssVar: "--modal-backdrop-blur",
-      default: "--blur-sm",
-      description: "Amount of blur applied behind the modal.",
-    },
-    "backdrop-opacity": {
-      kind: "scalar",
-      type: "opacity",
-      cssVar: "--modal-backdrop-opacity",
-      default: "40%",
-      description: "Opacity of the black backdrop.",
-    },
-    background: {
-      kind: "scalar",
-      type: "color",
-      cssVar: "--modal-background",
-      default: "--color-popover",
-      description: "Background color of the modal surface.",
-    },
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--modal-radius",
-      default: "--radius-xl",
-    },
   },
 } satisfies RegistryItem
 

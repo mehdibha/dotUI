@@ -13,14 +13,6 @@ const tagGroupMeta = {
   ],
   registryDependencies: ["field", "button", "focus-styles"],
   dependencies: ["react-aria-components"],
-  params: {
-    tagRadius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--tag-radius",
-      default: "--radius-md",
-    },
-  },
 } satisfies RegistryItem
 
 export default tagGroupMeta

@@ -21,7 +21,6 @@ import {
   TV_CONFIG_PLACEHOLDER,
 } from "./publish"
 import {
-  buildScalarVarMap,
   buildStyleVarMap,
   pruneResolvedCssVars,
   resolveClasses,
@@ -169,18 +168,6 @@ describe("resolve-classes", () => {
     expect(rewriteClassString("rounded-(--btn-radius) p-2", map)).toBe(
       "rounded-(--btn-radius) p-2",
     )
-  })
-
-  test("buildScalarVarMap uses preset selection over default", () => {
-    const map = buildScalarVarMap(alertPublishable.meta, {
-      radius: "--radius-sm",
-    })
-    expect(map.get("--alert-radius")).toBe("sm")
-  })
-
-  test("buildScalarVarMap falls back to def.default", () => {
-    const map = buildScalarVarMap(alertPublishable.meta, {})
-    expect(map.get("--alert-radius")).toBe("lg")
   })
 
   test("resolveClasses rewrites within slot arrays", () => {
@@ -381,24 +368,25 @@ describe("publish", () => {
     ])
   })
 
-  test("alert: rewrites scalar-param var when preset selects 'md' radius", () => {
+  test("alert: rewrites the surface var when the preset retargets its role", () => {
     const { rawContent } = publish({
       publishable: alertPublishable,
       preset: {
         density: "default",
-        componentParams: { alert: { radius: "--radius-md" } },
+        componentParams: {},
+        tokens: { "--alert-radius": "var(--radius-md)" },
       },
     })
     expect(rawContent).toContain("rounded-md")
     expect(rawContent).not.toContain("rounded-(--alert-radius)")
   })
 
-  test("alert: falls back to default radius when preset omits the param", () => {
+  test("alert: falls back to the styles.css default radius", () => {
     const { rawContent } = publish({
       publishable: alertPublishable,
       preset: { density: "default", componentParams: {} },
     })
-    // alert.radius default is "--radius-lg" → suffix "lg".
+    // --alert-radius → --radius-surface → --radius-lg → suffix "lg".
     expect(rawContent).toContain("rounded-lg")
   })
 
@@ -450,16 +438,6 @@ describe("publish", () => {
       styleVarDefaults: { "--btn-radius": "var(--radius-md)" },
     })
     expect(rawContent).toContain("rounded-md")
-  })
-
-  test("scalar-param selection overrides the styles.css default", () => {
-    const map = buildStyleVarMap({ "--alert-radius": "var(--radius-lg)" })
-    for (const [k, v] of buildScalarVarMap(alertPublishable.meta, {
-      radius: "--radius-sm",
-    })) {
-      map.set(k, v)
-    }
-    expect(map.get("--alert-radius")).toBe("sm")
   })
 
   test("surface-var refs in template markup (outside the tv config) resolve too", () => {

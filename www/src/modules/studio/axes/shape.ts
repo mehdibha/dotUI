@@ -172,6 +172,7 @@ export function resolveShape(state: StudioState): Resolved {
       tokens[ROLE_VARS[role.key]] =
         SHAPE_RUNGS[rungIndex(rung)]?.token ?? "var(--radius-md)"
   }
-  if (state.cornerShape !== "round") tokens["--corner-shape"] = state.cornerShape
+  if (state.cornerShape !== "round")
+    tokens["--corner-shape"] = state.cornerShape
   return { tokens }
 }

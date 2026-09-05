@@ -4,10 +4,10 @@
    scales everything, density picks the gap/inset recipe, control size moves
    the height ladder. All three resolve in the hero's specimen. */
 
+import { DENSITY_OPTIONS, spaceRecipe } from "../axes/space"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SliderRow } from "../rows"
 import type { Lab, LabState } from "../state"
-import { DENSITY_OPTIONS, spaceRecipe } from "../axes/space"
 import { controlRadiusPx, roleRadiusPx } from "./shape"
 
 /** A working mini form wearing the resolved recipe — control heights, the

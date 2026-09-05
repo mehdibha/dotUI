@@ -12,14 +12,6 @@ import type { CSSProperties } from "react"
 
 import { cn } from "@/registry/lib/utils"
 
-import { Hero } from "../hero"
-import {
-  ControlGroup,
-  GroupTitle,
-  OptionGridRow,
-  SelectRow,
-  SliderRow,
-} from "../rows"
 import {
   CORNER_SHAPE_OPTIONS,
   cornerShapeStyle,
@@ -30,6 +22,14 @@ import {
   SHAPE_RUNGS,
 } from "../axes/shape"
 import type { ShapeRoleKey } from "../axes/shape"
+import { Hero } from "../hero"
+import {
+  ControlGroup,
+  GroupTitle,
+  OptionGridRow,
+  SelectRow,
+  SliderRow,
+} from "../rows"
 import type { Lab, LabState } from "../state"
 
 export { controlRadiusPx, roleRadiusPx } from "../axes/shape"

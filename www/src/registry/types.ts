@@ -35,63 +35,33 @@ export type ComponentGroup =
 
 /* ------------------------------- Params ------------------------------- */
 
-export type TokenType =
-  | "radius"
-  | "color"
-  | "spacing"
-  | "font-size"
-  | "blur"
-  | "opacity"
-  | "cursor"
-  | "shadow"
 export type RegistryItemFile = NonNullable<ShadcnRegistryItem["files"]>[number]
 
 /**
- * An "enum" param: user picks one of a fixed set of named values.
- * Each value can carry tv slices in `createStyles` and/or CSS vars in `vars`
- * here. Covers what was previously `meta.styles` (aesthetic) and `meta.params`
- * (per-component variants).
+ * A param: the user picks one of a fixed set of named values. Each value can
+ * carry tv slices in `createStyles` and/or CSS vars in `vars` here.
  */
 export type EnumParamDef = {
   kind: "enum"
   default: string
   values: readonly string[]
   /**
-   * CSS vars a value sets on the provider scope, keyed by value name. Lives in
-   * meta (not the styles config) so the provider can resolve selections from
-   * data both server and client always share — like `ScalarParamDef.cssVar`.
+   * CSS vars a value sets as global tokens, keyed by value name. Lives in
+   * meta (not the styles config) so the resolver can read selections from
+   * data both server and client always share.
    */
   vars?: Record<string, Record<`--${string}`, string>>
   files?: Record<string, readonly RegistryItemFile[]>
   description?: string
 }
 
-/**
- * A "scalar" param: user picks any value from a typed pool (a token type).
- * The selected value is written to `cssVar` on `:root`. No tv slice.
- * Covers what was previously `meta.tokens`.
- */
-export type ScalarParamDef = {
-  kind: "scalar"
-  type: TokenType
-  cssVar: `--${string}`
-  default: string
-  minValue?: number
-  maxValue?: number
-  step?: number
-  description?: string
-}
-
-export type ParamDef = EnumParamDef | ScalarParamDef
+export type ParamDef = EnumParamDef
 
 export type RegistryItem = ShadcnRegistryItem & {
   /** Component group for style editor UI organization */
   group?: ComponentGroup | null
-  /**
-   * Customization knobs surfaced in the create-page customizer.
-   * Two kinds: `enum` (1-of-N named values, may carry tv + vars) and
-   * `scalar` (a single CSS var resolved from a typed token pool).
-   */
+  /** The studio axes this component answers to: 1-of-N named values that
+   *  carry tv slices and/or global CSS vars. */
   params?: Record<string, ParamDef>
 }
 

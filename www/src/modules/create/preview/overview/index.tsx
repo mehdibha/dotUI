@@ -876,8 +876,10 @@ export function PresetOverview({
     : radiusParsed
   const numericRadius = Number.isFinite(radiusPx) ? radiusPx : 10
 
-  const cursorInteractive = designSystem.tokens["--cursor-interactive"] ?? "pointer"
-  const cursorDisabled = designSystem.tokens["--cursor-disabled"] ?? "not-allowed"
+  const cursorInteractive =
+    designSystem.tokens["--cursor-interactive"] ?? "pointer"
+  const cursorDisabled =
+    designSystem.tokens["--cursor-disabled"] ?? "not-allowed"
 
   const name = describeAccent(seeds.accent)
 

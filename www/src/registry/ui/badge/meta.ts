@@ -11,14 +11,6 @@ const badgeMeta = {
       target: "ui/badge.tsx",
     },
   ],
-  params: {
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--badge-radius",
-      default: "--radius-md",
-    },
-  },
 } satisfies RegistryItem
 
 export default badgeMeta

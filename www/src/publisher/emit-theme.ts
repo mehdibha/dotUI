@@ -22,7 +22,11 @@ import {
 } from "@/registry/theme"
 import type { Density, RegistryItem } from "@/registry/types"
 
+// Relative import: the publisher sits in vite.config's module graph, where
+// value imports through the `@/` alias break vitest/vite startup.
+import { STYLE_VAR_DEFAULTS } from "../registry/__generated__/style-var-defaults"
 import { fontItemNamesForTokens } from "./emit-font"
+import { buildStyleVarMap } from "./resolve-classes"
 import type { PublishPreset } from "./types"
 
 type RegistryCssFields = Pick<RegistryItem, "css" | "cssVars">
@@ -71,22 +75,31 @@ function resolveCssValue(value: string): string {
   return value.startsWith("--") ? `var(${value})` : value
 }
 
-function emitPresetLightVars(preset: PublishPreset): Record<string, string> {
-  const vars: Record<string, string> = {}
+/**
+ * Split the preset's global tokens by where the export must carry them:
+ * - `theme`: names the shipped `@theme` block declares (fonts, cursors, the
+ *   radius rungs). It renders `@theme inline`, which bakes values into
+ *   utilities, so a `:root` override would be ignored — re-point the theme.
+ * - `root`: everything else lands on `:root`, same as the live provider —
+ *   minus builder-only indirection (`--radius-control` and friends), which
+ *   the class rewriter has already resolved into plain utilities.
+ */
+function splitPresetTokens(
+  preset: PublishPreset,
+  themeNames: Set<string>,
+): { theme: Record<string, string>; root: Record<string, string> } {
+  const theme: Record<string, string> = {}
+  const root: Record<string, string> = {}
   const density = densityRootValue(preset.density)
-  if (density) vars["--dotui-density"] = preset.density
-  // Global tokens (radius factor, cursors, …) land on `:root`, same as the
-  // live provider. `componentParams` are inlined into component classes at
-  // build, so they're not written here. Font tokens are excluded: the shipped
-  // theme renders `@theme inline`, which bakes values into utilities, so a
-  // `:root` override would be ignored — they re-point the `@theme` vocabulary
-  // instead (see mergePresetCssFields).
-  const fontVars = new Set<string>(FONT_TOKEN_VARS)
-  for (const [key, value] of Object.entries(preset.tokens ?? {})) {
-    if (fontVars.has(key)) continue
-    vars[key.startsWith("--") ? key : `--${key}`] = resolveCssValue(value)
+  if (density) root["--dotui-density"] = preset.density
+  const tokens = preset.tokens ?? {}
+  const resolved = buildStyleVarMap({ ...STYLE_VAR_DEFAULTS, ...tokens })
+  for (const [key, value] of Object.entries(tokens)) {
+    const name = key.startsWith("--") ? key : `--${key}`
+    if (themeNames.has(name)) theme[name] = resolveCssValue(value)
+    else if (!resolved.has(name)) root[name] = resolveCssValue(value)
   }
-  return vars
+  return { theme, root }
 }
 
 export function emitInitItem(input: EmitThemeInput): RegistryItem {
@@ -250,22 +263,19 @@ export function mergePresetCssFields(
     }
   }
 
-  const lightVars = emitPresetLightVars(preset)
-  if (Object.keys(lightVars).length > 0) {
+  const split = splitPresetTokens(
+    preset,
+    new Set([...FONT_TOKEN_VARS, ...Object.keys(base.cssVars?.theme ?? {})]),
+  )
+  if (Object.keys(split.root).length > 0) {
     css[":root"] = {
       ...(isPlainCssObject(css[":root"]) ? css[":root"] : {}),
-      ...lightVars,
+      ...split.root,
     }
   }
-
-  // Typography: re-point the `@theme` vocabulary at the preset's stacks (the
-  // block renders `@theme inline`, so utilities bake these values in — a
-  // `:root` override wouldn't reach them). The faces themselves come from
-  // `registry:font` items (init) or, on request, a Google Fonts import (v0).
-  for (const varName of FONT_TOKEN_VARS) {
-    const stack = preset.tokens?.[varName]
-    if (stack) themeVars[varName] = stack
-  }
+  // The faces themselves come from `registry:font` items (init) or, on
+  // request, a Google Fonts import (v0).
+  Object.assign(themeVars, split.theme)
   if (options.googleFontsImport) {
     const fontFamilies = fontFamiliesFromTokens(preset.tokens ?? {})
     if (fontFamilies.length > 0) {

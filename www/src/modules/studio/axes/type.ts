@@ -7,7 +7,11 @@
    through `--font-weight-heading` / `--tracking-heading`; the base size and
    body leading re-point Tailwind's `--text-*` theme vars. */
 
-import { DEFAULT_BODY_FAMILY, DEFAULT_MONO_FAMILY, fontStack } from "@/lib/fonts"
+import {
+  DEFAULT_BODY_FAMILY,
+  DEFAULT_MONO_FAMILY,
+  fontStack,
+} from "@/lib/fonts"
 
 import type { Resolved, StudioState } from "./index"
 

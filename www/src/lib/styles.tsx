@@ -42,7 +42,6 @@ import type {
   ParamDef,
   RegistryItem,
 } from "@/registry/types"
-import { registryUi } from "@/registry/ui/registry"
 
 /* --------------------------------- Types --------------------------------- */
 
@@ -63,37 +62,6 @@ const DesignSystemContext = React.createContext<DesignSystemContextValue>({
   params: {},
   density: "default",
 })
-
-/* ----------------------------- Param bindings ----------------------------- */
-
-const emptyParamSelections: Record<string, string> = {}
-
-/**
- * Param → CSS var bindings derived from the registry metas: enum values' `vars`
- * blocks (`{ [component]: { [paramName]: { [valueName]: vars } } }`) and scalar
- * params' `cssVar` (`{ [component]: { [paramName]: cssVar } }`). Deliberately
- * NOT registered by `createStyles` at module load: that would make the
- * provider's inline vars depend on which styles modules happen to be evaluated,
- * which differs between the server (accretes every SSR'd route in the dev
- * process) and the client (only the current page's chunks) — a hydration
- * mismatch. Metas are plain data both environments always share.
- */
-const enumVarBindings = new Map<
-  string,
-  Record<string, Record<string, Record<string, string>>>
->()
-const scalarVarBindings = new Map<string, Record<string, string>>()
-for (const item of registryUi) {
-  if (!item.params) continue
-  const enumVars: Record<string, Record<string, Record<string, string>>> = {}
-  const scalars: Record<string, string> = {}
-  for (const [paramName, def] of Object.entries(item.params)) {
-    if (def.kind === "scalar") scalars[paramName] = def.cssVar
-    else if (def.vars) enumVars[paramName] = def.vars
-  }
-  if (Object.keys(enumVars).length > 0) enumVarBindings.set(item.name, enumVars)
-  if (Object.keys(scalars).length > 0) scalarVarBindings.set(item.name, scalars)
-}
 
 /* -------------------------------- Provider ------------------------------- */
 
@@ -397,36 +365,14 @@ function DesignSystemProvider({
   const cssVars = React.useMemo(() => {
     const vars: Record<string, string> = {}
 
-    // Layer 1: global theme tokens (palette, radius factor, cursors, etc.).
+    // Global theme tokens: radius, fonts, cursors, and the CSS vars the
+    // selected param values carry (folded in by the studio resolver).
     for (const [prop, val] of Object.entries(tokens)) {
       vars[prop] = resolveCssValue(val)
     }
 
-    // Layer 2: per-component param selections.
-    // Enum params write a value's `vars` block; scalar params write a single
-    // CSS var resolved from the selected token reference.
-    for (const [componentName, componentSelections] of Object.entries(params)) {
-      const enumVars = enumVarBindings.get(componentName)
-      const scalarBindings = scalarVarBindings.get(componentName)
-      for (const [paramName, paramValue] of Object.entries(
-        componentSelections,
-      )) {
-        const enumValueVars = enumVars?.[paramName]?.[paramValue]
-        if (enumValueVars) {
-          for (const [k, v] of Object.entries(enumValueVars)) {
-            vars[k] = v
-          }
-          continue
-        }
-        const scalarCssVar = scalarBindings?.[paramName]
-        if (scalarCssVar) {
-          vars[scalarCssVar] = resolveCssValue(paramValue)
-        }
-      }
-    }
-
     return vars
-  }, [tokens, params])
+  }, [tokens])
 
   // Per-instance id for the overlay portal target (only used in `scoped` mode). The
   // scope *selector* is no longer per-instance — see useScopedTheme.
@@ -579,6 +525,8 @@ function DesignSystemProvider({
     </div>
   )
 }
+
+const emptyParamSelections: Record<string, string> = {}
 
 function useComponentParams(componentName: string): Record<string, string> {
   const { params } = React.useContext(DesignSystemContext)

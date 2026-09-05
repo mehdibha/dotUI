@@ -13,17 +13,15 @@ import {
 } from "@/registry/icons/create-icon"
 import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
 
-import { Hero } from "../hero"
-import { ControlGroup, SelectRow, SliderRow } from "../rows"
 import {
   ICON_STROKE_WIDTH_VAR,
   LIBRARY_OPTIONS,
   STROKE_DEFAULTS,
   WEIGHT_OPTIONS,
 } from "../axes/icons"
+import { Hero } from "../hero"
+import { ControlGroup, SelectRow, SliderRow } from "../rows"
 import type { Lab, LabState } from "../state"
-
-
 
 /** Renders children as real icons of a library: context + stroke var in one. */
 function IconScope({

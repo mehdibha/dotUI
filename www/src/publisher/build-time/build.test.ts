@@ -38,7 +38,7 @@ describe("extractStylesConfig", () => {
     expect(cfg.density?.comfortable).toBeDefined()
   })
 
-  test("alert: extracts slots, params, scalar var references in classes", () => {
+  test("alert: extracts slots, params, surface var references in classes", () => {
     const cfg = extractStylesConfig(path.join(REGISTRY_UI, "alert/styles.ts"))
 
     // Slots present on base.
@@ -202,7 +202,7 @@ describe("end-to-end (extract + transform → publish)", () => {
     expect(rawContent).not.toContain(TV_CONFIG_PLACEHOLDER)
   })
 
-  test("alert: scalar `radius` is resolved (publisher reads meta.params for the cssVar map)", () => {
+  test("alert: a retargeted surface role exports as the utility it resolves to", () => {
     const stylesConfig = extractStylesConfig(
       path.join(REGISTRY_UI, "alert/styles.ts"),
     )
@@ -231,21 +231,15 @@ describe("end-to-end (extract + transform → publish)", () => {
               default: "default",
               values: ["default", "sousse"] as const,
             },
-            radius: {
-              kind: "scalar",
-              type: "radius",
-              cssVar: "--alert-radius",
-              default: "--radius-lg",
-            },
           },
         },
       },
       preset: {
         density: "default",
-        componentParams: { alert: { radius: "--radius-md" } },
+        componentParams: {},
+        tokens: { "--radius-surface": "var(--radius-md)" },
       },
     })
-
     expect(rawContent).toContain("rounded-md")
     expect(rawContent).not.toContain("rounded-(--alert-radius)")
   })

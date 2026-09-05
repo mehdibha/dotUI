@@ -58,8 +58,7 @@ export interface StylesConfig {
  *   and a `%%TV_CONFIG%%` placeholder where the resolved config gets injected.
  * - `stylesConfig` — the plain-JSON extract.
  * - `meta` — the shadcn-shaped registry item meta (params kept on this side
- *   only so the request-time path can read scalar param definitions for the
- *   class rewriter; they're dropped from the emitted shadcn JSON).
+ *   for the flatten step; they're dropped from the emitted shadcn JSON).
  */
 export interface Publishable {
   template: string

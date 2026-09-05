@@ -1,13 +1,29 @@
 /* From studio state to the design system the engine consumes. The registry's
-   param defaults are the floor; every chapter's resolution lands on top. Pure
-   and React-free — shared by the panel, the preview iframe, the docs demos and
-   the /r/* registry routes. */
+   param defaults are the floor; every chapter's resolution lands on top, and
+   the CSS vars an enum param value carries fold into the global tokens — one
+   path for the provider, the exported theme and the class rewriter alike.
+   Pure and React-free — shared by the panel, the preview iframe, the docs
+   demos and the /r/* registry routes. */
 
+import { registryUi } from "@/registry/ui/registry"
 import { DEFAULTS as REGISTRY_DEFAULTS } from "@/modules/create/preset/defaults"
 import type { DesignSystem } from "@/modules/create/preset/types"
 
 import { resolveAll } from "./axes"
 import type { StudioState } from "./axes"
+
+const enumVars = new Map<
+  string,
+  Record<string, Record<string, Record<string, string>>>
+>()
+for (const item of registryUi) {
+  for (const [paramName, def] of Object.entries(item.params ?? {})) {
+    if (def.kind !== "enum" || !def.vars) continue
+    const byParam = enumVars.get(item.name) ?? {}
+    byParam[paramName] = def.vars
+    enumVars.set(item.name, byParam)
+  }
+}
 
 export function resolveDesignSystem(state: StudioState): DesignSystem {
   const resolved = resolveAll(state)
@@ -21,9 +37,21 @@ export function resolveDesignSystem(state: StudioState): DesignSystem {
   for (const [component, selections] of Object.entries(resolved.params)) {
     componentParams[component] ??= selections
   }
+  // Only non-default values fold in: an untouched system stays token-free, so
+  // scoped providers (docs demos) skip the closure clone entirely.
+  const tokens = { ...resolved.tokens }
+  for (const [component, selections] of Object.entries(componentParams)) {
+    const byParam = enumVars.get(component)
+    if (!byParam) continue
+    for (const [paramName, value] of Object.entries(selections)) {
+      if (value === REGISTRY_DEFAULTS.componentParams[component]?.[paramName])
+        continue
+      Object.assign(tokens, byParam[paramName]?.[value])
+    }
+  }
   return {
     componentParams,
-    tokens: resolved.tokens,
+    tokens,
     density: resolved.density ?? "default",
     color: resolved.color,
     icons: resolved.icons,

@@ -13,12 +13,6 @@ const qrCodeMeta = {
   ],
   dependencies: ["uqr"],
   params: {
-    radius: {
-      kind: "scalar",
-      type: "radius",
-      cssVar: "--qr-code-radius",
-      default: "--radius-lg",
-    },
     style: {
       kind: "enum",
       default: "squares",
