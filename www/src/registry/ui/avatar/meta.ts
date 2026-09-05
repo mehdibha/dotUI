@@ -12,6 +12,14 @@ const avatarMeta = {
     },
   ],
   registryDependencies: ["context", "use-image-loading-status"],
+  params: {
+    fallback: {
+      kind: "enum",
+      default: "neutral",
+      values: ["neutral", "tinted"] as const,
+      description: "What initials sit on when no image loads.",
+    },
+  },
 } satisfies RegistryItem
 
 export default avatarMeta

@@ -667,11 +667,11 @@ function FileTile({ file }: { file: FileEntry }) {
                   {formatSize(file.bytes)} · {formatDate(file.modified)}
                 </span>
                 <div className="flex flex-wrap items-center gap-1 pt-0.5">
-                  <Badge appearance="subtle" size="sm">
+                  <Badge appearance="soft" size="sm">
                     {kind.label}
                   </Badge>
                   {file.shared && (
-                    <Badge appearance="subtle" size="sm" variant="info">
+                    <Badge appearance="soft" size="sm" variant="info">
                       Shared
                     </Badge>
                   )}
@@ -958,7 +958,7 @@ export default function FileManager() {
           </div>
           <span className="truncate font-semibold">Meridian Drive</span>
           <Badge
-            appearance="subtle"
+            appearance="soft"
             variant="accent"
             className="hidden sm:inline-flex"
           >

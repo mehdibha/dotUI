@@ -98,7 +98,7 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
           <div className="flex items-center gap-2">
             <Badge variant="accent">Badge</Badge>
             <Badge variant="neutral">Neutral</Badge>
-            <Badge appearance="subtle" variant="accent">
+            <Badge appearance="soft" variant="accent">
               Subtle
             </Badge>
           </div>

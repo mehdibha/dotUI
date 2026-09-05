@@ -240,7 +240,7 @@ export default function InvoiceBlock() {
                 </span>
                 <Badge
                   variant="neutral"
-                  appearance="subtle"
+                  appearance="soft"
                   size="lg"
                   className="mt-1.5 font-mono tracking-tight tabular-nums"
                 >
@@ -446,11 +446,7 @@ export default function InvoiceBlock() {
 
 function StatusBadge({ isPaid }: { isPaid: boolean }) {
   return (
-    <Badge
-      variant={isPaid ? "success" : "warning"}
-      appearance="subtle"
-      size="lg"
-    >
+    <Badge variant={isPaid ? "success" : "warning"} appearance="soft" size="lg">
       <span aria-hidden className="size-1.5 rounded-full bg-current" />
       {isPaid ? "Paid" : "Due"}
     </Badge>

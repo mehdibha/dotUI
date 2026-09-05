@@ -13,6 +13,7 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import { TREATMENT_OPTIONS } from "../axes/kbd"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -102,15 +103,10 @@ function KbdGlyph({ treatment }: { treatment: keyof typeof TREATMENTS }) {
   )
 }
 
-const TREATMENT_OPTIONS: SelectRowOption[] = [
-  { value: "text", label: "Text", illustration: <KbdGlyph treatment="text" /> },
-  { value: "chip", label: "Chip", illustration: <KbdGlyph treatment="chip" /> },
-  {
-    value: "keycap",
-    label: "Keycap",
-    illustration: <KbdGlyph treatment="keycap" />,
-  },
-]
+const TREATMENT_ROW_OPTIONS: SelectRowOption[] = TREATMENT_OPTIONS.map((o) => ({
+  ...o,
+  illustration: <KbdGlyph treatment={o.value as keyof typeof TREATMENTS} />,
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 
@@ -149,7 +145,7 @@ export function KbdSection({ lab }: { lab: Lab }) {
         label="Treatment"
         value={state.kbdTreatment}
         onChange={set("kbdTreatment")}
-        options={TREATMENT_OPTIONS}
+        options={TREATMENT_ROW_OPTIONS}
         layout="grid"
       />
     </ControlGroup>

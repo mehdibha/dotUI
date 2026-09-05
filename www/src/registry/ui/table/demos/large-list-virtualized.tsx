@@ -86,7 +86,7 @@ export default function Demo() {
 function CellValue({ item, column }: { item: Deployment; column: Column }) {
   if (column.id === "status") {
     return (
-      <Badge appearance="subtle" variant={statusVariant[item.status]}>
+      <Badge appearance="soft" variant={statusVariant[item.status]}>
         {item.status}
       </Badge>
     )

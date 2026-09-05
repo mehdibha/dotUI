@@ -191,7 +191,7 @@ export default function Demo() {
                     {group.name}
                   </span>
                   <Badge
-                    appearance="subtle"
+                    appearance="soft"
                     variant="neutral"
                     size="sm"
                     className="rounded-sm"

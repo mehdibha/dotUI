@@ -469,7 +469,7 @@ function MessageRow({
         {(message.labels.length > 0 || message.attachments || isStarred) && (
           <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
             {message.labels.map((label) => (
-              <Badge key={label} appearance="subtle" variant="accent" size="sm">
+              <Badge key={label} appearance="soft" variant="accent" size="sm">
                 {label}
               </Badge>
             ))}
@@ -755,7 +755,7 @@ export default function MailBlock() {
                 <Tab id="all">All</Tab>
                 <Tab id="unread">
                   Unread
-                  <Badge appearance="subtle" size="sm" className="ml-1.5">
+                  <Badge appearance="soft" size="sm" className="ml-1.5">
                     {unreadCount}
                   </Badge>
                 </Tab>
@@ -939,15 +939,11 @@ export default function MailBlock() {
                       </h2>
                       <div className="flex flex-wrap items-center gap-1.5">
                         {selected.labels.map((label) => (
-                          <Badge
-                            key={label}
-                            appearance="subtle"
-                            variant="accent"
-                          >
+                          <Badge key={label} appearance="soft" variant="accent">
                             {label}
                           </Badge>
                         ))}
-                        <Badge appearance="subtle" variant="neutral">
+                        <Badge appearance="soft" variant="neutral">
                           {thread.length}{" "}
                           {thread.length === 1 ? "message" : "messages"}
                         </Badge>

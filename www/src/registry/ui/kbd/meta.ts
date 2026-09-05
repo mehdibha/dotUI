@@ -11,6 +11,14 @@ const kbdMeta = {
       target: "ui/kbd.tsx",
     },
   ],
+  params: {
+    treatment: {
+      kind: "enum",
+      default: "chip",
+      values: ["text", "chip", "keycap"] as const,
+      description: "The chrome a keyboard key wears.",
+    },
+  },
 } satisfies RegistryItem
 
 export default kbdMeta

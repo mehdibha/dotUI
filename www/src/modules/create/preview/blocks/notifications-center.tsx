@@ -434,7 +434,7 @@ function NotificationRow({
             <Button size="sm" onPress={() => onInvite(item.id, "declined")}>
               Decline
             </Button>
-            <Badge size="sm" variant="accent" appearance="subtle">
+            <Badge size="sm" variant="accent" appearance="soft">
               {item.invite.role}
             </Badge>
           </div>

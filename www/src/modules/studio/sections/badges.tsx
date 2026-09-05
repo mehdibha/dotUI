@@ -15,6 +15,7 @@ import { XIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
+import { SHAPE_OPTIONS, STYLE_OPTIONS } from "../axes/badges"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -75,21 +76,17 @@ function ChipGlyph({ fill, stroke }: { fill?: number; stroke?: boolean }) {
 
 /* --------------------------------- Options --------------------------------- */
 
-const STYLE_OPTIONS: SelectRowOption[] = [
-  { value: "solid", label: "Solid", illustration: <ChipGlyph fill={1} /> },
-  { value: "soft", label: "Soft", illustration: <ChipGlyph fill={0.35} /> },
-  { value: "outline", label: "Outline", illustration: <ChipGlyph stroke /> },
-  {
-    value: "soft-outline",
-    label: "Soft outline",
-    illustration: <ChipGlyph fill={0.25} stroke />,
-  },
-]
+const STYLE_GLYPHS: Record<string, React.ReactNode> = {
+  solid: <ChipGlyph fill={1} />,
+  soft: <ChipGlyph fill={0.35} />,
+  outline: <ChipGlyph stroke />,
+  "soft-outline": <ChipGlyph fill={0.25} stroke />,
+}
 
-const SHAPE_OPTIONS = [
-  { value: "pill", label: "Pill" },
-  { value: "rounded", label: "Rounded" },
-]
+const STYLE_ROW_OPTIONS: SelectRowOption[] = STYLE_OPTIONS.map((o) => ({
+  ...o,
+  illustration: STYLE_GLYPHS[o.value],
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 
@@ -149,11 +146,9 @@ export function BadgesHero({ state }: { state: LabState }) {
 
 /** Collapsed-row summary: the chip style, and its shape. */
 export function badgesSummary(state: LabState): string {
-  const style =
-    STYLE_OPTIONS.find((o) => o.value === state.badgeStyle)?.label ??
-    state.badgeStyle
-  const shape = state.badgeShape === "rounded" ? "Rounded" : "Pill"
-  return `${style} · ${shape}`
+  const label = (options: { value: string; label: string }[], value: string) =>
+    options.find((o) => o.value === value)?.label ?? value
+  return `${label(STYLE_OPTIONS, state.badgeStyle)} · ${label(SHAPE_OPTIONS, state.badgeShape)}`
 }
 
 export function BadgesSection({ lab }: { lab: Lab }) {
@@ -165,7 +160,7 @@ export function BadgesSection({ lab }: { lab: Lab }) {
         label="Style"
         value={state.badgeStyle}
         onChange={set("badgeStyle")}
-        options={STYLE_OPTIONS}
+        options={STYLE_ROW_OPTIONS}
         layout="grid"
       />
       <SegmentedControlRow

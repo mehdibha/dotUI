@@ -2,6 +2,9 @@ import { createStyles } from "@/lib/styles"
 
 import tagGroupMeta from "./meta"
 
+/* The fill lives in the `style` param so each value ships only its own
+   classes. Synced with badge — change both together. */
+
 const { useStyles, styles } = createStyles(tagGroupMeta, {
   base: {
     slots: {
@@ -13,7 +16,6 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
       ],
       tag: [
         "group/tag relative inline-flex w-fit shrink-0 cursor-default items-center justify-center gap-1 rounded-(--tag-radius) font-medium whitespace-nowrap outline-hidden transition-colors select-none data-react-aria-pressable:cursor-interactive",
-        "bg-neutral text-fg-on-neutral selected:bg-accent-muted selected:text-fg-accent",
         // svg
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
         // focus
@@ -56,6 +58,30 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
           "h-5.5 px-1.5",
           "group-data-[size=lg]/tag-group:h-6.5 group-data-[size=lg]/tag-group:px-2 group-data-[size=lg]/tag-group:text-sm",
         ],
+      },
+    },
+  },
+  params: {
+    style: {
+      solid: {
+        slots: {
+          tag: "bg-neutral text-fg-on-neutral selected:bg-accent-muted selected:text-fg-accent",
+        },
+      },
+      soft: {
+        slots: {
+          tag: "bg-muted text-fg selected:bg-accent-muted selected:text-fg-accent",
+        },
+      },
+      outline: {
+        slots: {
+          tag: "border border-border text-fg selected:border-border-accent selected:text-fg-accent",
+        },
+      },
+      "soft-outline": {
+        slots: {
+          tag: "border border-border bg-muted text-fg selected:border-border-accent selected:bg-accent-muted selected:text-fg-accent",
+        },
       },
     },
   },

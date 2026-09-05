@@ -658,7 +658,7 @@ function PresetVignette() {
           <ArrowRightIcon />
         </Button>
         <Button size="sm">Preview</Button>
-        <Badge variant="accent" appearance="subtle" size="sm">
+        <Badge variant="accent" appearance="soft" size="sm">
           Beta
         </Badge>
       </div>

@@ -530,7 +530,7 @@ function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
         </CardTitle>
         <CardAction>
           <Badge
-            appearance="subtle"
+            appearance="soft"
             variant={isGood ? "success" : "danger"}
             size="sm"
           >
@@ -833,12 +833,12 @@ function TransactionsTable({ rows }: { rows: Transaction[] }) {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-1.5">
-                    <Badge appearance="subtle" variant="neutral" size="sm">
+                    <Badge appearance="soft" variant="neutral" size="sm">
                       {row.category}
                     </Badge>
                     {row.status !== "Posted" && (
                       <Badge
-                        appearance="subtle"
+                        appearance="soft"
                         variant={statusVariant[row.status]}
                         size="sm"
                       >

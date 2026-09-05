@@ -603,7 +603,7 @@ function FacetMenu({
         <ListFilterIcon />
         {label}
         {selected.size > 0 && (
-          <Badge appearance="subtle" variant="accent" size="sm">
+          <Badge appearance="soft" variant="accent" size="sm">
             {selected.size}
           </Badge>
         )}
@@ -838,7 +838,7 @@ export default function CustomersBlock() {
       case "plan":
         return (
           <Badge
-            appearance="subtle"
+            appearance="soft"
             variant={customer.plan === "Enterprise" ? "accent" : "neutral"}
             size="sm"
           >
@@ -849,7 +849,7 @@ export default function CustomersBlock() {
         const meta = STATUS_META[customer.status]
         const StatusIcon = meta.icon
         return (
-          <Badge appearance="subtle" variant={meta.variant} size="sm">
+          <Badge appearance="soft" variant={meta.variant} size="sm">
             <StatusIcon />
             {meta.label}
           </Badge>
