@@ -12,6 +12,15 @@ const selectMeta = {
     },
   ],
   registryDependencies: ["button", "field", "list-box", "popover"],
+  params: {
+    caret: {
+      kind: "enum",
+      default: "chevron",
+      values: ["chevron", "double"] as const,
+      source: { double: { ChevronDownIcon: "ChevronsUpDownIcon" } },
+      description: "The trigger's caret glyph.",
+    },
+  },
 } satisfies RegistryItem
 
 export default selectMeta

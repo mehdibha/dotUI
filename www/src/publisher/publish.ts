@@ -182,6 +182,21 @@ export function selectPublishable(
   return mod.publishable
 }
 
+function applySourceSubstitutions(
+  content: string,
+  meta: RegistryItem,
+  selections: Record<string, string>,
+): string {
+  for (const [paramName, def] of Object.entries(meta.params ?? {})) {
+    if (def.kind !== "enum") continue
+    const swaps = def.source?.[selections[paramName] ?? def.default]
+    for (const [from, to] of Object.entries(swaps ?? {})) {
+      content = content.replaceAll(from, to)
+    }
+  }
+  return content
+}
+
 export interface PublishedItem {
   /** Shadcn-shaped registry item ready to JSON.stringify. */
   item: RegistryItem
@@ -235,6 +250,10 @@ export function publish({
   // 3+4. Serialize and substitute.
   const literal = serializeTvConfig(resolved)
   let content = template.replace(TV_CONFIG_PLACEHOLDER, literal)
+
+  // 4a. Param values that rewrite source text — an icon identifier, a prop
+  // default (see `EnumParamDef.source`).
+  content = applySourceSubstitutions(content, meta, paramSelections)
 
   // 4b. Resolve the source's `// MARK:` markers: always drop the internal
   // `…Styles` injection marker; render the rest as section separators when the
