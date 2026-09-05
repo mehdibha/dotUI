@@ -6,9 +6,9 @@
    centered, iOS-style systems drop it to a sheet.
 
    Engine: `popover.mobile` swaps the shipped popover file — the drawer
-   variant renders a Drawer below the line for modal popovers (non-modal ones,
-   a combobox list or a submenu, keep their anchor); `modal.mobile` is a
-   class slice that docks the modal to the bottom edge. */
+   variant renders a Drawer below the line for modal popovers and nests one
+   per submenu (a combobox list keeps its anchor); `modal.mobile` is a class
+   slice that docks the modal to the bottom edge. */
 
 import type { Resolved, StudioState } from "./index"
 

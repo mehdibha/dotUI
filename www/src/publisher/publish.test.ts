@@ -480,6 +480,52 @@ describe("publish", () => {
     ])
   })
 
+  test("popover: ships a param value's registry deps only when it is selected", () => {
+    setKnownDotuiNames(["drawer", "use-mobile"])
+    setDotuiDepResolver("https://dotui.org")
+    const publishable = {
+      template: TV_CONFIG_PLACEHOLDER,
+      stylesConfig: { base: {} },
+      meta: {
+        name: "popover",
+        type: "registry:ui",
+        files: [
+          {
+            type: "registry:ui",
+            path: "ui/popover/base.drawer.tsx",
+            target: "ui/popover.tsx",
+          },
+        ],
+        params: {
+          mobile: {
+            kind: "enum",
+            default: "drawer",
+            values: ["drawer", "popover"],
+            registryDependencies: { drawer: ["drawer", "use-mobile"] },
+          },
+        },
+      },
+    } satisfies Publishable
+
+    const drawer = publish({
+      publishable,
+      preset: { density: "default", componentParams: {} },
+    })
+    expect(drawer.item.registryDependencies).toEqual([
+      "https://dotui.org/r/drawer",
+      "https://dotui.org/r/use-mobile",
+    ])
+
+    const plain = publish({
+      publishable,
+      preset: {
+        density: "default",
+        componentParams: { popover: { mobile: "popover" } },
+      },
+    })
+    expect(plain.item.registryDependencies).toBeUndefined()
+  })
+
   test("alert: rewrites the surface var when the preset retargets its role", () => {
     const { rawContent } = publish({
       publishable: alertPublishable,

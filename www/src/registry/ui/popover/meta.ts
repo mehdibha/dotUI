@@ -11,7 +11,6 @@ const popoverMeta = {
       target: "ui/popover.tsx",
     },
   ],
-  registryDependencies: ["drawer", "use-mobile"],
   // Synced with tooltip and modal: the studio's Motion axis writes all three.
   params: {
     motion: {
@@ -24,6 +23,7 @@ const popoverMeta = {
       kind: "enum",
       default: "drawer",
       values: ["drawer", "popover"] as const,
+      registryDependencies: { drawer: ["drawer", "use-mobile"] },
       files: {
         drawer: [
           {
