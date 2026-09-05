@@ -12,7 +12,10 @@ import {
   emitCss,
   emitDarkOverridesCss,
   migrateColorConfig,
+  resolveColorConfig,
+  resolveTargetLiteral,
   semanticDelta,
+  semanticLiterals,
   semanticsFor,
 } from "@/registry/theme"
 
@@ -60,6 +63,52 @@ describe("applyTokenOverrides", () => {
       }),
     )
     expect(css).toContain("--color-border: var(--accent-600);")
+  })
+})
+
+describe("semanticLiterals", () => {
+  const theme = resolveColorConfig(DEFAULT_COLOR_CONFIG)
+
+  test("refs, on-labels, and literals resolve per mode", () => {
+    const { light, dark } = semanticLiterals(DEFAULT_SEMANTICS, theme)
+    expect(light["color-bg"]).toBe(theme.light.scales.neutral!["25"])
+    expect(dark["color-bg"]).toBe(theme.dark.scales.neutral!["25"])
+    expect(light["color-fg-on-success"]).toBe(theme.light.on.success!["700"])
+    expect(light["color-overlay"]).toBe("oklch(0 0 0)")
+    expect(Object.keys(light)).toEqual(Object.keys(DEFAULT_SEMANTICS))
+  })
+
+  test("a per-mode target picks each mode's own recipe", () => {
+    const { light, dark } = semanticLiterals(
+      { "color-popover": DEFAULT_SEMANTICS["color-popover"]! },
+      theme,
+    )
+    expect(light["color-popover"]).toBe(theme.light.scales.neutral!["50"])
+    // Dark mixes 50 and 100 — a literal strictly between the two rungs.
+    const l = (value: string) => Number(value.match(/oklch\(([\d.]+)/)?.[1])
+    expect(l(dark["color-popover"]!)).toBeGreaterThan(
+      l(theme.dark.scales.neutral!["50"]),
+    )
+    expect(l(dark["color-popover"]!)).toBeLessThan(
+      l(theme.dark.scales.neutral!["100"]),
+    )
+  })
+
+  test("a mix flattens to an oklch literal", () => {
+    const value = resolveTargetLiteral(
+      { mix: [{ value: "oklch(0.2 0 0)" }, 50, { value: "oklch(0.8 0 0)" }] },
+      theme.light,
+    )
+    expect(value).toBe("oklch(0.5 0 0)")
+  })
+
+  test("a ref to a missing ramp throws instead of shipping an empty var", () => {
+    expect(() =>
+      resolveTargetLiteral(
+        { ref: { palette: "selection", step: "700" } },
+        theme.light,
+      ),
+    ).toThrow(/selection-700/)
   })
 })
 

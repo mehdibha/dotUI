@@ -314,24 +314,11 @@ Lc ≥ 90 — Radix itself misses this in 19/31 scales, min 84.23; the fix costs
 ~+3 L\* on the worst reds); dark-specific floor asserts (no two adjacent
 surface steps render identical sRGB).
 
-## D10. States, alpha, status ✅
+## D10. States, status ✅
 
 - State shifts are **signed per mode** (hover darkens on light, lightens on
   dark) and expressed as ramp walks where a slot exists, computed shifts
   where not.
-- **Alpha twins** per scale, Radix-style, via the exact-solve algorithm
-  (verified digit-for-digit: 144/144 published Radix alpha steps reproduced
-  hex-exact): overlay toward white if any target channel is lighter than the
-  background channel, else toward black; `A = ceil(max_c (t−b)/(desired−b) ·
-255)/255`; channels solved as `ceil(clamp(−(b(1−A)−t)/A))` with ±1
-  correction against the browser compositing model
-  `round(bg·(1−a)) + round(fg·a)` at 0–255; pure-gray shortcut. Light twins
-  solve over the mode's app background; dark twins over our step-25 (Radix's
-  is #111111 = grayDark-1, solved empirically 72/72). CI: compositing a twin
-  over its mode background reproduces the solid within ≤ 1/255 per channel,
-  except channels on the wrong side of the background in the overlay
-  direction, where the clamp error is inherent (Radix's own ceiling: 14/255)
-  and the bar is ≤ the equivalent Radix construction's error.
 - Status palettes are four mini-systems from four seeds. Locked defaults
   (identity-preserving CVD search winners): success `#6ac48c`, warning
   `#eab308` (unchanged), danger `#ef4444` (unchanged), info `#4862ff`.
@@ -347,7 +334,7 @@ surface steps render identical sRGB).
   legitimately collide with a status hue), never a silent pass.
 
 Params: status seeds (defaulted, overridable).
-CI check: alpha parity + composite bars as above; CVD gate on the default
+CI check: composite bars as above; CVD gate on the default
 set; solid labels per D2.
 
 ## D11. Chart palettes ✅
@@ -394,7 +381,7 @@ else optional with research-backed defaults.
 ```ts
 createTheme({ seed: "#635bff" })
 // → { light, dark } × { accent, neutral, success, danger, warning, info }
-//   × 12 steps + on-* + alpha twins + chart palettes, all guarantees enforced
+//   × 12 steps + on-* + chart palettes, all guarantees enforced
 ```
 
 - Options are flat and few: `seeds` (per palette), `preserveSeed`,

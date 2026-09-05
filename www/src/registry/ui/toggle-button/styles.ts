@@ -14,7 +14,7 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
     variants: {
       variant: {
         primary:
-          "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-300)] hover:bg-primary-hover pressed:bg-primary-active",
+          "bg-primary text-fg-on-primary hover:bg-primary-hover disabled:bg-primary-disabled pressed:bg-primary-active disabled:selected:bg-primary-disabled",
         secondary:
           "border border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover disabled:border-border pressed:bg-neutral-active",
         quiet:

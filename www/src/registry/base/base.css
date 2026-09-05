@@ -36,11 +36,8 @@
   }
 }
 
-/* Both vars flip per mode: a light-accent tint with dark text in light mode,
-   a dark-accent tint with light text in dark. */
 ::selection {
-  background-color: var(--accent-300);
-  color: var(--neutral-950);
+  @apply bg-text-selection text-fg-on-text-selection;
 }
 
 /* Icon stroke width axis. Applies to stroke-based icon libraries only; the

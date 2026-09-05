@@ -32,8 +32,8 @@ export {
   emitCss,
   type EmitCssOptions,
   emitDarkOverridesCss,
-  resolveTarget,
-  resolveTokenValue,
+  resolveTargetLiteral,
+  semanticLiterals,
 } from "./emit-css"
 export {
   type ColorConfig,
@@ -44,6 +44,7 @@ export {
   type PaletteSeeds,
 } from "./color-config"
 export {
+  DEFAULT_RADIUS,
   emitPrimitivesCss,
   type EmitPrimitivesOptions,
   type Ramp,

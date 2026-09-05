@@ -14,7 +14,7 @@ const { useStyles, styles } = createStyles(buttonMeta, {
     variants: {
       variant: {
         primary:
-          "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-300)] hover:bg-primary-hover pressed:bg-primary-active",
+          "bg-primary text-fg-on-primary hover:bg-primary-hover disabled:bg-primary-disabled pending:bg-primary-disabled pressed:bg-primary-active",
         secondary:
           "border border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover disabled:border-border pending:border-border pressed:bg-neutral-active",
         quiet:
