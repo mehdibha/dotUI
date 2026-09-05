@@ -24,6 +24,12 @@ export const baseRegistryCss = {
 		"@layer base": {
 			"*": {
 				"@apply border-border": {},
+				"corner-shape": "var(--corner-shape, round)",
+			},
+			"h1,\n  h2,\n  h3,\n  h4,\n  h5,\n  h6": {
+				"font-family": "var(--font-heading)",
+				"font-weight": "var(--font-weight-heading, var(--font-weight-semibold))",
+				"letter-spacing": "var(--tracking-heading, 0)",
 			},
 			body: {
 				"@apply bg-bg font-sans text-fg": {},
@@ -382,7 +388,10 @@ export const baseRegistryCss = {
 		theme: {
 			"--ease-fluid-out": "cubic-bezier(0.32, 0.72, 0, 1)",
 			"--cursor-interactive": "pointer",
+			"--cursor-pending": "default",
 			"--cursor-disabled": "not-allowed",
+			"--cursor-drag": "var(--cursor-interactive)",
+			"--cursor-dragging": "var(--cursor-interactive)",
 			"--radius-xs": "calc(var(--radius) * 0.25)",
 			"--radius-sm": "calc(var(--radius) * 0.5)",
 			"--radius-md": "calc(var(--radius) * 0.75)",
@@ -391,6 +400,7 @@ export const baseRegistryCss = {
 			"--radius-2xl": "calc(var(--radius) * 2)",
 			"--radius-3xl": "calc(var(--radius) * 3)",
 			"--radius-4xl": "calc(var(--radius) * 4)",
+			"--radius-full": "calc(infinity * 1px)",
 			"--color-bg": "var(--neutral-25)",
 			"--color-muted": "var(--neutral-100)",
 			"--color-inverse": "var(--neutral-950)",

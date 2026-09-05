@@ -13,9 +13,9 @@ const { useStyles, styles } = createStyles(fieldMeta, {
         "flex w-full gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
       fieldContent: "flex flex-col gap-1",
       label: [
-        "inline-flex items-center gap-px leading-none select-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
+        "inline-flex items-center gap-px leading-none select-none peer-disabled:cursor-disabled peer-disabled:text-fg-disabled [&_svg]:size-3",
         "in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*']",
-        "in-disabled:cursor-not-allowed in-disabled:text-fg-disabled",
+        "in-disabled:cursor-disabled in-disabled:text-fg-disabled",
         "in-data-invalid:text-fg-danger",
       ],
       description:

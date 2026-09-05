@@ -7,47 +7,8 @@
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SliderRow } from "../rows"
 import type { Lab, LabState } from "../state"
+import { DENSITY_OPTIONS, spaceRecipe } from "../axes/space"
 import { controlRadiusPx, roleRadiusPx } from "./shape"
-
-const DENSITY_OPTIONS = [
-  { value: "compact", label: "Compact" },
-  { value: "default", label: "Default" },
-  { value: "comfortable", label: "Comfortable" },
-]
-
-export const DENSITY_FACTORS: Record<string, number> = {
-  compact: 0.75,
-  default: 1,
-  comfortable: 1.25,
-}
-
-const CONTROL_SIZE_OPTIONS = [
-  { value: "sm", label: "Small" },
-  { value: "md", label: "Medium" },
-  { value: "lg", label: "Large" },
-]
-
-/** Control heights as ladders of units — size moves the ladder, not the recipe. */
-const CONTROL_SIZE_UNITS: Record<string, number> = {
-  sm: 7,
-  md: 8,
-  lg: 9,
-}
-
-const spacePx = (n: number) => Math.round(n * 2) / 2
-
-export function spaceRecipe(state: LabState) {
-  const unit = state.spacingUnit
-  const factor = DENSITY_FACTORS[state.density] ?? 1
-  return {
-    unit,
-    controlH: spacePx((CONTROL_SIZE_UNITS[state.controlSize] ?? 8) * unit),
-    padX: spacePx(2.5 * unit * factor),
-    itemGap: spacePx(unit * factor),
-    gap: spacePx(2 * unit * factor),
-    inset: spacePx(3 * unit * factor),
-  }
-}
 
 /** A working mini form wearing the resolved recipe — control heights, the
  *  stack gap and the card inset all derive from unit × density × size, with
@@ -131,12 +92,6 @@ export function SpaceSection({ lab }: { lab: Lab }) {
           value={state.density}
           onChange={set("density")}
           options={DENSITY_OPTIONS}
-        />
-        <SegmentedControlRow
-          label="Control size"
-          value={state.controlSize}
-          onChange={set("controlSize")}
-          options={CONTROL_SIZE_OPTIONS}
         />
       </ControlGroup>
     </>

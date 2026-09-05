@@ -44,13 +44,6 @@ import { LoginForm } from "@/components/showcase/login-form"
 import { Notifications } from "@/components/showcase/notifications"
 import { Payment } from "@/components/showcase/payment"
 import { ContrastReadout } from "@/modules/create/colors/contrast"
-import {
-  CURSOR_DISABLED_VAR,
-  CURSOR_INTERACTIVE_VAR,
-  DEFAULT_CURSOR_DISABLED,
-  DEFAULT_CURSOR_INTERACTIVE,
-} from "@/modules/create/cursor"
-import { DEFAULT_RADIUS, RADIUS_VAR } from "@/modules/create/layout"
 import { sendInspect, useIsEmbeddedPreview } from "@/modules/create/preset"
 import type { DesignSystem } from "@/modules/create/preset"
 
@@ -876,17 +869,15 @@ export function PresetOverview({
     }
   }, [config])
 
-  const radiusRaw = designSystem.tokens[RADIUS_VAR] ?? DEFAULT_RADIUS
+  const radiusRaw = designSystem.tokens["--radius"] ?? "0.625rem"
   const radiusParsed = Number.parseFloat(radiusRaw)
   const radiusPx = radiusRaw.trim().endsWith("rem")
     ? radiusParsed * 16
     : radiusParsed
   const numericRadius = Number.isFinite(radiusPx) ? radiusPx : 10
 
-  const cursorInteractive =
-    designSystem.tokens[CURSOR_INTERACTIVE_VAR] ?? DEFAULT_CURSOR_INTERACTIVE
-  const cursorDisabled =
-    designSystem.tokens[CURSOR_DISABLED_VAR] ?? DEFAULT_CURSOR_DISABLED
+  const cursorInteractive = designSystem.tokens["--cursor-interactive"] ?? "pointer"
+  const cursorDisabled = designSystem.tokens["--cursor-disabled"] ?? "not-allowed"
 
   const name = describeAccent(seeds.accent)
 

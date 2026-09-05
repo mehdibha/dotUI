@@ -27,6 +27,19 @@
 @layer base {
   * {
     @apply border-border;
+    /* Corner shape axis (progressive enhancement; unsupported → round). */
+    corner-shape: var(--corner-shape, round);
+  }
+  /* The heading voice: face, weight and tracking are design-system axes. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-heading, var(--font-weight-semibold));
+    letter-spacing: var(--tracking-heading, 0);
   }
   body {
     @apply bg-bg font-sans text-fg;
@@ -56,8 +69,14 @@
   stroke-width: var(--icon-stroke-width, 1.5);
 }
 
+/* Cursor axes: what the pointer becomes over enabled, pending, disabled and
+   draggable controls. Dragging follows the interactive cursor unless the
+   design system opts into the grab hands. */
 @theme {
   --ease-fluid-out: cubic-bezier(0.32, 0.72, 0, 1);
   --cursor-interactive: pointer;
+  --cursor-pending: default;
   --cursor-disabled: not-allowed;
+  --cursor-drag: var(--cursor-interactive);
+  --cursor-dragging: var(--cursor-interactive);
 }

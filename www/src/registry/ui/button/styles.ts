@@ -8,8 +8,8 @@ const { useStyles, styles } = createStyles(buttonMeta, {
       "group/button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--btn-radius) bg-clip-padding font-(--btn-font-weight) whitespace-nowrap shadow-[var(--shadow-control,none)] transition-[background-color,border-color,color,box-shadow] select-none",
       "focus-reset focus-visible:focus-ring",
       "**:[svg]:pointer-events-none **:[svg]:shrink-0",
-      "pending:cursor-default pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
-      "disabled:cursor-default disabled:bg-disabled disabled:text-fg-disabled",
+      "pending:cursor-pending pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
+      "disabled:cursor-disabled disabled:bg-disabled disabled:text-fg-disabled",
     ],
     variants: {
       variant: {

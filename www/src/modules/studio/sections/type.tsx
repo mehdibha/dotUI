@@ -13,7 +13,6 @@ import { Button } from "@/registry/ui/button"
 import { Select } from "@/registry/ui/select"
 import { useLoadedFamilies } from "@/modules/create/typography"
 
-import { TYPE_DEFAULTS } from "../axes/type"
 import { Hero } from "../hero"
 import { DetailRow, MiniSliderRow } from "../patterns"
 import {
@@ -28,6 +27,14 @@ import {
   ROW_VALUE,
   SegmentedControlRow,
 } from "../rows"
+import {
+  LEADING_OPTIONS,
+  LEADING_VALUES,
+  TRACKING_EM,
+  TRACKING_OPTIONS,
+  TYPE_DEFAULTS,
+  WEIGHT_OPTIONS,
+} from "../axes/type"
 import type { Lab, LabState } from "../state"
 
 /** Collapsed-row summary: the face the system reads in, and its base size. */
@@ -42,48 +49,15 @@ type TypeRoleId = "heading" | "body" | "ui" | "code"
 const HEADING_STEPS = [-2, 0, 4, 8, 12]
 const HERO_STEP = 12
 
-/** A heading step in px: base plus the step's offset, scaled by the heading
- *  adjust (Radix's --heading-font-size-adjust). Body never takes it. */
+/** A heading step in px: base plus the step's offset. */
 function headingPx(state: LabState, step: number): number {
-  return Math.round((state.typeBase + step) * state.headingAdjust * 10) / 10
+  return state.typeBase + step
 }
 
-const adjustLabel = (adjust: number) => `${Math.round(adjust * 100)}%`
 
-const WEIGHT_OPTIONS = [
-  { value: "400", label: "400" },
-  { value: "500", label: "500" },
-  { value: "600", label: "600" },
-  { value: "700", label: "700" },
-]
 
-/* Linear's two buckets. Web tracking only ever tightens with size — no shipped
-   system widens a heading. */
-const TRACKING_OPTIONS = [
-  { value: "normal", label: "Normal" },
-  { value: "tight", label: "Tight" },
-  { value: "tighter", label: "Tighter" },
-]
 
-const TRACKING_EM: Record<string, string> = {
-  normal: "0em",
-  tight: "-0.012em",
-  tighter: "-0.022em",
-}
 
-/* Body-only, like Mantine/Chakra/Tailwind leading scales — headings keep the
-   ladder's fixed leading. */
-const LEADING_OPTIONS = [
-  { value: "tight", label: "Tight" },
-  { value: "normal", label: "Normal" },
-  { value: "relaxed", label: "Relaxed" },
-]
-
-const LEADING_VALUES: Record<string, number> = {
-  tight: 1.45,
-  normal: 1.6,
-  relaxed: 1.75,
-}
 
 /** A role's live recipe — heading and body follow the scale axes, UI and code
  *  sizes are the section's constants. */
@@ -259,11 +233,9 @@ export function TypeSection({ lab }: { lab: Lab }) {
   const { state, set } = lab
   const scaleModified =
     state.typeBase !== TYPE_DEFAULTS.typeBase ||
-    state.headingAdjust !== TYPE_DEFAULTS.headingAdjust ||
     state.bodyLeading !== TYPE_DEFAULTS.bodyLeading
   const scaleSummary = [
     `${state.typeBase}px`,
-    adjustLabel(state.headingAdjust),
     state.bodyLeading !== TYPE_DEFAULTS.bodyLeading &&
       LEADING_OPTIONS.find((o) => o.value === state.bodyLeading)?.label,
   ]
@@ -322,15 +294,6 @@ export function TypeSection({ lab }: { lab: Lab }) {
           maxValue={18}
           step={1}
           format={(v) => `${v}px`}
-        />
-        <MiniSliderRow
-          label="Heading size"
-          value={state.headingAdjust}
-          onChange={set("headingAdjust")}
-          minValue={0.9}
-          maxValue={1.1}
-          step={0.05}
-          format={adjustLabel}
         />
         <ParamRow label="Body leading">
           <MiniSegmented

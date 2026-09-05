@@ -39,7 +39,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       footer: "border-t bg-muted/50 font-medium",
       row: [
         "group/row relative box-border cursor-default border-b bg-bg/70 focus-reset transition-colors last:border-b-0 [&:is(div)]:h-full",
-        "hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted dragging:cursor-grabbing dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70 drop-target:bg-accent-muted/70",
+        "hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted dragging:cursor-dragging dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70 drop-target:bg-accent-muted/70",
         "focus-visible:bg-accent-muted/70 disabled:text-fg-disabled focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
       ],
       cell: [
@@ -54,12 +54,12 @@ const { useStyles, styles } = createStyles(tableMeta, {
         "[&:is(div)]:h-[calc(100%-1px)] [&:is(div)]:justify-start",
       ],
       dragCell: [
-        "w-8 min-w-8 cursor-grab px-1 text-fg-muted group-data-[dragging]/row:cursor-grabbing",
+        "w-8 min-w-8 cursor-drag px-1 text-fg-muted group-data-[dragging]/row:cursor-dragging",
         "[&:is(div)]:justify-center",
       ],
       dragButton: [
-        "inline-flex size-6 cursor-grab items-center justify-center rounded-sm text-fg-muted focus-reset transition-colors focus-visible:focus-ring",
-        "group-hover/row:text-fg group-data-[dragging]/row:cursor-grabbing focus-visible:bg-muted focus-visible:text-fg **:[svg]:size-4",
+        "inline-flex size-6 cursor-drag items-center justify-center rounded-sm text-fg-muted focus-reset transition-colors focus-visible:focus-ring",
+        "group-hover/row:text-fg group-data-[dragging]/row:cursor-dragging focus-visible:bg-muted focus-visible:text-fg **:[svg]:size-4",
       ],
       dropIndicator: "relative z-20 h-0 focus-reset outline-hidden",
       dropIndicatorLine: [

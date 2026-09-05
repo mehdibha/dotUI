@@ -12,30 +12,18 @@ import {
   IconWeightContext,
 } from "@/registry/icons/create-icon"
 import type { IconLibraryName, PhosphorWeight } from "@/registry/icons/icon-map"
-import {
-  ICON_STROKE_WIDTH_VAR,
-  STROKE_DEFAULTS,
-} from "@/modules/create/iconography"
 
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow, SliderRow } from "../rows"
+import {
+  ICON_STROKE_WIDTH_VAR,
+  LIBRARY_OPTIONS,
+  STROKE_DEFAULTS,
+  WEIGHT_OPTIONS,
+} from "../axes/icons"
 import type { Lab, LabState } from "../state"
 
-const LIBRARY_OPTIONS = [
-  { value: "lucide", label: "Lucide" },
-  { value: "phosphor", label: "Phosphor" },
-  { value: "tabler", label: "Tabler" },
-  { value: "remix", label: "Remix" },
-]
 
-const WEIGHT_OPTIONS = [
-  { value: "thin", label: "Thin" },
-  { value: "light", label: "Light" },
-  { value: "regular", label: "Regular" },
-  { value: "bold", label: "Bold" },
-  { value: "fill", label: "Fill" },
-  { value: "duotone", label: "Duotone" },
-]
 
 /** Renders children as real icons of a library: context + stroke var in one. */
 function IconScope({
