@@ -243,7 +243,18 @@ export function resolveAll(state: StudioState): ResolvedAll {
       params[component] = { ...params[component], ...selections }
     }
     if (part.density) density = part.density
-    if (part.color) color = part.color
+    // Color merges deep on its per-token maps so a chapter other than Color
+    // (Surfaces: border targets, token overrides) can contribute without
+    // owning the recipe.
+    if (part.color)
+      color = color
+        ? {
+            ...color,
+            ...part.color,
+            overrides: { ...color.overrides, ...part.color.overrides },
+            borders: { ...color.borders, ...part.color.borders },
+          }
+        : part.color
     if (part.icons) icons = part.icons
   }
   return { tokens, params, density, color, icons }
