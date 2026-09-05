@@ -12,7 +12,7 @@ export default function Demo() {
           <h3 className="text-sm font-semibold text-fg">Aero Runner</h3>
           <p className="text-sm text-fg-muted">$129.00</p>
         </div>
-        <Badge variant="success" appearance="subtle">
+        <Badge variant="success" appearance="soft">
           In stock
         </Badge>
       </div>

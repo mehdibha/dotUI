@@ -85,7 +85,7 @@ export default function Demo() {
               <TableCell className="font-medium">{project.project}</TableCell>
               <TableCell>
                 <Badge
-                  appearance="subtle"
+                  appearance="soft"
                   variant={statusVariant[project.status]}
                 >
                   <span

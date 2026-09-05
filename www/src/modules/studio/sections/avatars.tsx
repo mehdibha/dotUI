@@ -15,6 +15,7 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import { FALLBACK_OPTIONS, SHAPE_OPTIONS } from "../axes/avatars"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
@@ -24,11 +25,12 @@ const SHAPE = {
   rounded: "rounded-lg",
 }
 
-/* Stand-ins for a per-entity hash: three intent-muted families, cycled. */
+/* Stand-ins for the registry's per-entity hash: its four washes, cycled. */
 const TINTS = [
   "bg-accent-muted text-fg-accent",
   "bg-success-muted text-fg-success",
   "bg-warning-muted text-fg-warning",
+  "bg-info-muted text-fg-info",
 ]
 
 export function LabAvatar({
@@ -97,19 +99,13 @@ export function AvatarsSection({ lab }: { lab: Lab }) {
         label="Shape"
         value={state.avatarShape}
         onChange={set("avatarShape")}
-        options={[
-          { value: "circle", label: "Circle" },
-          { value: "rounded", label: "Rounded" },
-        ]}
+        options={SHAPE_OPTIONS}
       />
       <SegmentedControlRow
         label="Fallback"
         value={state.avatarFallback}
         onChange={set("avatarFallback")}
-        options={[
-          { value: "tinted", label: "Tinted" },
-          { value: "neutral", label: "Neutral" },
-        ]}
+        options={FALLBACK_OPTIONS}
       />
     </ControlGroup>
   )

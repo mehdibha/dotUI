@@ -5,7 +5,7 @@
 export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--alert-radius": "var(--radius-surface)",
 	"--attachment-radius": "var(--radius-surface)",
-	"--avatar-radius": "calc(infinity * 1px)",
+	"--avatar-radius": "var(--radius-full)",
 	"--badge-radius": "var(--radius-full)",
 	"--btn-font-weight": "var(--font-weight-medium)",
 	"--btn-radius": "var(--radius-control)",
@@ -46,7 +46,7 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--slider-track-radius": "var(--radius-full)",
 	"--switch-card-radius": "var(--radius-surface)",
 	"--switch-radius": "var(--radius-full)",
-	"--tag-radius": "var(--radius-control)",
+	"--tag-radius": "var(--radius-full)",
 	"--tooltip-radius": "var(--radius-item)",
 	"--tree-item-radius": "var(--radius-item)",
 };

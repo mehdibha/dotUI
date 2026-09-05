@@ -620,7 +620,7 @@ function KpiCards() {
           <CardContent className="flex items-center gap-2">
             <Badge
               variant={kpi.intent === "positive" ? "success" : "danger"}
-              appearance="subtle"
+              appearance="soft"
             >
               {kpi.trend === "up" ? <TrendingUpIcon /> : <TrendingDownIcon />}
               {kpi.delta}
@@ -675,7 +675,7 @@ function RevenueChart() {
           </span>
           <Badge
             variant={overTarget >= 0 ? "success" : "warning"}
-            appearance="subtle"
+            appearance="soft"
           >
             {overTarget >= 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
             {overTarget >= 0 ? "+" : ""}
@@ -824,10 +824,7 @@ function OrdersTable({ rows }: { rows: Order[] }) {
                 {order.date}
               </TableCell>
               <TableCell>
-                <Badge
-                  appearance="subtle"
-                  variant={STATUS_VARIANT[order.status]}
-                >
+                <Badge appearance="soft" variant={STATUS_VARIANT[order.status]}>
                   {order.status}
                 </Badge>
               </TableCell>

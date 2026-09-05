@@ -20,25 +20,26 @@ export default function BadgeExample() {
 function BadgeVariants() {
   return (
     <Example title="Variants">
-      {(["solid", "subtle"] as const).map((appearance) => (
-        <div key={appearance} className="flex flex-wrap gap-2">
-          {(
-            [
-              "neutral",
-              "accent",
-              "danger",
-              "success",
-              "warning",
-              "info",
-            ] as const
-          ).map((variant) => (
-            <Badge key={variant} appearance={appearance} variant={variant}>
-              {variant}
-              {appearance === "solid" ? "" : "-subtle"}
-            </Badge>
-          ))}
-        </div>
-      ))}
+      {(["solid", "soft", "outline", "soft-outline"] as const).map(
+        (appearance) => (
+          <div key={appearance} className="flex flex-wrap gap-2">
+            {(
+              [
+                "neutral",
+                "accent",
+                "danger",
+                "success",
+                "warning",
+                "info",
+              ] as const
+            ).map((variant) => (
+              <Badge key={variant} appearance={appearance} variant={variant}>
+                {variant}
+              </Badge>
+            ))}
+          </div>
+        ),
+      )}
     </Example>
   )
 }

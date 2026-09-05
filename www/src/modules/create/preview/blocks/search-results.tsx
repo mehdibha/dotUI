@@ -592,12 +592,12 @@ function ResultItem({ result }: { result: Result }) {
                 <span className="sr-only">Verified publisher</span>
               </span>
             )}
-            <Badge appearance="subtle" variant="accent">
+            <Badge appearance="soft" variant="accent">
               <TypeIcon aria-hidden />
               {type.label}
             </Badge>
             {result.version && (
-              <Badge appearance="subtle" variant="neutral">
+              <Badge appearance="soft" variant="neutral">
                 v{result.version}
               </Badge>
             )}
@@ -659,12 +659,7 @@ function ResultItem({ result }: { result: Result }) {
 
           <div className="flex flex-wrap gap-1.5 pt-0.5">
             {result.topics.map((topic) => (
-              <Badge
-                key={topic}
-                appearance="subtle"
-                variant="neutral"
-                size="sm"
-              >
+              <Badge key={topic} appearance="soft" variant="neutral" size="sm">
                 {topic}
               </Badge>
             ))}

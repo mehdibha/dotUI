@@ -268,7 +268,7 @@ const COLUMNS: Column[] = [
     minWidth: 110,
     sortValue: (r) => r.category,
     cell: (r) => (
-      <Badge appearance="subtle" variant="neutral" className="font-normal">
+      <Badge appearance="soft" variant="neutral" className="font-normal">
         {labelOf(CATEGORIES, r.category)}
       </Badge>
     ),
@@ -284,7 +284,7 @@ const COLUMNS: Column[] = [
       const Icon = option.icon
 
       return (
-        <Badge appearance="subtle" variant={option.variant}>
+        <Badge appearance="soft" variant={option.variant}>
           <Icon />
           {option.label}
         </Badge>
@@ -346,7 +346,7 @@ const COLUMNS: Column[] = [
         <span className="text-fg-muted">—</span>
       ) : (
         <Badge
-          appearance="subtle"
+          appearance="soft"
           variant={r.pricing === "free" ? "success" : "warning"}
           className="font-normal"
         >
@@ -646,7 +646,7 @@ function FacetFilter({
         <ListFilterIcon />
         {facet.title}
         {selectedKeys.size > 0 && (
-          <Badge appearance="subtle" variant="accent" size="sm">
+          <Badge appearance="soft" variant="accent" size="sm">
             {selectedKeys.size}
           </Badge>
         )}
@@ -766,7 +766,7 @@ function DetailsPopover({ registry }: { registry: Registry }) {
         <DialogContent aria-label={`@${registry.name}`} className="gap-3">
           <div className="flex items-center gap-2">
             <span className="font-mono text-sm">@{registry.name}</span>
-            <Badge appearance="subtle" variant={option.variant} size="sm">
+            <Badge appearance="soft" variant={option.variant} size="sm">
               {option.label}
             </Badge>
           </div>

@@ -199,12 +199,7 @@ function Cover({
         </p>
         <div className="flex flex-wrap gap-1.5 pt-1">
           {specs.map((s) => (
-            <Badge
-              key={s.label}
-              variant="neutral"
-              appearance="subtle"
-              size="lg"
-            >
+            <Badge key={s.label} variant="neutral" appearance="soft" size="lg">
               <span className="text-fg-muted">{s.label}</span>
               <span className="font-medium text-fg">{s.value}</span>
             </Badge>
@@ -512,7 +507,7 @@ function IconSection() {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-center gap-2">
-        <Badge appearance="subtle">{libraryLabel}</Badge>
+        <Badge appearance="soft">{libraryLabel}</Badge>
         <span className="text-sm text-fg-muted">
           A consistent 24px icon family — {Object.keys(icons).length} in the
           curated set.
@@ -565,7 +560,7 @@ function ShapeSection({
           </span>
           <span className="text-fg-muted">base radius</span>
         </div>
-        <Badge variant="accent" appearance="subtle" size="lg">
+        <Badge variant="accent" appearance="soft" size="lg">
           {radiusText}
         </Badge>
       </div>
@@ -607,7 +602,7 @@ function DensitySection({ density }: { density: string }) {
           <span className="text-3xl font-semibold tracking-tight">
             {DENSITY_LABEL[density] ?? density}
           </span>
-          <Badge appearance="subtle" size="lg">
+          <Badge appearance="soft" size="lg">
             density
           </Badge>
         </div>

@@ -383,7 +383,7 @@ const taskColumns: ColumnDef<Task>[] = [
     } satisfies TaskColumnMeta,
     cell: ({ row }) => (
       <div className="flex min-w-0 items-center gap-2">
-        <Badge appearance="subtle" variant="neutral" size="sm">
+        <Badge appearance="soft" variant="neutral" size="sm">
           {labelByValue[row.original.label].label}
         </Badge>
         <span className="truncate font-medium">{row.original.title}</span>
@@ -412,7 +412,7 @@ const taskColumns: ColumnDef<Task>[] = [
       const Icon = status.icon
 
       return (
-        <Badge appearance="subtle" variant={status.variant} size="sm">
+        <Badge appearance="soft" variant={status.variant} size="sm">
           <Icon />
           {status.label}
         </Badge>
@@ -810,12 +810,7 @@ function FacetedFilter({
         <PlusCircleIcon />
         {title}
         {selectedKeys.size > 0 && (
-          <Badge
-            appearance="subtle"
-            variant="neutral"
-            size="sm"
-            className="ml-1"
-          >
+          <Badge appearance="soft" variant="neutral" size="sm" className="ml-1">
             {selectedKeys.size}
           </Badge>
         )}
