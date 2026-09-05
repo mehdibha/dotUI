@@ -9,7 +9,7 @@ const { useStyles, styles } = createStyles(radioGroupMeta, {
       root: ["flex items-center has-data-description:items-start"],
       control: [
         "relative flex items-center gap-2 rounded-(--radio-radius) focus-reset not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--radio-card-radius)",
-        "transition-colors duration-75 has-data-label:w-full has-data-label:border has-data-label:p-2.5 has-data-label:selected:border-primary/25 has-data-label:selected:bg-primary-muted",
+        "transition-colors duration-75 has-data-label:w-full has-data-label:border has-data-label:p-2.5",
       ],
       indicator: [
         "grid size-4 shrink-0 place-content-center rounded-full border border-border-control bg-transparent text-transparent before:size-1.5 before:rounded-full before:bg-current before:content-['']",
@@ -34,6 +34,43 @@ const { useStyles, styles } = createStyles(radioGroupMeta, {
     comfortable: {
       slots: {
         root: "gap-3",
+      },
+    },
+  },
+  /* The card treatment — synced with checkbox and switch, change all three
+     together. Selected paints with the selection tokens so it follows the
+     family fill. */
+  params: {
+    "card-selected": {
+      outline: {
+        slots: { control: "has-data-label:selected:border-selection" },
+      },
+      tint: {
+        slots: { control: "has-data-label:selected:bg-selection/8" },
+      },
+      "outline-tint": {
+        slots: {
+          control:
+            "has-data-label:selected:border-selection has-data-label:selected:bg-selection/8",
+        },
+      },
+    },
+    "card-control": {
+      start: {
+        slots: {
+          control: "has-data-label:*:data-radio-indicator:order-first",
+        },
+      },
+      end: {
+        slots: {
+          control:
+            "has-data-label:justify-between has-data-label:*:data-radio-indicator:order-last",
+        },
+      },
+      hidden: {
+        slots: {
+          control: "has-data-label:*:data-radio-indicator:hidden",
+        },
       },
     },
   },

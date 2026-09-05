@@ -3,19 +3,16 @@
 /* Checkbox — lead of the selection-control family (Checkbox ⇄ Radio ⇄ Switch),
    split into one chapter per control but synced on one look, the Button ⇄
    ToggleButton model. Fill is the family axis and lives here; Radio, Switch
-   and Choice cards re-surface the same key. Accent is the brand-colored
-   school — Material, Ant, Radix Themes color their checks with the brand;
-   Neutral is the shadcn school — a near-black primary fill that inverts per
-   mode, so it wears bg-fg with a bg-colored mark rather than any fixed dark
-   token. Corner is checkbox-only geometry: Rounded ≈ shadcn's 4px, Square ≈
-   Material/Carbon's 2px, Circle ≈ iOS-style list checks and Ant's circle
-   checkbox — a radio is always a circle and a switch is always a pill, so
-   the axis stops at the box. */
+   and Choice cards re-surface the same key. Neutral wears bg-fg with a
+   bg-colored mark — the near-black fill that inverts per mode — rather than
+   any fixed dark token. A radio is always a circle and a switch is always a
+   pill, so Corner stops at the box. */
 
 import { CheckIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
+import { CORNER_OPTIONS, FILL_OPTIONS } from "../axes/checkbox"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -83,10 +80,9 @@ function CornerGlyph({ rx }: { rx: number }) {
 
 /* --------------------------------- Options --------------------------------- */
 
-const FILL_OPTIONS = [
-  { value: "accent", label: "Accent" },
-  { value: "neutral", label: "Neutral" },
-]
+export function fillLabel(state: LabState): string {
+  return `${FILL_OPTIONS.find((o) => o.value === state.checkFill)?.label ?? state.checkFill} fill`
+}
 
 /** The family's synced axis, shown in each chapter — one key, one look. */
 export function FillRow({ lab }: { lab: Lab }) {
@@ -100,15 +96,12 @@ export function FillRow({ lab }: { lab: Lab }) {
   )
 }
 
-const CORNER_OPTIONS: SelectRowOption[] = [
-  {
-    value: "rounded",
-    label: "Rounded",
-    illustration: <CornerGlyph rx={3.5} />,
-  },
-  { value: "square", label: "Square", illustration: <CornerGlyph rx={1} /> },
-  { value: "circle", label: "Circle", illustration: <CornerGlyph rx={7} /> },
-]
+const CORNER_RX: Record<string, number> = { rounded: 3.5, square: 1, circle: 7 }
+
+const CORNER_ROW_OPTIONS: SelectRowOption[] = CORNER_OPTIONS.map((o) => ({
+  ...o,
+  illustration: <CornerGlyph rx={CORNER_RX[o.value] ?? 3.5} />,
+}))
 
 /* -------------------------------- Specimen --------------------------------- */
 
@@ -155,13 +148,10 @@ export function CheckboxHero({ state }: { state: LabState }) {
 
 /** Collapsed-row summary: the fill school, and the corner geometry. */
 export function checkboxSummary(state: LabState): string {
-  const fill =
-    FILL_OPTIONS.find((o) => o.value === state.checkFill)?.label ??
-    state.checkFill
   const corner =
     CORNER_OPTIONS.find((o) => o.value === state.checkCorner)?.label ??
     state.checkCorner
-  return `${fill} fill · ${corner} corner`
+  return `${fillLabel(state)} · ${corner} corner`
 }
 
 export function CheckboxSection({ lab }: { lab: Lab }) {
@@ -174,7 +164,7 @@ export function CheckboxSection({ lab }: { lab: Lab }) {
         label="Corner"
         value={state.checkCorner}
         onChange={set("checkCorner")}
-        options={CORNER_OPTIONS}
+        options={CORNER_ROW_OPTIONS}
         layout="grid"
       />
     </ControlGroup>

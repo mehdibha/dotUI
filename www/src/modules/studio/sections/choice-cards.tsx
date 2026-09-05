@@ -12,6 +12,7 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import { CONTROL_OPTIONS, SELECTED_OPTIONS } from "../axes/choice-cards"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
@@ -33,20 +34,6 @@ export const SELECTED = {
     "outline-tint": "border-fg bg-fg/8",
   },
 }
-
-/* --------------------------------- Options --------------------------------- */
-
-const SELECTED_OPTIONS = [
-  { value: "outline", label: "Outline" },
-  { value: "tint", label: "Tint" },
-  { value: "outline-tint", label: "Both" },
-]
-
-const CONTROL_OPTIONS = [
-  { value: "start", label: "Start" },
-  { value: "end", label: "End" },
-  { value: "hidden", label: "Hidden" },
-]
 
 /* -------------------------------- Specimen --------------------------------- */
 

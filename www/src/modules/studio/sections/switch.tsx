@@ -12,7 +12,7 @@ import { cn } from "@/registry/lib/utils"
 import { Hero } from "../hero"
 import { ControlGroup } from "../rows"
 import type { Lab, LabState } from "../state"
-import { FillRow, fillOf, HERO_ROW } from "./checkbox"
+import { fillLabel, FillRow, fillOf, HERO_ROW } from "./checkbox"
 import type { CheckFill } from "./checkbox"
 
 /* -------------------------------- Specimen --------------------------------- */
@@ -56,7 +56,7 @@ export function SwitchHero({ state }: { state: LabState }) {
 
 /** Collapsed-row summary: the family fill school, the section's one axis. */
 export function switchSummary(state: LabState): string {
-  return state.checkFill === "neutral" ? "Neutral fill" : "Accent fill"
+  return fillLabel(state)
 }
 
 export function SwitchSection({ lab }: { lab: Lab }) {
