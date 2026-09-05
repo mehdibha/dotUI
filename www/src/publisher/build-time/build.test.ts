@@ -94,7 +94,7 @@ describe("extractStylesConfig", () => {
     expect(sm.input).toContain("[--input-h:--spacing(6)]")
     // `outlineField({ focus: 'self' })` in params.style.outline.
     const outline = cfg.params?.style?.outline?.slots?.input as string
-    expect(outline).toContain("focus:ring-2")
+    expect(outline).toContain("focus:focus-input")
     expect(outline).toContain("border-border-control")
   })
 

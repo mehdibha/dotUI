@@ -29,12 +29,12 @@ const defaultText = "text-base sm:text-sm"
 // nested input-control.
 
 const outlineField = tv({
-  base: "rounded-(--input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-[var(--shadow-control,none)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-border disabled:bg-disabled",
+  base: "rounded-(--input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-border disabled:bg-disabled",
   variants: {
     focus: {
-      self: "focus:ring-2 focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted",
+      self: "focus:focus-input focus:not-invalid:border-border-focus",
       group:
-        "group-focus/combobox:ring-2 group-focus/combobox:not-invalid:border-border-focus group-focus/combobox:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2 has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted",
+        "group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
     },
   },
 })
@@ -62,12 +62,12 @@ const filledLineBottomField = tv({
 })
 
 const filledField = tv({
-  base: "rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,none)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-disabled",
+  base: "rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-disabled",
   variants: {
     focus: {
-      self: "focus:ring-2 focus:not-invalid:border-border-focus focus:not-invalid:ring-border-focus-muted",
+      self: "focus:focus-input focus:not-invalid:border-border-focus",
       group:
-        "group-focus/combobox:ring-2 group-focus/combobox:not-invalid:border-border-focus group-focus/combobox:not-invalid:ring-border-focus-muted has-[[data-input-control][data-focused]]:ring-2 has-[[data-input-control][data-focused]]:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:not-invalid:ring-border-focus-muted",
+        "group-focus/combobox:focus-input group-focus/combobox:not-invalid:border-border-focus has-[[data-input-control][data-focused]]:focus-input has-[[data-input-control][data-focused]]:not-invalid:border-border-focus",
     },
   },
 })

@@ -12,12 +12,37 @@
   @apply ring-0 ring-transparent outline-none;
 }
 
+/* The keyboard ring and the field focus layer, drawn from the focus tokens
+   (see the @theme block) so one design system edit restyles every control.
+   Three strokes ride in `--tw-ring-shadow` so `ring-0` still silences them:
+   a bg hairline inside the edge (the duo family), the bg offset, the ring.
+   `--focus-*-inset` is unset (outside) or `inset`. Fields keep their own
+   width and color (a halo by default) and honor `ring-*` color overrides
+   (`invalid:ring-danger-muted`). */
 @utility focus-ring {
-  @apply ring-2 ring-border-focus ring-offset-2 ring-offset-bg;
+  --tw-ring-shadow:
+    inset 0 0 0 var(--focus-ring-inner) var(--color-bg),
+    var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--color-bg),
+    var(--focus-ring-inset,) 0 0 0
+      calc(var(--focus-ring-offset) + var(--focus-ring-width))
+      var(--focus-ring-color);
+  box-shadow:
+    var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
 }
 
 @utility focus-input {
-  @apply border-border-focus ring-2 ring-border-focus-muted;
+  --tw-ring-shadow:
+    inset 0 0 0 var(--focus-input-inner) var(--color-bg),
+    var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--color-bg),
+    var(--focus-input-inset,) 0 0 0
+      calc(var(--focus-input-offset) + var(--focus-input-width))
+      var(--tw-ring-color, var(--focus-input-color));
+  box-shadow:
+    var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
 }
 
 @utility no-highlight {
@@ -135,4 +160,17 @@
   --cursor-disabled: not-allowed;
   --cursor-drag: var(--cursor-interactive);
   --cursor-dragging: var(--cursor-interactive);
+}
+
+/* Focus axes: the ring controls wear (color, width, offset in bg, duo inner
+   stroke) and the layer fields wear (a muted halo by default). */
+@theme {
+  --focus-ring-color: var(--color-border-focus);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-inner: 0px;
+  --focus-input-color: var(--color-border-focus-muted);
+  --focus-input-width: 2px;
+  --focus-input-offset: 0px;
+  --focus-input-inner: 0px;
 }

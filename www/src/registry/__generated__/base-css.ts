@@ -13,10 +13,16 @@ export const baseRegistryCss = {
 			"@apply ring-0 ring-transparent outline-none": {},
 		},
 		"@utility focus-ring": {
-			"@apply ring-2 ring-border-focus ring-offset-2 ring-offset-bg": {},
+			"--tw-ring-shadow":
+				"inset 0 0 0 var(--focus-ring-inner) var(--color-bg),\n    var(--focus-ring-inset,) 0 0 0 var(--focus-ring-offset) var(--color-bg),\n    var(--focus-ring-inset,) 0 0 0\n      calc(var(--focus-ring-offset) + var(--focus-ring-width))\n      var(--focus-ring-color)",
+			"box-shadow":
+				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),\n    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),\n    var(--tw-shadow, 0 0 #0000)",
 		},
 		"@utility focus-input": {
-			"@apply border-border-focus ring-2 ring-border-focus-muted": {},
+			"--tw-ring-shadow":
+				"inset 0 0 0 var(--focus-input-inner) var(--color-bg),\n    var(--focus-input-inset,) 0 0 0 var(--focus-input-offset) var(--color-bg),\n    var(--focus-input-inset,) 0 0 0\n      calc(var(--focus-input-offset) + var(--focus-input-width))\n      var(--tw-ring-color, var(--focus-input-color))",
+			"box-shadow":
+				"var(--tw-inset-shadow, 0 0 #0000), var(--tw-inset-ring-shadow, 0 0 #0000),\n    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow),\n    var(--tw-shadow, 0 0 #0000)",
 		},
 		"@utility no-highlight": {
 			"-webkit-tap-highlight-color": "transparent",
@@ -400,6 +406,14 @@ export const baseRegistryCss = {
 			"--cursor-disabled": "not-allowed",
 			"--cursor-drag": "var(--cursor-interactive)",
 			"--cursor-dragging": "var(--cursor-interactive)",
+			"--focus-ring-color": "var(--color-border-focus)",
+			"--focus-ring-width": "2px",
+			"--focus-ring-offset": "2px",
+			"--focus-ring-inner": "0px",
+			"--focus-input-color": "var(--color-border-focus-muted)",
+			"--focus-input-width": "2px",
+			"--focus-input-offset": "0px",
+			"--focus-input-inner": "0px",
 			"--radius-xs": "calc(var(--radius) * 0.25)",
 			"--radius-sm": "calc(var(--radius) * 0.5)",
 			"--radius-md": "calc(var(--radius) * 0.75)",
