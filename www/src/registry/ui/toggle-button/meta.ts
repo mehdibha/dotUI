@@ -29,6 +29,11 @@ const toggleButtonMeta = {
       default: "dim",
       values: ["dim", "scale", "push", "none"] as const,
     },
+    selected: {
+      kind: "enum",
+      default: "fill",
+      values: ["fill", "chip", "inverse"] as const,
+    },
   },
 } satisfies RegistryItem
 

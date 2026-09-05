@@ -5,10 +5,10 @@ import segmentedControlMeta from "./meta"
 const { useStyles, styles } = createStyles(segmentedControlMeta, {
   base: {
     slots: {
-      root: "inline-flex w-fit items-center justify-center rounded-lg bg-muted p-[3px] text-fg-muted",
+      root: "inline-flex w-fit items-center justify-center rounded-lg text-fg-muted",
       item: [
         "relative isolate inline-flex cursor-default items-center justify-center rounded-md border border-transparent font-medium whitespace-nowrap focus-reset transition-[color] select-none focus-visible:focus-ring",
-        "text-fg-muted hover:text-fg selected:text-fg-on-selected",
+        "text-fg-muted hover:text-fg",
         "disabled:pointer-events-none disabled:text-fg-disabled",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       ],
@@ -16,7 +16,7 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
       // item; the transition makes it glide. `inset-0` + `isolate` on the item sit
       // it behind the content (which is `z-10`).
       indicator:
-        "pointer-events-none absolute inset-0 rounded-md bg-selected shadow-sm ease-out motion-safe:transition-[translate,width,height]",
+        "pointer-events-none absolute inset-0 rounded-md ease-out motion-safe:transition-[translate,width,height]",
       itemContent: "relative z-10 inline-flex items-center [gap:inherit]",
     },
   },
@@ -34,6 +34,40 @@ const { useStyles, styles } = createStyles(segmentedControlMeta, {
     comfortable: {
       slots: {
         item: "gap-2 px-3 py-1.5 text-sm has-data-icon-end:pr-2.5 has-data-icon-start:pl-2.5 **:[svg]:not-with-[size]:size-4",
+      },
+    },
+  },
+  params: {
+    // How the chip reads against the track: raised lifts a page-colored chip
+    // on shadow (the hairline ring keeps it on dark wells), flat fills
+    // tone-on-tone, inverse snaps to full contrast.
+    selected: {
+      raised: {
+        slots: {
+          item: "selected:text-fg",
+          indicator: "bg-bg shadow-sm ring-1 ring-border-control",
+        },
+      },
+      flat: {
+        slots: {
+          item: "selected:text-fg-on-selected",
+          indicator: "bg-selected shadow-sm",
+        },
+      },
+      inverse: {
+        slots: {
+          item: "selected:text-fg-inverse",
+          indicator: "bg-inverse",
+        },
+      },
+    },
+    // Outline trades a padding pixel for the hairline so the box stays put.
+    track: {
+      filled: {
+        slots: { root: "bg-muted p-[3px]" },
+      },
+      outline: {
+        slots: { root: "border border-border p-[2px]" },
       },
     },
   },

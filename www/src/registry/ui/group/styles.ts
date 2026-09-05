@@ -2,6 +2,11 @@ import { createStyles } from "@/lib/styles"
 
 import groupMeta from "./meta"
 
+/* Synced with toggle-button-group: same `separator` param — change both
+   together. Auto lets the segments' own edges divide (bordered buttons share
+   a hairline, fills abut); divider and none strip the inner borders, divider
+   drawing an inset hairline in their place. */
+
 const { useStyles, styles } = createStyles(groupMeta, {
   base: {
     slots: {
@@ -17,7 +22,7 @@ const { useStyles, styles } = createStyles(groupMeta, {
       orientation: {
         horizontal: {
           root: [
-            "-space-x-px not-has-data-group:*:not-first:rounded-l-none not-has-data-group:*:not-last:rounded-r-none",
+            "not-has-data-group:*:not-first:rounded-l-none not-has-data-group:*:not-last:rounded-r-none",
             "not-has-data-group:*:not-last:data-select:*:data-button:rounded-r-none not-has-data-group:*:not-[:nth-child(2)]:data-select:*:data-button:rounded-l-none",
           ],
         },
@@ -31,6 +36,47 @@ const { useStyles, styles } = createStyles(groupMeta, {
     compact: {},
     default: {},
     comfortable: {},
+  },
+  params: {
+    separator: {
+      auto: {
+        variants: {
+          orientation: {
+            horizontal: { root: "-space-x-px" },
+          },
+        },
+      },
+      divider: {
+        variants: {
+          orientation: {
+            horizontal: {
+              root: [
+                "*:not-first:data-button:border-l-0 *:not-last:data-button:border-r-0",
+                "*:not-first:data-button:before:absolute *:not-first:data-button:before:inset-y-1.5 *:not-first:data-button:before:left-0 *:not-first:data-button:before:w-px *:not-first:data-button:before:bg-current/20",
+              ],
+            },
+            vertical: {
+              root: [
+                "*:not-first:data-button:border-t-0 *:not-last:data-button:border-b-0",
+                "*:not-first:data-button:before:absolute *:not-first:data-button:before:inset-x-1.5 *:not-first:data-button:before:top-0 *:not-first:data-button:before:h-px *:not-first:data-button:before:bg-current/20",
+              ],
+            },
+          },
+        },
+      },
+      none: {
+        variants: {
+          orientation: {
+            horizontal: {
+              root: "*:not-first:data-button:border-l-0 *:not-last:data-button:border-r-0",
+            },
+            vertical: {
+              root: "*:not-first:data-button:border-t-0 *:not-last:data-button:border-b-0",
+            },
+          },
+        },
+      },
+    },
   },
 })
 
