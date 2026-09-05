@@ -2,9 +2,9 @@ import { createStyles } from "@/lib/styles"
 
 import linkMeta from "./meta"
 
-/* The default variant's color lives in the `color` param and `underline`
-   rules both styled variants, so the base variants carry only what no axis
-   owns. */
+/* `underline` and `color` shape the default variant only. Quiet is the
+   understated link that reads without color, so its underline is its
+   definition, not a policy. */
 
 const { useStyles, styles } = createStyles(linkMeta, {
   base: {
@@ -15,7 +15,7 @@ const { useStyles, styles } = createStyles(linkMeta, {
     variants: {
       variant: {
         default: "",
-        quiet: "font-medium text-fg",
+        quiet: "font-medium text-fg underline underline-offset-2",
         unstyled: "",
       },
     },
@@ -31,39 +31,23 @@ const { useStyles, styles } = createStyles(linkMeta, {
   params: {
     underline: {
       always: {
-        variants: {
-          variant: {
-            default: "underline underline-offset-2",
-            quiet: "underline underline-offset-2",
-          },
-        },
+        variants: { variant: { default: "underline underline-offset-2" } },
       },
       hover: {
         variants: {
-          variant: {
-            default: "underline-offset-2 hover:underline",
-            quiet: "underline-offset-2 hover:underline",
-          },
+          variant: { default: "underline-offset-2 hover:underline" },
         },
       },
       never: {},
     },
     color: {
       accent: {
-        variants: {
-          variant: {
-            default: "text-fg-accent",
-          },
-        },
+        variants: { variant: { default: "text-fg-accent" } },
       },
       /* Weight is the only resting cue a foreground link gets — the
          Vercel/Linear pattern against a muted paragraph. */
       foreground: {
-        variants: {
-          variant: {
-            default: "font-medium text-fg",
-          },
-        },
+        variants: { variant: { default: "font-medium text-fg" } },
       },
     },
   },
