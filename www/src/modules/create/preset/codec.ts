@@ -1,25 +1,39 @@
+/* The preset codec: studio state ⇄ the compact string that rides in `?preset=`,
+   localStorage and `components.json`. Only the diff against the defaults is
+   stored, so an untouched system encodes to nothing. Canonical — encode∘decode
+   is byte-identity — and tolerant: garbage decodes to the defaults, and the
+   pre-studio shape (a resolved design system) migrates onto the axes it maps
+   to. */
+
 import { deflateRaw, inflateRaw } from "pako"
 
+import { familyFromStack } from "@/lib/fonts"
 import { iconLibraries } from "@/registry/icons/icon-map"
 import type { IconLibraryName } from "@/registry/icons/icon-map"
-import {
-  DEFAULT_COLOR_CONFIG,
-  migrateColorConfig,
-  type ColorConfig,
-} from "@/registry/theme"
+import { migrateColorConfig } from "@/registry/theme"
+import type { ColorConfig } from "@/registry/theme"
+import { DEFAULTS } from "@/modules/studio/axes"
+import type { StudioState } from "@/modules/studio/axes"
 import {
   DEFAULT_CODE_OPTIONS,
   sanitizeCodeOptions,
 } from "@/publisher/code-options"
+import type { CodeOptions } from "@/publisher/code-options"
 
-import { DEFAULTS } from "./defaults"
-import { fromCompact } from "./types"
-import type { DesignSystem, DesignSystemState } from "./types"
+/** A studio state plus the exported-code style — everything a preset holds. */
+export interface StudioPreset {
+  state: StudioState
+  /** `undefined` means the default code style. */
+  codeOptions?: CodeOptions
+}
 
-/* ----------------------------- base64url helpers ----------------------------- */
+export const DEFAULT_PRESET: StudioPreset = { state: DEFAULTS }
+
+/* ------------------------------ base64url ------------------------------ */
 
 function toBase64Url(bytes: Uint8Array): string {
-  const binary = String.fromCharCode(...bytes)
+  let binary = ""
+  for (const byte of bytes) binary += String.fromCharCode(byte)
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")
 }
 
@@ -31,158 +45,170 @@ function fromBase64Url(str: string): Uint8Array {
   return Uint8Array.from(binary, (c) => c.charCodeAt(0))
 }
 
-/* ------------------------------ diff helpers ------------------------------ */
+/* -------------------------------- encode -------------------------------- */
 
-/** Remove entries that match defaults, returning only overrides (sorted keys
- *  so the encoding doesn't depend on input key order). */
-function diffRecords(
-  current: Record<string, string>,
-  defaults: Record<string, string>,
-): Record<string, string> | undefined {
-  const result: Record<string, string> = {}
-  let hasEntries = false
-  for (const key of Object.keys(current).sort()) {
-    const value = current[key]
-    if (value !== undefined && value !== defaults[key]) {
-      result[key] = value
-      hasEntries = true
+const VERSION = 3
+
+interface Encoded {
+  v: typeof VERSION
+  /** State keys that differ from the defaults, in sorted key order. */
+  s?: Partial<StudioState>
+  o?: CodeOptions
+}
+
+const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
+
+/** The keys of `state` that differ from the defaults, sorted. */
+export function diffState(state: StudioState): Partial<StudioState> {
+  const diff: Record<string, unknown> = {}
+  for (const key of Object.keys(DEFAULTS).sort()) {
+    const k = key as keyof StudioState
+    if (!same(state[k], DEFAULTS[k])) diff[key] = state[k]
+  }
+  return diff as Partial<StudioState>
+}
+
+/** `undefined` when everything matches the defaults (no preset needed). */
+export function encodePreset(preset: StudioPreset): string | undefined {
+  const compact: Encoded = { v: VERSION }
+  const diff = diffState(preset.state)
+  if (Object.keys(diff).length > 0) compact.s = diff
+  if (preset.codeOptions) {
+    const codeOptions = sanitizeCodeOptions(preset.codeOptions)
+    if (!same(codeOptions, DEFAULT_CODE_OPTIONS)) compact.o = codeOptions
+  }
+  if (!compact.s && !compact.o) return undefined
+  return toBase64Url(deflateRaw(JSON.stringify(compact), { level: 9 }))
+}
+
+/** Encode a bare state (default code style). */
+export function encodeState(state: StudioState): string | undefined {
+  return encodePreset({ state })
+}
+
+/* -------------------------------- decode -------------------------------- */
+
+/** Keep a stored value only when it has the default's shape. */
+function sanitizeState(raw: unknown): StudioState {
+  const state = { ...DEFAULTS } as Record<string, unknown>
+  if (!raw || typeof raw !== "object") return state as StudioState
+  for (const [key, fallback] of Object.entries(DEFAULTS)) {
+    const value = (raw as Record<string, unknown>)[key]
+    if (value === undefined) continue
+    if (fallback === null) {
+      if (value === null || typeof value === "number") state[key] = value
+    } else if (Array.isArray(fallback)) {
+      if (Array.isArray(value)) state[key] = value
+    } else if (typeof value === typeof fallback) {
+      state[key] = value
     }
   }
-  return hasEntries ? result : undefined
+  return state as StudioState
 }
 
-function diffNestedRecords(
-  current: Record<string, Record<string, string>>,
-  defaults: Record<string, Record<string, string>>,
-): Record<string, Record<string, string>> | undefined {
-  const result: Record<string, Record<string, string>> = {}
-  let hasEntries = false
-  for (const outer of Object.keys(current).sort()) {
-    const innerDiff = diffRecords(current[outer] ?? {}, defaults[outer] ?? {})
-    if (innerDiff) {
-      result[outer] = innerDiff
-      hasEntries = true
-    }
-  }
-  return hasEntries ? result : undefined
-}
-
-function mergeNested(
-  defaults: Record<string, Record<string, string>>,
-  overrides: Record<string, Record<string, string>>,
-): Record<string, Record<string, string>> {
-  const merged: Record<string, Record<string, string>> = {}
-  const keys = new Set([...Object.keys(defaults), ...Object.keys(overrides)])
-  for (const key of keys) {
-    merged[key] = { ...(defaults[key] ?? {}), ...(overrides[key] ?? {}) }
-  }
-  return merged
-}
-
-/* ----------------------------- sanitize helpers ----------------------------- */
-
-/**
- * Migrate a color recipe to `ColorConfig` v2 — v1 shapes map onto the nearest
- * v2 axes, garbage falls back to the default (never throws). A result equal to
- * the default becomes `undefined` so it encodes to nothing.
- */
-function sanitizeColor(
-  color: ColorConfig | undefined,
-): ColorConfig | undefined {
-  if (!color) return undefined
-  const migrated = migrateColorConfig(color)
-  return JSON.stringify(migrated) === JSON.stringify(DEFAULT_COLOR_CONFIG)
-    ? undefined
-    : migrated
-}
-
-/** Unknown/garbage library names sanitize to the default (lucide → `undefined`). */
-function sanitizeIcons(
-  icons: IconLibraryName | undefined,
-): IconLibraryName | undefined {
-  if (!icons || icons === "lucide") return undefined
-  return iconLibraries.some((lib) => lib.name === icons) ? icons : undefined
-}
-
-/* --------------------------------- encode --------------------------------- */
-
-/**
- * Encode a DesignSystem into a compact URL-safe string.
- * Returns `undefined` when all values match defaults (no preset needed).
- *
- * Canonical: sanitizers rebuild recipes in a fixed key order and diffs emit
- * sorted keys, so encode∘decode is byte-identity regardless of how the input
- * was constructed.
- */
-export function encodePreset(ds: DesignSystem): string | undefined {
-  const compact: DesignSystemState = {}
-
-  const paramDiff = diffNestedRecords(
-    ds.componentParams,
-    DEFAULTS.componentParams,
-  )
-  if (paramDiff) compact.p = paramDiff
-
-  const tokenDiff = diffRecords(ds.tokens, DEFAULTS.tokens)
-  if (tokenDiff) compact.t = tokenDiff
-
-  if (ds.density !== DEFAULTS.density) compact.d = ds.density
-
-  // Store the whole (small) color recipe only when it differs from the default palette.
-  const color = sanitizeColor(ds.color)
-  if (color) compact.c = color
-
-  // Store the whole (small) code-options recipe only when it differs from the default style.
-  if (ds.codeOptions) {
-    const codeOptions = sanitizeCodeOptions(ds.codeOptions)
-    if (JSON.stringify(codeOptions) !== JSON.stringify(DEFAULT_CODE_OPTIONS))
-      compact.o = codeOptions
-  }
-
-  const icons = sanitizeIcons(ds.icons)
-  if (icons) compact.i = icons
-
-  if (
-    !compact.p &&
-    !compact.t &&
-    !compact.d &&
-    !compact.c &&
-    !compact.o &&
-    !compact.i
-  )
-    return undefined
-
-  const json = JSON.stringify(compact)
-  const compressed = deflateRaw(json, { level: 9 })
-  return toBase64Url(compressed)
-}
-
-/* --------------------------------- decode --------------------------------- */
-
-/**
- * Decode a preset string back into a full DesignSystem.
- * Falls back to defaults on any error.
- */
-export function decodePreset(encoded: string): DesignSystem {
+/** Falls back to the defaults on any error. */
+export function decodePreset(encoded: string): StudioPreset {
   try {
-    const bytes = fromBase64Url(encoded)
-    const json = inflateRaw(bytes, { to: "string" })
-    const partial: DesignSystemState = JSON.parse(json)
-    const ds = fromCompact(partial)
-    return {
-      componentParams: mergeNested(
-        DEFAULTS.componentParams,
-        ds.componentParams,
-      ),
-      tokens: { ...DEFAULTS.tokens, ...ds.tokens },
-      density: ds.density,
-      color: sanitizeColor(ds.color),
-      codeOptions: ds.codeOptions
-        ? sanitizeCodeOptions(ds.codeOptions)
-        : undefined,
-      icons: sanitizeIcons(ds.icons),
+    const json = inflateRaw(fromBase64Url(encoded), { to: "string" })
+    const parsed = JSON.parse(json) as Encoded | LegacyState
+    if ("v" in parsed && parsed.v === VERSION) {
+      const codeOptions = parsed.o ? sanitizeCodeOptions(parsed.o) : undefined
+      return {
+        state: sanitizeState(parsed.s),
+        ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
+          ? { codeOptions }
+          : {}),
+      }
     }
+    return migrateLegacy(parsed as LegacyState)
   } catch {
-    return DEFAULTS
+    return DEFAULT_PRESET
+  }
+}
+
+export function decodeState(encoded: string): StudioState {
+  return decodePreset(encoded).state
+}
+
+/* ------------------------------- migration ------------------------------- */
+
+/**
+ * The pre-studio compact shape (a diffed resolved design system):
+ *   p = component params · t = global tokens · d = density · c = color
+ *   recipe · o = code options · i = icon library
+ */
+interface LegacyState {
+  p?: Record<string, Record<string, string>>
+  t?: Record<string, string>
+  d?: string
+  c?: ColorConfig
+  o?: CodeOptions
+  i?: IconLibraryName
+}
+
+const px = (value: string | undefined): number | undefined => {
+  if (!value) return undefined
+  const parsed = Number.parseFloat(value)
+  if (!Number.isFinite(parsed)) return undefined
+  return value.trim().endsWith("rem") ? parsed * 16 : parsed
+}
+
+/** Best-effort: the axes a resolved system maps back onto. Component params
+ *  don't survive — they were a different vocabulary. */
+function migrateLegacy(legacy: LegacyState): StudioPreset {
+  const state: Record<string, unknown> = { ...DEFAULTS }
+  const tokens = legacy.t ?? {}
+
+  const color = legacy.c ? migrateColorConfig(legacy.c) : undefined
+  if (color) {
+    state.brand = color.seeds.accent
+    if (color.primary === "accent") state.primary = "accent"
+    if (color.seeds.success) state.successSeed = color.seeds.success
+    if (color.seeds.warning) state.warningSeed = color.seeds.warning
+    if (color.seeds.danger) state.dangerSeed = color.seeds.danger
+    if (color.seeds.selection) state.selectionSeed = color.seeds.selection
+    if (color.vividness !== undefined) state.vividness = color.vividness
+    if (color.hueShift !== undefined) state.hueShift = color.hueShift
+    if (color.neutralTint !== undefined) state.neutralTint = color.neutralTint
+    if (color.neutralHue !== undefined) state.neutralHue = color.neutralHue
+    if (color.preserveSeed) state.preserveSeed = true
+    if (color.guaranteePolicy) state.guarantees = color.guaranteePolicy
+    if (color.background) {
+      state.modes = DEFAULTS.modes.map((mode) => {
+        const bg = color.background?.[mode.polarity]
+        if (bg === undefined) return mode
+        return { ...mode, bg: bg === "oled" ? 0 : bg }
+      })
+    }
+  }
+
+  if (legacy.d === "compact" || legacy.d === "comfortable")
+    state.density = legacy.d
+
+  const radius = px(tokens["--radius"])
+  if (radius !== undefined) state.radiusPx = radius
+
+  if (tokens["--font-sans"]) state.bodyFont = familyFromStack(tokens["--font-sans"])
+  if (tokens["--font-heading"])
+    state.headingFont = familyFromStack(tokens["--font-heading"])
+  if (tokens["--font-mono"]) state.monoFont = familyFromStack(tokens["--font-mono"])
+
+  if (legacy.i && iconLibraries.some((lib) => lib.name === legacy.i))
+    state.iconLibrary = legacy.i
+  const stroke = px(tokens["--icon-stroke-width"])
+  if (stroke !== undefined) state.iconStroke = stroke
+  if (tokens["--icon-weight"]) state.iconWeight = tokens["--icon-weight"]
+
+  if (tokens["--cursor-interactive"])
+    state.cursorControls = tokens["--cursor-interactive"]
+  if (tokens["--cursor-disabled"])
+    state.cursorDisabled = tokens["--cursor-disabled"]
+
+  const codeOptions = legacy.o ? sanitizeCodeOptions(legacy.o) : undefined
+  return {
+    state: sanitizeState(state),
+    ...(codeOptions && !same(codeOptions, DEFAULT_CODE_OPTIONS)
+      ? { codeOptions }
+      : {}),
   }
 }

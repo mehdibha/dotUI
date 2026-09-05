@@ -1,184 +1,133 @@
 import { deflateRaw } from "pako"
 import { describe, expect, it } from "vitest"
 
-import { DEFAULT_COLOR_CONFIG, type ColorConfig } from "@/registry/theme"
 import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
+import { DEFAULTS } from "@/modules/studio/axes"
+import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
 
-import { decodePreset, encodePreset } from "./codec"
-import { DEFAULTS } from "./defaults"
+import { decodePreset, encodePreset, encodeState } from "./codec"
 
-/** Encode an arbitrary compact state with the same deflate+base64url pipeline
- *  as `encodePreset`, bypassing its typing — for crafting stale/v1 presets. */
-function encodeRawState(state: unknown): string {
-  const compressed = deflateRaw(JSON.stringify(state), { level: 9 })
+/** Encode an arbitrary payload with the same deflate+base64url pipeline as
+ *  `encodePreset`, bypassing its typing — for crafting stale/garbage presets. */
+function encodeRaw(payload: unknown): string {
+  const compressed = deflateRaw(JSON.stringify(payload), { level: 9 })
   const binary = String.fromCharCode(...compressed)
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")
 }
 
-describe("preset codec — color recipe", () => {
-  it("omits the color recipe when it matches the default palette", () => {
+describe("preset codec — studio state", () => {
+  it("encodes the defaults to nothing", () => {
+    expect(encodeState(DEFAULTS)).toBeUndefined()
     expect(
-      encodePreset({ ...DEFAULTS, color: DEFAULT_COLOR_CONFIG }),
+      encodePreset({ state: DEFAULTS, codeOptions: DEFAULT_CODE_OPTIONS }),
     ).toBeUndefined()
   })
 
-  it("round-trips a custom color recipe through encode → decode", () => {
-    const custom: ColorConfig = {
-      ...DEFAULT_COLOR_CONFIG,
-      seeds: { ...DEFAULT_COLOR_CONFIG.seeds, accent: "#ef4444" },
-    }
-    const encoded = encodePreset({ ...DEFAULTS, color: custom })
+  it("round-trips a modified state", () => {
+    const state = { ...DEFAULTS, brand: "#ef4444", radiusPx: 4, density: "compact" }
+    const encoded = encodeState(state)
     expect(encoded).toBeTypeOf("string")
-    expect(decodePreset(encoded ?? "").color).toEqual(custom)
+    expect(decodePreset(encoded ?? "").state).toEqual(state)
   })
 
-  it("decodes to an undefined color when the preset carries none", () => {
-    const encoded = encodePreset({ ...DEFAULTS, density: "comfortable" })
-    expect(decodePreset(encoded ?? "").color).toBeUndefined()
+  it("round-trips the code options separately from the state", () => {
+    const encoded = encodePreset({
+      state: DEFAULTS,
+      codeOptions: { ...DEFAULT_CODE_OPTIONS, classArrays: false },
+    })
+    const decoded = decodePreset(encoded ?? "")
+    expect(decoded.state).toEqual(DEFAULTS)
+    expect(decoded.codeOptions?.classArrays).toBe(false)
   })
 
-  it("round-trips an accent-sourced primary", () => {
-    const custom: ColorConfig = { ...DEFAULT_COLOR_CONFIG, primary: "accent" }
-    const encoded = encodePreset({ ...DEFAULTS, color: custom })
-    expect(encoded).toBeTypeOf("string")
-    expect(decodePreset(encoded ?? "").color).toEqual(custom)
+  it("drops unknown keys and wrongly typed values", () => {
+    const encoded = encodeRaw({
+      v: 3,
+      s: { brand: "#ef4444", radiusPx: "big", nope: 1, modes: "dark" },
+    })
+    const { state } = decodePreset(encoded)
+    expect(state.brand).toBe("#ef4444")
+    expect(state.radiusPx).toBe(DEFAULTS.radiusPx)
+    expect(state.modes).toEqual(DEFAULTS.modes)
+    expect("nope" in state).toBe(false)
   })
 
-  it("round-trips the engine axes (background, vividness, preserveSeed)", () => {
-    const custom: ColorConfig = {
-      ...DEFAULT_COLOR_CONFIG,
-      background: { light: 98, dark: "oled" },
-      vividness: 1.33,
-      hueShift: 1.6,
-      neutralTint: 2,
-      preserveSeed: true,
-    }
-    const encoded = encodePreset({ ...DEFAULTS, color: custom })
-    expect(encoded).toBeTypeOf("string")
-    expect(decodePreset(encoded ?? "").color).toEqual(custom)
+  it("decodes garbage to the defaults", () => {
+    expect(decodePreset("not-a-preset").state).toEqual(DEFAULTS)
+    expect(decodePreset(encodeRaw("hello")).state).toEqual(DEFAULTS)
+  })
+})
+
+describe("preset codec — legacy migration", () => {
+  it("maps a resolved design system onto the axes it came from", () => {
+    const encoded = encodeRaw({
+      c: {
+        v: 2,
+        seeds: { accent: "#5e6ad2", selection: "#0072f5" },
+        primary: "accent",
+        vividness: 1.2,
+        background: { light: 98, dark: "oled" },
+      },
+      d: "comfortable",
+      t: {
+        "--radius": "0.75rem",
+        "--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
+        "--icon-stroke-width": "1.5",
+      },
+      i: "tabler",
+      o: { ...DEFAULT_CODE_OPTIONS, sectionComments: true },
+    })
+    const { state, codeOptions } = decodePreset(encoded)
+    expect(state.brand).toBe("#5e6ad2")
+    expect(state.selectionSeed).toBe("#0072f5")
+    expect(state.primary).toBe("accent")
+    expect(state.vividness).toBe(1.2)
+    expect(state.modes.map((m) => m.bg)).toEqual([98, 0])
+    expect(state.density).toBe("comfortable")
+    expect(state.radiusPx).toBe(12)
+    expect(state.bodyFont).toBe("Inter")
+    expect(state.iconLibrary).toBe("tabler")
+    expect(state.iconStroke).toBe(1.5)
+    expect(codeOptions?.sectionComments).toBe(true)
   })
 
-  it("migrates a stale v1-shaped preset onto the v2 axes", () => {
-    const encoded = encodeRawState({
+  it("migrates a v1 color recipe through the v2 migration first", () => {
+    const encoded = encodeRaw({
       c: {
         algorithm: "contrast",
-        seeds: { neutral: "#8a8f98", accent: "#5e6ad2", success: "#22c55e" },
-        knobs: { chromaMult: 1.2, hueTorsion: 30 },
+        seeds: { neutral: "#8a8f98", accent: "#5e6ad2" },
+        knobs: { chromaMult: 1.2 },
         primary: "accent",
       },
     })
-    expect(decodePreset(encoded).color).toEqual({
-      v: 2,
-      seeds: { accent: "#5e6ad2", neutral: "#8a8f98", success: "#22c55e" },
-      vividness: 1.2,
-      hueShift: 2,
-      primary: "accent",
-    })
+    const { state } = decodePreset(encoded)
+    expect(state.brand).toBe("#5e6ad2")
+    expect(state.vividness).toBe(1.2)
+    expect(state.primary).toBe("accent")
   })
 
-  it("migrates the v1 default gray neutral to the auto-tinted default", () => {
-    const encoded = encodeRawState({
-      c: {
-        algorithm: "oklch",
-        seeds: { neutral: "#808080", accent: "#ef4444" },
-      },
-    })
-    expect(decodePreset(encoded).color).toEqual({
-      v: 2,
-      seeds: { accent: "#ef4444" },
-    })
-  })
-
-  it("decodes an unrecognizable color slice to the default palette", () => {
-    const encoded = encodeRawState({ c: { algorithm: "fixed", ramps: {} } })
-    expect(() => decodePreset(encoded)).not.toThrow()
-    expect(decodePreset(encoded).color).toBeUndefined()
-  })
-
-  it("salvages valid axes when a sibling field is corrupt", () => {
-    const encoded = encodeRawState({
-      c: {
-        v: 2,
-        seeds: { accent: "#ef4444" },
-        vividness: 5, // out of range — clamps, must not nuke siblings
-        hueShift: "loud", // wrong type — dropped
-        background: { light: Number.NaN, dark: 3 },
-        preserveSeed: true,
-        primary: "garbage",
-      },
-    })
-    expect(decodePreset(encoded).color).toEqual({
-      v: 2,
-      seeds: { accent: "#ef4444" },
-      vividness: 2,
-      background: { dark: 3 },
-      preserveSeed: true,
-    })
-  })
-
-  it("replaces an unparseable seed instead of crashing the resolver", () => {
-    const encoded = encodeRawState({
-      c: {
-        v: 2,
-        seeds: { accent: "garbage", success: "#zzz", info: "#4862ff" },
-        vividness: 1.5,
-      },
-    })
-    expect(decodePreset(encoded).color).toEqual({
-      v: 2,
-      seeds: { accent: DEFAULT_COLOR_CONFIG.seeds.accent, info: "#4862ff" },
-      vividness: 1.5,
-    })
-  })
-
-  it("round-trips the icon library and treats lucide as the default", () => {
-    expect(encodePreset({ ...DEFAULTS, icons: "lucide" })).toBeUndefined()
-    const encoded = encodePreset({ ...DEFAULTS, icons: "tabler" })
-    expect(encoded).toBeTypeOf("string")
-    expect(decodePreset(encoded ?? "").icons).toBe("tabler")
-  })
-
-  it("decodes an unknown icon library to the default", () => {
-    const encoded = encodeRawState({ i: "heroicons" })
-    expect(decodePreset(encoded).icons).toBeUndefined()
-  })
-
-  it("drops a crafted primary value but keeps the rest of the recipe", () => {
-    const encoded = encodeRawState({
-      c: {
-        v: 2,
-        seeds: { accent: "#ef4444" },
-        primary: "red; } :root { --x: injected",
-      },
-    })
-    const decoded = decodePreset(encoded).color
-    expect(decoded?.primary).toBeUndefined()
-    expect(decoded?.seeds.accent).toBe("#ef4444")
+  it("ignores an unknown icon library and unparseable tokens", () => {
+    const encoded = encodeRaw({ i: "heroicons", t: { "--radius": "big" } })
+    const { state } = decodePreset(encoded)
+    expect(state.iconLibrary).toBe(DEFAULTS.iconLibrary)
+    expect(state.radiusPx).toBe(DEFAULTS.radiusPx)
   })
 })
 
 describe("preset codec — canonical encoding", () => {
-  // /create seeds from a stored state via decode → encode on reload; a
+  // /studio seeds from a stored state via decode → encode on reload; a
   // non-identity roundtrip makes a freshly applied preset look edited.
   for (const preset of [ORIGIN, ...PRESETS]) {
     it(`encode∘decode is byte-identity for the ${preset.name} preset`, () => {
-      const encoded = encodePreset(preset.designSystem)
+      const encoded = encodeState(preset.state)
       if (encoded === undefined) return
       expect(encodePreset(decodePreset(encoded))).toBe(encoded)
     })
   }
 
-  it("encodes the same system identically regardless of input key order", () => {
-    const a = encodePreset({
-      ...DEFAULTS,
-      tokens: { "--radius": "0.75rem", "--font-sans": "Inter" },
-      color: { ...DEFAULT_COLOR_CONFIG, primary: "accent", vividness: 1.2 },
-    })
-    const b = encodePreset({
-      ...DEFAULTS,
-      tokens: { "--font-sans": "Inter", "--radius": "0.75rem" },
-      color: { ...DEFAULT_COLOR_CONFIG, vividness: 1.2, primary: "accent" },
-    })
+  it("encodes the same state identically regardless of key order", () => {
+    const a = encodeState({ ...DEFAULTS, radiusPx: 12, brand: "#ef4444" })
+    const b = encodeState({ ...DEFAULTS, brand: "#ef4444", radiusPx: 12 })
     expect(a).toBeTypeOf("string")
     expect(b).toBe(a)
   })

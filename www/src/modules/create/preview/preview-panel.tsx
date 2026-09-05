@@ -42,11 +42,11 @@ import {
   sendPreviewNavigate,
   sendPreviewPrefetch,
   sendToIframe,
-  useDesignSystem,
   useInspectorExitMessages,
 } from "@/modules/create/preset"
 import type { PreviewMode } from "@/modules/create/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/create/preview/blocks"
+import { useStudio } from "@/modules/studio/use-studio"
 import { componentsData } from "@/modules/docs/components-list/components-data"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
@@ -104,7 +104,7 @@ export function PreviewPanel({
 }) {
   const { preview, preset } = routeApi.useSearch()
   const navigate = routeApi.useNavigate()
-  const { designSystem } = useDesignSystem()
+  const { designSystem } = useStudio()
   const { resolvedTheme } = useTheme()
 
   const panelRef = useRef<HTMLDivElement>(null)

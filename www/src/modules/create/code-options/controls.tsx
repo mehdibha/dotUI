@@ -3,9 +3,8 @@ import type { ReactNode } from "react"
 import { Switch } from "@/registry/ui/switch"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
-import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
 
-import { useDesignSystem } from "../preset"
+import { useStudio } from "@/modules/studio/use-studio"
 
 /* ------------------------------ row helpers ------------------------------ */
 
@@ -107,8 +106,7 @@ function EnumRow<T extends string>({
  * what survives a formatter pass and isn't already managed elsewhere.
  */
 export function CodeOptionsControls() {
-  const { designSystem, setCodeOption } = useDesignSystem()
-  const opts = designSystem.codeOptions ?? DEFAULT_CODE_OPTIONS
+  const { codeOptions: opts, setCodeOption } = useStudio()
 
   return (
     <div className="flex flex-col gap-5">

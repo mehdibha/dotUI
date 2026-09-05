@@ -5,13 +5,14 @@ import type { SearchSchemaInput } from "@tanstack/react-router"
 import { DialogContent } from "@/registry/ui/dialog"
 import { Drawer, DrawerHandle } from "@/registry/ui/drawer"
 import { ExportHeaderAction } from "@/modules/create/export"
-import { DEFAULTS, useDesignSystem } from "@/modules/create/preset"
+import { DEFAULT_PRESET } from "@/modules/create/preset/codec"
 import {
   loadStoredPreset,
   saveStoredPreset,
 } from "@/modules/create/preset/storage"
 import { PreviewPanel } from "@/modules/create/preview/preview-panel"
-import { LabCreatePanel } from "@/modules/panel-lab/create"
+import { LabCreatePanel } from "@/modules/studio/create"
+import { useStudio } from "@/modules/studio/use-studio"
 import { ORIGIN } from "@/modules/presets/presets-data"
 
 export function createSearchSchema(
@@ -51,7 +52,7 @@ export const Route = createFileRoute("/_app/studio")({
 
 function StudioPage() {
   const { preset } = Route.useSearch()
-  const { designSystem, setDesignSystem } = useDesignSystem()
+  const { preset: current, setPreset, setState } = useStudio()
   // Below `lg` the preview is the whole page and the panel rides over it as a
   // bottom sheet — edits stay visible on the live stage while adjusting.
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -66,9 +67,9 @@ function StudioPage() {
     seededFromStorage.current = true
     if (preset) return // a shared / deep-linked preset wins over the saved one
     const stored = loadStoredPreset()
-    if (stored !== DEFAULTS) setDesignSystem(stored)
-    else setDesignSystem(ORIGIN.designSystem)
-  }, [preset, setDesignSystem])
+    if (stored !== DEFAULT_PRESET) setPreset(stored)
+    else setState(ORIGIN.state)
+  }, [preset, setPreset, setState])
 
   const skipFirstPersist = useRef(true)
   useEffect(() => {
@@ -78,16 +79,14 @@ function StudioPage() {
       skipFirstPersist.current = false
       return
     }
-    saveStoredPreset(designSystem)
-  }, [designSystem])
+    saveStoredPreset(current)
+  }, [current])
 
   return (
     // lg:pr-4 matches the header's md:pr-4 so the preview panel's right edge
     // lines up with the Export button above it.
     <div className="flex h-[calc(100svh-var(--header-height))] min-h-0 flex-1 flex-col gap-3 p-4 pt-2 lg:flex-row lg:gap-6 lg:p-6 lg:pt-2 lg:pr-4">
       <ExportHeaderAction />
-      {/* Panel-lab drill-in panel mounted in the real slot — design only,
-          not wired to the create engine (see modules/panel-lab). */}
       <LabCreatePanel className="max-lg:hidden" />
       <PreviewPanel onCustomize={() => setSheetOpen(true)} />
 

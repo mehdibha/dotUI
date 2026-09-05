@@ -36,7 +36,6 @@ import { Route as AppComponentsRouteImport } from './routes/_app/components'
 import { Route as AppChartsRouteImport } from './routes/_app/charts'
 import { Route as DotwellKnownApiCatalogRouteImport } from './routes/[.]well-known/api-catalog'
 import { Route as AppDocsRouteRouteImport } from './routes/_app/docs/route'
-import { Route as InternalPanelLabIndexRouteImport } from './routes/internal.panel-lab.index'
 import { Route as AppDocsChar123Char125DotmdRouteImport } from './routes/_app/docs/{$}[.]md'
 import { Route as AppDocsSplatRouteImport } from './routes/_app/docs/$'
 
@@ -174,11 +173,6 @@ const AppDocsRouteRoute = AppDocsRouteRouteImport.update({
   path: '/docs',
   getParentRoute: () => AppRouteRoute,
 } as any)
-const InternalPanelLabIndexRoute = InternalPanelLabIndexRouteImport.update({
-  id: '/internal/panel-lab/',
-  path: '/internal/panel-lab/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppDocsChar123Char125DotmdRoute =
   AppDocsChar123Char125DotmdRouteImport.update({
     id: '/{$}.md',
@@ -220,7 +214,6 @@ export interface FileRoutesByFullPath {
   '/internal/': typeof InternalIndexRoute
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
-  '/internal/panel-lab/': typeof InternalPanelLabIndexRoute
 }
 export interface FileRoutesByTo {
   '/home.md': typeof HomeDotmdRoute
@@ -251,7 +244,6 @@ export interface FileRoutesByTo {
   '/internal': typeof InternalIndexRoute
   '/docs/$': typeof AppDocsSplatRoute
   '/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
-  '/internal/panel-lab': typeof InternalPanelLabIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -284,7 +276,6 @@ export interface FileRoutesById {
   '/internal/': typeof InternalIndexRoute
   '/_app/docs/$': typeof AppDocsSplatRoute
   '/_app/docs/{$}.md': typeof AppDocsChar123Char125DotmdRoute
-  '/internal/panel-lab/': typeof InternalPanelLabIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -317,7 +308,6 @@ export interface FileRouteTypes {
     | '/internal/'
     | '/docs/$'
     | '/docs/{$}.md'
-    | '/internal/panel-lab/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/home.md'
@@ -348,7 +338,6 @@ export interface FileRouteTypes {
     | '/internal'
     | '/docs/$'
     | '/docs/{$}.md'
-    | '/internal/panel-lab'
   id:
     | '__root__'
     | '/_app'
@@ -380,7 +369,6 @@ export interface FileRouteTypes {
     | '/internal/'
     | '/_app/docs/$'
     | '/_app/docs/{$}.md'
-    | '/internal/panel-lab/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -404,7 +392,6 @@ export interface RootRouteChildren {
   RRegistryDotjsonRoute: typeof RRegistryDotjsonRoute
   RV0Route: typeof RV0Route
   InternalIndexRoute: typeof InternalIndexRoute
-  InternalPanelLabIndexRoute: typeof InternalPanelLabIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -598,13 +585,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDocsRouteRouteImport
       parentRoute: typeof AppRouteRoute
     }
-    '/internal/panel-lab/': {
-      id: '/internal/panel-lab/'
-      path: '/internal/panel-lab'
-      fullPath: '/internal/panel-lab/'
-      preLoaderRoute: typeof InternalPanelLabIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_app/docs/{$}.md': {
       id: '/_app/docs/{$}.md'
       path: '/{$}.md'
@@ -681,7 +661,6 @@ const rootRouteChildren: RootRouteChildren = {
   RRegistryDotjsonRoute: RRegistryDotjsonRoute,
   RV0Route: RV0Route,
   InternalIndexRoute: InternalIndexRoute,
-  InternalPanelLabIndexRoute: InternalPanelLabIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

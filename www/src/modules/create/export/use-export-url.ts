@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from "react"
 
 import { siteConfig } from "@/config/site"
 
-import { useDesignSystem } from "../preset"
-import { encodePreset } from "../preset/codec"
+import { useStudio } from "@/modules/studio/use-studio"
+
 import type { PresetUrl } from "./types"
 
 const DEFAULT_REGISTRY_HOST: string = siteConfig.url
@@ -37,7 +37,7 @@ function getRegistryHost(): string {
  * swaps to the live origin) so the URL stays stable across hydration.
  */
 export function useExportUrl(): PresetUrl {
-  const { designSystem } = useDesignSystem()
+  const { encoded } = useStudio()
   const [host, setHost] = useState(DEFAULT_REGISTRY_HOST)
 
   useEffect(() => {
@@ -45,10 +45,9 @@ export function useExportUrl(): PresetUrl {
   }, [])
 
   return useMemo(() => {
-    const encoded = encodePreset(designSystem)
     return (path: string) => {
       const base = `${host}${path}`
       return encoded ? `${base}?preset=${encoded}` : base
     }
-  }, [designSystem, host])
+  }, [encoded, host])
 }

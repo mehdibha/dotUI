@@ -6,8 +6,7 @@ import {
   ExamplesIndex,
   GroupExamplesIndex,
 } from "@/modules/create/__generated__/examples"
-import { decodePreset } from "@/modules/create/preset/codec"
-import { DEFAULTS } from "@/modules/create/preset/defaults"
+import { decodeState } from "@/modules/create/preset/codec"
 import {
   useAnnouncePreviewReady,
   useIframeMessageListener,
@@ -17,6 +16,8 @@ import type { DesignSystem } from "@/modules/create/preset/types"
 import { BlocksIndex } from "@/modules/create/preview/blocks"
 import { PreviewInspector } from "@/modules/create/preview/inspector"
 import { PresetOverview } from "@/modules/create/preview/overview"
+import { resolveDesignSystem } from "@/modules/studio/resolve"
+import { DEFAULTS } from "@/modules/studio/axes"
 
 // Non-route file so the examples barrel, preset codec and overview stay in
 // this route's split chunk instead of the router's critical import graph.
@@ -54,7 +55,7 @@ export function PreviewPage() {
   const { slug } = route.useParams()
   const { preset } = route.useSearch()
   const [designSystem, setDesignSystem] = useState<DesignSystem>(() =>
-    preset ? decodePreset(preset) : DEFAULTS,
+    resolveDesignSystem(preset ? decodeState(preset) : DEFAULTS),
   )
 
   const navigate = route.useNavigate()

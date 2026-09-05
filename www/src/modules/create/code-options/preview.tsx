@@ -6,21 +6,19 @@
  * shiki).
  */
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { CheckIcon, CopyIcon } from "lucide-react"
 
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
 import { Button } from "@/registry/ui/button"
 import { DynamicPre } from "@/modules/docs/dynamic-pre"
 
-import { useDesignSystem } from "../preset"
-import { encodePreset } from "../preset/codec"
+import { useStudio } from "@/modules/studio/use-studio"
 
 const PREVIEW_FILE = "components/ui/button.tsx"
 
 export function CodeOptionsPreview() {
-  const { designSystem } = useDesignSystem()
-  const encoded = useMemo(() => encodePreset(designSystem), [designSystem])
+  const { encoded } = useStudio()
 
   // Debounce so dragging a slider / flipping switches doesn't spam the endpoint.
   const [debounced, setDebounced] = useState(encoded)

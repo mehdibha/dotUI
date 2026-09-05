@@ -9,7 +9,7 @@
  * Usage:  tsx scripts/encode-preset.ts origin spotify
  */
 
-import { encodePreset } from "@/modules/create/preset/codec"
+import { encodeState } from "@/modules/create/preset/codec"
 import { PRESETS } from "@/modules/presets/presets-data"
 
 const ids = process.argv.slice(2)
@@ -27,7 +27,7 @@ for (const id of ids) {
     )
     process.exit(2)
   }
-  const encoded = encodePreset(preset.designSystem)
+  const encoded = encodeState(preset.state)
   if (!encoded) {
     console.error(`error: preset "${id}" encodes to nothing`)
     process.exit(2)

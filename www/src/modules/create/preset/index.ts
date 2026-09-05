@@ -1,4 +1,11 @@
-export { decodePreset, encodePreset } from "./codec"
+export {
+  DEFAULT_PRESET,
+  decodePreset,
+  decodeState,
+  encodePreset,
+  encodeState,
+  type StudioPreset,
+} from "./codec"
 export { DEFAULTS } from "./defaults"
 export { type SavedPreset, useMyPresets } from "./my-presets"
 export {
@@ -19,11 +26,4 @@ export {
   useIsEmbeddedPreview,
   usePreviewForcedTheme,
 } from "./iframe-sync"
-export { useDesignSystem } from "./use-design-system"
-export type {
-  CodeOptions,
-  Density,
-  DesignSystem,
-  DesignSystemState,
-  IconLibraryName,
-} from "./types"
+export type { CodeOptions, Density, DesignSystem, IconLibraryName } from "./types"

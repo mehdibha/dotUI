@@ -13,7 +13,9 @@ import { Input } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
 import { TextField } from "@/registry/ui/text-field"
 
-import { encodePreset, useDesignSystem, useMyPresets } from "./preset"
+import { useStudio } from "@/modules/studio/use-studio"
+
+import { useMyPresets } from "./preset"
 import { saveDesignSystemName, useDesignSystemName } from "./preset/storage"
 
 /**
@@ -27,11 +29,11 @@ export function SavePresetDialog({
   isOpen: boolean
   onOpenChange: (open: boolean) => void
 }) {
-  const { designSystem } = useDesignSystem()
+  const { encoded } = useStudio()
   const { presets, activeId, save, update } = useMyPresets()
   const storedName = useDesignSystemName()
 
-  const currentState = encodePreset(designSystem) ?? ""
+  const currentState = encoded ?? ""
   const active = presets.find((p) => p.id === activeId)
   const isDirty = active ? active.state !== currentState : false
 
