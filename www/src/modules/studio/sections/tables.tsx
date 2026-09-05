@@ -14,9 +14,15 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import { HEADER_OPTIONS, SEPARATION_OPTIONS } from "../axes/tables"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
+
+const optionLabel = (
+  options: { value: string; label: string }[],
+  value: string,
+) => options.find((o) => o.value === value)?.label ?? value
 
 export const HEADER_FAMILY = {
   plain: "border-b border-border/60 text-fg-muted",
@@ -75,13 +81,10 @@ export function TablesHero({ state }: { state: LabState }) {
 /** Collapsed-row summary: the row separation, and the header treatment. */
 export function tablesSummary(state: LabState): string {
   const separation =
-    state.tableSeparation === "striped"
-      ? "Striped"
-      : state.tableSeparation === "plain"
-        ? "Plain rows"
-        : "Lines"
-  const header = state.tableHeader === "filled" ? "Filled" : "Plain"
-  return `${separation} · ${header} header`
+    state.tableSeparation === "plain"
+      ? "Plain rows"
+      : optionLabel(SEPARATION_OPTIONS, state.tableSeparation)
+  return `${separation} · ${optionLabel(HEADER_OPTIONS, state.tableHeader)} header`
 }
 
 export function TablesSection({ lab }: { lab: Lab }) {
@@ -93,20 +96,13 @@ export function TablesSection({ lab }: { lab: Lab }) {
         label="Separation"
         value={state.tableSeparation}
         onChange={set("tableSeparation")}
-        options={[
-          { value: "lines", label: "Lines" },
-          { value: "striped", label: "Striped" },
-          { value: "plain", label: "Plain" },
-        ]}
+        options={SEPARATION_OPTIONS}
       />
       <SegmentedControlRow
         label="Header"
         value={state.tableHeader}
         onChange={set("tableHeader")}
-        options={[
-          { value: "plain", label: "Plain" },
-          { value: "filled", label: "Filled" },
-        ]}
+        options={HEADER_OPTIONS}
       />
     </ControlGroup>
   )

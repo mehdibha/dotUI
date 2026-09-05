@@ -12,10 +12,9 @@ const { useStyles, styles } = createStyles(tableMeta, {
       // clipped by its own border-radius but escapes the scroll container's
       // rounded clip (Chromium), so the corner cells round themselves to the
       // container's inner radius and the thead must stay filter-free.
-      header:
-        "sticky top-0 z-10 bg-bg/95 supports-[-moz-appearance:none]:bg-bg",
+      header: "sticky top-0 z-10",
       column: [
-        "box-border h-10 cursor-default border-b bg-bg/95 px-2.5 text-left align-middle font-medium whitespace-nowrap text-fg-muted focus-reset outline-hidden backdrop-blur supports-[-moz-appearance:none]:bg-bg",
+        "box-border h-10 cursor-default px-2.5 text-left align-middle font-medium whitespace-nowrap text-fg-muted focus-reset outline-hidden",
         "first:rounded-tl-[calc(var(--radius-md)-1px)] last:rounded-tr-[calc(var(--radius-md)-1px)]",
         "[&:is(div)]:flex [&:is(div)]:h-full [&:is(div)]:items-center",
         "relative hover:text-fg focus-visible:z-20 focus-visible:text-fg focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:[outline:2px_solid_var(--color-border-focus)] focus-visible:before:[outline-offset:-2px] focus-visible:before:content-['']",
@@ -23,7 +22,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       columnContent: "flex h-full min-w-0 items-center gap-1.5",
       columnLabel: "min-w-0 flex-1 truncate",
       chromeColumn: [
-        "box-border h-10 border-b bg-bg/95 px-0 text-left align-middle focus-reset outline-hidden backdrop-blur supports-[-moz-appearance:none]:bg-bg",
+        "box-border h-10 px-0 text-left align-middle focus-reset outline-hidden",
         "first:rounded-tl-[calc(var(--radius-md)-1px)] last:rounded-tr-[calc(var(--radius-md)-1px)]",
         "[&:is(div)]:flex [&:is(div)]:h-full [&:is(div)]:items-center",
         "relative focus-visible:z-20 focus-visible:before:pointer-events-none focus-visible:before:absolute focus-visible:before:inset-0 focus-visible:before:rounded-md focus-visible:before:[outline:2px_solid_var(--color-border-focus)] focus-visible:before:[outline-offset:-2px] focus-visible:before:content-['']",
@@ -37,7 +36,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       body: "data-[empty]:h-24 data-[empty]:text-center data-[empty]:text-fg-muted",
       footer: "border-t bg-muted/50 font-medium",
       row: [
-        "group/row relative box-border cursor-default border-b bg-bg/70 focus-reset transition-colors last:border-b-0 [&:is(div)]:h-full",
+        "group/row relative box-border cursor-default bg-bg/70 focus-reset transition-colors [&:is(div)]:h-full",
         "hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted dragging:cursor-dragging dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70 drop-target:bg-accent-muted/70",
         "focus-visible:bg-accent-muted/70 disabled:text-fg-disabled focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
       ],
@@ -113,6 +112,37 @@ const { useStyles, styles } = createStyles(tableMeta, {
         cell: "h-12 px-3 leading-5",
         selectionCell: "px-3",
         dragCell: "px-1.5",
+      },
+    },
+  },
+  params: {
+    separation: {
+      lines: {
+        slots: { row: "border-b last:border-b-0" },
+      },
+      striped: {
+        slots: { row: "odd:bg-muted/40" },
+      },
+      plain: {},
+    },
+    /* The plain header blurs the rows scrolling under it; filled is opaque,
+       so it needs no blur. */
+    header: {
+      plain: {
+        slots: {
+          header: "bg-bg/95 supports-[-moz-appearance:none]:bg-bg",
+          column:
+            "border-b bg-bg/95 backdrop-blur supports-[-moz-appearance:none]:bg-bg",
+          chromeColumn:
+            "border-b bg-bg/95 backdrop-blur supports-[-moz-appearance:none]:bg-bg",
+        },
+      },
+      filled: {
+        slots: {
+          header: "bg-muted",
+          column: "bg-muted",
+          chromeColumn: "bg-muted",
+        },
       },
     },
   },
