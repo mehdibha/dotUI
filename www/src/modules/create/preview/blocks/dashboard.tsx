@@ -1,5 +1,4 @@
 import * as React from "react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 
 import {
   BellIcon,
@@ -44,15 +43,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
-import type { ChartConfig } from "@/registry/ui/chart"
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/registry/ui/chart"
+import { AreaChart } from "@/registry/ui/chart-area"
 import { Input } from "@/registry/ui/input"
 import {
   Menu,
@@ -134,10 +125,7 @@ const RANGES = [
 
 type RangeId = (typeof RANGES)[number]["id"]
 
-const chartConfig = {
-  revenue: { label: "Revenue", color: "var(--chart-1)" },
-  target: { label: "Target", color: "var(--chart-2)" },
-} satisfies ChartConfig
+const chartLabels = { revenue: "Revenue", target: "Target" }
 
 // `trend` drives the arrow, `intent` the colour — a falling refund rate is a
 // down arrow but good news.
@@ -639,7 +627,11 @@ function RevenueChart() {
   const [range, setRange] = React.useState<RangeId>("12m")
 
   const months = RANGES.find((r) => r.id === range)?.months ?? MONTHLY.length
-  const data = MONTHLY.slice(MONTHLY.length - months)
+  // Charts compare data by identity, so the slice must be stable per range.
+  const data = React.useMemo(
+    () => MONTHLY.slice(MONTHLY.length - months),
+    [months],
+  )
   const total = data.reduce((sum, d) => sum + d.revenue, 0)
   const targetTotal = data.reduce((sum, d) => sum + d.target, 0)
   const overTarget = ((total - targetTotal) / targetTotal) * 100
@@ -682,55 +674,17 @@ function RevenueChart() {
             {overTarget.toFixed(1)}% vs. plan
           </Badge>
         </div>
-        <ChartContainer config={chartConfig} className="h-56 w-full">
-          <AreaChart
-            accessibilityLayer
-            data={data}
-            margin={{ left: 12, right: 12 }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={8}
-              axisLine={false}
-              tickFormatter={(value: string) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dot" />}
-            />
-            <defs>
-              <linearGradient id="fillRevenue" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="5%"
-                  stopColor="var(--color-revenue)"
-                  stopOpacity={0.7}
-                />
-                <stop
-                  offset="95%"
-                  stopColor="var(--color-revenue)"
-                  stopOpacity={0.05}
-                />
-              </linearGradient>
-            </defs>
-            <Area
-              dataKey="target"
-              type="natural"
-              fill="transparent"
-              stroke="var(--color-target)"
-              strokeDasharray="4 4"
-            />
-            <Area
-              dataKey="revenue"
-              type="natural"
-              fill="url(#fillRevenue)"
-              stroke="var(--color-revenue)"
-            />
-            <ChartLegend content={<ChartLegendContent />} />
-          </AreaChart>
-        </ChartContainer>
-        <ChartDataTable data={data} config={chartConfig} labelKey="month" />
+        <AreaChart
+          data={data}
+          x="month"
+          y={["revenue", "target"]}
+          labels={chartLabels}
+          fill="gradient"
+          axes="x"
+          formatX={(value) => String(value).slice(0, 3)}
+          height={224}
+          ariaLabel="Monthly revenue against plan"
+        />
       </CardContent>
     </Card>
   )

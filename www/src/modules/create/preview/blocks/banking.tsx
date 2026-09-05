@@ -1,18 +1,6 @@
 "use client"
 
-import { type ReactNode, useState } from "react"
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Label as PieLabel,
-  Line,
-  LineChart,
-  Pie,
-  PieChart,
-  XAxis,
-  YAxis,
-} from "recharts"
+import { type CSSProperties, type ReactNode, useMemo, useState } from "react"
 
 import {
   ArrowDownIcon,
@@ -62,13 +50,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
-import type { ChartConfig } from "@/registry/ui/chart"
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/registry/ui/chart"
+import { paletteColor } from "@/registry/ui/chart"
+import { BarChart } from "@/registry/ui/chart-bar"
+import { LineChart } from "@/registry/ui/chart-line"
+import { PieChart } from "@/registry/ui/chart-pie"
 import {
   Dialog,
   DialogBody,
@@ -175,29 +160,27 @@ const CASHFLOW = [
   { month: "August", income: 8420, spending: 3492 },
 ]
 
-const cashflowConfig = {
-  income: { label: "Income", color: "var(--chart-2)" },
-  spending: { label: "Spending", color: "var(--chart-1)" },
-} satisfies ChartConfig
+const cashflowLabels = { income: "Income", spending: "Spending" }
 
+/* Row order drives the pie's palette-slot assignment, so the dot list below
+   can reuse the same index via `paletteColor`. */
 const CATEGORY_SPEND = [
-  { category: "housing", amount: 1850, fill: "var(--color-housing)" },
-  { category: "groceries", amount: 642, fill: "var(--color-groceries)" },
-  { category: "dining", amount: 388, fill: "var(--color-dining)" },
-  { category: "transport", amount: 214, fill: "var(--color-transport)" },
-  { category: "subscriptions", amount: 96, fill: "var(--color-subscriptions)" },
-  { category: "travel", amount: 302, fill: "var(--color-travel)" },
+  { category: "housing", amount: 1850 },
+  { category: "groceries", amount: 642 },
+  { category: "dining", amount: 388 },
+  { category: "transport", amount: 214 },
+  { category: "subscriptions", amount: 96 },
+  { category: "travel", amount: 302 },
 ]
 
-const categoryConfig = {
-  amount: { label: "Spent" },
-  housing: { label: "Housing", color: "var(--chart-1)" },
-  groceries: { label: "Groceries", color: "var(--chart-2)" },
-  dining: { label: "Dining", color: "var(--chart-3)" },
-  transport: { label: "Transport", color: "var(--chart-4)" },
-  subscriptions: { label: "Subscriptions", color: "var(--chart-5)" },
-  travel: { label: "Travel", color: "var(--chart-6)" },
-} satisfies ChartConfig
+const categoryLabels = {
+  housing: "Housing",
+  groceries: "Groceries",
+  dining: "Dining",
+  transport: "Transport",
+  subscriptions: "Subscriptions",
+  travel: "Travel",
+}
 
 const CATEGORY_TOTAL = CATEGORY_SPEND.reduce((sum, row) => sum + row.amount, 0)
 
@@ -475,39 +458,43 @@ function Header() {
   )
 }
 
-function Sparkline({
-  id,
+function AccountSparkline({
   color,
   series,
+  label,
 }: {
-  id: string
   color: string
   series: readonly number[]
+  label: string
 }) {
-  const config = {
-    value: { label: "Balance", color },
-  } satisfies ChartConfig
-  const data = series.map((value, index) => ({ point: `M${index + 1}`, value }))
+  // Charts compare data by identity, so the rows must be stable per series.
+  const data = useMemo(
+    () => series.map((value, index) => ({ point: `M${index + 1}`, value })),
+    [series],
+  )
 
   return (
-    <ChartContainer
-      id={id}
-      config={config}
-      className="aspect-auto h-12 w-full"
-      initialDimension={{ width: 260, height: 48 }}
+    // A single series always paints slot 1; remap it to the account's color.
+    // Skipped for slot 1 itself — `--chart-1: var(--chart-1)` is a cycle.
+    <div
+      style={
+        color === "var(--chart-1)"
+          ? undefined
+          : ({ "--chart-1": color } as CSSProperties)
+      }
     >
-      <LineChart data={data} margin={{ top: 4, bottom: 4, left: 2, right: 2 }}>
-        <YAxis hide domain={["dataMin", "dataMax"]} />
-        <Line
-          dataKey="value"
-          type="natural"
-          stroke="var(--color-value)"
-          strokeWidth={2}
-          dot={false}
-          isAnimationActive={false}
-        />
-      </LineChart>
-    </ChartContainer>
+      <LineChart
+        data={data}
+        x="point"
+        y="value"
+        axes={false}
+        grid={false}
+        legend={false}
+        tooltip={false}
+        height={48}
+        ariaLabel={label}
+      />
+    </div>
   )
 }
 
@@ -551,10 +538,10 @@ function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
           </p>
           <p className="text-xs text-fg-muted">{account.mask}</p>
         </div>
-        <Sparkline
-          id={`spark-${account.id}`}
+        <AccountSparkline
           color={account.color}
           series={account.series}
+          label={`${account.name} balance trend`}
         />
         {utilization !== null && limit !== null && (
           <ProgressBar
@@ -622,7 +609,8 @@ function CashflowCard() {
   const [range, setRange] = useState<string>("6m")
 
   const months = RANGES.find((r) => r.id === range)?.months ?? 6
-  const data = CASHFLOW.slice(CASHFLOW.length - months)
+  // Charts compare data by identity, so the slice must be stable per range.
+  const data = useMemo(() => CASHFLOW.slice(CASHFLOW.length - months), [months])
   const spent = data.reduce((sum, row) => sum + row.spending, 0)
   const earned = data.reduce((sum, row) => sum + row.income, 0)
 
@@ -669,29 +657,15 @@ function CashflowCard() {
             </p>
           </div>
         </div>
-        <ChartContainer
-          config={cashflowConfig}
-          className="aspect-auto h-56 w-full"
-        >
-          <BarChart accessibilityLayer data={data}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={10}
-              tickFormatter={(value: string) => value.slice(0, 3)}
-            />
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <Bar dataKey="income" fill="var(--color-income)" radius={4} />
-            <Bar dataKey="spending" fill="var(--color-spending)" radius={4} />
-          </BarChart>
-        </ChartContainer>
-        <ChartDataTable
+        <BarChart
           data={data}
-          config={cashflowConfig}
-          labelKey="month"
-          caption="Monthly income and spending"
+          x="month"
+          y={["income", "spending"]}
+          labels={cashflowLabels}
+          axes="x"
+          formatX={(value) => String(value).slice(0, 3)}
+          height={224}
+          ariaLabel="Monthly income and spending"
         />
       </CardContent>
     </Card>
@@ -706,68 +680,37 @@ function CategoriesCard() {
         <CardDescription>August, across all accounts</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <ChartContainer
-          config={categoryConfig}
-          className="mx-auto aspect-square h-52"
-        >
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={CATEGORY_SPEND}
-              dataKey="amount"
-              nameKey="category"
-              innerRadius={58}
-              strokeWidth={4}
-            >
-              <PieLabel
-                content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          className="fill-fg text-xl font-semibold"
-                        >
-                          {currency(CATEGORY_TOTAL, 0)}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy ?? 0) + 20}
-                          className="fill-fg-muted text-xs"
-                        >
-                          spent
-                        </tspan>
-                      </text>
-                    )
-                  }
-                  return <text />
-                }}
-              />
-            </Pie>
+        <div className="mx-auto h-52 max-w-52">
+          <PieChart
+            data={CATEGORY_SPEND}
+            value="amount"
+            name="category"
+            labels={categoryLabels}
+            innerRadius={0.6}
+            stroke="var(--color-bg)"
+            strokeWidth={4}
+            legend={false}
+            height={208}
+            ariaLabel="Spending by category in August"
+          >
+            <div className="flex h-full flex-col items-center justify-center">
+              <span className="text-xl font-semibold">
+                {currency(CATEGORY_TOTAL, 0)}
+              </span>
+              <span className="text-xs text-fg-muted">spent</span>
+            </div>
           </PieChart>
-        </ChartContainer>
+        </div>
         <ul className="space-y-2">
-          {CATEGORY_SPEND.map((row) => (
+          {CATEGORY_SPEND.map((row, index) => (
             <li key={row.category} className="flex items-center gap-2 text-sm">
               <span
                 aria-hidden
                 className="size-2.5 shrink-0 rounded-full"
-                style={{ background: row.fill }}
+                style={{ background: paletteColor(index) }}
               />
               <span className="truncate">
-                {
-                  categoryConfig[row.category as keyof typeof categoryConfig]
-                    .label
-                }
+                {categoryLabels[row.category as keyof typeof categoryLabels]}
               </span>
               <span className="ml-auto shrink-0 text-fg-muted tabular-nums">
                 {currency(row.amount, 0)}
@@ -775,12 +718,6 @@ function CategoriesCard() {
             </li>
           ))}
         </ul>
-        <ChartDataTable
-          data={CATEGORY_SPEND}
-          config={categoryConfig}
-          labelKey="category"
-          caption="Spending by category in August"
-        />
       </CardContent>
       <CardFooter>
         <Button variant="quiet" size="sm" className="text-fg-muted">

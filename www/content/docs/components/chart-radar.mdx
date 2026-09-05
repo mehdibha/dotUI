@@ -1,0 +1,145 @@
+---
+title: Radar Chart
+description: Plots a handful of categories around a circle, so a series reads as one recognisable shape.
+---
+
+<Demo name="chart-radar/demos/multiple" />
+
+A radar chart wraps a category axis into a circle and draws each series as a closed shape. Reach for it when the reader should judge a _profile_ — the balance across five to eight categories — and compare two of them at a glance. It is a poor tool for reading exact values or for ranking: the eye compares areas, and area grows with the square of the value. When precision matters, use the [bar chart](/docs/components/chart-bar).
+
+`RadarChart` takes your rows and the names of the fields to read. Colors, typography, grid, tooltip, and legend all come from your design system.
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/chart-radar
+```
+
+It brings the `chart` core — the host, the palette, and the shared frame — along with it.
+
+## Usage
+
+```tsx
+import { RadarChart } from "@/components/ui/chart-radar"
+```
+
+Point `x` at the category field and `y` at the value field — one row per category. A chart is a figure, so `ariaLabel` is required.
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+]
+
+export function Example() {
+  return (
+    <RadarChart
+      data={data}
+      x="month"
+      y="desktop"
+      labels={{ desktop: "Desktop" }}
+      legend={false}
+      ariaLabel="Desktop visitors by month"
+    />
+  )
+}
+```
+
+`data` is compared by identity, so define it outside your component — or memoize it. Every other prop is a flat scalar and can change freely.
+
+## Data shape
+
+Two shapes work, and both draw the same chart.
+
+**Wide** rows carry one column per series. Pass the columns as an array, and name them with `labels`:
+
+```tsx
+<RadarChart
+  data={data}
+  x="month"
+  y={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
+  ariaLabel="Visitors by device"
+/>
+```
+
+**Long** rows carry one row per series per category, with the series key in its own field. Pass that field as `series`, and set `seriesOrder` to lead the color slots and the legend — series the data carries but `seriesOrder` omits follow in the order they first appear:
+
+```tsx
+<RadarChart
+  data={data}
+  x="month"
+  y="visitors"
+  series="device"
+  seriesOrder={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
+  ariaLabel="Visitors by device"
+/>
+```
+
+Series take colors from `--chart-1` through `--chart-8` in order. Every series is drawn on one shared radius scale running from zero to the largest value — a radar with two units on it is a chart with two meanings, so normalize first.
+
+## Grid and labels
+
+The rings, the spokes, and the circumference labels are three separate switches: `grid` draws the rings, `spokes` the lines running out to each category, and `axes` the labels. `gridShape` makes the rings circles instead of polygons, `gridTicks` sets how many there are, and `gridFill` tints the area inside the outer one.
+
+```tsx
+<RadarChart
+  data={data}
+  x="month"
+  y="desktop"
+  gridShape="circle"
+  gridFill={0.2}
+  spokes={false}
+  ariaLabel="Desktop visitors by month"
+/>
+```
+
+`formatX` rewrites the circumference labels, and `axisDetail` adds a second, muted line above each one — the value at that spoke, a share, a delta.
+
+## Annotations
+
+`polarMarks` accepts raw [TanStack Charts](https://tanstack.com/charts) polar mark layers, spliced into the polar container on the same angle and radius scales. Cartesian marks would land outside the circle, so this is the escape hatch a radar uses. `children` renders as HTML above the chart, ignoring pointer events.
+
+## Animation
+
+The polygon grows from the center on first client paint and springs between data states — server-rendered charts replay the entrance once hydration lands. `animate` takes `false` for an immediate repaint, or a tween or spring configuration to change the feel.
+
+## Accessibility
+
+- `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
+- The chart surface is in the tab order. Arrow keys move between spokes, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
+- Hovering or focusing a spoke reports every series at that category, named and valued — color alone never carries the distinction.
+- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
+
+## Examples
+
+<Examples>
+  <Example name="chart-radar/demos/default" title="Default" />
+  <Example name="chart-radar/demos/dots" title="Dots" />
+  <Example name="chart-radar/demos/multiple" title="Multiple Series" />
+  <Example name="chart-radar/demos/legend" title="Legend" />
+  <Example name="chart-radar/demos/icons" title="Icon Legend" />
+  <Example name="chart-radar/demos/lines-only" title="Lines Only" />
+  <Example name="chart-radar/demos/label-custom" title="Detailed Labels" />
+  <Example name="chart-radar/demos/grid-circle" title="Circular Grid" />
+  <Example
+    name="chart-radar/demos/grid-circle-no-lines"
+    title="Circular Grid, No Spokes"
+  />
+  <Example
+    name="chart-radar/demos/grid-circle-fill"
+    title="Circular Grid, Filled"
+  />
+  <Example name="chart-radar/demos/grid-fill" title="Filled Grid" />
+  <Example name="chart-radar/demos/grid-custom" title="Custom Grid" />
+  <Example name="chart-radar/demos/grid-none" title="No Grid" />
+  <Example name="chart-radar/demos/radius" title="Radius" />
+</Examples>
+
+## API Reference
+
+### RadarChart
+
+<Reference name="radar-chart" />

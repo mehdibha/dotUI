@@ -11,7 +11,8 @@ const chartMeta = {
       target: "ui/chart.tsx",
     },
   ],
-  dependencies: ["recharts"],
+  dependencies: ["@tanstack/charts@0.14.0", "d3-scale"],
+  devDependencies: ["@types/d3-scale"],
 } satisfies RegistryItem
 
 export default chartMeta

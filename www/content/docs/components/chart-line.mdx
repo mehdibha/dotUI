@@ -1,0 +1,145 @@
+---
+title: Line Chart
+description: Draws one line per series across an ordered domain, themed by your design system.
+---
+
+<Demo name="chart-line/demos/multiple" />
+
+`LineChart` answers how a value changes across an ordered domain. Give it rows and the fields to read — it builds the scales, the axes, the legend, the tooltip, and the keyboard navigation for you, all colored from your palette.
+
+## Installation
+
+```npm
+npx shadcn@latest add @dotui/chart-line
+```
+
+It brings the `chart` core — the host, the palette, and the shared frame — along with it.
+
+## Usage
+
+```tsx
+import { LineChart } from "@/components/ui/chart-line"
+```
+
+```tsx
+const chartData = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+]
+
+export function Example() {
+  return (
+    <LineChart
+      data={chartData}
+      x="month"
+      y="desktop"
+      labels={{ desktop: "Desktop" }}
+      legend={false}
+      ariaLabel="Desktop visitors, January through March"
+    />
+  )
+}
+```
+
+`x` and `y` name fields on the row; `labels` gives each series a display name for the legend and the tooltip. `data` is compared by identity, so define it outside your component — or memoize it — and the chart rebuilds only when the rows actually change.
+
+## Wide and long data
+
+Two data shapes, one component. **Wide** rows carry one field per series:
+
+```tsx
+<LineChart
+  data={rows}
+  x="month"
+  y={["desktop", "mobile"]}
+  ariaLabel="Visitors by month"
+/>
+```
+
+**Long** rows repeat the x value and name their series in a field. Set `seriesOrder` to lead the color slots and the legend — series the data carries but `seriesOrder` omits follow in the order they first appear:
+
+```tsx
+<LineChart
+  data={rows}
+  x="month"
+  y="visitors"
+  series="device"
+  seriesOrder={["desktop", "mobile"]}
+  ariaLabel="Visitors by month and device"
+/>
+```
+
+Either way, series are colored in order from `--chart-1` through `--chart-8`.
+
+## Curve
+
+`curve` chooses the path between points: `natural` (the default), `monotone`, `step`, or `linear`.
+
+```tsx
+<LineChart
+  data={rows}
+  x="month"
+  y="desktop"
+  curve="step"
+  ariaLabel="Desktop visitors by month"
+/>
+```
+
+Interpolation only changes how the line travels between observations — it does not smooth the data or claim anything about the values in between. A `null` value is a gap, not a zero: the line stops and restarts on the far side.
+
+## Annotations
+
+`marks` paints extra layers over the lines, `marksBefore` under them. Both take marks straight from `@tanstack/charts`, so labels, reference rules, and custom dots compose with the same scales:
+
+```tsx
+import { text } from "@tanstack/charts/text"
+
+const labels = text(chartData, {
+  x: "month",
+  y: "desktop",
+  text: "desktop",
+  z: () => "Desktop",
+  dy: -12,
+})
+```
+
+```tsx
+<LineChart
+  data={chartData}
+  x="month"
+  y="desktop"
+  marks={[labels]}
+  ariaLabel="Desktop visitors, with each point labelled"
+/>
+```
+
+Give an annotation the same `z` as the series it belongs to — the series' display name, or its field name when you pass no `labels`. That keeps it in one focus group with the line, so the tooltip stays a single row instead of growing one per layer. Build marks outside render: like `data`, they are compared by identity.
+
+## Accessibility
+
+- `ariaLabel` is required and names the figure; add `ariaDescription` when the takeaway needs a sentence.
+- The chart surface is in the tab order. Arrow keys move between points, `Home` and `End` jump to the first and last, `Enter` and Space pin the tooltip, and `Escape` dismisses it.
+- Color alone never carries the distinction — the legend, tooltip, and axis labels all name the series.
+- When exact values matter, put a real table or a short summary next to the chart — HTML the reader can select, translate, and print.
+- `tooltip={false}` keeps the focus stops but removes their live region, so screen readers land on silent points. Turn it off only for a decorative chart.
+
+## Examples
+
+<Examples>
+  <Example name="chart-line/demos/default" title="Default" />
+  <Example name="chart-line/demos/multiple" title="Multiple Series" />
+  <Example name="chart-line/demos/linear" title="Linear" />
+  <Example name="chart-line/demos/step" title="Step" />
+  <Example name="chart-line/demos/dots" title="Dots" />
+  <Example name="chart-line/demos/dots-custom" title="Custom Dots" />
+  <Example name="chart-line/demos/dots-colors" title="Dot Colors" />
+  <Example name="chart-line/demos/label" title="Labels" />
+  <Example name="chart-line/demos/label-custom" title="Custom Labels" />
+</Examples>
+
+## API Reference
+
+### LineChart
+
+<Reference name="line-chart" />

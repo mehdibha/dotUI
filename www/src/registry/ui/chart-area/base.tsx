@@ -1,90 +1,108 @@
 "use client"
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import type { ChartBuildContext } from "@tanstack/charts"
+import { areaY } from "@tanstack/charts/area"
+import { d3Curve } from "@tanstack/charts/d3/shape"
+import { lineY } from "@tanstack/charts/line"
+import { curveMonotoneX, curveNatural, curveStepAfter } from "d3-shape"
 
-import { TrendingUpIcon } from "@/registry/icons"
+import type {
+  ChartComponentProps,
+  ChartCurve,
+  ChartSpecOf,
+  ChartXField,
+  ChartXValueOf,
+  XYChartSpecOptions,
+} from "@/registry/ui/chart"
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/registry/ui/card"
-import type { ChartConfig } from "@/registry/ui/chart"
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
+  Chart,
+  chartDefaults,
+  chartFrame,
+  drawEnterMotion,
+  paletteGradients,
+  planChart,
+  useChartDefinition,
 } from "@/registry/ui/chart"
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-]
+/* Curves live in the families that draw paths, so a bar or heatmap chart never
+   pulls d3-shape into the bundle. */
+const CURVES = {
+  linear: undefined,
+  natural: /* @__PURE__ */ d3Curve(curveNatural),
+  monotone: /* @__PURE__ */ d3Curve(curveMonotoneX),
+  step: /* @__PURE__ */ d3Curve(curveStepAfter),
+} as const satisfies Record<ChartCurve, unknown>
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-1)",
-  },
-} satisfies ChartConfig
+export interface AreaChartSpecOptions<
+  TDatum,
+  TXField extends ChartXField<TDatum>,
+> extends XYChartSpecOptions<TDatum, TXField> {
+  /** Path interpolation between points. */
+  curve?: ChartCurve
+  /** Fill opacity, or `'gradient'` to fade the fill out toward the baseline. */
+  fill?: number | "gradient"
+  strokeWidth?: number
+  /** Draw a dot at every point. */
+  points?: boolean
+}
 
-export function ChartArea() {
+/* An area mark never draws its own upper edge, so each series is two layers:
+   the fill, then the stroke over it. Both carry the same `z`, so grouped focus
+   still resolves exactly one point per series. */
+export function areaChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
+  options: AreaChartSpecOptions<TDatum, TXField>,
+  ctx: ChartBuildContext,
+): ChartSpecOf<TDatum, ChartXValueOf<TDatum, TXField>> {
+  const { order, layers } = planChart(options)
+  const curve = CURVES[options.curve ?? chartDefaults.curve]
+  const fill = options.fill ?? chartDefaults.fill
+  const gradient = fill === "gradient"
+  return {
+    ...chartFrame(options, ctx, { order }),
+    marks: [
+      ...(options.marksBefore ?? []),
+      ...layers.flatMap((layer) => [
+        areaY(options.data, {
+          ...layer.channels,
+          fillOpacity: gradient ? 1 : fill,
+          fill: gradient ? layer.gradientFill : undefined,
+          curve,
+          motion: drawEnterMotion,
+        }),
+        lineY(options.data, {
+          ...layer.channels,
+          strokeWidth: options.strokeWidth ?? chartDefaults.strokeWidth,
+          points: options.points ?? chartDefaults.points,
+          curve,
+          motion: drawEnterMotion,
+        }),
+      ]),
+      ...(options.marks ?? []),
+    ],
+    gradients: gradient ? paletteGradients(order.length) : undefined,
+  }
+}
+
+export type AreaChartProps<
+  TDatum,
+  TXField extends ChartXField<TDatum>,
+> = ChartComponentProps<
+  AreaChartSpecOptions<TDatum, TXField>,
+  TDatum,
+  ChartXValueOf<TDatum, TXField>
+>
+
+export function AreaChart<TDatum, TXField extends ChartXField<TDatum>>(
+  props: AreaChartProps<TDatum, TXField>,
+) {
+  const { definition, host, children, entrance } = useChartDefinition<
+    TDatum,
+    ChartXValueOf<TDatum, TXField>,
+    AreaChartSpecOptions<TDatum, TXField>
+  >(props, areaChartSpec, { entrance: "draw" })
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Area Chart</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          <AreaChart
-            accessibilityLayer
-            data={chartData}
-            margin={{ left: 12, right: 12 }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              tickMargin={8}
-              axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
-            <Area
-              dataKey="desktop"
-              type="natural"
-              fill="var(--color-desktop)"
-              fillOpacity={0.4}
-              stroke="var(--color-desktop)"
-            />
-          </AreaChart>
-        </ChartContainer>
-        <ChartDataTable
-          data={chartData}
-          config={chartConfig}
-          labelKey="month"
-          caption="Desktop visitors, January through June 2024"
-        />
-      </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUpIcon className="size-4" />
-        </div>
-        <div className="leading-none text-fg-muted">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
-    </Card>
+    <Chart definition={definition} entrance={entrance} {...host}>
+      {children}
+    </Chart>
   )
 }

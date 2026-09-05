@@ -48,6 +48,7 @@ function toIndexItem(name: string) {
       ? { description: item.description }
       : {}),
     ...(item.dependencies ? { dependencies: item.dependencies } : {}),
+    ...(item.devDependencies ? { devDependencies: item.devDependencies } : {}),
     ...(item.registryDependencies
       ? { registryDependencies: item.registryDependencies }
       : {}),

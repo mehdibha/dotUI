@@ -18,6 +18,7 @@ import UiCalendar from "@/registry/ui/calendar/meta";
 import UiCard from "@/registry/ui/card/meta";
 import UiChartArea from "@/registry/ui/chart-area/meta";
 import UiChartBar from "@/registry/ui/chart-bar/meta";
+import UiChartHeatmap from "@/registry/ui/chart-heatmap/meta";
 import UiChartLine from "@/registry/ui/chart-line/meta";
 import UiChartPie from "@/registry/ui/chart-pie/meta";
 import UiChartRadar from "@/registry/ui/chart-radar/meta";
@@ -102,6 +103,7 @@ export const registryUi: RegistryItem[] = [
 	UiChart,
 	UiChartArea,
 	UiChartBar,
+	UiChartHeatmap,
 	UiChartLine,
 	UiChartPie,
 	UiChartRadar,

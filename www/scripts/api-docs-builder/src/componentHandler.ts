@@ -211,6 +211,24 @@ function getMemberName(member: ts.TypeElement): string | undefined {
 }
 
 /**
+ * Documented props come from `types.ts` (the docs contract). When a component
+ * file also exports a same-named generic declaration whose type parameters have
+ * no defaults (the chart families' `<TDatum>` Props), it is not the documented
+ * declaration — scanning it would merge unbound generics into the table, and
+ * reading its order would shadow the `types.ts` one. Defaulted generics (the
+ * vendored token-field) resolve fine and still contribute.
+ */
+function isSkippableGenericDeclaration(
+  sourceFile: ts.SourceFile,
+  node: ts.InterfaceDeclaration | ts.TypeAliasDeclaration,
+): boolean {
+  return (
+    !sourceFile.fileName.endsWith("/types.ts") &&
+    (node.typeParameters ?? []).some((param) => param.default === undefined)
+  )
+}
+
+/**
  * Get the order of properties as they appear in the source declaration
  * Uses TypeScript's built-in AST (no ts-morph dependency)
  *
@@ -255,6 +273,11 @@ function getPropertyDeclarationOrder(
       // Handle interface declarations
       if (ts.isInterfaceDeclaration(node) && node.name.text === typeName) {
         if (requireExport && !hasExportModifier(node)) return
+        // Root lookups mirror the props-table scan: an unbound generic
+        // same-named declaration outside types.ts is not the documented one.
+        if (requireExport && isSkippableGenericDeclaration(sourceFile, node)) {
+          return
+        }
         found = true
 
         // Get properties in declaration order
@@ -295,6 +318,9 @@ function getPropertyDeclarationOrder(
       // Handle type alias declarations
       if (ts.isTypeAliasDeclaration(node) && node.name.text === typeName) {
         if (requireExport && !hasExportModifier(node)) return
+        if (requireExport && isSkippableGenericDeclaration(sourceFile, node)) {
+          return
+        }
         found = true
 
         const typeNode = node.type
@@ -737,6 +763,11 @@ async function getPropsWithTypeChecker(
   // Track original order from TypeScript's type checker (preserves inherited order)
   const originalOrder: string[] = []
 
+  // Same skip as the declaration-order scan: unbound generic same-named
+  // declarations outside types.ts are not the documented ones.
+  let scannedDeclarations = 0
+  let skippedGenericDeclarations = 0
+
   // Find the source file containing this type
   for (const sourceFile of program.getSourceFiles()) {
     if (
@@ -756,6 +787,11 @@ async function getPropsWithTypeChecker(
           ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Export
         )
         if (!isExported) return
+        if (isSkippableGenericDeclaration(sourceFile, node)) {
+          skippedGenericDeclarations++
+          return
+        }
+        scannedDeclarations++
 
         const symbol = checker.getSymbolAtLocation(node.name)
         if (!symbol) return
@@ -957,6 +993,18 @@ async function getPropsWithTypeChecker(
     if (prop?.detailedType) {
       prop.detailedType = await formatTypeWithOxfmt(prop.detailedType)
     }
+  }
+
+  // An empty table whose only candidates were skipped generics is silent
+  // otherwise — the props exist, they just never got scanned.
+  if (
+    Object.keys(result).length === 0 &&
+    scannedDeclarations === 0 &&
+    skippedGenericDeclarations > 0
+  ) {
+    console.warn(
+      `⚠️  ${typeName}: empty props table — every declaration was a skipped unbound generic. Declare the documented props in types.ts.`,
+    )
   }
 
   // Sort props by declaration order (matches react-aria/s2-docs behavior)
