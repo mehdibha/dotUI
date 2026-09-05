@@ -1,9 +1,9 @@
 import { Label } from "@/registry/ui/field"
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
 import {
   NumberField,
   NumberFieldDecrement,
+  NumberFieldGroup,
   NumberFieldIncrement,
 } from "@/registry/ui/number-field"
 
@@ -12,18 +12,18 @@ export default function Demo() {
     <div className="max-w-xs space-y-4">
       <NumberField defaultValue={1024}>
         <Label>Width</Label>
-        <Group>
+        <NumberFieldGroup>
           <NumberFieldDecrement />
           <Input placeholder="Visible label" />
           <NumberFieldIncrement />
-        </Group>
+        </NumberFieldGroup>
       </NumberField>
       <NumberField defaultValue={1024} aria-label="Width">
-        <Group>
+        <NumberFieldGroup>
           <NumberFieldDecrement />
           <Input placeholder="Hidden label" />
           <NumberFieldIncrement />
-        </Group>
+        </NumberFieldGroup>
       </NumberField>
     </div>
   )

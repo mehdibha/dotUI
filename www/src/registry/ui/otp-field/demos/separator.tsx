@@ -1,27 +1,30 @@
 import { Label } from "@/registry/ui/field"
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
-import { OTPField, OTPFieldSeparator } from "@/registry/ui/otp-field"
+import {
+  OTPField,
+  OTPFieldGroup,
+  OTPFieldSeparator,
+} from "@/registry/ui/otp-field"
 
 export default function Separator() {
   return (
     <OTPField length={6}>
       <Label>Verification code</Label>
       <div className="flex items-center">
-        <Group>
+        <OTPFieldGroup>
           <Input />
           <Input aria-label="Digit 2" />
-        </Group>
+        </OTPFieldGroup>
         <OTPFieldSeparator className="px-2 text-fg-muted">-</OTPFieldSeparator>
-        <Group>
+        <OTPFieldGroup>
           <Input aria-label="Digit 3" />
           <Input aria-label="Digit 4" />
-        </Group>
+        </OTPFieldGroup>
         <OTPFieldSeparator className="px-2 text-fg-muted">-</OTPFieldSeparator>
-        <Group>
+        <OTPFieldGroup>
           <Input aria-label="Digit 5" />
           <Input aria-label="Digit 6" />
-        </Group>
+        </OTPFieldGroup>
       </div>
     </OTPField>
   )

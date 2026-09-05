@@ -2,17 +2,19 @@
 
 import type * as React from "react"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
+import * as GroupPrimitive from "react-aria-components/Group"
 import * as NumberFieldPrimitives from "react-aria-components/NumberField"
 
 import { MinusIcon, PlusIcon } from "@/registry/icons"
+import { cn } from "@/registry/lib/utils"
 import { Button, type ButtonProps } from "@/registry/ui/button"
 import { fieldStyles } from "@/registry/ui/field"
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
 
 interface NumberFieldProps extends React.ComponentProps<
   typeof NumberFieldPrimitives.NumberField
 > {}
+
 const NumberField = ({ className, ...props }: NumberFieldProps) => {
   return (
     <NumberFieldPrimitives.NumberField
@@ -26,18 +28,38 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
         props.children,
         (children) =>
           children ?? (
-            <Group>
+            <NumberFieldGroup>
+              <NumberFieldDecrement />
               <Input />
-              <Button slot="decrement">
-                <MinusIcon />
-              </Button>
-              <Button slot="increment">
-                <PlusIcon />
-              </Button>
-            </Group>
+              <NumberFieldIncrement />
+            </NumberFieldGroup>
           ),
       )}
     </NumberFieldPrimitives.NumberField>
+  )
+}
+
+interface NumberFieldGroupProps extends React.ComponentProps<
+  typeof GroupPrimitive.Group
+> {}
+
+// One stepper at each end. Parts are placed by slot, so the authored order
+// never matters.
+const NumberFieldGroup = ({ className, ...props }: NumberFieldGroupProps) => {
+  return (
+    <GroupPrimitive.Group
+      data-slot="number-field-group"
+      className={composeRenderProps(className, (className) =>
+        cn(
+          "flex w-fit items-stretch -space-x-px *:focus:z-2 *:[input]:z-1",
+          "*:data-input:rounded-none *:data-input:text-center",
+          "*:[[slot=decrement]]:-order-1 *:[[slot=decrement]]:rounded-r-none",
+          "*:[[slot=increment]]:order-1 *:[[slot=increment]]:rounded-l-none",
+          className,
+        ),
+      )}
+      {...props}
+    />
   )
 }
 
@@ -57,10 +79,10 @@ const NumberFieldIncrement = ({ children, ...props }: ButtonProps) => {
   )
 }
 
-export type { NumberFieldProps }
+export type { NumberFieldGroupProps, NumberFieldProps }
 export {
-  Group as NumberFieldGroup,
   NumberField,
   NumberFieldDecrement,
+  NumberFieldGroup,
   NumberFieldIncrement,
 }

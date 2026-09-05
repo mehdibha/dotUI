@@ -1,9 +1,9 @@
 import { Label } from "@/registry/ui/field"
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
 import {
   NumberField,
   NumberFieldDecrement,
+  NumberFieldGroup,
   NumberFieldIncrement,
 } from "@/registry/ui/number-field"
 
@@ -19,11 +19,11 @@ export default function Demo() {
         }}
       >
         <Label>Decimal</Label>
-        <Group>
+        <NumberFieldGroup>
           <NumberFieldDecrement />
           <Input />
           <NumberFieldIncrement />
-        </Group>
+        </NumberFieldGroup>
       </NumberField>
 
       <NumberField
@@ -33,11 +33,11 @@ export default function Demo() {
         }}
       >
         <Label>Percentage</Label>
-        <Group>
+        <NumberFieldGroup>
           <NumberFieldDecrement />
           <Input />
           <NumberFieldIncrement />
-        </Group>
+        </NumberFieldGroup>
       </NumberField>
 
       <NumberField
@@ -50,11 +50,11 @@ export default function Demo() {
         }}
       >
         <Label>Currency</Label>
-        <Group>
+        <NumberFieldGroup>
           <NumberFieldDecrement />
           <Input />
           <NumberFieldIncrement />
-        </Group>
+        </NumberFieldGroup>
       </NumberField>
 
       <NumberField
@@ -66,11 +66,11 @@ export default function Demo() {
         }}
       >
         <Label>Unit</Label>
-        <Group>
+        <NumberFieldGroup>
           <NumberFieldDecrement />
           <Input />
           <NumberFieldIncrement />
-        </Group>
+        </NumberFieldGroup>
       </NumberField>
     </div>
   )

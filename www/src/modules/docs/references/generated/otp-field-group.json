@@ -1,0 +1,14 @@
+{
+  "name": "OTPFieldGroupProps",
+  "description": "A group lays out a run of single-character inputs as the design system's cells.",
+  "extendsElement": "div",
+  "props": {
+    "className": {
+      "type": "string",
+      "typeAst": {
+        "type": "string"
+      },
+      "description": "The CSS [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) for the element."
+    }
+  }
+}

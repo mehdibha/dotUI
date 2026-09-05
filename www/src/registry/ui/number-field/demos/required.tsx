@@ -1,9 +1,9 @@
 import { Label } from "@/registry/ui/field"
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
 import {
   NumberField,
   NumberFieldDecrement,
+  NumberFieldGroup,
   NumberFieldIncrement,
 } from "@/registry/ui/number-field"
 
@@ -11,11 +11,11 @@ export default function Demo() {
   return (
     <NumberField className="max-w-xs" defaultValue={1024} isRequired>
       <Label>Width</Label>
-      <Group>
+      <NumberFieldGroup>
         <NumberFieldDecrement />
         <Input />
         <NumberFieldIncrement />
-      </Group>
+      </NumberFieldGroup>
     </NumberField>
   )
 }

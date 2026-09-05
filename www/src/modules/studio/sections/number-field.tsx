@@ -1,12 +1,8 @@
 "use client"
 
-/* Number field — a per-component style being tried as a block; in /create it
-   would land as a component style variant, not a family axis.
-
-   Stepper placement: adjacent right pair (the registry today, Carbon), one
-   button at each end (Polaris mobile, HeroUI), stacked chevron column
-   (Spectrum, Ant, classic desktop). The field look comes from the Inputs
-   section. */
+/* Number field — where the steppers sit (axes/number-field.ts). The steppers
+   are attached segments beside the field, as the registry ships them; the
+   field look comes from the Inputs section. */
 
 import { useState } from "react"
 import type { CSSProperties } from "react"
@@ -19,19 +15,16 @@ import {
 
 import { cn } from "@/registry/lib/utils"
 
+import { NUMBER_LAYOUT_OPTIONS } from "../axes/number-field"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { focusFieldStyle } from "./focus"
 import { BARE_INPUT, hoverFx, inputLook, SHELL } from "./inputs"
 import { controlRadiusPx } from "./shape"
 
-const NUMBER_LAYOUT_OPTIONS: SelectRowOption[] = [
-  { value: "right", label: "Right" },
-  { value: "split", label: "Split" },
-  { value: "stacked", label: "Stacked" },
-]
+const SEGMENT =
+  "flex shrink-0 cursor-interactive items-center justify-center border border-border-control bg-neutral text-fg-muted outline-none hover:bg-neutral-hover hover:text-fg"
 
 /** A working stepper: the shell is the field, the buttons really step, and
  *  the three placements systems disagree on swap around a live value. */
@@ -41,93 +34,111 @@ export function NumberHero({ state }: { state: LabState }) {
   const radius = controlRadiusPx(state)
   const look = inputLook(state.inputStyle, radius)
   const layout = state.numberLayout
-  const shellStyle: CSSProperties = focused
-    ? { ...look.style, ...focusFieldStyle(state) }
-    : look.style
+  const shellStyle: CSSProperties = {
+    ...look.style,
+    ...(focused ? focusFieldStyle(state) : {}),
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    ...(layout === "split"
+      ? { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }
+      : {}),
+  }
 
-  const input = (
-    <input
-      type="text"
-      inputMode="numeric"
-      aria-label="Quantity"
-      value={value}
-      onChange={(e) => {
-        const next = Number.parseInt(e.target.value, 10)
-        setValue(Number.isNaN(next) ? 0 : next)
-      }}
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
-      className={cn(
-        BARE_INPUT,
-        "flex-1 tabular-nums",
-        layout === "split" && "text-center",
-      )}
-    />
-  )
-
-  const ghost = (label: string, icon: React.ReactNode, delta: number) => (
-    <button
-      type="button"
-      aria-label={label}
-      onClick={() => setValue((v) => v + delta)}
-      className="flex size-6 shrink-0 cursor-interactive items-center justify-center text-fg-muted outline-none hover:bg-highlight hover:text-fg"
-      style={{ borderRadius: Math.max(radius - 3, 2) }}
-    >
-      {icon}
-    </button>
-  )
+  const step = (delta: number) => () => setValue((v) => v + delta)
 
   return (
     <Hero className="items-center py-5">
-      {layout === "stacked" ? (
+      <div className="flex items-stretch">
+        {layout === "split" && (
+          <button
+            type="button"
+            aria-label="Decrement"
+            onClick={step(-1)}
+            className={cn(SEGMENT, "w-8")}
+            style={{
+              borderTopLeftRadius: radius,
+              borderBottomLeftRadius: radius,
+            }}
+          >
+            <MinusIcon className="size-3.5" />
+          </button>
+        )}
         <div
           className={cn(
             SHELL,
-            "w-36 overflow-hidden pl-2.5",
+            "z-1 w-24 px-2.5",
+            layout === "split" && "-ml-px",
             look.className,
             hoverFx(state),
           )}
           style={shellStyle}
         >
-          {input}
-          <span className="flex h-full w-6 shrink-0 flex-col border-l border-border-control">
+          <input
+            type="text"
+            inputMode="numeric"
+            aria-label="Quantity"
+            value={value}
+            onChange={(e) => {
+              const next = Number.parseInt(e.target.value, 10)
+              setValue(Number.isNaN(next) ? 0 : next)
+            }}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            className={cn(
+              BARE_INPUT,
+              "tabular-nums",
+              layout === "split" && "text-center",
+            )}
+          />
+        </div>
+        {layout === "stacked" ? (
+          <span className="-ml-px flex w-7 flex-col">
             <button
               type="button"
               aria-label="Increment"
-              onClick={() => setValue((v) => v + 1)}
-              className="flex flex-1 cursor-interactive items-center justify-center border-b border-border-control text-fg-muted outline-none hover:bg-highlight hover:text-fg"
+              onClick={step(1)}
+              className={cn(SEGMENT, "flex-1")}
+              style={{ borderTopRightRadius: radius }}
             >
               <ChevronUpIcon className="size-3" />
             </button>
             <button
               type="button"
               aria-label="Decrement"
-              onClick={() => setValue((v) => v - 1)}
-              className="flex flex-1 cursor-interactive items-center justify-center text-fg-muted outline-none hover:bg-highlight hover:text-fg"
+              onClick={step(-1)}
+              className={cn(SEGMENT, "-mt-px flex-1")}
+              style={{ borderBottomRightRadius: radius }}
             >
               <ChevronDownIcon className="size-3" />
             </button>
           </span>
-        </div>
-      ) : (
-        <div
-          className={cn(
-            SHELL,
-            "w-36 gap-1",
-            layout === "split" ? "px-1" : "pr-1 pl-2.5",
-            look.className,
-            hoverFx(state),
-          )}
-          style={shellStyle}
-        >
-          {layout === "split" &&
-            ghost("Decrement", <MinusIcon className="size-3.5" />, -1)}
-          {input}
-          {layout === "right" &&
-            ghost("Decrement", <MinusIcon className="size-3.5" />, -1)}
-          {ghost("Increment", <PlusIcon className="size-3.5" />, 1)}
-        </div>
-      )}
+        ) : (
+          <>
+            {layout === "right" && (
+              <button
+                type="button"
+                aria-label="Decrement"
+                onClick={step(-1)}
+                className={cn(SEGMENT, "-ml-px w-8")}
+              >
+                <MinusIcon className="size-3.5" />
+              </button>
+            )}
+            <button
+              type="button"
+              aria-label="Increment"
+              onClick={step(1)}
+              className={cn(SEGMENT, "-ml-px w-8")}
+              style={{
+                borderTopRightRadius: radius,
+                borderBottomRightRadius: radius,
+              }}
+            >
+              <PlusIcon className="size-3.5" />
+            </button>
+          </>
+        )}
+      </div>
     </Hero>
   )
 }
