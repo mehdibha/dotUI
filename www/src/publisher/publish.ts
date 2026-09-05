@@ -152,6 +152,27 @@ export function depsFromFileImports(
   return found
 }
 
+/**
+ * The registry deps an item ships: its own plus those of the selected value
+ * of every enum param that declares some (`selections` omitted → every value,
+ * for build-time guards).
+ */
+export function registryDepsFor(
+  meta: RegistryItem,
+  selections?: Record<string, string>,
+): string[] {
+  const deps = [...(meta.registryDependencies ?? [])]
+  for (const [paramName, def] of Object.entries(meta.params ?? {})) {
+    if (def.kind !== "enum" || !def.registryDependencies) continue
+    const values = selections
+      ? [selections[paramName] ?? def.default]
+      : Object.keys(def.registryDependencies)
+    for (const value of values)
+      deps.push(...(def.registryDependencies[value] ?? []))
+  }
+  return [...new Set(deps)]
+}
+
 export interface PublishableModule {
   publishable: Publishable
   publishableByPath?: Record<string, Publishable>
@@ -287,7 +308,9 @@ export function publish({
     externalCorpus,
   )
 
-  const registryDependencies = rewriteDeps(meta.registryDependencies)
+  const registryDependencies = rewriteDeps(
+    registryDepsFor(meta, paramSelections),
+  )
   const dependencies = [
     ...new Set([...(meta.dependencies ?? []), ...depsFromFileImports(files)]),
   ]

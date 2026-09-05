@@ -27,12 +27,18 @@ function Popover({
   const context = useSlottedContext(PopoverPrimitives.PopoverContext)
   const isMobile = useIsMobile()
 
-  // Below the mobile line, pickers and menus slide into a bottom drawer.
-  // Non-modal popovers (a combobox list, a submenu) keep their anchor: the
-  // page under them stays live. Render-prop children read placement and
-  // entering state, which only the popover can provide.
+  // Below the mobile line, pickers and menus slide into a bottom drawer and
+  // submenus stack as nested drawers. Other non-modal popovers (a combobox
+  // list) keep their anchor: the page under them stays live. Render-prop
+  // children read placement and entering state, which only the popover can
+  // provide.
   const isNonModal = props.isNonModal ?? context?.isNonModal
-  if (isMobile && !isNonModal && typeof props.children !== "function") {
+  const isSubmenu = context?.trigger === "SubmenuTrigger"
+  if (
+    isMobile &&
+    (!isNonModal || isSubmenu) &&
+    typeof props.children !== "function"
+  ) {
     return (
       <Drawer
         isOpen={props.isOpen}

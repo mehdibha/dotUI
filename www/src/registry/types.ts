@@ -52,6 +52,9 @@ export type EnumParamDef = {
    */
   vars?: Record<string, Record<`--${string}`, string>>
   files?: Record<string, readonly RegistryItemFile[]>
+  /** Registry items only this value needs (a drawer for the mobile-drawer
+   *  popover), keyed by value name; shipped only when the value is selected. */
+  registryDependencies?: Record<string, readonly string[]>
   description?: string
 }
 
