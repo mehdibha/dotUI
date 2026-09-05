@@ -58,10 +58,7 @@ export default function Demo() {
             <TableRow key={invoice.id}>
               <TableCell className="font-medium">{invoice.id}</TableCell>
               <TableCell>
-                <Badge
-                  appearance="soft"
-                  variant={statusVariant[invoice.status]}
-                >
+                <Badge variant={statusVariant[invoice.status]}>
                   {invoice.status}
                 </Badge>
               </TableCell>

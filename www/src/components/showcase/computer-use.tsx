@@ -49,7 +49,7 @@ export function ComputerUse({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           Computer use
-          <Badge appearance="soft" variant="neutral" size="sm">
+          <Badge variant="neutral" size="sm">
             Beta
           </Badge>
         </CardTitle>

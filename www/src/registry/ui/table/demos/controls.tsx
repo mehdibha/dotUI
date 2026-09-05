@@ -104,7 +104,7 @@ export default function Demo() {
             <TableRow key={task.id} textValue={task.task}>
               <TableCell className="font-medium">{task.task}</TableCell>
               <TableCell>
-                <Badge appearance="soft" variant={statusVariant[task.status]}>
+                <Badge variant={statusVariant[task.status]}>
                   {task.status}
                 </Badge>
               </TableCell>

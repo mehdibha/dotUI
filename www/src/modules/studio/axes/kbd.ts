@@ -6,7 +6,9 @@
    go mono.
 
    Engine: `treatment` is an enum param on `kbd`; the chip and keycap
-   corners ride on the `--kbd-radius` surface var. */
+   corners ride on the `--kbd-radius` surface var. Menu and list-box items
+   strip the chrome (`*:[kbd]:border-0 bg-transparent`), so list hints read
+   as text in every treatment. */
 
 import type { Resolved, StudioState } from "./index"
 

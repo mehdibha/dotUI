@@ -417,11 +417,7 @@ function AccountSection() {
 
       <SettingsGroup
         title="Workspace"
-        action={
-          <Badge variant="accent" appearance="soft">
-            Owner
-          </Badge>
-        }
+        action={<Badge variant="accent">Owner</Badge>}
       >
         <SettingsRow label="Workspace name">
           <TextField
@@ -786,7 +782,7 @@ function ConnectionsSection() {
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-medium">{integration.name}</span>
                 {integration.connected ? (
-                  <Badge variant="success" appearance="soft" size="sm">
+                  <Badge variant="success" size="sm">
                     Connected
                   </Badge>
                 ) : null}
@@ -885,7 +881,7 @@ function SecuritySection() {
                           {session.device}
                         </span>
                         {session.current && (
-                          <Badge variant="success" appearance="soft" size="sm">
+                          <Badge variant="success" size="sm">
                             This device
                           </Badge>
                         )}

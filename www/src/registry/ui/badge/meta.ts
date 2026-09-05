@@ -11,7 +11,6 @@ const badgeMeta = {
       target: "ui/badge.tsx",
     },
   ],
-  // Synced with tag-group: the studio's Badges axes write both.
   params: {
     style: {
       kind: "enum",

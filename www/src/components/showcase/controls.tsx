@@ -99,9 +99,7 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
           <div className="flex items-center gap-2">
             <Badge variant="accent">Badge</Badge>
             <Badge variant="neutral">Neutral</Badge>
-            <Badge appearance="soft" variant="accent">
-              Subtle
-            </Badge>
+            <Badge variant="accent">Subtle</Badge>
           </div>
           <AvatarGroup size="sm" className="*:data-avatar:ring-card">
             <Avatar size="sm">

@@ -845,11 +845,7 @@ function InlineThread({ id }: { id: string }) {
               </p>
             </div>
           </div>
-          {resolved && (
-            <Badge variant="success" appearance="soft">
-              Resolved
-            </Badge>
-          )}
+          {resolved && <Badge variant="success">Resolved</Badge>}
         </div>
 
         {replies.map((reply) => (
@@ -939,7 +935,7 @@ function FileDiff({
           {file.path}
         </span>
         {file.kind === "added" && (
-          <Badge variant="success" appearance="soft" size="sm">
+          <Badge variant="success" size="sm">
             New file
           </Badge>
         )}
@@ -1050,7 +1046,7 @@ function FilesChanged() {
                       <span className="shrink-0">{name}</span>
                     </span>
                     {file.comments > 0 && (
-                      <Badge appearance="soft" size="sm">
+                      <Badge size="sm">
                         <MessageSquareIcon className="size-3" />
                         {file.comments}
                       </Badge>
@@ -1226,11 +1222,7 @@ function Conversation({
                 key="body"
                 author={item.author}
                 when={item.when}
-                header={
-                  <Badge appearance="soft" size="sm">
-                    Author
-                  </Badge>
-                }
+                header={<Badge size="sm">Author</Badge>}
               >
                 <PullRequestBody />
               </TimelineCard>
@@ -1251,7 +1243,6 @@ function Conversation({
                           ? "danger"
                           : "neutral"
                     }
-                    appearance="soft"
                     size="sm"
                   >
                     {item.state === "approved"
@@ -1473,16 +1464,12 @@ export default function CodeReviewBlock() {
               <Tab id="conversation">
                 <MessageSquareIcon className="size-4" />
                 Conversation
-                <Badge appearance="soft" size="sm">
-                  8
-                </Badge>
+                <Badge size="sm">8</Badge>
               </Tab>
               <Tab id="files">
                 <FileCodeIcon className="size-4" />
                 Files changed
-                <Badge appearance="soft" size="sm">
-                  {FILES.length}
-                </Badge>
+                <Badge size="sm">{FILES.length}</Badge>
               </Tab>
             </TabList>
           </div>

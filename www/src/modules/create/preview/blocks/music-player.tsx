@@ -430,7 +430,7 @@ function TopBar() {
         className="ml-2 hidden max-w-xs md:flex"
       />
       <div className="ml-auto flex items-center gap-2">
-        <Badge appearance="soft" variant="accent" className="hidden sm:flex">
+        <Badge variant="accent" className="hidden sm:flex">
           <BadgeCheckIcon className="size-3" />
           Lossless
         </Badge>
@@ -475,7 +475,7 @@ function Hero({
         </Avatar>
         <div className="flex min-w-0 flex-col gap-3">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge appearance="soft">Artist</Badge>
+            <Badge>Artist</Badge>
             <span className="text-sm text-fg-muted">
               Porto, Portugal · Recording since 2016
             </span>
@@ -594,7 +594,7 @@ function TrackTable({
                       {track.title}
                     </span>
                     {track.explicit && (
-                      <Badge size="sm" appearance="soft" variant="neutral">
+                      <Badge size="sm" variant="neutral">
                         E
                       </Badge>
                     )}

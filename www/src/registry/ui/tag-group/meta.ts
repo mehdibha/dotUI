@@ -13,7 +13,6 @@ const tagGroupMeta = {
   ],
   registryDependencies: ["field", "button", "focus-styles"],
   dependencies: ["react-aria-components"],
-  // Synced with badge: the studio's Badges axes write both.
   params: {
     style: {
       kind: "enum",

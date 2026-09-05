@@ -353,7 +353,7 @@ function ThreadMessage({ message }: { message: ChatMessage }) {
           <div className="flex flex-wrap items-center gap-1.5">
             <span className="text-xs text-fg-muted">Sources</span>
             {message.sources.map((source) => (
-              <Badge key={source} appearance="soft" variant="accent" size="sm">
+              <Badge key={source} variant="accent" size="sm">
                 {source}
               </Badge>
             ))}
@@ -512,11 +512,7 @@ export default function AiChatBlock() {
                 {messages.length} messages · updated 4m ago
               </span>
             </div>
-            <Badge
-              appearance="soft"
-              variant="accent"
-              className="ml-2 hidden sm:inline-flex"
-            >
+            <Badge variant="accent" className="ml-2 hidden sm:inline-flex">
               Growth
             </Badge>
             <div className="ml-auto flex items-center gap-1">

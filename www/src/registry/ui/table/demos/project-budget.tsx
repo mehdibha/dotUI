@@ -84,10 +84,7 @@ export default function Demo() {
             <TableRow key={project.project}>
               <TableCell className="font-medium">{project.project}</TableCell>
               <TableCell>
-                <Badge
-                  appearance="soft"
-                  variant={statusVariant[project.status]}
-                >
+                <Badge variant={statusVariant[project.status]}>
                   <span
                     aria-hidden
                     className="size-1.5 rounded-full bg-current"

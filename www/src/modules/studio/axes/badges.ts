@@ -7,7 +7,8 @@
    group — one axis writes both). On the badge it sets the default of the
    `appearance` prop, which stays API for the products that mix chips; on the
    tag it is the fill. Shape rides on the shared `--badge-radius` /
-   `--tag-radius` surface vars, resolved to plain `rounded-*` on export. */
+   `--tag-radius` surface vars (token-field tokens sit on `--tag-radius`
+   too), resolved to plain `rounded-*` on export. */
 
 import type { Resolved, StudioState } from "./index"
 

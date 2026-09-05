@@ -511,9 +511,7 @@ export default function Checkout() {
                     <h2 className="font-heading text-base font-medium">
                       Order summary
                     </h2>
-                    <Badge appearance="soft" variant="accent">
-                      {itemCount} items
-                    </Badge>
+                    <Badge variant="accent">{itemCount} items</Badge>
                   </div>
 
                   <ul className="space-y-4">

@@ -20,7 +20,7 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
         "focus-visible:bg-highlight focus-visible:text-fg-on-highlight",
         "disabled:text-fg-disabled disabled:**:text-current",
         "has-data-listbox-item-description:flex-col has-data-listbox-item-description:items-start has-data-listbox-item-description:gap-0 has-data-listbox-item-description:has-[>svg]:pl-8 has-data-listbox-item-description:**:data-listbox-item-indicator:top-2 has-data-listbox-item-description:*:[svg]:absolute has-data-listbox-item-description:*:[svg]:top-2 has-data-listbox-item-description:*:[svg]:left-2",
-        "*:[kbd]:ml-auto *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
+        "*:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
       ],
       indicator: [
         "pointer-events-none absolute flex items-center justify-center",

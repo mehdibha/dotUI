@@ -774,12 +774,7 @@ function LevelBadge({ level }: { level: Level }) {
   const meta = LEVEL_META[level]
   const Icon = meta.icon
   return (
-    <Badge
-      variant={meta.badge}
-      appearance="soft"
-      size="sm"
-      className="font-mono uppercase"
-    >
+    <Badge variant={meta.badge} size="sm" className="font-mono uppercase">
       <Icon aria-hidden />
       {meta.label}
     </Badge>
@@ -835,7 +830,6 @@ function LogRow({ entry }: { entry: LogEntry }) {
                 <Badge
                   key={tag}
                   variant="neutral"
-                  appearance="soft"
                   size="sm"
                   className="font-mono"
                 >
@@ -1007,7 +1001,7 @@ export default function LogsBlock() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Badge variant={live ? "success" : "neutral"} appearance="soft">
+            <Badge variant={live ? "success" : "neutral"}>
               {live ? (
                 <span className="relative flex size-1.5">
                   <span className="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-75" />
@@ -1051,7 +1045,7 @@ export default function LogsBlock() {
                   {stat.label}
                 </CardTitle>
                 <CardAction>
-                  <Badge variant={stat.tone} appearance="soft" size="sm">
+                  <Badge variant={stat.tone} size="sm">
                     {stat.up ? (
                       <TrendingUpIcon aria-hidden />
                     ) : (
@@ -1357,7 +1351,6 @@ export default function LogsBlock() {
                         <TableCell className="text-right">
                           <Badge
                             variant={source.up ? "danger" : "success"}
-                            appearance="soft"
                             size="sm"
                           >
                             {source.up ? (
