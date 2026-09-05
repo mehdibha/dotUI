@@ -14,11 +14,17 @@ const sliderMeta = {
   registryDependencies: ["field", "focus-styles"],
   dependencies: ["react-aria"],
   params: {
-    "thumb-style": {
+    thumb: {
       kind: "enum",
-      default: "solid",
-      values: ["solid", "outline", "bar", "faceted"] as const,
-      // description: "Visual style of the slider thumb.",
+      default: "circle",
+      values: ["circle", "outline", "bar"] as const,
+      description: "The knob riding the track.",
+    },
+    track: {
+      kind: "enum",
+      default: "thin",
+      values: ["thin", "thick"] as const,
+      description: "The track weight: a hairline, or a level bar.",
     },
   },
 } satisfies RegistryItem
