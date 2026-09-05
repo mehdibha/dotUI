@@ -74,15 +74,10 @@ const ProgressBarFill = ({
       data-rac=""
       data-indeterminate={isIndeterminate || undefined}
       className={fill({ className })}
-      style={
-        {
-          transform:
-            typeof percentage === "number"
-              ? `scaleX(${percentage / 100})`
-              : undefined,
-          ...style,
-        } as React.CSSProperties
-      }
+      style={{
+        width: typeof percentage === "number" ? `${percentage}%` : undefined,
+        ...style,
+      }}
       {...props}
     />
   )

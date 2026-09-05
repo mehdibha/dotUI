@@ -153,9 +153,9 @@ describe("transformBase", () => {
     )
   })
 
-  test("loader spinner variant: transform works on variant base files", () => {
+  test("loader ring variant: transform works on variant base files", () => {
     const { template } = transformBase({
-      baseTsxPath: path.join(REGISTRY_UI, "loader/base.spinner.tsx"),
+      baseTsxPath: path.join(REGISTRY_UI, "loader/base.ring.tsx"),
       componentName: "loader",
     })
     expect(template).toContain("const loaderVariants = tv(")

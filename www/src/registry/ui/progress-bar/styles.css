@@ -1,0 +1,25 @@
+@theme inline {
+  --animate-progress-slide: progress-slide 1.4s ease-in-out infinite;
+  --animate-progress-pulse: progress-pulse 1.6s ease-in-out infinite;
+}
+
+/* A 40%-wide segment crossing the track: -100% hides it left, 250% of its
+   own width puts its leading edge past the track's end. */
+@keyframes progress-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+@keyframes progress-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}

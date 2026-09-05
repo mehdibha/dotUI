@@ -1,12 +1,11 @@
 "use client"
 
-/* Skeleton — how skeletons idle while content loads. Animation is the one
-   place a design system runs continuous ambient motion — shimmer
-   (Carbon/Ant) vs pulse (shadcn/MUI) vs none (Linear-style stillness);
-   the registry already ships the param unexposed in skeleton/styles.ts. */
+/* Skeleton — how skeletons idle while content loads: shimmer vs pulse vs
+   none. The hero wears the registry Skeleton with the chosen animation. */
 
 import { Skeleton } from "@/registry/ui/skeleton"
 
+import { ANIMATION_OPTIONS } from "../axes/skeleton"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -82,15 +81,16 @@ function SkeletonNoneGlyph() {
   )
 }
 
-const ANIMATION_OPTIONS: SelectRowOption[] = [
-  {
-    value: "shimmer",
-    label: "Shimmer",
-    illustration: <SkeletonShimmerGlyph />,
-  },
-  { value: "pulse", label: "Pulse", illustration: <SkeletonPulseGlyph /> },
-  { value: "none", label: "None", illustration: <SkeletonNoneGlyph /> },
-]
+const GLYPHS: Record<string, React.ReactNode> = {
+  shimmer: <SkeletonShimmerGlyph />,
+  pulse: <SkeletonPulseGlyph />,
+  none: <SkeletonNoneGlyph />,
+}
+
+const SKELETON_OPTIONS: SelectRowOption[] = ANIMATION_OPTIONS.map((option) => ({
+  ...option,
+  illustration: GLYPHS[option.value],
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 
@@ -137,7 +137,7 @@ export function SkeletonSection({ lab }: { lab: Lab }) {
         label="Animation"
         value={state.skeletonAnimation}
         onChange={set("skeletonAnimation")}
-        options={ANIMATION_OPTIONS}
+        options={SKELETON_OPTIONS}
         layout="grid"
       />
     </ControlGroup>

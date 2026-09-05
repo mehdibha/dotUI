@@ -7,12 +7,8 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
   base: {
     slots: {
       root: fieldStyles().field(),
-      // Fall back to the meta param defaults (track-size, track-radius, fill-color)
-      // so the bar stays visible even when the design system hasn't injected those
-      // CSS vars — otherwise the track collapses to 0 height and the fill is transparent.
-      track:
-        "relative flex h-[var(--progress-track-size,calc(var(--spacing)*1))] w-full items-center overflow-x-hidden rounded-[var(--progress-track-radius,9999px)] bg-muted",
-      fill: "data-indeterminate:animate-progress-indeterminate h-full w-full origin-left bg-[var(--progress-fill-color,var(--color-primary))] transition-all",
+      track: "relative flex w-full items-center overflow-x-hidden rounded-full",
+      fill: "h-full w-full bg-primary transition-all",
       output: "ml-auto text-fg-muted tabular-nums",
     },
     variants: {},
@@ -32,6 +28,49 @@ const { useStyles, styles } = createStyles(progressBarMeta, {
     comfortable: {
       slots: {
         output: "text-sm",
+      },
+    },
+  },
+  params: {
+    track: {
+      thin: {
+        slots: {
+          track: "h-1",
+        },
+      },
+      thick: {
+        slots: {
+          track: "h-2",
+        },
+      },
+    },
+    indeterminate: {
+      slide: {
+        slots: {
+          fill: "data-indeterminate:w-2/5 data-indeterminate:animate-progress-slide",
+        },
+      },
+      pulse: {
+        slots: {
+          fill: "data-indeterminate:animate-progress-pulse",
+        },
+      },
+    },
+    /* Material 3's cut track: the fill's rounded end, a 4px gap, then the
+       remaining track drawn by the fill's ::after (clipped by the track), and
+       a stop dot at the track's end. */
+    gap: {
+      none: {
+        slots: {
+          track: "bg-muted",
+        },
+      },
+      cut: {
+        slots: {
+          track:
+            "after:absolute after:top-1/2 after:right-0 after:size-1 after:-translate-y-1/2 after:rounded-full after:bg-primary",
+          fill: "relative rounded-full after:absolute after:top-0 after:left-[calc(100%+4px)] after:h-full after:w-screen after:rounded-full after:bg-muted data-indeterminate:after:hidden",
+        },
       },
     },
   },

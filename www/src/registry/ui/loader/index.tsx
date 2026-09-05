@@ -1,15 +1,17 @@
 import { createDynamicComponent } from "@/lib/styles"
 
-import { Loader as RingLoader } from "./base.ring"
-import { type LoaderProps, Loader as SpinnerLoader } from "./base.spinner"
+import { Loader as BladesLoader } from "./base.blades"
+import { Loader as DotsLoader } from "./base.dots"
+import { type LoaderProps, Loader as RingLoader } from "./base.ring"
 
-const Loader = createDynamicComponent<LoaderProps, "spinner" | "ring">({
+const Loader = createDynamicComponent<LoaderProps, "ring" | "blades" | "dots">({
   componentName: "loader",
   paramName: "style",
-  defaultValue: "spinner",
+  defaultValue: "ring",
   components: {
-    spinner: SpinnerLoader,
     ring: RingLoader,
+    blades: BladesLoader,
+    dots: DotsLoader,
   },
   displayName: "Loader",
 })
