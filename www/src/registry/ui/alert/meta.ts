@@ -14,8 +14,9 @@ const alertMeta = {
   params: {
     style: {
       kind: "enum",
-      default: "default",
-      values: ["default", "sousse"] as const,
+      default: "neutral",
+      values: ["neutral", "tinted", "tinted-border", "accent-bar"] as const,
+      description: "How much intent color the alert surface carries.",
     },
   },
 } satisfies RegistryItem

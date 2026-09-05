@@ -80,12 +80,13 @@ interface ToastProviderProps extends ToastPrimitive.Provider.Props {
 function ToastProvider({
   children,
   limit = 3,
-  position = "bottom-right",
+  position,
   portalProps,
   timeout = 5000,
   toastManager = defaultToastManager,
   ...props
 }: ToastProviderProps) {
+  const { defaultVariants } = useStyles()
   return (
     <ToastPrimitive.Provider
       limit={limit}
@@ -94,7 +95,10 @@ function ToastProvider({
       {...props}
     >
       {children}
-      <ToastList position={position} portalProps={portalProps} />
+      <ToastList
+        position={position ?? defaultVariants.position ?? "bottom-right"}
+        portalProps={portalProps}
+      />
     </ToastPrimitive.Provider>
   )
 }

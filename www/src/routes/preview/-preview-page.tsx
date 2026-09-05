@@ -2,6 +2,7 @@ import { type ReactNode, useCallback, useState } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
 import { DesignSystemProvider } from "@/lib/styles"
+import { ToastProvider } from "@/registry/ui/toast"
 import {
   ExamplesIndex,
   GroupExamplesIndex,
@@ -120,6 +121,9 @@ export function PreviewPage() {
     >
       {embedded && <style>{EMBEDDED_SCROLLBAR_CSS}</style>}
       {embedded && <PreviewInspector />}
+      {/* Inside the provider so toasts wear the previewed params; the app
+          itself fires none. */}
+      <ToastProvider />
       {content}
     </DesignSystemProvider>
   )

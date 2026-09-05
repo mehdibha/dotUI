@@ -51,9 +51,13 @@ describe("extractStylesConfig", () => {
       ),
     ).toBe(true)
 
-    // Both enum values for `style` extracted.
-    expect(cfg.params?.style?.default).toBeDefined()
-    expect(cfg.params?.style?.sousse).toBeDefined()
+    // Every enum value for `style` extracted.
+    expect(Object.keys(cfg.params?.style ?? {}).sort()).toEqual([
+      "accent-bar",
+      "neutral",
+      "tinted",
+      "tinted-border",
+    ])
   })
 
   test("skeleton: extracts the animation enum (shimmer, pulse, none)", () => {
@@ -228,8 +232,13 @@ describe("end-to-end (extract + transform → publish)", () => {
           params: {
             style: {
               kind: "enum",
-              default: "default",
-              values: ["default", "sousse"] as const,
+              default: "neutral",
+              values: [
+                "neutral",
+                "tinted",
+                "tinted-border",
+                "accent-bar",
+              ] as const,
             },
           },
         },
