@@ -78,7 +78,8 @@ const TRACK = {
 const THUMB = {
   circle: "rounded-full bg-fg",
   outline: "rounded-full border-2 border-border-control bg-bg",
-  bar: "w-1 rounded-full bg-fg",
+  // The ring paints the hero surface over track and fill — the M3 gap.
+  bar: "w-1 rounded-full bg-primary ring-[3px] ring-bg",
 }
 
 function SliderSpecimen({

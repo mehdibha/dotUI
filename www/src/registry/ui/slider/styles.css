@@ -2,7 +2,7 @@
   --slider-track-radius: var(--radius-full);
   --slider-thumb-radius: var(--radius-full);
   --slider-thumb-size: calc(var(--spacing) * 3);
-  --slider-thumb-shadow: none;
+  --slider-thumb-shadow: 0 0 #0000;
   --slider-fill-color: var(--color-primary);
   --slider-cursor: var(--cursor-drag);
   --slider-dragging-cursor: var(--cursor-dragging);

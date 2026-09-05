@@ -1,10 +1,12 @@
 /* Sliders — the two decisions real systems fork on. Thumb: a solid disc
-   (Material 2, dotUI), a bordered white disc (iOS, shadcn, Radix), or
+   (dotUI, Material 2), a bordered white disc (iOS, shadcn, Radix), or
    Material 3's tall handle. Track: a hairline the thumb rides (iOS, Radix,
    shadcn) or a chunky level bar (M3's 16dp track, media UIs).
 
    Engine: `thumb` and `track` are enum params on `slider`; the thick track
-   scales the thumb with it through the component's own size vars. */
+   scales the thumb with it through the component's own size vars. The
+   color-slider stays out: its track is a gradient swatch and its thumb the
+   shared color-thumb, so neither axis applies. */
 
 import type { Resolved, StudioState } from "./index"
 
