@@ -24,6 +24,13 @@ const modalMeta = {
       values: ["scale", "fade", "slide", "none"] as const,
       description: "How the dialog enters and leaves.",
     },
+    mobile: {
+      kind: "enum",
+      default: "center",
+      values: ["center", "sheet"] as const,
+      description:
+        "Where the modal sits below the mobile line: centered, or docked to the bottom edge as a sheet.",
+    },
   },
 } satisfies RegistryItem
 

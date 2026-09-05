@@ -75,6 +75,20 @@ const { useStyles, styles } = createStyles(modalMeta, {
       },
       none: {},
     },
+    /* Below the mobile line the sheet docks to the bottom edge of the visual
+       viewport (keyboard-aware) and rises in instead of scaling. */
+    mobile: {
+      center: {},
+      sheet: {
+        slots: {
+          viewport: "max-md:items-end",
+          modal: [
+            "max-md:max-w-full max-md:rounded-t-(--modal-radius) max-md:rounded-b-none max-md:border-b-0 max-md:pb-[env(safe-area-inset-bottom)]",
+            "max-md:transition-[opacity,translate] max-md:entering:translate-y-4 max-md:entering:scale-100 max-md:exiting:translate-y-4 max-md:exiting:scale-100",
+          ],
+        },
+      },
+    },
   },
 })
 
