@@ -13,7 +13,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
       list: "inline-flex w-fit items-center justify-center text-fg-muted",
       tab: [
         "relative isolate inline-flex flex-1 cursor-default items-center justify-center font-medium whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] select-none focus-visible:focus-ring",
-        "text-fg-muted hover:text-fg disabled:pointer-events-none disabled:text-fg-disabled selected:text-fg",
+        "text-fg-muted hover:text-fg disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 selected:text-fg",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       ],
       selectionIndicator:

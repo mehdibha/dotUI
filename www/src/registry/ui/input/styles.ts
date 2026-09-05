@@ -29,7 +29,7 @@ const defaultText = "text-base sm:text-sm"
 // nested input-control.
 
 const outlineField = tv({
-  base: "rounded-(--input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-border disabled:bg-disabled",
+  base: "rounded-(--input-radius) border border-border-control bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:focus-input focus:not-invalid:border-border-focus",
@@ -40,7 +40,7 @@ const outlineField = tv({
 })
 
 const lineField = tv({
-  base: "border-b border-border-control transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border",
+  base: "border-b border-border-control transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control))",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus invalid:focus:border-fg-danger",
@@ -51,7 +51,7 @@ const lineField = tv({
 })
 
 const filledLineBottomField = tv({
-  base: "rounded-t-(--input-radius) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-border disabled:bg-disabled",
+  base: "rounded-t-(--input-radius) border-b border-border-control bg-field px-(--edge-to-text) transition-[box-shadow,border-color,color] invalid:border-border-danger disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:not-invalid:border-border-focus",
@@ -62,7 +62,7 @@ const filledLineBottomField = tv({
 })
 
 const filledField = tv({
-  base: "rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-disabled",
+  base: "rounded-(--input-radius) border border-transparent bg-field px-(--edge-to-text) shadow-[var(--shadow-control,0_0_#0000)] transition-[box-shadow,border-color,color] invalid:border-border-danger invalid:ring-danger-muted disabled:bg-(--disabled-bg,var(--color-field))",
   variants: {
     focus: {
       self: "focus:focus-input focus:not-invalid:border-border-focus",
@@ -114,7 +114,7 @@ const { useStyles, styles } = createStyles(inputMeta, {
         "has-data-textarea:h-auto has-data-textarea:flex-col **:data-textarea:w-full",
         "has-data-input:has-[[data-input-group-addon]:first-child]:pl-0 has-data-input:has-[[data-input-group-addon]:last-child]:pr-0",
         "has-data-textarea:px-0",
-        "disabled:cursor-disabled disabled:text-fg-disabled",
+        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
         "has-data-combobox-value:h-auto has-data-combobox-value:min-h-(--input-h) has-data-combobox-value:flex-wrap has-data-combobox-value:items-center has-data-combobox-value:gap-1 has-data-combobox-value:py-(--addon-button-inset) has-data-combobox-value:pl-(--addon-button-inset) **:data-combobox-value:contents has-data-combobox-value:has-[[data-tag-list][data-empty]]:**:data-input:pl-(--edge-to-text) **:data-tag:h-[calc(var(--input-h)-var(--addon-button-inset)*2)] **:data-tag:rounded-[calc(var(--input-radius)-(var(--addon-button-inset)-1px))] **:data-tag-group:contents **:data-tag-list:contents",
       ],
       inputGroupAddon: [
@@ -132,14 +132,14 @@ const { useStyles, styles } = createStyles(inputMeta, {
       input: [
         "inline-flex w-full cursor-text items-center outline-none",
         "h-(--input-h) in-data-input-group:h-auto",
-        "disabled:cursor-disabled disabled:text-fg-disabled",
+        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
       ],
       textArea: [
         "min-h-16 w-full resize-none py-(--top-to-text) outline-none",
-        "disabled:cursor-disabled disabled:text-fg-disabled",
+        "disabled:cursor-disabled disabled:text-(--disabled-fg,currentColor)",
       ],
       dateInputSegment:
-        "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-fg-disabled type-literal:px-0",
+        "rounded px-0.5 outline-hidden select-none placeholder-shown:not-data-disabled:not-data-focused:text-fg-muted focus:bg-accent focus:text-fg-on-accent focus:caret-transparent disabled:text-(--disabled-fg,currentColor) type-literal:px-0",
     },
     variants: {
       size: {

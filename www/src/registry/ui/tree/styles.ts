@@ -17,7 +17,7 @@ const { useStyles, styles } = createStyles(treeMeta, {
         "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover",
         "drop-target:bg-accent-muted drop-target:text-fg",
         "dragging:opacity-60",
-        "disabled:pointer-events-none disabled:text-fg-disabled disabled:**:text-current",
+        "disabled:pointer-events-none disabled:text-(--disabled-fg,currentColor) disabled:**:text-current",
       ],
       itemContent: [
         "flex min-w-0 flex-1 items-center gap-1.5",

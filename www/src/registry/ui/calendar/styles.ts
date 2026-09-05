@@ -22,7 +22,7 @@ const { useStyles, styles } = createStyles(calendarMeta, {
       cell: [
         "relative flex aspect-square size-full items-center justify-center text-center text-sm font-medium no-highlight",
         "min-w-(--cell-size) cursor-interactive",
-        "disabled:text-fg-disabled unavailable:text-fg-disabled unavailable:line-through outside-month:text-fg-disabled",
+        "disabled:text-(--disabled-fg,currentColor) unavailable:text-fg-disabled unavailable:line-through outside-month:text-fg-disabled",
         "in-data-range-calendar:not-outside-month:selected:bg-accent-muted",
         "focus-reset in-data-calendar:transition-shadow in-data-calendar:hover:bg-accent-muted in-data-calendar:focus-visible:focus-ring in-data-calendar:selected:not-outside-month:bg-accent in-data-calendar:selected:not-outside-month:text-fg-on-accent",
         "outside-month:pointer-events-none",

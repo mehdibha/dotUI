@@ -16,7 +16,7 @@ const { useStyles, styles } = createStyles(timePickerMeta, {
         "hover:bg-accent-muted",
         "focus-visible:focus-ring",
         "selected:bg-accent selected:text-fg-on-accent",
-        "disabled:pointer-events-none disabled:text-fg-disabled",
+        "disabled:pointer-events-none disabled:text-(--disabled-fg,currentColor)",
       ],
     },
   },

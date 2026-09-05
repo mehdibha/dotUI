@@ -10,12 +10,13 @@ const { useStyles, styles } = createStyles(linkMeta, {
   base: {
     base: [
       "focus-reset focus-visible:focus-ring",
-      "inline-flex items-center gap-1 transition-colors disabled:text-fg-disabled",
+      "inline-flex items-center gap-1 transition-colors",
     ],
     variants: {
       variant: {
-        default: "",
-        quiet: "font-medium text-fg",
+        default: "disabled:text-(--disabled-fg,currentColor)",
+        quiet:
+          "font-medium text-fg disabled:text-(--disabled-fg,var(--color-fg))",
         unstyled: "",
       },
     },

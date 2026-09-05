@@ -35,11 +35,9 @@ import type { StylesConfig } from "../types"
  * strings the app renders (evaluated with the real `tv`), not just plain
  * literals.
  */
-interface ExtractCtx {
+interface ExtractCtx extends ExtractOptions {
   sourceFile: SourceFile
   filePath: string
-  /** Registry metas by name — a composed component's param defaults. */
-  metas?: ReadonlyMap<string, RegistryItem>
 }
 
 /** `.../registry/ui/<name>/styles.ts` → `.../registry/ui`. */

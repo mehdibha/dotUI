@@ -19,7 +19,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         "data-checked:border-primary/40 data-checked:bg-muted",
         "data-invalid:border-border-danger",
         "has-[>input:focus-visible]:focus-ring",
-        "data-disabled:pointer-events-none data-disabled:cursor-disabled data-disabled:text-fg-disabled",
+        "data-disabled:pointer-events-none data-disabled:cursor-disabled data-disabled:opacity-50",
       ],
       choiceInput:
         "absolute inset-0 z-10 size-full cursor-interactive opacity-0",
@@ -43,7 +43,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         "placeholder:text-fg-muted",
         "focus:focus-input focus:not-aria-invalid:border-border-focus",
         "aria-invalid:border-border-danger aria-invalid:ring-2 aria-invalid:ring-danger-muted",
-        "disabled:pointer-events-none disabled:border-border disabled:bg-disabled disabled:text-fg-disabled",
+        "disabled:pointer-events-none disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-field)) disabled:text-(--disabled-fg,currentColor)",
       ],
       error: "mt-2 text-fg-danger",
       actions:

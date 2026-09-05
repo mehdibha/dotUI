@@ -12,7 +12,7 @@ const { useStyles, styles } = createStyles(menuMeta, {
       item: [
         "relative flex w-full cursor-interactive items-center gap-2 outline-hidden select-none disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
         "focus:bg-highlight focus:text-fg-on-highlight",
-        "disabled:text-fg-disabled disabled:**:text-current",
+        "disabled:text-(--disabled-fg,currentColor) disabled:**:text-current",
         "has-data-menu-item-description:flex-col has-data-menu-item-description:items-start has-data-menu-item-description:gap-0 has-data-menu-item-description:has-[>svg]:pl-8 has-data-menu-item-description:*:[svg]:absolute has-data-menu-item-description:*:[svg]:top-2 has-data-menu-item-description:*:[svg]:left-2",
         "data-has-submenu:pr-8",
         "*:[kbd]:ml-auto *:[kbd]:border-0 *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",

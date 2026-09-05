@@ -1,5 +1,8 @@
 "use client"
 
+/* The `error: message` build of field: identical to base.tsx except that
+   FieldError leads with an icon. Keep the two files in step. */
+
 import type React from "react"
 import * as CheckboxPrimitives from "react-aria-components/Checkbox"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
@@ -10,6 +13,7 @@ import * as TextPrimitives from "react-aria-components/Text"
 import { useSlotId } from "react-aria/private/utils/useId"
 import type { VariantProps } from "tailwind-variants"
 
+import { CircleAlertIcon } from "@/registry/icons"
 import { Text } from "@/registry/ui/text"
 
 import { useStyles } from "./styles"
@@ -156,7 +160,7 @@ const Description = ({ className, ...props }: DescriptionProps) => {
 interface FieldErrorProps extends React.ComponentProps<
   typeof FieldErrorPrimitives.FieldError
 > {}
-const FieldError = ({ className, ...props }: FieldErrorProps) => {
+const FieldError = ({ className, children, ...props }: FieldErrorProps) => {
   const { fieldError } = useStyles()()
   return (
     <FieldErrorPrimitives.FieldError
@@ -166,7 +170,14 @@ const FieldError = ({ className, ...props }: FieldErrorProps) => {
         fieldError({ className }),
       )}
       {...props}
-    />
+    >
+      {composeRenderProps(children, (children, { validationErrors }) => (
+        <>
+          <CircleAlertIcon aria-hidden />
+          {children ?? validationErrors.join(" ")}
+        </>
+      ))}
+    </FieldErrorPrimitives.FieldError>
   )
 }
 

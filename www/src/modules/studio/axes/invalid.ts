@@ -3,8 +3,10 @@
    shadcn) vs the message line carrying an icon (Material, Spectrum, Carbon,
    Polaris) vs GOV.UK's left bar with a bold message above the field.
 
-   Engine: the `error` enum param on `field` — every field root (text field,
-   select, date picker…) wears the field styles. */
+   Engine: the `error` enum param on `field`. Label and message reorder
+   through field's slots; the message build ships a second base file with the
+   icon; the bar is a field/styles.css rule on every `data-field` root, driven
+   by the value's vars. */
 
 import type { Resolved, StudioState } from "./index"
 

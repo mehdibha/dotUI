@@ -38,7 +38,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       row: [
         "group/row relative box-border cursor-default bg-bg/70 focus-reset transition-colors [&:is(div)]:h-full",
         "hover:bg-muted/50 data-[state=selected]:bg-accent-muted pressed:bg-muted/70 selected:bg-accent-muted dragging:cursor-dragging dragging:bg-accent-muted/70 dragging:text-fg dragging:opacity-70 drop-target:bg-accent-muted/70",
-        "focus-visible:bg-accent-muted/70 disabled:text-fg-disabled focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
+        "focus-visible:bg-accent-muted/70 disabled:text-(--disabled-fg,currentColor) focus-visible:[&>*:first-child]:shadow-[inset_3px_0_0_0_var(--color-border-focus)]",
       ],
       cell: [
         "relative box-border h-10 align-middle leading-5 whitespace-nowrap focus-reset outline-hidden",
@@ -66,7 +66,7 @@ const { useStyles, styles } = createStyles(tableMeta, {
       ],
       expandButton: [
         "mr-1 -ml-1 inline-flex size-5 shrink-0 items-center justify-center rounded-sm text-fg-muted focus-reset focus-visible:focus-ring",
-        "hover:bg-muted disabled:text-fg-disabled",
+        "hover:bg-muted disabled:text-(--disabled-fg,var(--color-fg-muted))",
       ],
       expandIcon: "size-3.5 transition-transform",
       loadMore: [
