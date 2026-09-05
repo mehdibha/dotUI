@@ -7,44 +7,17 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import {
+  HOVER_OPTIONS,
+  PRESS_OPTIONS,
+  RADIUS_OPTIONS,
+  STYLE_OPTIONS,
+} from "../axes/buttons"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { controlRadiusPx } from "./shape"
-
-/* Style families from the Aug 2026 survey: flat (Geist), outline (Primer
-   hairline), raised (Radix classic 3D), elevated (Stripe). */
-const STYLE_OPTIONS: SelectRowOption[] = [
-  { value: "flat", label: "Flat" },
-  { value: "outline", label: "Outline" },
-  { value: "raised", label: "Raised" },
-  { value: "elevated", label: "Elevated" },
-]
-
-const RADIUS_OPTIONS: SelectRowOption[] = [
-  { value: "auto", label: "Auto" },
-  { value: "sharp", label: "Sharp" },
-  { value: "round", label: "Round" },
-  { value: "pill", label: "Pill" },
-]
-
-/* Hover: of 16 systems surveyed, 14 dim, 2 lighten (Linear, Ant), zero use
-   none or lift — dim is the default, lighten is the Linear feel. Press is
-   where systems diverge: darker step (8), nothing (5), scale .97
-   (Linear/HeroUI/Spectrum pressScale), 1px push (shadcn v4 styles). */
-const HOVER_OPTIONS: SelectRowOption[] = [
-  { value: "dim", label: "Dim" },
-  { value: "lighten", label: "Lighten" },
-  { value: "none", label: "None" },
-]
-
-const PRESS_OPTIONS: SelectRowOption[] = [
-  { value: "dim", label: "Dim" },
-  { value: "scale", label: "Scale" },
-  { value: "push", label: "Push" },
-  { value: "none", label: "None" },
-]
 
 const optionLabel = (options: SelectRowOption[], value: string) =>
   options.find((o) => o.value === value)?.label ?? value

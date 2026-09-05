@@ -2,10 +2,13 @@ import { createStyles } from "@/lib/styles"
 
 import toggleButtonMeta from "./meta"
 
+/* Synced with button: same base shape, same `style` / `hover` / `press`
+   params — change both together. The selected state keeps its own feedback. */
+
 const { useStyles, styles } = createStyles(toggleButtonMeta, {
   base: {
     base: [
-      "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--btn-radius) bg-clip-padding font-(--btn-font-weight) whitespace-nowrap shadow-[var(--shadow-control,none)] transition-[background-color,border-color,color,box-shadow] select-none",
+      "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--btn-radius) bg-clip-padding font-(--btn-font-weight) whitespace-nowrap shadow-[var(--shadow-control,none)] transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-none",
       "focus-reset focus-visible:focus-ring",
       "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
@@ -14,11 +17,10 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
     variants: {
       variant: {
         primary:
-          "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-300)] hover:bg-primary-hover pressed:bg-primary-active",
+          "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-300)]",
         secondary:
-          "border border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover disabled:border-border pressed:bg-neutral-active",
-        quiet:
-          "bg-transparent text-fg hover:bg-inverse/10 pressed:bg-inverse/20",
+          "border border-border-control bg-neutral text-fg-on-neutral disabled:border-border",
+        quiet: "bg-transparent text-fg",
       },
       size: {
         xs: "",
@@ -68,6 +70,85 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
           lg: "h-10 gap-1.5 px-3 has-data-icon-end:pr-2 has-data-icon-start:pl-2 data-icon-only:size-10",
         },
       },
+    },
+  },
+  params: {
+    style: {
+      flat: {},
+      outline: {
+        variants: {
+          variant: {
+            primary:
+              "shadow-[inset_0_0_0_1px_rgb(0_0_0/0.25),0_1px_0_rgb(0_0_0/0.1)]",
+            secondary: "shadow-[0_1px_0_rgb(0_0_0/0.08)]",
+          },
+        },
+      },
+      raised: {
+        variants: {
+          variant: {
+            primary:
+              "bg-linear-to-b from-white/15 to-black/15 shadow-[inset_0_1px_0_rgb(255_255_255/0.25),inset_0_-2px_1px_rgb(0_0_0/0.2),0_1px_2px_rgb(0_0_0/0.15)]",
+            secondary:
+              "bg-linear-to-b from-white/8 to-black/8 shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_1px_2px_rgb(0_0_0/0.12)]",
+          },
+        },
+      },
+      elevated: {
+        variants: {
+          variant: {
+            primary:
+              "shadow-[0_2px_6px_rgb(0_0_0/0.3),0_1px_2px_rgb(0_0_0/0.2)]",
+            secondary:
+              "border-transparent shadow-[0_2px_6px_rgb(0_0_0/0.25),0_1px_2px_rgb(0_0_0/0.15)]",
+          },
+        },
+      },
+    },
+    hover: {
+      dim: {
+        variants: {
+          variant: {
+            primary: "hover:bg-primary-hover",
+            secondary: "hover:bg-neutral-hover",
+            quiet: "hover:bg-inverse/10",
+          },
+        },
+      },
+      lighten: {
+        variants: {
+          variant: {
+            primary: "hover:brightness-110",
+            secondary: "hover:brightness-105",
+            quiet: "hover:bg-inverse/10",
+          },
+        },
+      },
+      none: {
+        variants: {
+          variant: {
+            quiet: "hover:bg-inverse/10",
+          },
+        },
+      },
+    },
+    press: {
+      dim: {
+        variants: {
+          variant: {
+            primary: "pressed:bg-primary-active",
+            secondary: "pressed:bg-neutral-active",
+            quiet: "pressed:bg-inverse/20",
+          },
+        },
+      },
+      scale: {
+        base: "pressed:scale-[0.97]",
+      },
+      push: {
+        base: "pressed:translate-y-px",
+      },
+      none: {},
     },
   },
 })
