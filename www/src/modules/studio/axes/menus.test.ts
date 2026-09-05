@@ -16,6 +16,7 @@ describe("menus axis", () => {
     expect(ds.componentParams["list-box"]).toEqual(ds.componentParams.menu)
     expect(ds.componentParams.command).toEqual({
       search: "field",
+      inset: "inset",
       scale: "default",
     })
   })
@@ -40,6 +41,7 @@ describe("menus axis", () => {
     expect(ds.componentParams["list-box"]).toEqual(list)
     expect(ds.componentParams.command).toEqual({
       search: "prompt",
+      inset: "full-bleed",
       scale: "large",
     })
     expect(ds.tokens).toEqual({

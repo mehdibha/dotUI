@@ -662,12 +662,17 @@ type EnumParamValuesOf<M, K extends PropertyKey> = M extends {
     : never
   : never
 
+/** A param value's layer; `density` holds the classes that depend on both the value and the density tier. */
+type ParamValueTv<Base> = ExtendingTv<Base> & {
+  density?: Partial<Record<Density, ExtendingTv<Base>>>
+}
+
 type EnumParamsConfig<M, Base> = [EnumParamNamesOf<M>] extends [never]
   ? { params?: never }
   : {
       params?: {
         [K in EnumParamNamesOf<M>]?: {
-          [V in EnumParamValuesOf<M, K> & string]?: ExtendingTv<Base>
+          [V in EnumParamValuesOf<M, K> & string]?: ParamValueTv<Base>
         }
       }
     }
@@ -747,11 +752,17 @@ function createStyles<const M extends RegistryItem, const Base>(
         paramSelection[paramName] ?? paramDefaults[paramName]
       if (!selectedValue) continue
       const valueConfig = params?.[paramName]?.[selectedValue]
-      if (!valueConfig || Object.keys(valueConfig).length === 0) continue
-      current = tv({
-        extend: current as never,
-        ...(valueConfig as Parameters<typeof tv>[0]),
-      } as never)
+      if (!valueConfig) continue
+      const { density: byDensity, ...layer } = valueConfig as {
+        density?: Partial<Record<Density, Record<string, unknown>>>
+      }
+      for (const l of [layer, byDensity?.[d]]) {
+        if (!l || Object.keys(l).length === 0) continue
+        current = tv({
+          extend: current as never,
+          ...(l as Parameters<typeof tv>[0]),
+        } as never)
+      }
     }
     return current
   }

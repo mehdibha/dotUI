@@ -43,11 +43,16 @@ export interface OverrideLayer extends TvLayer {
   vars?: Record<string, string>
 }
 
+/** A param value's layer may also carry per-density classes, applied after its own. */
+export interface ParamValueLayer extends OverrideLayer {
+  density?: Partial<Record<Density, TvLayer>>
+}
+
 /** The plain-JSON extract of a component's `styles.ts` config. */
 export interface StylesConfig {
   base: TvLayer
   density?: Partial<Record<Density, OverrideLayer>>
-  params?: Record<string, Record<string, OverrideLayer>>
+  params?: Record<string, Record<string, ParamValueLayer>>
 }
 
 /**

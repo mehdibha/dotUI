@@ -80,15 +80,22 @@ const { useStyles, styles } = createStyles(menuMeta, {
       inset: {
         slots: {
           root: "p-1 **:data-separator:-mx-1",
-          item: "rounded-(--menu-item-radius) px-1.5",
-          sectionTitle: "px-1.5",
+          item: "rounded-(--menu-item-radius)",
+        },
+        density: {
+          compact: { slots: { item: "px-2", sectionTitle: "px-2" } },
+          default: { slots: { item: "px-1.5", sectionTitle: "px-1.5" } },
+          comfortable: { slots: { item: "px-2", sectionTitle: "px-2" } },
         },
       },
       "full-bleed": {
         slots: {
           root: "py-1",
-          item: "px-2.5",
-          sectionTitle: "px-2.5",
+        },
+        density: {
+          compact: { slots: { item: "px-2.5", sectionTitle: "px-2.5" } },
+          default: { slots: { item: "px-3", sectionTitle: "px-3" } },
+          comfortable: { slots: { item: "px-3.5", sectionTitle: "px-3.5" } },
         },
       },
     },

@@ -5,7 +5,8 @@
    Engine: `indicator`, `highlight`, `inset` and `labels` are enum params on
    `menu` and `list-box` (highlight re-points the `--color-highlight` pair
    through the param's vars); `search` and `scale` are enum params on
-   `command`, the search-led surface. */
+   `command`, the search-led surface, which also takes `inset` so its list
+   gutter follows the rows. */
 
 import type { Resolved, StudioState } from "./index"
 
@@ -74,6 +75,7 @@ export function resolveMenus(state: StudioState): Resolved {
       "list-box": list,
       command: {
         search: pick(SEARCH_OPTIONS, state.menuSearch, "field"),
+        inset: list.inset,
         scale: pick(SCALE_OPTIONS, state.menuScale, "default"),
       },
     },
