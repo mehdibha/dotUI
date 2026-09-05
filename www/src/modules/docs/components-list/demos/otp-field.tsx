@@ -1,22 +1,25 @@
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
-import { OTPField, OTPFieldSeparator } from "@/registry/ui/otp-field"
+import {
+  OTPField,
+  OTPFieldGroup,
+  OTPFieldSeparator,
+} from "@/registry/ui/otp-field"
 
 export function OTPFieldDemo() {
   return (
     <OTPField length={6} defaultValue="2849">
       <div className="flex items-center">
-        <Group>
+        <OTPFieldGroup>
           <Input />
           <Input aria-label="Digit 2" />
           <Input aria-label="Digit 3" />
-        </Group>
+        </OTPFieldGroup>
         <OTPFieldSeparator className="px-2 text-fg-muted">-</OTPFieldSeparator>
-        <Group>
+        <OTPFieldGroup>
           <Input aria-label="Digit 4" />
           <Input aria-label="Digit 5" />
           <Input aria-label="Digit 6" />
-        </Group>
+        </OTPFieldGroup>
       </div>
     </OTPField>
   )

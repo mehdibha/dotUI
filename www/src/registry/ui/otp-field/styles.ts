@@ -28,7 +28,7 @@ const { useStyles, styles } = createStyles(otpFieldMeta, {
       underline: {
         slots: {
           group:
-            "gap-2 **:data-input:rounded-none **:data-input:border-x-0 **:data-input:border-t-0 **:data-input:border-b-2 **:data-input:bg-transparent **:data-input:shadow-none **:data-input:focus:ring-0",
+            "gap-2 **:data-input:rounded-none **:data-input:border-x-0 **:data-input:border-t-0 **:data-input:border-b-2 **:data-input:bg-transparent **:data-input:shadow-none **:data-input:not-invalid:not-focus:not-disabled:border-b-border-control **:data-input:focus:ring-0 **:data-input:disabled:border-b-border",
         },
       },
     },

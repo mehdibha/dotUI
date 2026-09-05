@@ -94,7 +94,7 @@ const hoverTint = "hover:not-focus-within:not-disabled:bg-neutral-hover"
    Ant addonBefore), the control keeping its own inset beside it. Inline
    padding stays the style's — a cell wears the same inset an inline addon does. */
 const addonBoxed =
-  "self-stretch bg-highlight group-has-data-input/input-group:first:mr-(--edge-to-text) group-has-data-input/input-group:first:rounded-l-[inherit] group-has-data-input/input-group:last:ml-(--edge-to-text) group-has-data-input/input-group:last:rounded-r-[inherit] group-has-data-textarea/input-group:first:rounded-t-[inherit] group-has-data-textarea/input-group:last:rounded-b-[inherit]"
+  "self-stretch bg-highlight group-has-data-input/input-group:first:mr-(--edge-to-text) group-has-data-input/input-group:first:rounded-l-[inherit] group-has-data-input/input-group:last:ml-(--edge-to-text) group-has-data-input/input-group:last:rounded-r-[inherit] group-has-data-textarea/input-group:first:rounded-t-[inherit] group-has-data-textarea/input-group:first:pb-(--edge-to-text) group-has-data-textarea/input-group:last:rounded-b-[inherit] group-has-data-textarea/input-group:last:pt-(--edge-to-text) group-has-data-textarea/input-group:has-data-button:first:pb-(--top-to-text) group-has-data-textarea/input-group:has-data-button:last:pt-(--top-to-text)"
 const addonDivider =
   "border-border-control group-has-data-input/input-group:first:border-r group-has-data-input/input-group:last:border-l group-has-data-textarea/input-group:first:border-b group-has-data-textarea/input-group:last:border-t"
 

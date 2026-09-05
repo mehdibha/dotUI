@@ -47,7 +47,6 @@ import {
   FieldGroup,
   Label,
 } from "@/registry/ui/field"
-import { Group } from "@/registry/ui/group"
 import {
   Input,
   InputGroup,
@@ -58,6 +57,7 @@ import { Modal } from "@/registry/ui/modal"
 import {
   NumberField,
   NumberFieldDecrement,
+  NumberFieldGroup,
   NumberFieldIncrement,
 } from "@/registry/ui/number-field"
 import {
@@ -552,14 +552,14 @@ export default function Checkout() {
                             maxValue={9}
                             className="w-fit"
                           >
-                            <Group>
+                            <NumberFieldGroup>
                               <NumberFieldDecrement size="sm" />
                               <Input
                                 size="sm"
                                 className="w-9 text-center tabular-nums"
                               />
                               <NumberFieldIncrement size="sm" />
-                            </Group>
+                            </NumberFieldGroup>
                           </NumberField>
                         </div>
                       </li>
