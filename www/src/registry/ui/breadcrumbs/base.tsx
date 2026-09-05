@@ -3,11 +3,25 @@
 import * as BreadcrumbsPrimitive from "react-aria-components/Breadcrumbs"
 import { composeRenderProps } from "react-aria-components/composeRenderProps"
 
+import { createParamValue } from "@/lib/styles"
 import { ChevronRightIcon } from "@/registry/icons"
 
 import { useStyles } from "./styles"
 
 // MARK: breadcrumbsStyles
+
+const useSeparatorGlyph = createParamValue({
+  componentName: "breadcrumbs",
+  paramName: "separator",
+  defaultValue: "chevron",
+  values: {
+    chevron: <ChevronRightIcon />,
+    slash: "/",
+  },
+})
+
+// MARK: Separator
+
 interface BreadcrumbsProps<
   T extends object,
 > extends BreadcrumbsPrimitive.BreadcrumbsProps<T> {
@@ -72,6 +86,7 @@ const BreadcrumbSeparator = ({
   ...props
 }: BreadcrumbSeparatorProps) => {
   const { separator } = useStyles()()
+  const glyph = useSeparatorGlyph()
   return (
     <span
       data-breadcrumb-separator=""
@@ -79,7 +94,7 @@ const BreadcrumbSeparator = ({
       className={separator({ className })}
       {...props}
     >
-      {children ?? <ChevronRightIcon />}
+      {children ?? glyph}
     </span>
   )
 }

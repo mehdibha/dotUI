@@ -35,6 +35,8 @@ import { IndentationText, Node, Project, QuoteKind, SyntaxKind } from "ts-morph"
 import type { ImportDeclaration, SourceFile } from "ts-morph"
 
 import { TV_CONFIG_PLACEHOLDER } from "../publish"
+import { collectParamValueHooks, foldParamValues } from "./fold-param-values"
+import type { ParamValueHook } from "./fold-param-values"
 
 const TS_PLACEHOLDER_IDENT = "__TV_CONFIG__"
 
@@ -121,6 +123,11 @@ export interface TransformBaseInput {
    * only path rewrites applied.
    */
   hasStylesConfig?: boolean
+  /**
+   * Param values to fold `createParamValue` hooks to (param → value). Omit to
+   * leave the hooks in place.
+   */
+  paramSelection?: Record<string, string>
 }
 
 export interface TransformBaseOutput {
@@ -152,10 +159,22 @@ function getProject(): Project {
   return cachedProject
 }
 
+/** The `createParamValue` hooks a base file declares. */
+export function paramValueHooksOf(baseTsxPath: string): ParamValueHook[] {
+  const project = getProject()
+  const sourceFile = project.addSourceFileAtPath(baseTsxPath)
+  try {
+    return collectParamValueHooks(sourceFile)
+  } finally {
+    project.removeSourceFile(sourceFile)
+  }
+}
+
 export function transformBase({
   baseTsxPath,
   componentName,
   hasStylesConfig = true,
+  paramSelection,
 }: TransformBaseInput): TransformBaseOutput {
   const variantIdent = `${toCamelCase(componentName)}Variants`
   const oldStylesIdent = `${toCamelCase(componentName)}Styles` // e.g. "buttonStyles"
@@ -171,6 +190,13 @@ export function transformBase({
       oldStylesTypeIdent,
       hasStylesConfig,
     })
+    if (paramSelection) {
+      foldParamValues(
+        sourceFile,
+        collectParamValueHooks(sourceFile),
+        paramSelection,
+      )
+    }
 
     // Replace the placeholder identifier with the runtime sentinel string.
     const transformed = sourceFile

@@ -16,6 +16,11 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import {
+  CONTAINER_OPTIONS as CONTAINER_VALUES,
+  MARKER_OPTIONS as MARKER_VALUES,
+  POSITION_OPTIONS,
+} from "../axes/accordion"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -94,37 +99,17 @@ function MarkerGlyph({ glyph }: { glyph: "chevron" | "plus" }) {
   )
 }
 
-const CONTAINER_OPTIONS: SelectRowOption[] = [
-  {
-    value: "divided",
-    label: "Divided",
-    illustration: <ContainerGlyph style="divided" />,
-  },
-  {
-    value: "boxed",
-    label: "Boxed",
-    illustration: <ContainerGlyph style="boxed" />,
-  },
-  {
-    value: "cards",
-    label: "Cards",
-    illustration: <ContainerGlyph style="cards" />,
-  },
-]
+const CONTAINER_OPTIONS: SelectRowOption[] = CONTAINER_VALUES.map((option) => ({
+  ...option,
+  illustration: (
+    <ContainerGlyph style={option.value as keyof typeof CONTAINER} />
+  ),
+}))
 
-const MARKER_OPTIONS: SelectRowOption[] = [
-  {
-    value: "chevron",
-    label: "Chevron",
-    illustration: <MarkerGlyph glyph="chevron" />,
-  },
-  { value: "plus", label: "Plus", illustration: <MarkerGlyph glyph="plus" /> },
-]
-
-const POSITION_OPTIONS = [
-  { value: "leading", label: "Leading" },
-  { value: "trailing", label: "Trailing" },
-]
+const MARKER_OPTIONS: SelectRowOption[] = MARKER_VALUES.map((option) => ({
+  ...option,
+  illustration: <MarkerGlyph glyph={option.value as "chevron" | "plus"} />,
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 

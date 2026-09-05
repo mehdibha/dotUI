@@ -17,6 +17,10 @@
 
 import { MousePointer2Icon } from "lucide-react"
 
+import {
+  SEPARATOR_OPTIONS as SEPARATOR_VALUES,
+  TONE_OPTIONS,
+} from "../axes/breadcrumbs"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -54,18 +58,10 @@ function SeparatorGlyph({ kind }: { kind: "slash" | "chevron" }) {
   )
 }
 
-const SEPARATOR_OPTIONS: SelectRowOption[] = [
-  {
-    value: "slash",
-    label: "Slash",
-    illustration: <SeparatorGlyph kind="slash" />,
-  },
-  {
-    value: "chevron",
-    label: "Chevron",
-    illustration: <SeparatorGlyph kind="chevron" />,
-  },
-]
+const SEPARATOR_OPTIONS: SelectRowOption[] = SEPARATOR_VALUES.map((option) => ({
+  ...option,
+  illustration: <SeparatorGlyph kind={option.value as "slash" | "chevron"} />,
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 
@@ -145,10 +141,7 @@ export function BreadcrumbsSection({ lab }: { lab: Lab }) {
         label="Crumbs"
         value={state.breadcrumbTone}
         onChange={set("breadcrumbTone")}
-        options={[
-          { value: "accent", label: "Accent" },
-          { value: "muted", label: "Muted" },
-        ]}
+        options={TONE_OPTIONS}
       />
     </ControlGroup>
   )

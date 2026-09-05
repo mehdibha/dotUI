@@ -4,6 +4,7 @@
 @import "./base/fonts.css";
 @import "./roles.css";
 
+@import "./ui/accordion/styles.css";
 @import "./ui/avatar/styles.css";
 @import "./ui/alert/styles.css";
 @import "./ui/attachment/styles.css";
@@ -27,6 +28,7 @@
 @import "./ui/radio-group/styles.css";
 @import "./ui/skeleton/styles.css";
 @import "./ui/switch/styles.css";
+@import "./ui/tabs/styles.css";
 @import "./ui/tooltip/styles.css";
 @import "./ui/tree/styles.css";
 @import "./ui/slider/styles.css";

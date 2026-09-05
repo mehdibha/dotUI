@@ -568,6 +568,35 @@ function createDynamicComponent<
   return DynamicComponent
 }
 
+interface ParamValueConfig<Value> {
+  componentName: string
+  paramName: string
+  defaultValue: string
+  values: Record<string, Value>
+}
+
+/**
+ * A per-param-value expression a base file reads through a hook — an icon
+ * glyph, a button variant name. At runtime the hook follows the design
+ * system; on publish the publisher folds the hook call to the selected
+ * value's source text (see publisher/build-time/fold-param-values.ts).
+ */
+function createParamValue<Value>({
+  componentName,
+  paramName,
+  defaultValue,
+  values,
+}: ParamValueConfig<Value>) {
+  return function useParamValue(): Value {
+    const selected = useComponentParams(componentName)[paramName]
+    const key =
+      selected !== undefined && Object.hasOwn(values, selected)
+        ? selected
+        : defaultValue
+    return values[key] as Value
+  }
+}
+
 /* ------------------------------ createStyles ----------------------------- */
 
 /**
@@ -794,6 +823,7 @@ function createStyles<const M extends RegistryItem, const Base>(
 export type { VariantProps }
 export {
   createDynamicComponent,
+  createParamValue,
   createStyles,
   DesignSystemContext,
   DesignSystemProvider,
