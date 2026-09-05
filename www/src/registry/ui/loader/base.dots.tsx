@@ -2,7 +2,6 @@
 
 import * as ProgressBarPrimitives from "react-aria-components/ProgressBar"
 
-import { Loader2Icon } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 
 interface LoaderProps extends ProgressBarPrimitives.ProgressBarProps {}
@@ -19,11 +18,15 @@ function Loader({ className, ...props }: LoaderProps) {
       {...props}
       isIndeterminate
     >
-      <Loader2Icon
+      <span
         role="status"
         aria-label="Loading"
-        className="size-full animate-spin"
-      />
+        className="flex size-full items-center justify-center gap-[12.5%]"
+      >
+        <span className="size-[25%] animate-loader-dots rounded-full bg-current" />
+        <span className="size-[25%] animate-loader-dots rounded-full bg-current [animation-delay:150ms]" />
+        <span className="size-[25%] animate-loader-dots rounded-full bg-current [animation-delay:300ms]" />
+      </span>
     </ProgressBarPrimitives.ProgressBar>
   )
 }

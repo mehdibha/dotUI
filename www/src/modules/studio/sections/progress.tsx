@@ -1,17 +1,20 @@
 "use client"
 
-/* Progress — the linear bar's three forks. Track weight: hairline ~4px
-   (iOS, Material 3, Spectrum, Carbon) vs chunky (Ant 8px, shadcn h-2,
-   Bootstrap 16px) — independent of the slider track axis: M3 sets 4dp
-   progress against a 16dp slider. Indeterminate motion: a sliding
-   indicator segment (Material, Carbon) vs a pulsing fill (Bootstrap
-   striped, dashboard shimmer). Track gap: M3's cut track + stop-indicator
-   dot — an M3-only signature, kept as a boolean for preset fidelity.
-   Rejected: end caps ride the global Shape chapter; fill tone (Polaris
-   tone=success) is a prop; percent-label placement is a prop. */
+/* Progress — the linear bar's three forks: track weight, indeterminate
+   motion, and Material 3's cut track. Rejected: end caps ride the global
+   Shape chapter; fill tone (Polaris tone=success) and percent-label
+   placement are props. */
 
-import { cn } from "@/registry/lib/utils"
+import { useMemo } from "react"
 
+import { DesignSystemProvider } from "@/lib/styles"
+import { ProgressBar } from "@/registry/ui/progress-bar"
+
+import {
+  INDETERMINATE_OPTIONS,
+  resolveProgress,
+  TRACK_OPTIONS,
+} from "../axes/progress"
 import { Hero } from "../hero"
 import {
   ControlGroup,
@@ -65,99 +68,27 @@ function PulseGlyph() {
   )
 }
 
-const INDETERMINATE_OPTIONS: SelectRowOption[] = [
-  { value: "slide", label: "Slide", illustration: <SlideGlyph /> },
-  { value: "pulse", label: "Pulse", illustration: <PulseGlyph /> },
-]
+const GLYPHS: Record<string, React.ReactNode> = {
+  slide: <SlideGlyph />,
+  pulse: <PulseGlyph />,
+}
 
-const TRACK_OPTIONS = [
-  { value: "thin", label: "Thin" },
-  { value: "thick", label: "Thick" },
-]
+const INDETERMINATE_ROW_OPTIONS: SelectRowOption[] = INDETERMINATE_OPTIONS.map(
+  (option) => ({ ...option, illustration: GLYPHS[option.value] }),
+)
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-const TRACK_HEIGHT = {
-  thin: "h-1",
-  thick: "h-2",
-}
-
-function trackHeight(state: LabState) {
-  return TRACK_HEIGHT[state.progressTrack as keyof typeof TRACK_HEIGHT]
-}
-
-function DeterminateBar({
-  percent,
-  state,
-}: {
-  percent: number
-  state: LabState
-}) {
-  if (state.progressGap) {
-    return (
-      <div className={cn("flex w-full items-center gap-1", trackHeight(state))}>
-        <div
-          className="h-full rounded-full bg-accent"
-          style={{ width: `${percent}%` }}
-        />
-        <div className="relative h-full flex-1 rounded-full bg-muted">
-          <span className="absolute top-1/2 right-0 size-1 -translate-y-1/2 rounded-full bg-accent" />
-        </div>
-      </div>
-    )
-  }
-  return (
-    <div
-      className={cn(
-        "w-full overflow-hidden rounded-full bg-muted",
-        trackHeight(state),
-      )}
-    >
-      <div
-        className="h-full rounded-full bg-accent"
-        style={{ width: `${percent}%` }}
-      />
-    </div>
-  )
-}
-
-/* Carries its own keyframes so it animates wherever it mounts. */
-function IndeterminateBar({ state }: { state: LabState }) {
-  return (
-    <div
-      className={cn(
-        "relative w-full overflow-hidden rounded-full bg-muted",
-        trackHeight(state),
-      )}
-    >
-      <style>{`
-        @keyframes lab-progress-slide { 0% { left: -40% } 100% { left: 100% } }
-        @keyframes lab-progress-pulse { 0%, 100% { opacity: .35 } 50% { opacity: 1 } }
-      `}</style>
-      {state.progressIndeterminate === "slide" ? (
-        <span
-          className="absolute inset-y-0 w-2/5 rounded-full bg-accent"
-          style={{
-            animation: "lab-progress-slide 1.4s ease-in-out infinite",
-          }}
-        />
-      ) : (
-        <span
-          className="absolute inset-0 rounded-full bg-accent"
-          style={{
-            animation: "lab-progress-pulse 1.6s ease-in-out infinite",
-          }}
-        />
-      )}
-    </div>
-  )
-}
-
+/* The registry bar under a provider carrying only this chapter's params —
+   the hero shows exactly what the preview does. */
 export function ProgressHero({ state }: { state: LabState }) {
+  const params = useMemo(() => resolveProgress(state).params, [state])
   return (
     <Hero className="gap-5 px-5 py-6">
-      <DeterminateBar percent={60} state={state} />
-      <IndeterminateBar state={state} />
+      <DesignSystemProvider params={params}>
+        <ProgressBar aria-label="Progress" value={60} className="w-full" />
+        <ProgressBar aria-label="Loading" isIndeterminate className="w-full" />
+      </DesignSystemProvider>
     </Hero>
   )
 }
@@ -188,7 +119,7 @@ export function ProgressSection({ lab }: { lab: Lab }) {
         label="Indeterminate"
         value={state.progressIndeterminate}
         onChange={set("progressIndeterminate")}
-        options={INDETERMINATE_OPTIONS}
+        options={INDETERMINATE_ROW_OPTIONS}
         layout="grid"
       />
       <SwitchRow

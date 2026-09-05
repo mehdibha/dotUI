@@ -7,27 +7,34 @@ const loaderMeta = {
   files: [
     {
       type: "registry:ui",
-      path: "ui/loader/base.spinner.tsx",
+      path: "ui/loader/base.ring.tsx",
       target: "ui/loader.tsx",
     },
   ],
   params: {
     style: {
       kind: "enum",
-      default: "spinner",
-      values: ["spinner", "ring"] as const,
+      default: "ring",
+      values: ["ring", "blades", "dots"] as const,
       files: {
-        spinner: [
-          {
-            type: "registry:ui",
-            path: "ui/loader/base.spinner.tsx",
-            target: "ui/loader.tsx",
-          },
-        ],
         ring: [
           {
             type: "registry:ui",
             path: "ui/loader/base.ring.tsx",
+            target: "ui/loader.tsx",
+          },
+        ],
+        blades: [
+          {
+            type: "registry:ui",
+            path: "ui/loader/base.blades.tsx",
+            target: "ui/loader.tsx",
+          },
+        ],
+        dots: [
+          {
+            type: "registry:ui",
+            path: "ui/loader/base.dots.tsx",
             target: "ui/loader.tsx",
           },
         ],

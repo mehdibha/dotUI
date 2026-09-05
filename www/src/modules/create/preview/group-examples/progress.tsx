@@ -21,6 +21,13 @@ export default function ProgressGroupExamples() {
           <ProgressBarControl />
         </ProgressBar>
       </Example>
+      <Example title="Indeterminate">
+        <ProgressBar
+          aria-label="Loading"
+          isIndeterminate
+          className="w-full max-w-sm"
+        />
+      </Example>
       <Example title="Loader">
         <Loader />
       </Example>

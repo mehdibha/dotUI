@@ -21,9 +21,11 @@
 @import "./ui/input/styles.css";
 @import "./ui/kbd/styles.css";
 @import "./ui/list-box/styles.css";
+@import "./ui/loader/styles.css";
 @import "./ui/menu/styles.css";
 @import "./ui/modal/styles.css";
 @import "./ui/popover/styles.css";
+@import "./ui/progress-bar/styles.css";
 @import "./ui/radio-group/styles.css";
 @import "./ui/skeleton/styles.css";
 @import "./ui/switch/styles.css";

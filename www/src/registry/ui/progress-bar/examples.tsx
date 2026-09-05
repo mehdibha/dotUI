@@ -3,6 +3,7 @@ import { Examples } from "@/modules/create/preview/examples"
 
 import ControlledDemo from "./demos/controlled"
 import FileUploadListDemo from "./demos/file-upload-list"
+import IndeterminateDemo from "./demos/indeterminate"
 import ProgressValuesDemo from "./demos/progress-values"
 import WithLabelDemo from "./demos/with-label"
 
@@ -14,6 +15,9 @@ export default function ProgressBarExamples() {
       </Example>
       <Example title="With Label">
         <WithLabelDemo />
+      </Example>
+      <Example title="Indeterminate">
+        <IndeterminateDemo />
       </Example>
       <Example title="Controlled">
         <ControlledDemo />
