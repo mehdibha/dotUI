@@ -1,14 +1,14 @@
 # Consumer templates (see examples/README.md): each is a real app with the
 # registry's resolved output committed — styles collapsed to its preset, icon
-# imports swapped, params inlined. Nobody maintains that output by hand:
+# imports swapped, params inlined. The output is regenerated with the real
+# shadcn CLI and committed with the registry change that caused it, like every
+# other generated file in the repo.
 #
-#   - On pull requests, every template is regenerated from scratch with the real
-#     shadcn CLI (init, then add every item) against the branch's registry, then
-#     built and type-checked. The resulting diff against the committed template
-#     goes into the job summary and a patch artifact, so a registry change is
-#     reviewable as the consumer-facing files it changes. Drift never fails a PR.
-#   - On push to main, one job regenerates all templates and commits the result
-#     back to main, so `examples/` always matches what the registry serves.
+# On every pull request and merge-group run that touches the registry, the
+# publisher, the /r/* routes, presets, or examples/, each template is
+# regenerated from scratch against the branch's registry, built, and
+# type-checked, and the result must match what is committed. Drift fails the
+# check with the patch as an artifact: run `pnpm smoke:examples` and commit.
 #
 # The publisher's own tests never invoke the CLI, so the regeneration is also
 # the only check on where files land and how imports resolve in a consumer.
@@ -17,28 +17,9 @@ name: Examples
 
 on:
   pull_request:
-    paths:
-      - "www/src/registry/**"
-      - "www/src/publisher/**"
-      - "www/src/routes/r/**"
-      - "www/src/lib/registry-preset.ts"
-      - "www/src/lib/fonts.ts"
-      - "www/src/modules/presets/presets-data.ts"
-      - "www/src/modules/create/preset/**"
-      - "examples/**"
-      - ".github/workflows/examples.yml"
+  merge_group:
   push:
     branches: [main]
-    paths:
-      - "www/src/registry/**"
-      - "www/src/publisher/**"
-      - "www/src/routes/r/**"
-      - "www/src/lib/registry-preset.ts"
-      - "www/src/lib/fonts.ts"
-      - "www/src/modules/presets/presets-data.ts"
-      - "www/src/modules/create/preset/**"
-      - "examples/**"
-      - ".github/workflows/examples.yml"
   workflow_dispatch:
     inputs:
       origin:
@@ -49,10 +30,40 @@ on:
 permissions:
   contents: read
 
+# A newer push to the same PR supersedes an in-flight run.
+concurrency:
+  group: examples-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  # Pull requests: regenerate per template, report the diff, never commit.
+  # A required check has to report on every PR, so the workflow always runs
+  # and decides in-job whether the change can affect consumer output. A
+  # skipped verify job counts as passing.
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.filter.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: filter
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ -z "$BASE" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if git diff --name-only "$BASE...HEAD" | grep -qE '^(www/src/registry/|www/src/publisher/|www/src/routes/r/|www/src/lib/registry-preset\.ts|www/src/lib/fonts\.ts|www/src/modules/presets/presets-data\.ts|www/src/modules/create/preset/|packages/colors/|examples/|\.github/workflows/examples\.yml)'; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "nothing that reaches consumer output changed"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
   verify:
-    if: github.event_name != 'push'
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     runs-on: ubuntu-latest
     name: ${{ matrix.example }}
     timeout-minutes: 25
@@ -69,77 +80,50 @@ jobs:
       - uses: ./.github/actions/setup
 
       # With no --origin the script builds the registry, serves it with the www
-      # dev server, and stops it when done. The dispatch input reaches the shell
-      # through an env var, never by interpolation into the command line.
+      # dev server, and stops it when done. shadcn's own base files come from
+      # the vendored copies, so the run never reaches ui.shadcn.com. The
+      # dispatch input reaches the shell through an env var, never by
+      # interpolation into the command line.
       - name: Regenerate, build, type-check
         env:
           ORIGIN: ${{ inputs.origin }}
         run: |
-          node examples/scripts/smoke.ts --example "${{ matrix.example }}" ${ORIGIN:+--origin "$ORIGIN"}
+          set -o pipefail
+          node examples/scripts/smoke.ts --example "${{ matrix.example }}" ${ORIGIN:+--origin "$ORIGIN"} 2>&1 | tee smoke.log
 
-      - name: Report what changed for consumers
+      - name: Committed template must match
         run: |
           git add -A -- examples/${{ matrix.example }}
           if git diff --cached --quiet -- examples/${{ matrix.example }}; then
-            echo "### ${{ matrix.example }}: no change for consumers" >> "$GITHUB_STEP_SUMMARY"
+            echo "### ${{ matrix.example }}: matches the registry" >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           git diff --cached -- examples/${{ matrix.example }} > examples-${{ matrix.example }}.patch
           {
-            echo "### ${{ matrix.example }}: consumer-facing changes"
+            echo "### ${{ matrix.example }}: committed template is stale"
             echo
             echo '```'
             git --no-pager diff --cached --stat -- examples/${{ matrix.example }}
             echo '```'
             echo
-            echo "Full patch in the \`examples-${{ matrix.example }}\` artifact. \`main\` regenerates and commits this on merge."
+            echo "Run \`pnpm smoke:examples\` and commit \`examples/\`. Full patch in the \`examples-${{ matrix.example }}\` artifact."
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "::error::examples/${{ matrix.example }} is stale — run pnpm smoke:examples and commit the result"
+          exit 1
+
+      - name: Smoke log on failure
+        if: failure()
+        run: |
+          {
+            echo "### ${{ matrix.example }}: smoke log (tail)"
+            echo '```'
+            tail -n 200 smoke.log
+            echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
       - uses: actions/upload-artifact@v4
-        if: hashFiles('examples-*.patch') != ''
+        if: failure() && hashFiles('examples-*.patch') != ''
         with:
           name: examples-${{ matrix.example }}
           path: examples-*.patch
           retention-days: 14
-
-  # main: regenerate everything and commit the result back.
-  commit:
-    if: "${{ github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'chore(examples): regenerate') }}"
-    runs-on: ubuntu-latest
-    name: Regenerate and commit
-    timeout-minutes: 45
-    permissions:
-      contents: write
-    # One regeneration at a time; a newer push supersedes an in-flight one.
-    concurrency:
-      group: examples-main
-      cancel-in-progress: true
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-
-      - name: Regenerate, build, type-check
-        run: node examples/scripts/smoke.ts
-
-      - name: Commit if anything changed
-        run: |
-          git add -A -- examples
-          if git diff --cached --quiet -- examples; then
-            echo "examples/ already matches the registry"
-            exit 0
-          fi
-          git --no-pager diff --cached --stat -- examples
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore(examples): regenerate templates" -m "Registry output changed in ${{ github.sha }}; regenerated with the real shadcn CLI."
-          # main may have moved while this ran (any push, not just a matching
-          # one). The commit touches only examples/, so rebasing is trivial.
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git rebase origin/main
-            if git push origin HEAD:main; then exit 0; fi
-            echo "push rejected (attempt $attempt); retrying"
-            sleep 10
-          done
-          echo "::error::could not push the regenerated templates to main after 3 attempts"
-          exit 1

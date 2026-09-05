@@ -73,13 +73,13 @@ When working on a component's styles, compare against the shadcn equivalent to c
 
 After modifying `www/src/registry/`, run `pnpm build:registry` and commit the regenerated `__generated__/*` + `base/colors.css` — CI's registry-drift job diffs exactly these files.
 
-`examples/` holds consumer templates with the registry's resolved output committed (styles collapsed to the preset, icons swapped, params inlined). Never edit or regenerate them as part of a PR: CI regenerates every template with the real shadcn CLI on push to `main` and commits the result. On PRs the Examples job reports the consumer-facing diff in its summary — read it when you touch the registry, the publisher, presets, or `/r/*`. To look at a branch's output locally, `pnpm smoke:examples`. See `examples/README.md`.
+`examples/` holds consumer templates with the registry's resolved output committed (styles collapsed to the preset, icons swapped, params inlined) — generated output, like `__generated__/*`. Touched the registry, the publisher, presets, or `/r/*`? Run `pnpm smoke:examples` (offline, ~5 min for all four; `--example <name>` for one) and commit `examples/` — the diff is the consumer-facing change, review it. CI regenerates every template with the real shadcn CLI, builds, type-checks, and fails on drift. Never hand-edit `examples/`; on a conflict, regenerate. To watch real consumer files change as you work, `pnpm examples:preview --example <name> --watch` with that template's dev server running. See `examples/README.md`.
 
 ### Before committing
 
 - `pnpm check` — CI fails on formatting and import order.
 - `pnpm typecheck`; `pnpm test` if you touched `packages/colors`.
-- Touched the registry? Regenerate first (see Registry changes).
+- Touched the registry, publisher, presets, or `/r/*`? Regenerate first (see Registry changes), `examples/` included.
 
 ## Dev tweaker (design exploration)
 

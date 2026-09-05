@@ -1,0 +1,6 @@
+# Consumer templates: the shadcn CLI writes these (see examples/README.md).
+# Collapsed in PR diffs; stylesheets, components.json, and layouts stay
+# expanded as the reviewable part of a regeneration.
+examples/*/src/components/ui/** linguist-generated=true
+examples/*/src/hooks/** linguist-generated=true
+examples/*/src/lib/** linguist-generated=true

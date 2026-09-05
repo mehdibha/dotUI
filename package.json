@@ -30,6 +30,7 @@
     "build:references": "pnpm --filter=www build:references",
     "probe:registry": "pnpm --filter=www probe:registry",
     "smoke:examples": "node examples/scripts/smoke.ts",
+    "examples:preview": "pnpm --filter=www preview:example",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo run clean",
     "check": "oxlint . && oxfmt --check .",

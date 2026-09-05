@@ -14,31 +14,39 @@
  *   5. A production build, then `tsc --noEmit`, then checks that the theme's
  *      fonts survived into the built output.
  *
- * CI runs the same script: on pull requests it reports the diff against the
- * committed template (never failing on drift), so a registry change shows up
- * as the files it changes for consumers; on push to main it commits the
- * result, so nobody maintains `examples/` by hand. The publisher's tests never
- * invoke the CLI — this is the only check on where files land and how imports
- * resolve (#706 lived in that gap for three months).
+ * The result is committed with the registry change that caused it, like every
+ * other generated file in the repo; CI runs the same script on pull requests
+ * and fails on drift. The publisher's tests never invoke the CLI — this is the
+ * only check on where files land and how imports resolve (#706 lived in that
+ * gap for three months).
  *
  * Usage:
- *   node examples/scripts/smoke.ts [--origin <url>] [--example <name>]
+ *   node examples/scripts/smoke.ts [--origin <url>] [--example <name>] [--no-build]
  *
  * With no `--origin` the script builds the registry and serves this checkout
  * with the www dev server (reusing one already running on its port). Pass a
  * Vercel preview or production to regenerate from a deployment instead. Preset
  * encoding always comes from this checkout (`www/scripts/encode-preset.ts`),
  * the same way the create page encodes it in the browser.
+ *
+ * Runs offline: the CLI's own base fetches (its style list and base color) are
+ * answered from `shadcn-base/`, vendored from shadcn-ui/ui, through the CLI's
+ * `REGISTRY_URL` override — the same files in CI and on a laptop, and no
+ * dependency on ui.shadcn.com being reachable. `--no-build` stops after the
+ * files are written, for a quick look at the output.
  */
 
 import { spawn, spawnSync } from "node:child_process"
 import {
+  existsSync,
   openSync,
   readdirSync,
   readFileSync,
   rmSync,
   writeFileSync,
 } from "node:fs"
+import { createServer } from "node:http"
+import type { AddressInfo } from "node:net"
 import os from "node:os"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
@@ -54,6 +62,9 @@ const EXAMPLES_DIR = path.resolve(
   "..",
 )
 const REPO_DIR = path.resolve(EXAMPLES_DIR, "..")
+// shadcn's own registry files the CLI reads during init, vendored from
+// github.com/shadcn-ui/ui (apps/v4/public/r). Served through `REGISTRY_URL`.
+const SHADCN_BASE_DIR = path.join(EXAMPLES_DIR, "scripts", "shadcn-base")
 
 type Framework = "next" | "tanstack-start"
 
@@ -138,17 +149,21 @@ const GENERATED = [
 interface Options {
   origin: string | undefined
   examples: string[]
+  build: boolean
 }
 
 function parseArgs(argv: string[]): Options {
   let origin: string | undefined = process.env.SMOKE_ORIGIN
   let examples = Object.keys(EXAMPLES)
+  let build = true
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]
     const value = argv[i + 1]
     if (arg === "--origin" && value) {
       origin = value
       i++
+    } else if (arg === "--no-build") {
+      build = false
     } else if (arg === "--example" && value) {
       if (!(value in EXAMPLES)) {
         console.error(
@@ -163,16 +178,33 @@ function parseArgs(argv: string[]): Options {
       process.exit(2)
     }
   }
-  return { origin: origin?.replace(/\/+$/, ""), examples }
+  return { origin: origin?.replace(/\/+$/, ""), examples, build }
 }
 
-function run(cwd: string, cmd: string, args: string[]): void {
+/**
+ * Run a command to completion. Asynchronous, not `spawnSync`: the vendored
+ * shadcn base is served from this process, so the event loop must keep
+ * turning while the CLI runs.
+ */
+function run(
+  cwd: string,
+  cmd: string,
+  args: string[],
+  env: Record<string, string> = {},
+): Promise<void> {
   console.log(`\n$ ${cmd} ${args.join(" ")}`)
-  const result = spawnSync(cmd, args, { cwd, stdio: "inherit" })
-  if (result.error) throw result.error
-  if (result.status !== 0) {
-    throw new Error(`${cmd} ${args[0] ?? ""} exited with ${result.status}`)
-  }
+  return new Promise((resolve, reject) => {
+    const child = spawn(cmd, args, {
+      cwd,
+      stdio: "inherit",
+      env: { ...process.env, ...env },
+    })
+    child.on("error", reject)
+    child.on("exit", (status) => {
+      if (status === 0) resolve()
+      else reject(new Error(`${cmd} ${args[0] ?? ""} exited with ${status}`))
+    })
+  })
 }
 
 /* ------------------------------ local registry ------------------------------ */
@@ -196,7 +228,7 @@ async function serveLocalRegistry(): Promise<() => void> {
     console.log(`registry: reusing the dev server at ${LOCAL_ORIGIN}`)
     return () => {}
   }
-  run(REPO_DIR, "pnpm", ["build:registry"])
+  await run(REPO_DIR, "pnpm", ["build:registry"])
   const log = path.join(os.tmpdir(), "dotui-examples-www.log")
   const fd = openSync(log, "w")
   const child = spawn(
@@ -239,6 +271,47 @@ async function serveLocalRegistry(): Promise<() => void> {
   throw new Error(`www dev server did not come up; see ${log}`)
 }
 
+/* ------------------------------- shadcn base ------------------------------- */
+
+/**
+ * Answer the CLI's fetches of shadcn's own registry (`styles/index.json`,
+ * `colors/<base>.json`) from the vendored copies. Anything else is a 404 and
+ * a loud log line: a new CLI fetch means a file to vendor, not a network
+ * dependency to accept.
+ */
+async function serveShadcnBase(): Promise<{ url: string; stop: () => void }> {
+  const server = createServer((req, res) => {
+    const rel = (req.url ?? "").replace(/^\/r\//, "").split("?")[0]!
+    const file = path.join(SHADCN_BASE_DIR, rel)
+    if (rel && !rel.includes("..") && existsSync(file)) {
+      res.setHeader("content-type", "application/json")
+      res.end(readFileSync(file))
+      return
+    }
+    console.error(`shadcn-base: no vendored file for ${req.url}`)
+    res.statusCode = 404
+    res.end()
+  })
+  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve))
+  const { port } = server.address() as AddressInfo
+  return { url: `http://127.0.0.1:${port}/r`, stop: () => server.close() }
+}
+
+/**
+ * The CLI sends every request through `HTTP(S)_PROXY` when set, loopback
+ * included, and ignores `NO_PROXY` — behind a sandbox proxy that refuses
+ * loopback, `init` hangs on our own dev server. Everything it needs is on
+ * loopback (the registry, the vendored base) or comes through pnpm, which
+ * reads its own `npm_config_*` proxy settings, so the CLI runs without one.
+ */
+function noProxy(): Record<string, string> {
+  const cleared: Record<string, string> = {}
+  for (const name of Object.keys(process.env)) {
+    if (/^(https?|all)_proxy$/i.test(name)) cleared[name] = ""
+  }
+  return cleared
+}
+
 /* ---------------------------------- registry -------------------------------- */
 
 /**
@@ -262,20 +335,21 @@ async function fetchJson<T>(url: string, attempts = 5): Promise<T> {
   throw lastError instanceof Error ? lastError : new Error(String(lastError))
 }
 
-/** Encoded `?preset=` values by preset id, from this checkout's preset data. */
+/**
+ * Encoded `?preset=` values by preset id, from this checkout's preset data.
+ * Runs tsx directly: through `pnpm exec`, an engine warning lands on stdout
+ * and corrupts the JSON.
+ */
 function encodePresets(ids: string[]): Record<string, string> {
-  const args = [
-    "--filter=www",
-    "exec",
-    "tsx",
-    "scripts/encode-preset.ts",
-    ...ids,
-  ]
-  const result = spawnSync("pnpm", args, {
-    cwd: REPO_DIR,
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "inherit"],
-  })
+  const result = spawnSync(
+    path.join(REPO_DIR, "www/node_modules/.bin/tsx"),
+    ["scripts/encode-preset.ts", ...ids],
+    {
+      cwd: path.join(REPO_DIR, "www"),
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "inherit"],
+    },
+  )
   if (result.error) throw result.error
   if (result.status !== 0)
     throw new Error(`encode-preset exited with ${result.status}`)
@@ -414,6 +488,8 @@ async function regenerate(
   origin: string,
   encodedPreset: string,
   names: string[],
+  shadcnBaseUrl: string,
+  build: boolean,
 ) {
   const { framework: frameworkName } = EXAMPLES[example]!
   const framework = FRAMEWORKS[frameworkName]
@@ -430,29 +506,41 @@ async function regenerate(
     '@import "tailwindcss";\n',
   )
 
-  run(cwd, "pnpm", ["install"])
-  run(cwd, "pnpm", [
-    "dlx",
-    SHADCN,
-    "init",
-    `${origin}/r/init?preset=${encodedPreset}`,
-    "--yes",
-  ])
-  run(cwd, "pnpm", [
-    "dlx",
-    SHADCN,
-    "add",
-    ...names.map((name) => `@dotui/${name}`),
-    "--yes",
-    "--overwrite",
-  ])
+  const shadcnEnv = { ...noProxy(), REGISTRY_URL: shadcnBaseUrl }
+  await run(cwd, "pnpm", ["install"])
+  await run(
+    cwd,
+    "pnpm",
+    [
+      "dlx",
+      SHADCN,
+      "init",
+      `${origin}/r/init?preset=${encodedPreset}`,
+      "--yes",
+    ],
+    shadcnEnv,
+  )
+  await run(
+    cwd,
+    "pnpm",
+    [
+      "dlx",
+      SHADCN,
+      "add",
+      ...names.map((name) => `@dotui/${name}`),
+      "--yes",
+      "--overwrite",
+    ],
+    shadcnEnv,
+  )
   canonicalizeOrigin(cwd, origin)
   stabilizePackageJson(cwd, packageJsonBefore)
+  if (!build) return
 
   // Build first: it generates what typecheck needs (TanStack's routeTree.gen.ts,
   // Next's next-env.d.ts).
-  run(cwd, "pnpm", ["build"])
-  run(cwd, "pnpm", ["typecheck"])
+  await run(cwd, "pnpm", ["build"])
+  await run(cwd, "pnpm", ["typecheck"])
   checkBuiltCss(cwd, framework, expectFonts)
 }
 
@@ -471,6 +559,7 @@ async function main() {
   const encoded = encodePresets(presetIds)
   const names = await registryNames(origin)
   console.log(`items: ${names.length} · presets: ${presetIds.join(", ")}`)
+  const shadcnBase = await serveShadcnBase()
 
   const failures: string[] = []
   for (const example of options.examples) {
@@ -480,6 +569,8 @@ async function main() {
         origin,
         encoded[EXAMPLES[example]!.preset]!,
         names,
+        shadcnBase.url,
+        options.build,
       )
       console.log(`\n✓ ${example}`)
     } catch (error) {
@@ -489,6 +580,7 @@ async function main() {
     }
   }
   stopServer()
+  shadcnBase.stop()
 
   const total = options.examples.length
   console.log(`\n${total - failures.length}/${total} templates regenerated`)
