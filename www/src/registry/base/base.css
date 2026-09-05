@@ -18,7 +18,8 @@
    a bg hairline inside the edge (the duo family), the bg offset, the ring.
    `--focus-*-inset` is unset (outside) or `inset`. Fields keep their own
    width and color (a halo by default) and honor `ring-*` color overrides
-   (`invalid:ring-danger-muted`). */
+   (`invalid:ring-danger-muted`). A consumer's own shadow var must default to
+   `0 0 #0000`, never `none` — `none` invalidates the whole composite. */
 @utility focus-ring {
   --tw-ring-shadow:
     inset 0 0 0 var(--focus-ring-inner) var(--color-bg),
