@@ -12,6 +12,20 @@ const linkMeta = {
     },
   ],
   registryDependencies: ["focus-styles"],
+  params: {
+    underline: {
+      kind: "enum",
+      default: "never",
+      values: ["always", "hover", "never"] as const,
+      description: "When a link wears its underline.",
+    },
+    color: {
+      kind: "enum",
+      default: "accent",
+      values: ["accent", "foreground"] as const,
+      description: "The color the default link wears.",
+    },
+  },
 } satisfies RegistryItem
 
 export default linkMeta

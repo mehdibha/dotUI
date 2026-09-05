@@ -3,14 +3,14 @@
   "description": "A link allows a user to navigate to another page or resource within a web page or application.",
   "props": {
     "variant": {
-      "type": "\"accent\" | \"quiet\" | \"unstyled\"",
-      "detailedType": "'accent' | 'quiet' | 'unstyled' | undefined",
+      "type": "\"default\" | \"quiet\" | \"unstyled\"",
+      "detailedType": "'default' | 'quiet' | 'unstyled' | undefined",
       "typeAst": {
         "type": "union",
         "elements": [
           {
             "type": "stringLiteral",
-            "value": "accent"
+            "value": "default"
           },
           {
             "type": "stringLiteral",
@@ -23,7 +23,7 @@
         ]
       },
       "description": "The visual style of the link.",
-      "default": "'accent'"
+      "default": "'default'"
     },
     "onPress": {
       "type": "((e: PressEvent) => void)",
@@ -972,7 +972,7 @@
           "name": "type",
           "value": {
             "type": "identifier",
-            "name": "\"pressstart\" | \"pressend\" | \"pressup\" | \"press\""
+            "name": "\"press\" | \"pressstart\" | \"pressend\" | \"pressup\""
           },
           "optional": false,
           "readonly": false,
