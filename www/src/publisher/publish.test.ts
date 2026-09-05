@@ -10,6 +10,11 @@
 
 import { afterEach, describe, expect, test } from "vitest"
 
+import {
+  publishables,
+  PUBLISHABLE_NAMES,
+} from "@/registry/__generated__/publishables"
+
 import { alertPublishable } from "./__fixtures__/alert-publishable"
 import { buttonPublishable } from "./__fixtures__/button-publishable"
 import { flatten } from "./flatten"
@@ -27,7 +32,7 @@ import {
   rewriteClassString,
 } from "./resolve-classes"
 import { serializeTvConfig } from "./serialize"
-import type { ClassValue, TvLayer } from "./types"
+import type { ClassValue, Publishable, TvLayer } from "./types"
 
 afterEach(() => {
   setKnownDotuiNames([])
@@ -319,6 +324,64 @@ describe("publish", () => {
     expect(file?.path).toBe("ui/button.tsx")
     expect(file?.target).toBeUndefined()
     expect(file?.content).toBe(rawContent)
+  })
+
+  test("enum param `source`: the selected value rewrites the shipped source", () => {
+    const publishable: Publishable = {
+      template: `import { ChevronDownIcon } from "@/components/icons";\n\nconst caretVariants = tv(%%TV_CONFIG%%);\n\nconst Caret = () => <ChevronDownIcon className="ml-auto" />;\n`,
+      stylesConfig: { base: { base: "flex" } },
+      meta: {
+        name: "caret",
+        type: "registry:ui",
+        files: [{ type: "registry:ui", path: "ui/caret/base.tsx" }],
+        params: {
+          caret: {
+            kind: "enum",
+            default: "chevron",
+            values: ["chevron", "double"],
+            source: { double: { ChevronDownIcon: "ChevronsUpDownIcon" } },
+          },
+        },
+      },
+    }
+
+    const untouched = publish({
+      publishable,
+      preset: { density: "default", componentParams: {} },
+    }).rawContent
+    expect(untouched).toContain(
+      'import { ChevronDownIcon } from "lucide-react";',
+    )
+    expect(untouched).toContain("<ChevronDownIcon ")
+
+    const swapped = publish({
+      publishable,
+      preset: {
+        density: "default",
+        componentParams: { caret: { caret: "double" } },
+      },
+    }).rawContent
+    expect(swapped).toContain(
+      'import { ChevronsUpDownIcon } from "lucide-react";',
+    )
+    expect(swapped).toContain("<ChevronsUpDownIcon ")
+    expect(swapped).not.toContain("ChevronDownIcon")
+  })
+
+  test("enum param `source`: every substitution key occurs in its template", async () => {
+    // A renamed identifier or reformatted prop default would otherwise turn
+    // the swap into a silent no-op.
+    for (const name of PUBLISHABLE_NAMES) {
+      const { publishable } = await publishables[name]!()
+      for (const def of Object.values(publishable.meta.params ?? {})) {
+        if (def.kind !== "enum" || !def.source) continue
+        for (const swaps of Object.values(def.source)) {
+          for (const from of Object.keys(swaps)) {
+            expect(publishable.template, `${name}: "${from}"`).toContain(from)
+          }
+        }
+      }
+    }
   })
 
   test("button: rewrites known dotui deps to extensionless endpoint URLs", () => {

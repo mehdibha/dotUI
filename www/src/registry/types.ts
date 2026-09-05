@@ -51,6 +51,13 @@ export type EnumParamDef = {
    * data both server and client always share.
    */
   vars?: Record<string, Record<`--${string}`, string>>
+  /**
+   * Source substitutions a value applies to the shipped base file, keyed by
+   * value name — `{ ChevronDownIcon: "ChevronsUpDownIcon" }` swaps an icon,
+   * `{ 'weekdayStyle = "narrow"': 'weekdayStyle = "short"' }` a prop default.
+   * The www wrapper (`index.tsx`) mirrors the same choice at runtime.
+   */
+  source?: Record<string, Record<string, string>>
   files?: Record<string, readonly RegistryItemFile[]>
   description?: string
 }
