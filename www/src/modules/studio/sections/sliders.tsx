@@ -1,18 +1,13 @@
 "use client"
 
-/* Sliders — two decisions real systems actually fork on. Thumb: the circle
-   knob (iOS, shadcn, Radix, Spectrum — a white-ish disc riding the track) vs
-   Material 3's handle, a tall thin rounded bar with the track cut away around
-   it (the post-2023 M3 slider spec). Track: hairline (iOS ~4px, Radix,
-   shadcn — the track recedes, the thumb is the control) vs chunky (M3's
-   16dp track, audio/media UIs — the fill itself reads as a level bar). The
-   two axes compose freely: circle-on-thick is the classic volume slider,
-   bar-on-thin is M3 on a quiet page. The hero shows two static specimens at
-   different values so both the fill shape and the thumb treatment read at a
-   glance. */
+/* Sliders — thumb and track compose freely: circle-on-thick is the classic
+   volume slider, bar-on-thin is M3 on a quiet page. The hero shows two static
+   specimens at different values so both the fill shape and the thumb
+   treatment read at a glance; the classes mirror the registry's slices. */
 
 import { cn } from "@/registry/lib/utils"
 
+import { THUMB_OPTIONS, TRACK_OPTIONS } from "../axes/sliders"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -20,21 +15,10 @@ import type { Lab, LabState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
-function ThumbGlyph({ thumb }: { thumb: "circle" | "bar" }) {
+function ThumbGlyph({ thumb }: { thumb: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-      {thumb === "circle" ? (
-        <>
-          <path
-            d="M3 12h18"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            opacity=".4"
-          />
-          <circle cx="13.5" cy="12" r="4" fill="currentColor" />
-        </>
-      ) : (
+      {thumb === "bar" ? (
         <>
           <path
             d="M3 12h5.5M15.5 12h5.5"
@@ -52,30 +36,49 @@ function ThumbGlyph({ thumb }: { thumb: "circle" | "bar" }) {
             fill="currentColor"
           />
         </>
+      ) : (
+        <>
+          <path
+            d="M3 12h18"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            opacity=".4"
+          />
+          {thumb === "outline" ? (
+            <circle
+              cx="13.5"
+              cy="12"
+              r="3.5"
+              fill="var(--color-bg)"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            />
+          ) : (
+            <circle cx="13.5" cy="12" r="4" fill="currentColor" />
+          )}
+        </>
       )}
     </svg>
   )
 }
 
-const THUMB_OPTIONS: SelectRowOption[] = [
-  {
-    value: "circle",
-    label: "Circle",
-    illustration: <ThumbGlyph thumb="circle" />,
-  },
-  { value: "bar", label: "Bar", illustration: <ThumbGlyph thumb="bar" /> },
-]
-
-const TRACK_OPTIONS = [
-  { value: "thin", label: "Thin" },
-  { value: "thick", label: "Thick" },
-]
+const THUMB_SELECT_OPTIONS: SelectRowOption[] = THUMB_OPTIONS.map((o) => ({
+  ...o,
+  illustration: <ThumbGlyph thumb={o.value} />,
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 
-export const TRACK_HEIGHT = {
-  thin: "h-1",
-  thick: "h-3",
+const TRACK = {
+  thin: { track: "h-1", disc: "size-3", bar: "h-6" },
+  thick: { track: "h-3", disc: "size-5", bar: "h-10" },
+}
+
+const THUMB = {
+  circle: "rounded-full bg-fg",
+  outline: "rounded-full border-2 border-border-control bg-bg",
+  bar: "w-1 rounded-full bg-fg",
 }
 
 function SliderSpecimen({
@@ -86,38 +89,36 @@ function SliderSpecimen({
   state: LabState
 }) {
   const left = `${percent}%`
+  const track = TRACK[state.sliderTrack as keyof typeof TRACK] ?? TRACK.thin
+  const thumb = state.sliderThumb as keyof typeof THUMB
   return (
-    <div className="relative flex h-6 w-full items-center">
+    <div className="relative flex h-10 w-full items-center">
       <div
         className={cn(
-          "w-full overflow-hidden rounded-full bg-muted",
-          TRACK_HEIGHT[state.sliderTrack as keyof typeof TRACK_HEIGHT],
+          "w-full overflow-hidden rounded-full bg-neutral",
+          track.track,
         )}
       >
         <div
-          className="h-full rounded-full bg-accent"
+          className="h-full rounded-full bg-primary"
           style={{ width: left }}
         />
       </div>
-      {state.sliderThumb === "bar" ? (
-        // The ring paints the hero surface over track and fill — the M3 gap.
-        <span
-          className="absolute top-1/2 h-6 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent ring-[3px] ring-bg"
-          style={{ left }}
-        />
-      ) : (
-        <span
-          className="absolute top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-bg shadow-sm"
-          style={{ left }}
-        />
-      )}
+      <span
+        className={cn(
+          "absolute top-1/2 -translate-x-1/2 -translate-y-1/2",
+          thumb === "bar" ? track.bar : track.disc,
+          THUMB[thumb] ?? THUMB.circle,
+        )}
+        style={{ left }}
+      />
     </div>
   )
 }
 
 export function SlidersHero({ state }: { state: LabState }) {
   return (
-    <Hero className="gap-5 px-5 py-6">
+    <Hero className="gap-3 px-5 py-4">
       <SliderSpecimen percent={35} state={state} />
       <SliderSpecimen percent={70} state={state} />
     </Hero>
@@ -144,7 +145,7 @@ export function SlidersSection({ lab }: { lab: Lab }) {
         label="Thumb"
         value={state.sliderThumb}
         onChange={set("sliderThumb")}
-        options={THUMB_OPTIONS}
+        options={THUMB_SELECT_OPTIONS}
         layout="grid"
       />
       <SegmentedControlRow
