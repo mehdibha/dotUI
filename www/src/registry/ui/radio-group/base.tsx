@@ -113,6 +113,7 @@ const RadioIndicator = ({ className, ...props }: RadioIndicatorProps) => {
   const ctx = useContext(InternalRadioContext)
   return (
     <span
+      data-radio-indicator=""
       data-rac=""
       data-selected={ctx?.isSelected || undefined}
       data-pressed={ctx?.isPressed || undefined}
