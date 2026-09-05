@@ -2,6 +2,10 @@ import { createStyles } from "@/lib/styles"
 
 import commandMeta from "./meta"
 
+// A frameless input over a hairline that runs the full width of the surface.
+const HAIRLINE_FIELD =
+  "**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0 **:data-search-field:border-b"
+
 const { useStyles, styles } = createStyles(commandMeta, {
   base: {
     base: [
@@ -23,8 +27,8 @@ const { useStyles, styles } = createStyles(commandMeta, {
     comfortable: {},
   },
   params: {
-    style: {
-      1: {
+    search: {
+      field: {
         base: [
           // The shell inset lives on the search field and inside the scrolling
           // list — never on the root, so the list runs to the surface edge and
@@ -45,27 +49,27 @@ const { useStyles, styles } = createStyles(commandMeta, {
           "in-data-modal:**:[[data-search-field]>[data-input-group]]:rounded-[calc(var(--surface-radius,var(--radius-surface))-(--spacing(2)))]",
         ],
       },
-      2: {
+      bar: {
+        base: [HAIRLINE_FIELD, "in-data-modal:**:data-search-field:p-0.5"],
+      },
+      prompt: {
         base: [
-          "**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0",
-          "**:data-search-field:border-b",
-          "in-data-modal:**:data-search-field:p-0.5",
+          HAIRLINE_FIELD,
+          // Text only: the leading magnifier goes, and the input takes back the
+          // text inset the addon owned so the prompt lines up with the items.
+          "**:[[data-search-field]_[data-input-group-addon]:first-child]:hidden **:[[data-search-field]_[data-input]]:pl-(--edge-to-text)",
         ],
       },
-      3: {
+    },
+    scale: {
+      default: {},
+      large: {
         base: [
-          // Vercel ⌘K: padded shell, frameless input on an inset hairline,
-          // flush list. The inset rides the search field (margins keep the
-          // hairline's geometry) and the list's own padding, so the scrollbar
-          // sits flush against the popover edge.
-          "gap-2",
-          // w-auto: margins keep the hairline inset, and the field's base
-          // w-full would otherwise add them on top of the full width.
-          "**:data-search-field:mx-2 **:data-search-field:mt-2 **:data-search-field:w-auto",
-          "**:data-listbox:scroll-py-2 **:data-listbox:px-2 **:data-listbox:pt-0 **:data-listbox:pb-2",
-          "**:[[data-search-field]>[data-input-group]]:border-0 **:[[data-search-field]>[data-input-group]]:bg-transparent **:[[data-search-field]>[data-input-group]]:ring-0",
-          "**:data-search-field:border-b **:data-search-field:pb-1.5",
-          "**:data-listbox:**:data-separator:mx-0 **:data-listbox:**:data-separator:my-1.5",
+          // Input, rows and icons step up together (Raycast, Linear ⌘K).
+          "**:[[data-search-field]_[data-input-group]]:[--icon-size:--spacing(5)] **:[[data-search-field]_[data-input-group]]:[--input-h:--spacing(11)]",
+          "**:[[data-search-field]_[data-input]]:text-base",
+          "**:data-listbox-item:py-2 **:data-listbox-item:text-base **:data-menu-item:py-2 **:data-menu-item:text-base",
+          "**:[[data-listbox-item]>svg]:not-with-[size]:size-5 **:[[data-menu-item]>svg]:not-with-[size]:size-5",
         ],
       },
     },
