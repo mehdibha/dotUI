@@ -232,6 +232,17 @@ export interface ResolvedAll extends Omit<Resolved, "tokens" | "params"> {
   params: Record<string, Record<string, string>>
 }
 
+function mergeColor(base: ColorConfig, part: ColorConfig): ColorConfig {
+  const merged: ColorConfig = { ...base, ...part }
+  const overrides = { ...base.overrides, ...part.overrides }
+  const borders = { ...base.borders, ...part.borders }
+  if (Object.keys(overrides).length > 0) merged.overrides = overrides
+  else delete merged.overrides
+  if (Object.keys(borders).length > 0) merged.borders = borders
+  else delete merged.borders
+  return merged
+}
+
 export function resolveAll(state: StudioState): ResolvedAll {
   const tokens: Record<string, string> = {}
   const params: Record<string, Record<string, string>> = {}
@@ -248,15 +259,7 @@ export function resolveAll(state: StudioState): ResolvedAll {
     // Color merges deep on its per-token maps so a chapter other than Color
     // (Surfaces: border targets, token overrides) can contribute without
     // owning the recipe.
-    if (part.color)
-      color = color
-        ? {
-            ...color,
-            ...part.color,
-            overrides: { ...color.overrides, ...part.color.overrides },
-            borders: { ...color.borders, ...part.color.borders },
-          }
-        : part.color
+    if (part.color) color = color ? mergeColor(color, part.color) : part.color
     if (part.icons) icons = part.icons
   }
   return { tokens, params, density, color, icons }

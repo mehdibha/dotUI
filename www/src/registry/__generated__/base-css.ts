@@ -31,7 +31,16 @@ export const baseRegistryCss = {
 			"*": {
 				"@apply border-border": {},
 				"corner-shape": "var(--corner-shape, round)",
+				"scrollbar-width": "var(--scrollbar-width, auto)",
+				"scrollbar-color": "var(--scrollbar-color, auto)",
 			},
+			"*:hover": {
+				"scrollbar-color": "var(--scrollbar-color-hover, var(--scrollbar-color, auto))",
+			},
+			':where(\n    button,\n    label,\n    kbd,\n    th,\n    [role="button"],\n    [role="tab"],\n    [role="option"],\n    [role^="menuitem"],\n    [role="radio"],\n    [role="switch"],\n    [role="tooltip"]\n  )':
+				{
+					"user-select": "var(--user-select-ui, auto)",
+				},
 			':root,\n  [data-mode="light"]': {
 				"color-scheme": "light",
 			},
@@ -45,6 +54,9 @@ export const baseRegistryCss = {
 			},
 			body: {
 				"@apply bg-bg font-sans text-fg": {},
+			},
+			":is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *)": {
+				opacity: "var(--disabled-opacity, 1)",
 			},
 			html: {
 				"@apply font-sans": {},
@@ -220,8 +232,8 @@ export const baseRegistryCss = {
 			"--chart-8": "oklch(0.3567 0.124 256.48)",
 		},
 		"::selection": {
-			"background-color": "var(--accent-300)",
-			color: "var(--neutral-950)",
+			"background-color": "var(--selection-bg, Highlight)",
+			color: "var(--selection-fg, HighlightText)",
 		},
 		".lucide,\n.tabler-icon": {
 			"stroke-width": "var(--icon-stroke-width, 2)",
@@ -400,6 +412,10 @@ export const baseRegistryCss = {
 	},
 	cssVars: {
 		theme: {
+			"--ease-enter": "cubic-bezier(0, 0, 0.2, 1)",
+			"--transition-duration-enter": "200ms",
+			"--transition-duration-exit": "150ms",
+			"--default-transition-duration": "150ms",
 			"--ease-fluid-out": "cubic-bezier(0.32, 0.72, 0, 1)",
 			"--cursor-interactive": "pointer",
 			"--cursor-pending": "default",
@@ -441,11 +457,14 @@ export const baseRegistryCss = {
 			"--color-primary-hover": "color-mix(in oklab, var(--neutral-950) 90%, var(--neutral-25))",
 			"--color-primary-active": "color-mix(in oklab, var(--neutral-950) 80%, var(--neutral-25))",
 			"--color-primary-muted": "var(--neutral-200)",
+			"--color-primary-disabled": "var(--neutral-300)",
 			"--color-fg-on-primary": "var(--neutral-25)",
-			"--color-fg-primary-disabled": "var(--neutral-500)",
+			"--color-fg-primary-disabled": "var(--neutral-600)",
 			"--color-selection": "var(--neutral-950)",
 			"--color-selection-hover": "color-mix(in oklab, var(--neutral-950) 90%, var(--neutral-25))",
 			"--color-fg-on-selection": "var(--neutral-25)",
+			"--color-selection-disabled": "var(--neutral-100)",
+			"--color-fg-on-selection-disabled": "var(--neutral-600)",
 			"--color-success": "var(--success-700)",
 			"--color-success-hover": "var(--success-800)",
 			"--color-success-active": "color-mix(in oklab, var(--success-800) 88%, var(--neutral-950))",
