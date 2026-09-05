@@ -6,66 +6,69 @@
    selectable — the hero previews both surfaces so the split is visible.
    Highlight styles ::selection; the browser default never themes. */
 
-import { cn } from "@/registry/lib/utils"
+import type { CSSProperties } from "react"
 
+import {
+  HIGHLIGHT_OPTIONS,
+  resolveSelection,
+  UI_TEXT_OPTIONS,
+} from "../axes/selection"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { ArrowCursor, GlyphBadge, IBeamCursor } from "./cursor"
 
-const UI_TEXT_OPTIONS: SelectRowOption[] = [
-  { value: "selectable", label: "Selectable", illustration: <IBeamCursor /> },
-  { value: "none", label: "Non-selectable", illustration: <ArrowCursor /> },
-]
+const UI_TEXT_ILLUSTRATIONS: Record<string, React.ReactNode> = {
+  selectable: <IBeamCursor />,
+  none: <ArrowCursor />,
+}
 
 /* Painted words, not cursors: the option is the highlight itself. The blue
    depicts the OS default, which is literal like the cursor drawings. */
-const HIGHLIGHT_OPTIONS: SelectRowOption[] = [
-  {
-    value: "browser",
-    label: "Browser",
-    illustration: (
-      <span className="rounded-xs bg-[#B3D7FF] px-1 text-sm text-[#1B1B1F]">
-        Aa
-      </span>
-    ),
-  },
-  {
-    value: "accent",
-    label: "Accent",
-    illustration: (
-      <span className="rounded-xs bg-accent px-1 text-sm text-fg-on-accent">
-        Aa
-      </span>
-    ),
-  },
-]
+const HIGHLIGHT_ILLUSTRATIONS: Record<string, React.ReactNode> = {
+  browser: (
+    <span className="rounded-xs bg-[#B3D7FF] px-1 text-sm text-[#1B1B1F]">
+      Aa
+    </span>
+  ),
+  accent: (
+    <span className="rounded-xs bg-accent px-1 text-sm text-fg-on-accent">
+      Aa
+    </span>
+  ),
+}
 
-/* Content and chrome side by side: the sentence stays selectable under
-   either switch — non-selectable systems opt content back in — while the
-   label follows it, arrow cursor included. ::selection can't be forced to
-   render, so the sentence asks to be selected instead of faking it. */
+const uiTextOptions: SelectRowOption[] = UI_TEXT_OPTIONS.map((o) => ({
+  ...o,
+  illustration: UI_TEXT_ILLUSTRATIONS[o.value],
+}))
+
+const highlightOptions: SelectRowOption[] = HIGHLIGHT_OPTIONS.map((o) => ({
+  ...o,
+  illustration: HIGHLIGHT_ILLUSTRATIONS[o.value],
+}))
+
+/* Content and chrome side by side, wearing the engine's own tokens: the
+   sentence stays selectable under either switch — non-selectable systems opt
+   content back in — while the label (a control label, so base.css's rule
+   reaches it) follows the switch, arrow cursor included. ::selection can't
+   be forced to render, so the sentence asks to be selected instead. */
 export function SelectionHero({ state }: { state: LabState }) {
   const none = state.selectionUiText === "none"
   return (
-    <Hero className="gap-2 px-5 py-5">
-      {state.selectionHighlight === "accent" && (
-        <style>{`[data-selection-hero] ::selection { background: var(--color-accent); color: var(--color-fg-on-accent); }`}</style>
-      )}
-      <div data-selection-hero="" className="flex flex-col items-start gap-2">
+    <Hero className="px-5 py-5">
+      <div
+        className="flex flex-col items-start gap-2"
+        style={resolveSelection(state).tokens as CSSProperties}
+      >
         <p className="cursor-text text-sm text-fg">
           Select this sentence — content always allows it.
         </p>
-        <span
-          className={cn(
-            "relative text-xs text-fg-muted",
-            none && "cursor-default select-none",
-          )}
-        >
+        <label className="relative text-xs text-fg-muted">
           UI label
           <GlyphBadge>{none ? <ArrowCursor /> : <IBeamCursor />}</GlyphBadge>
-        </span>
+        </label>
       </div>
     </Hero>
   )
@@ -91,14 +94,14 @@ export function SelectionSection({ lab }: { lab: Lab }) {
         label="UI text"
         value={state.selectionUiText}
         onChange={set("selectionUiText")}
-        options={UI_TEXT_OPTIONS}
+        options={uiTextOptions}
         layout="grid"
       />
       <SelectRow
         label="Highlight"
         value={state.selectionHighlight}
         onChange={set("selectionHighlight")}
-        options={HIGHLIGHT_OPTIONS}
+        options={highlightOptions}
         layout="grid"
       />
     </ControlGroup>

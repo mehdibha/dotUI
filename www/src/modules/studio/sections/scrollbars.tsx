@@ -10,6 +10,9 @@
    second decision); thumb radius (rides Shape); scrollbar-gutter (layout
    engineering every option needs, no system treats it as a look). */
 
+import type { CSSProperties } from "react"
+
+import { resolveScrollbars, STYLE_OPTIONS } from "../axes/scrollbars"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -17,7 +20,7 @@ import type { Lab, LabState } from "../state"
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
-function ScrollbarGlyph({ kind }: { kind: "native" | "thin" | "overlay" }) {
+function ScrollbarGlyph({ kind }: { kind: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
@@ -73,32 +76,12 @@ function ScrollbarGlyph({ kind }: { kind: "native" | "thin" | "overlay" }) {
   )
 }
 
-const STYLE_OPTIONS: SelectRowOption[] = [
-  {
-    value: "native",
-    label: "Native",
-    illustration: <ScrollbarGlyph kind="native" />,
-  },
-  {
-    value: "thin",
-    label: "Thin",
-    illustration: <ScrollbarGlyph kind="thin" />,
-  },
-  {
-    value: "overlay",
-    label: "Hover reveal",
-    illustration: <ScrollbarGlyph kind="overlay" />,
-  },
-]
+const styleOptions: SelectRowOption[] = STYLE_OPTIONS.map((o) => ({
+  ...o,
+  illustration: <ScrollbarGlyph kind={o.value} />,
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
-
-const SCROLLBAR_CSS: Record<string, string> = {
-  native: "",
-  thin: `.lab-scrollbar { scrollbar-width: thin; scrollbar-color: var(--color-border) transparent }`,
-  overlay: `.lab-scrollbar { scrollbar-width: thin; scrollbar-color: transparent transparent }
-.lab-scrollbar:hover { scrollbar-color: var(--color-border) transparent }`,
-}
 
 const SETTINGS_ROWS: [string, string][] = [
   ["Appearance", "System"],
@@ -117,14 +100,15 @@ const SETTINGS_ROWS: [string, string][] = [
   ["Advanced", ""],
 ]
 
-/* A list long enough that the bar renders at rest, tall enough to grab. */
+/* A list long enough that the bar renders at rest, tall enough to grab,
+   wearing the engine's own tokens so the bar is the one users will ship. */
 export function ScrollbarsHero({ state }: { state: LabState }) {
   return (
     <Hero inset={false}>
-      <style>
-        {SCROLLBAR_CSS[state.scrollbarStyle as keyof typeof SCROLLBAR_CSS]}
-      </style>
-      <div className="lab-scrollbar h-44 overflow-y-auto">
+      <div
+        className="h-44 overflow-y-auto"
+        style={resolveScrollbars(state).tokens as CSSProperties}
+      >
         <div className="divide-y divide-border/40">
           {SETTINGS_ROWS.map(([label, value]) => (
             <div
@@ -158,7 +142,7 @@ export function ScrollbarsSection({ lab }: { lab: Lab }) {
         label="Style"
         value={state.scrollbarStyle}
         onChange={set("scrollbarStyle")}
-        options={STYLE_OPTIONS}
+        options={styleOptions}
         layout="grid"
       />
     </ControlGroup>
