@@ -4,19 +4,21 @@ const badgeVariants = tv({
   base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-full text-xs font-medium whitespace-nowrap [&>svg]:pointer-events-none",
   variants: {
     appearance: {
-      solid: "bg-(--color) text-(--fg)",
+      solid: "bg-(--badge-color) text-(--badge-fg)",
       subtle:
-        "bg-[color-mix(in_srgb,var(--color)_30%,var(--color-bg))] text-[color-mix(in_srgb,var(--color)_60%,var(--color-fg))]",
+        "bg-[color-mix(in_srgb,var(--badge-color)_30%,var(--color-bg))] text-[color-mix(in_srgb,var(--badge-color)_60%,var(--color-fg))]",
     },
     variant: {
       neutral: "bg-neutral text-fg-on-neutral",
-      accent: "[--color:var(--color-accent)] [--fg:var(--color-fg-on-accent)]",
-      danger: "[--color:var(--color-danger)] [--fg:var(--color-fg-on-danger)]",
+      accent:
+        "[--badge-color:var(--color-accent)] [--badge-fg:var(--color-fg-on-accent)]",
+      danger:
+        "[--badge-color:var(--color-danger)] [--badge-fg:var(--color-fg-on-danger)]",
       success:
-        "[--color:var(--color-success)] [--fg:var(--color-fg-on-success)]",
+        "[--badge-color:var(--color-success)] [--badge-fg:var(--color-fg-on-success)]",
       warning:
-        "[--color:var(--color-warning)] [--fg:var(--color-fg-on-warning)]",
-      info: "[--color:var(--color-info)] [--fg:var(--color-fg-on-info)]",
+        "[--badge-color:var(--color-warning)] [--badge-fg:var(--color-fg-on-warning)]",
+      info: "[--badge-color:var(--color-info)] [--badge-fg:var(--color-fg-on-info)]",
     },
     size: {
       sm: "h-4.5 min-w-4.5 px-1.5 **:data-loader:*:[svg]:size-2.5 [&>svg]:size-2.5",
