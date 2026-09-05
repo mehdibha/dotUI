@@ -54,33 +54,36 @@ function renderCssEntries(record: CssRecord, indent: string): string[] {
 }
 
 /**
- * Render the init item's structured CSS fields — plus every shipped
- * component's `css` block merged in — into a single real `globals.css`.
- * `@import`s (ours + the record's) are hoisted to the top, as CSS requires.
+ * Render structured registry CSS fields into a real stylesheet, the way
+ * `shadcn init` would merge them into the consumer's: `@import`s hoisted to
+ * the top (ours + the record's), then `@theme inline`, `:root`, `.dark`, then
+ * everything else. `preamble` lines go between the imports and the vars.
  */
-export function renderGlobalsCss(fields: RegistryCssFields): string {
+export function renderStylesheet(
+  fields: RegistryCssFields,
+  options: { imports?: string[]; preamble?: string[] } = {},
+): string {
   const css = (fields.css ?? {}) as CssRecord
   const importKeys = Object.keys(css).filter((k) => k.startsWith("@import"))
   const rest = Object.entries(css).filter(([k]) => !k.startsWith("@import"))
 
   const lines: string[] = [
     '@import "tailwindcss";',
-    '@import "@fontsource-variable/geist";',
-    '@import "@fontsource/geist-mono";',
+    ...(options.imports ?? []),
     ...importKeys.map((k) => `${k};`),
-    "",
-    // The base theme aliases --font-sans to these; the faces come from the
-    // @fontsource imports above.
-    "@theme {",
-    '  --font-geist-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;',
-    '  --font-geist-mono: "Geist Mono", ui-monospace, monospace;',
-    "}",
+    ...(options.preamble ?? []),
   ]
 
-  const theme = fields.cssVars?.theme
-  if (theme && Object.keys(theme).length > 0) {
-    lines.push("", "@theme inline {")
-    for (const [name, value] of Object.entries(theme)) {
+  // Structured var fields render the way `shadcn init` writes them.
+  const varBlocks = [
+    ["@theme inline", fields.cssVars?.theme],
+    [":root", fields.cssVars?.light],
+    [".dark", fields.cssVars?.dark],
+  ] as const
+  for (const [selector, vars] of varBlocks) {
+    if (!vars || Object.keys(vars).length === 0) continue
+    lines.push("", `${selector} {`)
+    for (const [name, value] of Object.entries(vars)) {
       lines.push(`  ${name.startsWith("--") ? name : `--${name}`}: ${value};`)
     }
     lines.push("}")
@@ -92,6 +95,28 @@ export function renderGlobalsCss(fields: RegistryCssFields): string {
   }
 
   return `${lines.join("\n")}\n`
+}
+
+/**
+ * The v0 bundle's `globals.css`: the init fields plus every shipped
+ * component's `css` block, with the Geist faces from @fontsource.
+ */
+export function renderGlobalsCss(fields: RegistryCssFields): string {
+  return renderStylesheet(fields, {
+    imports: [
+      '@import "@fontsource-variable/geist";',
+      '@import "@fontsource/geist-mono";',
+    ],
+    // The base theme aliases --font-sans to these; the faces come from the
+    // @fontsource imports above.
+    preamble: [
+      "",
+      "@theme {",
+      '  --font-geist-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;',
+      '  --font-geist-mono: "Geist Mono", ui-monospace, monospace;',
+      "}",
+    ],
+  })
 }
 
 /** Deep-merge one component's `css` block into the accumulated record. */
