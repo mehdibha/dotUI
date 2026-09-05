@@ -17,7 +17,7 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
         "relative flex w-full cursor-interactive items-center gap-2 outline-hidden select-none disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
         "hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-highlight hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-highlight",
         "focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight",
-        "focus-visible:bg-highlight",
+        "focus-visible:bg-highlight focus-visible:text-fg-on-highlight",
         "disabled:text-fg-disabled disabled:**:text-current",
         "has-data-listbox-item-description:flex-col has-data-listbox-item-description:items-start has-data-listbox-item-description:gap-0 has-data-listbox-item-description:has-[>svg]:pl-8 has-data-listbox-item-description:**:data-listbox-item-indicator:top-2 has-data-listbox-item-description:*:[svg]:absolute has-data-listbox-item-description:*:[svg]:top-2 has-data-listbox-item-description:*:[svg]:left-2",
         "*:[kbd]:ml-auto *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
@@ -82,7 +82,7 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
     highlight: {
       accent: {
         slots: {
-          item: "hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:**:text-current focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:**:text-current",
+          item: "hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:**:text-current focus-visible:**:text-current focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:**:text-current",
         },
       },
     },
@@ -90,15 +90,22 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
       inset: {
         slots: {
           root: "p-1 **:data-separator:-mx-1",
-          item: "rounded-(--list-box-item-radius) px-1.5",
-          sectionTitle: "px-1.5",
+          item: "rounded-(--list-box-item-radius)",
+        },
+        density: {
+          compact: { slots: { item: "px-2", sectionTitle: "px-2" } },
+          default: { slots: { item: "px-1.5", sectionTitle: "px-1.5" } },
+          comfortable: { slots: { item: "px-2", sectionTitle: "px-2" } },
         },
       },
       "full-bleed": {
         slots: {
           root: "py-1",
-          item: "px-2.5",
-          sectionTitle: "px-2.5",
+        },
+        density: {
+          compact: { slots: { item: "px-2.5", sectionTitle: "px-2.5" } },
+          default: { slots: { item: "px-3", sectionTitle: "px-3" } },
+          comfortable: { slots: { item: "px-3.5", sectionTitle: "px-3.5" } },
         },
       },
     },

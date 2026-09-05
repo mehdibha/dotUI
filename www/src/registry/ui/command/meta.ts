@@ -20,6 +20,12 @@ const commandMeta = {
       description:
         "The search chrome: a boxed field, a full-bleed bar with the magnifier, or a bare prompt.",
     },
+    inset: {
+      kind: "enum",
+      default: "inset",
+      values: ["inset", "full-bleed"] as const,
+      description: "The list gutter: rows in a padded gutter, or edge-to-edge.",
+    },
     scale: {
       kind: "enum",
       default: "default",

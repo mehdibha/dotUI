@@ -14,6 +14,7 @@ import {
   publishables,
   PUBLISHABLE_NAMES,
 } from "@/registry/__generated__/publishables"
+import type { RegistryItem } from "@/registry/types"
 
 import { alertPublishable } from "./__fixtures__/alert-publishable"
 import { buttonPublishable } from "./__fixtures__/button-publishable"
@@ -33,7 +34,7 @@ import {
   rewriteClassString,
 } from "./resolve-classes"
 import { serializeTvConfig } from "./serialize"
-import type { ClassValue, Publishable, TvLayer } from "./types"
+import type { ClassValue, Publishable, StylesConfig, TvLayer } from "./types"
 
 afterEach(() => {
   setKnownDotuiNames([])
@@ -80,6 +81,53 @@ describe("flatten", () => {
     })
     const sizeMd = layer.variants?.size?.md as string
     expect(sizeMd).toContain("h-8")
+  })
+
+  test("param value: density sub-layer lands after the value's own classes", () => {
+    const meta = {
+      name: "list",
+      type: "registry:ui",
+      files: [],
+      params: {
+        inset: {
+          kind: "enum",
+          default: "inset",
+          values: ["inset", "full-bleed"],
+        },
+      },
+    } as unknown as RegistryItem
+    const stylesConfig: StylesConfig = {
+      base: { slots: { item: "flex" } },
+      density: { compact: { slots: { item: "py-1" } } },
+      params: {
+        inset: {
+          inset: {
+            slots: { item: "rounded-md" },
+            density: {
+              compact: { slots: { item: "px-2" } },
+              default: { slots: { item: "px-1.5" } },
+            },
+          },
+          "full-bleed": {
+            density: { compact: { slots: { item: "px-2.5" } } },
+          },
+        },
+      },
+    }
+    const compact = flatten({
+      stylesConfig,
+      meta,
+      density: "compact",
+      paramSelections: {},
+    })
+    expect(compact.slots?.item).toEqual(["flex", "py-1", "rounded-md", "px-2"])
+    const comfortable = flatten({
+      stylesConfig,
+      meta,
+      density: "comfortable",
+      paramSelections: { inset: "full-bleed" },
+    })
+    expect(comfortable.slots?.item).toBe("flex")
   })
 
   test("alert: enum param 'style' merges slot maps inside variants", () => {
