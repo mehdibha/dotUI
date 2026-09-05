@@ -155,21 +155,37 @@ export function depsFromFileImports(
 export interface PublishableModule {
   publishable: Publishable
   publishableByPath?: Record<string, Publishable>
+  /** Folded `createParamValue` templates keyed `param=value[&…]`. */
+  publishableBySelection?: Record<string, Publishable>
 }
 
 /**
  * Pick the publishable variant the preset selects. Components with an
  * enum-with-files param (e.g. loader.style = "ring" → ship `base.ring.tsx`)
- * generate one publishable per file; the user's choice points at one of them.
+ * generate one publishable per file; those with `createParamValue` hooks one
+ * per param selection. The user's choice points at one of them.
  */
 export function selectPublishable(
   mod: PublishableModule,
   preset: PublishPreset,
 ): Publishable {
-  if (!mod.publishableByPath) return mod.publishable
   const meta = mod.publishable.meta
   const selections = preset.componentParams[meta.name] ?? {}
 
+  if (mod.publishableBySelection) {
+    const paramNames = Object.keys(mod.publishableBySelection)[0]!
+      .split("&")
+      .map((entry) => entry.split("=")[0]!)
+    const key = paramNames
+      .map(
+        (name) =>
+          `${name}=${selections[name] ?? meta.params?.[name]?.default ?? ""}`,
+      )
+      .join("&")
+    return mod.publishableBySelection[key] ?? mod.publishable
+  }
+
+  if (!mod.publishableByPath) return mod.publishable
   for (const [paramName, def] of Object.entries(meta.params ?? {})) {
     if (def.kind !== "enum" || !def.files) continue
     const value = selections[paramName] ?? def.default

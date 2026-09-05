@@ -14,6 +14,7 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import { TAB_STYLE_OPTIONS } from "../axes/tabs"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -119,15 +120,10 @@ function TabGlyph({ style }: { style: "line" | "pill" | "enclosed" }) {
   )
 }
 
-const TAB_OPTIONS: SelectRowOption[] = [
-  { value: "line", label: "Line", illustration: <TabGlyph style="line" /> },
-  { value: "pill", label: "Pill", illustration: <TabGlyph style="pill" /> },
-  {
-    value: "enclosed",
-    label: "Enclosed",
-    illustration: <TabGlyph style="enclosed" />,
-  },
-]
+const TAB_OPTIONS: SelectRowOption[] = TAB_STYLE_OPTIONS.map((option) => ({
+  ...option,
+  illustration: <TabGlyph style={option.value as keyof typeof TAB_FAMILY} />,
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 

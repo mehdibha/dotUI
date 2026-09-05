@@ -42,8 +42,7 @@
           }
         ]
       },
-      "description": "The visual style of the link.",
-      "default": "isActive ? 'secondary' : 'quiet'"
+      "description": "The visual style of the link. Unset, it's `quiet`, or the design\nsystem's current-page style when `isActive`."
     },
     "size": {
       "type": "\"lg\" | \"md\" | \"sm\" | \"xs\"",

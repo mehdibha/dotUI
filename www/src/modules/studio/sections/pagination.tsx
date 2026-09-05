@@ -10,6 +10,7 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import { CURRENT_OPTIONS as CURRENT_VALUES } from "../axes/pagination"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -53,18 +54,12 @@ function CurrentGlyph({ emphasis }: { emphasis: "filled" | "outline" }) {
   )
 }
 
-const CURRENT_OPTIONS: SelectRowOption[] = [
-  {
-    value: "filled",
-    label: "Filled",
-    illustration: <CurrentGlyph emphasis="filled" />,
-  },
-  {
-    value: "outline",
-    label: "Outline",
-    illustration: <CurrentGlyph emphasis="outline" />,
-  },
-]
+const CURRENT_OPTIONS: SelectRowOption[] = CURRENT_VALUES.map((option) => ({
+  ...option,
+  illustration: (
+    <CurrentGlyph emphasis={option.value as "filled" | "outline"} />
+  ),
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 

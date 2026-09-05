@@ -12,10 +12,12 @@ const accordionMeta = {
     },
   ],
   params: {
-    style: {
+    container: {
       kind: "enum",
-      default: "default",
-      values: ["default", "hammamet"] as const,
+      default: "divided",
+      values: ["divided", "boxed", "cards"] as const,
+      description:
+        "How the items are grouped: hairline rows, one bordered surface, or a card each.",
     },
   },
 } satisfies RegistryItem

@@ -2,20 +2,22 @@ import { createStyles } from "@/lib/styles"
 
 import tabsMeta from "./meta"
 
+/* The `variant` prop is per-instance API; the `style` param sets its default
+   for the design system. Every look ships, so each value only retargets
+   `defaultVariants`. */
+
 const { useStyles, styles } = createStyles(tabsMeta, {
   base: {
     slots: {
       root: "flex gap-2",
       list: "inline-flex w-fit items-center justify-center text-fg-muted",
       tab: [
-        "relative isolate inline-flex flex-1 cursor-default items-center justify-center border border-transparent font-medium whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] select-none focus-visible:focus-ring",
-        "text-fg-muted hover:text-fg disabled:pointer-events-none disabled:text-fg-disabled",
+        "relative isolate inline-flex flex-1 cursor-default items-center justify-center font-medium whitespace-nowrap focus-reset transition-[background-color,border-color,color,box-shadow] select-none focus-visible:focus-ring",
+        "text-fg-muted hover:text-fg disabled:pointer-events-none disabled:text-fg-disabled selected:text-fg",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
-        "[&:has([data-tab-indicator])_>_[data-tab-default-indicator]]:hidden",
       ],
-      selectionIndicator: [
-        "pointer-events-none absolute rounded-md ease-out motion-safe:transition-[translate,width,height]",
-      ],
+      selectionIndicator:
+        "pointer-events-none absolute ease-out motion-safe:transition-[translate,width,height]",
       panel: "flex-1 outline-none data-[inert=true]:hidden",
     },
     variants: {
@@ -23,7 +25,7 @@ const { useStyles, styles } = createStyles(tabsMeta, {
         horizontal: {
           root: "flex-col",
           list: "h-(--tabs-list-height) flex-row",
-          tab: "h-[calc(100%-1px)]",
+          tab: "h-full",
         },
         vertical: {
           root: "flex-row",
@@ -32,21 +34,28 @@ const { useStyles, styles } = createStyles(tabsMeta, {
         },
       },
       variant: {
-        default: {
-          list: "rounded-lg bg-muted p-[3px]",
-          tab: "rounded-md selected:text-fg-on-selected",
-          selectionIndicator: "inset-0 bg-selected shadow-sm",
-        },
         line: {
-          list: "gap-1 rounded-none bg-transparent p-[3px]",
-          tab: "rounded-md selected:text-fg",
+          list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
+          tab: "rounded-md",
           selectionIndicator:
-            "rounded-full bg-fg orientation-horizontal:bottom-[-5px] orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-1 orientation-vertical:h-full orientation-vertical:w-0.5",
+            "rounded-full bg-fg orientation-horizontal:-bottom-px orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5",
+        },
+        pill: {
+          list: "gap-1",
+          tab: "rounded-full",
+          selectionIndicator: "inset-0 rounded-full bg-muted",
+        },
+        enclosed: {
+          list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",
+          // The selected tab steps one pixel onto the list's edge and paints
+          // over it, so tab and content read as one surface.
+          tab: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:rounded-t-(--tabs-radius) orientation-vertical:-mr-px orientation-vertical:rounded-l-(--tabs-radius) selected:z-10 selected:border-border selected:bg-bg orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent",
+          selectionIndicator: "hidden",
         },
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "line",
     },
   },
   density: {
@@ -67,9 +76,16 @@ const { useStyles, styles } = createStyles(tabsMeta, {
     comfortable: {
       slots: {
         root: "[--tabs-list-height:2.25rem]",
-        tab: "gap-1.5 px-2 py-1 text-sm has-data-icon-end:pr-1.5 has-data-icon-start:pl-1.5 **:[svg]:not-with-[size]:size-4",
+        tab: "gap-1.5 px-2.5 py-1 text-sm has-data-icon-end:pr-2 has-data-icon-start:pl-2 **:[svg]:not-with-[size]:size-4",
         panel: "text-sm",
       },
+    },
+  },
+  params: {
+    style: {
+      line: { defaultVariants: { variant: "line" } },
+      pill: { defaultVariants: { variant: "pill" } },
+      enclosed: { defaultVariants: { variant: "enclosed" } },
     },
   },
 })

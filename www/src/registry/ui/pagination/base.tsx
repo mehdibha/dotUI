@@ -2,6 +2,7 @@
 
 import type * as React from "react"
 
+import { createParamValue } from "@/lib/styles"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -11,6 +12,16 @@ import { LinkButton } from "@/registry/ui/button"
 import type { LinkButtonProps } from "@/registry/ui/button"
 
 import { useStyles } from "./styles"
+
+const useActiveVariant = createParamValue<LinkButtonProps["variant"]>({
+  componentName: "pagination",
+  paramName: "current",
+  defaultValue: "filled",
+  values: {
+    filled: "primary",
+    outline: "secondary",
+  },
+})
 
 // MARK: Pagination
 
@@ -63,11 +74,12 @@ const PaginationLink = ({
   isIconOnly = true,
   ...props
 }: PaginationLinkProps) => {
+  const activeVariant = useActiveVariant()
   return (
     <LinkButton
       aria-current={isActive ? "page" : undefined}
       data-pagination-link=""
-      variant={variant ?? (isActive ? "secondary" : "quiet")}
+      variant={variant ?? (isActive ? activeVariant : "quiet")}
       isIconOnly={isIconOnly}
       {...props}
     />

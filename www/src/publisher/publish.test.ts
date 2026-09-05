@@ -21,6 +21,7 @@ import { flatten } from "./flatten"
 import {
   depsFromFileImports,
   publish,
+  selectPublishable,
   setDotuiDepResolver,
   setKnownDotuiNames,
   TV_CONFIG_PLACEHOLDER,
@@ -648,5 +649,53 @@ describe("depsFromFileImports", () => {
     // types are imported (time-picker) — caught by the examples smoke.
     const found = deps(`import type { Time } from "@internationalized/date"`)
     expect(found).toContain("@internationalized/date")
+  })
+})
+
+describe("selectPublishable: createParamValue selections", () => {
+  const meta: Publishable["meta"] = {
+    name: "disclosure",
+    type: "registry:ui",
+    files: [],
+    params: {
+      marker: {
+        kind: "enum",
+        default: "chevron",
+        values: ["chevron", "plus"],
+      },
+    },
+  }
+  const make = (template: string): Publishable => ({
+    template,
+    stylesConfig: { base: {} },
+    meta,
+  })
+  const mod = {
+    publishable: make("default"),
+    publishableBySelection: {
+      "marker=chevron": make("chevron"),
+      "marker=plus": make("plus"),
+    },
+  }
+
+  test("picks the folded template for the preset's value", () => {
+    const preset = {
+      density: "default",
+      componentParams: { disclosure: { marker: "plus" } },
+    } as const
+    expect(selectPublishable(mod, preset).template).toBe("plus")
+  })
+
+  test("falls back to the meta default, then the default publishable", () => {
+    expect(
+      selectPublishable(mod, { density: "default", componentParams: {} })
+        .template,
+    ).toBe("chevron")
+    expect(
+      selectPublishable(mod, {
+        density: "default",
+        componentParams: { disclosure: { marker: "bogus" } },
+      }).template,
+    ).toBe("default")
   })
 })

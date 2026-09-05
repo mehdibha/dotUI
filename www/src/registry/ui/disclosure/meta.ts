@@ -11,6 +11,20 @@ const disclosureMeta = {
       target: "ui/disclosure.tsx",
     },
   ],
+  params: {
+    marker: {
+      kind: "enum",
+      default: "chevron",
+      values: ["chevron", "plus"] as const,
+      description:
+        "The glyph that shows a trigger opens: a turning chevron or a plus that becomes a minus.",
+    },
+    markerPosition: {
+      kind: "enum",
+      default: "trailing",
+      values: ["trailing", "leading"] as const,
+    },
+  },
 } satisfies RegistryItem
 
 export default disclosureMeta

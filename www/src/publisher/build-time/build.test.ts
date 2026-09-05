@@ -294,3 +294,62 @@ describe("end-to-end (extract + transform → publish)", () => {
     expect(rawContent).toMatch(/legend:\s*""/)
   })
 })
+
+/* ============================================================ */
+/* fold-param-values                                             */
+/* ============================================================ */
+
+describe("createParamValue folds", () => {
+  const disclosure = path.join(REGISTRY_UI, "disclosure/base.tsx")
+
+  test("disclosure: the selected marker inlines, the rest and their imports go", () => {
+    const chevron = transformBase({
+      baseTsxPath: disclosure,
+      componentName: "disclosure",
+      paramSelection: { marker: "chevron" },
+    }).template
+    expect(chevron).toContain("const glyph = <ChevronDownIcon />")
+    expect(chevron).not.toContain("PlusIcon")
+    expect(chevron).not.toContain("createParamValue")
+    expect(chevron).not.toContain("@/lib/styles")
+
+    const plus = transformBase({
+      baseTsxPath: disclosure,
+      componentName: "disclosure",
+      paramSelection: { marker: "plus" },
+    }).template
+    expect(plus).toContain("<PlusIcon")
+    expect(plus).toContain("<MinusIcon")
+    expect(plus).not.toContain("ChevronDownIcon")
+    expect(plus).not.toContain("useMarker")
+  })
+
+  test("breadcrumbs: a string value folds to the literal", () => {
+    const slash = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "breadcrumbs/base.tsx"),
+      componentName: "breadcrumbs",
+      paramSelection: { separator: "slash" },
+    }).template
+    expect(slash).toContain('const glyph = "/"')
+    expect(slash).not.toContain("ChevronRightIcon")
+    expect(slash).not.toContain("@/components/icons")
+  })
+
+  test("pagination: the current-page variant folds to its name", () => {
+    const outline = transformBase({
+      baseTsxPath: path.join(REGISTRY_UI, "pagination/base.tsx"),
+      componentName: "pagination",
+      paramSelection: { current: "outline" },
+    }).template
+    expect(outline).toContain('const activeVariant = "secondary"')
+    expect(outline).not.toContain("createParamValue")
+  })
+
+  test("hooks stay in place without a selection", () => {
+    const { template } = transformBase({
+      baseTsxPath: disclosure,
+      componentName: "disclosure",
+    })
+    expect(template).toContain("createParamValue")
+  })
+})

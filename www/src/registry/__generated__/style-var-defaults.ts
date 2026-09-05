@@ -3,9 +3,10 @@
 // publisher's class rewriter (see resolve-classes.ts).
 
 export const STYLE_VAR_DEFAULTS: Record<string, string> = {
+	"--accordion-radius": "var(--radius-panel)",
 	"--alert-radius": "var(--radius-surface)",
 	"--attachment-radius": "var(--radius-surface)",
-	"--avatar-radius": "var(--radius-full)",
+	"--avatar-radius": "calc(infinity * 1px)",
 	"--badge-radius": "var(--radius-full)",
 	"--btn-font-weight": "var(--font-weight-medium)",
 	"--btn-radius": "var(--radius-control)",
@@ -22,6 +23,8 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--kbd-radius": "var(--radius-sm)",
 	"--list-box-item-radius": "var(--radius-item)",
 	"--menu-item-radius": "var(--radius-item)",
+	"--modal-backdrop-blur": "var(--blur-sm)",
+	"--modal-backdrop-opacity": "40%",
 	"--modal-background": "var(--color-popover)",
 	"--modal-radius": "var(--radius-panel)",
 	"--popover-radius": "var(--radius-surface)",
@@ -44,7 +47,8 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--slider-track-radius": "var(--radius-full)",
 	"--switch-card-radius": "var(--radius-surface)",
 	"--switch-radius": "var(--radius-full)",
-	"--tag-radius": "var(--radius-full)",
+	"--tabs-radius": "var(--radius-surface)",
+	"--tag-radius": "var(--radius-control)",
 	"--tooltip-radius": "var(--radius-item)",
 	"--tree-item-radius": "var(--radius-item)",
 };

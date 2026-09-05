@@ -5,11 +5,27 @@ import { composeRenderProps } from "react-aria-components/composeRenderProps"
 import * as DisclosurePrimitives from "react-aria-components/Disclosure"
 import * as HeadingPrimitives from "react-aria-components/Heading"
 
-import { ChevronDownIcon } from "@/registry/icons"
+import { createParamValue } from "@/lib/styles"
+import { ChevronDownIcon, MinusIcon, PlusIcon } from "@/registry/icons"
 
 import { useStyles } from "./styles"
 
 // MARK: disclosureStyles
+
+const useMarker = createParamValue({
+  componentName: "disclosure",
+  paramName: "marker",
+  defaultValue: "chevron",
+  values: {
+    chevron: <ChevronDownIcon />,
+    plus: (
+      <>
+        <PlusIcon className="group-expanded/disclosure:hidden" />
+        <MinusIcon className="hidden group-expanded/disclosure:block" />
+      </>
+    ),
+  },
+})
 
 // MARK: Separator
 
@@ -54,7 +70,8 @@ interface DisclosureTriggerProps extends React.ComponentProps<
 > {}
 
 function DisclosureTrigger({ className, ...props }: DisclosureTriggerProps) {
-  const { heading, button } = useStyles()()
+  const { heading, button, marker } = useStyles()()
+  const glyph = useMarker()
   return (
     <HeadingPrimitives.Heading className={heading()}>
       <ButtonPrimitives.Button
@@ -68,7 +85,9 @@ function DisclosureTrigger({ className, ...props }: DisclosureTriggerProps) {
         {composeRenderProps(props.children, (children) => (
           <>
             {children}
-            <ChevronDownIcon className="pointer-events-none size-4 shrink-0 translate-y-0.5 text-fg-muted transition-transform duration-200" />
+            <span data-disclosure-marker="" className={marker()}>
+              {glyph}
+            </span>
           </>
         ))}
       </ButtonPrimitives.Button>
