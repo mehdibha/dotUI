@@ -8,7 +8,7 @@ const { useStyles, styles } = createStyles(drawerMeta, {
       overlay:
         "fixed inset-0 isolate z-50 [--drawer-bleed:--spacing(40)] [--drawer-inset:0px] [--drawer-peek:24px]",
       backdrop:
-        "absolute inset-0 bg-overlay/70 opacity-[calc(1-var(--drawer-swipe-progress,0))] transition-opacity duration-500 ease-fluid-out data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 data-[swiping]:duration-0",
+        "absolute inset-0 opacity-[calc(1-var(--drawer-swipe-progress,0))] transition-opacity duration-500 ease-fluid-out data-[ending-style]:opacity-0 data-[starting-style]:opacity-0 data-[swiping]:duration-0",
       viewport: "@container-[size] fixed inset-0 z-10 touch-none",
       popup:
         "relative flex max-h-full min-h-0 w-full min-w-0 flex-col border bg-bg text-fg shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.35)] [transition-property:transform,box-shadow,height,background-color,margin,padding] [transition-duration:calc(500ms*var(--drawer-swipe-strength,1))] [transition-timing-function:cubic-bezier(0.32,0.72,0,1)] will-change-[transform,height] outline-none [--drawer-scale-base:calc(max(0,1-(var(--nested-drawers,0)*0.05)))] [--drawer-scale:clamp(0,calc(var(--drawer-scale-base)+(0.05*var(--drawer-stack-progress))),1)] [--drawer-shrink:calc(1-var(--drawer-scale))] [--drawer-stack-offset:max(0px,calc((var(--nested-drawers,0)-var(--drawer-stack-progress))*var(--drawer-peek)))] [--drawer-stack-progress:clamp(0,var(--drawer-swipe-progress,0),1)] [interpolate-size:allow-keywords] data-[ending-style]:shadow-none data-[nested-drawer-open]:overflow-hidden data-[nested-drawer-swiping]:transition-none data-[starting-style]:shadow-none data-[swiping]:transition-none data-[swiping]:select-none",
@@ -56,6 +56,13 @@ const { useStyles, styles } = createStyles(drawerMeta, {
     compact: {},
     default: {},
     comfortable: {},
+  },
+  params: {
+    backdrop: {
+      dim: { slots: { backdrop: "bg-overlay/70" } },
+      blur: { slots: { backdrop: "bg-overlay/50 backdrop-blur-sm" } },
+      none: {},
+    },
   },
 })
 

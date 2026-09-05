@@ -11,7 +11,8 @@
    so the tooltip's tip is its own axis, never synced. Header: how a popover
    titles itself — freeform content (Radix Themes, Mantine, Polaris), a plain
    title + muted description (shadcn v4 PopoverHeader, Base UI), or a tinted
-   divided band (Bootstrap popover-header, Ant title). Rejected: close X
+   divided band (Bootstrap popover-header, Ant title) — freeform content is
+   how a popover is composed, not styled, so it isn't an option. Rejected: close X
    (Cloudscape is the lone default-on; everywhere else light-dismiss), offset
    (0–8px cluster — recipe constant), popover→sheet on mobile (real split,
    Apple/Spectrum vs the anchored web, but a system-wide adaptive decision
@@ -19,6 +20,9 @@
 
 import { ChevronDownIcon } from "lucide-react"
 
+import { cn } from "@/registry/lib/utils"
+
+import { HEADER_OPTIONS, TIP_OPTIONS } from "../axes/popovers"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
@@ -58,8 +62,8 @@ function TipGlyph({ tip }: { tip?: boolean }) {
   )
 }
 
-/** The panel's title treatment: freeform lines, a leading title, or a band. */
-function HeaderGlyph({ header }: { header: "none" | "title" | "band" }) {
+/** The panel's title treatment: a leading title, or a band. */
+function HeaderGlyph({ header }: { header: "title" | "band" }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect
@@ -78,11 +82,10 @@ function HeaderGlyph({ header }: { header: "none" | "title" | "band" }) {
         </>
       )}
       <path
-        d={header === "none" ? "M7 8.5h10" : "M7 8h7"}
+        d="M7 8h7"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
-        opacity={header === "none" ? 0.45 : 1}
       />
       <path
         d="M7 13h10M7 16h6"
@@ -97,24 +100,15 @@ function HeaderGlyph({ header }: { header: "none" | "title" | "band" }) {
 
 /* --------------------------------- Options --------------------------------- */
 
-const TIP_OPTIONS: SelectRowOption[] = [
-  { value: "none", label: "None", illustration: <TipGlyph /> },
-  { value: "tip", label: "Tip", illustration: <TipGlyph tip /> },
-]
+const TIP_ROW_OPTIONS: SelectRowOption[] = TIP_OPTIONS.map((o) => ({
+  ...o,
+  illustration: <TipGlyph tip={o.value === "tip"} />,
+}))
 
-const HEADER_OPTIONS: SelectRowOption[] = [
-  {
-    value: "none",
-    label: "Freeform",
-    illustration: <HeaderGlyph header="none" />,
-  },
-  {
-    value: "title",
-    label: "Title",
-    illustration: <HeaderGlyph header="title" />,
-  },
-  { value: "band", label: "Band", illustration: <HeaderGlyph header="band" /> },
-]
+const HEADER_ROW_OPTIONS: SelectRowOption[] = HEADER_OPTIONS.map((o) => ({
+  ...o,
+  illustration: <HeaderGlyph header={o.value as "title" | "band"} />,
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 
@@ -133,15 +127,16 @@ export function PopoversHero({ state }: { state: LabState }) {
           {state.popoverTip === "tip" && (
             <span className="absolute -top-[4.5px] left-1/2 size-2 -translate-x-1/2 rotate-45 rounded-[1px] border-t border-l border-border/60 bg-card" />
           )}
-          {header === "band" && (
-            <div className="rounded-t-lg border-b border-border/60 bg-muted/50 px-3 py-1.5 font-medium text-fg">
-              {title}
-            </div>
-          )}
           <div className="flex flex-col gap-1 p-3">
-            {header === "title" && (
-              <span className="font-medium text-fg">{title}</span>
-            )}
+            <span
+              className={cn(
+                "font-medium text-fg",
+                header === "band" &&
+                  "-mx-3 -mt-3 mb-0.5 rounded-t-[7px] border-b border-border/60 bg-muted/50 px-3 py-1.5",
+              )}
+            >
+              {title}
+            </span>
             <span className="text-xs text-fg-muted">{description}</span>
             <span className="mt-1 h-6 rounded-md border border-border/60 bg-bg" />
           </div>
@@ -156,7 +151,7 @@ export function popoversSummary(state: LabState): string {
   const header =
     HEADER_OPTIONS.find((o) => o.value === state.popoverHeader)?.label ??
     state.popoverHeader
-  const parts = [state.popoverHeader === "none" ? header : `${header} header`]
+  const parts = [`${header} header`]
   if (state.popoverTip === "tip") parts.push("Tip")
   return parts.join(" · ")
 }
@@ -170,14 +165,14 @@ export function PopoversSection({ lab }: { lab: Lab }) {
         label="Tip"
         value={state.popoverTip}
         onChange={set("popoverTip")}
-        options={TIP_OPTIONS}
+        options={TIP_ROW_OPTIONS}
         layout="grid"
       />
       <SelectRow
         label="Header"
         value={state.popoverHeader}
         onChange={set("popoverHeader")}
-        options={HEADER_OPTIONS}
+        options={HEADER_ROW_OPTIONS}
         layout="grid"
       />
     </ControlGroup>

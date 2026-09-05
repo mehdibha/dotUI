@@ -15,7 +15,7 @@ interface PopoverProps extends React.ComponentProps<
 }
 function Popover({
   className,
-  showArrow = false,
+  showArrow = true,
   placement,
   ...props
 }: PopoverProps) {

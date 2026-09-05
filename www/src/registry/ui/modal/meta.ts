@@ -12,10 +12,18 @@ const modalMeta = {
     },
   ],
   params: {
-    style: {
+    // Synced with drawer: one Dialogs axis writes both backdrops.
+    backdrop: {
       kind: "enum",
-      default: "default",
-      values: ["default", "muted-footer"] as const,
+      default: "dim",
+      values: ["dim", "blur", "none"] as const,
+      description: "How the page reads under the open modal.",
+    },
+    position: {
+      kind: "enum",
+      default: "center",
+      values: ["center", "top"] as const,
+      description: "Where the modal rests in the viewport.",
     },
   },
 } satisfies RegistryItem

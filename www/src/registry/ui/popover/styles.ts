@@ -12,9 +12,10 @@ const { useStyles, styles } = createStyles(popoverMeta, {
         "exiting:scale-95 exiting:transform-(--origin) exiting:opacity-0 exiting:duration-150",
         "placement-left:[--origin:translateX(var(--slide-offset))] placement-right:[--origin:translateX(calc(var(--slide-offset)*-1))] placement-top:[--origin:translateY(var(--slide-offset))] placement-bottom:[--origin:translateY(calc(var(--slide-offset)*-1))]",
       ],
+      // The tip overlaps the panel edge by 1px and strokes its own border.
       arrow: [
-        "block [&>svg]:size-2.5 [&>svg]:fill-popover",
-        "placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
+        "block [&>svg]:size-2.5 [&>svg]:fill-popover [&>svg]:stroke-border",
+        "placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
       ],
     },
   },

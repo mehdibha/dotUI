@@ -14,13 +14,15 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import { BACKDROP_OPTIONS, POSITION_OPTIONS } from "../axes/dialogs"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 
+/* The engine's modal backdrop slices, at hero scale. */
 export const BACKDROP = {
-  dim: "bg-overlay/50",
+  dim: "bg-overlay/40",
   blur: "bg-overlay/30 backdrop-blur-[3px]",
   none: "",
 }
@@ -77,23 +79,12 @@ function BackdropGlyph({ treatment }: { treatment: "dim" | "blur" | "none" }) {
 
 /* --------------------------------- Options --------------------------------- */
 
-const BACKDROP_OPTIONS: SelectRowOption[] = [
-  {
-    value: "dim",
-    label: "Dim",
-    illustration: <BackdropGlyph treatment="dim" />,
-  },
-  {
-    value: "blur",
-    label: "Blur",
-    illustration: <BackdropGlyph treatment="blur" />,
-  },
-  {
-    value: "none",
-    label: "None",
-    illustration: <BackdropGlyph treatment="none" />,
-  },
-]
+const BACKDROP_ROW_OPTIONS: SelectRowOption[] = BACKDROP_OPTIONS.map((o) => ({
+  ...o,
+  illustration: (
+    <BackdropGlyph treatment={o.value as "dim" | "blur" | "none"} />
+  ),
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 
@@ -135,7 +126,9 @@ export function dialogsSummary(state: LabState): string {
   const backdrop =
     BACKDROP_OPTIONS.find((o) => o.value === state.dialogBackdrop)?.label ??
     state.dialogBackdrop
-  const position = state.dialogPosition === "top" ? "Top" : "Center"
+  const position =
+    POSITION_OPTIONS.find((o) => o.value === state.dialogPosition)?.label ??
+    state.dialogPosition
   const first =
     state.dialogBackdrop === "none" ? "No backdrop" : `${backdrop} backdrop`
   return `${first} · ${position}`
@@ -150,17 +143,14 @@ export function DialogsSection({ lab }: { lab: Lab }) {
         label="Backdrop"
         value={state.dialogBackdrop}
         onChange={set("dialogBackdrop")}
-        options={BACKDROP_OPTIONS}
+        options={BACKDROP_ROW_OPTIONS}
         layout="grid"
       />
       <SegmentedControlRow
         label="Position"
         value={state.dialogPosition}
         onChange={set("dialogPosition")}
-        options={[
-          { value: "center", label: "Center" },
-          { value: "top", label: "Top" },
-        ]}
+        options={POSITION_OPTIONS}
       />
     </ControlGroup>
   )

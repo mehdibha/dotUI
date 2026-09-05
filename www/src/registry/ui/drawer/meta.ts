@@ -4,7 +4,6 @@ const drawerMeta = {
   name: "drawer",
   type: "registry:ui",
   group: "overlays",
-  dependencies: ["@base-ui/react"],
   files: [
     {
       type: "registry:ui",
@@ -12,6 +11,15 @@ const drawerMeta = {
       target: "ui/drawer.tsx",
     },
   ],
+  params: {
+    // Synced with modal: one Dialogs axis writes both backdrops.
+    backdrop: {
+      kind: "enum",
+      default: "dim",
+      values: ["dim", "blur", "none"] as const,
+      description: "How the page reads under the open drawer.",
+    },
+  },
 } satisfies RegistryItem
 
 export default drawerMeta
