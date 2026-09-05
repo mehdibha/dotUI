@@ -1,22 +1,18 @@
 "use client"
 
-/* Color — modes as a user-defined list of named schemes (1..n) instead of a
-   hardcoded light/dark pair. A mode = the same seeds resolved
-   under different conditions — polarity, background lightness, contrast
-   level. One mode → no switcher at all (light-only sites); extras (Dim,
-   OLED, High contrast) come from an archetype menu. The hero previews the
-   active mode; the Modes row manages the set. Still engine-real: each mode
-   resolves through @dotui/colors with its own background/guarantee settings. */
+/* Color — the only hero-less chapter: its rows are the specimen. The seeds
+   and axes land on `ColorConfig` through the axis module; here they resolve
+   through the same engine the preview runs, in the panel's own display mode,
+   so every swatch and derived "Auto" value is what ships. */
 
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import {
   MoonIcon,
-  PlusIcon,
   RotateCcwIcon,
   SunIcon,
   TriangleAlertIcon,
-  XIcon,
 } from "lucide-react"
+import { useTheme } from "starter-themes"
 
 import { STEPS, toHex, toOklch, wcag2 } from "@dotui/colors"
 
@@ -26,21 +22,18 @@ import type { ColorConfig } from "@/registry/theme"
 import { Button } from "@/registry/ui/button"
 import { ColorPicker } from "@/registry/ui/color-picker"
 import { ColorSwatch } from "@/registry/ui/color-swatch"
-import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
-import { Popover } from "@/registry/ui/popover"
-import {
-  Slider,
-  SliderControl,
-  SliderFill,
-  SliderThumb,
-  SliderTrack,
-} from "@/registry/ui/slider"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-import { COLOR_DEFAULTS } from "../axes/color"
+import {
+  BORDER_JOBS,
+  buildColorConfig,
+  COLOR_DEFAULTS,
+  GUARANTEE_OPTIONS,
+} from "../axes/color"
 import type { LabMode } from "../axes/color"
 import {
   DetailRow,
+  MiniSliderRow,
   PaletteDot,
   PickerPopoverContent,
   SwatchDots,
@@ -55,116 +48,29 @@ import {
   ROW,
   ROW_LABEL,
   ROW_VALUE,
-  ROW_OVERLAY_PLACEMENT,
-  INSTANT_POPOVER,
   SegmentedControlRow,
 } from "../rows"
 import type { Lab, LabState } from "../state"
 
 /* ------------------------------ Config bridge ------------------------------ */
 
-/** The color-global slice of lab state that every mode shares. */
-const SHARED_KEYS = [
-  "brand",
-  "primary",
-  "neutralHue",
-  "successSeed",
-  "warningSeed",
-  "dangerSeed",
-  "selectionSeed",
-  "vividness",
-  "hueShift",
-  "neutralTint",
-  "preserveSeed",
-  "guarantees",
-  "borderContrast",
-  "border400",
-  "border500",
-  "border600",
-] as const
-type SharedColorState = Pick<LabState, (typeof SHARED_KEYS)[number]>
+const COLOR_KEYS = Object.keys(
+  COLOR_DEFAULTS,
+) as (keyof typeof COLOR_DEFAULTS)[]
 
-/**
- * Shared slice + one mode → ColorConfig. The seeds and global axes are
- * common; the mode contributes its background (on its polarity's half) and,
- * for high contrast, a strict guarantee policy with raised border floors.
- */
-function buildModeConfig(state: SharedColorState, mode: LabMode): ColorConfig {
-  const {
-    brand,
-    primary,
-    neutralHue,
-    successSeed,
-    warningSeed,
-    dangerSeed,
-    selectionSeed,
-    vividness,
-    hueShift,
-    neutralTint,
-    preserveSeed,
-    guarantees,
-    borderContrast,
-    border400,
-    border500,
-    border600,
-  } = state
-  const high = mode.contrast === "high"
-  return {
-    v: 2,
-    seeds: {
-      accent: brand,
-      success: successSeed || undefined,
-      warning: warningSeed || undefined,
-      danger: dangerSeed || undefined,
-      selection: selectionSeed || undefined,
-    },
-    background:
-      mode.polarity === "light"
-        ? { light: Math.min(100, Math.max(90, mode.bg)) }
-        : { dark: mode.bg === 0 ? "oled" : Math.min(20, mode.bg) },
-    vividness: vividness === 1 ? undefined : vividness,
-    hueShift: hueShift === 1 ? undefined : hueShift,
-    neutralTint: neutralTint === 1 ? undefined : neutralTint,
-    neutralHue: neutralHue ?? undefined,
-    preserveSeed: preserveSeed || undefined,
-    guaranteePolicy: high
-      ? "strict"
-      : guarantees === "relaxed" || guarantees === "strict"
-        ? guarantees
-        : undefined,
-    primary: primary === "accent" ? "accent" : undefined,
-    borders: high
-      ? { "*": { "400": 2, "500": 3, "600": 4.5 } }
-      : borderContrast
-        ? {
-            "*": {
-              "400": border400 > 0 ? border400 : undefined,
-              "500": border500 > 0 ? border500 : undefined,
-              "600": border600 > 0 ? border600 : undefined,
-            },
-          }
-        : undefined,
-  }
+/** The state's recipe, reference-stable on its values so the engine runs
+ *  once per color edit (never for edits in other sections). */
+function useColorConfig(state: LabState): ColorConfig {
+  const key = JSON.stringify(COLOR_KEYS.map((k) => state[k]))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  return useMemo(() => buildColorConfig(state), [key])
 }
 
-/** Shared slice + one mode, resolved to that mode's engine half — how other
- *  sections (Surfaces) read the mode set without owning color state. */
+/** One mode's engine half — how other sections (Surfaces) read the mode
+ *  pair without owning color state. */
 export function useModeTheme(state: LabState, mode?: LabMode) {
-  const sharedKey = JSON.stringify(SHARED_KEYS.map((key) => state[key]))
-  const shared = useMemo(
-    (): SharedColorState =>
-      Object.fromEntries(
-        SHARED_KEYS.map((key) => [key, state[key]]),
-      ) as SharedColorState,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [sharedKey],
-  )
-  const config = useMemo(
-    () => (mode ? buildModeConfig(shared, mode) : null),
-    [shared, mode],
-  )
-  if (!config || !mode) return null
-  return resolveColorConfigCached(config)[mode.polarity]
+  const theme = resolveColorConfigCached(useColorConfig(state))
+  return mode ? theme[mode.polarity] : null
 }
 
 /** WCAG of the untouched borders vs the app background — the border sliders'
@@ -187,75 +93,16 @@ function cssToHex(css: string): string {
 }
 
 /** A mode's background as CSS without running the engine — for the swatches
- *  in summaries and mode rows (the real value is engine-derived, but at dot
- *  size CIELAB L* on a neutral axis is indistinguishable). */
+ *  in summaries and mode rows (at dot size CIELAB L* on a neutral axis is
+ *  indistinguishable from the engine's). */
 function modeBgCss(mode: LabMode): string {
   return `lab(${mode.bg}% 0 0)`
-}
-
-/* ------------------------------ Mode archetypes ----------------------------- */
-
-/** The 20% of modes that cover 80% of real systems — added, then tweaked. */
-const MODE_ARCHETYPES: {
-  key: string
-  note: string
-  mode: Omit<LabMode, "id">
-}[] = [
-  {
-    key: "light",
-    note: "White canvas",
-    mode: { name: "Light", polarity: "light", bg: 99, contrast: "default" },
-  },
-  {
-    key: "dark",
-    note: "Near-black canvas",
-    mode: { name: "Dark", polarity: "dark", bg: 2, contrast: "default" },
-  },
-  {
-    key: "dim",
-    note: "Lifted dark, easy on OLED smear",
-    mode: { name: "Dim", polarity: "dark", bg: 15, contrast: "default" },
-  },
-  {
-    key: "oled",
-    note: "Pure black canvas",
-    mode: { name: "OLED", polarity: "dark", bg: 0, contrast: "default" },
-  },
-  {
-    key: "light-hc",
-    note: "AA text everywhere, strong borders",
-    mode: { name: "Light HC", polarity: "light", bg: 100, contrast: "high" },
-  },
-  {
-    key: "dark-hc",
-    note: "AA text everywhere, strong borders",
-    mode: { name: "Dark HC", polarity: "dark", bg: 0, contrast: "high" },
-  },
-]
-
-const MAX_MODES = 6
-
-/** Unique id + display name for an added archetype ("Dark", "Dark 2", …). */
-function instantiate(
-  archetype: Omit<LabMode, "id">,
-  existing: LabMode[],
-): LabMode {
-  let name = archetype.name
-  let n = 2
-  while (existing.some((mode) => mode.name === name)) {
-    name = `${archetype.name} ${n}`
-    n += 1
-  }
-  let id = name.toLowerCase().replace(/[^a-z0-9]+/g, "-")
-  while (existing.some((mode) => mode.id === id)) id = `${id}-x`
-  return { ...archetype, id, name }
 }
 
 /* ----------------------------- Contrast status ----------------------------- */
 
 /** The report as a passive indicator: nothing when guarantees pass, a warning
- *  glyph opening the details on hover when they don't. Diagnostics, not
- *  content — the section leads with the controls. */
+ *  glyph opening the details on hover when they don't. */
 function ContrastWarnings({
   warnings,
   delta,
@@ -294,22 +141,14 @@ function ContrastWarnings({
 
 /* -------------------------------- Mode editor ------------------------------- */
 
-/** One mode's block inside the Modes panel: identity row (polarity glyph,
- *  name, default badge, remove) over its two parameters. */
+/** One mode's block inside the Modes panel: identity row over its two
+ *  parameters. */
 function ModeEditor({
   mode,
-  isDefault,
-  removable,
   onChange,
-  onMakeDefault,
-  onRemove,
 }: {
   mode: LabMode
-  isDefault: boolean
-  removable: boolean
   onChange: (mode: LabMode) => void
-  onMakeDefault: () => void
-  onRemove: () => void
 }) {
   const PolarityIcon = mode.polarity === "light" ? SunIcon : MoonIcon
   const light = mode.polarity === "light"
@@ -324,29 +163,6 @@ function ModeEditor({
           {mode.name}
         </span>
         <PolarityIcon className="size-3 shrink-0 text-fg-muted" />
-        <span className="ml-auto flex shrink-0 items-center gap-0.5">
-          {isDefault ? (
-            <span className="rounded-full bg-bg/50 px-2 py-0.5 text-[10px] font-medium text-fg-muted">
-              Default
-            </span>
-          ) : (
-            <Button size="xs" variant="quiet" onPress={onMakeDefault}>
-              Make default
-            </Button>
-          )}
-          {removable && (
-            <Button
-              size="xs"
-              variant="quiet"
-              isIconOnly
-              aria-label={`Remove ${mode.name} mode`}
-              onPress={onRemove}
-              className="text-fg-muted"
-            >
-              <XIcon />
-            </Button>
-          )}
-        </span>
       </div>
       <MiniSliderRow
         label="Background"
@@ -366,54 +182,6 @@ function ModeEditor({
           }
         />
       </ParamRow>
-    </div>
-  )
-}
-
-/** The add-mode entry: a quiet row opening the archetype menu. */
-function AddModeRow({
-  disabled,
-  onAdd,
-}: {
-  disabled: boolean
-  onAdd: (archetype: Omit<LabMode, "id">) => void
-}) {
-  return (
-    <div className="border-t border-bg/50 pt-1">
-      <Menu>
-        <Button
-          variant="quiet"
-          size="sm"
-          isDisabled={disabled}
-          className="w-full justify-start gap-2 px-2 text-xs font-normal text-fg-muted"
-        >
-          <PlusIcon className="size-3.5" />
-          {disabled ? `Up to ${MAX_MODES} modes` : "Add mode"}
-        </Button>
-        <Popover placement={ROW_OVERLAY_PLACEMENT} className={INSTANT_POPOVER}>
-          <MenuContent>
-            {MODE_ARCHETYPES.map(({ key, note, mode }) => (
-              <MenuItem
-                key={key}
-                id={key}
-                textValue={mode.name}
-                onAction={() => onAdd(mode)}
-              >
-                <span className="flex items-center gap-2.5">
-                  <span
-                    className="size-4 shrink-0 rounded-full ring-1 ring-border/60 ring-inset"
-                    style={{ backgroundColor: `lab(${mode.bg}% 0 0)` }}
-                  />
-                  <span className="flex flex-col">
-                    <span>{mode.name}</span>
-                    <span className="text-xs text-fg-muted">{note}</span>
-                  </span>
-                </span>
-              </MenuItem>
-            ))}
-          </MenuContent>
-        </Popover>
-      </Menu>
     </div>
   )
 }
@@ -479,7 +247,7 @@ function AutoColorRow({
 }
 
 /** AutoColorRow on the tile geometry (ColorPickerRow's tile layout) — for the
- *  semantic seeds, two up. Reset appears in the corner once overridden. */
+ *  semantic seeds, three up. Reset appears in the corner once overridden. */
 function AutoColorTile({
   label,
   value,
@@ -537,62 +305,7 @@ function AutoColorTile({
   )
 }
 
-/* ------------------------------- Mini slider ------------------------------- */
-
-/** A continuous axis at sub-row scale: label left, compact drag pill + value
- *  right — the engine's sliders in the mini-control language. */
-function MiniSliderRow({
-  label,
-  value,
-  onChange,
-  minValue,
-  maxValue,
-  step,
-  format,
-}: {
-  label: string
-  value: number
-  onChange: (value: number) => void
-  minValue: number
-  maxValue: number
-  step: number
-  format: (value: number) => string
-}) {
-  return (
-    <div className="flex h-9 items-center justify-between gap-3 px-2">
-      <span className="truncate text-xs text-fg-muted">{label}</span>
-      <span className="flex shrink-0 items-center gap-2">
-        <Slider
-          aria-label={label}
-          value={value}
-          minValue={minValue}
-          maxValue={maxValue}
-          step={step}
-          onChange={(v) => onChange(v as number)}
-          className="relative w-24"
-        >
-          <SliderControl>
-            <SliderTrack className="relative h-5 overflow-hidden rounded-md bg-bg/50">
-              <SliderFill className="absolute inset-y-0 left-0 bg-highlight" />
-            </SliderTrack>
-            <SliderThumb className="absolute top-1/2 z-10 h-3.5 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-fg/25" />
-          </SliderControl>
-        </Slider>
-        <span className="w-14 text-right font-mono text-xs text-fg-muted tabular-nums">
-          {format(value)}
-        </span>
-      </span>
-    </div>
-  )
-}
-
 /* --------------------------------- Section --------------------------------- */
-
-const GUARANTEE_OPTIONS = [
-  { value: "default", label: "Default" },
-  { value: "relaxed", label: "Relaxed" },
-  { value: "strict", label: "Strict" },
-]
 
 const CHARACTER_KEYS = ["vividness", "hueShift"] as const
 
@@ -604,50 +317,22 @@ const SEMANTIC_SEEDS = [
   { key: "dangerSeed", palette: "danger", label: "Danger" },
 ] as const
 
-const BORDER_JOBS = [
-  { key: "border400", job: "400", label: "Border · subtle", maxValue: 3 },
-  { key: "border500", job: "500", label: "Border · interactive", maxValue: 4 },
-  { key: "border600", job: "600", label: "Border · emphasized", maxValue: 8 },
-] as const
-
-/** Collapsed-row summary: the brand seed, and how many modes it drives. The
- *  only hero-less chapter — its rows are the specimen. */
+/** Collapsed-row summary: the brand seed and where primary actions draw from. */
 export function colorSummary(state: LabState): string {
-  const count = state.modes.length
-  return `${state.brand.toUpperCase()} · ${count} mode${count === 1 ? "" : "s"}`
+  const primary = state.primary === "accent" ? "Accent" : "Neutral"
+  return `${state.brand.toUpperCase()} · ${primary} primary`
 }
 
 export function ColorSection({ lab }: { lab: Lab }) {
   const { state, set } = lab
   const modes = state.modes
-  const [activeId, setActiveId] = useState<string | null>(null)
-  const active = modes.find((mode) => mode.id === activeId) ?? modes[0]
-
-  // Resolve ONLY the active mode — mode swatches elsewhere derive from bg
-  // directly, so switching or editing another mode never pays an engine run
-  // for schemes nobody is looking at. The shared slice memoizes on its own
-  // values, so edits to other sections never rebuild the config.
-  // JSON key: SHARED_KEYS is a const tuple, so the string is order-stable.
-  const sharedKey = JSON.stringify(SHARED_KEYS.map((key) => state[key]))
-  const shared = useMemo(
-    (): SharedColorState =>
-      Object.fromEntries(
-        SHARED_KEYS.map((key) => [key, state[key]]),
-      ) as SharedColorState,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [sharedKey],
-  )
-  const activeConfig = useMemo(
-    () => (active ? buildModeConfig(shared, active) : null),
-    [shared, active],
-  )
-  const theme = activeConfig ? resolveColorConfigCached(activeConfig) : null
-  const borderSeeds = useBorderSeeds(
-    activeConfig ?? { v: 2, seeds: { accent: state.brand } },
-  )
-
-  if (!active || !theme) return null
-  const m = theme[active.polarity]
+  const config = useColorConfig(state)
+  const theme = resolveColorConfigCached(config)
+  const borderSeeds = useBorderSeeds(config)
+  // Swatches read in the panel's own mode, so what the rows show is what the
+  // page around them renders.
+  const { resolvedTheme } = useTheme()
+  const m = theme[resolvedTheme === "dark" ? "dark" : "light"]
 
   const solid = (palette: string) => m.scales[palette]?.["700"] ?? m.background
   const selectionDerived =
@@ -661,20 +346,8 @@ export function ColorSection({ lab }: { lab: Lab }) {
     (key) => state[key] !== COLOR_DEFAULTS[key],
   )
 
-  const setModes = set("modes")
   const updateMode = (next: LabMode) =>
-    setModes(modes.map((mode) => (mode.id === next.id ? next : mode)))
-  const addMode = (archetype: Omit<LabMode, "id">) => {
-    const mode = instantiate(archetype, modes)
-    setModes([...modes, mode])
-    setActiveId(mode.id)
-  }
-  const removeMode = (id: string) => {
-    const rest = modes.filter((mode) => mode.id !== id)
-    setModes(rest)
-    if (state.defaultMode === id && rest[0]) set("defaultMode")(rest[0].id)
-    if (activeId === id) setActiveId(null)
-  }
+    set("modes")(modes.map((mode) => (mode.id === next.id ? next : mode)))
 
   const setBorderContrast = (on: boolean) => {
     set("borderContrast")(on)
@@ -683,7 +356,7 @@ export function ColorSection({ lab }: { lab: Lab }) {
 
   return (
     <>
-      {/* Palette first: the base seeds, then the semantic set two up. */}
+      {/* Palette first: the base seeds, then the semantic set three up. */}
       <ControlGroup>
         <ColorPickerRow
           label="Brand"
@@ -758,29 +431,20 @@ export function ColorSection({ lab }: { lab: Lab }) {
         label="Modes"
         summary={
           <span className="flex items-center gap-1.5">
-            {modes.length > 3 ? (
-              <span className={ROW_VALUE}>{modes.length} modes</span>
-            ) : (
-              <span className={ROW_VALUE}>
-                {modes.map((mode) => mode.name).join(" · ")}
-              </span>
-            )}
+            <span className={ROW_VALUE}>
+              {modes
+                .map((mode) =>
+                  mode.contrast === "high" ? `${mode.name} HC` : mode.name,
+                )
+                .join(" · ")}
+            </span>
             <SwatchDots colors={modes.map(modeBgCss)} />
           </span>
         }
       >
         {modes.map((mode) => (
-          <ModeEditor
-            key={mode.id}
-            mode={mode}
-            isDefault={state.defaultMode === mode.id}
-            removable={modes.length > 1}
-            onChange={updateMode}
-            onMakeDefault={() => set("defaultMode")(mode.id)}
-            onRemove={() => removeMode(mode.id)}
-          />
+          <ModeEditor key={mode.id} mode={mode} onChange={updateMode} />
         ))}
-        <AddModeRow disabled={modes.length >= MAX_MODES} onAdd={addMode} />
       </DetailRow>
       <DetailRow
         label="Character"
