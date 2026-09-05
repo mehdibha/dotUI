@@ -160,6 +160,39 @@ describe("chartPalette option (hue-spread strategies)", () => {
     },
   )
 
+  test.each(["vivid", "muted"] as const)(
+    "%s keeps each series' hue across modes",
+    (chartPalette) => {
+      for (const seed of ["#635BFF", "#438cd6", "#e5484d", "#f5a524"]) {
+        const theme = createTheme({ seeds: { accent: seed }, chartPalette })
+        const light = theme.charts.light.categorical.map(toOklch)
+        const dark = theme.charts.dark.categorical.map(toOklch)
+        light.forEach((color, i) => {
+          const gap = Math.abs(((color.h - dark[i]!.h + 540) % 360) - 180)
+          expect(gap, `${seed} series ${i + 1}`).toBeLessThan(1)
+        })
+      }
+    },
+  )
+
+  test("muted keeps low-chroma warm hues off mid rungs (no brown or khaki)", () => {
+    for (const seed of ["#635BFF", "#438cd6", "#2ebd85", "#7c3aed"]) {
+      const theme = createTheme({
+        seeds: { accent: seed },
+        chartPalette: "muted",
+      })
+      for (const mode of ["light", "dark"] as const)
+        for (const color of theme.charts[mode].categorical.map(toOklch)) {
+          const h = ((color.h % 360) + 360) % 360
+          if (h >= 30 && h < 135 && color.c < 0.1)
+            expect(
+              lstarOf(color),
+              `${seed} hue ${h.toFixed(0)} in ${mode}`,
+            ).toBeGreaterThanOrEqual(67)
+        }
+    }
+  })
+
   test("muted keeps the hue spread at a fraction of vivid's chroma", () => {
     const vivid = createTheme({ seeds: { accent }, chartPalette: "vivid" })
     const muted = createTheme({ seeds: { accent }, chartPalette: "muted" })
