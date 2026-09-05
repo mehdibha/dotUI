@@ -24,6 +24,7 @@ import { Example } from "@/modules/docs/example"
 import { Examples, type ExamplesProps } from "@/modules/docs/examples"
 import { InteractiveDemo } from "@/modules/docs/interactive-demo"
 import { Reference, type ReferenceProps } from "@/modules/docs/reference"
+import { StudioCta } from "@/modules/docs/studio-cta"
 
 export const mdxComponents: MDXComponents = {
   h1: ({ className, ...props }) => (
@@ -212,6 +213,7 @@ export const mdxComponents: MDXComponents = {
   ),
   ComponentsGrid,
   ChartFamilyGrid,
+  StudioCta,
   CompositionAnimation: ({
     className,
     ...props
