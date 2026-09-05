@@ -52,11 +52,10 @@ const { useStyles, styles } = createStyles(sliderMeta, {
     },
   },
   params: {
-    /* ----------------------------- Thumb styles ----------------------------- */
-    "thumb-style": {
-      solid: {
+    thumb: {
+      circle: {
         slots: {
-          thumb: "size-(--slider-thumb-size) border-0 bg-fg",
+          thumb: "size-(--slider-thumb-size) bg-fg",
         },
       },
       outline: {
@@ -67,16 +66,18 @@ const { useStyles, styles } = createStyles(sliderMeta, {
       },
       bar: {
         slots: {
-          thumb:
-            "h-(--slider-thumb-size) w-[calc(var(--slider-thumb-size)*0.2)] border-0 bg-fg",
+          thumb: "h-[calc(var(--slider-thumb-size)*2)] w-1 bg-fg",
         },
       },
-      faceted: {
+    },
+    track: {
+      thin: {},
+      // The track grows and the thumb with it: a level bar wants a knob
+      // that still reads on top of the fill.
+      thick: {
         slots: {
-          thumb: [
-            "size-(--slider-thumb-size) border border-border-control/60",
-            "bg-[conic-gradient(from_45deg,var(--color-bg),var(--color-neutral),var(--color-fg),var(--color-bg),var(--color-fg-muted),var(--color-bg))]",
-          ],
+          control:
+            "[--slider-size:calc(var(--spacing)*3)] [--slider-thumb-size:calc(var(--spacing)*5)]",
         },
       },
     },
