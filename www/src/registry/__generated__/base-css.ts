@@ -25,7 +25,16 @@ export const baseRegistryCss = {
 			"*": {
 				"@apply border-border": {},
 				"corner-shape": "var(--corner-shape, round)",
+				"scrollbar-width": "var(--scrollbar-width, auto)",
+				"scrollbar-color": "var(--scrollbar-color, auto)",
 			},
+			"*:hover": {
+				"scrollbar-color": "var(--scrollbar-color-hover, var(--scrollbar-color, auto))",
+			},
+			':where(\n    button,\n    label,\n    kbd,\n    th,\n    [role="button"],\n    [role="tab"],\n    [role="option"],\n    [role^="menuitem"],\n    [role="radio"],\n    [role="switch"],\n    [role="tooltip"]\n  )':
+				{
+					"user-select": "var(--user-select-ui, auto)",
+				},
 			"h1,\n  h2,\n  h3,\n  h4,\n  h5,\n  h6": {
 				"font-family": "var(--font-heading)",
 				"font-weight": "var(--font-weight-heading, var(--font-weight-semibold))",
@@ -39,8 +48,8 @@ export const baseRegistryCss = {
 			},
 		},
 		"::selection": {
-			"background-color": "var(--accent-300)",
-			color: "var(--neutral-950)",
+			"background-color": "var(--selection-bg, Highlight)",
+			color: "var(--selection-fg, HighlightText)",
 		},
 		".lucide,\n.tabler-icon": {
 			"stroke-width": "var(--icon-stroke-width, 2)",

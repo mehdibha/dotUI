@@ -29,6 +29,31 @@
     @apply border-border;
     /* Corner shape axis (progressive enhancement; unsupported → round). */
     corner-shape: var(--corner-shape, round);
+    /* Scrollbar axis: native unless the tokens say thin/themed; the hover
+       pair reveals an overlay-style bar while the pointer is over the area. */
+    scrollbar-width: var(--scrollbar-width, auto);
+    scrollbar-color: var(--scrollbar-color, auto);
+  }
+  *:hover {
+    scrollbar-color: var(--scrollbar-color-hover, var(--scrollbar-color, auto));
+  }
+  /* Selection axis: whether text on controls and their labels can be
+     selected. Content stays selectable; `cursor: auto` turns into the arrow
+     over unselectable text on its own. */
+  :where(
+    button,
+    label,
+    kbd,
+    th,
+    [role="button"],
+    [role="tab"],
+    [role="option"],
+    [role^="menuitem"],
+    [role="radio"],
+    [role="switch"],
+    [role="tooltip"]
+  ) {
+    user-select: var(--user-select-ui, auto);
   }
   /* The heading voice: face, weight and tracking are design-system axes. */
   h1,
@@ -49,11 +74,11 @@
   }
 }
 
-/* Both vars flip per mode: a light-accent tint with dark text in light mode,
-   a dark-accent tint with light text in dark. */
+/* Selection highlight axis: the OS pair unless the design system paints its
+   own (the tokens flip per mode through the semantic colors they point at). */
 ::selection {
-  background-color: var(--accent-300);
-  color: var(--neutral-950);
+  background-color: var(--selection-bg, Highlight);
+  color: var(--selection-fg, HighlightText);
 }
 
 /* Icon stroke width axis. Applies to stroke-based icon libraries only; the
