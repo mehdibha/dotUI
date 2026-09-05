@@ -1,42 +1,23 @@
 "use client"
 
-/* Links — how an inline link announces itself, two axes. Underline: `always`
-   is the prose-first camp (GOV.UK mandates it, Apple's HIG for web and most
-   docs systems follow — a link must read without color); `hover` is the
-   GitHub/MDN middle ground — clean line at rest, underline as pointer
-   feedback; `never` is app UIs (Linear, Figma) where color or weight alone
-   carries it. Color: `accent` is the classic blue/brand link (GOV.UK blue,
-   Material primary); `foreground` is the Vercel/Linear move — the link wears
-   the text's own color, distinguished only by weight and whatever the
-   underline axis grants. The combos are left honest: foreground + never
-   barely reads, and the hero shows exactly that — previewing the mistake is
-   the point. The hero is one short paragraph with both states side by side:
-   a resting link, then a hovered one wearing a cursor badge, so the hover
-   underline has somewhere to appear. */
+/* Links — two axes, see axes/links.ts. The combos are left honest:
+   foreground + never barely reads, and the hero shows exactly that —
+   previewing the mistake is the point. The hero is one short paragraph with
+   both states side by side: a resting link, then a hovered one wearing a
+   cursor badge, so the hover underline has somewhere to appear. */
 
 import { MousePointer2Icon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
+import { COLOR_OPTIONS, UNDERLINE_OPTIONS } from "../axes/links"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
 
-const UNDERLINE_OPTIONS = [
-  { value: "always", label: "Always" },
-  { value: "hover", label: "Hover" },
-  { value: "never", label: "Never" },
-]
-
-const COLOR_OPTIONS = [
-  { value: "accent", label: "Accent" },
-  { value: "foreground", label: "Foreground" },
-]
-
+/* Mirrors the `link` registry params (registry/ui/link/styles.ts). */
 export const LINK_COLOR = {
-  accent: "text-accent",
-  // Weight is the only resting cue foreground links get — the Vercel/Linear
-  // pattern against a muted paragraph.
+  accent: "text-fg-accent",
   foreground: "font-medium text-fg",
 }
 
