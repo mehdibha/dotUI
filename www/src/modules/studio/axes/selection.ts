@@ -1,35 +1,38 @@
 /* Selection — whether UI text can be selected, and what selected content
-   looks like. Engine: base.css puts `user-select: var(--user-select-ui)` on
-   controls and their labels (the arrow cursor follows for free — `cursor:
-   auto` is the arrow over unselectable text), and its `::selection` rule
-   reads the `--selection-bg` / `--selection-fg` pair, the OS highlight
-   colors unless a system paints its own. */
+   looks like. Engine: the `select-ui` utility (base.css) every control and
+   label wears reads `--user-select-ui` (none unless a system opts text back
+   in; the arrow cursor follows for free — `cursor: auto` is the arrow over
+   unselectable text), and `::selection` reads the `text-selection` semantic
+   pair, re-pointed at the OS highlight when the system leaves it alone. */
 
 import type { Resolved, StudioState } from "./index"
 
+/* Defaults mirror the registry: controls are unselectable, `::selection` is
+   the accent tint. */
 export const SELECTION_DEFAULTS = {
-  selectionUiText: "selectable",
-  selectionHighlight: "browser",
+  selectionUiText: "none",
+  selectionHighlight: "accent",
 }
 
 export const UI_TEXT_OPTIONS = [
-  { value: "selectable", label: "Selectable" },
   { value: "none", label: "Non-selectable" },
+  { value: "selectable", label: "Selectable" },
 ]
 
 export const HIGHLIGHT_OPTIONS = [
-  { value: "browser", label: "Browser" },
   { value: "accent", label: "Accent" },
+  { value: "browser", label: "Browser" },
 ]
 
 export const WIRED = true
 
 export function resolveSelection(state: StudioState): Resolved {
   const tokens: Record<string, string> = {}
-  if (state.selectionUiText === "none") tokens["--user-select-ui"] = "none"
-  if (state.selectionHighlight === "accent") {
-    tokens["--selection-bg"] = "var(--color-accent)"
-    tokens["--selection-fg"] = "var(--color-fg-on-accent)"
+  if (state.selectionUiText === "selectable")
+    tokens["--user-select-ui"] = "auto"
+  if (state.selectionHighlight === "browser") {
+    tokens["--color-text-selection"] = "Highlight"
+    tokens["--color-fg-on-text-selection"] = "HighlightText"
   }
   return { tokens }
 }

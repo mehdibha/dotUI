@@ -24,6 +24,14 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Selection axis: whether text on controls and their labels can be selected.
+   Content stays selectable; `cursor: auto` is the arrow over unselectable
+   text on its own. */
+@utility select-ui {
+  -webkit-user-select: var(--user-select-ui, none);
+  user-select: var(--user-select-ui, none);
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -36,24 +44,6 @@
   }
   *:hover {
     scrollbar-color: var(--scrollbar-color-hover, var(--scrollbar-color, auto));
-  }
-  /* Selection axis: whether text on controls and their labels can be
-     selected. Content stays selectable; `cursor: auto` turns into the arrow
-     over unselectable text on its own. */
-  :where(
-    button,
-    label,
-    kbd,
-    th,
-    [role="button"],
-    [role="tab"],
-    [role="option"],
-    [role^="menuitem"],
-    [role="radio"],
-    [role="switch"],
-    [role="tooltip"]
-  ) {
-    user-select: var(--user-select-ui, auto);
   }
   /* The heading voice: face, weight and tracking are design-system axes. */
   h1,
@@ -74,11 +64,8 @@
   }
 }
 
-/* Selection highlight axis: the OS pair unless the design system paints its
-   own (the tokens flip per mode through the semantic colors they point at). */
 ::selection {
-  background-color: var(--selection-bg, Highlight);
-  color: var(--selection-fg, HighlightText);
+  @apply bg-text-selection text-fg-on-text-selection;
 }
 
 /* Icon stroke width axis. Applies to stroke-based icon libraries only; the

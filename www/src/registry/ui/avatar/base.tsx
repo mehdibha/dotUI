@@ -12,9 +12,9 @@ const avatarStyles = tv({
     root: "group/avatar relative inline-flex size-8 shrink-0 rounded-(--avatar-radius) bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0",
     image: "aspect-square size-full rounded-[inherit] object-cover",
     fallback:
-      "flex size-full items-center justify-center rounded-[inherit] bg-muted text-sm select-none group-data-[size=sm]/avatar:text-xs",
+      "flex size-full items-center justify-center rounded-[inherit] bg-muted text-sm select-ui group-data-[size=sm]/avatar:text-xs",
     badge: [
-      "absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-fg-on-primary bg-blend-color ring-2 ring-bg select-none with-[left]:right-auto with-[top]:bottom-auto",
+      "absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-fg-on-primary bg-blend-color ring-2 ring-bg select-ui with-[left]:right-auto with-[top]:bottom-auto",
       "not-with-[size]:group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden",
       "not-with-[size]:group-data-[size=md]/avatar:size-2.5 group-data-[size=md]/avatar:[&>svg]:size-2",
       "not-with-[size]:group-data-[size=lg]/avatar:size-3 group-data-[size=lg]/avatar:[&>svg]:size-2",

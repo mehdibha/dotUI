@@ -11,7 +11,7 @@ const { useStyles, styles } = createStyles(treeMeta, {
         "data-empty:items-center data-empty:justify-center",
       ],
       item: [
-        "group/tree-item relative flex w-full items-center rounded-(--tree-item-radius) outline-hidden select-none",
+        "group/tree-item relative flex w-full items-center rounded-(--tree-item-radius) outline-hidden select-ui",
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",
         "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-border-focus",
         "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover",

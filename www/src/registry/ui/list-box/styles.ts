@@ -14,7 +14,7 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
         "**:data-separator:-mx-1 **:data-separator:my-1 **:data-separator:w-auto",
       ],
       item: [
-        "relative flex w-full cursor-interactive items-center gap-2 rounded-(--list-box-item-radius) outline-hidden select-none disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
+        "relative flex w-full cursor-interactive items-center gap-2 rounded-(--list-box-item-radius) outline-hidden select-ui disabled:pointer-events-none **:[svg]:pointer-events-none **:[svg]:shrink-0",
         "data-selection-mode:pr-8",
         "hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-highlight hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-highlight",
         "focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight",

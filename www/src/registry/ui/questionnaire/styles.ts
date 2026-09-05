@@ -14,7 +14,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       description: "text-pretty text-fg-muted",
       choices: "group/questionnaire-choices grid min-w-0",
       choice: [
-        "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-(--questionnaire-choice-radius) border border-border-control bg-transparent text-start transition-colors select-none",
+        "group/questionnaire-choice relative flex min-h-11 cursor-interactive items-start rounded-(--questionnaire-choice-radius) border border-border-control bg-transparent text-start transition-colors select-ui",
         "hover:bg-muted/50",
         "data-checked:border-primary/40 data-checked:bg-muted",
         "data-invalid:border-border-danger",

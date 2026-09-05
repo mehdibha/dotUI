@@ -98,6 +98,8 @@
 	--color-sidebar: var(--neutral-50);
 	--color-overlay: oklch(0 0 0);
 	--color-thumb: oklch(1 0 0);
+	--color-text-selection: var(--accent-300);
+	--color-fg-on-text-selection: var(--neutral-950);
 }
 
 .dark {

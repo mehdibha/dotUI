@@ -12,7 +12,7 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
         "gap-1",
       ],
       tag: [
-        "group/tag relative inline-flex w-fit shrink-0 cursor-default items-center justify-center gap-1 rounded-(--tag-radius) font-medium whitespace-nowrap outline-hidden transition-colors select-none data-react-aria-pressable:cursor-interactive",
+        "group/tag relative inline-flex w-fit shrink-0 cursor-default items-center justify-center gap-1 rounded-(--tag-radius) font-medium whitespace-nowrap outline-hidden transition-colors select-ui data-react-aria-pressable:cursor-interactive",
         "bg-neutral text-fg-on-neutral selected:bg-accent-muted selected:text-fg-accent",
         // svg
         "**:[svg]:pointer-events-none **:[svg]:shrink-0",

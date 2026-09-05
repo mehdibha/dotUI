@@ -21,6 +21,10 @@ export const baseRegistryCss = {
 		"@utility no-highlight": {
 			"-webkit-tap-highlight-color": "transparent",
 		},
+		"@utility select-ui": {
+			"-webkit-user-select": "var(--user-select-ui, none)",
+			"user-select": "var(--user-select-ui, none)",
+		},
 		"@layer base": {
 			"*": {
 				"@apply border-border": {},
@@ -31,10 +35,6 @@ export const baseRegistryCss = {
 			"*:hover": {
 				"scrollbar-color": "var(--scrollbar-color-hover, var(--scrollbar-color, auto))",
 			},
-			':where(\n    button,\n    label,\n    kbd,\n    th,\n    [role="button"],\n    [role="tab"],\n    [role="option"],\n    [role^="menuitem"],\n    [role="radio"],\n    [role="switch"],\n    [role="tooltip"]\n  )':
-				{
-					"user-select": "var(--user-select-ui, auto)",
-				},
 			"h1,\n  h2,\n  h3,\n  h4,\n  h5,\n  h6": {
 				"font-family": "var(--font-heading)",
 				"font-weight": "var(--font-weight-heading, var(--font-weight-semibold))",
@@ -48,8 +48,7 @@ export const baseRegistryCss = {
 			},
 		},
 		"::selection": {
-			"background-color": "var(--selection-bg, Highlight)",
-			color: "var(--selection-fg, HighlightText)",
+			"@apply bg-text-selection text-fg-on-text-selection": {},
 		},
 		".lucide,\n.tabler-icon": {
 			"stroke-width": "var(--icon-stroke-width, 2)",
@@ -494,6 +493,8 @@ export const baseRegistryCss = {
 			"--color-sidebar": "var(--neutral-50)",
 			"--color-overlay": "oklch(0 0 0)",
 			"--color-thumb": "oklch(1 0 0)",
+			"--color-text-selection": "var(--accent-300)",
+			"--color-fg-on-text-selection": "var(--neutral-950)",
 			"--font-sans": "var(--font-geist-sans)",
 			"--font-heading": "var(--font-sans)",
 			"--font-mono": "var(--font-geist-mono)",
