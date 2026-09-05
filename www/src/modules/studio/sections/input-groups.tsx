@@ -1,11 +1,7 @@
 "use client"
 
 /* Input groups — the Buttons→Group analog: how a prefix/suffix sits in the
-   field splits the ecosystem — floating inside the shell (shadcn, Geist,
-   Linear, Polaris, and the registry today) vs a boxed cell attached to the
-   edge (Bootstrap input-group, Ant addonBefore/After). The registry can only
-   express inside today — the boxed family is a missing axis (see issue).
-   The field look comes from the Inputs section. */
+   field (axes/input-groups.ts). The field look comes from the Inputs section. */
 
 import { useState } from "react"
 import type { CSSProperties } from "react"
@@ -13,25 +9,16 @@ import { CopyIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
+import {
+  ADDON_DIVIDER_OPTIONS,
+  ADDON_LAYOUT_OPTIONS,
+} from "../axes/input-groups"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { focusFieldStyle } from "./focus"
 import { BARE_INPUT, hoverFx, inputLook, SHELL } from "./inputs"
 import { controlRadiusPx } from "./shape"
-
-const ADDON_LAYOUT_OPTIONS: SelectRowOption[] = [
-  { value: "inside", label: "Inside" },
-  { value: "boxed", label: "Boxed" },
-]
-
-/* Bootstrap and Ant always divide the cell from the input; a few designs let
-   the cell fill run into the field, so the hairline is a choice, not a given. */
-const ADDON_DIVIDER_OPTIONS: SelectRowOption[] = [
-  { value: "hairline", label: "Hairline" },
-  { value: "none", label: "None" },
-]
 
 /** One group, both attachments: a text prefix and an icon-button suffix
  *  around a live input — the two addon kinds systems actually disagree on. */
@@ -69,7 +56,7 @@ export function AddonsHero({ state }: { state: LabState }) {
         <div className={shell} style={shellStyle}>
           <span
             className={cn(
-              "flex h-full shrink-0 items-center bg-neutral px-2.5 text-fg-muted",
+              "flex h-full shrink-0 items-center bg-highlight px-2.5 text-fg-muted",
               divided && "border-r border-border-control",
             )}
           >
@@ -80,7 +67,7 @@ export function AddonsHero({ state }: { state: LabState }) {
             type="button"
             aria-label="Copy"
             className={cn(
-              "flex h-full shrink-0 cursor-interactive items-center bg-neutral px-2.5 text-fg-muted outline-none hover:bg-neutral-hover hover:text-fg",
+              "flex h-full shrink-0 cursor-interactive items-center bg-highlight px-2.5 text-fg-muted outline-none hover:bg-neutral-hover hover:text-fg",
               divided && "border-l border-border-control",
             )}
           >

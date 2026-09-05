@@ -84,6 +84,20 @@ const addonInputModeParadigmB =
 const addonInputModeLine =
   "group-has-data-input/input-group:last:pl-(--text-to-visual) group-has-data-input/input-group:first:pr-(--text-to-visual)"
 
+/* Hover is the field's own pointer state: focus and invalid keep their border,
+   so it yields to both. */
+const hoverBorder =
+  "hover:not-focus-within:not-invalid:not-disabled:border-border-control-hover"
+const hoverTint = "hover:not-focus-within:not-disabled:bg-neutral-hover"
+
+/* Boxed addons: a tinted cell hugging the shell edge (Bootstrap input-group,
+   Ant addonBefore), the control keeping its own inset beside it. Inline
+   padding stays the style's — a cell wears the same inset an inline addon does. */
+const addonBoxed =
+  "self-stretch bg-highlight group-has-data-input/input-group:first:mr-(--edge-to-text) group-has-data-input/input-group:first:rounded-l-[inherit] group-has-data-input/input-group:last:ml-(--edge-to-text) group-has-data-input/input-group:last:rounded-r-[inherit] group-has-data-textarea/input-group:first:rounded-t-[inherit] group-has-data-textarea/input-group:last:rounded-b-[inherit]"
+const addonDivider =
+  "border-border-control group-has-data-input/input-group:first:border-r group-has-data-input/input-group:last:border-l group-has-data-textarea/input-group:first:border-b group-has-data-textarea/input-group:last:border-t"
+
 /* -------------------------------------------------------------------------- */
 
 const { useStyles, styles } = createStyles(inputMeta, {
@@ -251,6 +265,32 @@ const { useStyles, styles } = createStyles(inputMeta, {
           textArea: filledField({ focus: "self" }),
           inputGroupAddon: addonInputModeParadigmB,
         },
+      },
+    },
+    hover: {
+      none: {},
+      border: {
+        slots: {
+          inputGroup: hoverBorder,
+          input: hoverBorder,
+          textArea: hoverBorder,
+        },
+      },
+      tint: {
+        slots: {
+          inputGroup: hoverTint,
+          input: hoverTint,
+          textArea: hoverTint,
+        },
+      },
+    },
+    addon: {
+      inside: {},
+      boxed: {
+        slots: { inputGroupAddon: [addonBoxed, addonDivider] },
+      },
+      "boxed-flush": {
+        slots: { inputGroupAddon: addonBoxed },
       },
     },
   },

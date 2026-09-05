@@ -200,6 +200,7 @@ export function semanticVocabulary(
     ),
     // The control weight: field, control, and secondary-button edges.
     "color-border-control": bd(ref("neutral", "400"), NEUTRAL),
+    "color-border-control-hover": bd(ref("neutral", "500"), NEUTRAL),
     "color-border-focus": bd(
       ref(hasSelection ? "selection" : "accent", "700"),
       PRIMARY,

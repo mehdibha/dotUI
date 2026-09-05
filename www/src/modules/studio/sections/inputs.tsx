@@ -1,11 +1,13 @@
 "use client"
 
-/* Inputs — the field family's axes (Select, Combobox, Textarea follow Input).
-   Style is the registry's real enum (input/meta.ts); hover is the field's own
-   pointer state. Focus is owned by the Focus section — specimens wear that
-   recipe live when they focus. Labels always sit on top: float and
-   placeholder-only failed review (a11y, systems moving away), inset is an
-   InputGroup composition, not an axis.
+/* Inputs — the field family's axes. Style and hover are `input` params
+   (axes/inputs.ts) and reach every field that renders through Input /
+   InputGroup: TextArea, SearchField, Combobox, DateField, NumberField, OTP.
+   Select's trigger is a Button and follows the Buttons chapter. Focus is
+   owned by the Focus section — specimens wear that recipe live when they
+   focus. Labels always sit on top: float and placeholder-only failed review
+   (a11y, systems moving away), inset is an InputGroup composition, not an
+   axis.
 
    Error treatment moved to the Invalid section (a cross-component state, with
    Focus and Disabled); the hero's failed specimen still wears it live.
@@ -19,27 +21,12 @@ import { ChevronDownIcon, CircleAlertIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
+import { HOVER_OPTIONS, STYLE_OPTIONS } from "../axes/inputs"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { focusFieldStyle } from "./focus"
 import { controlRadiusPx } from "./shape"
-
-const STYLE_OPTIONS: SelectRowOption[] = [
-  { value: "outline", label: "Outline" },
-  { value: "line", label: "Line" },
-  { value: "filled-line-bottom", label: "Filled line" },
-  { value: "filled", label: "Filled" },
-]
-
-/* Hover: shadcn and Geist ship none (the default here, matching the
-   registry), Spectrum and Ant darken the border, Linear tints the fill. */
-const HOVER_OPTIONS: SelectRowOption[] = [
-  { value: "none", label: "None" },
-  { value: "border", label: "Border" },
-  { value: "tint", label: "Tint" },
-]
 
 /** Style → what the field shell paints. Radius only where the style rounds;
  *  filled keeps a transparent border so focus and hover can swap it in. */
@@ -74,7 +61,7 @@ export function inputLook(
 export function hoverFx(state: LabState): string {
   switch (state.inputHover) {
     case "border":
-      return "hover:not-focus-within:border-neutral-600"
+      return "hover:not-focus-within:border-border-control-hover"
     case "tint":
       return "hover:not-focus-within:bg-neutral-hover"
     default:

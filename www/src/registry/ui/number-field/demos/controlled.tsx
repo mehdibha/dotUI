@@ -2,11 +2,11 @@
 
 import React from "react"
 
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
 import {
   NumberField,
   NumberFieldDecrement,
+  NumberFieldGroup,
   NumberFieldIncrement,
 } from "@/registry/ui/number-field"
 
@@ -21,11 +21,11 @@ export default function Demo() {
           setInputValue(value)
         }}
       >
-        <Group>
+        <NumberFieldGroup>
           <NumberFieldDecrement />
           <Input />
           <NumberFieldIncrement />
-        </Group>
+        </NumberFieldGroup>
       </NumberField>
       <p className="text-sm text-fg-muted">mirrored number: {inputValue}</p>
     </div>

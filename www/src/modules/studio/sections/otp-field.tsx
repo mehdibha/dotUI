@@ -1,26 +1,16 @@
 "use client"
 
-/* OTP field — a per-component style being tried as a block; in /create it
-   would land as a component style variant, not a family axis.
-
-   Cells: separate boxes (the registry today, iOS), one attached group with
-   dividers (shadcn), a bare dash per digit (Material-ish minimal). The field
-   look comes from the Inputs section. */
+/* OTP field — how the digit cells sit (axes/otp-field.ts). The field look
+   comes from the Inputs section. */
 
 import { cn } from "@/registry/lib/utils"
 
+import { OTP_STYLE_OPTIONS } from "../axes/otp-field"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { inputLook } from "./inputs"
 import { controlRadiusPx } from "./shape"
-
-const OTP_STYLE_OPTIONS: SelectRowOption[] = [
-  { value: "boxes", label: "Boxes" },
-  { value: "group", label: "Group" },
-  { value: "underline", label: "Underline" },
-]
 
 /** Three digits and a caret: cells wear the field style boxed, fused into one
  *  group, or reduced to a dash per digit. */
@@ -80,7 +70,7 @@ export function otpFieldSummary(state: LabState): string {
   const style =
     OTP_STYLE_OPTIONS.find((o) => o.value === state.otpStyle)?.label ??
     state.otpStyle
-  return state.otpStyle === "boxes" ? style : `${style} cells`
+  return `${style} cells`
 }
 
 export function OtpFieldSection({ lab }: { lab: Lab }) {
