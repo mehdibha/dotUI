@@ -80,13 +80,13 @@ import {
 } from "@/registry/ui/dialog"
 import { Drawer } from "@/registry/ui/drawer"
 import { Description, Label } from "@/registry/ui/field"
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Modal } from "@/registry/ui/modal"
 import {
   NumberField,
   NumberFieldDecrement,
+  NumberFieldGroup,
   NumberFieldIncrement,
 } from "@/registry/ui/number-field"
 import { Popover } from "@/registry/ui/popover"
@@ -1108,11 +1108,11 @@ function TransferDialog({
                   formatOptions={{ style: "currency", currency: "USD" }}
                 >
                   <Label>Amount</Label>
-                  <Group>
+                  <NumberFieldGroup>
                     <NumberFieldDecrement />
                     <Input />
                     <NumberFieldIncrement />
-                  </Group>
+                  </NumberFieldGroup>
                   <Description>
                     {source?.name} has {currency(source?.available ?? 0)}{" "}
                     available.

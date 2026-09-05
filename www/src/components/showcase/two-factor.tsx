@@ -11,9 +11,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
-import { Group } from "@/registry/ui/group"
 import { Input } from "@/registry/ui/input"
-import { OTPField, OTPFieldSeparator } from "@/registry/ui/otp-field"
+import {
+  OTPField,
+  OTPFieldGroup,
+  OTPFieldSeparator,
+} from "@/registry/ui/otp-field"
 
 export function TwoFactor({
   className,
@@ -35,19 +38,19 @@ export function TwoFactor({
           className="items-center"
         >
           <div className="flex items-center">
-            <Group>
+            <OTPFieldGroup>
               <Input />
               <Input aria-label="Digit 2" />
               <Input aria-label="Digit 3" />
-            </Group>
+            </OTPFieldGroup>
             <OTPFieldSeparator className="px-2 text-fg-muted">
               -
             </OTPFieldSeparator>
-            <Group>
+            <OTPFieldGroup>
               <Input aria-label="Digit 4" />
               <Input aria-label="Digit 5" />
               <Input aria-label="Digit 6" />
-            </Group>
+            </OTPFieldGroup>
           </div>
         </OTPField>
         <p className="mt-3 flex items-center justify-center gap-1.5 text-center text-sm text-fg-muted">
