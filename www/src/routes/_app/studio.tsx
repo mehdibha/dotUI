@@ -11,9 +11,9 @@ import {
   saveStoredPreset,
 } from "@/modules/create/preset/storage"
 import { PreviewPanel } from "@/modules/create/preview/preview-panel"
+import { ORIGIN } from "@/modules/presets/presets-data"
 import { LabCreatePanel } from "@/modules/studio/create"
 import { useStudio } from "@/modules/studio/use-studio"
-import { ORIGIN } from "@/modules/presets/presets-data"
 
 export function createSearchSchema(
   search: {

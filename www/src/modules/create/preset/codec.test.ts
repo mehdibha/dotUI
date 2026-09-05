@@ -1,9 +1,9 @@
 import { deflateRaw } from "pako"
 import { describe, expect, it } from "vitest"
 
+import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
 import { ORIGIN, PRESETS } from "@/modules/presets/presets-data"
 import { DEFAULTS } from "@/modules/studio/axes"
-import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
 
 import { decodePreset, encodePreset, encodeState } from "./codec"
 
@@ -24,7 +24,12 @@ describe("preset codec — studio state", () => {
   })
 
   it("round-trips a modified state", () => {
-    const state = { ...DEFAULTS, brand: "#ef4444", radiusPx: 4, density: "compact" }
+    const state = {
+      ...DEFAULTS,
+      brand: "#ef4444",
+      radiusPx: 4,
+      density: "compact",
+    }
     const encoded = encodeState(state)
     expect(encoded).toBeTypeOf("string")
     expect(decodePreset(encoded ?? "").state).toEqual(state)

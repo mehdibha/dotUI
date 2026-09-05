@@ -10,7 +10,6 @@
 
 import { DEFAULTS } from "./axes"
 import type { StudioState } from "./axes"
-import type { Studio } from "./use-studio"
 import { ACCORDION_DEFAULTS } from "./axes/accordion"
 import { AVATAR_DEFAULTS } from "./axes/avatars"
 import { BADGE_DEFAULTS } from "./axes/badges"
@@ -63,16 +62,8 @@ import {
   AccordionHero,
   accordionSummary,
 } from "./sections/accordion"
-import {
-  AvatarsSection,
-  AvatarsHero,
-  avatarsSummary,
-} from "./sections/avatars"
-import {
-  BadgesSection,
-  BadgesHero,
-  badgesSummary,
-} from "./sections/badges"
+import { AvatarsSection, AvatarsHero, avatarsSummary } from "./sections/avatars"
+import { BadgesSection, BadgesHero, badgesSummary } from "./sections/badges"
 import {
   BreadcrumbsSection,
   BreadcrumbsHero,
@@ -83,21 +74,13 @@ import {
   ButtonGroupHero,
   buttonGroupsSummary,
 } from "./sections/button-groups"
-import {
-  ButtonsHero,
-  ButtonsSection,
-  buttonsSummary,
-} from "./sections/buttons"
+import { ButtonsHero, ButtonsSection, buttonsSummary } from "./sections/buttons"
 import {
   CalendarSection,
   CalendarHero,
   calendarSummary,
 } from "./sections/calendar"
-import {
-  ChartsHero,
-  ChartsSection,
-  chartsSummary,
-} from "./sections/charts"
+import { ChartsHero, ChartsSection, chartsSummary } from "./sections/charts"
 import {
   CheckboxSection,
   CheckboxHero,
@@ -109,92 +92,40 @@ import {
   choiceCardsSummary,
 } from "./sections/choice-cards"
 import { ColorSection, colorSummary } from "./sections/color"
-import {
-  CursorSection,
-  CursorHero,
-  cursorSummary,
-} from "./sections/cursor"
-import {
-  DialogsSection,
-  DialogsHero,
-  dialogsSummary,
-} from "./sections/dialogs"
+import { CursorSection, CursorHero, cursorSummary } from "./sections/cursor"
+import { DialogsSection, DialogsHero, dialogsSummary } from "./sections/dialogs"
 import {
   DisabledSection,
   DisabledHero,
   disabledSummary,
 } from "./sections/disabled"
-import {
-  FocusSection,
-  FocusHero,
-  focusSummary,
-} from "./sections/focus"
-import {
-  IconsHero,
-  IconsSection,
-  iconsSummary,
-} from "./sections/icons"
+import { FocusSection, FocusHero, focusSummary } from "./sections/focus"
+import { IconsHero, IconsSection, iconsSummary } from "./sections/icons"
 import {
   InputGroupsSection,
   AddonsHero,
   inputGroupsSummary,
 } from "./sections/input-groups"
-import {
-  FieldHero,
-  InputsSection,
-  inputsSummary,
-} from "./sections/inputs"
-import {
-  InvalidHero,
-  InvalidSection,
-  invalidSummary,
-} from "./sections/invalid"
+import { FieldHero, InputsSection, inputsSummary } from "./sections/inputs"
+import { InvalidHero, InvalidSection, invalidSummary } from "./sections/invalid"
 import { KbdSection, KbdHero, kbdSummary } from "./sections/kbd"
-import {
-  LinksSection,
-  LinksHero,
-  linksSummary,
-} from "./sections/links"
-import {
-  MenusHero,
-  MenusSection,
-  menusSummary,
-} from "./sections/menus"
-import {
-  MobileHero,
-  MobileSection,
-  mobileSummary,
-} from "./sections/mobile"
-import {
-  MotionSection,
-  MotionHero,
-  motionSummary,
-} from "./sections/motion"
-import {
-  NoticesSection,
-  NoticesHero,
-  noticesSummary,
-} from "./sections/notices"
+import { LinksSection, LinksHero, linksSummary } from "./sections/links"
+import { MenusHero, MenusSection, menusSummary } from "./sections/menus"
+import { MobileHero, MobileSection, mobileSummary } from "./sections/mobile"
+import { MotionSection, MotionHero, motionSummary } from "./sections/motion"
+import { NoticesSection, NoticesHero, noticesSummary } from "./sections/notices"
 import {
   NumberFieldSection,
   NumberHero,
   numberFieldSummary,
 } from "./sections/number-field"
-import {
-  OtpFieldSection,
-  OtpHero,
-  otpFieldSummary,
-} from "./sections/otp-field"
+import { OtpFieldSection, OtpHero, otpFieldSummary } from "./sections/otp-field"
 import {
   PaginationSection,
   PaginationHero,
   paginationSummary,
 } from "./sections/pagination"
-import {
-  PickersSection,
-  PickersHero,
-  pickersSummary,
-} from "./sections/pickers"
+import { PickersSection, PickersHero, pickersSummary } from "./sections/pickers"
 import {
   PopoversSection,
   PopoversHero,
@@ -205,11 +136,7 @@ import {
   ProgressHero,
   progressSummary,
 } from "./sections/progress"
-import {
-  RadioSection,
-  RadioHero,
-  radioSummary,
-} from "./sections/radio"
+import { RadioSection, RadioHero, radioSummary } from "./sections/radio"
 import {
   ScrollbarsSection,
   ScrollbarsHero,
@@ -225,70 +152,34 @@ import {
   SelectionHero,
   selectionSummary,
 } from "./sections/selection"
-import {
-  ShapeHero,
-  ShapeSection,
-  shapeSummary,
-} from "./sections/shape"
+import { ShapeHero, ShapeSection, shapeSummary } from "./sections/shape"
 import {
   SkeletonSection,
   SkeletonHero,
   skeletonSummary,
 } from "./sections/skeleton"
-import {
-  SlidersSection,
-  SlidersHero,
-  slidersSummary,
-} from "./sections/sliders"
-import {
-  SpaceSection,
-  SpaceHero,
-  spaceSummary,
-} from "./sections/space"
-import {
-  SpinnerSection,
-  SpinnerHero,
-  spinnerSummary,
-} from "./sections/spinner"
+import { SlidersSection, SlidersHero, slidersSummary } from "./sections/sliders"
+import { SpaceSection, SpaceHero, spaceSummary } from "./sections/space"
+import { SpinnerSection, SpinnerHero, spinnerSummary } from "./sections/spinner"
 import {
   SurfacesSection,
   SurfacesHero,
   surfacesSummary,
 } from "./sections/surfaces"
-import {
-  SwitchSection,
-  SwitchHero,
-  switchSummary,
-} from "./sections/switch"
-import {
-  TablesSection,
-  TablesHero,
-  tablesSummary,
-} from "./sections/tables"
-import {
-  TabsSection,
-  TabsHero,
-  tabsSummary,
-} from "./sections/tabs"
-import {
-  TogglesSection,
-  ToggleHero,
-  togglesSummary,
-} from "./sections/toggles"
+import { SwitchSection, SwitchHero, switchSummary } from "./sections/switch"
+import { TablesSection, TablesHero, tablesSummary } from "./sections/tables"
+import { TabsSection, TabsHero, tabsSummary } from "./sections/tabs"
+import { TogglesSection, ToggleHero, togglesSummary } from "./sections/toggles"
 import {
   TooltipsSection,
   TooltipsHero,
   tooltipsSummary,
 } from "./sections/tooltips"
-import {
-  TypeHero,
-  TypeSection,
-  typeSummary,
-} from "./sections/type"
+import { TypeHero, TypeSection, typeSummary } from "./sections/type"
+import type { Studio } from "./use-studio"
 
 export { DEFAULTS }
 export type LabState = StudioState
-
 
 /** What a section body gets: the state, a setter per key, and its status. */
 export type Lab = Pick<Studio, "state" | "set" | "section">

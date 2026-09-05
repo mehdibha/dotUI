@@ -11,53 +11,53 @@ import type { IconLibraryName } from "@/registry/icons/icon-map"
 import type { ColorConfig } from "@/registry/theme"
 import type { Density } from "@/registry/types"
 
-import * as color from "./color"
-import * as type from "./type"
-import * as icons from "./icons"
-import * as shape from "./shape"
-import * as space from "./space"
-import * as surfaces from "./surfaces"
-import * as focus from "./focus"
-import * as cursor from "./cursor"
-import * as selection from "./selection"
-import * as scrollbars from "./scrollbars"
-import * as disabled from "./disabled"
-import * as invalid from "./invalid"
-import * as motion from "./motion"
-import * as mobile from "./mobile"
-import * as charts from "./charts"
-import * as links from "./links"
-import * as notices from "./notices"
-import * as skeleton from "./skeleton"
-import * as spinner from "./spinner"
-import * as progress from "./progress"
-import * as buttons from "./buttons"
+import * as accordion from "./accordion"
+import * as avatars from "./avatars"
+import * as badges from "./badges"
+import * as breadcrumbs from "./breadcrumbs"
 import * as buttonGroups from "./button-groups"
-import * as toggles from "./toggles"
-import * as segmentedControl from "./segmented-control"
-import * as switchAxis from "./switch"
+import * as buttons from "./buttons"
+import * as calendar from "./calendar"
+import * as charts from "./charts"
 import * as checkbox from "./checkbox"
-import * as radio from "./radio"
 import * as choiceCards from "./choice-cards"
-import * as inputs from "./inputs"
+import * as color from "./color"
+import * as cursor from "./cursor"
+import * as dialogs from "./dialogs"
+import * as disabled from "./disabled"
+import * as focus from "./focus"
+import * as icons from "./icons"
 import * as inputGroups from "./input-groups"
+import * as inputs from "./inputs"
+import * as invalid from "./invalid"
+import * as kbd from "./kbd"
+import * as links from "./links"
+import * as menus from "./menus"
+import * as mobile from "./mobile"
+import * as motion from "./motion"
+import * as notices from "./notices"
 import * as numberField from "./number-field"
 import * as otpField from "./otp-field"
-import * as pickers from "./pickers"
-import * as calendar from "./calendar"
-import * as sliders from "./sliders"
-import * as menus from "./menus"
-import * as dialogs from "./dialogs"
-import * as popovers from "./popovers"
-import * as tooltips from "./tooltips"
-import * as tabs from "./tabs"
-import * as accordion from "./accordion"
-import * as breadcrumbs from "./breadcrumbs"
 import * as pagination from "./pagination"
-import * as badges from "./badges"
-import * as kbd from "./kbd"
-import * as avatars from "./avatars"
+import * as pickers from "./pickers"
+import * as popovers from "./popovers"
+import * as progress from "./progress"
+import * as radio from "./radio"
+import * as scrollbars from "./scrollbars"
+import * as segmentedControl from "./segmented-control"
+import * as selection from "./selection"
+import * as shape from "./shape"
+import * as skeleton from "./skeleton"
+import * as sliders from "./sliders"
+import * as space from "./space"
+import * as spinner from "./spinner"
+import * as surfaces from "./surfaces"
+import * as switchAxis from "./switch"
 import * as tables from "./tables"
+import * as tabs from "./tabs"
+import * as toggles from "./toggles"
+import * as tooltips from "./tooltips"
+import * as type from "./type"
 
 /** One chapter's contribution to the resolved design system. */
 export interface Resolved {
@@ -124,53 +124,53 @@ export type StudioState = typeof DEFAULTS
 
 /** Chapter id (state.ts) → whether its axes drive the preview and export. */
 export const WIRED: Record<string, boolean> = {
-  "color": color.WIRED,
-  "typography": type.WIRED,
-  "icons": icons.WIRED,
-  "shape": shape.WIRED,
-  "space": space.WIRED,
-  "surfaces": surfaces.WIRED,
-  "focus": focus.WIRED,
-  "cursor": cursor.WIRED,
-  "selection": selection.WIRED,
-  "scrollbars": scrollbars.WIRED,
-  "disabled": disabled.WIRED,
-  "invalid": invalid.WIRED,
-  "motion": motion.WIRED,
-  "mobile": mobile.WIRED,
-  "charts": charts.WIRED,
-  "links": links.WIRED,
-  "notices": notices.WIRED,
-  "skeleton": skeleton.WIRED,
-  "spinner": spinner.WIRED,
-  "progress": progress.WIRED,
-  "buttons": buttons.WIRED,
+  color: color.WIRED,
+  typography: type.WIRED,
+  icons: icons.WIRED,
+  shape: shape.WIRED,
+  space: space.WIRED,
+  surfaces: surfaces.WIRED,
+  focus: focus.WIRED,
+  cursor: cursor.WIRED,
+  selection: selection.WIRED,
+  scrollbars: scrollbars.WIRED,
+  disabled: disabled.WIRED,
+  invalid: invalid.WIRED,
+  motion: motion.WIRED,
+  mobile: mobile.WIRED,
+  charts: charts.WIRED,
+  links: links.WIRED,
+  notices: notices.WIRED,
+  skeleton: skeleton.WIRED,
+  spinner: spinner.WIRED,
+  progress: progress.WIRED,
+  buttons: buttons.WIRED,
   "button-groups": buttonGroups.WIRED,
-  "toggles": toggles.WIRED,
+  toggles: toggles.WIRED,
   "segmented-control": segmentedControl.WIRED,
   switch: switchAxis.WIRED,
-  "checkbox": checkbox.WIRED,
-  "radio": radio.WIRED,
+  checkbox: checkbox.WIRED,
+  radio: radio.WIRED,
   "choice-cards": choiceCards.WIRED,
-  "inputs": inputs.WIRED,
+  inputs: inputs.WIRED,
   "input-groups": inputGroups.WIRED,
   "number-field": numberField.WIRED,
   "otp-field": otpField.WIRED,
-  "pickers": pickers.WIRED,
-  "calendar": calendar.WIRED,
-  "sliders": sliders.WIRED,
-  "menus": menus.WIRED,
-  "dialogs": dialogs.WIRED,
-  "popovers": popovers.WIRED,
-  "tooltips": tooltips.WIRED,
-  "tabs": tabs.WIRED,
-  "accordion": accordion.WIRED,
-  "breadcrumbs": breadcrumbs.WIRED,
-  "pagination": pagination.WIRED,
-  "badges": badges.WIRED,
-  "kbd": kbd.WIRED,
-  "avatars": avatars.WIRED,
-  "tables": tables.WIRED,
+  pickers: pickers.WIRED,
+  calendar: calendar.WIRED,
+  sliders: sliders.WIRED,
+  menus: menus.WIRED,
+  dialogs: dialogs.WIRED,
+  popovers: popovers.WIRED,
+  tooltips: tooltips.WIRED,
+  tabs: tabs.WIRED,
+  accordion: accordion.WIRED,
+  breadcrumbs: breadcrumbs.WIRED,
+  pagination: pagination.WIRED,
+  badges: badges.WIRED,
+  kbd: kbd.WIRED,
+  avatars: avatars.WIRED,
+  tables: tables.WIRED,
 }
 
 const RESOLVERS: Array<(state: StudioState) => Resolved> = [

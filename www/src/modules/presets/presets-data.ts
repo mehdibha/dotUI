@@ -1,9 +1,9 @@
 import { toOklch } from "@dotui/colors"
 
+import type { DesignSystem } from "@/modules/create/preset/types"
 import { DEFAULTS } from "@/modules/studio/axes"
 import type { StudioState } from "@/modules/studio/axes"
 import { resolveDesignSystem } from "@/modules/studio/resolve"
-import type { DesignSystem } from "@/modules/create/preset/types"
 
 /**
  * A built-in design system the gallery can browse and apply: studio state

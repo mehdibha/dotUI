@@ -37,6 +37,8 @@ import {
 } from "@/registry/ui/slider"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
+import { COLOR_DEFAULTS } from "../axes/color"
+import type { LabMode } from "../axes/color"
 import {
   DetailRow,
   PaletteDot,
@@ -57,8 +59,6 @@ import {
   INSTANT_POPOVER,
   SegmentedControlRow,
 } from "../rows"
-import { COLOR_DEFAULTS } from "../axes/color"
-import type { LabMode } from "../axes/color"
 import type { Lab, LabState } from "../state"
 
 /* ------------------------------ Config bridge ------------------------------ */

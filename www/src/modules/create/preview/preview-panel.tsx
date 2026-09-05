@@ -46,8 +46,8 @@ import {
 } from "@/modules/create/preset"
 import type { PreviewMode } from "@/modules/create/preset"
 import { AVAILABLE_BLOCKS } from "@/modules/create/preview/blocks"
-import { useStudio } from "@/modules/studio/use-studio"
 import { componentsData } from "@/modules/docs/components-list/components-data"
+import { useStudio } from "@/modules/studio/use-studio"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
 

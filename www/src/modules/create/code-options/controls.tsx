@@ -3,7 +3,6 @@ import type { ReactNode } from "react"
 import { Switch } from "@/registry/ui/switch"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
-
 import { useStudio } from "@/modules/studio/use-studio"
 
 /* ------------------------------ row helpers ------------------------------ */

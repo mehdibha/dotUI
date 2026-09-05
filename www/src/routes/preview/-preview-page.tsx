@@ -16,8 +16,8 @@ import type { DesignSystem } from "@/modules/create/preset/types"
 import { BlocksIndex } from "@/modules/create/preview/blocks"
 import { PreviewInspector } from "@/modules/create/preview/inspector"
 import { PresetOverview } from "@/modules/create/preview/overview"
-import { resolveDesignSystem } from "@/modules/studio/resolve"
 import { DEFAULTS } from "@/modules/studio/axes"
+import { resolveDesignSystem } from "@/modules/studio/resolve"
 
 // Non-route file so the examples barrel, preset codec and overview stay in
 // this route's split chunk instead of the router's critical import graph.

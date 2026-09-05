@@ -12,7 +12,6 @@ import { CheckIcon, CopyIcon } from "lucide-react"
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
 import { Button } from "@/registry/ui/button"
 import { DynamicPre } from "@/modules/docs/dynamic-pre"
-
 import { useStudio } from "@/modules/studio/use-studio"
 
 const PREVIEW_FILE = "components/ui/button.tsx"

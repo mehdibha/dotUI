@@ -8,6 +8,8 @@
 import { useCallback, useMemo } from "react"
 import { getRouteApi } from "@tanstack/react-router"
 
+import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
+import type { CodeOptions } from "@/publisher/code-options"
 import {
   DEFAULT_PRESET,
   decodePreset,
@@ -15,8 +17,6 @@ import {
 } from "@/modules/create/preset/codec"
 import type { StudioPreset } from "@/modules/create/preset/codec"
 import type { DesignSystem } from "@/modules/create/preset/types"
-import { DEFAULT_CODE_OPTIONS } from "@/publisher/code-options"
-import type { CodeOptions } from "@/publisher/code-options"
 
 import type { StudioState } from "./axes"
 import { resolveDesignSystem } from "./resolve"
@@ -75,7 +75,8 @@ export function useStudio(): Studio {
   const designSystem = useMemo(() => resolveDesignSystem(state), [state])
 
   return useMemo(() => {
-    const setState = (next: StudioState) => setPreset({ ...preset, state: next })
+    const setState = (next: StudioState) =>
+      setPreset({ ...preset, state: next })
     const set =
       <K extends keyof StudioState>(key: K) =>
       (value: StudioState[K]) =>

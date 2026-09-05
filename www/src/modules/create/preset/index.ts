@@ -26,4 +26,9 @@ export {
   useIsEmbeddedPreview,
   usePreviewForcedTheme,
 } from "./iframe-sync"
-export type { CodeOptions, Density, DesignSystem, IconLibraryName } from "./types"
+export type {
+  CodeOptions,
+  Density,
+  DesignSystem,
+  IconLibraryName,
+} from "./types"

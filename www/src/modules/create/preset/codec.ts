@@ -12,13 +12,13 @@ import { iconLibraries } from "@/registry/icons/icon-map"
 import type { IconLibraryName } from "@/registry/icons/icon-map"
 import { migrateColorConfig } from "@/registry/theme"
 import type { ColorConfig } from "@/registry/theme"
-import { DEFAULTS } from "@/modules/studio/axes"
-import type { StudioState } from "@/modules/studio/axes"
 import {
   DEFAULT_CODE_OPTIONS,
   sanitizeCodeOptions,
 } from "@/publisher/code-options"
 import type { CodeOptions } from "@/publisher/code-options"
+import { DEFAULTS } from "@/modules/studio/axes"
+import type { StudioState } from "@/modules/studio/axes"
 
 /** A studio state plus the exported-code style — everything a preset holds. */
 export interface StudioPreset {
@@ -188,10 +188,12 @@ function migrateLegacy(legacy: LegacyState): StudioPreset {
   const radius = px(tokens["--radius"])
   if (radius !== undefined) state.radiusPx = radius
 
-  if (tokens["--font-sans"]) state.bodyFont = familyFromStack(tokens["--font-sans"])
+  if (tokens["--font-sans"])
+    state.bodyFont = familyFromStack(tokens["--font-sans"])
   if (tokens["--font-heading"])
     state.headingFont = familyFromStack(tokens["--font-heading"])
-  if (tokens["--font-mono"]) state.monoFont = familyFromStack(tokens["--font-mono"])
+  if (tokens["--font-mono"])
+    state.monoFont = familyFromStack(tokens["--font-mono"])
 
   if (legacy.i && iconLibraries.some((lib) => lib.name === legacy.i))
     state.iconLibrary = legacy.i
