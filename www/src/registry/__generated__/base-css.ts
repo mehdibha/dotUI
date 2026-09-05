@@ -386,6 +386,10 @@ export const baseRegistryCss = {
 	},
 	cssVars: {
 		theme: {
+			"--ease-enter": "cubic-bezier(0, 0, 0.2, 1)",
+			"--transition-duration-enter": "200ms",
+			"--transition-duration-exit": "150ms",
+			"--default-transition-duration": "150ms",
 			"--ease-fluid-out": "cubic-bezier(0.32, 0.72, 0, 1)",
 			"--cursor-interactive": "pointer",
 			"--cursor-pending": "default",

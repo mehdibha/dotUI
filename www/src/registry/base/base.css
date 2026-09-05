@@ -69,10 +69,18 @@
   stroke-width: var(--icon-stroke-width, 1.5);
 }
 
-/* Cursor axes: what the pointer becomes over enabled, pending, disabled and
+/* Motion axes: the easing character every overlay entrance shares, the
+   entrance / exit durations (speed scales both), and how long a state change
+   — hover, press, selection — takes to settle: every transition without an
+   explicit duration reads Tailwind's default. Exits keep a plain ease-out.
+   Cursor axes: what the pointer becomes over enabled, pending, disabled and
    draggable controls. Dragging follows the interactive cursor unless the
    design system opts into the grab hands. */
 @theme {
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --transition-duration-enter: 200ms;
+  --transition-duration-exit: 150ms;
+  --default-transition-duration: 150ms;
   --ease-fluid-out: cubic-bezier(0.32, 0.72, 0, 1);
   --cursor-interactive: pointer;
   --cursor-pending: default;

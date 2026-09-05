@@ -17,6 +17,13 @@ const modalMeta = {
       default: "default",
       values: ["default", "muted-footer"] as const,
     },
+    // Synced with popover and tooltip: the studio's Motion axis writes all three.
+    motion: {
+      kind: "enum",
+      default: "scale",
+      values: ["scale", "fade", "slide", "none"] as const,
+      description: "How the dialog enters and leaves.",
+    },
   },
 } satisfies RegistryItem
 
