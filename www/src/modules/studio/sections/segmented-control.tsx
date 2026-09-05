@@ -21,19 +21,20 @@ import { useState } from "react"
 
 import { cn } from "@/registry/lib/utils"
 
+import { SELECTED_OPTIONS, TRACK_OPTIONS } from "../axes/segmented-control"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 
-export const TRACK_SHELL = {
+const TRACK_SHELL = {
   filled: "bg-muted",
   outline: "border border-border",
 }
 
 /* Raised keeps the hairline ring so the bg-on-bg chip survives dark wells —
    same rationale as the Toggles chip. */
-export const SELECTED_FX = {
+const SELECTED_FX = {
   raised: "bg-bg text-fg shadow-sm ring-1 ring-border-control",
   flat: "bg-selected text-fg-on-selected",
   inverse: "bg-inverse text-fg-inverse",
@@ -82,24 +83,10 @@ function SelectedGlyph({ look }: { look: keyof typeof SELECTED_FX }) {
   )
 }
 
-const SELECTED_OPTIONS: SelectRowOption[] = [
-  {
-    value: "raised",
-    label: "Raised",
-    illustration: <SelectedGlyph look="raised" />,
-  },
-  { value: "flat", label: "Flat", illustration: <SelectedGlyph look="flat" /> },
-  {
-    value: "inverse",
-    label: "Inverse",
-    illustration: <SelectedGlyph look="inverse" />,
-  },
-]
-
-const TRACK_OPTIONS = [
-  { value: "filled", label: "Filled" },
-  { value: "outline", label: "Outline" },
-]
+const SELECTED_ROW_OPTIONS: SelectRowOption[] = SELECTED_OPTIONS.map((o) => ({
+  ...o,
+  illustration: <SelectedGlyph look={o.value as keyof typeof SELECTED_FX} />,
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 
@@ -162,7 +149,7 @@ export function SegmentedControlSection({ lab }: { lab: Lab }) {
         label="Selected"
         value={state.segmentedSelected}
         onChange={set("segmentedSelected")}
-        options={SELECTED_OPTIONS}
+        options={SELECTED_ROW_OPTIONS}
         layout="grid"
       />
       <SegmentedControlRow

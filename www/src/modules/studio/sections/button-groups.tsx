@@ -8,9 +8,9 @@
 
 import { cn } from "@/registry/lib/utils"
 
+import { SEPARATOR_OPTIONS } from "../axes/button-groups"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import {
   buttonRadiusPx,
@@ -19,12 +19,6 @@ import {
   SPECIMEN_FX,
   styleLook,
 } from "./buttons"
-
-const SEPARATOR_OPTIONS: SelectRowOption[] = [
-  { value: "auto", label: "Auto" },
-  { value: "divider", label: "Divider" },
-  { value: "none", label: "None" },
-]
 
 /** Attached grouping shared by Button Group and Toggle Group: one container,
  *  square segments, the separator axis deciding what divides them. */

@@ -3,7 +3,8 @@ import { createStyles } from "@/lib/styles"
 import toggleButtonMeta from "./meta"
 
 /* Synced with button: same base shape, same `style` / `hover` / `press`
-   params — change both together. The selected state keeps its own feedback. */
+   params — change both together. `selected` is the toggle's own look, with
+   its own hover/press feedback. */
 
 const { useStyles, styles } = createStyles(toggleButtonMeta, {
   base: {
@@ -11,7 +12,6 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
       "group/toggle-button relative inline-flex shrink-0 cursor-interactive items-center justify-center rounded-(--btn-radius) bg-clip-padding font-(--btn-font-weight) whitespace-nowrap shadow-[var(--shadow-control,none)] transition-[background-color,border-color,color,box-shadow,filter,scale,translate] select-none",
       "focus-reset focus-visible:focus-ring",
       "**:[svg]:pointer-events-none **:[svg]:shrink-0",
-      "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
       "disabled:cursor-disabled disabled:bg-disabled disabled:text-fg-disabled disabled:selected:bg-disabled disabled:selected:text-fg-disabled",
     ],
     variants: {
@@ -149,6 +149,30 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
         base: "pressed:translate-y-px",
       },
       none: {},
+    },
+    selected: {
+      fill: {
+        base: "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
+      },
+      // Chip: a page-colored chip lifted on shadow; borderless variants gain a
+      // hairline ring so it survives dark wells (secondary keeps its border).
+      chip: {
+        base: "selected:bg-bg selected:text-fg selected:shadow-sm selected:hover:bg-muted selected:pressed:bg-highlight",
+        variants: {
+          variant: {
+            primary: "selected:ring-1 selected:ring-border-control",
+            quiet: "selected:ring-1 selected:ring-border-control",
+          },
+        },
+      },
+      inverse: {
+        base: "selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
+        variants: {
+          variant: {
+            secondary: "selected:border-inverse",
+          },
+        },
+      },
     },
   },
 })

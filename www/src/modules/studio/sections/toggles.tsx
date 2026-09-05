@@ -9,9 +9,9 @@ import { StarIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
+import { SELECTED_OPTIONS } from "../axes/toggles"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
-import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { AttachedShell } from "./button-groups"
 import {
@@ -21,12 +21,6 @@ import {
   SPECIMEN_FX,
   styleLook,
 } from "./buttons"
-
-const SELECTED_OPTIONS: SelectRowOption[] = [
-  { value: "fill", label: "Fill" },
-  { value: "chip", label: "Chip" },
-  { value: "inverse", label: "Inverse" },
-]
 
 /* Chip is the container archetype's floating pill; the hairline ring keeps it
    reading on dark wells and flat surfaces alike. */
