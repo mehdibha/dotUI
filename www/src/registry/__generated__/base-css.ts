@@ -43,6 +43,9 @@ export const baseRegistryCss = {
 			body: {
 				"@apply bg-bg font-sans text-fg": {},
 			},
+			":is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *)": {
+				opacity: "var(--disabled-opacity, 1)",
+			},
 			html: {
 				"@apply font-sans": {},
 			},
@@ -432,11 +435,14 @@ export const baseRegistryCss = {
 			"--color-primary-hover": "color-mix(in oklab, var(--neutral-950) 90%, var(--neutral-25))",
 			"--color-primary-active": "color-mix(in oklab, var(--neutral-950) 80%, var(--neutral-25))",
 			"--color-primary-muted": "var(--neutral-200)",
+			"--color-primary-disabled": "var(--neutral-300)",
 			"--color-fg-on-primary": "var(--neutral-25)",
-			"--color-fg-primary-disabled": "var(--neutral-500)",
+			"--color-fg-primary-disabled": "var(--neutral-600)",
 			"--color-selection": "var(--neutral-950)",
 			"--color-selection-hover": "color-mix(in oklab, var(--neutral-950) 90%, var(--neutral-25))",
 			"--color-fg-on-selection": "var(--neutral-25)",
+			"--color-selection-disabled": "var(--neutral-100)",
+			"--color-fg-on-selection-disabled": "var(--neutral-600)",
 			"--color-success": "var(--success-700)",
 			"--color-success-hover": "var(--success-800)",
 			"--color-success-active": "color-mix(in oklab, var(--success-800) 88%, var(--neutral-950))",

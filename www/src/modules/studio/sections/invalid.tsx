@@ -2,23 +2,24 @@
 
 /* Invalid — how the system flags a failed value, everywhere at once.
    Extracted from Inputs (Aug 2026): invalid is a cross-component state like
-   Focus and Disabled, not a field-only knob. One axis, treatment: border
-   swap only (shadcn primitive) vs danger border + message line with icon
-   (Material, Spectrum, Carbon, Ant, Polaris — the icon rides the message in
-   Spectrum/Polaris/Atlassian, the field slot in Material/Carbon) vs GOV.UK's
-   left bar + bold message. Danger halo rejected: the Focus field recipe
-   recolored — a state of that axis, not a new one. */
+   Focus and Disabled, not a field-only knob. One axis, treatment: danger
+   border with a plain message (shadcn, dotUI today) vs danger border +
+   message line with icon (Material, Spectrum, Carbon, Ant, Polaris — the
+   icon rides the message in Spectrum/Polaris/Atlassian, the field slot in
+   Material/Carbon) vs GOV.UK's left bar + bold message. Danger halo
+   rejected: the Focus field recipe recolored — a state of that axis, not a
+   new one. */
 
 import { useId } from "react"
-import { CircleAlertIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
+import { ERROR_OPTIONS } from "../axes/invalid"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
-import { BARE_INPUT, inputLook, SHELL } from "./inputs"
+import { BARE_INPUT, ErrorMessage, inputLook, SHELL } from "./inputs"
 import { controlRadiusPx } from "./shape"
 
 function ErrorGlyph({ kind }: { kind: "border" | "message" | "bar" }) {
@@ -107,19 +108,10 @@ function ErrorGlyph({ kind }: { kind: "border" | "message" | "bar" }) {
   )
 }
 
-export const ERROR_OPTIONS: SelectRowOption[] = [
-  {
-    value: "border",
-    label: "Border",
-    illustration: <ErrorGlyph kind="border" />,
-  },
-  {
-    value: "message",
-    label: "Message",
-    illustration: <ErrorGlyph kind="message" />,
-  },
-  { value: "bar", label: "Bar", illustration: <ErrorGlyph kind="bar" /> },
-]
+const ERROR_ROW_OPTIONS: SelectRowOption[] = ERROR_OPTIONS.map((o) => ({
+  ...o,
+  illustration: <ErrorGlyph kind={o.value as "border" | "message" | "bar"} />,
+}))
 
 /** One failed field wearing the current field style and the treatment. */
 export function InvalidHero({ state }: { state: LabState }) {
@@ -159,12 +151,7 @@ export function InvalidHero({ state }: { state: LabState }) {
             className={BARE_INPUT}
           />
         </div>
-        {state.inputError === "message" && (
-          <p className="flex items-center gap-1 text-xs text-fg-danger">
-            <CircleAlertIcon className="size-3 shrink-0" />
-            Username is taken
-          </p>
-        )}
+        <ErrorMessage state={state} />
       </div>
     </Hero>
   )
@@ -187,7 +174,7 @@ export function InvalidSection({ lab }: { lab: Lab }) {
         label="Treatment"
         value={state.inputError}
         onChange={set("inputError")}
-        options={ERROR_OPTIONS}
+        options={ERROR_ROW_OPTIONS}
         layout="grid"
       />
     </ControlGroup>

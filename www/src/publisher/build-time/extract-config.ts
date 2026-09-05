@@ -38,6 +38,8 @@ import type { StylesConfig } from "../types"
 interface ExtractCtx {
   sourceFile: SourceFile
   filePath: string
+  /** Registry metas by name — a composed component's param defaults. */
+  metas?: ReadonlyMap<string, RegistryItem>
 }
 
 /** `.../registry/ui/<name>/styles.ts` → `.../registry/ui`. */
@@ -281,7 +283,8 @@ const importedStylesCache = new Map<string, () => unknown>()
  * Rebuild another component's default `styles` (the value of `<x>Styles`) so
  * `<x>Styles().slot()` resolves to the same class the app renders. `styles.ts`
  * exports `compose('default', paramDefaults)`; we mirror that with `flatten`
- * (base ← default density ← param defaults) fed to the real `tv`.
+ * (base ← default density ← param defaults) fed to the real `tv`. A composed
+ * slot freezes at the param defaults: it doesn't follow the preset.
  */
 function resolveImportedStyles(name: string, ctx: ExtractCtx): () => unknown {
   const spec = importSpecifierFor(name, ctx)
@@ -300,22 +303,17 @@ function resolveImportedStyles(name: string, ctx: ExtractCtx): () => unknown {
   const cached = importedStylesCache.get(stylesTsPath)
   if (cached) return cached
 
-  const config = extractStylesConfig(stylesTsPath)
-  if (config.params && Object.keys(config.params).length > 0) {
-    // Composing a parameterized component's styles would need its meta param
-    // defaults; no current source does, so fail loudly rather than emit a
-    // silently-wrong default.
+  const config = extractStylesConfig(stylesTsPath, { metas: ctx.metas })
+  const meta = ctx.metas?.get(componentName)
+  if (!meta && config.params && Object.keys(config.params).length > 0) {
     throw new Error(
-      `[publisher/extract] cannot compose "${name}" (${componentName} has params) in ${ctx.filePath}`,
+      `[publisher/extract] cannot compose "${name}" (${componentName} has params and no meta was given) in ${ctx.filePath}`,
     )
   }
   const layer = flatten({
     stylesConfig: config,
-    meta: {
-      name: componentName,
-      type: "registry:ui",
-      params: {},
-    } as RegistryItem,
+    meta:
+      meta ?? ({ name: componentName, type: "registry:ui" } as RegistryItem),
     density: "default",
     paramSelections: {},
   })
@@ -343,7 +341,10 @@ function importSpecifierFor(name: string, ctx: ExtractCtx): string {
  * Find the `createStyles(meta, <config>)` call in `sourceFile` and return the
  * `<config>` object as plain JSON. Throws if not found or shape doesn't match.
  */
-function extractFromSourceFile(sourceFile: SourceFile): StylesConfig {
+function extractFromSourceFile(
+  sourceFile: SourceFile,
+  options: ExtractOptions,
+): StylesConfig {
   const filePath = sourceFile.getFilePath()
 
   const calls = sourceFile.getDescendantsOfKind(SyntaxKind.CallExpression)
@@ -374,7 +375,7 @@ function extractFromSourceFile(sourceFile: SourceFile): StylesConfig {
     )
   }
 
-  const value = exprToValue(configArg, { sourceFile, filePath })
+  const value = exprToValue(configArg, { sourceFile, filePath, ...options })
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     throw new Error(
       `[publisher/extract] createStyles() config must be an object literal in ${filePath}`,
@@ -401,11 +402,20 @@ function getProject(): Project {
   return cachedProject
 }
 
-export function extractStylesConfig(stylesTsPath: string): StylesConfig {
+export interface ExtractOptions {
+  /** Registry metas by name, so a `<x>Styles().slot()` composition of a
+   *  parameterized component resolves at its param defaults. */
+  metas?: ReadonlyMap<string, RegistryItem>
+}
+
+export function extractStylesConfig(
+  stylesTsPath: string,
+  options: ExtractOptions = {},
+): StylesConfig {
   const project = getProject()
   const sourceFile = project.addSourceFileAtPath(stylesTsPath)
   try {
-    return extractFromSourceFile(sourceFile)
+    return extractFromSourceFile(sourceFile, options)
   } finally {
     project.removeSourceFile(sourceFile)
   }

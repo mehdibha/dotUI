@@ -21,6 +21,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
       description:
         "text-fg-muted last:mt-0 in-data-disabled:text-fg-disabled nth-last-2:-mt-1",
       fieldError: "text-fg-danger",
+      fieldErrorIcon: "shrink-0",
     },
     variants: {
       orientation: {
@@ -43,6 +44,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
         label: "text-xs",
         description: "text-xs",
         fieldError: "text-xs",
+        fieldErrorIcon: "size-3",
         fieldGroup:
           "gap-4 has-data-checkbox:gap-2 has-data-radio:gap-2 has-[[data-checkbox]_[data-label]]:gap-1.5 has-[[data-radio]_[data-label]]:gap-1.5",
       },
@@ -52,6 +54,7 @@ const { useStyles, styles } = createStyles(fieldMeta, {
         label: "text-sm",
         description: "text-sm",
         fieldError: "text-sm",
+        fieldErrorIcon: "size-3.5",
         fieldGroup:
           "gap-5 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2 has-[[data-radio]_[data-label]]:gap-2",
       },
@@ -61,8 +64,35 @@ const { useStyles, styles } = createStyles(fieldMeta, {
         label: "text-sm",
         description: "text-sm",
         fieldError: "text-sm",
+        fieldErrorIcon: "size-3.5",
         fieldGroup:
           "gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
+      },
+    },
+  },
+  /* Invalid treatment: the danger border alone (shadcn), an icon on the
+     message line (Material, Spectrum, Polaris), or GOV.UK's bar with the
+     message above the field. */
+  params: {
+    error: {
+      border: {
+        slots: {
+          fieldErrorIcon: "hidden",
+        },
+      },
+      message: {
+        slots: {
+          fieldError: "flex items-center gap-1",
+        },
+      },
+      bar: {
+        slots: {
+          field:
+            "invalid:border-l-[3px] invalid:border-border-danger invalid:pl-2.5",
+          label: "order-first",
+          fieldError: "order-first font-semibold",
+          fieldErrorIcon: "hidden",
+        },
       },
     },
   },

@@ -42,10 +42,11 @@ export async function buildPublishables({
 
   const written: string[] = []
   const skipped: Array<{ name: string; reason: string }> = []
+  const metas = new Map(items.map((item) => [item.name, item]))
 
   for (const meta of items) {
     try {
-      const result = await buildOne({ meta, registryDir, outDir })
+      const result = await buildOne({ meta, metas, registryDir, outDir })
       if (result === "skipped") {
         skipped.push({ name: meta.name, reason: "no base.tsx in meta.files" })
       } else if (typeof result === "string") {
@@ -216,6 +217,7 @@ async function renderBaseRegistryCss(registryDir: string): Promise<string> {
 
 interface BuildOneInput {
   meta: RegistryItem
+  metas: ReadonlyMap<string, RegistryItem>
   registryDir: string
   outDir: string
 }
@@ -227,6 +229,7 @@ interface BuildOneInput {
  */
 async function buildOne({
   meta,
+  metas,
   registryDir,
   outDir,
 }: BuildOneInput): Promise<string | "skipped"> {
@@ -240,7 +243,7 @@ async function buildOne({
   const stylesTsPath = path.join(componentDir, "styles.ts")
   const hasStyles = existsSync(stylesTsPath)
   const stylesConfig: StylesConfig = hasStyles
-    ? extractStylesConfig(stylesTsPath)
+    ? extractStylesConfig(stylesTsPath, { metas })
     : emptyStylesConfig()
   const runtimeMeta = withComponentCssFields(
     meta,
@@ -291,7 +294,7 @@ async function buildStylelessPublishable({
   meta,
   registryDir,
   outDir,
-}: BuildOneInput): Promise<string | "skipped"> {
+}: Omit<BuildOneInput, "metas">): Promise<string | "skipped"> {
   const files = meta.files ?? []
   if (files.length === 0) return "skipped"
 

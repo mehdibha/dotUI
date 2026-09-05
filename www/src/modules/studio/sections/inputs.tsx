@@ -92,6 +92,19 @@ const LABEL = "text-xs font-medium text-fg"
 
 type Specimen = "email" | "role" | "username" | "notes"
 
+/** The message line every treatment but the bar puts under the field. */
+export function ErrorMessage({ state }: { state: LabState }) {
+  if (state.inputError === "bar") return null
+  return (
+    <p className="flex items-center gap-1 text-xs text-fg-danger">
+      {state.inputError === "message" && (
+        <CircleAlertIcon className="size-3 shrink-0" />
+      )}
+      Username is taken
+    </p>
+  )
+}
+
 /** Live specimens — label, control, help — focusing with the Focus section's
  *  field recipe, the way the buttons hero hovers and presses for real. */
 export function FieldHero({ state }: { state: LabState }) {
@@ -167,12 +180,7 @@ export function FieldHero({ state }: { state: LabState }) {
               className={BARE_INPUT}
             />
           </div>
-          {state.inputError === "message" && (
-            <p className="flex items-center gap-1 text-xs text-fg-danger">
-              <CircleAlertIcon className="size-3 shrink-0" />
-              Username is taken
-            </p>
-          )}
+          <ErrorMessage state={state} />
         </div>
         <div className="flex w-48 flex-col gap-1.5">
           <label htmlFor={`${id}-notes`} className={LABEL}>
