@@ -116,7 +116,8 @@
 }
 
 /* Surfaces: the edge cards and floating layers (popover, menu, dialog) draw.
-   Their shadows ride `--shadow-card` / `--shadow-overlay`, none by default. */
+   Their shadows ride `--shadow-card` / `--shadow-popover` / `--shadow-modal`,
+   falling back to the registry's own (none · md · lg). */
 :root {
   --card-border: var(--color-border);
   --overlay-border: var(--color-border);

@@ -22,6 +22,9 @@ const baseRegistryCss = {
     },
     ".dark": {
       "--neutral-50": "hsl(0, 6%, 4%)",
+      // theme.css ships the vocabulary's per-mode re-points in base css too.
+      "--color-popover":
+        "color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100))",
     },
   },
   cssVars: {
@@ -149,6 +152,7 @@ describe("emitInitItem", () => {
     })
     expect(item.css?.[".dark"]).not.toHaveProperty("--color-popover")
     expect(item.css?.[".dark"]).toHaveProperty("--color-border")
+    expect(item.css?.[".dark"]).toHaveProperty("--neutral-50")
   })
 
   test("font tokens become registry:font deps, not a Google Fonts @import", () => {

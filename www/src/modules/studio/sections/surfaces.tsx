@@ -67,7 +67,7 @@ function SurfaceTile({
         : `color-mix(in oklab, ${neutral("100")} 50%, ${neutral("200")})`,
     ink: neutral("950"),
   }
-  const { page, card, overlay, glass } = surfaceRecipe(state)
+  const { page, card, popover, glass } = surfaceRecipe(state)
   const paint = (look: SurfaceLook) => ({
     backgroundColor: surfaceColorCss(look.bg[mode], palette),
     border: `1px solid ${surfaceColorCss(look.edge[mode], palette)}`,
@@ -75,7 +75,7 @@ function SurfaceTile({
       surfaceColorCss(color[mode], palette),
     ),
   })
-  const menu = paint(overlay)
+  const menu = paint(popover)
   if (glass) {
     menu.backgroundColor = glassCss(menu.backgroundColor)
   }

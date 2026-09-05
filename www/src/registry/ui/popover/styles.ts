@@ -15,7 +15,7 @@ const { useStyles, styles } = createStyles(popoverMeta, {
   base: {
     slots: {
       popover: [
-        "popover z-50 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) rounded-(--popover-radius) border border-(--overlay-border) bg-popover shadow-[var(--shadow-overlay,var(--shadow-md))] [backdrop-filter:var(--overlay-backdrop-filter,none)] forced-color-adjust-none outline-none [--surface-radius:var(--popover-radius)]",
+        "popover z-50 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) rounded-(--popover-radius) border border-(--overlay-border) bg-popover shadow-[var(--shadow-popover,var(--shadow-md))] [backdrop-filter:var(--overlay-backdrop-filter,none)] forced-color-adjust-none outline-none [--surface-radius:var(--popover-radius)]",
       ],
       // The tip overlaps the panel edge by 1px and strokes its own border.
       arrow: [

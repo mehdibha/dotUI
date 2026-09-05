@@ -33,7 +33,7 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
       inverted: {
         slots: {
           content:
-            "bg-tooltip text-fg-on-tooltip shadow-[var(--shadow-overlay,none)]",
+            "bg-tooltip text-fg-on-tooltip",
           arrow: "[&>svg]:fill-tooltip",
         },
       },
@@ -41,7 +41,7 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
       surface: {
         slots: {
           content:
-            "border bg-popover text-fg shadow-[var(--shadow-overlay,var(--shadow-md))]",
+            "border bg-popover text-fg shadow-[var(--shadow-popover,var(--shadow-md))]",
           arrow:
             "placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px [&>svg]:fill-popover [&>svg]:stroke-border",
         },
