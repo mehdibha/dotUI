@@ -3,14 +3,17 @@ import { describe, expect, it } from "vitest"
 import { resolveDesignSystem } from "../resolve"
 import { DEFAULTS } from "./index"
 
-const CARD_DEFAULTS = { "card-selected": "outline", "card-control": "start" }
+const CONTROLS = ["checkbox", "radio-group", "switch"]
 
 describe("selection controls", () => {
   it("defaults resolve to no tokens and the registry's card params", () => {
     const ds = resolveDesignSystem(DEFAULTS)
     expect(ds.tokens).toEqual({})
-    for (const component of ["checkbox", "radio-group", "switch"]) {
-      expect(ds.componentParams[component]).toEqual(CARD_DEFAULTS)
+    for (const component of CONTROLS) {
+      expect(ds.componentParams[component]).toEqual({
+        "card-selected": "tint",
+        "card-control": "start",
+      })
     }
   })
 
@@ -35,12 +38,12 @@ describe("selection controls", () => {
   it("choice cards write the synced card params on all three controls", () => {
     const ds = resolveDesignSystem({
       ...DEFAULTS,
-      cardSelected: "tint",
+      cardSelected: "outline",
       cardControl: "hidden",
     })
-    for (const component of ["checkbox", "radio-group", "switch"]) {
+    for (const component of CONTROLS) {
       expect(ds.componentParams[component]).toEqual({
-        "card-selected": "tint",
+        "card-selected": "outline",
         "card-control": "hidden",
       })
     }

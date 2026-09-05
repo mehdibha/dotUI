@@ -12,12 +12,10 @@ const checkboxMeta = {
     },
   ],
   registryDependencies: ["focus-styles", "field"],
-  // Synced with radio-group and switch: the studio's Choice cards axes write
-  // all three.
   params: {
     "card-selected": {
       kind: "enum",
-      default: "outline",
+      default: "tint",
       values: ["outline", "tint", "outline-tint"] as const,
       description: "What marks the selected card.",
     },

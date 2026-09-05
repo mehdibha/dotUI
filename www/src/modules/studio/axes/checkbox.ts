@@ -2,9 +2,9 @@
    ⇄ Choice cards): Fill is the family's synced axis and resolves once, here;
    Corner is checkbox-only geometry.
 
-   Engine: checked controls paint with the semantic selection tokens, which
-   the color engine points at the primary fill — near-black in dotUI's
-   (shadcn-school) default, so Neutral is the registry default and Accent
+   Engine: checked controls paint with the semantic selection tokens. The
+   color engine points those at the primary fill — near-black in dotUI's
+   default (the shadcn school), so Neutral is the no-op default and Accent
    re-points the trio at the accent tokens (the Vercel split: black primary,
    brand-colored checks). Corner rides on the `--checkbox-radius` surface
    var, resolved to a plain `rounded-*` utility on export. */
@@ -19,8 +19,8 @@ export const CHECKBOX_DEFAULTS = {
 /* Accent is the brand-colored school (Material, Ant, Radix Themes); Neutral
    the shadcn school — a near-black fill that inverts per mode. */
 export const FILL_OPTIONS = [
-  { value: "neutral", label: "Neutral" },
   { value: "accent", label: "Accent" },
+  { value: "neutral", label: "Neutral" },
 ]
 
 /* Rounded ≈ shadcn's 4px, Square ≈ Material/Carbon's 2px, Circle ≈ iOS-style

@@ -4,13 +4,15 @@
 
    Engine: `card-selected` and `card-control` are enum params on `checkbox`,
    `radio-group` and `switch` (a synced group — one axis writes all three).
-   Selected marks the chosen card with the selection tokens, so it follows
-   the family Fill for free. */
+   Tint is the registry's default — the muted surface + soft edge today's
+   cards ship; Outline marks the card with the selection tokens, so it follows
+   the family Fill. Start leaves the control where the markup puts it; End and
+   Hidden reorder or drop the indicator. */
 
 import type { Resolved, StudioState } from "./index"
 
 export const CHOICE_CARD_DEFAULTS = {
-  cardSelected: "outline",
+  cardSelected: "tint",
   cardControl: "start",
 }
 
@@ -36,7 +38,7 @@ export const WIRED = true
 
 export function resolveChoiceCards(state: StudioState): Resolved {
   const selection = {
-    "card-selected": pick(SELECTED_OPTIONS, state.cardSelected, "outline"),
+    "card-selected": pick(SELECTED_OPTIONS, state.cardSelected, "tint"),
     "card-control": pick(CONTROL_OPTIONS, state.cardControl, "start"),
   }
   return {

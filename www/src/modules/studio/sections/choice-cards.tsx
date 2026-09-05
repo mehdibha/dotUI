@@ -21,16 +21,17 @@ import { DemoRadio } from "./radio"
 import { DemoSwitch } from "./switch"
 
 /* Selected wears the family fill's school: accent cards mark with the brand,
-   neutral cards with fg — the same inversion the controls themselves use. */
+   neutral cards with fg — the same inversion the controls themselves use.
+   Tint softens the edge too (the registry's default card). */
 export const SELECTED = {
   accent: {
     outline: "border-accent",
-    tint: "border-border/60 bg-accent/8",
+    tint: "border-accent/25 bg-accent/8",
     "outline-tint": "border-accent bg-accent/8",
   },
   neutral: {
     outline: "border-fg",
-    tint: "border-border/60 bg-fg/8",
+    tint: "border-fg/25 bg-fg/8",
     "outline-tint": "border-fg bg-fg/8",
   },
 }

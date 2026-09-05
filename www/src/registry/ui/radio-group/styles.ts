@@ -38,29 +38,29 @@ const { useStyles, styles } = createStyles(radioGroupMeta, {
     },
   },
   /* The card treatment — synced with checkbox and switch, change all three
-     together. Selected paints with the selection tokens so it follows the
-     family fill. */
+     together. Tint ships the registry's default card; Outline marks the card
+     with the selection tokens so it follows the family fill. Start keeps the
+     control where the markup puts it. */
   params: {
     "card-selected": {
       outline: {
         slots: { control: "has-data-label:selected:border-selection" },
       },
       tint: {
-        slots: { control: "has-data-label:selected:bg-selection/8" },
+        slots: {
+          control:
+            "has-data-label:selected:border-primary/25 has-data-label:selected:bg-primary-muted",
+        },
       },
       "outline-tint": {
         slots: {
           control:
-            "has-data-label:selected:border-selection has-data-label:selected:bg-selection/8",
+            "has-data-label:selected:border-selection has-data-label:selected:bg-primary-muted",
         },
       },
     },
     "card-control": {
-      start: {
-        slots: {
-          control: "has-data-label:*:data-radio-indicator:order-first",
-        },
-      },
+      start: {},
       end: {
         slots: {
           control:
