@@ -144,3 +144,35 @@ describe("brand-tonal categorical (the default — shadcn parity)", () => {
       expect(color.c).toBeLessThanOrEqual(0.05 + 1e-6)
   })
 })
+
+describe("chartPalette option (hue-spread strategies)", () => {
+  const accent = "#438cd6"
+
+  test.each(["light", "dark"] as const)(
+    "vivid spreads hues around the accent and passes the gate (%s)",
+    (mode) => {
+      const theme = createTheme({ seeds: { accent }, chartPalette: "vivid" })
+      const palette = theme.charts[mode].categorical.map(toOklch)
+      expect(categoricalGateReport(palette)).toMatchObject({ passes: true })
+      expect(theme.charts[mode].categorical).not.toEqual(
+        createTheme(accent).charts[mode].categorical,
+      )
+    },
+  )
+
+  test("muted keeps the hue spread at a fraction of vivid's chroma", () => {
+    const vivid = createTheme({ seeds: { accent }, chartPalette: "vivid" })
+    const muted = createTheme({ seeds: { accent }, chartPalette: "muted" })
+    const meanChroma = (set: string[]) =>
+      set.reduce((sum, css) => sum + toOklch(css).c, 0) / set.length
+    expect(meanChroma(muted.charts.light.categorical)).toBeLessThan(
+      0.6 * meanChroma(vivid.charts.light.categorical),
+    )
+    const hueBins = new Set(
+      muted.charts.light.categorical.map((css) =>
+        Math.round(toOklch(css).h / 30),
+      ),
+    )
+    expect(hueBins.size).toBeGreaterThanOrEqual(5)
+  })
+})

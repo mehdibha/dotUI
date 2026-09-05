@@ -96,8 +96,15 @@ export function tonalGateReport(palette: Oklch[]) {
   }
 }
 
-/** Reject washed-out picks: achieved chroma below this fraction of the hue's cusp. */
-const MIN_CUSP_FRACTION = 0.4
+/**
+ * Chroma of hue-spread series as a fraction of each hue's cusp: `vivid` is the
+ * saturated Material/Carbon register, `muted` the desaturated one (Linear,
+ * Stripe dashboards).
+ */
+export const CATEGORICAL_CHROMA = { vivid: 0.75, muted: 0.3 } as const
+
+/** Reject washed-out picks: achieved chroma below this fraction of the target. */
+const MIN_TARGET_FRACTION = 0.53
 /** Warm-yellow hues (gold→lime) turn olive below this L* — keep them on light slots. */
 const YELLOW_BAND = { from: 75, to: 135, minLstar: 58 }
 /** Minimum circular hue distance between chosen series. */
@@ -108,16 +115,20 @@ function hueGap(a: number, b: number): number {
   return d
 }
 
-function categoricalCandidate(hue: number, lstar: number): Oklch {
+function categoricalCandidate(
+  hue: number,
+  lstar: number,
+  chroma: number,
+): Oklch {
   const { c } = cusp(hue)
   return solveLstar(
     lstar,
-    (l) => Math.min(0.75 * c, maxChroma(l, hue)),
+    (l) => Math.min(chroma * c, maxChroma(l, hue)),
     () => hue,
   )
 }
 
-function isMuddy(candidate: Oklch, lstar: number): boolean {
+function isMuddy(candidate: Oklch, lstar: number, chroma: number): boolean {
   const h = ((candidate.h % 360) + 360) % 360
   if (
     h >= YELLOW_BAND.from &&
@@ -125,7 +136,7 @@ function isMuddy(candidate: Oklch, lstar: number): boolean {
     lstar < YELLOW_BAND.minLstar
   )
     return true
-  return candidate.c < MIN_CUSP_FRACTION * cusp(candidate.h).c
+  return candidate.c < MIN_TARGET_FRACTION * chroma * cusp(candidate.h).c
 }
 
 /**
@@ -133,12 +144,14 @@ function isMuddy(candidate: Oklch, lstar: number): boolean {
  * takes the ladder rung nearest the accent's own lightness (a yellow brand
  * stays yellow, never mustard); later slots greedily maximize the min
  * pairwise ΔEok under normal and CVD vision, constrained away from muddy
- * hue-lightness pairings and near-duplicate hues. Deterministic.
+ * hue-lightness pairings and near-duplicate hues. `chroma` is the series'
+ * target as a fraction of each hue's cusp. Deterministic.
  */
 export function categoricalPalette(
   accent: Oklch,
   n = 8,
   mode: Mode = "light",
+  chroma: number = CATEGORICAL_CHROMA.vivid,
 ): Oklch[] {
   const baseLadder = CATEGORICAL_LSTAR[mode]
   // Give the brand series the rung closest to its natural lightness.
@@ -169,7 +182,7 @@ export function categoricalPalette(
       ? CHART_GATES.categoricalNormal
       : CHART_GATES.categoricalCvd
 
-  const chosen: Oklch[] = [categoricalCandidate(accent.h, ladder[0]!)]
+  const chosen: Oklch[] = [categoricalCandidate(accent.h, ladder[0]!, chroma)]
   const chosenSim: Simulated[] = [simulate(chosen[0]!)]
   const setMin: Record<(typeof CONDITIONS)[number], number> = {
     normal: Infinity,
@@ -189,7 +202,7 @@ export function categoricalPalette(
     let bestRelaxed: { color: Oklch; sim: Simulated } | null = null
     let bestRelaxedScore = -Infinity
     for (const hue of pool) {
-      const candidate = categoricalCandidate(hue, lstar)
+      const candidate = categoricalCandidate(hue, lstar, chroma)
       const sim = simulate(candidate)
       let score = Infinity
       for (const condition of CONDITIONS) {
@@ -203,7 +216,7 @@ export function categoricalPalette(
         bestRelaxedScore = score
         bestRelaxed = { color: candidate, sim }
       }
-      if (isMuddy(candidate, lstar)) continue
+      if (isMuddy(candidate, lstar, chroma)) continue
       if (chosen.some((c) => hueGap(c.h, hue) < MIN_HUE_GAP)) continue
       if (score > bestScore) {
         bestScore = score

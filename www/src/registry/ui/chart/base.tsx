@@ -6,6 +6,10 @@ import type { TooltipValueType } from "recharts"
 
 import { cn } from "@/registry/lib/utils"
 
+import { useStyles } from "./styles"
+
+// MARK: chartStyles
+
 // MARK: constants
 
 // Format: { THEME_NAME: CSS_SELECTOR }
@@ -62,16 +66,14 @@ function ChartContainer({
 }) {
   const uniqueId = React.useId()
   const chartId = `chart-${id ?? uniqueId.replace(/:/g, "")}`
+  const { container } = useStyles()()
 
   return (
     <ChartContext.Provider value={{ config }}>
       <div
         data-slot="chart"
         data-chart={chartId}
-        className={cn(
-          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-fg-muted [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector]:outline-hidden [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-surface]:outline-hidden",
-          className,
-        )}
+        className={container({ className })}
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
@@ -154,6 +156,7 @@ function ChartTooltipContent({
     "accessibilityLayer"
   >) {
   const { config } = useChart()
+  const { tooltip } = useStyles()()
 
   const tooltipLabel = React.useMemo(() => {
     if (hideLabel || !payload?.length) {
@@ -198,12 +201,7 @@ function ChartTooltipContent({
   const nestLabel = payload.length === 1 && indicator !== "dot"
 
   return (
-    <div
-      className={cn(
-        "grid min-w-[8rem] items-start gap-1.5 rounded-lg border bg-popover px-2.5 py-1.5 text-xs shadow-xl",
-        className,
-      )}
-    >
+    <div className={tooltip({ className })}>
       {!nestLabel ? tooltipLabel : null}
       <div className="grid gap-1.5">
         {payload
@@ -293,6 +291,7 @@ function ChartLegendContent({
   nameKey?: string
 } & RechartsPrimitive.DefaultLegendContentProps) {
   const { config } = useChart()
+  const { legend } = useStyles()()
 
   if (!payload?.length) {
     return null
@@ -300,11 +299,9 @@ function ChartLegendContent({
 
   return (
     <div
-      className={cn(
-        "flex items-center justify-center gap-4",
-        verticalAlign === "top" ? "pb-3" : "pt-3",
-        className,
-      )}
+      className={legend({
+        className: cn(verticalAlign === "top" ? "pb-3" : "pt-3", className),
+      })}
     >
       {payload
         .filter((item) => item.type !== "none")
