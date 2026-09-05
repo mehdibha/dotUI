@@ -41,7 +41,7 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--slider-fill-color": "var(--color-primary)",
 	"--slider-size": "calc(var(--spacing) * 1)",
 	"--slider-thumb-radius": "var(--radius-full)",
-	"--slider-thumb-shadow": "none",
+	"--slider-thumb-shadow": "0 0 #0000",
 	"--slider-thumb-size": "calc(var(--spacing) * 3)",
 	"--slider-track-radius": "var(--radius-full)",
 	"--switch-card-radius": "var(--radius-surface)",
