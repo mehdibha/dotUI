@@ -253,7 +253,8 @@ export function mergePresetCssFields(
   const darkRepoints: Record<string, string> = {}
   for (const [name, token] of Object.entries(semanticsFor(preset.color))) {
     themeVars[`--${name}`] = resolveTokenValue(token)
-    if ("light" in token.target)
+    // A preset token that re-defines the name carries both modes itself.
+    if ("light" in token.target && !preset.tokens?.[`--${name}`])
       darkRepoints[`--${name}`] = resolveTarget(token.target.dark)
   }
   if (Object.keys(darkRepoints).length > 0) {

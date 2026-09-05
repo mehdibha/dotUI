@@ -26,6 +26,12 @@ export const baseRegistryCss = {
 				"@apply border-border": {},
 				"corner-shape": "var(--corner-shape, round)",
 			},
+			':root,\n  [data-mode="light"]': {
+				"color-scheme": "light",
+			},
+			'.dark,\n  [data-mode="dark"]': {
+				"color-scheme": "dark",
+			},
 			"h1,\n  h2,\n  h3,\n  h4,\n  h5,\n  h6": {
 				"font-family": "var(--font-heading)",
 				"font-weight": "var(--font-weight-heading, var(--font-weight-semibold))",
@@ -38,17 +44,9 @@ export const baseRegistryCss = {
 				"@apply font-sans": {},
 			},
 		},
-		"::selection": {
-			"background-color": "var(--accent-300)",
-			color: "var(--neutral-950)",
-		},
-		".lucide,\n.tabler-icon": {
-			"stroke-width": "var(--icon-stroke-width, 2)",
-		},
-		".hugeicon,\n.hugeicon *": {
-			"stroke-width": "var(--icon-stroke-width, 1.5)",
-		},
 		":root": {
+			"--card-border": "var(--color-border)",
+			"--overlay-border": "var(--color-border)",
 			"--radius": "0.625rem",
 			"--neutral-25": "oklch(0.9921 0.0021 251.06)",
 			"--neutral-50": "oklch(0.9829 0.003 251.06)",
@@ -214,6 +212,16 @@ export const baseRegistryCss = {
 			"--chart-6": "oklch(0.4662 0.1337 254.29)",
 			"--chart-7": "oklch(0.4072 0.1337 255.47)",
 			"--chart-8": "oklch(0.3567 0.124 256.48)",
+		},
+		"::selection": {
+			"background-color": "var(--accent-300)",
+			color: "var(--neutral-950)",
+		},
+		".lucide,\n.tabler-icon": {
+			"stroke-width": "var(--icon-stroke-width, 2)",
+		},
+		".hugeicon,\n.hugeicon *": {
+			"stroke-width": "var(--icon-stroke-width, 1.5)",
 		},
 		".dark": {
 			"--neutral-25": "oklch(0.1307 0.0037 251.06)",
