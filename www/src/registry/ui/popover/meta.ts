@@ -7,10 +7,36 @@ const popoverMeta = {
   files: [
     {
       type: "registry:ui",
-      path: "ui/popover/base.tsx",
+      path: "ui/popover/base.drawer.tsx",
       target: "ui/popover.tsx",
     },
   ],
+  registryDependencies: ["drawer", "use-mobile"],
+  params: {
+    mobile: {
+      kind: "enum",
+      default: "drawer",
+      values: ["drawer", "popover"] as const,
+      files: {
+        drawer: [
+          {
+            type: "registry:ui",
+            path: "ui/popover/base.drawer.tsx",
+            target: "ui/popover.tsx",
+          },
+        ],
+        popover: [
+          {
+            type: "registry:ui",
+            path: "ui/popover/base.popover.tsx",
+            target: "ui/popover.tsx",
+          },
+        ],
+      },
+      description:
+        "What pickers and menus become below the mobile line: a bottom drawer, or the popover kept anchored.",
+    },
+  },
 } satisfies RegistryItem
 
 export default popoverMeta
