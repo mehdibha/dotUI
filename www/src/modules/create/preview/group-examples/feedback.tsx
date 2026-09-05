@@ -7,14 +7,13 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/registry/ui/empty"
-import { ToastProvider, toastManager } from "@/registry/ui/toast"
+import { toastManager } from "@/registry/ui/toast"
 import { Example } from "@/modules/create/preview/example"
 import { Examples } from "@/modules/create/preview/examples"
 
 export default function FeedbackGroupExamples() {
   return (
     <Examples>
-      <ToastProvider />
       <Example title="Alert">
         <Alert>
           <CircleAlertIcon />

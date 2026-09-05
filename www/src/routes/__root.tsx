@@ -12,7 +12,6 @@ import { ThemeProvider } from "starter-themes"
 
 import { siteConfig } from "@/config/site"
 import { truncateOnWord } from "@/lib/text"
-import { ToastProvider } from "@/registry/ui/toast"
 import { usePreviewForcedTheme } from "@/modules/create/preset/iframe-sync"
 import { PREVIEW_PENDING_SCRIPT } from "@/modules/docs/preview-pending"
 
@@ -86,9 +85,7 @@ function RootComponent() {
   return (
     <ThemeProvider forcedTheme={forcedTheme}>
       <RootDocument>
-        <ToastProvider>
-          <Outlet />
-        </ToastProvider>
+        <Outlet />
         {/* ClientOnly: the !SSR guard above renders nothing on the server, so
             without it the client's first render mismatches and hydration fails. */}
         {DevtoolsHub && (

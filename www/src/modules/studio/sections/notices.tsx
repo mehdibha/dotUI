@@ -1,39 +1,26 @@
 "use client"
 
-/* Notices — how the system announces events: the toast and the inline alert,
-   the section's one related pair. Both answer "how much intent color does a
-   notice surface carry?" but they stay two axes: Ant pairs tinted alerts
-   with neutral toasts and Material an inverse snackbar with neutral banners,
-   so a single axis would make both unreachable. The Sync switch is the
-   Button ⇄ ToggleButton model instead: on, either row drags the other to
-   its nearest counterpart; off, they fork. The hero is the app viewport:
-   the alert sits in the page, the toast floats over it at the chosen
-   corner — top placements overlap the alert the way a real toast overlays
-   real UI. */
+/* Notices — the toast and the inline alert (axes/notices.ts). The hero is
+   the app viewport: the alert sits in the page, the toast floats over it at
+   the chosen corner — top placements overlap the alert the way a real toast
+   overlays real UI. */
 
+import type * as React from "react"
 import { CircleCheckIcon, InfoIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
+import {
+  ALERT_OPTIONS,
+  POSITION_OPTIONS,
+  syncedAlert,
+  syncedToast,
+  TOAST_OPTIONS,
+} from "../axes/notices"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow, SwitchRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
-
-/* Nearest counterpart, not identity: the vocabularies only partly overlap
-   (no inverted alert exists in the wild, no tinted toast). */
-const TOAST_TO_ALERT = {
-  surface: "neutral",
-  inverted: "neutral",
-  filled: "tinted",
-  "accent-bar": "accent-bar",
-}
-const ALERT_TO_TOAST = {
-  neutral: "surface",
-  tinted: "filled",
-  "tinted-border": "surface",
-  "accent-bar": "accent-bar",
-}
 
 export const TOAST_FAMILY = {
   surface: "border bg-card text-fg **:[svg]:text-fg-success",
@@ -51,11 +38,12 @@ export const ALERT_FAMILY = {
 }
 
 const TOAST_POSITION = {
-  "bottom-right": "right-2.5 bottom-2.5",
-  "bottom-center": "bottom-2.5 left-1/2 -translate-x-1/2",
-  "bottom-left": "bottom-2.5 left-2.5",
-  "top-right": "top-2.5 right-2.5",
+  "top-left": "top-2.5 left-2.5",
   "top-center": "top-2.5 left-1/2 -translate-x-1/2",
+  "top-right": "top-2.5 right-2.5",
+  "bottom-left": "bottom-2.5 left-2.5",
+  "bottom-center": "bottom-2.5 left-1/2 -translate-x-1/2",
+  "bottom-right": "right-2.5 bottom-2.5",
 }
 
 /* ------------------------------ Option glyphs ------------------------------ */
@@ -120,54 +108,32 @@ function PositionGlyph({ position }: { position: string }) {
 
 /* --------------------------------- Options --------------------------------- */
 
-const TOAST_OPTIONS: SelectRowOption[] = [
-  { value: "surface", label: "Surface", illustration: <NoticeGlyph stroke /> },
-  {
-    value: "inverted",
-    label: "Inverted",
-    illustration: <NoticeGlyph fill={1} />,
-  },
-  {
-    value: "filled",
-    label: "Filled",
-    illustration: <NoticeGlyph fill={0.45} />,
-  },
-  {
-    value: "accent-bar",
-    label: "Accent bar",
-    illustration: <NoticeGlyph stroke bar />,
-  },
-]
+const TOAST_GLYPHS: Record<string, React.ReactNode> = {
+  surface: <NoticeGlyph stroke />,
+  inverted: <NoticeGlyph fill={1} />,
+  filled: <NoticeGlyph fill={0.45} />,
+  "accent-bar": <NoticeGlyph stroke bar />,
+}
 
-const POSITION_OPTIONS: SelectRowOption[] = [
-  { value: "bottom-right", label: "Bottom right" },
-  { value: "bottom-center", label: "Bottom center" },
-  { value: "bottom-left", label: "Bottom left" },
-  { value: "top-right", label: "Top right" },
-  { value: "top-center", label: "Top center" },
-].map((option) => ({
+const ALERT_GLYPHS: Record<string, React.ReactNode> = {
+  neutral: <NoticeGlyph stroke />,
+  tinted: <NoticeGlyph fill={0.25} />,
+  "tinted-border": <NoticeGlyph fill={0.25} stroke />,
+  "accent-bar": <NoticeGlyph fill={0.2} bar />,
+}
+
+const illustrated = (
+  options: { value: string; label: string }[],
+  glyphs: Record<string, React.ReactNode>,
+): SelectRowOption[] =>
+  options.map((option) => ({ ...option, illustration: glyphs[option.value] }))
+
+const toastOptions = illustrated(TOAST_OPTIONS, TOAST_GLYPHS)
+const alertOptions = illustrated(ALERT_OPTIONS, ALERT_GLYPHS)
+const positionOptions: SelectRowOption[] = POSITION_OPTIONS.map((option) => ({
   ...option,
   illustration: <PositionGlyph position={option.value} />,
 }))
-
-const ALERT_OPTIONS: SelectRowOption[] = [
-  { value: "neutral", label: "Neutral", illustration: <NoticeGlyph stroke /> },
-  {
-    value: "tinted",
-    label: "Tinted",
-    illustration: <NoticeGlyph fill={0.25} />,
-  },
-  {
-    value: "tinted-border",
-    label: "Tinted border",
-    illustration: <NoticeGlyph fill={0.25} stroke />,
-  },
-  {
-    value: "accent-bar",
-    label: "Accent bar",
-    illustration: <NoticeGlyph fill={0.2} bar />,
-  },
-]
 
 /* ---------------------------------- Hero ----------------------------------- */
 
@@ -221,20 +187,15 @@ export function NoticesSection({ lab }: { lab: Lab }) {
 
   const setToast = (value: string) => {
     set("noticeToast")(value)
-    if (state.noticeSynced)
-      set("noticeAlert")(TOAST_TO_ALERT[value as keyof typeof TOAST_TO_ALERT])
+    if (state.noticeSynced) set("noticeAlert")(syncedAlert(value))
   }
   const setAlert = (value: string) => {
     set("noticeAlert")(value)
-    if (state.noticeSynced)
-      set("noticeToast")(ALERT_TO_TOAST[value as keyof typeof ALERT_TO_TOAST])
+    if (state.noticeSynced) set("noticeToast")(syncedToast(value))
   }
   const setSynced = (value: boolean) => {
     set("noticeSynced")(value)
-    if (value)
-      set("noticeAlert")(
-        TOAST_TO_ALERT[state.noticeToast as keyof typeof TOAST_TO_ALERT],
-      )
+    if (value) set("noticeAlert")(syncedAlert(state.noticeToast))
   }
 
   return (
@@ -244,21 +205,21 @@ export function NoticesSection({ lab }: { lab: Lab }) {
         label="Toast"
         value={state.noticeToast}
         onChange={setToast}
-        options={TOAST_OPTIONS}
+        options={toastOptions}
         layout="grid"
       />
       <SelectRow
         label="Position"
         value={state.noticeToastPosition}
         onChange={set("noticeToastPosition")}
-        options={POSITION_OPTIONS}
+        options={positionOptions}
         layout="grid"
       />
       <SelectRow
         label="Alert"
         value={state.noticeAlert}
         onChange={setAlert}
-        options={ALERT_OPTIONS}
+        options={alertOptions}
         layout="grid"
       />
       <SwitchRow
