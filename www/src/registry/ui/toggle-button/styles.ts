@@ -165,11 +165,18 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
           },
         },
       },
+      // Inverse: snaps to full contrast. Primary already wears the inverse
+      // color, so it flips the other way: a page chip inside an inverse
+      // hairline (shadow-none keeps the ring composite valid on flat styles).
       inverse: {
-        base: "selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
         variants: {
           variant: {
-            secondary: "selected:border-inverse",
+            primary:
+              "selected:bg-bg selected:text-fg selected:shadow-none selected:inset-ring selected:inset-ring-inverse selected:hover:bg-muted selected:pressed:bg-highlight",
+            secondary:
+              "selected:border-inverse selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
+            quiet:
+              "selected:bg-inverse selected:text-fg-inverse selected:hover:bg-inverse/90 selected:pressed:bg-inverse/80",
           },
         },
       },
