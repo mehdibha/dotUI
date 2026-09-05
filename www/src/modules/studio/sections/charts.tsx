@@ -1,66 +1,47 @@
 "use client"
 
-/* Charts — the data-viz look. Three axes: the categorical series palette
-   (auto = hues rotated from the brand seed, vivid and muted fixed sets, mono
-   = brand tints — the strategies real systems pick between), the line curve
-   (smooth vs linear), and the gridline treatment (dashed / solid / none).
-   Schematic on purpose: the real chart-color engine is queued for a rewrite;
-   this section pins down the axes it must serve. */
+/* Charts — the data-viz look. Two axes: the categorical series palette (mono
+   = brand tints, vivid and muted = hues spread around the brand — the
+   strategies real systems pick between) and the gridline treatment (solid /
+   dashed / none). The hero is engine-true: its series are the `--chart-*`
+   colors the recipe generates for the brand, in the page's mode. */
 
-import { toHex, toOklch } from "@dotui/colors"
+import { useMemo } from "react"
+import { useTheme } from "starter-themes"
 
+import { resolveColorConfigCached } from "@/lib/resolve-color"
+import type { ColorConfig } from "@/registry/theme"
+
+import { chartPaletteOf, GRID_OPTIONS, PALETTE_OPTIONS } from "../axes/charts"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
 
-const PALETTE_OPTIONS = [
-  { value: "auto", label: "Auto" },
-  { value: "vivid", label: "Vivid" },
-  { value: "muted", label: "Muted" },
-  { value: "mono", label: "Mono" },
-]
-
-const CURVE_OPTIONS = [
-  { value: "smooth", label: "Smooth" },
-  { value: "linear", label: "Linear" },
-]
-
-const GRID_OPTIONS = [
-  { value: "dashed", label: "Dashed" },
-  { value: "solid", label: "Solid" },
-  { value: "none", label: "None" },
-]
-
-const VIVID = ["#4E80EE", "#2EBD85", "#F5A524", "#E5484D"]
-const MUTED = ["#7C90C1", "#7FAE94", "#C0A47E", "#B98F9C"]
-
-/** The categorical series colors the palette strategy resolves to. */
-export function chartSeries(state: LabState): string[] {
-  const brand = state.brand
-  switch (state.chartPalette) {
-    case "vivid":
-      return VIVID
-    case "muted":
-      return MUTED
-    case "mono":
-      return [100, 65, 40, 22].map(
-        (pct) => `color-mix(in oklab, ${brand} ${pct}%, transparent)`,
-      )
-    default: {
-      const seed = toOklch(brand)
-      return [0, 75, 160, 250].map((shift) =>
-        toHex({ ...seed, h: ((seed.h ?? 0) + shift) % 360 }),
-      )
-    }
-  }
+/** The first series colors the recipe generates for the brand, per mode. */
+function useChartSeries(state: LabState, count: number): string[] {
+  const { resolvedTheme } = useTheme()
+  const config = useMemo(
+    (): ColorConfig => ({
+      v: 2,
+      seeds: { accent: state.brand },
+      chartPalette: chartPaletteOf(state.chartPalette),
+    }),
+    [state.brand, state.chartPalette],
+  )
+  const mode = resolvedTheme === "dark" ? "dark" : "light"
+  return resolveColorConfigCached(config).charts[mode].categorical.slice(
+    0,
+    count,
+  )
 }
 
 type Point = [number, number]
 
-export function linePath(points: Point[], smooth: boolean): string {
+/** A Catmull-Rom curve through the points — the `natural` interpolation the
+ *  registry charts default to. */
+export function smoothPath(points: Point[]): string {
   const first = points[0]
   if (!first) return ""
-  if (!smooth) return `M${points.map((p) => `${p[0]} ${p[1]}`).join(" L")}`
   let d = `M${first[0]} ${first[1]}`
   for (let i = 0; i < points.length - 1; i++) {
     const p1 = points[i] ?? first
@@ -89,8 +70,7 @@ export function seriesPoints(values: number[]): Point[] {
 }
 
 export function ChartsHero({ state }: { state: LabState }) {
-  const colors = chartSeries(state)
-  const smooth = state.chartCurve === "smooth"
+  const colors = useChartSeries(state, SERIES.length)
   const grid = state.chartGrid
   return (
     <Hero className="items-center gap-3 py-5">
@@ -105,13 +85,13 @@ export function ChartsHero({ state }: { state: LabState }) {
               y2={y}
               stroke="var(--color-border)"
               strokeOpacity="0.6"
-              strokeDasharray={grid === "dashed" ? "3 4" : undefined}
+              strokeDasharray={grid === "dashed" ? "3 3" : undefined}
             />
           ))}
         {SERIES.map((values, i) => (
           <path
             key={i}
-            d={linePath(seriesPoints(values), smooth)}
+            d={smoothPath(seriesPoints(values))}
             stroke={colors[i]}
             strokeWidth="1.75"
             strokeLinecap="round"
@@ -136,15 +116,15 @@ export function ChartsHero({ state }: { state: LabState }) {
   )
 }
 
-/** Collapsed-row summary: the palette strategy and the curve. */
+/** Collapsed-row summary: the palette strategy and the grid. */
 export function chartsSummary(state: LabState): string {
   const palette =
     PALETTE_OPTIONS.find((o) => o.value === state.chartPalette)?.label ??
     state.chartPalette
-  const curve =
-    CURVE_OPTIONS.find((o) => o.value === state.chartCurve)?.label ??
-    state.chartCurve
-  return `${palette} · ${curve}`
+  const grid =
+    GRID_OPTIONS.find((o) => o.value === state.chartGrid)?.label ??
+    state.chartGrid
+  return `${palette} · ${grid}`
 }
 
 export function ChartsSection({ lab }: { lab: Lab }) {
@@ -157,12 +137,6 @@ export function ChartsSection({ lab }: { lab: Lab }) {
         value={state.chartPalette}
         onChange={set("chartPalette")}
         options={PALETTE_OPTIONS}
-      />
-      <SegmentedControlRow
-        label="Curve"
-        value={state.chartCurve}
-        onChange={set("chartCurve")}
-        options={CURVE_OPTIONS}
       />
       <SegmentedControlRow
         label="Grid"

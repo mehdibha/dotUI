@@ -44,6 +44,7 @@ export {
 } from "./meters"
 export { alphaTwin, solveAlphaRgb8 } from "./alpha"
 export {
+  CATEGORICAL_CHROMA,
   categoricalGateReport,
   categoricalPalette,
   divergingPalette,
