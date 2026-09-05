@@ -232,8 +232,11 @@ export interface ResolvedAll extends Omit<Resolved, "tokens" | "params"> {
   params: Record<string, Record<string, string>>
 }
 
-function mergeColor(base: ColorConfig, part: ColorConfig): ColorConfig {
-  const merged: ColorConfig = { ...base, ...part }
+function mergeColor(
+  base: Partial<ColorConfig>,
+  part: Partial<ColorConfig>,
+): Partial<ColorConfig> {
+  const merged: Partial<ColorConfig> = { ...base, ...part }
   const overrides = { ...base.overrides, ...part.overrides }
   const borders = { ...base.borders, ...part.borders }
   if (Object.keys(overrides).length > 0) merged.overrides = overrides
