@@ -19,7 +19,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
         "data-checked:border-primary/40 data-checked:bg-muted",
         "data-invalid:border-border-danger",
         "has-[>input:focus-visible]:focus-ring",
-        "data-disabled:pointer-events-none data-disabled:cursor-disabled data-disabled:opacity-50",
+        "data-disabled:pointer-events-none data-disabled:cursor-disabled data-disabled:text-fg-disabled",
       ],
       choiceInput:
         "absolute inset-0 z-10 size-full cursor-interactive opacity-0",

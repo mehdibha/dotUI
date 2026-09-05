@@ -44,6 +44,12 @@
   body {
     @apply bg-bg font-sans text-fg;
   }
+  /* Disabled treatment axis: fade dims the whole control; the recolor
+     treatments come through the disabled color tokens. Only the outermost
+     disabled element dims, so a disabled field's input doesn't compound. */
+  :is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *) {
+    opacity: var(--disabled-opacity, 1);
+  }
   html {
     @apply font-sans;
   }

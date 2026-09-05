@@ -11,7 +11,7 @@ const { useStyles, styles } = createStyles(sliderMeta, {
         "relative flex grow cursor-(--slider-cursor) touch-none items-center select-none disabled:cursor-disabled",
       track:
         "pointer-events-none relative grow overflow-hidden rounded-(--slider-track-radius) bg-neutral disabled:bg-disabled",
-      fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-disabled",
+      fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-selection-disabled",
       thumb: [
         "top-1/2 left-1/2 grid cursor-(--slider-cursor) place-items-center rounded-(--slider-thumb-radius) shadow-(--slider-thumb-shadow) focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor)",
       ],

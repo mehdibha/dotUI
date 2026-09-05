@@ -109,6 +109,11 @@ export function semanticVocabulary(
     : // Text on the inverse surface is the app background by construction.
       { target: ref("neutral", "25"), category: "foreground" }
 
+  // Disabled fills stay neutral whatever the primary draws from; the Disabled
+  // axis re-points them (fade keeps the live fill, alpha mixes ink).
+  const primaryFillDisabled = bg(ref("neutral", "300"), PRIMARY)
+  const primaryFillOnDisabled = fg(ref("neutral", "600"), PRIMARY)
+
   const primaryCluster: SemanticVocabulary = isAccent
     ? {
         "color-primary": primaryFill,
@@ -118,8 +123,9 @@ export function semanticVocabulary(
           PRIMARY,
         ),
         "color-primary-muted": bg(ref("accent", "100"), PRIMARY),
+        "color-primary-disabled": primaryFillDisabled,
         "color-fg-on-primary": primaryFillOn,
-        "color-fg-primary-disabled": fg(ref("accent", "400"), PRIMARY),
+        "color-fg-primary-disabled": primaryFillOnDisabled,
       }
     : {
         "color-primary": primaryFill,
@@ -129,13 +135,17 @@ export function semanticVocabulary(
           PRIMARY,
         ),
         "color-primary-muted": bg(ref("neutral", "200"), PRIMARY),
+        "color-primary-disabled": primaryFillDisabled,
         "color-fg-on-primary": primaryFillOn,
-        "color-fg-primary-disabled": fg(ref("neutral", "500"), PRIMARY),
+        "color-fg-primary-disabled": primaryFillOnDisabled,
       }
 
   // Checked-control fills (switch/checkbox/radio) + focus draw from here.
   // Defaults to the primary targets — nothing shifts — until a `selection` seed
   // splits them onto their own ramp (Vercel: black primary, blue selection).
+  const selectionFillDisabled = bg(ref("neutral", "100"), SELECTION)
+  const selectionFillOnDisabled = fg(ref("neutral", "600"), SELECTION)
+
   const selectionCluster: SemanticVocabulary = hasSelection
     ? {
         "color-selection": bg(ref("selection", "700"), SELECTION),
@@ -144,11 +154,15 @@ export function semanticVocabulary(
           target: on("selection", "700"),
           category: "foreground",
         },
+        "color-selection-disabled": selectionFillDisabled,
+        "color-fg-on-selection-disabled": selectionFillOnDisabled,
       }
     : {
         "color-selection": primaryFill,
         "color-selection-hover": primaryFillHover,
         "color-fg-on-selection": primaryFillOn,
+        "color-selection-disabled": selectionFillDisabled,
+        "color-fg-on-selection-disabled": selectionFillOnDisabled,
       }
 
   return {

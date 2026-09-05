@@ -13,18 +13,21 @@ const { useStyles, styles } = createStyles(buttonMeta, {
       "focus-reset focus-visible:focus-ring",
       "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       "pending:cursor-pending pending:bg-disabled pending:text-transparent pending:**:not-data-[slot=spinner]:not-in-data-[slot=spinner]:opacity-0 pending:**:data-[slot=spinner]:text-fg-muted",
-      "disabled:cursor-disabled disabled:bg-disabled disabled:text-fg-disabled",
+      "disabled:cursor-disabled",
     ],
     variants: {
       variant: {
         primary:
-          "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-300)]",
+          "bg-primary text-fg-on-primary disabled:bg-primary-disabled disabled:text-fg-primary-disabled",
         secondary:
-          "border border-border-control bg-neutral text-fg-on-neutral disabled:border-border pending:border-border",
-        quiet: "bg-transparent text-fg",
-        link: "text-fg underline-offset-4 hover:underline",
-        warning: "bg-warning text-fg-on-warning",
-        danger: "bg-danger text-fg-on-danger",
+          "border border-border-control bg-neutral text-fg-on-neutral disabled:border-border disabled:bg-disabled disabled:text-fg-disabled pending:border-border",
+        quiet:
+          "bg-transparent text-fg disabled:bg-disabled disabled:text-fg-disabled",
+        link: "text-fg underline-offset-4 hover:underline disabled:bg-disabled disabled:text-fg-disabled",
+        warning:
+          "bg-warning text-fg-on-warning disabled:bg-disabled disabled:text-fg-disabled",
+        danger:
+          "bg-danger text-fg-on-danger disabled:bg-disabled disabled:text-fg-disabled",
       },
       size: {
         xs: "",

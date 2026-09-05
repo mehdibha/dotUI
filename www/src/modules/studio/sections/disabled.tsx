@@ -1,26 +1,21 @@
 "use client"
 
 /* Disabled — how the system says "not now", everywhere at once. One axis,
-   treatment: fade (shadcn, Geist, Radix — the control keeps its colors under
-   flat ~50% opacity) vs alpha grey (Material 3 — no opacity, fixed on-surface
-   alphas: 38% text, 12% container fills) vs solid grey (Spectrum 2 — opaque
-   gray fills with muted text; every variant collapses to the same gray).
-   Rejected: disabled cursor (not-allowed vs default) — the Cursor chapter
-   owns it; per-component disabled looks — disabled is system-wide by
-   definition, no surveyed system forks it; fade amount (50% vs 38%) — a knob
-   inside one treatment, not a fork. */
+   treatment: solid grey (dotUI today, Spectrum 2, Geist — opaque grey fills
+   with muted text; every variant collapses to the same grey) vs fade
+   (shadcn, Radix — the control keeps its colors under flat 50% opacity) vs
+   alpha grey (Material 3 — no opacity, fixed on-surface alphas: 38% text,
+   12% container fills). Rejected: disabled cursor (not-allowed vs default)
+   — the Cursor chapter owns it; per-component disabled looks — disabled is
+   system-wide by definition, no surveyed system forks it; fade amount (50%
+   vs 38%) — a knob inside one treatment, not a fork. */
 
 import { cn } from "@/registry/lib/utils"
 
+import { TREATMENT_OPTIONS } from "../axes/disabled"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
-
-const TREATMENT_OPTIONS = [
-  { value: "fade", label: "Fade" },
-  { value: "alpha", label: "Alpha" },
-  { value: "solid", label: "Solid" },
-]
 
 /* ---------------------------------- Hero ----------------------------------- */
 

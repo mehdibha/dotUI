@@ -10,11 +10,14 @@
 import path from "node:path"
 import { describe, expect, test } from "vitest"
 
+import fieldMeta from "../../registry/ui/field/meta"
 import { publish, TV_CONFIG_PLACEHOLDER } from "../publish"
 import { extractStylesConfig } from "./extract-config"
 import { transformBase } from "./transform-base"
 
 const REGISTRY_UI = path.resolve(__dirname, "../../registry/ui")
+// Composing `fieldStyles()` needs field's param defaults.
+const METAS = { metas: new Map([["field", fieldMeta]]) }
 
 /* ============================================================ */
 /* extract-config                                                */
@@ -94,6 +97,7 @@ describe("extractStylesConfig", () => {
   test("otp-field: composes field styles via fieldStyles().field(...)", () => {
     const cfg = extractStylesConfig(
       path.join(REGISTRY_UI, "otp-field/styles.ts"),
+      METAS,
     )
     const root = cfg.base.slots?.root as string[]
     expect(Array.isArray(root)).toBe(true)
@@ -103,7 +107,10 @@ describe("extractStylesConfig", () => {
   })
 
   test("slider: composes field styles via fieldStyles().field()", () => {
-    const cfg = extractStylesConfig(path.join(REGISTRY_UI, "slider/styles.ts"))
+    const cfg = extractStylesConfig(
+      path.join(REGISTRY_UI, "slider/styles.ts"),
+      METAS,
+    )
     // Same default-composed field slot the app renders (no className arg).
     expect(cfg.base.slots?.root).toBe(
       "flex invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden w-full flex-col gap-2",

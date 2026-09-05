@@ -12,15 +12,16 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
       "focus-reset focus-visible:focus-ring",
       "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
-      "disabled:cursor-disabled disabled:bg-disabled disabled:text-fg-disabled disabled:selected:bg-disabled disabled:selected:text-fg-disabled",
+      "disabled:cursor-disabled",
     ],
     variants: {
       variant: {
         primary:
-          "bg-primary text-fg-on-primary [--color-disabled:var(--neutral-300)]",
+          "bg-primary text-fg-on-primary disabled:bg-primary-disabled disabled:text-fg-primary-disabled disabled:selected:bg-disabled disabled:selected:text-fg-disabled",
         secondary:
-          "border border-border-control bg-neutral text-fg-on-neutral disabled:border-border",
-        quiet: "bg-transparent text-fg",
+          "border border-border-control bg-neutral text-fg-on-neutral disabled:border-border disabled:bg-disabled disabled:text-fg-disabled",
+        quiet:
+          "bg-transparent text-fg disabled:bg-disabled disabled:text-fg-disabled",
       },
       size: {
         xs: "",
