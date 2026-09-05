@@ -18,27 +18,38 @@ const { useStyles, styles } = createStyles(modalMeta, {
         "group/modal absolute top-0 left-0 isolate z-100 h-(--page-height) w-full",
       ],
       backdrop: [
-        "absolute inset-0 bg-overlay/(--modal-backdrop-opacity) backdrop-blur-(--modal-backdrop-blur)",
+        "absolute inset-0",
       ],
       viewport:
-        "@container-[size] sticky top-0 left-0 flex h-(--visual-viewport-height) w-full items-center justify-center",
+        "@container-[size] sticky top-0 left-0 flex h-(--visual-viewport-height) w-full justify-center",
       modal: [
-        "relative flex max-h-[calc(var(--visual-viewport-height)-2rem)] w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--modal-radius) border border-(--overlay-border) bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))] [backdrop-filter:var(--overlay-backdrop-filter,none)] [--surface-radius:var(--modal-radius)] sm:max-h-[calc(var(--visual-viewport-height)*.9)]",
+        "relative flex w-full max-w-[calc(100vw-2rem)] flex-col rounded-(--modal-radius) border border-(--overlay-border) bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))] [backdrop-filter:var(--overlay-backdrop-filter,none)] [--surface-radius:var(--modal-radius)]",
       ],
     },
   },
   density: {
     compact: { slots: { modal: "sm:max-w-sm" } },
-    default: { slots: { modal: "sm:max-w-sm" } },
+    default: { slots: { modal: "sm:max-w-md" } },
     comfortable: { slots: { modal: "sm:max-w-md" } },
   },
   params: {
-    style: {
-      default: {},
-      "muted-footer": {
+    backdrop: {
+      dim: { slots: { backdrop: "bg-overlay/40" } },
+      blur: { slots: { backdrop: "bg-overlay/30 backdrop-blur-sm" } },
+      none: {},
+    },
+    position: {
+      center: {
         slots: {
+          viewport: "items-center",
           modal:
-            "**:data-[slot=dialog-footer]:-mx-6 **:data-[slot=dialog-footer]:-mb-6 **:data-[slot=dialog-footer]:rounded-b-(--modal-radius) **:data-[slot=dialog-footer]:border-t **:data-[slot=dialog-footer]:bg-muted **:data-[slot=dialog-footer]:px-6 **:data-[slot=dialog-footer]:py-4",
+            "max-h-[calc(var(--visual-viewport-height)-2rem)] sm:max-h-[calc(var(--visual-viewport-height)*.9)]",
+        },
+      },
+      top: {
+        slots: {
+          viewport: "items-start pt-[10vh]",
+          modal: "max-h-[calc(var(--visual-viewport-height)-10vh-1rem)]",
         },
       },
     },

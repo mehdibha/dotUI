@@ -55,6 +55,7 @@ import {
   TextArea,
 } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
+import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
 import {
   Radio,
   RadioControl,
@@ -971,12 +972,13 @@ function SettingsSidebar({
 export default function SettingsBlock() {
   const [section, setSection] = useState("account")
   const [isDirty, setIsDirty] = useState(false)
+  const { backdrop } = useModalStyles()()
 
   return (
     // Looks like an opened settings modal but is a plain card — the backdrop
-    // and card reuse the Modal style's global vars so the fake tracks the axis.
+    // and card reuse the Modal styles so the fake tracks the axis.
     <div className="relative flex h-svh items-center justify-center bg-bg p-4 text-fg sm:p-8">
-      <div className="absolute inset-0 bg-overlay/(--modal-backdrop-opacity) backdrop-blur-(--modal-backdrop-blur)" />
+      <div className={backdrop()} />
       <SidebarProvider className="relative h-full max-h-[46rem] min-h-0 w-full max-w-5xl overflow-hidden rounded-(--modal-radius) border bg-(--modal-background) shadow-[var(--shadow-overlay,var(--shadow-lg))]">
         <SettingsSidebar section={section} onSectionChange={setSection} />
         <Tooltip>

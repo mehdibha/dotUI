@@ -54,6 +54,7 @@ import {
   MenuSection,
   MenuSectionHeader,
 } from "@/registry/ui/menu"
+import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
 import { Separator } from "@/registry/ui/separator"
@@ -645,11 +646,13 @@ export default function NotificationsCenter() {
     setCategories(new Set(CATEGORIES.map((c) => c.id)))
   }
 
+  const { backdrop } = useModalStyles()()
+
   return (
     // Same fake-modal shell as the settings block — the backdrop and card
-    // reuse the Modal style's global vars so the fake tracks the axis.
+    // reuse the Modal styles so the fake tracks the axis.
     <div className="relative flex h-svh items-center justify-center bg-bg p-4 text-fg sm:p-8">
-      <div className="absolute inset-0 bg-overlay/(--modal-backdrop-opacity) backdrop-blur-(--modal-backdrop-blur)" />
+      <div className={backdrop()} />
       <Tabs
         selectedKey={tab}
         onSelectionChange={(key) => setTab(key as TabId)}

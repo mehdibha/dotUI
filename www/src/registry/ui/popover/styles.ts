@@ -17,9 +17,10 @@ const { useStyles, styles } = createStyles(popoverMeta, {
       popover: [
         "popover z-50 min-w-[max(var(--trigger-width),--spacing(32))] origin-(--trigger-anchor-point) rounded-(--popover-radius) border border-(--overlay-border) bg-popover shadow-[var(--shadow-overlay,var(--shadow-md))] [backdrop-filter:var(--overlay-backdrop-filter,none)] forced-color-adjust-none outline-none [--surface-radius:var(--popover-radius)]",
       ],
+      // The tip overlaps the panel edge by 1px and strokes its own border.
       arrow: [
-        "block [&>svg]:size-2.5 [&>svg]:fill-popover",
-        "placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
+        "block [&>svg]:size-2.5 [&>svg]:fill-popover [&>svg]:stroke-border",
+        "placement-left:-ml-px placement-right:-mr-px placement-top:-mt-px placement-bottom:-mb-px placement-left:[&>svg]:-rotate-90 placement-right:[&>svg]:rotate-90 placement-bottom:[&>svg]:rotate-180",
       ],
     },
   },
@@ -56,6 +57,10 @@ const { useStyles, styles } = createStyles(popoverMeta, {
         },
       },
       none: {},
+    },
+    tip: {
+      none: { slots: { arrow: "hidden" } },
+      tip: {},
     },
   },
 })

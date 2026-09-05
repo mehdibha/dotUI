@@ -22,8 +22,6 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--kbd-radius": "var(--radius-sm)",
 	"--list-box-item-radius": "var(--radius-item)",
 	"--menu-item-radius": "var(--radius-item)",
-	"--modal-backdrop-blur": "var(--blur-sm)",
-	"--modal-backdrop-opacity": "40%",
 	"--modal-background": "var(--color-popover)",
 	"--modal-radius": "var(--radius-panel)",
 	"--popover-radius": "var(--radius-surface)",

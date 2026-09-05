@@ -9,14 +9,16 @@ import { CopyIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 
+import { TOOLTIP_STYLE_OPTIONS } from "../axes/tooltips"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 
+/* The engine's tooltip style slices, at hero scale. */
 export const TOOLTIP = {
   inverted: "bg-tooltip text-fg-on-tooltip",
-  surface: "border border-border bg-card text-fg shadow-sm",
+  surface: "border border-border bg-popover text-fg shadow-sm",
 }
 
 /* ------------------------------ Option glyphs ------------------------------ */
@@ -49,14 +51,10 @@ function TooltipGlyph({ filled }: { filled?: boolean }) {
 
 /* --------------------------------- Options --------------------------------- */
 
-const TOOLTIP_OPTIONS: SelectRowOption[] = [
-  {
-    value: "inverted",
-    label: "Inverted",
-    illustration: <TooltipGlyph filled />,
-  },
-  { value: "surface", label: "Surface", illustration: <TooltipGlyph /> },
-]
+const TOOLTIP_OPTIONS: SelectRowOption[] = TOOLTIP_STYLE_OPTIONS.map((o) => ({
+  ...o,
+  illustration: <TooltipGlyph filled={o.value === "inverted"} />,
+}))
 
 /* ---------------------------------- Hero ----------------------------------- */
 

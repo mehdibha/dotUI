@@ -43,6 +43,12 @@ const popoverMeta = {
       description:
         "What pickers and menus become below the mobile line: a bottom drawer, or the popover kept anchored.",
     },
+    tip: {
+      kind: "enum",
+      default: "none",
+      values: ["none", "tip"] as const,
+      description: "Whether the panel points at its trigger.",
+    },
   },
 } satisfies RegistryItem
 

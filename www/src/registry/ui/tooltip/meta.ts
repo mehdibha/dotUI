@@ -12,17 +12,12 @@ const tooltipMeta = {
     },
   ],
   params: {
-    color: {
+    style: {
       kind: "enum",
-      default: "default",
-      values: ["default", "translucid"] as const,
-      vars: {
-        translucid: {
-          "--color-tooltip": "var(--neutral-200)",
-          "--color-fg-on-tooltip": "var(--neutral-950)",
-        },
-      },
-      description: "How the tooltip surface is rendered.",
+      default: "inverted",
+      values: ["inverted", "surface"] as const,
+      description:
+        "The tooltip's surface: an inverted chip, or a bordered popover surface.",
     },
     // Synced with popover and modal: the studio's Motion axis writes all three.
     motion: {
