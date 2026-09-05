@@ -1,21 +1,19 @@
 "use client"
 
 /* Skeleton — how skeletons idle while content loads: shimmer vs pulse vs
-   none. The hero wears the registry Skeleton with the chosen animation. */
+   none. The hero is the registry Skeleton under a provider carrying only
+   this chapter's param — it shows exactly what the preview does. */
 
+import { useMemo } from "react"
+
+import { DesignSystemProvider } from "@/lib/styles"
 import { Skeleton } from "@/registry/ui/skeleton"
 
-import { ANIMATION_OPTIONS } from "../axes/skeleton"
+import { ANIMATION_OPTIONS, resolveSkeleton } from "../axes/skeleton"
 import { Hero } from "../hero"
 import { ControlGroup, SelectRow } from "../rows"
 import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
-
-const SKELETON_CLASS = {
-  shimmer: "skeleton--shimmer",
-  pulse: "skeleton--pulse",
-  none: "skeleton--none",
-}
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
@@ -96,25 +94,21 @@ const SKELETON_OPTIONS: SelectRowOption[] = ANIMATION_OPTIONS.map((option) => ({
 
 /* One content card, wearing the idle treatment. */
 export function SkeletonHero({ state }: { state: LabState }) {
+  const params = useMemo(() => resolveSkeleton(state).params, [state])
   return (
     <Hero>
       <div className="flex min-h-16 items-center rounded-lg border border-border/60 bg-card p-3">
-        <Skeleton
-          isLoading
-          className={
-            SKELETON_CLASS[
-              state.skeletonAnimation as keyof typeof SKELETON_CLASS
-            ]
-          }
-        >
-          <div className="flex items-center gap-2.5">
-            <span data-skeleton="circle" className="size-8" />
-            <div className="flex flex-col gap-1.5">
-              <span data-skeleton="block" className="h-2.5 w-24 rounded-sm" />
-              <span data-skeleton="block" className="h-2.5 w-16 rounded-sm" />
+        <DesignSystemProvider params={params}>
+          <Skeleton isLoading>
+            <div className="flex items-center gap-2.5">
+              <span data-skeleton="circle" className="size-8" />
+              <div className="flex flex-col gap-1.5">
+                <span data-skeleton="block" className="h-2.5 w-24 rounded-sm" />
+                <span data-skeleton="block" className="h-2.5 w-16 rounded-sm" />
+              </div>
             </div>
-          </div>
-        </Skeleton>
+          </Skeleton>
+        </DesignSystemProvider>
       </div>
     </Hero>
   )
