@@ -132,7 +132,7 @@ export function PopoversHero({ state }: { state: LabState }) {
               className={cn(
                 "font-medium text-fg",
                 header === "band" &&
-                  "-mx-3 -mt-3 mb-0.5 rounded-t-[7px] border-b border-border/60 bg-muted/50 px-3 py-1.5",
+                  "-mx-3 -mt-3 mb-0.5 rounded-t-[7px] border-b border-border/60 bg-muted px-3 py-1.5",
               )}
             >
               {title}

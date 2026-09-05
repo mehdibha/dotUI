@@ -12,7 +12,6 @@ const modalMeta = {
     },
   ],
   params: {
-    // Synced with drawer: one Dialogs axis writes both backdrops.
     backdrop: {
       kind: "enum",
       default: "dim",

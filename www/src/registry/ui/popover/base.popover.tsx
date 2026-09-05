@@ -43,7 +43,10 @@ interface PopoverArrowProps extends React.ComponentProps<"svg"> {}
 function PopoverArrow({ className, ...props }: PopoverArrowProps) {
   const { arrow } = useStyles()()
   return (
-    <PopoverPrimitives.OverlayArrow className={arrow({ className })}>
+    <PopoverPrimitives.OverlayArrow
+      data-slot="popover-arrow"
+      className={arrow({ className })}
+    >
       <svg
         aria-hidden="true"
         width={12}

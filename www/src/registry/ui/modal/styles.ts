@@ -29,7 +29,7 @@ const { useStyles, styles } = createStyles(modalMeta, {
   },
   density: {
     compact: { slots: { modal: "sm:max-w-sm" } },
-    default: { slots: { modal: "sm:max-w-md" } },
+    default: { slots: { modal: "sm:max-w-sm" } },
     comfortable: { slots: { modal: "sm:max-w-md" } },
   },
   params: {

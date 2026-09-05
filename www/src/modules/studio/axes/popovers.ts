@@ -9,6 +9,7 @@
    styles the title inside a popover. */
 
 import type { Resolved, StudioState } from "./index"
+import { pick } from "./pick"
 
 export const POPOVER_DEFAULTS = {
   popoverTip: "none",
@@ -24,9 +25,6 @@ export const HEADER_OPTIONS = [
   { value: "title", label: "Title" },
   { value: "band", label: "Band" },
 ]
-
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
 
 export const WIRED = true
 

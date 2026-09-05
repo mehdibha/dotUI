@@ -5,8 +5,6 @@ import dialogMeta from "./meta"
 const { useStyles, styles } = createStyles(dialogMeta, {
   base: {
     slots: {
-      // `--dialog-padding` is the inset every bleeding piece (body, a popover
-      // title band) reads back.
       content:
         "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto",
       header: "flex flex-col",
@@ -54,8 +52,10 @@ const { useStyles, styles } = createStyles(dialogMeta, {
       title: {},
       band: {
         slots: {
+          content:
+            "in-data-popover:has-data-[slot=dialog-heading]:[&~[data-slot=popover-arrow][data-placement=bottom]>svg]:fill-muted",
           title:
-            "in-data-popover:-mx-(--dialog-padding) in-data-popover:-mt-(--dialog-padding) in-data-popover:mb-1 in-data-popover:rounded-t-[calc(var(--surface-radius)-1px)] in-data-popover:border-b in-data-popover:bg-muted/50 in-data-popover:px-(--dialog-padding) in-data-popover:py-2",
+            "in-data-popover:-mx-(--dialog-padding) in-data-popover:-mt-(--dialog-padding) in-data-popover:mb-1 in-data-popover:rounded-t-[calc(var(--surface-radius)-1px)] in-data-popover:border-b in-data-popover:bg-muted in-data-popover:px-(--dialog-padding) in-data-popover:py-2",
         },
       },
     },

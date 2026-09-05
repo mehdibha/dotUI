@@ -4,6 +4,7 @@
    Engine: `style` is an enum param on `tooltip`. */
 
 import type { Resolved, StudioState } from "./index"
+import { pick } from "./pick"
 
 export const TOOLTIP_DEFAULTS = {
   tooltipStyle: "inverted",
@@ -17,10 +18,11 @@ export const TOOLTIP_STYLE_OPTIONS = [
 export const WIRED = true
 
 export function resolveTooltips(state: StudioState): Resolved {
-  const style = TOOLTIP_STYLE_OPTIONS.some(
-    (o) => o.value === state.tooltipStyle,
-  )
-    ? state.tooltipStyle
-    : "inverted"
-  return { params: { tooltip: { style } } }
+  return {
+    params: {
+      tooltip: {
+        style: pick(TOOLTIP_STYLE_OPTIONS, state.tooltipStyle, "inverted"),
+      },
+    },
+  }
 }

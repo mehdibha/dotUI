@@ -8,6 +8,7 @@
    group — one axis writes both); `position` is a `modal` param. */
 
 import type { Resolved, StudioState } from "./index"
+import { pick } from "./pick"
 
 export const DIALOG_DEFAULTS = {
   dialogBackdrop: "dim",
@@ -24,9 +25,6 @@ export const POSITION_OPTIONS = [
   { value: "center", label: "Center" },
   { value: "top", label: "Top" },
 ]
-
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
 
 export const WIRED = true
 

@@ -4,6 +4,7 @@ const drawerMeta = {
   name: "drawer",
   type: "registry:ui",
   group: "overlays",
+  dependencies: ["@base-ui/react"],
   files: [
     {
       type: "registry:ui",
@@ -12,7 +13,6 @@ const drawerMeta = {
     },
   ],
   params: {
-    // Synced with modal: one Dialogs axis writes both backdrops.
     backdrop: {
       kind: "enum",
       default: "dim",

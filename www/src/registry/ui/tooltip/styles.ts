@@ -37,7 +37,6 @@ const { useStyles, styles } = createStyles(tooltipMeta, {
           arrow: "[&>svg]:fill-tooltip",
         },
       },
-      // The arrow overlaps the panel edge by 1px and strokes its own border.
       surface: {
         slots: {
           content:

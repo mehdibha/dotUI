@@ -7,6 +7,7 @@
    the shared `--btn-radius` var. */
 
 import type { Resolved, StudioState } from "./index"
+import { pick } from "./pick"
 
 export const BUTTON_DEFAULTS = {
   buttonStyle: "flat",
@@ -53,9 +54,6 @@ const RADIUS_TOKENS: Record<string, string> = {
   round: "var(--radius-lg)",
   pill: "var(--radius-full)",
 }
-
-const pick = (options: { value: string }[], value: string, fallback: string) =>
-  options.some((o) => o.value === value) ? value : fallback
 
 export const WIRED = true
 
