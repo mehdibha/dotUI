@@ -17,6 +17,7 @@ const NumberField = ({ className, ...props }: NumberFieldProps) => {
   return (
     <NumberFieldPrimitives.NumberField
       data-slot="number-field"
+      data-field=""
       className={composeRenderProps(className, (className) =>
         fieldStyles().field({ className }),
       )}

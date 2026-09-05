@@ -13,11 +13,11 @@ const { useStyles, styles } = createStyles(switchMeta, {
       indicator: [
         "inline-flex shrink-0 cursor-pointer items-center rounded-(--switch-radius) border border-transparent bg-neutral p-0.5 transition-[background-color,border-color,box-shadow] duration-200",
         "selected:bg-selection",
-        "read-only:cursor-default disabled:cursor-disabled disabled:border-border disabled:bg-transparent disabled:selected:border-transparent disabled:selected:bg-selection-disabled",
+        "read-only:cursor-default disabled:cursor-disabled disabled:border-(--disabled-border,transparent) disabled:bg-(--disabled-unselected-bg,var(--color-neutral)) disabled:selected:border-transparent disabled:selected:bg-(--disabled-selected-bg,var(--color-selection))",
       ],
       thumb: [
         "pointer-events-none block rounded-(--switch-radius) bg-thumb shadow-sm transition-[background-color,margin,width] duration-200",
-        "disabled:bg-fg-disabled disabled:selected:bg-fg-on-selection-disabled",
+        "disabled:bg-(--disabled-fg,var(--color-thumb)) disabled:selected:bg-(--disabled-selected-fg,var(--color-thumb))",
       ],
     },
     variants: {

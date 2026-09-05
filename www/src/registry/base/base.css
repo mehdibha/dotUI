@@ -44,9 +44,10 @@
   body {
     @apply bg-bg font-sans text-fg;
   }
-  /* Disabled treatment axis: fade dims the whole control; the recolor
-     treatments come through the disabled color tokens. Only the outermost
-     disabled element dims, so a disabled field's input doesn't compound. */
+  /* Disabled treatment axis: fade dims the whole control (the recolor
+     treatments come through the --disabled-* tokens below). Only the
+     outermost disabled element dims, so a disabled field's input doesn't
+     compound. */
   :is([data-disabled], :disabled):not(:is([data-disabled], :disabled) *) {
     opacity: var(--disabled-opacity, 1);
   }
@@ -85,4 +86,17 @@
   --cursor-disabled: not-allowed;
   --cursor-drag: var(--cursor-interactive);
   --cursor-dragging: var(--cursor-interactive);
+}
+
+/* Disabled treatment axis: what a disabled control recolors to. Every site
+   reads one of these with its own color as the fallback
+   (`disabled:bg-(--disabled-bg,var(--color-danger))`), so a design system that
+   only dims (shadcn) unsets them; Material re-points them to ink alphas. */
+@theme {
+  --disabled-bg: var(--color-disabled);
+  --disabled-fg: var(--color-fg-disabled);
+  --disabled-border: var(--color-border);
+  --disabled-selected-bg: var(--color-disabled);
+  --disabled-selected-fg: var(--color-fg-disabled);
+  --disabled-unselected-bg: transparent;
 }

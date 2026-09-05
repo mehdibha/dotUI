@@ -15,7 +15,7 @@ const { useStyles, styles } = createStyles(calendarMeta, {
       cell: [
         "relative flex aspect-square size-full items-center justify-center text-center text-sm font-medium no-highlight",
         "min-w-(--cell-size) cursor-interactive",
-        "disabled:text-fg-disabled unavailable:text-fg-disabled unavailable:line-through outside-month:text-fg-disabled",
+        "disabled:text-(--disabled-fg,currentColor) unavailable:text-fg-disabled unavailable:line-through outside-month:text-fg-disabled",
         "in-data-range-calendar:not-outside-month:selected:bg-accent-muted selection-start:rounded-l-full selection-end:rounded-r-full",
         "in-data-range-calendar:[td:has(+td>[data-outside-month])>&[data-selected]:not([data-selection-end])]:rounded-r-(--calendar-range-radius)",
         "in-data-range-calendar:[td:has(>[data-outside-month])+td>&[data-selected]:not([data-selection-start])]:rounded-l-(--calendar-range-radius)",

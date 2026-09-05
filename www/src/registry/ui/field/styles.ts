@@ -13,15 +13,14 @@ const { useStyles, styles } = createStyles(fieldMeta, {
         "flex w-full gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
       fieldContent: "flex flex-col gap-1",
       label: [
-        "inline-flex items-center gap-px leading-none select-none peer-disabled:cursor-disabled peer-disabled:text-fg-disabled [&_svg]:size-3",
+        "inline-flex items-center gap-px leading-none select-none peer-disabled:cursor-disabled peer-disabled:text-(--disabled-fg,currentColor) [&_svg]:size-3",
         "in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*']",
-        "in-disabled:cursor-disabled in-disabled:text-fg-disabled",
+        "in-disabled:cursor-disabled in-disabled:text-(--disabled-fg,currentColor)",
         "in-data-invalid:text-fg-danger",
       ],
       description:
-        "text-fg-muted last:mt-0 in-data-disabled:text-fg-disabled nth-last-2:-mt-1",
+        "text-fg-muted last:mt-0 in-data-disabled:text-(--disabled-fg,var(--color-fg-muted)) nth-last-2:-mt-1",
       fieldError: "text-fg-danger",
-      fieldErrorIcon: "shrink-0",
     },
     variants: {
       orientation: {
@@ -44,7 +43,6 @@ const { useStyles, styles } = createStyles(fieldMeta, {
         label: "text-xs",
         description: "text-xs",
         fieldError: "text-xs",
-        fieldErrorIcon: "size-3",
         fieldGroup:
           "gap-4 has-data-checkbox:gap-2 has-data-radio:gap-2 has-[[data-checkbox]_[data-label]]:gap-1.5 has-[[data-radio]_[data-label]]:gap-1.5",
       },
@@ -54,7 +52,6 @@ const { useStyles, styles } = createStyles(fieldMeta, {
         label: "text-sm",
         description: "text-sm",
         fieldError: "text-sm",
-        fieldErrorIcon: "size-3.5",
         fieldGroup:
           "gap-5 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2 has-[[data-radio]_[data-label]]:gap-2",
       },
@@ -64,7 +61,6 @@ const { useStyles, styles } = createStyles(fieldMeta, {
         label: "text-sm",
         description: "text-sm",
         fieldError: "text-sm",
-        fieldErrorIcon: "size-3.5",
         fieldGroup:
           "gap-7 has-data-checkbox:gap-3 has-data-radio:gap-3 has-[[data-checkbox]_[data-label]]:gap-2.5 has-[[data-radio]_[data-label]]:gap-2.5",
       },
@@ -72,26 +68,21 @@ const { useStyles, styles } = createStyles(fieldMeta, {
   },
   /* Invalid treatment: the danger border alone (shadcn), an icon on the
      message line (Material, Spectrum, Polaris), or GOV.UK's bar with the
-     message above the field. */
+     message above the field. The bar itself is a styles.css rule on every
+     `data-field` root, driven by the value's vars. */
   params: {
     error: {
-      border: {
-        slots: {
-          fieldErrorIcon: "hidden",
-        },
-      },
+      border: {},
       message: {
         slots: {
-          fieldError: "flex items-center gap-1",
+          fieldError:
+            "flex items-center gap-1 *:[svg]:size-[1em] *:[svg]:shrink-0",
         },
       },
       bar: {
         slots: {
-          field:
-            "invalid:border-l-[3px] invalid:border-border-danger invalid:pl-2.5",
           label: "order-first",
           fieldError: "order-first font-semibold",
-          fieldErrorIcon: "hidden",
         },
       },
     },

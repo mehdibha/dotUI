@@ -12,16 +12,16 @@ const { useStyles, styles } = createStyles(toggleButtonMeta, {
       "focus-reset focus-visible:focus-ring",
       "**:[svg]:pointer-events-none **:[svg]:shrink-0",
       "selected:bg-selected selected:text-fg-on-selected selected:hover:bg-selected-hover selected:pressed:bg-selected-active",
-      "disabled:cursor-disabled",
+      "disabled:cursor-disabled disabled:selected:bg-(--disabled-selected-bg,var(--color-selected)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected))",
     ],
     variants: {
       variant: {
         primary:
-          "bg-primary text-fg-on-primary disabled:bg-primary-disabled disabled:text-fg-primary-disabled disabled:selected:bg-disabled disabled:selected:text-fg-disabled",
+          "bg-primary text-fg-on-primary disabled:bg-(--color-primary-disabled,var(--color-primary)) disabled:text-(--disabled-fg,var(--color-fg-on-primary)) disabled:selected:bg-(--color-primary-disabled,var(--color-selected))",
         secondary:
-          "border border-border-control bg-neutral text-fg-on-neutral disabled:border-border disabled:bg-disabled disabled:text-fg-disabled",
+          "border border-border-control bg-neutral text-fg-on-neutral disabled:border-(--disabled-border,var(--color-border-control)) disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral))",
         quiet:
-          "bg-transparent text-fg disabled:bg-disabled disabled:text-fg-disabled",
+          "bg-transparent text-fg disabled:bg-(--disabled-bg,transparent) disabled:text-(--disabled-fg,var(--color-fg))",
       },
       size: {
         xs: "",

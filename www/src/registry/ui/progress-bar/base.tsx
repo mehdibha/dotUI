@@ -25,6 +25,7 @@ const ProgressBar = ({ children, className, ...props }: ProgressBarProps) => {
   const { root } = useStyles()()
   return (
     <ProgressBarPrimitive.ProgressBar
+      data-field=""
       className={composeRenderProps(className, (className) =>
         root({ className }),
       )}

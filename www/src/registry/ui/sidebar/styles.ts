@@ -78,7 +78,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       menuButton: [
         "peer/menu-button group/menu-button relative flex w-full cursor-interactive items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm whitespace-nowrap text-fg-muted outline-hidden transition-[width,height,padding,background-color,color]",
         "hover:bg-muted hover:text-fg focus-visible:focus-ring pressed:bg-muted",
-        "disabled:pointer-events-none disabled:text-fg-disabled",
+        "disabled:pointer-events-none disabled:opacity-50",
         "data-[active]:bg-muted data-[active]:font-medium data-[active]:text-fg",
         "data-[size=lg]:h-12 data-[size=lg]:p-2.5 data-[size=md]:h-8 data-[size=sm]:h-7 data-[size=sm]:text-xs",
         "data-[variant=outline]:border data-[variant=outline]:bg-bg data-[variant=outline]:shadow-xs data-[variant=outline]:hover:bg-muted",
@@ -109,7 +109,7 @@ const { useStyles, styles } = createStyles(sidebarMeta, {
       menuSubButton: [
         "flex h-7 min-w-0 -translate-x-px cursor-interactive items-center gap-2 overflow-hidden rounded-md px-2 text-sm whitespace-nowrap text-fg-muted outline-hidden",
         "hover:bg-muted hover:text-fg focus-visible:focus-ring pressed:bg-muted",
-        "disabled:pointer-events-none disabled:text-fg-disabled",
+        "disabled:pointer-events-none disabled:opacity-50",
         "data-[active]:bg-muted data-[active]:font-medium data-[active]:text-fg",
         "data-[size=md]:text-sm data-[size=sm]:text-xs",
         "group-data-[collapsible=icon]:hidden",

@@ -13,7 +13,7 @@ const { useStyles, styles } = createStyles(checkboxMeta, {
       indicator: [
         "grid size-4 shrink-0 place-content-center rounded-(--checkbox-radius) border border-border-control bg-transparent text-transparent transition-[background-color,border-color,box-shadow,color] duration-75 *:[svg]:size-3",
         "selected:border-transparent selected:bg-selection selected:text-fg-on-selection",
-        "disabled:border-border disabled:indeterminate:bg-selection-disabled disabled:selected:bg-selection-disabled disabled:selected:text-fg-on-selection-disabled",
+        "disabled:border-(--disabled-border,var(--color-border-control)) disabled:indeterminate:bg-(--disabled-selected-bg,var(--color-selection)) disabled:selected:bg-(--disabled-selected-bg,var(--color-selection)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selection))",
         "invalid:border-border-danger invalid:selected:bg-danger-muted invalid:selected:text-fg-danger",
         "indeterminate:border-transparent indeterminate:bg-selection indeterminate:text-fg-on-selection",
       ],

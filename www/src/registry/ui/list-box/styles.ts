@@ -19,7 +19,7 @@ const { useStyles, styles } = createStyles(listBoxMeta, {
         "hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:bg-highlight hover:not-in-data-[trigger=ComboBox]:not-in-data-[trigger=Select]:text-fg-on-highlight",
         "focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:bg-highlight focus:in-[:is([data-trigger=ComboBox],[data-trigger=Select])]:text-fg-on-highlight",
         "focus-visible:bg-highlight",
-        "disabled:text-fg-disabled disabled:**:text-current",
+        "disabled:text-(--disabled-fg,currentColor) disabled:**:text-current",
         "has-data-listbox-item-description:flex-col has-data-listbox-item-description:items-start has-data-listbox-item-description:gap-0 has-data-listbox-item-description:has-[>svg]:pl-8 has-data-listbox-item-description:**:data-listbox-item-indicator:top-2 has-data-listbox-item-description:*:[svg]:absolute has-data-listbox-item-description:*:[svg]:top-2 has-data-listbox-item-description:*:[svg]:left-2",
         "*:[kbd]:ml-auto *:[kbd]:bg-transparent *:[kbd]:text-fg-muted",
       ],

@@ -9,15 +9,22 @@ describe("disabled", () => {
     expect(Object.keys(tokens).some((k) => k.includes("disabled"))).toBe(false)
   })
 
-  test("fade dims and keeps every colored fill's own token", () => {
+  test("fade unsets every recolor token and dims", () => {
     const { tokens } = resolveDesignSystem({
       ...DEFAULTS,
       disabledTreatment: "fade",
     })
     expect(tokens["--disabled-opacity"]).toBe("0.5")
-    expect(tokens["--color-primary-disabled"]).toBe("var(--color-primary)")
-    expect(tokens["--color-selection-disabled"]).toBe("var(--color-selection)")
-    expect(tokens["--color-disabled"]).toBeUndefined()
+    for (const name of [
+      "--disabled-bg",
+      "--disabled-fg",
+      "--disabled-border",
+      "--disabled-selected-bg",
+      "--disabled-selected-fg",
+      "--disabled-unselected-bg",
+      "--color-primary-disabled",
+    ])
+      expect(tokens[name]).toBe("initial")
   })
 
   test("alpha mixes ink at fixed alphas, no opacity", () => {
@@ -26,20 +33,22 @@ describe("disabled", () => {
       disabledTreatment: "alpha",
     })
     expect(tokens["--disabled-opacity"]).toBeUndefined()
-    expect(tokens["--color-disabled"]).toContain("12%")
-    expect(tokens["--color-fg-disabled"]).toContain("38%")
+    expect(tokens["--disabled-bg"]).toContain("12%")
+    expect(tokens["--disabled-fg"]).toContain("38%")
+    expect(tokens["--disabled-selected-fg"]).toBe("var(--color-bg)")
   })
 })
 
 describe("invalid", () => {
-  test("drives the field error param", () => {
-    expect(resolveDesignSystem(DEFAULTS).componentParams.field?.error).toBe(
-      "border",
-    )
-    expect(
-      resolveDesignSystem({ ...DEFAULTS, inputError: "bar" }).componentParams
-        .field?.error,
-    ).toBe("bar")
+  test("drives the field error param; the bar carries its vars", () => {
+    const plain = resolveDesignSystem(DEFAULTS)
+    expect(plain.componentParams.field?.error).toBe("border")
+    expect(plain.tokens["--field-error-bar"]).toBeUndefined()
+
+    const bar = resolveDesignSystem({ ...DEFAULTS, inputError: "bar" })
+    expect(bar.componentParams.field?.error).toBe("bar")
+    expect(bar.tokens["--field-error-bar"]).toBe("3px")
+
     expect(
       resolveDesignSystem({ ...DEFAULTS, inputError: "nope" }).componentParams
         .field?.error,

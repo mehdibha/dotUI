@@ -9,7 +9,7 @@ const { useStyles, styles } = createStyles(breadcrumbsMeta, {
       item: "inline-flex items-center gap-1",
       link: [
         "focus-reset focus-visible:focus-ring",
-        "inline-flex items-center gap-1 rounded px-0.5 leading-none transition-colors disabled:cursor-disabled disabled:not-current:text-fg-disabled current:text-fg hover:[a]:text-fg",
+        "inline-flex items-center gap-1 rounded px-0.5 leading-none transition-colors disabled:cursor-disabled disabled:not-current:text-(--disabled-fg,currentColor) current:text-fg hover:[a]:text-fg",
       ],
       separator: "[&_svg]:size-4",
     },

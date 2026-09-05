@@ -10,12 +10,13 @@ const { useStyles, styles } = createStyles(sliderMeta, {
       control:
         "relative flex grow cursor-(--slider-cursor) touch-none items-center select-none disabled:cursor-disabled",
       track:
-        "pointer-events-none relative grow overflow-hidden rounded-(--slider-track-radius) bg-neutral disabled:bg-disabled",
-      fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-selection-disabled",
+        "pointer-events-none relative grow overflow-hidden rounded-(--slider-track-radius) bg-neutral disabled:bg-(--disabled-bg,var(--color-neutral))",
+      fill: "pointer-events-none bg-(--slider-fill-color) disabled:bg-(--disabled-selected-bg,var(--slider-fill-color))",
       thumb: [
         "top-1/2 left-1/2 grid cursor-(--slider-cursor) place-items-center rounded-(--slider-thumb-radius) shadow-(--slider-thumb-shadow) focus-reset transition-shadow focus-visible:focus-ring disabled:cursor-disabled dragging:cursor-(--slider-dragging-cursor)",
       ],
-      output: "text-fg-muted tabular-nums disabled:text-fg-disabled",
+      output:
+        "text-fg-muted tabular-nums disabled:text-(--disabled-fg,var(--color-fg-muted))",
     },
     variants: {
       orientation: {

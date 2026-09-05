@@ -4,10 +4,11 @@
    Radix — the control keeps its colors under flat 50% opacity) vs alpha grey
    (Material 3 — no opacity, fixed on-surface alphas: 38% text, 12% fills).
 
-   Engine: the disabled color tokens (`--color-disabled`, `--color-fg-disabled`
-   and the primary/selection pairs that keep a colored fill's own token under
-   fade) plus `--disabled-opacity`, read by the base.css rule on the outermost
-   disabled element. */
+   Engine: the `--disabled-*` tokens declared in base.css. Every disabled
+   recolor in the registry reads one of them with the control's own color as
+   the fallback (`disabled:bg-(--disabled-bg,var(--color-danger))`), so fade
+   unsets them (`initial`) and dims through `--disabled-opacity`, while the
+   recolor treatments re-point them. */
 
 import type { Resolved, StudioState } from "./index"
 
@@ -21,25 +22,32 @@ export const TREATMENT_OPTIONS = [
   { value: "alpha", label: "Alpha" },
 ]
 
-const INK_12 = "color-mix(in oklab, var(--color-fg) 12%, transparent)"
-const INK_38 = "color-mix(in oklab, var(--color-fg) 38%, transparent)"
+const DISABLED_TOKENS = [
+  "--disabled-bg",
+  "--disabled-fg",
+  "--disabled-border",
+  "--disabled-selected-bg",
+  "--disabled-selected-fg",
+  "--disabled-unselected-bg",
+  "--color-primary-disabled",
+]
+
+const ink = (pct: number) =>
+  `color-mix(in oklab, var(--color-fg) ${pct}%, transparent)`
 
 const TREATMENT_TOKENS: Record<string, Record<string, string>> = {
   fade: {
+    ...Object.fromEntries(DISABLED_TOKENS.map((name) => [name, "initial"])),
     "--disabled-opacity": "0.5",
-    "--color-fg-disabled": "var(--color-fg)",
-    "--color-primary-disabled": "var(--color-primary)",
-    "--color-fg-primary-disabled": "var(--color-fg-on-primary)",
-    "--color-selection-disabled": "var(--color-selection)",
-    "--color-fg-on-selection-disabled": "var(--color-fg-on-selection)",
   },
   alpha: {
-    "--color-disabled": INK_12,
-    "--color-fg-disabled": INK_38,
-    "--color-primary-disabled": INK_12,
-    "--color-fg-primary-disabled": INK_38,
-    "--color-selection-disabled": INK_38,
-    "--color-fg-on-selection-disabled": "var(--color-bg)",
+    "--disabled-bg": ink(12),
+    "--disabled-fg": ink(38),
+    "--disabled-border": ink(12),
+    "--disabled-selected-bg": ink(38),
+    "--disabled-selected-fg": "var(--color-bg)",
+    "--disabled-unselected-bg": ink(12),
+    "--color-primary-disabled": ink(12),
   },
 }
 

@@ -21,7 +21,7 @@ const { useStyles, styles } = createStyles(tagGroupMeta, {
         // link variant (when href)
         "data-href:cursor-interactive",
         // disabled
-        "disabled:bg-disabled disabled:text-fg-disabled data-selection-mode:disabled:cursor-disabled",
+        "disabled:bg-(--disabled-bg,var(--color-neutral)) disabled:text-(--disabled-fg,var(--color-fg-on-neutral)) data-selection-mode:disabled:cursor-disabled",
 
         "text-xs/relaxed **:[svg]:not-with-[size]:size-3",
         // remove button
