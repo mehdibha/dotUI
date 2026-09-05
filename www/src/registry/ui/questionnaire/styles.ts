@@ -41,7 +41,7 @@ const { useStyles, styles } = createStyles(questionnaireMeta, {
       input: [
         "w-full min-w-0 rounded-(--questionnaire-input-radius) border border-border-control bg-field transition-[box-shadow,border-color,color] outline-none",
         "placeholder:text-fg-muted",
-        "focus:ring-2 focus:not-aria-invalid:border-border-focus focus:not-aria-invalid:ring-border-focus-muted",
+        "focus:focus-input focus:not-aria-invalid:border-border-focus",
         "aria-invalid:border-border-danger aria-invalid:ring-2 aria-invalid:ring-danger-muted",
         "disabled:pointer-events-none disabled:border-border disabled:bg-disabled disabled:text-fg-disabled",
       ],

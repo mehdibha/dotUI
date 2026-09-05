@@ -66,7 +66,9 @@ export interface Resolved {
   /** Registry param selections: component → param → value. */
   params?: Record<string, Record<string, string>>
   density?: Density
-  color?: ColorConfig
+  /** A slice of the recipe — a chapter other than Color contributes token
+   *  overrides or border targets; `resolveDesignSystem` completes it. */
+  color?: Partial<ColorConfig>
   icons?: IconLibraryName
 }
 
@@ -234,7 +236,7 @@ export function resolveAll(state: StudioState): ResolvedAll {
   const tokens: Record<string, string> = {}
   const params: Record<string, Record<string, string>> = {}
   let density: Density | undefined
-  let color: ColorConfig | undefined
+  let color: Partial<ColorConfig> | undefined
   let icons: IconLibraryName | undefined
   for (const resolve of RESOLVERS) {
     const part = resolve(state)

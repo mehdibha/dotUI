@@ -6,92 +6,71 @@
 
    Color sits on its own above both blocks: it's the one axis both categories
    draw from, so owning it from Controls would have been a lie. Everything
-   below is per-category, and a row only appears when the chosen style actually
-   reads it — no dead knobs. Menu items highlight, no ring. */
+   below is per-category: the style is the row, the geometry folds behind it,
+   and a knob only appears when the chosen style reads it. Menu items
+   highlight, no ring. */
 
 import type { CSSProperties } from "react"
 
 import { cn } from "@/registry/lib/utils"
 
+import {
+  FOCUS_COLOR_OPTIONS,
+  FOCUS_DEFAULTS,
+  FOCUS_INPUT_STYLE_OPTIONS,
+  FOCUS_OFFSET_OPTIONS,
+  FOCUS_STYLE_OPTIONS,
+  mixFocus,
+} from "../axes/focus"
 import { Hero } from "../hero"
-import { PaletteDot } from "../patterns"
+import { DetailRow, MiniSliderRow, PaletteDot } from "../patterns"
 import {
   ControlGroup,
   GroupTitle,
+  MiniSegmented,
+  ParamRow,
   SegmentedControlRow,
   SPECIMEN_BUTTON,
   SPECIMEN_FIELD,
-  StepperRow,
 } from "../rows"
 import type { SegmentedRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 import { controlRadiusPx } from "./shape"
 
+/* The ink each color option draws in — the ramp steps the engine re-points
+   `--color-border-focus` / `-muted` to. */
 const COLOR_VARS = {
-  accent: "var(--accent-700)",
-  neutral: "var(--neutral-700)",
+  accent: { ring: "var(--accent-700)", muted: "var(--accent-300)" },
+  neutral: { ring: "var(--neutral-700)", muted: "var(--neutral-300)" },
 } as const
 
-const COLOR_OPTIONS: SegmentedRowOption[] = [
-  {
-    value: "accent",
+const COLOR_OPTIONS: SegmentedRowOption[] = FOCUS_COLOR_OPTIONS.map(
+  ({ value, label }) => ({
+    value,
     label: (
       <>
-        <PaletteDot color={COLOR_VARS.accent} />
-        Accent
+        <PaletteDot color={COLOR_VARS[value as keyof typeof COLOR_VARS].ring} />
+        {label}
       </>
     ),
-  },
-  {
-    value: "neutral",
-    label: (
-      <>
-        <PaletteDot color={COLOR_VARS.neutral} />
-        Neutral
-      </>
-    ),
-  },
-]
+  }),
+)
 
-/** Duo is the two-stroke family (Fluent, GOV.UK): a bg hairline inside the
- *  colored ring, so at least one stroke reads on any fill. */
-const CONTROL_STYLE_OPTIONS: SegmentedRowOption[] = [
-  { value: "ring", label: "Ring" },
-  { value: "halo", label: "Halo" },
-  { value: "duo", label: "Duo" },
-]
-
-/** How a field wears the recipe: halo = border + muted halo of the ring color
- *  (dotUI today, Geist/Stripe); ring = the control ring exactly (Supabase);
- *  border = the border swap alone (Material). */
-const INPUT_STYLE_OPTIONS: SegmentedRowOption[] = [
-  { value: "halo", label: "Halo" },
-  { value: "ring", label: "Ring" },
-  { value: "border", label: "Border" },
-]
-
-const OFFSET_OPTIONS: SegmentedRowOption[] = [
-  { value: "inset", label: "Inset" },
-  { value: "flush", label: "Flush" },
-  { value: "gap", label: "Gap" },
-]
-
-const focusColorVar = (state: LabState): string =>
+const focusInk = (state: LabState) =>
   COLOR_VARS[state.focusColor as keyof typeof COLOR_VARS] ?? COLOR_VARS.accent
 
-const mix = (base: string, pct: number) =>
-  `color-mix(in oklab, ${base} ${pct}%, transparent)`
+const px = (n: number) => `${n}px`
 
-/** The keyboard ring as a box-shadow stack — the gap paints in bg like the
- *  real focus-ring utility (ring-offset-bg), so it follows any radius. */
+/** The keyboard ring as a box-shadow stack, the exact recipe the `focus-ring`
+ *  utility composes from the tokens: the gap paints in bg (so it follows any
+ *  radius), duo adds a bg hairline just inside the edge under a flush ring. */
 export function focusRingShadow(state: LabState): string {
   const width = state.focusWidth
-  const base = focusColorVar(state)
-  // Duo sits flush by design — the inner hairline is its gap.
+  const base = focusInk(state).ring
   if (state.focusStyle === "duo")
-    return `0 0 0 1px var(--color-bg), 0 0 0 ${width + 1}px ${base}`
+    return `inset 0 0 0 1px var(--color-bg), 0 0 0 ${width}px ${base}`
   const color =
-    state.focusStyle === "halo" ? mix(base, state.focusHaloStrength) : base
+    state.focusStyle === "halo" ? mixFocus(base, state.focusHaloStrength) : base
   switch (state.focusOffset) {
     case "inset":
       return `inset 0 0 0 ${width}px ${color}`
@@ -104,21 +83,30 @@ export function focusRingShadow(state: LabState): string {
   }
 }
 
-/** The field's focus layer: border swap plus the style's shadow — the exact
- *  keyboard ring, a muted halo of the same color, or the border alone.
- *  Exported: the Inputs hero wears this recipe when its specimens focus. */
+/** The field's focus layer: border swap plus the style's shadow — a muted
+ *  halo of the ring color, the exact keyboard ring, or the border alone
+ *  (thickened by an inset stroke, so the box never shifts). Exported: the
+ *  Inputs hero wears this recipe when its specimens focus. */
 export function focusFieldStyle(state: LabState): CSSProperties {
-  const base = focusColorVar(state)
-  const style = state.focusInputStyle
-  return {
-    borderColor: base,
-    borderWidth: style === "border" ? state.focusInputBorderWidth : undefined,
-    boxShadow:
-      style === "ring"
-        ? focusRingShadow(state)
-        : style === "halo"
-          ? `0 0 0 ${state.focusInputWidth}px ${mix(base, state.focusInputStrength)}`
-          : undefined,
+  const ink = focusInk(state)
+  switch (state.focusInputStyle) {
+    case "ring":
+      return { borderColor: ink.ring, boxShadow: focusRingShadow(state) }
+    case "border":
+      return {
+        borderColor: ink.ring,
+        boxShadow: `inset 0 0 0 ${state.focusInputBorderWidth - 1}px ${ink.ring}`,
+      }
+    default: {
+      const color =
+        state.focusInputStrength === FOCUS_DEFAULTS.focusInputStrength
+          ? ink.muted
+          : mixFocus(ink.ring, state.focusInputStrength)
+      return {
+        borderColor: ink.ring,
+        boxShadow: `0 0 0 ${state.focusInputWidth}px ${color}`,
+      }
+    }
   }
 }
 
@@ -169,10 +157,11 @@ export function FocusHero({ state }: { state: LabState }) {
   )
 }
 
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+
 /** Collapsed-row summary: the control ring style, and the ink it draws in.
  *  Values capitalized directly — the color labels are JSX (dot + name). */
 export function focusSummary(state: LabState): string {
-  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
   return `${cap(state.focusStyle)} · ${cap(state.focusColor)}`
 }
 
@@ -225,6 +214,26 @@ function InputFocusHero({ state }: { state: LabState }) {
   )
 }
 
+/** What the ring's geometry reads back while folded: width, then the
+ *  placement (or the halo strength) when it left the default. */
+function ringSummary(state: LabState): string {
+  const parts = [px(state.focusWidth)]
+  if (state.focusStyle === "halo") parts.push(`${state.focusHaloStrength}%`)
+  if (state.focusStyle !== "duo")
+    parts.push(
+      state.focusOffset === "gap"
+        ? `Gap ${px(state.focusGap)}`
+        : cap(state.focusOffset),
+    )
+  return parts.join(" · ")
+}
+
+function inputSummary(state: LabState): string {
+  return state.focusInputStyle === "border"
+    ? px(state.focusInputBorderWidth)
+    : `${px(state.focusInputWidth)} · ${state.focusInputStrength}%`
+}
+
 export function FocusSection({ lab }: { lab: Lab }) {
   const { state, set } = lab
   return (
@@ -246,48 +255,52 @@ export function FocusSection({ lab }: { lab: Lab }) {
           label="Style"
           value={state.focusStyle}
           onChange={set("focusStyle")}
-          options={CONTROL_STYLE_OPTIONS}
+          options={FOCUS_STYLE_OPTIONS}
         />
-        <StepperRow
+      </ControlGroup>
+      <DetailRow label="Geometry" summary={ringSummary(state)}>
+        <MiniSliderRow
           label="Width"
           value={state.focusWidth}
           onChange={set("focusWidth")}
           minValue={1}
           maxValue={6}
-          unit="px"
+          step={1}
+          format={px}
         />
         {state.focusStyle === "halo" && (
-          <StepperRow
+          <MiniSliderRow
             label="Strength"
             value={state.focusHaloStrength}
             onChange={set("focusHaloStrength")}
             minValue={10}
             maxValue={100}
             step={5}
-            unit="%"
+            format={(v) => `${v}%`}
           />
         )}
         {state.focusStyle !== "duo" && (
-          <>
-            <SegmentedControlRow
-              label="Offset"
+          <ParamRow label="Offset">
+            <MiniSegmented
+              ariaLabel="Offset"
               value={state.focusOffset}
               onChange={set("focusOffset")}
-              options={OFFSET_OPTIONS}
+              options={FOCUS_OFFSET_OPTIONS}
             />
-            {state.focusOffset === "gap" && (
-              <StepperRow
-                label="Gap"
-                value={state.focusGap}
-                onChange={set("focusGap")}
-                minValue={1}
-                maxValue={6}
-                unit="px"
-              />
-            )}
-          </>
+          </ParamRow>
         )}
-      </ControlGroup>
+        {state.focusStyle !== "duo" && state.focusOffset === "gap" && (
+          <MiniSliderRow
+            label="Gap"
+            value={state.focusGap}
+            onChange={set("focusGap")}
+            minValue={1}
+            maxValue={6}
+            step={1}
+            format={px}
+          />
+        )}
+      </DetailRow>
       <GroupTitle>Inputs</GroupTitle>
       <ControlGroup>
         <InputFocusHero state={state} />
@@ -295,40 +308,45 @@ export function FocusSection({ lab }: { lab: Lab }) {
           label="Style"
           value={state.focusInputStyle}
           onChange={set("focusInputStyle")}
-          options={INPUT_STYLE_OPTIONS}
+          options={FOCUS_INPUT_STYLE_OPTIONS}
         />
-        {state.focusInputStyle === "halo" && (
-          <>
-            <StepperRow
-              label="Width"
-              value={state.focusInputWidth}
-              onChange={set("focusInputWidth")}
-              minValue={1}
-              maxValue={8}
-              unit="px"
-            />
-            <StepperRow
-              label="Strength"
-              value={state.focusInputStrength}
-              onChange={set("focusInputStrength")}
-              minValue={10}
-              maxValue={100}
-              step={5}
-              unit="%"
-            />
-          </>
-        )}
-        {state.focusInputStyle === "border" && (
-          <StepperRow
+      </ControlGroup>
+      {/* Ring borrows the control geometry above — nothing of its own. */}
+      {state.focusInputStyle === "halo" && (
+        <DetailRow label="Halo" summary={inputSummary(state)}>
+          <MiniSliderRow
+            label="Width"
+            value={state.focusInputWidth}
+            onChange={set("focusInputWidth")}
+            minValue={1}
+            maxValue={8}
+            step={1}
+            format={px}
+          />
+          <MiniSliderRow
+            label="Strength"
+            value={state.focusInputStrength}
+            onChange={set("focusInputStrength")}
+            minValue={10}
+            maxValue={100}
+            step={5}
+            format={(v) => `${v}%`}
+          />
+        </DetailRow>
+      )}
+      {state.focusInputStyle === "border" && (
+        <DetailRow label="Border" summary={inputSummary(state)}>
+          <MiniSliderRow
             label="Width"
             value={state.focusInputBorderWidth}
             onChange={set("focusInputBorderWidth")}
             minValue={1}
             maxValue={4}
-            unit="px"
+            step={1}
+            format={px}
           />
-        )}
-      </ControlGroup>
+        </DetailRow>
+      )}
     </>
   )
 }
