@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest"
 import { DEFAULT_COLOR_CONFIG, resolveColorConfig } from "@/registry/theme"
 
 import { resolveDesignSystem } from "../resolve"
+import { gridOption, paletteOption } from "./charts"
 import { DEFAULTS } from "./index"
 
 describe("charts axes", () => {
@@ -26,6 +27,17 @@ describe("charts axes", () => {
     const tonal = resolveColorConfig(DEFAULT_COLOR_CONFIG).charts
     expect(vivid.light.categorical).not.toEqual(tonal.light.categorical)
     expect(vivid.dark.categorical).not.toEqual(tonal.dark.categorical)
+  })
+
+  it("a stored value outside the options (the pre-rename `auto`) reads as the default", () => {
+    const ds = resolveDesignSystem({
+      ...DEFAULTS,
+      chartPalette: "auto",
+      chartGrid: "dotted",
+    })
+    expect(ds).toEqual(resolveDesignSystem(DEFAULTS))
+    expect(paletteOption("auto")).toBe("mono")
+    expect(gridOption("dotted")).toBe("solid")
   })
 
   it("the grid is a param on the chart container", () => {
