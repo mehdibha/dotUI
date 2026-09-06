@@ -16,14 +16,14 @@ import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
 
 /* Mirrors the `link` registry params (registry/ui/link/styles.ts). */
-export const LINK_COLOR = {
+const LINK_COLOR = {
   accent: "text-fg-accent",
   foreground: "font-medium text-fg",
 }
 
 /* Rest vs hover split so the hero can pin one link in its hovered state; the
    resting link keeps a live hover: class so real pointers work too. */
-export const LINK_REST = {
+const LINK_REST = {
   always: "underline underline-offset-2",
   hover: "underline-offset-2 hover:underline",
   never: "",

@@ -5,9 +5,9 @@
    `foreground` the Vercel/Linear move — the text's own color, with weight and
    the underline axis doing the work.
 
-   Engine: `underline` and `color` are enum params on `link`. Underline rules
-   both styled variants; color only the default one (quiet is foreground by
-   definition). Defaults mirror the registry: accent, no underline. */
+   Engine: `underline` and `color` are enum params on `link`, shaping the
+   default variant; quiet keeps its own underlined, foreground look. Defaults
+   mirror the registry: accent, no underline. */
 
 import type { Resolved, StudioState } from "./index"
 
