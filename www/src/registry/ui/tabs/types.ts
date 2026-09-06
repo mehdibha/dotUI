@@ -1,7 +1,7 @@
 import type * as SelectionIndicatorPrimitives from "react-aria-components/SelectionIndicator"
 import type * as TabsPrimitives from "react-aria-components/Tabs"
 
-type TabsVariant = "line" | "pill" | "enclosed"
+type TabsVariant = "segmented" | "line" | "pill" | "enclosed"
 
 /**
  * Tabs organize content into multiple sections and allow users to navigate between them.

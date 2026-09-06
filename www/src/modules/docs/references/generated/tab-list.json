@@ -3,8 +3,8 @@
   "description": "A TabList is used within Tabs to group tabs that a user can switch between.",
   "props": {
     "variant": {
-      "type": "'line' | 'pill' | 'enclosed'",
-      "detailedType": "'line' | 'pill' | 'enclosed' | undefined",
+      "type": "'segmented' | 'line' | 'pill' | 'enclosed'",
+      "detailedType": "| 'segmented'\n| 'line'\n| 'pill'\n| 'enclosed'\n| undefined",
       "typeAst": {
         "type": "union",
         "elements": [
@@ -19,6 +19,10 @@
           {
             "type": "stringLiteral",
             "value": "pill"
+          },
+          {
+            "type": "stringLiteral",
+            "value": "segmented"
           },
           {
             "type": "undefined"

@@ -1,16 +1,14 @@
 "use client"
 
-/* Tabs — the selected-tab signature: how a strip says "you are here". Line
-   draws an underline indicator over a hairline baseline — the dominant
-   modern form (Material, Geist, Linear, GitHub). Pill fills the selected
-   tab as a free-floating rounded chip, no baseline at all (Radix Themes'
-   soft variant, dashboard pill navs). Enclosed is the folder tab: the
-   selected tab grows side and top borders and fuses with the content
-   surface below — browser tabs, Chakra's enclosed variant, classic
-   Bootstrap. Deliberately absent: the segmented container. Tabs in a
-   filled track are the SegmentedControl component, not a tab style —
-   the axis-vs-prop line; a product wanting that look reaches for the
-   other component. */
+/* Tabs — the selected-tab signature: how a strip says "you are here".
+   Segmented sits the tabs in a filled track and slides a chip under the
+   selected one (shadcn, Radix Themes, dotUI today). Line draws an underline
+   indicator over a hairline baseline — the dominant modern form (Material,
+   Geist, Linear, GitHub). Pill fills the selected tab as a free-floating
+   rounded chip, no baseline at all (Radix Themes' soft variant, dashboard
+   pill navs). Enclosed is the folder tab: the selected tab grows side and
+   top borders and fuses with the content surface below — browser tabs,
+   Chakra's enclosed variant, classic Bootstrap. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -21,12 +19,18 @@ import type { SelectRowOption } from "../rows"
 import type { Lab, LabState } from "../state"
 
 export const TAB_STRIP = {
+  segmented: "m-2 w-fit rounded-lg bg-muted p-[3px]",
   line: "gap-4 border-b border-border px-3 pt-1",
   pill: "gap-1 px-2 py-1.5",
   enclosed: "items-end px-2 pt-1.5",
 }
 
 export const TAB_FAMILY = {
+  segmented: {
+    base: "rounded-md px-2.5 py-1",
+    idle: "text-fg-muted",
+    selected: "bg-selected font-medium text-fg-on-selected shadow-sm",
+  },
   line: {
     base: "py-2",
     idle: "text-fg-muted",
@@ -50,7 +54,30 @@ export const TAB_FAMILY = {
 
 /* ------------------------------ Option glyphs ------------------------------ */
 
-function TabGlyph({ style }: { style: "line" | "pill" | "enclosed" }) {
+function TabGlyph({ style }: { style: keyof typeof TAB_FAMILY }) {
+  if (style === "segmented")
+    return (
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+        <rect
+          x="3"
+          y="7.5"
+          width="18"
+          height="9"
+          rx="3"
+          fill="currentColor"
+          opacity=".2"
+        />
+        <rect
+          x="4.5"
+          y="9"
+          width="7.5"
+          height="6"
+          rx="2"
+          fill="currentColor"
+          opacity=".7"
+        />
+      </svg>
+    )
   if (style === "line")
     return (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden>

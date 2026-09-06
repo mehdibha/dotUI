@@ -11,7 +11,7 @@ import { useStyles } from "./styles"
 
 // MARK: tabsStyles
 
-type TabsVariant = "line" | "pill" | "enclosed"
+type TabsVariant = "segmented" | "line" | "pill" | "enclosed"
 
 // MARK: Separator
 

@@ -6,7 +6,7 @@ import { DEFAULTS } from "./index"
 describe("navigation chapters", () => {
   test("defaults land on the registry defaults and add no tokens", () => {
     const ds = resolveDesignSystem(DEFAULTS)
-    expect(ds.componentParams.tabs).toEqual({ style: "line" })
+    expect(ds.componentParams.tabs).toEqual({ style: "segmented" })
     expect(ds.componentParams.accordion).toEqual({ container: "divided" })
     expect(ds.componentParams.disclosure).toEqual({
       marker: "chevron",
@@ -16,7 +16,7 @@ describe("navigation chapters", () => {
       separator: "chevron",
       tone: "muted",
     })
-    expect(ds.componentParams.pagination).toEqual({ current: "filled" })
+    expect(ds.componentParams.pagination).toEqual({ current: "outline" })
     expect(ds.tokens).toEqual({})
   })
 
@@ -44,17 +44,17 @@ describe("navigation chapters", () => {
       ...DEFAULTS,
       breadcrumbSeparator: "slash",
       breadcrumbTone: "accent",
-      paginationCurrent: "outline",
+      paginationCurrent: "filled",
     })
     expect(ds.componentParams.breadcrumbs).toEqual({
       separator: "slash",
       tone: "accent",
     })
-    expect(ds.componentParams.pagination).toEqual({ current: "outline" })
+    expect(ds.componentParams.pagination).toEqual({ current: "filled" })
   })
 
   test("unknown values fall back to the defaults", () => {
-    const ds = resolveDesignSystem({ ...DEFAULTS, tabStyle: "segmented" })
-    expect(ds.componentParams.tabs).toEqual({ style: "line" })
+    const ds = resolveDesignSystem({ ...DEFAULTS, tabStyle: "underline" })
+    expect(ds.componentParams.tabs).toEqual({ style: "segmented" })
   })
 })

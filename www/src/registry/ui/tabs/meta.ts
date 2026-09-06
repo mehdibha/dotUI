@@ -15,8 +15,8 @@ const tabsMeta = {
   params: {
     style: {
       kind: "enum",
-      default: "line",
-      values: ["line", "pill", "enclosed"] as const,
+      default: "segmented",
+      values: ["segmented", "line", "pill", "enclosed"] as const,
       description:
         "The default look of a tab list; the `variant` prop overrides it.",
     },
