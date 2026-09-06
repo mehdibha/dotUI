@@ -1,21 +1,19 @@
 import { LinkButton } from "@/registry/ui/button"
-import { Eyebrow } from "@/components/eyebrow"
-import { ReactAriaIcon } from "@/components/icons/react-aria"
-import { TailwindIcon } from "@/components/icons/tailwind"
 import { Footer } from "@/components/layout/footer"
 import Cards from "@/modules/marketing/cards"
 import { CtaSection } from "@/modules/marketing/cta-section"
 import { HeroWordSwap } from "@/modules/marketing/hero-word-swap"
 
-function HeroEyebrow() {
+function StackLink({ href, children }: { href: string; children: string }) {
   return (
-    <Eyebrow className="mb-3 border-transparent bg-inverse/5 pl-2.5">
-      <span aria-hidden className="relative flex size-1.5">
-        <span className="absolute inset-0 animate-ping rounded-full bg-warning opacity-75" />
-        <span className="relative size-1.5 rounded-full bg-warning" />
-      </span>
-      Public preview
-    </Eyebrow>
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="underline decoration-fg-muted/40 underline-offset-3 hover:text-fg"
+    >
+      {children}
+    </a>
   )
 }
 
@@ -29,7 +27,6 @@ export function HomePage() {
         {/* Hero section */}
         <section className="flex flex-col pt-10 sm:pt-14 md:pt-20">
           <div className="flex flex-col items-center text-center">
-            <HeroEyebrow />
             <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.75rem,calc((100vw-2rem)/8.5),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-[4rem]">
               The Design System Studio <br className="max-sm:hidden" />
               <span className="text-fg-muted">
@@ -38,7 +35,7 @@ export function HomePage() {
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
               Every design decision is yours. Create, tweak and refine your
-              system live, then install it with the shadcn CLI as code you own.
+              system live. Install it with shadcn CLI as code you own.
               {/* Once a non-web export ships: One foundation for all platforms. */}
             </p>
             <div className="mt-9 flex items-center gap-3">
@@ -49,16 +46,14 @@ export function HomePage() {
                 View components
               </LinkButton>
             </div>
-            <p className="mt-6 flex items-center gap-x-4 text-sm text-fg-muted">
-              <span>Built on</span>
-              <span className="inline-flex items-center gap-1.5">
-                <ReactAriaIcon className="size-4" />
+            <p className="mt-6 text-sm text-balance text-fg-muted">
+              Currently in beta · Built on{" "}
+              <StackLink href="https://react-spectrum.adobe.com/react-aria">
                 React Aria
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <TailwindIcon className="size-4" />
-                Tailwind CSS
-              </span>
+              </StackLink>
+              , <StackLink href="https://base-ui.com">Base UI</StackLink> and{" "}
+              <StackLink href="https://tailwindcss.com">Tailwind CSS</StackLink>
+              .
             </p>
           </div>
         </section>
