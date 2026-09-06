@@ -35,7 +35,7 @@ export function HomePage() {
                 for <HeroWordSwap />
               </span>
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed sm:text-lg text-balance text-fg-muted">
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-balance text-fg-muted sm:text-lg">
               Every design decision is yours — create, tweak, and ship code you
               own.
               {/* Once a non-web export ships: One foundation for all platforms. */}
