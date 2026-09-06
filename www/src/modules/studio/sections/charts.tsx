@@ -12,7 +12,13 @@ import { useTheme } from "starter-themes"
 import { resolveColorConfigCached } from "@/lib/resolve-color"
 import type { ColorConfig } from "@/registry/theme"
 
-import { chartPaletteOf, GRID_OPTIONS, PALETTE_OPTIONS } from "../axes/charts"
+import {
+  chartPaletteOf,
+  GRID_OPTIONS,
+  gridOption,
+  PALETTE_OPTIONS,
+  paletteOption,
+} from "../axes/charts"
 import { Hero } from "../hero"
 import { ControlGroup, SegmentedControlRow } from "../rows"
 import type { Lab, LabState } from "../state"
@@ -118,13 +124,11 @@ export function ChartsHero({ state }: { state: LabState }) {
 
 /** Collapsed-row summary: the palette strategy and the grid. */
 export function chartsSummary(state: LabState): string {
-  const palette =
-    PALETTE_OPTIONS.find((o) => o.value === state.chartPalette)?.label ??
-    state.chartPalette
-  const grid =
-    GRID_OPTIONS.find((o) => o.value === state.chartGrid)?.label ??
-    state.chartGrid
-  return `${palette} · ${grid}`
+  const palette = paletteOption(state.chartPalette)
+  const grid = gridOption(state.chartGrid)
+  return `${PALETTE_OPTIONS.find((o) => o.value === palette)?.label} · ${
+    GRID_OPTIONS.find((o) => o.value === grid)?.label
+  }`
 }
 
 export function ChartsSection({ lab }: { lab: Lab }) {
@@ -134,13 +138,13 @@ export function ChartsSection({ lab }: { lab: Lab }) {
       <ChartsHero state={state} />
       <SegmentedControlRow
         label="Palette"
-        value={state.chartPalette}
+        value={paletteOption(state.chartPalette)}
         onChange={set("chartPalette")}
         options={PALETTE_OPTIONS}
       />
       <SegmentedControlRow
         label="Grid"
-        value={state.chartGrid}
+        value={gridOption(state.chartGrid)}
         onChange={set("chartGrid")}
         options={GRID_OPTIONS}
       />
