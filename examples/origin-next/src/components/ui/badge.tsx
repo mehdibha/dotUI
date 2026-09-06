@@ -1,27 +1,24 @@
 import type * as React from "react";
 import { type VariantProps, tv } from "tailwind-variants";
 const badgeVariants = tv({
-  base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-full text-xs font-medium whitespace-nowrap [&>svg]:pointer-events-none",
+  base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-md text-xs font-medium whitespace-nowrap [&>svg]:pointer-events-none",
   variants: {
     appearance: {
-      solid: "bg-(--badge-fill) text-(--badge-fg)",
-      soft: "bg-(--badge-tint) text-(--badge-fg-tint)",
-      outline: "border border-(--badge-border) text-(--badge-fg-tint)",
-      "soft-outline":
-        "border border-(--badge-border) bg-(--badge-tint) text-(--badge-fg-tint)",
+      solid: "bg-(--badge-color) text-(--badge-fg)",
+      subtle:
+        "bg-[color-mix(in_srgb,var(--badge-color)_30%,var(--color-bg))] text-[color-mix(in_srgb,var(--badge-color)_60%,var(--color-fg))]",
     },
     variant: {
-      neutral:
-        "[--badge-border:var(--color-border)] [--badge-fg-tint:var(--color-fg)] [--badge-fg:var(--color-fg-on-neutral)] [--badge-fill:var(--color-neutral)] [--badge-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]",
+      neutral: "bg-neutral text-fg-on-neutral",
       accent:
-        "[--badge-border:var(--color-border-accent)] [--badge-fg-tint:var(--color-fg-accent)] [--badge-fg:var(--color-fg-on-accent)] [--badge-fill:var(--color-accent)] [--badge-tint:var(--color-accent-muted)]",
+        "[--badge-color:var(--color-accent)] [--badge-fg:var(--color-fg-on-accent)]",
       danger:
-        "[--badge-border:var(--color-border-danger)] [--badge-fg-tint:var(--color-fg-danger)] [--badge-fg:var(--color-fg-on-danger)] [--badge-fill:var(--color-danger)] [--badge-tint:var(--color-danger-muted)]",
+        "[--badge-color:var(--color-danger)] [--badge-fg:var(--color-fg-on-danger)]",
       success:
-        "[--badge-border:var(--color-border-success)] [--badge-fg-tint:var(--color-fg-success)] [--badge-fg:var(--color-fg-on-success)] [--badge-fill:var(--color-success)] [--badge-tint:var(--color-success-muted)]",
+        "[--badge-color:var(--color-success)] [--badge-fg:var(--color-fg-on-success)]",
       warning:
-        "[--badge-border:var(--color-border-warning)] [--badge-fg-tint:var(--color-fg-warning)] [--badge-fg:var(--color-fg-on-warning)] [--badge-fill:var(--color-warning)] [--badge-tint:var(--color-warning-muted)]",
-      info: "[--badge-border:var(--color-border-info)] [--badge-fg-tint:var(--color-fg-info)] [--badge-fg:var(--color-fg-on-info)] [--badge-fill:var(--color-info)] [--badge-tint:var(--color-info-muted)]",
+        "[--badge-color:var(--color-warning)] [--badge-fg:var(--color-fg-on-warning)]",
+      info: "[--badge-color:var(--color-info)] [--badge-fg:var(--color-fg-on-info)]",
     },
     size: {
       sm: "h-4.5 min-w-4.5 px-1.5 **:data-loader:*:[svg]:size-2.5 [&>svg]:size-2.5",

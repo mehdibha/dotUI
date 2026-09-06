@@ -37,7 +37,7 @@ const mix = (
   a: SemanticTarget,
   weight: number,
   b: SemanticTarget,
-): SemanticTarget => ({ mix: { space: "oklab", stops: [a, weight, b] } })
+): SemanticTarget => ({ mix: [a, weight, b] })
 
 const bg = (
   target: SemanticToken["target"],

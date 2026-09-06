@@ -41,7 +41,7 @@ export default function ChartBarNegative() {
             axisLine={false}
             tickFormatter={(value) => value.slice(0, 3)}
           />
-          <ReferenceLine y={0} stroke="var(--border)" />
+          <ReferenceLine y={0} stroke="var(--color-border)" />
           <Bar dataKey="visitors">
             <LabelList position="top" dataKey="month" fillOpacity={1} />
             {chartData.map((entry) => (

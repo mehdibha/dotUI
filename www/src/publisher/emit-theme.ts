@@ -1,10 +1,24 @@
 /**
  * Build the `registry:base` (a.k.a. "init") item that `shadcn init` consumes.
  *
- * Base CSS is emitted through shadcn's structured registry fields:
- *   - `cssVars.theme` -> `@theme inline`
- *   - `css`           -> imports, plugins, utilities, layers, selectors,
- *                        and runtime palette vars in `:root` / `.dark`
+ * Base CSS is emitted through shadcn's structured registry fields, in the
+ * same shape shadcn's own themes use:
+ *   - `cssVars.light` / `.dark` -> `:root` / `.dark` — every semantic token
+ *                                  as a literal `oklch()` per mode, plus
+ *                                  radius and chart slots
+ *   - `cssVars.theme`           -> `@theme inline` — the Tailwind vocabulary
+ *                                  (`--color-bg: var(--bg)`, radius rungs, fonts)
+ *   - `css`                     -> imports, plugins, utilities, layers,
+ *                                  selectors, and the preset's non-color
+ *                                  `:root` vars (density, component tokens)
+ *
+ * Keys in `light`/`dark` carry no `--`: shadcn's theme updater aliases every
+ * key it doesn't know as `var(--<key>)`, so a prefixed key would render as
+ * `var(----key)`. Non-color preset vars stay out of those fields for the
+ * same reason — the updater would alias them into `@theme inline` as junk.
+ *
+ * The primitive ramps never ship: users own ~90 readable semantic values,
+ * not the generator's intermediate output.
  *
  * Pure JS — no `ts-morph`, no React. Safe to import in route handlers.
  */
@@ -15,12 +29,13 @@ import {
   googleFontsUrl,
 } from "@/lib/fonts"
 import {
+  DEFAULT_COLOR_CONFIG,
+  DEFAULT_RADIUS,
   resolveColorConfig,
-  resolveTarget,
-  resolveTokenValue,
+  semanticLiterals,
   semanticsFor,
 } from "@/registry/theme"
-import type { Density, RegistryItem } from "@/registry/types"
+import type { RegistryItem } from "@/registry/types"
 
 // Relative import: the publisher sits in vite.config's module graph, where
 // value imports through the `@/` alias break vitest/vite startup.
@@ -59,18 +74,7 @@ export const cn = (...classes: Parameters<typeof cnBase>): string =>
   cnBase(...classes) ?? "";
 `
 
-/**
- * Map the preset's density key to a `:root` value. dotui's default density
- * is `default`, so an empty value omits the declaration.
- */
-function densityRootValue(density: Density): string | undefined {
-  if (density === "default") return undefined
-  return density
-}
-
-/** Mirror of `resolveCssValue` in lib/styles.tsx (not importable here — React).
- *  Distinct from the imported `resolveTokenValue`, which resolves a
- *  `SemanticToken`; this takes a raw token string. */
+/** Mirror of `resolveCssValue` in lib/styles.tsx (not importable here — React). */
 function resolveCssValue(value: string): string {
   return value.startsWith("--") ? `var(${value})` : value
 }
@@ -80,9 +84,11 @@ function resolveCssValue(value: string): string {
  * - `theme`: names the shipped `@theme` block declares (fonts, cursors, the
  *   radius rungs). It renders `@theme inline`, which bakes values into
  *   utilities, so a `:root` override would be ignored — re-point the theme.
- * - `root`: everything else lands on `:root`, same as the live provider —
- *   minus builder-only indirection (`--radius-control` and friends), which
- *   the class rewriter has already resolved into plain utilities.
+ * - `root`: everything else lands on `:root` (density, component tokens),
+ *   same as the live provider — minus `--radius` (it rides in
+ *   `cssVars.light`) and builder-only indirection (`--radius-control` and
+ *   friends), which the class rewriter has already resolved into utilities.
+ * `componentParams` are inlined into component classes at build.
  */
 function splitPresetTokens(
   preset: PublishPreset,
@@ -90,14 +96,15 @@ function splitPresetTokens(
 ): { theme: Record<string, string>; root: Record<string, string> } {
   const theme: Record<string, string> = {}
   const root: Record<string, string> = {}
-  const density = densityRootValue(preset.density)
-  if (density) root["--dotui-density"] = preset.density
+  // dotui's default density is `default`, so it needs no declaration.
+  if (preset.density !== "default") root["--dotui-density"] = preset.density
   const tokens = preset.tokens ?? {}
   const resolved = buildStyleVarMap({ ...STYLE_VAR_DEFAULTS, ...tokens })
   for (const [key, value] of Object.entries(tokens)) {
     const name = key.startsWith("--") ? key : `--${key}`
+    if (name === "--radius" || resolved.has(name)) continue
     if (themeNames.has(name)) theme[name] = resolveCssValue(value)
-    else if (!resolved.has(name)) root[name] = resolveCssValue(value)
+    else root[name] = resolveCssValue(value)
   }
   return { theme, root }
 }
@@ -175,37 +182,9 @@ function registryConfigUrl(
   return `${registryRoot}/r/{name}?preset=${encodedPreset ?? ""}`
 }
 
-type EngineTheme = ReturnType<typeof resolveColorConfig>
-
-/** Flatten one engine mode into primitive var entries, mirroring
- *  `emitPrimitivesCss` naming: ramp steps, alpha twins, solved on-* labels. */
-function modeToVars(mode: EngineTheme["light"]): Record<string, string> {
-  const vars: Record<string, string> = {}
-  for (const [palette, scale] of Object.entries(mode.scales)) {
-    for (const [step, value] of Object.entries(scale)) {
-      vars[`--${palette}-${step}`] = value
-    }
-  }
-  for (const [palette, twin] of Object.entries(mode.alphas)) {
-    for (const [step, value] of Object.entries(twin)) {
-      vars[`--${palette}-a${step}`] = value
-    }
-  }
-  for (const [palette, on] of Object.entries(mode.on)) {
-    vars[`--on-${palette}-700`] = on["700"]
-    vars[`--on-${palette}-800`] = on["800"]
-  }
-  return vars
-}
-
-function chartVars(
-  set: EngineTheme["charts"]["light"],
-): Record<string, string> {
-  const vars: Record<string, string> = {}
-  set.categorical.forEach((color, i) => {
-    vars[`--chart-${i + 1}`] = color
-  })
-  return vars
+/** `color-fg-on-primary` → `fg-on-primary`: the `:root` name behind a token. */
+function rootVar(tokenName: string): string {
+  return tokenName.replace(/^color-/, "")
 }
 
 export function mergePresetCssFields(
@@ -223,67 +202,46 @@ export function mergePresetCssFields(
   } = {},
 ): RegistryCssFields {
   const css = cloneRecord(base.css) ?? {}
-  mergeCssVarsIntoCssRule(css, ":root", base.cssVars?.light)
-  mergeCssVarsIntoCssRule(css, ".dark", base.cssVars?.dark)
-
-  const cssVars = cloneThemeCssVars(base.cssVars)
-
-  // A custom color recipe regenerates the full primitive layer — ramps, alpha
-  // twins, solved on-* labels, and chart colors — overriding the static base
-  // palette in :root (light) and .dark (an independent engine pass).
-  if (preset.color) {
-    const theme = resolveColorConfig(preset.color)
-    css[":root"] = {
-      ...(isPlainCssObject(css[":root"]) ? css[":root"] : {}),
-      ...modeToVars(theme.light),
-      ...chartVars(theme.charts.light),
-    }
-    css[".dark"] = {
-      ...(isPlainCssObject(css[".dark"]) ? css[".dark"] : {}),
-      ...modeToVars(theme.dark),
-      ...chartVars(theme.charts.dark),
-    }
+  const theme = { ...base.cssVars?.theme }
+  const light: Record<string, string> = {
+    ...base.cssVars?.light,
+    radius: preset.tokens?.["--radius"] ?? DEFAULT_RADIUS,
   }
-
-  // The shipped `@theme` block is resolved from the typed vocabulary, honoring
-  // the preset's primary source (`--color-primary: var(--accent-700)` when the
-  // primary draws from the accent ramp) and any per-token overrides. Per-mode
-  // targets take their light value in `@theme` and re-point on `.dark`.
-  const themeVars = (cssVars.theme ??= {})
-  const darkRepoints: Record<string, string> = {}
-  for (const [name, token] of Object.entries(semanticsFor(preset.color))) {
-    themeVars[`--${name}`] = resolveTokenValue(token)
-    if ("light" in token.target)
-      darkRepoints[`--${name}`] = resolveTarget(token.target.dark)
-  }
-  if (Object.keys(darkRepoints).length > 0) {
-    css[".dark"] = {
-      ...(isPlainCssObject(css[".dark"]) ? css[".dark"] : {}),
-      ...darkRepoints,
-    }
-  }
-  // A preset token carries both modes itself (`light-dark()`); the theme's
-  // `.dark` re-point of the same name — shipped in base.css and re-added
-  // above — would beat the `@theme` value in dark mode and freeze the token.
-  if (isPlainCssObject(css[".dark"])) {
-    for (const key of Object.keys(preset.tokens ?? {})) {
-      delete css[".dark"][key.startsWith("--") ? key : `--${key}`]
-    }
-  }
-
+  const dark: Record<string, string> = { ...base.cssVars?.dark }
   const split = splitPresetTokens(
     preset,
-    new Set([...FONT_TOKEN_VARS, ...Object.keys(base.cssVars?.theme ?? {})]),
+    new Set([...FONT_TOKEN_VARS, ...Object.keys(theme)]),
   )
   if (Object.keys(split.root).length > 0) {
+    const root = css[":root"]
     css[":root"] = {
-      ...(isPlainCssObject(css[":root"]) ? css[":root"] : {}),
+      ...(typeof root === "object" && root !== null ? root : {}),
       ...split.root,
     }
   }
-  // The faces themselves come from `registry:font` items (init) or, on
-  // request, a Google Fonts import (v0).
-  Object.assign(themeVars, split.theme)
+
+  // The color layer: every semantic token flattened to a literal per mode,
+  // named shadcn-style in `:root`/`.dark` and aliased into the vocabulary.
+  const engine = resolveColorConfig(preset.color ?? DEFAULT_COLOR_CONFIG)
+  const literals = semanticLiterals(semanticsFor(preset.color), engine)
+  for (const [name, value] of Object.entries(literals.light)) {
+    theme[`--${name}`] = `var(--${rootVar(name)})`
+    light[rootVar(name)] = value
+  }
+  for (const [name, value] of Object.entries(literals.dark)) {
+    dark[rootVar(name)] = value
+  }
+  engine.charts.light.categorical.forEach((color, i) => {
+    light[`chart-${i + 1}`] = color
+  })
+  engine.charts.dark.categorical.forEach((color, i) => {
+    dark[`chart-${i + 1}`] = color
+  })
+
+  // Theme re-points (fonts, cursors, …) land after the color aliases so a
+  // preset token that names a vocabulary entry wins. The faces themselves come
+  // from `registry:font` items (init) or, on request, a Google Fonts import (v0).
+  Object.assign(theme, split.theme)
   if (options.googleFontsImport) {
     const fontFamilies = fontFamiliesFromTokens(preset.tokens ?? {})
     if (fontFamilies.length > 0) {
@@ -292,39 +250,11 @@ export function mergePresetCssFields(
   }
 
   return {
-    ...(css && Object.keys(css).length > 0 ? { css } : {}),
-    ...(Object.keys(cssVars).length > 0 ? { cssVars } : {}),
+    ...(Object.keys(css).length > 0 ? { css } : {}),
+    cssVars: { theme, light, dark },
   }
-}
-
-function cloneThemeCssVars(
-  cssVars: RegistryCssFields["cssVars"],
-): NonNullable<RegistryCssFields["cssVars"]> {
-  return {
-    ...(cssVars?.theme ? { theme: { ...cssVars.theme } } : {}),
-  }
-}
-
-function mergeCssVarsIntoCssRule(
-  css: NonNullable<RegistryCssFields["css"]>,
-  selector: string,
-  vars: Record<string, string> | undefined,
-): void {
-  if (!vars || Object.keys(vars).length === 0) return
-
-  const target = isPlainCssObject(css[selector]) ? css[selector] : {}
-  for (const [key, value] of Object.entries(vars)) {
-    target[key.startsWith("--") ? key : `--${key}`] = value
-  }
-  css[selector] = target
 }
 
 function cloneRecord<T>(value: T): T {
   return value ? JSON.parse(JSON.stringify(value)) : value
-}
-
-function isPlainCssObject(
-  value: unknown,
-): value is NonNullable<RegistryItem["css"]> {
-  return typeof value === "object" && value !== null && !Array.isArray(value)
 }
