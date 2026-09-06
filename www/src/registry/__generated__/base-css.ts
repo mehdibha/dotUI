@@ -461,6 +461,7 @@ export const baseRegistryCss = {
 			"--color-fg-primary-disabled": "var(--neutral-500)",
 			"--color-selection": "var(--neutral-950)",
 			"--color-selection-hover": "color-mix(in oklab, var(--neutral-950) 90%, var(--neutral-25))",
+			"--color-selection-muted": "var(--neutral-200)",
 			"--color-fg-on-selection": "var(--neutral-25)",
 			"--color-success": "var(--success-700)",
 			"--color-success-hover": "var(--success-800)",

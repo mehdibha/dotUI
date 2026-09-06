@@ -58,9 +58,9 @@ const { useStyles, styles } = createStyles(switchMeta, {
     },
   },
   /* The card treatment — synced with checkbox and radio-group, change all three
-     together. Tint ships the registry's default card; Outline marks the card
-     with the selection tokens so it follows the family fill. Start keeps the
-     control where the markup puts it. */
+     together. Every value paints with the selection tokens, so the card
+     follows the family fill. The switch card always trails its control, so
+     the family's `card-control` stops at the box and the dot. */
   params: {
     "card-selected": {
       outline: {
@@ -69,26 +69,13 @@ const { useStyles, styles } = createStyles(switchMeta, {
       tint: {
         slots: {
           control:
-            "has-data-label:selected:border-accent/25 has-data-label:selected:bg-accent-muted",
+            "has-data-label:selected:border-selection/25 has-data-label:selected:bg-selection-muted",
         },
       },
       "outline-tint": {
         slots: {
           control:
-            "has-data-label:selected:border-selection has-data-label:selected:bg-accent-muted",
-        },
-      },
-    },
-    "card-control": {
-      start: {},
-      end: {
-        slots: {
-          control: "has-data-label:*:data-switch-indicator:order-last",
-        },
-      },
-      hidden: {
-        slots: {
-          control: "has-data-label:*:data-switch-indicator:hidden",
+            "has-data-label:selected:border-selection has-data-label:selected:bg-selection-muted",
         },
       },
     },

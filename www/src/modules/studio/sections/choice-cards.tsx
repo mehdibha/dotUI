@@ -6,9 +6,9 @@
    CheckCard). The control colors stay synced to the family Fill; the axes
    here are card-only. Selected is what marks the chosen card — an accent
    border, a tinted surface, or both; systems split roughly evenly. Control
-   is where the real check/radio/switch sits — leading, trailing, or hidden
-   entirely so the card treatment alone carries the state (the Ant
-   selectable-card school). */
+   is where the real check/radio sits — leading, trailing, or hidden entirely
+   so the card treatment alone carries the state (the Ant selectable-card
+   school); a switch card always trails its control. */
 
 import { cn } from "@/registry/lib/utils"
 
@@ -20,19 +20,20 @@ import { checkboxCorner, DemoCheckbox, fillOf } from "./checkbox"
 import { DemoRadio } from "./radio"
 import { DemoSwitch } from "./switch"
 
-/* Selected wears the family fill's school: accent cards mark with the brand,
-   neutral cards with fg — the same inversion the controls themselves use.
-   Tint softens the edge too (the registry's default card). */
+/* Selected wears the family fill's school, as the engine's selection tokens
+   do: accent cards mark with the brand over the accent wash, neutral cards
+   with fg over the primary wash — the same inversion the controls themselves
+   use. Tint softens the edge too (the registry's default card). */
 export const SELECTED = {
   accent: {
     outline: "border-accent",
-    tint: "border-accent/25 bg-accent/8",
-    "outline-tint": "border-accent bg-accent/8",
+    tint: "border-accent/25 bg-accent-muted",
+    "outline-tint": "border-accent bg-accent-muted",
   },
   neutral: {
     outline: "border-fg",
-    tint: "border-fg/25 bg-fg/8",
-    "outline-tint": "border-fg bg-fg/8",
+    tint: "border-fg/25 bg-primary-muted",
+    "outline-tint": "border-fg bg-primary-muted",
   },
 }
 
@@ -42,17 +43,18 @@ function ChoiceCard({
   state,
   selected,
   control,
+  placement = state.cardControl,
   title,
   description,
 }: {
   state: LabState
   selected?: boolean
   control: React.ReactNode
+  placement?: string
   title: string
   description: string
 }) {
   const school = SELECTED[state.checkFill as keyof typeof SELECTED]
-  const placement = state.cardControl
   return (
     <label
       className={cn(
@@ -105,6 +107,7 @@ export function ChoiceCardsHero({ state }: { state: LabState }) {
         state={state}
         selected
         control={<DemoSwitch fill={fill} />}
+        placement="end"
         title="Auto-save"
         description="Write changes as you type"
       />
