@@ -94,7 +94,7 @@ export function semanticVocabulary(
   primary: PrimaryColorSource = "neutral",
   hasSelection = false,
 ): SemanticVocabulary {
-  // The primary fill/hover/on trio — shared by the primary cluster and, by
+  // The primary fill/hover/on/muted set — shared by the primary cluster and, by
   // default, the selection cluster (they only diverge under a `selection` seed).
   const isAccent = primary === "accent"
   const primaryFill = isAccent
@@ -108,6 +108,9 @@ export function semanticVocabulary(
     ? { target: on("accent", "700"), category: "foreground" }
     : // Text on the inverse surface is the app background by construction.
       { target: ref("neutral", "25"), category: "foreground" }
+  const primaryFillMuted = isAccent
+    ? bg(ref("accent", "100"), PRIMARY)
+    : bg(ref("neutral", "200"), PRIMARY)
 
   // The disabled fill stays neutral whatever the primary draws from.
   const primaryFillDisabled = bg(ref("neutral", "300"), PRIMARY)
@@ -120,7 +123,7 @@ export function semanticVocabulary(
           mix(ref("accent", "800"), 88, ref("neutral", "950")),
           PRIMARY,
         ),
-        "color-primary-muted": bg(ref("accent", "100"), PRIMARY),
+        "color-primary-muted": primaryFillMuted,
         "color-primary-disabled": primaryFillDisabled,
         "color-fg-on-primary": primaryFillOn,
         "color-fg-primary-disabled": fg(ref("accent", "400"), PRIMARY),
@@ -132,19 +135,21 @@ export function semanticVocabulary(
           mix(ref("neutral", "950"), 80, ref("neutral", "25")),
           PRIMARY,
         ),
-        "color-primary-muted": bg(ref("neutral", "200"), PRIMARY),
+        "color-primary-muted": primaryFillMuted,
         "color-primary-disabled": primaryFillDisabled,
         "color-fg-on-primary": primaryFillOn,
         "color-fg-primary-disabled": fg(ref("neutral", "500"), PRIMARY),
       }
 
-  // Checked-control fills (switch/checkbox/radio) + focus draw from here.
-  // Defaults to the primary targets — nothing shifts — until a `selection` seed
-  // splits them onto their own ramp (Vercel: black primary, blue selection).
+  // Checked-control fills (switch/checkbox/radio), the selected choice card's
+  // wash, and focus draw from here. Defaults to the primary targets — nothing
+  // shifts — until a `selection` seed splits them onto their own ramp (Vercel:
+  // black primary, blue selection).
   const selectionCluster: SemanticVocabulary = hasSelection
     ? {
         "color-selection": bg(ref("selection", "700"), SELECTION),
         "color-selection-hover": bg(ref("selection", "800"), SELECTION),
+        "color-selection-muted": bg(ref("selection", "100"), SELECTION),
         "color-fg-on-selection": {
           target: on("selection", "700"),
           category: "foreground",
@@ -153,6 +158,7 @@ export function semanticVocabulary(
     : {
         "color-selection": primaryFill,
         "color-selection-hover": primaryFillHover,
+        "color-selection-muted": primaryFillMuted,
         "color-fg-on-selection": primaryFillOn,
       }
 
