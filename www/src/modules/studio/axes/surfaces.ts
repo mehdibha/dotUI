@@ -19,7 +19,7 @@
    - Material: solid or glass floating layers.
 
    Engine: every combination resolves to the tokens card, popover (menus,
-   pickers) and modal read — an edge per role (`--card-border`,
+   pickers, chart tooltips), modal and drawer read — an edge per role (`--card-border`,
    `--overlay-border`), a shadow per role (`--shadow-card`, `--shadow-popover`,
    `--shadow-modal`), the surface colors (`--color-bg`, `--color-card`,
    `--color-popover`) and the floating material (`--overlay-backdrop-filter`).
