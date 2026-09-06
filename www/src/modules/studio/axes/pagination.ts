@@ -8,7 +8,7 @@
 import type { Resolved, StudioState } from "./index"
 
 export const PAGINATION_DEFAULTS = {
-  paginationCurrent: "filled",
+  paginationCurrent: "outline",
 }
 
 export const CURRENT_OPTIONS = [

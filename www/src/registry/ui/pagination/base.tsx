@@ -16,7 +16,7 @@ import { useStyles } from "./styles"
 const useActiveVariant = createParamValue<LinkButtonProps["variant"]>({
   componentName: "pagination",
   paramName: "current",
-  defaultValue: "filled",
+  defaultValue: "outline",
   values: {
     filled: "primary",
     outline: "secondary",

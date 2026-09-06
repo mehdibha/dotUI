@@ -1,7 +1,6 @@
 "use client"
 
-/* Segmented control — the container+chip archetype Tabs and Button groups
-   both exile here (tabs-in-a-track is not a tab style; a chip in a shared
+/* Segmented control — the container+chip archetype (a chip in a shared
    well is not a button group). Selected: how the chip reads against the
    track — raised, a page-colored chip lifted on shadow (iOS
    UISegmentedControl, Radix Themes, Ant Design Segmented, shadcn Tabs) vs

@@ -15,7 +15,7 @@ const paginationMeta = {
   params: {
     current: {
       kind: "enum",
-      default: "filled",
+      default: "outline",
       values: ["filled", "outline"] as const,
       description:
         "The current page's button variant: primary fill or the secondary outline.",
