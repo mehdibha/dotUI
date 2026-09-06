@@ -4,8 +4,9 @@ import groupMeta from "./meta"
 
 /* Synced with toggle-button-group: same `separator` param — change both
    together. Auto lets the segments' own edges divide (bordered buttons share
-   a hairline, fills abut); divider and none strip the inner borders, divider
-   drawing an inset hairline in their place. */
+   a hairline, fills abut); divider and none strip the borders between two
+   adjacent buttons, divider drawing an inset hairline in their place. Seams
+   next to a text, input or select child always stay auto. */
 
 const { useStyles, styles } = createStyles(groupMeta, {
   base: {
@@ -22,7 +23,7 @@ const { useStyles, styles } = createStyles(groupMeta, {
       orientation: {
         horizontal: {
           root: [
-            "not-has-data-group:*:not-first:rounded-l-none not-has-data-group:*:not-last:rounded-r-none",
+            "-space-x-px not-has-data-group:*:not-first:rounded-l-none not-has-data-group:*:not-last:rounded-r-none",
             "not-has-data-group:*:not-last:data-select:*:data-button:rounded-r-none not-has-data-group:*:not-[:nth-child(2)]:data-select:*:data-button:rounded-l-none",
           ],
         },
@@ -39,26 +40,20 @@ const { useStyles, styles } = createStyles(groupMeta, {
   },
   params: {
     separator: {
-      auto: {
-        variants: {
-          orientation: {
-            horizontal: { root: "-space-x-px" },
-          },
-        },
-      },
+      auto: {},
       divider: {
         variants: {
           orientation: {
             horizontal: {
               root: [
-                "*:not-first:data-button:border-l-0 *:not-last:data-button:border-r-0",
-                "*:not-first:data-button:before:absolute *:not-first:data-button:before:inset-y-1.5 *:not-first:data-button:before:left-0 *:not-first:data-button:before:w-px *:not-first:data-button:before:bg-current/20",
+                "*:data-button:[&:has(+[data-button])]:me-0 *:data-button:[&:has(+[data-button])]:border-r-0 *:data-button:[[data-button]+&]:border-l-0",
+                "*:data-button:[[data-button]+&]:before:absolute *:data-button:[[data-button]+&]:before:inset-y-1.5 *:data-button:[[data-button]+&]:before:left-0 *:data-button:[[data-button]+&]:before:w-px *:data-button:[[data-button]+&]:before:bg-current/20",
               ],
             },
             vertical: {
               root: [
-                "*:not-first:data-button:border-t-0 *:not-last:data-button:border-b-0",
-                "*:not-first:data-button:before:absolute *:not-first:data-button:before:inset-x-1.5 *:not-first:data-button:before:top-0 *:not-first:data-button:before:h-px *:not-first:data-button:before:bg-current/20",
+                "*:data-button:[&:has(+[data-button])]:border-b-0 *:data-button:[[data-button]+&]:border-t-0",
+                "*:data-button:[[data-button]+&]:before:absolute *:data-button:[[data-button]+&]:before:inset-x-1.5 *:data-button:[[data-button]+&]:before:top-0 *:data-button:[[data-button]+&]:before:h-px *:data-button:[[data-button]+&]:before:bg-current/20",
               ],
             },
           },
@@ -68,10 +63,10 @@ const { useStyles, styles } = createStyles(groupMeta, {
         variants: {
           orientation: {
             horizontal: {
-              root: "*:not-first:data-button:border-l-0 *:not-last:data-button:border-r-0",
+              root: "*:data-button:[&:has(+[data-button])]:border-r-0 *:data-button:[[data-button]+&]:border-l-0",
             },
             vertical: {
-              root: "*:not-first:data-button:border-t-0 *:not-last:data-button:border-b-0",
+              root: "*:data-button:[&:has(+[data-button])]:border-b-0 *:data-button:[[data-button]+&]:border-t-0",
             },
           },
         },
