@@ -46,7 +46,7 @@ export const STYLE_VAR_DEFAULTS: Record<string, string> = {
 	"--switch-card-radius": "var(--radius-surface)",
 	"--switch-radius": "var(--radius-full)",
 	"--tabs-radius": "var(--radius-surface)",
-	"--tag-radius": "var(--radius-full)",
+	"--tag-radius": "var(--radius-control)",
 	"--tooltip-radius": "var(--radius-item)",
 	"--tree-item-radius": "var(--radius-item)",
 };
