@@ -28,14 +28,14 @@ export function HomePage() {
         <section className="flex flex-col pt-10 sm:pt-14 md:pt-20">
           <div className="flex flex-col items-center text-center">
             <HeroEyebrow />
-            <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.5rem,calc((100vw-2rem)/12.6),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-[4rem]">
+            <h1 className="[font-feature-settings:'calt'_0,'rlig','ss11'] text-[clamp(1.5rem,calc((100vw-2rem)/11.7),3rem)] leading-[1.17] font-normal tracking-[-0.06em] text-balance antialiased sm:text-[3rem] sm:leading-[3.5rem] xl:text-6xl xl:leading-[4rem]">
               The Design System Studio
               <br />
               <span className="text-fg-muted">
                 for <HeroWordSwap />
               </span>
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-balance text-fg-muted sm:text-lg">
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-balance text-fg-muted">
               Every design decision is yours — create, tweak, and ship code you
               own.
               {/* Once a non-web export ships: One foundation for all platforms. */}
