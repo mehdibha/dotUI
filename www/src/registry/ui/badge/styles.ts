@@ -4,7 +4,9 @@ import badgeMeta from "./meta"
 
 /* Each intent sets the chip's palette as vars; `appearance` picks which of
    them paint. The `style` param only moves the appearance default, so a
-   product that mixes chips keeps the prop. Synced with tag-group. */
+   product that mixes chips keeps the prop. The neutral tint is a half-strength
+   wash: its fill is already the wash tone, so `muted` alone would equal solid.
+   Synced with tag-group. */
 
 const { useStyles, styles } = createStyles(badgeMeta, {
   base: {
@@ -19,7 +21,7 @@ const { useStyles, styles } = createStyles(badgeMeta, {
       },
       variant: {
         neutral:
-          "[--badge-border:var(--color-border)] [--badge-fg-tint:var(--color-fg)] [--badge-fg:var(--color-fg-on-neutral)] [--badge-fill:var(--color-neutral)] [--badge-tint:var(--color-muted)]",
+          "[--badge-border:var(--color-border)] [--badge-fg-tint:var(--color-fg)] [--badge-fg:var(--color-fg-on-neutral)] [--badge-fill:var(--color-neutral)] [--badge-tint:color-mix(in_oklab,var(--color-muted)_50%,transparent)]",
         accent:
           "[--badge-border:var(--color-border-accent)] [--badge-fg-tint:var(--color-fg-accent)] [--badge-fg:var(--color-fg-on-accent)] [--badge-fill:var(--color-accent)] [--badge-tint:var(--color-accent-muted)]",
         danger:

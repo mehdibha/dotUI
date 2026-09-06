@@ -29,7 +29,7 @@ export const BADGE_STYLE = {
     danger: "bg-danger text-fg-on-danger",
   },
   soft: {
-    neutral: "bg-muted text-fg",
+    neutral: "bg-muted/50 text-fg",
     success: "bg-success-muted text-fg-success",
     warning: "bg-warning-muted text-fg-warning",
     danger: "bg-danger-muted text-fg-danger",
@@ -41,7 +41,7 @@ export const BADGE_STYLE = {
     danger: "border border-border-danger text-fg-danger",
   },
   "soft-outline": {
-    neutral: "border border-border bg-muted text-fg",
+    neutral: "border border-border bg-muted/50 text-fg",
     success: "border border-border-success bg-success-muted text-fg-success",
     warning: "border border-border-warning bg-warning-muted text-fg-warning",
     danger: "border border-border-danger bg-danger-muted text-fg-danger",
@@ -50,6 +50,12 @@ export const BADGE_STYLE = {
 
 export const BADGE_SHAPE = {
   pill: "rounded-full",
+  rounded: "rounded-[4px]",
+}
+
+/* Pill leaves tags on their registry default (`--tag-radius`: radius-control). */
+const TAG_SHAPE = {
+  pill: "rounded-(--radius-control)",
   rounded: "rounded-[4px]",
 }
 
@@ -106,7 +112,9 @@ function Chip({
       className={cn(
         "flex h-5 items-center gap-1 px-2 text-[0.6875rem] font-medium",
         BADGE_STYLE[state.badgeStyle as keyof typeof BADGE_STYLE][intent],
-        BADGE_SHAPE[state.badgeShape as keyof typeof BADGE_SHAPE],
+        (dismissible ? TAG_SHAPE : BADGE_SHAPE)[
+          state.badgeShape as keyof typeof BADGE_SHAPE
+        ],
       )}
     >
       {children}
