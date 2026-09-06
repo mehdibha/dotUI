@@ -1360,7 +1360,9 @@ export function SegmentedControlRow({
       data-row=""
       className={cn(
         ROW,
-        "flex items-center justify-between gap-3 pr-1.5 pl-4",
+        // Wraps: a control too wide for the label's line drops under it,
+        // right-aligned, instead of clipping.
+        "flex h-auto min-h-11 flex-wrap items-center justify-between gap-x-3 gap-y-1.5 py-1.5 pr-1.5 pl-4",
         description && ROW_DESCRIBED,
       )}
     >
@@ -1372,7 +1374,7 @@ export function SegmentedControlRow({
           const next = keys.values().next().value
           if (next) onChange(next as string)
         }}
-        className="shrink-0 bg-bg/50 p-0.5"
+        className="ml-auto shrink-0 bg-bg/50 p-0.5"
       >
         {options.map((option) => (
           <SegmentedControlItem

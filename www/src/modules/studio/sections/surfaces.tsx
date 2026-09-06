@@ -159,7 +159,7 @@ function StackedSegmentedRow({
           <SegmentedControlItem
             key={option.value}
             id={option.value}
-            className="flex-1 justify-center text-xs"
+            className="min-w-0 flex-1 justify-center px-1 text-xs"
           >
             {option.label}
           </SegmentedControlItem>
