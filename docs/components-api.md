@@ -16760,1611 +16760,2150 @@ import { QRCode } from "@/components/ui/qr-code"
 
 # Charts
 
-## Chart
-
-The base composition: Recharts components wrapped in `ChartContainer`, which turns each `config` key into a `--color-<key>` CSS variable.
-
-```tsx
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-]
-
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-} satisfies ChartConfig
-
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <BarChart accessibilityLayer data={chartData}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} axisLine={false} />
-    <ChartTooltip content={<ChartTooltipContent />} />
-    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-  </BarChart>
-</ChartContainer>
-```
-
-## Chart config with per-theme colors
-
-Use `theme` instead of `color` when a series needs a different value in light and dark mode.
-
-```tsx
-import { type ChartConfig } from "@/components/ui/chart"
-```
-
-```tsx
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-  mobile: { label: "Mobile", theme: { light: "#2563eb", dark: "#60a5fa" } },
-} satisfies ChartConfig
-```
-
-## Chart tooltip and legend
-
-`ChartTooltip`/`ChartLegend` are the Recharts primitives; the `*Content` components are the styled, config-aware contents.
-
-```tsx
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <BarChart accessibilityLayer data={chartData}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} />
-    <ChartTooltip
-      cursor={false}
-      content={<ChartTooltipContent indicator="dashed" hideLabel />}
-    />
-    <ChartLegend content={<ChartLegendContent hideIcon />} />
-    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-    <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-  </BarChart>
-</ChartContainer>
-```
-
-## Chart with series icons
-
-An `icon` in config is picked up by the tooltip and legend.
-
-```tsx
-import { MonitorIcon, SmartphoneIcon } from "lucide-react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-const chartConfig = {
-  desktop: { label: "Desktop", icon: MonitorIcon, color: "var(--chart-1)" },
-  mobile: { label: "Mobile", icon: SmartphoneIcon, color: "var(--chart-2)" },
-} satisfies ChartConfig
-
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <AreaChart accessibilityLayer data={chartData} margin={{ left: 12, right: 12 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} tickMargin={8} axisLine={false} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-    <Area dataKey="mobile" type="natural" fill="var(--color-mobile)" fillOpacity={0.4} stroke="var(--color-mobile)" stackId="a" />
-    <Area dataKey="desktop" type="natural" fill="var(--color-desktop)" fillOpacity={0.4} stroke="var(--color-desktop)" stackId="a" />
-    <ChartLegend content={<ChartLegendContent />} />
-  </AreaChart>
-</ChartContainer>
-```
-
-## Chart with accessible data table
-
-`ChartDataTable` renders a visually-hidden table from the same `data` and `config`; `labelKey` is the row header field.
-
-```tsx
-import { Bar, BarChart, XAxis } from "recharts"
-
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-<>
-  <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-    <BarChart accessibilityLayer data={chartData}>
-      <XAxis dataKey="month" tickLine={false} axisLine={false} />
-      <ChartTooltip content={<ChartTooltipContent />} />
-      <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-    </BarChart>
-  </ChartContainer>
-  <ChartDataTable
-    data={chartData}
-    config={chartConfig}
-    labelKey="month"
-    caption="Desktop visitors, January through June 2024"
-  />
-</>
-```
-
-## Chart in a Card
-
-The family components (`ChartBar`, `ChartArea`, …) wrap a chart in a Card with header and footer.
-
-```tsx
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-
-import { TrendingUpIcon } from "@/components/icons"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-<Card>
-  <CardHeader>
-    <CardTitle>Bar Chart</CardTitle>
-    <CardDescription>January - June 2024</CardDescription>
-  </CardHeader>
-  <CardContent>
-    <ChartContainer config={chartConfig}>
-      <BarChart accessibilityLayer data={chartData}>
-        <CartesianGrid vertical={false} />
-        <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dashed" />} />
-        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-        <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-      </BarChart>
-    </ChartContainer>
-    <ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
-  </CardContent>
-  <CardFooter className="flex-col items-start gap-2 text-sm">
-    <div className="flex gap-2 leading-none font-medium">
-      Trending up by 5.2% this month <TrendingUpIcon className="size-4" />
-    </div>
-    <div className="leading-none text-fg-muted">
-      Showing total visitors for the last 6 months
-    </div>
-  </CardFooter>
-</Card>
-```
-
-## Area chart
-
-```tsx
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-]
-
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-} satisfies ChartConfig
-
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <AreaChart accessibilityLayer data={chartData} margin={{ left: 12, right: 12 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis
-      dataKey="month"
-      tickLine={false}
-      tickMargin={8}
-      axisLine={false}
-      tickFormatter={(value) => value.slice(0, 3)}
-    />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-    <Area
-      dataKey="desktop"
-      type="natural"
-      fill="var(--color-desktop)"
-      fillOpacity={0.4}
-      stroke="var(--color-desktop)"
-    />
-  </AreaChart>
-</ChartContainer>
-<ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
-```
-
-## Area chart curve types
-
-`type` on `Area` (and `Line`) switches the interpolation: `natural`, `linear`, `step`, `monotone`.
-
-```tsx
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <AreaChart accessibilityLayer data={chartData} margin={{ left: 12, right: 12 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} tickMargin={8} axisLine={false} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-    <Area
-      dataKey="desktop"
-      type="step"
-      fill="var(--color-desktop)"
-      fillOpacity={0.4}
-      stroke="var(--color-desktop)"
-    />
-  </AreaChart>
-</ChartContainer>
-```
-
-## Area chart with Y axis
-
-```tsx
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <AreaChart accessibilityLayer data={chartData} margin={{ left: 0, right: 12 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis
-      dataKey="month"
-      tickLine={false}
-      tickMargin={8}
-      axisLine={false}
-      tickFormatter={(value) => value.slice(0, 3)}
-    />
-    <YAxis
-      width="auto"
-      tickLine={false}
-      axisLine={false}
-      tickMargin={4}
-      tickCount={4}
-      tickFormatter={(value) => `${value}`}
-    />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-    <Area dataKey="desktop" type="natural" fill="var(--color-desktop)" fillOpacity={0.4} stroke="var(--color-desktop)" />
-  </AreaChart>
-</ChartContainer>
-```
-
-## Area chart stacked
-
-Series sharing a `stackId` stack on top of each other; add a legend for multi-series charts.
-
-```tsx
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-  mobile: { label: "Mobile", color: "var(--chart-2)" },
-} satisfies ChartConfig
-
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <AreaChart accessibilityLayer data={chartData} margin={{ left: 12, right: 12 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} tickMargin={8} axisLine={false} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
-    <Area
-      dataKey="mobile"
-      type="natural"
-      fill="var(--color-mobile)"
-      fillOpacity={0.4}
-      stroke="var(--color-mobile)"
-      stackId="a"
-    />
-    <Area
-      dataKey="desktop"
-      type="natural"
-      fill="var(--color-desktop)"
-      fillOpacity={0.4}
-      stroke="var(--color-desktop)"
-      stackId="a"
-    />
-    <ChartLegend content={<ChartLegendContent />} />
-  </AreaChart>
-</ChartContainer>
-```
-
-## Area chart stacked expanded
-
-`stackOffset="expand"` normalizes stacked series to 100%.
-
-```tsx
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <AreaChart
-    accessibilityLayer
-    data={chartData}
-    margin={{ left: 12, right: 12 }}
-    stackOffset="expand"
-  >
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} tickMargin={8} axisLine={false} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-    <Area dataKey="other" type="natural" fill="var(--color-other)" fillOpacity={0.1} stroke="var(--color-other)" stackId="a" />
-    <Area dataKey="mobile" type="natural" fill="var(--color-mobile)" fillOpacity={0.4} stroke="var(--color-mobile)" stackId="a" />
-    <Area dataKey="desktop" type="natural" fill="var(--color-desktop)" fillOpacity={0.4} stroke="var(--color-desktop)" stackId="a" />
-    <ChartLegend content={<ChartLegendContent />} />
-  </AreaChart>
-</ChartContainer>
-```
-
-## Area chart with gradient fill
-
-Define SVG gradients in `<defs>` using the config color variables, then reference them by `url(#id)`.
-
-```tsx
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <AreaChart accessibilityLayer data={chartData} margin={{ left: 12, right: 12 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} tickMargin={8} axisLine={false} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
-    <defs>
-      <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="5%" stopColor="var(--color-desktop)" stopOpacity={0.8} />
-        <stop offset="95%" stopColor="var(--color-desktop)" stopOpacity={0.1} />
-      </linearGradient>
-      <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="5%" stopColor="var(--color-mobile)" stopOpacity={0.8} />
-        <stop offset="95%" stopColor="var(--color-mobile)" stopOpacity={0.1} />
-      </linearGradient>
-    </defs>
-    <Area dataKey="mobile" type="natural" fill="url(#fillMobile)" fillOpacity={0.4} stroke="var(--color-mobile)" stackId="a" />
-    <Area dataKey="desktop" type="natural" fill="url(#fillDesktop)" fillOpacity={0.4} stroke="var(--color-desktop)" stackId="a" />
-    <ChartLegend content={<ChartLegendContent />} />
-  </AreaChart>
-</ChartContainer>
-```
+Every chart is one component per family, fed rows plus the names of the fields to read. Shared props: `data` (compared by identity — keep it at module scope), `x`, `y` (one field, or several for wide rows), `series` for long rows, `labels` to rename keys in the legend, tooltip, and screen reader, `legend`, `axes` (off by default on x/y charts), `grid`, `formatX` / `formatY`, `animate`, and a required `ariaLabel`. Series take the palette slots `--chart-1..8` in the order you list them. `marks` and `marksBefore` paint raw `@tanstack/charts` layers over or under the family's own on the same scales.
 
 ## Bar chart
 
 ```tsx
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { BarChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
 ]
 
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-} satisfies ChartConfig
-
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <BarChart accessibilityLayer data={chartData}>
-    <CartesianGrid vertical={false} />
-    <XAxis
-      dataKey="month"
-      tickLine={false}
-      tickMargin={10}
-      axisLine={false}
-      tickFormatter={(value) => value.slice(0, 3)}
-    />
-    <ChartTooltip content={<ChartTooltipContent />} />
-    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8} />
-  </BarChart>
-</ChartContainer>
-<ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
+<BarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  ariaLabel="Desktop visitors per month, January through June"
+/>
 ```
 
-## Bar chart multiple
+## Bar chart grouped
 
 ```tsx
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { BarChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-  mobile: { label: "Mobile", color: "var(--chart-2)" },
-} satisfies ChartConfig
+const data = [
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
+  { month: "Mar", desktop: 237, mobile: 120 },
+  { month: "Apr", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "Jun", desktop: 214, mobile: 140 },
+]
 
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <BarChart accessibilityLayer data={chartData}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dashed" />} />
-    <ChartLegend content={<ChartLegendContent />} />
-    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-    <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-  </BarChart>
-</ChartContainer>
+<BarChart
+  data={data}
+  x="month"
+  y={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
+  ariaLabel="Desktop and mobile visitors per month, side by side"
+/>
 ```
 
 ## Bar chart stacked
 
-Round only the outer corners of the stack with a per-corner `radius` array.
-
 ```tsx
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { stackY } from "@/components/ui/chart"
+import { BarChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <BarChart accessibilityLayer data={chartData}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-    <ChartLegend content={<ChartLegendContent />} />
-    <Bar dataKey="desktop" stackId="a" fill="var(--color-desktop)" radius={[0, 0, 4, 4]} />
-    <Bar dataKey="mobile" stackId="a" fill="var(--color-mobile)" />
-    <Bar dataKey="tablet" stackId="a" fill="var(--color-tablet)" radius={[4, 4, 0, 0]} />
-  </BarChart>
-</ChartContainer>
+const rows = [
+  { month: "Jan", desktop: 186, mobile: 80, tablet: 45 },
+  { month: "Feb", desktop: 305, mobile: 200, tablet: 90 },
+  { month: "Mar", desktop: 237, mobile: 120, tablet: 60 },
+  { month: "Apr", desktop: 73, mobile: 190, tablet: 110 },
+  { month: "May", desktop: 209, mobile: 130, tablet: 70 },
+  { month: "Jun", desktop: 214, mobile: 140, tablet: 85 },
+]
+
+// Module scope: the stacked rows keep one identity for the whole session.
+const data = stackY(rows, {
+  x: "month",
+  y: ["desktop", "mobile", "tablet"],
+})
+
+<BarChart
+  data={data}
+  x="x"
+  y="top"
+  y1="base"
+  series="series"
+  seriesOrder={["desktop", "mobile", "tablet"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile", tablet: "Tablet" }}
+  radius={2}
+  ariaLabel="Visitors per month by device, stacked"
+/>
 ```
 
 ## Bar chart horizontal
 
-`layout="vertical"` on the chart with a numeric `XAxis` and a category `YAxis`.
-
 ```tsx
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { BarChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <BarChart accessibilityLayer data={chartData} layout="vertical" margin={{ left: -20 }}>
-    <CartesianGrid horizontal={false} />
-    <XAxis type="number" dataKey="desktop" hide />
-    <YAxis
-      dataKey="month"
-      type="category"
-      tickLine={false}
-      tickMargin={10}
-      axisLine={false}
-      tickFormatter={(value) => value.slice(0, 3)}
-    />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-  </BarChart>
-</ChartContainer>
-```
-
-## Bar chart with labels
-
-```tsx
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <BarChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8}>
-      <LabelList position="top" offset={12} className="fill-fg" fontSize={12} />
-    </Bar>
-  </BarChart>
-</ChartContainer>
-```
-
-## Bar chart with custom inside labels
-
-A horizontal bar with hidden axes and two `LabelList`s: the category inside the bar, the value to its right. The `label` config key only supplies a color.
-
-```tsx
-import { Bar, BarChart, LabelList, XAxis, YAxis } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-  label: { color: "var(--chart-1)" },
-} satisfies ChartConfig
-
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <BarChart accessibilityLayer data={chartData} layout="vertical" margin={{ right: 16 }}>
-    <YAxis dataKey="month" type="category" tickLine={false} tickMargin={10} axisLine={false} hide />
-    <XAxis dataKey="desktop" type="number" hide />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-    <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4}>
-      <LabelList dataKey="month" position="insideLeft" offset={8} className="fill-(--color-label)" fontSize={12} />
-      <LabelList dataKey="desktop" position="right" offset={8} className="fill-fg" fontSize={12} />
-    </Bar>
-  </BarChart>
-</ChartContainer>
-```
-
-## Bar chart per-category colors
-
-Long-format data carries its own `fill`; a `Cell` per row applies it, and the axis reads labels from config.
-
-```tsx
-import { Bar, BarChart, Cell, XAxis, YAxis } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
 ]
 
-const chartConfig = {
-  visitors: { label: "Visitors" },
-  chrome: { label: "Chrome", color: "var(--chart-1)" },
-  safari: { label: "Safari", color: "var(--chart-2)" },
-  firefox: { label: "Firefox", color: "var(--chart-3)" },
-} satisfies ChartConfig
-
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <BarChart accessibilityLayer data={chartData} layout="vertical" margin={{ left: 0 }}>
-    <YAxis
-      dataKey="browser"
-      type="category"
-      tickLine={false}
-      tickMargin={10}
-      axisLine={false}
-      tickFormatter={(value) => chartConfig[value as keyof typeof chartConfig]?.label as string}
-    />
-    <XAxis dataKey="visitors" type="number" hide />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <Bar dataKey="visitors" radius={5}>
-      {chartData.map((entry) => (
-        <Cell key={entry.browser} fill={entry.fill} />
-      ))}
-    </Bar>
-  </BarChart>
-</ChartContainer>
-<ChartDataTable data={chartData} config={chartConfig} labelKey="browser" />
+<BarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  horizontal
+  legend={false}
+  focus="group-y"
+  axes="y"
+  ariaLabel="Desktop visitors per month, horizontal bars"
+/>
 ```
 
-## Bar chart with negative values
-
-A `ReferenceLine` at zero, and a `Cell` fill chosen by sign.
+## Bar chart per-category color
 
 ```tsx
-import { Bar, BarChart, Cell, LabelList, ReferenceLine, XAxis } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { BarChart } from "@/components/ui/chart-bar"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <BarChart accessibilityLayer data={chartData}>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel hideIndicator />} />
-    <XAxis dataKey="month" tickLine={false} tickMargin={10} axisLine={false} />
-    <ReferenceLine y={0} stroke="var(--border)" />
-    <Bar dataKey="visitors">
-      <LabelList position="top" dataKey="month" fillOpacity={1} />
-      {chartData.map((entry) => (
-        <Cell
-          key={entry.month}
-          fill={entry.visitors > 0 ? "var(--chart-1)" : "var(--chart-2)"}
-        />
-      ))}
-    </Bar>
-  </BarChart>
-</ChartContainer>
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
+
+<BarChart
+  data={data}
+  x="browser"
+  y="visitors"
+  // One series per category: every bar lands on its own palette slot.
+  series="browser"
+  labels={{
+    chrome: "Chrome",
+    safari: "Safari",
+    firefox: "Firefox",
+    edge: "Edge",
+    other: "Other",
+  }}
+  horizontal
+  legend={false}
+  focus="group-y"
+  axes="y"
+  ariaLabel="Visitors by browser"
+/>
+```
+
+## Bar chart negative values
+
+```tsx
+import { ruleY } from "@tanstack/charts/rule"
+
+import { BarChart } from "@/components/ui/chart-bar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", change: 186, trend: "gain" },
+  { month: "Feb", change: 205, trend: "gain" },
+  { month: "Mar", change: -207, trend: "loss" },
+  { month: "Apr", change: 173, trend: "gain" },
+  { month: "May", change: -209, trend: "loss" },
+  { month: "Jun", change: 214, trend: "gain" },
+]
+
+// A baseline under the bars, so the sign flip reads as a crossing.
+const baseline = [ruleY([0], { stroke: "var(--color-border)" })]
+
+<BarChart
+  data={data}
+  x="month"
+  y="change"
+  series="trend"
+  seriesOrder={["gain", "loss"]}
+  labels={{ gain: "Gain", loss: "Loss" }}
+  marksBefore={baseline}
+  ariaLabel="Monthly change in visitors, gains and losses"
+/>
+```
+
+## Bar chart axes
+
+```tsx
+import type { ChartValue } from "@tanstack/charts"
+
+import { BarChart } from "@/components/ui/chart-bar"
+```
+
+```tsx
+const data = [
+  { month: "January", desktop: 18600 },
+  { month: "February", desktop: 30500 },
+  { month: "March", desktop: 23700 },
+  { month: "April", desktop: 7300 },
+  { month: "May", desktop: 20900 },
+  { month: "June", desktop: 21400 },
+]
+
+/* Module scope: a formatter defined in render would rebuild the scene every
+   time. Option-object formatters (see `formatY`) are free of that constraint. */
+const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
+
+<BarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  axes
+  formatX={shortMonth}
+  formatY={{ locale: "en-US", number: { notation: "compact" } }}
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Bar chart labels
+
+```tsx
+import { text } from "@tanstack/charts/text"
+
+import { BarChart } from "@/components/ui/chart-bar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+// Same `z` as the bars, so grouped focus keeps one tooltip row per month.
+const labels = [
+  text(data, {
+    x: "month",
+    y: "desktop",
+    text: "desktop",
+    z: () => "Desktop",
+    fill: "var(--color-fg-muted)",
+    fontSize: 12,
+    dy: -10,
+  }),
+]
+
+<BarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  marks={labels}
+  ariaLabel="Desktop visitors per month, labelled"
+/>
+```
+
+## Bar chart labels inside bars
+
+```tsx
+import { text } from "@tanstack/charts/text"
+
+import { BarChart } from "@/components/ui/chart-bar"
+```
+
+```tsx
+const data = [
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
+  { month: "April", desktop: 173 },
+  { month: "May", desktop: 209 },
+  { month: "June", desktop: 214 },
+]
+
+/* Both labels ride inside the bar, so even the category axis can go: the
+   category anchors to the value baseline, the value to the bar's end. */
+const labels = [
+  text(data, {
+    x: () => 0,
+    y: "month",
+    text: "month",
+    z: () => "Desktop",
+    fill: "var(--color-bg)",
+    fontSize: 12,
+    fontWeight: 500,
+    anchor: "start",
+    dx: 10,
+  }),
+  text(data, {
+    x: "desktop",
+    y: "month",
+    text: "desktop",
+    z: () => "Desktop",
+    fill: "var(--color-bg)",
+    fontSize: 12,
+    anchor: "end",
+    dx: -10,
+  }),
+]
+
+<BarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  horizontal
+  grid={false}
+  legend={false}
+  marks={labels}
+  focus="group-y"
+  ariaLabel="Desktop visitors per month, labelled inside each bar"
+/>
+```
+
+## Bar chart highlight on focus
+
+```tsx
+import { useMemo, useState } from "react"
+import { barY } from "@tanstack/charts/bar"
+
+import { chartDefaults } from "@/components/ui/chart"
+import { BarChart } from "@/components/ui/chart-bar"
+```
+
+```tsx
+const data = [
+  { browser: "chrome", visitors: 187 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 275 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
+
+const LABELS: Record<string, string> = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
+
+const labelOf = (row: (typeof data)[number]) => LABELS[row.browser]
+
+const [active, setActive] = useState<string | null>(null)
+
+/* The focused bar is repainted by a second layer at full opacity: `marks` is
+   identity-compared, so a new array is what rebuilds the chart. */
+const highlight = useMemo(
+  () =>
+    active === null
+      ? []
+      : [
+          barY(
+            data.filter((row) => row.browser === active),
+            {
+              x: "browser",
+              y: "visitors",
+              z: labelOf,
+              color: labelOf,
+              radius: chartDefaults.barRadius,
+            },
+          ),
+        ],
+  [active],
+)
+
+<BarChart
+  data={data}
+  x="browser"
+  y="visitors"
+  series="browser"
+  labels={LABELS}
+  fillOpacity={active === null ? 1 : 0.3}
+  legend={false}
+  marks={highlight}
+  animate={false}
+  onFocusChange={(point) => setActive(point?.datum.browser ?? null)}
+  ariaLabel="Visitors by browser, with the focused bar highlighted"
+/>
 ```
 
 ## Line chart
 
 ```tsx
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { LineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-} satisfies ChartConfig
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
 
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <LineChart accessibilityLayer data={chartData} margin={{ left: 12, right: 12 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis
-      dataKey="month"
-      tickLine={false}
-      axisLine={false}
-      tickMargin={8}
-      tickFormatter={(value) => value.slice(0, 3)}
-    />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <Line
-      dataKey="desktop"
-      type="natural"
-      stroke="var(--color-desktop)"
-      strokeWidth={2}
-      dot={false}
-    />
-  </LineChart>
-</ChartContainer>
-<ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
+<LineChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  ariaLabel="Desktop visitors, January through June"
+/>
 ```
 
-## Line chart multiple
+## Line chart multiple Series
 
 ```tsx
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { LineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <LineChart accessibilityLayer data={chartData} margin={{ left: 12, right: 12 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-    <ChartLegend content={<ChartLegendContent />} />
-    <Line dataKey="desktop" type="monotone" stroke="var(--color-desktop)" strokeWidth={2} dot={false} />
-    <Line dataKey="mobile" type="monotone" stroke="var(--color-mobile)" strokeWidth={2} dot={false} />
-  </LineChart>
-</ChartContainer>
+const data = [
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
+  { month: "Mar", desktop: 237, mobile: 120 },
+  { month: "Apr", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "Jun", desktop: 214, mobile: 140 },
+]
+
+<LineChart
+  data={data}
+  x="month"
+  y={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
+  curve="monotone"
+  ariaLabel="Desktop and mobile visitors, January through June"
+/>
 ```
 
-## Line chart with dots
+## Line chart linear
 
 ```tsx
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <LineChart accessibilityLayer data={chartData} margin={{ left: 12, right: 12 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <Line
-      dataKey="desktop"
-      type="natural"
-      stroke="var(--color-desktop)"
-      strokeWidth={2}
-      dot={{ fill: "var(--color-desktop)" }}
-      activeDot={{ r: 6 }}
-    />
-  </LineChart>
-</ChartContainer>
-```
-
-## Line chart with custom dots
-
-Render each point yourself with a `dot` function; per-row `fill` gives per-category dot colors.
-
-```tsx
-import { CartesianGrid, Dot, Line, LineChart, XAxis } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { LineChart } from "@/components/ui/chart-line"
 ```
 
 ```tsx
-interface ColoredDotProps {
-  cx?: number
-  cy?: number
-  index?: number
-  payload?: { browser: string; fill: string }
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+<LineChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  curve="linear"
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Line chart step
+
+```tsx
+import { LineChart } from "@/components/ui/chart-line"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+<LineChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  curve="step"
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Line chart dots
+
+```tsx
+import { LineChart } from "@/components/ui/chart-line"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+<LineChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  points
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Line chart custom Dots
+
+```tsx
+import { dot } from "@tanstack/charts/dot"
+
+import { LineChart } from "@/components/ui/chart-line"
+```
+
+```tsx
+const SERIES = "Desktop"
+
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+/* Ring markers instead of the built-in `points` dots. Reusing the line's `z`
+   keeps the pair in one focus group. */
+const rings = dot(data, {
+  x: "month",
+  y: "desktop",
+  z: () => SERIES,
+  r: 5,
+  fill: "var(--color-bg)",
+  stroke: "var(--chart-1)",
+  strokeWidth: 2,
+})
+
+<LineChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: SERIES }}
+  legend={false}
+  marks={[rings]}
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Line chart dot Colors
+
+```tsx
+import { dot } from "@tanstack/charts/dot"
+
+import { chartDefaults } from "@/components/ui/chart"
+import { LineChart } from "@/components/ui/chart-line"
+```
+
+```tsx
+const SERIES = "Visitors"
+
+const data = [
+  { browser: "Chrome", visitors: 275, color: "var(--chart-1)" },
+  { browser: "Safari", visitors: 200, color: "var(--chart-2)" },
+  { browser: "Firefox", visitors: 187, color: "var(--chart-3)" },
+  { browser: "Edge", visitors: 173, color: "var(--chart-4)" },
+  { browser: "Other", visitors: 90, color: "var(--chart-5)" },
+]
+
+/* `dot.fill` is a constant, so per-point color means one mark per color. Each
+   reuses the line's `z` so grouped focus still shows a single tooltip row. */
+const dots = data.map((row) =>
+  dot([row], {
+    x: "browser",
+    y: "visitors",
+    z: () => SERIES,
+    fill: row.color,
+    r: chartDefaults.dotRadius,
+  }),
+)
+
+<LineChart
+  data={data}
+  x="browser"
+  y="visitors"
+  labels={{ visitors: SERIES }}
+  legend={false}
+  marks={dots}
+  ariaLabel="Visitors by browser"
+/>
+```
+
+## Line chart axes
+
+```tsx
+import type { ChartValue } from "@tanstack/charts"
+
+import { LineChart } from "@/components/ui/chart-line"
+```
+
+```tsx
+const data = [
+  { month: "January", desktop: 18600 },
+  { month: "February", desktop: 30500 },
+  { month: "March", desktop: 23700 },
+  { month: "April", desktop: 7300 },
+  { month: "May", desktop: 20900 },
+  { month: "June", desktop: 21400 },
+]
+
+/* Module scope: a formatter defined in render would rebuild the scene every
+   time. Option-object formatters (see `formatY`) are free of that constraint. */
+const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
+
+<LineChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  axes
+  formatX={shortMonth}
+  formatY={{ locale: "en-US", number: { notation: "compact" } }}
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Line chart labels
+
+```tsx
+import { text } from "@tanstack/charts/text"
+
+import { LineChart } from "@/components/ui/chart-line"
+```
+
+```tsx
+const SERIES = "Desktop"
+
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+const labels = text(data, {
+  x: "month",
+  y: "desktop",
+  text: "desktop",
+  z: () => SERIES,
+  dy: -12,
+  fontSize: 12,
+  fill: "var(--color-fg-muted)",
+})
+
+<LineChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: SERIES }}
+  legend={false}
+  points
+  marks={[labels]}
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Line chart custom Labels
+
+```tsx
+import { dot } from "@tanstack/charts/dot"
+import { text } from "@tanstack/charts/text"
+
+import { chartDefaults } from "@/components/ui/chart"
+import { LineChart } from "@/components/ui/chart-line"
+```
+
+```tsx
+interface Row {
+  month: string
+  desktop: number
 }
 
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <LineChart accessibilityLayer data={chartData} margin={{ top: 24, left: 12, right: 12 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="browser" tickLine={false} axisLine={false} tickMargin={8} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent nameKey="visitors" hideLabel />} />
-    <Line
-      dataKey="visitors"
-      type="natural"
-      stroke="var(--color-visitors)"
-      strokeWidth={2}
-      activeDot={{ r: 6 }}
-      dot={({ cx, cy, payload, index }: ColoredDotProps) =>
-        cx == null || cy == null ? (
-          <g key={index} />
-        ) : (
-          <Dot key={payload?.browser ?? index} cx={cx} cy={cy} r={5} fill={payload?.fill} stroke={payload?.fill} />
-        )
-      }
-    />
-  </LineChart>
-</ChartContainer>
+const SERIES = "Desktop"
+
+const data: Row[] = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+const pick = (rows: readonly Row[], best: (a: Row, b: Row) => boolean) =>
+  rows.reduce((winner, row) => (best(row, winner) ? row : winner))
+
+/* Annotate a chosen few rows, not every point: pick them in data preparation
+   so the intent stays auditable. */
+const extremes = [
+  {
+    ...pick(data, (a, b) => a.desktop > b.desktop),
+    label: "Peak",
+    dy: -16,
+  },
+  { ...pick(data, (a, b) => a.desktop < b.desktop), label: "Low", dy: 22 },
+]
+
+const markers = dot(extremes, {
+  x: "month",
+  y: "desktop",
+  z: () => SERIES,
+  r: chartDefaults.dotRadius,
+})
+
+const callouts = text(extremes, {
+  x: "month",
+  y: "desktop",
+  text: (row) => `${row.label} · ${row.desktop}`,
+  z: () => SERIES,
+  dy: (row) => row.dy,
+  fontSize: 12,
+  fontWeight: 600,
+  fill: "var(--color-fg)",
+})
+
+<LineChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: SERIES }}
+  legend={false}
+  marks={[markers, callouts]}
+  ariaLabel="Desktop visitors, with the peak and low months annotated"
+/>
 ```
 
-## Line chart with labels
+## Area chart
 
 ```tsx
-import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { AreaChart } from "@/components/ui/chart-area"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <LineChart accessibilityLayer data={chartData} margin={{ top: 20, left: 12, right: 12 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
-    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-    <Line
-      dataKey="desktop"
-      type="natural"
-      stroke="var(--color-desktop)"
-      strokeWidth={2}
-      dot={{ fill: "var(--color-desktop)" }}
-      activeDot={{ r: 6 }}
-    >
-      <LabelList position="top" offset={12} className="fill-fg-muted" fontSize={12} />
-    </Line>
-  </LineChart>
-</ChartContainer>
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+<AreaChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  ariaLabel="Desktop visitors, January through June"
+/>
 ```
 
-## Line chart with custom labels
-
-Label points with another field via `dataKey` + `formatter`; a hidden `YAxis` with a padded `domain` keeps labels inside the chart.
+## Area chart multiple Series
 
 ```tsx
-import { CartesianGrid, LabelList, Line, LineChart, XAxis, YAxis } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { AreaChart } from "@/components/ui/chart-area"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-  <LineChart accessibilityLayer data={chartData} margin={{ top: 24, left: 24, right: 24 }}>
-    <CartesianGrid vertical={false} />
-    <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
-    <YAxis hide domain={["dataMin - 40", "dataMax + 40"]} />
-    <ChartTooltip
-      cursor={false}
-      content={<ChartTooltipContent indicator="line" nameKey="desktop" hideLabel />}
-    />
-    <Line
-      dataKey="desktop"
-      type="natural"
-      stroke="var(--color-desktop)"
-      strokeWidth={2}
-      dot={{ fill: "var(--color-desktop)" }}
-      activeDot={{ r: 6 }}
-    >
-      <LabelList
-        dataKey="month"
-        position="top"
-        offset={12}
-        className="fill-fg"
-        fontSize={12}
-        formatter={(value: unknown) => (typeof value === "string" ? value.slice(0, 3) : String(value))}
-      />
-    </Line>
-  </LineChart>
-</ChartContainer>
+const data = [
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
+  { month: "Mar", desktop: 237, mobile: 120 },
+  { month: "Apr", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "Jun", desktop: 214, mobile: 140 },
+]
+
+<AreaChart
+  data={data}
+  x="month"
+  y={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
+  ariaLabel="Desktop and mobile visitors, January through June"
+/>
+```
+
+## Area chart gradient
+
+```tsx
+import { AreaChart } from "@/components/ui/chart-area"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
+  { month: "Mar", desktop: 237, mobile: 120 },
+  { month: "Apr", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "Jun", desktop: 214, mobile: 140 },
+]
+
+<AreaChart
+  data={data}
+  x="month"
+  y={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
+  fill="gradient"
+  ariaLabel="Desktop and mobile visitors, January through June"
+/>
+```
+
+## Area chart stacked
+
+```tsx
+import { stackY } from "@/components/ui/chart"
+import { AreaChart } from "@/components/ui/chart-area"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186, mobile: 80, other: 45 },
+  { month: "Feb", desktop: 305, mobile: 200, other: 100 },
+  { month: "Mar", desktop: 237, mobile: 120, other: 150 },
+  { month: "Apr", desktop: 73, mobile: 190, other: 50 },
+  { month: "May", desktop: 209, mobile: 130, other: 100 },
+  { month: "Jun", desktop: 214, mobile: 140, other: 160 },
+]
+
+/* Stacking is a data transform, not a chart flag: wide rows in, one long row
+   per band out, carrying `base`/`top` plus its own `value` for the tooltip. */
+const stacked = stackY(data, {
+  x: "month",
+  y: ["desktop", "mobile", "other"],
+})
+
+<AreaChart
+  data={stacked}
+  x="x"
+  y="top"
+  y1="base"
+  series="series"
+  seriesOrder={["desktop", "mobile", "other"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile", other: "Other" }}
+  ariaLabel="Visitors by device, stacked, January through June"
+/>
+```
+
+## Area chart stacked Expanded
+
+```tsx
+import { stackY } from "@/components/ui/chart"
+import { AreaChart } from "@/components/ui/chart-area"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186, mobile: 80, other: 45 },
+  { month: "Feb", desktop: 305, mobile: 200, other: 100 },
+  { month: "Mar", desktop: 237, mobile: 120, other: 150 },
+  { month: "Apr", desktop: 73, mobile: 190, other: 50 },
+  { month: "May", desktop: 209, mobile: 130, other: 100 },
+  { month: "Jun", desktop: 214, mobile: 140, other: 160 },
+]
+
+/* `normalize` divides each band by its own x-group total, so the stack fills
+   the plot and reads as share rather than volume. */
+const shares = stackY(data, {
+  x: "month",
+  y: ["desktop", "mobile", "other"],
+  normalize: true,
+})
+
+<AreaChart
+  data={shares}
+  x="x"
+  y="top"
+  y1="base"
+  series="series"
+  seriesOrder={["desktop", "mobile", "other"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile", other: "Other" }}
+  formatY={{ locale: "en-US", number: { style: "percent" } }}
+  ariaLabel="Share of visitors by device, January through June"
+/>
+```
+
+## Area chart long Format Labels
+
+```tsx
+import { AreaChart } from "@/components/ui/chart-area"
+```
+
+```tsx
+/* Long format: one row per series per x value, with the series key in a field. */
+const data = [
+  { month: "Jan", channel: "organic_search", visitors: 186 },
+  { month: "Jan", channel: "paid_social", visitors: 80 },
+  { month: "Feb", channel: "organic_search", visitors: 305 },
+  { month: "Feb", channel: "paid_social", visitors: 200 },
+  { month: "Mar", channel: "organic_search", visitors: 237 },
+  { month: "Mar", channel: "paid_social", visitors: 120 },
+  { month: "Apr", channel: "organic_search", visitors: 173 },
+  { month: "Apr", channel: "paid_social", visitors: 190 },
+  { month: "May", channel: "organic_search", visitors: 209 },
+  { month: "May", channel: "paid_social", visitors: 130 },
+  { month: "Jun", channel: "organic_search", visitors: 214 },
+  { month: "Jun", channel: "paid_social", visitors: 140 },
+]
+
+<AreaChart
+  data={data}
+  x="month"
+  y="visitors"
+  series="channel"
+  seriesOrder={["paid_social", "organic_search"]}
+  labels={{ organic_search: "Organic search", paid_social: "Paid social" }}
+  ariaLabel="Visitors by acquisition channel, January through June"
+/>
+```
+
+## Area chart axis Formatting
+
+```tsx
+import type { ChartValue } from "@tanstack/charts"
+
+import { AreaChart } from "@/components/ui/chart-area"
+```
+
+```tsx
+const data = [
+  { month: "January", desktop: 18600 },
+  { month: "February", desktop: 30500 },
+  { month: "March", desktop: 23700 },
+  { month: "April", desktop: 7300 },
+  { month: "May", desktop: 20900 },
+  { month: "June", desktop: 21400 },
+]
+
+/* Module scope: a formatter defined in render would rebuild the scene every
+   time. Option-object formatters (see `formatY`) are free of that constraint. */
+const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
+
+<AreaChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  axes
+  formatX={shortMonth}
+  formatY={{ locale: "en-US", number: { notation: "compact" } }}
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Area chart linear
+
+```tsx
+import { AreaChart } from "@/components/ui/chart-area"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+<AreaChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  curve="linear"
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Area chart step
+
+```tsx
+import { AreaChart } from "@/components/ui/chart-area"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+<AreaChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  curve="step"
+  ariaLabel="Desktop visitors, January through June"
+/>
 ```
 
 ## Pie chart
 
-Long-format data: each row is a slice with its own `fill`, and `nameKey` maps slices to config entries.
-
 ```tsx
-import { Pie, PieChart } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { PieChart } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
 ]
 
-const chartConfig = {
-  visitors: { label: "Visitors" },
-  chrome: { label: "Chrome", color: "var(--chart-1)" },
-  safari: { label: "Safari", color: "var(--chart-2)" },
-  firefox: { label: "Firefox", color: "var(--chart-3)" },
-} satisfies ChartConfig
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
 
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <PieChart>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <Pie data={chartData} dataKey="visitors" nameKey="browser" />
-  </PieChart>
-</ChartContainer>
-<ChartDataTable data={chartData} config={chartConfig} labelKey="browser" />
+<PieChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  stroke="var(--color-bg)"
+  strokeWidth={2}
+  ariaLabel="Visitors by browser"
+/>
 ```
 
-## Pie chart without separators
+## Pie chart donut
 
 ```tsx
-import { Pie, PieChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <PieChart>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <Pie data={chartData} dataKey="visitors" nameKey="browser" stroke="0" paddingAngle={0} />
-  </PieChart>
-</ChartContainer>
-```
-
-## Pie chart with legend
-
-`nameKey` on `ChartLegendContent` reads legend labels from the slice field.
-
-```tsx
-import { Pie, PieChart } from "recharts"
-
-import { ChartContainer, ChartLegend, ChartLegendContent } from "@/components/ui/chart"
+import { PieChart } from "@/components/ui/chart-pie"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <PieChart>
-    <Pie data={chartData} dataKey="visitors" />
-    <ChartLegend
-      content={<ChartLegendContent nameKey="browser" />}
-      className="-translate-y-2 flex-wrap gap-2 *:basis-1/4 *:justify-center"
-    />
-  </PieChart>
-</ChartContainer>
-```
-
-## Pie chart with labels
-
-```tsx
-import { Pie, PieChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer
-  config={chartConfig}
-  className="mx-auto aspect-square min-h-[250px] w-full [&_.recharts-pie-label-text]:fill-fg"
->
-  <PieChart>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <Pie data={chartData} dataKey="visitors" label nameKey="browser" />
-  </PieChart>
-</ChartContainer>
-```
-
-## Pie chart with custom labels
-
-```tsx
-import { Pie, PieChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer
-  config={chartConfig}
-  className="mx-auto aspect-square min-h-[250px] w-full [&_.recharts-pie-label-text]:fill-fg"
->
-  <PieChart>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent nameKey="visitors" hideLabel />} />
-    <Pie
-      data={chartData}
-      dataKey="visitors"
-      nameKey="browser"
-      labelLine={false}
-      label={({ payload, ...props }) => (
-        <text
-          cx={props.cx}
-          cy={props.cy}
-          x={props.x}
-          y={props.y}
-          textAnchor={props.textAnchor}
-          dominantBaseline={props.dominantBaseline}
-          fill="var(--color-fg)"
-        >
-          {(payload as { visitors?: number }).visitors}
-        </text>
-      )}
-    />
-  </PieChart>
-</ChartContainer>
-```
-
-## Pie chart with label list
-
-Labels drawn inside slices with `LabelList`, resolving display names from config.
-
-```tsx
-import { LabelList, Pie, PieChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer
-  config={chartConfig}
-  className="mx-auto aspect-square min-h-[250px] w-full [&_.recharts-pie-label-text]:fill-fg"
->
-  <PieChart>
-    <ChartTooltip content={<ChartTooltipContent nameKey="visitors" hideLabel />} />
-    <Pie data={chartData} dataKey="visitors">
-      <LabelList
-        dataKey="browser"
-        className="fill-fg"
-        stroke="none"
-        fontSize={12}
-        formatter={(value: unknown) => chartConfig[value as keyof typeof chartConfig]?.label}
-      />
-    </Pie>
-  </PieChart>
-</ChartContainer>
-```
-
-## Donut chart
-
-```tsx
-import { Pie, PieChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <PieChart>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <Pie data={chartData} dataKey="visitors" nameKey="browser" innerRadius={60} />
-  </PieChart>
-</ChartContainer>
-```
-
-## Donut chart with center text
-
-A Recharts `Label` inside `Pie` with a `content` render function positioned at the viewBox center.
-
-```tsx
-import * as React from "react"
-import { Label, Pie, PieChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-const totalVisitors = React.useMemo(
-  () => chartData.reduce((acc, curr) => acc + curr.visitors, 0),
-  [],
-)
-
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <PieChart>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <Pie data={chartData} dataKey="visitors" nameKey="browser" innerRadius={60} strokeWidth={5}>
-      <Label
-        content={({ viewBox }) => {
-          if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-            return (
-              <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                <tspan x={viewBox.cx} y={viewBox.cy} className="fill-fg text-3xl font-bold">
-                  {totalVisitors.toLocaleString()}
-                </tspan>
-                <tspan x={viewBox.cx} y={(viewBox.cy ?? 0) + 24} className="fill-fg-muted">
-                  Visitors
-                </tspan>
-              </text>
-            )
-          }
-          return <text />
-        }}
-      />
-    </Pie>
-  </PieChart>
-</ChartContainer>
-```
-
-## Donut chart with active slice
-
-A custom `shape` enlarges one `Sector` to highlight it.
-
-```tsx
-import { Pie, PieChart, Sector } from "recharts"
-import type { PieSectorShapeProps } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-const ACTIVE_INDEX = 0
-
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <PieChart>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <Pie
-      data={chartData}
-      dataKey="visitors"
-      nameKey="browser"
-      innerRadius={60}
-      strokeWidth={5}
-      shape={({ index, outerRadius = 0, ...props }: PieSectorShapeProps) =>
-        index === ACTIVE_INDEX ? (
-          <Sector {...props} outerRadius={outerRadius + 10} />
-        ) : (
-          <Sector {...props} outerRadius={outerRadius} />
-        )
-      }
-    />
-  </PieChart>
-</ChartContainer>
-```
-
-## Pie chart stacked
-
-Two concentric `Pie`s from separate datasets; `labelFormatter` maps the hovered series key back to its config label.
-
-```tsx
-import { Pie, PieChart } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
-```
-
-```tsx
-const desktopData = [
-  { month: "january", desktop: 186, fill: "var(--color-january)" },
-  { month: "february", desktop: 305, fill: "var(--color-february)" },
-]
-const mobileData = [
-  { month: "january", mobile: 80, fill: "var(--color-january)" },
-  { month: "february", mobile: 200, fill: "var(--color-february)" },
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
 ]
 
-const chartConfig = {
-  visitors: { label: "Visitors" },
-  desktop: { label: "Desktop" },
-  mobile: { label: "Mobile" },
-  january: { label: "January", color: "var(--chart-1)" },
-  february: { label: "February", color: "var(--chart-2)" },
-} satisfies ChartConfig
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
 
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <PieChart>
-    <ChartTooltip
-      content={
-        <ChartTooltipContent
-          labelKey="visitors"
-          nameKey="month"
-          indicator="line"
-          labelFormatter={(_, payload) => {
-            const key = payload?.[0]?.dataKey as keyof typeof chartConfig | undefined
-            return key ? chartConfig[key]?.label : null
-          }}
-        />
-      }
-    />
-    <Pie data={desktopData} dataKey="desktop" outerRadius={60} />
-    <Pie data={mobileData} dataKey="mobile" innerRadius={70} outerRadius={90} />
-  </PieChart>
-</ChartContainer>
+<PieChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  innerRadius={0.55}
+  stroke="var(--color-bg)"
+  strokeWidth={2}
+  ariaLabel="Visitors by browser"
+/>
+```
+
+## Pie chart active Slice
+
+```tsx
+import { PieChart } from "@/components/ui/chart-pie"
+```
+
+```tsx
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
+
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
+
+<PieChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  innerRadius={0.55}
+  outerRadius={0.88}
+  // Static, so the highlighted slice reads without hovering.
+  activeIndex={0}
+  activeOffset={0.12}
+  stroke="var(--color-bg)"
+  strokeWidth={2}
+  ariaLabel="Visitors by browser, with Chrome highlighted"
+/>
+```
+
+## Pie chart donut with Text
+
+```tsx
+import { PieChart } from "@/components/ui/chart-pie"
+```
+
+```tsx
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
+
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
+
+const total = data.reduce((sum, row) => sum + row.visitors, 0)
+
+<PieChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  innerRadius={0.6}
+  stroke="var(--color-bg)"
+  strokeWidth={2}
+  ariaLabel="Visitors by browser, with the total in the centre"
+>
+  {/* The hole is an HTML overlay, so the total is real text, not a label
+      mark competing for focus. */}
+  <div className="flex h-full flex-col items-center justify-center">
+    <span className="text-3xl font-bold">{total}</span>
+    <span className="text-sm text-fg-muted">Visitors</span>
+  </div>
+</PieChart>
+```
+
+## Pie chart value Labels
+
+```tsx
+import { PieChart } from "@/components/ui/chart-pie"
+```
+
+```tsx
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
+
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
+
+<PieChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  sliceLabel="value"
+  sliceLabelRadius={0.72}
+  stroke="var(--color-bg)"
+  strokeWidth={2}
+  ariaLabel="Visitors by browser, with values on the slices"
+/>
+```
+
+## Pie chart custom Labels
+
+```tsx
+import { PieChart } from "@/components/ui/chart-pie"
+```
+
+```tsx
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
+
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
+
+<PieChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  sliceLabel="value"
+  sliceLabelRadius={0.6}
+  sliceLabelFill="var(--color-bg)"
+  sliceLabelFontSize={15}
+  ariaLabel="Visitors by browser, with values inside the slices"
+/>
+```
+
+## Pie chart name Labels
+
+```tsx
+import { PieChart } from "@/components/ui/chart-pie"
+```
+
+```tsx
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
+
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
+
+<PieChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  sliceLabel="name"
+  sliceLabelRadius={0.68}
+  sliceLabelFontSize={11}
+  stroke="var(--color-bg)"
+  strokeWidth={2}
+  ariaLabel="Visitors by browser, with names on the slices"
+/>
+```
+
+## Pie chart legend
+
+```tsx
+import { PieChart } from "@/components/ui/chart-pie"
+```
+
+```tsx
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
+
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
+
+<PieChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  legend
+  radiusRatio={0.85}
+  stroke="var(--color-bg)"
+  strokeWidth={2}
+  ariaLabel="Visitors by browser"
+/>
+```
+
+## Pie chart no Separator
+
+```tsx
+import { PieChart } from "@/components/ui/chart-pie"
+```
+
+```tsx
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
+
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
+
+/* No stroke and no pad angle: the slices meet edge to edge. Compare with the
+   donut demo, which separates them with a background-colored stroke. */
+
+<PieChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  padAngle={0}
+  ariaLabel="Visitors by browser, without slice separators"
+/>
+```
+
+## Pie chart stacked Rings
+
+```tsx
+import { pieRing, PieChart } from "@/components/ui/chart-pie"
+```
+
+```tsx
+const desktop = [
+  { month: "january", desktop: 186 },
+  { month: "february", desktop: 305 },
+  { month: "march", desktop: 237 },
+  { month: "april", desktop: 173 },
+  { month: "may", desktop: 209 },
+]
+
+const mobile = [
+  { month: "january", mobile: 80 },
+  { month: "february", mobile: 200 },
+  { month: "march", mobile: 120 },
+  { month: "april", mobile: 190 },
+  { month: "may", mobile: 130 },
+]
+
+const labels = {
+  january: "January",
+  february: "February",
+  march: "March",
+  april: "April",
+  may: "May",
+}
+
+/* A second series is a second ring, built at module scope so it keeps its
+   identity across renders. Both rings key their colors off the month, so a
+   month is one color from the middle out. */
+const mobileRing = pieRing({
+  id: "mobile",
+  data: mobile,
+  value: "mobile",
+  name: "month",
+  labels,
+  innerRadius: 0.7,
+  outerRadius: 0.95,
+})
+
+<PieChart
+  data={desktop}
+  value="desktop"
+  name="month"
+  labels={labels}
+  outerRadius={0.6}
+  polarMarks={mobileRing}
+  ariaLabel="Desktop and mobile visitors by month, as concentric rings"
+/>
 ```
 
 ## Radar chart
 
 ```tsx
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { RadarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-} satisfies ChartConfig
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
 
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px]">
-  <RadarChart data={chartData}>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-    <PolarAngleAxis dataKey="month" />
-    <PolarGrid />
-    <Radar dataKey="desktop" fill="var(--color-desktop)" fillOpacity={0.6} />
-  </RadarChart>
-</ChartContainer>
-<ChartDataTable data={chartData} config={chartConfig} labelKey="month" />
+<RadarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  ariaLabel="Desktop visitors, January through June"
+/>
 ```
 
-## Radar chart multiple
-
-`ChartLegend` (or Recharts' `Legend`) with `ChartLegendContent`; `outerRadius` on the chart shrinks the plot.
+## Radar chart dots
 
 ```tsx
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
-
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { RadarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[250px]">
-  <RadarChart data={chartData}>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-    <PolarAngleAxis dataKey="month" />
-    <PolarGrid />
-    <Radar dataKey="desktop" fill="var(--color-desktop)" fillOpacity={0.6} />
-    <Radar dataKey="mobile" fill="var(--color-mobile)" />
-    <ChartLegend className="mt-8" content={<ChartLegendContent />} />
-  </RadarChart>
-</ChartContainer>
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+<RadarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  points
+  ariaLabel="Desktop visitors, January through June"
+/>
 ```
 
-## Radar chart with dots
+## Radar chart multiple Series
 
 ```tsx
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px]">
-  <RadarChart data={chartData} outerRadius={90}>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-    <PolarAngleAxis dataKey="month" />
-    <PolarGrid />
-    <Radar
-      dataKey="desktop"
-      fill="var(--color-desktop)"
-      fillOpacity={0.6}
-      dot={{ r: 4, fillOpacity: 1 }}
-    />
-  </RadarChart>
-</ChartContainer>
-```
-
-## Radar chart lines only
-
-```tsx
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { RadarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px]">
-  <RadarChart data={chartData}>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-    <PolarAngleAxis dataKey="month" />
-    <PolarGrid radialLines={false} />
-    <Radar dataKey="desktop" fill="var(--color-desktop)" fillOpacity={0} stroke="var(--color-desktop)" strokeWidth={2} />
-    <Radar dataKey="mobile" fill="var(--color-mobile)" fillOpacity={0} stroke="var(--color-mobile)" strokeWidth={2} />
-  </RadarChart>
-</ChartContainer>
+const data = [
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
+  { month: "Mar", desktop: 237, mobile: 120 },
+  { month: "Apr", desktop: 273, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "Jun", desktop: 214, mobile: 140 },
+]
+
+<RadarChart
+  data={data}
+  x="month"
+  y={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
+  points
+  ariaLabel="Desktop and mobile visitors, January through June"
+/>
 ```
 
-## Radar chart grid variants
-
-`PolarGrid` takes `gridType="circle"`, `radialLines={false}`, or a filled `className`; omit it entirely for no grid.
+## Radar chart legend
 
 ```tsx
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px]">
-  <RadarChart data={chartData}>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-    <PolarGrid
-      className="fill-(--color-desktop) opacity-20"
-      gridType="circle"
-      radialLines={false}
-    />
-    <PolarAngleAxis dataKey="month" />
-    <Radar dataKey="desktop" fill="var(--color-desktop)" fillOpacity={0.5} />
-  </RadarChart>
-</ChartContainer>
-```
-
-## Radar chart with custom axis labels
-
-Render each `PolarAngleAxis` tick yourself to show the value above the category.
-
-```tsx
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { RadarChart } from "@/components/ui/chart-radar"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px]">
-  <RadarChart data={chartData}>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-    <PolarAngleAxis
-      dataKey="month"
-      tick={({ x, y, textAnchor, index, ...props }) => {
-        const data = chartData[index]
-        return (
-          <text
-            x={x}
-            y={index === 0 ? Number(y) - 10 : y}
-            textAnchor={textAnchor}
-            fontSize={13}
-            fontWeight={500}
-            {...props}
-          >
-            <tspan className="fill-fg-muted">{data?.desktop}</tspan>
-            <tspan className="fill-fg" x={x} dy={"1rem"}>
-              {data?.month}
-            </tspan>
-          </text>
-        )
-      }}
-    />
-    <PolarGrid />
-    <Radar dataKey="desktop" fill="var(--color-desktop)" fillOpacity={0.6} />
-  </RadarChart>
-</ChartContainer>
+const data = [
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
+  { month: "Mar", desktop: 237, mobile: 120 },
+  { month: "Apr", desktop: 273, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "Jun", desktop: 214, mobile: 140 },
+]
+
+<RadarChart
+  data={data}
+  x="month"
+  y={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
+  ariaLabel="Desktop and mobile visitors, January through June"
+/>
+```
+
+## Radar chart icon Legend
+
+```tsx
+import { MonitorIcon, SmartphoneIcon } from "lucide-react"
+
+import { RadarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186, mobile: 80 },
+  { month: "Feb", desktop: 305, mobile: 200 },
+  { month: "Mar", desktop: 237, mobile: 120 },
+  { month: "Apr", desktop: 273, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "Jun", desktop: 214, mobile: 140 },
+]
+
+const labels = { desktop: "Desktop", mobile: "Mobile" }
+
+/* An icon legend is HTML beside the chart, not a chart legend: the SVG legend
+   draws color swatches. */
+
+<div>
+  <RadarChart
+    data={data}
+    x="month"
+    y={["desktop", "mobile"]}
+    labels={labels}
+    legend={false}
+    ariaLabel="Desktop and mobile visitors, January through June"
+  />
+  <div className="mt-2 flex items-center justify-center gap-4 text-sm text-fg-muted">
+    <span className="flex items-center gap-1.5">
+      <MonitorIcon className="size-4" />
+      {labels.desktop}
+    </span>
+    <span className="flex items-center gap-1.5">
+      <SmartphoneIcon className="size-4" />
+      {labels.mobile}
+    </span>
+  </div>
+</div>
+```
+
+## Radar chart lines Only
+
+```tsx
+import { RadarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186, mobile: 160 },
+  { month: "Feb", desktop: 185, mobile: 170 },
+  { month: "Mar", desktop: 207, mobile: 180 },
+  { month: "Apr", desktop: 173, mobile: 160 },
+  { month: "May", desktop: 160, mobile: 190 },
+  { month: "Jun", desktop: 174, mobile: 204 },
+]
+
+<RadarChart
+  data={data}
+  x="month"
+  y={["desktop", "mobile"]}
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
+  fill={0}
+  spokes={false}
+  ariaLabel="Desktop and mobile visitors, January through June"
+/>
+```
+
+## Radar chart detailed Labels
+
+```tsx
+import { RadarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+const values = new Map(data.map((row) => [row.month, row.desktop]))
+
+<RadarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  axisDetail={(month) => String(values.get(String(month)) ?? "")}
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Radar chart circular Grid
+
+```tsx
+import { RadarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+<RadarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  gridShape="circle"
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Radar chart filled Grid
+
+```tsx
+import { RadarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+<RadarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  gridFill={0.2}
+  fill={0.5}
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Radar chart custom Grid
+
+```tsx
+import { RadarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 285 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 203 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 264 },
+]
+
+<RadarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  gridShape="circle"
+  gridFill={0.2}
+  fill={1}
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Radar chart no Grid
+
+```tsx
+import { RadarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+<RadarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  grid={false}
+  ariaLabel="Desktop visitors, January through June"
+/>
+```
+
+## Radar chart radius
+
+```tsx
+import { RadarChart } from "@/components/ui/chart-radar"
+```
+
+```tsx
+const data = [
+  { month: "Jan", desktop: 186 },
+  { month: "Feb", desktop: 305 },
+  { month: "Mar", desktop: 237 },
+  { month: "Apr", desktop: 273 },
+  { month: "May", desktop: 209 },
+  { month: "Jun", desktop: 214 },
+]
+
+<RadarChart
+  data={data}
+  x="month"
+  y="desktop"
+  labels={{ desktop: "Desktop" }}
+  legend={false}
+  radiusRatio={0.62}
+  points
+  ariaLabel="Desktop visitors, January through June"
+/>
 ```
 
 ## Radial chart
 
-Long-format data with per-row `fill`; `nameKey` on the tooltip resolves each bar's label.
-
 ```tsx
-import { RadialBar, RadialBarChart } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartDataTable,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { RadialBarChart } from "@/components/ui/chart-radial"
 ```
 
 ```tsx
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--chart-1)" },
-  { browser: "safari", visitors: 200, fill: "var(--chart-2)" },
-  { browser: "firefox", visitors: 187, fill: "var(--chart-3)" },
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
 ]
 
-const chartConfig = {
-  visitors: { label: "Visitors" },
-  chrome: { label: "Chrome", color: "var(--chart-1)" },
-  safari: { label: "Safari", color: "var(--chart-2)" },
-  firefox: { label: "Firefox", color: "var(--chart-3)" },
-} satisfies ChartConfig
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
 
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <RadialBarChart data={chartData} innerRadius={30} outerRadius={110}>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="browser" />} />
-    <RadialBar dataKey="visitors" background />
-  </RadialBarChart>
-</ChartContainer>
-<ChartDataTable data={chartData} config={chartConfig} labelKey="browser" />
+<RadialBarChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  innerRadius={0.3}
+  radiusRatio={0.95}
+  track
+  legend
+  ariaLabel="Visitors by browser"
+/>
 ```
 
-## Radial chart with grid
+## Radial chart grid
 
 ```tsx
-import { PolarGrid, RadialBar, RadialBarChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-```
-
-```tsx
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <RadialBarChart data={chartData} innerRadius={30} outerRadius={100}>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="browser" />} />
-    <PolarGrid gridType="circle" />
-    <RadialBar dataKey="visitors" />
-  </RadialBarChart>
-</ChartContainer>
-```
-
-## Radial chart with labels
-
-```tsx
-import { LabelList, RadialBar, RadialBarChart } from "recharts"
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { RadialBarChart } from "@/components/ui/chart-radial"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <RadialBarChart data={chartData} startAngle={-90} endAngle={380} innerRadius={30} outerRadius={110}>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel nameKey="browser" />} />
-    <RadialBar dataKey="visitors" background>
-      <LabelList position="insideStart" dataKey="browser" className="fill-fg-muted capitalize" fontSize={11} />
-    </RadialBar>
-  </RadialBarChart>
-</ChartContainer>
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
+
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
+
+<RadialBarChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  innerRadius={0.3}
+  radiusRatio={0.95}
+  grid
+  ariaLabel="Visitors by browser, over a circular grid"
+/>
 ```
 
-## Radial chart with center text
-
-A single-value ring: a `Label` inside `PolarRadiusAxis` draws the total at the center.
+## Radial chart labels
 
 ```tsx
-import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts"
-
-import { type ChartConfig, ChartContainer } from "@/components/ui/chart"
-```
-
-```tsx
-const chartData = [{ browser: "safari", visitors: 1260, fill: "var(--color-safari)" }]
-
-const chartConfig = {
-  visitors: { label: "Visitors" },
-  safari: { label: "Safari", color: "var(--chart-2)" },
-} satisfies ChartConfig
-
-const totalVisitors = chartData[0]?.visitors ?? 0
-
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <RadialBarChart data={chartData} startAngle={0} endAngle={250} innerRadius={80} outerRadius={90}>
-    <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-      <Label
-        content={({ viewBox }) => {
-          if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-            return (
-              <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-                <tspan x={viewBox.cx} y={viewBox.cy} className="fill-fg text-2xl font-bold">
-                  {totalVisitors.toLocaleString()}
-                </tspan>
-                <tspan x={viewBox.cx} y={(viewBox.cy ?? 0) + 24} className="fill-fg-muted">
-                  Visitors
-                </tspan>
-              </text>
-            )
-          }
-          return null
-        }}
-      />
-    </PolarRadiusAxis>
-    <RadialBar dataKey="visitors" background cornerRadius={10} />
-  </RadialBarChart>
-</ChartContainer>
-```
-
-## Radial chart with custom shape
-
-A `PolarGrid` with fixed `polarRadius` rings, styled via `first:`/`last:` fills, behind a rounded bar.
-
-```tsx
-import { Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts"
-
-import { ChartContainer } from "@/components/ui/chart"
+import { RadialBarChart } from "@/components/ui/chart-radial"
 ```
 
 ```tsx
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <RadialBarChart data={chartData} startAngle={0} endAngle={100} innerRadius={65} outerRadius={95}>
-    <PolarGrid
-      gridType="circle"
-      radialLines={false}
-      stroke="none"
-      className="first:fill-muted last:fill-popover"
-      polarRadius={[86, 74]}
-    />
-    <RadialBar dataKey="visitors" background cornerRadius={10} />
-    <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-      <Label
-        content={({ viewBox }) =>
-          viewBox && "cx" in viewBox && "cy" in viewBox ? (
-            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-              <tspan x={viewBox.cx} y={viewBox.cy} className="fill-fg text-2xl font-bold">
-                {totalVisitors.toLocaleString()}
-              </tspan>
-              <tspan x={viewBox.cx} y={(viewBox.cy ?? 0) + 24} className="fill-fg-muted">
-                Visitors
-              </tspan>
-            </text>
-          ) : null
-        }
-      />
-    </PolarRadiusAxis>
-  </RadialBarChart>
-</ChartContainer>
+const data = [
+  { browser: "chrome", visitors: 275 },
+  { browser: "safari", visitors: 200 },
+  { browser: "firefox", visitors: 187 },
+  { browser: "edge", visitors: 173 },
+  { browser: "other", visitors: 90 },
+]
+
+const labels = {
+  chrome: "Chrome",
+  safari: "Safari",
+  firefox: "Firefox",
+  edge: "Edge",
+  other: "Other",
+}
+
+<RadialBarChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={labels}
+  // A full turn starting at nine o'clock, so labels sit on the left.
+  startAngle={-Math.PI / 2}
+  endAngle={Math.PI * 1.5}
+  innerRadius={0.25}
+  radiusRatio={0.95}
+  track
+  barLabels
+  ariaLabel="Visitors by browser, each ring labelled"
+/>
+```
+
+## Radial chart progress Ring
+
+```tsx
+import { RadialBarChart } from "@/components/ui/chart-radial"
+```
+
+```tsx
+const data = [{ browser: "safari", visitors: 1260 }]
+
+const deg = (value: number) => (value * Math.PI) / 180
+
+<RadialBarChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={{ safari: "Safari" }}
+  endAngle={deg(250)}
+  innerRadius={0.78}
+  outerRadius={0.95}
+  radiusRatio={0.9}
+  cornerRadius={999}
+  track
+  max={1600}
+  ariaLabel="Safari visitors as a progress ring"
+>
+  <div className="flex h-full flex-col items-center justify-center">
+    <span className="text-2xl font-bold">1,260</span>
+    <span className="text-sm text-fg-muted">Visitors</span>
+  </div>
+</RadialBarChart>
+```
+
+## Radial chart shape
+
+```tsx
+import { RadialBarChart } from "@/components/ui/chart-radial"
+```
+
+```tsx
+const data = [{ browser: "safari", visitors: 1260 }]
+
+const deg = (value: number) => (value * Math.PI) / 180
+
+<RadialBarChart
+  data={data}
+  value="visitors"
+  name="browser"
+  labels={{ safari: "Safari" }}
+  endAngle={deg(100)}
+  innerRadius={0.66}
+  outerRadius={0.95}
+  radiusRatio={0.9}
+  cornerRadius={999}
+  track
+  max={1600}
+  grid
+  ariaLabel="Safari visitors against a 1,600 target"
+>
+  <div className="flex h-full flex-col items-center justify-center">
+    <span className="text-2xl font-bold">1,260</span>
+    <span className="text-sm text-fg-muted">Visitors</span>
+  </div>
+</RadialBarChart>
 ```
 
 ## Radial chart stacked
 
-A half-gauge (`endAngle={180}`) with two stacked `RadialBar`s from one wide-format row.
-
 ```tsx
-import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from "recharts"
-
-import {
-  type ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { RadialBarChart } from "@/components/ui/chart-radial"
 ```
 
 ```tsx
-const chartData = [{ month: "january", desktop: 1260, mobile: 570 }]
+const data = [{ month: "january", desktop: 1260, mobile: 570 }]
 
-const chartConfig = {
-  desktop: { label: "Desktop", color: "var(--chart-1)" },
-  mobile: { label: "Mobile", color: "var(--chart-2)" },
-} satisfies ChartConfig
-
-const totalVisitors = (chartData[0]?.desktop ?? 0) + (chartData[0]?.mobile ?? 0)
-
-<ChartContainer config={chartConfig} className="mx-auto aspect-square min-h-[250px] w-full">
-  <RadialBarChart data={chartData} endAngle={180} innerRadius={80} outerRadius={110}>
-    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-    <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-      <Label
-        content={({ viewBox }) =>
-          viewBox && "cx" in viewBox && "cy" in viewBox ? (
-            <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
-              <tspan x={viewBox.cx} y={(viewBox.cy ?? 0) - 16} className="fill-fg text-2xl font-bold">
-                {totalVisitors.toLocaleString()}
-              </tspan>
-              <tspan x={viewBox.cx} y={(viewBox.cy ?? 0) + 4} className="fill-fg-muted">
-                Visitors
-              </tspan>
-            </text>
-          ) : null
-        }
-      />
-    </PolarRadiusAxis>
-    <RadialBar dataKey="desktop" stackId="a" cornerRadius={5} fill="var(--color-desktop)" className="stroke-transparent stroke-2" />
-    <RadialBar dataKey="mobile" stackId="a" cornerRadius={5} fill="var(--color-mobile)" className="stroke-transparent stroke-2" />
-  </RadialBarChart>
-</ChartContainer>
+<RadialBarChart
+  data={data}
+  // An array of fields stacks one ring, cumulative from `startAngle`.
+  value={["desktop", "mobile"]}
+  name="month"
+  labels={{ desktop: "Desktop", mobile: "Mobile" }}
+  startAngle={-Math.PI / 2}
+  endAngle={Math.PI / 2}
+  innerRadius={0.7}
+  outerRadius={0.98}
+  radiusRatio={0.9}
+  barPadding={0.06}
+  cornerRadius={5}
+  max={2200}
+  ariaLabel="Desktop and mobile visitors in January, stacked"
+>
+  <div className="flex h-full flex-col items-center justify-center pb-6">
+    <span className="text-2xl font-bold">1,830</span>
+    <span className="text-sm text-fg-muted">Visitors</span>
+  </div>
+</RadialBarChart>
 ```
 
+## Heatmap matrix
+
+```tsx
+import { HeatmapChart } from "@/components/ui/chart-heatmap"
+```
+
+```tsx
+/* Sessions per weekday and hour: a daily shape scaled by how busy the day is. */
+const hours = [
+  { hour: "08", base: 14 },
+  { hour: "09", base: 32 },
+  { hour: "10", base: 58 },
+  { hour: "11", base: 74 },
+  { hour: "12", base: 61 },
+  { hour: "13", base: 42 },
+  { hour: "14", base: 66 },
+  { hour: "15", base: 88 },
+  { hour: "16", base: 71 },
+  { hour: "17", base: 39 },
+]
+
+const days = [
+  { day: "Mon", weight: 1 },
+  { day: "Tue", weight: 0.94 },
+  { day: "Wed", weight: 1.06 },
+  { day: "Thu", weight: 1.12 },
+  { day: "Fri", weight: 0.87 },
+  { day: "Sat", weight: 0.42 },
+  { day: "Sun", weight: 0.31 },
+]
+
+const data = days.flatMap(({ day, weight }) =>
+  hours.map(({ hour, base }) => ({
+    day,
+    hour,
+    sessions: Math.round(base * weight),
+  })),
+)
+
+<HeatmapChart
+  data={data}
+  x="hour"
+  y="day"
+  value="sessions"
+  label="Sessions"
+  labelX="Hour"
+  labelY="Day"
+  ariaLabel="Sessions by weekday and hour"
+/>
+```
+
+## Heatmap calendar Months
+
+```tsx
+import { HeatmapChart } from "@/components/ui/chart-heatmap"
+```
+
+```tsx
+/* Rainfall by month and year: a seasonal shape scaled by how wet the year was. */
+const months = [
+  { month: "Jan", normal: 82 },
+  { month: "Feb", normal: 64 },
+  { month: "Mar", normal: 58 },
+  { month: "Apr", normal: 47 },
+  { month: "May", normal: 39 },
+  { month: "Jun", normal: 21 },
+  { month: "Jul", normal: 12 },
+  { month: "Aug", normal: 18 },
+  { month: "Sep", normal: 44 },
+  { month: "Oct", normal: 76 },
+  { month: "Nov", normal: 94 },
+  { month: "Dec", normal: 88 },
+]
+
+const years = [
+  { year: "2022", weight: 0.74 },
+  { year: "2023", weight: 1.18 },
+  { year: "2024", weight: 0.91 },
+  { year: "2025", weight: 1.05 },
+]
+
+const data = years.flatMap(({ year, weight }) =>
+  months.map(({ month, normal }) => ({
+    year,
+    month,
+    rainfall: Math.round(normal * weight),
+  })),
+)
+
+<HeatmapChart
+  data={data}
+  x="month"
+  y="year"
+  value="rainfall"
+  formatValue={{
+    locale: "en-US",
+    number: { style: "unit", unit: "millimeter" },
+  }}
+  label="Rainfall"
+  ariaLabel="Monthly rainfall by year"
+  height={200}
+/>
+```
+
+## Heatmap discrete Scale
+
+```tsx
+import { heatmapColors, HeatmapChart } from "@/components/ui/chart-heatmap"
+```
+
+```tsx
+/* Incidents per service and week. The cuts are a policy, not an extent: one
+   incident is already worth seeing, ten is an outage week. */
+const services = [
+  { service: "api", counts: [0, 1, 0, 3, 12, 4, 1, 0] },
+  { service: "auth", counts: [1, 0, 0, 0, 2, 1, 0, 0] },
+  { service: "billing", counts: [4, 2, 6, 1, 0, 0, 3, 11] },
+  { service: "search", counts: [0, 0, 1, 0, 1, 0, 0, 2] },
+  { service: "workers", counts: [7, 5, 2, 9, 14, 6, 3, 1] },
+]
+
+const data = services.flatMap(({ service, counts }) =>
+  counts.map((incidents, index) => ({
+    service,
+    week: `W${index + 1}`,
+    incidents,
+  })),
+)
+
+<HeatmapChart
+  data={data}
+  x="week"
+  y="service"
+  value="incidents"
+  colors={heatmapColors("var(--chart-4)", 4)}
+  thresholds={[1, 4, 10]}
+  label="Incidents"
+  ariaLabel="Incidents per service and week"
+  height={200}
+/>
+```
+
+## Heatmap with Values
+
+```tsx
+import { HeatmapChart } from "@/components/ui/chart-heatmap"
+```
+
+```tsx
+/* Few, large cells — the only shape where in-cell numbers stay legible. */
+const regions = [
+  { region: "Americas", quarters: [0.42, 0.48, 0.51, 0.57] },
+  { region: "EMEA", quarters: [0.31, 0.29, 0.36, 0.44] },
+  { region: "APAC", quarters: [0.18, 0.24, 0.33, 0.39] },
+]
+
+const data = regions.flatMap(({ region, quarters }) =>
+  quarters.map((share, index) => ({
+    region,
+    quarter: `Q${index + 1}`,
+    share,
+  })),
+)
+
+<HeatmapChart
+  data={data}
+  x="quarter"
+  y="region"
+  value="share"
+  values
+  formatValue={{
+    locale: "en-US",
+    number: { style: "percent", maximumFractionDigits: 0 },
+  }}
+  label="Adoption"
+  ariaLabel="Feature adoption by region and quarter"
+  height={180}
+/>
+```
