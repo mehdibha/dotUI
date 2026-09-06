@@ -9,7 +9,7 @@ import { z } from "zod"
 import { alphaTwin } from "./alpha"
 import {
   CATEGORICAL_CHROMA,
-  categoricalPalette,
+  categoricalPalettes,
   divergingPalette,
   sequentialPalette,
   tonalCategoricalPalette,
@@ -380,25 +380,24 @@ export function createTheme(input: string | ThemeOptions): Theme {
 
   // D11 — chart palettes from the brand accent, one set per mode. The
   // categorical default is tonal (shadcn parity: shades of one brand hue,
-  // lightness-encoded); the hue-spread strategies maximize their CVD gates
-  // by construction, so only the tonal ladder is priced here.
+  // lightness-encoded); the hue-spread strategies pick one hue sequence for
+  // both modes and maximize their CVD gates by construction, so only the
+  // tonal ladder is priced here.
   const chartPalette = options.chartPalette ?? "tonal"
+  const hueSpread =
+    chartPalette === "tonal"
+      ? undefined
+      : categoricalPalettes(accentSeed, 8, CATEGORICAL_CHROMA[chartPalette])
   const chartSet = (mode: Mode) => {
     let categorical: Oklch[]
-    if (chartPalette === "tonal") {
+    if (hueSpread) categorical = hueSpread[mode]
+    else {
       categorical = tonalCategoricalPalette(accentSeed, 8, mode)
       const gate = tonalGateReport(categorical)
       if (!gate.passes)
         warnings.push(
           `${mode} tonal chart palette misses its gate (min adjacent ΔL* ${gate.minAdjacent.toFixed(1)}, monotonic ${gate.monotonic})`,
         )
-    } else {
-      categorical = categoricalPalette(
-        accentSeed,
-        8,
-        mode,
-        CATEGORICAL_CHROMA[chartPalette],
-      )
     }
     return {
       categorical: categorical.map(oklchCss),

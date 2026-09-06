@@ -47,6 +47,7 @@ export {
   CATEGORICAL_CHROMA,
   categoricalGateReport,
   categoricalPalette,
+  categoricalPalettes,
   divergingPalette,
   sequentialPalette,
   tonalCategoricalPalette,

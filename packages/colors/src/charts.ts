@@ -107,6 +107,8 @@ export const CATEGORICAL_CHROMA = { vivid: 0.75, muted: 0.3 } as const
 const MIN_TARGET_FRACTION = 0.53
 /** Warm-yellow hues (gold→lime) turn olive below this L* — keep them on light slots. */
 const YELLOW_BAND = { from: 75, to: 135, minLstar: 58 }
+/** Low-chroma warm hues (orange→lime) read as brown or khaki below this L*. */
+const BROWN_BAND = { from: 30, to: 135, maxChroma: 0.1, minLstar: 68 }
 /** Minimum circular hue distance between chosen series. */
 const MIN_HUE_GAP = 30
 
@@ -136,36 +138,50 @@ function isMuddy(candidate: Oklch, lstar: number, chroma: number): boolean {
     lstar < YELLOW_BAND.minLstar
   )
     return true
+  if (
+    h >= BROWN_BAND.from &&
+    h < BROWN_BAND.to &&
+    candidate.c < BROWN_BAND.maxChroma &&
+    lstar < BROWN_BAND.minLstar
+  )
+    return true
   return candidate.c < MIN_TARGET_FRACTION * chroma * cusp(candidate.h).c
 }
 
+const MODES: Mode[] = ["light", "dark"]
+
 /**
- * Build a categorical palette of `n` series anchored on the accent. Slot 1
- * takes the ladder rung nearest the accent's own lightness (a yellow brand
- * stays yellow, never mustard); later slots greedily maximize the min
- * pairwise ΔEok under normal and CVD vision, constrained away from muddy
- * hue-lightness pairings and near-duplicate hues. `chroma` is the series'
- * target as a fraction of each hue's cusp. Deterministic.
+ * Build the categorical palettes of `n` series anchored on the accent, one
+ * per mode, sharing one hue sequence so a series keeps its identity when the
+ * theme toggles. Slot 1 takes the ladder rung nearest the accent's own
+ * lightness (a yellow brand stays yellow, never mustard); later slots
+ * greedily maximize the min pairwise ΔEok under normal and CVD vision in
+ * both modes at once, constrained away from muddy hue-lightness pairings and
+ * near-duplicate hues. `chroma` is the series' target as a fraction of each
+ * hue's cusp. Deterministic.
  */
-export function categoricalPalette(
+export function categoricalPalettes(
   accent: Oklch,
   n = 8,
-  mode: Mode = "light",
   chroma: number = CATEGORICAL_CHROMA.vivid,
-): Oklch[] {
-  const baseLadder = CATEGORICAL_LSTAR[mode]
+): Record<Mode, Oklch[]> {
   // Give the brand series the rung closest to its natural lightness.
   const accentLstar = lstarOf(fitSrgb(accent))
-  let nearest = 0
-  baseLadder.forEach((lstar, i) => {
-    if (
-      Math.abs(lstar - accentLstar) <
-      Math.abs(baseLadder[nearest]! - accentLstar)
-    )
-      nearest = i
-  })
-  const ladder = [...baseLadder]
-  ;[ladder[0], ladder[nearest]] = [ladder[nearest]!, ladder[0]!]
+  const ladders = Object.fromEntries(
+    MODES.map((mode) => {
+      const ladder = [...CATEGORICAL_LSTAR[mode]]
+      let nearest = 0
+      ladder.forEach((lstar, i) => {
+        if (
+          Math.abs(lstar - accentLstar) <
+          Math.abs(ladder[nearest]! - accentLstar)
+        )
+          nearest = i
+      })
+      ;[ladder[0], ladder[nearest]] = [ladder[nearest]!, ladder[0]!]
+      return [mode, ladder]
+    }),
+  ) as Record<Mode, number[]>
 
   // Incremental gate scoring: keep every chosen color's CVD simulations and
   // the chosen-set's running per-condition minimum, so scoring a candidate is
@@ -182,13 +198,48 @@ export function categoricalPalette(
       ? CHART_GATES.categoricalNormal
       : CHART_GATES.categoricalCvd
 
-  const chosen: Oklch[] = [categoricalCandidate(accent.h, ladder[0]!, chroma)]
-  const chosenSim: Simulated[] = [simulate(chosen[0]!)]
-  const setMin: Record<(typeof CONDITIONS)[number], number> = {
-    normal: Infinity,
-    protan: Infinity,
-    deutan: Infinity,
-    tritan: Infinity,
+  type Candidate = Record<Mode, { color: Oklch; sim: Simulated }>
+  const candidateFor = (hue: number, slot: number): Candidate =>
+    Object.fromEntries(
+      MODES.map((mode) => {
+        const color = categoricalCandidate(hue, ladders[mode][slot]!, chroma)
+        return [mode, { color, sim: simulate(color) }]
+      }),
+    ) as Candidate
+  const muddy = (candidate: Candidate, slot: number) =>
+    MODES.some((mode) =>
+      isMuddy(candidate[mode].color, ladders[mode][slot]!, chroma),
+    )
+
+  const chosen: Candidate[] = [candidateFor(accent.h, 0)]
+  const setMin = Object.fromEntries(
+    MODES.map((mode) => [
+      mode,
+      {
+        normal: Infinity,
+        protan: Infinity,
+        deutan: Infinity,
+        tritan: Infinity,
+      },
+    ]),
+  ) as Record<Mode, Record<(typeof CONDITIONS)[number], number>>
+  // The candidate's score is its worst gate ratio across both modes.
+  const score = (candidate: Candidate) => {
+    let score = Infinity
+    for (const mode of MODES)
+      for (const condition of CONDITIONS) {
+        let min = setMin[mode][condition]
+        for (const existing of chosen)
+          min = Math.min(
+            min,
+            deltaEok(
+              existing[mode].sim[condition],
+              candidate[mode].sim[condition],
+            ),
+          )
+        score = Math.min(score, min / gateFor(condition))
+      }
+    return score
   }
 
   const pool: number[] = []
@@ -196,49 +247,55 @@ export function categoricalPalette(
     pool.push((accent.h + offset) % 360)
 
   while (chosen.length < n) {
-    const lstar = ladder[chosen.length % ladder.length]!
-    let best: { color: Oklch; sim: Simulated } | null = null
+    const slot = chosen.length % CATEGORICAL_LSTAR.light.length
+    let best: { hue: number; candidate: Candidate } | null = null
     let bestScore = -Infinity
-    let bestRelaxed: { color: Oklch; sim: Simulated } | null = null
+    let bestRelaxed: { hue: number; candidate: Candidate } | null = null
     let bestRelaxedScore = -Infinity
     for (const hue of pool) {
-      const candidate = categoricalCandidate(hue, lstar, chroma)
-      const sim = simulate(candidate)
-      let score = Infinity
-      for (const condition of CONDITIONS) {
-        let min = setMin[condition]
-        for (const existing of chosenSim)
-          min = Math.min(min, deltaEok(existing[condition], sim[condition]))
-        score = Math.min(score, min / gateFor(condition))
-      }
+      const candidate = candidateFor(hue, slot)
+      const s = score(candidate)
       // Track an unconstrained fallback so exhausted pools still fill slots.
-      if (score > bestRelaxedScore) {
-        bestRelaxedScore = score
-        bestRelaxed = { color: candidate, sim }
+      if (s > bestRelaxedScore) {
+        bestRelaxedScore = s
+        bestRelaxed = { hue, candidate }
       }
-      if (isMuddy(candidate, lstar, chroma)) continue
-      if (chosen.some((c) => hueGap(c.h, hue) < MIN_HUE_GAP)) continue
-      if (score > bestScore) {
-        bestScore = score
-        best = { color: candidate, sim }
+      if (muddy(candidate, slot)) continue
+      if (chosen.some((c) => hueGap(c.light.color.h, hue) < MIN_HUE_GAP))
+        continue
+      if (s > bestScore) {
+        bestScore = s
+        best = { hue, candidate }
       }
     }
     const pick = best ?? bestRelaxed
     if (!pick) break
-    for (const condition of CONDITIONS) {
-      for (const existing of chosenSim)
-        setMin[condition] = Math.min(
-          setMin[condition],
-          deltaEok(existing[condition], pick.sim[condition]),
-        )
-    }
-    chosen.push(pick.color)
-    chosenSim.push(pick.sim)
-    const pickHue = pick.color.h
-    const index = pool.findIndex((h) => Math.abs(h - pickHue) < 1e-6)
-    if (index >= 0) pool.splice(index, 1)
+    for (const mode of MODES)
+      for (const condition of CONDITIONS)
+        for (const existing of chosen)
+          setMin[mode][condition] = Math.min(
+            setMin[mode][condition],
+            deltaEok(
+              existing[mode].sim[condition],
+              pick.candidate[mode].sim[condition],
+            ),
+          )
+    chosen.push(pick.candidate)
+    pool.splice(pool.indexOf(pick.hue), 1)
   }
-  return chosen
+  return Object.fromEntries(
+    MODES.map((mode) => [mode, chosen.map((c) => c[mode].color)]),
+  ) as Record<Mode, Oklch[]>
+}
+
+/** One mode of `categoricalPalettes` — hues are still chosen across both. */
+export function categoricalPalette(
+  accent: Oklch,
+  n = 8,
+  mode: Mode = "light",
+  chroma: number = CATEGORICAL_CHROMA.vivid,
+): Oklch[] {
+  return categoricalPalettes(accent, n, chroma)[mode]
 }
 
 /**
