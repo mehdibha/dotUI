@@ -99,7 +99,7 @@ const sidebarVariants = tv({
       "data-[show-on-hover]:group-focus-within/menu-item:opacity-100 data-[show-on-hover]:group-hover/menu-item:opacity-100 data-[show-on-hover]:focus-within:opacity-100 data-[show-on-hover]:md:opacity-0",
     ],
     menuBadge: [
-      "pointer-events-none absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium text-fg-muted tabular-nums select-none",
+      "pointer-events-none absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-md px-1 text-xs font-medium text-fg-muted tabular-nums select-ui",
       "peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=md]/menu-button:top-1.5 peer-data-[size=sm]/menu-button:top-1",
       "group-data-[collapsible=icon]:hidden",
     ],

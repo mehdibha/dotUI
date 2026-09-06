@@ -11,8 +11,8 @@ import { tv, type VariantProps } from "tailwind-variants";
 const dialogVariants = tv({
   slots: {
     content: [
-      "relative flex max-h-[inherit] min-h-0 flex-col gap-4 outline-none has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto",
-      "p-4 text-sm in-data-popover:p-2.5 in-data-popover:text-xs",
+      "relative flex max-h-[inherit] min-h-0 flex-col gap-4 p-(--dialog-padding) outline-none has-data-command:p-0 [@container_(height<31.25rem)]:overflow-y-auto",
+      "text-sm [--dialog-padding:--spacing(4)] in-data-popover:text-xs in-data-popover:[--dialog-padding:--spacing(2.5)]",
     ],
     header: [
       "flex flex-col",
@@ -23,10 +23,7 @@ const dialogVariants = tv({
       "font-medium in-data-modal:text-base in-data-modal:leading-none",
     ],
     description: "text-fg-muted",
-    body: [
-      "flex min-h-0 flex-1 flex-col gap-2 in-data-modal:[@container_(height<31.25rem)]:mx-0 in-data-modal:[@container_(height<31.25rem)]:shrink-0 in-data-modal:[@container_(height<31.25rem)]:overflow-y-visible in-data-modal:[@container_(height<31.25rem)]:px-0",
-      "-mx-4 px-4 in-data-popover:-mx-2.5 in-data-popover:px-2.5",
-    ],
+    body: "-mx-(--dialog-padding) flex min-h-0 flex-1 flex-col gap-2 px-(--dialog-padding) in-data-modal:[@container_(height<31.25rem)]:mx-0 in-data-modal:[@container_(height<31.25rem)]:shrink-0 in-data-modal:[@container_(height<31.25rem)]:overflow-y-visible in-data-modal:[@container_(height<31.25rem)]:px-0",
     footer: "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
     closeButton: ["absolute", "top-2 right-2"],
   },

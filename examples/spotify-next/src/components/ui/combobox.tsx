@@ -22,6 +22,7 @@ const Combobox = <
 }: ComboboxProps<T, M>) => {
   return (
     <ComboBoxPrimitive.ComboBox
+      data-field=""
       menuTrigger={menuTrigger}
       className={composeRenderProps(className, (className) =>
         fieldStyles().field({

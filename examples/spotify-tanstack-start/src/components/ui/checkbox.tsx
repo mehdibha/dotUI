@@ -16,12 +16,13 @@ const checkboxVariants = tv({
     root: ["flex items-center has-data-description:items-start", "gap-2"],
     control: [
       "relative flex items-center gap-2 rounded-sm focus-reset not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:focus-ring disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-lg",
-      "transition-colors duration-75 has-data-label:w-full has-data-label:border has-data-label:p-2.5 has-data-label:selected:border-primary/25 has-data-label:selected:bg-primary-muted",
+      "transition-colors duration-75 has-data-label:w-full has-data-label:border has-data-label:p-2.5",
+      "has-data-label:selected:border-selection/25 has-data-label:selected:bg-selection-muted",
     ],
     indicator: [
       "grid size-4 shrink-0 place-content-center rounded-sm border border-border-control bg-transparent text-transparent transition-[background-color,border-color,box-shadow,color] duration-75 *:[svg]:size-3",
       "selected:border-transparent selected:bg-selection selected:text-fg-on-selection",
-      "disabled:border-border disabled:indeterminate:bg-disabled disabled:selected:bg-disabled disabled:selected:text-fg-disabled",
+      "disabled:border-(--disabled-border,var(--color-border-control)) disabled:indeterminate:bg-(--disabled-selected-bg,var(--color-selection)) disabled:selected:bg-(--disabled-selected-bg,var(--color-selection)) disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selection))",
       "invalid:border-border-danger invalid:selected:bg-danger-muted invalid:selected:text-fg-danger",
       "indeterminate:border-transparent indeterminate:bg-selection indeterminate:text-fg-on-selection",
     ],
@@ -110,6 +111,7 @@ const CheckboxIndicator = ({ className, ...props }: CheckboxIndicatorProps) => {
   const ctx = useContext(InternalCheckboxContext);
   return (
     <span
+      data-checkbox-indicator=""
       data-rac=""
       data-selected={ctx?.isSelected || undefined}
       data-indeterminate={ctx?.isIndeterminate || undefined}

@@ -17,7 +17,8 @@ const DateField = <T extends DateFieldPrimitive.DateValue>({
   const fieldStyles = useStyles;
   return (
     <DateFieldPrimitive.DateField
-      date-date-field=""
+      data-date-field=""
+      data-field=""
       className={composeRenderProps(className, (className) =>
         fieldStyles().field({ className: cn("group/date-field", className) }),
       )}

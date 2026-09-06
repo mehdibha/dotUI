@@ -23,14 +23,14 @@ const fieldVariants = tv({
       "flex w-full gap-2 invalid:has-data-[slot=field-error]:**:data-[slot=description]:hidden",
     fieldContent: "flex flex-col gap-1",
     label: [
-      "inline-flex items-center gap-px leading-none select-none peer-disabled:cursor-not-allowed peer-disabled:text-fg-disabled [&_svg]:size-3",
+      "inline-flex items-center gap-px leading-none select-ui peer-disabled:cursor-disabled peer-disabled:text-(--disabled-fg,currentColor) [&_svg]:size-3",
       "in-data-required:after:ml-0.5 in-data-required:after:text-fg-danger in-data-required:after:content-['*']",
-      "in-disabled:cursor-not-allowed in-disabled:text-fg-disabled",
+      "in-disabled:cursor-disabled in-disabled:text-(--disabled-fg,currentColor)",
       "in-data-invalid:text-fg-danger",
       "text-sm",
     ],
     description: [
-      "text-fg-muted last:mt-0 in-data-disabled:text-fg-disabled nth-last-2:-mt-1",
+      "text-fg-muted last:mt-0 in-data-disabled:text-(--disabled-fg,var(--color-fg-muted)) nth-last-2:-mt-1",
       "text-sm",
     ],
     fieldError: ["text-fg-danger", "text-sm"],
