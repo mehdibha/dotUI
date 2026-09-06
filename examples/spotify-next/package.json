@@ -22,7 +22,6 @@
     "react-aria-components": "^1.21.0",
     "react-dom": "^19.2.1",
     "react-stately": "^3.50.0",
-    "recharts": "^3.10.1",
     "tailwind-variants": "^3.3.1",
     "tailwindcss-react-aria-components": "^2.2.0",
     "tailwindcss-with": "^0.0.2",
