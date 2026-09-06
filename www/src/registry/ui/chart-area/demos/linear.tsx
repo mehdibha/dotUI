@@ -20,7 +20,6 @@ export default function ChartAreaLinear() {
       labels={{ desktop: "Desktop" }}
       legend={false}
       curve="linear"
-      axes="x"
       ariaLabel="Desktop visitors, January through June"
     />
   )

@@ -164,7 +164,8 @@ export function heatmapChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
     inset: chartDefaults.cellInset,
   })
   return {
-    ...chartFrame(options, ctx, {
+    // Axes on by default: row/column labels are the cells' identity.
+    ...chartFrame({ ...options, axes: options.axes ?? true }, ctx, {
       // Band scales with d3's zero padding: cells tile the plot, and the
       // inset above cuts the gutter. `nice` is not a band-scale operation.
       x: { scale: scaleBand, nice: false, label: options.labelX },

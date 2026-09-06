@@ -19,7 +19,6 @@ export default function ChartLineDefault() {
       y="desktop"
       labels={{ desktop: "Desktop" }}
       legend={false}
-      axes="x"
       ariaLabel="Desktop visitors, January through June"
     />
   )

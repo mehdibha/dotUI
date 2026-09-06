@@ -68,7 +68,7 @@ export interface AreaChartProps extends ChartFamilyProps {
 
   /**
    * Show the axes and their tick labels.
-   * @default true
+   * @default false
    */
   axes?: boolean
 

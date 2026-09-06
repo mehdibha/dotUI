@@ -167,7 +167,8 @@ export function radarChartSpec<TDatum, TXField extends ChartXField<TDatum>>(
   const grid = options.grid ?? chartDefaults.grid
   const spokes = options.spokes ?? grid
   // Radar has one label ring, so the per-axis "x"/"y" values mean "on" here.
-  const axes = (options.axes ?? chartDefaults.axes) !== false
+  // On by default: the ring labels are the categories, not axis chrome.
+  const axes = (options.axes ?? true) !== false
   const shape = options.gridShape ?? "polygon"
   const ticks = options.gridTicks ?? radarDefaults.gridTicks
   const fill = options.fill ?? radarDefaults.fill

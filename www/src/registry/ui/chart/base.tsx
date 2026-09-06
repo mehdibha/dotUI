@@ -58,7 +58,10 @@ export const chartDefaults = {
   pointPadding: 0,
   groupPadding: 0.15,
   grid: true,
-  axes: true,
+  // Axes are opt-in chrome on x/y charts — the default look is marks + grid.
+  // Families whose labels are structure, not chrome (heatmap cells, radar
+  // spokes), default them on in their own base.
+  axes: false,
   legend: true,
   focus: "group-x",
   tooltipAnchor: "group-center",

@@ -60,7 +60,6 @@ export default function ChartBarActive() {
       marks={highlight}
       animate={false}
       onFocusChange={(point) => setActive(point?.datum.browser ?? null)}
-      axes="x"
       ariaLabel="Visitors by browser, with the focused bar highlighted"
     />
   )

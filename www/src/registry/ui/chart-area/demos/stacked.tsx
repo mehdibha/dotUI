@@ -29,7 +29,6 @@ export default function ChartAreaStacked() {
       series="series"
       seriesOrder={["desktop", "mobile", "other"]}
       labels={{ desktop: "Desktop", mobile: "Mobile", other: "Other" }}
-      axes="x"
       ariaLabel="Visitors by device, stacked, January through June"
     />
   )

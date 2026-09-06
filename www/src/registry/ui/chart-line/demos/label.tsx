@@ -35,7 +35,6 @@ export default function ChartLineLabel() {
       legend={false}
       points
       marks={[labels]}
-      axes="x"
       ariaLabel="Desktop visitors, January through June"
     />
   )

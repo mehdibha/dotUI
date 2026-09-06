@@ -2,7 +2,7 @@
 
 import type { ChartValue } from "@tanstack/charts"
 
-import { AreaChart } from "@/registry/ui/chart-area"
+import { LineChart } from "@/registry/ui/chart-line"
 
 const data = [
   { month: "January", desktop: 18600 },
@@ -17,9 +17,9 @@ const data = [
    time. Option-object formatters (see `formatY`) are free of that constraint. */
 const shortMonth = (value: ChartValue) => String(value).slice(0, 3)
 
-export default function ChartAreaAxes() {
+export default function ChartLineAxes() {
   return (
-    <AreaChart
+    <LineChart
       data={data}
       x="month"
       y="desktop"

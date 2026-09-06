@@ -13,7 +13,7 @@ const data = [
   { month: "June", desktop: 214 },
 ]
 
-/* Both labels ride inside the bar, so the chart needs no axes at all: the
+/* Both labels ride inside the bar, so even the category axis can go: the
    category anchors to the value baseline, the value to the bar's end. */
 const labels = [
   text(data, {
@@ -47,7 +47,6 @@ export default function ChartBarLabelCustom() {
       y="desktop"
       labels={{ desktop: "Desktop" }}
       horizontal
-      axes={false}
       grid={false}
       legend={false}
       marks={labels}

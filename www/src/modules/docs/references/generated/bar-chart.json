@@ -170,7 +170,7 @@
         "type": "boolean"
       },
       "description": "Show the axes and their tick labels.",
-      "default": "true"
+      "default": "false"
     },
     "grid": {
       "type": "boolean",

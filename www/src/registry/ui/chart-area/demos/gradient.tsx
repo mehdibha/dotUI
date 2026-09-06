@@ -19,7 +19,6 @@ export default function ChartAreaGradient() {
       y={["desktop", "mobile"]}
       labels={{ desktop: "Desktop", mobile: "Mobile" }}
       fill="gradient"
-      axes="x"
       ariaLabel="Desktop and mobile visitors, January through June"
     />
   )

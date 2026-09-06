@@ -389,6 +389,10 @@ export const DemosIndex: Record<
 		files: ["ui/chart-bar/demos/active.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/active")),
 	},
+	"chart-bar/demos/axes": {
+		files: ["ui/chart-bar/demos/axes.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/axes")),
+	},
 	"chart-bar/demos/default": {
 		files: ["ui/chart-bar/demos/default.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-bar/demos/default")),
@@ -436,6 +440,10 @@ export const DemosIndex: Record<
 	"chart-heatmap/demos/with-values": {
 		files: ["ui/chart-heatmap/demos/with-values.tsx"],
 		component: React.lazy(() => import("@/registry/ui/chart-heatmap/demos/with-values")),
+	},
+	"chart-line/demos/axes": {
+		files: ["ui/chart-line/demos/axes.tsx"],
+		component: React.lazy(() => import("@/registry/ui/chart-line/demos/axes")),
 	},
 	"chart-line/demos/default": {
 		files: ["ui/chart-line/demos/default.tsx"],
